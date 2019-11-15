@@ -3,13 +3,46 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data", "Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj", "{6CACF381-9F0A-41B1-9A14-715491CC6213}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data", "Libraries\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj", "{6CACF381-9F0A-41B1-9A14-715491CC6213}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.WordPress.Entities", "Jeebs.WordPress.Entities\Jeebs.WordPress.Entities.csproj", "{DA24A71C-0218-4E6A-8151-1E97F76154F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Entities", "Libraries\Jeebs.WordPress.Entities\Jeebs.WordPress.Entities.csproj", "{DA24A71C-0218-4E6A-8151-1E97F76154F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Directory.Build.props = Tests\Directory.Build.props
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Data", "Jeebs.Data\Jeebs.Data.csproj", "{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data", "Libraries\Jeebs.Data\Jeebs.Data.csproj", "{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Data", ".Data", "{2C74A640-5088-487E-8B3D-0B8C818EDFCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".WordPress", ".WordPress", "{0B3996E1-B1FF-4037-B3FB-15E0ABE01032}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Directory.Build.props = Libraries\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{A256449B-4234-43DD-B18F-741D69906712}"
+	ProjectSection(SolutionItems) = preProject
+		Apps\Directory.Build.props = Apps\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs", "Libraries\Jeebs\Jeebs.csproj", "{356A4CC7-CEA0-46A1-81FB-41AC3F0C1614}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.App", "Libraries\Jeebs.App\Jeebs.App.csproj", "{227E9F54-D49F-4E6B-9744-31F3A4E3E8D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Clients", ".Clients", "{9BE173C5-9B68-4F6D-BF76-283EA7C8C73A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Clients.MySql", "Libraries\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj", "{B22D88C5-A63B-425C-B12E-3471044EBB4F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Abstractions", "Libraries\Jeebs.Data.Abstractions\Jeebs.Data.Abstractions.csproj", "{EFC6D1E2-B4E0-4ECF-AD57-A9B163435C9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Web", ".Web", "{FAFDBA16-5E50-4AB5-945A-1F32F22E04C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Web.Mvc", "Libraries\Jeebs.Web.Mvc\Jeebs.Web.Mvc.csproj", "{4D1F383B-A11F-4074-85A1-DC2AACAC2D7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Data.Clients.SqlServer", "Libraries\Jeebs.Data.Clients.SqlServer\Jeebs.Data.Clients.SqlServer.csproj", "{AE703837-1753-4408-A32D-97423655233F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,9 +62,48 @@ Global
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356A4CC7-CEA0-46A1-81FB-41AC3F0C1614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356A4CC7-CEA0-46A1-81FB-41AC3F0C1614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356A4CC7-CEA0-46A1-81FB-41AC3F0C1614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356A4CC7-CEA0-46A1-81FB-41AC3F0C1614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{227E9F54-D49F-4E6B-9744-31F3A4E3E8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{227E9F54-D49F-4E6B-9744-31F3A4E3E8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{227E9F54-D49F-4E6B-9744-31F3A4E3E8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{227E9F54-D49F-4E6B-9744-31F3A4E3E8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B22D88C5-A63B-425C-B12E-3471044EBB4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B22D88C5-A63B-425C-B12E-3471044EBB4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B22D88C5-A63B-425C-B12E-3471044EBB4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B22D88C5-A63B-425C-B12E-3471044EBB4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFC6D1E2-B4E0-4ECF-AD57-A9B163435C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFC6D1E2-B4E0-4ECF-AD57-A9B163435C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFC6D1E2-B4E0-4ECF-AD57-A9B163435C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFC6D1E2-B4E0-4ECF-AD57-A9B163435C9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1F383B-A11F-4074-85A1-DC2AACAC2D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1F383B-A11F-4074-85A1-DC2AACAC2D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1F383B-A11F-4074-85A1-DC2AACAC2D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D1F383B-A11F-4074-85A1-DC2AACAC2D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE703837-1753-4408-A32D-97423655233F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE703837-1753-4408-A32D-97423655233F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE703837-1753-4408-A32D-97423655233F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE703837-1753-4408-A32D-97423655233F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6CACF381-9F0A-41B1-9A14-715491CC6213} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
+		{DA24A71C-0218-4E6A-8151-1E97F76154F8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
+		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
+		{2C74A640-5088-487E-8B3D-0B8C818EDFCB} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{0B3996E1-B1FF-4037-B3FB-15E0ABE01032} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{356A4CC7-CEA0-46A1-81FB-41AC3F0C1614} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{227E9F54-D49F-4E6B-9744-31F3A4E3E8D4} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{9BE173C5-9B68-4F6D-BF76-283EA7C8C73A} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
+		{B22D88C5-A63B-425C-B12E-3471044EBB4F} = {9BE173C5-9B68-4F6D-BF76-283EA7C8C73A}
+		{EFC6D1E2-B4E0-4ECF-AD57-A9B163435C9C} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
+		{FAFDBA16-5E50-4AB5-945A-1F32F22E04C2} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{4D1F383B-A11F-4074-85A1-DC2AACAC2D7C} = {FAFDBA16-5E50-4AB5-945A-1F32F22E04C2}
+		{AE703837-1753-4408-A32D-97423655233F} = {9BE173C5-9B68-4F6D-BF76-283EA7C8C73A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+	  <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+  </ItemGroup>
+
+</Project>
