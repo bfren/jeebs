@@ -19,11 +19,11 @@ namespace Jeebs.Config
 		/// </summary>
 		public string Authentication
 		{
-			get => authentication ?? Default;
-			set => authentication = value;
+			get => authenticationConnectionValue ?? Default;
+			set => authenticationConnectionValue = value;
 		}
 
-		private string authentication;
+		private string? authenticationConnectionValue;
 
 		/// <summary>
 		/// Dictionary of database connections
@@ -31,20 +31,12 @@ namespace Jeebs.Config
 		public Dictionary<string, DbConnectionConfig> Connections { get; set; }
 
 		/// <summary>
-		/// Ensure validity
+		/// Setup object
 		/// </summary>
-		/// <exception cref="Jx.ConfigException">If 'Default' connection is not defined, or there are no connections defined</exception>
 		public DbConfig()
 		{
-			if (string.IsNullOrEmpty(Default))
-			{
-				throw new Jx.ConfigException($"{nameof(Default)} must be defined in DbConfig.");
-			}
-
-			if (Connections.Count == 0)
-			{
-				throw new Jx.ConfigException($"{nameof(Connections)} must contain at least one item.");
-			}
+			Default = string.Empty;
+			Connections = new Dictionary<string, DbConnectionConfig>();
 		}
 
 		/// <summary>
@@ -52,19 +44,21 @@ namespace Jeebs.Config
 		/// </summary>
 		/// <param name="name">[Optional] Connection name</param>
 		/// <exception cref="Jx.ConfigException">If a default name is not defined, or the requested connection was not found.</exception>
-		/// <returns>Connection object</returns>
-		public DbConnectionConfig GetConnection(string name = null)
+		public DbConnectionConfig GetConnection(in string? name = null)
 		{
 			// If name is null, use Default connection
 			string connection = name ?? Default;
-
-			// If both name and DefaultDbConnection are null, throw an exception
 			if (string.IsNullOrEmpty(connection))
 			{
-				throw new Jx.ConfigException($"{nameof(Default)} is not defined in configuration settings.");
+				throw new Jx.ConfigException($"{nameof(Default)} must be defined in DbConfig.");
 			}
 
 			// Attempt to retrieve the connection
+			if (Connections.Count == 0)
+			{
+				throw new Jx.ConfigException($"{nameof(Connections)} must contain at least one item.");
+			}
+
 			if (Connections.TryGetValue(connection, out var config))
 			{
 				return config;
@@ -78,7 +72,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Retrieve the authentication database connection settings
 		/// </summary>
-		/// <returns></returns>
 		public DbConnectionConfig GetAuthenticationConnection() => GetConnection(Authentication);
 	}
 }

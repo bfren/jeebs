@@ -11,7 +11,7 @@ namespace Jeebs.Util
 	public static class Json
 	{
 		/// <summary>
-		/// Default JSON serialiser settings
+		/// Default JsonSerializerOptions
 		/// </summary>
 		public static JsonSerializerOptions DefaultSettings = new JsonSerializerOptions
 		{
@@ -20,17 +20,24 @@ namespace Jeebs.Util
 		};
 
 		/// <summary>
-		/// Use JsonConvert to serialise a given object
+		/// Use JsonSerializer to serialise a given object
 		/// </summary>
 		/// <typeparam name="T">Object Type to be serialised</typeparam>
 		/// <param name="obj">The object to serialise</param>
 		/// <param name="settings">Serialiser settings</param>
 		/// <returns>Json String of serialised object</returns>
-		public static string Serialise<T>(in T obj, in JsonSerializerOptions? settings = null) =>
-			JsonSerializer.Serialize(obj, settings ?? DefaultSettings);
+		public static string Serialise<T>(in T obj, in JsonSerializerOptions? settings = null)
+		{
+			if (obj is null)
+			{
+				return "null";
+			}
+
+			return JsonSerializer.Serialize(obj, settings ?? DefaultSettings);
+		}
 
 		/// <summary>
-		/// Use JsonConvert to deserialise a given string into a given object type
+		/// Use JsonSerializer to deserialise a given string into a given object type
 		/// </summary>
 		/// <param name="str">The string to deserialise</param>
 		/// <param name="type">Object Type</param>
@@ -52,7 +59,7 @@ namespace Jeebs.Util
 		}
 
 		/// <summary>
-		/// Use JsonConvert to deserialise a given string into a given object type
+		/// Use JsonSerializer to deserialise a given string into a given object type
 		/// If 'str' is null, default(T) will be returned (null for reference types, 0 for integers)
 		/// </summary>
 		/// <typeparam name="T">The type of the object to return</typeparam>

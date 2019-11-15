@@ -23,5 +23,15 @@ namespace Jeebs.Config
 		/// Additional settings required for configuring this database connection
 		/// </summary>
 		public Dictionary<string, string> AdditionalSettings { get; set; }
+
+		/// <summary>
+		/// Setup object
+		/// </summary>
+		public DbConnectionConfig()
+		{
+			ConnectionString = string.Empty;
+			TablePrefix = string.Empty;
+			AdditionalSettings = new Dictionary<string, string>();
+		}
 	}
 }

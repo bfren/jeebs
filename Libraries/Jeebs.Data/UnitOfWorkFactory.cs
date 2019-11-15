@@ -14,8 +14,9 @@ namespace Jeebs.Data
 		/// Create a new UnitOfWork
 		/// </summary>
 		/// <param name="connection">IDbConnection</param>
+		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
 		/// <returns>UnitOfWork</returns>
-		internal UnitOfWork Create(IDbConnection connection, ILog log) => new UnitOfWork(connection, log);
+		internal UnitOfWork Create(IDbConnection connection, IAdapter adapter, ILog log) => new UnitOfWork(connection, adapter, log);
 	}
 }

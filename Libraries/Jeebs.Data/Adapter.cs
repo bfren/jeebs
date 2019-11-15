@@ -110,6 +110,15 @@ namespace Jeebs.Data
 		/// <returns>SQL query</returns>
 		public abstract string UpdateSingle<T>(int id, long? version = null);
 
+
+		/// <summary>
+		/// Query to delete a single row
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="id">Id value</param>
+		/// <returns>SQL query</returns>
+		public abstract string DeleteSingle<T>(int id);
+
 		#endregion
 	}
 }

@@ -68,5 +68,17 @@ namespace Jeebs.Data
 		string UpdateSingle<T>(int id, long? version = null);
 
 		#endregion
+
+		#region Queries - Delete
+
+		/// <summary>
+		/// Query to delete a single row
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="id">Id value</param>
+		/// <returns>SQL query</returns>
+		string DeleteSingle<T>(int id);
+
+		#endregion
 	}
 }

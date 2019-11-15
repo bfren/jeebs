@@ -28,5 +28,10 @@ namespace Jeebs.Data.Clients.SqlServer
 		{
 			throw new NotImplementedException();
 		}
+
+		public override string DeleteSingle<T>(int id)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

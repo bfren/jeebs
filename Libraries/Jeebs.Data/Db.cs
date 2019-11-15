@@ -50,7 +50,7 @@ namespace Jeebs.Data
 				//	connection.Open();
 				//}
 
-				return unitOfWorkFactory.Create(connection, log);
+				return unitOfWorkFactory.Create(connection, Client.Adapter.Value, log);
 			}
 		}
 

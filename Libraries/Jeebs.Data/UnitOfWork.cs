@@ -4,11 +4,17 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Jeebs.Util;
 
 namespace Jeebs.Data
 {
 	public sealed class UnitOfWork
 	{
+		/// <summary>
+		/// Provides thread-safe locking
+		/// </summary>
+		private static readonly object _ = new object();
+
 		/// <summary>
 		/// IDbTransaction
 		/// </summary>
@@ -76,8 +82,10 @@ namespace Jeebs.Data
 
 			try
 			{
-				var insertSql = adapter.CreateSingleAndReturnId<T>();
-				newId = Connection.ExecuteScalar<int>(insertSql, poco, transaction);
+				var query = adapter.CreateSingleAndReturnId<T>();
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(poco));
+
+				newId = Connection.ExecuteScalar<int>(query, poco, transaction);
 			}
 			catch (Exception ex)
 			{
@@ -116,8 +124,10 @@ namespace Jeebs.Data
 
 			try
 			{
-				var insertSql = adapter.CreateSingleAndReturnId<T>();
-				newId = await Connection.ExecuteScalarAsync<int>(insertSql, poco, transaction);
+				var query = adapter.CreateSingleAndReturnId<T>();
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(poco));
+
+				newId = await Connection.ExecuteScalarAsync<int>(query, poco, transaction);
 			}
 			catch (Exception ex)
 			{
@@ -158,6 +168,8 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+
 				var result = Connection.Query<dynamic>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -165,7 +177,7 @@ namespace Jeebs.Data
 			{
 				// Log error
 				var error = $"An error occurred while executing {nameof(Query)}";
-				log.Error(error, ex.Message, query);
+				log.Error(error, ex.Message, query, "parameters: " + Json.Serialise(parameters));
 				return DbResult.Failure<IEnumerable<dynamic>>(error);
 			}
 		}
@@ -180,6 +192,8 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+
 				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -187,7 +201,7 @@ namespace Jeebs.Data
 			{
 				// Log error
 				var error = $"An error occurred while executing {nameof(QueryAsync)}";
-				log.Error(ex, error, query, parameters);
+				log.Error(ex, error, query, "parameters: " + Json.Serialise(parameters));
 				return DbResult.Failure<IEnumerable<dynamic>>(error);
 			}
 		}
@@ -203,6 +217,8 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+
 				var result = Connection.Query<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -210,7 +226,7 @@ namespace Jeebs.Data
 			{
 				// Log error
 				var error = $"An error occurred while executing {nameof(Query)}";
-				log.Error(ex, error, query, parameters);
+				log.Error(ex, error, query, "parameters: " + Json.Serialise(parameters));
 				return DbResult.Failure<IEnumerable<T>>(error);
 			}
 		}
@@ -222,53 +238,21 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		public async Task<IEnumerable<T>> QueryAsync<T>(string query, object parameters = null)
+		public async Task<IDbResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null)
 		{
 			try
 			{
-				return await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction);
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
-			}
-		}
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
 
-		/// <summary>
-		/// Run a query against the database
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="builder">Query builder</param>
-		/// <returns>IEnumerable</returns>
-		public IEnumerable<T> Query<T>(Func<Mapper.Build.Query<T>, Mapper.Build.Query<T>> builder) where T : IEntity
-		{
-			try
-			{
-				var (query, parameters) = builder(Mapper.Build.RetrieveByQuery<T>(Connection)).Build();
-				return Connection.Query<T>(query, parameters, transaction);
+				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction);
+				return DbResult.Success(result);
 			}
 			catch (Exception ex)
 			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
-			}
-		}
-
-		/// <summary>
-		/// Run a query against the database
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="builder">Query builder</param>
-		/// <returns>IEnumerable</returns>
-		public async Task<IEnumerable<T>> QueryAsync<T>(Func<Mapper.Build.Query<T>, Mapper.Build.Query<T>> builder) where T : IEntity
-		{
-			try
-			{
-				var (query, parameters) = builder(Mapper.Build.RetrieveByQuery<T>(Connection)).Build();
-				return await Connection.QueryAsync<T>(query, parameters, transaction);
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
+				// Log error
+				var error = $"An error occurred while executing {nameof(QueryAsync)}";
+				log.Error(ex, error, query, "parameters: " + Json.Serialise(parameters));
+				return DbResult.Failure<IEnumerable<T>>(error);
 			}
 		}
 
@@ -278,16 +262,23 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		private T Get<T>(int id) where T : class, IEntity
+		public IDbResult<T> Single<T>(int id) where T : class, IEntity
 		{
 			try
 			{
-				var selectSql = Mapper.Build.RetrieveById<T>(Connection);
-				return Connection.QuerySingleOrDefault<T>(selectSql, new { id }, transaction);
+				var query = adapter.RetrieveSingleById<T>(id);
+
+				log.Debug("Query: {0}", query);
+
+				var result = Connection.QuerySingle<T>(query, transaction: transaction);
+				return DbResult.Success(result);
 			}
 			catch (Exception ex)
 			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
+				// Log error
+				var error = $"An error occured while retrieving {typeof(T)} with ID '{id}'.";
+				log.Error(ex, error);
+				return DbResult.Failure<T>(error);
 			}
 		}
 
@@ -297,100 +288,23 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		private async Task<T> GetAsync<T>(int id) where T : class, IEntity
+		private async Task<IDbResult<T>> SingleAsync<T>(int id) where T : class, IEntity
 		{
 			try
 			{
-				var selectSql = Mapper.Build.RetrieveById<T>(Connection);
-				return await Connection.QuerySingleOrDefaultAsync<T>(selectSql, new { id }, transaction);
+				var query = adapter.RetrieveSingleById<T>(id);
+
+				log.Debug("Query: {0}", query);
+
+				var result =  await Connection.QuerySingleAsync<T>(query, transaction: transaction);
+				return DbResult.Success(result);
 			}
 			catch (Exception ex)
 			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
-			}
-		}
-
-		/// <summary>
-		/// Return a single object by primary key, throwing an exception if the object cannot be found
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="id">Primary key</param>
-		/// <returns>Object</returns>
-		public T Single<T>(int id) where T : class, IEntity
-		{
-			try
-			{
-				var entity = Get<T>(id);
-				if (entity == null)
-				{
-					throw new Jx.Data.RetrieveException($"Null is not allowed when {nameof(Single)} is used.");
-				}
-
-				return entity;
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), id, ex);
-			}
-		}
-
-		/// <summary>
-		/// Return a single object by primary key, throwing an exception if the object cannot be found
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="id">Primary key</param>
-		/// <returns>Object</returns>
-		public async Task<T> SingleAsync<T>(int id) where T : class, IEntity
-		{
-			try
-			{
-				var entity = await GetAsync<T>(id);
-				if (entity == null)
-				{
-					throw new Jx.Data.RetrieveException($"Null is not allowed when {nameof(SingleAsync)} is used.");
-				}
-
-				return entity;
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), id, ex);
-			}
-		}
-
-		/// <summary>
-		/// Return a single object by primary key, or default value if the object cannot be found
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="id">Primary key</param>
-		/// <returns>Object or default value</returns>
-		public T SingleOrDefault<T>(int id) where T : class, IEntity
-		{
-			try
-			{
-				return Get<T>(id);
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), id, ex);
-			}
-		}
-
-		/// <summary>
-		/// Return a single object by primary key, or default value if the object cannot be found
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="id">Primary key</param>
-		/// <returns>Object or default value</returns>
-		public async Task<T> SingleOrDefaultAsync<T>(int id) where T : class, IEntity
-		{
-			try
-			{
-				return await GetAsync<T>(id);
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), id, ex);
+				// Log error
+				var error = $"An error occured while retrieving {typeof(T)} with ID '{id}'.";
+				log.Error(ex, error);
+				return DbResult.Failure<T>(error);
 			}
 		}
 
@@ -400,15 +314,21 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Object or default value</returns>
-		public T SingleOrDefault<T>(string query, object parameters = null)
+		public IDbResult<T> Single<T>(string query, object parameters)
 		{
 			try
 			{
-				return Connection.QuerySingleOrDefault<T>(query, parameters, transaction);
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+
+				var result = Connection.QuerySingle<T>(query, parameters, transaction);
+				return DbResult.Success(result);
 			}
 			catch (Exception ex)
 			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
+				// Log error
+				var error = $"An error occured while retrieving {typeof(T)}.";
+				log.Error(ex, error, query, Json.Serialise(parameters));
+				return DbResult.Failure<T>(error);
 			}
 		}
 
@@ -418,65 +338,27 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Object or default value</returns>
-		/// <returns>Object or default value</returns>
-		public async Task<T> SingleOrDefaultAsync<T>(string query, object parameters = null)
+		public async Task<IDbResult<T>> SingleAsync<T>(string query, object parameters)
 		{
 			try
 			{
-				return await Connection.QuerySingleOrDefaultAsync<T>(query, parameters, transaction);
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
-			}
-		}
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
 
-		/// <summary>
-		/// Return a single object using a query, or default value if the object cannot be found
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="builder">Query builder</param>
-		/// <returns>Object or default value</returns>
-		public T SingleOrDefault<T>(Func<Mapper.Build.Query<T>, Mapper.Build.Query<T>> builder) where T : IEntity
-		{
-			try
-			{
-				var (query, parameters) = builder(Mapper.Build.RetrieveByQuery<T>(Connection)).Build();
-				return Connection.QuerySingleOrDefault<T>(query, parameters, transaction);
+				var result = await Connection.QuerySingleAsync<T>(query, parameters, transaction);
+				return DbResult.Success(result);
 			}
 			catch (Exception ex)
 			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
-			}
-		}
-
-		/// <summary>
-		/// Return a single object using a query, or default value if the object cannot be found
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="builder">Query builder</param>
-		/// <returns>Object or default value</returns>
-		public async Task<T> SingleOrDefaultAsync<T>(Func<Mapper.Build.Query<T>, Mapper.Build.Query<T>> builder) where T : IEntity
-		{
-			try
-			{
-				var (query, parameters) = builder(Mapper.Build.RetrieveByQuery<T>(Connection)).Build();
-				return await Connection.QuerySingleOrDefaultAsync<T>(query, parameters, transaction);
-			}
-			catch (Exception ex)
-			{
-				throw new Jx.Data.RetrieveException(typeof(T), ex);
+				// Log error
+				var error = $"An error occured while retrieving {typeof(T)}.";
+				log.Error(ex, error, query, Json.Serialise(parameters));
+				return DbResult.Failure<T>(error);
 			}
 		}
 
 		#endregion
 
 		#region U
-
-		/// <summary>
-		/// Provides thread-safe locking for Updates
-		/// </summary>
-		private static readonly object _ = new object();
 
 		/// <summary>
 		/// Update an object
@@ -512,11 +394,14 @@ namespace Jeebs.Data
 			try
 			{
 				// Build the query
-				var updateSql = adapter.UpdateSingle<T>(poco.Id, poco.Version);
+				var query = adapter.UpdateSingle<T>(poco.Id, poco.Version);
 
 				// Now increase the row version and execute query
 				poco.Version++;
-				var rowsAffected = Connection.Execute(updateSql, poco, transaction);
+
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(poco));
+
+				var rowsAffected = Connection.Execute(query, poco, transaction);
 				if (rowsAffected == 1)
 				{
 					return new DbSuccess();
@@ -528,8 +413,8 @@ namespace Jeebs.Data
 				Rollback();
 
 				// Log error
-				log.Error(ex, error);
-				return new DbFailure(error, ex.Message);
+				log.Error(ex, error, Json.Serialise(poco));
+				return DbResult.Failure(error, ex.Message);
 			}
 
 			// Build the query to get a fresh poco
@@ -544,7 +429,7 @@ namespace Jeebs.Data
 
 				// Log error
 				log.Error(error + " Concurrency check failed.");
-				return new DbFailureConcurrency<T>();
+				return DbResult.ConcurrencyFailure<T>();
 			}
 			else
 			{
@@ -553,7 +438,7 @@ namespace Jeebs.Data
 
 				// Log error
 				log.Error(error);
-				return new DbFailure(error);
+				return DbResult.Failure(error);
 			}
 		}
 
@@ -569,10 +454,11 @@ namespace Jeebs.Data
 			try
 			{
 				// Build the query
-				var updateSql = adapter.UpdateSingle<T>(poco.Id);
+				var query = adapter.UpdateSingle<T>(poco.Id);
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(poco));
 
 				// Now execute query
-				var rowsAffected = Connection.Execute(updateSql, poco, transaction);
+				var rowsAffected = Connection.Execute(query, poco, transaction);
 				if (rowsAffected == 1)
 				{
 					return new DbSuccess();
@@ -584,7 +470,7 @@ namespace Jeebs.Data
 
 					// Log error
 					log.Error(error);
-					return new DbFailure(error);
+					return DbResult.Failure(error);
 				}
 			}
 			catch (Exception ex)
@@ -594,7 +480,7 @@ namespace Jeebs.Data
 
 				// Log error
 				log.Error(ex, error);
-				return new DbFailure(error, ex.Message);
+				return DbResult.Failure(error, ex.Message);
 			}
 		}
 
@@ -610,7 +496,39 @@ namespace Jeebs.Data
 		/// <result>IDbResult - Whether or not the delete was successful</result>
 		public IDbResult Delete<T>(in T poco) where T : class, IEntity
 		{
-			throw new NotImplementedException();
+			var error = $"Unable to delete {typeof(T)} {poco.Id}.";
+
+			try
+			{
+				// Build the query
+				var query = adapter.DeleteSingle<T>(poco.Id);
+				log.Debug("Query: {0}");
+
+				// Now execute query
+				var rowsAffected = Connection.Execute(query, transaction: transaction);
+				if (rowsAffected == 1)
+				{
+					return DbResult.Success();
+				}
+				else
+				{
+					// Rollback
+					Rollback();
+
+					// Log error
+					log.Error(error);
+					return DbResult.Failure(error);
+				}
+			}
+			catch (Exception ex)
+			{
+				// Rollback
+				Rollback();
+
+				// Log error
+				log.Error(ex, error);
+				return DbResult.Failure(error, ex.Message);
+			}
 		}
 
 		/// <summary>
@@ -619,9 +537,41 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IDbResult - Whether or not the delete was successful</result>
-		public Task<IDbResult> DeleteAsync<T>(in T poco) where T : class, IEntity
+		public async Task<IDbResult> DeleteAsync<T>(T poco) where T : class, IEntity
 		{
-			throw new NotImplementedException();
+			var error = $"Unable to delete {typeof(T)} {poco.Id}.";
+
+			try
+			{
+				// Build the query
+				var query = adapter.DeleteSingle<T>(poco.Id);
+				log.Debug("Query: {0}");
+
+				// Now execute query
+				var rowsAffected = await Connection.ExecuteAsync(query, transaction: transaction);
+				if (rowsAffected == 1)
+				{
+					return DbResult.Success();
+				}
+				else
+				{
+					// Rollback
+					Rollback();
+
+					// Log error
+					log.Error(error);
+					return DbResult.Failure(error);
+				}
+			}
+			catch (Exception ex)
+			{
+				// Rollback
+				Rollback();
+
+				// Log error
+				log.Error(ex, error);
+				return DbResult.Failure(error, ex.Message);
+			}
 		}
 
 		#endregion
@@ -633,9 +583,21 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		public void Execute(in string query, in object? parameters = null)
+		public IDbResult Execute(in string query, in object? parameters = null)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+				Connection.Execute(query, param: parameters, transaction: transaction);
+				return DbResult.Success();
+			}
+			catch (Exception ex)
+			{
+				// Log error
+				var error = "Error executing query";
+				log.Error(ex, error, query, Json.Serialise(parameters));
+				return DbResult.Failure();
+			}
 		}
 
 		/// <summary>
@@ -643,9 +605,21 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		public Task ExecuteAsync(in string query, in object? parameters = null)
+		public async Task<IDbResult> ExecuteAsync(string query, object? parameters = null)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+				await Connection.ExecuteAsync(query, param: parameters, transaction: transaction);
+				return DbResult.Success();
+			}
+			catch (Exception ex)
+			{
+				// Log error
+				var error = "Error executing query";
+				log.Error(ex, error, query, Json.Serialise(parameters));
+				return DbResult.Failure();
+			}
 		}
 
 		/// <summary>
@@ -657,7 +631,19 @@ namespace Jeebs.Data
 		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
 		public IDbResult<T> ExecuteScalar<T>(in string query, in object? parameters = null)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: transaction);
+				return DbResult.Success(result);
+			}
+			catch (Exception ex)
+			{
+				// Log error
+				var error = "Error executing query";
+				log.Error(ex, error, query, Json.Serialise(parameters));
+				return DbResult.Failure<T>();
+			}
 		}
 
 		/// <summary>
@@ -667,9 +653,21 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		public Task<IDbResult<T>> ExecuteScalarAsync<T>(in string query, in object? parameters = null)
+		public async Task<IDbResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				log.Debug("Query: {0}\nParameters: {1}", query, Json.Serialise(parameters));
+				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: transaction);
+				return DbResult.Success(result);
+			}
+			catch (Exception ex)
+			{
+				// Log error
+				var error = "Error executing query";
+				log.Error(ex, error, query, Json.Serialise(parameters));
+				return DbResult.Failure<T>();
+			}
 		}
 
 		#endregion

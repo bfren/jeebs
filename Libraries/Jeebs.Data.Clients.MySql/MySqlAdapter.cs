@@ -81,5 +81,17 @@ namespace Jeebs.Data.Clients.MySql
 
 			return $"{sql};";
 		}
+
+		/// <summary>
+		/// Query to delete a single row
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="id">Id value</param>
+		/// <returns>SQL query</returns>
+		public override string DeleteSingle<T>(int id)
+		{
+			var map = TableMaps.GetMap<T>();
+			return $"DELETE {map.Name} WHERE {map.IdColumn.Column} = '{id}';";
+		}
 	}
 }
