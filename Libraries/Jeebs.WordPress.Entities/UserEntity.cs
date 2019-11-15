@@ -56,5 +56,19 @@ namespace Jeebs.WordPress.Entities
 		/// DisplayName
 		/// </summary>
 		public string DisplayName { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpUserEntity()
+		{
+			Username = string.Empty;
+			Password = string.Empty;
+			Slug = string.Empty;
+			Email = string.Empty;
+			Url = string.Empty;
+			ActivationKey = string.Empty;
+			DisplayName = string.Empty;
+		}
 	}
 }

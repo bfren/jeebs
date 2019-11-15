@@ -18,11 +18,11 @@
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key { get; set; }
+		public string? Key { get; set; }
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string Value { get; set; }
+		public string? Value { get; set; }
 	}
 }

@@ -76,5 +76,20 @@ namespace Jeebs.WordPress.Entities
 		/// Rss
 		/// </summary>
 		public string Rss { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpLinkEntity()
+		{
+			Url = string.Empty;
+			Title = string.Empty;
+			Image = string.Empty;
+			Target = string.Empty;
+			Description = string.Empty;
+			Rel = string.Empty;
+			Notes = string.Empty;
+			Rss = string.Empty;
+		}
 	}
 }

@@ -17,7 +17,7 @@ namespace Jeebs.WordPress
 		public TConfig Config { get; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		/// <param name="config">WpConfig</param>
 		protected Wp(in TConfig config)

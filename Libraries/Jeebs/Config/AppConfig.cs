@@ -15,7 +15,7 @@ namespace Jeebs.Config
 		public string Project { get; set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public AppConfig()
 		{

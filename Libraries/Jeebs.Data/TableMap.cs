@@ -32,7 +32,7 @@ namespace Jeebs.Data
 		public MappedColumn? VersionColumn { get; set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		/// <param name="name">Table Name</param>
 		/// <param name="columns">Mapped Columns</param>

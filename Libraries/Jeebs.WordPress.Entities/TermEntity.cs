@@ -24,5 +24,14 @@
 		/// Group
 		/// </summary>
 		public int Group { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpTermEntity()
+		{
+			Title = string.Empty;
+			Slug = string.Empty;
+		}
 	}
 }

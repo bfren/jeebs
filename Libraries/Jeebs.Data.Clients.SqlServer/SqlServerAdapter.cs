@@ -10,7 +10,7 @@ namespace Jeebs.Data.Clients.SqlServer
 	public sealed class SqlServerAdapter : Adapter
 	{
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public SqlServerAdapter() : base('.', '[', ']') { }
 

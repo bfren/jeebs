@@ -21,7 +21,7 @@ namespace Jeebs.Data
 		private Lazy<int> IdFactory { get; }
 
 		/// <summary>
-		/// Setup object with an Id of -1
+		/// Create object with an Id of -1
 		/// </summary>
 		protected Entity() => IdFactory = new Lazy<int>(-1);
 

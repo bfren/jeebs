@@ -10,7 +10,7 @@ namespace Jeebs.Data.Clients.MySql
 	public sealed class MySqlAdapter : Adapter
 	{
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public MySqlAdapter() : base('.', '`', '`') { }
 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Data;
+using Jeebs.Data.Clients.MySql;
 using Jeebs.WordPress.Entities;
-using static Jeebs.Data.Adapters;
 
 namespace Jeebs.WordPress.Tables
 {
@@ -35,8 +35,8 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">MySqlAdapter object</param>
+		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in MySqlAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
+		public TermTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
 	}
 }

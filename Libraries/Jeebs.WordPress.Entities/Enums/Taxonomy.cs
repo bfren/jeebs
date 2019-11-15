@@ -17,6 +17,11 @@ namespace Jeebs.WordPress.Enums
 		#region Default Taxonomies
 
 		/// <summary>
+		/// Blank
+		/// </summary>
+		public static readonly Taxonomy Blank = new Taxonomy("");
+
+		/// <summary>
 		/// Category
 		/// </summary>
 		public static readonly Taxonomy PostCategory = new Taxonomy("category");

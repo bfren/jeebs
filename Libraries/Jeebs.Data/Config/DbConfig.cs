@@ -31,7 +31,7 @@ namespace Jeebs.Config
 		public Dictionary<string, DbConnectionConfig> Connections { get; set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public DbConfig()
 		{

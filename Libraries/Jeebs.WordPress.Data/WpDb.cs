@@ -2,10 +2,8 @@
 using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
-using Jeebs.Data.Providers.Dapper;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Tables;
-using static Jeebs.Data.Adapters;
 
 namespace Jeebs.WordPress
 {
@@ -24,7 +22,7 @@ namespace Jeebs.WordPress
 	/// <typeparam name="Ttt">WpTermTaxonomyEntity</typeparam>
 	/// <typeparam name="Tu">WpUserEntity</typeparam>
 	/// <typeparam name="Tum">WpUserMetaEntity</typeparam>
-	public abstract class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : DapperDb<MySqlDbClient>
+	public abstract class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Db<MySqlDbClient>
 		where Tc : WpCommentEntity
 		where Tcm : WpCommentMetaEntity
 		where Tl : WpLinkEntity
@@ -49,14 +47,14 @@ namespace Jeebs.WordPress
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
 		/// <exception cref="Jx.ConfigurationException">If WordPress database configuration cannot be found</exception>
-		protected WpDb(in DbConfig dbConfig, in WpConfig wpConfig)
+		protected WpDb(in DbConfig dbConfig, in WpConfig wpConfig, in ILog log) : base(log)
 		{
 			if (dbConfig.GetConnection(wpConfig.Db) is DbConnectionConfig cfg)
 			{
 				ConnectionString = cfg.ConnectionString;
 
-				var adapter = new MySqlAdapter();
 				var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
+				var adapter = (MySqlAdapter)client.Adapter.Value;
 
 				Term = new TermTable<Tt>(adapter, tablePrefix);
 			}

@@ -21,7 +21,7 @@ namespace Jeebs.Config.Logging
 		public override bool IsValid() => !string.IsNullOrEmpty(Webhook);
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public SlackProvider()
 		{

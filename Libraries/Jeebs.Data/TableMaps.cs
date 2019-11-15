@@ -17,7 +17,7 @@ namespace Jeebs.Data
 		private static readonly ConcurrentDictionary<Type, TableMap> maps;
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		static TableMaps() => maps = new ConcurrentDictionary<Type, TableMap>();
 

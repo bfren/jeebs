@@ -21,7 +21,7 @@ namespace Jeebs.Data
 		public PropertyInfo Property { get; }
 
 		/// <summary>
-		/// Setup Object
+		/// Create object
 		/// </summary>
 		/// <param name="column">Escaped Column Name</param>
 		/// <param name="property">Entity Property</param>

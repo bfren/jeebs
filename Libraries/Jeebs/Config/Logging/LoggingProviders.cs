@@ -22,7 +22,7 @@ namespace Jeebs.Config.Logging
 		public SlackProvider Slack { get; set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public LoggingProviders()
 		{

@@ -9,27 +9,27 @@ namespace Jeebs.Data
 	/// Database
 	/// </summary>
 	/// <typeparam name="TDbClient">Database Client type</typeparam>
-	public sealed class Db<TDbClient> where TDbClient : IDbClient, new()
+	public class Db<TDbClient> where TDbClient : IDbClient, new()
 	{
 		/// <summary>
 		/// IDbClient
 		/// </summary>
-		public TDbClient Client { get; }
-
-		/// <summary>
-		/// Connection String
-		/// </summary>
-		private readonly string connectionString;
-
-		/// <summary>
-		/// ILog
-		/// </summary>
-		private readonly ILog log;
+		protected readonly TDbClient client = new TDbClient();
 
 		/// <summary>
 		/// TUnitOfWorkFactory object
 		/// </summary>
-		private readonly UnitOfWorkFactory unitOfWorkFactory;
+		private readonly UnitOfWorkFactory unitOfWorkFactory = new UnitOfWorkFactory();
+
+		/// <summary>
+		/// Connection String
+		/// </summary>
+		protected string ConnectionString { get; set; }
+
+		/// <summary>
+		/// ILog
+		/// </summary>
+		protected ILog Log { get; }
 
 		/// <summary>
 		/// Create a new IUnitOfWork
@@ -39,19 +39,29 @@ namespace Jeebs.Data
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(connectionString))
+				if (string.IsNullOrEmpty(ConnectionString))
 				{
 					throw new Jx.Data.ConnectionException("You must define the connection string before creating a Unit of Work.");
 				}
 
-				var connection = Client.Connect(connectionString);
+				var connection = client.Connect(ConnectionString);
 				//if (connection.State != ConnectionState.Open)
 				//{
 				//	connection.Open();
 				//}
 
-				return unitOfWorkFactory.Create(connection, Client.Adapter.Value, log);
+				return unitOfWorkFactory.Create(connection, client.Adapter.Value, Log);
 			}
+		}
+
+		/// <summary>
+		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
+		/// </summary>
+		/// <param name="log">ILog</param>
+		public Db(in ILog log)
+		{
+			ConnectionString = string.Empty;
+			Log = log;
 		}
 
 		/// <summary>
@@ -59,12 +69,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="connectionString">Connection String</param>
 		/// <param name="log">ILog</param>
-		public Db(in string connectionString, in ILog log)
-		{
-			Client = new TDbClient();
-			this.connectionString = connectionString;
-			this.log = log;
-			unitOfWorkFactory = new UnitOfWorkFactory();
-		}
+		public Db(in string connectionString, in ILog log) : this(log) => ConnectionString = connectionString;
 	}
 }

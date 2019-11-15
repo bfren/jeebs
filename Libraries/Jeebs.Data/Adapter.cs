@@ -26,7 +26,7 @@ namespace Jeebs.Data
 		private readonly char escapeClose;
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		/// <param name="separator">Separator character</param>
 		/// <param name="escapeOpen">Open escape character</param>

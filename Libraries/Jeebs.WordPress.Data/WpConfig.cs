@@ -34,5 +34,17 @@ namespace Jeebs.WordPress
 		/// Files URL (alias to hide wp-content/uploads directory)
 		/// </summary>
 		public string VirtualUploadsUrl { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpConfig()
+		{
+			Db = string.Empty;
+			TablePrefix = string.Empty;
+			UploadsUrl = string.Empty;
+			UploadsPath = string.Empty;
+			VirtualUploadsUrl = string.Empty;
+		}
 	}
 }

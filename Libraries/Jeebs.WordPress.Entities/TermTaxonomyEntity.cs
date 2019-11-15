@@ -36,5 +36,14 @@ namespace Jeebs.WordPress.Entities
 		/// Count
 		/// </summary>
 		public int Count { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpTermTaxonomyEntity()
+		{
+			Taxonomy = Taxonomy.Blank;
+			Description = string.Empty;
+		}
 	}
 }

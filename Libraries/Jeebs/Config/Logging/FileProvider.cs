@@ -21,7 +21,7 @@ namespace Jeebs.Config.Logging
 		public override bool IsValid() => !string.IsNullOrEmpty(Path) && System.IO.File.Exists(Path);
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public FileProvider()
 		{

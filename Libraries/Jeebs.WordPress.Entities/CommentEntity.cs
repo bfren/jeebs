@@ -87,5 +87,19 @@ namespace Jeebs.WordPress.Entities
 		/// AuthorIsSubscribed
 		/// </summary>
 		public bool AuthorIsSubscribed { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpCommentEntity()
+		{
+			AuthorName = string.Empty;
+			AuthorEmail = string.Empty;
+			AuthorUrl = string.Empty;
+			AuthorIp = string.Empty;
+			Content = string.Empty;
+			AuthorUserAgent = string.Empty;
+			Type = CommentType.Blank;
+		}
 	}
 }

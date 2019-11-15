@@ -19,7 +19,7 @@ namespace Jeebs.Config
 		public LoggingProviders Providers { get; set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public LoggingConfig()
 		{

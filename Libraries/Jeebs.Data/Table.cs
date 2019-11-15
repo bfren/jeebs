@@ -33,12 +33,12 @@ namespace Jeebs.Data
 		private bool valid = false;
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		/// <param name="adapter">Adapter</param>
 		/// <param name="name">Table name</param>
 		/// <param name="useVersion">Whether or not to use row versioning</param>
-		protected Table(in Adapter adapter, in string name, bool useVersion = false)
+		protected Table(in IAdapter adapter, in string name, bool useVersion = false)
 		{
 			this.adapter = adapter;
 			this.name = name;

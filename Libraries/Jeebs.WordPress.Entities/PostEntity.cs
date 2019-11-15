@@ -87,5 +87,20 @@ namespace Jeebs.WordPress.Entities
 		/// CommentsCount
 		/// </summary>
 		public int CommentsCount { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpPostEntity()
+		{
+			Content = string.Empty;
+			Title = string.Empty;
+			Excerpt = string.Empty;
+			Status = PostStatus.Publish	;
+			Slug = string.Empty;
+			Url = string.Empty;
+			Type = PostType.Post;
+			MimeType = MimeType.Blank;
+		}
 	}
 }

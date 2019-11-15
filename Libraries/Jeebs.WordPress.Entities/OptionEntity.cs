@@ -24,5 +24,14 @@
 		/// IsAutoloaded
 		/// </summary>
 		public bool IsAutoloaded { get; set; }
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public WpOptionEntity()
+		{
+			Key = string.Empty;
+			Value = string.Empty;
+		}
 	}
 }

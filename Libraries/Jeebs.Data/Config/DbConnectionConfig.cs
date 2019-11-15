@@ -25,7 +25,7 @@ namespace Jeebs.Config
 		public Dictionary<string, string> AdditionalSettings { get; set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public DbConnectionConfig()
 		{

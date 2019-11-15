@@ -25,7 +25,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		public IDbConnection Connect(in string connectionString, in string? encryptionKey = null) => new SqlConnection(connectionString);
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public SqlServerDbClient()
 		{

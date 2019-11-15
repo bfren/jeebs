@@ -36,7 +36,7 @@ namespace Jeebs.Data
 		private readonly ILog log;
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		/// <param name="connection">IDbConnection</param>
 		/// <param name="adapter">IAdapter</param>

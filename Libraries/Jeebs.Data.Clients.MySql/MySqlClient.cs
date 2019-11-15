@@ -25,7 +25,7 @@ namespace Jeebs.Data.Clients.MySql
 		public IDbConnection Connect(in string connectionString, in string? encryptionKey = null) => new MySqlConnection(connectionString);
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
 		public MySqlDbClient()
 		{
