@@ -13,12 +13,17 @@ namespace Jeebs
 		/// <summary>
 		/// Default path to Jeebs settings configuration section
 		/// </summary>
-		internal const string Key = "jeebs";
+		public const string Key = "jeebs";
 
 		/// <summary>
 		/// AppConfig object
 		/// </summary>
 		public AppConfig App { get; set; }
+
+		/// <summary>
+		/// AzureKeyVault object
+		/// </summary>
+		public AzureKeyVaultConfig AzureKeyVault { get; set; }
 
 		/// <summary>
 		/// LoggingConfig object
@@ -31,7 +36,15 @@ namespace Jeebs
 		public JeebsConfig()
 		{
 			App = new AppConfig();
+			AzureKeyVault = new AzureKeyVaultConfig();
 			Logging = new LoggingConfig();
 		}
+
+		/// <summary>
+		/// If key starts with ':', add Jeebs config prefix
+		/// </summary>
+		/// <param name="key">Section key</param>
+		/// <returns>Full config key</returns>
+		public static string GetKey(string key ) => key.StartsWith(":") ? Key + key : key;
 	}
 }

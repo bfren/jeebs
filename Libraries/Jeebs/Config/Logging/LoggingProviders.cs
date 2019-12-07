@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs.Config.Logging
 {
+	/// <summary>
+	/// Logging Providers
+	/// </summary>
 	public sealed class LoggingProviders
 	{
 		/// <summary>

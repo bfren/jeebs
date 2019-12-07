@@ -1,0 +1,15 @@
+{
+	"jeebs": {
+		"app": {
+			"project": "Console App"
+		},
+		"logging": {
+			"minimumLevel": "Debug",
+			"providers": {
+				"console": {
+					"enabled": true
+				}
+			}
+		}
+	}
+}
