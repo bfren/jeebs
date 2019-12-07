@@ -8,7 +8,8 @@ namespace Jeebs.Data.TypeHandlers
 	/// EnumList TypeHandler
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
-	public sealed class EnumListTypeHandler<T> : JsonTypeHandler<EnumList<T>> where T : Enum
+	public sealed class EnumListTypeHandler<T> : JsonTypeHandler<EnumList<T>> 
+		where T : Enum
 	{
 		/// <summary>
 		/// Convert to list of string values

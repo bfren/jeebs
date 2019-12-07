@@ -9,7 +9,8 @@ namespace Jeebs.Data
 	/// Database
 	/// </summary>
 	/// <typeparam name="TDbClient">Database Client type</typeparam>
-	public class Db<TDbClient> where TDbClient : IDbClient, new()
+	public class Db<TDbClient> 
+		where TDbClient : IDbClient, new()
 	{
 		/// <summary>
 		/// IDbClient

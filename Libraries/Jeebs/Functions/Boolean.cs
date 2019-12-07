@@ -14,7 +14,8 @@ namespace F
 		/// <param name="value">String value to parse</param>
 		/// <param name="result">Parsed result</param>
 		/// <returns>True / false</returns>
-		public static bool TryParse<T>(T value, out bool result) where T : notnull
+		public static bool TryParse<T>(T value, out bool result)
+			where T : notnull
 		{
 			// String
 			var val = value.ToString().ToLower();

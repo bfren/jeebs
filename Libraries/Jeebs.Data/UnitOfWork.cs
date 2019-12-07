@@ -76,7 +76,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public IDbResult<T> Insert<T>(T poco) where T : class, IEntity
+		public IDbResult<T> Insert<T>(T poco) 
+			where T : class, IEntity
 		{
 			int newId;
 
@@ -118,7 +119,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public async Task<IResult<T>> InsertAsync<T>(T poco) where T : class, IEntity
+		public async Task<IResult<T>> InsertAsync<T>(T poco) 
+			where T : class, IEntity
 		{
 			int newId;
 
@@ -262,7 +264,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		public IDbResult<T> Single<T>(int id) where T : class, IEntity
+		public IDbResult<T> Single<T>(int id) 
+			where T : class, IEntity
 		{
 			try
 			{
@@ -288,7 +291,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		private async Task<IDbResult<T>> SingleAsync<T>(int id) where T : class, IEntity
+		private async Task<IDbResult<T>> SingleAsync<T>(int id) 
+			where T : class, IEntity
 		{
 			try
 			{
@@ -366,7 +370,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		public IDbResult Update<T>(in T poco) where T : class, IEntity
+		public IDbResult Update<T>(in T poco)
+			where T : class, IEntity
 		{
 			lock (_)
 			{
@@ -386,7 +391,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
-		private IDbResult UpdateWithVersion<T>(in T poco) where T : class, IEntityWithVersion
+		private IDbResult UpdateWithVersion<T>(in T poco) 
+			where T : class, IEntityWithVersion
 		{
 			var currentVersion = poco.Version;
 			var error = $"Unable to update {typeof(T)} {poco.Id}.";
@@ -447,7 +453,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
-		private IDbResult UpdateWithoutVersion<T>(in T poco) where T : class, IEntity
+		private IDbResult UpdateWithoutVersion<T>(in T poco)
+			where T : class, IEntity
 		{
 			var error = $"Unable to update {typeof(T)} {poco.Id}.";
 
@@ -494,7 +501,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IDbResult - Whether or not the delete was successful</result>
-		public IDbResult Delete<T>(in T poco) where T : class, IEntity
+		public IDbResult Delete<T>(in T poco) 
+			where T : class, IEntity
 		{
 			var error = $"Unable to delete {typeof(T)} {poco.Id}.";
 
@@ -537,7 +545,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IDbResult - Whether or not the delete was successful</result>
-		public async Task<IDbResult> DeleteAsync<T>(T poco) where T : class, IEntity
+		public async Task<IDbResult> DeleteAsync<T>(T poco) 
+			where T : class, IEntity
 		{
 			var error = $"Unable to delete {typeof(T)} {poco.Id}.";
 

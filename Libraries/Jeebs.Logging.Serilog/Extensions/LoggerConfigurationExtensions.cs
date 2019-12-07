@@ -34,7 +34,8 @@ namespace Jeebs.Logging.Serilog
 			config.MinimumLevel.Is(minimumLevel);
 
 			// Add a provider to the Serilog configuration
-			void AddProvider<T>(Func<LoggingProviders, T> get, Action<T> configure) where T : LoggingProvider
+			void AddProvider<T>(Func<LoggingProviders, T> get, Action<T> configure) 
+				where T : LoggingProvider
 			{
 				if (get(jeebs.Logging.Providers) is T provider && provider.Enabled && provider.IsValid())
 				{

@@ -47,7 +47,8 @@ namespace Jeebs
 		/// <param name="value">Enum value</param>
 		/// <param name="match">Matched Enum value</param>
 		/// <returns>Matching Enum value, or null if there was no match</returns>
-		private static IResult<T> Check<T>(in string name, in T value) where T : Enum
+		private static IResult<T> Check<T>(in string name, in T value) 
+			where T : Enum
 		{
 			if (string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase))
 			{
@@ -65,7 +66,8 @@ namespace Jeebs
 		/// <param name="values">Enum values to check name against</param>
 		/// <exception cref="Jx.ParseException">If string <paramref name="name"/> is not a valid value of Enum type <typeparamref name="T"/>.</exception>
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
-		protected static T Parse<T>(in string name, in T[] values) where T : Enum
+		protected static T Parse<T>(in string name, in T[] values)
+			where T : Enum
 		{
 			// Return the Enum value
 			return (T)cache.GetOrAdd(
@@ -92,7 +94,8 @@ namespace Jeebs
 		/// Parse Arguments
 		/// </summary>
 		/// <typeparam name="T">Enum Type</typeparam>
-		private class ParseArgs<T> where T : Enum
+		private class ParseArgs<T> 
+			where T : Enum
 		{
 			/// <summary>
 			/// Enum name to parse

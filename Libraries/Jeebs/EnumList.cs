@@ -8,7 +8,8 @@ namespace Jeebs
 	/// Enum List
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public sealed class EnumList<T> : List<T> where T : Enum
+	public sealed class EnumList<T> : List<T> 
+		where T : Enum
 	{
 		/// <summary>
 		/// Empty constructor

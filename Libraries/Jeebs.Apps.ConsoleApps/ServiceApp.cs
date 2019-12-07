@@ -11,7 +11,8 @@ namespace Jeebs.Apps.ConsoleApps
 	/// Service Application bootstrapped using IHost
 	/// </summary>
 	/// <typeparam name="T">IHostedService</typeparam>
-	public abstract class ServiceApp<T> : ConsoleApp where T : class, IHostedService
+	public abstract class ServiceApp<T> : ConsoleApp
+		where T : class, IHostedService
 	{
 		/// <summary>
 		/// Configure Services

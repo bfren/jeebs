@@ -140,7 +140,8 @@ namespace Jeebs.Data
 			TableMaps.Add<TEntity>(map);
 
 			// Get the property with the specified attribute
-			MappedColumn GetPropertyWith<TAttribute>(string attr) where TAttribute : Attribute
+			MappedColumn GetPropertyWith<TAttribute>(string attr) 
+				where TAttribute : Attribute
 			{
 				var pi = columns.Where(p => p.Property.GetCustomAttribute<TAttribute>() != null);
 				if (!pi.Any())

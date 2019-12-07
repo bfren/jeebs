@@ -24,7 +24,8 @@ namespace Jeebs
 		/// <param name="config">IConfigurationRoot object</param>
 		/// <param name="sectionKey">Section key</param>
 		/// <returns>Configuration section</returns>
-		public static T GetSection<T>(this IConfiguration config, string sectionKey) where T : class, new() =>
+		public static T GetSection<T>(this IConfiguration config, string sectionKey)
+			where T : class, new() =>
 			config.GetSection(JeebsConfig.GetKey(sectionKey))?.Get<T>() ?? new T();
 	}
 }

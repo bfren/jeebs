@@ -17,13 +17,15 @@ namespace Jeebs
 		/// <typeparam name="T">Settings object type</typeparam>
 		/// <param name="services">IServiceCollection object</param>
 		/// <returns>FluentBind object</returns>
-		public static FluentBind<T> Bind<T>(this IServiceCollection services) where T : class => new FluentBind<T>(services);
+		public static FluentBind<T> Bind<T>(this IServiceCollection services) 
+			where T : class => new FluentBind<T>(services);
 
 		/// <summary>
 		/// Fluent Bind
 		/// </summary>
 		/// <typeparam name="T">Type to bind configuration section to</typeparam>
-		public class FluentBind<T> where T : class
+		public class FluentBind<T> 
+			where T : class
 		{
 			/// <summary>
 			/// IServiceCollection object

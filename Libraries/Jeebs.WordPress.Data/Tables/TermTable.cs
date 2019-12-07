@@ -10,7 +10,8 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Term Table
 	/// </summary>
-	public class TermTable<T> : Table<T> where T : WpTermEntity
+	public class TermTable<T> : Table<T>
+		where T : WpTermEntity
 	{
 		/// <summary>
 		/// TermId

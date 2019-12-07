@@ -16,7 +16,8 @@ namespace F
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
-		public static T Parse<T>(string value) where T : struct, Enum
+		public static T Parse<T>(string value) 
+			where T : struct, Enum
 		{
 			try
 			{
@@ -61,13 +62,15 @@ namespace F
 		/// <typeparam name="TFrom">Enum type</typeparam>
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
-		public static FluentConvert<TFrom> Convert<TFrom>(TFrom value) where TFrom : struct, Enum => new FluentConvert<TFrom>(value);
+		public static FluentConvert<TFrom> Convert<TFrom>(TFrom value) 
+			where TFrom : struct, Enum => new FluentConvert<TFrom>(value);
 
 		/// <summary>
 		/// FluentConvert
 		/// </summary>
 		/// <typeparam name="TFrom">Convert from type</typeparam>
-		public sealed class FluentConvert<TFrom> where TFrom : struct, Enum
+		public sealed class FluentConvert<TFrom>
+			where TFrom : struct, Enum
 		{
 			private readonly TFrom from;
 
@@ -82,7 +85,8 @@ namespace F
 			/// </summary>
 			/// <typeparam name="TTo">Convert To type</typeparam>
 			/// <returns>Converted object</returns>
-			public TTo To<TTo>() where TTo : struct, Enum
+			public TTo To<TTo>() 
+				where TTo : struct, Enum
 			{
 				var fromInt = Enums.ToInt32(from);
 				if (Enums.TryToObject(fromInt, out TTo converted) && Enum.IsDefined(typeof(TTo), converted))
