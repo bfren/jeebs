@@ -4,6 +4,7 @@ using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Tables;
+using Jeebs.WordPress.TypeHandlers;
 
 namespace Jeebs.WordPress
 {
@@ -22,7 +23,7 @@ namespace Jeebs.WordPress
 	/// <typeparam name="Ttt">WpTermTaxonomyEntity</typeparam>
 	/// <typeparam name="Tu">WpUserEntity</typeparam>
 	/// <typeparam name="Tum">WpUserMetaEntity</typeparam>
-	public abstract class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Db<MySqlDbClient>
+	public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Db<MySqlDbClient>
 		where Tc : WpCommentEntity
 		where Tcm : WpCommentMetaEntity
 		where Tl : WpLinkEntity
@@ -47,21 +48,37 @@ namespace Jeebs.WordPress
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
 		/// <exception cref="Jx.ConfigurationException">If WordPress database configuration cannot be found</exception>
-		protected WpDb(in DbConfig dbConfig, in WpConfig wpConfig, in ILog log) : base(log)
+		public WpDb(in DbConfig dbConfig, in WpConfig wpConfig, in ILog log) : base(log)
 		{
+			// Get connection string from WordPress database configuration
 			if (dbConfig.GetConnection(wpConfig.Db) is DbConnectionConfig cfg)
 			{
+				// Set connection string
 				ConnectionString = cfg.ConnectionString;
 
+				// Get table prefix for this instance
 				var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
-				var adapter = (MySqlAdapter)client.Adapter.Value;
 
-				Term = new TermTable<Tt>(adapter, tablePrefix);
+				// Create table definitions
+				Term = new TermTable<Tt>(client.Adapter, tablePrefix);
 			}
 			else
 			{
 				throw new Jx.ConfigException("Unable to determine WordPress database configuration.");
 			}
+		}
+
+		/// <summary>
+		/// Add Dapper type handlers
+		/// </summary>
+		static WpDb()
+		{
+			Dapper.SqlMapper.AddTypeHandler(new BooleanTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new CommentTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new MimeTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new PostStatusTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new PostTypeTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());
 		}
 	}
 }
