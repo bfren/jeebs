@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// Extensions for IServiceCollection
@@ -17,14 +17,14 @@ namespace Jeebs
 		/// <typeparam name="T">Settings object type</typeparam>
 		/// <param name="services">IServiceCollection object</param>
 		/// <returns>FluentBind object</returns>
-		public static FluentBind<T> Bind<T>(this IServiceCollection services) 
+		public static FluentBind<T> Bind<T>(this IServiceCollection services)
 			where T : class => new FluentBind<T>(services);
 
 		/// <summary>
 		/// Fluent Bind
 		/// </summary>
 		/// <typeparam name="T">Type to bind configuration section to</typeparam>
-		public class FluentBind<T> 
+		public class FluentBind<T>
 			where T : class
 		{
 			/// <summary>
@@ -53,28 +53,23 @@ namespace Jeebs
 			/// </summary>
 			/// <param name="sectionKey">Section key (e.g. 'settings:app')</param>
 			/// <returns>FluentBind object</returns>
-			public FluentBind<T> To(in string sectionKey)
-			{
-				this.sectionKey = sectionKey;
-				return Check();
-			}
+			public FluentBind<T> To(string sectionKey) => Check(() => this.sectionKey = sectionKey);
 
 			/// <summary>
 			/// Bind using the specified IConfigurationRoot
 			/// </summary>
 			/// <param name="config">IConfigurationRoot object</param>
 			/// <returns>FluentBind object</returns>
-			public FluentBind<T> Using(in IConfiguration config)
-			{
-				this.config = config;
-				return Check();
-			}
+			public FluentBind<T> Using(IConfiguration config) => Check(() => this.config = config);
 
 			/// <summary>
 			/// Save the binding to the IServiceCollection
 			/// </summary>
-			private FluentBind<T> Check()
+			private FluentBind<T> Check(Action run)
 			{
+				// Run action
+				run();
+
 				// Check services
 				if (services == null || config == null || sectionKey == null)
 				{

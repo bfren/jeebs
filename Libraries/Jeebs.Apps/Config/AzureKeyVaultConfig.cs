@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Config
+namespace Jeebs.Apps.Config
 {
 	/// <summary>
 	/// Azure Key Vault Configuration

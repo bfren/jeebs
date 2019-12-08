@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Config;
 using Serilog.Events;
 using Serilog;
-using Jeebs.Config.Logging;
 using Microsoft.Extensions.Logging;
 using Serilog.Sinks.Slack;
+using Jeebs.Apps.Config.Logging;
+using Jeebs.Apps.Config;
 
-namespace Jeebs.Logging.Serilog
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// LoggerConfiguration extension methods
@@ -34,7 +34,7 @@ namespace Jeebs.Logging.Serilog
 			config.MinimumLevel.Is(minimumLevel);
 
 			// Add a provider to the Serilog configuration
-			void AddProvider<T>(Func<LoggingProviders, T> get, Action<T> configure) 
+			void AddProvider<T>(Func<LoggingProviders, T> get, Action<T> configure)
 				where T : LoggingProvider
 			{
 				if (get(jeebs.Logging.Providers) is T provider && provider.Enabled && provider.IsValid())

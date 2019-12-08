@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Config;
+using Jeebs.Apps.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Jeebs
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// IConfigurationBuilder extension methods

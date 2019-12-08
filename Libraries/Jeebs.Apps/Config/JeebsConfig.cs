@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Config;
 
-namespace Jeebs
+namespace Jeebs.Apps.Config
 {
 	/// <summary>
 	/// Jeebs Configuration
