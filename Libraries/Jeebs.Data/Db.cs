@@ -9,7 +9,7 @@ namespace Jeebs.Data
 	/// Database
 	/// </summary>
 	/// <typeparam name="TDbClient">Database Client type</typeparam>
-	public class Db<TDbClient> 
+	public class Db<TDbClient>
 		where TDbClient : IDbClient, new()
 	{
 		/// <summary>
@@ -40,17 +40,20 @@ namespace Jeebs.Data
 		{
 			get
 			{
+				// Make sure the connection string has been defined
 				if (string.IsNullOrEmpty(ConnectionString))
 				{
 					throw new Jx.Data.ConnectionException("You must define the connection string before creating a Unit of Work.");
 				}
 
+				// Connect to the database client
 				var connection = client.Connect(ConnectionString);
-				//if (connection.State != ConnectionState.Open)
-				//{
-				//	connection.Open();
-				//}
+				if (connection.State != ConnectionState.Open)
+				{
+					connection.Open();
+				}
 
+				// Create Unit of Work
 				return unitOfWorkFactory.Create(connection, client.Adapter, Log);
 			}
 		}

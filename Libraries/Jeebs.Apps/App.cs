@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Jeebs.Apps.Config;
+using Jeebs.Config;
 using Jeebs.Logging;
-using Jeebs.Logging.Serilog;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -63,7 +62,6 @@ namespace Jeebs.Apps
 		protected virtual void ConfigureHost(ref IConfigurationBuilder config)
 		{
 			config.SetBasePath(Directory.GetCurrentDirectory());
-			config.AddEnvironmentVariables();
 		}
 
 		/// <summary>

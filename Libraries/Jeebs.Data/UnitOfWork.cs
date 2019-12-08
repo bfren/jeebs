@@ -53,6 +53,12 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
+		/// Shorthand for IAdapter.SplitAndEscape
+		/// </summary>
+		/// <param name="element"></param>
+		public string E(in object element) => adapter.SplitAndEscape(element.ToString());
+
+		/// <summary>
 		/// Commit all queries - should normally be called as part of Dispose()
 		/// </summary>
 		public void Commit() => transaction.Commit();
@@ -81,7 +87,8 @@ namespace Jeebs.Data
 		/// <param name="query">SQL query</param>
 		private void LogQuery(string method, string query)
 		{
-			log.Debug("Method: UnitOfWork.{0}()\nQuery: {1}", method, query);
+			log.Debug("Method: UnitOfWork.{0}()", method);
+			log.Debug("Query: {0}", query);
 		}
 
 		/// <summary>
@@ -93,13 +100,9 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		private void LogQuery<T>(string method, string query, T parameters)
 		{
-			var jsonOptions = new JsonSerializerOptions
-			{
-				PropertyNamingPolicy = null,    // match output to property case
-				WriteIndented = true            // format JSON nicely
-			};
-
-			log.Debug("Method: UnitOfWork.{0}()\nQuery: {1}\nParameters:\n{2)", method, query, Json.Serialise(parameters, jsonOptions));
+			log.Debug("Method: UnitOfWork.{0}()", method);
+			log.Debug("Query: {0}", query);
+			log.Debug("Parameters: {0}", Json.Serialise(parameters));
 		}
 
 		/// <summary>

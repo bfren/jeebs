@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Constants
+namespace Jeebs.Constants.Apps.WebApps
 {
 	/// <summary>
 	/// Cache Profiles

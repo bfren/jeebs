@@ -41,16 +41,13 @@ namespace Jeebs.Data
 		#region Escaping
 
 		/// <summary>
-		/// Format and escape a table name
-		/// Examples:
-		///		prefix_table_name			prefix: prefix_
-		///		dbo.prefix_table_name		prefix: dbo.prefix_
+		/// Split a string by '.', escape the elements, and rejoin them
 		/// </summary>
-		/// <param name="name">Table name</param>
-		/// <returns>Formatted and escaped table name</returns>
-		public string SplitAndEscape(in string name)
+		/// <param name="element">Elemnts (table or column names)</param>
+		/// <returns>Escaped and joined elements</returns>
+		public string SplitAndEscape(in string element)
 		{
-			var elements = name.Split(separator);
+			var elements = element.Split(separator);
 			return EscapeAndJoin(elements);
 		}
 

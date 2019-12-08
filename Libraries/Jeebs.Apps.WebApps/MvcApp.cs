@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using Jeebs.Apps.WebApps.Config;
 using Jeebs.Apps.WebApps.Middleware;
+using Jeebs.Constants.Apps.WebApps;
 using Jeebs.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -133,8 +134,8 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="opt">MvcOptions</param>
 		public virtual void ConfigureServices_MvcOptions(MvcOptions opt)
 		{
-			opt.CacheProfiles.Add(Constants.CacheProfiles.None, new CacheProfile() { NoStore = true });
-			opt.CacheProfiles.Add(Constants.CacheProfiles.Default, new CacheProfile() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
+			opt.CacheProfiles.Add(CacheProfiles.None, new CacheProfile() { NoStore = true });
+			opt.CacheProfiles.Add(CacheProfiles.Default, new CacheProfile() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
 		}
 
 		/// <summary>
