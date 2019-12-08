@@ -13,42 +13,42 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="level">LogLevel</param>
 		/// <returns>True if the log will write at this level</returns>
-		bool IsEnabled(LogLevel level);
+		bool IsEnabled(in LogLevel level);
 
 		/// <summary>
 		/// Verbose log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Verbose(string message, params object[] args);
+		void Verbose(in string message, params object[] args);
 
 		/// <summary>
 		/// Debug log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Debug(string message, params object[] args);
+		void Debug(in string message, params object[] args);
 
 		/// <summary>
 		/// Information log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Information(string message, params object[] args);
+		void Information(in string message, params object[] args);
 
 		/// <summary>
 		/// Warning log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Warning(string message, params object[] args);
+		void Warning(in string message, params object[] args);
 
 		/// <summary>
 		/// Error log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Error(string message, params object[] args);
+		void Error(in string message, params object[] args);
 
 		/// <summary>
 		/// Error log message
@@ -56,14 +56,14 @@ namespace Jeebs
 		/// <param name="ex">Exception</param>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Error(Exception ex, string message, params object[] args);
+		void Error(in Exception ex, in string message, params object[] args);
 
 		/// <summary>
 		/// Fatal log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Fatal(string message, params object[] args);
+		void Fatal(in string message, params object[] args);
 
 		/// <summary>
 		/// Fatal log message
@@ -71,6 +71,6 @@ namespace Jeebs
 		/// <param name="ex">Exception</param>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Fatal(Exception ex, string message, params object[] args);
+		void Fatal(in Exception ex, in string message, params object[] args);
 	}
 }
