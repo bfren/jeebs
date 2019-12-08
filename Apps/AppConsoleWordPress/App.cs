@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AppConsoleWordPress.Bcg;
 using AppConsoleWordPress.Usa;
+using Jeebs.Data;
 using Jeebs.WordPress;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,9 @@ namespace AppConsoleWordPress
 		{
 			// Base
 			base.ConfigureServices(env, config, ref services);
+
+			// Add Data
+			services.AddData().Using(config);
 
 			// Add WordPress
 			services.AddWordPressInstance(":wp:bcg").Using<WpBcg, WpBcgConfig>(config);

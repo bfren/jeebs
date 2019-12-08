@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Apps;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ConsoleApp

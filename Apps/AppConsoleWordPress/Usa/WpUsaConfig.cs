@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.WordPress;
+using Jeebs.Config;
 
 namespace AppConsoleWordPress.Usa
 {

@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
-    <ProjectReference Include="..\..\Libraries\Jeebs.WordPress.Data\Jeebs.WordPress.csproj" />
   </ItemGroup>
 
 </Project>
