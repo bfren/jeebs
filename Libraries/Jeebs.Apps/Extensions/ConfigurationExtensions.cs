@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 
 namespace Jeebs.Apps

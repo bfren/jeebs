@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Apps.Config;
+using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -28,20 +28,16 @@ namespace Jeebs.Apps
 			builder.AddEnvironmentVariables();
 
 			// Check for Azure Key Vault section
-			var azureSection = builder.Build().GetSection("azureKeyVault");
-			if (azureSection.Value == null)
-			{
-				return builder;
-			}
-
-			// Bind config to object
-			var azure = new AzureKeyVaultConfig();
-			azureSection.Bind(azure);
+			var jeebs = builder.Build().GetSection<JeebsConfig>(JeebsConfig.Key);
 
 			// If the config is valid, add Azure Key Vault to IConfigurationBuilder
-			if (azure.IsValid)
+			if (jeebs.AzureKeyVault.IsValid)
 			{
-				builder.AddAzureKeyVault($"https://{azure.Name}.vault.azure.net/", azure.ClientId, azure.ClientSecret);
+				builder.AddAzureKeyVault(
+					$"https://{jeebs.AzureKeyVault.Name}.vault.azure.net/",
+					jeebs.AzureKeyVault.ClientId,
+					jeebs.AzureKeyVault.ClientSecret
+				);
 			}
 
 			// Return

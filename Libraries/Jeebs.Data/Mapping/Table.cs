@@ -30,7 +30,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Whether or not the table has been validated
 		/// </summary>
-		private bool valid = false;
+		private bool valid;
 
 		/// <summary>
 		/// Create object
@@ -128,7 +128,7 @@ namespace Jeebs.Data
 			var id = GetPropertyWith<IdAttribute>("Id");
 
 			// Create Table Map
-			var map = new TableMap(ToString(), columns.ToList(), id);
+			var map = new TableMap(adapter.Escape(name), columns.ToList(), id);
 
 			// Get Version property
 			if (useVersion)
@@ -140,7 +140,7 @@ namespace Jeebs.Data
 			TableMaps.Add<TEntity>(map);
 
 			// Get the property with the specified attribute
-			MappedColumn GetPropertyWith<TAttribute>(string attr) 
+			MappedColumn GetPropertyWith<TAttribute>(string attr)
 				where TAttribute : Attribute
 			{
 				var pi = columns.Where(p => p.Property.GetCustomAttribute<TAttribute>() != null);
@@ -158,9 +158,9 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Escaped table name
+		/// Table name
 		/// </summary>
-		/// <returns>Escaped table name</returns>
-		public override string ToString() => adapter.Escape(name);
+		/// <returns>Table name</returns>
+		public override string ToString() => name;
 	}
 }
