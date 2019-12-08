@@ -44,21 +44,35 @@ namespace Jeebs.Data
 			IdColumn = idColumn;
 		}
 
+		/// <summary>
+		/// Get all column names (they will be escaped)
+		/// </summary>
 		public IEnumerable<string> GetColumnNames() => Columns.Select(mc => mc.Column);
 
+		/// <summary>
+		/// Get all column aliases
+		/// </summary>
+		/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
 		public IEnumerable<string> GetAliases(bool includeIdAlias) => Columns.Select(mc => mc.Property.Name).Where(a => includeIdAlias || a != IdColumn.Property.Name);
 
+		/// <summary>
+		/// Get all column names and aliases for writeable columns
+		/// (i.e. not marked with <see cref="IdAttribute"/>, <see cref="ComputedAttribute"/> or <see cref="ReadonlyAttribute"/>
+		/// </summary>
 		public (List<string> columns, List<string> aliases) GetWriteableColumnsAndAliases()
 		{
-			var writeable = (
-				from c in Columns
-				where c.Property.GetCustomAttribute<IdAttribute>() == null
-				&& c.Property.GetCustomAttribute<ComputedAttribute>() == null
-				&& c.Property.GetCustomAttribute<ReadonlyAttribute>() == null
-				select c
-			).ToList();
+			// Query
+			var writeable = from c in Columns
+							where c.Property.GetCustomAttribute<IdAttribute>() == null
+							&& c.Property.GetCustomAttribute<ComputedAttribute>() == null
+							&& c.Property.GetCustomAttribute<ReadonlyAttribute>() == null
+							select c;
 
-			return (writeable.Select(w => w.Column).ToList(), writeable.Select(w => w.Property.Name).ToList());
+			// Return
+			return (
+				writeable.Select(w => w.Column).ToList(),
+				writeable.Select(w => w.Property.Name).ToList()
+			);
 		}
 	}
 }
