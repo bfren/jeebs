@@ -28,7 +28,7 @@
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpOptionEntity()
+		protected WpOptionEntity()
 		{
 			Key = string.Empty;
 			Value = string.Empty;

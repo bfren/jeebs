@@ -91,7 +91,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpCommentEntity()
+		protected WpCommentEntity()
 		{
 			AuthorName = string.Empty;
 			AuthorEmail = string.Empty;

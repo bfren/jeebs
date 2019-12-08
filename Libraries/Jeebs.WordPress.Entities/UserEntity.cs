@@ -60,7 +60,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpUserEntity()
+		protected WpUserEntity()
 		{
 			Username = string.Empty;
 			Password = string.Empty;

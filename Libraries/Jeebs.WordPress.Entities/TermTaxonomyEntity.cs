@@ -40,7 +40,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpTermTaxonomyEntity()
+		protected WpTermTaxonomyEntity()
 		{
 			Taxonomy = Taxonomy.Blank;
 			Description = string.Empty;

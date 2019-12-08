@@ -80,7 +80,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpLinkEntity()
+		protected WpLinkEntity()
 		{
 			Url = string.Empty;
 			Title = string.Empty;

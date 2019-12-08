@@ -1,4 +1,6 @@
-﻿namespace Jeebs.WordPress.Entities
+﻿using Jeebs.Data;
+
+namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// Term entity
@@ -8,6 +10,7 @@
 		/// <summary>
 		/// TermId
 		/// </summary>
+		[Id]
 		public int TermId { get; set; }
 
 		/// <summary>
@@ -28,7 +31,7 @@
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpTermEntity()
+		protected WpTermEntity()
 		{
 			Title = string.Empty;
 			Slug = string.Empty;

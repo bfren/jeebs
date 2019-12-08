@@ -91,7 +91,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public WpPostEntity()
+		protected WpPostEntity()
 		{
 			Content = string.Empty;
 			Title = string.Empty;
