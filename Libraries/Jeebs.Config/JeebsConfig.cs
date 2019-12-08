@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Apps.Config
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// Jeebs Configuration

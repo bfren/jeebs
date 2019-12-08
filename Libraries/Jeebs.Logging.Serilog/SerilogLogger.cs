@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 
 namespace Jeebs.Logging
 {
@@ -14,7 +15,7 @@ namespace Jeebs.Logging
 		/// </summary>
 		/// <param name="level">LogLevel</param>
 		/// <returns>True if the log will write at this level</returns>
-		public bool IsEnabled(in LogLevel level) => Log.Logger.IsEnabled(F.EnumF.Convert(level).To<EventLogEventLevel>());
+		public bool IsEnabled(in LogLevel level) => Log.Logger.IsEnabled(F.EnumF.Convert(level).To<LogEventLevel>());
 
 		/// <summary>
 		/// Verbose log message

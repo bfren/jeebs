@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.WordPress
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// WordPress configuration
 	/// </summary>
 	public abstract class WpConfig
 	{
+		/// <summary>
+		/// Path to WordPress settings configuration section
+		/// </summary>
+		public const string Key = ":wp";
+
 		/// <summary>
 		/// Database connection name (accessed via main Jeebs DB settings section)
 		/// If empty, will attempt to use the default connection (as defined in main Jeebs DB settings section)

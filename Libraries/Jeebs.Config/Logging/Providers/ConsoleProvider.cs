@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Apps.Config.Logging
+namespace Jeebs.Config.Logging
 {
 	/// <summary>
 	/// Console Provider

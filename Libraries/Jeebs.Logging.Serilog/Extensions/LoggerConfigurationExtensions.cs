@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Serilog.Events;
-using Serilog;
+using Jeebs.Config;
+using Jeebs.Config.Logging;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.Slack;
-using Jeebs.Apps.Config.Logging;
-using Jeebs.Apps.Config;
 
-namespace Jeebs.Apps
+namespace Jeebs.Logging
 {
 	/// <summary>
 	/// LoggerConfiguration extension methods

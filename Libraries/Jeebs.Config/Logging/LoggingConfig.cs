@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Apps.Config.Logging;
+using Jeebs.Config.Logging;
 using Microsoft.Extensions.Logging;
 
-namespace Jeebs.Apps.Config
+namespace Jeebs.Config
 {
 	public sealed class LoggingConfig
 	{

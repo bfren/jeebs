@@ -10,6 +10,11 @@ namespace Jeebs.Config
 	public sealed class DbConfig
 	{
 		/// <summary>
+		/// Path to database settings configuration section
+		/// </summary>
+		public const string Key = ":db";
+
+		/// <summary>
 		/// Default database connection name
 		/// </summary>
 		public string Default { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
-namespace Jeebs.Apps.Config.Logging
+namespace Jeebs.Config.Logging
 {
 	/// <summary>
 	/// Abstract Logging Provider
