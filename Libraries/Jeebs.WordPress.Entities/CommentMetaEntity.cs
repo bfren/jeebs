@@ -3,7 +3,7 @@
 	/// <summary>
 	/// CommentMeta entity
 	/// </summary>
-	public class WpCommentMetaEntity
+	public abstract class WpCommentMetaEntity
 	{
 
 		/// <summary>

@@ -5,7 +5,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// TermTaxonomy entity
 	/// </summary>
-	public class WpTermTaxonomyEntity
+	public abstract class WpTermTaxonomyEntity
 	{
 		/// <summary>
 		/// TermTaxonomyId

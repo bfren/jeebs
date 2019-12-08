@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Term entity
 	/// </summary>
-	public class WpTermEntity
+	public abstract class WpTermEntity
 	{
 		/// <summary>
 		/// TermId

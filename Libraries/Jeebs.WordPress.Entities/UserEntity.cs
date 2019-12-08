@@ -5,7 +5,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// User entity
 	/// </summary>
-	public class WpUserEntity
+	public abstract class WpUserEntity
 	{
 		/// <summary>
 		/// UserId

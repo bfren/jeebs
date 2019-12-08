@@ -3,7 +3,7 @@
 	/// <summary>
 	/// PostMeta entity
 	/// </summary>
-	public class WpPostMetaEntity
+	public abstract class WpPostMetaEntity
 	{
 		/// <summary>
 		/// PostMetaId

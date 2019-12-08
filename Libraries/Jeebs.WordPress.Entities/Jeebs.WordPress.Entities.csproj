@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <None Remove="_Scaffold.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="_Scaffold.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
   </ItemGroup>
 

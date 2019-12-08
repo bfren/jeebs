@@ -5,7 +5,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public class WpLinkEntity
+	public abstract class WpLinkEntity
 	{
 		/// <summary>
 		/// LinkId

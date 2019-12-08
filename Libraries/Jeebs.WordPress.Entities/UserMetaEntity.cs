@@ -3,7 +3,7 @@
 	/// <summary>
 	/// UserMeta entity
 	/// </summary>
-	public class WpUserMetaEntity
+	public abstract class WpUserMetaEntity
 	{
 		/// <summary>
 		/// UserMetaId

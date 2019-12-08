@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Post entity
 	/// </summary>
-	public class WpPostEntity
+	public abstract class WpPostEntity
 	{
 		/// <summary>
 		/// PostId

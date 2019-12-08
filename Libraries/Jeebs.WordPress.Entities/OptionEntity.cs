@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Option entity
 	/// </summary>
-	public class WpOptionEntity
+	public abstract class WpOptionEntity
 	{
 		/// <summary>
 		/// OptionId

@@ -3,7 +3,7 @@
 	/// <summary>
 	/// TermRelationship entity
 	/// </summary>
-	public class WpTermRelationshipEntity
+	public abstract class WpTermRelationshipEntity
 	{
 		/// <summary>
 		/// PostId

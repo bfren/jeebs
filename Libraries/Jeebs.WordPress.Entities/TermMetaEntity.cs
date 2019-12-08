@@ -3,7 +3,7 @@
 	/// <summary>
 	/// TermMeta entity
 	/// </summary>
-	public class WpTermMetaEntity
+	public abstract class WpTermMetaEntity
 	{
 		/// <summary>
 		/// TermMetaId

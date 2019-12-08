@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Comment entity
 	/// </summary>
-	public class WpCommentEntity
+	public abstract class WpCommentEntity
 	{
 		/// <summary>
 		/// CommentId
