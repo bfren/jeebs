@@ -11,7 +11,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// IAdapter
 		/// </summary>
-		public Lazy<IAdapter> Adapter { get; }
+		public IAdapter Adapter { get; }
 
 		/// <summary>
 		/// Create a system IDbConnection using the specified connection string

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// Contains Escaping and Queries for a database
+	/// </summary>
 	public interface IAdapter
 	{
 		#region Escaping
@@ -76,8 +79,9 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Id value</param>
+		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		string DeleteSingle<T>(int id);
+		string DeleteSingle<T>(int id, long? version = null);
 
 		#endregion
 	}

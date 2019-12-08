@@ -12,9 +12,14 @@ namespace Jeebs.Data.Clients.MySql
 	public sealed class MySqlDbClient : IDbClient
 	{
 		/// <summary>
+		/// IAdapter
+		/// </summary>
+		IAdapter IDbClient.Adapter => Adapter;
+
+		/// <summary>
 		/// MySqlAdapter
 		/// </summary>
-		public Lazy<IAdapter> Adapter { get; }
+		public MySqlAdapter Adapter { get; }
 
 		/// <summary>
 		/// Create a MySqlConnection object using the specified connection string
@@ -29,7 +34,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// </summary>
 		public MySqlDbClient()
 		{
-			Adapter = new Lazy<IAdapter>(() => new MySqlAdapter());
+			Adapter = new MySqlAdapter();
 		}
 	}
 }

@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// Database Entity with Custom ID Property
+	/// </summary>
 	public abstract class Entity : IEntity
 	{
 		/// <summary>
 		/// Entity Id
 		/// </summary>
-		public virtual int Id
-		{
-			get { return IdFactory.Value; }
-		}
+		public virtual int Id { get => IdFactory.Value; }
 
 		/// <summary>
 		/// Id Factory

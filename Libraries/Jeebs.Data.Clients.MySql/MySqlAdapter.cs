@@ -87,11 +87,19 @@ namespace Jeebs.Data.Clients.MySql
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Id value</param>
+		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public override string DeleteSingle<T>(int id)
+		public override string DeleteSingle<T>(int id, long? version = null)
 		{
 			var map = TableMaps.GetMap<T>();
-			return $"DELETE {map.Name} WHERE {map.IdColumn.Column} = '{id}';";
+			var sql = $"DELETE {map.Name} WHERE {map.IdColumn.Column} = '{id}'";
+
+			if (map.VersionColumn is MappedColumn versionColumn && version is long versionValue)
+			{
+				sql += $" AND {versionColumn} = '{versionValue}'";
+			}
+
+			return $"{sql};";
 		}
 	}
 }

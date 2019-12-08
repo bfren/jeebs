@@ -14,7 +14,12 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// SqlServerAdapter
 		/// </summary>
-		public Lazy<IAdapter> Adapter { get; }
+		IAdapter IDbClient.Adapter => Adapter;
+
+		/// <summary>
+		/// MySqlAdapter
+		/// </summary>
+		public SqlServerAdapter Adapter { get; }
 
 		/// <summary>
 		/// Create a MySqlConnection object using the specified connection string
@@ -29,7 +34,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// </summary>
 		public SqlServerDbClient()
 		{
-			Adapter = new Lazy<IAdapter>(() => new SqlServerAdapter());
+			Adapter = new SqlServerAdapter();
 		}
 	}
 }
