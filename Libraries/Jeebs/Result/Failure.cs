@@ -26,6 +26,11 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="errors">Array of errors</param>
 		public Failure(params string[] errors) => AddRange(errors);
+
+		/// <summary>
+		/// Output Message when ToString() is called
+		/// </summary>
+		public override string ToString() => Message;
 	}
 
 	/// <summary>
