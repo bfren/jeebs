@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="Mapster" Version="4.1.1" />
+		<PackageReference Include="Sodium.Core" Version="1.2.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
+	</ItemGroup>
+
+</Project>
