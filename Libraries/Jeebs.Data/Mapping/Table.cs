@@ -214,7 +214,7 @@ namespace Jeebs.Data
 				var mapped = mappedProperties.SingleOrDefault(p => p.Property.Name == prop.Name);
 
 				// If the column has not been mapped, continue
-				if (mapped == null)
+				if (mapped is null)
 				{
 					continue;
 				}

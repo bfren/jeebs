@@ -23,7 +23,7 @@ namespace Jeebs.Logging
 		public static void LoadFromJeebsConfig(this LoggerConfiguration config, JeebsConfig jeebs)
 		{
 			// If there are no logging providers, return default configuration
-			if (jeebs.Logging.Providers == null)
+			if (jeebs.Logging.Providers is null)
 			{
 				return;
 			}

@@ -29,7 +29,7 @@ namespace Jeebs.Apps
 			using (var host = app.CreateHost(args))
 			{
 				// Run default
-				if (run == null)
+				if (run is null)
 				{
 					await host.RunAsync();
 				}

@@ -30,7 +30,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>SQL query</returns>
-		public override string RetrieveSingleById<T>(int id)
+		public override string RetrieveSingleById<T>(in int id)
 		{
 			throw new NotImplementedException();
 		}
@@ -42,7 +42,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public override string UpdateSingle<T>(int id, long? version = null)
+		public override string UpdateSingle<T>(in int id, in long? version = null)
 		{
 			throw new NotImplementedException();
 		}
@@ -54,7 +54,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public override string DeleteSingle<T>(int id, long? version = null)
+		public override string DeleteSingle<T>(in int id, in long? version = null)
 		{
 			throw new NotImplementedException();
 		}

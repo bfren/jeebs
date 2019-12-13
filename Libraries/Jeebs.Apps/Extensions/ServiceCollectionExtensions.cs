@@ -72,7 +72,7 @@ namespace Jeebs.Apps
 				run();
 
 				// Check services
-				if (services == null || config == null || sectionKey == null)
+				if (services is null || config is null || sectionKey is null)
 				{
 					return this;
 				}
