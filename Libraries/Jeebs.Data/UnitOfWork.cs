@@ -61,12 +61,32 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Commit all queries - should normally be called as part of Dispose()
 		/// </summary>
-		public void Commit() => transaction.Commit();
+		public void Commit()
+		{
+			try
+			{
+				transaction.Commit();
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex, "Error committing transaction.");
+			}
+		}
 
 		/// <summary>
 		/// Rollback all queries
 		/// </summary>
-		public void Rollback() => transaction.Rollback();
+		public void Rollback()
+		{
+			try
+			{
+				transaction.Rollback();
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex, "Error rolling back transaction.");
+			}
+		}
 
 		/// <summary>
 		/// Commit transaction and close connection

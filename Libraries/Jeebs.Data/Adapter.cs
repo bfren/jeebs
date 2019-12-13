@@ -31,7 +31,7 @@ namespace Jeebs.Data
 		/// <param name="separator">Separator character</param>
 		/// <param name="escapeOpen">Open escape character</param>
 		/// <param name="escapeClose">Close escape character</param>
-		protected Adapter(char separator, char escapeOpen, char escapeClose)
+		protected Adapter(in char separator, in char escapeOpen, in char escapeClose)
 		{
 			this.separator = separator;
 			this.escapeOpen = escapeOpen;
@@ -96,7 +96,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>SQL query</returns>
-		public abstract string RetrieveSingleById<T>(int id);
+		public abstract string RetrieveSingleById<T>(in int id);
 
 		/// <summary>
 		/// Query to update a single row
@@ -105,7 +105,7 @@ namespace Jeebs.Data
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public abstract string UpdateSingle<T>(int id, long? version = null);
+		public abstract string UpdateSingle<T>(in int id, in long? version = null);
 
 
 		/// <summary>
@@ -115,7 +115,7 @@ namespace Jeebs.Data
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public abstract string DeleteSingle<T>(int id, long? version = null);
+		public abstract string DeleteSingle<T>(in int id, in long? version = null);
 
 		#endregion
 	}

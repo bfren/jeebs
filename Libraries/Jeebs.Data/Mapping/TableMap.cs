@@ -12,7 +12,7 @@ namespace Jeebs.Data
 	public sealed class TableMap
 	{
 		/// <summary>
-		/// Table Name
+		/// Escaped Table Name
 		/// </summary>
 		public string Name { get; set; }
 
@@ -34,7 +34,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="name">Table Name</param>
+		/// <param name="name">Table Name - must be escaped</param>
 		/// <param name="columns">Mapped Columns</param>
 		/// <param name="idColumn">Id Column</param>
 		public TableMap(string name, List<MappedColumn> columns, MappedColumn idColumn)
@@ -74,5 +74,10 @@ namespace Jeebs.Data
 				writeable.Select(w => w.Property.Name).ToList()
 			);
 		}
+
+		/// <summary>
+		/// Return Escaped Table Name
+		/// </summary>
+		public override string ToString() => Name;
 	}
 }

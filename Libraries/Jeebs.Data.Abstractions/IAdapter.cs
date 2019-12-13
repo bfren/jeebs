@@ -53,7 +53,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>SQL query</returns>
-		string RetrieveSingleById<T>(int id);
+		string RetrieveSingleById<T>(in int id);
 
 		#endregion
 
@@ -66,7 +66,7 @@ namespace Jeebs.Data
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		string UpdateSingle<T>(int id, long? version = null);
+		string UpdateSingle<T>(in int id, in long? version = null);
 
 		#endregion
 
@@ -79,7 +79,7 @@ namespace Jeebs.Data
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		string DeleteSingle<T>(int id, long? version = null);
+		string DeleteSingle<T>(in int id, in long? version = null);
 
 		#endregion
 	}

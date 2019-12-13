@@ -8,7 +8,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Mapped Column
 	/// </summary>
-	public class MappedColumn
+	public sealed class MappedColumn
 	{
 		/// <summary>
 		/// Escaped Column Name
@@ -24,11 +24,16 @@ namespace Jeebs.Data
 		/// Create object
 		/// </summary>
 		/// <param name="column">Escaped Column Name</param>
-		/// <param name="property">Entity Property</param>
-		public MappedColumn(string column, PropertyInfo property)
+		/// <param name="property">Entity property PropertyInfo</param>
+		public MappedColumn(in string column, in PropertyInfo property)
 		{
 			Column = column;
 			Property = property;
 		}
+
+		/// <summary>
+		/// Return Escaped Column Name
+		/// </summary>
+		public override string ToString() => Column;
 	}
 }

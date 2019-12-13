@@ -10,7 +10,8 @@ namespace Jeebs.Data
 	/// Table
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	public abstract class Table<TEntity>
+	public abstract class Table<TEntity> : ITable
+		where TEntity : IEntity
 	{
 		/// <summary>
 		/// Adapter
@@ -47,6 +48,14 @@ namespace Jeebs.Data
 			Validate();
 			Map();
 		}
+
+		/// <summary>
+		/// Table name
+		/// </summary>
+		/// <returns>Table name</returns>
+		public override string ToString() => name;
+
+		#region Mapping
 
 		/// <summary>
 		/// Validate the table's columns against the entity's properties
@@ -157,10 +166,67 @@ namespace Jeebs.Data
 			}
 		}
 
+		#endregion
+
+		#region Extracting
+
 		/// <summary>
-		/// Table name
+		/// Cached maps of TModel classes to columns
 		/// </summary>
-		/// <returns>Table name</returns>
-		public override string ToString() => name;
+		private static readonly Dictionary<Type, ExtractedColumns> cache = new Dictionary<Type, ExtractedColumns>();
+
+		/// <summary>
+		/// Extract the column names for the table entity
+		/// </summary>
+		public ExtractedColumns Extract() => Extract(typeof(TEntity));
+
+
+		/// <summary>
+		/// Extract the column names for the model type
+		/// </summary>
+		/// <typeparam name="TModel">Model Type</typeparam>
+		public ExtractedColumns Extract<TModel>() => Extract(typeof(TModel));
+
+		/// <summary>
+		/// Extract the column names for <paramref name="modelType"/>
+		/// </summary>
+		/// <param name="modelType">Model Type</param>
+		private ExtractedColumns Extract(Type modelType)
+		{
+			// Check the cache first to see if this model has already been extracted
+			if (cache.TryGetValue(modelType, out ExtractedColumns value))
+			{
+				return value;
+			}
+
+			// Get the list of properties from the model
+			var modelProperties = modelType.GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
+
+			// Get the list of mapped properties
+			var mappedProperties = TableMaps.GetColumns<TEntity>();
+
+			// Holds the list of column names being extracted
+			var extracted = new ExtractedColumns();
+
+			foreach (var prop in modelProperties)
+			{
+				// Get the corresponding mapped property
+				var mapped = mappedProperties.SingleOrDefault(p => p.Property.Name == prop.Name);
+
+				// If the column has not been mapped, continue
+				if (mapped == null)
+				{
+					continue;
+				}
+
+				// Add the column to the extraction list
+				extracted.Add(new ExtractedColumn(adapter.Escape(name), mapped.Column, mapped.Property.Name));
+			}
+
+			// Return list of extracted columns
+			return extracted;
+		}
+
+		#endregion
 	}
 }
