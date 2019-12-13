@@ -32,9 +32,6 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public MySqlDbClient()
-		{
-			Adapter = new MySqlAdapter();
-		}
+		public MySqlDbClient() => Adapter = new MySqlAdapter();
 	}
 }

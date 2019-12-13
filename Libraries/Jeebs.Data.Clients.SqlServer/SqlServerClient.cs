@@ -32,9 +32,6 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public SqlServerDbClient()
-		{
-			Adapter = new SqlServerAdapter();
-		}
+		public SqlServerDbClient() => Adapter = new SqlServerAdapter();
 	}
 }

@@ -8,36 +8,36 @@ using Jeebs.WordPress.Entities;
 namespace Jeebs.WordPress.Tables
 {
 	/// <summary>
-	/// Term Table
+	/// User Table
 	/// </summary>
-	public sealed class TermTable<T> : Table<T>
-		where T : WpTermEntity
+	public sealed class UserMetaTable<T> : Table<T>
+		where T : WpUserMetaEntity
 	{
 		/// <summary>
-		/// TermId
+		/// UserMetaId
 		/// </summary>
-		public readonly string TermId = "term_id";
+		public readonly string UserMetaId = "umeta_id";
 
 		/// <summary>
-		/// Title
+		/// UserId
 		/// </summary>
-		public readonly string Title = "name";
+		public readonly string UserId = "user_id";
 
 		/// <summary>
-		/// Slug
+		/// Key
 		/// </summary>
-		public readonly string Slug = "slug";
+		public readonly string Key = "meta_key";
 
 		/// <summary>
-		/// Group
+		/// Value
 		/// </summary>
-		public readonly string Group = "term_group";
+		public readonly string Value = "meta_value";
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
+		public UserMetaTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}usermeta") { }
 	}
 }

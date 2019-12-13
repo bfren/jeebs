@@ -8,36 +8,36 @@ using Jeebs.WordPress.Entities;
 namespace Jeebs.WordPress.Tables
 {
 	/// <summary>
-	/// Term Table
+	/// Post Meta Table
 	/// </summary>
-	public sealed class TermTable<T> : Table<T>
-		where T : WpTermEntity
+	public sealed class PostMetaTable<T> : Table<T>
+		where T : WpPostMetaEntity
 	{
 		/// <summary>
-		/// TermId
+		/// PostMetaId
 		/// </summary>
-		public readonly string TermId = "term_id";
+		public readonly string PostMetaId = "meta_id";
 
 		/// <summary>
-		/// Title
+		/// PostId
 		/// </summary>
-		public readonly string Title = "name";
+		public readonly string PostId = "post_id";
 
 		/// <summary>
-		/// Slug
+		/// Key
 		/// </summary>
-		public readonly string Slug = "slug";
+		public readonly string Key = "meta_key";
 
 		/// <summary>
-		/// Group
+		/// Value
 		/// </summary>
-		public readonly string Group = "term_group";
+		public readonly string Value = "meta_value";
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
+		public PostMetaTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}postmeta") { }
 	}
 }

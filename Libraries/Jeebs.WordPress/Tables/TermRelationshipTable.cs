@@ -8,36 +8,31 @@ using Jeebs.WordPress.Entities;
 namespace Jeebs.WordPress.Tables
 {
 	/// <summary>
-	/// Term Table
+	/// Term Relationship Table
 	/// </summary>
-	public sealed class TermTable<T> : Table<T>
-		where T : WpTermEntity
+	public sealed class TermRelationshipTable<T> : Table<T>
+		where T : WpTermRelationshipEntity
 	{
 		/// <summary>
-		/// TermId
+		/// PostId
 		/// </summary>
-		public readonly string TermId = "term_id";
+		public readonly string PostId = "object_id";
 
 		/// <summary>
-		/// Title
+		/// TermTaxonomyId
 		/// </summary>
-		public readonly string Title = "name";
+		public readonly string TermTaxonomyId = "term_taxonomy_id";
 
 		/// <summary>
-		/// Slug
+		/// SortOrder
 		/// </summary>
-		public readonly string Slug = "slug";
-
-		/// <summary>
-		/// Group
-		/// </summary>
-		public readonly string Group = "term_group";
+		public readonly string SortOrder = "term_order";
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
+		public TermRelationshipTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}term_relationships") { }
 	}
 }

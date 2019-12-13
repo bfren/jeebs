@@ -15,7 +15,7 @@ namespace AppConsoleWordPress
 {
 	internal sealed class Program : Jeebs.Apps.Program
 	{
-		internal static async Task Main(string[] args) => await Main<App>(args, (provider, config) =>
+		internal static async Task Main(string[] args) => await Main<App>(args, async (provider, config) =>
 		{
 			// Begin
 			Console.WriteLine("= WordPress Console Test =");
@@ -39,6 +39,22 @@ namespace AppConsoleWordPress
 				if (count1 is Success<int> success1)
 				{
 					Console.WriteLine($"There are {success1.Value} terms in USA.");
+				}
+
+				var opt = new Bcg.Entities.Option
+				{
+					Key = Guid.NewGuid().ToString(),
+					Value = DateTime.Now.ToLongTimeString()
+				};
+
+				var inserted = await w0.InsertAsync(opt);
+				if (inserted is Success<Bcg.Entities.Option> success)
+				{
+					Console.WriteLine($"Test option '{success.Value.Key}' = '{success.Value.Value}'.");
+				}
+				else
+				{
+					Console.WriteLine($"{inserted}");
 				}
 			}
 

@@ -8,36 +8,36 @@ using Jeebs.WordPress.Entities;
 namespace Jeebs.WordPress.Tables
 {
 	/// <summary>
-	/// Term Table
+	/// Option Table
 	/// </summary>
-	public sealed class TermTable<T> : Table<T>
-		where T : WpTermEntity
+	public sealed class OptionTable<T> : Table<T>
+		where T : WpOptionEntity
 	{
 		/// <summary>
-		/// TermId
+		/// OptionId
 		/// </summary>
-		public readonly string TermId = "term_id";
+		public readonly string OptionId = "option_id";
 
 		/// <summary>
-		/// Title
+		/// Key
 		/// </summary>
-		public readonly string Title = "name";
+		public readonly string Key = "option_name";
 
 		/// <summary>
-		/// Slug
+		/// Value
 		/// </summary>
-		public readonly string Slug = "slug";
+		public readonly string Value = "option_value";
 
 		/// <summary>
-		/// Group
+		/// IsAutoloaded
 		/// </summary>
-		public readonly string Group = "term_group";
+		public readonly string IsAutoloaded = "autoload";
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
+		public OptionTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}options") { }
 	}
 }
