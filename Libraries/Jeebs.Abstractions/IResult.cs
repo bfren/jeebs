@@ -10,9 +10,9 @@ namespace Jeebs
 	public interface IResult<TSuccess>
 	{
 		/// <summary>
-		/// Optional message to return with the result
+		/// Message to return with the result
 		/// </summary>
-		string? Message { get; }
+		string Message { get; }
 	}
 
 	/// <summary>
