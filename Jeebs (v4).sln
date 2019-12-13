@@ -60,13 +60,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppRazor", "Apps\AppRazor\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsoleWordPress", "Apps\AppConsoleWordPress\AppConsoleWordPress.csproj", "{52CF9096-6186-48F0-8481-BFC6E4E0CFA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Data.Apps", "Libraries\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj", "{947F6189-FD20-4230-8B27-71D0953B1438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Apps", "Libraries\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj", "{947F6189-FD20-4230-8B27-71D0953B1438}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Logging", ".Logging", "{BD8813AD-C9E3-4B05-A9E0-F044D53AE06F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Logging.Serilog", "Libraries\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj", "{7B521F2C-855B-4296-B02B-880F90E9A0E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog", "Libraries\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj", "{7B521F2C-855B-4296-B02B-880F90E9A0E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Config", "Libraries\Jeebs.Config\Jeebs.Config.csproj", "{829B619E-2CF5-4706-8B60-1F65B356E96F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Config", "Libraries\Jeebs.Config\Jeebs.Config.csproj", "{829B619E-2CF5-4706-8B60-1F65B356E96F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs", "Tests\Jeebs.Tests\Jeebs.csproj", "{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Config", "Tests\Jeebs.Config.Tests\Jeebs.Config.csproj", "{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -154,6 +158,14 @@ Global
 		{829B619E-2CF5-4706-8B60-1F65B356E96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{829B619E-2CF5-4706-8B60-1F65B356E96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{829B619E-2CF5-4706-8B60-1F65B356E96F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +196,8 @@ Global
 		{BD8813AD-C9E3-4B05-A9E0-F044D53AE06F} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{7B521F2C-855B-4296-B02B-880F90E9A0E0} = {BD8813AD-C9E3-4B05-A9E0-F044D53AE06F}
 		{829B619E-2CF5-4706-8B60-1F65B356E96F} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{B9A66FB3-C415-4E29-A419-E5D50A7A29E4} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
