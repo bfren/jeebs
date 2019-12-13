@@ -1,13 +1,22 @@
-﻿namespace Jeebs.WordPress.Entities
+﻿using Jeebs.Data;
+
+namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// TermRelationship entity
 	/// </summary>
-	public abstract class WpTermRelationshipEntity
+	public abstract class WpTermRelationshipEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get; set; }
+
 		/// <summary>
 		/// PostId
 		/// </summary>
+		[Id]
 		public int PostId { get; set; }
 
 		/// <summary>

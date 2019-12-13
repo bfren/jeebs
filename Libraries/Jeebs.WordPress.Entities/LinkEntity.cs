@@ -1,15 +1,22 @@
 ﻿using System;
+using Jeebs.Data;
 
 namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public abstract class WpLinkEntity
+	public abstract class WpLinkEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => LinkId; set => LinkId = value; }
 		/// <summary>
 		/// LinkId
 		/// </summary>
+		[Id]
 		public int LinkId { get; set; }
 
 		/// <summary>

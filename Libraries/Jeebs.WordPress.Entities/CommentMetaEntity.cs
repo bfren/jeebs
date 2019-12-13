@@ -1,14 +1,22 @@
-﻿namespace Jeebs.WordPress.Entities
+﻿using Jeebs.Data;
+
+namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// CommentMeta entity
 	/// </summary>
-	public abstract class WpCommentMetaEntity
+	public abstract class WpCommentMetaEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => CommentMetaId; set => CommentMetaId = value; }
 
 		/// <summary>
 		/// CommentMetaId
 		/// </summary>
+		[Id]
 		public int CommentMetaId { get; set; }
 
 		/// <summary>

@@ -1,15 +1,23 @@
-﻿using Jeebs.WordPress.Enums;
+﻿using Jeebs.Data;
+using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// TermTaxonomy entity
 	/// </summary>
-	public abstract class WpTermTaxonomyEntity
+	public abstract class WpTermTaxonomyEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => TermTaxonomyId; set => TermTaxonomyId = value; }
+
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
+		[Id]
 		public int TermTaxonomyId { get; set; }
 
 		/// <summary>

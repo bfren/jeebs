@@ -1,15 +1,23 @@
 ﻿using System;
+using Jeebs.Data;
 
 namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// User entity
 	/// </summary>
-	public abstract class WpUserEntity
+	public abstract class WpUserEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => UserId; set => UserId = value; }
+
 		/// <summary>
 		/// UserId
 		/// </summary>
+		[Id]
 		public int UserId { get; set; }
 
 		/// <summary>

@@ -1,13 +1,22 @@
-﻿namespace Jeebs.WordPress.Entities
+﻿using Jeebs.Data;
+
+namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// TermMeta entity
 	/// </summary>
-	public abstract class WpTermMetaEntity
+	public abstract class WpTermMetaEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => TermMetaId; set => TermMetaId = value; }
+
 		/// <summary>
 		/// TermMetaId
 		/// </summary>
+		[Id]
 		public int TermMetaId { get; set; }
 
 		/// <summary>

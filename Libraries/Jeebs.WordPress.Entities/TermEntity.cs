@@ -5,8 +5,14 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Term entity
 	/// </summary>
-	public abstract class WpTermEntity
+	public abstract class WpTermEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => TermId; set => TermId = value; }
+
 		/// <summary>
 		/// TermId
 		/// </summary>

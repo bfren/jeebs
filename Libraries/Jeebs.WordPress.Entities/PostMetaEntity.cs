@@ -1,13 +1,22 @@
-﻿namespace Jeebs.WordPress.Entities
+﻿using Jeebs.Data;
+
+namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
 	/// PostMeta entity
 	/// </summary>
-	public abstract class WpPostMetaEntity
+	public abstract class WpPostMetaEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => PostMetaId; set => PostMetaId = value; }
+
 		/// <summary>
 		/// PostMetaId
 		/// </summary>
+		[Id]
 		public int PostMetaId { get; set; }
 
 		/// <summary>

@@ -1,4 +1,5 @@
-﻿using Jeebs.WordPress.Enums;
+﻿using Jeebs.Data;
+using Jeebs.WordPress.Enums;
 using System;
 
 namespace Jeebs.WordPress.Entities
@@ -6,11 +7,18 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Post entity
 	/// </summary>
-	public abstract class WpPostEntity
+	public abstract class WpPostEntity : IEntity
 	{
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public int Id { get => PostId; set => PostId = value; }
+
 		/// <summary>
 		/// PostId
 		/// </summary>
+		[Id]
 		public int PostId { get; set; }
 
 		/// <summary>
