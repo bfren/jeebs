@@ -37,17 +37,17 @@ namespace Jeebs.Data.Clients.MySql
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>SQL query</returns>
-		public override string RetrieveSingleById<T>(int id)
+		public override string RetrieveSingleById<T>(in int id)
 		{
 			var map = TableMaps.GetMap<T>();
 			var select = new List<string>();
 
 			foreach (var mc in map.Columns)
 			{
-				select.Add($"{mc.Column} AS '{mc.Property.Name}'");
+				select.Add($"{mc} AS '{mc.Property.Name}'");
 			}
 
-			return $"SELECT {string.Join(", ", select)} FROM {map.Name} WHERE {map.IdColumn.Column} = '{id}';";
+			return $"SELECT {string.Join(", ", select)} FROM {map} WHERE {map.IdColumn} = '{id}';";
 		}
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public override string UpdateSingle<T>(int id, long? version = null)
+		public override string UpdateSingle<T>(in int id, in long? version = null)
 		{
 			var map = TableMaps.GetMap<T>();
 			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
@@ -69,9 +69,9 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			var sql = $@"
-					UPDATE {map.Name}
+					UPDATE {map}
 					SET {string.Join(", ", update)}
-					WHERE {map.IdColumn.Column} = '{id}'
+					WHERE {map.IdColumn} = '{id}'
 				";
 
 			if (map.VersionColumn is MappedColumn versionColumn && version is long versionValue)
@@ -89,10 +89,10 @@ namespace Jeebs.Data.Clients.MySql
 		/// <param name="id">Id value</param>
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
-		public override string DeleteSingle<T>(int id, long? version = null)
+		public override string DeleteSingle<T>(in int id, in long? version = null)
 		{
 			var map = TableMaps.GetMap<T>();
-			var sql = $"DELETE {map.Name} WHERE {map.IdColumn.Column} = '{id}'";
+			var sql = $"DELETE {map} WHERE {map.IdColumn} = '{id}'";
 
 			if (map.VersionColumn is MappedColumn versionColumn && version is long versionValue)
 			{
