@@ -22,7 +22,7 @@ namespace Jeebs
 		/// <param name="list">List of values</param>
 		public EnumList(in List<string> list)
 		{
-			if (list == null)
+			if (list is null)
 			{
 				return;
 			}

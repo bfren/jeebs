@@ -19,7 +19,7 @@ namespace Jeebs
 		/// <returns>Extended array</returns>
 		public static T[] ExtendWith<T>(this T[] array, params T[] additionalItems)
 		{
-			if (additionalItems == null)
+			if (additionalItems is null)
 			{
 				return array;
 			}

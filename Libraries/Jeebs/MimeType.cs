@@ -107,15 +107,21 @@
 		public static MimeType Zip = new MimeType("application/zip");
 
 		/// <summary>
-		/// Parse MimeType value name
+		/// Parse MimeType value
 		/// </summary>
-		/// <param name="name">Value name</param>
-		/// <returns>MimeType object</returns>
-		public static MimeType Parse(string name)
+		/// <param name="mimeType">Value</param>
+		public static MimeType Parse(in string? mimeType)
 		{
+			// Return Blank for null
+			if (mimeType is null)
+			{
+				return Blank;
+			}
+
+			// Parse - if there is an error (usually because name is not a recognised Mime Type) return General
 			try
 			{
-				return Parse(name, new[]
+				return Parse(mimeType, new[]
 				{
 					Blank,
 					General,

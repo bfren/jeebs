@@ -20,9 +20,8 @@ namespace Jeebs.Util
 			{
 				var opt = new JsonSerializerOptions
 				{
-					IgnoreNullValues = true,
 					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-					DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
+					IgnoreNullValues = true
 				};
 
 				opt.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
@@ -31,14 +30,15 @@ namespace Jeebs.Util
 			}
 		}
 
+
+
 		/// <summary>
 		/// Use JsonSerializer to serialise a given object
-		/// Returns '{ }' if <paramref name="obj"/> is null
 		/// </summary>
 		/// <typeparam name="T">Object Type to be serialised</typeparam>
 		/// <param name="obj">The object to serialise</param>
-		/// <param name="opt">Serialiser settings</param>
-		/// <returns>Json of serialised object</returns>
+		/// <param name="opt">[Optional] JsonSerializerOptions</param>
+		/// <returns>Json String of serialised object</returns>
 		public static string Serialise<T>(in T obj, in JsonSerializerOptions? opt = null)
 		{
 			if (obj is null)
@@ -54,16 +54,22 @@ namespace Jeebs.Util
 		/// </summary>
 		/// <param name="str">The string to deserialise</param>
 		/// <param name="type">Object Type</param>
+		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <exception cref="ArgumentNullException">If <paramref name="type"/> is null</exception>
 		/// <returns>Deserialised object of given type</returns>
-		public static object Deserialise(in string str, in Type type)
+		public static object Deserialise(in string str, in Type type, in JsonSerializerOptions? opt = null)
 		{
-			if (type == null)
+			if (string.IsNullOrWhiteSpace(str))
+			{
+				throw new ArgumentNullException(nameof(str));
+			}
+
+			if (type is null)
 			{
 				throw new ArgumentNullException(nameof(type));
 			}
 
-			return JsonSerializer.Deserialize(str, type);
+			return JsonSerializer.Deserialize(str, type, opt ?? DefaultSettings);
 		}
 
 		/// <summary>
@@ -72,7 +78,8 @@ namespace Jeebs.Util
 		/// </summary>
 		/// <typeparam name="T">The type of the object to return</typeparam>
 		/// <param name="str">The string to deserialise</param>
+		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static T Deserialise<T>(in string str) => (T)Deserialise(str, typeof(T));
+		public static T Deserialise<T>(in string str, in JsonSerializerOptions? opt = null) => (T)Deserialise(str, typeof(T), opt);
 	}
 }

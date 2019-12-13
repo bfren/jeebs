@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <summary>
 		/// Optional message to display
 		/// </summary>
-		public string? Message { get; }
+		public string Message { get; }
 
 		/// <summary>
 		/// Value of returned object
@@ -25,14 +25,18 @@ namespace Jeebs
 		/// Create object from value
 		/// </summary>
 		/// <param name="value">Value to return</param>
-		public Success(in T value) => Value = value;
+		public Success(in T value) : this(value?.ToString() ?? typeof(T).ToString(), value) { }
 
 		/// <summary>
 		/// Create object from value with optional message to display
 		/// </summary>
 		/// <param name="message">Message to display</param>
 		/// <param name="value">Value to return</param>
-		public Success(in string message, in T value) : this(value) => Message = message;
+		public Success(in string message, in T value)
+		{
+			Message = message;
+			Value = value;
+		}
 	}
 
 	/// <summary>
