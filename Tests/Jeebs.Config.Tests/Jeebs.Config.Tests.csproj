@@ -1,11 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-
-    <RootNamespace>Jeebs</RootNamespace>
+    <RootNamespace>Jeebs.Config</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Config\Jeebs.Config.csproj" />
   </ItemGroup>
 
 </Project>

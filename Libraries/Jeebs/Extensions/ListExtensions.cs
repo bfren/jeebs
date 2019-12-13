@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// IList Extensions
+	/// </summary>
 	public static class ListExtensions
 	{
 		/// <summary>

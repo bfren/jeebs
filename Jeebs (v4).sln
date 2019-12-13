@@ -68,9 +68,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Config", "Libraries\Jeebs.Config\Jeebs.Config.csproj", "{829B619E-2CF5-4706-8B60-1F65B356E96F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs", "Tests\Jeebs.Tests\Jeebs.csproj", "{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Tests", "Tests\Jeebs.Tests\Jeebs.Tests.csproj", "{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Config", "Tests\Jeebs.Config.Tests\Jeebs.Config.csproj", "{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Config.Tests", "Tests\Jeebs.Config.Tests\Jeebs.Config.Tests.csproj", "{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Cryptography", "Libraries\Jeebs.Cryptography\Jeebs.Cryptography.csproj", "{DAD8177A-B883-4D5C-AB79-5AB13796C86C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Cryptography.Tests", "Tests\Jeebs.Cryptography.Tests\Jeebs.Cryptography.Tests.csproj", "{95BAA070-C5CB-4056-A799-241D1DA4F45F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -166,6 +170,14 @@ Global
 		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD8177A-B883-4D5C-AB79-5AB13796C86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD8177A-B883-4D5C-AB79-5AB13796C86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD8177A-B883-4D5C-AB79-5AB13796C86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD8177A-B883-4D5C-AB79-5AB13796C86C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,6 +210,8 @@ Global
 		{829B619E-2CF5-4706-8B60-1F65B356E96F} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{B9A66FB3-C415-4E29-A419-E5D50A7A29E4} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{DAD8177A-B883-4D5C-AB79-5AB13796C86C} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{95BAA070-C5CB-4056-A799-241D1DA4F45F} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
