@@ -58,20 +58,6 @@ namespace Jeebs.Data
 		/// <param name="errors">List of errors</param>
 		public static DbFailure<T> Failure<T>(in List<string> errors) => new DbFailure<T>(errors);
 
-		/// <summary>
-		///	Concurrency Failure
-		/// </summary>
-		/// <typeparam name="T">Value type</typeparam>
-		/// <param name="errors">Errors</param>
-		public static DbFailureConcurrency<T> ConcurrencyFailure<T>(params string[] errors) => new DbFailureConcurrency<T>(errors);
-
-		/// <summary>
-		///	Concurrency Failure
-		/// </summary>
-		/// <typeparam name="T">Value type</typeparam>
-		/// <param name="errors">List of errors</param>
-		public static DbFailureConcurrency<T> ConcurrencyFailure<T>(in List<string> errors) => new DbFailureConcurrency<T>(errors);
-
 		#endregion
 	}
 }
