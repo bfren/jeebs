@@ -47,7 +47,10 @@ namespace Jeebs.Data
 		/// <returns>Escaped and joined elements</returns>
 		public string SplitAndEscape(in string element)
 		{
+			// Split an element by the default separator
 			var elements = element.Split(separator);
+
+			// Now escape the elements and re-join them
 			return EscapeAndJoin(elements);
 		}
 
@@ -58,10 +61,13 @@ namespace Jeebs.Data
 		/// <returns>Escaped and joined elements</returns>
 		public string EscapeAndJoin(string?[] elements)
 		{
+			// The list of elements to escape
 			var escaped = new List<string>();
+
+			// Escape each element in the array, skipping elements that are null / empty / whitespace
 			foreach (var element in elements)
 			{
-				if (string.IsNullOrEmpty(element))
+				if (string.IsNullOrWhiteSpace(element))
 				{
 					continue;
 				}
@@ -69,15 +75,37 @@ namespace Jeebs.Data
 				escaped.Add(Escape(element));
 			}
 
+			// Return escaped elements joined with the separator
 			return string.Join(separator.ToString(), escaped);
 		}
 
 		/// <summary>
 		/// Escape a table or column name
+		/// If <paramref name="name"/> contains the separator character, <see cref="SplitAndEscape(in string)"/> will be used instead
 		/// </summary>
+		/// <exception cref="ArgumentNullException">If <paramref name="name"/> is null, empty, or whitespace</exception>
 		/// <param name="name">Table or column name</param>
 		/// <returns>Escaped name</returns>
-		public string Escape(in string name) => $"{escapeOpen}{name}{escapeClose}";
+		public string Escape(in string name)
+		{
+			// Don't allow blank names
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			// If the name contains the separator character, use SplitAndJoin() instead
+			if (name.Contains(separator))
+			{
+				return SplitAndEscape(name);
+			}
+
+			// Trim escape characters
+			var trimmed = name.Trim(escapeOpen, escapeClose);
+
+			// Return escaped name
+			return $"{escapeOpen}{trimmed}{escapeClose}";
+		}
 
 		#endregion
 
@@ -116,6 +144,25 @@ namespace Jeebs.Data
 		/// <param name="version">[Optional] Version</param>
 		/// <returns>SQL query</returns>
 		public abstract string DeleteSingle<T>(in int id, in long? version = null);
+
+		/// <summary>
+		/// Query to delete a single row
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="poco">Object to delete</param>
+		/// <returns>SQL query</returns>
+		public string DeleteSingle<T>(in T poco)
+			where T : IEntity
+		{
+			if (poco is IEntityWithVersion pocoWithVersion)
+			{
+				return DeleteSingle<T>(pocoWithVersion.Id, pocoWithVersion.Version);
+			}
+			else
+			{
+				return DeleteSingle<T>(poco.Id);
+			}
+		}
 
 		#endregion
 	}

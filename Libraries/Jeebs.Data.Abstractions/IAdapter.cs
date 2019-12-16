@@ -81,6 +81,14 @@ namespace Jeebs.Data
 		/// <returns>SQL query</returns>
 		string DeleteSingle<T>(in int id, in long? version = null);
 
+		/// <summary>
+		/// Query to delete a single row
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="poco">Object to delete</param>
+		/// <returns>SQL query</returns>
+		string DeleteSingle<T>(in T poco) where T : IEntity;
+
 		#endregion
 	}
 }

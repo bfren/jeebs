@@ -68,13 +68,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Config", "Libraries\Jeebs.Config\Jeebs.Config.csproj", "{829B619E-2CF5-4706-8B60-1F65B356E96F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Tests", "Tests\Jeebs.Tests\Jeebs.Tests.csproj", "{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs", "Tests\Tests.Jeebs\Tests.Jeebs.csproj", "{B9A66FB3-C415-4E29-A419-E5D50A7A29E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Config.Tests", "Tests\Jeebs.Config.Tests\Jeebs.Config.Tests.csproj", "{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Config", "Tests\Tests.Jeebs.Config\Tests.Jeebs.Config.csproj", "{FCB49E83-1E38-43D7-8FBD-F0775A171E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Cryptography", "Libraries\Jeebs.Cryptography\Jeebs.Cryptography.csproj", "{DAD8177A-B883-4D5C-AB79-5AB13796C86C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Cryptography", "Libraries\Jeebs.Cryptography\Jeebs.Cryptography.csproj", "{DAD8177A-B883-4D5C-AB79-5AB13796C86C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Cryptography.Tests", "Tests\Jeebs.Cryptography.Tests\Jeebs.Cryptography.Tests.csproj", "{95BAA070-C5CB-4056-A799-241D1DA4F45F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Cryptography", "Tests\Tests.Jeebs.Cryptography\Tests.Jeebs.Cryptography.csproj", "{95BAA070-C5CB-4056-A799-241D1DA4F45F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Data", ".Data", "{1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Clients", ".Clients", "{D899A9DC-CBCF-44E8-BECE-73EB8911C6C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Clients.MySql", "Tests\Tests.Jeebs.Data.Clients.MySql\Tests.Jeebs.Data.Clients.MySql.csproj", "{F7794637-FAF0-4EF0-B42C-98CD8FD5B459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Clients.SqlServer", "Tests\Tests.Jeebs.Data.Clients.SqlServer\Tests.Jeebs.Data.Clients.SqlServer.csproj", "{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".WordPress", ".WordPress", "{0B5859A2-D126-488E-9232-9D71FCCFC777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress", "Tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data", "Tests\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj", "{656E74E2-9E0A-4404-B7A9-F124680D1050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,6 +192,22 @@ Global
 		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95BAA070-C5CB-4056-A799-241D1DA4F45F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7794637-FAF0-4EF0-B42C-98CD8FD5B459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7794637-FAF0-4EF0-B42C-98CD8FD5B459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7794637-FAF0-4EF0-B42C-98CD8FD5B459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7794637-FAF0-4EF0-B42C-98CD8FD5B459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,6 +242,13 @@ Global
 		{FCB49E83-1E38-43D7-8FBD-F0775A171E3A} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{DAD8177A-B883-4D5C-AB79-5AB13796C86C} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{95BAA070-C5CB-4056-A799-241D1DA4F45F} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{D899A9DC-CBCF-44E8-BECE-73EB8911C6C2} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
+		{F7794637-FAF0-4EF0-B42C-98CD8FD5B459} = {D899A9DC-CBCF-44E8-BECE-73EB8911C6C2}
+		{088834AB-1B3B-4967-BC07-15FEFA8EA8D0} = {D899A9DC-CBCF-44E8-BECE-73EB8911C6C2}
+		{0B5859A2-D126-488E-9232-9D71FCCFC777} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
+		{656E74E2-9E0A-4404-B7A9-F124680D1050} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
