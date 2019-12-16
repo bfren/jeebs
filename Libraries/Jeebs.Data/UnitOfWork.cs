@@ -103,17 +103,6 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Log a query
 		/// </summary>
-		/// <param name="method">Calling method</param>
-		/// <param name="query">SQL query</param>
-		private void LogQuery(string method, string query)
-		{
-			log.Debug("Method: UnitOfWork.{0}()", method);
-			log.Debug("Query: {0}", query);
-		}
-
-		/// <summary>
-		/// Log a query
-		/// </summary>
 		/// <typeparam name="T">Parameter object type</typeparam>
 		/// <param name="method">Calling method</param>
 		/// <param name="query">SQL query</param>

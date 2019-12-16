@@ -13,14 +13,14 @@ namespace Jeebs.Data
 		where TDbClient : IDbClient, new()
 	{
 		/// <summary>
-		/// IDbClient
+		/// ILog
 		/// </summary>
-		protected readonly TDbClient client = new TDbClient();
+		protected readonly ILog log;
 
 		/// <summary>
-		/// TUnitOfWorkFactory object
+		/// TDbClient
 		/// </summary>
-		private readonly UnitOfWorkFactory unitOfWorkFactory = new UnitOfWorkFactory();
+		protected readonly TDbClient client = new TDbClient();
 
 		/// <summary>
 		/// Connection String
@@ -28,12 +28,7 @@ namespace Jeebs.Data
 		protected string ConnectionString { get; set; }
 
 		/// <summary>
-		/// ILog
-		/// </summary>
-		protected ILog Log { get; }
-
-		/// <summary>
-		/// Create a new IUnitOfWork
+		/// Create a new UnitOfWork
 		/// </summary>
 		/// <exception cref="Jx.Data.ConnectionException">If the connection string has not yet been set</exception>
 		public UnitOfWork UnitOfWork
@@ -54,7 +49,7 @@ namespace Jeebs.Data
 				}
 
 				// Create Unit of Work
-				return unitOfWorkFactory.Create(connection, client.Adapter, Log);
+				return new UnitOfWork(connection, client.Adapter, log);
 			}
 		}
 
@@ -65,7 +60,7 @@ namespace Jeebs.Data
 		public Db(in ILog log)
 		{
 			ConnectionString = string.Empty;
-			Log = log;
+			this.log = log;
 		}
 
 		/// <summary>
