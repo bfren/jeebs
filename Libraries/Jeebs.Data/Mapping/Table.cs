@@ -24,11 +24,6 @@ namespace Jeebs.Data
 		private readonly string name;
 
 		/// <summary>
-		/// Whether or not to use versioning
-		/// </summary>
-		private readonly bool useVersion;
-
-		/// <summary>
 		/// Whether or not the table has been validated
 		/// </summary>
 		private bool valid;
@@ -38,12 +33,10 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="adapter">Adapter</param>
 		/// <param name="name">Table name</param>
-		/// <param name="useVersion">Whether or not to use row versioning</param>
-		protected Table(in IAdapter adapter, in string name, bool useVersion = false)
+		protected Table(in IAdapter adapter, in string name)
 		{
 			this.adapter = adapter;
 			this.name = name;
-			this.useVersion = useVersion;
 
 			Validate();
 			Map();
@@ -140,7 +133,7 @@ namespace Jeebs.Data
 			var map = new TableMap(adapter.Escape(name), columns.ToList(), id);
 
 			// Get Version property
-			if (useVersion)
+			if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
 			{
 				map.VersionColumn = GetPropertyWith<VersionAttribute>("Version");
 			}

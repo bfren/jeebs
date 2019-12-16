@@ -227,12 +227,12 @@ namespace Jeebs.Data
 
 			try
 			{
-				// Create query
+				// Build query
 				var query = adapter.CreateSingleAndReturnId<T>();
 				LogQuery(nameof(Insert), query, poco);
 
 				// Insert and capture new ID
-				newId = Connection.ExecuteScalar<int>(query, poco, transaction);
+				newId = Connection.ExecuteScalar<int>(query, param: poco, transaction: transaction);
 			}
 			catch (Exception ex)
 			{
@@ -263,12 +263,12 @@ namespace Jeebs.Data
 
 			try
 			{
-				// Create query
+				// Build query
 				var query = adapter.CreateSingleAndReturnId<T>();
 				LogQuery(nameof(InsertAsync), query, poco);
 
 				// Insert and capture new ID
-				newId = await Connection.ExecuteScalarAsync<int>(query, poco, transaction);
+				newId = await Connection.ExecuteScalarAsync<int>(query, param: poco, transaction: transaction);
 			}
 			catch (Exception ex)
 			{
@@ -298,8 +298,10 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(Query), query, parameters);
 
+				// Execute and return
 				var result = Connection.Query<dynamic>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -322,8 +324,10 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(QueryAsync), query, parameters);
 
+				// Execute and return
 				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -347,8 +351,10 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(Query), query, parameters);
 
+				// Execute and return
 				var result = Connection.Query<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -372,8 +378,10 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(QueryAsync), query, parameters);
 
+				// Execute and return
 				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -397,11 +405,12 @@ namespace Jeebs.Data
 		{
 			try
 			{
-				var query = adapter.RetrieveSingleById<T>(id);
+				// Build query
+				var query = adapter.RetrieveSingleById<T>();
+				LogQuery(nameof(Single), query, new { id });
 
-				LogQuery(nameof(Single), query);
-
-				var result = Connection.QuerySingle<T>(query, transaction: transaction);
+				// Execute and return
+				var result = Connection.QuerySingle<T>(query, param: new { id }, transaction: transaction);
 				return DbResult.Success(result);
 			}
 			catch (Exception ex)
@@ -421,11 +430,12 @@ namespace Jeebs.Data
 		{
 			try
 			{
-				var query = adapter.RetrieveSingleById<T>(id);
+				// Build query
+				var query = adapter.RetrieveSingleById<T>();
+				LogQuery(nameof(SingleAsync), query, new { id });
 
-				LogQuery(nameof(SingleAsync), query);
-
-				var result = await Connection.QuerySingleAsync<T>(query, transaction: transaction);
+				// Execute and return
+				var result = await Connection.QuerySingleAsync<T>(query, param: new { id }, transaction: transaction);
 				return DbResult.Success(result);
 			}
 			catch (Exception ex)
@@ -444,9 +454,11 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(Single), query, parameters);
 
-				var result = Connection.QuerySingle<T>(query, parameters, transaction);
+				// Execute and return
+				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
 			catch (Exception ex)
@@ -468,9 +480,11 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(SingleAsync), query, parameters);
 
-				var result = await Connection.QuerySingleAsync<T>(query, parameters, transaction);
+				// Execute and return
+				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
 			catch (Exception ex)
@@ -522,39 +536,23 @@ namespace Jeebs.Data
 
 			try
 			{
-				// Build the query
-				var query = adapter.UpdateSingle<T>(poco.Id, poco.Version);
-
-				// Now increase the row version and execute query
+				// Build query and increase the version number
+				var query = adapter.UpdateSingle<T>();
 				poco.Version++;
-
 				LogQuery(nameof(UpdateWithVersion), query, poco);
 
-				var rowsAffected = Connection.Execute(query, poco, transaction);
+				// Execute and return
+				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
-					return new DbSuccess();
+					return DbResult.Success();
 				}
+
+				return Fail(error);
 			}
 			catch (Exception ex)
 			{
 				return Fail(ex, error);
-			}
-
-			// Build the query to get a fresh poco
-			var selectSql = adapter.RetrieveSingleById<T>(poco.Id);
-
-			// Get the fresh poco
-			var freshPoco = Connection.QuerySingle<T>(selectSql);
-			if (freshPoco.Version > currentVersion)
-			{
-				Rollback();
-				log.Error(error + " Concurrency check failed.");
-				return DbResult.ConcurrencyFailure<T>();
-			}
-			else
-			{
-				return Fail(error);
 			}
 		}
 
@@ -571,20 +569,18 @@ namespace Jeebs.Data
 
 			try
 			{
-				// Build the query
-				var query = adapter.UpdateSingle<T>(poco.Id);
+				// Build query
+				var query = adapter.UpdateSingle<T>();
 				LogQuery(nameof(UpdateWithoutVersion), query, poco);
 
-				// Now execute query
-				var rowsAffected = Connection.Execute(query, poco, transaction);
+				// Execute and return
+				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
-					return new DbSuccess();
+					return DbResult.Success();
 				}
-				else
-				{
-					return Fail(error);
-				}
+
+				return Fail(error);
 			}
 			catch (Exception ex)
 			{
@@ -597,88 +593,30 @@ namespace Jeebs.Data
 		#region D
 
 		/// <summary>
-		/// Update an object
+		/// Delete an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity object</param>
-		/// <returns>IDbResult - Whether or not the update was successful</returns>
+		/// <param name="poco">Entity to delete</param>
+		/// <result>IDbResult - Whether or not the delete was successful</result>
 		public IDbResult Delete<T>(in T poco)
 			where T : class, IEntity
 		{
-			lock (_)
-			{
-				if (poco is IEntityWithVersion pocoWithVersion)
-				{
-					return DeleteWithVersion(pocoWithVersion);
-				}
-				else
-				{
-					return DeleteWithoutVersion(poco);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Delete an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity to delete</param>
-		/// <result>IDbResult - Whether or not the delete was successful</result>
-		private IDbResult DeleteWithVersion<T>(in T poco)
-			where T : class, IEntityWithVersion
-		{
 			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
 
 			try
 			{
-				// Build the query
-				var query = adapter.DeleteSingle<T>(poco.Id, poco.Version);
-				LogQuery(nameof(Delete), query);
+				// Build query
+				var query = adapter.DeleteSingle<T>();
+				LogQuery(nameof(Delete), query, poco);
 
-				// Now execute query
-				var rowsAffected = Connection.Execute(query, transaction: transaction);
+				// Execute and return
+				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
 					return DbResult.Success();
 				}
-				else
-				{
-					return Fail(error);
-				}
-			}
-			catch (Exception ex)
-			{
-				return Fail(ex, error);
-			}
-		}
 
-		/// <summary>
-		/// Delete an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity to delete</param>
-		/// <result>IDbResult - Whether or not the delete was successful</result>
-		private IDbResult DeleteWithoutVersion<T>(in T poco)
-			where T : class, IEntity
-		{
-			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
-
-			try
-			{
-				// Build the query
-				var query = adapter.DeleteSingle<T>(poco.Id);
-				LogQuery(nameof(Delete), query);
-
-				// Now execute query
-				var rowsAffected = Connection.Execute(query, transaction: transaction);
-				if (rowsAffected == 1)
-				{
-					return DbResult.Success();
-				}
-				else
-				{
-					return Fail(error);
-				}
+				return Fail(error);
 			}
 			catch (Exception ex)
 			{
@@ -699,20 +637,18 @@ namespace Jeebs.Data
 
 			try
 			{
-				// Build the query
-				var query = adapter.DeleteSingle<T>(poco.Id);
-				LogQuery(nameof(DeleteAsync), query);
+				// Build query
+				var query = adapter.DeleteSingle<T>();
+				LogQuery(nameof(DeleteAsync), query, poco);
 
-				// Now execute query
-				var rowsAffected = await Connection.ExecuteAsync(query, transaction: transaction);
+				// Execute and return
+				var rowsAffected = await Connection.ExecuteAsync(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
 					return DbResult.Success();
 				}
-				else
-				{
-					return Fail(error);
-				}
+
+				return Fail(error);
 			}
 			catch (Exception ex)
 			{
@@ -729,17 +665,21 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		public IDbResult Execute(in string query, in object? parameters = null)
+		/// <returns>Affected rows</returns>
+		public IDbResult<int> Execute(in string query, in object? parameters = null)
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(Execute), query, parameters);
-				Connection.Execute(query, param: parameters, transaction: transaction);
-				return DbResult.Success();
+
+				// Execute and return
+				var affectedRows = Connection.Execute(query, param: parameters, transaction: transaction);
+				return DbResult.Success(affectedRows);
 			}
 			catch (Exception ex)
 			{
-				return Fail(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
+				return Fail<int>(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
 			}
 		}
 
@@ -748,17 +688,21 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		public async Task<IDbResult> ExecuteAsync(string query, object? parameters = null)
+		/// <returns>Affected rows</returns>
+		public async Task<IDbResult<int>> ExecuteAsync(string query, object? parameters = null)
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(ExecuteAsync), query, parameters);
-				await Connection.ExecuteAsync(query, param: parameters, transaction: transaction);
-				return DbResult.Success();
+
+				// Execute and return
+				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: transaction);
+				return DbResult.Success(affectedRows);
 			}
 			catch (Exception ex)
 			{
-				return Fail(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
+				return Fail<int>(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
 			}
 		}
 
@@ -773,7 +717,10 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(ExecuteScalar), query, parameters);
+
+				// Execute and return
 				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}
@@ -794,7 +741,10 @@ namespace Jeebs.Data
 		{
 			try
 			{
+				// Log query
 				LogQuery(nameof(ExecuteScalarAsync), query, parameters);
+
+				// Execute and return
 				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: transaction);
 				return DbResult.Success(result);
 			}

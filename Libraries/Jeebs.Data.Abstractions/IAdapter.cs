@@ -40,7 +40,6 @@ namespace Jeebs.Data
 		/// Query to insert a single row and return the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <returns>SQL query</returns>
 		string CreateSingleAndReturnId<T>();
 
 		#endregion
@@ -51,9 +50,7 @@ namespace Jeebs.Data
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Entity ID</param>
-		/// <returns>SQL query</returns>
-		string RetrieveSingleById<T>(in int id);
+		string RetrieveSingleById<T>();
 
 		#endregion
 
@@ -63,10 +60,7 @@ namespace Jeebs.Data
 		/// Query to update a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Id value</param>
-		/// <param name="version">[Optional] Version</param>
-		/// <returns>SQL query</returns>
-		string UpdateSingle<T>(in int id, in long? version = null);
+		string UpdateSingle<T>();
 
 		#endregion
 
@@ -76,18 +70,7 @@ namespace Jeebs.Data
 		/// Query to delete a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Id value</param>
-		/// <param name="version">[Optional] Version</param>
-		/// <returns>SQL query</returns>
-		string DeleteSingle<T>(in int id, in long? version = null);
-
-		/// <summary>
-		/// Query to delete a single row
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Object to delete</param>
-		/// <returns>SQL query</returns>
-		string DeleteSingle<T>(in T poco) where T : IEntity;
+		string DeleteSingle<T>();
 
 		#endregion
 	}

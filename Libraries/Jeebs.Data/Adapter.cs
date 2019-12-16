@@ -115,54 +115,25 @@ namespace Jeebs.Data
 		/// Query to insert a single row and return the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <returns>SQL query</returns>
 		public abstract string CreateSingleAndReturnId<T>();
 
 		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Entity ID</param>
-		/// <returns>SQL query</returns>
-		public abstract string RetrieveSingleById<T>(in int id);
+		public abstract string RetrieveSingleById<T>();
 
 		/// <summary>
 		/// Query to update a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Id value</param>
-		/// <param name="version">[Optional] Version</param>
-		/// <returns>SQL query</returns>
-		public abstract string UpdateSingle<T>(in int id, in long? version = null);
-
+		public abstract string UpdateSingle<T>();
 
 		/// <summary>
 		/// Query to delete a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Id value</param>
-		/// <param name="version">[Optional] Version</param>
-		/// <returns>SQL query</returns>
-		public abstract string DeleteSingle<T>(in int id, in long? version = null);
-
-		/// <summary>
-		/// Query to delete a single row
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Object to delete</param>
-		/// <returns>SQL query</returns>
-		public string DeleteSingle<T>(in T poco)
-			where T : IEntity
-		{
-			if (poco is IEntityWithVersion pocoWithVersion)
-			{
-				return DeleteSingle<T>(pocoWithVersion.Id, pocoWithVersion.Version);
-			}
-			else
-			{
-				return DeleteSingle<T>(poco.Id);
-			}
-		}
+		public abstract string DeleteSingle<T>();
 
 		#endregion
 	}

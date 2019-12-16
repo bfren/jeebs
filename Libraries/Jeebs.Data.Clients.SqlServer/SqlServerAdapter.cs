@@ -18,7 +18,6 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// Query to insert a single row and return the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <returns>SQL query</returns>
 		public override string CreateSingleAndReturnId<T>()
 		{
 			throw new NotImplementedException();
@@ -28,9 +27,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Entity ID</param>
-		/// <returns>SQL query</returns>
-		public override string RetrieveSingleById<T>(in int id)
+		public override string RetrieveSingleById<T>()
 		{
 			throw new NotImplementedException();
 		}
@@ -39,10 +36,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// Query to update a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Id value</param>
-		/// <param name="version">[Optional] Version</param>
-		/// <returns>SQL query</returns>
-		public override string UpdateSingle<T>(in int id, in long? version = null)
+		public override string UpdateSingle<T>()
 		{
 			throw new NotImplementedException();
 		}
@@ -51,10 +45,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// Query to delete a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Id value</param>
-		/// <param name="version">[Optional] Version</param>
-		/// <returns>SQL query</returns>
-		public override string DeleteSingle<T>(in int id, in long? version = null)
+		public override string DeleteSingle<T>()
 		{
 			throw new NotImplementedException();
 		}
