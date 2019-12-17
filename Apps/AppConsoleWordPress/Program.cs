@@ -56,6 +56,11 @@ namespace AppConsoleWordPress
 				{
 					Console.WriteLine($"{inserted}");
 				}
+
+				w0.Query<int>(build =>
+				{
+					build.SelectFromTable(_0.Post);
+				});
 			}
 
 			// End

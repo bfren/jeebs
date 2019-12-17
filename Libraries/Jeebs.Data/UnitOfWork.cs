@@ -278,6 +278,23 @@ namespace Jeebs.Data
 		#region R
 
 		/// <summary>
+		/// Start a new Fluent Query
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		public IDbResult<IEnumerable<T>> Query<T>(Action<FluentQuery<T>> buildQuery)
+		{
+			// Build fluent query
+			var fluent = new FluentQuery<T>(adapter);
+			buildQuery(fluent);
+
+			// Get query
+			var query = adapter.Retrieve(fluent);
+
+			// Return
+			return Query<T>(query, fluent.Parameters);
+		}
+
+		/// <summary>
 		/// Perform a query, returning a dynamic object
 		/// </summary>
 		/// <param name="query">Query string</param>

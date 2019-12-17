@@ -43,7 +43,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Table name
+		/// Table name (unescaped)
 		/// </summary>
 		/// <returns>Table name</returns>
 		public override string ToString() => name;
@@ -169,19 +169,19 @@ namespace Jeebs.Data
 		private static readonly Dictionary<Type, ExtractedColumns> cache = new Dictionary<Type, ExtractedColumns>();
 
 		/// <summary>
-		/// Extract the column names for the table entity
+		/// Extract the column names (unescaped) for the table entity
 		/// </summary>
 		public ExtractedColumns Extract() => Extract(typeof(TEntity));
 
 
 		/// <summary>
-		/// Extract the column names for the model type
+		/// Extract the column names (unescaped) for the model type
 		/// </summary>
 		/// <typeparam name="TModel">Model Type</typeparam>
 		public ExtractedColumns Extract<TModel>() => Extract(typeof(TModel));
 
 		/// <summary>
-		/// Extract the column names for <paramref name="modelType"/>
+		/// Extract the column names (unescaped) for <paramref name="modelType"/>
 		/// </summary>
 		/// <param name="modelType">Model Type</param>
 		private ExtractedColumns Extract(Type modelType)

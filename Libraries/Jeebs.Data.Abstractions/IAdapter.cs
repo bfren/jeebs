@@ -23,7 +23,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
-		string EscapeAndJoin(string?[] elements);
+		string EscapeAndJoin(params string?[] elements);
 
 		/// <summary>
 		/// Escape a table or column name
@@ -31,6 +31,26 @@ namespace Jeebs.Data
 		/// <param name="name">Table or column name</param>
 		/// <returns>Escaped name</returns>
 		string Escape(in string name);
+
+		/// <summary>
+		/// Escape a table
+		/// </summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="table">Mapped Table</param>
+		/// <returns>Escaped name</returns>
+		string Escape<TTable>(in TTable table) where TTable : ITable;
+
+		/// <summary>
+		/// Get an ExtractedColumn
+		/// </summary>
+		/// <param name="col">ExtractedColumn</param>
+		string GetColumn(in ExtractedColumn col);
+
+		/// <summary>
+		/// Get a MappedColumn
+		/// </summary>
+		/// <param name="col">MappedColumn</param>
+		string GetColumn(in MappedColumn col);
 
 		#endregion
 
@@ -45,6 +65,13 @@ namespace Jeebs.Data
 		#endregion
 
 		#region Queries - Retrieve
+
+		/// <summary>
+		/// Build a Fluent Query
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="query">IFluentQuery</param>
+		string Retrieve<T>(IFluentQuery<T> query);
 
 		/// <summary>
 		/// Query to retrieve a single row by ID

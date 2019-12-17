@@ -10,15 +10,19 @@ namespace Jeebs.Data
 	public interface ITable
 	{
 		/// <summary>
-		/// Extract the column names for the table entity
+		/// Extract the column names (unescaped) for the table entity
 		/// </summary>
 		ExtractedColumns Extract();
 
-
 		/// <summary>
-		/// Extract the column names for the model type
+		/// Extract the column names (unescaped) for the model type
 		/// </summary>
 		/// <typeparam name="TModel">Model Type</typeparam>
 		ExtractedColumns Extract<TModel>();
+
+		/// <summary>
+		/// Table name (unescaped)
+		/// </summary>
+		string ToString();
 	}
 }

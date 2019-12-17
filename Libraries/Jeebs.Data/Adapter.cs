@@ -26,16 +26,37 @@ namespace Jeebs.Data
 		private readonly char escapeClose;
 
 		/// <summary>
+		/// Alias keyword
+		/// </summary>
+		private readonly string alias;
+
+		/// <summary>
+		/// Alias open character
+		/// </summary>
+		private readonly char aliasOpen;
+
+		/// <summary>
+		/// Alias open character
+		/// </summary>
+		private readonly char aliasClose;
+
+		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="separator">Separator character</param>
 		/// <param name="escapeOpen">Open escape character</param>
 		/// <param name="escapeClose">Close escape character</param>
-		protected Adapter(in char separator, in char escapeOpen, in char escapeClose)
+		/// <param name="alias">Alias keyword</param>
+		/// <param name="aliasOpen">Alias open character</param>
+		/// <param name="aliasClose">Alias close character</param>
+		protected Adapter(in char separator, in char escapeOpen, in char escapeClose, in string alias, in char aliasOpen, in char aliasClose)
 		{
 			this.separator = separator;
 			this.escapeOpen = escapeOpen;
 			this.escapeClose = escapeClose;
+			this.alias = alias;
+			this.aliasOpen = aliasOpen;
+			this.aliasClose = aliasClose;
 		}
 
 		#region Escaping
@@ -59,8 +80,14 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
-		public string EscapeAndJoin(string?[] elements)
+		public string EscapeAndJoin(params string?[] elements)
 		{
+			// Check for no elements
+			if (elements.Length == 0)
+			{
+				throw new ArgumentNullException(nameof(elements));
+			}
+
 			// The list of elements to escape
 			var escaped = new List<string>();
 
@@ -107,6 +134,33 @@ namespace Jeebs.Data
 			return $"{escapeOpen}{trimmed}{escapeClose}";
 		}
 
+		/// <summary>
+		/// Escape a table
+		/// </summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="table">Mapped Table</param>
+		/// <returns>Escaped name</returns>
+		public string Escape<TTable>(in TTable table) where TTable : ITable => Escape(table.ToString());
+
+		/// <summary>
+		/// Get an ExtractedColumn
+		/// </summary>
+		/// <param name="col">ExtractedColumn</param>
+		public string GetColumn(in ExtractedColumn col) => Column(string.Concat(col.Table, separator, col.Column), col.Alias);
+
+		/// <summary>
+		/// Get a MappedColumn
+		/// </summary>
+		/// <param name="col">MappedColumn</param>
+		public string GetColumn(in MappedColumn col) => Column(col.Column, col.Property.Name);
+
+		/// <summary>
+		/// Escape a column using its table and alias
+		/// </summary>
+		/// <param name="name">Column name</param>
+		/// <param name="alias">Column alias</param>
+		private string Column(string name, string alias) => $"{name} {this.alias} {aliasOpen}{alias}{aliasClose}";
+
 		#endregion
 
 		#region Queries
@@ -116,6 +170,13 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		public abstract string CreateSingleAndReturnId<T>();
+
+		/// <summary>
+		/// Build a Fluent Query
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="query">IFluentQuery</param>
+		public abstract string Retrieve<T>(IFluentQuery<T> query);
 
 		/// <summary>
 		/// Query to retrieve a single row by ID

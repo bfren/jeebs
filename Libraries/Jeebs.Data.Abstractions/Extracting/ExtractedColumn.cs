@@ -20,7 +20,7 @@ namespace Jeebs.Data
 		public string Column { get; set; }
 
 		/// <summary>
-		/// Escaped Column Alias
+		/// Column Alias
 		/// </summary>
 		public string Alias { get; set; }
 
@@ -29,7 +29,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="table">Escaped Table Name</param>
 		/// <param name="column">Escaped Column Name</param>
-		/// <param name="alias">Escaped Column Alias</param>
+		/// <param name="alias">Column Alias</param>
 		public ExtractedColumn(string table, string column, string alias)
 		{
 			Table = table;
@@ -49,16 +49,15 @@ namespace Jeebs.Data
 			/// <param name="y">ExtractedColumn 2</param>
 			/// <returns>True if the two columns are identical</returns>
 			public bool Equals(ExtractedColumn x, ExtractedColumn y)
-			{
-				return x.Table.Equals(y.Table) && x.Column.Equals(y.Column) && x.Alias.Equals(y.Alias);
-			}
+				=> x.Table.Equals(y.Table) && x.Column.Equals(y.Column) && x.Alias.Equals(y.Alias);
 
 			/// <summary>
 			/// Return object's hash code
 			/// </summary>
 			/// <param name="obj">ExtractedColumn</param>
 			/// <returns>Hash code</returns>
-			public int GetHashCode(ExtractedColumn obj) => obj.GetHashCode();
+			public int GetHashCode(ExtractedColumn obj)
+				=> obj.GetHashCode();
 		}
 	}
 }

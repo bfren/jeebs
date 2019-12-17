@@ -12,7 +12,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public MySqlAdapter() : base('.', '`', '`') { }
+		public MySqlAdapter() : base('.', '`', '`', "AS", '\'', '\'') { }
 
 		/// <summary>
 		/// Query to insert a single row and return the new ID
@@ -31,6 +31,16 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <summary>
+		/// Build a Fluent Query
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="query">IFluentQuery</param>
+		public override string Retrieve<T>(IFluentQuery<T> query)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
@@ -43,7 +53,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Add each column to the select list
 			foreach (var mc in map.Columns)
 			{
-				select.Add($"{mc} AS '{mc.Property.Name}'");
+				select.Add(GetColumn(mc));
 			}
 
 			// Return SQL
