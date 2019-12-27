@@ -12,7 +12,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public SqlServerAdapter() : base('.', '[', ']') { }
+		public SqlServerAdapter() : base('.', '[', ']', "AS", '[', ']') { }
 
 		/// <summary>
 		/// Query to insert a single row and return the new ID

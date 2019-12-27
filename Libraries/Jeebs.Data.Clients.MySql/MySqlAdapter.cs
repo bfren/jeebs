@@ -31,16 +31,6 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <summary>
-		/// Build a Fluent Query
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="query">IFluentQuery</param>
-		public override string Retrieve<T>(IFluentQuery<T> query)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>

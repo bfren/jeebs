@@ -12,6 +12,21 @@ namespace Jeebs.Data
 		#region Escaping
 
 		/// <summary>
+		/// Escape a table or column name
+		/// </summary>
+		/// <param name="name">Table or column name</param>
+		/// <returns>Escaped name</returns>
+		string Escape(in string name);
+
+		/// <summary>
+		/// Escape a table
+		/// </summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="table">Mapped Table</param>
+		/// <returns>Escaped name</returns>
+		string Escape<TTable>(in TTable table) where TTable : ITable;
+
+		/// <summary>
 		/// Split a string by '.', escape the elements, and rejoin them
 		/// </summary>
 		/// <param name="element">Elemnts (table or column names)</param>
@@ -26,19 +41,10 @@ namespace Jeebs.Data
 		string EscapeAndJoin(params string?[] elements);
 
 		/// <summary>
-		/// Escape a table or column name
+		/// Join a list of ExtractedColumn objects
 		/// </summary>
-		/// <param name="name">Table or column name</param>
-		/// <returns>Escaped name</returns>
-		string Escape(in string name);
-
-		/// <summary>
-		/// Escape a table
-		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="table">Mapped Table</param>
-		/// <returns>Escaped name</returns>
-		string Escape<TTable>(in TTable table) where TTable : ITable;
+		/// <param name="columns">ExtractedColumns</param>
+		string Join(in ExtractedColumns columns);
 
 		/// <summary>
 		/// Get an ExtractedColumn
@@ -65,13 +71,6 @@ namespace Jeebs.Data
 		#endregion
 
 		#region Queries - Retrieve
-
-		/// <summary>
-		/// Build a Fluent Query
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="query">IFluentQuery</param>
-		string Retrieve<T>(IFluentQuery<T> query);
 
 		/// <summary>
 		/// Query to retrieve a single row by ID

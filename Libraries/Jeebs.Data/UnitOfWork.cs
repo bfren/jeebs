@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -53,10 +54,17 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
+		/// Shorthand for ITables[].ExtractColumns and then IAdapter.Join
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
+		public string Extract<T>(params ITable[] tables) => adapter.Join(tables.ExtractColumns<T>());
+
+		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
-		/// <param name="element"></param>
-		public string E(in object element) => adapter.SplitAndEscape(element.ToString());
+		/// <param name="element">The element to split and escape</param>
+		public string Escape(in object element) => adapter.SplitAndEscape(element.ToString());
 
 		/// <summary>
 		/// Commit all queries - should normally be called as part of Dispose()
@@ -276,23 +284,6 @@ namespace Jeebs.Data
 		#endregion
 
 		#region R
-
-		/// <summary>
-		/// Start a new Fluent Query
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		public IDbResult<IEnumerable<T>> Query<T>(Action<FluentQuery<T>> buildQuery)
-		{
-			// Build fluent query
-			var fluent = new FluentQuery<T>(adapter);
-			buildQuery(fluent);
-
-			// Get query
-			var query = adapter.Retrieve(fluent);
-
-			// Return
-			return Query<T>(query, fluent.Parameters);
-		}
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
