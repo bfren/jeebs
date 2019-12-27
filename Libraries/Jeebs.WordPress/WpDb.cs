@@ -25,7 +25,7 @@ namespace Jeebs.WordPress
 	/// <typeparam name="Ttt">WpTermTaxonomyEntity</typeparam>
 	/// <typeparam name="Tu">WpUserEntity</typeparam>
 	/// <typeparam name="Tum">WpUserMetaEntity</typeparam>
-	public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Db<MySqlDbClient>
+	public sealed partial class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Db<MySqlDbClient>
 		where Tc : WpCommentEntity
 		where Tcm : WpCommentMetaEntity
 		where Tl : WpLinkEntity

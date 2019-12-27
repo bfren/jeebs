@@ -5,6 +5,7 @@ using Jeebs;
 using Jeebs.Config;
 using Jeebs.WordPress;
 using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Options;
 
 namespace AppConsoleWordPress.Bcg
@@ -35,5 +36,58 @@ namespace AppConsoleWordPress.Bcg
 		/// <param name="wpConfig">WpBcgConfig</param>
 		/// <param name="log">ILog</param>
 		public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog log) : base(dbConfig.Value, wpConfig.Value, log) { }
+
+		/// <summary>
+		/// Register custom fields
+		/// </summary>
+		public override void RegisterCustomFields() { }
+
+		/// <summary>
+		/// Register custom post types
+		/// </summary>
+		public override void RegisterCustomPostTypes()
+		{
+			PostType.AddCustomPostType(PostTypes.Sermon);
+		}
+
+		/// <summary>
+		/// Register custom taxonomies
+		/// </summary>
+		public override void RegisterCustomTaxonomies()
+		{
+			Taxonomy.AddCustomTaxonomy(Taxonomies.BibleBook);
+			Taxonomy.AddCustomTaxonomy(Taxonomies.PlacePreached);
+			Taxonomy.AddCustomTaxonomy(Taxonomies.Section);
+			Taxonomy.AddCustomTaxonomy(Taxonomies.Series);
+			Taxonomy.AddCustomTaxonomy(Taxonomies.Theme);
+		}
+
+		/// <summary>
+		/// Custom Fields
+		/// </summary>
+		public static class CustomFields
+		{
+
+		}
+
+		/// <summary>
+		/// Custom Post Types
+		/// </summary>
+		public static class PostTypes
+		{
+			public readonly static PostType Sermon = new PostType("sermon");
+		}
+
+		/// <summary>
+		/// Custom Taxonomies
+		/// </summary>
+		public static class Taxonomies
+		{
+			public readonly static Taxonomy BibleBook = new Taxonomy("bible_book");
+			public readonly static Taxonomy PlacePreached = new Taxonomy("place_preached");
+			public readonly static Taxonomy Section = new Taxonomy("section");
+			public readonly static Taxonomy Series = new Taxonomy("series");
+			public readonly static Taxonomy Theme = new Taxonomy("theme");
+		}
 	}
 }

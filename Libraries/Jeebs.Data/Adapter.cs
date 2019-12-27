@@ -62,6 +62,42 @@ namespace Jeebs.Data
 		#region Escaping
 
 		/// <summary>
+		/// Escape a table or column name
+		/// If <paramref name="name"/> contains the separator character, <see cref="SplitAndEscape(in string)"/> will be used instead
+		/// </summary>
+		/// <exception cref="ArgumentNullException">If <paramref name="name"/> is null, empty, or whitespace</exception>
+		/// <param name="name">Table or column name</param>
+		/// <returns>Escaped name</returns>
+		public string Escape(in string name)
+		{
+			// Don't allow blank names
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			// If the name contains the separator character, use SplitAndJoin() instead
+			if (name.Contains(separator))
+			{
+				return SplitAndEscape(name);
+			}
+
+			// Trim escape characters
+			var trimmed = name.Trim(escapeOpen, escapeClose);
+
+			// Return escaped name
+			return $"{escapeOpen}{trimmed}{escapeClose}";
+		}
+
+		/// <summary>
+		/// Escape a table
+		/// </summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="table">Mapped Table</param>
+		/// <returns>Escaped name</returns>
+		public string Escape<TTable>(in TTable table) where TTable : ITable => Escape(table.ToString());
+
+		/// <summary>
 		/// Split a string by '.', escape the elements, and rejoin them
 		/// </summary>
 		/// <param name="element">Elemnts (table or column names)</param>
@@ -107,40 +143,21 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Escape a table or column name
-		/// If <paramref name="name"/> contains the separator character, <see cref="SplitAndEscape(in string)"/> will be used instead
+		/// Join a list of ExtractedColumn objects
 		/// </summary>
-		/// <exception cref="ArgumentNullException">If <paramref name="name"/> is null, empty, or whitespace</exception>
-		/// <param name="name">Table or column name</param>
-		/// <returns>Escaped name</returns>
-		public string Escape(in string name)
+		/// <param name="columns">ExtractedColumns</param>
+		public string Join(in ExtractedColumns columns)
 		{
-			// Don't allow blank names
-			if (string.IsNullOrWhiteSpace(name))
+			// Get each column
+			var select = new List<string>();
+			foreach (var c in columns)
 			{
-				throw new ArgumentNullException(nameof(name));
+				select.Add(GetColumn(c));
 			}
 
-			// If the name contains the separator character, use SplitAndJoin() instead
-			if (name.Contains(separator))
-			{
-				return SplitAndEscape(name);
-			}
-
-			// Trim escape characters
-			var trimmed = name.Trim(escapeOpen, escapeClose);
-
-			// Return escaped name
-			return $"{escapeOpen}{trimmed}{escapeClose}";
+			// Return joined with a comma
+			return string.Join(", ", select);
 		}
-
-		/// <summary>
-		/// Escape a table
-		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="table">Mapped Table</param>
-		/// <returns>Escaped name</returns>
-		public string Escape<TTable>(in TTable table) where TTable : ITable => Escape(table.ToString());
 
 		/// <summary>
 		/// Get an ExtractedColumn
@@ -170,13 +187,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		public abstract string CreateSingleAndReturnId<T>();
-
-		/// <summary>
-		/// Build a Fluent Query
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="query">IFluentQuery</param>
-		public abstract string Retrieve<T>(IFluentQuery<T> query);
 
 		/// <summary>
 		/// Query to retrieve a single row by ID

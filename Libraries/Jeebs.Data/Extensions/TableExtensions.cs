@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Jeebs.Data.Extensions
+namespace Jeebs.Data
 {
 	/// <summary>
 	/// Perform additional functions on ITable objects
