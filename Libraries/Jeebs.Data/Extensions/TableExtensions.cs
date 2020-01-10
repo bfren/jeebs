@@ -15,13 +15,13 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="tables">Array of tables</param>
-		public static ExtractedColumns ExtractColumns<TModel>(this ITable[] tables)
+		public static ExtractedColumns ExtractColumns<TModel>(this Table[] tables)
 		{
 			// Extract matching columns from each of the tables
 			var mappedColumns = new List<ExtractedColumns>();
 			foreach (var table in tables)
 			{
-				mappedColumns.Add(table.Extract<TModel>());
+				mappedColumns.Add(Extract<TModel>.From(table));
 			}
 
 			// Now create a master list of all the extracted columns

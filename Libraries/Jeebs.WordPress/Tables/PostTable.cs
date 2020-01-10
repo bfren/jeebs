@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Post Table
 	/// </summary>
-	public sealed class PostTable<T> : Table<T>
-		where T : WpPostEntity
+	public sealed class PostTable : Table
 	{
 		/// <summary>
 		/// PostId
@@ -96,8 +95,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public PostTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}posts") { }
+		public PostTable(in string prefix) : base($"{prefix}posts") { }
 	}
 }

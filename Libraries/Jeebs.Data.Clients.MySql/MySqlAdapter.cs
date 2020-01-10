@@ -47,7 +47,7 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Return SQL
-			return $"SELECT {string.Join(", ", select)} FROM {map} WHERE {map.IdColumn} = @id;";
+			return $"SELECT {string.Join(", ", select)} FROM {map} WHERE {map.IdColumn} = @Id;";
 		}
 
 		/// <summary>

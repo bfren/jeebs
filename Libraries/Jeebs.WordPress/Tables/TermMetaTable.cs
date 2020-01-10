@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Term Meta Table
 	/// </summary>
-	public sealed class TermMetaTable<T> : Table<T>
-		where T : WpTermMetaEntity
+	public sealed class TermMetaTable : Table
 	{
 		/// <summary>
 		/// TermMetaId
@@ -36,8 +35,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermMetaTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}termmeta") { }
+		public TermMetaTable(in string prefix) : base($"{prefix}termmeta") { }
 	}
 }

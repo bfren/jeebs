@@ -9,7 +9,7 @@ namespace Jeebs.Data
 	/// Database
 	/// </summary>
 	/// <typeparam name="TDbClient">Database Client type</typeparam>
-	public class Db<TDbClient>
+	public class Db<TDbClient> : IDb
 		where TDbClient : IDbClient, new()
 	{
 		/// <summary>
@@ -31,7 +31,7 @@ namespace Jeebs.Data
 		/// Create a new UnitOfWork
 		/// </summary>
 		/// <exception cref="Jx.Data.ConnectionException">If the connection string has not yet been set</exception>
-		public UnitOfWork UnitOfWork
+		public IUnitOfWork UnitOfWork
 		{
 			get
 			{

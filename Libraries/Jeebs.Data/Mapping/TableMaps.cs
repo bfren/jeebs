@@ -33,7 +33,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <exception cref="Jx.Data.MappingException">If <typeparamref name="TEntity"/> has already been mapped</exception>
 		/// <param name="map">TableMap</param>
-		public static void Add<TEntity>(TableMap map)
+		internal static void Add<TEntity>(TableMap map)
 		{
 			// Don't map the same entity twice
 			if (Exists<TEntity>())

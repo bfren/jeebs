@@ -13,7 +13,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Database Unit of Work
 	/// </summary>
-	public sealed class UnitOfWork : IDisposable
+	public sealed class UnitOfWork : IUnitOfWork
 	{
 		/// <summary>
 		/// Provides thread-safe locking
@@ -54,11 +54,11 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Shorthand for ITables[].ExtractColumns and then IAdapter.Join
+		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
-		public string Extract<T>(params ITable[] tables) => adapter.Join(tables.ExtractColumns<T>());
+		public string Extract<T>(params Table[] tables) => adapter.Join(tables.ExtractColumns<T>());
 
 		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape

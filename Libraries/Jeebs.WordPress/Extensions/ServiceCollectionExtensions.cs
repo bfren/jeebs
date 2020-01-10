@@ -19,9 +19,7 @@ namespace Jeebs.WordPress
 		/// <param name="services">IServiceCollection</param>
 		/// <param name="section">[Optional] Section Key for retrieving WordPress configuration</param>
 		public static FluentWordPress AddWordPressInstance(this IServiceCollection services, in string section = WpConfig.Key)
-		{
-			return new FluentWordPress(ref services, section);
-		}
+			=> new FluentWordPress(ref services, section);
 
 		/// <summary>
 		/// Fluently configure WordPress registration
@@ -56,7 +54,7 @@ namespace Jeebs.WordPress
 			/// <typeparam name="TWpConfig">WordPress configuration</typeparam>
 			/// <param name="config">IConfiguration</param>
 			public IServiceCollection Using<TWp, TWpConfig>(IConfiguration config)
-				where TWp : class
+				where TWp : class, IWp<TWpConfig>
 				where TWpConfig : WpConfig
 			{
 				Services.AddSingleton<TWp>();

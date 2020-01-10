@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Option Table
 	/// </summary>
-	public sealed class OptionTable<T> : Table<T>
-		where T : WpOptionEntity
+	public sealed class OptionTable : Table
 	{
 		/// <summary>
 		/// OptionId
@@ -36,8 +35,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public OptionTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}options") { }
+		public OptionTable(in string prefix) : base($"{prefix}options") { }
 	}
 }

@@ -90,12 +90,12 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Escape a table
+		/// Escape a table name
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Mapped Table</param>
 		/// <returns>Escaped name</returns>
-		public string Escape<TTable>(in TTable table) where TTable : ITable => Escape(table.ToString());
+		public string Escape<TTable>(in TTable table) where TTable : notnull => Escape(table.ToString());
 
 		/// <summary>
 		/// Split a string by '.', escape the elements, and rejoin them

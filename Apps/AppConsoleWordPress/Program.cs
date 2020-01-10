@@ -27,7 +27,7 @@ namespace AppConsoleWordPress
 			var bcg = provider.GetService<WpBcg>();
 			var usa = provider.GetService<WpUsa>();
 
-			using (UnitOfWork w0 = bcg.Db.UnitOfWork, w1 = usa.Db.UnitOfWork)
+			using (IUnitOfWork w0 = bcg.Db.UnitOfWork, w1 = usa.Db.UnitOfWork)
 			{
 				var _0 = bcg.Db;
 				var _1 = usa.Db;
@@ -67,6 +67,7 @@ namespace AppConsoleWordPress
 					$"ORDER BY {_0.Term}.{_0.Term.Title};";
 
 				var terms = w0.Query<TermModel>(getTermQuery, new { count = 10 });
+
 				if (terms is Success<IEnumerable<TermModel>> termsSuccess)
 				{
 					Console.WriteLine($"Terms: {termsSuccess.Value.Count()}");

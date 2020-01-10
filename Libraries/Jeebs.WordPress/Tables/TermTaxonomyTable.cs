@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Term Taxonomy Table
 	/// </summary>
-	public sealed class TermTaxonomyTable<T> : Table<T>
-		where T : WpTermTaxonomyEntity
+	public sealed class TermTaxonomyTable : Table
 	{
 		/// <summary>
 		/// TermTaxonomyId
@@ -46,8 +45,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTaxonomyTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}term_taxonomy") { }
+		public TermTaxonomyTable(in string prefix) : base($"{prefix}term_taxonomy") { }
 	}
 }

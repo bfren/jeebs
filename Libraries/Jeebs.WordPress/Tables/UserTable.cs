@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// User Table
 	/// </summary>
-	public sealed class UserTable<T> : Table<T>
-		where T : WpUserEntity
+	public sealed class UserTable : Table
 	{
 		/// <summary>
 		/// UserId
@@ -66,8 +65,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public UserTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}users") { }
+		public UserTable(in string prefix) : base($"{prefix}users") { }
 	}
 }

@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Post Meta Table
 	/// </summary>
-	public sealed class PostMetaTable<T> : Table<T>
-		where T : WpPostMetaEntity
+	public sealed class PostMetaTable : Table
 	{
 		/// <summary>
 		/// PostMetaId
@@ -36,8 +35,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public PostMetaTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}postmeta") { }
+		public PostMetaTable(in string prefix) : base($"{prefix}postmeta") { }
 	}
 }

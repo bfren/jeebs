@@ -77,7 +77,7 @@ namespace Jeebs.Data.Clients.MySql.Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			new FooTable(adapter);
+			Map<Foo>.To(new FooTable(), adapter);
 			const string expected = "INSERT INTO `foo` (`foo_bar0`, `foo_bar1`) VALUES (@Bar0, @Bar1); SELECT LAST_INSERT_ID();";
 
 			// Act
@@ -92,10 +92,8 @@ namespace Jeebs.Data.Clients.MySql.Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			new FooTable(adapter);
-			new FooWithVersionTable(adapter);
-
-			const string expected = "SELECT `foo_id` AS 'Id', `foo_bar0` AS 'Bar0', `foo_bar1` AS 'Bar1' FROM `foo` WHERE `foo_id` = '1';";
+			Map<Foo>.To(new FooTable(), adapter);
+			const string expected = "SELECT `foo_id` AS 'Id', `foo_bar0` AS 'Bar0', `foo_bar1` AS 'Bar1' FROM `foo` WHERE `foo_id` = @Id;";
 
 			// Act
 			var result = adapter.RetrieveSingleById<Foo>();
@@ -109,8 +107,8 @@ namespace Jeebs.Data.Clients.MySql.Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			new FooTable(adapter);
-			new FooWithVersionTable(adapter);
+			Map<Foo>.To(new FooTable(), adapter);
+			Map<FooWithVersion>.To(new FooWithVersionTable(), adapter);
 			const string expected = "UPDATE `foo` SET `foo_bar0` = @Bar0, `foo_bar1` = @Bar1 WHERE `foo_id` = @Id;";
 			const string expected_with_version = "UPDATE `foo_with_version` SET `foo_bar0` = @Bar0, `foo_bar1` = @Bar1, `foo_version` = @Version " +
 				"WHERE `foo_id` = @Id AND `foo_version` = @Version - 1;";
@@ -129,8 +127,8 @@ namespace Jeebs.Data.Clients.MySql.Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			new FooTable(adapter);
-			new FooWithVersionTable(adapter);
+			Map<Foo>.To(new FooTable(), adapter);
+			Map<FooWithVersion>.To(new FooWithVersionTable(), adapter);
 			const string expected = "DELETE FROM `foo` WHERE `foo_id` = @Id;";
 			const string expected_with_version = "DELETE FROM `foo_with_version` WHERE `foo_id` = @Id AND `foo_version` = @Version;";
 
@@ -159,7 +157,7 @@ namespace Jeebs.Data.Clients.MySql.Tests
 			public long Version { get; set; }
 		}
 
-		class FooTable : Table<Foo>
+		class FooTable : Table
 		{
 			public readonly string Id = "foo_id";
 
@@ -167,10 +165,10 @@ namespace Jeebs.Data.Clients.MySql.Tests
 
 			public readonly string Bar1 = "foo_bar1";
 
-			public FooTable(in IAdapter adapter) : base(adapter, "foo") { }
+			public FooTable() : base("foo") { }
 		}
 
-		class FooWithVersionTable : Table<FooWithVersion>
+		class FooWithVersionTable : Table
 		{
 			public readonly string Id = "foo_id";
 
@@ -180,7 +178,7 @@ namespace Jeebs.Data.Clients.MySql.Tests
 
 			public readonly string Version = "foo_version";
 
-			public FooWithVersionTable(in IAdapter adapter) : base(adapter, "foo_with_version") { }
+			public FooWithVersionTable() : base("foo_with_version") { }
 		}
 	}
 }

@@ -19,12 +19,12 @@ namespace Jeebs.Data
 		string Escape(in string name);
 
 		/// <summary>
-		/// Escape a table
+		/// Escape a table name
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Mapped Table</param>
 		/// <returns>Escaped name</returns>
-		string Escape<TTable>(in TTable table) where TTable : ITable;
+		string Escape<TTable>(in TTable table) where TTable : notnull;
 
 		/// <summary>
 		/// Split a string by '.', escape the elements, and rejoin them

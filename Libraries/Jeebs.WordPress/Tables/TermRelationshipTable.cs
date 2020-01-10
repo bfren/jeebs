@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Term Relationship Table
 	/// </summary>
-	public sealed class TermRelationshipTable<T> : Table<T>
-		where T : WpTermRelationshipEntity
+	public sealed class TermRelationshipTable : Table
 	{
 		/// <summary>
 		/// PostId
@@ -31,8 +30,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermRelationshipTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}term_relationships") { }
+		public TermRelationshipTable(in string prefix) : base($"{prefix}term_relationships") { }
 	}
 }

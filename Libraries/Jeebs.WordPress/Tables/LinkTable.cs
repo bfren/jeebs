@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Link Table
 	/// </summary>
-	public sealed class LinkTable<T> : Table<T>
-		where T : WpLinkEntity
+	public sealed class LinkTable : Table
 	{
 		/// <summary>
 		/// LinkId
@@ -86,8 +85,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public LinkTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}links") { }
+		public LinkTable(in string prefix) : base($"{prefix}links") { }
 	}
 }

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// DbResult
+	/// </summary>
 	public static partial class DbResult
 	{
 		#region Success

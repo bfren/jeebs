@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// User Table
 	/// </summary>
-	public sealed class UserMetaTable<T> : Table<T>
-		where T : WpUserMetaEntity
+	public sealed class UserMetaTable : Table
 	{
 		/// <summary>
 		/// UserMetaId
@@ -36,8 +35,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public UserMetaTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}usermeta") { }
+		public UserMetaTable(in string prefix) : base($"{prefix}usermeta") { }
 	}
 }

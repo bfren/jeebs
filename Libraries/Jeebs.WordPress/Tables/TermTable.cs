@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Term Table
 	/// </summary>
-	public sealed class TermTable<T> : Table<T>
-		where T : WpTermEntity
+	public sealed class TermTable : Table
 	{
 		/// <summary>
 		/// TermId
@@ -36,8 +35,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}terms") { }
+		public TermTable(in string prefix) : base($"{prefix}terms") { }
 	}
 }

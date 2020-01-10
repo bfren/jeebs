@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// Database results
+	/// </summary>
 	public static partial class DbResult
 	{
 		/// <summary>

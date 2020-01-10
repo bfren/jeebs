@@ -10,7 +10,7 @@ namespace Jeebs.WordPress
 	/// WordPress wrapper
 	/// </summary>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
-	public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>
+	public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : IWp<TConfig>
 		where TConfig : WpConfig
 		where Tc : WpCommentEntity
 		where Tcm : WpCommentMetaEntity
@@ -38,7 +38,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// WordPress database instance
 		/// </summary>
-		public WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> Db { get; }
+		public IWpDb Db { get; }
 
 		/// <summary>
 		/// Create object and register custom fields / post types / taxonomies

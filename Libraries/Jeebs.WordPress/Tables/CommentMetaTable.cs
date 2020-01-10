@@ -10,8 +10,7 @@ namespace Jeebs.WordPress.Tables
 	/// <summary>
 	/// Comment Meta Table
 	/// </summary>
-	public sealed class CommentMetaTable<T> : Table<T>
-		where T : WpCommentMetaEntity
+	public sealed class CommentMetaTable : Table
 	{
 		/// <summary>
 		/// CommentMetaId
@@ -36,8 +35,7 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="adapter">IAdapter</param>
-		/// <param name="prefix">Table prefix</param>
-		public CommentMetaTable(in IAdapter adapter, in string prefix) : base(adapter, $"{prefix}commentmeta") { }
+		/// <param name="prefix">Table Prefix</param>
+		public CommentMetaTable(in string prefix) : base($"{prefix}commentmeta") { }
 	}
 }
