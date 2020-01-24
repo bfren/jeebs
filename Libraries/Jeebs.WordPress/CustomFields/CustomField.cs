@@ -19,22 +19,22 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Custom Field value
 		/// </summary>
-		public T Value { get; internal set; }
+		public abstract T Val { get; }
+
+		/// <summary>
+		/// String representation of the value - normally retrieved from the database
+		/// </summary>
+		protected readonly string value = string.Empty;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
-		/// <param name="defaultValue">Default value</param>
-		protected CustomField(in string key, in T defaultValue)
-		{
-			Key = key;
-			Value = defaultValue;
-		}
+		protected CustomField(in string key) => Key = key;
 
 		/// <summary>
-		/// Return the post_meta key instead of the class name
+		/// Return the value, or post_meta key (instead of the class name)
 		/// </summary>
-		public override string ToString() => Key;
+		public override string ToString() => Val?.ToString() ?? Key;
 	}
 }

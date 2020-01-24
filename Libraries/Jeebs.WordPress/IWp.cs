@@ -21,5 +21,20 @@ namespace Jeebs.WordPress
 		/// WordPress database instance
 		/// </summary>
 		IWpDb Db { get; }
+
+		/// <summary>
+		/// Register custom fields
+		/// </summary>
+		void RegisterCustomFields();
+
+		/// <summary>
+		/// Register custom post types
+		/// </summary>
+		void RegisterCustomPostTypes();
+
+		/// <summary>
+		/// Register custom taxonomies
+		/// </summary>
+		void RegisterCustomTaxonomies();
 	}
 }

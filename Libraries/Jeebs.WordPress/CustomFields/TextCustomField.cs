@@ -10,15 +10,14 @@ namespace Jeebs.WordPress
 	public abstract class TextCustomField : CustomField<string>
 	{
 		/// <summary>
+		/// Custom Field value
+		/// </summary>
+		public override string Val => value;
+
+		/// <summary>
 		/// Pass post_meta key to parent
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
-		protected TextCustomField(string key) : base(key, string.Empty) { }
-
-		/// <summary>
-		/// Return custom field value
-		/// </summary>
-		/// <returns>Custom field value</returns>
-		public override string ToString() => Value ?? base.ToString();
+		protected TextCustomField(string key) : base(key) { }
 	}
 }
