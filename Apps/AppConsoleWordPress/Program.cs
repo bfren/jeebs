@@ -33,16 +33,16 @@ namespace AppConsoleWordPress
 				var _1 = usa.Db;
 
 				var count0 = w0.ExecuteScalar<int>($"SELECT COUNT(*) FROM {_0.Term} WHERE {_0.Term.Slug} LIKE @a;", new { a = "%a%" });
-				if (count0 is Success<int> success0)
-				{
-					Console.WriteLine($"There are {success0.Val} terms in BCG.");
-				}
+				Console.WriteLine(count0.Err is ErrorList
+					? $"{count0.Err}"
+					: $"There are {count0.Val} terms in BCG."
+				);
 
 				var count1 = w0.ExecuteScalar<int>($"SELECT COUNT(*) FROM {_1.Term} WHERE {_1.Term.Slug} LIKE @a;", new { a = "%a%" });
-				if (count1 is Success<int> success1)
-				{
-					Console.WriteLine($"There are {success1.Val} terms in USA.");
-				}
+				Console.WriteLine(count1.Err is ErrorList
+					? $"{count1.Err}"
+					: $"There are {count1.Val} terms in USA."
+				);
 
 				var opt = new Bcg.Entities.Option
 				{
@@ -51,14 +51,10 @@ namespace AppConsoleWordPress
 				};
 
 				var inserted = await w0.InsertAsync(opt);
-				if (inserted is Success<Bcg.Entities.Option> success)
-				{
-					Console.WriteLine($"Test option '{success.Val.Key}' = '{success.Val.Value}'.");
-				}
-				else
-				{
-					Console.WriteLine($"{inserted}");
-				}
+				Console.WriteLine(inserted.Err is ErrorList
+					? $"{inserted.Err}"
+					: $"Test option '{inserted.Val.Key}' = '{inserted.Val.Value}'."
+				);
 			}
 
 			// End

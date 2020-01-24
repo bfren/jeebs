@@ -15,35 +15,15 @@ namespace ConsoleApp
 			log.Debug("Services loaded");
 			log.Debug("Project {ProjectName}", config.GetJeebsConfig().App.Project);
 
-			Console.ReadLine();
-
-
-
-
 			var r1 = Do(true);
 			var r2 = Do(false);
 
-			if (r1.Err is ErrorList e1)
-			{
-				Console.WriteLine($"r1 failed : {e1}");
-			}
-			else
-			{
-				Console.WriteLine($"r1 value : {r1.Val}");
-			}
+			Write(r1, 1);
+			Write(r2, 2);
 
-			if (r2.Err is ErrorList e2)
-			{
-				Console.WriteLine($"r2 failed : {e2}");
-			}
-			else
-			{
-				Console.WriteLine($"r2 value : {r2.Val}");
-			}
+			Console.ReadLine();
 
-
-
-			Result<Test> Do(bool succeed)
+			static Result<Test> Do(bool succeed)
 			{
 				if (succeed)
 				{
@@ -53,6 +33,11 @@ namespace ConsoleApp
 				{
 					return Result.Failure<Test>(new[] { "Something went wrong" });
 				}
+			}
+
+			static void Write(Result<Test> r, int num)
+			{
+				Console.WriteLine(r.Err is ErrorList e ? $"r{num} failed : {e}" : $"r{num} value : Text = '{r.Val.Text}', Num = {r.Val.Num}");
 			}
 		});
 	}
