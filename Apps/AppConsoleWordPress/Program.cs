@@ -35,13 +35,13 @@ namespace AppConsoleWordPress
 				var count0 = w0.ExecuteScalar<int>($"SELECT COUNT(*) FROM {_0.Term} WHERE {_0.Term.Slug} LIKE @a;", new { a = "%a%" });
 				if (count0 is Success<int> success0)
 				{
-					Console.WriteLine($"There are {success0.Value} terms in BCG.");
+					Console.WriteLine($"There are {success0.Val} terms in BCG.");
 				}
 
 				var count1 = w0.ExecuteScalar<int>($"SELECT COUNT(*) FROM {_1.Term} WHERE {_1.Term.Slug} LIKE @a;", new { a = "%a%" });
 				if (count1 is Success<int> success1)
 				{
-					Console.WriteLine($"There are {success1.Value} terms in USA.");
+					Console.WriteLine($"There are {success1.Val} terms in USA.");
 				}
 
 				var opt = new Bcg.Entities.Option
@@ -53,33 +53,11 @@ namespace AppConsoleWordPress
 				var inserted = await w0.InsertAsync(opt);
 				if (inserted is Success<Bcg.Entities.Option> success)
 				{
-					Console.WriteLine($"Test option '{success.Value.Key}' = '{success.Value.Value}'.");
+					Console.WriteLine($"Test option '{success.Val.Key}' = '{success.Val.Value}'.");
 				}
 				else
 				{
 					Console.WriteLine($"{inserted}");
-				}
-
-				var getTermQuery = $"SELECT {w0.Extract<TermModel>(_0.Term, _0.TermTaxonomy)} " +
-					$"FROM {_0.Term} " +
-					$"INNER JOIN {_0.TermTaxonomy} ON {_0.Term}.{_0.Term.TermId} = {_0.TermTaxonomy}.{_0.TermTaxonomy.TermId} " +
-					$"WHERE {_0.TermTaxonomy}.{_0.TermTaxonomy.Count} > @count " +
-					$"ORDER BY {_0.Term}.{_0.Term.Title};";
-
-				var terms = w0.Query<TermModel>(getTermQuery, new { count = 10 });
-
-				if (terms is Success<IEnumerable<TermModel>> termsSuccess)
-				{
-					Console.WriteLine($"Terms: {termsSuccess.Value.Count()}");
-
-					foreach (var item in termsSuccess.Value)
-					{
-						Console.WriteLine("{0}, {1} ({2})", item.Title, item.Taxonomy, item.Count);
-					}
-				}
-				else
-				{
-					Console.WriteLine($"{terms}");
 				}
 			}
 

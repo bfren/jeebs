@@ -40,22 +40,20 @@ namespace Jeebs
 		static Enum() => cache = new ConcurrentDictionary<string, object>();
 
 		/// <summary>
-		/// If the specified name matches the given value, return the value - otherwise null
+		/// Check whether or not the specified name matches the given value
 		/// </summary>
 		/// <typeparam name="T">Enum value type</typeparam>
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
-		/// <param name="match">Matched Enum value</param>
-		/// <returns>Matching Enum value, or null if there was no match</returns>
-		private static IResult<T> Check<T>(in string name, in T value) 
+		private static Result<T> Check<T>(in string name, in T value)
 			where T : Enum
 		{
 			if (string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase))
 			{
-				return new Success<T>(value);
+				return Result.Success(value);
 			}
 
-			return new Failure<T>();
+			return Result.Failure<T>($"'{value}' does not match '{name}'.");
 		}
 
 		/// <summary>
@@ -79,7 +77,7 @@ namespace Jeebs
 					{
 						if (Check(args.Name, item) is Success<T> success)
 						{
-							return success.Value;
+							return success.Val;
 						}
 					}
 
@@ -94,7 +92,7 @@ namespace Jeebs
 		/// Parse Arguments
 		/// </summary>
 		/// <typeparam name="T">Enum Type</typeparam>
-		private class ParseArgs<T> 
+		private class ParseArgs<T>
 			where T : Enum
 		{
 			/// <summary>

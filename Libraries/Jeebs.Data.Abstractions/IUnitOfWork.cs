@@ -41,7 +41,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		IDbResult<T> Insert<T>(T poco) where T : class, IEntity;
+		Result<T> Insert<T>(T poco) where T : class, IEntity;
 
 		/// <summary>
 		/// Insert an entity
@@ -49,7 +49,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public Task<IDbResult<T>> InsertAsync<T>(T poco) where T : class, IEntity;
+		public Task<Result<T>> InsertAsync<T>(T poco) where T : class, IEntity;
 
 		#endregion
 
@@ -61,7 +61,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		IDbResult<IEnumerable<dynamic>> Query(in string query, in object? parameters = null);
+		Result<IEnumerable<dynamic>> Query(in string query, in object? parameters = null);
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
@@ -69,7 +69,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		Task<IDbResult<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null);
+		Task<Result<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null);
 
 		/// <summary>
 		/// Run a query against the database
@@ -78,7 +78,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		IDbResult<IEnumerable<T>> Query<T>(string query, object? parameters = null);
+		Result<IEnumerable<T>> Query<T>(string query, object? parameters = null);
 
 		/// <summary>
 		/// Run a query against the database
@@ -87,7 +87,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		Task<IDbResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null);
+		Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null);
 
 		/// <summary>
 		/// Get an entity from the database by ID
@@ -95,7 +95,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		IDbResult<T> Single<T>(int id) where T : class, IEntity;
+		Result<T> Single<T>(int id) where T : class, IEntity;
 
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
@@ -103,7 +103,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Object or default value</returns>
-		IDbResult<T> Single<T>(string query, object parameters);
+		Result<T> Single<T>(string query, object parameters);
 
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
@@ -111,7 +111,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Object or default value</returns>
-		Task<IDbResult<T>> SingleAsync<T>(string query, object parameters);
+		Task<Result<T>> SingleAsync<T>(string query, object parameters);
 
 		#endregion
 
@@ -122,8 +122,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
-		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		IDbResult Update<T>(in T poco) where T : class, IEntity;
+		/// <returns>IResult - Whether or not the update was successful</returns>
+		Result<bool> Update<T>(in T poco) where T : class, IEntity;
 
 		#endregion
 
@@ -134,16 +134,16 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
-		/// <result>IDbResult - Whether or not the delete was successful</result>
-		IDbResult Delete<T>(in T poco) where T : class, IEntity;
+		/// <result>IResult - Whether or not the delete was successful</result>
+		Result<bool> Delete<T>(in T poco) where T : class, IEntity;
 
 		/// <summary>
 		/// Delete an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
-		/// <result>IDbResult - Whether or not the delete was successful</result>
-		Task<IDbResult> DeleteAsync<T>(T poco) where T : class, IEntity;
+		/// <result>IResult - Whether or not the delete was successful</result>
+		Task<Result<bool>> DeleteAsync<T>(T poco) where T : class, IEntity;
 
 		#endregion
 
@@ -155,7 +155,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Affected rows</returns>
-		IDbResult<int> Execute(in string query, in object? parameters = null);
+		Result<int> Execute(in string query, in object? parameters = null);
 
 		/// <summary>
 		/// Execute a query on the database
@@ -163,7 +163,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Affected rows</returns>
-		Task<IDbResult<int>> ExecuteAsync(string query, object? parameters = null);
+		Task<Result<int>> ExecuteAsync(string query, object? parameters = null);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
@@ -171,8 +171,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Return type</typeparam>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		IDbResult<T> ExecuteScalar<T>(in string query, in object? parameters = null);
+		/// <returns>IResult - on success, Value is Scalar value T</returns>
+		Result<T> ExecuteScalar<T>(in string query, in object? parameters = null);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
@@ -180,8 +180,8 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Return type</typeparam>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		Task<IDbResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null);
+		/// <returns>IResult - on success, Value is Scalar value T</returns>
+		Task<Result<T>> ExecuteScalarAsync<T>(string query, object? parameters = null);
 
 		#endregion
 	}

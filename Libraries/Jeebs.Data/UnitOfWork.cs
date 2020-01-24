@@ -130,7 +130,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private DbResult.DbFailure Fail(string error, params object[] args)
+		private Failure Fail(string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -139,7 +139,7 @@ namespace Jeebs.Data
 			log.Error(error, args);
 
 			// Return failure object
-			return DbResult.Failure(error);
+			return Result.Failure(error);
 		}
 
 		/// <summary>
@@ -151,7 +151,7 @@ namespace Jeebs.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private DbResult.DbFailure Fail(Exception ex, string error, params object[] args)
+		private Failure Fail(Exception ex, string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -160,7 +160,7 @@ namespace Jeebs.Data
 			log.Error(ex, error, args);
 
 			// Return failure object
-			return DbResult.Failure(error);
+			return Result.Failure(error);
 		}
 
 		/// <summary>
@@ -172,7 +172,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Return value type</typeparam>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private DbResult.DbFailure<T> Fail<T>(string error, params object[] args)
+		private Failure<T> Fail<T>(string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -181,7 +181,7 @@ namespace Jeebs.Data
 			log.Error(error, args);
 
 			// Return failure object
-			return DbResult.Failure<T>(error);
+			return Result.Failure<T>(error);
 		}
 
 		/// <summary>
@@ -194,7 +194,7 @@ namespace Jeebs.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private DbResult.DbFailure<T> Fail<T>(Exception ex, string error, params object[] args)
+		private Failure<T> Fail<T>(Exception ex, string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -203,7 +203,7 @@ namespace Jeebs.Data
 			log.Error(ex, error, args);
 
 			// Return failure object
-			return DbResult.Failure<T>(error);
+			return Result.Failure<T>(error);
 		}
 
 		#endregion
@@ -216,7 +216,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public IDbResult<T> Insert<T>(T poco)
+		public Result<T> Insert<T>(T poco)
 			where T : class, IEntity
 		{
 			// Declare here so accessible outside try...catch
@@ -252,7 +252,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public async Task<IDbResult<T>> InsertAsync<T>(T poco)
+		public async Task<Result<T>> InsertAsync<T>(T poco)
 			where T : class, IEntity
 		{
 			// Declare here so accessible outside try...catch
@@ -291,7 +291,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		public IDbResult<IEnumerable<dynamic>> Query(in string query, in object? parameters = null)
+		public Result<IEnumerable<dynamic>> Query(in string query, in object? parameters = null)
 		{
 			try
 			{
@@ -300,7 +300,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Connection.Query<dynamic>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -317,7 +317,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		public async Task<IDbResult<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null)
+		public async Task<Result<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null)
 		{
 			try
 			{
@@ -326,7 +326,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -344,7 +344,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		public IDbResult<IEnumerable<T>> Query<T>(string query, object? parameters = null)
+		public Result<IEnumerable<T>> Query<T>(string query, object? parameters = null)
 		{
 			try
 			{
@@ -353,7 +353,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Connection.Query<T>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -371,7 +371,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		public async Task<IDbResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null)
+		public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null)
 		{
 			try
 			{
@@ -380,7 +380,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -397,7 +397,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		public IDbResult<T> Single<T>(int id)
+		public Result<T> Single<T>(int id)
 			where T : class, IEntity
 		{
 			try
@@ -408,7 +408,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Connection.QuerySingle<T>(query, param: new { id }, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -422,7 +422,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		/// <returns>Entity (or null if not found)</returns>
-		private async Task<IDbResult<T>> SingleAsync<T>(int id)
+		private async Task<Result<T>> SingleAsync<T>(int id)
 			where T : class, IEntity
 		{
 			try
@@ -433,7 +433,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Connection.QuerySingleAsync<T>(query, param: new { id }, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -447,7 +447,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Object or default value</returns>
-		public IDbResult<T> Single<T>(string query, object parameters)
+		public Result<T> Single<T>(string query, object parameters)
 		{
 			try
 			{
@@ -456,7 +456,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -473,7 +473,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Object or default value</returns>
-		public async Task<IDbResult<T>> SingleAsync<T>(string query, object parameters)
+		public async Task<Result<T>> SingleAsync<T>(string query, object parameters)
 		{
 			try
 			{
@@ -482,7 +482,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -503,7 +503,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		public IDbResult Update<T>(in T poco)
+		public Result<bool> Update<T>(in T poco)
 			where T : class, IEntity
 		{
 			lock (_)
@@ -525,7 +525,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		private IDbResult UpdateWithVersion<T>(in T poco)
+		private Result<bool> UpdateWithVersion<T>(in T poco)
 			where T : class, IEntityWithVersion
 		{
 			var currentVersion = poco.Version;
@@ -542,7 +542,7 @@ namespace Jeebs.Data
 				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
-					return DbResult.Success();
+					return Result.Success();
 				}
 
 				return Fail(error);
@@ -559,7 +559,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		private IDbResult UpdateWithoutVersion<T>(in T poco)
+		private Result<bool> UpdateWithoutVersion<T>(in T poco)
 			where T : class, IEntity
 		{
 			var error = $"Unable to update {typeof(T)} '{poco.Id}'.";
@@ -574,7 +574,7 @@ namespace Jeebs.Data
 				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
-					return DbResult.Success();
+					return Result.Success();
 				}
 
 				return Fail(error);
@@ -595,7 +595,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IDbResult - Whether or not the delete was successful</result>
-		public IDbResult Delete<T>(in T poco)
+		public Result<bool> Delete<T>(in T poco)
 			where T : class, IEntity
 		{
 			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
@@ -610,7 +610,7 @@ namespace Jeebs.Data
 				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
-					return DbResult.Success();
+					return Result.Success();
 				}
 
 				return Fail(error);
@@ -627,7 +627,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IDbResult - Whether or not the delete was successful</result>
-		public async Task<IDbResult> DeleteAsync<T>(T poco)
+		public async Task<Result<bool>> DeleteAsync<T>(T poco)
 			where T : class, IEntity
 		{
 			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
@@ -642,7 +642,7 @@ namespace Jeebs.Data
 				var rowsAffected = await Connection.ExecuteAsync(query, param: poco, transaction: transaction);
 				if (rowsAffected == 1)
 				{
-					return DbResult.Success();
+					return Result.Success();
 				}
 
 				return Fail(error);
@@ -663,7 +663,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Affected rows</returns>
-		public IDbResult<int> Execute(in string query, in object? parameters = null)
+		public Result<int> Execute(in string query, in object? parameters = null)
 		{
 			try
 			{
@@ -672,7 +672,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var affectedRows = Connection.Execute(query, param: parameters, transaction: transaction);
-				return DbResult.Success(affectedRows);
+				return Result.Success(affectedRows);
 			}
 			catch (Exception ex)
 			{
@@ -686,7 +686,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Affected rows</returns>
-		public async Task<IDbResult<int>> ExecuteAsync(string query, object? parameters = null)
+		public async Task<Result<int>> ExecuteAsync(string query, object? parameters = null)
 		{
 			try
 			{
@@ -695,7 +695,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: transaction);
-				return DbResult.Success(affectedRows);
+				return Result.Success(affectedRows);
 			}
 			catch (Exception ex)
 			{
@@ -710,7 +710,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		public IDbResult<T> ExecuteScalar<T>(in string query, in object? parameters = null)
+		public Result<T> ExecuteScalar<T>(in string query, in object? parameters = null)
 		{
 			try
 			{
@@ -719,7 +719,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
@@ -734,7 +734,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		public async Task<IDbResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null)
+		public async Task<Result<T>> ExecuteScalarAsync<T>(string query, object? parameters = null)
 		{
 			try
 			{
@@ -743,7 +743,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: transaction);
-				return DbResult.Success(result);
+				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
