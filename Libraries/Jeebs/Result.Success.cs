@@ -19,7 +19,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="value">Success value</param>
-		public static Success<T> Success<T>(T value) => new Success<T>(value);
+		public static Success<T> Success<T>(in T value) => new Success<T>(value);
 	}
 
 	/// <summary>
@@ -43,6 +43,6 @@ namespace Jeebs
 		/// Create object with specified value
 		/// </summary>
 		/// <param name="value">Success value</param>
-		internal Success(T value) : base(value) { }
+		internal Success(in T value) : base(value) { }
 	}
 }

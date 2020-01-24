@@ -14,14 +14,14 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="errors">List of errors - MUST contain at least one</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static Failure Failure(string[] errors) => new Failure(errors);
+		public static Failure Failure(in string[] errors) => new Failure(errors);
 
 		/// <summary>
 		/// Simple failure
 		/// </summary>
 		/// <param name="error">Single error</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static Failure Failure(string error) => Failure(new[] { error });
+		public static Failure Failure(in string error) => Failure(new[] { error });
 
 		/// <summary>
 		/// Feailure result
@@ -29,7 +29,7 @@ namespace Jeebs
 		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="errors">List of errors - MUST contain at least one</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static Failure<T> Failure<T>(string[] errors) => new Failure<T>(errors);
+		public static Failure<T> Failure<T>(in string[] errors) => new Failure<T>(errors);
 
 		/// <summary>
 		/// Feailure result
@@ -37,7 +37,7 @@ namespace Jeebs
 		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="error">Single error</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static Failure<T> Failure<T>(string error) => Failure<T>(new[] { error });
+		public static Failure<T> Failure<T>(in string error) => Failure<T>(new[] { error });
 	}
 
 	/// <summary>
@@ -49,7 +49,7 @@ namespace Jeebs
 		/// Create object with errors
 		/// </summary>
 		/// <param name="errors">List of errors</param>
-		internal Failure(string[] errors) : base(errors) { }
+		internal Failure(in string[] errors) : base(errors) { }
 	}
 
 	/// <summary>
@@ -62,6 +62,6 @@ namespace Jeebs
 		/// Create object with errors
 		/// </summary>
 		/// <param name="errors">List of errors</param>
-		internal Failure(string[] errors) : base(errors) { }
+		internal Failure(in string[] errors) : base(errors) { }
 	}
 }
