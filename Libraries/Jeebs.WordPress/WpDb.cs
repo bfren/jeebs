@@ -40,6 +40,11 @@ namespace Jeebs.WordPress
 		where Tum : WpUserMetaEntity
 	{
 		/// <summary>
+		/// MySqlAdapter
+		/// </summary>
+		public MySqlAdapter Adapter { get => client.Adapter; }
+
+		/// <summary>
 		/// Comment Table
 		/// </summary>
 		public CommentTable Comment { get; }
@@ -131,18 +136,18 @@ namespace Jeebs.WordPress
 				UserMeta = new UserMetaTable(tablePrefix);
 
 				// Map entities to tables
-				Map<Tc>.To(Comment, client.Adapter);
-				Map<Tcm>.To(CommentMeta, client.Adapter);
-				Map<Tl>.To(Link, client.Adapter);
-				Map<To>.To(Option, client.Adapter);
-				Map<Tp>.To(Post, client.Adapter);
-				Map<Tpm>.To(PostMeta, client.Adapter);
-				Map<Tt>.To(Term, client.Adapter);
-				Map<Ttm>.To(TermMeta, client.Adapter);
-				Map<Ttr>.To(TermRelationship, client.Adapter);
-				Map<Ttt>.To(TermTaxonomy, client.Adapter);
-				Map<Tu>.To(User, client.Adapter);
-				Map<Tum>.To(UserMeta, client.Adapter);
+				Map<Tc>.To(Comment, Adapter);
+				Map<Tcm>.To(CommentMeta, Adapter);
+				Map<Tl>.To(Link, Adapter);
+				Map<To>.To(Option, Adapter);
+				Map<Tp>.To(Post, Adapter);
+				Map<Tpm>.To(PostMeta, Adapter);
+				Map<Tt>.To(Term, Adapter);
+				Map<Ttm>.To(TermMeta, Adapter);
+				Map<Ttr>.To(TermRelationship, Adapter);
+				Map<Ttt>.To(TermTaxonomy, Adapter);
+				Map<Tu>.To(User, Adapter);
+				Map<Tum>.To(UserMeta, Adapter);
 			}
 			else
 			{

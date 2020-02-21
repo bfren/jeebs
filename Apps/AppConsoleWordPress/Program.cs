@@ -57,6 +57,9 @@ namespace AppConsoleWordPress
 				);
 			}
 
+			var qp = bcg.Db.QueryPosts;
+			var sermons = qp.Execute<Bcg.Entities.Post>();
+
 			// End
 			Console.Read();
 		});
