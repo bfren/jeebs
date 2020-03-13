@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
@@ -41,6 +42,16 @@ namespace Jeebs.Data
 		private readonly char aliasClose;
 
 		/// <summary>
+		/// Sort ascending text
+		/// </summary>
+		private readonly string sortAsc;
+
+		/// <summary>
+		/// Sort descending text
+		/// </summary>
+		private readonly string sortDesc;
+
+		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="separator">Separator character</param>
@@ -49,7 +60,9 @@ namespace Jeebs.Data
 		/// <param name="alias">Alias keyword</param>
 		/// <param name="aliasOpen">Alias open character</param>
 		/// <param name="aliasClose">Alias close character</param>
-		protected Adapter(in char separator, in char escapeOpen, in char escapeClose, string alias, in char aliasOpen, in char aliasClose)
+		/// <param name="sortAsc">Sort Ascending string</param>
+		/// <param name="sortDesc">Sort Descending string</param>
+		protected Adapter(in char separator, in char escapeOpen, in char escapeClose, string alias, in char aliasOpen, in char aliasClose, in string sortAsc, in string sortDesc)
 		{
 			this.separator = separator;
 			this.escapeOpen = escapeOpen;
@@ -57,6 +70,8 @@ namespace Jeebs.Data
 			this.alias = alias;
 			this.aliasOpen = aliasOpen;
 			this.aliasClose = aliasClose;
+			this.sortAsc = sortAsc;
+			this.sortDesc = sortDesc;
 		}
 
 		#region Escaping
@@ -180,6 +195,23 @@ namespace Jeebs.Data
 
 		#endregion
 
+		#region Sorting
+
+		/// <summary>
+		/// Return a sort order string (ASC or DESC)
+		/// </summary>
+		/// <param name="column">Column name (unescaped)</param>
+		/// <param name="order">QuerySortOrder</param>
+		/// <returns>Sort order</returns>
+		public string GetSortOrder(string column, SortOrder order) => string.Concat(Escape(column), " ", order == SortOrder.Ascending ? sortAsc : sortDesc);
+
+		/// <summary>
+		/// Return random sort string
+		/// </summary>
+		public abstract string GetRandomSortOrder();
+
+		#endregion
+
 		#region Queries
 
 		/// <summary>
@@ -193,6 +225,18 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		public abstract string RetrieveSingleById<T>();
+
+		/// <summary>
+		/// Build a SELECT query
+		/// </summary>
+		/// <param name="args">IQuery</param>
+		public abstract string Retrieve(IQuery args);
+
+		/// <summary>
+		/// Build a SELECT COUNT query
+		/// </summary>
+		/// <param name="args">IQuery</param>
+		public string Count(IQuery args) => Retrieve(args.OverrideSelect("COUNT(*)"));
 
 		/// <summary>
 		/// Query to update a single row

@@ -33,7 +33,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// IAdapter
 		/// </summary>
-		private readonly IAdapter adapter;
+		public IAdapter Adapter { get; }
 
 		/// <summary>
 		/// ILog
@@ -49,7 +49,7 @@ namespace Jeebs.Data
 		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log)
 		{
 			transaction = connection.BeginTransaction();
-			this.adapter = adapter;
+			Adapter = adapter;
 			this.log = log;
 		}
 
@@ -58,13 +58,19 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
-		public string Extract<T>(params Table[] tables) => adapter.Join(tables.ExtractColumns<T>());
+		public string Extract<T>(params Table[] tables) => Adapter.Join(tables.ExtractColumns<T>());
 
 		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
 		/// <param name="element">The element to split and escape</param>
-		public string Escape(object element) => adapter.SplitAndEscape(element.ToString());
+		public string Escape(object element) => Adapter.SplitAndEscape(element.ToString());
+
+		/// <summary>
+		/// Shorthand for IAdapter.EscapeAndJoin
+		/// </summary>
+		/// <param name="elements">The elements to escape and join</param>
+		public string Escape(params string?[] elements) => Adapter.EscapeAndJoin(elements);
 
 		/// <summary>
 		/// Commit all queries - should normally be called as part of Dispose()
@@ -225,7 +231,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.CreateSingleAndReturnId<T>();
+				var query = Adapter.CreateSingleAndReturnId<T>();
 				LogQuery(nameof(Insert), query, poco);
 
 				// Insert and capture new ID
@@ -261,7 +267,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.CreateSingleAndReturnId<T>();
+				var query = Adapter.CreateSingleAndReturnId<T>();
 				LogQuery(nameof(InsertAsync), query, poco);
 
 				// Insert and capture new ID
@@ -403,7 +409,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.RetrieveSingleById<T>();
+				var query = Adapter.RetrieveSingleById<T>();
 				LogQuery(nameof(Single), query, new { id });
 
 				// Execute and return
@@ -428,7 +434,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.RetrieveSingleById<T>();
+				var query = Adapter.RetrieveSingleById<T>();
 				LogQuery(nameof(SingleAsync), query, new { id });
 
 				// Execute and return
@@ -534,7 +540,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query and increase the version number
-				var query = adapter.UpdateSingle<T>();
+				var query = Adapter.UpdateSingle<T>();
 				poco.Version++;
 				LogQuery(nameof(UpdateWithVersion), query, poco);
 
@@ -567,7 +573,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.UpdateSingle<T>();
+				var query = Adapter.UpdateSingle<T>();
 				LogQuery(nameof(UpdateWithoutVersion), query, poco);
 
 				// Execute and return
@@ -603,7 +609,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.DeleteSingle<T>();
+				var query = Adapter.DeleteSingle<T>();
 				LogQuery(nameof(Delete), query, poco);
 
 				// Execute and return
@@ -635,7 +641,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Build query
-				var query = adapter.DeleteSingle<T>();
+				var query = Adapter.DeleteSingle<T>();
 				LogQuery(nameof(DeleteAsync), query, poco);
 
 				// Execute and return
