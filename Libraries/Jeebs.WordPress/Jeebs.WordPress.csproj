@@ -6,8 +6,4 @@
     <ProjectReference Include="..\Jeebs.WordPress.Entities\Jeebs.WordPress.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>
