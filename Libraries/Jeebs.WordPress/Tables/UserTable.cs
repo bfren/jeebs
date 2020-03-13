@@ -66,6 +66,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table prefix</param>
-		public UserTable(in string prefix) : base($"{prefix}users") { }
+		public UserTable(string prefix) : base($"{prefix}users") { }
 	}
 }

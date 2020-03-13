@@ -19,20 +19,20 @@ namespace Jx
         /// Construct exception
         /// </summary>
         /// <param name="message">Message</param>
-        public ResultException(in string message) : base(message) { }
+        public ResultException(string message) : base(message) { }
 
         /// <summary>
         /// Construct exception
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="errors">Errors</param>
-        public ResultException(in string message, in ErrorList errors) : base(message, new Exception(errors.ToString())) { }
+        public ResultException(string message, ErrorList errors) : base(message, new Exception(errors.ToString())) { }
 
         /// <summary>
         /// Construct exception
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="inner">Inner exception</param>
-        public ResultException(in string message, in Exception inner) : base(message, inner) { }
+        public ResultException(string message, Exception inner) : base(message, inner) { }
     }
 }

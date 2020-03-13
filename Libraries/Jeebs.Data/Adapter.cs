@@ -49,7 +49,7 @@ namespace Jeebs.Data
 		/// <param name="alias">Alias keyword</param>
 		/// <param name="aliasOpen">Alias open character</param>
 		/// <param name="aliasClose">Alias close character</param>
-		protected Adapter(in char separator, in char escapeOpen, in char escapeClose, in string alias, in char aliasOpen, in char aliasClose)
+		protected Adapter(in char separator, in char escapeOpen, in char escapeClose, string alias, in char aliasOpen, in char aliasClose)
 		{
 			this.separator = separator;
 			this.escapeOpen = escapeOpen;
@@ -68,7 +68,7 @@ namespace Jeebs.Data
 		/// <exception cref="ArgumentNullException">If <paramref name="name"/> is null, empty, or whitespace</exception>
 		/// <param name="name">Table or column name</param>
 		/// <returns>Escaped name</returns>
-		public string Escape(in string name)
+		public string Escape(string name)
 		{
 			// Don't allow blank names
 			if (string.IsNullOrWhiteSpace(name))
@@ -95,14 +95,14 @@ namespace Jeebs.Data
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Mapped Table</param>
 		/// <returns>Escaped name</returns>
-		public string Escape<TTable>(in TTable table) where TTable : notnull => Escape(table.ToString());
+		public string Escape<TTable>(TTable table) where TTable : notnull => Escape(table.ToString());
 
 		/// <summary>
 		/// Split a string by '.', escape the elements, and rejoin them
 		/// </summary>
 		/// <param name="element">Elemnts (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
-		public string SplitAndEscape(in string element)
+		public string SplitAndEscape(string element)
 		{
 			// Split an element by the default separator
 			var elements = element.Split(separator);
@@ -146,7 +146,7 @@ namespace Jeebs.Data
 		/// Join a list of ExtractedColumn objects
 		/// </summary>
 		/// <param name="columns">ExtractedColumns</param>
-		public string Join(in ExtractedColumns columns)
+		public string Join(ExtractedColumns columns)
 		{
 			// Get each column
 			var select = new List<string>();
@@ -163,13 +163,13 @@ namespace Jeebs.Data
 		/// Get an ExtractedColumn
 		/// </summary>
 		/// <param name="col">ExtractedColumn</param>
-		public string GetColumn(in ExtractedColumn col) => Column(string.Concat(col.Table, separator, col.Column), col.Alias);
+		public string GetColumn(ExtractedColumn col) => Column(string.Concat(col.Table, separator, col.Column), col.Alias);
 
 		/// <summary>
 		/// Get a MappedColumn
 		/// </summary>
 		/// <param name="col">MappedColumn</param>
-		public string GetColumn(in MappedColumn col) => Column(col.Column, col.Property.Name);
+		public string GetColumn(MappedColumn col) => Column(col.Column, col.Property.Name);
 
 		/// <summary>
 		/// Escape a column using its table and alias

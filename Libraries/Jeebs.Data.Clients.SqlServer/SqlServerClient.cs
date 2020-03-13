@@ -27,7 +27,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <param name="connectionString">Database connection string</param>
 		/// <param name="encryptionKey">[Optional] Encryption key</param>
 		/// <returns>IDbConnection (MySqlConnection) object</returns>
-		public IDbConnection Connect(in string connectionString, in string? encryptionKey = null) => new SqlConnection(connectionString);
+		public IDbConnection Connect(string connectionString, string? encryptionKey = null) => new SqlConnection(connectionString);
 
 		/// <summary>
 		/// Create object

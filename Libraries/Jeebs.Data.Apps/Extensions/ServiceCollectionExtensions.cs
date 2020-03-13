@@ -18,7 +18,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
 		/// <param name="section">[Optional] Section Key for retrieving database configuration</param>
-		public static FluentData AddData(this IServiceCollection services, in string section = DbConfig.Key)
+		public static FluentData AddData(this IServiceCollection services, string section = DbConfig.Key)
 		{
 			return new FluentData(ref services, section);
 		}
@@ -43,7 +43,7 @@ namespace Jeebs.Data
 			/// </summary>
 			/// <param name="services">IServiceCollection</param>
 			/// <param name="section">Configuration Section Key</param>
-			public FluentData(ref IServiceCollection services, in string section)
+			public FluentData(ref IServiceCollection services, string section)
 			{
 				Services = services;
 				this.section = section;

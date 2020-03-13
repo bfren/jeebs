@@ -89,7 +89,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		internal LoggerMiddleware(in RequestDelegate next, in ILogger logger) : this(next)
+		internal LoggerMiddleware(RequestDelegate next, ILogger logger) : this(next)
 		{
 			this.logger = logger;
 		}
@@ -99,7 +99,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		public static LoggerMiddleware CreateForTesting(in RequestDelegate next, in ILogger logger)
+		public static LoggerMiddleware CreateForTesting(RequestDelegate next, ILogger logger)
 			=> new LoggerMiddleware(next, logger);
 
 		#endregion

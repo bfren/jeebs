@@ -69,7 +69,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfigurationBuilder</param>
-		protected virtual void ConfigureApp(in IHostEnvironment env, ref IConfigurationBuilder config)
+		protected virtual void ConfigureApp(IHostEnvironment env, ref IConfigurationBuilder config)
 		{
 			config.AddJeebsConfig(env);
 		}
@@ -79,7 +79,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="logger">LoggerConfiguration</param>
-		protected virtual void ConfigureSerilog(in IConfiguration config, ref LoggerConfiguration logger)
+		protected virtual void ConfigureSerilog(IConfiguration config, ref LoggerConfiguration logger)
 		{
 			// Load Serilog config
 			var jeebs = config.GetJeebsConfig();
@@ -92,7 +92,7 @@ namespace Jeebs.Apps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="services">IServiceCollection</param>
-		protected virtual void ConfigureServices(in IHostEnvironment env, in IConfiguration config, ref IServiceCollection services)
+		protected virtual void ConfigureServices(IHostEnvironment env, IConfiguration config, ref IServiceCollection services)
 		{
 			// Bind JeebsConfig
 			services.Bind<JeebsConfig>().To(JeebsConfig.Key).Using(config);

@@ -20,7 +20,7 @@ namespace Jeebs.Data
 		/// Create object
 		/// </summary>
 		/// <param name="name">Table name</param>
-		protected Table(in string name) => this.name = name;
+		protected Table(string name) => this.name = name;
 
 		/// <summary>
 		/// Table name (unescaped)

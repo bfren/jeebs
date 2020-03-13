@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Enums
 		/// Create new value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		public PostType(in string name) : base(name) { }
+		public PostType(string name) : base(name) { }
 
 		#region Default Post Types
 
@@ -64,13 +64,13 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="type">PostType to add</param>
 		/// <returns>False if the post type already exists</returns>
-		public static bool AddCustomPostType(in PostType type) => all.Add(type);
+		public static bool AddCustomPostType(PostType type) => all.Add(type);
 
 		/// <summary>
 		/// Parse PostType value name
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>PostType object</returns>
-		public static PostType Parse(in string name) => Parse(name, all.ToArray());
+		public static PostType Parse(string name) => Parse(name, all.ToArray());
 	}
 }

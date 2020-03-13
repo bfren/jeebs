@@ -16,13 +16,13 @@ namespace Jx
 		/// Construct exception
 		/// </summary>
 		/// <param name="message">Message</param>
-		public ParseException(in string message) : base(message) { }
+		public ParseException(string message) : base(message) { }
 
 		/// <summary>
 		/// Construct exception
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="inner">Inner exception</param>
-		public ParseException(in string message, in Exception inner) : base(message, inner) { }
+		public ParseException(string message, Exception inner) : base(message, inner) { }
 	}
 }

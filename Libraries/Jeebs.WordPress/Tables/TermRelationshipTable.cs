@@ -31,6 +31,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table prefix</param>
-		public TermRelationshipTable(in string prefix) : base($"{prefix}term_relationships") { }
+		public TermRelationshipTable(string prefix) : base($"{prefix}term_relationships") { }
 	}
 }

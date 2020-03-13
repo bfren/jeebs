@@ -46,7 +46,7 @@ namespace Jeebs.WordPress
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
 		/// <param name="log">ILog</param>
-		protected Wp(in DbConfig dbConfig, in TConfig wpConfig, in ILog log)
+		protected Wp(DbConfig dbConfig, TConfig wpConfig, ILog log)
 		{
 			// Store config
 			Config = wpConfig;

@@ -46,6 +46,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table prefix</param>
-		public TermTaxonomyTable(in string prefix) : base($"{prefix}term_taxonomy") { }
+		public TermTaxonomyTable(string prefix) : base($"{prefix}term_taxonomy") { }
 	}
 }

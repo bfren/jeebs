@@ -209,7 +209,7 @@ namespace Jeebs.Apps.WebApps
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_StaticFiles(in IHostEnvironment env, ref IApplicationBuilder app)
+		protected virtual void Configure_StaticFiles(IHostEnvironment env, ref IApplicationBuilder app)
 		{
 			// Check whether or not they have already been enabled
 			if (staticFilesAreEnabled)
@@ -258,7 +258,7 @@ namespace Jeebs.Apps.WebApps
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Redirections(in IConfiguration config, ref IApplicationBuilder app)
+		protected virtual void Configure_Redirections(IConfiguration config, ref IApplicationBuilder app)
 		{
 			if (config.GetSection<RedirectionsConfig>(":redirections") is RedirectionsConfig redirectRules)
 			{

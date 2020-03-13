@@ -25,7 +25,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="column">Escaped Column Name</param>
 		/// <param name="property">Entity property PropertyInfo</param>
-		public MappedColumn(in string column, in PropertyInfo property)
+		public MappedColumn(string column, PropertyInfo property)
 		{
 			Column = column;
 			Property = property;

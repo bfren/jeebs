@@ -30,7 +30,7 @@ namespace Jeebs.WordPress
 		/// Create object
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
-		protected CustomField(in string key) => Key = key;
+		protected CustomField(string key) => Key = key;
 
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)

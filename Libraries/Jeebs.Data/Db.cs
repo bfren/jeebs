@@ -57,7 +57,7 @@ namespace Jeebs.Data
 		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
 		/// </summary>
 		/// <param name="log">ILog</param>
-		public Db(in ILog log)
+		public Db(ILog log)
 		{
 			ConnectionString = string.Empty;
 			this.log = log;
@@ -68,6 +68,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="connectionString">Connection String</param>
 		/// <param name="log">ILog</param>
-		public Db(in string connectionString, in ILog log) : this(log) => ConnectionString = connectionString;
+		public Db(string connectionString, ILog log) : this(log) => ConnectionString = connectionString;
 	}
 }

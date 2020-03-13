@@ -18,13 +18,13 @@ namespace Jx
 		/// Construct exception
 		/// </summary>
 		/// <param name="message">Message</param>
-		public ConfigException(in string message) : base(message) { }
+		public ConfigException(string message) : base(message) { }
 
 		/// <summary>
 		/// Construct exception
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="inner">Inner exception</param>
-		public ConfigException(in string message, in Exception inner) : base(message, inner) { }
+		public ConfigException(string message, Exception inner) : base(message, inner) { }
 	}
 }

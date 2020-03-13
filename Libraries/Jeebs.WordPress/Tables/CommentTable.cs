@@ -96,6 +96,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table prefix</param>
-		public CommentTable(in string prefix) : base($"{prefix}comments") { }
+		public CommentTable(string prefix) : base($"{prefix}comments") { }
 	}
 }

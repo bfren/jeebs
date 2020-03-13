@@ -32,7 +32,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Table</param>
-		public static ExtractedColumns From<TTable>(in TTable table)
+		public static ExtractedColumns From<TTable>(TTable table)
 			where TTable : Table
 		{
 			// Check the cache first to see if this model has already been used against this table

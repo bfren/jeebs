@@ -39,7 +39,7 @@ namespace Jeebs.Util
 		/// <param name="obj">The object to serialise</param>
 		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <returns>Json String of serialised object</returns>
-		public static string Serialise<T>(in T obj, in JsonSerializerOptions? opt = null)
+		public static string Serialise<T>(T obj, JsonSerializerOptions? opt = null)
 		{
 			if (obj is null)
 			{
@@ -57,7 +57,7 @@ namespace Jeebs.Util
 		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <exception cref="ArgumentNullException">If <paramref name="type"/> is null</exception>
 		/// <returns>Deserialised object of given type</returns>
-		public static object Deserialise(in string str, in Type type, in JsonSerializerOptions? opt = null)
+		public static object Deserialise(string str, Type type, JsonSerializerOptions? opt = null)
 		{
 			if (string.IsNullOrWhiteSpace(str))
 			{
@@ -80,6 +80,6 @@ namespace Jeebs.Util
 		/// <param name="str">The string to deserialise</param>
 		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static T Deserialise<T>(in string str, in JsonSerializerOptions? opt = null) => (T)Deserialise(str, typeof(T), opt);
+		public static T Deserialise<T>(string str, JsonSerializerOptions? opt = null) => (T)Deserialise(str, typeof(T), opt);
 	}
 }

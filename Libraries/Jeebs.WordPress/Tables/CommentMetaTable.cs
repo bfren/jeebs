@@ -36,6 +36,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table Prefix</param>
-		public CommentMetaTable(in string prefix) : base($"{prefix}commentmeta") { }
+		public CommentMetaTable(string prefix) : base($"{prefix}commentmeta") { }
 	}
 }

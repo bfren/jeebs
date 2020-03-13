@@ -20,7 +20,7 @@ namespace Jeebs
 		/// Construct object from list of string values
 		/// </summary>
 		/// <param name="list">List of values</param>
-		public EnumList(in List<string> list)
+		public EnumList(List<string> list)
 		{
 			if (list is null)
 			{
@@ -53,7 +53,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="json">JSON</param>
 		/// <returns>EnumList</returns>
-		public static EnumList<T> Deserialise(in string json)
+		public static EnumList<T> Deserialise(string json)
 		{
 			var strings = Util.Json.Deserialise<List<string>>(json);
 			return new EnumList<T>(strings);

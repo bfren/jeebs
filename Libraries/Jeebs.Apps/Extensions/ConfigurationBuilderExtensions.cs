@@ -17,7 +17,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="builder">IConfigurationBuilder</param>
 		/// <param name="env">IHostEnvironment</param>
-		public static IConfigurationBuilder AddJeebsConfig(this IConfigurationBuilder builder, in IHostEnvironment env)
+		public static IConfigurationBuilder AddJeebsConfig(this IConfigurationBuilder builder, IHostEnvironment env)
 		{
 			// Add Jeebs config - keeps Jeebs config away from app settings
 			builder.AddJsonFile("jeebsconfig.json", optional: false);

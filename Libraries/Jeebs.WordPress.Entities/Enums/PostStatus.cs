@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Enums
 		/// Create new value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		public PostStatus(in string name) : base(name) { }
+		public PostStatus(string name) : base(name) { }
 
 		#region Default Post Statuses
 
@@ -50,6 +50,6 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>PostStatus object</returns>
-		public static PostStatus Parse(in string name) => Parse(name, values: new[] { Publish, Inherit, Pending, Draft, AutoDraft });
+		public static PostStatus Parse(string name) => Parse(name, values: new[] { Publish, Inherit, Pending, Draft, AutoDraft });
 	}
 }

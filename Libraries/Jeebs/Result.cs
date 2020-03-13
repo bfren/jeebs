@@ -51,7 +51,7 @@ namespace Jeebs
 		/// Create success result using specified value
 		/// </summary>
 		/// <param name="value">Success value</param>
-		protected Result(in T value) => this.value = value;
+		protected Result(T value) => this.value = value;
 
 		/// <summary>
 		/// Create failure result using specified errors
@@ -59,7 +59,7 @@ namespace Jeebs
 		/// <param name="errors">List of errors - MUST contain at least one</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-		protected Result(in string[] errors)
+		protected Result(string[] errors)
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		{
 			if (errors.Length == 0)

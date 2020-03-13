@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Enums
 		/// Create new value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		public Taxonomy(in string name) : base(name) { }
+		public Taxonomy(string name) : base(name) { }
 
 		#region Default Taxonomies
 
@@ -59,13 +59,13 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="type">Taxonomy to add</param>
 		/// <returns>False if the taxonomy already exists</returns>
-		public static bool AddCustomTaxonomy(in Taxonomy type) => all.Add(type);
+		public static bool AddCustomTaxonomy(Taxonomy type) => all.Add(type);
 
 		/// <summary>
 		/// Parse Taxonomy value name
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>Taxonomy object</returns>
-		public static Taxonomy Parse(in string name) => Parse(name, all.ToArray());
+		public static Taxonomy Parse(string name) => Parse(name, all.ToArray());
 	}
 }

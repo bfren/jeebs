@@ -36,6 +36,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table prefix</param>
-		public PostMetaTable(in string prefix) : base($"{prefix}postmeta") { }
+		public PostMetaTable(string prefix) : base($"{prefix}postmeta") { }
 	}
 }

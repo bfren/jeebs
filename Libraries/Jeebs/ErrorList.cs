@@ -13,7 +13,7 @@ namespace Jeebs
 		/// Create from an array of errors
 		/// </summary>
 		/// <param name="errors">Errors</param>
-		internal ErrorList(in string[] errors) : base(errors) { }
+		internal ErrorList(string[] errors) : base(errors) { }
 
 		/// <summary>
 		/// Join errors with a comma

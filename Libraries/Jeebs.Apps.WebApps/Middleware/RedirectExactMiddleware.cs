@@ -75,7 +75,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="next">RequestDelegate object</param>
 		/// <param name="redirections">Redirections</param>
 		/// <param name="logger">ILogger</param>
-		internal RedirectExactMiddleware(in RequestDelegate next, in RedirectionsConfig redirections, in ILogger logger) : this(next, redirections)
+		internal RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections, ILogger logger) : this(next, redirections)
 		{
 			this.logger = logger;
 		}
@@ -85,7 +85,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		public static RedirectExactMiddleware CreateForTesting(in RequestDelegate next, in RedirectionsConfig redirections, in ILogger logger)
+		public static RedirectExactMiddleware CreateForTesting(RequestDelegate next, RedirectionsConfig redirections, ILogger logger)
 			=> new RedirectExactMiddleware(next, redirections, logger);
 
 		#endregion

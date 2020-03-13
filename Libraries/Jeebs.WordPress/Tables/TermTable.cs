@@ -36,6 +36,6 @@ namespace Jeebs.WordPress.Tables
 		/// Create object
 		/// </summary>
 		/// <param name="prefix">Table prefix</param>
-		public TermTable(in string prefix) : base($"{prefix}terms") { }
+		public TermTable(string prefix) : base($"{prefix}terms") { }
 	}
 }

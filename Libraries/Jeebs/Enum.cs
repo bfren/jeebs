@@ -19,7 +19,7 @@ namespace Jeebs
 		/// Set the name of this value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		protected Enum(in string name) => this.name = name;
+		protected Enum(string name) => this.name = name;
 
 		/// <summary>
 		/// Return the name of this value
@@ -45,7 +45,7 @@ namespace Jeebs
 		/// <typeparam name="T">Enum value type</typeparam>
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
-		private static Result<T> Check<T>(in string name, in T value)
+		private static Result<T> Check<T>(string name, T value)
 			where T : Enum
 		{
 			if (string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase))
@@ -64,7 +64,7 @@ namespace Jeebs
 		/// <param name="values">Enum values to check name against</param>
 		/// <exception cref="Jx.ParseException">If string <paramref name="name"/> is not a valid value of Enum type <typeparamref name="T"/>.</exception>
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
-		protected static T Parse<T>(in string name, in T[] values)
+		protected static T Parse<T>(string name, T[] values)
 			where T : Enum
 		{
 			// Return the Enum value
@@ -105,7 +105,7 @@ namespace Jeebs
 			/// </summary>
 			public readonly T[] Values;
 
-			public ParseArgs(in string name, in T[] values)
+			public ParseArgs(string name, T[] values)
 			{
 				Name = name;
 				Values = values;

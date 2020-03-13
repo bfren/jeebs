@@ -47,7 +47,7 @@ namespace Jeebs.Apps
 			/// Setup dependencies
 			/// </summary>
 			/// <param name="services">IServiceCollection object</param>
-			public FluentBind(in IServiceCollection services) => this.services = services;
+			public FluentBind(IServiceCollection services) => this.services = services;
 
 			/// <summary>
 			/// Bind to the specified section

@@ -46,7 +46,7 @@ namespace Jeebs.Data
 		/// <param name="connection">IDbConnection</param>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
-		internal UnitOfWork(in IDbConnection connection, in IAdapter adapter, in ILog log)
+		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log)
 		{
 			transaction = connection.BeginTransaction();
 			this.adapter = adapter;
@@ -64,7 +64,7 @@ namespace Jeebs.Data
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
 		/// <param name="element">The element to split and escape</param>
-		public string Escape(in object element) => adapter.SplitAndEscape(element.ToString());
+		public string Escape(object element) => adapter.SplitAndEscape(element.ToString());
 
 		/// <summary>
 		/// Commit all queries - should normally be called as part of Dispose()
@@ -291,7 +291,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		public Result<IEnumerable<dynamic>> Query(in string query, in object? parameters = null)
+		public Result<IEnumerable<dynamic>> Query(string query, object? parameters = null)
 		{
 			try
 			{
@@ -503,7 +503,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		public Result<bool> Update<T>(in T poco)
+		public Result<bool> Update<T>(T poco)
 			where T : class, IEntity
 		{
 			lock (_)
@@ -525,7 +525,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		private Result<bool> UpdateWithVersion<T>(in T poco)
+		private Result<bool> UpdateWithVersion<T>(T poco)
 			where T : class, IEntityWithVersion
 		{
 			var currentVersion = poco.Version;
@@ -559,7 +559,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
 		/// <returns>IDbResult - Whether or not the update was successful</returns>
-		private Result<bool> UpdateWithoutVersion<T>(in T poco)
+		private Result<bool> UpdateWithoutVersion<T>(T poco)
 			where T : class, IEntity
 		{
 			var error = $"Unable to update {typeof(T)} '{poco.Id}'.";
@@ -595,7 +595,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IDbResult - Whether or not the delete was successful</result>
-		public Result<bool> Delete<T>(in T poco)
+		public Result<bool> Delete<T>(T poco)
 			where T : class, IEntity
 		{
 			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
@@ -663,7 +663,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Affected rows</returns>
-		public Result<int> Execute(in string query, in object? parameters = null)
+		public Result<int> Execute(string query, object? parameters = null)
 		{
 			try
 			{
@@ -710,7 +710,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		public Result<T> ExecuteScalar<T>(in string query, in object? parameters = null)
+		public Result<T> ExecuteScalar<T>(string query, object? parameters = null)
 		{
 			try
 			{

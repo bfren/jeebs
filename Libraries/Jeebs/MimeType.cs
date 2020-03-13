@@ -110,7 +110,7 @@
 		/// Parse MimeType value
 		/// </summary>
 		/// <param name="mimeType">Value</param>
-		public static MimeType Parse(in string? mimeType)
+		public static MimeType Parse(string? mimeType)
 		{
 			// Return Blank for null
 			if (mimeType is null)

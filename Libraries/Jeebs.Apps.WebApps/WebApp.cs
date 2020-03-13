@@ -86,7 +86,7 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure(in IHostEnvironment env, in IConfiguration config, ref IApplicationBuilder app)
+		protected virtual void Configure(IHostEnvironment env, IConfiguration config, ref IApplicationBuilder app)
 		{
 			// Logging
 			app.UseMiddleware<LoggerMiddleware>();
