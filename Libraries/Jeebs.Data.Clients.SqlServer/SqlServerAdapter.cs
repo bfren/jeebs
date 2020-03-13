@@ -12,7 +12,12 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public SqlServerAdapter() : base('.', '[', ']', "AS", '[', ']') { }
+		public SqlServerAdapter() : base('.', '[', ']', "AS", '[', ']', "ASC", "DESC") { }
+
+		/// <summary>
+		/// Return random sort string
+		/// </summary>
+		public override string GetRandomSortOrder() => "NEWID()";
 
 		/// <summary>
 		/// Query to insert a single row and return the new ID
@@ -30,6 +35,71 @@ namespace Jeebs.Data.Clients.SqlServer
 		public override string RetrieveSingleById<T>()
 		{
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Build a SELECT query
+		/// </summary>
+		/// <param name="args">IQuery</param>
+		/// <returns>SELECT query</returns>
+		public override string Retrieve(IQuery args)
+		{
+			// Start query
+			StringBuilder sql = new StringBuilder($"SELECT {args.Select ?? "*"} FROM {args.From}");
+
+			// Add INNER JOIN
+			if (args.InnerJoin is List<string> innerJoinValues)
+			{
+				foreach (var item in innerJoinValues)
+				{
+					sql.Append($" INNER JOIN {item}");
+				}
+			}
+
+			// Add LEFT JOIN
+			if (args.LeftJoin is List<string> leftJoinValues)
+			{
+				foreach (var item in leftJoinValues)
+				{
+					sql.Append($" LEFT JOIN {item}");
+				}
+			}
+
+			// Add RIGHT JOIN
+			if (args.RightJoin is List<string> rightJoinValues)
+			{
+				foreach (var item in rightJoinValues)
+				{
+					sql.Append($" RIGHT JOIN {item}");
+				}
+			}
+
+			// Add WHERE
+			if (args.Where is List<string> whereValue)
+			{
+				sql.Append($" WHERE {string.Join(" AND ", whereValue)}");
+			}
+
+			// Add ORDER BY
+			if (args.OrderBy is List<string> orderByValue)
+			{
+				sql.Append($" ORDER BY {string.Join(", ", orderByValue)}");
+			}
+
+			// Add LIMIT
+			if (args.Limit is double limitValue && limitValue > 0)
+			{
+				sql.Append($" LIMIT {limitValue}");
+			}
+
+			// Add OFFSET
+			if (args.Offset is double offsetValue && offsetValue > 0)
+			{
+				sql.Append($" OFFSET {offsetValue}");
+			}
+
+			// Return query string
+			return sql.ToString();
 		}
 
 		/// <summary>

@@ -11,6 +11,11 @@ namespace Jeebs.Data
 	public interface IUnitOfWork : IDisposable
 	{
 		/// <summary>
+		/// IAdapter
+		/// </summary>
+		IAdapter Adapter { get; }
+
+		/// <summary>
 		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
@@ -21,7 +26,13 @@ namespace Jeebs.Data
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
 		/// <param name="element">The element to split and escape</param>
-		string Escape(in object element);
+		string Escape(object element);
+
+		/// <summary>
+		/// Shorthand for IAdapter.EscapeAndJoin
+		/// </summary>
+		/// <param name="elements">The elements to escape and join</param>
+		string Escape(params string?[] elements);
 
 		/// <summary>
 		/// Commit all queries - should normally be called as part of Dispose()
@@ -61,7 +72,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IEnumerable</returns>
-		Result<IEnumerable<dynamic>> Query(in string query, in object? parameters = null);
+		Result<IEnumerable<dynamic>> Query(string query, object? parameters = null);
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
@@ -123,7 +134,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
 		/// <returns>IResult - Whether or not the update was successful</returns>
-		Result<bool> Update<T>(in T poco) where T : class, IEntity;
+		Result<bool> Update<T>(T poco) where T : class, IEntity;
 
 		#endregion
 
@@ -135,7 +146,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
 		/// <result>IResult - Whether or not the delete was successful</result>
-		Result<bool> Delete<T>(in T poco) where T : class, IEntity;
+		Result<bool> Delete<T>(T poco) where T : class, IEntity;
 
 		/// <summary>
 		/// Delete an entity
@@ -155,7 +166,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>Affected rows</returns>
-		Result<int> Execute(in string query, in object? parameters = null);
+		Result<int> Execute(string query, object? parameters = null);
 
 		/// <summary>
 		/// Execute a query on the database
@@ -172,7 +183,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <returns>IResult - on success, Value is Scalar value T</returns>
-		Result<T> ExecuteScalar<T>(in string query, in object? parameters = null);
+		Result<T> ExecuteScalar<T>(string query, object? parameters = null);
 
 		/// <summary>
 		/// Execute a query and return a scalar value

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
@@ -16,7 +17,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="name">Table or column name</param>
 		/// <returns>Escaped name</returns>
-		string Escape(in string name);
+		string Escape(string name);
 
 		/// <summary>
 		/// Escape a table name
@@ -24,39 +25,56 @@ namespace Jeebs.Data
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Mapped Table</param>
 		/// <returns>Escaped name</returns>
-		string Escape<TTable>(in TTable table) where TTable : notnull;
+		string Escape<TTable>(TTable table) where TTable : notnull;
 
 		/// <summary>
-		/// Split a string by '.', escape the elements, and rejoin them
+		/// Split a string by '.', escape the elements, and rejothem
 		/// </summary>
 		/// <param name="element">Elemnts (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
-		string SplitAndEscape(in string element);
+		string SplitAndEscape(string element);
 
 		/// <summary>
-		/// Escape and then join an array of elements
+		/// Escape and then join array of elements
 		/// </summary>
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
 		string EscapeAndJoin(params string?[] elements);
 
 		/// <summary>
-		/// Join a list of ExtractedColumn objects
+		/// Joa list of ExtractedColumn objects
 		/// </summary>
 		/// <param name="columns">ExtractedColumns</param>
-		string Join(in ExtractedColumns columns);
+		string Join(ExtractedColumns columns);
 
 		/// <summary>
 		/// Get an ExtractedColumn
 		/// </summary>
 		/// <param name="col">ExtractedColumn</param>
-		string GetColumn(in ExtractedColumn col);
+		string GetColumn(ExtractedColumn col);
 
 		/// <summary>
 		/// Get a MappedColumn
 		/// </summary>
 		/// <param name="col">MappedColumn</param>
-		string GetColumn(in MappedColumn col);
+		string GetColumn(MappedColumn col);
+
+		#endregion
+
+		#region Sorting
+
+		/// <summary>
+		/// Return a sort order string
+		/// </summary>
+		/// <param name="column">Column name (unescaped)</param>
+		/// <param name="order">QuerySortOrder</param>
+		/// <returns>Sort order</returns>
+		string GetSortOrder(string column, SortOrder order);
+
+		/// <summary>
+		/// Return random sort string
+		/// </summary>
+		string GetRandomSortOrder();
 
 		#endregion
 
@@ -77,6 +95,18 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		string RetrieveSingleById<T>();
+
+		/// <summary>
+		/// Build a SELECT query
+		/// </summary>
+		/// <param name="args">IQuery</param>
+		string Retrieve(IQuery args);
+
+		/// <summary>
+		/// Build a COUNT query
+		/// </summary>
+		/// <param name="args">IQuery</param>
+		string Count(IQuery args);
 
 		#endregion
 

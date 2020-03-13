@@ -19,6 +19,6 @@ namespace Jeebs.Data
 		/// <param name="connectionString">Database connection string</param>
 		/// <param name="encryptionKey">[Optional] Encryption key</param>
 		/// <returns>IDbConnection</returns>
-		IDbConnection Connect(in string connectionString, in string? encryptionKey = null);
+		IDbConnection Connect(string connectionString, string? encryptionKey = null);
 	}
 }
