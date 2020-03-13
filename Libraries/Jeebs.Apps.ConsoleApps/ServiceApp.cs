@@ -20,10 +20,10 @@ namespace Jeebs.Apps.ConsoleApps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="services">IServiceCollection</param>
-		protected override void ConfigureServices(in IHostEnvironment env, in IConfiguration config, ref IServiceCollection services)
+		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base
-			base.ConfigureServices(env, config, ref services);
+			base.ConfigureServices(env, config, services);
 
 			// Add Hosted Service
 			services.AddHostedService<T>();

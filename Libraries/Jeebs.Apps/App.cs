@@ -28,25 +28,25 @@ namespace Jeebs.Apps
 				// Configure Host
 				.ConfigureHostConfiguration(config =>
 				{
-					ConfigureHost(ref config);
+					ConfigureHost(config);
 				})
 
 				// Configure App
 				.ConfigureAppConfiguration((host, config) =>
 				{
-					ConfigureApp(host.HostingEnvironment, ref config);
+					ConfigureApp(host.HostingEnvironment, config);
 				})
 
 				// Configure Serilog
 				.UseSerilog((host, logger) =>
 				{
-					ConfigureSerilog(host.Configuration, ref logger);
+					ConfigureSerilog(host.Configuration, logger);
 				})
 
 				// Configure Services
 				.ConfigureServices((host, services) =>
 				{
-					ConfigureServices(host.HostingEnvironment, host.Configuration, ref services);
+					ConfigureServices(host.HostingEnvironment, host.Configuration, services);
 				})
 
 				// Build Host
@@ -59,7 +59,7 @@ namespace Jeebs.Apps
 		/// Configure Host
 		/// </summary>
 		/// <param name="config">IConfigurationBuilder</param>
-		protected virtual void ConfigureHost(ref IConfigurationBuilder config)
+		protected virtual void ConfigureHost(IConfigurationBuilder config)
 		{
 			config.SetBasePath(Directory.GetCurrentDirectory());
 		}
@@ -69,7 +69,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfigurationBuilder</param>
-		protected virtual void ConfigureApp(IHostEnvironment env, ref IConfigurationBuilder config)
+		protected virtual void ConfigureApp(IHostEnvironment env, IConfigurationBuilder config)
 		{
 			config.AddJeebsConfig(env);
 		}
@@ -79,7 +79,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="logger">LoggerConfiguration</param>
-		protected virtual void ConfigureSerilog(IConfiguration config, ref LoggerConfiguration logger)
+		protected virtual void ConfigureSerilog(IConfiguration config, LoggerConfiguration logger)
 		{
 			// Load Serilog config
 			var jeebs = config.GetJeebsConfig();
@@ -92,7 +92,7 @@ namespace Jeebs.Apps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="services">IServiceCollection</param>
-		protected virtual void ConfigureServices(IHostEnvironment env, IConfiguration config, ref IServiceCollection services)
+		protected virtual void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Bind JeebsConfig
 			services.Bind<JeebsConfig>().To(JeebsConfig.Key).Using(config);

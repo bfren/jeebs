@@ -60,29 +60,29 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="services">IServiceCollection</param>
-		protected override void ConfigureServices(in IHostEnvironment env, in IConfiguration config, ref IServiceCollection services)
+		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base
-			base.ConfigureServices(env, config, ref services);
+			base.ConfigureServices(env, config, services);
 
 			// Response Caching
-			ConfigureServices_ResponseCaching(ref services);
+			ConfigureServices_ResponseCaching(services);
 
 			// Response Compression
-			ConfigureServices_ResponseCompression(ref services);
+			ConfigureServices_ResponseCompression(services);
 
 			// Routing
-			ConfigureServices_Routing(ref services);
+			ConfigureServices_Routing(services);
 
 			// Endpoints
-			ConfigureServices_Endpoints(ref services);
+			ConfigureServices_Endpoints(services);
 		}
 
 		/// <summary>
 		/// Override to configure response caching
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
-		protected virtual void ConfigureServices_ResponseCaching(ref IServiceCollection services)
+		protected virtual void ConfigureServices_ResponseCaching(IServiceCollection services)
 		{
 			services.AddResponseCaching();
 		}
@@ -91,7 +91,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure response compression
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
-		protected virtual void ConfigureServices_ResponseCompression(ref IServiceCollection services)
+		protected virtual void ConfigureServices_ResponseCompression(IServiceCollection services)
 		{
 			services
 				.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
@@ -108,7 +108,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure routing
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
-		protected virtual void ConfigureServices_Routing(ref IServiceCollection services)
+		protected virtual void ConfigureServices_Routing(IServiceCollection services)
 		{
 			services.AddRouting(opt =>
 			{
@@ -121,7 +121,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure endpoints - default is MVC
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
-		protected virtual void ConfigureServices_Endpoints(ref IServiceCollection services)
+		protected virtual void ConfigureServices_Endpoints(IServiceCollection services)
 		{
 			services
 				.AddControllersWithViews(ConfigureServices_MvcOptions)
@@ -165,41 +165,41 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected override void Configure(in IHostEnvironment env, in IConfiguration config, ref IApplicationBuilder app)
+		protected override void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
 		{
 			// Base
-			base.Configure(env, config, ref app);
+			base.Configure(env, config, app);
 
 			// Compression
-			Configure_ResponseCompression(ref app);
+			Configure_ResponseCompression(app);
 
 			// Static Files
-			Configure_StaticFiles(env, ref app);
+			Configure_StaticFiles(env, app);
 
 			// Cookie Policy
-			Configure_CookiePolicy(ref app);
+			Configure_CookiePolicy(app);
 
 			// Response Caching
-			Configure_ResponseCaching(ref app);
+			Configure_ResponseCaching(app);
 
 			// Redirections
-			Configure_Redirections(config, ref app);
+			Configure_Redirections(config, app);
 
 			// Routing
-			Configure_Routing(ref app);
+			Configure_Routing(app);
 
 			// Authorisation
-			Configure_Authorisation(ref app);
+			Configure_Authorisation(app);
 
 			// Endpoint Routing
-			Configure_Endpoints(ref app);
+			Configure_Endpoints(app);
 		}
 
 		/// <summary>
 		/// Override to configure response compression
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_ResponseCompression(ref IApplicationBuilder app)
+		protected virtual void Configure_ResponseCompression(IApplicationBuilder app)
 		{
 			app.UseResponseCompression();
 		}
@@ -209,7 +209,7 @@ namespace Jeebs.Apps.WebApps
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_StaticFiles(IHostEnvironment env, ref IApplicationBuilder app)
+		protected virtual void Configure_StaticFiles(IHostEnvironment env, IApplicationBuilder app)
 		{
 			// Check whether or not they have already been enabled
 			if (staticFilesAreEnabled)
@@ -239,7 +239,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure cookie policy
 		/// </summary>
 		/// <param name="app"></param>
-		protected virtual void Configure_CookiePolicy(ref IApplicationBuilder app)
+		protected virtual void Configure_CookiePolicy(IApplicationBuilder app)
 		{
 			app.UseCookiePolicy(cookiePolicyOptions);
 		}
@@ -248,7 +248,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure response caching
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_ResponseCaching(ref IApplicationBuilder app)
+		protected virtual void Configure_ResponseCaching(IApplicationBuilder app)
 		{
 			app.UseResponseCaching();
 		}
@@ -258,7 +258,7 @@ namespace Jeebs.Apps.WebApps
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Redirections(IConfiguration config, ref IApplicationBuilder app)
+		protected virtual void Configure_Redirections(IConfiguration config, IApplicationBuilder app)
 		{
 			if (config.GetSection<RedirectionsConfig>(":redirections") is RedirectionsConfig redirectRules)
 			{
@@ -270,7 +270,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure routing
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Routing(ref IApplicationBuilder app)
+		protected virtual void Configure_Routing(IApplicationBuilder app)
 		{
 			app.UseRouting();
 		}
@@ -279,7 +279,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure authorisation
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Authorisation(ref IApplicationBuilder app)
+		protected virtual void Configure_Authorisation(IApplicationBuilder app)
 		{
 			app.UseAuthorization();
 		}
@@ -288,7 +288,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure endpoints
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Endpoints(ref IApplicationBuilder app)
+		protected virtual void Configure_Endpoints(IApplicationBuilder app)
 		{
 			app.UseEndpoints(endpoints =>
 			{

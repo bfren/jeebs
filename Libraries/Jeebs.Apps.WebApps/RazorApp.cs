@@ -17,7 +17,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure endpoints - default is MVC
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
-		protected override void ConfigureServices_Endpoints(ref IServiceCollection services)
+		protected override void ConfigureServices_Endpoints(IServiceCollection services)
 		{
 			services
 				.AddRazorPages(ConfigureServices_RazorPagesOptions)
@@ -37,7 +37,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure endpoints
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected override void Configure_Endpoints(ref IApplicationBuilder app)
+		protected override void Configure_Endpoints(IApplicationBuilder app)
 		{
 			app.UseEndpoints(endpoints =>
 			{

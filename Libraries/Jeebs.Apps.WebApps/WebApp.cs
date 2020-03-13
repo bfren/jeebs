@@ -32,25 +32,25 @@ namespace Jeebs.Apps.WebApps
 					// App Configuration
 					.ConfigureAppConfiguration((host, config) =>
 					{
-						ConfigureApp(host.HostingEnvironment, ref config);
+						ConfigureApp(host.HostingEnvironment, config);
 					})
 
 					// Serilog
 					.UseSerilog((host, logger) =>
 					{
-						ConfigureSerilog(host.Configuration, ref logger);
+						ConfigureSerilog(host.Configuration, logger);
 					})
 
 					// Services
 					.ConfigureServices((host, services) =>
 					{
-						ConfigureServices(host.HostingEnvironment, host.Configuration, ref services);
+						ConfigureServices(host.HostingEnvironment, host.Configuration, services);
 					})
 
 					// Configure
 					.Configure((host, app) =>
 					{
-						Configure(host.HostingEnvironment, host.Configuration, ref app);
+						Configure(host.HostingEnvironment, host.Configuration, app);
 					})
 
 					// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
@@ -66,10 +66,10 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="services">IServiceCollection</param>
-		protected override void ConfigureServices(in IHostEnvironment env, in IConfiguration config, ref IServiceCollection services)
+		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base
-			base.ConfigureServices(env, config, ref services);
+			base.ConfigureServices(env, config, services);
 
 			// Specify HSTS options
 			services.AddHsts(opt =>
@@ -86,7 +86,7 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure(IHostEnvironment env, IConfiguration config, ref IApplicationBuilder app)
+		protected virtual void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
 		{
 			// Logging
 			app.UseMiddleware<LoggerMiddleware>();
@@ -99,10 +99,10 @@ namespace Jeebs.Apps.WebApps
 			else
 			{
 				// Pretty exception page
-				Configure_ProductionExceptionHandling(ref app);
+				Configure_ProductionExceptionHandling(app);
 
 				// Add security headers
-				Configure_SecurityHeaders(ref app);
+				Configure_SecurityHeaders(app);
 			}
 
 			// HTTPS
@@ -113,7 +113,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure production exception handling
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_ProductionExceptionHandling(ref IApplicationBuilder app)
+		protected virtual void Configure_ProductionExceptionHandling(IApplicationBuilder app)
 		{
 			app.UseExceptionHandler();
 		}
@@ -122,7 +122,7 @@ namespace Jeebs.Apps.WebApps
 		/// Override to configure security headers
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_SecurityHeaders(ref IApplicationBuilder app)
+		protected virtual void Configure_SecurityHeaders(IApplicationBuilder app)
 		{
 			app.UseHsts();
 		}
