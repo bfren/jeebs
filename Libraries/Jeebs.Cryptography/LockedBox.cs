@@ -27,7 +27,9 @@ namespace Jeebs.Cryptography
 		/// </summary>
 		public T Value
 		{
+#pragma warning disable CS8603 // Possible null reference return.
 			get => EncryptedValue is null ? unencryptedValue : default;
+#pragma warning restore CS8603 // Possible null reference return.
 			set => unencryptedValue = value;
 		}
 
@@ -49,9 +51,9 @@ namespace Jeebs.Cryptography
 		/// <summary>
 		/// Empty constructor
 		/// </summary>
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
+#pragma warning disable CS8604 // Possible null reference argument.
 		internal LockedBox() : this(default) { }
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
+#pragma warning restore CS8604 // Possible null reference argument.
 
 		/// <summary>
 		/// Create new box with contents
