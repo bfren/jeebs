@@ -91,6 +91,11 @@ namespace Jeebs.Data
 		#region Queries - Retrieve
 
 		/// <summary>
+		/// SELECT columns to return a COUNT query
+		/// </summary>
+		string GetSelectCount();
+
+		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
@@ -101,12 +106,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="args">IQuery</param>
 		string Retrieve(IQuery args);
-
-		/// <summary>
-		/// Build a COUNT query
-		/// </summary>
-		/// <param name="args">IQuery</param>
-		string Count(IQuery args);
 
 		#endregion
 

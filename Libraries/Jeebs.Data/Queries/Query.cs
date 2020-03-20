@@ -77,9 +77,11 @@ namespace Jeebs.Data
 		public double Offset { get; protected set; }
 
 		/// <summary>
-		/// Setup object
+		/// Create object
 		/// </summary>
-		protected Query(Func<IUnitOfWork> unitOfWorkFactory, IUnitOfWork? unitOfWork)
+		/// <param name="unitOfWorkFactory">Function to create an IUnitOfWork, if one isn't passed</param>
+		/// <param name="unitOfWork">[Optional] Pre-created IUnitOfWork</param>
+		protected Query(Func<IUnitOfWork> unitOfWorkFactory, IUnitOfWork? unitOfWork = null)
 		{
 			if (unitOfWork == null)
 			{
@@ -127,16 +129,6 @@ namespace Jeebs.Data
 			{
 				throw new Jx.Data.QueryException("SELECT has already been set.");
 			}
-		}
-
-		/// <summary>
-		/// Override select value and return IQuery
-		/// </summary>
-		/// <param name="select">New select</param>
-		public IQuery OverrideSelect(string select)
-		{
-			AddSelect(select, true);
-			return this;
 		}
 
 		/// <summary>
@@ -202,7 +194,19 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Build SELECT COUNT query
 		/// </summary>
-		public string GetCountSql() => Adapter.Count(this);
+		public string GetCountSql()
+		{
+			// Store select
+			var actualSelect = Select;
+
+			// Get count query
+			Select = Adapter.GetSelectCount();
+			var countQuery = Adapter.Retrieve(this);
+
+			// Reset select and return
+			Select = actualSelect;
+			return countQuery;
+		}
 
 		/// <summary>
 		/// Dispose of the UnitOfWork if we created one just for this query

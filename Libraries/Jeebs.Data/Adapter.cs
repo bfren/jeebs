@@ -62,7 +62,7 @@ namespace Jeebs.Data
 		/// <param name="aliasClose">Alias close character</param>
 		/// <param name="sortAsc">Sort Ascending string</param>
 		/// <param name="sortDesc">Sort Descending string</param>
-		protected Adapter(in char separator, in char escapeOpen, in char escapeClose, string alias, in char aliasOpen, in char aliasClose, in string sortAsc, in string sortDesc)
+		protected Adapter(char separator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
 		{
 			this.separator = separator;
 			this.escapeOpen = escapeOpen;
@@ -78,7 +78,7 @@ namespace Jeebs.Data
 
 		/// <summary>
 		/// Escape a table or column name
-		/// If <paramref name="name"/> contains the separator character, <see cref="SplitAndEscape(in string)"/> will be used instead
+		/// If <paramref name="name"/> contains the separator character, <see cref="SplitAndEscape(string)"/> will be used instead
 		/// </summary>
 		/// <exception cref="ArgumentNullException">If <paramref name="name"/> is null, empty, or whitespace</exception>
 		/// <param name="name">Table or column name</param>
@@ -113,7 +113,7 @@ namespace Jeebs.Data
 		public string Escape<TTable>(TTable table) where TTable : notnull => Escape(table.ToString());
 
 		/// <summary>
-		/// Split a string by '.', escape the elements, and rejoin them
+		/// Split a string by '.', escape the elements, and rejothem
 		/// </summary>
 		/// <param name="element">Elemnts (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
@@ -122,12 +122,12 @@ namespace Jeebs.Data
 			// Split an element by the default separator
 			var elements = element.Split(separator);
 
-			// Now escape the elements and re-join them
+			// Now escape the elements and re-jothem
 			return EscapeAndJoin(elements);
 		}
 
 		/// <summary>
-		/// Escape and then join an array of elements
+		/// Escape and then joan array of elements
 		/// </summary>
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
@@ -142,7 +142,7 @@ namespace Jeebs.Data
 			// The list of elements to escape
 			var escaped = new List<string>();
 
-			// Escape each element in the array, skipping elements that are null / empty / whitespace
+			// Escape each element the array, skipping elements that are null / empty / whitespace
 			foreach (var element in elements)
 			{
 				if (string.IsNullOrWhiteSpace(element))
@@ -158,7 +158,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Join a list of ExtractedColumn objects
+		/// Joa list of ExtractedColumn objects
 		/// </summary>
 		/// <param name="columns">ExtractedColumns</param>
 		public string Join(ExtractedColumns columns)
@@ -221,6 +221,11 @@ namespace Jeebs.Data
 		public abstract string CreateSingleAndReturnId<T>();
 
 		/// <summary>
+		/// SELECT columns to return a COUNT query
+		/// </summary>
+		public virtual string GetSelectCount() => "COUNT(*)";
+
+		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
@@ -231,12 +236,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="args">IQuery</param>
 		public abstract string Retrieve(IQuery args);
-
-		/// <summary>
-		/// Build a SELECT COUNT query
-		/// </summary>
-		/// <param name="args">IQuery</param>
-		public string Count(IQuery args) => Retrieve(args.OverrideSelect("COUNT(*)"));
 
 		/// <summary>
 		/// Query to update a single row

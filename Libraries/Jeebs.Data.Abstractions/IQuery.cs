@@ -55,12 +55,6 @@ namespace Jeebs.Data
 		public double Offset { get; }
 
 		/// <summary>
-		/// Override select value and return IQuery
-		/// </summary>
-		/// <param name="select">New select</param>
-		public IQuery OverrideSelect(string select);
-
-		/// <summary>
 		/// Build SELECT query
 		/// </summary>
 		string GetQuerySql();
