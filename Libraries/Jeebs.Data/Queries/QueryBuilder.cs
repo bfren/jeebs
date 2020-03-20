@@ -8,14 +8,15 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query Builder
 	/// </summary>
+	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TOptions">QueryOptions</typeparam>
-	public abstract class QueryBuilder<TOptions>
+	public abstract class QueryBuilder<TEntity, TOptions>
 		where TOptions : QueryOptions
 	{
 		/// <summary>
 		/// QueryArgs
 		/// </summary>
-		protected QueryArgs Args { get; }
+		protected QueryArgs<TEntity> Args { get; }
 
 		/// <summary>
 		/// IAdapter
@@ -28,17 +29,22 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		protected QueryBuilder(IAdapter adapter)
 		{
-			Args = new QueryArgs();
+			Args = new QueryArgs<TEntity>();
 			this.adapter = adapter;
 		}
 
 		/// <summary>
 		/// Build the query
 		/// </summary>
-		/// <typeparam name="T">Entity type to return</typeparam>
 		/// <param name="opt">TOptions</param>
 		/// <returns>QueryArgs</returns>
-		public virtual QueryArgs Build<T>(TOptions opt)
+		public abstract QueryArgs<TEntity> Build(TOptions opt);
+
+		/// <summary>
+		/// Add Limit and Offset
+		/// </summary>
+		/// <param name="opt">TOptions</param>
+		protected void AddLimitAndOffset(TOptions opt)
 		{
 			// LIMIT
 			if (opt.Limit is double limit)
@@ -51,8 +57,6 @@ namespace Jeebs.Data
 			{
 				AddOffset(offset);
 			}
-
-			return Args;
 		}
 
 		#region Adapter Shorthands

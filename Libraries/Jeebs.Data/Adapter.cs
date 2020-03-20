@@ -235,7 +235,7 @@ namespace Jeebs.Data
 		/// Build a SELECT query
 		/// </summary>
 		/// <param name="args">QueryArgs</param>
-		public abstract string Retrieve(QueryArgs args);
+		public abstract string Retrieve<T>(QueryArgs<T> args);
 
 		/// <summary>
 		/// Query to update a single row

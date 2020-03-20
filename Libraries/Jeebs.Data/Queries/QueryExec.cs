@@ -19,14 +19,14 @@ namespace Jeebs.Data
 		/// <summary>
 		/// QueryArgs
 		/// </summary>
-		private readonly QueryArgs args;
+		private readonly QueryArgs<T> args;
 
 		/// <summary>
 		/// Setup object
 		/// </summary>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="args">QueryArgs</param>
-		public QueryExec(IUnitOfWork unitOfWork, QueryArgs args)
+		public QueryExec(IUnitOfWork unitOfWork, QueryArgs<T> args)
 		{
 			this.unitOfWork = unitOfWork;
 			this.args = args;

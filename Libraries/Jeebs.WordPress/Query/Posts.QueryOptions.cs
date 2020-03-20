@@ -61,14 +61,17 @@ namespace Jeebs.WordPress
 			/// </summary>
 			public IList<(Taxonomy taxonomy, int id)>? Taxonomies { get; set; }
 
+			/// <summary>
+			/// Search custom fields
+			/// </summary>
+			public IList<(ICustomField field, SearchOperators op, object value)>? CustomFields { get; set; }
+
 			public QueryOptions()
 			{
 				Type = PostType.Post;
 				Status = PostStatus.Publish;
 				SearchFields = SearchPostFields.Title | SearchPostFields.Slug | SearchPostFields.Content;
 				SearchOperator = SearchOperators.Like;
-				//Taxonomies = new List<(Taxonomy, int)>();
-				//CustomFields = new List<(ICustomFieldQueryable field, SearchOperators op, object value)>();
 			}
 		}
 	}

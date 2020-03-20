@@ -27,11 +27,20 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string? Key { get; set; }
+		public string Key { get; set; }
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string? Value { get; set; }
+		public string Value { get; set; }
+
+		/// <summary>
+		/// Setup object
+		/// </summary>
+		protected WpPostMetaEntity()
+		{
+			Key = string.Empty;
+			Value = string.Empty;
+		}
 	}
 }

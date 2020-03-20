@@ -18,9 +18,15 @@ namespace Jeebs
 		private readonly PropertyInfo info;
 
 		/// <summary>
-		/// Inject dependencies
+		/// Create object
 		/// </summary>
 		/// <param name="info">PropertyInfo object</param>
+		public PropertyInfo(PropertyInfo info) => this.info = info;
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="propertyName">Property name</param>
 		public PropertyInfo(string propertyName)
 		{
 			if (typeof(TObject).GetProperty(propertyName) is PropertyInfo info)

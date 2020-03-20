@@ -9,7 +9,7 @@ namespace Jeebs.WordPress
 	/// Represents a CustomField, which are stored in the post_meta table
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
-	public abstract class CustomField<T>
+	public abstract class CustomField<T> : ICustomField<T>
 	{
 		/// <summary>
 		/// Meta key (for post_meta table)

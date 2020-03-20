@@ -59,9 +59,9 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="args">IQuery</param>
+		/// <param name="args">QueryArgs</param>
 		/// <returns>SELECT query</returns>
-		public override string Retrieve(QueryArgs args)
+		public override string Retrieve<T>(QueryArgs<T> args)
 		{
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {args.Select ?? "*"} FROM {args.From}");

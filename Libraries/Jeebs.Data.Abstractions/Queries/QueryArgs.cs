@@ -7,7 +7,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query args
 	/// </summary>
-	public class QueryArgs
+	public class QueryArgs<T>
 	{
 		/// <summary>
 		/// From table

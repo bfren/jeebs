@@ -10,6 +10,7 @@ using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Util;
+using Jeebs.WordPress;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -66,6 +67,24 @@ namespace AppConsoleWordPress
 
 			using (var q = bcg.Db.Query)
 			{
+				var exec = q.Posts<PostModel>(opt => opt.Limit = 3);
+				var posts = (await exec.Retrieve()).Val;
+				await q.AddPostsMeta(posts, p => p.Meta);
+
+				Console.WriteLine();
+				Console.WriteLine("== Meta ==");
+				foreach (var post in posts)
+				{
+					Console.WriteLine("Post {0}", post.PostId);
+					foreach (var item in post.Meta)
+					{
+						Console.WriteLine("{0}: {1}", item.Key, item.Value);
+					}
+				}
+			}
+
+			using (var q = bcg.Db.Query)
+			{
 				var sermonsExec = q.Posts<SermonModel>(opt =>
 				{
 					opt.SearchText = "holiness";
@@ -91,6 +110,12 @@ namespace AppConsoleWordPress
 				Console.WriteLine();
 				Console.WriteLine("== Sermons: Luke ==");
 				await Output(taxonomyExec);
+
+				var customFieldExec = q.Posts<SermonModel>(opt =>
+				{
+					opt.Type = WpBcg.PostTypes.Sermon;
+					opt.Limit = 20;
+				});
 			}
 
 			async Task Output(QueryExec<SermonModel> exec)
@@ -128,6 +153,15 @@ class TermModel
 	public Taxonomy Taxonomy { get; set; }
 
 	public int Count { get; set; }
+}
+
+class PostModel : IEntity
+{
+	public long Id { get => PostId; set => PostId = value; }
+
+	public long PostId { get; set; }
+
+	public MetaDictionary Meta { get; set; }
 }
 
 class SermonModel
