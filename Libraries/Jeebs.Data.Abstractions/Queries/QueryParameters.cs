@@ -17,12 +17,22 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters to add</param>
 		public void Add(object parameters)
 		{
-			foreach (var p in parameters.GetProperties())
+			if (parameters is QueryParameters keyValuePairs)
 			{
-				var name = p.Name;
-				var value = p.GetValue(parameters);
+				foreach (var p in keyValuePairs)
+				{
+					Add(p.Key, p.Value);
+				}
+			}
+			else
+			{
+				foreach (var p in parameters.GetProperties())
+				{
+					var name = p.Name;
+					var value = p.GetValue(parameters);
 
-				Add(name, value);
+					Add(name, value);
+				}
 			}
 		}
 	}
