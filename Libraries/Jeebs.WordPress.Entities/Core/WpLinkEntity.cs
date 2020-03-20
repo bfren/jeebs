@@ -12,12 +12,12 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => LinkId; set => LinkId = value; }
+		public long Id { get => LinkId; set => LinkId = value; }
 		/// <summary>
 		/// LinkId
 		/// </summary>
 		[Id]
-		public int LinkId { get; set; }
+		public long LinkId { get; set; }
 
 		/// <summary>
 		/// Url
@@ -42,7 +42,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// CategoryId
 		/// </summary>
-		public int CategoryId { get; set; }
+		public long CategoryId { get; set; }
 
 		/// <summary>
 		/// Description
@@ -57,7 +57,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// OwnerId
 		/// </summary>
-		public int OwnerId { get; set; }
+		public long OwnerId { get; set; }
 
 		/// <summary>
 		/// Rating

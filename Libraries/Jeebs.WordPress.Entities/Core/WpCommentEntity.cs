@@ -13,18 +13,18 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => CommentId; set => CommentId = value; }
+		public long Id { get => CommentId; set => CommentId = value; }
 
 		/// <summary>
 		/// CommentId
 		/// </summary>
 		[Id]
-		public int CommentId { get; set; }
+		public long CommentId { get; set; }
 
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public int PostId { get; set; }
+		public long PostId { get; set; }
 
 		/// <summary>
 		/// AuthorName
@@ -84,12 +84,12 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public int ParentId { get; set; }
+		public long ParentId { get; set; }
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public int AuthorId { get; set; }
+		public long AuthorId { get; set; }
 
 		/// <summary>
 		/// AuthorIsSubscribed

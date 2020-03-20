@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Jeebs.Data
 {
@@ -62,6 +63,6 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Build SELECT COUNT query
 		/// </summary>
-		string GetCountSql();
+		Task<Result<int>> GetCountAsync();
 	}
 }

@@ -11,13 +11,13 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => TermId; set => TermId = value; }
+		public long Id { get => TermId; set => TermId = value; }
 
 		/// <summary>
 		/// TermId
 		/// </summary>
 		[Id]
-		public int TermId { get; set; }
+		public long TermId { get; set; }
 
 		/// <summary>
 		/// Title

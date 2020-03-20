@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs.Util.JsonConverters;
 
 namespace Jeebs.Util
 {
@@ -21,16 +22,15 @@ namespace Jeebs.Util
 				var opt = new JsonSerializerOptions
 				{
 					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-					IgnoreNullValues = true
+					IgnoreNullValues = true,
 				};
 
+				opt.Converters.Add(new EnumJsonConverterFactory());
 				opt.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
 				return opt;
 			}
 		}
-
-
 
 		/// <summary>
 		/// Use JsonSerializer to serialise a given object

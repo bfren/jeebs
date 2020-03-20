@@ -8,6 +8,7 @@ using Jeebs;
 using Jeebs.Apps;
 using Jeebs.Config;
 using Jeebs.Data;
+using Jeebs.Data.Enums;
 using Jeebs.Util;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Configuration;
@@ -57,8 +58,25 @@ namespace AppConsoleWordPress
 				);
 			}
 
-			var qp = bcg.Db.QueryPosts;
-			//var sermons = qp.Execute<Bcg.Entities.Post>();
+			using (var qp = bcg.Db.QueryPosts)
+			{
+				qp.Build<SermonModel>(opt =>
+				{
+					opt.SearchText = "Jesus";
+					opt.SearchOperator = SearchOperators.Like;
+					opt.Type = WpBcg.PostTypes.Sermon;
+					opt.Sort = new[] { (qp.WpDb.Post.Title, SortOrder.Ascending) };
+					opt.Limit = 0;
+				});
+
+				var sermonsCount = await qp.GetCountAsync();
+				Console.WriteLine(sermonsCount.Err is ErrorList
+					? $"{sermonsCount.Err}"
+					: $"There are {sermonsCount.Val} matching sermons."
+				);
+
+
+			}
 
 			// End
 			Console.Read();
@@ -73,4 +91,13 @@ class TermModel
 	public Taxonomy Taxonomy { get; set; }
 
 	public int Count { get; set; }
+}
+
+class SermonModel : IEntity
+{
+	public long Id { get; set; }
+
+	public string Title { get; set; }
+
+	public DateTime PublishedOn { get; set; }
 }

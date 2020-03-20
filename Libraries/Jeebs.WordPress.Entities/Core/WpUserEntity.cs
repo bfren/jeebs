@@ -12,13 +12,13 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => UserId; set => UserId = value; }
+		public long Id { get => UserId; set => UserId = value; }
 
 		/// <summary>
 		/// UserId
 		/// </summary>
 		[Id]
-		public int UserId { get; set; }
+		public long UserId { get; set; }
 
 		/// <summary>
 		/// Username

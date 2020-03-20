@@ -13,18 +13,18 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => PostId; set => PostId = value; }
+		public long Id { get => PostId; set => PostId = value; }
 
 		/// <summary>
 		/// PostId
 		/// </summary>
 		[Id]
-		public int PostId { get; set; }
+		public long PostId { get; set; }
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public int AuthorId { get; set; }
+		public long AuthorId { get; set; }
 
 		/// <summary>
 		/// PublishedOn
@@ -74,7 +74,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public int ParentId { get; set; }
+		public long ParentId { get; set; }
 
 		/// <summary>
 		/// Url

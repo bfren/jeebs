@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Dapper;
+using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
@@ -59,7 +59,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Query Parameters
 		/// </summary>
-		public DynamicParameters Parameters { get; }
+		public QueryParameters Parameters { get; }
 
 		/// <summary>
 		/// Order By
@@ -94,7 +94,7 @@ namespace Jeebs.Data
 			}
 
 			From = string.Empty;
-			Parameters = new DynamicParameters();
+			Parameters = new QueryParameters();
 		}
 
 		/// <summary>
@@ -104,13 +104,13 @@ namespace Jeebs.Data
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in FROM</param>
 		protected void AddFrom(string from, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(from) || overwrite)
+			if (string.IsNullOrEmpty(From) || overwrite)
 			{
 				From = from;
 			}
 			else
 			{
-				throw new Jx.Data.QueryException("From has already been set.");
+				throw new Jx.Data.QueryException("FROM has already been set.");
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace Jeebs.Data
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in SELECT</param>
 		protected void AddSelect(string select, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(select) || overwrite)
+			if (string.IsNullOrEmpty(Select) || overwrite)
 			{
 				Select = select;
 			}
@@ -141,7 +141,7 @@ namespace Jeebs.Data
 
 			if (parameters != null)
 			{
-				Parameters.AddDynamicParams(parameters);
+				Parameters.Add(parameters);
 			}
 		}
 
@@ -191,10 +191,7 @@ namespace Jeebs.Data
 		/// </summary>
 		public string GetQuerySql() => Adapter.Retrieve(this);
 
-		/// <summary>
-		/// Build SELECT COUNT query
-		/// </summary>
-		public string GetCountSql()
+		public async Task<Result<int>> GetCountAsync()
 		{
 			// Store select
 			var actualSelect = Select;
@@ -203,9 +200,12 @@ namespace Jeebs.Data
 			Select = Adapter.GetSelectCount();
 			var countQuery = Adapter.Retrieve(this);
 
+			// Execute
+			var count = await UnitOfWork.ExecuteScalarAsync<int>(countQuery, Parameters);
+
 			// Reset select and return
 			Select = actualSelect;
-			return countQuery;
+			return count;
 		}
 
 		/// <summary>

@@ -13,25 +13,25 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Entity Id
 		/// </summary>
-		public virtual int Id { get => IdFactory.Value; }
+		public virtual long Id { get => IdFactory.Value; }
 
 		/// <summary>
 		/// Id Factory
 		/// </summary>
-		private Lazy<int> IdFactory { get; }
+		private Lazy<long> IdFactory { get; }
 
 		/// <summary>
 		/// Create object with an Id of -1
 		/// </summary>
-		protected Entity() => IdFactory = new Lazy<int>(-1);
+		protected Entity() => IdFactory = new Lazy<long>(-1);
 
 		/// <summary>
 		/// Use expression to return Entity ID
 		/// </summary>
 		/// <param name="idProperty">Expression to return ID Property</param>
-		protected Entity(Expression<Func<Entity, int>> idProperty)
+		protected Entity(Expression<Func<Entity, long>> idProperty)
 		{
-			IdFactory = new Lazy<int>(() => idProperty.Compile().Invoke(this));
+			IdFactory = new Lazy<long>(() => idProperty.Compile().Invoke(this));
 		}
 	}
 }

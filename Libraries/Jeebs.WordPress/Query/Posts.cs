@@ -9,7 +9,7 @@ namespace Jeebs.WordPress
 {
 	public static partial class Query
 	{
-		public sealed class Posts : Base<PostsOptions>
+		public class Posts : Base<PostsOptions>
 		{
 			/// <summary>
 			/// Create object
@@ -34,13 +34,16 @@ namespace Jeebs.WordPress
 				var w = UnitOfWork;
 
 				// Get table names
-				var p = _.Post.ToString();
+				var p = "p";
 				var pm = _.PostMeta.ToString();
 				var tr = _.TermRelationship.ToString();
 				var tx = _.TermTaxonomy.ToString();
 
-				// SELECT columns FROM table
-				AddSelect($"{w.Extract<T>(_.Post)} AS '{p}' FROM {w.Escape(_.Post)}");
+				// SELECT columns
+				AddSelect($"{w.Extract<T>(_.Post)}");
+
+				// FROM table
+				AddFrom($"{w.Escape(_.Post)} AS {w.Escape(p)}");
 
 				// WHERE type
 				var type = opt.Type;
@@ -106,7 +109,7 @@ namespace Jeebs.WordPress
 					}
 
 					// Add to WHERE
-					AddWhere(where, new { search });
+					AddWhere($"({where})", new { search });
 				}
 
 				// WHERE dates

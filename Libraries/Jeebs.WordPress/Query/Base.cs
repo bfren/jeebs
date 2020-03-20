@@ -19,7 +19,7 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// IWpDb
 			/// </summary>
-			protected IWpDb WpDb { get; }
+			public IWpDb WpDb { get; }
 
 			/// <summary>
 			/// Setup object

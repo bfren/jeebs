@@ -11,18 +11,18 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get; set; }
+		public long Id { get; set; }
 
 		/// <summary>
 		/// PostId
 		/// </summary>
 		[Id]
-		public int PostId { get; set; }
+		public long PostId { get; set; }
 
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public int TermTaxonomyId { get; set; }
+		public long TermTaxonomyId { get; set; }
 
 		/// <summary>
 		/// SortOrder

@@ -11,18 +11,18 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => UserMetaId; set => UserMetaId = value; }
+		public long Id { get => UserMetaId; set => UserMetaId = value; }
 
 		/// <summary>
 		/// UserMetaId
 		/// </summary>
 		[Id]
-		public int UserMetaId { get; set; }
+		public long UserMetaId { get; set; }
 
 		/// <summary>
 		/// UserId
 		/// </summary>
-		public int UserId { get; set; }
+		public long UserId { get; set; }
 
 		/// <summary>
 		/// Key

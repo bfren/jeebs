@@ -33,6 +33,14 @@ namespace Jeebs.WordPress
 			/// Query OFFSET
 			/// </summary>
 			public double Offset { get; set; }
+
+			/// <summary>
+			/// Set defaults
+			/// </summary>
+			public BaseOptions()
+			{
+				Limit = 10;
+			}
 		}
 	}
 }

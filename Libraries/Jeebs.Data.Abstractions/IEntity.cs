@@ -12,6 +12,6 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Primary key
 		/// </summary>
-		int Id { get; }
+		long Id { get; }
 	}
 }

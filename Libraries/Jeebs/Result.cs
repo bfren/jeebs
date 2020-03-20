@@ -69,5 +69,10 @@ namespace Jeebs
 
 			Err = new ErrorList(errors);
 		}
+
+		/// <summary>
+		/// Return Err (ErrorList) if there was an error, or Val (T) if not
+		/// </summary>
+		public override string ToString() => Err is ErrorList ? Err.ToString() : (Val is T ? Val.ToString() : base.ToString());
 	}
 }

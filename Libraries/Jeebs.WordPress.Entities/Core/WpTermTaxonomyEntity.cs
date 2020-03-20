@@ -12,18 +12,18 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public int Id { get => TermTaxonomyId; set => TermTaxonomyId = value; }
+		public long Id { get => TermTaxonomyId; set => TermTaxonomyId = value; }
 
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
 		[Id]
-		public int TermTaxonomyId { get; set; }
+		public long TermTaxonomyId { get; set; }
 
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public int TermId { get; set; }
+		public long TermId { get; set; }
 
 		/// <summary>
 		/// Taxonomy
@@ -38,7 +38,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public int ParentId { get; set; }
+		public long ParentId { get; set; }
 
 		/// <summary>
 		/// Count
