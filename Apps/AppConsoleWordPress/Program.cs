@@ -58,24 +58,35 @@ namespace AppConsoleWordPress
 				);
 			}
 
-			using (var qp = bcg.Db.QueryPosts)
+			using (var q = bcg.Db.Query)
 			{
-				qp.Build<SermonModel>(opt =>
+				var sermonsExec = q.Posts<SermonModel>(opt =>
 				{
-					opt.SearchText = "Jesus";
+					opt.SearchText = "holiness";
 					opt.SearchOperator = SearchOperators.Like;
 					opt.Type = WpBcg.PostTypes.Sermon;
-					opt.Sort = new[] { (qp.WpDb.Post.Title, SortOrder.Ascending) };
-					opt.Limit = 0;
+					opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+					opt.Limit = 20;
 				});
 
-				var sermonsCount = await qp.GetCountAsync();
+				var sermonsCount = await sermonsExec.Count();
 				Console.WriteLine(sermonsCount.Err is ErrorList
 					? $"{sermonsCount.Err}"
 					: $"There are {sermonsCount.Val} matching sermons."
 				);
 
-
+				var sermons = await sermonsExec.Retrieve();
+				if (sermons.Err is ErrorList)
+				{
+					Console.WriteLine(sermons.Err);
+				}
+				else
+				{
+					foreach (var item in sermons.Val)
+					{
+						Console.WriteLine("{0:0000}: {1}", item.PostId, item.Title);
+					}
+				}
 			}
 
 			// End
@@ -93,9 +104,9 @@ class TermModel
 	public int Count { get; set; }
 }
 
-class SermonModel : IEntity
+class SermonModel
 {
-	public long Id { get; set; }
+	public long PostId { get; set; }
 
 	public string Title { get; set; }
 

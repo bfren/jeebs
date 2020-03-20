@@ -158,7 +158,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Joa list of ExtractedColumn objects
+		/// Join a list of ExtractedColumn objects
 		/// </summary>
 		/// <param name="columns">ExtractedColumns</param>
 		public string Join(ExtractedColumns columns)
@@ -191,7 +191,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="name">Column name</param>
 		/// <param name="alias">Column alias</param>
-		private string Column(string name, string alias) => $"{name} {this.alias} {aliasOpen}{alias}{aliasClose}";
+		private string Column(string name, string alias) => $"{Escape(name)} {this.alias} {aliasOpen}{alias}{aliasClose}";
 
 		#endregion
 
@@ -234,8 +234,8 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="args">IQuery</param>
-		public abstract string Retrieve(IQuery args);
+		/// <param name="args">QueryArgs</param>
+		public abstract string Retrieve(QueryArgs args);
 
 		/// <summary>
 		/// Query to update a single row

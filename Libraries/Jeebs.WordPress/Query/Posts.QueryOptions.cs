@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress
 {
-	public static partial class Query
+	/// <summary>
+	/// Query Posts
+	/// </summary>
+	public partial class Posts
 	{
-		public sealed class PostsOptions : BaseOptions
+		/// <summary>
+		/// Query Options
+		/// </summary>
+		public sealed class QueryOptions : Data.QueryOptions
 		{
 			/// <summary>
 			/// Search Post type
@@ -51,7 +56,7 @@ namespace Jeebs.WordPress
 			/// </summary>
 			public int? ParentId { get; set; }
 
-			public PostsOptions()
+			public QueryOptions()
 			{
 				Type = PostType.Post;
 				Status = PostStatus.Publish;

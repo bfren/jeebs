@@ -45,6 +45,13 @@ namespace Jeebs.WordPress
 		public MySqlAdapter Adapter { get => client.Adapter; }
 
 		/// <summary>
+		/// Start a new query
+		/// </summary>
+		public Query Query { get => new Query(this); }
+
+		#region Tables
+
+		/// <summary>
 		/// Comment Table
 		/// </summary>
 		public CommentTable Comment { get; }
@@ -103,6 +110,8 @@ namespace Jeebs.WordPress
 		/// User Meta Table
 		/// </summary>
 		public UserMetaTable UserMeta { get; }
+
+		#endregion
 
 		/// <summary>
 		/// Set database connection string, and create tables for schema

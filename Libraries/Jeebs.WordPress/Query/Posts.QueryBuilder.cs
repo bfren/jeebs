@@ -7,56 +7,61 @@ using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress
 {
-	public static partial class Query
+	/// <summary>
+	/// Query Posts
+	/// </summary>
+	public partial class Posts
 	{
-		public class Posts : Base<PostsOptions>
+		/// <summary>
+		/// Query Builder
+		/// </summary>
+		internal sealed class QueryBuilder : QueryBuilder<QueryOptions>
 		{
+			/// <summary>
+			/// IWpDb
+			/// </summary>
+			private readonly IWpDb db;
+
 			/// <summary>
 			/// Create object
 			/// </summary>
-			/// <param name="wpDb">IWpDb</param>
-			/// <param name="unitOfWork">[Optional] IUnitOfWork</param>
-			public Posts(IWpDb wpDb, IUnitOfWork? unitOfWork = null) : base(wpDb, unitOfWork) { }
+			/// <param name="db">IWpDb</param>
+			internal QueryBuilder(IWpDb db) : base(db.Adapter) => this.db = db;
 
 			/// <summary>
-			/// Build the query using default options
+			/// Build query
 			/// </summary>
 			/// <typeparam name="T">Entity type</typeparam>
-			/// <param name="modifyOptions">[Optional] Action to modify default options</param>
-			public override void Build<T>(Action<PostsOptions>? modifyOptions = null)
+			/// <param name="opt">QueryOptions</param>
+			public override QueryArgs Build<T>(QueryOptions opt)
 			{
-				// Get query options
-				var opt = new PostsOptions();
-				modifyOptions?.Invoke(opt);
-
-				// Get shorthands
-				var _ = WpDb;
-				var w = UnitOfWork;
+				// Use db shorthand
+				var _ = db;
 
 				// Get table names
-				var p = "p";
+				var p = _.Post.ToString();
 				var pm = _.PostMeta.ToString();
 				var tr = _.TermRelationship.ToString();
 				var tx = _.TermTaxonomy.ToString();
 
 				// SELECT columns
-				AddSelect($"{w.Extract<T>(_.Post)}");
+				AddSelect($"{Extract<T>(_.Post)}");
 
 				// FROM table
-				AddFrom($"{w.Escape(_.Post)} AS {w.Escape(p)}");
+				AddFrom($"{Escape(_.Post)} AS {Escape(p)}");
 
 				// WHERE type
 				var type = opt.Type;
-				AddWhere($"{w.Escape(p, _.Post.Type)} = @{nameof(type)}", new { type });
+				AddWhere($"{Escape(p, _.Post.Type)} = @{nameof(type)}", new { type });
 
 				// WHERE status
 				var status = opt.Status;
-				AddWhere($"{w.Escape(p, _.Post.Status)} = @{nameof(status)}", new { status });
+				AddWhere($"{Escape(p, _.Post.Status)} = @{nameof(status)}", new { status });
 
 				// WHERE Id
 				if (opt.Id is double postId)
 				{
-					AddWhere($"{w.Escape(p, _.Post.PostId)} = @{nameof(postId)}", new { postId });
+					AddWhere($"{Escape(p, _.Post.PostId)} = @{nameof(postId)}", new { postId });
 				}
 
 				// WHERE search
@@ -83,7 +88,7 @@ namespace Jeebs.WordPress
 					// Search title
 					if ((opt.SearchFields & SearchPostFields.Title) != 0)
 					{
-						where += $"{w.Escape(p,_.Post.Title)} {comparison} @{nameof(search)}";
+						where += $"{Escape(p, _.Post.Title)} {comparison} @{nameof(search)}";
 					}
 
 					// Search slug
@@ -94,7 +99,7 @@ namespace Jeebs.WordPress
 							where += " OR ";
 						}
 
-						where += $"{w.Escape(p, _.Post.Slug)} {comparison} @{nameof(search)}";
+						where += $"{Escape(p, _.Post.Slug)} {comparison} @{nameof(search)}";
 					}
 
 					// Search content
@@ -105,7 +110,7 @@ namespace Jeebs.WordPress
 							where += " OR ";
 						}
 
-						where += $"{w.Escape(p, _.Post.Content)} {comparison} @{nameof(search)}";
+						where += $"{Escape(p, _.Post.Content)} {comparison} @{nameof(search)}";
 					}
 
 					// Add to WHERE
@@ -116,18 +121,18 @@ namespace Jeebs.WordPress
 				if (opt.From is DateTime f)
 				{
 					var from = f.StartOfDay().ToMySqlString();
-					AddWhere($"{w.Escape(p, _.Post.PublishedOn)} >= @{nameof(from)}", new { from });
+					AddWhere($"{Escape(p, _.Post.PublishedOn)} >= @{nameof(from)}", new { from });
 				}
 				if (opt.To is DateTime t)
 				{
 					var to = t.EndOfDay().ToMySqlString();
-					AddWhere($"{w.Escape(p, _.Post.PublishedOn)} <= @{nameof(to)}", new { to });
+					AddWhere($"{Escape(p, _.Post.PublishedOn)} <= @{nameof(to)}", new { to });
 				}
 
 				// WHERE parent ID
 				if (opt.ParentId is int parentId)
 				{
-					AddWhere($"{w.Escape(p, _.Post.ParentId)} = @{nameof(parentId)}", new { parentId });
+					AddWhere($"{Escape(p, _.Post.ParentId)} = @{nameof(parentId)}", new { parentId });
 				}
 
 				// ORDER BY
@@ -144,11 +149,8 @@ namespace Jeebs.WordPress
 					AddOrderBy((_.Post.PublishedOn, SortOrder.Descending));
 				}
 
-				// LIMIT
-				AddLimit(opt.Limit);
-
-				// OFFSET
-				AddOffset(opt.Offset);
+				// Return
+				return base.Build<T>(opt);
 			}
 		}
 	}

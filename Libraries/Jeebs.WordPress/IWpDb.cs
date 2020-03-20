@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.WordPress.Tables;
@@ -17,12 +18,17 @@ namespace Jeebs.WordPress
 		/// </summary>
 		MySqlAdapter Adapter { get; }
 
+		/// <summary>
+		/// Start a new query
+		/// </summary>
+		Query Query { get; }
+
 		#region Tables
 
-			/// <summary>
-			/// Comment Table
-			/// </summary>
-			CommentTable Comment { get; }
+		/// <summary>
+		/// Comment Table
+		/// </summary>
+		CommentTable Comment { get; }
 
 		/// <summary>
 		/// Comment Meta Table
@@ -78,12 +84,6 @@ namespace Jeebs.WordPress
 		/// User Meta Table
 		/// </summary>
 		UserMetaTable UserMeta { get; }
-
-		#endregion
-
-		#region Queries
-
-		Query.Posts QueryPosts { get => new Query.Posts(this, null); }
 
 		#endregion
 	}
