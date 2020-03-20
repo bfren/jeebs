@@ -9,12 +9,21 @@ namespace Jeebs.WordPress
 {
 	public static partial class Query
 	{
-		public sealed class Posts : Base
+		public sealed class Posts : Base<PostsOptions>
 		{
-			public Posts(IWpDb wpDb, IUnitOfWork? unitOfWork) : base(wpDb, unitOfWork) { }
+			/// <summary>
+			/// Create object
+			/// </summary>
+			/// <param name="wpDb">IWpDb</param>
+			/// <param name="unitOfWork">[Optional] IUnitOfWork</param>
+			public Posts(IWpDb wpDb, IUnitOfWork? unitOfWork = null) : base(wpDb, unitOfWork) { }
 
-			public void Build<T>(Action<PostsOptions>? modifyOptions = null)
-				where T : IEntity
+			/// <summary>
+			/// Build the query using default options
+			/// </summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="modifyOptions">[Optional] Action to modify default options</param>
+			public override void Build<T>(Action<PostsOptions>? modifyOptions = null)
 			{
 				// Get query options
 				var opt = new PostsOptions();

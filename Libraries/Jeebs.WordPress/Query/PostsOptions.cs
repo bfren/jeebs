@@ -9,7 +9,7 @@ namespace Jeebs.WordPress
 {
 	public static partial class Query
 	{
-		public sealed class PostsOptions : QueryOptions
+		public sealed class PostsOptions : BaseOptions
 		{
 			/// <summary>
 			/// Search Post type
