@@ -20,7 +20,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Custom Field value
 		/// </summary>
-		public abstract T ValueObj { get; protected set; }
+		public virtual T ValueObj { get; protected set; }
 
 		/// <summary>
 		/// String representation of the value - normally retrieved from the database

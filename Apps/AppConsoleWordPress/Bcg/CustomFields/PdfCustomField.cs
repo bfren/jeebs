@@ -8,7 +8,7 @@ namespace AppConsoleWordPress.Bcg
 	/// <summary>
 	/// Sermon script PDF
 	/// </summary>
-	public sealed class PdfCustomField : PostAttachmentCustomField
+	public sealed class PdfCustomField : AttachmentCustomField
 	{
 		/// <summary>
 		/// This is not a required field

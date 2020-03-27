@@ -9,7 +9,7 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Post Attachment Custom Field
 	/// </summary>
-	public abstract partial class PostAttachmentCustomField : CustomField<PostAttachmentCustomField.Attachment>
+	public abstract partial class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
 		/// <summary>
 		/// Attachment class
