@@ -7,7 +7,7 @@ namespace Jeebs
 	/// <summary>
 	/// Factory methods for creating Results
 	/// </summary>
-	public static partial class Result
+	public partial class Result
 	{
 		/// <summary>
 		/// Simple failure
@@ -43,7 +43,7 @@ namespace Jeebs
 	/// <summary>
 	/// Alias for simple failure
 	/// </summary>
-	public sealed class Failure : Result<bool>
+	public sealed class Failure : Result
 	{
 		/// <summary>
 		/// Create object with errors

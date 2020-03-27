@@ -5,6 +5,13 @@ using System.Text;
 
 namespace Jeebs
 {
+	public partial class Result : Result<bool>
+	{
+		public Result(bool value) : base(value) { }
+
+		public Result(string[] errors) : base(errors) { }
+	}
+
 	/// <summary>
 	/// Result class
 	/// </summary>

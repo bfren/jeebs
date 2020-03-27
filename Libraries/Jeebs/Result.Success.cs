@@ -7,7 +7,7 @@ namespace Jeebs
 	/// <summary>
 	/// Factory methods for creating Results
 	/// </summary>
-	public static partial class Result
+	public partial class Result
 	{
 		/// <summary>
 		/// Simple Success
@@ -25,7 +25,7 @@ namespace Jeebs
 	/// <summary>
 	/// Alias for simple success
 	/// </summary>
-	public sealed class Success : Result<bool>
+	public sealed class Success : Result
 	{
 		/// <summary>
 		/// Create object with true value
