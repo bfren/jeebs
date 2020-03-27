@@ -67,7 +67,7 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		public static class CustomFields
 		{
-
+			public readonly static BiblePassageCustomField Passage = new BiblePassageCustomField();
 		}
 
 		/// <summary>

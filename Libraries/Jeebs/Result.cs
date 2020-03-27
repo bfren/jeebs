@@ -5,11 +5,30 @@ using System.Text;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// True / false result class
+	/// </summary>
 	public partial class Result : Result<bool>
 	{
+		/// <summary>
+		/// Create success result using specified value
+		/// </summary>
+		/// <param name="value">Success value</param>
 		public Result(bool value) : base(value) { }
 
+		/// <summary>
+		/// Create failure result using specified errors
+		/// </summary>
+		/// <param name="errors">List of errors - MUST contain at least one</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
 		public Result(string[] errors) : base(errors) { }
+
+		/// <summary>
+		/// Create failure result using specified errors
+		/// </summary>
+		/// <param name="err">ErrorList</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
+		public Result(ErrorList err) : base(err) { }
 	}
 
 	/// <summary>
@@ -76,6 +95,15 @@ namespace Jeebs
 
 			Err = new ErrorList(errors);
 		}
+
+		/// <summary>
+		/// Create failure result using specified errors
+		/// </summary>
+		/// <param name="err">ErrorList</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+		protected Result(ErrorList err) => Err = err;
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
 		/// <summary>
 		/// Return Err (ErrorList) if there was an error, or Val (T) if not

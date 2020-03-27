@@ -19,6 +19,13 @@ namespace Jeebs
 		/// <summary>
 		/// Simple failure
 		/// </summary>
+		/// <param name="err">ErrorList</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
+		public static Failure Failure(ErrorList err) => new Failure(err);
+
+		/// <summary>
+		/// Simple failure
+		/// </summary>
 		/// <param name="error">Single error</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
 		public static Failure Failure(string error) => Failure(new[] { error });
@@ -30,6 +37,14 @@ namespace Jeebs
 		/// <param name="errors">List of errors - MUST contain at least one</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
 		public static Failure<T> Failure<T>(string[] errors) => new Failure<T>(errors);
+
+		/// <summary>
+		/// Feailure result
+		/// </summary>
+		/// <typeparam name="T">Result success value type</typeparam>
+		/// <param name="err">ErrorList</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
+		public static Failure<T> Failure<T>(ErrorList err) => new Failure<T>(err);
 
 		/// <summary>
 		/// Feailure result
@@ -50,6 +65,12 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="errors">List of errors</param>
 		internal Failure(string[] errors) : base(errors) { }
+
+		/// <summary>
+		/// Create object with errors
+		/// </summary>
+		/// <param name="err">ErrorList</param>
+		internal Failure(ErrorList err) : base(err) { }
 	}
 
 	/// <summary>
@@ -63,5 +84,11 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="errors">List of errors</param>
 		internal Failure(string[] errors) : base(errors) { }
+
+		/// <summary>
+		/// Create object with errors
+		/// </summary>
+		/// <param name="err">ErrorList</param>
+		internal Failure(ErrorList err) : base(err) { }
 	}
 }

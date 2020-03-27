@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Reflection;
 using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Tables;
 
@@ -34,12 +35,39 @@ namespace Jeebs.WordPress
 		}
 
 		/// <summary>
+		/// Add Meta and Custom Fields to the list of posts
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="posts">Posts</param>
+		/// <param name="meta">Expression to return MetaDictionary property</param>
+		public async Task<Result> AddMetaAndCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+			where T : IEntity
+		{
+			// Add Meta
+			var addMetaResult = await AddMetaToPosts(posts, meta);
+			if (addMetaResult.Err is ErrorList addMetaErr)
+			{
+				return Result.Failure(addMetaErr);
+			}
+
+			// Add Custom Fields
+			var addCustomFieldsResult = await AddCustomFieldsToPosts(posts, meta);
+			if (addCustomFieldsResult.Err is ErrorList addCustomFieldsErr)
+			{
+				return Result.Failure(addCustomFieldsErr);
+			}
+
+			// Return success
+			return Result.Success();
+		}
+
+		/// <summary>
 		/// Add meta values to posts
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Expression to return MetaDictionary property</param>
-		public async Task<Result> AddMetaToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		private async Task<Result> AddMetaToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
 			where T : IEntity
 		{
 			// Don't do anything if there aren't any posts
@@ -60,15 +88,15 @@ namespace Jeebs.WordPress
 				.GetExec(UnitOfWork);
 
 			// Get meta
-			var allMeta = await exec.Retrieve();
+			var metaResult = await exec.Retrieve();
 
 			// Return errors if there are any
-			if (allMeta.Err is ErrorList)
+			if (metaResult.Err is ErrorList)
 			{
-				return Result.Failure(allMeta.Err.Prepend("Error fetching meta to add to posts.").ToArray());
+				return Result.Failure(metaResult.Err);
 			}
 			// If no meta, return success
-			else if (!allMeta.Val.Any())
+			else if (!metaResult.Val.Any())
 			{
 				return Result.Success();
 			}
@@ -79,7 +107,7 @@ namespace Jeebs.WordPress
 			// Add meta to each post
 			foreach (var post in posts)
 			{
-				var postMeta = from m in allMeta.Val
+				var postMeta = from m in metaResult.Val
 							   where m.PostId == post.Id
 							   select new KeyValuePair<string, string>(m.Key, m.Value);
 
@@ -102,12 +130,52 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Expression to return MetaDictionary property</param>
-		public async Task<Result> AddCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		private async Task<Result> AddCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+			where T : IEntity
 		{
 			// Don't do anything if there aren't any posts
 			if (!posts.Any())
 			{
 				return Result.Failure("No posts to work on.");
+			}
+
+			// Get all custom field properties from the model
+			var customFields = from cf in typeof(T).GetProperties()
+							   where cf.PropertyType.GetInterfaces().Contains(typeof(ICustomField))
+							   select cf;
+
+			// If no custom fields, return success
+			if (!customFields.Any())
+			{
+				return Result.Success();
+			}
+
+			// Hydrate all custom fields for all posts
+			var metaFunc = meta.Compile();
+			foreach (var post in posts)
+			{
+				// If post is null, continue
+				if (post == null)
+				{
+					continue;
+				}
+
+				// Get meta
+				var metaDictionary = metaFunc.Invoke(post);
+
+				// Add each custom field
+				foreach (var customField in customFields)
+				{
+					// Get field property
+					var customFieldProperty = (ICustomField)post.GetProperty(customField.Name);
+
+					// Hydrate the field
+					var result = await customFieldProperty.Hydrate(db, UnitOfWork, metaDictionary);
+					if (result.Err is ErrorList err && customFieldProperty.IsRequired)
+					{
+						return Result.Failure(err);
+					}
+				}
 			}
 
 			// Return success

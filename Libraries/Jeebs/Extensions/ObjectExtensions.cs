@@ -24,7 +24,7 @@ namespace Jeebs.Reflection
 		/// <param name="o">Object</param>
 		/// <param name="propertyName">The name of the property whose value you want to return</param>
 		/// <returns>The value of the property, or an empty string if the property does not exist</returns>
-		public static object GetPropertyValue(this object o, string propertyName)
+		public static object GetProperty(this object o, string propertyName)
 		{
 			TypeInfo type = o.GetType().GetTypeInfo();
 			if (!type.DeclaredProperties.Any(x => x.Name == propertyName))
@@ -43,7 +43,7 @@ namespace Jeebs.Reflection
 		/// <param name="o">Object</param>
 		/// <param name="propertyName">The name of the property whose value you want to return</param>
 		/// <returns>The value of the property, or an empty string if the property does not exist</returns>
-		public static T GetPropertyValue<T>(this object o, string propertyName)
+		public static T GetProperty<T>(this object o, string propertyName)
 		{
 			TypeInfo type = o.GetType().GetTypeInfo();
 			if (type.DeclaredProperties.Any(x => x.Name == propertyName) == false)
