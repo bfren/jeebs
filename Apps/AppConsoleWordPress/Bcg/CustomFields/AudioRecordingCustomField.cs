@@ -6,13 +6,13 @@ using Jeebs.WordPress;
 namespace AppConsoleWordPress.Bcg
 {
 	/// <summary>
-	/// Bible Passage
+	/// Audio recording of sermon
 	/// </summary>
-	public sealed class PassageCustomField : TextCustomField
+	public sealed class AudioRecordingCustomField : PostAttachmentCustomField
 	{
 		/// <summary>
-		/// This is a required field
+		/// This is not a required field
 		/// </summary>
-		public PassageCustomField() : base("passage", true) { }
+		public AudioRecordingCustomField() : base("audio") { }
 	}
 }

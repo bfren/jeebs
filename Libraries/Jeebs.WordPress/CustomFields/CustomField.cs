@@ -20,12 +20,12 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Custom Field value
 		/// </summary>
-		public abstract T Val { get; }
+		public abstract T ValueObj { get; protected set; }
 
 		/// <summary>
 		/// String representation of the value - normally retrieved from the database
 		/// </summary>
-		protected string Value { get; set; }
+		protected string ValueStr { get; set; }
 
 		/// <summary>
 		/// Whether or not this Custom Field is required (default: false)
@@ -40,7 +40,7 @@ namespace Jeebs.WordPress
 		protected CustomField(string key, bool isRequired = false)
 		{
 			Key = key;
-			Value = string.Empty;
+			ValueStr = string.Empty;
 			IsRequired = isRequired;
 		}
 
@@ -55,6 +55,6 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)
 		/// </summary>
-		public override string ToString() => Val?.ToString() ?? Key;
+		public override string ToString() => ValueObj?.ToString() ?? (ValueStr ?? Key);
 	}
 }

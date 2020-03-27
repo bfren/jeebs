@@ -6,13 +6,13 @@ using Jeebs.WordPress;
 namespace AppConsoleWordPress.Bcg
 {
 	/// <summary>
-	/// Bible Passage
+	/// Sermon script PDF
 	/// </summary>
-	public sealed class PassageCustomField : TextCustomField
+	public sealed class PdfCustomField : PostAttachmentCustomField
 	{
 		/// <summary>
-		/// This is a required field
+		/// This is not a required field
 		/// </summary>
-		public PassageCustomField() : base("passage", true) { }
+		public PdfCustomField() : base("pdf") { }
 	}
 }

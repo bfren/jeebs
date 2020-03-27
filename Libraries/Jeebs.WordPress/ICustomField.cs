@@ -39,6 +39,6 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Custom Field Value
 		/// </summary>
-		T Val { get; }
+		T ValueObj { get; }
 	}
 }

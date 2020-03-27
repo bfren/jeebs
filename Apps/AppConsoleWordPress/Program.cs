@@ -194,7 +194,7 @@ namespace AppConsoleWordPress
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
-					opt.Limit = 50;
+					opt.Limit = 10;
 				});
 
 				var result = await exec.Retrieve();
@@ -218,7 +218,10 @@ namespace AppConsoleWordPress
 
 				foreach (var sermon in sermons.ToList())
 				{
-					Console.WriteLine("{0:0000} - Title '{1}' - Passage '{2}'", sermon.PostId, sermon.Title, sermon.Passage);
+					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
+					Console.WriteLine("  - Passage: {0}", sermon.Passage);
+					Console.WriteLine("  - PDF: {0}", sermon.Pdf);
+					Console.WriteLine("  - Audio: {0}", sermon.Audio);
 				}
 			}
 			catch (Exception ex)
@@ -255,7 +258,11 @@ class SermonModel : IEntity
 
 	public string Title { get; set; }
 
-	public BiblePassageCustomField Passage { get; set; }
+	public PassageCustomField Passage { get; set; }
+
+	public PdfCustomField Pdf { get; set; }
+
+	public AudioRecordingCustomField Audio { get; set; }
 
 	public DateTime PublishedOn { get; set; }
 
@@ -264,7 +271,9 @@ class SermonModel : IEntity
 	public SermonModel()
 	{
 		Title = string.Empty;
-		Passage = new BiblePassageCustomField();
+		Passage = new PassageCustomField();
+		Pdf = new PdfCustomField();
+		Audio = new AudioRecordingCustomField();
 		PublishedOn = DateTime.MinValue;
 		Meta = new MetaDictionary();
 	}

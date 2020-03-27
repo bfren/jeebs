@@ -14,7 +14,11 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Custom Field value
 		/// </summary>
-		public override string Val => Value;
+		public override string ValueObj
+		{
+			get => ValueStr;
+			protected set => ValueStr = value;
+		}
 
 		/// <summary>
 		/// Pass post_meta key to parent
@@ -31,13 +35,21 @@ namespace Jeebs.WordPress
 		/// <param name="meta">MetaDictionary</param>
 		public override async Task<Result> Hydrate(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
-			if (meta.ContainsKey(Key))
+			// If meta doesn't contain the key and this is a required field, return failure
+			// Otherwise return success
+			if (!meta.ContainsKey(Key))
 			{
-				Value = meta[Key];
-				return await Task.FromResult(Result.Success());
+				if (IsRequired)
+				{
+					return await Result.FailureAsync($"Key not found in meta dictionary: '{Key}'.");
+				}
+
+				return await Result.SuccessAsync();
 			}
 
-			return await Task.FromResult(Result.Failure($"Key not found in meta dictionary: '{Key}'."));
+			// Set value from met and return success
+			ValueObj = ValueStr = meta[Key];
+			return await Result.SuccessAsync();
 		}
 	}
 }

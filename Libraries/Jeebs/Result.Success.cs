@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Jeebs
 {
@@ -15,11 +16,23 @@ namespace Jeebs
 		public static Success Success() => new Success();
 
 		/// <summary>
+		/// Simple Success
+		/// </summary>
+		public static async Task<Success> SuccessAsync() => await Task.FromResult(Success());
+
+		/// <summary>
 		/// Success result
 		/// </summary>
 		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="value">Success value</param>
 		public static Success<T> Success<T>(T value) => new Success<T>(value);
+
+		/// <summary>
+		/// Success result
+		/// </summary>
+		/// <typeparam name="T">Result success value type</typeparam>
+		/// <param name="value">Success value</param>
+		public static async Task<Success<T>> SuccessAsync<T>(T value) => await Task.FromResult(Success(value));
 	}
 
 	/// <summary>
