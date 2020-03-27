@@ -26,6 +26,10 @@ namespace Jeebs.WordPress
 			/// <param name="db">IWpDb</param>
 			internal QueryBuilder(IWpDb db) : base(db.Adapter) => this.db = db;
 
+			/// <summary>
+			/// Build query
+			/// </summary>
+			/// <param name="opt">QueryOptions</param>
 			public override QueryArgs<T> Build(QueryOptions opt)
 			{
 				// FROM

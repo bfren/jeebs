@@ -67,25 +67,34 @@ namespace AppConsoleWordPress
 
 			using (var q = bcg.Db.Query)
 			{
-				var exec = q.Posts<PostModel>(opt => opt.Limit = 3);
+				var exec = q.QueryPosts<PostModel>(opt => opt.Limit = 3);
+				var count = (await exec.Count()).Val;
 				var posts = (await exec.Retrieve()).Val;
-				await q.AddPostsMeta(posts, p => p.Meta);
-
 				Console.WriteLine();
 				Console.WriteLine("== Meta ==");
-				foreach (var post in posts)
+				Console.WriteLine("{0} Posts", count);
+
+				if ((await q.AddMetaToPosts(posts, p => p.Meta)).Err is ErrorList err)
 				{
-					Console.WriteLine("Post {0}", post.PostId);
-					foreach (var item in post.Meta)
+					Console.WriteLine("Error fetching meta");
+					Console.WriteLine(err);
+				}
+				else
+				{
+					foreach (var post in posts)
 					{
-						Console.WriteLine("{0}: {1}", item.Key, item.Value);
+						Console.WriteLine("Post {0}", post.PostId);
+						foreach (var item in post.Meta)
+						{
+							Console.WriteLine("{0}: {1}", item.Key, item.Value);
+						}
 					}
 				}
 			}
 
 			using (var q = bcg.Db.Query)
 			{
-				var sermonsExec = q.Posts<SermonModel>(opt =>
+				var sermonsExec = q.QueryPosts<SermonModel>(opt =>
 				{
 					opt.SearchText = "holiness";
 					opt.SearchOperator = SearchOperators.Like;
@@ -98,7 +107,7 @@ namespace AppConsoleWordPress
 				Console.WriteLine("== Sermons: holiness ==");
 				await Output(sermonsExec);
 
-				var taxonomyExec = q.Posts<SermonModel>(opt =>
+				var taxonomyExec = q.QueryPosts<SermonModel>(opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SearchText = "jesus";
@@ -111,7 +120,7 @@ namespace AppConsoleWordPress
 				Console.WriteLine("== Sermons: Luke ==");
 				await Output(taxonomyExec);
 
-				var customFieldExec = q.Posts<SermonModel>(opt =>
+				var customFieldExec = q.QueryPosts<SermonModel>(opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.Limit = 20;
@@ -141,6 +150,8 @@ namespace AppConsoleWordPress
 			}
 
 			// End
+			Console.WriteLine();
+			Console.WriteLine("Complete.");
 			Console.Read();
 		});
 	}

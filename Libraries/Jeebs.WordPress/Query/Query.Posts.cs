@@ -21,7 +21,7 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public QueryExec<T> Posts<T>(Action<Posts.QueryOptions>? modifyOptions = null)
+		public QueryExec<T> QueryPosts<T>(Action<Posts.QueryOptions>? modifyOptions = null)
 		{
 			// Create and modify options
 			var options = new Posts.QueryOptions();
@@ -39,13 +39,13 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Expression to return MetaDictionary property</param>
-		public async Task AddPostsMeta<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		public async Task<Result> AddMetaToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
 			where T : IEntity
 		{
 			// Don't do anything if there aren't any posts
 			if (!posts.Any())
 			{
-				return;
+				return Result.Failure("No posts to work on.");
 			}
 
 			// Create options
@@ -61,13 +61,16 @@ namespace Jeebs.WordPress
 
 			// Get meta
 			var allMeta = await exec.Retrieve();
+
+			// Return errors if there are any
 			if (allMeta.Err is ErrorList)
 			{
-				throw new Jx.Data.QueryException("Error fetching meta to add to posts.");
+				return Result.Failure(allMeta.Err.Prepend("Error fetching meta to add to posts.").ToArray());
 			}
+			// If no meta, return success
 			else if (!allMeta.Val.Any())
 			{
-				return;
+				return Result.Success();
 			}
 
 			// Prepare expression for use
@@ -88,8 +91,32 @@ namespace Jeebs.WordPress
 				// Set the value of the meta property
 				metaPropertyInfo.Set(post, new MetaDictionary(postMeta));
 			}
+
+			// Return success
+			return Result.Success();
 		}
 
-		public class PostMeta : Entities.WpPostMetaEntity { }
+		/// <summary>
+		/// Add custom fields to posts
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="posts">Posts</param>
+		/// <param name="meta">Expression to return MetaDictionary property</param>
+		public async Task<Result> AddCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		{
+			// Don't do anything if there aren't any posts
+			if (!posts.Any())
+			{
+				return Result.Failure("No posts to work on.");
+			}
+
+			// Return success
+			return Result.Success();
+		}
+
+		/// <summary>
+		/// Private PostMeta entity for meta queries
+		/// </summary>
+		private class PostMeta : Entities.WpPostMetaEntity { }
 	}
 }
