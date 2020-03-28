@@ -8,8 +8,13 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Post Attachment
 	/// </summary>
-	public abstract class WpPostAttachmentEntity : WpPostEntity
+	public abstract class Attachment : WpPostEntity
 	{
+		/// <summary>
+		/// MetaDictionary
+		/// </summary>
+		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+
 		/// <summary>
 		/// UrlPath
 		/// </summary>

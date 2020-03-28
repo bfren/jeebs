@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress
@@ -11,7 +12,7 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Post Attachment Custom Field
 	/// </summary>
-	public abstract partial class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
+	public abstract class AttachmentCustomField : CustomField<Attachment>
 	{
 		/// <summary>
 		/// Setup object

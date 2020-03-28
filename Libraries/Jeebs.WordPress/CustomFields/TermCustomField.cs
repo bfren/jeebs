@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.WordPress.Entities;
 
 namespace Jeebs.WordPress
 {
 	/// <summary>
 	/// Term Taxonomy Custom Field
 	/// </summary>
-	public abstract partial class TermCustomField : CustomField<TermCustomField.Term>
+	public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
 		/// <summary>
 		/// Setup object
@@ -69,5 +70,10 @@ namespace Jeebs.WordPress
 		/// Return term Title
 		/// </summary>
 		public override string ToString() => ValueObj?.Title ?? base.ToString();
+
+		/// <summary>
+		/// Term class
+		/// </summary>
+		public sealed class Term : WpTermEntity { }
 	}
 }
