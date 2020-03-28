@@ -53,6 +53,55 @@ namespace Jeebs
 		}
 
 		/// <summary>
+		/// Convert straight quotes to curly quotes, but not inside HTML tags / attributes
+		/// </summary>
+		/// <param name="s">Input string</param>
+		/// <returns>IHtmlContent with curly quotes</returns>
+		public static string ConvertInnerHtmlQuotes(this string s)
+		{
+			return Modify(s, () =>
+			{
+				// Will hold the result
+				string result = string.Empty;
+
+				// Convert using HTML entities
+				static string convert(string input)
+				{
+					return input.ConvertCurlyQuotes(ls: "&lsquo;", rs: "&rsquo;", ld: "&ldquo;", rd: "&rdquo;");
+				}
+
+				// Match HTML tags and their attributes
+				var htmlTags = new Regex("<[^>]*>");
+
+				// Get the first match
+				Match match = htmlTags.Match(s);
+
+				// Loop through each HTML tag, replacing the quotes in the text in between
+				int lastIndex = 0;
+				while (match.Success)
+				{
+					// Replace text between this match and the previous one
+					string textBetween = s[lastIndex..match.Index];
+					result += convert(textBetween);
+
+					// Add the text in this section unchanged
+					result += match.Value;
+
+					// Move to the next section
+					lastIndex = match.Index + match.Length;
+					match = match.NextMatch();
+				}
+
+				// Replace any remaining quotes
+				string remaining = s[lastIndex..];
+				result += convert(remaining);
+
+				// Return result string
+				return result;
+			});
+		}
+
+		/// <summary>
 		/// Ensure that an input string ends with a single defined character
 		/// </summary>
 		/// <param name="s">The input string</param>
@@ -101,8 +150,7 @@ namespace Jeebs
 				}
 
 				// Get the extension and switch to get the mime type
-				string extension = s.Substring(lastPeriod + 1).ToLower();
-				switch (extension)
+				switch (s.Substring(lastPeriod + 1).ToLower())
 				{
 					case "bmp":
 						return MimeType.Bmp.ToString();
@@ -161,6 +209,20 @@ namespace Jeebs
 				}
 			});
 		}
+
+		/// <summary>
+		/// Decode HTML entities
+		/// </summary>
+		/// <param name="s">Input string</param>
+		/// <returns>String with HTML entities decoded</returns>
+		public static string HtmlDecode(this string s) => Modify(s, () => System.Net.WebUtility.HtmlDecode(s));
+
+		/// <summary>
+		/// Encode HTML entities
+		/// </summary>
+		/// <param name="s">Input string</param>
+		/// <returns>String with HTML entities encoded</returns>
+		public static string HtmlEncode(this string s) => Modify(s, () => System.Net.WebUtility.HtmlEncode(s));
 
 		/// <summary>
 		/// Ensure a string is no longer than the specified maximum
