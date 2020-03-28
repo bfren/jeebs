@@ -52,12 +52,12 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Limit
 		/// </summary>
-		public double? Limit { get; set; }
+		public long? Limit { get; set; }
 
 		/// <summary>
 		/// Offset
 		/// </summary>
-		public double? Offset { get; set; }
+		public long? Offset { get; set; }
 
 		/// <summary>
 		/// Create object

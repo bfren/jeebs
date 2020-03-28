@@ -12,14 +12,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Project Name
 		/// </summary>
-		public string Project { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public AppConfig()
-		{
-			Project = string.Empty;
-		}
+		public string Project { get; set; } = string.Empty;
 	}
 }

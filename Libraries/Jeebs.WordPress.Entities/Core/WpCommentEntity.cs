@@ -29,22 +29,22 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// AuthorName
 		/// </summary>
-		public string AuthorName { get; set; }
+		public string AuthorName { get; set; } = string.Empty;
 
 		/// <summary>
 		/// AuthorEmail
 		/// </summary>
-		public string AuthorEmail { get; set; }
+		public string AuthorEmail { get; set; } = string.Empty;
 
 		/// <summary>
 		/// AuthorUrl
 		/// </summary>
-		public string AuthorUrl { get; set; }
+		public string AuthorUrl { get; set; } = string.Empty;
 
 		/// <summary>
 		/// AuthorIp
 		/// </summary>
-		public string AuthorIp { get; set; }
+		public string AuthorIp { get; set; } = string.Empty;
 
 		/// <summary>
 		/// PublishedOn
@@ -59,7 +59,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Content
 		/// </summary>
-		public string Content { get; set; }
+		public string Content { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Karma
@@ -74,12 +74,12 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// AuthorUserAgent
 		/// </summary>
-		public string AuthorUserAgent { get; set; }
+		public string AuthorUserAgent { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Type
 		/// </summary>
-		public CommentType Type { get; set; }
+		public CommentType Type { get; set; } = CommentType.Blank;
 
 		/// <summary>
 		/// ParentId
@@ -95,19 +95,5 @@ namespace Jeebs.WordPress.Entities
 		/// AuthorIsSubscribed
 		/// </summary>
 		public bool AuthorIsSubscribed { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpCommentEntity()
-		{
-			AuthorName = string.Empty;
-			AuthorEmail = string.Empty;
-			AuthorUrl = string.Empty;
-			AuthorIp = string.Empty;
-			Content = string.Empty;
-			AuthorUserAgent = string.Empty;
-			Type = CommentType.Blank;
-		}
 	}
 }

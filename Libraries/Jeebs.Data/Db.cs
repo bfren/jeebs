@@ -25,7 +25,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Connection String
 		/// </summary>
-		protected string ConnectionString { get; set; }
+		protected string ConnectionString { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Create a new UnitOfWork
@@ -57,11 +57,7 @@ namespace Jeebs.Data
 		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
 		/// </summary>
 		/// <param name="log">ILog</param>
-		public Db(ILog log)
-		{
-			ConnectionString = string.Empty;
-			this.log = log;
-		}
+		public Db(ILog log) => this.log = log;
 
 		/// <summary>
 		/// Create object using the specified connection string

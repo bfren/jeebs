@@ -23,27 +23,27 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Username
 		/// </summary>
-		public string Username { get; set; }
+		public string Username { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Password
 		/// </summary>
-		public string Password { get; set; }
+		public string Password { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public string Slug { get; set; }
+		public string Slug { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Email
 		/// </summary>
-		public string Email { get; set; }
+		public string Email { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; set; }
+		public string Url { get; set; } = string.Empty;
 
 		/// <summary>
 		/// RegisteredOn
@@ -53,7 +53,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// ActivationKey
 		/// </summary>
-		public string ActivationKey { get; set; }
+		public string ActivationKey { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Status
@@ -63,20 +63,6 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// DisplayName
 		/// </summary>
-		public string DisplayName { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpUserEntity()
-		{
-			Username = string.Empty;
-			Password = string.Empty;
-			Slug = string.Empty;
-			Email = string.Empty;
-			Url = string.Empty;
-			ActivationKey = string.Empty;
-			DisplayName = string.Empty;
-		}
+		public string DisplayName { get; set; } = string.Empty;
 	}
 }

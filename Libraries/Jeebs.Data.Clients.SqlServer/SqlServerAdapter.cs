@@ -42,35 +42,35 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// </summary>
 		/// <param name="args">IQuery</param>
 		/// <returns>SELECT query</returns>
-		public override string Retrieve(IQuery args)
+		public override string Retrieve<T>(QueryArgs<T> args)
 		{
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {args.Select ?? "*"} FROM {args.From}");
 
 			// Add INNER JOIN
-			if (args.InnerJoin is List<string> innerJoinValues)
+			if (args.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)
 			{
 				foreach (var item in innerJoinValues)
 				{
-					sql.Append($" INNER JOIN {item}");
+					sql.Append($" INNER JOIN {item.table} ON {item.on} = {item.equals}");
 				}
 			}
 
 			// Add LEFT JOIN
-			if (args.LeftJoin is List<string> leftJoinValues)
+			if (args.LeftJoin is List<(string table, string on, string equals)> leftJoinValues)
 			{
 				foreach (var item in leftJoinValues)
 				{
-					sql.Append($" LEFT JOIN {item}");
+					sql.Append($" LEFT JOIN {item.table} ON {item.on} = {item.equals}");
 				}
 			}
 
 			// Add RIGHT JOIN
-			if (args.RightJoin is List<string> rightJoinValues)
+			if (args.RightJoin is List<(string table, string on, string equals)> rightJoinValues)
 			{
 				foreach (var item in rightJoinValues)
 				{
-					sql.Append($" RIGHT JOIN {item}");
+					sql.Append($" RIGHT JOIN {item.table} ON {item.on} = {item.equals}");
 				}
 			}
 
@@ -87,13 +87,13 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Add LIMIT
-			if (args.Limit is double limitValue && limitValue > 0)
+			if (args.Limit is long limitValue && limitValue > 0)
 			{
 				sql.Append($" LIMIT {limitValue}");
 			}
 
 			// Add OFFSET
-			if (args.Offset is double offsetValue && offsetValue > 0)
+			if (args.Offset is long offsetValue && offsetValue > 0)
 			{
 				sql.Append($" OFFSET {offsetValue}");
 			}

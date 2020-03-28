@@ -28,12 +28,12 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Taxonomy
 		/// </summary>
-		public Taxonomy Taxonomy { get; set; }
+		public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
 
 		/// <summary>
 		/// Description
 		/// </summary>
-		public string Description { get; set; }
+		public string Description { get; set; } = string.Empty;
 
 		/// <summary>
 		/// ParentId
@@ -44,14 +44,5 @@ namespace Jeebs.WordPress.Entities
 		/// Count
 		/// </summary>
 		public int Count { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpTermTaxonomyEntity()
-		{
-			Taxonomy = Taxonomy.Blank;
-			Description = string.Empty;
-		}
 	}
 }

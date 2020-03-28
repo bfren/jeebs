@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// UrlPath
 		/// </summary>
-		public string UrlPath { get; set; }
+		public string UrlPath { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Deserialise info and return as JSON
@@ -28,10 +28,5 @@ namespace Jeebs.WordPress.Entities
 		/// Serialised info
 		/// </summary>
 		private string info = string.Empty;
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpPostAttachmentEntity() => UrlPath = string.Empty;
 	}
 }

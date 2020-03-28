@@ -141,23 +141,23 @@ namespace Jeebs.Data.Clients.MySql.Tests
 			Assert.Equal(expected_with_version, result_with_version);
 		}
 
-		class Foo : IEntity
+		private class Foo : IEntity
 		{
 			[Id]
-			public int Id { get; set; }
+			public long Id { get; set; }
 
-			public string Bar0 { get; set; }
+			public string Bar0 { get; set; } = string.Empty;
 
-			public string Bar1 { get; set; }
+			public string Bar1 { get; set; } = string.Empty;
 		}
 
-		class FooWithVersion : Foo, IEntityWithVersion
+		private class FooWithVersion : Foo, IEntityWithVersion
 		{
 			[Version]
 			public long Version { get; set; }
 		}
 
-		class FooTable : Table
+		private class FooTable : Table
 		{
 			public readonly string Id = "foo_id";
 
@@ -168,7 +168,7 @@ namespace Jeebs.Data.Clients.MySql.Tests
 			public FooTable() : base("foo") { }
 		}
 
-		class FooWithVersionTable : Table
+		private class FooWithVersionTable : Table
 		{
 			public readonly string Id = "foo_id";
 

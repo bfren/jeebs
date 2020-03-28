@@ -22,22 +22,22 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; set; }
+		public string Url { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Image
 		/// </summary>
-		public string Image { get; set; }
+		public string Image { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Target
 		/// </summary>
-		public string Target { get; set; }
+		public string Target { get; set; } = string.Empty;
 
 		/// <summary>
 		/// CategoryId
@@ -47,7 +47,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Description
 		/// </summary>
-		public string Description { get; set; }
+		public string Description { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Visible
@@ -72,31 +72,16 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Rel
 		/// </summary>
-		public string Rel { get; set; }
+		public string Rel { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Notes
 		/// </summary>
-		public string Notes { get; set; }
+		public string Notes { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Rss
 		/// </summary>
-		public string Rss { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpLinkEntity()
-		{
-			Url = string.Empty;
-			Title = string.Empty;
-			Image = string.Empty;
-			Target = string.Empty;
-			Description = string.Empty;
-			Rel = string.Empty;
-			Notes = string.Empty;
-			Rss = string.Empty;
-		}
+		public string Rss { get; set; } = string.Empty;
 	}
 }

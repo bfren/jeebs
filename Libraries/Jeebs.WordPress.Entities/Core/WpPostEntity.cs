@@ -39,27 +39,27 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Content
 		/// </summary>
-		public string Content { get; set; }
+		public string Content { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Excerpt
 		/// </summary>
-		public string Excerpt { get; set; }
+		public string Excerpt { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Status
 		/// </summary>
-		public PostStatus Status { get; set; }
+		public PostStatus Status { get; set; } = PostStatus.Draft;
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public string Slug { get; set; }
+		public string Slug { get; set; } = string.Empty;
 
 		/// <summary>
 		/// LastModifiedOn
@@ -79,36 +79,21 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; set; }
+		public string Url { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Type
 		/// </summary>
-		public PostType Type { get; set; }
+		public PostType Type { get; set; } = PostType.Post;
 
 		/// <summary>
 		/// MimeType
 		/// </summary>
-		public MimeType MimeType { get; set; }
+		public MimeType MimeType { get; set; } = MimeType.Blank;
 
 		/// <summary>
 		/// CommentsCount
 		/// </summary>
 		public int CommentsCount { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpPostEntity()
-		{
-			Content = string.Empty;
-			Title = string.Empty;
-			Excerpt = string.Empty;
-			Status = PostStatus.Publish	;
-			Slug = string.Empty;
-			Url = string.Empty;
-			Type = PostType.Post;
-			MimeType = MimeType.Blank;
-		}
 	}
 }

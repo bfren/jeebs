@@ -106,13 +106,13 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Add LIMIT
-			if (args.Limit is double limitValue && limitValue > 0)
+			if (args.Limit is long limitValue && limitValue > 0)
 			{
 				sql.Append($" LIMIT {limitValue}");
 			}
 
 			// Add OFFSET
-			if (args.Offset is double offsetValue && offsetValue > 0)
+			if (args.Offset is long offsetValue && offsetValue > 0)
 			{
 				sql.Append($" OFFSET {offsetValue}");
 			}

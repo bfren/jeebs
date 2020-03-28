@@ -29,22 +29,22 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Title
 			/// </summary>
-			public string Title { get; set; }
+			public string Title { get; set; } = string.Empty;
 
 			/// <summary>
 			/// MimeType
 			/// </summary>
-			public MimeType MimeType { get; set; }
+			public MimeType MimeType { get; set; } = MimeType.Blank;
 
 			/// <summary>
 			/// Meta
 			/// </summary>
-			public MetaDictionary Meta { get; set; }
+			public MetaDictionary Meta { get; set; } = new MetaDictionary();
 
 			/// <summary>
 			/// UrlPath
 			/// </summary>
-			public string UrlPath { get; set; }
+			public string UrlPath { get; set; } = string.Empty;
 
 			/// <summary>
 			/// Info
@@ -55,17 +55,6 @@ namespace Jeebs.WordPress
 				set => info = value;
 			}
 			private string info = string.Empty;
-
-			/// <summary>
-			/// Setup object
-			/// </summary>
-			public Attachment()
-			{
-				Title = string.Empty;
-				MimeType = MimeType.Blank;
-				Meta = new MetaDictionary();
-				UrlPath = string.Empty;
-			}
 		}
 	}
 }

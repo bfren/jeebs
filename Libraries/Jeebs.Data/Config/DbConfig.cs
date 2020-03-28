@@ -17,7 +17,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Default database connection name
 		/// </summary>
-		public string Default { get; set; }
+		public string Default { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Authentication database connection name
@@ -33,16 +33,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Dictionary of database connections
 		/// </summary>
-		public Dictionary<string, DbConnectionConfig> Connections { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public DbConfig()
-		{
-			Default = string.Empty;
-			Connections = new Dictionary<string, DbConnectionConfig>();
-		}
+		public Dictionary<string, DbConnectionConfig> Connections { get; set; } = new Dictionary<string, DbConnectionConfig>();
 
 		/// <summary>
 		/// Retrieve default Connection, unless name is set

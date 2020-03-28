@@ -12,26 +12,16 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Database connection string
 		/// </summary>
-		public string ConnectionString { get; set; }
+		public string ConnectionString { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Database table prefix
 		/// </summary>
-		public string TablePrefix { get; set; }
+		public string TablePrefix { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Additional settings required for configuring this database connection
 		/// </summary>
-		public Dictionary<string, string> AdditionalSettings { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public DbConnectionConfig()
-		{
-			ConnectionString = string.Empty;
-			TablePrefix = string.Empty;
-			AdditionalSettings = new Dictionary<string, string>();
-		}
+		public Dictionary<string, string> AdditionalSettings { get; set; } = new Dictionary<string, string>();
 	}
 }

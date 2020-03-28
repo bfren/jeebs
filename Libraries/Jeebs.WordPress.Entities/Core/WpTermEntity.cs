@@ -22,25 +22,16 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public string Slug { get; set; }
+		public string Slug { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Group
 		/// </summary>
 		public int Group { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		protected WpTermEntity()
-		{
-			Title = string.Empty;
-			Slug = string.Empty;
-		}
 	}
 }
