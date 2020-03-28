@@ -22,17 +22,17 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Inner Join
 		/// </summary>
-		public List<string>? InnerJoin { get; set; }
+		public List<(string table, string on, string equals)>? InnerJoin { get; set; }
 
 		/// <summary>
 		/// Left Join
 		/// </summary>
-		public List<string>? LeftJoin { get; set; }
+		public List<(string table, string on, string equals)>? LeftJoin { get; set; }
 
 		/// <summary>
 		/// Right Join
 		/// </summary>
-		public List<string>? RightJoin { get; set; }
+		public List<(string table, string on, string equals)>? RightJoin { get; set; }
 
 		/// <summary>
 		/// Where

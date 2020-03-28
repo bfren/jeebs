@@ -9,12 +9,12 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query Posts
 	/// </summary>
-	public partial class Posts
+	public partial class QueryPosts
 	{
 		/// <summary>
 		/// Query Options
 		/// </summary>
-		public sealed class QueryOptions : Data.QueryOptions
+		public sealed class Options : Data.QueryOptions
 		{
 			/// <summary>
 			/// Search Post type
@@ -66,7 +66,7 @@ namespace Jeebs.WordPress
 			/// </summary>
 			public IList<(ICustomField field, SearchOperators op, object value)>? CustomFields { get; set; }
 
-			public QueryOptions()
+			public Options()
 			{
 				Type = PostType.Post;
 				Status = PostStatus.Publish;

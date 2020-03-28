@@ -8,12 +8,12 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query Post Meta
 	/// </summary>
-	public partial class PostsMeta
+	public partial class QueryPostsMeta
 	{
 		/// <summary>
 		/// Query Builder
 		/// </summary>
-		internal sealed class QueryBuilder<T> : QueryBuilder<T, QueryOptions>
+		internal sealed class Builder<T> : QueryBuilder<T, Options>
 		{
 			/// <summary>
 			/// IWpDb
@@ -24,13 +24,13 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal QueryBuilder(IWpDb db) : base(db.Adapter) => this.db = db;
+			internal Builder(IWpDb db) : base(db.Adapter) => this.db = db;
 
 			/// <summary>
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryArgs<T> Build(QueryOptions opt)
+			public override QueryArgs<T> Build(Options opt)
 			{
 				// FROM
 				AddFrom(db.PostMeta.ToString());

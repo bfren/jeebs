@@ -8,7 +8,7 @@ namespace AppConsoleWordPress.Bcg
 	/// <summary>
 	/// Audio recording of sermon
 	/// </summary>
-	public sealed class AudioRecordingCustomField : AttachmentCustomField
+	public sealed class AudioRecordingCustomField : FileCustomField
 	{
 		/// <summary>
 		/// This is not a required field

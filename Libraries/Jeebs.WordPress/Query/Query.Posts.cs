@@ -22,14 +22,14 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public QueryExec<T> QueryPosts<T>(Action<Posts.QueryOptions>? modifyOptions = null)
+		public QueryExec<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
 		{
 			// Create and modify options
-			var options = new Posts.QueryOptions();
+			var options = new QueryPosts.Options();
 			modifyOptions?.Invoke(options);
 
 			// Get Exec
-			return new Posts.QueryBuilder<T>(db)
+			return new QueryPosts.Builder<T>(db)
 				.Build(options)
 				.GetExec(UnitOfWork);
 		}
@@ -77,13 +77,13 @@ namespace Jeebs.WordPress
 			}
 
 			// Create options
-			var options = new PostsMeta.QueryOptions
+			var options = new QueryPostsMeta.Options
 			{
 				PostIds = posts.Select(p => p.Id).ToList()
 			};
 
 			// Get Exec
-			var exec = new PostsMeta.QueryBuilder<PostMeta>(db)
+			var exec = new QueryPostsMeta.Builder<PostMeta>(db)
 				.Build(options)
 				.GetExec(UnitOfWork);
 

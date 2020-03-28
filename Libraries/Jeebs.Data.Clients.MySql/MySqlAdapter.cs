@@ -67,29 +67,29 @@ namespace Jeebs.Data.Clients.MySql
 			StringBuilder sql = new StringBuilder($"SELECT {args.Select ?? "*"} FROM {args.From}");
 
 			// Add INNER JOIN
-			if (args.InnerJoin is List<string> innerJoinValues)
+			if (args.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)
 			{
 				foreach (var item in innerJoinValues)
 				{
-					sql.Append($" INNER JOIN {item}");
+					sql.Append($" INNER JOIN {item.table} ON {item.on} = {item.equals}");
 				}
 			}
 
 			// Add LEFT JOIN
-			if (args.LeftJoin is List<string> leftJoinValues)
+			if (args.LeftJoin is List<(string table, string on, string equals)> leftJoinValues)
 			{
 				foreach (var item in leftJoinValues)
 				{
-					sql.Append($" LEFT JOIN {item}");
+					sql.Append($" LEFT JOIN {item.table} ON {item.on} = {item.equals}");
 				}
 			}
 
 			// Add RIGHT JOIN
-			if (args.RightJoin is List<string> rightJoinValues)
+			if (args.RightJoin is List<(string table, string on, string equals)> rightJoinValues)
 			{
 				foreach (var item in rightJoinValues)
 				{
-					sql.Append($" RIGHT JOIN {item}");
+					sql.Append($" RIGHT JOIN {item.table} ON {item.on} = {item.equals}");
 				}
 			}
 

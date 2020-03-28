@@ -5,14 +5,14 @@ using System.Text;
 namespace Jeebs.WordPress
 {
 	/// <summary>
-	/// Query Posts
+	/// Query Posts Meta
 	/// </summary>
-	public partial class PostsMeta
+	public partial class QueryPostsMeta
 	{
 		/// <summary>
 		/// Query Options
 		/// </summary>
-		public sealed class QueryOptions : Data.QueryOptions
+		public sealed class Options : Data.QueryOptions
 		{
 			/// <summary>
 			/// Search for multiple Posts
@@ -22,7 +22,7 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Setup object
 			/// </summary>
-			public QueryOptions() => Limit = null;
+			public Options() => Limit = null;
 		}
 	}
 }

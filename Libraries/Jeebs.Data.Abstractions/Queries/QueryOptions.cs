@@ -13,7 +13,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Query Id
 		/// </summary>
-		public double? Id { get; set; }
+		public long? Id { get; set; }
 
 		/// <summary>
 		/// Query ORDER BY
@@ -28,12 +28,12 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Query LIMIT
 		/// </summary>
-		public double? Limit { get; set; }
+		public long? Limit { get; set; }
 
 		/// <summary>
 		/// Query OFFSET
 		/// </summary>
-		public double? Offset { get; set; }
+		public long? Offset { get; set; }
 
 		/// <summary>
 		/// Set defaults

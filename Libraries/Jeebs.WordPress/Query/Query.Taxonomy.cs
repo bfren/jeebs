@@ -11,18 +11,18 @@ namespace Jeebs.WordPress
 	public sealed partial class Query : Data.Query
 	{
 		/// <summary>
-		/// Query Posts
+		/// Query Taxonomy
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public QueryExec<T> QueryTaxonomy<T>(Action<Taxonomy.QueryOptions>? modifyOptions = null)
+		public QueryExec<T> QueryTaxonomy<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
 		{
 			// Create and modify options
-			var options = new Taxonomy.QueryOptions();
+			var options = new QueryTaxonomy.Options();
 			modifyOptions?.Invoke(options);
 
 			// Get Exec
-			return new Taxonomy.QueryBuilder<T>(db)
+			return new QueryTaxonomy.Builder<T>(db)
 				.Build(options)
 				.GetExec(UnitOfWork);
 		}

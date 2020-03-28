@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
@@ -46,7 +47,27 @@ namespace Jeebs.WordPress
 				return Result.Failure($"'{ValueStr}' is not a valid Term ID.");
 			}
 
-			throw new NotImplementedException();
+			// Start a new query
+			using var q = db.Query;
+			var exec = q.QueryTaxonomy<Term>(opt => opt.Id = termId);
+
+			// Get results
+			var result = await exec.Retrieve();
+			if (result.Err is ErrorList)
+			{
+				return Result.Failure(result.Err);
+			}
+
+			// Get term
+			ValueObj = result.Val.Single();
+
+			// Return success
+			return Result.Success();
 		}
+
+		/// <summary>
+		/// Return term Title
+		/// </summary>
+		public override string ToString() => ValueObj?.Title ?? base.ToString();
 	}
 }

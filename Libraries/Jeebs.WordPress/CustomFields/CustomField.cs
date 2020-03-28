@@ -37,7 +37,9 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
 		/// <param name="isRequired">Whether or not this custom field is required</param>
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		protected CustomField(string key, bool isRequired = false)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		{
 			Key = key;
 			ValueStr = string.Empty;

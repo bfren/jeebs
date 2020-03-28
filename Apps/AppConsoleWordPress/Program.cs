@@ -107,7 +107,7 @@ namespace AppConsoleWordPress
 		/// <param name="search"></param>
 		/// <param name="bcg"></param>
 		/// <param name="opt"></param>
-		internal static async Task SearchSermons(string search, IWpDb bcg, Action<Posts.QueryOptions> opt)
+		internal static async Task SearchSermons(string search, IWpDb bcg, Action<QueryPosts.Options> opt)
 		{
 			Console.WriteLine();
 			Console.WriteLine($"== Sermons: {search} ==");
@@ -222,6 +222,7 @@ namespace AppConsoleWordPress
 					Console.WriteLine("  - Passage: {0}", sermon.Passage);
 					Console.WriteLine("  - PDF: {0}", sermon.Pdf);
 					Console.WriteLine("  - Audio: {0}", sermon.Audio);
+					Console.WriteLine("  - First Preached: {0}", sermon.FirstPreached);
 				}
 			}
 			catch (Exception ex)
@@ -264,6 +265,8 @@ class SermonModel : IEntity
 
 	public AudioRecordingCustomField Audio { get; set; }
 
+	public FirstPreachedCustomField FirstPreached { get; set; }
+
 	public DateTime PublishedOn { get; set; }
 
 	public MetaDictionary Meta { get; set; }
@@ -274,6 +277,7 @@ class SermonModel : IEntity
 		Passage = new PassageCustomField();
 		Pdf = new PdfCustomField();
 		Audio = new AudioRecordingCustomField();
+		FirstPreached = new FirstPreachedCustomField();
 		PublishedOn = DateTime.MinValue;
 		Meta = new MetaDictionary();
 	}

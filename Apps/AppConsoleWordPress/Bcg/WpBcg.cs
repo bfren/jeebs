@@ -67,7 +67,10 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		public static class CustomFields
 		{
+			public readonly static AudioRecordingCustomField Audio = new AudioRecordingCustomField();
+			public readonly static FirstPreachedCustomField FirstPreached = new FirstPreachedCustomField();
 			public readonly static PassageCustomField Passage = new PassageCustomField();
+			public readonly static PdfCustomField Pdf = new PdfCustomField();
 		}
 
 		/// <summary>

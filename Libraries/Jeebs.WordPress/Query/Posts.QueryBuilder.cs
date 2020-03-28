@@ -11,12 +11,12 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query Posts
 	/// </summary>
-	public partial class Posts
+	public partial class QueryPosts
 	{
 		/// <summary>
 		/// Query Builder
 		/// </summary>
-		internal sealed class QueryBuilder<T> : QueryBuilder<T, QueryOptions>
+		internal sealed class Builder<T> : QueryBuilder<T, Options>
 		{
 			/// <summary>
 			/// IWpDb
@@ -27,13 +27,13 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal QueryBuilder(IWpDb db) : base(db.Adapter) => this.db = db;
+			internal Builder(IWpDb db) : base(db.Adapter) => this.db = db;
 
 			/// <summary>
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryArgs<T> Build(QueryOptions opt)
+			public override QueryArgs<T> Build(Options opt)
 			{
 				// Use db shorthands
 				var _ = db;
@@ -54,7 +54,7 @@ namespace Jeebs.WordPress
 				AddWhere($"{Escape(p, _.Post.Status)} = @{nameof(status)}", new { status });
 
 				// WHERE Id
-				if (opt.Id is double postId)
+				if (opt.Id is long postId)
 				{
 					AddWhere($"{Escape(p, _.Post.PostId)} = @{nameof(postId)}", new { postId });
 				}
@@ -96,18 +96,7 @@ namespace Jeebs.WordPress
 				}
 
 				// ORDER BY
-				if (opt.SortRandom)
-				{
-					AddOrderByRandom();
-				}
-				else if (opt.Sort is (string selectColumn, SortOrder order)[] sort)
-				{
-					AddOrderBy(sort);
-				}
-				else
-				{
-					AddOrderBy((_.Post.PublishedOn, SortOrder.Descending));
-				}
+				AddSort(opt, new[] { (_.Post.PublishedOn, SortOrder.Descending) });
 
 				// LIMIT and OFFSET
 				AddLimitAndOffset(opt);
@@ -121,7 +110,7 @@ namespace Jeebs.WordPress
 			/// </summary>
 			/// <param name="searchText">Search text</param>
 			/// <param name="opt">QueryOptions</param>
-			private void AddWhereSearch(string searchText, QueryOptions opt)
+			private void AddWhereSearch(string searchText, Options opt)
 			{
 				// Use shorthands
 				var _ = db;

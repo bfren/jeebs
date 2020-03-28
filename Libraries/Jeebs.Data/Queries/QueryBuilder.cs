@@ -41,21 +41,65 @@ namespace Jeebs.Data
 		public abstract QueryArgs<TEntity> Build(TOptions opt);
 
 		/// <summary>
+		/// Add Sort
+		/// </summary>
+		/// <param name="opt">TOptions</param>
+		/// <param name="defaultSort">Default sort columns</param>
+		protected void AddSort(TOptions opt, (string selectColumn, SortOrder order)[] defaultSort)
+		{
+			// Random sort
+			if (opt.SortRandom)
+			{
+				(Args.OrderBy ?? (Args.OrderBy = new List<string>())).Clear();
+				Args.OrderBy.Add(adapter.GetRandomSortOrder());
+			}
+			// Specified sort
+			else if (opt.Sort is (string selectColumn, SortOrder order)[] sort)
+			{
+				Add(sort);
+			}
+			// Default sort
+			else
+			{
+				Add(defaultSort);
+			}
+
+			// Add to ORDER BY
+			void Add(params (string selectColumn, SortOrder order)[] sort)
+			{
+				if (sort.Length == 0)
+				{
+					return;
+				}
+
+				if (Args.OrderBy == null)
+				{
+					Args.OrderBy = new List<string>();
+				}
+
+				foreach (var (column, order) in sort)
+				{
+					Args.OrderBy.Add(adapter.GetSortOrder(column, order));
+				}
+			}
+		}
+
+		/// <summary>
 		/// Add Limit and Offset
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		protected void AddLimitAndOffset(TOptions opt)
 		{
 			// LIMIT
-			if (opt.Limit is double limit)
+			if (opt.Limit is long limit)
 			{
-				AddLimit(limit);
+				Args.Limit = limit;
 			}
 
 			// OFFSET
-			if (opt.Offset is double offset)
+			if (opt.Offset is long offset)
 			{
-				AddOffset(offset);
+				Args.Offset = offset;
 			}
 		}
 
@@ -117,6 +161,52 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
+		/// Add JOIN
+		/// </summary>
+		/// <param name="join">JOINT list</param>
+		/// <param name="table">Table to join</param>
+		/// <param name="on">Table and column to join from</param>
+		/// <param name="equals">Table and column to join to</param>
+		private List<(string table, string on, string equals)> AddJoin(
+			List<(string table, string on, string equals)>? join,
+			string table,
+			string on,
+			(string table, string column) equals
+		)
+		{
+			// Use existing list or create new one
+			var joinList = join ?? new List<(string table, string on, string equals)>();
+
+			// Add the join
+			joinList.Add((
+				Escape(table),
+				Escape(table, on),
+				Escape(equals.table, equals.column)
+			));
+
+			// Return the join list
+			return joinList;
+		}
+
+		/// <summary>
+		/// Set INNER JOIN
+		/// </summary>
+		protected void AddInnerJoin(string table, string on, (string table, string column) equals)
+			=> Args.InnerJoin = AddJoin(Args.InnerJoin, table, on, equals);
+
+		/// <summary>
+		/// Set INNER JOIN
+		/// </summary>
+		protected void AddLeftJoin(string table, string on, (string table, string column) equals)
+			=> Args.LeftJoin = AddJoin(Args.LeftJoin, table, on, equals);
+
+		/// <summary>
+		/// Set INNER JOIN
+		/// </summary>
+		protected void AddRightJoin(string table, string on, (string table, string column) equals)
+			=> Args.RightJoin = AddJoin(Args.RightJoin, table, on, equals);
+
+		/// <summary>
 		/// Add WHERE clause
 		/// </summary>
 		/// <param name="where">WHERE string</param>
@@ -129,46 +219,5 @@ namespace Jeebs.Data
 				Args.Parameters.Add(parameters);
 			}
 		}
-
-		/// <summary>
-		/// Add ORDER BY random - will clear previous order by items
-		/// </summary>
-		protected void AddOrderByRandom()
-		{
-			(Args.OrderBy ?? (Args.OrderBy = new List<string>())).Clear();
-			Args.OrderBy.Add(adapter.GetRandomSortOrder());
-		}
-
-		/// <summary>
-		/// Add ORDER BY columns
-		/// </summary>
-		/// <param name="sort">Sort columns</param>
-		protected void AddOrderBy(params (string selectColumn, SortOrder order)[] sort)
-		{
-			// Add sort clauses
-			if (sort.Length > 0)
-			{
-				if (Args.OrderBy == null)
-				{
-					Args.OrderBy = new List<string>();
-				}
-
-				foreach (var (column, order) in sort)
-				{
-					Args.OrderBy.Add(adapter.GetSortOrder(column, order));
-				}
-			}
-		}
-
-		/// <summary>
-		/// Add LIMIT
-		/// </summary>
-		/// <param name="limit"></param>
-		protected void AddLimit(double limit) => Args.Limit = limit;
-
-		/// <summary>
-		/// Add OFFSET
-		/// </summary>
-		protected void AddOffset(double offset) => Args.Offset = offset;
 	}
 }

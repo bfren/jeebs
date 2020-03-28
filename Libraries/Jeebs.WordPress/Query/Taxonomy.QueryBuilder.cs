@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Data;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.WordPress
 {
 	/// <summary>
 	/// Query Taxonomy
 	/// </summary>
-	public partial class Taxonomy
+	public partial class QueryTaxonomy
 	{
 		/// <summary>
 		/// Query Builder
 		/// </summary>
-		internal sealed class QueryBuilder<T> : QueryBuilder<T, QueryOptions>
+		internal sealed class Builder<T> : QueryBuilder<T, Options>
 		{
 			/// <summary>
 			/// IWpDb
@@ -24,13 +25,13 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal QueryBuilder(IWpDb db) : base(db.Adapter) => this.db = db;
+			internal Builder(IWpDb db) : base(db.Adapter) => this.db = db;
 
 			/// <summary>
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryArgs<T> Build(QueryOptions opt)
+			public override QueryArgs<T> Build(Options opt)
 			{
 				// Use db shorthands
 				var _ = db;
@@ -41,9 +42,47 @@ namespace Jeebs.WordPress
 				AddSelect($"{Extract<T>(_.Term)}");
 
 				// FROM table
-				AddFrom($"{Escape(_.Term)} AS {Escape(tm)}");
+				AddFrom($"{Escape(tm)}");
 
-				// TODO : add join support to query
+				// INNER JOIN table
+				AddInnerJoin(tx, _.TermTaxonomy.TermId, (tm, _.Term.TermId));
+
+				// WHERE taxonomy
+				if (opt.Taxonomy is Enums.Taxonomy taxonomy)
+				{
+					AddWhere($"{Escape(tx, _.TermTaxonomy.Taxonomy)} = @{nameof(taxonomy)}", new { taxonomy });
+				}
+
+				// WHERE count
+				if (opt.CountAtLeast is long count && count > 0)
+				{
+					AddWhere($"{Escape(tx, _.TermTaxonomy.Count)} >= @{nameof(count)}", new { count });
+				}
+
+				// WHERE id
+				if (opt.Id is long id)
+				{
+					AddWhere($"{Escape(tm, _.Term.TermId)} = @{nameof(id)}", new { id });
+				}
+
+				// WHERE slug
+				if (opt.Term is string slug)
+				{
+					AddWhere($"{Escape(tm, _.Term.Slug)} = @{nameof(slug)}", new { slug });
+				}
+
+				// ORDER BY
+				AddSort(opt, new[]
+				{
+					(Escape(tm, _.Term.Title), SortOrder.Ascending),
+					(Escape(tx, _.TermTaxonomy.Count), SortOrder.Ascending)
+				});
+
+				// LIMIT and OFFSET
+				AddLimitAndOffset(opt);
+
+				// Return
+				return Args;
 			}
 		}
 	}

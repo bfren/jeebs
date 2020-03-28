@@ -95,8 +95,8 @@ namespace Jeebs.WordPress
 		}
 
 		/// <summary>
-		/// Return URL Path
+		/// Return term Title
 		/// </summary>
-		public override string ToString() => ValueObj?.UrlPath ?? (ValueStr ?? Key);
+		public override string ToString() => ValueObj?.Title ?? base.ToString();
 	}
 }
