@@ -12,26 +12,16 @@ namespace Jeebs.Config.Logging
 		/// <summary>
 		/// Console Provider
 		/// </summary>
-		public ConsoleProvider Console { get; set; }
+		public ConsoleProvider Console { get; set; } = new ConsoleProvider();
 
 		/// <summary>
 		/// File Provider
 		/// </summary>
-		public FileProvider File { get; set; }
+		public FileProvider File { get; set; } = new FileProvider();
 
 		/// <summary>
 		/// Slack Provider
 		/// </summary>
-		public SlackProvider Slack { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public LoggingProviders()
-		{
-			Console = new ConsoleProvider();
-			File = new FileProvider();
-			Slack = new SlackProvider();
-		}
+		public SlackProvider Slack { get; set; } = new SlackProvider();
 	}
 }

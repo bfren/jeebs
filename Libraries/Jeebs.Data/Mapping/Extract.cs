@@ -7,7 +7,7 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Extract columns from a table that match <see cref="TModel"/>
+	/// Extract columns from a table that match <typeparamref name="TModel"/>
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	public static class Extract<TModel>
@@ -23,7 +23,7 @@ namespace Jeebs.Data
 		private static readonly IEnumerable<PropertyInfo> properties;
 
 		/// <summary>
-		/// Get properties for <see cref="TModel"/> that have not been marked with <see cref="IgnoreAttribute"/>
+		/// Get properties for <typeparamref name="TModel"/> that have not been marked with <see cref="IgnoreAttribute"/>
 		/// </summary>
 		static Extract() => properties = typeof(TModel).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
 

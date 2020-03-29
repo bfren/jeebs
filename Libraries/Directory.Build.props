@@ -8,9 +8,9 @@
 	<PropertyGroup Label="Package">
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
-		<Copyright>Ben Green 2013-2019</Copyright>
+		<Copyright>Ben Green 2013-2020</Copyright>
 		<Version>4.0.0</Version>
-		<VersionSuffix>-preview.001</VersionSuffix>
+		<VersionSuffix>-beta.3</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">

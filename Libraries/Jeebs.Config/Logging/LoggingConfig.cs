@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Jeebs.Config
 {
+	/// <summary>
+	/// Logging configuration
+	/// </summary>
 	public sealed class LoggingConfig
 	{
 		/// <summary>
@@ -16,14 +19,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Providers Configuration
 		/// </summary>
-		public LoggingProviders Providers { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public LoggingConfig()
-		{
-			Providers = new LoggingProviders();
-		}
+		public LoggingProviders Providers { get; set; } = new LoggingProviders();
 	}
 }

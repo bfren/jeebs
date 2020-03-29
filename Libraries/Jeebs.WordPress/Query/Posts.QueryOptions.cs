@@ -19,12 +19,12 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Search Post type
 			/// </summary>
-			public PostType Type { get; set; }
+			public PostType Type { get; set; } = PostType.Post;
 
 			/// <summary>
 			/// Search Post status
 			/// </summary>
-			public PostStatus Status { get; set; }
+			public PostStatus Status { get; set; } = PostStatus.Publish;
 
 			/// <summary>
 			/// Search Post Text
@@ -34,12 +34,12 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Search text fields
 			/// </summary>
-			public SearchPostFields SearchFields { get; set; }
+			public SearchPostFields SearchFields { get; set; } = SearchPostFields.Title | SearchPostFields.Slug | SearchPostFields.Content;
 
 			/// <summary>
 			/// Search text operator (= or LIKE)
 			/// </summary>
-			public SearchOperators SearchOperator { get; set; }
+			public SearchOperators SearchOperator { get; set; } = SearchOperators.Like;
 
 			/// <summary>
 			/// Search Post published from
@@ -65,14 +65,6 @@ namespace Jeebs.WordPress
 			/// Search custom fields
 			/// </summary>
 			public IList<(ICustomField field, SearchOperators op, object value)>? CustomFields { get; set; }
-
-			public Options()
-			{
-				Type = PostType.Post;
-				Status = PostStatus.Publish;
-				SearchFields = SearchPostFields.Title | SearchPostFields.Slug | SearchPostFields.Content;
-				SearchOperator = SearchOperators.Like;
-			}
 		}
 	}
 }

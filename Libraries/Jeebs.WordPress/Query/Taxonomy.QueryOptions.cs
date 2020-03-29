@@ -28,14 +28,13 @@ namespace Jeebs.WordPress
 			/// Search taxonomy count (default: 1)
 			/// (to override and show everything, set to zero)
 			/// </summary>
-			public long? CountAtLeast { get; set; }
+			public long? CountAtLeast { get; set; } = 1;
 
 			/// <summary>
-			/// By default only show taxonomy terms that have at least one post
+			/// Remove LIMIT and OFFSET
 			/// </summary>
 			public Options()
 			{
-				CountAtLeast = 1;
 				Limit = null;
 				Offset = null;
 			}

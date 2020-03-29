@@ -17,27 +17,17 @@ namespace Jeebs.Config
 		/// <summary>
 		/// AppConfig object
 		/// </summary>
-		public AppConfig App { get; set; }
+		public AppConfig App { get; set; } = new AppConfig();
 
 		/// <summary>
 		/// AzureKeyVault object
 		/// </summary>
-		public AzureKeyVaultConfig AzureKeyVault { get; set; }
+		public AzureKeyVaultConfig AzureKeyVault { get; set; } = new AzureKeyVaultConfig();
 
 		/// <summary>
 		/// LoggingConfig object
 		/// </summary>
-		public LoggingConfig Logging { get; set; }
-
-		/// <summary>
-		/// Create blank objects
-		/// </summary>
-		public JeebsConfig()
-		{
-			App = new AppConfig();
-			AzureKeyVault = new AzureKeyVaultConfig();
-			Logging = new LoggingConfig();
-		}
+		public LoggingConfig Logging { get; set; } = new LoggingConfig();
 
 		/// <summary>
 		/// If key starts with ':', add Jeebs config prefix

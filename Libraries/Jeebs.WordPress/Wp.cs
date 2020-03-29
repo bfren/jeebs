@@ -10,6 +10,18 @@ namespace Jeebs.WordPress
 	/// WordPress wrapper
 	/// </summary>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
+	/// <typeparam name="Tc">WpCommentEntity type</typeparam>
+	/// <typeparam name="Tcm">WpCommentMetaEntity type</typeparam>
+	/// <typeparam name="Tl">WpLinkEntity type</typeparam>
+	/// <typeparam name="To">WpOptionEntity type</typeparam>
+	/// <typeparam name="Tp">WpPostEntity type</typeparam>
+	/// <typeparam name="Tpm">WpPostMetaEntity type</typeparam>
+	/// <typeparam name="Tt">WpTermEntity type</typeparam>
+	/// <typeparam name="Ttm">WpTermMetaEntity type</typeparam>
+	/// <typeparam name="Ttr">WpTermRelationshipEntity type</typeparam>
+	/// <typeparam name="Ttt">WpTermTaxonomyEntity type</typeparam>
+	/// <typeparam name="Tu">WpUserEntity type</typeparam>
+	/// <typeparam name="Tum">WpUserMetaEntity type</typeparam>
 	public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : IWp<TConfig>
 		where TConfig : WpConfig
 		where Tc : WpCommentEntity

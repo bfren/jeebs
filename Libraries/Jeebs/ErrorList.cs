@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Wrapper for List<string> to hold lists of errors
+	/// Wrapper for List to hold lists of errors
 	/// </summary>
 	public sealed class ErrorList : List<string>
 	{
