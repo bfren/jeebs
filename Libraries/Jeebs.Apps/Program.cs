@@ -26,20 +26,19 @@ namespace Jeebs.Apps
 			var app = new T();
 
 			// Create host
-			using (var host = app.CreateHost(args))
-			{
-				// Run default
-				if (run is null)
-				{
-					await host.RunAsync();
-				}
+			using var host = app.CreateHost(args);
 
-				// Run custom
-				else
-				{
-					var config = host.Services.GetService<IConfiguration>();
-					run(host.Services, config);
-				}
+			// Run default
+			if (run is null)
+			{
+				await host.RunAsync();
+			}
+
+			// Run custom
+			else
+			{
+				var config = host.Services.GetService<IConfiguration>();
+				run(host.Services, config);
 			}
 		}
 	}
