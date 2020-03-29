@@ -84,6 +84,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Construct an object for testing
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
+		/// <param name="redirections">RedirectionsConfig</param>
 		/// <param name="logger">ILogger</param>
 		public static RedirectExactMiddleware CreateForTesting(RequestDelegate next, RedirectionsConfig redirections, ILogger logger)
 			=> new RedirectExactMiddleware(next, redirections, logger);

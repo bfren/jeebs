@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress
@@ -12,7 +11,7 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Post Attachment Custom Field
 	/// </summary>
-	public abstract class AttachmentCustomField : CustomField<Attachment>
+	public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
 		/// <summary>
 		/// Setup object
@@ -99,5 +98,10 @@ namespace Jeebs.WordPress
 		/// Return term Title
 		/// </summary>
 		public override string ToString() => ValueObj?.Title ?? base.ToString();
+
+		/// <summary>
+		/// Attachment class
+		/// </summary>
+		public sealed class Attachment : Entities.Attachment { }
 	}
 }

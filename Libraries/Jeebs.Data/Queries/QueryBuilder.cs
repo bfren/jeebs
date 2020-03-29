@@ -210,6 +210,7 @@ namespace Jeebs.Data
 		/// Add WHERE clause
 		/// </summary>
 		/// <param name="where">WHERE string</param>
+		/// <param name="parameters">[Optional] Parameters to add</param>
 		protected void AddWhere(string where, object? parameters = null)
 		{
 			(Args.Where ?? (Args.Where = new List<string>())).Add(where);
