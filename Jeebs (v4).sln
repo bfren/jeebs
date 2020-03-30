@@ -82,13 +82,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Clients", ".Clients", "{D8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Clients.MySql", "Tests\Tests.Jeebs.Data.Clients.MySql\Tests.Jeebs.Data.Clients.MySql.csproj", "{F7794637-FAF0-4EF0-B42C-98CD8FD5B459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Clients.SqlServer", "Tests\Tests.Jeebs.Data.Clients.SqlServer\Tests.Jeebs.Data.Clients.SqlServer.csproj", "{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Clients.SqlServer", "Tests\Tests.Jeebs.Data.Clients.SqlServer\Tests.Jeebs.Data.Clients.SqlServer.csproj", "{088834AB-1B3B-4967-BC07-15FEFA8EA8D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".WordPress", ".WordPress", "{0B5859A2-D126-488E-9232-9D71FCCFC777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress", "Tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress", "Tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data", "Tests\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj", "{656E74E2-9E0A-4404-B7A9-F124680D1050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data", "Tests\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj", "{656E74E2-9E0A-4404-B7A9-F124680D1050}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Mvc", "Libraries\Jeebs.Mvc\Jeebs.Mvc.csproj", "{063DCBAE-D75F-4E35-9DFE-DDDC6F1CF93B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -208,6 +210,10 @@ Global
 		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656E74E2-9E0A-4404-B7A9-F124680D1050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{063DCBAE-D75F-4E35-9DFE-DDDC6F1CF93B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{063DCBAE-D75F-4E35-9DFE-DDDC6F1CF93B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{063DCBAE-D75F-4E35-9DFE-DDDC6F1CF93B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{063DCBAE-D75F-4E35-9DFE-DDDC6F1CF93B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,6 +255,7 @@ Global
 		{0B5859A2-D126-488E-9232-9D71FCCFC777} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{656E74E2-9E0A-4404-B7A9-F124680D1050} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
+		{063DCBAE-D75F-4E35-9DFE-DDDC6F1CF93B} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
