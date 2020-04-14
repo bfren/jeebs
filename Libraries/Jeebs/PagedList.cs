@@ -13,27 +13,27 @@ namespace Jeebs
 		/// <summary>
 		/// The page number to display
 		/// </summary>
-		public double CurrentPage { get; private set; }
+		public long CurrentPage { get; private set; }
 
 		/// <summary>
 		/// The total number of items that match the search
 		/// </summary>
-		public double TotalItems { get; }
+		public long TotalItems { get; }
 
 		/// <summary>
 		/// The number of items to display on each page of results
 		/// </summary>
-		public double ItemsPerPage { get; set; }
+		public long ItemsPerPage { get; set; }
 
 		/// <summary>
 		/// The number of pages per group of page numbers
 		/// </summary>
-		public double NumberOfPagesPerGroup { get; set; }
+		public long NumberOfPagesPerGroup { get; set; }
 
 		/// <summary>
 		/// The index of the first item being displayed
 		/// </summary>
-		public double FirstItem { get; private set; }
+		public long FirstItem { get; private set; }
 
 		/// <summary>
 		/// The number of items to Skip() in a Linq query
@@ -43,7 +43,7 @@ namespace Jeebs
 		/// <summary>
 		/// The index + 1 of the last item being displayed
 		/// </summary>
-		public double LastItem { get; private set; }
+		public long LastItem { get; private set; }
 
 		/// <summary>
 		/// The number of items to Take() in a Linq query
@@ -53,24 +53,24 @@ namespace Jeebs
 		/// <summary>
 		/// The number of pages needed to display all the items
 		/// </summary>
-		public double Pages { get; private set; }
+		public long Pages { get; private set; }
 
 		/// <summary>
 		/// The first page to display
 		/// </summary>
-		public double LowerPage { get; private set; }
+		public long LowerPage { get; private set; }
 
 		/// <summary>
 		/// The last page to display
 		/// </summary>
-		public double UpperPage { get; private set; }
+		public long UpperPage { get; private set; }
 
 		/// <summary>
 		/// Create PagedList from a collection of items
 		/// </summary>
 		/// <param name="collection">Collection</param>
 		/// <param name="currentPage">Current page</param>
-		public PagedList(IEnumerable<T> collection, double currentPage) : base(collection)
+		public PagedList(IEnumerable<T> collection, long currentPage) : base(collection)
 		{
 			TotalItems = Count;
 			CurrentPage = currentPage;
@@ -83,7 +83,7 @@ namespace Jeebs
 		/// <param name="totalItems">Total number of items</param>
 		/// <param name="itemsPerPage">[Optional] Number of items per page</param>
 		/// <param name="numberOfPagesPerGroup">[Optional] Number of page numbers before using next / previous</param>
-		public PagedList(double currentPage, double totalItems, double itemsPerPage = 10, double numberOfPagesPerGroup = 10)
+		public PagedList(long currentPage, long totalItems, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
 		{
 			CurrentPage = currentPage;
 			TotalItems = totalItems;
@@ -109,7 +109,7 @@ namespace Jeebs
 
 			// Calculate the number of pages in total - if there are no items,
 			// we still display one page, just with no results
-			Pages = TotalItems == 0 ? 1 : Math.Ceiling(TotalItems / ItemsPerPage);
+			Pages = TotalItems == 0 ? 1 : (long)Math.Ceiling((double)TotalItems / ItemsPerPage);
 
 			// Reduce the page number if it is greated than the Number of Pages
 			if (CurrentPage > Pages)
@@ -133,7 +133,7 @@ namespace Jeebs
 			}
 			else
 			{
-				LowerPage = (Math.Floor((CurrentPage - 1) / NumberOfPagesPerGroup) * NumberOfPagesPerGroup) + 1;
+				LowerPage = (long)(Math.Floor((double)(CurrentPage - 1) / NumberOfPagesPerGroup) * NumberOfPagesPerGroup) + 1;
 				UpperPage = LowerPage + NumberOfPagesPerGroup - 1;
 
 				if (UpperPage > Pages)

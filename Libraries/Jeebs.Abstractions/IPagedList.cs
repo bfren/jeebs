@@ -13,27 +13,27 @@ namespace Jeebs
 		/// <summary>
 		/// The page number to display
 		/// </summary>
-		double CurrentPage { get; }
+		long CurrentPage { get; }
 
 		/// <summary>
 		/// The total number of items that match the search
 		/// </summary>
-		double TotalItems { get; }
+		long TotalItems { get; }
 
 		/// <summary>
 		/// The number of items to display on each page of results
 		/// </summary>
-		double ItemsPerPage { get; set; }
+		long ItemsPerPage { get; set; }
 
 		/// <summary>
 		/// The number of page numbers to display
 		/// </summary>
-		double NumberOfPagesPerGroup { get; set; }
+		long NumberOfPagesPerGroup { get; set; }
 
 		/// <summary>
 		/// The index of the first item being displayed
 		/// </summary>
-		double FirstItem { get; }
+		long FirstItem { get; }
 
 		/// <summary>
 		/// The number of items to Skip() in a Linq query
@@ -43,7 +43,7 @@ namespace Jeebs
 		/// <summary>
 		/// The index + 1 of the last item being displayed
 		/// </summary>
-		double LastItem { get; }
+		long LastItem { get; }
 
 		/// <summary>
 		/// The number of items to Take() in a Linq query
@@ -53,17 +53,17 @@ namespace Jeebs
 		/// <summary>
 		/// The number of pages needed to display all the items
 		/// </summary>
-		double Pages { get; }
+		long Pages { get; }
 
 		/// <summary>
 		/// The first page to display
 		/// </summary>
-		double LowerPage { get; }
+		long LowerPage { get; }
 
 		/// <summary>
 		/// The last page to display
 		/// </summary>
-		double UpperPage { get; }
+		long UpperPage { get; }
 
 		/// <summary>
 		/// Calculate the various paging values
