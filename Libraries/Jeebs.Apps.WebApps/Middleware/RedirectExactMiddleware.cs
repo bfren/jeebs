@@ -88,7 +88,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="logger">ILogger</param>
 		public static RedirectExactMiddleware CreateForTesting(RequestDelegate next, RedirectionsConfig redirections, ILogger logger)
 		{
-			new RedirectExactMiddleware(next, redirections, logger);
+			return new RedirectExactMiddleware(next, redirections, logger);
 		}
 
 		#endregion

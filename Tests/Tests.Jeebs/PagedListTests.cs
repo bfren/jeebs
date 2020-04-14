@@ -8,12 +8,12 @@ namespace Jeebs
 {
 	public sealed class PagedListTests
 	{
-		private PagedList<Foo> GetEmptyList(double currentPage, double totalItems = 25, double itemsPerPage = 10, double numberOfPagesPerGroup = 10)
+		private PagedList<Foo> GetEmptyList(long currentPage, long totalItems = 25, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
 		{
 			return new PagedList<Foo>(currentPage, totalItems, itemsPerPage, numberOfPagesPerGroup);
 		}
 
-		private PagedList<Foo> GetFilledList(double currentPage, double totalItems = 25, double itemsPerPage = 10, double numberOfPagesPerGroup = 10)
+		private PagedList<Foo> GetFilledList(long currentPage, long totalItems = 25, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
 		{
 			var list = new List<Foo>();
 			for (int i = 1; i <= totalItems; i++)
