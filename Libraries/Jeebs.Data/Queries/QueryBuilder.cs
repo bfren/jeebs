@@ -8,15 +8,15 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query Builder
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TModel">Model type</typeparam>
 	/// <typeparam name="TOptions">QueryOptions</typeparam>
-	public abstract class QueryBuilder<TEntity, TOptions>
+	public abstract class QueryBuilder<TModel, TOptions>
 		where TOptions : QueryOptions
 	{
 		/// <summary>
 		/// QueryArgs
 		/// </summary>
-		protected QueryArgs<TEntity> Args { get; }
+		protected QueryArgs<TModel> Args { get; }
 
 		/// <summary>
 		/// IAdapter
@@ -29,7 +29,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		protected QueryBuilder(IAdapter adapter)
 		{
-			Args = new QueryArgs<TEntity>();
+			Args = new QueryArgs<TModel>();
 			this.adapter = adapter;
 		}
 
@@ -38,7 +38,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <returns>QueryArgs</returns>
-		public abstract QueryArgs<TEntity> Build(TOptions opt);
+		public abstract QueryArgs<TModel> Build(TOptions opt);
 
 		/// <summary>
 		/// Add Sort

@@ -7,7 +7,8 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query args
 	/// </summary>
-	public class QueryArgs<T>
+	/// <typeparam name="TModel">Model type</typeparam>
+	public class QueryArgs<TModel>
 	{
 		/// <summary>
 		/// From table
@@ -42,7 +43,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Query Parameters
 		/// </summary>
-		public QueryParameters Parameters { get; set; }
+		public QueryParameters Parameters { get; set; } = new QueryParameters();
 
 		/// <summary>
 		/// Order By
@@ -58,10 +59,5 @@ namespace Jeebs.Data
 		/// Offset
 		/// </summary>
 		public long? Offset { get; set; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public QueryArgs() => Parameters = new QueryParameters();
 	}
 }

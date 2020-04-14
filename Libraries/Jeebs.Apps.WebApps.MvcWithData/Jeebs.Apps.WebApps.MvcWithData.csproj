@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
+  </ItemGroup>
+
+</Project>

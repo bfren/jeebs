@@ -28,16 +28,11 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Query LIMIT
 		/// </summary>
-		public long? Limit { get; set; }
+		public long? Limit { get; set; } = 10;
 
 		/// <summary>
 		/// Query OFFSET
 		/// </summary>
 		public long? Offset { get; set; }
-
-		/// <summary>
-		/// Set defaults
-		/// </summary>
-		protected QueryOptions() => Limit = 10;
 	}
 }
