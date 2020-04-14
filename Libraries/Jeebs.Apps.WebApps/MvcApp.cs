@@ -9,6 +9,7 @@ using Jeebs.Constants.Apps.WebApps;
 using Jeebs.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -125,6 +126,7 @@ namespace Jeebs.Apps.WebApps
 		{
 			services
 				.AddControllersWithViews(ConfigureServices_MvcOptions)
+				.AddRazorRuntimeCompilation(ConfigureServices_RuntimeCompilation)
 				.AddJsonOptions(ConfigureServices_EndpointsJson);
 		}
 
@@ -136,6 +138,15 @@ namespace Jeebs.Apps.WebApps
 		{
 			opt.CacheProfiles.Add(CacheProfiles.None, new CacheProfile() { NoStore = true });
 			opt.CacheProfiles.Add(CacheProfiles.Default, new CacheProfile() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
+		}
+
+		/// <summary>
+		/// Override to configure Razor Runtime Compilation
+		/// </summary>
+		/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
+		public virtual void ConfigureServices_RuntimeCompilation(MvcRazorRuntimeCompilationOptions opt)
+		{
+
 		}
 
 		/// <summary>

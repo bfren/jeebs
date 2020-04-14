@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
-		<PackageReference Include="Mapster" Version="5.2.0" />
 		<PackageReference Include="Sodium.Core" Version="1.2.3" />
 	</ItemGroup>
 
