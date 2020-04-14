@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using Jeebs.Mvc.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,14 +25,24 @@ namespace Jeebs.Mvc.TagHelpers
 		public Menu? Menu { get; set; }
 
 		/// <summary>
+		/// Default: ul
+		/// </summary>
+		public string WrapperElement { get; set; } = "ul";
+
+		/// <summary>
 		/// Default: nav nav-pills flex-column
 		/// </summary>
-		public string ListClass { get; set; } = "nav nav-pills flex-column";
+		public string WrapperClass { get; set; } = "nav nav-pills flex-column";
+
+		/// <summary>
+		/// Default: li
+		/// </summary>
+		public string ItemElement { get; set; } = "li";
 
 		/// <summary>
 		/// Default: nav-item
 		/// </summary>
-		public string ListItemClass { get; set; } = "nav-item";
+		public string ItemClass { get; set; } = "nav-item";
 
 		/// <summary>
 		/// Default: nav-link
@@ -51,7 +62,7 @@ namespace Jeebs.Mvc.TagHelpers
 		/// <summary>
 		/// Default: nav-child
 		/// </summary>
-		public string ChildMenuClass { get; set; } = "nav-child";
+		public string ChildMenuWrapperClass { get; set; } = "nav-child";
 
 		/// <summary>
 		/// Create object
@@ -77,92 +88,80 @@ namespace Jeebs.Mvc.TagHelpers
 
 			// Setup objects
 			var currentController = ViewContext.ControllerName().ToLower();
-			var currentAction = ((ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName.ToLower();
+			var currentAction = ViewContext.ActionName().ToLower();
 			var urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
 
-			// Add each menu item to the menu
-			foreach (var item in Menu.Items)
-			{
-				// Create list item
-				TagBuilder listItem = new TagBuilder("li");
-				listItem.AddCssClass(ListItemClass);
-
-				// Create link
-				TagBuilder link = new TagBuilder("a");
-				link.AddCssClass(LinkClass);
-
-				// For parent menu items, only check the controller for active links
-				if (item.Controller.ToLower() == currentController)
-				{
-					link.AddCssClass(LinkActiveClass);
-				}
-
-				// Generate the link URL
-				var urlActionContext = new UrlActionContext { Controller = item.Controller, Action = "Index" };
-				link.Attributes.Add("href", urlHelper.Action(urlActionContext));
-
-				// Add link text - if not set use controller name
-				link.InnerHtml.Append(item.Text ?? item.Controller);
-
-				// Add the link to the list item
-				listItem.InnerHtml.AppendHtml(link);
-
-				// Check for child menu
-				if (item.Children?.Count > 0)
-				{
-					var childMenu = BuildChildMenu(item.Children);
-					listItem.InnerHtml.AppendHtml(childMenu);
-				}
-
-				// Add list item to menu
-				output.Content.AppendHtml(listItem);
-			}
+			// Build the menu
+			BuildMenu(Menu.Items,
+				mi => mi.Controller.ToLower() == currentController,
+				mi => mi.Controller,
+				el => output.Content.AppendHtml(el)
+			);
 
 			// Set output properties
-			output.TagName = "ul";
+			output.TagName = WrapperElement;
 			output.TagMode = TagMode.StartTagAndEndTag;
-			output.Attributes.Add("class", ListClass);
+			output.Attributes.Add("class", WrapperClass);
 
-			// Build a child menu
-			TagBuilder BuildChildMenu(List<MenuItem> childMenuItems)
+			// Build a menu (allows recursion for child menus)
+			//
+			//		items:		The menu items to build a menu for
+			//		isActive:	Function which determines whether or not the current item is the active page
+			//		getText:	If MenuItem.Text is null, returns the text to show in the link
+			//		append:		Action to append the element to the menu wrapper
+			void BuildMenu(List<MenuItem> items, Func<MenuItem, bool> isActive, Func<MenuItem, string> getText, Action<TagBuilder> append)
 			{
-				// Create child menu
-				TagBuilder childMenu = new TagBuilder("ul");
-				childMenu.AddCssClass(ListClass);
-				childMenu.AddCssClass(ChildMenuClass);
-
 				// Add each menu item to the menu
-				foreach (var item in childMenuItems)
+				foreach (var menuItem in items)
 				{
-					// Create list item
-					TagBuilder listItem = new TagBuilder("li");
-					listItem.AddCssClass(ListItemClass);
+					// Create item element
+					TagBuilder item = new TagBuilder(ItemElement);
+					item.AddCssClass(ItemClass);
 
-					// Create link
+					// Create link element
 					TagBuilder link = new TagBuilder("a");
 					link.AddCssClass(LinkClass);
 
-					// For child menu items, only check the action for active links
-					if (item.Action.ToLower() == currentAction)
+					// Add GUID
+					link.MergeAttribute("id", $"link-{menuItem.Guid}");
+
+					// Check whether or not this is an active link / section
+					if (isActive(menuItem))
 					{
 						link.AddCssClass(LinkActiveClass);
 					}
 
 					// Generate the link URL
-					var urlActionContext = new UrlActionContext { Controller = item.Controller, Action = item.Action };
+					var urlActionContext = new UrlActionContext { Controller = menuItem.Controller, Action = menuItem.Action };
 					link.Attributes.Add("href", urlHelper.Action(urlActionContext));
 
-					// Add link text - if not set use action name
-					link.InnerHtml.Append(item.Text ?? item.Action);
+					// Add link text - if not set use getText() function
+					link.InnerHtml.Append(menuItem.Text ?? getText(menuItem));
 
 					// Add the link to the list item
-					listItem.InnerHtml.AppendHtml(link);
+					item.InnerHtml.AppendHtml(link);
 
-					// Add list item to child menu
-					childMenu.InnerHtml.AppendHtml(listItem);
+					// Check for child menu
+					if (IncludeChildren && menuItem.Children.Count > 0)
+					{
+						// Create child menu wrapper
+						TagBuilder childMenu = new TagBuilder(WrapperElement);
+						childMenu.AddCssClass(ChildMenuWrapperClass);
+
+						// Build child menu
+						BuildMenu(menuItem.Children,
+							mi => mi.Action.ToLower() == currentAction,
+							mi => mi.Action,
+							el => childMenu.InnerHtml.AppendHtml(el)
+						);
+
+						// Add child menu to item
+						item.InnerHtml.AppendHtml(childMenu);
+					}
+
+					// Append item
+					append(item);
 				}
-
-				return childMenu;
 			}
 		}
 	}

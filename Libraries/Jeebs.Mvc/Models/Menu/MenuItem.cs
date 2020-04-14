@@ -17,7 +17,7 @@ namespace Jeebs.Mvc.Models
         /// <summary>
         /// The text to display in the link
         /// </summary>
-        public string Text { get; set; } = string.Empty;
+        public string? Text { get; set; }
 
         /// <summary>
         /// The link description - if set, will be added as the title attribute
@@ -32,7 +32,7 @@ namespace Jeebs.Mvc.Models
         /// <summary>
         /// The action to use in the link
         /// </summary>
-        public string Action { get; set; } = string.Empty;
+        public string Action { get; set; } = "Index";
 
         /// <summary>
         /// Optional route values to be added to the URL

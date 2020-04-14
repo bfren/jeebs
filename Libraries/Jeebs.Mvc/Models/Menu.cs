@@ -30,7 +30,7 @@ namespace Jeebs.Mvc.Models
 				yield return new MenuItemSimple
 				{
 					Guid = Guid.NewGuid(),
-					Text = item.Text,
+					Text = item.Text ?? item.Controller,
 					Url = GetUri(url, item)
 				};
 			}
