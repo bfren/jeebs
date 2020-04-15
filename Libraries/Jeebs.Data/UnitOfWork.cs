@@ -121,10 +121,11 @@ namespace Jeebs.Data
 		/// <param name="method">Calling method</param>
 		/// <param name="query">SQL query</param>
 		/// <param name="parameters">Parameters</param>
-		private void LogQuery<T>(string method, string query, T parameters)
+		/// <param name="commandType">CommandType</param>
+		private void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
 		{
 			log.Debug("Method: UnitOfWork.{0}()", method);
-			log.Debug("Query: {0}", query);
+			log.Debug("Query [{0}]: {1}", commandType, query);
 			log.Debug("Parameters: {0}", Json.Serialise(parameters));
 		}
 
@@ -289,23 +290,23 @@ namespace Jeebs.Data
 
 		#endregion
 
-		#region R
+		#region R: Query
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
 		/// </summary>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IEnumerable</returns>
-		public Result<IEnumerable<dynamic>> Query(string query, object? parameters = null)
+		/// <param name="commandType">CommandType</param>
+		public Result<IEnumerable<dynamic>> Query(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Query), query, parameters);
+				LogQuery(nameof(Query), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.Query<dynamic>(query, param: parameters, transaction: transaction);
+				var result = Connection.Query<dynamic>(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
@@ -322,16 +323,16 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IEnumerable</returns>
-		public async Task<Result<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null)
+		/// <param name="commandType">CommandType</param>
+		public async Task<Result<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(QueryAsync), query, parameters);
+				LogQuery(nameof(QueryAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: transaction);
+				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
@@ -349,16 +350,16 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Object type</typeparam>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IEnumerable</returns>
-		public Result<IEnumerable<T>> Query<T>(string query, object? parameters = null)
+		/// <param name="commandType">CommandType</param>
+		public Result<IEnumerable<T>> Query<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Query), query, parameters);
+				LogQuery(nameof(Query), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.Query<T>(query, param: parameters, transaction: transaction);
+				var result = Connection.Query<T>(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
@@ -376,16 +377,16 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Object type</typeparam>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IEnumerable</returns>
-		public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null)
+		/// <param name="commandType">CommandType</param>
+		public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(QueryAsync), query, parameters);
+				LogQuery(nameof(QueryAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction);
+				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
@@ -396,13 +397,16 @@ namespace Jeebs.Data
 				);
 			}
 		}
+
+		#endregion
+
+		#region R: Single
 
 		/// <summary>
 		/// Get an entity from the database by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
-		/// <returns>Entity (or null if not found)</returns>
 		public Result<T> Single<T>(int id)
 			where T : class, IEntity
 		{
@@ -427,7 +431,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
-		/// <returns>Entity (or null if not found)</returns>
 		private async Task<Result<T>> SingleAsync<T>(int id)
 			where T : class, IEntity
 		{
@@ -452,16 +455,16 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>Object or default value</returns>
-		public Result<T> Single<T>(string query, object parameters)
+		/// <param name="commandType">CommandType</param>
+		public Result<T> Single<T>(string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Single), query, parameters);
+				LogQuery(nameof(Single), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: transaction);
+				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
@@ -478,16 +481,16 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>Object or default value</returns>
-		public async Task<Result<T>> SingleAsync<T>(string query, object parameters)
+		/// <param name="commandType">CommandType</param>
+		public async Task<Result<T>> SingleAsync<T>(string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(SingleAsync), query, parameters);
+				LogQuery(nameof(SingleAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: transaction);
+				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
@@ -508,7 +511,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity object</param>
-		/// <returns>IDbResult - Whether or not the update was successful</returns>
 		public Result<bool> Update<T>(T poco)
 			where T : class, IEntity
 		{
@@ -530,7 +532,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
-		/// <returns>IDbResult - Whether or not the update was successful</returns>
 		private Result<bool> UpdateWithVersion<T>(T poco)
 			where T : class, IEntityWithVersion
 		{
@@ -564,7 +565,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Object</param>
-		/// <returns>IDbResult - Whether or not the update was successful</returns>
 		private Result<bool> UpdateWithoutVersion<T>(T poco)
 			where T : class, IEntity
 		{
@@ -600,7 +600,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
-		/// <result>IDbResult - Whether or not the delete was successful</result>
 		public Result<bool> Delete<T>(T poco)
 			where T : class, IEntity
 		{
@@ -632,7 +631,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="poco">Entity to delete</param>
-		/// <result>IDbResult - Whether or not the delete was successful</result>
 		public async Task<Result<bool>> DeleteAsync<T>(T poco)
 			where T : class, IEntity
 		{
@@ -668,16 +666,17 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
+		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		public Result<int> Execute(string query, object? parameters = null)
+		public Result<int> Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Execute), query, parameters);
+				LogQuery(nameof(Execute), query, parameters, commandType);
 
 				// Execute and return
-				var affectedRows = Connection.Execute(query, param: parameters, transaction: transaction);
+				var affectedRows = Connection.Execute(query, param: parameters, transaction: transaction, commandType: commandType);
 				return Result.Success(affectedRows);
 			}
 			catch (Exception ex)
@@ -691,13 +690,14 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
+		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		public async Task<Result<int>> ExecuteAsync(string query, object? parameters = null)
+		public async Task<Result<int>> ExecuteAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteAsync), query, parameters);
+				LogQuery(nameof(ExecuteAsync), query, parameters, commandType);
 
 				// Execute and return
 				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: transaction);
@@ -715,13 +715,13 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Return type</typeparam>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		public Result<T> ExecuteScalar<T>(string query, object? parameters = null)
+		/// <param name="commandType">CommandType</param>
+		public Result<T> ExecuteScalar<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteScalar), query, parameters);
+				LogQuery(nameof(ExecuteScalar), query, parameters, commandType);
 
 				// Execute and return
 				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: transaction);
@@ -739,13 +739,13 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Return type</typeparam>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
-		/// <returns>IDbResult - on success, Value is Scalar value T</returns>
-		public async Task<Result<T>> ExecuteScalarAsync<T>(string query, object? parameters = null)
+		/// <param name="commandType">CommandType</param>
+		public async Task<Result<T>> ExecuteScalarAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteScalarAsync), query, parameters);
+				LogQuery(nameof(ExecuteScalarAsync), query, parameters, commandType);
 
 				// Execute and return
 				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: transaction);
