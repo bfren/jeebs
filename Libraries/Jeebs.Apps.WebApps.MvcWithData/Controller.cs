@@ -7,26 +7,24 @@ namespace Jeebs.Apps.WebApps.Mvc
 	/// Controller class
 	/// </summary>
 	/// <typeparam name="TDb">IDb</typeparam>
-	/// <typeparam name="TDbSvc">IDbSvc</typeparam>
-	public abstract class Controller<TDb, TDbSvc> : Controller
+	public abstract class Controller<TDb> : Controller
 		where TDb : IDb
-		where TDbSvc : IDbSvc<TDb>
 	{
 		/// <summary>
-		/// TDbSvc
+		/// TDb
 		/// </summary>
-		protected TDbSvc Svc { get; }
+		protected TDb Db { get; }
 
 		/// <summary>
 		/// Current page number
 		/// </summary>
-		public int Page => int.TryParse(Request.Query["p"], out int p) ? p : 1;
+		public long Page => long.TryParse(Request.Query["p"], out long p) ? p : 1;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="log">ILog</param>
-		/// <param name="svc">TDbSvc</param>
-		protected Controller(ILog log, TDbSvc svc) : base(log) => Svc = svc;
+		/// <param name="db">TDb</param>
+		protected Controller(ILog log, TDb db) : base(log) => Db = db;
 	}
 }

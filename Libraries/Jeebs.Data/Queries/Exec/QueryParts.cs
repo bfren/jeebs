@@ -5,10 +5,10 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Query args
+	/// Query parts
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	public class QueryArgs<TModel>
+	public sealed class QueryParts<TModel>
 	{
 		/// <summary>
 		/// From table

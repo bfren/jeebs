@@ -31,7 +31,7 @@ namespace Jeebs.WordPress
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryArgs<T> Build(Options opt)
+			public override QueryParts<T> Build(Options opt)
 			{
 				// Use db shorthands
 				var _ = db;
@@ -82,7 +82,7 @@ namespace Jeebs.WordPress
 				AddLimitAndOffset(opt);
 
 				// Return
-				return Args;
+				return Parts;
 			}
 		}
 	}

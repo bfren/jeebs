@@ -8,154 +8,56 @@ namespace Jeebs
 	/// List that supports paging operations
 	/// </summary>
 	/// <typeparam name="T">Type of objects in the list</typeparam>
-	public sealed class PagedList<T> : List<T>, IPagedList<T>
+	public sealed class PagedList<T> : List<T>
 	{
 		/// <summary>
-		/// The page number to display
+		/// The paging values
 		/// </summary>
-		public long CurrentPage { get; private set; }
-
-		/// <summary>
-		/// The total number of items that match the search
-		/// </summary>
-		public long TotalItems { get; }
-
-		/// <summary>
-		/// The number of items to display on each page of results
-		/// </summary>
-		public long ItemsPerPage { get; set; }
-
-		/// <summary>
-		/// The number of pages per group of page numbers
-		/// </summary>
-		public long NumberOfPagesPerGroup { get; set; }
-
-		/// <summary>
-		/// The index of the first item being displayed
-		/// </summary>
-		public long FirstItem { get; private set; }
-
-		/// <summary>
-		/// The number of items to Skip() in a Linq query
-		/// </summary>
-		public int Skip { get => (int)(FirstItem > 0 ? FirstItem - 1 : 0); }
-
-		/// <summary>
-		/// The index + 1 of the last item being displayed
-		/// </summary>
-		public long LastItem { get; private set; }
-
-		/// <summary>
-		/// The number of items to Take() in a Linq query
-		/// </summary>
-		public int Take { get => (int)ItemsPerPage; }
-
-		/// <summary>
-		/// The number of pages needed to display all the items
-		/// </summary>
-		public long Pages { get; private set; }
-
-		/// <summary>
-		/// The first page to display
-		/// </summary>
-		public long LowerPage { get; private set; }
-
-		/// <summary>
-		/// The last page to display
-		/// </summary>
-		public long UpperPage { get; private set; }
+		public readonly PagingValues Values;
 
 		/// <summary>
 		/// Create PagedList from a collection of items
 		/// </summary>
 		/// <param name="collection">Collection</param>
 		/// <param name="currentPage">Current page</param>
-		public PagedList(IEnumerable<T> collection, long currentPage) : base(collection)
+		/// <param name="itemsPerPage">[Optional] Number of items per page</param>
+		/// <param name="numberOfPagesPerGroup">[Optional] Number of page numbers before using next / previous</param>
+		public PagedList(IEnumerable<T> collection, long currentPage, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
+			: base(collection)
 		{
-			TotalItems = Count;
-			CurrentPage = currentPage;
+			Values = new PagingValues(currentPage, Count, itemsPerPage, numberOfPagesPerGroup);
 		}
 
 		/// <summary>
 		/// Set required parameters and calculate values
 		/// </summary>
-		/// <param name="currentPage">Current page</param>
 		/// <param name="totalItems">Total number of items</param>
+		/// <param name="currentPage">Current page</param>
 		/// <param name="itemsPerPage">[Optional] Number of items per page</param>
 		/// <param name="numberOfPagesPerGroup">[Optional] Number of page numbers before using next / previous</param>
-		public PagedList(long currentPage, long totalItems, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
+		public PagedList(long totalItems, long currentPage, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
 		{
-			CurrentPage = currentPage;
-			TotalItems = totalItems;
-			ItemsPerPage = itemsPerPage;
-			NumberOfPagesPerGroup = numberOfPagesPerGroup;
-		}
-
-		/// <summary>
-		/// Calculate the various paging values
-		/// </summary>
-		public void Calculate()
-		{
-			// Ensure a valid current page
-			if (CurrentPage < 0)
-			{
-				throw new InvalidOperationException($"{nameof(CurrentPage)} must be greater than zero");
-			}
-
-			if (CurrentPage == 0)
-			{
-				CurrentPage = 1;
-			}
-
-			// Calculate the number of pages in total - if there are no items,
-			// we still display one page, just with no results
-			Pages = TotalItems == 0 ? 1 : (long)Math.Ceiling((double)TotalItems / ItemsPerPage);
-
-			// Reduce the page number if it is greated than the Number of Pages
-			if (CurrentPage > Pages)
-			{
-				CurrentPage = Pages;
-			}
-
-			// Calculate the first and last item variables
-			FirstItem = ((CurrentPage - 1) * ItemsPerPage) + 1;
-			LastItem = CurrentPage * ItemsPerPage;
-			if (LastItem > TotalItems)
-			{
-				LastItem = TotalItems;
-			}
-
-			// Calculate the upper and lower page bounds
-			if (Pages < NumberOfPagesPerGroup)
-			{
-				LowerPage = 1;
-				UpperPage = Pages;
-			}
-			else
-			{
-				LowerPage = (long)(Math.Floor((double)(CurrentPage - 1) / NumberOfPagesPerGroup) * NumberOfPagesPerGroup) + 1;
-				UpperPage = LowerPage + NumberOfPagesPerGroup - 1;
-
-				if (UpperPage > Pages)
-				{
-					UpperPage = Pages;
-				}
-			}
+			Values = new PagingValues(currentPage, totalItems, itemsPerPage, numberOfPagesPerGroup);
 		}
 
 		/// <summary>
 		/// Calculate the various paging values and apply them values to the list items
 		/// </summary>
-		public void CalculateAndApply()
+		public PagedList<T> CalculateAndApply()
 		{
-			Calculate();
-
-			if (Count > 0 && Pages > 0)
+			// Return empty list
+			if (Count == 0 || Values.Pages == 0)
 			{
-				var items = this.Skip(Skip).Take(Take).ToList();
-				Clear();
-				AddRange(items);
+				return new PagedList<T>(0, 0, 0, 0);
 			}
+
+			// Return new paged list with only the necessary items
+			return new PagedList<T>(
+				this.Skip(Values.Skip).Take(Values.Take),
+				Values.CurrentPage,
+				Values.ItemsPerPage,
+				Values.NumberOfPagesPerGroup
+			);
 		}
 	}
 }

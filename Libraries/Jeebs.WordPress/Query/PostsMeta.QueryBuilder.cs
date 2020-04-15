@@ -30,7 +30,7 @@ namespace Jeebs.WordPress
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryArgs<T> Build(Options opt)
+			public override QueryParts<T> Build(Options opt)
 			{
 				// FROM
 				AddFrom(db.PostMeta.ToString());
@@ -48,7 +48,7 @@ namespace Jeebs.WordPress
 				AddLimitAndOffset(opt);
 
 				// Return
-				return Args;
+				return Parts;
 			}
 		}
 	}

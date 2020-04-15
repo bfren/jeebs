@@ -104,8 +104,8 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="args">IQuery</param>
-		string Retrieve<T>(QueryArgs<T> args);
+		/// <param name="parts">QueryParts</param>
+		string Retrieve<T>(QueryParts<T> parts);
 
 		#endregion
 

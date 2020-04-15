@@ -65,7 +65,7 @@ namespace Jeebs.Data
 
 		#endregion
 
-		#region R
+		#region R: Query
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
@@ -100,6 +100,10 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+
+		#endregion
+
+		#region R: Single
 
 		/// <summary>
 		/// Get an entity from the database by ID

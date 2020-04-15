@@ -40,15 +40,15 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="args">IQuery</param>
+		/// <param name="parts">QueryParts</param>
 		/// <returns>SELECT query</returns>
-		public override string Retrieve<T>(QueryArgs<T> args)
+		public override string Retrieve<T>(QueryParts<T> parts)
 		{
 			// Start query
-			StringBuilder sql = new StringBuilder($"SELECT {args.Select ?? "*"} FROM {args.From}");
+			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
 
 			// Add INNER JOIN
-			if (args.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)
+			if (parts.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)
 			{
 				foreach (var item in innerJoinValues)
 				{
@@ -57,7 +57,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Add LEFT JOIN
-			if (args.LeftJoin is List<(string table, string on, string equals)> leftJoinValues)
+			if (parts.LeftJoin is List<(string table, string on, string equals)> leftJoinValues)
 			{
 				foreach (var item in leftJoinValues)
 				{
@@ -66,7 +66,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Add RIGHT JOIN
-			if (args.RightJoin is List<(string table, string on, string equals)> rightJoinValues)
+			if (parts.RightJoin is List<(string table, string on, string equals)> rightJoinValues)
 			{
 				foreach (var item in rightJoinValues)
 				{
@@ -75,25 +75,25 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Add WHERE
-			if (args.Where is List<string> whereValue)
+			if (parts.Where is List<string> whereValue)
 			{
 				sql.Append($" WHERE {string.Join(" AND ", whereValue)}");
 			}
 
 			// Add ORDER BY
-			if (args.OrderBy is List<string> orderByValue)
+			if (parts.OrderBy is List<string> orderByValue)
 			{
 				sql.Append($" ORDER BY {string.Join(", ", orderByValue)}");
 			}
 
 			// Add LIMIT
-			if (args.Limit is long limitValue && limitValue > 0)
+			if (parts.Limit is long limitValue && limitValue > 0)
 			{
 				sql.Append($" LIMIT {limitValue}");
 			}
 
 			// Add OFFSET
-			if (args.Offset is long offsetValue && offsetValue > 0)
+			if (parts.Offset is long offsetValue && offsetValue > 0)
 			{
 				sql.Append($" OFFSET {offsetValue}");
 			}

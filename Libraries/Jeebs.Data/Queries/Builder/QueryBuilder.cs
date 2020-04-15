@@ -14,9 +14,9 @@ namespace Jeebs.Data
 		where TOptions : QueryOptions
 	{
 		/// <summary>
-		/// QueryArgs
+		/// QueryParts
 		/// </summary>
-		protected QueryArgs<TModel> Args { get; }
+		protected QueryParts<TModel> Parts { get; }
 
 		/// <summary>
 		/// IAdapter
@@ -29,7 +29,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		protected QueryBuilder(IAdapter adapter)
 		{
-			Args = new QueryArgs<TModel>();
+			Parts = new QueryParts<TModel>();
 			this.adapter = adapter;
 		}
 
@@ -37,8 +37,7 @@ namespace Jeebs.Data
 		/// Build the query
 		/// </summary>
 		/// <param name="opt">TOptions</param>
-		/// <returns>QueryArgs</returns>
-		public abstract QueryArgs<TModel> Build(TOptions opt);
+		public abstract QueryParts<TModel> Build(TOptions opt);
 
 		/// <summary>
 		/// Add Sort
@@ -50,8 +49,8 @@ namespace Jeebs.Data
 			// Random sort
 			if (opt.SortRandom)
 			{
-				(Args.OrderBy ?? (Args.OrderBy = new List<string>())).Clear();
-				Args.OrderBy.Add(adapter.GetRandomSortOrder());
+				(Parts.OrderBy ?? (Parts.OrderBy = new List<string>())).Clear();
+				Parts.OrderBy.Add(adapter.GetRandomSortOrder());
 			}
 			// Specified sort
 			else if (opt.Sort is (string selectColumn, SortOrder order)[] sort)
@@ -72,14 +71,14 @@ namespace Jeebs.Data
 					return;
 				}
 
-				if (Args.OrderBy == null)
+				if (Parts.OrderBy == null)
 				{
-					Args.OrderBy = new List<string>();
+					Parts.OrderBy = new List<string>();
 				}
 
 				foreach (var (column, order) in sort)
 				{
-					Args.OrderBy.Add(adapter.GetSortOrder(column, order));
+					Parts.OrderBy.Add(adapter.GetSortOrder(column, order));
 				}
 			}
 		}
@@ -93,13 +92,13 @@ namespace Jeebs.Data
 			// LIMIT
 			if (opt.Limit is long limit)
 			{
-				Args.Limit = limit;
+				Parts.Limit = limit;
 			}
 
 			// OFFSET
 			if (opt.Offset is long offset)
 			{
-				Args.Offset = offset;
+				Parts.Offset = offset;
 			}
 		}
 
@@ -133,9 +132,9 @@ namespace Jeebs.Data
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in FROM</param>
 		protected void AddFrom(string from, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(Args.From) || overwrite)
+			if (string.IsNullOrEmpty(Parts.From) || overwrite)
 			{
-				Args.From = from;
+				Parts.From = from;
 			}
 			else
 			{
@@ -150,9 +149,9 @@ namespace Jeebs.Data
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in SELECT</param>
 		protected void AddSelect(string select, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(Args.Select) || overwrite)
+			if (string.IsNullOrEmpty(Parts.Select) || overwrite)
 			{
-				Args.Select = select;
+				Parts.Select = select;
 			}
 			else
 			{
@@ -192,19 +191,19 @@ namespace Jeebs.Data
 		/// Set INNER JOIN
 		/// </summary>
 		protected void AddInnerJoin(string table, string on, (string table, string column) equals)
-			=> Args.InnerJoin = AddJoin(Args.InnerJoin, table, on, equals);
+			=> Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals);
 
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
 		protected void AddLeftJoin(string table, string on, (string table, string column) equals)
-			=> Args.LeftJoin = AddJoin(Args.LeftJoin, table, on, equals);
+			=> Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals);
 
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
 		protected void AddRightJoin(string table, string on, (string table, string column) equals)
-			=> Args.RightJoin = AddJoin(Args.RightJoin, table, on, equals);
+			=> Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals);
 
 		/// <summary>
 		/// Add WHERE clause
@@ -213,11 +212,11 @@ namespace Jeebs.Data
 		/// <param name="parameters">[Optional] Parameters to add</param>
 		protected void AddWhere(string where, object? parameters = null)
 		{
-			(Args.Where ?? (Args.Where = new List<string>())).Add(where);
+			(Parts.Where ?? (Parts.Where = new List<string>())).Add(where);
 
 			if (parameters != null)
 			{
-				Args.Parameters.Add(parameters);
+				Parts.Parameters.Add(parameters);
 			}
 		}
 	}
