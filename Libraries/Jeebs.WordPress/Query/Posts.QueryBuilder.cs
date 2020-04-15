@@ -96,7 +96,7 @@ namespace Jeebs.WordPress
 				}
 
 				// ORDER BY
-				AddSort(opt, new[] { (_.Post.PublishedOn, SortOrder.Descending) });
+				AddSort(opt, new[] { (Escape(p, _.Post.PublishedOn), SortOrder.Descending) });
 
 				// LIMIT and OFFSET
 				AddLimitAndOffset(opt);

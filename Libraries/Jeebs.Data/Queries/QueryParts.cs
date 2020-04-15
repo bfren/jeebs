@@ -59,5 +59,10 @@ namespace Jeebs.Data
 		/// Offset
 		/// </summary>
 		public long? Offset { get; set; }
+
+		/// <summary>
+		/// Only allow internal construction - usually from QueryBuilder
+		/// </summary>
+		internal QueryParts() { }
 	}
 }

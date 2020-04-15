@@ -191,19 +191,25 @@ namespace Jeebs.Data
 		/// Set INNER JOIN
 		/// </summary>
 		protected void AddInnerJoin(string table, string on, (string table, string column) equals)
-			=> Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals);
+		{
+			Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals);
+		}
 
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
 		protected void AddLeftJoin(string table, string on, (string table, string column) equals)
-			=> Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals);
+		{
+			Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals);
+		}
 
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
 		protected void AddRightJoin(string table, string on, (string table, string column) equals)
-			=> Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals);
+		{
+			Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals);
+		}
 
 		/// <summary>
 		/// Add WHERE clause

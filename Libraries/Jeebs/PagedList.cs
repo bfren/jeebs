@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using D = Jeebs.PagingValues.Defaults;
 
 namespace Jeebs
 {
@@ -11,53 +12,37 @@ namespace Jeebs
 	public sealed class PagedList<T> : List<T>
 	{
 		/// <summary>
-		/// The paging values
+		/// Create empty PagedList
 		/// </summary>
-		public readonly PagingValues Values;
+		public PagedList() { }
 
 		/// <summary>
 		/// Create PagedList from a collection of items
 		/// </summary>
 		/// <param name="collection">Collection</param>
-		/// <param name="currentPage">Current page</param>
-		/// <param name="itemsPerPage">[Optional] Number of items per page</param>
-		/// <param name="numberOfPagesPerGroup">[Optional] Number of page numbers before using next / previous</param>
-		public PagedList(IEnumerable<T> collection, long currentPage, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
-			: base(collection)
-		{
-			Values = new PagingValues(currentPage, Count, itemsPerPage, numberOfPagesPerGroup);
-		}
-
-		/// <summary>
-		/// Set required parameters and calculate values
-		/// </summary>
-		/// <param name="totalItems">Total number of items</param>
-		/// <param name="currentPage">Current page</param>
-		/// <param name="itemsPerPage">[Optional] Number of items per page</param>
-		/// <param name="numberOfPagesPerGroup">[Optional] Number of page numbers before using next / previous</param>
-		public PagedList(long totalItems, long currentPage, long itemsPerPage = 10, long numberOfPagesPerGroup = 10)
-		{
-			Values = new PagingValues(currentPage, totalItems, itemsPerPage, numberOfPagesPerGroup);
-		}
+		public PagedList(IEnumerable<T> collection) : base(collection) { }
 
 		/// <summary>
 		/// Apply paging values to the list items and return a new PagedList
 		/// </summary>
-		public PagedList<T> ApplyValues()
+		/// <param name="page">Current page</param>
+		/// <param name="itemsPer">[Optional] Number of items per page</param>
+		/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
+		public (PagedList<T> list, PagingValues values) CalculateAndApply(long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer)
 		{
 			// Return empty list
-			if (Count == 0 || Values.Pages == 0)
+			if (Count == 0)
 			{
-				return new PagedList<T>(0, 0, 0, 0);
+				return (new PagedList<T>(), new PagingValues(0, 0));
 			}
 
-			// Return new paged list with only the necessary items
-			return new PagedList<T>(
-				this.Skip(Values.Skip).Take(Values.Take),
-				Values.CurrentPage,
-				Values.ItemsPerPage,
-				Values.PagesPerGroup
-			);
+			// Calculate values
+			var values = new PagingValues(items: Count, page: page, itemsPer: itemsPer, pagesPer: pagesPer);
+
+			// Create new paged list with only the necessary items
+			var newList = new PagedList<T>(this.Skip(values.Skip).Take(values.Take));
+
+			return (newList, new PagingValues(items: newList.Count, page: page, itemsPer: itemsPer, pagesPer: pagesPer));
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Jeebs
 			int invalidPage = -1;
 
 			// Act
-			Action createPagingValuesWithInvalidPage = () => new PagingValues(invalidPage, 0);
+			Action createPagingValuesWithInvalidPage = () => new PagingValues(items: 0, page: invalidPage);
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(createPagingValuesWithInvalidPage);
@@ -24,14 +24,14 @@ namespace Jeebs
 		public void NoPageOrItems_CurrentPage_Equals_1()
 		{
 			// Arrange
-			var pageNoItems = new PagingValues(1, 0);
-			var itemsNoPage = new PagingValues(0, 1);
+			var pageNoItems = new PagingValues(items: 0, page: 1);
+			var itemsNoPage = new PagingValues(items: 1, page: 0);
 
 			// Act
 
 			// Assert
-			Assert.Equal(1, pageNoItems.CurrentPage);
-			Assert.Equal(1, itemsNoPage.CurrentPage);
+			Assert.Equal(1, pageNoItems.Page);
+			Assert.Equal(1, itemsNoPage.Page);
 		}
 
 		[Theory]
@@ -41,7 +41,7 @@ namespace Jeebs
 		public void FirstAndLastItems(int page, int firstItem, int lastItem)
 		{
 			// Arrange
-			var values = new PagingValues(page, 25);
+			var values = new PagingValues(items: 25, page: page);
 
 			// Act
 
@@ -58,7 +58,7 @@ namespace Jeebs
 		public void UpperAndLowerPages(int page, int items, int lowerPage, int upperPage)
 		{
 			// Arrange
-			var values = new PagingValues(page, items);
+			var values = new PagingValues(items: items, page: page);
 
 			// Act
 

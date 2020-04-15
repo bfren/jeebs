@@ -68,8 +68,7 @@ namespace Jeebs.Data
 		/// Retrieves the items using the current query parts, using LIMIT / OFFSET to select only the items on a particular page
 		/// </summary>
 		/// <param name="page">Current page number</param>
-		/// <param name="itemsPerPage">Number of items per page</param>
-		public async Task<Result<PagedList<TModel>>> RetrievePaged(long page, long itemsPerPage)
+		public async Task<Result<PagedList<TModel>>> RetrievePaged(long page)
 		{
 			// Get the count
 			var count = await Count();
@@ -78,12 +77,12 @@ namespace Jeebs.Data
 				return Result.Failure<PagedList<TModel>>(count.Err);
 			}
 
-			// Create PagedList
-			var list = new PagedList<TModel>(count.Val, page, itemsPerPage);
+			// Get paging values
+			var values = new PagingValues(count.Val, page, parts.Limit ?? PagingValues.Defaults.ItemsPer);
 
 			// Set the OFFSET and LIMIT values
-			parts.Offset = (list.Values.CurrentPage - 1) * list.Values.ItemsPerPage;
-			parts.Limit = list.Values.ItemsPerPage;
+			parts.Offset = (values.Page - 1) * values.ItemsPer;
+			parts.Limit = values.ItemsPer;
 
 			// Get the items
 			var items = await Retrieve();
@@ -93,7 +92,7 @@ namespace Jeebs.Data
 			}
 
 			// Add the items to the list and return success
-			list.AddRange(items.Val);
+			var list = new PagedList<TModel>(items.Val);
 			return Result.Success(list);
 		}
 	}

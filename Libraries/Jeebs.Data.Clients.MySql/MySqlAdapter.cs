@@ -113,8 +113,10 @@ namespace Jeebs.Data.Clients.MySql
 				{
 					sql.Append($" LIMIT {offsetValue}, {limitValue}");
 				}
-
-				sql.Append($" LIMIT {limitValue}");
+				else
+				{
+					sql.Append($" LIMIT {limitValue}");
+				}
 			}
 
 			// Append semi-colon
