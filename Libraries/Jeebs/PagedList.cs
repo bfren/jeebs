@@ -41,9 +41,9 @@ namespace Jeebs
 		}
 
 		/// <summary>
-		/// Calculate the various paging values and apply them values to the list items
+		/// Apply paging values to the list items and return a new PagedList
 		/// </summary>
-		public PagedList<T> CalculateAndApply()
+		public PagedList<T> ApplyValues()
 		{
 			// Return empty list
 			if (Count == 0 || Values.Pages == 0)
@@ -56,7 +56,7 @@ namespace Jeebs
 				this.Skip(Values.Skip).Take(Values.Take),
 				Values.CurrentPage,
 				Values.ItemsPerPage,
-				Values.NumberOfPagesPerGroup
+				Values.PagesPerGroup
 			);
 		}
 	}
