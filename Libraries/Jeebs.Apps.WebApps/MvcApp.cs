@@ -53,6 +53,12 @@ namespace Jeebs.Apps.WebApps
 		/// </summary>
 		protected bool staticFilesAreEnabled;
 
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+		protected MvcApp(bool useHsts) : base(useHsts) { }
+
 		#region ConfigureServices
 
 		/// <summary>

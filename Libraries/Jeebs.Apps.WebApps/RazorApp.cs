@@ -14,6 +14,12 @@ namespace Jeebs.Apps.WebApps
 	public abstract class RazorApp : MvcApp
 	{
 		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+		protected RazorApp(bool useHsts) : base(useHsts) { }
+
+		/// <summary>
 		/// Override to configure endpoints - default is MVC
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
@@ -21,6 +27,7 @@ namespace Jeebs.Apps.WebApps
 		{
 			services
 				.AddRazorPages(ConfigureServices_RazorPagesOptions)
+				.AddRazorRuntimeCompilation(ConfigureServices_RuntimeCompilation)
 				.AddJsonOptions(ConfigureServices_EndpointsJson);
 		}
 

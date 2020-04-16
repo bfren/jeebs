@@ -19,6 +19,17 @@ namespace Jeebs.Apps.WebApps
 	public abstract class WebApp : App
 	{
 		/// <summary>
+		/// Whether or not to use HSTS
+		/// </summary>
+		private readonly bool useHsts;
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+		protected WebApp(bool useHsts) => this.useHsts = useHsts;
+
+		/// <summary>
 		/// Create IHost
 		/// </summary>
 		/// <param name="args">Command Line Arguments</param>
@@ -72,12 +83,15 @@ namespace Jeebs.Apps.WebApps
 			base.ConfigureServices(env, config, services);
 
 			// Specify HSTS options
-			services.AddHsts(opt =>
+			if (!env.IsDevelopment() && useHsts)
 			{
-				opt.Preload = true;
-				opt.IncludeSubDomains = true;
-				opt.MaxAge = TimeSpan.FromDays(60);
-			});
+				services.AddHsts(opt =>
+				{
+					opt.Preload = true;
+					opt.IncludeSubDomains = true;
+					opt.MaxAge = TimeSpan.FromDays(60);
+				});
+			}
 		}
 
 		/// <summary>
@@ -105,8 +119,7 @@ namespace Jeebs.Apps.WebApps
 				Configure_SecurityHeaders(app);
 			}
 
-			// HTTPS
-			app.UseHttpsRedirection();
+			// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
 		}
 
 		/// <summary>
@@ -124,7 +137,10 @@ namespace Jeebs.Apps.WebApps
 		/// <param name="app">IApplicationBuilder</param>
 		protected virtual void Configure_SecurityHeaders(IApplicationBuilder app)
 		{
-			app.UseHsts();
+			if (useHsts) // check for Development Environment happens in Configure()
+			{
+				app.UseHsts();
+			}
 		}
 	}
 }
