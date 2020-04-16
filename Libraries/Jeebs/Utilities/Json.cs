@@ -81,5 +81,16 @@ namespace Jeebs.Util
 		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
 		public static T Deserialise<T>(string str, JsonSerializerOptions? opt = null) => (T)Deserialise(str, typeof(T), opt);
+
+		/// <summary>
+		/// Clone an object using JSON
+		/// </summary>
+		/// <typeparam name="T">Object type</typeparam>
+		/// <param name="obj">Object to clone</param>
+		public static T Clone<T>(this T obj)
+		{
+			var json = Serialise(obj);
+			return Deserialise<T>(json);
+		}
 	}
 }

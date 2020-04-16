@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Jeebs.Util;
 
 namespace Jeebs.Data
 {
@@ -37,19 +38,15 @@ namespace Jeebs.Data
 		/// </summary>
 		public async Task<Result<long>> GetCount()
 		{
-			// Store select
-			var actualSelect = parts.Select;
+			// Use QueryParts but alter SELECT
+			var countParts = parts.Clone();
+			countParts.Select = unitOfWork.Adapter.GetSelectCount();
 
 			// Get count query
-			parts.Select = unitOfWork.Adapter.GetSelectCount();
-			var countQuery = unitOfWork.Adapter.Retrieve(parts);
+			var countQuery = unitOfWork.Adapter.Retrieve(countParts);
 
 			// Execute
-			var count = await unitOfWork.ExecuteScalarAsync<long>(countQuery, parts.Parameters);
-
-			// Reset select and return
-			parts.Select = actualSelect;
-			return count;
+			return await unitOfWork.ExecuteScalarAsync<long>(countQuery, countParts.Parameters);
 		}
 
 		/// <summary>

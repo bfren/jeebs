@@ -8,6 +8,7 @@ namespace Jeebs.Data
 	/// Query parts
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
+	[Serializable]
 	public sealed class QueryParts<TModel>
 	{
 		/// <summary>
