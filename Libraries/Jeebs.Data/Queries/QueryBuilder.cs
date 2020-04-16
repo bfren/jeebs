@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// Builds a Query in a fluent manner
+	/// </summary>
 	public sealed partial class QueryBuilder
 	{
 		/// <summary>

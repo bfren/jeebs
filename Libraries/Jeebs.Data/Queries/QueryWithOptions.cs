@@ -35,12 +35,23 @@ namespace Jeebs.Data
 			}
 
 			/// <summary>
+			/// Query Stage 3: Use existing query parts
+			/// </summary>
+			/// <typeparam name="TModel">Model Type</typeparam>
+			/// <param name="parts">QueryParts</param>
+			public Query<TModel> WithParts<TModel>(QueryParts<TModel> parts)
+			{
+				return new Query<TModel>(unitOfWork, parts);
+			}
+
+			/// <summary>
 			/// Query Stage 3: Build the query parts
 			/// </summary>
-			/// <param name="build">Function to return QueryParts</param>
-			public Query<TModel> BuildParts<TModel>(Func<TOptions, QueryParts<TModel>> build)
+			/// <typeparam name="TModel">Model Type</typeparam>
+			/// <param name="builder">QueryPartsBuilder</param>
+			public Query<TModel> WithBuilder<TModel>(QueryPartsBuilder<TModel, TOptions> builder)
 			{
-				return new Query<TModel>(unitOfWork, build(options));
+				return WithParts(builder.Build(options));
 			}
 		}
 	}

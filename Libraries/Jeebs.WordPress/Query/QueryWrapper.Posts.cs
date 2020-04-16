@@ -26,7 +26,7 @@ namespace Jeebs.WordPress
 		{
 			return StartNewQuery()
 				.WithOptions(modifyOptions)
-				.BuildParts(opt => new QueryPosts.Builder<T>(db).Build(opt));
+				.WithBuilder(new QueryPosts.Builder<T>(db));
 		}
 
 		/// <summary>

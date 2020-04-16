@@ -19,7 +19,7 @@ namespace Jeebs.WordPress
 		{
 			return StartNewQuery()
 				.WithOptions(modifyOptions)
-				.BuildParts(opt => new QueryTaxonomy.Builder<T>(db).Build(opt));
+				.WithBuilder(new QueryTaxonomy.Builder<T>(db));
 		}
 	}
 }
