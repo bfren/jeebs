@@ -95,14 +95,8 @@ namespace Jeebs.WordPress
 					AddWhereCustomFields(fields);
 				}
 
-				// ORDER BY
-				AddSort(opt, new[] { (Escape(p, _.Post.PublishedOn), SortOrder.Descending) });
-
-				// LIMIT and OFFSET
-				AddLimitAndOffset(opt);
-
-				// Return
-				return Parts;
+				// Finish and Return
+				return FinishBuild(opt, (Escape(p, _.Post.PublishedOn), SortOrder.Descending));
 			}
 
 			/// <summary>

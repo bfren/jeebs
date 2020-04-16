@@ -44,11 +44,8 @@ namespace Jeebs.WordPress
 					AddWhere($"{Escape(db.PostMeta.PostId)} IN ({string.Join(", ", postIds)})");
 				}
 
-				// LIMIT and OFFSET
-				AddLimitAndOffset(opt);
-
-				// Return
-				return Parts;
+				// Finish and return
+				return FinishBuild(opt);
 			}
 		}
 	}

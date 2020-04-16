@@ -71,18 +71,11 @@ namespace Jeebs.WordPress
 					AddWhere($"{Escape(tm, _.Term.Slug)} = @{nameof(slug)}", new { slug });
 				}
 
-				// ORDER BY
-				AddSort(opt, new[]
-				{
+				// Finish and return
+				return FinishBuild(opt,
 					(Escape(tm, _.Term.Title), SortOrder.Ascending),
 					(Escape(tx, _.TermTaxonomy.Count), SortOrder.Ascending)
-				});
-
-				// LIMIT and OFFSET
-				AddLimitAndOffset(opt);
-
-				// Return
-				return Parts;
+				);
 			}
 		}
 	}

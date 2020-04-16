@@ -10,6 +10,6 @@ namespace MvcApp
 {
 	public sealed class App : Jeebs.Apps.WebApps.MvcApp
 	{
-
+		public App() : base(false) { }
 	}
 }

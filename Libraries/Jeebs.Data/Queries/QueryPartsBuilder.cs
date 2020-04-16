@@ -16,7 +16,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		protected QueryParts<TModel> Parts { get; }
+		private readonly QueryParts<TModel> parts;
 
 		/// <summary>
 		/// IAdapter
@@ -29,7 +29,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		protected QueryPartsBuilder(IAdapter adapter)
 		{
-			Parts = new QueryParts<TModel>();
+			parts = new QueryParts<TModel>();
 			this.adapter = adapter;
 		}
 
@@ -40,17 +40,34 @@ namespace Jeebs.Data
 		public abstract QueryParts<TModel> Build(TOptions opt);
 
 		/// <summary>
+		/// Finish Build process by adding ORDER BY, LIMIT and OFFSET values
+		/// </summary>
+		/// <param name="opt">TOptions</param>
+		/// <param name="defaultSort">Default sort columns</param>
+		protected QueryParts<TModel> FinishBuild(TOptions opt, params (string selectColumn, SortOrder order)[] defaultSort)
+		{
+			// ORDER BY
+			AddSort(opt, defaultSort);
+
+			// LIMIT and OFFSET
+			AddLimitAndOffset(opt);
+
+			// Return
+			return parts;
+		}
+
+		/// <summary>
 		/// Add Sort
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <param name="defaultSort">Default sort columns</param>
-		protected void AddSort(TOptions opt, (string selectColumn, SortOrder order)[] defaultSort)
+		private void AddSort(TOptions opt, (string selectColumn, SortOrder order)[] defaultSort)
 		{
 			// Random sort
 			if (opt.SortRandom)
 			{
-				(Parts.OrderBy ?? (Parts.OrderBy = new List<string>())).Clear();
-				Parts.OrderBy.Add(adapter.GetRandomSortOrder());
+				(parts.OrderBy ?? (parts.OrderBy = new List<string>())).Clear();
+				parts.OrderBy.Add(adapter.GetRandomSortOrder());
 			}
 			// Specified sort
 			else if (opt.Sort is (string selectColumn, SortOrder order)[] sort)
@@ -71,14 +88,14 @@ namespace Jeebs.Data
 					return;
 				}
 
-				if (Parts.OrderBy == null)
+				if (parts.OrderBy == null)
 				{
-					Parts.OrderBy = new List<string>();
+					parts.OrderBy = new List<string>();
 				}
 
 				foreach (var (column, order) in sort)
 				{
-					Parts.OrderBy.Add(adapter.GetSortOrder(column, order));
+					parts.OrderBy.Add(adapter.GetSortOrder(column, order));
 				}
 			}
 		}
@@ -87,18 +104,18 @@ namespace Jeebs.Data
 		/// Add Limit and Offset
 		/// </summary>
 		/// <param name="opt">TOptions</param>
-		protected void AddLimitAndOffset(TOptions opt)
+		private void AddLimitAndOffset(TOptions opt)
 		{
 			// LIMIT
 			if (opt.Limit is long limit)
 			{
-				Parts.Limit = limit;
+				parts.Limit = limit;
 			}
 
 			// OFFSET
 			if (opt.Offset is long offset)
 			{
-				Parts.Offset = offset;
+				parts.Offset = offset;
 			}
 		}
 
@@ -132,9 +149,9 @@ namespace Jeebs.Data
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in FROM</param>
 		protected void AddFrom(string from, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(Parts.From) || overwrite)
+			if (string.IsNullOrEmpty(parts.From) || overwrite)
 			{
-				Parts.From = from;
+				parts.From = from;
 			}
 			else
 			{
@@ -149,9 +166,9 @@ namespace Jeebs.Data
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in SELECT</param>
 		protected void AddSelect(string select, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(Parts.Select) || overwrite)
+			if (string.IsNullOrEmpty(parts.Select) || overwrite)
 			{
-				Parts.Select = select;
+				parts.Select = select;
 			}
 			else
 			{
@@ -192,7 +209,7 @@ namespace Jeebs.Data
 		/// </summary>
 		protected void AddInnerJoin(string table, string on, (string table, string column) equals)
 		{
-			Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals);
+			parts.InnerJoin = AddJoin(parts.InnerJoin, table, on, equals);
 		}
 
 		/// <summary>
@@ -200,7 +217,7 @@ namespace Jeebs.Data
 		/// </summary>
 		protected void AddLeftJoin(string table, string on, (string table, string column) equals)
 		{
-			Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals);
+			parts.LeftJoin = AddJoin(parts.LeftJoin, table, on, equals);
 		}
 
 		/// <summary>
@@ -208,7 +225,7 @@ namespace Jeebs.Data
 		/// </summary>
 		protected void AddRightJoin(string table, string on, (string table, string column) equals)
 		{
-			Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals);
+			parts.RightJoin = AddJoin(parts.RightJoin, table, on, equals);
 		}
 
 		/// <summary>
@@ -218,11 +235,11 @@ namespace Jeebs.Data
 		/// <param name="parameters">[Optional] Parameters to add</param>
 		protected void AddWhere(string where, object? parameters = null)
 		{
-			(Parts.Where ?? (Parts.Where = new List<string>())).Add(where);
+			(parts.Where ?? (parts.Where = new List<string>())).Add(where);
 
 			if (parameters != null)
 			{
-				Parts.Parameters.Add(parameters);
+				parts.Parameters.Add(parameters);
 			}
 		}
 	}

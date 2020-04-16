@@ -7,6 +7,6 @@ namespace AppRazor
 {
 	public sealed class App : Jeebs.Apps.WebApps.RazorApp
 	{
-
+		public App() : base(false) { }
 	}
 }

@@ -16,6 +16,12 @@ namespace Jeebs.Apps.WebApps
 		where TDb : class, IDb
 	{
 		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+		public MvcAppWithData(bool useHsts) : base(useHsts) { }
+
+		/// <summary>
 		/// Configure services to include data
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>

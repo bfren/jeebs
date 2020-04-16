@@ -11,6 +11,8 @@ namespace AppWeb
 {
 	public class App : Jeebs.Apps.WebApps.WebApp
 	{
+		public App() : base(false) { }
+
 		protected override void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
 		{
 			base.Configure(env, config, app);
