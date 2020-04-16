@@ -13,7 +13,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Query Builder
 		/// </summary>
-		internal sealed class Builder<T> : QueryBuilder<T, Options>
+		internal sealed class Builder<T> : QueryPartsBuilder<T, Options>
 		{
 			/// <summary>
 			/// IWpDb

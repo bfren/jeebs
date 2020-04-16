@@ -49,11 +49,11 @@ namespace Jeebs.WordPress
 			}
 
 			// Start a new query
-			using var q = db.Query;
-			var exec = q.QueryTaxonomy<Term>(opt => opt.Id = termId);
+			using var w = db.QueryWrapper;
+			var query = w.QueryTaxonomy<Term>(opt => opt.Id = termId);
 
 			// Get results
-			var result = await exec.Retrieve();
+			var result = await query.ExecuteQuery();
 			if (result.Err is ErrorList)
 			{
 				return Result.Failure(result.Err);

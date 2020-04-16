@@ -112,17 +112,17 @@ namespace AppConsoleWordPress
 			Console.WriteLine();
 			Console.WriteLine($"== Sermons: {search} ==");
 
-			using var q = bcg.Query;
+			using var q = bcg.QueryWrapper;
 
-			var exec = q.QueryPosts<SermonModel>(opt);
+			var query = q.QueryPosts<SermonModel>(opt);
 
-			var count = await exec.Count();
+			var count = await query.GetCount();
 			Console.WriteLine(count.Err is ErrorList
 				? $"{count.Err}"
 				: $"There are {count.Val} matching sermons."
 			);
 
-			var posts = await exec.Retrieve();
+			var posts = await query.ExecuteQuery();
 			if (posts.Err is ErrorList)
 			{
 				Console.WriteLine(posts.Err);
@@ -145,10 +145,10 @@ namespace AppConsoleWordPress
 			Console.WriteLine();
 			Console.WriteLine("== Meta ==");
 
-			using var q = db.Query;
+			using var w = db.QueryWrapper;
 
-			var exec = q.QueryPosts<PostModel>(opt => opt.Limit = 3);
-			var result = await exec.Retrieve();
+			var query = w.QueryPosts<PostModel>(opt => opt.Limit = 3);
+			var result = await query.ExecuteQuery();
 			if (result.Err is ErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts");
@@ -158,7 +158,7 @@ namespace AppConsoleWordPress
 
 			var posts = result.Val;
 
-			var metaAdded = await q.AddMetaAndCustomFieldsToPosts(posts, p => p.Meta);
+			var metaAdded = await w.AddMetaAndCustomFieldsToPosts(posts, p => p.Meta);
 
 			if (metaAdded.Err is ErrorList metaAddedErr)
 			{
@@ -188,16 +188,16 @@ namespace AppConsoleWordPress
 				Console.WriteLine();
 				Console.WriteLine("== Custom Fields ==");
 
-				using var q = db.Query;
+				using var q = db.QueryWrapper;
 
-				var exec = q.QueryPosts<SermonModel>(opt =>
+				var query = q.QueryPosts<SermonModel>(opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
 					opt.Limit = 10;
 				});
 
-				var result = await exec.Retrieve();
+				var result = await query.ExecuteQuery();
 				if (result.Err is ErrorList sermonsErr)
 				{
 					Console.WriteLine("Error fetching sermons");

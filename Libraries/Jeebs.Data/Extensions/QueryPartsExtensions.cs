@@ -10,11 +10,11 @@ namespace Jeebs.Data
 	public static class QueryPartsExtensions
 	{
 		/// <summary>
-		/// Get QueryExec from QueryParts
+		/// Get Query from QueryParts
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="parts">QueryParts</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
-		public static QueryExec<T> GetExec<T>(this QueryParts<T> parts, IUnitOfWork unitOfWork) => new QueryExec<T>(unitOfWork, parts);
+		public static Query<T> GetQuery<T>(this QueryParts<T> parts, IUnitOfWork unitOfWork) => new Query<T>(unitOfWork, parts);
 	}
 }

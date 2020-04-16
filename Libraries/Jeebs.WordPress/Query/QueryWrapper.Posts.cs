@@ -15,23 +15,18 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query wrapper
 	/// </summary>
-	public sealed partial class Query : Data.Query
+	public sealed partial class QueryWrapper
 	{
 		/// <summary>
 		/// Query Posts
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public QueryExec<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
+		public Query<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
 		{
-			// Create and modify options
-			var options = new QueryPosts.Options();
-			modifyOptions?.Invoke(options);
-
-			// Get Exec
-			return new QueryPosts.Builder<T>(db)
-				.Build(options)
-				.GetExec(UnitOfWork);
+			return StartNewQuery()
+				.WithOptions(modifyOptions)
+				.BuildParts(opt => new QueryPosts.Builder<T>(db).Build(opt));
 		}
 
 		/// <summary>
@@ -83,12 +78,12 @@ namespace Jeebs.WordPress
 			};
 
 			// Get Exec
-			var exec = new QueryPostsMeta.Builder<PostMeta>(db)
+			var query = new QueryPostsMeta.Builder<PostMeta>(db)
 				.Build(options)
-				.GetExec(UnitOfWork);
+				.GetQuery(unitOfWork);
 
 			// Get meta
-			var metaResult = await exec.Retrieve();
+			var metaResult = await query.ExecuteQuery();
 
 			// Return errors if there are any
 			if (metaResult.Err is ErrorList)
@@ -170,7 +165,7 @@ namespace Jeebs.WordPress
 					var customFieldProperty = (ICustomField)post.GetProperty(customField.Name);
 
 					// Hydrate the field
-					var result = await customFieldProperty.Hydrate(db, UnitOfWork, metaDictionary);
+					var result = await customFieldProperty.Hydrate(db, unitOfWork, metaDictionary);
 					if (result.Err is ErrorList err && customFieldProperty.IsRequired)
 					{
 						return Result.Failure(err);

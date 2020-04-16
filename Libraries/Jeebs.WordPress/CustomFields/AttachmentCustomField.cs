@@ -49,10 +49,10 @@ namespace Jeebs.WordPress
 			}
 
 			// Create new query
-			using var q = db.Query;
+			using var w = db.QueryWrapper;
 
 			// Get matching posts
-			var exec = q.QueryPosts<Attachment>(opt =>
+			var query = w.QueryPosts<Attachment>(opt =>
 			{
 				opt.Id = postId;
 				opt.Type = PostType.Attachment;
@@ -60,7 +60,7 @@ namespace Jeebs.WordPress
 				opt.Limit = 1;
 			});
 
-			var result = await exec.Retrieve();
+			var result = await query.ExecuteQuery();
 
 			// Check result
 			if (result.Err is ErrorList)
@@ -71,7 +71,7 @@ namespace Jeebs.WordPress
 			var attachments = result.Val;
 
 			// Add meta
-			var metaResult = await q.AddMetaAndCustomFieldsToPosts(attachments, a => a.Meta);
+			var metaResult = await w.AddMetaAndCustomFieldsToPosts(attachments, a => a.Meta);
 			if (metaResult.Err is ErrorList)
 			{
 				return Result.Failure(metaResult.Err);

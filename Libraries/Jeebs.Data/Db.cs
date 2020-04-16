@@ -54,6 +54,11 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
+		/// Start a new query
+		/// </summary>
+		public QueryWrapper QueryWrapper { get => new QueryWrapper(this); }
+
+		/// <summary>
 		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
 		/// </summary>
 		/// <param name="log">ILog</param>

@@ -21,7 +21,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Start a new query
 		/// </summary>
-		Query Query { get; }
+		new QueryWrapper QueryWrapper { get; }
 
 		#region Tables
 

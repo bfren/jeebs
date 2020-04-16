@@ -47,7 +47,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Start a new query
 		/// </summary>
-		public Query Query { get => new Query(this); }
+		public new QueryWrapper QueryWrapper { get => new QueryWrapper(this); }
 
 		#region Tables
 

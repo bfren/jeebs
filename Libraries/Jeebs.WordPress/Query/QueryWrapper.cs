@@ -14,7 +14,7 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query wrapper
 	/// </summary>
-	public sealed partial class Query : Data.Query
+	public sealed partial class QueryWrapper : Data.QueryWrapper
 	{
 		/// <summary>
 		/// IWpDb
@@ -25,6 +25,6 @@ namespace Jeebs.WordPress
 		/// Setup object
 		/// </summary>
 		/// <param name="db">IWpDb</param>
-		public Query(IWpDb db) : base(db) => this.db = db;
+		public QueryWrapper(IWpDb db) : base(db) => this.db = db;
 	}
 }
