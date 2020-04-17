@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Apps.ConsoleApps
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// Console Application bootstrapped using IHost

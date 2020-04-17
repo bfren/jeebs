@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Apps.WebApps
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// Razor Pages Application bootstrapped using IHost

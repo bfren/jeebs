@@ -5,7 +5,6 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
     <ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
     <ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
   </ItemGroup>

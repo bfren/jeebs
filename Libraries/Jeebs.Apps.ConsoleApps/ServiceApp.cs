@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Jeebs.Apps.ConsoleApps
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// Service Application bootstrapped using IHost

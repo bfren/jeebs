@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Jeebs.Apps.WebApps
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// MVC Application bootstrapped using IHost - with Data access enabled

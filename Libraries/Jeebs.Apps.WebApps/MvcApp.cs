@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 
-namespace Jeebs.Apps.WebApps
+namespace Jeebs.Apps
 {
 	/// <summary>
 	/// MVC Application bootstrapped using IHost
