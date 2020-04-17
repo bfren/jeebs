@@ -8,7 +8,7 @@ namespace Jeebs.Data
 	/// Query parts
 	/// </summary>
 	/// <typeparam name="T">Model type</typeparam>
-	public sealed class QueryParts<T> : IQueryParts<T>
+	public sealed class QueryParts : IQueryParts
 	{
 		/// <summary>
 		/// From table
@@ -64,11 +64,5 @@ namespace Jeebs.Data
 		/// Only allow internal construction - usually from QueryBuilder
 		/// </summary>
 		internal QueryParts() { }
-
-		/// <summary>
-		/// Get Query
-		/// </summary>
-		/// <param name="unitOfWork">IUnitOfWork</param>
-		public IQuery<T> GetQuery(IUnitOfWork unitOfWork) => new Query<T>(unitOfWork, this);
 	}
 }

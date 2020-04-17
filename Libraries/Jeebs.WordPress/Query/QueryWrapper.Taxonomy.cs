@@ -18,8 +18,10 @@ namespace Jeebs.WordPress
 		public IQuery<T> QueryTaxonomy<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
 		{
 			return StartNewQuery()
+				.WithModel<T>()
 				.WithOptions(modifyOptions)
-				.WithBuilder(new QueryTaxonomy.Builder<T>(db));
+				.WithParts(new QueryTaxonomy.Builder<T>(db))
+				.GetQuery();
 		}
 	}
 }

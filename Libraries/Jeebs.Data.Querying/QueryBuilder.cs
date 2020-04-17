@@ -7,7 +7,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Builds a Query in a fluent manner
 	/// </summary>
-	public sealed partial class QueryBuilder : IQueryBuilder
+	public sealed class QueryBuilder : IQueryBuilder
 	{
 		/// <summary>
 		/// IUnitOfWork
@@ -21,19 +21,12 @@ namespace Jeebs.Data
 		internal QueryBuilder(IUnitOfWork unitOfWork) => this.unitOfWork = unitOfWork;
 
 		/// <summary>
-		/// Query Stage 2: Set the options for this query
+		/// Query Stage 1: Set the model for this query
 		/// </summary>
-		/// <typeparam name="TOptions">QueryOptions</typeparam>
-		/// <param name="modify">[Optional] Action to modify default options</param>
-		public IQueryWithOptions<TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
-			where TOptions : QueryOptions, new()
+		/// <typeparam name="T">Model type</typeparam>
+		public IQueryWithModel<T> WithModel<T>()
 		{
-			// Create options
-			var options = new TOptions();
-			modify?.Invoke(options);
-
-			// Pass to next stage
-			return new QueryWithOptions<TOptions>(unitOfWork, options);
+			return new QueryBuilder<T>.QueryWithModel(unitOfWork);
 		}
 	}
 }

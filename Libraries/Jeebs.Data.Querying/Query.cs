@@ -20,14 +20,14 @@ namespace Jeebs.Data
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		private readonly IQueryParts<T> parts;
+		private readonly IQueryParts parts;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="parts">IQueryParts</param>
-		internal Query(IUnitOfWork unitOfWork, IQueryParts<T> parts)
+		internal Query(IUnitOfWork unitOfWork, IQueryParts parts)
 		{
 			this.unitOfWork = unitOfWork;
 			this.parts = parts;

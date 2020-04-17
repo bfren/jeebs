@@ -53,5 +53,10 @@ namespace Jeebs.Data
 		/// Offset
 		/// </summary>
 		long? Offset { get; set; }
+
+		/// <summary>
+		/// Query Parameters
+		/// </summary>
+		IQueryParameters Parameters { get; set; }
 	}
 }

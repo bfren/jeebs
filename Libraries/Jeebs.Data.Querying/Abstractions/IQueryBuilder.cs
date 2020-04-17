@@ -10,11 +10,9 @@ namespace Jeebs.Data
 	public interface IQueryBuilder
 	{
 		/// <summary>
-		/// Query Stage 2: Set the options for this query
+		/// Query Stage 1: Set the model for this query
 		/// </summary>
-		/// <typeparam name="TOptions">QueryOptions</typeparam>
-		/// <param name="modify">[Optional] Action to modify default options</param>
-		public IQueryWithOptions<TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
-			where TOptions : QueryOptions, new();
+		/// <typeparam name="T">Model type</typeparam>
+		IQueryWithModel<T> WithModel<T>();
 	}
 }

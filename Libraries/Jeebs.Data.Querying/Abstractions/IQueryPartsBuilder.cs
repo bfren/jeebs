@@ -16,6 +16,6 @@ namespace Jeebs.Data
 		/// Build the query
 		/// </summary>
 		/// <param name="opt">TOptions</param>
-		IQueryParts<TModel> Build(TOptions opt);
+		IQueryParts Build(TOptions opt);
 	}
 }

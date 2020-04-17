@@ -10,7 +10,7 @@ namespace Jeebs.Data
 	public interface IQueryWrapper : IDisposable
 	{
 		/// <summary>
-		/// Start a new Query
+		/// Start a new Query using the current UnitOfWork
 		/// </summary>
 		IQueryBuilder StartNewQuery();
 	}

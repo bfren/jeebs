@@ -30,7 +30,7 @@ namespace Jeebs.WordPress
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override IQueryParts<T> Build(Options opt)
+			public override IQueryParts Build(Options opt)
 			{
 				// FROM
 				AddFrom(db.PostMeta.ToString());

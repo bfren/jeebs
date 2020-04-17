@@ -16,7 +16,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		private readonly IQueryParts<TModel> parts;
+		private readonly IQueryParts parts;
 
 		/// <summary>
 		/// IAdapter
@@ -29,7 +29,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		protected QueryPartsBuilder(IAdapter adapter)
 		{
-			parts = new QueryParts<TModel>();
+			parts = new QueryParts();
 			Adapter = adapter;
 		}
 
@@ -37,14 +37,14 @@ namespace Jeebs.Data
 		/// Build the query
 		/// </summary>
 		/// <param name="opt">TOptions</param>
-		public abstract IQueryParts<TModel> Build(TOptions opt);
+		public abstract IQueryParts Build(TOptions opt);
 
 		/// <summary>
 		/// Finish Build process by adding ORDER BY, LIMIT and OFFSET values
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <param name="defaultSort">Default sort columns</param>
-		protected IQueryParts<TModel> FinishBuild(TOptions opt, params (string selectColumn, SortOrder order)[] defaultSort)
+		protected IQueryParts FinishBuild(TOptions opt, params (string selectColumn, SortOrder order)[] defaultSort)
 		{
 			// ORDER BY
 			AddSort(opt, defaultSort);

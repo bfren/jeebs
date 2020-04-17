@@ -25,35 +25,10 @@ namespace Jeebs.WordPress
 		public IQuery<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
 		{
 			return StartNewQuery()
+				.WithModel<T>()
 				.WithOptions(modifyOptions)
-				.WithBuilder(new QueryPosts.Builder<T>(db));
-		}
-
-		/// <summary>
-		/// Add Meta and Custom Fields to the list of posts
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="meta">Expression to return MetaDictionary property</param>
-		public async Task<IResult<bool>> AddMetaAndCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
-			where T : IEntity
-		{
-			// Add Meta
-			var addMetaResult = await AddMetaToPosts(posts, meta);
-			if (addMetaResult.Err is ErrorList addMetaErr)
-			{
-				return Result.Failure(addMetaErr);
-			}
-
-			// Add Custom Fields
-			var addCustomFieldsResult = await AddCustomFieldsToPosts(posts, meta);
-			if (addCustomFieldsResult.Err is ErrorList addCustomFieldsErr)
-			{
-				return Result.Failure(addCustomFieldsErr);
-			}
-
-			// Return success
-			return Result.Success();
+				.WithParts(new QueryPosts.Builder<T>(db))
+				.GetQuery();
 		}
 
 		/// <summary>
@@ -78,9 +53,11 @@ namespace Jeebs.WordPress
 			};
 
 			// Get Exec
-			var query = new QueryPostsMeta.Builder<PostMeta>(db)
-				.Build(options)
-				.GetQuery(unitOfWork);
+			var query = StartNewQuery()
+				.WithModel<PostMeta>()
+				.WithOptions(options)
+				.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
+				.GetQuery();
 
 			// Get meta
 			var metaResult = await query.ExecuteQuery();
@@ -171,6 +148,33 @@ namespace Jeebs.WordPress
 						return Result.Failure(err);
 					}
 				}
+			}
+
+			// Return success
+			return Result.Success();
+		}
+
+		/// <summary>
+		/// Add Meta and Custom Fields to the list of posts
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="posts">Posts</param>
+		/// <param name="meta">Expression to return MetaDictionary property</param>
+		public async Task<IResult<bool>> AddMetaAndCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+			where T : IEntity
+		{
+			// Add Meta
+			var addMetaResult = await AddMetaToPosts(posts, meta);
+			if (addMetaResult.Err is ErrorList addMetaErr)
+			{
+				return Result.Failure(addMetaErr);
+			}
+
+			// Add Custom Fields
+			var addCustomFieldsResult = await AddCustomFieldsToPosts(posts, meta);
+			if (addCustomFieldsResult.Err is ErrorList addCustomFieldsErr)
+			{
+				return Result.Failure(addCustomFieldsErr);
 			}
 
 			// Return success
