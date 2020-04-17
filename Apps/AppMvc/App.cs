@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace MvcApp
 {
-	public sealed class App : Jeebs.Apps.WebApps.MvcApp
+	public sealed class App : Jeebs.Apps.MvcApp
 	{
 		public App() : base(false) { }
 	}

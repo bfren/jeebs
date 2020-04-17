@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ServiceApp
 {
-	public class App : Jeebs.Apps.ConsoleApps.ServiceApp<AppService>
+	public class App : Jeebs.Apps.ServiceApp<AppService>
 	{
 
 	}

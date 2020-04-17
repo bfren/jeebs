@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AppRazor
 {
-	public sealed class App : Jeebs.Apps.WebApps.RazorApp
+	public sealed class App : Jeebs.Apps.RazorApp
 	{
 		public App() : base(false) { }
 	}

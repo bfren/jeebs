@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace AppWeb
 {
-	public class App : Jeebs.Apps.WebApps.WebApp
+	public class App : Jeebs.Apps.WebApp
 	{
 		public App() : base(false) { }
 

@@ -14,7 +14,7 @@ namespace AppConsoleWordPress
 	/// <summary>
 	/// WordPress Console Application
 	/// </summary>
-	internal sealed class App : Jeebs.Apps.ConsoleApps.ConsoleApp
+	internal sealed class App : Jeebs.Apps.ConsoleApp
 	{
 		/// <summary>
 		/// Register WordPress instances

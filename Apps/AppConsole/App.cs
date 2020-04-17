@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace ConsoleApp
 {
-	public class App : Jeebs.Apps.ConsoleApps.ConsoleApp
+	public class App : Jeebs.Apps.ConsoleApp
 	{
 
 	}
