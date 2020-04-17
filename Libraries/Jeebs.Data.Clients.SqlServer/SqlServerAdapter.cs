@@ -22,17 +22,10 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Query to insert a single row and return the new ID
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string CreateSingleAndReturnId<T>()
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Query to retrieve a single row by ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string RetrieveSingleById<T>()
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
 		{
 			throw new NotImplementedException();
 		}
@@ -40,9 +33,9 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="parts">QueryParts</param>
+		/// <param name="parts">IQueryParts</param>
 		/// <returns>SELECT query</returns>
-		public override string Retrieve<T>(QueryParts<T> parts)
+		public override string Retrieve(IQueryParts parts)
 		{
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
@@ -103,10 +96,27 @@ namespace Jeebs.Data.Clients.SqlServer
 		}
 
 		/// <summary>
+		/// Query to retrieve a single row by ID
+		/// </summary>
+		/// <param name="columns">The columns to SELECT</param>
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column</param>
+		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
 		/// Query to update a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string UpdateSingle<T>()
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			throw new NotImplementedException();
 		}
@@ -114,8 +124,12 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Query to delete a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string DeleteSingle<T>()
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			throw new NotImplementedException();
 		}

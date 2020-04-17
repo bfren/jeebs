@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Data.Mapping\Jeebs.Data.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

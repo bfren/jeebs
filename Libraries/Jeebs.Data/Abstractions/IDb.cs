@@ -13,10 +13,5 @@ namespace Jeebs.Data
 		/// Create IUnitOfWork
 		/// </summary>
 		IUnitOfWork UnitOfWork { get; }
-
-		/// <summary>
-		/// Start a new query
-		/// </summary>
-		QueryWrapper QueryWrapper { get; }
 	}
 }

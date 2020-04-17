@@ -8,7 +8,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Mapped Column
 	/// </summary>
-	public sealed class MappedColumn
+	public sealed class MappedColumn : IMappedColumn
 	{
 		/// <summary>
 		/// Escaped Column Name

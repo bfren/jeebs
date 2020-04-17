@@ -18,11 +18,6 @@ namespace Jeebs.WordPress
 		/// </summary>
 		MySqlAdapter Adapter { get; }
 
-		/// <summary>
-		/// Start a new query
-		/// </summary>
-		new QueryWrapper QueryWrapper { get; }
-
 		#region Tables
 
 		/// <summary>
@@ -86,5 +81,10 @@ namespace Jeebs.WordPress
 		UserMetaTable UserMeta { get; }
 
 		#endregion
+
+		/// <summary>
+		/// Start a new query
+		/// </summary>
+		QueryWrapper GetQueryWrapper();
 	}
 }

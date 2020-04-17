@@ -7,7 +7,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Builds a Query in a fluent manner
 	/// </summary>
-	public sealed partial class QueryBuilder
+	public sealed partial class QueryBuilder : IQueryBuilder
 	{
 		/// <summary>
 		/// IUnitOfWork
@@ -25,7 +25,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TOptions">QueryOptions</typeparam>
 		/// <param name="modify">[Optional] Action to modify default options</param>
-		public QueryWithOptions<TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
+		public IQueryWithOptions<TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
 			where TOptions : QueryOptions, new()
 		{
 			// Create options

@@ -1,78 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs
 {
-	/// <summary>
-	/// List that supports paging operations
-	/// </summary>
-	/// <typeparam name="T">Type of objects in the list</typeparam>
 	public interface IPagedList<T> : IList<T>
 	{
 		/// <summary>
-		/// The page number to display
+		/// Apply paging values to the list items and return a new PagedList
 		/// </summary>
-		long CurrentPage { get; }
-
-		/// <summary>
-		/// The total number of items that match the search
-		/// </summary>
-		long TotalItems { get; }
-
-		/// <summary>
-		/// The number of items to display on each page of results
-		/// </summary>
-		long ItemsPerPage { get; set; }
-
-		/// <summary>
-		/// The number of page numbers to display
-		/// </summary>
-		long NumberOfPagesPerGroup { get; set; }
-
-		/// <summary>
-		/// The index of the first item being displayed
-		/// </summary>
-		long FirstItem { get; }
-
-		/// <summary>
-		/// The number of items to Skip() in a Linq query
-		/// </summary>
-		int Skip { get; }
-
-		/// <summary>
-		/// The index + 1 of the last item being displayed
-		/// </summary>
-		long LastItem { get; }
-
-		/// <summary>
-		/// The number of items to Take() in a Linq query
-		/// </summary>
-		int Take { get; }
-
-		/// <summary>
-		/// The number of pages needed to display all the items
-		/// </summary>
-		long Pages { get; }
-
-		/// <summary>
-		/// The first page to display
-		/// </summary>
-		long LowerPage { get; }
-
-		/// <summary>
-		/// The last page to display
-		/// </summary>
-		long UpperPage { get; }
-
-		/// <summary>
-		/// Calculate the various paging values
-		/// </summary>
-		void Calculate();
-
-		/// <summary>
-		/// Calculate the various paging values and apply them values to the list items
-		/// </summary>
-		void CalculateAndApply();
+		/// <param name="page">Current page</param>
+		/// <param name="itemsPer">[Optional] Number of items per page</param>
+		/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
+		public (IPagedList<T> list, IPagingValues values) CalculateAndApply(long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer);
 	}
 }

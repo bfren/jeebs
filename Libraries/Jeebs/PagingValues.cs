@@ -1,84 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs
 {
 	/// <summary>
 	/// Paging Values
 	/// </summary>
-	public sealed class PagingValues
+	public sealed class PagingValues : IPagingValues
 	{
-		/// <summary>
-		/// Default values
-		/// </summary>
-		public static class Defaults
-		{
-			/// <summary>
-			/// The number of items to display on each page of results
-			/// </summary>
-			public const long ItemsPer = 10;
-
-			/// <summary>
-			/// The number of pages per group of page numbers
-			/// </summary>
-			public const long PagesPer = 10;
-		}
-
 		/// <summary>
 		/// The total number of items that match the search
 		/// </summary>
-		public readonly long Items;
+		public long Items { get; }
 
 		/// <summary>
 		/// The number of items to display on each page of results
 		/// </summary>
-		public readonly long ItemsPer;
+		public long ItemsPer { get; }
 
 		/// <summary>
 		/// The index of the first item being displayed
 		/// </summary>
-		public readonly long FirstItem;
+		public long FirstItem { get; }
 
 		/// <summary>
 		/// The index + 1 of the last item being displayed
 		/// </summary>
-		public readonly long LastItem;
+		public long LastItem { get; }
 
 		/// <summary>
 		/// The page number to display
 		/// </summary>
-		public readonly long Page;
+		public long Page { get; }
 
 		/// <summary>
 		/// The number of pages needed to display all the items
 		/// </summary>
-		public readonly long Pages;
+		public long Pages { get; }
 
 		/// <summary>
 		/// The number of pages per group of page numbers
 		/// </summary>
-		public readonly long PagesPer;
+		public long PagesPer { get; }
 
 		/// <summary>
 		/// The first page to display
 		/// </summary>
-		public readonly long LowerPage;
+		public long LowerPage { get; }
 
 		/// <summary>
 		/// The last page to display
 		/// </summary>
-		public readonly long UpperPage;
+		public long UpperPage { get; }
 
 		/// <summary>
 		/// The number of items to Skip() in a Linq query
 		/// </summary>
-		public readonly int Skip;
+		public int Skip { get; }
 
 		/// <summary>
 		/// The number of items to Take() in a Linq query
 		/// </summary>
-		public readonly int Take;
+		public int Take { get; }
 
 		/// <summary>
 		/// Set and calculate values
@@ -89,7 +74,7 @@ namespace Jeebs
 		/// <param name="page">Current page</param>
 		/// <param name="itemsPer">[Optional] Number of items per page</param>
 		/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
-		public PagingValues(long items, long page, long itemsPer = Defaults.ItemsPer, long pagesPer = Defaults.PagesPer)
+		public PagingValues(long items, long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer)
 		{
 			// Ensure a valid current page
 			if (page < 0)

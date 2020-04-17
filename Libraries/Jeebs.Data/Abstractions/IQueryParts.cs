@@ -1,68 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Query
+	/// Query Parts interface
 	/// </summary>
-	public interface IQuery : IDisposable
+	public interface IQueryParts
 	{
 		/// <summary>
-		/// From
+		/// From table
 		/// </summary>
-		string From { get; }
+		string? From { get; set; }
 
 		/// <summary>
 		/// Select
 		/// </summary>
-		string? Select { get; }
+		string? Select { get; set; }
 
 		/// <summary>
 		/// Inner Join
 		/// </summary>
-		List<string>? InnerJoin { get; }
+		IList<(string table, string on, string equals)>? InnerJoin { get; set; }
 
 		/// <summary>
 		/// Left Join
 		/// </summary>
-		List<string>? LeftJoin { get; }
+		IList<(string table, string on, string equals)>? LeftJoin { get; set; }
 
 		/// <summary>
 		/// Right Join
 		/// </summary>
-		List<string>? RightJoin { get; }
+		IList<(string table, string on, string equals)>? RightJoin { get; set; }
 
 		/// <summary>
 		/// Where
 		/// </summary>
-		List<string>? Where { get; }
+		IList<string>? Where { get; set; }
 
 		/// <summary>
 		/// Order By
 		/// </summary>
-		List<string>? OrderBy { get; }
+		IList<string>? OrderBy { get; set; }
 
 		/// <summary>
 		/// Limit
 		/// </summary>
-		double Limit { get; }
+		long? Limit { get; set; }
 
 		/// <summary>
 		/// Offset
 		/// </summary>
-		public double Offset { get; }
-
-		/// <summary>
-		/// Build SELECT query
-		/// </summary>
-		string GetQuerySql();
-
-		/// <summary>
-		/// Build SELECT COUNT query
-		/// </summary>
-		Task<Result<int>> GetCountAsync();
+		long? Offset { get; set; }
 	}
 }

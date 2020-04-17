@@ -15,7 +15,7 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public Query<T> QueryTaxonomy<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
+		public IQuery<T> QueryTaxonomy<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
 		{
 			return StartNewQuery()
 				.WithOptions(modifyOptions)

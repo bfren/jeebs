@@ -31,7 +31,7 @@ namespace Jeebs.WordPress
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryParts<T> Build(Options opt)
+			public override IQueryParts<T> Build(Options opt)
 			{
 				// Use db shorthands
 				var _ = db;
@@ -39,7 +39,7 @@ namespace Jeebs.WordPress
 				var tx = _.TermTaxonomy.ToString();
 
 				// SELECT columns
-				AddSelect($"{Extract<T>(_.Term)}");
+				AddSelect($"{Adapter.Extract<T>(_.Term)}");
 
 				// FROM table
 				AddFrom($"{Escape(tm)}");

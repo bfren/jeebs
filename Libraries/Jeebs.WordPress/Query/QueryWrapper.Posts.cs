@@ -22,7 +22,7 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public Query<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
+		public IQuery<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
 		{
 			return StartNewQuery()
 				.WithOptions(modifyOptions)
@@ -35,7 +35,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Expression to return MetaDictionary property</param>
-		public async Task<Result> AddMetaAndCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		public async Task<IResult<bool>> AddMetaAndCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
 			where T : IEntity
 		{
 			// Add Meta
@@ -62,7 +62,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Expression to return MetaDictionary property</param>
-		private async Task<Result> AddMetaToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		private async Task<IResult<bool>> AddMetaToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
 			where T : IEntity
 		{
 			// Don't do anything if there aren't any posts
@@ -125,7 +125,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Expression to return MetaDictionary property</param>
-		private async Task<Result> AddCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
+		private async Task<IResult<bool>> AddCustomFieldsToPosts<T>(IEnumerable<T> posts, Expression<Func<T, MetaDictionary>> meta)
 			where T : IEntity
 		{
 			// Don't do anything if there aren't any posts

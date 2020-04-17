@@ -13,26 +13,26 @@ namespace Jeebs
 		/// <summary>
 		/// Simple Success
 		/// </summary>
-		public static Success Success() => new Success();
+		public static IResult<bool> Success() => new Success();
 
 		/// <summary>
 		/// Simple Success
 		/// </summary>
-		public static async Task<Success> SuccessAsync() => await Task.FromResult(Success());
+		public static async Task<IResult<bool>> SuccessAsync() => await Task.FromResult(Success());
 
 		/// <summary>
 		/// Success result
 		/// </summary>
 		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="value">Success value</param>
-		public static Success<T> Success<T>(T value) => new Success<T>(value);
+		public static IResult<T> Success<T>(T value) => new Success<T>(value);
 
 		/// <summary>
 		/// Success result
 		/// </summary>
 		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="value">Success value</param>
-		public static async Task<Success<T>> SuccessAsync<T>(T value) => await Task.FromResult(Success(value));
+		public static async Task<IResult<T>> SuccessAsync<T>(T value) => await Task.FromResult(Success(value));
 	}
 
 	/// <summary>

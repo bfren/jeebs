@@ -7,9 +7,8 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query parts
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	[Serializable]
-	public sealed class QueryParts<TModel>
+	/// <typeparam name="T">Model type</typeparam>
+	public sealed class QueryParts<T> : IQueryParts<T>
 	{
 		/// <summary>
 		/// From table
@@ -24,32 +23,32 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Inner Join
 		/// </summary>
-		public List<(string table, string on, string equals)>? InnerJoin { get; set; }
+		public IList<(string table, string on, string equals)>? InnerJoin { get; set; }
 
 		/// <summary>
 		/// Left Join
 		/// </summary>
-		public List<(string table, string on, string equals)>? LeftJoin { get; set; }
+		public IList<(string table, string on, string equals)>? LeftJoin { get; set; }
 
 		/// <summary>
 		/// Right Join
 		/// </summary>
-		public List<(string table, string on, string equals)>? RightJoin { get; set; }
+		public IList<(string table, string on, string equals)>? RightJoin { get; set; }
 
 		/// <summary>
 		/// Where
 		/// </summary>
-		public List<string>? Where { get; set; }
+		public IList<string>? Where { get; set; }
 
 		/// <summary>
 		/// Query Parameters
 		/// </summary>
-		public QueryParameters Parameters { get; set; } = new QueryParameters();
+		public IQueryParameters Parameters { get; set; } = new QueryParameters();
 
 		/// <summary>
 		/// Order By
 		/// </summary>
-		public List<string>? OrderBy { get; set; }
+		public IList<string>? OrderBy { get; set; }
 
 		/// <summary>
 		/// Limit
@@ -65,5 +64,11 @@ namespace Jeebs.Data
 		/// Only allow internal construction - usually from QueryBuilder
 		/// </summary>
 		internal QueryParts() { }
+
+		/// <summary>
+		/// Get Query
+		/// </summary>
+		/// <param name="unitOfWork">IUnitOfWork</param>
+		public IQuery<T> GetQuery(IUnitOfWork unitOfWork) => new Query<T>(unitOfWork, this);
 	}
 }

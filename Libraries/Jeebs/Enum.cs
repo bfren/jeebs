@@ -45,7 +45,7 @@ namespace Jeebs
 		/// <typeparam name="T">Enum value type</typeparam>
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
-		private static Result<T> Check<T>(string name, T value)
+		private static IResult<T> Check<T>(string name, T value)
 			where T : Enum
 		{
 			if (string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase))

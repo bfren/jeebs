@@ -10,18 +10,18 @@ namespace Jeebs.Data
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <typeparam name="TOptions">QueryOptions</typeparam>
-	public abstract class QueryPartsBuilder<TModel, TOptions>
+	public abstract class QueryPartsBuilder<TModel, TOptions> : IQueryPartsBuilder<TModel, TOptions>
 		where TOptions : QueryOptions
 	{
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		private readonly QueryParts<TModel> parts;
+		private readonly IQueryParts<TModel> parts;
 
 		/// <summary>
 		/// IAdapter
 		/// </summary>
-		private readonly IAdapter adapter;
+		public IAdapter Adapter { get; }
 
 		/// <summary>
 		/// Create object
@@ -30,21 +30,21 @@ namespace Jeebs.Data
 		protected QueryPartsBuilder(IAdapter adapter)
 		{
 			parts = new QueryParts<TModel>();
-			this.adapter = adapter;
+			Adapter = adapter;
 		}
 
 		/// <summary>
 		/// Build the query
 		/// </summary>
 		/// <param name="opt">TOptions</param>
-		public abstract QueryParts<TModel> Build(TOptions opt);
+		public abstract IQueryParts<TModel> Build(TOptions opt);
 
 		/// <summary>
 		/// Finish Build process by adding ORDER BY, LIMIT and OFFSET values
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <param name="defaultSort">Default sort columns</param>
-		protected QueryParts<TModel> FinishBuild(TOptions opt, params (string selectColumn, SortOrder order)[] defaultSort)
+		protected IQueryParts<TModel> FinishBuild(TOptions opt, params (string selectColumn, SortOrder order)[] defaultSort)
 		{
 			// ORDER BY
 			AddSort(opt, defaultSort);
@@ -67,7 +67,7 @@ namespace Jeebs.Data
 			if (opt.SortRandom)
 			{
 				(parts.OrderBy ?? (parts.OrderBy = new List<string>())).Clear();
-				parts.OrderBy.Add(adapter.GetRandomSortOrder());
+				parts.OrderBy.Add(Adapter.GetRandomSortOrder());
 			}
 			// Specified sort
 			else if (opt.Sort is (string selectColumn, SortOrder order)[] sort)
@@ -95,7 +95,7 @@ namespace Jeebs.Data
 
 				foreach (var (column, order) in sort)
 				{
-					parts.OrderBy.Add(adapter.GetSortOrder(column, order));
+					parts.OrderBy.Add(Adapter.GetSortOrder(column, order));
 				}
 			}
 		}
@@ -122,23 +122,16 @@ namespace Jeebs.Data
 		#region Adapter Shorthands
 
 		/// <summary>
-		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
-		public string Extract<T>(params Table[] tables) => adapter.Join(tables.ExtractColumns<T>());
-
-		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
 		/// <param name="element">The element to split and escape</param>
-		public string Escape(object element) => adapter.SplitAndEscape(element.ToString());
+		public string Escape(object element) => Adapter.SplitAndEscape(element.ToString());
 
 		/// <summary>
 		/// Shorthand for IAdapter.EscapeAndJoin
 		/// </summary>
 		/// <param name="elements">The elements to escape and join</param>
-		public string Escape(params string?[] elements) => adapter.EscapeAndJoin(elements);
+		public string Escape(params string?[] elements) => Adapter.EscapeAndJoin(elements);
 
 		#endregion
 
@@ -183,8 +176,8 @@ namespace Jeebs.Data
 		/// <param name="table">Table to join</param>
 		/// <param name="on">Table and column to join from</param>
 		/// <param name="equals">Table and column to join to</param>
-		private List<(string table, string on, string equals)> AddJoin(
-			List<(string table, string on, string equals)>? join,
+		private IList<(string table, string on, string equals)> AddJoin(
+			IList<(string table, string on, string equals)>? join,
 			string table,
 			string on,
 			(string table, string column) equals

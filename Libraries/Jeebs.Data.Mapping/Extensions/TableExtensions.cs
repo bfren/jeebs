@@ -15,7 +15,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="tables">Array of tables</param>
-		public static ExtractedColumns ExtractColumns<TModel>(this Table[] tables)
+		public static IExtractedColumns ExtractColumns<TModel>(this Table[] tables)
 		{
 			// Extract matching columns from each of the tables
 			var mappedColumns = new List<ExtractedColumns>();

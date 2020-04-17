@@ -30,13 +30,13 @@ namespace Jeebs.WordPress
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryParts<T> Build(Options opt)
+			public override IQueryParts<T> Build(Options opt)
 			{
 				// FROM
 				AddFrom(db.PostMeta.ToString());
 
 				// SELECT
-				AddSelect(Extract<T>(db.PostMeta));
+				AddSelect(Adapter.Extract<T>(db.PostMeta));
 
 				// WHERE Post IDs
 				if (opt.PostIds is List<long> postIds)

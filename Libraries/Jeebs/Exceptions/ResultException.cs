@@ -26,7 +26,7 @@ namespace Jx
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="errors">Errors</param>
-        public ResultException(string message, ErrorList errors) : base(message, new Exception(errors.ToString())) { }
+        public ResultException(string message, IErrorList errors) : base(message, new Exception(errors.ToString())) { }
 
         /// <summary>
         /// Construct exception

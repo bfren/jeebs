@@ -112,7 +112,7 @@ namespace AppConsoleWordPress
 			Console.WriteLine();
 			Console.WriteLine($"== Sermons: {search} ==");
 
-			using var q = bcg.QueryWrapper;
+			using var q = bcg.GetQueryWrapper();
 
 			var query = q.QueryPosts<SermonModel>(opt);
 
@@ -145,7 +145,7 @@ namespace AppConsoleWordPress
 			Console.WriteLine();
 			Console.WriteLine("== Meta ==");
 
-			using var w = db.QueryWrapper;
+			using var w = db.GetQueryWrapper();
 
 			var query = w.QueryPosts<PostModel>(opt => opt.Limit = 3);
 			var result = await query.ExecuteQuery();
@@ -188,7 +188,7 @@ namespace AppConsoleWordPress
 				Console.WriteLine();
 				Console.WriteLine("== Custom Fields ==");
 
-				using var q = db.QueryWrapper;
+				using var q = db.GetQueryWrapper();
 
 				var query = q.QueryPosts<SermonModel>(opt =>
 				{

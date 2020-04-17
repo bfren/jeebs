@@ -7,7 +7,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Alias for a list of ExtractedColumn objects
 	/// </summary>
-	public sealed class ExtractedColumns : List<ExtractedColumn>
+	public sealed class ExtractedColumns : List<IExtractedColumn>, IExtractedColumns
 	{
 		/// <summary>
 		/// Empty constructor
@@ -18,6 +18,6 @@ namespace Jeebs.Data
 		/// Construct object from Enumerable
 		/// </summary>
 		/// <param name="ienum">IEnumerable</param>
-		public ExtractedColumns(IEnumerable<ExtractedColumn> ienum) : base(ienum) { }
+		public ExtractedColumns(IEnumerable<IExtractedColumn> ienum) : base(ienum) { }
 	}
 }

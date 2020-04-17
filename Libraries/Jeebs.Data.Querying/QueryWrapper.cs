@@ -7,7 +7,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query wrapper
 	/// </summary>
-	public class QueryWrapper : IDisposable
+	public class QueryWrapper : IQueryWrapper
 	{
 		/// <summary>
 		/// IUnitOfWork
@@ -23,7 +23,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Start a new Query using the current UnitOfWork
 		/// </summary>
-		public QueryBuilder StartNewQuery() => new QueryBuilder(unitOfWork);
+		public IQueryBuilder StartNewQuery() => new QueryBuilder(unitOfWork);
 
 		/// <summary>
 		/// Dispose <see cref="unitOfWork"/>

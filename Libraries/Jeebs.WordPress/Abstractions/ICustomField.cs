@@ -27,7 +27,7 @@ namespace Jeebs.WordPress
 		/// <param name="db">IWpDb</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="meta">MetaDictionary</param>
-		Task<Result> Hydrate(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
+		Task<IResult<bool>> Hydrate(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 	}
 
 	/// <summary>

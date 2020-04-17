@@ -15,25 +15,21 @@ namespace Jeebs.Data
 	/// </summary>
 	public sealed class UnitOfWork : IUnitOfWork
 	{
-		/// <summary>
-		/// Provides thread-safe locking
-		/// </summary>
-		private static readonly object _ = new object();
-
-		/// <summary>
-		/// IDbTransaction
-		/// </summary>
-		private readonly IDbTransaction transaction;
-
-		/// <summary>
-		/// IDbConnection
-		/// </summary>
-		private IDbConnection Connection => transaction.Connection;
 
 		/// <summary>
 		/// IAdapter
 		/// </summary>
 		public IAdapter Adapter { get; }
+
+		/// <summary>
+		/// IDbConnection
+		/// </summary>
+		public IDbConnection Connection => Transaction.Connection;
+
+		/// <summary>
+		/// IDbTransaction
+		/// </summary>
+		public IDbTransaction Transaction { get; }
 
 		/// <summary>
 		/// ILog
@@ -48,17 +44,10 @@ namespace Jeebs.Data
 		/// <param name="log">ILog</param>
 		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log)
 		{
-			transaction = connection.BeginTransaction();
 			Adapter = adapter;
+			Transaction = connection.BeginTransaction();
 			this.log = log;
 		}
-
-		/// <summary>
-		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
-		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
-		public string Extract<T>(params Table[] tables) => Adapter.Join(tables.ExtractColumns<T>());
 
 		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape
@@ -79,7 +68,7 @@ namespace Jeebs.Data
 		{
 			try
 			{
-				transaction.Commit();
+				Transaction.Commit();
 			}
 			catch (Exception ex)
 			{
@@ -94,7 +83,7 @@ namespace Jeebs.Data
 		{
 			try
 			{
-				transaction.Rollback();
+				Transaction.Rollback();
 			}
 			catch (Exception ex)
 			{
@@ -108,11 +97,11 @@ namespace Jeebs.Data
 		public void Dispose()
 		{
 			Commit();
-			transaction.Dispose();
+			Transaction.Dispose();
 			Connection.Dispose();
 		}
 
-		#region Logging
+		#region Logging & Failure
 
 		/// <summary>
 		/// Log a query
@@ -122,7 +111,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL query</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		private void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
+		public void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
 		{
 			log.Debug("Method: UnitOfWork.{0}()", method);
 			log.Debug("Query [{0}]: {1}", commandType, query);
@@ -137,7 +126,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private Failure Fail(string error, params object[] args)
+		public IResult<bool> Fail(string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -158,7 +147,7 @@ namespace Jeebs.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private Failure Fail(Exception ex, string error, params object[] args)
+		public IResult<bool> Fail(Exception ex, string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -179,7 +168,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Return value type</typeparam>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private Failure<T> Fail<T>(string error, params object[] args)
+		public IResult<T> Fail<T>(string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -201,7 +190,7 @@ namespace Jeebs.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		private Failure<T> Fail<T>(Exception ex, string error, params object[] args)
+		public IResult<T> Fail<T>(Exception ex, string error, params object[] args)
 		{
 			// Rollback transaction
 			Rollback();
@@ -211,81 +200,6 @@ namespace Jeebs.Data
 
 			// Return failure object
 			return Result.Failure<T>(error);
-		}
-
-		#endregion
-
-		#region C
-
-		/// <summary>
-		/// Insert an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity object</param>
-		/// <returns>Entity (complete with new ID)</returns>
-		public Result<T> Insert<T>(T poco)
-			where T : class, IEntity
-		{
-			// Declare here so accessible outside try...catch
-			int newId;
-
-			try
-			{
-				// Build query
-				var query = Adapter.CreateSingleAndReturnId<T>();
-				LogQuery(nameof(Insert), query, poco);
-
-				// Insert and capture new ID
-				newId = Connection.ExecuteScalar<int>(query, param: poco, transaction: transaction);
-			}
-			catch (Exception ex)
-			{
-				return Fail<T>(ex, $"Unable to insert {typeof(T)}.");
-			}
-
-			// If newId is still 0, rollback changes - something went wrong
-			if (newId == 0)
-			{
-				return Fail<T>($"Unable to retrieve ID of inserted {typeof(T)}.");
-			}
-
-			// Retrieve fresh POCO with inserted ID
-			return Single<T>(newId);
-		}
-
-		/// <summary>
-		/// Insert an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity object</param>
-		/// <returns>Entity (complete with new ID)</returns>
-		public async Task<Result<T>> InsertAsync<T>(T poco)
-			where T : class, IEntity
-		{
-			// Declare here so accessible outside try...catch
-			int newId;
-
-			try
-			{
-				// Build query
-				var query = Adapter.CreateSingleAndReturnId<T>();
-				LogQuery(nameof(InsertAsync), query, poco);
-
-				// Insert and capture new ID
-				newId = await Connection.ExecuteScalarAsync<int>(query, param: poco, transaction: transaction);
-			}
-			catch (Exception ex)
-			{
-				return Fail<T>(ex, $"Unable to insert {typeof(T)}.");
-			}
-
-			// If newId is still 0, rollback changes - something went wrong
-			if (newId == 0)
-			{
-				return Fail<T>($"Unable to retrieve ID of inserted {typeof(T)}.");
-			}
-
-			return await SingleAsync<T>(newId);
 		}
 
 		#endregion
@@ -298,7 +212,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public Result<IEnumerable<dynamic>> Query(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IResult<IEnumerable<dynamic>> Query(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -306,13 +220,13 @@ namespace Jeebs.Data
 				LogQuery(nameof(Query), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.Query<dynamic>(query, param: parameters, transaction: transaction, commandType: commandType);
+				var result = Connection.Query<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
 				return Fail<IEnumerable<dynamic>>(
-					new Jx.Data.QueryException(query, parameters, ex),
+					new Jx.Data.UnitOfWorkException(query, parameters, ex),
 					$"An error occurred while executing the query."
 				);
 			}
@@ -324,7 +238,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public async Task<Result<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IResult<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -332,13 +246,13 @@ namespace Jeebs.Data
 				LogQuery(nameof(QueryAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: transaction, commandType: commandType);
+				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
 				return Fail<IEnumerable<dynamic>>(
-					new Jx.Data.QueryException(query, parameters, ex),
+					new Jx.Data.UnitOfWorkException(query, parameters, ex),
 					$"An error occurred while executing the query."
 				);
 			}
@@ -351,7 +265,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public Result<IEnumerable<T>> Query<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IResult<IEnumerable<T>> Query<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -359,13 +273,13 @@ namespace Jeebs.Data
 				LogQuery(nameof(Query), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.Query<T>(query, param: parameters, transaction: transaction, commandType: commandType);
+				var result = Connection.Query<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
 				return Fail<IEnumerable<T>>(
-					new Jx.Data.QueryException(query, parameters, ex),
+					new Jx.Data.UnitOfWorkException(query, parameters, ex),
 					$"An error occurred while executing the query."
 				);
 			}
@@ -378,7 +292,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -386,13 +300,13 @@ namespace Jeebs.Data
 				LogQuery(nameof(QueryAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: transaction, commandType: commandType);
+				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
 				return Fail<IEnumerable<T>>(
-					new Jx.Data.QueryException(query, parameters, ex),
+					new Jx.Data.UnitOfWorkException(query, parameters, ex),
 					$"An error occurred while executing the query."
 				);
 			}
@@ -403,60 +317,12 @@ namespace Jeebs.Data
 		#region R: Single
 
 		/// <summary>
-		/// Get an entity from the database by ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Entity ID</param>
-		public Result<T> Single<T>(int id)
-			where T : class, IEntity
-		{
-			try
-			{
-				// Build query
-				var query = Adapter.RetrieveSingleById<T>();
-				LogQuery(nameof(Single), query, new { id });
-
-				// Execute and return
-				var result = Connection.QuerySingle<T>(query, param: new { id }, transaction: transaction);
-				return Result.Success(result);
-			}
-			catch (Exception ex)
-			{
-				return Fail<T>(ex, $"An error occured while retrieving {typeof(T)} with ID '{id}'.");
-			}
-		}
-
-		/// <summary>
-		/// Get an entity from the database by ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="id">Entity ID</param>
-		private async Task<Result<T>> SingleAsync<T>(int id)
-			where T : class, IEntity
-		{
-			try
-			{
-				// Build query
-				var query = Adapter.RetrieveSingleById<T>();
-				LogQuery(nameof(SingleAsync), query, new { id });
-
-				// Execute and return
-				var result = await Connection.QuerySingleAsync<T>(query, param: new { id }, transaction: transaction);
-				return Result.Success(result);
-			}
-			catch (Exception ex)
-			{
-				return Fail<T>(ex, $"An error occured while retrieving {typeof(T)} with ID '{id}'.");
-			}
-		}
-
-		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
 		/// </summary>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public Result<T> Single<T>(string query, object parameters, CommandType commandType = CommandType.Text)
+		public IResult<T> Single<T>(string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -464,13 +330,13 @@ namespace Jeebs.Data
 				LogQuery(nameof(Single), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: transaction, commandType: commandType);
+				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
 				return Fail<T>(
-					new Jx.Data.QueryException(query, parameters, ex),
+					new Jx.Data.UnitOfWorkException(query, parameters, ex),
 					$"An error occurred while retrieving {typeof(T)}."
 				);
 			}
@@ -482,7 +348,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public async Task<Result<T>> SingleAsync<T>(string query, object parameters, CommandType commandType = CommandType.Text)
+		public async Task<IResult<T>> SingleAsync<T>(string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -490,13 +356,13 @@ namespace Jeebs.Data
 				LogQuery(nameof(SingleAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: transaction, commandType: commandType);
+				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
 				return Fail<T>(
-					new Jx.Data.QueryException(query, parameters, ex),
+					new Jx.Data.UnitOfWorkException(query, parameters, ex),
 					$"An error occurred while retrieving {typeof(T)}."
 				);
 			}
@@ -504,162 +370,7 @@ namespace Jeebs.Data
 
 		#endregion
 
-		#region U
-
-		/// <summary>
-		/// Update an object
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity object</param>
-		public Result<bool> Update<T>(T poco)
-			where T : class, IEntity
-		{
-			lock (_)
-			{
-				if (poco is IEntityWithVersion pocoWithVersion)
-				{
-					return UpdateWithVersion(pocoWithVersion);
-				}
-				else
-				{
-					return UpdateWithoutVersion(poco);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Update using versioning
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Object</param>
-		private Result<bool> UpdateWithVersion<T>(T poco)
-			where T : class, IEntityWithVersion
-		{
-			var currentVersion = poco.Version;
-			var error = $"Unable to update {typeof(T)} '{poco.Id}'.";
-
-			try
-			{
-				// Build query and increase the version number
-				var query = Adapter.UpdateSingle<T>();
-				poco.Version++;
-				LogQuery(nameof(UpdateWithVersion), query, poco);
-
-				// Execute and return
-				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
-				if (rowsAffected == 1)
-				{
-					return Result.Success();
-				}
-
-				return Fail(error);
-			}
-			catch (Exception ex)
-			{
-				return Fail(ex, error);
-			}
-		}
-
-		/// <summary>
-		/// Update without using versioning
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Object</param>
-		private Result<bool> UpdateWithoutVersion<T>(T poco)
-			where T : class, IEntity
-		{
-			var error = $"Unable to update {typeof(T)} '{poco.Id}'.";
-
-			try
-			{
-				// Build query
-				var query = Adapter.UpdateSingle<T>();
-				LogQuery(nameof(UpdateWithoutVersion), query, poco);
-
-				// Execute and return
-				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
-				if (rowsAffected == 1)
-				{
-					return Result.Success();
-				}
-
-				return Fail(error);
-			}
-			catch (Exception ex)
-			{
-				return Fail(ex, error);
-			}
-		}
-
-		#endregion
-
-		#region D
-
-		/// <summary>
-		/// Delete an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity to delete</param>
-		public Result<bool> Delete<T>(T poco)
-			where T : class, IEntity
-		{
-			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
-
-			try
-			{
-				// Build query
-				var query = Adapter.DeleteSingle<T>();
-				LogQuery(nameof(Delete), query, poco);
-
-				// Execute and return
-				var rowsAffected = Connection.Execute(query, param: poco, transaction: transaction);
-				if (rowsAffected == 1)
-				{
-					return Result.Success();
-				}
-
-				return Fail(error);
-			}
-			catch (Exception ex)
-			{
-				return Fail(ex, error);
-			}
-		}
-
-		/// <summary>
-		/// Delete an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="poco">Entity to delete</param>
-		public async Task<Result<bool>> DeleteAsync<T>(T poco)
-			where T : class, IEntity
-		{
-			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
-
-			try
-			{
-				// Build query
-				var query = Adapter.DeleteSingle<T>();
-				LogQuery(nameof(DeleteAsync), query, poco);
-
-				// Execute and return
-				var rowsAffected = await Connection.ExecuteAsync(query, param: poco, transaction: transaction);
-				if (rowsAffected == 1)
-				{
-					return Result.Success();
-				}
-
-				return Fail(error);
-			}
-			catch (Exception ex)
-			{
-				return Fail(ex, error);
-			}
-		}
-
-		#endregion
-
-		#region Direct
+		#region Execute
 
 		/// <summary>
 		/// Execute a query on the database
@@ -668,7 +379,7 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		public Result<int> Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IResult<int> Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -676,12 +387,12 @@ namespace Jeebs.Data
 				LogQuery(nameof(Execute), query, parameters, commandType);
 
 				// Execute and return
-				var affectedRows = Connection.Execute(query, param: parameters, transaction: transaction, commandType: commandType);
+				var affectedRows = Connection.Execute(query, param: parameters, transaction: Transaction, commandType: commandType);
 				return Result.Success(affectedRows);
 			}
 			catch (Exception ex)
 			{
-				return Fail<int>(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
+				return Fail<int>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
 			}
 		}
 
@@ -692,7 +403,7 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		public async Task<Result<int>> ExecuteAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IResult<int>> ExecuteAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -700,12 +411,12 @@ namespace Jeebs.Data
 				LogQuery(nameof(ExecuteAsync), query, parameters, commandType);
 
 				// Execute and return
-				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: transaction);
+				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: Transaction);
 				return Result.Success(affectedRows);
 			}
 			catch (Exception ex)
 			{
-				return Fail<int>(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
+				return Fail<int>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
 			}
 		}
 
@@ -716,7 +427,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public Result<T> ExecuteScalar<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IResult<T> ExecuteScalar<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -724,12 +435,12 @@ namespace Jeebs.Data
 				LogQuery(nameof(ExecuteScalar), query, parameters, commandType);
 
 				// Execute and return
-				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: transaction);
+				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: Transaction);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
+				return Fail<T>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
 			}
 		}
 
@@ -740,7 +451,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public async Task<Result<T>> ExecuteScalarAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -748,12 +459,12 @@ namespace Jeebs.Data
 				LogQuery(nameof(ExecuteScalarAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: transaction);
+				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: Transaction);
 				return Result.Success(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(new Jx.Data.QueryException(query, parameters, ex), "Error executing query.");
+				return Fail<T>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
 			}
 		}
 

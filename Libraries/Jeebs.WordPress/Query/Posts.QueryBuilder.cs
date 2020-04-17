@@ -33,14 +33,14 @@ namespace Jeebs.WordPress
 			/// Build query
 			/// </summary>
 			/// <param name="opt">QueryOptions</param>
-			public override QueryParts<T> Build(Options opt)
+			public override IQueryParts<T> Build(Options opt)
 			{
 				// Use db shorthands
 				var _ = db;
 				var p = _.Post.ToString();
 
 				// SELECT columns
-				AddSelect($"{Extract<T>(_.Post)}");
+				AddSelect($"{Adapter.Extract<T>(_.Post)}");
 
 				// FROM table
 				AddFrom($"{Escape(_.Post)} AS {Escape(p)}");

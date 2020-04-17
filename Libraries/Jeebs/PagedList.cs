@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using D = Jeebs.PagingValues.Defaults;
+using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs
 {
@@ -9,7 +9,7 @@ namespace Jeebs
 	/// List that supports paging operations
 	/// </summary>
 	/// <typeparam name="T">Type of objects in the list</typeparam>
-	public sealed class PagedList<T> : List<T>
+	public sealed class PagedList<T> : List<T>, IPagedList<T>
 	{
 		/// <summary>
 		/// Create empty PagedList
@@ -28,7 +28,7 @@ namespace Jeebs
 		/// <param name="page">Current page</param>
 		/// <param name="itemsPer">[Optional] Number of items per page</param>
 		/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
-		public (PagedList<T> list, PagingValues values) CalculateAndApply(long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer)
+		public (IPagedList<T> list, IPagingValues values) CalculateAndApply(long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer)
 		{
 			// Return empty list
 			if (Count == 0)

@@ -44,11 +44,6 @@ namespace Jeebs.WordPress
 		/// </summary>
 		public MySqlAdapter Adapter { get => client.Adapter; }
 
-		/// <summary>
-		/// Start a new query
-		/// </summary>
-		public new QueryWrapper QueryWrapper { get => new QueryWrapper(this); }
-
 		#region Tables
 
 		/// <summary>
@@ -179,5 +174,10 @@ namespace Jeebs.WordPress
 			Dapper.SqlMapper.AddTypeHandler(new PostTypeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());
 		}
+
+		/// <summary>
+		/// Start a new query
+		/// </summary>
+		public QueryWrapper GetQueryWrapper() => new QueryWrapper(this);
 	}
 }

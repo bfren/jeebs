@@ -8,7 +8,8 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Shorthand to make working with query parameters easier
 	/// </summary>
-	public sealed class QueryParameters : Dictionary<string, object>
+	[Serializable]
+	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
 	{
 		/// <summary>
 		/// Add an anonymous object of parameters to the dictionary

@@ -14,42 +14,42 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Separator character
 		/// </summary>
-		private readonly char separator;
+		public char Separator { get; }
 
 		/// <summary>
 		/// Escape character
 		/// </summary>
-		private readonly char escapeOpen;
+		public char EscapeOpen { get; }
 
 		/// <summary>
 		/// Escape character
 		/// </summary>
-		private readonly char escapeClose;
+		public char EscapeClose { get; }
 
 		/// <summary>
 		/// Alias keyword
 		/// </summary>
-		private readonly string alias;
+		public string Alias { get; }
 
 		/// <summary>
 		/// Alias open character
 		/// </summary>
-		private readonly char aliasOpen;
+		public char AliasOpen { get; }
 
 		/// <summary>
 		/// Alias open character
 		/// </summary>
-		private readonly char aliasClose;
+		public char AliasClose { get; }
 
 		/// <summary>
 		/// Sort ascending text
 		/// </summary>
-		private readonly string sortAsc;
+		public string SortAsc { get; }
 
 		/// <summary>
 		/// Sort descending text
 		/// </summary>
-		private readonly string sortDesc;
+		public string SortDesc { get; }
 
 		/// <summary>
 		/// Create object
@@ -64,14 +64,14 @@ namespace Jeebs.Data
 		/// <param name="sortDesc">Sort Descending string</param>
 		protected Adapter(char separator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
 		{
-			this.separator = separator;
-			this.escapeOpen = escapeOpen;
-			this.escapeClose = escapeClose;
-			this.alias = alias;
-			this.aliasOpen = aliasOpen;
-			this.aliasClose = aliasClose;
-			this.sortAsc = sortAsc;
-			this.sortDesc = sortDesc;
+			Separator = separator;
+			EscapeOpen = escapeOpen;
+			EscapeClose = escapeClose;
+			Alias = alias;
+			AliasOpen = aliasOpen;
+			AliasClose = aliasClose;
+			SortAsc = sortAsc;
+			SortDesc = sortDesc;
 		}
 
 		#region Escaping
@@ -92,16 +92,16 @@ namespace Jeebs.Data
 			}
 
 			// If the name contains the separator character, use SplitAndJoin() instead
-			if (name.Contains(separator))
+			if (name.Contains(Separator))
 			{
 				return SplitAndEscape(name);
 			}
 
 			// Trim escape characters
-			var trimmed = name.Trim(escapeOpen, escapeClose);
+			var trimmed = name.Trim(EscapeOpen, EscapeClose);
 
 			// Return escaped name
-			return $"{escapeOpen}{trimmed}{escapeClose}";
+			return $"{EscapeOpen}{trimmed}{EscapeClose}";
 		}
 
 		/// <summary>
@@ -120,7 +120,7 @@ namespace Jeebs.Data
 		public string SplitAndEscape(string element)
 		{
 			// Split an element by the default separator
-			var elements = element.Split(separator);
+			var elements = element.Split(Separator);
 
 			// Now escape the elements and re-jothem
 			return EscapeAndJoin(elements);
@@ -154,48 +154,17 @@ namespace Jeebs.Data
 			}
 
 			// Return escaped elements joined with the separator
-			return string.Join(separator.ToString(), escaped);
+			return string.Join(Separator.ToString(), escaped);
 		}
-
-		/// <summary>
-		/// Join a list of ExtractedColumn objects
-		/// </summary>
-		/// <param name="columns">ExtractedColumns</param>
-		public string Join(ExtractedColumns columns)
-		{
-			// Get each column
-			var select = new List<string>();
-			foreach (var c in columns)
-			{
-				select.Add(GetColumn(c));
-			}
-
-			// Return joined with a comma
-			return string.Join(", ", select);
-		}
-
-		/// <summary>
-		/// Get an ExtractedColumn
-		/// </summary>
-		/// <param name="col">ExtractedColumn</param>
-		public string GetColumn(ExtractedColumn col) => Column(string.Concat(col.Table, separator, col.Column), col.Alias);
-
-		/// <summary>
-		/// Get a MappedColumn
-		/// </summary>
-		/// <param name="col">MappedColumn</param>
-		public string GetColumn(MappedColumn col) => Column(col.Column, col.Property.Name);
 
 		/// <summary>
 		/// Escape a column using its table and alias
 		/// </summary>
 		/// <param name="name">Column name</param>
 		/// <param name="alias">Column alias</param>
-		private string Column(string name, string alias) => $"{Escape(name)} {this.alias} {aliasOpen}{alias}{aliasClose}";
+		public string EscapeColumn(string name, string alias) => $"{Escape(name)} {this.Alias} {AliasOpen}{alias}{AliasClose}";
 
 		#endregion
-
-		#region Sorting
 
 		/// <summary>
 		/// Return a sort order string (ASC or DESC)
@@ -203,22 +172,12 @@ namespace Jeebs.Data
 		/// <param name="column">Column name (unescaped)</param>
 		/// <param name="order">QuerySortOrder</param>
 		/// <returns>Sort order</returns>
-		public string GetSortOrder(string column, SortOrder order) => string.Concat(Escape(column), " ", order == SortOrder.Ascending ? sortAsc : sortDesc);
+		public string GetSortOrder(string column, SortOrder order) => string.Concat(Escape(column), " ", order == SortOrder.Ascending ? SortAsc : SortDesc);
 
 		/// <summary>
 		/// Return random sort string
 		/// </summary>
 		public abstract string GetRandomSortOrder();
-
-		#endregion
-
-		#region Queries
-
-		/// <summary>
-		/// Query to insert a single row and return the new ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public abstract string CreateSingleAndReturnId<T>();
 
 		/// <summary>
 		/// SELECT columns to return a COUNT query
@@ -226,29 +185,48 @@ namespace Jeebs.Data
 		public virtual string GetSelectCount() => "COUNT(*)";
 
 		/// <summary>
-		/// Query to retrieve a single row by ID
+		/// Query to insert a single row and return the new ID
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public abstract string RetrieveSingleById<T>();
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		public abstract string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases);
 
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		public abstract string Retrieve<T>(QueryParts<T> parts);
+		/// <param name="parts">IQueryParts</param>
+		/// <returns>SELECT query</returns>
+		public abstract string Retrieve(IQueryParts parts);
+
+		/// <summary>
+		/// Query to retrieve a single row by ID
+		/// </summary>
+		/// <param name="columns">The columns to SELECT</param>
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column</param>
+		public abstract string RetrieveSingleById(List<string> columns, string table, string idColumn);
 
 		/// <summary>
 		/// Query to update a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public abstract string UpdateSingle<T>();
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		public abstract string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
 
 		/// <summary>
 		/// Query to delete a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public abstract string DeleteSingle<T>();
-
-		#endregion
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		public abstract string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
 	}
 }

@@ -10,6 +10,46 @@ namespace Jeebs.Data
 	/// </summary>
 	public interface IAdapter
 	{
+		/// <summary>
+		/// Separator character
+		/// </summary>
+		char Separator { get; }
+
+		/// <summary>
+		/// Escape character
+		/// </summary>
+		char EscapeOpen { get; }
+
+		/// <summary>
+		/// Escape character
+		/// </summary>
+		char EscapeClose { get; }
+
+		/// <summary>
+		/// Alias keyword
+		/// </summary>
+		string Alias { get; }
+
+		/// <summary>
+		/// Alias open character
+		/// </summary>
+		char AliasOpen { get; }
+
+		/// <summary>
+		/// Alias open character
+		/// </summary>
+		char AliasClose { get; }
+
+		/// <summary>
+		/// Sort ascending text
+		/// </summary>
+		string SortAsc { get; }
+
+		/// <summary>
+		/// Sort descending text
+		/// </summary>
+		string SortDesc { get; }
+
 		#region Escaping
 
 		/// <summary>
@@ -42,26 +82,15 @@ namespace Jeebs.Data
 		string EscapeAndJoin(params string?[] elements);
 
 		/// <summary>
-		/// Joa list of ExtractedColumn objects
+		/// Escape a column using its table and alias
 		/// </summary>
-		/// <param name="columns">ExtractedColumns</param>
-		string Join(ExtractedColumns columns);
-
-		/// <summary>
-		/// Get an ExtractedColumn
-		/// </summary>
-		/// <param name="col">ExtractedColumn</param>
-		string GetColumn(ExtractedColumn col);
-
-		/// <summary>
-		/// Get a MappedColumn
-		/// </summary>
-		/// <param name="col">MappedColumn</param>
-		string GetColumn(MappedColumn col);
+		/// <param name="name">Column name</param>
+		/// <param name="alias">Column alias</param>
+		string EscapeColumn(string name, string alias);
 
 		#endregion
 
-		#region Sorting
+		#region Querying
 
 		/// <summary>
 		/// Return a sort order string
@@ -76,56 +105,55 @@ namespace Jeebs.Data
 		/// </summary>
 		string GetRandomSortOrder();
 
-		#endregion
-
-		#region Queries - Create
-
-		/// <summary>
-		/// Query to insert a single row and return the new ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		string CreateSingleAndReturnId<T>();
-
-		#endregion
-
-		#region Queries - Retrieve
-
 		/// <summary>
 		/// SELECT columns to return a COUNT query
 		/// </summary>
 		string GetSelectCount();
 
 		/// <summary>
-		/// Query to retrieve a single row by ID
+		/// Query to insert a single row and return the new ID
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		string RetrieveSingleById<T>();
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases);
 
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		string Retrieve<T>(QueryParts<T> parts);
+		/// <param name="parts">IQueryParts</param>
+		/// <returns>SELECT query</returns>
+		string Retrieve(IQueryParts parts);
 
-		#endregion
-
-		#region Queries - Update
+		/// <summary>
+		/// Query to retrieve a single row by ID
+		/// </summary>
+		/// <param name="columns">The columns to SELECT</param>
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column</param>
+		string RetrieveSingleById(List<string> columns, string table, string idColumn);
 
 		/// <summary>
 		/// Query to update a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		string UpdateSingle<T>();
-
-		#endregion
-
-		#region Queries - Delete
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
 
 		/// <summary>
 		/// Query to delete a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		string DeleteSingle<T>();
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
 
 		#endregion
 	}

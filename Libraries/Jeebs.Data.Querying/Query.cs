@@ -9,8 +9,8 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query
 	/// </summary>
-	/// <typeparam name="TModel">Return Model type</typeparam>
-	public sealed class Query<TModel>
+	/// <typeparam name="T">Return Model type</typeparam>
+	public sealed class Query<T> : IQuery<T>
 	{
 		/// <summary>
 		/// IUnitOfWork
@@ -20,14 +20,14 @@ namespace Jeebs.Data
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		private readonly QueryParts<TModel> parts;
+		private readonly IQueryParts<T> parts;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="unitOfWork">IUnitOfWork</param>
-		/// <param name="parts">QueryParts</param>
-		internal Query(IUnitOfWork unitOfWork, QueryParts<TModel> parts)
+		/// <param name="parts">IQueryParts</param>
+		internal Query(IUnitOfWork unitOfWork, IQueryParts<T> parts)
 		{
 			this.unitOfWork = unitOfWork;
 			this.parts = parts;
@@ -36,46 +36,52 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Returns the number of items to be retrieved by the current query parts
 		/// </summary>
-		public async Task<Result<long>> GetCount()
+		public async Task<IResult<long>> GetCount()
 		{
-			// Use QueryParts but alter SELECT
-			var countParts = parts.Clone();
-			countParts.Select = unitOfWork.Adapter.GetSelectCount();
+			// Store original SELECT
+			var originalSelect = parts.Select;
+
+			// Alter SELECT
+			parts.Select = unitOfWork.Adapter.GetSelectCount();
 
 			// Get count query
-			var countQuery = unitOfWork.Adapter.Retrieve(countParts);
+			var countQuery = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute
-			return await unitOfWork.ExecuteScalarAsync<long>(countQuery, countParts.Parameters);
+			var count = await unitOfWork.ExecuteScalarAsync<long>(countQuery, parts.Parameters);
+
+			// Restore SELECT and return
+			parts.Select = originalSelect;
+			return count;
 		}
 
 		/// <summary>
 		/// Retrieves the items using the current query parts
 		/// </summary>
-		public async Task<Result<IEnumerable<TModel>>> ExecuteQuery()
+		public async Task<IResult<IEnumerable<T>>> ExecuteQuery()
 		{
 			// Get query
 			var query = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute and return
-			return await unitOfWork.QueryAsync<TModel>(query, parts.Parameters);
+			return await unitOfWork.QueryAsync<T>(query, parts.Parameters);
 		}
 
 		/// <summary>
 		/// Retrieves the items using the current query parts, using LIMIT / OFFSET to select only the items on a particular page
 		/// </summary>
 		/// <param name="page">Current page number</param>
-		public async Task<Result<PagedList<TModel>>> ExecuteQuery(long page)
+		public async Task<IResult<IPagedList<T>>> ExecuteQuery(long page)
 		{
 			// Get the count
 			var count = await GetCount();
 			if (count.Err is ErrorList)
 			{
-				return Result.Failure<PagedList<TModel>>(count.Err);
+				return Result.Failure<IPagedList<T>>(count.Err);
 			}
 
 			// Get paging values
-			var values = new PagingValues(count.Val, page, parts.Limit ?? PagingValues.Defaults.ItemsPer);
+			var values = new PagingValues(count.Val, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
 
 			// Set the OFFSET and LIMIT values
 			parts.Offset = (values.Page - 1) * values.ItemsPer;
@@ -85,12 +91,12 @@ namespace Jeebs.Data
 			var items = await ExecuteQuery();
 			if (items.Err is ErrorList)
 			{
-				return Result.Failure<PagedList<TModel>>(items.Err);
+				return Result.Failure<IPagedList<T>>(items.Err);
 			}
 
 			// Add the items to the list and return success
-			var list = new PagedList<TModel>(items.Val);
-			return Result.Success(list);
+			var list = new PagedList<T>(items.Val);
+			return Result.Success<IPagedList<T>>(list);
 		}
 	}
 }

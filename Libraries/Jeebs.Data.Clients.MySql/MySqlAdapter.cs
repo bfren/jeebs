@@ -23,45 +23,24 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Query to insert a single row and return the new ID
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string CreateSingleAndReturnId<T>()
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
 		{
-			// Get map and columns
-			var map = TableMaps.GetMap<T>();
-			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
-
-			// Return SQL
-			return $"INSERT INTO {map.Name} ({string.Join(", ", columns)}) " +
-				$"VALUES (@{string.Join(", @", aliases)}); " +
-				$"SELECT LAST_INSERT_ID();";
-		}
-
-		/// <summary>
-		/// Query to retrieve a single row by ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string RetrieveSingleById<T>()
-		{
-			// Get map and select list
-			var map = TableMaps.GetMap<T>();
-			var select = new List<string>();
-
-			// Add each column to the select list
-			foreach (var mc in map.Columns)
-			{
-				select.Add(GetColumn(mc));
-			}
-
-			// Return SQL
-			return $"SELECT {string.Join(", ", select)} FROM {map} WHERE {map.IdColumn} = @Id;";
+			return string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
+				table,
+				string.Join(", ", columns),
+				"@" + string.Join(", @", aliases)
+			);
 		}
 
 		/// <summary>
 		/// Build a SELECT query
 		/// </summary>
-		/// <param name="parts">QueryParts</param>
+		/// <param name="parts">IQueryParts</param>
 		/// <returns>SELECT query</returns>
-		public override string Retrieve<T>(QueryParts<T> parts)
+		public override string Retrieve(IQueryParts parts)
 		{
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
@@ -127,15 +106,32 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <summary>
+		/// Query to retrieve a single row by ID
+		/// </summary>
+		/// <param name="columns">The columns to SELECT</param>
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column</param>
+		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
+		{
+			return string.Format("SELECT {0} FROM {1} WHERE {2} = @Id;",
+				string.Join(", ", columns),
+				table,
+				idColumn
+			);
+		}
+
+		/// <summary>
 		/// Query to update a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string UpdateSingle<T>()
+		/// <param name="table">Table name</param>
+		/// <param name="columns">Columns (actual column names in database)</param>
+		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
-			// Get map and columns
-			var map = TableMaps.GetMap<T>();
-			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
-
 			// Add each column to the update list
 			var update = new List<string>();
 			for (int i = 0; i < columns.Count; i++)
@@ -144,14 +140,17 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Build SQL
-			var sql = $"UPDATE {map} " +
-				$"SET {string.Join(", ", update)} " +
-				$"WHERE {map.IdColumn} = @{map.IdColumn.Property.Name}";
+			var sql = string.Format("UPDATE {0} SET {1} WHERE {2} = @{3}",
+				table,
+				string.Join(", ", update),
+				idColumn,
+				idAlias
+			);
 
 			// Add Version column
-			if (map.VersionColumn is MappedColumn versionColumn)
+			if (versionColumn is string column && versionAlias is string alias)
 			{
-				sql += $" AND {versionColumn} = @{versionColumn.Property.Name} - 1";
+				sql += string.Format(" AND {0} = @{1} - 1", column, alias);
 			}
 
 			// Return SQL
@@ -161,19 +160,24 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Query to delete a single row
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public override string DeleteSingle<T>()
+		/// <param name="table">Table name</param>
+		/// <param name="idColumn">ID column (actual column name in database)</param>
+		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
+		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
+		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
-			// Get map
-			var map = TableMaps.GetMap<T>();
-
 			// Build SQL
-			var sql = $"DELETE FROM {map} WHERE {map.IdColumn} = @{map.IdColumn.Property.Name}";
+			var sql = string.Format("DELETE FROM {0} WHERE {1} = @{2}",
+				table,
+				idColumn,
+				idAlias
+			);
 
 			// Add Version column
-			if (map.VersionColumn is MappedColumn versionColumn)
+			if (versionColumn is string column && versionAlias is string alias)
 			{
-				sql += $" AND {versionColumn} = @{versionColumn.Property.Name}";
+				sql += string.Format(" AND {0} = @{1} - 1", column, alias);
 			}
 
 			// Return SQL

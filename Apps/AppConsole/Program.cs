@@ -23,7 +23,7 @@ namespace ConsoleApp
 
 			Console.ReadLine();
 
-			static Result<Test> Do(bool succeed)
+			static IResult<Test> Do(bool succeed)
 			{
 				if (succeed)
 				{
@@ -35,7 +35,7 @@ namespace ConsoleApp
 				}
 			}
 
-			static void Write(Result<Test> r, int num)
+			static void Write(IResult<Test> r, int num)
 			{
 				Console.WriteLine(r.Err is ErrorList e ? $"r{num} failed : {e}" : $"r{num} value : Text = '{r.Val.Text}', Num = {r.Val.Num}");
 			}

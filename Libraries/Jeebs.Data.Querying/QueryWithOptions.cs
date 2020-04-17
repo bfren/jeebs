@@ -10,7 +10,7 @@ namespace Jeebs.Data
 		/// Saves query options (stage 2) and enables stage 3: build query parts
 		/// </summary>
 		/// <typeparam name="TOptions">QueryOptions</typeparam>
-		public sealed class QueryWithOptions<TOptions>
+		public sealed class QueryWithOptions<TOptions> : IQueryWithOptions<TOptions>
 			where TOptions : QueryOptions
 		{
 			/// <summary>
@@ -38,8 +38,8 @@ namespace Jeebs.Data
 			/// Query Stage 3: Use existing query parts
 			/// </summary>
 			/// <typeparam name="TModel">Model Type</typeparam>
-			/// <param name="parts">QueryParts</param>
-			public Query<TModel> WithParts<TModel>(QueryParts<TModel> parts)
+			/// <param name="parts">IQueryParts</param>
+			public IQuery<TModel> WithParts<TModel>(IQueryParts<TModel> parts)
 			{
 				return new Query<TModel>(unitOfWork, parts);
 			}
@@ -48,8 +48,8 @@ namespace Jeebs.Data
 			/// Query Stage 3: Build the query parts
 			/// </summary>
 			/// <typeparam name="TModel">Model Type</typeparam>
-			/// <param name="builder">QueryPartsBuilder</param>
-			public Query<TModel> WithBuilder<TModel>(QueryPartsBuilder<TModel, TOptions> builder)
+			/// <param name="builder">IQueryPartsBuilder</param>
+			public IQuery<TModel> WithBuilder<TModel>(IQueryPartsBuilder<TModel, TOptions> builder)
 			{
 				return WithParts(builder.Build(options));
 			}
