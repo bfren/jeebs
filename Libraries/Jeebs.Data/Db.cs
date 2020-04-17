@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Jeebs.Data.TypeHandlers;
 
 namespace Jeebs.Data
 {
@@ -65,5 +66,32 @@ namespace Jeebs.Data
 		/// <param name="connectionString">Connection String</param>
 		/// <param name="log">ILog</param>
 		public Db(string connectionString, ILog log) : this(log) => ConnectionString = connectionString;
+
+		/// <summary>
+		/// Add default type handlers
+		/// </summary>
+		static Db()
+		{
+			Dapper.SqlMapper.AddTypeHandler(new GuidTypeHandler());
+		}
+
+		/// <summary>
+		/// Persist an EnumList to the database by encoding it as JSON
+		/// </summary>
+		/// <typeparam name="T">Type to handle</typeparam>
+		protected static void AddEnumListTypeHandler<T>()
+			where T : Enum
+		{
+			Dapper.SqlMapper.AddTypeHandler(new EnumListTypeHandler<T>());
+		}
+
+		/// <summary>
+		/// Persist a type to the database by encoding it as JSON
+		/// </summary>
+		/// <typeparam name="T">Type to handle</typeparam>
+		protected static void AddJsonTypeHandler<T>()
+		{
+			Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
+		}
 	}
 }
