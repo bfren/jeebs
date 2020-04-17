@@ -13,6 +13,7 @@ namespace Jeebs.Data
 		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="adapter">IAdapter</param>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
 		public static string Extract<T>(this IAdapter adapter, params Table[] tables)
 		{

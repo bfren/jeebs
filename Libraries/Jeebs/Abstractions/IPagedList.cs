@@ -5,6 +5,10 @@ using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Paged liste interface
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public interface IPagedList<T> : IList<T>
 	{
 		/// <summary>
