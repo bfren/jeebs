@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Apps.WebApps.Mvc
+namespace Jeebs.Mvc
 {
 	/// <summary>
 	/// Controller class
 	/// </summary>
-	/// <typeparam name="TApp">MvcApp</typeparam>
 	public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	{
 		/// <summary>

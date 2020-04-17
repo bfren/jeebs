@@ -1,7 +1,7 @@
 ﻿using System;
 using Jeebs.Data;
 
-namespace Jeebs.Apps.WebApps.Mvc
+namespace Jeebs.Mvc
 {
 	/// <summary>
 	/// Controller class
