@@ -23,49 +23,60 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public IQuery<T> QueryPosts<T>(Action<QueryPosts.Options>? modifyOptions = null)
+		public async Task<IResult<List<T>>> QueryPostsAsync<T>(Action<QueryPosts.Options>? modifyOptions = null)
+			where T : IEntity
 		{
-			return StartNewQuery()
+			// Get query
+			var query = StartNewQuery()
 				.WithModel<T>()
 				.WithOptions(modifyOptions)
 				.WithParts(new QueryPosts.Builder<T>(db))
 				.GetQuery();
-		}
 
-		/// <summary>
-		/// Add Meta and Custom Fields to the list of posts
-		/// </summary>
-		/// <typeparam name="T">Post model</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="meta">Expression to return MetaDictionary property</param>
-		public async Task<IResult<bool>> AddMetaAndCustomFieldsToPostsAsync<T>(IEnumerable<T> posts)
-			where T : IEntity
-		{
-			// Get MetaDictionary from the cache
-			if (GetMetaDictionary<T>() is PropertyInfo meta)
+			// Execute query
+			var results = await query.ExecuteQueryAsync();
+			if (results.Err is IErrorList)
+			{
+				return Result.Failure<List<T>>(results.Err);
+			}
+
+			// If nothing matches, return empty list
+			if (!results.Val.Any())
+			{
+				return Result.Success(new List<T>());
+			}
+
+			// If the type has a MetaDictionary, add Meta and check for Custom Fields
+			var posts = results.Val.ToList();
+			if (GetMetaDictionary<T>() is PropertyInfo info)
 			{
 				// Convert to info class
-				var info = new PropertyInfo<T, MetaDictionary>(meta);
+				var meta = new PropertyInfo<T, MetaDictionary>(info);
 
 				// Get Meta
-				var addMetaResult = await AddMetaToPostsAsync(posts, info);
-				if (addMetaResult.Err is IErrorList addMetaErr)
+				var addMetaResult = await AddMetaToPostsAsync(posts, meta);
+				if (addMetaResult.Err is IErrorList)
 				{
-					return Result.Failure(addMetaErr);
+					return Result.Failure<List<T>>(addMetaResult.Err);
 				}
 
 				// Get Custom Fields
-				var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, info);
-				if (addCustomFieldsResult.Err is IErrorList addCustomFieldsErr)
+				var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta);
+				if (addCustomFieldsResult.Err is IErrorList)
 				{
-					return Result.Failure(addCustomFieldsErr);
+					return Result.Failure<List<T>>(addCustomFieldsResult.Err);
 				}
-
-				// Return success
-				return Result.Success();
 			}
 
-			throw new Jx.WordPress.QueryException($"Model {typeof(T)} does not have a MetaDictionary property.");
+			// Add Taxonomies
+			var addTaxonomiesResult = await AddTaxonomiesToPostsAsync(posts);
+			if (addTaxonomiesResult.Err is IErrorList)
+			{
+				return Result.Failure<List<T>>(addTaxonomiesResult.Err);
+			}
+
+			// Return posts
+			return Result.Success(posts);
 		}
 
 		/// <summary>
@@ -77,12 +88,6 @@ namespace Jeebs.WordPress
 		private async Task<IResult<bool>> AddMetaToPostsAsync<T>(IEnumerable<T> posts, PropertyInfo<T, MetaDictionary> meta)
 			where T : IEntity
 		{
-			// Don't do anything if there aren't any posts
-			if (!posts.Any())
-			{
-				return Result.Failure("No posts to work on.");
-			}
-
 			// Create options
 			var options = new QueryPostsMeta.Options
 			{
@@ -97,7 +102,7 @@ namespace Jeebs.WordPress
 				.GetQuery();
 
 			// Get meta
-			var metaResult = await query.ExecuteQuery();
+			var metaResult = await query.ExecuteQueryAsync();
 			if (metaResult.Err is IErrorList)
 			{
 				return Result.Failure(metaResult.Err);
@@ -137,12 +142,6 @@ namespace Jeebs.WordPress
 		private async Task<IResult<bool>> AddCustomFieldsToPostsAsync<T>(IEnumerable<T> posts, PropertyInfo<T, MetaDictionary> meta)
 			where T : IEntity
 		{
-			// Don't do anything if there aren't any posts
-			if (!posts.Any())
-			{
-				return Result.Failure("No posts to work on.");
-			}
-
 			// Get custom fields from the cache
 			var customFields = GetCustomFields<T>();
 
@@ -165,14 +164,14 @@ namespace Jeebs.WordPress
 				var metaDictionary = meta.Get(post);
 
 				// Add each custom field
-				foreach (var customField in customFields)
+				foreach (var info in customFields)
 				{
 					// Get field property
-					var customFieldProperty = (ICustomField)post.GetProperty(customField.Name);
+					var customField = (ICustomField)post.GetProperty(info.Name);
 
 					// Hydrate the field
-					var result = await customFieldProperty.Hydrate(db, unitOfWork, metaDictionary);
-					if (result.Err is IErrorList err && customFieldProperty.IsRequired)
+					var result = await customField.HydrateAsync(db, unitOfWork, metaDictionary);
+					if (result.Err is IErrorList err && customField.IsRequired)
 					{
 						return Result.Failure(err);
 					}
@@ -188,15 +187,9 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Post model</typeparam>
 		/// <param name="posts"></param>
-		public async Task<IResult<bool>> AddTaxonomiesToPostsAsync<T>(IEnumerable<T> posts)
+		private async Task<IResult<bool>> AddTaxonomiesToPostsAsync<T>(IEnumerable<T> posts)
 			where T : IEntity
 		{
-			// Don't do anything if there aren't any posts
-			if (!posts.Any())
-			{
-				return Result.Failure("No posts to work on.");
-			}
-
 			// Get term lists from the cache
 			var termLists = GetTermLists<T>();
 
@@ -214,10 +207,16 @@ namespace Jeebs.WordPress
 
 			// Add each taxonomy to the query options
 			var firstPost = posts.First();
-			foreach (var list in termLists)
+			foreach (var info in termLists)
 			{
 				// Get taxonomy
-				var taxonomy = new PropertyInfo<T, TermList>(list).Get(firstPost).Taxonomy;
+				var taxonomy = new PropertyInfo<T, TermList>(info).Get(firstPost).Taxonomy;
+
+				// Make sure taxonomy has been registered
+				if (!Taxonomy.IsRegistered(taxonomy))
+				{
+					throw new Jx.WordPress.QueryException($"Taxonomy '{taxonomy}' must be registered in WpDb.RegisterCustomTaxonomies().");
+				}
 
 				// Add to query
 				options.Taxonomies.Add(taxonomy);
@@ -231,7 +230,7 @@ namespace Jeebs.WordPress
 				.GetQuery();
 
 			// Get terms
-			var termsResult = await query.ExecuteQuery();
+			var termsResult = await query.ExecuteQueryAsync();
 			if (termsResult.Err is IErrorList)
 			{
 				return Result.Failure(termsResult.Err);
@@ -240,19 +239,24 @@ namespace Jeebs.WordPress
 			// Now add the terms to each post
 			foreach (var post in posts)
 			{
-				foreach (var list in termLists)
+				foreach (var info in termLists)
 				{
-					// Get PropertyInfo<>
-					var info = new PropertyInfo<T, TermList>(list).Get(post);
+					// Get PropertyInfo<> for the TermList
+					var list = new PropertyInfo<T, TermList>(info).Get(post);
 
 					// Get terms
 					var terms = from t in termsResult.Val
 								where t.PostId == post.Id
-								&& t.Taxonomy == info.Taxonomy
+								&& t.Taxonomy == list.Taxonomy
 								select (TermList.Term)t;
 
 					// Add terms to post
-					info.AddRange(terms);
+					if (!terms.Any())
+					{
+						continue;
+					}
+
+					list.AddRange(terms);
 				}
 			}
 

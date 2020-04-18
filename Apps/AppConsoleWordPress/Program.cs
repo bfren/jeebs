@@ -30,10 +30,10 @@ namespace AppConsoleWordPress
 			var usa = provider.GetService<WpUsa>();
 
 			// Perform tests
-			await Terms("BCG", bcg.Db);
-			await Terms("USA", usa.Db);
-			await InsertOption(bcg.Db);
-			await SearchSermons("holiness", bcg.Db, opt =>
+			await TermsAsync("BCG", bcg.Db);
+			await TermsAsync("USA", usa.Db);
+			await InsertOptionAsync(bcg.Db);
+			await SearchSermonsAsync("holiness", bcg.Db, opt =>
 			{
 				opt.SearchText = "holiness";
 				opt.SearchOperator = SearchOperators.Like;
@@ -41,7 +41,7 @@ namespace AppConsoleWordPress
 				opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 				opt.Limit = 4;
 			});
-			await SearchSermons("jesus", bcg.Db, opt =>
+			await SearchSermonsAsync("jesus", bcg.Db, opt =>
 			{
 				opt.Type = WpBcg.PostTypes.Sermon;
 				opt.SearchText = "jesus";
@@ -64,7 +64,7 @@ namespace AppConsoleWordPress
 		/// </summary>
 		/// <param name="section"></param>
 		/// <param name="db"></param>
-		internal static async Task Terms(string section, IWpDb db)
+		internal static async Task TermsAsync(string section, IWpDb db)
 		{
 			Console.WriteLine();
 			Console.WriteLine($"== {section} Terms ==");
@@ -82,7 +82,7 @@ namespace AppConsoleWordPress
 		/// Insert an Option
 		/// </summary>
 		/// <param name="bcg"></param>
-		internal static async Task InsertOption(IWpDb bcg)
+		internal static async Task InsertOptionAsync(IWpDb bcg)
 		{
 			Console.WriteLine();
 			Console.WriteLine("== Option Insert ==");
@@ -108,32 +108,23 @@ namespace AppConsoleWordPress
 		/// <param name="search"></param>
 		/// <param name="bcg"></param>
 		/// <param name="opt"></param>
-		internal static async Task SearchSermons(string search, IWpDb bcg, Action<QueryPosts.Options> opt)
+		internal static async Task SearchSermonsAsync(string search, IWpDb bcg, Action<QueryPosts.Options> opt)
 		{
 			Console.WriteLine();
 			Console.WriteLine($"== Sermons: {search} ==");
 
 			using var q = bcg.GetQueryWrapper();
 
-			var query = q.QueryPosts<SermonModel>(opt);
+			var query = await q.QueryPostsAsync<SermonModel>(opt);
 
-			var count = await query.GetCount();
-			Console.WriteLine(count.Err is IErrorList
-				? $"{count.Err}"
-				: $"There are {count.Val} matching sermons."
+			Console.WriteLine(query.Err is IErrorList
+				? $"{query.Err}"
+				: $"There are {query.Val.Count} matching sermons."
 			);
 
-			var posts = await query.ExecuteQuery();
-			if (posts.Err is IErrorList)
+			foreach (var item in query.Val)
 			{
-				Console.WriteLine(posts.Err);
-			}
-			else
-			{
-				foreach (var item in posts.Val)
-				{
-					Console.WriteLine("{0:0000}: {1}", item.PostId, item.Title);
-				}
+				Console.WriteLine("{0:0000}: {1}", item.PostId, item.Title);
 			}
 		}
 
@@ -148,8 +139,7 @@ namespace AppConsoleWordPress
 
 			using var w = db.GetQueryWrapper();
 
-			var query = w.QueryPosts<PostModel>(opt => opt.Limit = 3);
-			var result = await query.ExecuteQuery();
+			var result = await w.QueryPostsAsync<PostModel>(opt => opt.Limit = 3);
 			if (result.Err is IErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts");
@@ -158,16 +148,6 @@ namespace AppConsoleWordPress
 			}
 
 			var posts = result.Val;
-
-			var metaAdded = await w.AddMetaAndCustomFieldsToPostsAsync(posts);
-
-			if (metaAdded.Err is IErrorList metaAddedErr)
-			{
-				Console.WriteLine("Error fetching meta");
-				Console.WriteLine(metaAddedErr);
-				return;
-			}
-
 			foreach (var post in posts)
 			{
 				Console.WriteLine("Post {0}", post.PostId);
@@ -191,31 +171,22 @@ namespace AppConsoleWordPress
 
 				using var q = db.GetQueryWrapper();
 
-				var query = q.QueryPosts<SermonModel>(opt =>
+				var query = await q.QueryPostsAsync<SermonModelWithCustomFields>(opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
 					opt.Limit = 10;
 				});
 
-				var result = await query.ExecuteQuery();
-				if (result.Err is IErrorList sermonsErr)
+				if (query.Err is IErrorList sermonsErr)
 				{
 					Console.WriteLine("Error fetching sermons");
 					Console.WriteLine(sermonsErr);
 					return;
 				}
 
-				var sermons = result.Val;
+				var sermons = query.Val;
 				Console.WriteLine($"{sermons.Count()} sermons found");
-
-				var addResult = await q.AddMetaAndCustomFieldsToPostsAsync(sermons);
-				if (addResult.Err is IErrorList addErr)
-				{
-					Console.WriteLine("Error fetching meta and custom fields");
-					Console.WriteLine(addErr);
-					return;
-				}
 
 				foreach (var sermon in sermons.ToList())
 				{
@@ -245,33 +216,24 @@ namespace AppConsoleWordPress
 
 				using var q = db.GetQueryWrapper();
 
-				var query = q.QueryPosts<SermonModel>(opt =>
+				var query = await q.QueryPostsAsync<SermonModelWithTaxonomies>(opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
 					opt.Limit = 10;
 				});
 
-				var result = await query.ExecuteQuery();
-				if (result.Err is IErrorList sermonsErr)
+				if (query.Err is IErrorList sermonsErr)
 				{
 					Console.WriteLine("Error fetching sermons");
 					Console.WriteLine(sermonsErr);
 					return;
 				}
 
-				var sermons = result.Val;
-				Console.WriteLine($"{sermons.Count()} sermons found");
+				var sermons = query.Val;
+				Console.WriteLine($"{sermons.Count} sermons found");
 
-				var addResult = await q.AddTaxonomiesToPostsAsync(sermons);
-				if (addResult.Err is IErrorList addErr)
-				{
-					Console.WriteLine("Error fetching taxnomies");
-					Console.WriteLine(addErr);
-					return;
-				}
-
-				foreach (var sermon in sermons.ToList())
+				foreach (var sermon in sermons)
 				{
 					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
 
@@ -319,6 +281,13 @@ namespace AppConsoleWordPress
 
 		public string Title { get; set; } = string.Empty;
 
+		public DateTime PublishedOn { get; set; }
+	}
+
+	class SermonModelWithCustomFields : SermonModel
+	{
+		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+
 		public PassageCustomField Passage { get; set; } = new PassageCustomField();
 
 		public PdfCustomField Pdf { get; set; } = new PdfCustomField();
@@ -326,11 +295,10 @@ namespace AppConsoleWordPress
 		public AudioRecordingCustomField Audio { get; set; } = new AudioRecordingCustomField();
 
 		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+	}
 
-		public DateTime PublishedOn { get; set; }
-
-		public MetaDictionary Meta { get; set; } = new MetaDictionary();
-
+	class SermonModelWithTaxonomies : SermonModel
+	{
 		public TermList BibleBooks { get; set; } = new TermList(WpBcg.Taxonomies.BibleBook);
 
 		public TermList Series { get; set; } = new TermList(WpBcg.Taxonomies.Series);

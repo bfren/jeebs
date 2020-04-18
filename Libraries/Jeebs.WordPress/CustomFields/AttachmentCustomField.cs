@@ -26,7 +26,7 @@ namespace Jeebs.WordPress
 		/// <param name="db">IWpDb</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="meta">MetaDictionary</param>
-		public override async Task<IResult<bool>> Hydrate(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
@@ -52,7 +52,7 @@ namespace Jeebs.WordPress
 			using var w = db.GetQueryWrapper();
 
 			// Get matching posts
-			var query = w.QueryPosts<Attachment>(opt =>
+			var result = await w.QueryPostsAsync<Attachment>(opt =>
 			{
 				opt.Id = postId;
 				opt.Type = PostType.Attachment;
@@ -60,25 +60,13 @@ namespace Jeebs.WordPress
 				opt.Limit = 1;
 			});
 
-			var result = await query.ExecuteQuery();
-
-			// Check result
 			if (result.Err is IErrorList)
 			{
 				return Result.Failure(result.Err);
 			}
 
-			var attachments = result.Val;
-
-			// Add meta
-			var metaResult = await w.AddMetaAndCustomFieldsToPostsAsync(attachments);
-			if (metaResult.Err is IErrorList)
-			{
-				return Result.Failure(metaResult.Err);
-			}
-
 			// Get attachment (there should be only one)
-			ValueObj = attachments.Single();
+			ValueObj = result.Val.Single();
 
 			if (ValueObj.Meta.TryGetValue(Constants.AttachedFile, out var urlPath))
 			{

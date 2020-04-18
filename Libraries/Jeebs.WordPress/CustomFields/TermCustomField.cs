@@ -26,7 +26,7 @@ namespace Jeebs.WordPress
 		/// <param name="db">IWpDb</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="meta">MetaDictionary</param>
-		public override async Task<IResult<bool>> Hydrate(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
@@ -50,10 +50,9 @@ namespace Jeebs.WordPress
 
 			// Start a new query
 			using var w = db.GetQueryWrapper();
-			var query = w.QueryTaxonomy<Term>(opt => opt.Id = termId);
 
-			// Get results
-			var result = await query.ExecuteQuery();
+			// Get terms
+			var result = await w.QueryTaxonomyAsync<Term>(opt => opt.Id = termId);
 			if (result.Err is IErrorList)
 			{
 				return Result.Failure(result.Err);

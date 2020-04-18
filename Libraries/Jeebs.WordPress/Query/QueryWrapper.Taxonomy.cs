@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Jeebs.Data;
 
 namespace Jeebs.WordPress
@@ -15,13 +16,14 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public IQuery<T> QueryTaxonomy<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
+		public async Task<IResult<IEnumerable<T>>> QueryTaxonomyAsync<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
 		{
-			return StartNewQuery()
+			return await StartNewQuery()
 				.WithModel<T>()
 				.WithOptions(modifyOptions)
 				.WithParts(new QueryTaxonomy.Builder<T>(db))
-				.GetQuery();
+				.GetQuery()
+				.ExecuteQueryAsync();
 		}
 	}
 }

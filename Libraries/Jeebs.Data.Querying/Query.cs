@@ -36,7 +36,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Returns the number of items to be retrieved by the current query parts
 		/// </summary>
-		public async Task<IResult<long>> GetCount()
+		public async Task<IResult<long>> GetCountAsync()
 		{
 			// Store original SELECT
 			var originalSelect = parts.Select;
@@ -58,7 +58,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Retrieves the items using the current query parts
 		/// </summary>
-		public async Task<IResult<IEnumerable<T>>> ExecuteQuery()
+		public async Task<IResult<IEnumerable<T>>> ExecuteQueryAsync()
 		{
 			// Get query
 			var query = unitOfWork.Adapter.Retrieve(parts);
@@ -71,10 +71,10 @@ namespace Jeebs.Data
 		/// Retrieves the items using the current query parts, using LIMIT / OFFSET to select only the items on a particular page
 		/// </summary>
 		/// <param name="page">Current page number</param>
-		public async Task<IResult<IPagedList<T>>> ExecuteQuery(long page)
+		public async Task<IResult<IPagedList<T>>> ExecuteQueryAsync(long page)
 		{
 			// Get the count
-			var count = await GetCount();
+			var count = await GetCountAsync();
 			if (count.Err is IErrorList)
 			{
 				return Result.Failure<IPagedList<T>>(count.Err);
@@ -88,7 +88,7 @@ namespace Jeebs.Data
 			parts.Limit = values.ItemsPer;
 
 			// Get the items
-			var items = await ExecuteQuery();
+			var items = await ExecuteQueryAsync();
 			if (items.Err is IErrorList)
 			{
 				return Result.Failure<IPagedList<T>>(items.Err);

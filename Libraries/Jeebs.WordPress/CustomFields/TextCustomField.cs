@@ -33,7 +33,7 @@ namespace Jeebs.WordPress
 		/// <param name="db">IWpDb</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="meta">MetaDictionary</param>
-		public override async Task<IResult<bool>> Hydrate(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success

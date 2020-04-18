@@ -73,7 +73,7 @@ namespace Jeebs
 				(_, args) =>
 				{
 					// Check all given values against name
-					foreach (var item in args!.Values)
+					foreach (var item in args.Values)
 					{
 						if (Check(args.Name, item) is Success<T> success)
 						{
@@ -86,6 +86,26 @@ namespace Jeebs
 				},
 				new ParseArgs<T>(name, values)
 			);
+		}
+
+		/// <summary>
+		/// Returns true if the given name matches a registered Enum value
+		/// </summary>
+		/// <typeparam name="T">Enum value type</typeparam>
+		/// <param name="name">Enum name</param>
+		/// <param name="values">Enum values to check name against</param>
+		protected static bool IsRegistered<T>(string name, T[] values)
+			where T : Enum
+		{
+			try
+			{
+				Parse(name, values);
+				return true;
+			}
+			catch (Jx.ParseException)
+			{
+				return false;
+			}
 		}
 
 		/// <summary>

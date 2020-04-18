@@ -57,9 +57,9 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Add a custom taxonomy
 		/// </summary>
-		/// <param name="type">Taxonomy to add</param>
+		/// <param name="taxonomy">Taxonomy to add</param>
 		/// <returns>False if the taxonomy already exists</returns>
-		public static bool AddCustomTaxonomy(Taxonomy type) => all.Add(type);
+		public static bool AddCustomTaxonomy(Taxonomy taxonomy) => all.Add(taxonomy);
 
 		/// <summary>
 		/// Parse Taxonomy value name
@@ -67,5 +67,11 @@ namespace Jeebs.WordPress.Enums
 		/// <param name="name">Value name</param>
 		/// <returns>Taxonomy object</returns>
 		public static Taxonomy Parse(string name) => Parse(name, all.ToArray());
+
+		/// <summary>
+		/// Returns whether or not the specified taxonomy has been registered
+		/// </summary>
+		/// <param name="taxonomy">Taxonomy to check</param>
+		public static bool IsRegistered(Taxonomy taxonomy) => IsRegistered(taxonomy.ToString(), all.ToArray());
 	}
 }

@@ -14,17 +14,17 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Returns the number of items to be retrieved by the current query parts
 		/// </summary>
-		public Task<IResult<long>> GetCount();
+		public Task<IResult<long>> GetCountAsync();
 
 		/// <summary>
 		/// Retrieves the items using the current query parts
 		/// </summary>
-		public Task<IResult<IEnumerable<T>>> ExecuteQuery();
+		public Task<IResult<IEnumerable<T>>> ExecuteQueryAsync();
 
 		/// <summary>
 		/// Retrieves the items using the current query parts, using LIMIT / OFFSET to select only the items on a particular page
 		/// </summary>
 		/// <param name="page">Current page number</param>
-		public Task<IResult<IPagedList<T>>> ExecuteQuery(long page);
+		public Task<IResult<IPagedList<T>>> ExecuteQueryAsync(long page);
 	}
 }
