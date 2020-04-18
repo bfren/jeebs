@@ -11,6 +11,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Util;
 using Jeebs.WordPress;
+using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +53,7 @@ namespace AppConsoleWordPress
 			await FetchMeta(bcg.Db);
 			await FetchCustomFields(bcg.Db);
 			await FetchTaxonomies(bcg.Db);
+			await ApplyContentFilters(bcg.Db);
 
 			// End
 			Console.WriteLine();
@@ -253,6 +255,32 @@ namespace AppConsoleWordPress
 				Console.WriteLine(ex);
 			}
 		}
+
+		/// <summary>
+		/// Apply content filters
+		/// </summary>
+		/// <param name="db"></param>
+		internal static async Task ApplyContentFilters(IWpDb db)
+		{
+			Console.WriteLine();
+			Console.WriteLine("== Content Filters ==");
+
+			using var w = db.GetQueryWrapper();
+
+			var result = await w.QueryPostsAsync<PostModelWithContent>(opt => opt.Limit = 3, GenerateExcerpt.Create());
+			if (result.Err is IErrorList postsErr)
+			{
+				Console.WriteLine("Error fetching posts with content filter");
+				Console.WriteLine(postsErr);
+				return;
+			}
+
+			foreach (var post in result.Val)
+			{
+				Console.WriteLine("Post {0}", post.PostId);
+				Console.WriteLine("  - {0}", post.Content);
+			}
+		}
 	}
 
 	class TermModel
@@ -271,6 +299,11 @@ namespace AppConsoleWordPress
 		public long PostId { get; set; }
 
 		public MetaDictionary Meta { get; set; }
+	}
+
+	class PostModelWithContent : PostModel
+	{
+		public string Content { get; set; }
 	}
 
 	class SermonModel : IEntity

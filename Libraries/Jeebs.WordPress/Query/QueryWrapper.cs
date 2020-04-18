@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Tables;
 
@@ -47,6 +48,11 @@ namespace Jeebs.WordPress
 		private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> customFieldsCache;
 
 		/// <summary>
+		/// Post Content cache
+		/// </summary>
+		private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> contentCache;
+
+		/// <summary>
 		/// Create empty cache dictionaries
 		/// </summary>
 		static QueryWrapper()
@@ -54,6 +60,7 @@ namespace Jeebs.WordPress
 			metaDictionaryCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
 			termListsCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
 			customFieldsCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
+			contentCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
 		}
 
 		/// <summary>
@@ -129,6 +136,29 @@ namespace Jeebs.WordPress
 			}
 
 			return customFields.ToList();
+		}
+
+		/// <summary>
+		/// Get Post Content property for specified model
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		private static PropertyInfo? GetPostContent<T>()
+		{
+			// Get from or Add to the cache
+			var content = contentCache.GetOrAdd(typeof(T), type =>
+			{
+				return from c in type.GetProperties()
+					   where c.Name == nameof(WpPostEntity.Content)
+					   select c;
+			});
+
+			// If content is not defined return null
+			if (!content.Any())
+			{
+				return null;
+			}
+
+			return content.Single();
 		}
 
 		#endregion

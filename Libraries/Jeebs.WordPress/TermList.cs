@@ -6,7 +6,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress
 {
 	/// <summary>
-	/// Term List
+	/// Term List - allows taxonomies to be added to posts
 	/// </summary>
 	public sealed class TermList : List<TermList.Term>
 	{
