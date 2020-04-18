@@ -43,6 +43,6 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Count
 		/// </summary>
-		public int Count { get; set; }
+		public long Count { get; set; }
 	}
 }

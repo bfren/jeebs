@@ -27,6 +27,6 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// SortOrder
 		/// </summary>
-		public int SortOrder { get; set; }
+		public long SortOrder { get; set; }
 	}
 }

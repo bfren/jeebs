@@ -62,7 +62,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Rating
 		/// </summary>
-		public int Rating { get; set; }
+		public long Rating { get; set; }
 
 		/// <summary>
 		/// LastUpdatedOn

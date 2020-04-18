@@ -64,7 +64,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Karma
 		/// </summary>
-		public int Karma { get; set; }
+		public long Karma { get; set; }
 
 		/// <summary>
 		/// IsApproved

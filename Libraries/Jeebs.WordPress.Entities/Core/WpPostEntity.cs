@@ -94,6 +94,6 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// CommentsCount
 		/// </summary>
-		public int CommentsCount { get; set; }
+		public long CommentsCount { get; set; }
 	}
 }

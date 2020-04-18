@@ -51,6 +51,7 @@ namespace AppConsoleWordPress
 			});
 			await FetchMeta(bcg.Db);
 			await FetchCustomFields(bcg.Db);
+			await FetchTaxonomies(bcg.Db);
 
 			// End
 			Console.WriteLine();
@@ -230,56 +231,108 @@ namespace AppConsoleWordPress
 				Console.WriteLine(ex);
 			}
 		}
+
+		/// <summary>
+		/// Fetch taxonomies
+		/// </summary>
+		/// <param name="db"></param>
+		internal static async Task FetchTaxonomies(IWpDb db)
+		{
+			try
+			{
+				Console.WriteLine();
+				Console.WriteLine("== Taxonomies ==");
+
+				using var q = db.GetQueryWrapper();
+
+				var query = q.QueryPosts<SermonModel>(opt =>
+				{
+					opt.Type = WpBcg.PostTypes.Sermon;
+					opt.SortRandom = true;
+					opt.Limit = 10;
+				});
+
+				var result = await query.ExecuteQuery();
+				if (result.Err is IErrorList sermonsErr)
+				{
+					Console.WriteLine("Error fetching sermons");
+					Console.WriteLine(sermonsErr);
+					return;
+				}
+
+				var sermons = result.Val;
+				Console.WriteLine($"{sermons.Count()} sermons found");
+
+				var addResult = await q.AddTaxonomiesToPostsAsync(sermons);
+				if (addResult.Err is IErrorList addErr)
+				{
+					Console.WriteLine("Error fetching taxnomies");
+					Console.WriteLine(addErr);
+					return;
+				}
+
+				foreach (var sermon in sermons.ToList())
+				{
+					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
+
+					foreach (var book in sermon.BibleBooks)
+					{
+						Console.WriteLine("  - Bible Book: {0}", book);
+					}
+
+					foreach (var series in sermon.Series)
+					{
+						Console.WriteLine("  - Series: {0}", series);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+		}
 	}
-}
 
-class TermModel
-{
-	public string Title { get; set; }
-
-	public Taxonomy Taxonomy { get; set; }
-
-	public int Count { get; set; }
-}
-
-class PostModel : IEntity
-{
-	public long Id { get => PostId; set => PostId = value; }
-
-	public long PostId { get; set; }
-
-	public MetaDictionary Meta { get; set; }
-}
-
-class SermonModel : IEntity
-{
-	public long Id { get => PostId; set => PostId = value; }
-
-	public long PostId { get; set; }
-
-	public string Title { get; set; }
-
-	public PassageCustomField Passage { get; set; }
-
-	public PdfCustomField Pdf { get; set; }
-
-	public AudioRecordingCustomField Audio { get; set; }
-
-	public FirstPreachedCustomField FirstPreached { get; set; }
-
-	public DateTime PublishedOn { get; set; }
-
-	public MetaDictionary Meta { get; set; }
-
-	public SermonModel()
+	class TermModel
 	{
-		Title = string.Empty;
-		Passage = new PassageCustomField();
-		Pdf = new PdfCustomField();
-		Audio = new AudioRecordingCustomField();
-		FirstPreached = new FirstPreachedCustomField();
-		PublishedOn = DateTime.MinValue;
-		Meta = new MetaDictionary();
+		public string Title { get; set; }
+
+		public Taxonomy Taxonomy { get; set; }
+
+		public int Count { get; set; }
 	}
 
+	class PostModel : IEntity
+	{
+		public long Id { get => PostId; set => PostId = value; }
+
+		public long PostId { get; set; }
+
+		public MetaDictionary Meta { get; set; }
+	}
+
+	class SermonModel : IEntity
+	{
+		public long Id { get => PostId; set => PostId = value; }
+
+		public long PostId { get; set; }
+
+		public string Title { get; set; } = string.Empty;
+
+		public PassageCustomField Passage { get; set; } = new PassageCustomField();
+
+		public PdfCustomField Pdf { get; set; } = new PdfCustomField();
+
+		public AudioRecordingCustomField Audio { get; set; } = new AudioRecordingCustomField();
+
+		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+
+		public DateTime PublishedOn { get; set; }
+
+		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+
+		public TermList BibleBooks { get; set; } = new TermList(WpBcg.Taxonomies.BibleBook);
+
+		public TermList Series { get; set; } = new TermList(WpBcg.Taxonomies.Series);
+	}
 }

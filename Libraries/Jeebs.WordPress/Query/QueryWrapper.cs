@@ -37,6 +37,11 @@ namespace Jeebs.WordPress
 		private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> metaDictionaryCache;
 
 		/// <summary>
+		/// Taxonomies cache
+		/// </summary>
+		private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> termListsCache;
+
+		/// <summary>
 		/// Custom Fields cache
 		/// </summary>
 		private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> customFieldsCache;
@@ -47,6 +52,7 @@ namespace Jeebs.WordPress
 		static QueryWrapper()
 		{
 			metaDictionaryCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
+			termListsCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
 			customFieldsCache = new ConcurrentDictionary<Type, IEnumerable<PropertyInfo>>();
 		}
 
@@ -54,7 +60,7 @@ namespace Jeebs.WordPress
 		/// Get MetaDictionary for specified model
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
-		private static PropertyInfo<T, MetaDictionary>? GetMetaDictionary<T>()
+		private static PropertyInfo? GetMetaDictionary<T>()
 		{
 			// Get from or Add to the cache
 			var metaDictionary = metaDictionaryCache.GetOrAdd(typeof(T), type =>
@@ -70,13 +76,36 @@ namespace Jeebs.WordPress
 				throw new Jx.WordPress.QueryException("You must have no more than one MetaDictionary property in a model.");
 			}
 
-			// If MetaDictionary is not defined return false and an empty PropertyInfo
+			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
 				return null;
 			}
 
-			return new PropertyInfo<T, MetaDictionary>(metaDictionary.Single());
+			return metaDictionary.Single();
+		}
+
+		/// <summary>
+		/// Get Term Lists for specified model
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		private static List<PropertyInfo> GetTermLists<T>()
+		{
+			// Get from or Add to the cache
+			var taxonomies = termListsCache.GetOrAdd(typeof(T), type =>
+			{
+				return from t in type.GetProperties()
+					   where t.PropertyType.IsEquivalentTo(typeof(TermList))
+					   select t;
+			});
+
+			// If there aren't any return an empty list
+			if (!taxonomies.Any())
+			{
+				return new List<PropertyInfo>();
+			}
+
+			return taxonomies.ToList();
 		}
 
 		/// <summary>
@@ -93,7 +122,7 @@ namespace Jeebs.WordPress
 					   select cf;
 			});
 
-			// If there aren't any return false and an empty list
+			// If there aren't any return an empty list
 			if (!customFields.Any())
 			{
 				return new List<PropertyInfo>();

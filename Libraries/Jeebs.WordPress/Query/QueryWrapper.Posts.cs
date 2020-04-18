@@ -41,18 +41,21 @@ namespace Jeebs.WordPress
 		public async Task<IResult<bool>> AddMetaAndCustomFieldsToPostsAsync<T>(IEnumerable<T> posts)
 			where T : IEntity
 		{
-			// Get MetaDictionary
-			if (GetMetaDictionary<T>() is PropertyInfo<T, MetaDictionary> meta)
+			// Get MetaDictionary from the cache
+			if (GetMetaDictionary<T>() is PropertyInfo meta)
 			{
+				// Convert to info class
+				var info = new PropertyInfo<T, MetaDictionary>(meta);
+
 				// Get Meta
-				var addMetaResult = await AddMetaToPostsAsync(posts, meta);
+				var addMetaResult = await AddMetaToPostsAsync(posts, info);
 				if (addMetaResult.Err is IErrorList addMetaErr)
 				{
 					return Result.Failure(addMetaErr);
 				}
 
 				// Get Custom Fields
-				var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta);
+				var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, info);
 				if (addCustomFieldsResult.Err is IErrorList addCustomFieldsErr)
 				{
 					return Result.Failure(addCustomFieldsErr);
@@ -95,8 +98,6 @@ namespace Jeebs.WordPress
 
 			// Get meta
 			var metaResult = await query.ExecuteQuery();
-
-			// Return errors if there are any
 			if (metaResult.Err is IErrorList)
 			{
 				return Result.Failure(metaResult.Err);
@@ -142,7 +143,7 @@ namespace Jeebs.WordPress
 				return Result.Failure("No posts to work on.");
 			}
 
-			// Get all custom field properties from the model
+			// Get custom fields from the cache
 			var customFields = GetCustomFields<T>();
 
 			// If no custom fields, return success
@@ -183,15 +184,12 @@ namespace Jeebs.WordPress
 		}
 
 		/// <summary>
-		/// Add Taxonomies to posts - <typeparamref name="TTerm"/> can contain columns from Term and TermRelationship tables
+		/// Add Taxonomies to posts
 		/// </summary>
-		/// <typeparam name="TPost">Post model</typeparam>
-		/// <typeparam name="TTerm">Term model</typeparam>
+		/// <typeparam name="T">Post model</typeparam>
 		/// <param name="posts"></param>
-		/// <param name="taxonomies"></param>
-		public async Task<IResult<bool>> AddTaxonomiesToPostsAsync<TPost, TTerm>(IEnumerable<TPost> posts)
-			where TPost : IEntity
-			where TTerm : ITerm
+		public async Task<IResult<bool>> AddTaxonomiesToPostsAsync<T>(IEnumerable<T> posts)
+			where T : IEntity
 		{
 			// Don't do anything if there aren't any posts
 			if (!posts.Any())
@@ -199,39 +197,88 @@ namespace Jeebs.WordPress
 				return Result.Failure("No posts to work on.");
 			}
 
+			// Get term lists from the cache
+			var termLists = GetTermLists<T>();
 
-
-			// Don't do anything if there aren't any taxonomies
-			if (taxonomies.Length == 0)
+			// If no term lists, return success
+			if (termLists.Count == 0)
 			{
-				return Result.Failure("No taxonomies to add.");
+				return Result.Success();
 			}
 
-			// Get post IDS
-			var postIds = posts.Select(p => p.Id).ToList();
-
-			// Add each taxonomy
-			foreach ((var taxonomy, var postTaxonomy) in taxonomies)
+			// Create options
+			var options = new QueryPostsTaxonomy.Options
 			{
-				// Build query
-				var query = StartNewQuery()
-					.WithModel<TTerm>()
-					.WithOptions<QueryPostsTaxonomy.Options>(opt =>
-					{
-						opt.Taxonomy = taxonomy;
-						opt.PostIds = postIds;
-					})
-					.WithParts(new QueryPostsTaxonomy.Builder<TTerm>(db))
-					.GetQuery();
+				PostIds = posts.Select(p => p.Id).ToList()
+			};
 
+			// Add each taxonomy to the query options
+			var firstPost = posts.First();
+			foreach (var list in termLists)
+			{
+				// Get taxonomy
+				var taxonomy = new PropertyInfo<T, TermList>(list).Get(firstPost).Taxonomy;
+
+				// Add to query
+				options.Taxonomies.Add(taxonomy);
 			}
 
-			throw new NotImplementedException();
+			// Build query
+			var query = StartNewQuery()
+				.WithModel<Term>()
+				.WithOptions(options)
+				.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
+				.GetQuery();
+
+			// Get terms
+			var termsResult = await query.ExecuteQuery();
+			if (termsResult.Err is IErrorList)
+			{
+				return Result.Failure(termsResult.Err);
+			}
+
+			// Now add the terms to each post
+			foreach (var post in posts)
+			{
+				foreach (var list in termLists)
+				{
+					// Get PropertyInfo<>
+					var info = new PropertyInfo<T, TermList>(list).Get(post);
+
+					// Get terms
+					var terms = from t in termsResult.Val
+								where t.PostId == post.Id
+								&& t.Taxonomy == info.Taxonomy
+								select (TermList.Term)t;
+
+					// Add terms to post
+					info.AddRange(terms);
+				}
+			}
+
+			// Return success
+			return Result.Success();
 		}
 
 		/// <summary>
 		/// Private PostMeta entity for meta queries
 		/// </summary>
 		private class PostMeta : Entities.WpPostMetaEntity { }
+
+		/// <summary>
+		/// Private Term entity for taxonomy queries
+		/// </summary>
+		private class Term : TermList.Term
+		{
+			/// <summary>
+			/// Enables query for multiple posts and multiple taxonomies
+			/// </summary>
+			public long PostId { get; set; }
+
+			/// <summary>
+			/// Enables query for multiple posts and multiple taxonomies
+			/// </summary>
+			public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
+		}
 	}
 }

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress
 {
 	/// <summary>
-	/// Query Posts Meta
+	/// Query Post Taxonomy
 	/// </summary>
-	internal partial class QueryPostsMeta
+	internal partial class QueryPostsTaxonomy
 	{
 		/// <summary>
 		/// Query Options
@@ -15,9 +16,14 @@ namespace Jeebs.WordPress
 		internal sealed class Options : Data.QueryOptions
 		{
 			/// <summary>
+			/// The taxonomy to query
+			/// </summary>
+			public List<Taxonomy> Taxonomies { get; set; } = new List<Taxonomy>();
+
+			/// <summary>
 			/// Search for multiple Posts
 			/// </summary>
-			public List<long>? PostIds { get; set; }
+			public List<long> PostIds { get; set; } = new List<long>();
 
 			/// <summary>
 			/// Setup object

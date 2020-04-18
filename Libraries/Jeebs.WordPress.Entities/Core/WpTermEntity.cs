@@ -32,6 +32,6 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Group
 		/// </summary>
-		public int Group { get; set; }
+		public long Group { get; set; }
 	}
 }

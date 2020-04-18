@@ -8,7 +8,7 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query Post Meta
 	/// </summary>
-	public partial class QueryPostsMeta
+	internal partial class QueryPostsMeta
 	{
 		/// <summary>
 		/// Query Builder
