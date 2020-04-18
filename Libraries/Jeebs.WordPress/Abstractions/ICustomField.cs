@@ -7,7 +7,7 @@ using Jeebs.Data;
 namespace Jeebs.WordPress
 {
 	/// <summary>
-	/// Custom Field
+	/// Custom Field interface
 	/// </summary>
 	public interface ICustomField
 	{
@@ -31,7 +31,7 @@ namespace Jeebs.WordPress
 	}
 
 	/// <summary>
-	/// Custom Field
+	/// Custom Field interface
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	public interface ICustomField<T> : ICustomField

@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public MySqlAdapter() : base('.', '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
+		public MySqlAdapter() : base('.', ", ", '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
 
 		/// <summary>
 		/// Return random sort string
@@ -30,8 +30,8 @@ namespace Jeebs.Data.Clients.MySql
 		{
 			return string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
 				table,
-				string.Join(", ", columns),
-				"@" + string.Join(", @", aliases)
+				string.Join(ColumnSeparator, columns),
+				"@" + string.Join($"{ColumnSeparator}@", aliases)
 			);
 		}
 
@@ -42,33 +42,39 @@ namespace Jeebs.Data.Clients.MySql
 		/// <returns>SELECT query</returns>
 		public override string Retrieve(IQueryParts parts)
 		{
+			// Make sure FROM is not null
+			if (parts.From == null)
+			{
+				throw new InvalidOperationException($"{nameof(IQueryParts)} must have FROM set before using it to retrieve a query.");
+			}
+
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
 
 			// Add INNER JOIN
 			if (parts.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)
 			{
-				foreach (var item in innerJoinValues)
+				foreach (var (table, on, equals) in innerJoinValues)
 				{
-					sql.Append($" INNER JOIN {item.table} ON {item.on} = {item.equals}");
+					sql.Append($" INNER JOIN {table} ON {on} = {equals}");
 				}
 			}
 
 			// Add LEFT JOIN
 			if (parts.LeftJoin is List<(string table, string on, string equals)> leftJoinValues)
 			{
-				foreach (var item in leftJoinValues)
+				foreach (var (table, on, equals) in leftJoinValues)
 				{
-					sql.Append($" LEFT JOIN {item.table} ON {item.on} = {item.equals}");
+					sql.Append($" LEFT JOIN {table} ON {on} = {equals}");
 				}
 			}
 
 			// Add RIGHT JOIN
 			if (parts.RightJoin is List<(string table, string on, string equals)> rightJoinValues)
 			{
-				foreach (var item in rightJoinValues)
+				foreach (var (table, on, equals) in rightJoinValues)
 				{
-					sql.Append($" RIGHT JOIN {item.table} ON {item.on} = {item.equals}");
+					sql.Append($" RIGHT JOIN {table} ON {on} = {equals}");
 				}
 			}
 
@@ -81,7 +87,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Add ORDER BY
 			if (parts.OrderBy is List<string> orderByValue)
 			{
-				sql.Append($" ORDER BY {string.Join(", ", orderByValue)}");
+				sql.Append($" ORDER BY {string.Join(ColumnSeparator, orderByValue)}");
 			}
 
 			// Add LIMIT
@@ -114,7 +120,7 @@ namespace Jeebs.Data.Clients.MySql
 		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
 		{
 			return string.Format("SELECT {0} FROM {1} WHERE {2} = @Id;",
-				string.Join(", ", columns),
+				string.Join(ColumnSeparator, columns),
 				table,
 				idColumn
 			);
@@ -142,7 +148,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Build SQL
 			var sql = string.Format("UPDATE {0} SET {1} WHERE {2} = @{3}",
 				table,
-				string.Join(", ", update),
+				string.Join(ColumnSeparator, update),
 				idColumn,
 				idAlias
 			);

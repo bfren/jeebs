@@ -71,7 +71,7 @@ namespace AppConsoleWordPress
 			using var w = db.UnitOfWork;
 
 			var count = await w.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {db.Term} WHERE {db.Term.Slug} LIKE @a;", new { a = "%a%" });
-			Console.WriteLine(count.Err is ErrorList
+			Console.WriteLine(count.Err is IErrorList
 				? $"{count.Err}"
 				: $"There are {count.Val} terms in {section}."
 			);
@@ -95,7 +95,7 @@ namespace AppConsoleWordPress
 			using var w = bcg.UnitOfWork;
 
 			var inserted = await w.InsertAsync(opt);
-			Console.WriteLine(inserted.Err is ErrorList
+			Console.WriteLine(inserted.Err is IErrorList
 				? $"{inserted.Err}"
 				: $"Test option '{inserted.Val.Key}' = '{inserted.Val.Value}'."
 			);
@@ -117,13 +117,13 @@ namespace AppConsoleWordPress
 			var query = q.QueryPosts<SermonModel>(opt);
 
 			var count = await query.GetCount();
-			Console.WriteLine(count.Err is ErrorList
+			Console.WriteLine(count.Err is IErrorList
 				? $"{count.Err}"
 				: $"There are {count.Val} matching sermons."
 			);
 
 			var posts = await query.ExecuteQuery();
-			if (posts.Err is ErrorList)
+			if (posts.Err is IErrorList)
 			{
 				Console.WriteLine(posts.Err);
 			}
@@ -149,7 +149,7 @@ namespace AppConsoleWordPress
 
 			var query = w.QueryPosts<PostModel>(opt => opt.Limit = 3);
 			var result = await query.ExecuteQuery();
-			if (result.Err is ErrorList postsErr)
+			if (result.Err is IErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts");
 				Console.WriteLine(postsErr);
@@ -158,9 +158,9 @@ namespace AppConsoleWordPress
 
 			var posts = result.Val;
 
-			var metaAdded = await w.AddMetaAndCustomFieldsToPosts(posts, p => p.Meta);
+			var metaAdded = await w.AddMetaAndCustomFieldsToPostsAsync(posts);
 
-			if (metaAdded.Err is ErrorList metaAddedErr)
+			if (metaAdded.Err is IErrorList metaAddedErr)
 			{
 				Console.WriteLine("Error fetching meta");
 				Console.WriteLine(metaAddedErr);
@@ -198,7 +198,7 @@ namespace AppConsoleWordPress
 				});
 
 				var result = await query.ExecuteQuery();
-				if (result.Err is ErrorList sermonsErr)
+				if (result.Err is IErrorList sermonsErr)
 				{
 					Console.WriteLine("Error fetching sermons");
 					Console.WriteLine(sermonsErr);
@@ -208,8 +208,8 @@ namespace AppConsoleWordPress
 				var sermons = result.Val;
 				Console.WriteLine($"{sermons.Count()} sermons found");
 
-				var addResult = await q.AddMetaAndCustomFieldsToPosts(sermons, p => p.Meta);
-				if (addResult.Err is ErrorList addErr)
+				var addResult = await q.AddMetaAndCustomFieldsToPostsAsync(sermons);
+				if (addResult.Err is IErrorList addErr)
 				{
 					Console.WriteLine("Error fetching meta and custom fields");
 					Console.WriteLine(addErr);

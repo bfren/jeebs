@@ -53,7 +53,7 @@ namespace Jeebs
 				else if (Err is IErrorList) // Val has been accessed
 				{
 					throw new Jx.ResultException("Result value has not been set and there are errors - " +
-						"use `Result.Err is ErrorList` before accessing Result.Val.", Err);
+						"use `Result.Err is IErrorList` before accessing Result.Val.", Err);
 				}
 				else // we should never get here!
 				{

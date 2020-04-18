@@ -7,7 +7,6 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Query parts
 	/// </summary>
-	/// <typeparam name="T">Model type</typeparam>
 	public sealed class QueryParts : IQueryParts
 	{
 		/// <summary>

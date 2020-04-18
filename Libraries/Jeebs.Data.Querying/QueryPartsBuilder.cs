@@ -131,7 +131,7 @@ namespace Jeebs.Data
 		/// Shorthand for IAdapter.EscapeAndJoin
 		/// </summary>
 		/// <param name="elements">The elements to escape and join</param>
-		public string Escape(params string?[] elements) => Adapter.EscapeAndJoin(elements);
+		public string Escape(params object?[] elements) => Adapter.EscapeAndJoin(elements);
 
 		#endregion
 
@@ -178,9 +178,9 @@ namespace Jeebs.Data
 		/// <param name="equals">Table and column to join to</param>
 		private IList<(string table, string on, string equals)> AddJoin(
 			IList<(string table, string on, string equals)>? join,
-			string table,
+			object table,
 			string on,
-			(string table, string column) equals
+			(object table, string column) equals
 		)
 		{
 			// Use existing list or create new one
@@ -200,7 +200,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
-		protected void AddInnerJoin(string table, string on, (string table, string column) equals)
+		protected void AddInnerJoin(object table, string on, (object table, string column) equals)
 		{
 			parts.InnerJoin = AddJoin(parts.InnerJoin, table, on, equals);
 		}
@@ -208,7 +208,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
-		protected void AddLeftJoin(string table, string on, (string table, string column) equals)
+		protected void AddLeftJoin(object table, string on, (string table, string column) equals)
 		{
 			parts.LeftJoin = AddJoin(parts.LeftJoin, table, on, equals);
 		}
@@ -216,7 +216,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
-		protected void AddRightJoin(string table, string on, (string table, string column) equals)
+		protected void AddRightJoin(object table, string on, (string table, string column) equals)
 		{
 			parts.RightJoin = AddJoin(parts.RightJoin, table, on, equals);
 		}

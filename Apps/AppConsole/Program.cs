@@ -37,7 +37,7 @@ namespace ConsoleApp
 
 			static void Write(IResult<Test> r, int num)
 			{
-				Console.WriteLine(r.Err is ErrorList e ? $"r{num} failed : {e}" : $"r{num} value : Text = '{r.Val.Text}', Num = {r.Val.Num}");
+				Console.WriteLine(r.Err is IErrorList e ? $"r{num} failed : {e}" : $"r{num} value : Text = '{r.Val.Text}', Num = {r.Val.Num}");
 			}
 		});
 	}

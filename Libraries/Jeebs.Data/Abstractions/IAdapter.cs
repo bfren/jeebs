@@ -11,9 +11,14 @@ namespace Jeebs.Data
 	public interface IAdapter
 	{
 		/// <summary>
-		/// Separator character
+		/// Schema separator character
 		/// </summary>
-		char Separator { get; }
+		char SchemaSeparator { get; }
+
+		/// <summary>
+		/// Select column separator string
+		/// </summary>
+		string ColumnSeparator { get; }
 
 		/// <summary>
 		/// Escape character
@@ -79,7 +84,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
-		string EscapeAndJoin(params string?[] elements);
+		string EscapeAndJoin(params object?[] elements);
 
 		/// <summary>
 		/// Escape a column using its table and alias

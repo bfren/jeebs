@@ -9,7 +9,6 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Saves query parts (stage 3) and enables stage 4: get query object
 		/// </summary>
-		/// <typeparam name="T">Model Type</typeparam>
 		public sealed class QueryWithParts : IQueryWithParts<TModel>
 		{
 			/// <summary>

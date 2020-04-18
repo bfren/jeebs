@@ -75,7 +75,7 @@ namespace Jeebs.Data
 		{
 			// Get the count
 			var count = await GetCount();
-			if (count.Err is ErrorList)
+			if (count.Err is IErrorList)
 			{
 				return Result.Failure<IPagedList<T>>(count.Err);
 			}
@@ -89,7 +89,7 @@ namespace Jeebs.Data
 
 			// Get the items
 			var items = await ExecuteQuery();
-			if (items.Err is ErrorList)
+			if (items.Err is IErrorList)
 			{
 				return Result.Failure<IPagedList<T>>(items.Err);
 			}

@@ -12,9 +12,14 @@ namespace Jeebs.Data
 	public abstract class Adapter : IAdapter
 	{
 		/// <summary>
-		/// Separator character
+		/// Schema separator character
 		/// </summary>
-		public char Separator { get; }
+		public char SchemaSeparator { get; }
+
+		/// <summary>
+		/// Column separator string
+		/// </summary>
+		public string ColumnSeparator { get; }
 
 		/// <summary>
 		/// Escape character
@@ -54,7 +59,8 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="separator">Separator character</param>
+		/// <param name="schemaSeparator">Schema separator character</param>
+		/// <param name="columnSeparator">Column separator string</param>
 		/// <param name="escapeOpen">Open escape character</param>
 		/// <param name="escapeClose">Close escape character</param>
 		/// <param name="alias">Alias keyword</param>
@@ -62,9 +68,10 @@ namespace Jeebs.Data
 		/// <param name="aliasClose">Alias close character</param>
 		/// <param name="sortAsc">Sort Ascending string</param>
 		/// <param name="sortDesc">Sort Descending string</param>
-		protected Adapter(char separator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
+		protected Adapter(char schemaSeparator, string columnSeparator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
 		{
-			Separator = separator;
+			SchemaSeparator = schemaSeparator;
+			ColumnSeparator = columnSeparator;
 			EscapeOpen = escapeOpen;
 			EscapeClose = escapeClose;
 			Alias = alias;
@@ -92,7 +99,7 @@ namespace Jeebs.Data
 			}
 
 			// If the name contains the separator character, use SplitAndJoin() instead
-			if (name.Contains(Separator))
+			if (name.Contains(SchemaSeparator))
 			{
 				return SplitAndEscape(name);
 			}
@@ -120,7 +127,7 @@ namespace Jeebs.Data
 		public string SplitAndEscape(string element)
 		{
 			// Split an element by the default separator
-			var elements = element.Split(Separator);
+			var elements = element.Split(SchemaSeparator);
 
 			// Now escape the elements and re-jothem
 			return EscapeAndJoin(elements);
@@ -131,7 +138,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
-		public string EscapeAndJoin(params string?[] elements)
+		public string EscapeAndJoin(params object?[] elements)
 		{
 			// Check for no elements
 			if (elements.Length == 0)
@@ -145,16 +152,18 @@ namespace Jeebs.Data
 			// Escape each element the array, skipping elements that are null / empty / whitespace
 			foreach (var element in elements)
 			{
-				if (string.IsNullOrWhiteSpace(element))
+				var str = element?.ToString();
+
+				if (string.IsNullOrWhiteSpace(str))
 				{
 					continue;
 				}
 
-				escaped.Add(Escape(element));
+				escaped.Add(Escape(str));
 			}
 
 			// Return escaped elements joined with the separator
-			return string.Join(Separator.ToString(), escaped);
+			return string.Join(SchemaSeparator.ToString(), escaped);
 		}
 
 		/// <summary>

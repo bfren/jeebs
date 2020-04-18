@@ -15,7 +15,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Cached maps of table classes to columns
 		/// </summary>
-		private static readonly Dictionary<string, ExtractedColumns> cache = new Dictionary<string, ExtractedColumns>();
+		private static readonly Dictionary<string, IExtractedColumns> cache = new Dictionary<string, IExtractedColumns>();
 
 		/// <summary>
 		/// Model properties
@@ -28,15 +28,46 @@ namespace Jeebs.Data
 		static Extract() => properties = typeof(TModel).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
 
 		/// <summary>
-		/// Extract columns from specified table
+		/// Extract columns from specified tables
 		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="tables">List of tables</param>
+		public static IExtractedColumns From(params Table[] tables)
+		{
+			// Extract matching columns from each of the tables
+			var mappedColumns = new List<IExtractedColumns>();
+			foreach (var table in tables)
+			{
+				mappedColumns.Add(ExtractSingle(table));
+			}
+
+			// Now create a master list of all the extracted columns
+			var mergedColumns = new ExtractedColumns();
+			foreach (var mapped in mappedColumns)
+			{
+				mergedColumns.AddRange(mapped);
+			}
+
+			// Make sure some columns were found
+			if (!mergedColumns.Any())
+			{
+				throw new Jx.Data.MappingException("No columns were extracted.");
+			}
+
+			// Get only distinct columns
+			var distinctColumns = mergedColumns.Distinct(new ExtractedColumn.Comparer());
+
+			// Return
+			return new ExtractedColumns(distinctColumns);
+		}
+
+		/// <summary>
+		/// Extract columns from a single table
+		/// </summary>
 		/// <param name="table">Table</param>
-		public static ExtractedColumns From<TTable>(TTable table)
-			where TTable : Table
+		private static IExtractedColumns ExtractSingle(Table table)
 		{
 			// Check the cache first to see if this model has already been used against this table
-			if (cache.TryGetValue(table.ToString(), out ExtractedColumns value))
+			if (cache.TryGetValue(table.ToString(), out IExtractedColumns value))
 			{
 				return value;
 			}

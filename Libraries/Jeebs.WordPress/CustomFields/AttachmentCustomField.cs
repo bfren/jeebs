@@ -63,7 +63,7 @@ namespace Jeebs.WordPress
 			var result = await query.ExecuteQuery();
 
 			// Check result
-			if (result.Err is ErrorList)
+			if (result.Err is IErrorList)
 			{
 				return Result.Failure(result.Err);
 			}
@@ -71,8 +71,8 @@ namespace Jeebs.WordPress
 			var attachments = result.Val;
 
 			// Add meta
-			var metaResult = await w.AddMetaAndCustomFieldsToPosts(attachments, a => a.Meta);
-			if (metaResult.Err is ErrorList)
+			var metaResult = await w.AddMetaAndCustomFieldsToPostsAsync(attachments);
+			if (metaResult.Err is IErrorList)
 			{
 				return Result.Failure(metaResult.Err);
 			}

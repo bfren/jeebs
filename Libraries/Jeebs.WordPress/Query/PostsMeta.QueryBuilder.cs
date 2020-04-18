@@ -39,9 +39,9 @@ namespace Jeebs.WordPress
 				AddSelect(Adapter.Extract<T>(db.PostMeta));
 
 				// WHERE Post IDs
-				if (opt.PostIds is List<long> postIds)
+				if (opt.PostIds is List<long> postIds && postIds.Count > 0)
 				{
-					AddWhere($"{Escape(db.PostMeta.PostId)} IN ({string.Join(", ", postIds)})");
+					AddWhere($"{Escape(db.PostMeta.PostId)} IN ({string.Join(db.Adapter.ColumnSeparator, postIds)})");
 				}
 
 				// Finish and return

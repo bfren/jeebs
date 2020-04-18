@@ -10,18 +10,18 @@ namespace Jeebs.Data
 	public static partial class AdapterExtensions
 	{
 		/// <summary>
-		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
+		/// Extracts and escapes matching columns
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
 		public static string Extract<T>(this IAdapter adapter, params Table[] tables)
 		{
-			return adapter.Join(tables.ExtractColumns<T>());
+			return adapter.Join(Data.Extract<T>.From(tables));
 		}
 
 		/// <summary>
-		/// Joa list of ExtractedColumn objects
+		/// Join list of ExtractedColumn objects
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="columns">IExtractedColumns</param>
@@ -34,8 +34,8 @@ namespace Jeebs.Data
 				select.Add(GetColumn(adapter, c));
 			}
 
-			// Return joined with a comma
-			return string.Join(", ", select);
+			// Return joined
+			return string.Join(adapter.ColumnSeparator, select);
 		}
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace Jeebs.Data
 		/// <param name="col">IExtractedColumn</param>
 		public static string GetColumn(this IAdapter adapter, IExtractedColumn col)
 		{
-			return adapter.EscapeColumn(string.Concat(col.Table, adapter.Separator, col.Column), col.Alias);
+			return adapter.EscapeColumn(string.Concat(col.Table, adapter.SchemaSeparator, col.Column), col.Alias);
 		}
 
 		/// <summary>

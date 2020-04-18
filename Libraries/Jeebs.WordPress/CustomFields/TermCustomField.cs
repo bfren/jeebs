@@ -54,7 +54,7 @@ namespace Jeebs.WordPress
 
 			// Get results
 			var result = await query.ExecuteQuery();
-			if (result.Err is ErrorList)
+			if (result.Err is IErrorList)
 			{
 				return Result.Failure(result.Err);
 			}
