@@ -8,11 +8,11 @@ using Jeebs.WordPress.TypeHandlers;
 
 namespace Jeebs.WordPress
 {
-	/// <summary>
-	/// WordPress Database Instance
+	/// <inheritdoc cref="IWpDb"/>
+	/// <remarks>
 	/// It should be registered with a DI container as a singleton to avoid the (expensive) table creation
 	/// each time the instance is required
-	/// </summary>
+	/// </remarks>
 	/// <typeparam name="Tc">WpCommentEntity</typeparam>
 	/// <typeparam name="Tcm">WpCommentMetaEntity</typeparam>
 	/// <typeparam name="Tl">WpLinkEntity</typeparam>
@@ -39,71 +39,45 @@ namespace Jeebs.WordPress
 		where Tu : WpUserEntity
 		where Tum : WpUserMetaEntity
 	{
-		/// <summary>
-		/// MySqlAdapter
-		/// </summary>
+		/// <inheritdoc/>
 		public MySqlAdapter Adapter { get => client.Adapter; }
 
 		#region Tables
 
-		/// <summary>
-		/// Comment Table
-		/// </summary>
+		/// <inheritdoc/>
 		public CommentTable Comment { get; }
 
-		/// <summary>
-		/// Comment Meta Table
-		/// </summary>
+		/// <inheritdoc/>
 		public CommentMetaTable CommentMeta { get; }
 
-		/// <summary>
-		/// Link Table
-		/// </summary>
+		/// <inheritdoc/>
 		public LinkTable Link { get; }
 
-		/// <summary>
-		/// Option Table
-		/// </summary>
+		/// <inheritdoc/>
 		public OptionTable Option { get; }
 
-		/// <summary>
-		/// Post Table
-		/// </summary>
+		/// <inheritdoc/>
 		public PostTable Post { get; }
 
-		/// <summary>
-		/// Post Meta Table
-		/// </summary>
+		/// <inheritdoc/>
 		public PostMetaTable PostMeta { get; }
 
-		/// <summary>
-		/// Term Table
-		/// </summary>
+		/// <inheritdoc/>
 		public TermTable Term { get; }
 
-		/// <summary>
-		/// Term Meta Table
-		/// </summary>
+		/// <inheritdoc/>
 		public TermMetaTable TermMeta { get; }
 
-		/// <summary>
-		/// Term Relationship Table
-		/// </summary>
+		/// <inheritdoc/>
 		public TermRelationshipTable TermRelationship { get; }
 
-		/// <summary>
-		/// Term Taxonomy Table
-		/// </summary>
+		/// <inheritdoc/>
 		public TermTaxonomyTable TermTaxonomy { get; }
 
-		/// <summary>
-		/// User Table
-		/// </summary>
+		/// <inheritdoc/>
 		public UserTable User { get; }
 
-		/// <summary>
-		/// User Meta Table
-		/// </summary>
+		/// <inheritdoc/>
 		public UserMetaTable UserMeta { get; }
 
 		#endregion
@@ -175,9 +149,7 @@ namespace Jeebs.WordPress
 			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());
 		}
 
-		/// <summary>
-		/// Start a new query
-		/// </summary>
+		/// <inheritdoc/>
 		public QueryWrapper GetQueryWrapper() => new QueryWrapper(this);
 	}
 }

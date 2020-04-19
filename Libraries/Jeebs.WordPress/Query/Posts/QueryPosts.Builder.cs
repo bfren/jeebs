@@ -13,9 +13,7 @@ namespace Jeebs.WordPress
 	/// </summary>
 	public partial class QueryPosts
 	{
-		/// <summary>
-		/// Query Builder
-		/// </summary>
+		/// <inheritdoc/>
 		internal sealed class Builder<T> : QueryPartsBuilder<T, Options>
 		{
 			/// <summary>
@@ -29,10 +27,7 @@ namespace Jeebs.WordPress
 			/// <param name="db">IWpDb</param>
 			internal Builder(IWpDb db) : base(db.Adapter) => this.db = db;
 
-			/// <summary>
-			/// Build query
-			/// </summary>
-			/// <param name="opt">QueryOptions</param>
+			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)
 			{
 				// Use db shorthands

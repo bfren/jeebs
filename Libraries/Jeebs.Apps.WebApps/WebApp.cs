@@ -14,7 +14,7 @@ using Serilog;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// Web Application bootstrapped using IHost
+	/// Web Application - see <see cref="App"/>
 	/// </summary>
 	public abstract class WebApp : App
 	{
@@ -29,10 +29,7 @@ namespace Jeebs.Apps
 		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 		protected WebApp(bool useHsts) => this.useHsts = useHsts;
 
-		/// <summary>
-		/// Create IHost
-		/// </summary>
-		/// <param name="args">Command Line Arguments</param>
+		/// <inheritdoc/>
 		public override IHost CreateHost(string[] args)
 		{
 			return Host.CreateDefaultBuilder(args)
@@ -71,12 +68,7 @@ namespace Jeebs.Apps
 			.Build();
 		}
 
-		/// <summary>
-		/// Configure Services
-		/// </summary>
-		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
-		/// <param name="services">IServiceCollection</param>
+		/// <inheritdoc/>
 		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base

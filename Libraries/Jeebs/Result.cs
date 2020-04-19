@@ -31,17 +31,10 @@ namespace Jeebs
 		public Result(IErrorList err) : base(err) { }
 	}
 
-	/// <summary>
-	/// Result class
-	/// </summary>
-	/// <typeparam name="T">Result success value type</typeparam>
+	/// <inheritdoc cref="IResult{T}"/>
 	public class Result<T> : IResult<T>
 	{
-		/// <summary>
-		/// Success value - you MUST use <code>Result.Err is IErrorList</code> (or similar) before accessing this
-		/// </summary>
-		/// <exception cref="Jx.ResultException">If value is not set and there are errors, InnerException will contain the IErrorList</exception>
-		/// <exception cref="NullReferenceException">This should never happen - it means Val and Err are both null</exception>
+		/// <inheritdoc/>
 		public T Val
 		{
 			get
@@ -67,10 +60,7 @@ namespace Jeebs
 		/// </summary>
 		private readonly T value;
 
-		/// <summary>
-		/// List of errors when the result is a failure
-		/// Use <code>Result.Err is IErrorList</code> to check before accessing Result.Val
-		/// </summary>
+		/// <inheritdoc/>
 		public IErrorList? Err { get; }
 
 		/// <summary>
@@ -108,6 +98,17 @@ namespace Jeebs
 		/// <summary>
 		/// Return Err (IErrorList) if there was an error, or Val (T) if not
 		/// </summary>
-		public override string ToString() => Err is ErrorList ? Err.ToString() : (Val is T ? Val.ToString() : base.ToString());
+		public override string ToString()
+		{
+			return
+				Err is ErrorList
+				? Err.ToString()
+				: (
+					Val is T
+					? Val.ToString()
+					: "Unknown result."
+				)
+			;
+		}
 	}
 }

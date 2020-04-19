@@ -4,9 +4,7 @@ using System.Text;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Alias for a list of ExtractedColumn objects
-	/// </summary>
+	/// <inheritdoc cref="IExtractedColumns"/>
 	public sealed class ExtractedColumns : List<IExtractedColumn>, IExtractedColumns
 	{
 		/// <summary>
@@ -15,7 +13,7 @@ namespace Jeebs.Data
 		public ExtractedColumns() { }
 
 		/// <summary>
-		/// Construct object from Enumerable
+		/// Construct object from IEnumerable
 		/// </summary>
 		/// <param name="ienum">IEnumerable</param>
 		public ExtractedColumns(IEnumerable<IExtractedColumn> ienum) : base(ienum) { }

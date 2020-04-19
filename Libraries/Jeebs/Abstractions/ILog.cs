@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace Jeebs
 {
 	/// <summary>
-	/// ILog
+	/// Enables agnostic logging operations
 	/// </summary>
 	public interface ILog
 	{

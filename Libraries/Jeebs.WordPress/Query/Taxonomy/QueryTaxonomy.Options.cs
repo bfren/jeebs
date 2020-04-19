@@ -9,9 +9,7 @@ namespace Jeebs.WordPress
 	/// </summary>
 	public partial class QueryTaxonomy
 	{
-		/// <summary>
-		/// Query Options
-		/// </summary>
+		/// <inheritdoc/>
 		public sealed class Options : Data.QueryOptions
 		{
 			/// <summary>
@@ -31,13 +29,9 @@ namespace Jeebs.WordPress
 			public long? CountAtLeast { get; set; } = 1;
 
 			/// <summary>
-			/// Remove LIMIT and OFFSET
+			/// No limit on taxonomy - return them all
 			/// </summary>
-			public Options()
-			{
-				Limit = null;
-				Offset = null;
-			}
+			public Options() => Limit = null;
 		}
 	}
 }

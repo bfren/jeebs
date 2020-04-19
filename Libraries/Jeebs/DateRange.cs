@@ -4,24 +4,16 @@ using System.Text;
 
 namespace Jeebs
 {
-	/// <summary>
-	/// Date Range
-	/// </summary>
+	/// <inheritdoc cref="IRange{T}"/>
 	public sealed class DateRange : IRange<DateTime>
 	{
-		/// <summary>
-		/// Range start
-		/// </summary>
+		/// <inheritdoc/>
 		public DateTime Start { get; }
 
-		/// <summary>
-		/// Range end
-		/// </summary>
+		/// <inheritdoc/>
 		public DateTime End { get; }
 
-		/// <summary>
-		/// The length of the range
-		/// </summary>
+		/// <inheritdoc/>
 		public int Length { get => End.Subtract(Start).Days + 1; }
 
 		/// <summary>
@@ -53,25 +45,13 @@ namespace Jeebs
 			}
 		}
 
-		/// <summary>
-		/// Whether or not the range includes the specified value
-		/// </summary>
-		/// <param name="value">IRange</param>
-		/// <returns>True / false</returns>
+		/// <inheritdoc/>
 		public bool Includes(DateTime value) => Start <= value && End >= value;
 
-		/// <summary>
-		/// Whether or not the range includes the specified range of values
-		/// </summary>
-		/// <param name="value">IRange</param>
-		/// <returns>True / false</returns>
+		/// <inheritdoc/>
 		public bool Includes(IRange<DateTime> value) => Start <= value.Start && End >= value.End;
 
-		/// <summary>
-		/// Whether or not the range overlaps the specified range
-		/// </summary>
-		/// <param name="value">IRange</param>
-		/// <returns>True / false</returns>
+		/// <inheritdoc/>
 		public bool Overlaps(IRange<DateTime> value) => value.Includes(Start) || value.Includes(End) || Includes(value);
 
 		#region Static Members

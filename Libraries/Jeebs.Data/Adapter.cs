@@ -6,54 +6,34 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Contains Escaping and Queries for a database
-	/// </summary>
+	/// <inheritdoc cref="IAdapter"/>
 	public abstract class Adapter : IAdapter
 	{
-		/// <summary>
-		/// Schema separator character
-		/// </summary>
+		/// <inheritdoc/>
 		public char SchemaSeparator { get; }
 
-		/// <summary>
-		/// Column separator string
-		/// </summary>
+		/// <inheritdoc/>
 		public string ColumnSeparator { get; }
 
-		/// <summary>
-		/// Escape character
-		/// </summary>
+		/// <inheritdoc/>
 		public char EscapeOpen { get; }
 
-		/// <summary>
-		/// Escape character
-		/// </summary>
+		/// <inheritdoc/>
 		public char EscapeClose { get; }
 
-		/// <summary>
-		/// Alias keyword
-		/// </summary>
+		/// <inheritdoc/>
 		public string Alias { get; }
 
-		/// <summary>
-		/// Alias open character
-		/// </summary>
+		/// <inheritdoc/>
 		public char AliasOpen { get; }
 
-		/// <summary>
-		/// Alias open character
-		/// </summary>
+		/// <inheritdoc/>
 		public char AliasClose { get; }
 
-		/// <summary>
-		/// Sort ascending text
-		/// </summary>
+		/// <inheritdoc/>
 		public string SortAsc { get; }
 
-		/// <summary>
-		/// Sort descending text
-		/// </summary>
+		/// <inheritdoc/>
 		public string SortDesc { get; }
 
 		/// <summary>
@@ -83,13 +63,7 @@ namespace Jeebs.Data
 
 		#region Escaping
 
-		/// <summary>
-		/// Escape a table or column name
-		/// If <paramref name="name"/> contains the separator character, <see cref="SplitAndEscape(string)"/> will be used instead
-		/// </summary>
-		/// <exception cref="ArgumentNullException">If <paramref name="name"/> is null, empty, or whitespace</exception>
-		/// <param name="name">Table or column name</param>
-		/// <returns>Escaped name</returns>
+		/// <inheritdoc/>
 		public string Escape(string name)
 		{
 			// Don't allow blank names
@@ -111,19 +85,10 @@ namespace Jeebs.Data
 			return $"{EscapeOpen}{trimmed}{EscapeClose}";
 		}
 
-		/// <summary>
-		/// Escape a table name
-		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="table">Mapped Table</param>
-		/// <returns>Escaped name</returns>
+		/// <inheritdoc/>
 		public string Escape<TTable>(TTable table) where TTable : notnull => Escape(table.ToString());
 
-		/// <summary>
-		/// Split a string by '.', escape the elements, and rejothem
-		/// </summary>
-		/// <param name="element">Elemnts (table or column names)</param>
-		/// <returns>Escaped and joined elements</returns>
+		/// <inheritdoc/>
 		public string SplitAndEscape(string element)
 		{
 			// Split an element by the default separator
@@ -133,11 +98,7 @@ namespace Jeebs.Data
 			return EscapeAndJoin(elements);
 		}
 
-		/// <summary>
-		/// Escape and then joan array of elements
-		/// </summary>
-		/// <param name="elements">Elements (table or column names)</param>
-		/// <returns>Escaped and joined elements</returns>
+		/// <inheritdoc/>
 		public string EscapeAndJoin(params object?[] elements)
 		{
 			// Check for no elements
@@ -166,76 +127,37 @@ namespace Jeebs.Data
 			return string.Join(SchemaSeparator.ToString(), escaped);
 		}
 
-		/// <summary>
-		/// Escape a column using its table and alias
-		/// </summary>
-		/// <param name="name">Column name</param>
-		/// <param name="alias">Column alias</param>
+		/// <inheritdoc/>
 		public string EscapeColumn(string name, string alias) => $"{Escape(name)} {this.Alias} {AliasOpen}{alias}{AliasClose}";
 
 		#endregion
 
-		/// <summary>
-		/// Return a sort order string (ASC or DESC)
-		/// </summary>
-		/// <param name="column">Column name (unescaped)</param>
-		/// <param name="order">QuerySortOrder</param>
-		/// <returns>Sort order</returns>
+		#region Querying
+
+		/// <inheritdoc/>
 		public string GetSortOrder(string column, SortOrder order) => string.Concat(Escape(column), " ", order == SortOrder.Ascending ? SortAsc : SortDesc);
 
-		/// <summary>
-		/// Return random sort string
-		/// </summary>
+		/// <inheritdoc/>
 		public abstract string GetRandomSortOrder();
 
-		/// <summary>
-		/// SELECT columns to return a COUNT query
-		/// </summary>
+		/// <inheritdoc/>
 		public virtual string GetSelectCount() => "COUNT(*)";
 
-		/// <summary>
-		/// Query to insert a single row and return the new ID
-		/// </summary>
-		/// <param name="table">Table name</param>
-		/// <param name="columns">Columns (actual column names in database)</param>
-		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		/// <inheritdoc/>
 		public abstract string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases);
 
-		/// <summary>
-		/// Build a SELECT query
-		/// </summary>
-		/// <param name="parts">IQueryParts</param>
-		/// <returns>SELECT query</returns>
+		/// <inheritdoc/>
 		public abstract string Retrieve(IQueryParts parts);
 
-		/// <summary>
-		/// Query to retrieve a single row by ID
-		/// </summary>
-		/// <param name="columns">The columns to SELECT</param>
-		/// <param name="table">Table name</param>
-		/// <param name="idColumn">ID column</param>
+		/// <inheritdoc/>
 		public abstract string RetrieveSingleById(List<string> columns, string table, string idColumn);
 
-		/// <summary>
-		/// Query to update a single row
-		/// </summary>
-		/// <param name="table">Table name</param>
-		/// <param name="columns">Columns (actual column names in database)</param>
-		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
-		/// <param name="idColumn">ID column (actual column name in database)</param>
-		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
-		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
-		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		/// <inheritdoc/>
 		public abstract string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
 
-		/// <summary>
-		/// Query to delete a single row
-		/// </summary>
-		/// <param name="table">Table name</param>
-		/// <param name="idColumn">ID column (actual column name in database)</param>
-		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
-		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
-		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		/// <inheritdoc/>
 		public abstract string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
+
+		#endregion
 	}
 }

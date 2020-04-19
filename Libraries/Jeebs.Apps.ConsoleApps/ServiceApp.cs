@@ -8,18 +8,12 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// Service Application bootstrapped using IHost
+	/// Hosted Service Application (for background tasks) - see <see cref="ConsoleApp"/>
 	/// </summary>
-	/// <typeparam name="T">IHostedService</typeparam>
 	public abstract class ServiceApp<T> : ConsoleApp
 		where T : class, IHostedService
 	{
-		/// <summary>
-		/// Configure Services
-		/// </summary>
-		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
-		/// <param name="services">IServiceCollection</param>
+		/// <inheritdoc/>
 		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base

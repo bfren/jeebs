@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using Jeebs.Apps.WebApps.Config;
 using Jeebs.Apps.WebApps.Middleware;
-using Jeebs.Constants.Apps.WebApps;
+using Jeebs.Constants;
 using Jeebs.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ using Microsoft.Net.Http.Headers;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// MVC Application bootstrapped using IHost
+	/// MVC Web Application - see <see cref="WebApp"/>
 	/// </summary>
 	public abstract class MvcApp : WebApp
 	{
@@ -61,12 +61,7 @@ namespace Jeebs.Apps
 
 		#region ConfigureServices
 
-		/// <summary>
-		/// Configure Services
-		/// </summary>
-		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
-		/// <param name="services">IServiceCollection</param>
+		/// <inheritdoc/>
 		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base
@@ -176,12 +171,7 @@ namespace Jeebs.Apps
 
 		#region Configure
 
-		/// <summary>
-		/// Configure Application
-		/// </summary>
-		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
-		/// <param name="app">IApplicationBuilder</param>
+		/// <inheritdoc/>
 		protected override void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
 		{
 			// Base

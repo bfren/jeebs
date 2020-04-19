@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// Razor Pages Application bootstrapped using IHost
+	/// Razor Pages Web Application - see <see cref="MvcApp"/>
 	/// </summary>
 	public abstract class RazorApp : MvcApp
 	{
@@ -19,10 +19,7 @@ namespace Jeebs.Apps
 		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 		protected RazorApp(bool useHsts) : base(useHsts) { }
 
-		/// <summary>
-		/// Override to configure endpoints - default is MVC
-		/// </summary>
-		/// <param name="services">IServiceCollection</param>
+		/// <inheritdoc/>
 		protected override void ConfigureServices_Endpoints(IServiceCollection services)
 		{
 			services
@@ -35,21 +32,12 @@ namespace Jeebs.Apps
 		/// Override to configure Razor Pages options
 		/// </summary>
 		/// <param name="opt">RazorPagesOptions</param>
-		public virtual void ConfigureServices_RazorPagesOptions(RazorPagesOptions opt)
-		{
+		public virtual void ConfigureServices_RazorPagesOptions(RazorPagesOptions opt) { }
 
-		}
-
-		/// <summary>
-		/// Override to configure endpoints
-		/// </summary>
-		/// <param name="app">IApplicationBuilder</param>
+		/// <inheritdoc/>
 		protected override void Configure_Endpoints(IApplicationBuilder app)
 		{
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapRazorPages();
-			});
+			app.UseEndpoints(endpoints => endpoints.MapRazorPages());
 		}
 	}
 }

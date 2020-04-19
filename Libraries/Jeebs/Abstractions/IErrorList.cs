@@ -5,13 +5,7 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Error List Interface
+	/// Holds lists of errors
 	/// </summary>
-	public interface IErrorList : IList<string>
-	{
-		/// <summary>
-		/// Join errors with a | char
-		/// </summary>
-		public string ToString() => string.Join('|', this);
-	}
+	public interface IErrorList : IList<string> { }
 }

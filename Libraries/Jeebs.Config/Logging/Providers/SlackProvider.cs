@@ -14,10 +14,7 @@ namespace Jeebs.Config.Logging
 		/// </summary>
 		public string Webhook { get; set; } = string.Empty;
 
-		/// <summary>
-		/// Whether or not this provider's configuraiton is valid
-		/// </summary>
-		/// <returns>True if the webhook is not empty</returns>
+		/// <inheritdoc/>
 		public override bool IsValid() => !string.IsNullOrEmpty(Webhook);
 	}
 }

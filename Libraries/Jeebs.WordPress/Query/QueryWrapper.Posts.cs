@@ -14,34 +14,54 @@ using Jeebs.WordPress.Tables;
 
 namespace Jeebs.WordPress
 {
-	/// <summary>
-	/// Query wrapper
-	/// </summary>
 	public sealed partial class QueryWrapper
 	{
 		/// <summary>
 		/// Query Posts
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		/// <param name="contentFilters">[Optional] Content filters to apply to matching posts</param>
-		public async Task<IResult<List<T>>> QueryPostsAsync<T>(Action<QueryPosts.Options>? modifyOptions = null, params ContentFilter[] contentFilters)
+		/// <param name="page">[Optional] Page number</param>
+		/// <param name="modify">[Optional] Action to modify the options for this query</param>
+		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
+		public async Task<IResult<PagedList<T>>> QueryPostsAsync<T>(long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
 			where T : IEntity
 		{
-			//
-			//
-			//	EXECUTE MAIN QUERY - GET POSTS
-			//
-			//
+			// Get query
+			var query = GetQuery<T>(modify);
 
 			// Execute query
-			var results = await StartNewQuery()
-				.WithModel<T>()
-				.WithOptions(modifyOptions)
-				.WithParts(new QueryPosts.Builder<T>(db))
-				.GetQuery()
-				.ExecuteQueryAsync();
+			var results = await query.ExecuteQueryAsync(page);
+			if (results.Err is IErrorList)
+			{
+				return Result.Failure<PagedList<T>>(results.Err);
+			}
 
+			// If nothing matches, return empty list
+			if (results.Val.Count == 0)
+			{
+				return Result.Success(new PagedList<T>());
+			}
+
+			var posts = new PagedList<T>(results.Val);
+
+			// Process posts
+			return await Process<PagedList<T>, T>(posts, filters);
+		}
+
+		/// <summary>
+		/// Query Posts
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="modify">[Optional] Action to modify the options for this query</param>
+		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
+		public async Task<IResult<List<T>>> QueryPostsAsync<T>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
+			where T : IEntity
+		{
+			// Get query
+			var query = GetQuery<T>(modify);
+
+			// Execute query
+			var results = await query.ExecuteQueryAsync();
 			if (results.Err is IErrorList)
 			{
 				return Result.Failure<List<T>>(results.Err);
@@ -55,8 +75,35 @@ namespace Jeebs.WordPress
 
 			var posts = results.Val.ToList();
 
+			// Process posts
+			return await Process<List<T>, T>(posts, filters);
+		}
 
+		/// <summary>
+		/// Get query object
+		/// </summary>
+		/// <typeparam name="T">Model type</typeparam>
+		/// <param name="modify">[Optional] Action to modify the options for this query</param>
+		private IQuery<T> GetQuery<T>(Action<QueryPosts.Options>? modify = null)
+		{
+			return StartNewQuery()
+				.WithModel<T>()
+				.WithOptions(modify)
+				.WithParts(new QueryPosts.Builder<T>(db))
+				.GetQuery();
+		}
 
+		/// <summary>
+		/// Process a list of posts
+		/// </summary>
+		/// <typeparam name="TList">List type</typeparam>
+		/// <typeparam name="TModel">Model type</typeparam>
+		/// <param name="posts">List of posts</param>
+		/// <param name="filters">Content filters</param>
+		private async Task<IResult<TList>> Process<TList, TModel>(TList posts, ContentFilter[] filters)
+			where TList : List<TModel>
+			where TModel : IEntity
+		{
 			//
 			//
 			//	ADD META AND CUSTOM FIELDS
@@ -64,27 +111,27 @@ namespace Jeebs.WordPress
 			//
 
 			// If the type has a MetaDictionary, add Meta and check for Custom Fields
-			if (GetMetaDictionary<T>() is PropertyInfo metaInfo)
+			if (GetMetaDictionary<TModel>() is PropertyInfo metaInfo)
 			{
 				// Convert to info class
-				var meta = new PropertyInfo<T, MetaDictionary>(metaInfo);
+				var meta = new PropertyInfo<TModel, MetaDictionary>(metaInfo);
 
 				// Add meta
 				var addMetaResult = await AddMetaToPostsAsync(posts, meta);
 				if (addMetaResult.Err is IErrorList)
 				{
-					return Result.Failure<List<T>>(addMetaResult.Err);
+					return Result.Failure<TList>(addMetaResult.Err);
 				}
 
 				// Get custom fields from the cache
-				var customFields = GetCustomFields<T>();
+				var customFields = GetCustomFields<TModel>();
 				if (customFields.Count > 0)
 				{
 					// Add custom fields
 					var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta, customFields);
 					if (addCustomFieldsResult.Err is IErrorList)
 					{
-						return Result.Failure<List<T>>(addCustomFieldsResult.Err);
+						return Result.Failure<TList>(addCustomFieldsResult.Err);
 					}
 				}
 			}
@@ -98,14 +145,14 @@ namespace Jeebs.WordPress
 			//
 
 			// Get term lists from the cache
-			var termLists = GetTermLists<T>();
+			var termLists = GetTermLists<TModel>();
 			if (termLists.Count > 0)
 			{
 				// Add taxonomies
 				var addTaxonomiesResult = await AddTaxonomiesToPostsAsync(posts, termLists);
 				if (addTaxonomiesResult.Err is IErrorList)
 				{
-					return Result.Failure<List<T>>(addTaxonomiesResult.Err);
+					return Result.Failure<TList>(addTaxonomiesResult.Err);
 				}
 			}
 
@@ -118,23 +165,23 @@ namespace Jeebs.WordPress
 			//
 
 			// If there are some filters to apply, get post content from the cache
-			if (contentFilters.Length > 0)
+			if (filters.Length > 0)
 			{
-				if (GetPostContent<T>() is PropertyInfo contentInfo)
+				if (GetPostContent<TModel>() is PropertyInfo contentInfo)
 				{
 					// Convert to info class
-					var content = new PropertyInfo<T, string>(contentInfo);
+					var content = new PropertyInfo<TModel, string>(contentInfo);
 
 					// Apply content filters
-					var applyContentFiltersResult = ApplyContentFilters(posts, content, contentFilters);
+					var applyContentFiltersResult = ApplyContentFilters(posts, content, filters);
 					if (applyContentFiltersResult.Err is IErrorList)
 					{
-						return Result.Failure<List<T>>(applyContentFiltersResult.Err);
+						return Result.Failure<TList>(applyContentFiltersResult.Err);
 					}
 				}
 				else
 				{
-					throw new Jx.WordPress.QueryException($"Cannot find the {nameof(WpPostEntity.Content)} property of {typeof(T)}.");
+					throw new Jx.WordPress.QueryException($"Cannot find the {nameof(WpPostEntity.Content)} property of {typeof(TModel)}.");
 				}
 			}
 
@@ -250,6 +297,7 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="T">Post model</typeparam>
 		/// <param name="posts">Posts</param>
+		/// <param name="termLists">TermList properties</param>
 		private async Task<IResult<bool>> AddTaxonomiesToPostsAsync<T>(List<T> posts, List<PropertyInfo> termLists)
 			where T : IEntity
 		{

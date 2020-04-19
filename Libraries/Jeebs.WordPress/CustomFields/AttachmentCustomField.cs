@@ -13,19 +13,10 @@ namespace Jeebs.WordPress
 	/// </summary>
 	public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
-		/// <summary>
-		/// Setup object
-		/// </summary>
-		/// <param name="key">Meta key</param>
-		/// <param name="isRequired">[Optional] Whether or not this custom field is required (default: false)</param>
+		/// <inheritdoc/>
 		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, isRequired) => ValueObj = new Attachment();
 
-		/// <summary>
-		/// Hydrate this Field
-		/// </summary>
-		/// <param name="db">IWpDb</param>
-		/// <param name="unitOfWork">IUnitOfWork</param>
-		/// <param name="meta">MetaDictionary</param>
+		/// <inheritdoc/>
 		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -52,7 +43,7 @@ namespace Jeebs.WordPress
 			using var w = db.GetQueryWrapper();
 
 			// Get matching posts
-			var result = await w.QueryPostsAsync<Attachment>(opt =>
+			var result = await w.QueryPostsAsync<Attachment>(modify: opt =>
 			{
 				opt.Id = postId;
 				opt.Type = PostType.Attachment;

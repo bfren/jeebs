@@ -6,10 +6,7 @@ namespace Jeebs.Data
 {
 	public sealed partial class QueryBuilder<TModel>
 	{
-		/// <summary>
-		/// Saves query options (stage 2) and enables stage 3: build query parts
-		/// </summary>
-		/// <typeparam name="TOptions">QueryOptions</typeparam>
+		/// <inheritdoc cref="IQueryWithOptions{TModel, TOptions}"/>
 		public sealed class QueryWithOptions<TOptions> : IQueryWithOptions<TModel, TOptions>
 			where TOptions : QueryOptions
 		{
@@ -34,23 +31,11 @@ namespace Jeebs.Data
 				this.options = options;
 			}
 
-			/// <summary>
-			/// Query Stage 3: Use existing query parts
-			/// </summary>
-			/// <param name="parts">IQueryParts</param>
-			public IQueryWithParts<TModel> WithParts(IQueryParts parts)
-			{
-				return new QueryWithParts(unitOfWork, parts);
-			}
+			/// <inheritdoc/>
+			public IQueryWithParts<TModel> WithParts(IQueryParts parts) => new QueryWithParts(unitOfWork, parts);
 
-			/// <summary>
-			/// Query Stage 3: Build the query parts
-			/// </summary>
-			/// <param name="builder">IQueryPartsBuilder</param>
-			public IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder)
-			{
-				return WithParts(builder.Build(options));
-			}
+			/// <inheritdoc/>
+			public IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder) => WithParts(builder.Build(options));
 		}
 	}
 }

@@ -20,19 +20,10 @@ namespace Jeebs.WordPress
 			protected set => ValueStr = value;
 		}
 
-		/// <summary>
-		/// Pass post_meta key to parent
-		/// </summary>
-		/// <param name="key">Meta key (for post_meta table)</param>
-		/// <param name="isRequired">Whether or not this custom field is required</param>
+		/// <inheritdoc/>
 		protected TextCustomField(string key, bool isRequired = false) : base(key, isRequired) { }
 
-		/// <summary>
-		/// Hydrate this Field
-		/// </summary>
-		/// <param name="db">IWpDb</param>
-		/// <param name="unitOfWork">IUnitOfWork</param>
-		/// <param name="meta">MetaDictionary</param>
+		/// <inheritdoc/>
 		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure

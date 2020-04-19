@@ -13,7 +13,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// <summary>
 	/// Logger Middleware
 	/// </summary>
-	public class LoggerMiddleware
+	public sealed class LoggerMiddleware
 	{
 		/// <summary>
 		/// The next request in the pipeline

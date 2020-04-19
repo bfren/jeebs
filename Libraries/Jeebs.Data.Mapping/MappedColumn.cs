@@ -5,19 +5,13 @@ using System.Text;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Mapped Column
-	/// </summary>
+	/// <inheritdoc cref="IMappedColumn"/>
 	public sealed class MappedColumn : IMappedColumn
 	{
-		/// <summary>
-		/// Escaped Column Name
-		/// </summary>
+		/// <inheritdoc/>
 		public string Column { get; }
 
-		/// <summary>
-		/// Entity Property
-		/// </summary>
+		/// <inheritdoc/>
 		public PropertyInfo Property { get; }
 
 		/// <summary>

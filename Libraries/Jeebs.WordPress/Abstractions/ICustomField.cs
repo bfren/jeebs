@@ -7,7 +7,7 @@ using Jeebs.Data;
 namespace Jeebs.WordPress
 {
 	/// <summary>
-	/// Custom Field interface
+	/// Represents a CustomField, which are stored in the post_meta table
 	/// </summary>
 	public interface ICustomField
 	{
@@ -22,7 +22,7 @@ namespace Jeebs.WordPress
 		bool IsRequired { get; }
 
 		/// <summary>
-		/// Hydrate this Field
+		/// Hydrate this Custom Field using a combination of <see cref="IWpDb"/>, <see cref="IUnitOfWork"/>, and <see cref="MetaDictionary"/>.
 		/// </summary>
 		/// <param name="db">IWpDb</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
@@ -30,9 +30,7 @@ namespace Jeebs.WordPress
 		Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 	}
 
-	/// <summary>
-	/// Custom Field interface
-	/// </summary>
+	/// <inheritdoc/>
 	/// <typeparam name="T">Value type</typeparam>
 	public interface ICustomField<T> : ICustomField
 	{

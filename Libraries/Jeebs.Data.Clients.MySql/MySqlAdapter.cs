@@ -5,9 +5,7 @@ using System.Text;
 
 namespace Jeebs.Data.Clients.MySql
 {
-	/// <summary>
-	/// MySql adapter
-	/// </summary>
+	/// <inheritdoc/>
 	public sealed class MySqlAdapter : Adapter
 	{
 		/// <summary>
@@ -15,17 +13,10 @@ namespace Jeebs.Data.Clients.MySql
 		/// </summary>
 		public MySqlAdapter() : base('.', ", ", '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
 
-		/// <summary>
-		/// Return random sort string
-		/// </summary>
+		/// <inheritdoc/>
 		public override string GetRandomSortOrder() => "RAND()";
 
-		/// <summary>
-		/// Query to insert a single row and return the new ID
-		/// </summary>
-		/// <param name="table">Table name</param>
-		/// <param name="columns">Columns (actual column names in database)</param>
-		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
+		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
 		{
 			return string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
@@ -35,11 +26,7 @@ namespace Jeebs.Data.Clients.MySql
 			);
 		}
 
-		/// <summary>
-		/// Build a SELECT query
-		/// </summary>
-		/// <param name="parts">IQueryParts</param>
-		/// <returns>SELECT query</returns>
+		/// <inheritdoc/>
 		public override string Retrieve(IQueryParts parts)
 		{
 			// Make sure FROM is not null
@@ -111,12 +98,7 @@ namespace Jeebs.Data.Clients.MySql
 			return sql.ToString();
 		}
 
-		/// <summary>
-		/// Query to retrieve a single row by ID
-		/// </summary>
-		/// <param name="columns">The columns to SELECT</param>
-		/// <param name="table">Table name</param>
-		/// <param name="idColumn">ID column</param>
+		/// <inheritdoc/>
 		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
 		{
 			return string.Format("SELECT {0} FROM {1} WHERE {2} = @Id;",
@@ -126,16 +108,7 @@ namespace Jeebs.Data.Clients.MySql
 			);
 		}
 
-		/// <summary>
-		/// Query to update a single row
-		/// </summary>
-		/// <param name="table">Table name</param>
-		/// <param name="columns">Columns (actual column names in database)</param>
-		/// <param name="aliases">Aliases (parameter names / POCO property names)</param>
-		/// <param name="idColumn">ID column (actual column name in database)</param>
-		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
-		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
-		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		/// <inheritdoc/>
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Add each column to the update list
@@ -163,14 +136,7 @@ namespace Jeebs.Data.Clients.MySql
 			return $"{sql};";
 		}
 
-		/// <summary>
-		/// Query to delete a single row
-		/// </summary>
-		/// <param name="table">Table name</param>
-		/// <param name="idColumn">ID column (actual column name in database)</param>
-		/// <param name="idAlias">ID alias (parameter name / POCO property name)</param>
-		/// <param name="versionColumn">[Optional] Version column (actual column name in database)</param>
-		/// <param name="versionAlias">[Optional] Version alias (parameter name / POCO property name)</param>
+		/// <inheritdoc/>
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Build SQL

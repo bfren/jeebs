@@ -4,9 +4,7 @@ using System.Text;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Query wrapper
-	/// </summary>
+	/// <inheritdoc cref="IQueryWrapper"/>
 	public class QueryWrapper : IQueryWrapper
 	{
 		/// <summary>
@@ -20,13 +18,11 @@ namespace Jeebs.Data
 		/// <param name="db">IDb</param>
 		public QueryWrapper(IDb db) => unitOfWork = db.UnitOfWork;
 
-		/// <summary>
-		/// Start a new Query using the current UnitOfWork
-		/// </summary>
+		/// <inheritdoc/>
 		public IQueryBuilder StartNewQuery() => new QueryBuilder(unitOfWork);
 
 		/// <summary>
-		/// Dispose <see cref="unitOfWork"/>
+		/// Dispose <see cref="IUnitOfWork"/>
 		/// </summary>
 		public void Dispose() => unitOfWork.Dispose();
 	}

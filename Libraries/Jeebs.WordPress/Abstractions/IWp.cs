@@ -23,11 +23,6 @@ namespace Jeebs.WordPress
 		IWpDb Db { get; }
 
 		/// <summary>
-		/// Register custom fields
-		/// </summary>
-		void RegisterCustomFields();
-
-		/// <summary>
 		/// Register custom post types
 		/// </summary>
 		void RegisterCustomPostTypes();

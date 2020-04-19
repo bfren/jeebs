@@ -5,12 +5,12 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Database
+	/// Enables agnostic interaction with a database
 	/// </summary>
 	public interface IDb
 	{
 		/// <summary>
-		/// Create IUnitOfWork
+		/// Create new IUnitOfWork
 		/// </summary>
 		IUnitOfWork UnitOfWork { get; }
 	}

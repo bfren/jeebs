@@ -21,7 +21,7 @@ namespace Jeebs.Config.Logging
 		public LogLevel? MinimumLevel { get; set; }
 
 		/// <summary>
-		/// Whether or not this provider's configuraiton is valid
+		/// Whether or not this provider's configuration is valid
 		/// </summary>
 		/// <returns>True if configuration is valid</returns>
 		public abstract bool IsValid();

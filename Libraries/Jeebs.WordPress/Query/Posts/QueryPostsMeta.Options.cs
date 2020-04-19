@@ -9,9 +9,7 @@ namespace Jeebs.WordPress
 	/// </summary>
 	internal partial class QueryPostsMeta
 	{
-		/// <summary>
-		/// Query Options
-		/// </summary>
+		/// <inheritdoc/>
 		internal sealed class Options : Data.QueryOptions
 		{
 			/// <summary>
@@ -20,7 +18,7 @@ namespace Jeebs.WordPress
 			public List<long>? PostIds { get; set; }
 
 			/// <summary>
-			/// Setup object
+			/// No limit on meta - return it all
 			/// </summary>
 			public Options() => Limit = null;
 		}

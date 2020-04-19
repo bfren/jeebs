@@ -19,14 +19,9 @@ namespace Jeebs.Apps
 		/// Create object
 		/// </summary>
 		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-		public MvcAppWithData(bool useHsts) : base(useHsts) { }
+		protected MvcAppWithData(bool useHsts) : base(useHsts) { }
 
-		/// <summary>
-		/// Configure services to include data
-		/// </summary>
-		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
-		/// <param name="services">IServiceCollection</param>
+		/// <inheritdoc/>
 		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			// Base

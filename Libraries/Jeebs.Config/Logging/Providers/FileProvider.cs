@@ -14,10 +14,7 @@ namespace Jeebs.Config.Logging
 		/// </summary>
 		public string Path { get; set; } = string.Empty;
 
-		/// <summary>
-		/// Whether or not this provider's configuraiton is valid
-		/// </summary>
-		/// <returns>Returns true if a path is specified and that file exists</returns>
+		/// <inheritdoc/>
 		public override bool IsValid() => !string.IsNullOrEmpty(Path) && System.IO.File.Exists(Path);
 	}
 }

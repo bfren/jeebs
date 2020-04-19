@@ -38,11 +38,6 @@ namespace AppConsoleWordPress.Bcg
 		public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog log) : base(dbConfig.Value, wpConfig.Value, log) { }
 
 		/// <summary>
-		/// Register custom fields
-		/// </summary>
-		public override void RegisterCustomFields() { }
-
-		/// <summary>
 		/// Register custom post types
 		/// </summary>
 		public override void RegisterCustomPostTypes()

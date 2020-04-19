@@ -5,11 +5,7 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Query Builder
-	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <typeparam name="TOptions">QueryOptions</typeparam>
+	/// <inheritdoc cref="IQueryPartsBuilder{TModel, TOptions}"/>
 	public abstract class QueryPartsBuilder<TModel, TOptions> : IQueryPartsBuilder<TModel, TOptions>
 		where TOptions : QueryOptions
 	{
@@ -18,9 +14,7 @@ namespace Jeebs.Data
 		/// </summary>
 		private readonly IQueryParts parts;
 
-		/// <summary>
-		/// IAdapter
-		/// </summary>
+		/// <inheritdoc/>
 		public IAdapter Adapter { get; }
 
 		/// <summary>
@@ -121,16 +115,10 @@ namespace Jeebs.Data
 
 		#region Adapter Shorthands
 
-		/// <summary>
-		/// Shorthand for IAdapter.SplitAndEscape
-		/// </summary>
-		/// <param name="element">The element to split and escape</param>
+		/// <inheritdoc/>
 		public string Escape(object element) => Adapter.SplitAndEscape(element.ToString());
 
-		/// <summary>
-		/// Shorthand for IAdapter.EscapeAndJoin
-		/// </summary>
-		/// <param name="elements">The elements to escape and join</param>
+		/// <inheritdoc/>
 		public string Escape(params object?[] elements) => Adapter.EscapeAndJoin(elements);
 
 		#endregion

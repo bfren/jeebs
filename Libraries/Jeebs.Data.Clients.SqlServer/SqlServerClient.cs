@@ -6,32 +6,18 @@ using System.Text;
 
 namespace Jeebs.Data.Clients.SqlServer
 {
-	/// <summary>
-	/// SqlServer client
-	/// </summary>
+	/// <inheritdoc cref="IDbClient"/>
 	public sealed class SqlServerDbClient : IDbClient
 	{
-		/// <summary>
-		/// SqlServerAdapter
-		/// </summary>
+		/// <inheritdoc/>
 		IAdapter IDbClient.Adapter => Adapter;
 
 		/// <summary>
 		/// MySqlAdapter
 		/// </summary>
-		public SqlServerAdapter Adapter { get; }
+		public SqlServerAdapter Adapter { get; } = new SqlServerAdapter();
 
-		/// <summary>
-		/// Create a MySqlConnection object using the specified connection string
-		/// </summary>
-		/// <param name="connectionString">Database connection string</param>
-		/// <param name="encryptionKey">[Optional] Encryption key</param>
-		/// <returns>IDbConnection (MySqlConnection) object</returns>
+		/// <inheritdoc/>
 		public IDbConnection Connect(string connectionString, string? encryptionKey = null) => new SqlConnection(connectionString);
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public SqlServerDbClient() => Adapter = new SqlServerAdapter();
 	}
 }

@@ -5,17 +5,10 @@ using Jeebs.Reflection;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Shorthand to make working with query parameters easier
-	/// </summary>
-	[Serializable]
+	/// <inheritdoc cref="IQueryParameters"/>
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
 	{
-		/// <summary>
-		/// Add an anonymous object of parameters to the dictionary
-		/// Properties must be simple key/value pairs
-		/// </summary>
-		/// <param name="parameters">Parameters to add</param>
+		/// <inheritdoc/>
 		public void Add(object parameters)
 		{
 			if (parameters is QueryParameters keyValuePairs)

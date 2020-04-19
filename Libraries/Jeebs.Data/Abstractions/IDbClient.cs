@@ -14,7 +14,7 @@ namespace Jeebs.Data
 		public IAdapter Adapter { get; }
 
 		/// <summary>
-		/// Create a system IDbConnection using the specified connection string
+		/// Create IDbConnection using the specified connection string
 		/// </summary>
 		/// <param name="connectionString">Database connection string</param>
 		/// <param name="encryptionKey">[Optional] Encryption key</param>

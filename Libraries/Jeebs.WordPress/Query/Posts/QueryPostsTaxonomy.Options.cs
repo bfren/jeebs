@@ -10,9 +10,7 @@ namespace Jeebs.WordPress
 	/// </summary>
 	internal partial class QueryPostsTaxonomy
 	{
-		/// <summary>
-		/// Query Options
-		/// </summary>
+		/// <inheritdoc/>
 		internal sealed class Options : Data.QueryOptions
 		{
 			/// <summary>
@@ -26,7 +24,7 @@ namespace Jeebs.WordPress
 			public List<long> PostIds { get; set; } = new List<long>();
 
 			/// <summary>
-			/// Setup object
+			/// No limit on taxonomies - return them all
 			/// </summary>
 			public Options() => Limit = null;
 		}

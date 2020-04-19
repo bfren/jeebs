@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Query Parts interface
+	/// The various parts required to build a query
 	/// </summary>
 	public interface IQueryParts
 	{
@@ -15,48 +15,48 @@ namespace Jeebs.Data
 		string? From { get; set; }
 
 		/// <summary>
-		/// Select
+		/// Select columns
 		/// </summary>
 		string? Select { get; set; }
 
 		/// <summary>
-		/// Inner Join
+		/// Inner Joins
 		/// </summary>
 		IList<(string table, string on, string equals)>? InnerJoin { get; set; }
 
 		/// <summary>
-		/// Left Join
+		/// Left Joins
 		/// </summary>
 		IList<(string table, string on, string equals)>? LeftJoin { get; set; }
 
 		/// <summary>
-		/// Right Join
+		/// Right Joins
 		/// </summary>
 		IList<(string table, string on, string equals)>? RightJoin { get; set; }
 
 		/// <summary>
-		/// Where
+		/// Where statements
 		/// </summary>
 		IList<string>? Where { get; set; }
-
-		/// <summary>
-		/// Order By
-		/// </summary>
-		IList<string>? OrderBy { get; set; }
-
-		/// <summary>
-		/// Limit
-		/// </summary>
-		long? Limit { get; set; }
-
-		/// <summary>
-		/// Offset
-		/// </summary>
-		long? Offset { get; set; }
 
 		/// <summary>
 		/// Query Parameters
 		/// </summary>
 		IQueryParameters Parameters { get; set; }
+
+		/// <summary>
+		/// Order By columns
+		/// </summary>
+		IList<string>? OrderBy { get; set; }
+
+		/// <summary>
+		/// Limit number
+		/// </summary>
+		long? Limit { get; set; }
+
+		/// <summary>
+		/// Offset number
+		/// </summary>
+		long? Offset { get; set; }
 	}
 }

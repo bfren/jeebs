@@ -5,10 +5,7 @@ using System.Text;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// Console Application bootstrapped using IHost
+	/// Console Application - see <see cref="App"/>
 	/// </summary>
-	public abstract class ConsoleApp : App
-	{
-
-	}
+	public abstract class ConsoleApp : App { }
 }

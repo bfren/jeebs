@@ -12,12 +12,12 @@ using Serilog;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// Application bootstrapped using IHost
+	/// Configure and run an application using <seealso cref="IHost"/>
 	/// </summary>
 	public abstract class App
 	{
 		/// <summary>
-		/// Create IHost
+		/// Create <see cref="IHost"/> using specified arguments
 		/// </summary>
 		/// <param name="args">Command Line Arguments</param>
 		public virtual IHost CreateHost(string[] args)

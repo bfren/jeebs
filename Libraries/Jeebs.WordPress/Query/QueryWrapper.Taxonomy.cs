@@ -6,9 +6,6 @@ using Jeebs.Data;
 
 namespace Jeebs.WordPress
 {
-	/// <summary>
-	/// Query wrapper
-	/// </summary>
 	public sealed partial class QueryWrapper
 	{
 		/// <summary>

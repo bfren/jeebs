@@ -5,10 +5,7 @@ using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs
 {
-	/// <summary>
-	/// List that supports paging operations
-	/// </summary>
-	/// <typeparam name="T">Type of objects in the list</typeparam>
+	/// <inheritdoc cref="IPagedList{T}"/>
 	public sealed class PagedList<T> : List<T>, IPagedList<T>
 	{
 		/// <summary>
@@ -22,12 +19,7 @@ namespace Jeebs
 		/// <param name="collection">Collection</param>
 		public PagedList(IEnumerable<T> collection) : base(collection) { }
 
-		/// <summary>
-		/// Apply paging values to the list items and return a new PagedList
-		/// </summary>
-		/// <param name="page">Current page</param>
-		/// <param name="itemsPer">[Optional] Number of items per page</param>
-		/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
+		/// <inheritdoc/>
 		public (IPagedList<T> list, IPagingValues values) CalculateAndApply(long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer)
 		{
 			// Return empty list

@@ -11,9 +11,7 @@ namespace Jeebs.WordPress
 	/// </summary>
 	public partial class QueryPosts
 	{
-		/// <summary>
-		/// Query Options
-		/// </summary>
+		/// <inheritdoc/>
 		public sealed class Options : Data.QueryOptions
 		{
 			/// <summary>

@@ -37,11 +37,6 @@ namespace AppConsoleWordPress.Usa
 		public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog log) : base(dbConfig.Value, wpConfig.Value, log) { }
 
 		/// <summary>
-		/// Register custom fields
-		/// </summary>
-		public override void RegisterCustomFields() { }
-
-		/// <summary>
 		/// Register custom post types
 		/// </summary>
 		public override void RegisterCustomPostTypes() { }

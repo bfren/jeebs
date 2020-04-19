@@ -6,9 +6,9 @@ using D = Jeebs.Defaults.PagingValues;
 namespace Jeebs
 {
 	/// <summary>
-	/// Paged liste interface
+	/// List that supports paging operations
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">Type of objects in the list</typeparam>
 	public interface IPagedList<T> : IList<T>
 	{
 		/// <summary>

@@ -5,9 +5,7 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Alias for a list of IExtractedColumn objects
+	/// Holds and processes a list of <seealso cref="IExtractedColumn"/> objects
 	/// </summary>
-	public interface IExtractedColumns : IList<IExtractedColumn>
-	{
-	}
+	public interface IExtractedColumns : IList<IExtractedColumn> { }
 }

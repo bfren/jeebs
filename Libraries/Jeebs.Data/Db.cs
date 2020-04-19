@@ -6,9 +6,7 @@ using Jeebs.Data.TypeHandlers;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Database
-	/// </summary>
+	/// <inheritdoc cref="IDb"/>
 	/// <typeparam name="TDbClient">Database Client type</typeparam>
 	public class Db<TDbClient> : IDb
 		where TDbClient : IDbClient, new()
@@ -28,10 +26,7 @@ namespace Jeebs.Data
 		/// </summary>
 		protected string ConnectionString { get; set; } = string.Empty;
 
-		/// <summary>
-		/// Create a new UnitOfWork
-		/// </summary>
-		/// <exception cref="Jx.Data.ConnectionException">If the connection string has not yet been set</exception>
+		/// <inheritdoc/>
 		public IUnitOfWork UnitOfWork
 		{
 			get
@@ -70,10 +65,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Add default type handlers
 		/// </summary>
-		static Db()
-		{
-			Dapper.SqlMapper.AddTypeHandler(new GuidTypeHandler());
-		}
+		static Db() => Dapper.SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
 		/// <summary>
 		/// Persist an EnumList to the database by encoding it as JSON

@@ -14,9 +14,7 @@ using Jeebs.WordPress.Tables;
 
 namespace Jeebs.WordPress
 {
-	/// <summary>
-	/// Query wrapper
-	/// </summary>
+	/// <inheritdoc/>
 	public sealed partial class QueryWrapper : Data.QueryWrapper
 	{
 		/// <summary>

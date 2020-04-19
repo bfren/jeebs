@@ -6,20 +6,13 @@ using Jeebs.Data;
 
 namespace Jeebs.WordPress
 {
-	/// <summary>
-	/// Represents a CustomField, which are stored in the post_meta table
-	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
+	/// <inheritdoc cref="ICustomField{T}"/>
 	public abstract class CustomField<T> : ICustomField<T>
 	{
-		/// <summary>
-		/// Meta key (for post_meta table)
-		/// </summary>
+		/// <inheritdoc/>
 		public string Key { get; }
 
-		/// <summary>
-		/// Custom Field value
-		/// </summary>
+		/// <inheritdoc/>
 		public virtual T ValueObj { get; protected set; }
 
 		/// <summary>
@@ -27,13 +20,11 @@ namespace Jeebs.WordPress
 		/// </summary>
 		protected string ValueStr { get; set; }
 
-		/// <summary>
-		/// Whether or not this Custom Field is required (default: false)
-		/// </summary>
+		/// <inheritdoc/>
 		public bool IsRequired { get; }
 
 		/// <summary>
-		/// Create object
+		/// Create object with specified meta key
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
 		/// <param name="isRequired">Whether or not this custom field is required</param>
@@ -46,12 +37,7 @@ namespace Jeebs.WordPress
 			IsRequired = isRequired;
 		}
 
-		/// <summary>
-		/// Hydrate this Field
-		/// </summary>
-		/// <param name="db">IWpDb</param>
-		/// <param name="unitOfWork">IUnitOfWork</param>
-		/// <param name="meta">MetaDictionary</param>
+		/// <inheritdoc/>
 		public abstract Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 
 		/// <summary>

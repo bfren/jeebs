@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Query Wrapper interface
+	/// Disposable Query Wrapper - implementations should start a new UnitOfWork as it is created, which can then be disposed
 	/// </summary>
 	public interface IQueryWrapper : IDisposable
 	{

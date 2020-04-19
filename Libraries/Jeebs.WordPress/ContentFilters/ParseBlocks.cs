@@ -10,10 +10,7 @@ namespace Jeebs.WordPress.ContentFilters
 	/// </summary>
 	public sealed class ParseBlocks : ContentFilter
 	{
-		/// <summary>
-		/// Use factory pattern
-		/// </summary>
-		/// <param name="filter">Content filter function</param>
+		/// <inheritdoc/>
 		private ParseBlocks(Func<string, string> filter) : base(filter) { }
 
 		/// <summary>

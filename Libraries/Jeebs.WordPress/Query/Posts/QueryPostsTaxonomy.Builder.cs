@@ -12,9 +12,7 @@ namespace Jeebs.WordPress
 	/// </summary>
 	internal partial class QueryPostsTaxonomy
 	{
-		/// <summary>
-		/// Query Builder
-		/// </summary>
+		/// <inheritdoc/>
 		internal sealed class Builder<T> : QueryPartsBuilder<T, Options>
 			where T : TermList.Term
 		{
@@ -29,10 +27,7 @@ namespace Jeebs.WordPress
 			/// <param name="db">IWpDb</param>
 			internal Builder(IWpDb db) : base(db.Adapter) => this.db = db;
 
-			/// <summary>
-			/// Build query
-			/// </summary>
-			/// <param name="opt">QueryOptions</param>
+			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)
 			{
 				// FROM

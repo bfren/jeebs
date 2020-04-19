@@ -3,7 +3,7 @@
 namespace Jeebs
 {
 	/// <summary>
-	/// Result interface
+	/// Enables passing of results, with value and errors
 	/// </summary>
 	/// <typeparam name="T">Result success value type</typeparam>
 	public interface IResult<T>

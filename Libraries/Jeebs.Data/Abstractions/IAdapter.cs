@@ -6,7 +6,7 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Contains Escaping and Queries for a database
+	/// Enables database-agnostic escaping and queries
 	/// </summary>
 	public interface IAdapter
 	{

@@ -10,25 +10,16 @@ using Jeebs.Util;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Database Unit of Work
-	/// </summary>
+	/// <inheritdoc cref="IUnitOfWork"/>
 	public sealed class UnitOfWork : IUnitOfWork
 	{
-
-		/// <summary>
-		/// IAdapter
-		/// </summary>
+		/// <inheritdoc/>
 		public IAdapter Adapter { get; }
 
-		/// <summary>
-		/// IDbConnection
-		/// </summary>
+		/// <inheritdoc/>
 		public IDbConnection Connection => Transaction.Connection;
 
-		/// <summary>
-		/// IDbTransaction
-		/// </summary>
+		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; }
 
 		/// <summary>
@@ -49,21 +40,13 @@ namespace Jeebs.Data
 			this.log = log;
 		}
 
-		/// <summary>
-		/// Shorthand for IAdapter.SplitAndEscape
-		/// </summary>
-		/// <param name="element">The element to split and escape</param>
+		/// <inheritdoc/>
 		public string Escape(object element) => Adapter.SplitAndEscape(element.ToString());
 
-		/// <summary>
-		/// Shorthand for IAdapter.EscapeAndJoin
-		/// </summary>
-		/// <param name="elements">The elements to escape and join</param>
+		/// <inheritdoc/>
 		public string Escape(params string?[] elements) => Adapter.EscapeAndJoin(elements);
 
-		/// <summary>
-		/// Commit all queries - should normally be called as part of Dispose()
-		/// </summary>
+		/// <inheritdoc/>
 		public void Commit()
 		{
 			try
@@ -76,9 +59,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <summary>
-		/// Rollback all queries
-		/// </summary>
+		/// <inheritdoc/>
 		public void Rollback()
 		{
 			try
@@ -91,9 +72,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <summary>
-		/// Commit transaction and close connection
-		/// </summary>
+		/// <inheritdoc/>
 		public void Dispose()
 		{
 			Commit();
@@ -103,14 +82,7 @@ namespace Jeebs.Data
 
 		#region Logging & Failure
 
-		/// <summary>
-		/// Log a query
-		/// </summary>
-		/// <typeparam name="T">Parameter object type</typeparam>
-		/// <param name="method">Calling method</param>
-		/// <param name="query">SQL query</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
 		{
 			log.Debug("Method: UnitOfWork.{0}()", method);
@@ -118,14 +90,7 @@ namespace Jeebs.Data
 			log.Debug("Parameters: {0}", Json.Serialise(parameters));
 		}
 
-		/// <summary>
-		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
-		/// </summary>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
+		/// <inheritdoc/>
 		public IResult<bool> Fail(string error, params object[] args)
 		{
 			// Rollback transaction
@@ -138,15 +103,7 @@ namespace Jeebs.Data
 			return Result.Failure(error);
 		}
 
-		/// <summary>
-		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
-		/// </summary>
-		/// <param name="ex">Exception</param>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
+		/// <inheritdoc/>
 		public IResult<bool> Fail(Exception ex, string error, params object[] args)
 		{
 			// Rollback transaction
@@ -159,15 +116,7 @@ namespace Jeebs.Data
 			return Result.Failure(error);
 		}
 
-		/// <summary>
-		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
-		/// </summary>
-		/// <typeparam name="T">Return value type</typeparam>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
+		/// <inheritdoc/>
 		public IResult<T> Fail<T>(string error, params object[] args)
 		{
 			// Rollback transaction
@@ -180,16 +129,7 @@ namespace Jeebs.Data
 			return Result.Failure<T>(error);
 		}
 
-		/// <summary>
-		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
-		/// </summary>
-		/// <typeparam name="T">Return value type</typeparam>
-		/// <param name="ex">Exception</param>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
+		/// <inheritdoc/>
 		public IResult<T> Fail<T>(Exception ex, string error, params object[] args)
 		{
 			// Rollback transaction
@@ -206,12 +146,7 @@ namespace Jeebs.Data
 
 		#region R: Query
 
-		/// <summary>
-		/// Perform a query, returning a dynamic object
-		/// </summary>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public IResult<IEnumerable<dynamic>> Query(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -227,17 +162,12 @@ namespace Jeebs.Data
 			{
 				return Fail<IEnumerable<dynamic>>(
 					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					$"An error occurred while executing the query."
+					"An error occurred while executing the query."
 				);
 			}
 		}
 
-		/// <summary>
-		/// Perform a query, returning a dynamic object
-		/// </summary>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public async Task<IResult<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -253,18 +183,12 @@ namespace Jeebs.Data
 			{
 				return Fail<IEnumerable<dynamic>>(
 					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					$"An error occurred while executing the query."
+					"An error occurred while executing the query."
 				);
 			}
 		}
 
-		/// <summary>
-		/// Run a query against the database
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public IResult<IEnumerable<T>> Query<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -280,18 +204,12 @@ namespace Jeebs.Data
 			{
 				return Fail<IEnumerable<T>>(
 					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					$"An error occurred while executing the query."
+					"An error occurred while executing the query."
 				);
 			}
 		}
 
-		/// <summary>
-		/// Run a query against the database
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public async Task<IResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -307,7 +225,7 @@ namespace Jeebs.Data
 			{
 				return Fail<IEnumerable<T>>(
 					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					$"An error occurred while executing the query."
+					"An error occurred while executing the query."
 				);
 			}
 		}
@@ -316,12 +234,7 @@ namespace Jeebs.Data
 
 		#region R: Single
 
-		/// <summary>
-		/// Return a single object by query, or default value if the object cannot be found
-		/// </summary>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public IResult<T> Single<T>(string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -342,12 +255,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <summary>
-		/// Return a single object by query, or default value if the object cannot be found
-		/// </summary>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public async Task<IResult<T>> SingleAsync<T>(string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -372,13 +280,7 @@ namespace Jeebs.Data
 
 		#region Execute
 
-		/// <summary>
-		/// Execute a query on the database
-		/// </summary>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		/// <returns>Affected rows</returns>
+		/// <inheritdoc/>
 		public IResult<int> Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -396,13 +298,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <summary>
-		/// Execute a query on the database
-		/// </summary>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		/// <returns>Affected rows</returns>
+		/// <inheritdoc/>
 		public async Task<IResult<int>> ExecuteAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -420,13 +316,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <summary>
-		/// Execute a query and return a scalar value
-		/// </summary>
-		/// <typeparam name="T">Return type</typeparam>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public IResult<T> ExecuteScalar<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
@@ -444,13 +334,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <summary>
-		/// Execute a query and return a scalar value
-		/// </summary>
-		/// <typeparam name="T">Return type</typeparam>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
+		/// <inheritdoc/>
 		public async Task<IResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try

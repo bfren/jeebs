@@ -6,9 +6,7 @@ namespace Jeebs.Data
 {
 	public sealed partial class QueryBuilder<TModel>
 	{
-		/// <summary>
-		/// Saves query parts (stage 3) and enables stage 4: get query object
-		/// </summary>
+		/// <inheritdoc cref="IQueryWithParts{T}"/>
 		public sealed class QueryWithParts : IQueryWithParts<TModel>
 		{
 			/// <summary>
@@ -32,13 +30,8 @@ namespace Jeebs.Data
 				this.parts = parts;
 			}
 
-			/// <summary>
-			/// Query Stage 4: Get query object
-			/// </summary>
-			public IQuery<TModel> GetQuery()
-			{
-				return new Query<TModel>(unitOfWork, parts);
-			}
+			/// <inheritdoc/>
+			public IQuery<TModel> GetQuery() => new Query<TModel>(unitOfWork, parts);
 		}
 	}
 }

@@ -6,10 +6,7 @@ using Jeebs.Util;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Query
-	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <inheritdoc cref="IQuery{T}"/>
 	public sealed class Query<T> : IQuery<T>
 	{
 		/// <summary>
@@ -33,9 +30,7 @@ namespace Jeebs.Data
 			this.parts = parts;
 		}
 
-		/// <summary>
-		/// Returns the number of items to be retrieved by the current query parts
-		/// </summary>
+		/// <inheritdoc/>
 		public async Task<IResult<long>> GetCountAsync()
 		{
 			// Store original SELECT
@@ -55,9 +50,7 @@ namespace Jeebs.Data
 			return count;
 		}
 
-		/// <summary>
-		/// Retrieves the items using the current query parts
-		/// </summary>
+		/// <inheritdoc/>
 		public async Task<IResult<IEnumerable<T>>> ExecuteQueryAsync()
 		{
 			// Get query
@@ -67,10 +60,7 @@ namespace Jeebs.Data
 			return await unitOfWork.QueryAsync<T>(query, parts.Parameters);
 		}
 
-		/// <summary>
-		/// Retrieves the items using the current query parts, using LIMIT / OFFSET to select only the items on a particular page
-		/// </summary>
-		/// <param name="page">Current page number</param>
+		/// <inheritdoc/>
 		public async Task<IResult<IPagedList<T>>> ExecuteQueryAsync(long page)
 		{
 			// Get the count

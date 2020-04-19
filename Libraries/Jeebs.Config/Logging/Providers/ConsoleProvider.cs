@@ -9,10 +9,7 @@ namespace Jeebs.Config.Logging
 	/// </summary>
 	public sealed class ConsoleProvider : LoggingProvider
 	{
-		/// <summary>
-		/// Whether or not this provider's configuraiton is valid
-		/// </summary>
-		/// <returns>Always returns true - there is no configuraiton</returns>
+		/// <inheritdoc/>
 		public override bool IsValid() => true;
 	}
 }

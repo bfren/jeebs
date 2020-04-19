@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps
 {
 	/// <summary>
-	/// Run a Program using IHost
+	/// Run a Program using <see cref="App"/>
 	/// </summary>
 	public abstract class Program
 	{

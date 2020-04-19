@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Query interface
+	/// Performs queries - returning either the total number of matching rows, the results, or the paged results
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	public interface IQuery<T>

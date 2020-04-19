@@ -6,7 +6,7 @@ using System.Text;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Mapped Column interface
+	/// Holds information about a column mapped using <seealso cref="Map{TEntity}"/>
 	/// </summary>
 	public interface IMappedColumn
 	{

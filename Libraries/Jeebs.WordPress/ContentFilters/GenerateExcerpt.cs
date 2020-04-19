@@ -11,10 +11,7 @@ namespace Jeebs.WordPress.ContentFilters
 	/// </summary>
 	public sealed class GenerateExcerpt : ContentFilter
 	{
-		/// <summary>
-		/// Use factory pattern
-		/// </summary>
-		/// <param name="filter">Content filter function</param>
+		/// <inheritdoc/>
 		private GenerateExcerpt(Func<string, string> filter) : base(filter) { }
 
 		/// <summary>

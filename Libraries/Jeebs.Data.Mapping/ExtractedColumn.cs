@@ -4,24 +4,16 @@ using System.Text;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Holds information about a column extracted from a Model for the select clause of a query
-	/// </summary>
+	/// <inheritdoc cref="IExtractedColumn"/>
 	public sealed class ExtractedColumn : IExtractedColumn
 	{
-		/// <summary>
-		/// Escaped Table Name
-		/// </summary>
+		/// <inheritdoc/>
 		public string Table { get; }
 
-		/// <summary>
-		/// Escaped Column Name
-		/// </summary>
+		/// <inheritdoc/>
 		public string Column { get; }
 
-		/// <summary>
-		/// Column Alias
-		/// </summary>
+		/// <inheritdoc/>
 		public string Alias { get; }
 
 		/// <summary>
@@ -49,15 +41,16 @@ namespace Jeebs.Data
 			/// <param name="y">IExtractedColumn 2</param>
 			/// <returns>True if the two columns are identical</returns>
 			public bool Equals(IExtractedColumn x, IExtractedColumn y)
-				=> x.Table.Equals(y.Table) && x.Column.Equals(y.Column) && x.Alias.Equals(y.Alias);
+			{
+				return x.Table.Equals(y.Table) && x.Column.Equals(y.Column) && x.Alias.Equals(y.Alias);
+			}
 
 			/// <summary>
 			/// Return object's hash code
 			/// </summary>
 			/// <param name="obj">IExtractedColumn</param>
 			/// <returns>Hash code</returns>
-			public int GetHashCode(IExtractedColumn obj)
-				=> obj.GetHashCode();
+			public int GetHashCode(IExtractedColumn obj) => obj.GetHashCode();
 		}
 	}
 }

@@ -5,64 +5,40 @@ using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs
 {
-	/// <summary>
-	/// Paging Values
-	/// </summary>
+	/// <inheritdoc cref="IPagingValues"/>
 	public sealed class PagingValues : IPagingValues
 	{
-		/// <summary>
-		/// The total number of items that match the search
-		/// </summary>
+		/// <inheritdoc/>
 		public long Items { get; }
 
-		/// <summary>
-		/// The number of items to display on each page of results
-		/// </summary>
+		/// <inheritdoc/>
 		public long ItemsPer { get; }
 
-		/// <summary>
-		/// The index of the first item being displayed
-		/// </summary>
+		/// <inheritdoc/>
 		public long FirstItem { get; }
 
-		/// <summary>
-		/// The index + 1 of the last item being displayed
-		/// </summary>
+		/// <inheritdoc/>
 		public long LastItem { get; }
 
-		/// <summary>
-		/// The page number to display
-		/// </summary>
+		/// <inheritdoc/>
 		public long Page { get; }
 
-		/// <summary>
-		/// The number of pages needed to display all the items
-		/// </summary>
+		/// <inheritdoc/>
 		public long Pages { get; }
 
-		/// <summary>
-		/// The number of pages per group of page numbers
-		/// </summary>
+		/// <inheritdoc/>
 		public long PagesPer { get; }
 
-		/// <summary>
-		/// The first page to display
-		/// </summary>
+		/// <inheritdoc/>
 		public long LowerPage { get; }
 
-		/// <summary>
-		/// The last page to display
-		/// </summary>
+		/// <inheritdoc/>
 		public long UpperPage { get; }
 
-		/// <summary>
-		/// The number of items to Skip() in a Linq query
-		/// </summary>
+		/// <inheritdoc/>
 		public int Skip { get; }
 
-		/// <summary>
-		/// The number of items to Take() in a Linq query
-		/// </summary>
+		/// <inheritdoc/>
 		public int Take { get; }
 
 		/// <summary>

@@ -13,19 +13,10 @@ namespace Jeebs.WordPress
 	/// </summary>
 	public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
-		/// <summary>
-		/// Setup object
-		/// </summary>
-		/// <param name="key">Meta key</param>
-		/// <param name="isRequired">[Optional] Whether or not this custom field is required (default: false)</param>
+		/// <inheritdoc/>
 		protected TermCustomField(string key, bool isRequired = false) : base(key, isRequired) => ValueObj = new Term();
 
-		/// <summary>
-		/// Hydrate this Field
-		/// </summary>
-		/// <param name="db">IWpDb</param>
-		/// <param name="unitOfWork">IUnitOfWork</param>
-		/// <param name="meta">MetaDictionary</param>
+		/// <inheritdoc/>
 		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure

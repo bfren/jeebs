@@ -6,9 +6,7 @@ using Jeebs.WordPress.Entities;
 
 namespace Jeebs.WordPress
 {
-	/// <summary>
-	/// WordPress wrapper
-	/// </summary>
+	/// <inheritdoc cref="IWp{TConfig}"/>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
 	/// <typeparam name="Tc">WpCommentEntity type</typeparam>
 	/// <typeparam name="Tcm">WpCommentMetaEntity type</typeparam>
@@ -42,14 +40,10 @@ namespace Jeebs.WordPress
 		/// </summary>
 		private static bool initialised;
 
-		/// <summary>
-		/// WordPress configuration
-		/// </summary>
+		/// <inheritdoc/>
 		public TConfig Config { get; }
 
-		/// <summary>
-		/// WordPress database instance
-		/// </summary>
+		/// <inheritdoc/>
 		public IWpDb Db { get; }
 
 		/// <summary>
@@ -71,25 +65,15 @@ namespace Jeebs.WordPress
 			if (!initialised)
 			{
 				initialised = true;
-				RegisterCustomFields();
 				RegisterCustomPostTypes();
 				RegisterCustomTaxonomies();
 			}
 		}
 
-		/// <summary>
-		/// Register custom fields
-		/// </summary>
-		public abstract void RegisterCustomFields();
-
-		/// <summary>
-		/// Register custom post types
-		/// </summary>
+		/// <inheritdoc/>
 		public abstract void RegisterCustomPostTypes();
 
-		/// <summary>
-		/// Register custom taxonomies
-		/// </summary>
+		/// <inheritdoc/>
 		public abstract void RegisterCustomTaxonomies();
 	}
 }

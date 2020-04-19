@@ -117,7 +117,7 @@ namespace AppConsoleWordPress
 
 			using var q = bcg.GetQueryWrapper();
 
-			var query = await q.QueryPostsAsync<SermonModel>(opt);
+			var query = await q.QueryPostsAsync<SermonModel>(modify: opt);
 
 			Console.WriteLine(query.Err is IErrorList
 				? $"{query.Err}"
@@ -141,7 +141,7 @@ namespace AppConsoleWordPress
 
 			using var w = db.GetQueryWrapper();
 
-			var result = await w.QueryPostsAsync<PostModel>(opt => opt.Limit = 3);
+			var result = await w.QueryPostsAsync<PostModel>(modify: opt => opt.Limit = 3);
 			if (result.Err is IErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts");
@@ -173,7 +173,7 @@ namespace AppConsoleWordPress
 
 				using var q = db.GetQueryWrapper();
 
-				var query = await q.QueryPostsAsync<SermonModelWithCustomFields>(opt =>
+				var query = await q.QueryPostsAsync<SermonModelWithCustomFields>(modify: opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
@@ -218,7 +218,7 @@ namespace AppConsoleWordPress
 
 				using var q = db.GetQueryWrapper();
 
-				var query = await q.QueryPostsAsync<SermonModelWithTaxonomies>(opt =>
+				var query = await q.QueryPostsAsync<SermonModelWithTaxonomies>(modify: opt =>
 				{
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
@@ -267,7 +267,7 @@ namespace AppConsoleWordPress
 
 			using var w = db.GetQueryWrapper();
 
-			var result = await w.QueryPostsAsync<PostModelWithContent>(opt => opt.Limit = 3, GenerateExcerpt.Create());
+			var result = await w.QueryPostsAsync<PostModelWithContent>(modify: opt => opt.Limit = 3, filters: GenerateExcerpt.Create());
 			if (result.Err is IErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts with content filter");

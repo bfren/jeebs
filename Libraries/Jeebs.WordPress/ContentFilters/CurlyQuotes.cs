@@ -9,10 +9,7 @@ namespace Jeebs.WordPress.ContentFilters
 	/// </summary>
 	public sealed class CurlyQuotes : ContentFilter
 	{
-		/// <summary>
-		/// Use factory pattern
-		/// </summary>
-		/// <param name="filter">Content filter function</param>
+		/// <inheritdoc/>
 		private CurlyQuotes(Func<string, string> filter) : base(filter) { }
 
 		/// <summary>

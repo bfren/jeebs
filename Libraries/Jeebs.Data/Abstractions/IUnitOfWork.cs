@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Unit of Work
+	/// Unit of Work for interacting with a database
 	/// </summary>
 	public interface IUnitOfWork : IDisposable
 	{
@@ -58,51 +58,51 @@ namespace Jeebs.Data
 		/// <param name="query">SQL query</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text);
+		void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
+		///	<para>	Rollback</para>
+		///	<para>	Log Error</para>
+		///	<para>	Return Failure Result</para>
 		/// </summary>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		public IResult<bool> Fail(string error, params object[] args);
+		IResult<bool> Fail(string error, params object[] args);
 
 		/// <summary>
 		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
+		///	<para>	Rollback</para>
+		///	<para>	Log Error</para>
+		///	<para>	Return Failure Result</para>
 		/// </summary>
 		/// <param name="ex">Exception</param>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		public IResult<bool> Fail(Exception ex, string error, params object[] args);
+		IResult<bool> Fail(Exception ex, string error, params object[] args);
 
 		/// <summary>
 		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
+		///	<para>	Rollback</para>
+		///	<para>	Log Error</para>
+		///	<para>	Return Failure Result</para>
 		/// </summary>
 		/// <typeparam name="T">Return value type</typeparam>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		public IResult<T> Fail<T>(string error, params object[] args);
+		IResult<T> Fail<T>(string error, params object[] args);
 
 		/// <summary>
 		/// Query failure -
-		///		Rollback
-		///		Log Error
-		///		Return Failure Result
+		///	<para>	Rollback</para>
+		///	<para>	Log Error</para>
+		///	<para>	Return Failure Result</para>
 		/// </summary>
 		/// <typeparam name="T">Return value type</typeparam>
 		/// <param name="ex">Exception</param>
 		/// <param name="error">Error message</param>
 		/// <param name="args">Error message arguments</param>
-		public IResult<T> Fail<T>(Exception ex, string error, params object[] args);
+		IResult<T> Fail<T>(Exception ex, string error, params object[] args);
 
 		#endregion
 

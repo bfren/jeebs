@@ -4,59 +4,37 @@ using System.Text;
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Query parts
-	/// </summary>
+	/// <inheritdoc cref="IQueryParts"/>
 	public sealed class QueryParts : IQueryParts
 	{
-		/// <summary>
-		/// From table
-		/// </summary>
+		/// <inheritdoc/>
 		public string? From { get; set; }
 
-		/// <summary>
-		/// Select
-		/// </summary>
+		/// <inheritdoc/>
 		public string? Select { get; set; }
 
-		/// <summary>
-		/// Inner Join
-		/// </summary>
+		/// <inheritdoc/>
 		public IList<(string table, string on, string equals)>? InnerJoin { get; set; }
 
-		/// <summary>
-		/// Left Join
-		/// </summary>
+		/// <inheritdoc/>
 		public IList<(string table, string on, string equals)>? LeftJoin { get; set; }
 
-		/// <summary>
-		/// Right Join
-		/// </summary>
+		/// <inheritdoc/>
 		public IList<(string table, string on, string equals)>? RightJoin { get; set; }
 
-		/// <summary>
-		/// Where
-		/// </summary>
+		/// <inheritdoc/>
 		public IList<string>? Where { get; set; }
 
-		/// <summary>
-		/// Query Parameters
-		/// </summary>
+		/// <inheritdoc/>
 		public IQueryParameters Parameters { get; set; } = new QueryParameters();
 
-		/// <summary>
-		/// Order By
-		/// </summary>
+		/// <inheritdoc/>
 		public IList<string>? OrderBy { get; set; }
 
-		/// <summary>
-		/// Limit
-		/// </summary>
+		/// <inheritdoc/>
 		public long? Limit { get; set; }
 
-		/// <summary>
-		/// Offset
-		/// </summary>
+		/// <inheritdoc/>
 		public long? Offset { get; set; }
 
 		/// <summary>
