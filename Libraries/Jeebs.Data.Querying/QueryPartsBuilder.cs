@@ -38,7 +38,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <param name="defaultSort">Default sort columns</param>
-		protected IQueryParts FinishBuild(TOptions opt, params (string selectColumn, SortOrder order)[] defaultSort)
+		protected IQueryParts FinishBuild(TOptions opt, params (string column, SortOrder order)[] defaultSort)
 		{
 			// ORDER BY
 			AddSort(opt, defaultSort);
@@ -55,7 +55,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <param name="defaultSort">Default sort columns</param>
-		private void AddSort(TOptions opt, (string selectColumn, SortOrder order)[] defaultSort)
+		private void AddSort(TOptions opt, (string column, SortOrder order)[] defaultSort)
 		{
 			// Random sort
 			if (opt.SortRandom)
@@ -64,7 +64,7 @@ namespace Jeebs.Data
 				parts.OrderBy.Add(Adapter.GetRandomSortOrder());
 			}
 			// Specified sort
-			else if (opt.Sort is (string selectColumn, SortOrder order)[] sort)
+			else if (opt.Sort is (string column, SortOrder order)[] sort && sort.Length > 0)
 			{
 				Add(sort);
 			}
@@ -75,7 +75,7 @@ namespace Jeebs.Data
 			}
 
 			// Add to ORDER BY
-			void Add(params (string selectColumn, SortOrder order)[] sort)
+			void Add(params (string column, SortOrder order)[] sort)
 			{
 				if (sort.Length == 0)
 				{
