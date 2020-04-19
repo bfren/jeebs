@@ -11,44 +11,40 @@ namespace Jeebs
 	public partial class Result
 	{
 		/// <summary>
-		/// Failure result
+		/// Simple failure
 		/// </summary>
-		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="errors">List of errors - MUST contain at least one</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static IResult<T> Failure<T>(string[] errors) => new Failure<T>(errors);
+		public static IResult<bool> Failure(string[] errors) => new Failure(errors);
 
-		/// <inheritdoc cref="Failure{T}(string[])"/>
-		public static async Task<IResult<T>> FailureAsync<T>(string[] errors) => await Task.FromResult(Failure<T>(errors));
+		/// <inheritdoc cref="Failure(string[])"/>
+		public static async Task<IResult<bool>> FailureAsync(string[] errors) => await Task.FromResult(Failure(errors));
 
 		/// <summary>
-		/// Failure result
+		/// Simple failure
 		/// </summary>
-		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="err">IErrorList</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static IResult<T> Failure<T>(IErrorList err) => new Failure<T>(err);
+		public static IResult<bool> Failure(IErrorList err) => new Failure(err);
 
 		/// <inheritdoc cref="Failure(IErrorList)"/>
-		public static async Task<IResult<T>> FailureAsync<T>(IErrorList err) => await Task.FromResult(Failure<T>(err));
+		public static async Task<IResult<bool>> FailureAsync(IErrorList err) => await Task.FromResult(Failure(err));
 
 		/// <summary>
-		/// Failure result
+		/// Simple failure
 		/// </summary>
-		/// <typeparam name="T">Result success value type</typeparam>
 		/// <param name="error">Single error</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public static IResult<T> Failure<T>(string error) => Failure<T>(new[] { error });
+		public static IResult<bool> Failure(string error) => Failure(new[] { error });
 
-		/// <inheritdoc cref="Failure{T}(string)"/>
-		public static async Task<IResult<T>> FailureAsync<T>(string error) => await Task.FromResult(Failure<T>(error));
+		/// <inheritdoc cref="Failure(string)"/>
+		public static async Task<IResult<bool>> FailureAsync(string error) => await Task.FromResult(Failure(error));
 	}
 
 	/// <summary>
-	/// Alias for failure
+	/// Alias for simple failure
 	/// </summary>
-	/// <typeparam name="T">Success value type</typeparam>
-	public sealed class Failure<T> : Result<T>
+	public sealed class Failure : Result<bool>
 	{
 		/// <summary>
 		/// Create object with errors

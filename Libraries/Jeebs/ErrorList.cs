@@ -7,6 +7,9 @@ namespace Jeebs
 	/// <inheritdoc cref="IErrorList"/>
 	public sealed class ErrorList : List<string>, IErrorList
 	{
+		/// <inheritdoc/>
+		public bool NotFound { get; internal set; }
+
 		/// <summary>
 		/// Create from an array of errors
 		/// </summary>

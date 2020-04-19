@@ -38,7 +38,7 @@ namespace Jeebs
 	/// <summary>
 	/// Alias for simple success
 	/// </summary>
-	public sealed class Success : Result
+	public sealed class Success : Result<bool>
 	{
 		/// <summary>
 		/// Create object with true value

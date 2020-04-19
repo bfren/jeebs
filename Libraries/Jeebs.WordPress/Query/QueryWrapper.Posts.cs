@@ -18,6 +18,45 @@ namespace Jeebs.WordPress
 	{
 		/// <summary>
 		/// Query Posts
+		/// <para>Returns:</para>
+		/// <para>Result.Failure - if there is an error executing the query, or processing the pages</para>
+		/// <para>Result.NotFound - if the query executes successfully but no posts are found</para>
+		/// <para>Result.Success - if the query and post processing execute successfully</para>
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="modify">[Optional] Action to modify the options for this query</param>
+		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
+		public async Task<IResult<List<T>>> QueryPostsAsync<T>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
+			where T : IEntity
+		{
+			// Get query
+			var query = GetQuery<T>(modify);
+
+			// Execute query
+			var results = await query.ExecuteQueryAsync();
+			if (results.Err is IErrorList)
+			{
+				return Result.Failure<List<T>>(results.Err);
+			}
+
+			// If nothing matches, return Not Found
+			if (!results.Val.Any())
+			{
+				return Result.NotFound<List<T>>();
+			}
+
+			var posts = results.Val.ToList();
+
+			// Process posts
+			return await Process<List<T>, T>(posts, filters);
+		}
+
+		/// <summary>
+		/// Query Posts
+		/// <para>Returns:</para>
+		/// <para>Result.Failure - if there is an error executing the query, or processing the pages</para>
+		/// <para>Result.NotFound - if the query executes successfully but no posts are found</para>
+		/// <para>Result.Success - if the query and post processing execute successfully</para>
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="page">[Optional] Page number</param>
@@ -36,47 +75,16 @@ namespace Jeebs.WordPress
 				return Result.Failure<PagedList<T>>(results.Err);
 			}
 
-			// If nothing matches, return empty list
+			// If nothing matches, return Not Found
 			if (results.Val.Count == 0)
 			{
-				return Result.Success(new PagedList<T>());
+				return Result.NotFound<PagedList<T>>();
 			}
 
 			var posts = new PagedList<T>(results.Val);
 
 			// Process posts
 			return await Process<PagedList<T>, T>(posts, filters);
-		}
-
-		/// <summary>
-		/// Query Posts
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
-		public async Task<IResult<List<T>>> QueryPostsAsync<T>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
-			where T : IEntity
-		{
-			// Get query
-			var query = GetQuery<T>(modify);
-
-			// Execute query
-			var results = await query.ExecuteQueryAsync();
-			if (results.Err is IErrorList)
-			{
-				return Result.Failure<List<T>>(results.Err);
-			}
-
-			// If nothing matches, return empty list
-			if (!results.Val.Any())
-			{
-				return Result.Success(new List<T>());
-			}
-
-			var posts = results.Val.ToList();
-
-			// Process posts
-			return await Process<List<T>, T>(posts, filters);
 		}
 
 		/// <summary>

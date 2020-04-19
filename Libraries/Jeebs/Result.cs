@@ -5,34 +5,8 @@ using System.Text;
 
 namespace Jeebs
 {
-	/// <summary>
-	/// True / false result class
-	/// </summary>
-	public partial class Result : Result<bool>
-	{
-		/// <summary>
-		/// Create success result using specified value
-		/// </summary>
-		/// <param name="value">Success value</param>
-		public Result(bool value) : base(value) { }
-
-		/// <summary>
-		/// Create failure result using specified errors
-		/// </summary>
-		/// <param name="errors">List of errors - MUST contain at least one</param>
-		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public Result(string[] errors) : base(errors) { }
-
-		/// <summary>
-		/// Create failure result using specified errors
-		/// </summary>
-		/// <param name="err">IErrorList</param>
-		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-		public Result(IErrorList err) : base(err) { }
-	}
-
 	/// <inheritdoc cref="IResult{T}"/>
-	public class Result<T> : IResult<T>
+	public abstract class Result<T> : IResult<T>
 	{
 		/// <inheritdoc/>
 		public T Val
@@ -73,9 +47,10 @@ namespace Jeebs
 		/// Create failure result using specified errors
 		/// </summary>
 		/// <param name="errors">List of errors - MUST contain at least one</param>
+		/// <param name="notFound">Set to true to mark this as a 'Not Found' error</param>
 		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-		protected Result(string[] errors)
+		protected Result(string[] errors, bool notFound = false)
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		{
 			if (errors.Length == 0)
@@ -83,7 +58,7 @@ namespace Jeebs
 				throw new Jx.ResultException("You must pass at least one error.");
 			}
 
-			Err = new ErrorList(errors);
+			Err = new ErrorList(errors) { NotFound = notFound };
 		}
 
 		/// <summary>
@@ -101,7 +76,7 @@ namespace Jeebs
 		public override string ToString()
 		{
 			return
-				Err is ErrorList
+				Err is IErrorList
 				? Err.ToString()
 				: (
 					Val is T
