@@ -11,7 +11,7 @@ namespace Jeebs.WordPress
 	internal partial class QueryPostsMeta
 	{
 		/// <inheritdoc/>
-		internal sealed class Builder<T> : QueryPartsBuilder<T, Options>
+		internal sealed class Builder<T> : QueryPartsBuilderExtended<T, Options>
 		{
 			/// <summary>
 			/// IWpDb
@@ -27,16 +27,16 @@ namespace Jeebs.WordPress
 			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)
 			{
-				// FROM
-				AddFrom(db.PostMeta.ToString());
-
 				// SELECT
-				AddSelect(Adapter.Extract<T>(db.PostMeta));
+				AddSelect(db.PostMeta);
+
+				// FROM
+				AddFrom(db.PostMeta);
 
 				// WHERE Post IDs
 				if (opt.PostIds is List<long> postIds && postIds.Count > 0)
 				{
-					AddWhere($"{Escape(db.PostMeta.PostId)} IN ({string.Join(db.Adapter.ColumnSeparator, postIds)})");
+					AddWhere($"{__(db.PostMeta, pm => pm.PostId)} IN ({string.Join(Adapter.ColumnSeparator, postIds)})");
 				}
 
 				// Finish and return

@@ -10,6 +10,19 @@ namespace Jeebs.Data
 	public static partial class AdapterExtensions
 	{
 		/// <summary>
+		/// Escape and join a column on a table
+		/// </summary>
+		/// <typeparam name="T">Table type</typeparam>
+		/// <param name="adapter">IAdapter</param>
+		/// <param name="table">Table</param>
+		/// <param name="column">Column</param>
+		public static string Escape<T>(this IAdapter adapter, T table, Func<T, string> column)
+			where T : Table
+		{
+			return adapter.EscapeAndJoin(table, column(table));
+		}
+
+		/// <summary>
 		/// Extracts and escapes matching columns
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>

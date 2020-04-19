@@ -13,7 +13,7 @@ namespace Jeebs.WordPress
 	internal partial class QueryPostsTaxonomy
 	{
 		/// <inheritdoc/>
-		internal sealed class Builder<T> : QueryPartsBuilder<T, Options>
+		internal sealed class Builder<T> : QueryPartsBuilderExtended<T, Options>
 			where T : TermList.Term
 		{
 			/// <summary>
@@ -30,34 +30,34 @@ namespace Jeebs.WordPress
 			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)
 			{
-				// FROM
-				AddFrom(db.Term.ToString());
-
 				// Add SELECT
-				AddSelect(Adapter.Extract<T>(db.Term, db.TermRelationship, db.TermTaxonomy));
+				AddSelect(db.Term, db.TermRelationship, db.TermTaxonomy);
+
+				// FROM
+				AddFrom(db.Term);
 
 				// JOIN
-				AddInnerJoin(db.TermTaxonomy, db.TermTaxonomy.TermId, (db.Term, db.Term.TermId));
-				AddInnerJoin(db.TermRelationship, db.TermRelationship.TermTaxonomyId, (db.TermTaxonomy, db.TermTaxonomy.TermTaxonomyId));
+				AddInnerJoin(db.TermTaxonomy, tx => tx.TermId, (db.Term, tm => tm.TermId));
+				AddInnerJoin(db.TermRelationship, tr => tr.TermTaxonomyId, (db.TermTaxonomy, tx => tx.TermTaxonomyId));
 
 				// WHERE Taxonomies
 				if (opt.Taxonomies.Count > 0)
 				{
-					var taxonomies = string.Join($"'{db.Adapter.ColumnSeparator}'", opt.Taxonomies);
-					AddWhere($"{Escape(db.TermTaxonomy, db.TermTaxonomy.Taxonomy)} IN ('{taxonomies}')");
+					var taxonomies = string.Join($"'{Adapter.ColumnSeparator}'", opt.Taxonomies);
+					AddWhere($"{__(db.TermTaxonomy, tx => tx.Taxonomy)} IN ('{taxonomies}')");
 				}
 
 				// WHERE Post IDs
 				if (opt.PostIds.Count > 0)
 				{
-					var postIds = string.Join(db.Adapter.ColumnSeparator, opt.PostIds);
-					AddWhere($"{Escape(db.TermRelationship.PostId)} IN ({postIds})");
+					var postIds = string.Join(Adapter.ColumnSeparator, opt.PostIds);
+					AddWhere($"{__(db.TermRelationship, tr => tr.PostId)} IN ({postIds})");
 				}
 
 				// Finish and return
 				return FinishBuild(opt,
-					(Escape(db.Term, db.Term.Title), SortOrder.Ascending),
-					(Escape(db.TermTaxonomy, db.TermTaxonomy.Count), SortOrder.Descending)
+					(__(db.Term, tm => tm.Title), SortOrder.Ascending),
+					(__(db.TermTaxonomy, tx => tx.Count), SortOrder.Descending)
 				);
 			}
 		}

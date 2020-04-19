@@ -113,16 +113,6 @@ namespace Jeebs.Data
 			}
 		}
 
-		#region Adapter Shorthands
-
-		/// <inheritdoc/>
-		public string Escape(object element) => Adapter.SplitAndEscape(element.ToString());
-
-		/// <inheritdoc/>
-		public string Escape(params object?[] elements) => Adapter.EscapeAndJoin(elements);
-
-		#endregion
-
 		/// <summary>
 		/// Set FROM
 		/// </summary>
@@ -161,9 +151,9 @@ namespace Jeebs.Data
 		/// Add JOIN
 		/// </summary>
 		/// <param name="join">JOINT list</param>
-		/// <param name="table">Table to join</param>
-		/// <param name="on">Table and column to join from</param>
-		/// <param name="equals">Table and column to join to</param>
+		/// <param name="table">JOIN table</param>
+		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
+		/// <param name="equals">EQUALS table and column</param>
 		private IList<(string table, string on, string equals)> AddJoin(
 			IList<(string table, string on, string equals)>? join,
 			object table,
@@ -176,9 +166,9 @@ namespace Jeebs.Data
 
 			// Add the join
 			joinList.Add((
-				Escape(table),
-				Escape(table, on),
-				Escape(equals.table, equals.column)
+				Adapter.Escape(table),
+				Adapter.EscapeAndJoin(table, on),
+				Adapter.EscapeAndJoin(equals.table, equals.column)
 			));
 
 			// Return the join list
@@ -188,23 +178,32 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Set INNER JOIN
 		/// </summary>
+		/// <param name="table">JOIN table</param>
+		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
+		/// <param name="equals">EQUALS table and column</param>
 		protected void AddInnerJoin(object table, string on, (object table, string column) equals)
 		{
 			parts.InnerJoin = AddJoin(parts.InnerJoin, table, on, equals);
 		}
 
 		/// <summary>
-		/// Set INNER JOIN
+		/// Set LEFT JOIN
 		/// </summary>
-		protected void AddLeftJoin(object table, string on, (string table, string column) equals)
+		/// <param name="table">JOIN table</param>
+		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
+		/// <param name="equals">EQUALS table and column</param>
+		protected void AddLeftJoin(object table, string on, (object table, string column) equals)
 		{
 			parts.LeftJoin = AddJoin(parts.LeftJoin, table, on, equals);
 		}
 
 		/// <summary>
-		/// Set INNER JOIN
+		/// Set RIGHT JOIN
 		/// </summary>
-		protected void AddRightJoin(object table, string on, (string table, string column) equals)
+		/// <param name="table">JOIN table</param>
+		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
+		/// <param name="equals">EQUALS table and column</param>
+		protected void AddRightJoin(object table, string on, (object table, string column) equals)
 		{
 			parts.RightJoin = AddJoin(parts.RightJoin, table, on, equals);
 		}

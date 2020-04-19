@@ -14,7 +14,7 @@ namespace Jeebs.WordPress
 	public partial class QueryPosts
 	{
 		/// <inheritdoc/>
-		internal sealed class Builder<T> : QueryPartsBuilder<T, Options>
+		internal sealed class Builder<T> : QueryPartsBuilderExtended<T, Options>
 		{
 			/// <summary>
 			/// IWpDb
@@ -30,28 +30,24 @@ namespace Jeebs.WordPress
 			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)
 			{
-				// Use db shorthands
-				var _ = db;
-				var p = _.Post.ToString();
-
 				// SELECT columns
-				AddSelect($"{Adapter.Extract<T>(_.Post)}");
+				AddSelect(db.Post);
 
 				// FROM table
-				AddFrom($"{Escape(_.Post)} AS {Escape(p)}");
+				AddFrom(db.Post);
 
 				// WHERE type
 				var type = opt.Type;
-				AddWhere($"{Escape(p, _.Post.Type)} = @{nameof(type)}", new { type });
+				AddWhere($"{__(db.Post, p => p.Type)} = @{nameof(type)}", new { type });
 
 				// WHERE status
 				var status = opt.Status;
-				AddWhere($"{Escape(p, _.Post.Status)} = @{nameof(status)}", new { status });
+				AddWhere($"{__(db.Post, p => p.Status)} = @{nameof(status)}", new { status });
 
 				// WHERE Id
 				if (opt.Id is long postId)
 				{
-					AddWhere($"{Escape(p, _.Post.PostId)} = @{nameof(postId)}", new { postId });
+					AddWhere($"{__(db.Post, p => p.PostId)} = @{nameof(postId)}", new { postId });
 				}
 
 				// WHERE search
@@ -64,18 +60,18 @@ namespace Jeebs.WordPress
 				if (opt.From is DateTime fromBase)
 				{
 					var from = fromBase.StartOfDay().ToMySqlString();
-					AddWhere($"{Escape(p, _.Post.PublishedOn)} >= @{nameof(from)}", new { from });
+					AddWhere($"{__(db.Post, p => p.PublishedOn)} >= @{nameof(from)}", new { from });
 				}
 				if (opt.To is DateTime toBase)
 				{
 					var to = toBase.EndOfDay().ToMySqlString();
-					AddWhere($"{Escape(p, _.Post.PublishedOn)} <= @{nameof(to)}", new { to });
+					AddWhere($"{__(db.Post, p => p.PublishedOn)} <= @{nameof(to)}", new { to });
 				}
 
 				// WHERE parent ID
 				if (opt.ParentId is int parentId)
 				{
-					AddWhere($"{Escape(p, _.Post.ParentId)} = @{nameof(parentId)}", new { parentId });
+					AddWhere($"{__(db.Post, p => p.ParentId)} = @{nameof(parentId)}", new { parentId });
 				}
 
 				// WHERE taxonomies
@@ -91,7 +87,7 @@ namespace Jeebs.WordPress
 				}
 
 				// Finish and Return
-				return FinishBuild(opt, (Escape(p, _.Post.PublishedOn), SortOrder.Descending));
+				return FinishBuild(opt, (__(db.Post, p => p.PublishedOn), SortOrder.Descending));
 			}
 
 			/// <summary>
@@ -101,10 +97,6 @@ namespace Jeebs.WordPress
 			/// <param name="opt">QueryOptions</param>
 			private void AddWhereSearch(string searchText, Options opt)
 			{
-				// Use shorthands
-				var _ = db;
-				var p = _.Post.ToString();
-
 				// Trim search text
 				var search = searchText.Trim();
 				var where = string.Empty;
@@ -126,7 +118,7 @@ namespace Jeebs.WordPress
 				// Search title
 				if ((opt.SearchFields & SearchPostFields.Title) != 0)
 				{
-					where += $"{Escape(p, db.Post.Title)} {comparison} @{nameof(search)}";
+					where += $"{__(db.Post, p => p.Title)} {comparison} @{nameof(search)}";
 				}
 
 				// Search slug
@@ -137,7 +129,7 @@ namespace Jeebs.WordPress
 						where += " OR ";
 					}
 
-					where += $"{Escape(p, _.Post.Slug)} {comparison} @{nameof(search)}";
+					where += $"{__(db.Post, p => p.Slug)} {comparison} @{nameof(search)}";
 				}
 
 				// Search content
@@ -148,7 +140,7 @@ namespace Jeebs.WordPress
 						where += " OR ";
 					}
 
-					where += $"{Escape(p, _.Post.Content)} {comparison} @{nameof(search)}";
+					where += $"{__(db.Post, p => p.Content)} {comparison} @{nameof(search)}";
 				}
 
 				// Add to WHERE
@@ -161,12 +153,6 @@ namespace Jeebs.WordPress
 			/// <param name="taxonomiesList">List of taxonomies to search</param>
 			private void AddWhereTaxonomies(IList<(Taxonomy taxonomy, int id)> taxonomiesList)
 			{
-				// Use shorthands
-				var _ = db;
-				var p = _.Post.ToString();
-				var tr = _.TermRelationship.ToString();
-				var tx = _.TermTaxonomy.ToString();
-
 				// Setup variables
 				var taxonomyWhere = string.Empty;
 				var taxonomyNameIndex = 0;
@@ -196,11 +182,11 @@ namespace Jeebs.WordPress
 
 					// Add SQL commands to lookup taxonomy terms
 					var subQuery = "SELECT COUNT(1) ";
-					subQuery += $"FROM {Escape(tr)} ";
-					subQuery += $"INNER JOIN {Escape(tx)} ON {Escape(tr, _.TermRelationship.TermTaxonomyId)} = {Escape(tx, _.TermTaxonomy.TermTaxonomyId)} ";
-					subQuery += $"WHERE {Escape(tx, _.TermTaxonomy.Taxonomy)} = {taxonomyNameParameter} ";
-					subQuery += $"AND {Escape(tr, _.TermRelationship.PostId)} = {Escape(p, _.Post.PostId)} ";
-					subQuery += $"AND {Escape(tx, _.TermTaxonomy.TermId)} IN (";
+					subQuery += $"FROM {__(db.TermRelationship)} ";
+					subQuery += $"INNER JOIN {__(db.TermTaxonomy)} ON {__(db.TermRelationship, tr => tr.TermTaxonomyId)} = {__(db.TermTaxonomy, tx => tx.TermTaxonomyId)} ";
+					subQuery += $"WHERE {__(db.TermTaxonomy, tx => tx.Taxonomy)} = {taxonomyNameParameter} ";
+					subQuery += $"AND {__(db.TermRelationship, tr => tr.PostId)} = {__(db.Post, p => p.PostId)} ";
+					subQuery += $"AND {__(db.TermTaxonomy, tx => tx.TermId)} IN (";
 
 					// Add the terms for this taxonomy
 					var taxonomyIdIndex = 0;
@@ -245,11 +231,6 @@ namespace Jeebs.WordPress
 			/// <param name="fields">List of custom fields to search</param>
 			private void AddWhereCustomFields(IList<(ICustomField field, SearchOperators op, object value)> fields)
 			{
-				// Use shorthands
-				var _ = db;
-				var p = _.Post.ToString();
-				var pm = _.PostMeta.ToString();
-
 				// Setup variables
 				var customFieldWhere = string.Empty;
 				var customFieldIndex = 0;
@@ -287,10 +268,10 @@ namespace Jeebs.WordPress
 
 					// Add SQL commands to lookup custom field
 					var subQuery = "SELECT COUNT(1) ";
-					subQuery += $"FROM {Escape(pm)} ";
-					subQuery += $"WHERE {Escape(pm, _.PostMeta.PostId)} = {Escape(p, _.Post.PostId)} ";
-					subQuery += $"AND {Escape(pm, _.PostMeta.Key)} = {customFieldKeyParameter} ";
-					subQuery += $"AND {Escape(pm, _.PostMeta.Value)} {customFieldComparison} {customFieldValueParameter} ";
+					subQuery += $"FROM {__(db.PostMeta)} ";
+					subQuery += $"WHERE {__(db.PostMeta, pm => pm.PostId)} = {__(db.Post, p => p.PostId)} ";
+					subQuery += $"AND {__(db.PostMeta, pm => pm.Key)} = {customFieldKeyParameter} ";
+					subQuery += $"AND {__(db.PostMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter} ";
 
 					// Add sub query to where
 					customFieldWhere += $"({subQuery}) = 1";
