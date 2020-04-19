@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 
-namespace Jeebs.Mvc.Controllers
+namespace Jeebs.Mvc
 {
 	/// <summary>
 	/// Error Controller
@@ -74,6 +74,15 @@ namespace Jeebs.Mvc.Controllers
 			var viewPath = $"Error/{viewName}";
 			var result = viewEngine.FindView(ControllerContext, viewPath, true);
 			return result.Success ? View(viewPath) : null;
+		}
+
+		/// <summary>
+		/// Redirect to error page
+		/// </summary>
+		/// <param name="code">HTTP Status Code</param>
+		public static RedirectToActionResult RedirectToError(int code = 500)
+		{
+			return new RedirectToActionResult(nameof(Execute), "Error", new { code });
 		}
 	}
 }
