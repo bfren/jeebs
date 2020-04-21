@@ -81,20 +81,16 @@ namespace Jeebs.Util
 
 		public class Test
 		{
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-			public string Foo { get; set; }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+			public string Foo { get; set; } = string.Empty;
 
 			public int Bar { get; set; }
 
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-			public string Empty { get; set; }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+			public string Empty { get; set; } = string.Empty;
 		}
 
 		public class TestComparer : IEqualityComparer<Test>
 		{
-			public bool Equals(Test x, Test y) => x.Foo == y.Foo && x.Bar == y.Bar;
+			public bool Equals(Test? x, Test? y) => x?.Foo == y?.Foo && x?.Bar == y?.Bar;
 
 			public int GetHashCode(Test obj) => obj.GetHashCode();
 		}

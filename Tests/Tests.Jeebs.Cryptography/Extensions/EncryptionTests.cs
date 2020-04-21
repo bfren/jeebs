@@ -160,14 +160,12 @@ namespace Jeebs.Cryptography.Extensions
 
 		public class Foo
 		{
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-			public string Bar { get; set; }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+			public string Bar { get; set; } = string.Empty;
 		}
 
 		public class FooComparer : IEqualityComparer<Foo>
 		{
-			public bool Equals(Foo x, Foo y) => x.Bar == y.Bar;
+			public bool Equals(Foo? x, Foo? y) => x?.Bar == y?.Bar;
 
 			public int GetHashCode(Foo obj) => obj.GetHashCode();
 		}
