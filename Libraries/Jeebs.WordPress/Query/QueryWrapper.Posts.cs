@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Data.Enums;
 using Jeebs.Reflection;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
-using Jeebs.WordPress.Tables;
 
 namespace Jeebs.WordPress
 {
@@ -112,6 +109,9 @@ namespace Jeebs.WordPress
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
+			// Shorthand Failure function
+			static IResult<TList> Fail(IErrorList err) => Result.Failure<TList>(err);
+
 			//
 			//
 			//	ADD META AND CUSTOM FIELDS
@@ -128,7 +128,7 @@ namespace Jeebs.WordPress
 				var addMetaResult = await AddMetaToPostsAsync(posts, meta);
 				if (addMetaResult.Err is IErrorList)
 				{
-					return Result.Failure<TList>(addMetaResult.Err);
+					return Fail(addMetaResult.Err);
 				}
 
 				// Get custom fields from the cache
@@ -139,12 +139,10 @@ namespace Jeebs.WordPress
 					var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta, customFields);
 					if (addCustomFieldsResult.Err is IErrorList)
 					{
-						return Result.Failure<TList>(addCustomFieldsResult.Err);
+						return Fail(addCustomFieldsResult.Err);
 					}
 				}
 			}
-
-
 
 			//
 			//
@@ -160,11 +158,9 @@ namespace Jeebs.WordPress
 				var addTaxonomiesResult = await AddTaxonomiesToPostsAsync(posts, termLists);
 				if (addTaxonomiesResult.Err is IErrorList)
 				{
-					return Result.Failure<TList>(addTaxonomiesResult.Err);
+					return Fail(addTaxonomiesResult.Err);
 				}
 			}
-
-
 
 			//
 			//
@@ -184,7 +180,7 @@ namespace Jeebs.WordPress
 					var applyContentFiltersResult = ApplyContentFilters(posts, content, filters);
 					if (applyContentFiltersResult.Err is IErrorList)
 					{
-						return Result.Failure<TList>(applyContentFiltersResult.Err);
+						return Fail(applyContentFiltersResult.Err);
 					}
 				}
 				else
@@ -192,8 +188,6 @@ namespace Jeebs.WordPress
 					throw new Jx.WordPress.QueryException($"Cannot find the {nameof(WpPostEntity.Content)} property of {typeof(TModel)}.");
 				}
 			}
-
-
 
 			//
 			//
@@ -316,7 +310,7 @@ namespace Jeebs.WordPress
 			};
 
 			// Add each taxonomy to the query options
-			var firstPost = posts.First();
+			var firstPost = posts[0];
 			foreach (var info in termLists)
 			{
 				// Get taxonomy
