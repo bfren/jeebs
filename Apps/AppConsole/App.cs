@@ -10,10 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace ConsoleApp
+namespace AppConsole
 {
-	public class App : Jeebs.Apps.ConsoleApp
-	{
-
-	}
+	public class App : Jeebs.Apps.ConsoleApp { }
 }

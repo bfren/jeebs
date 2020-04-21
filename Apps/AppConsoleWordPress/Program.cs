@@ -285,9 +285,9 @@ namespace AppConsoleWordPress
 
 	class TermModel
 	{
-		public string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
-		public Taxonomy Taxonomy { get; set; }
+		public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
 
 		public int Count { get; set; }
 	}
@@ -298,12 +298,12 @@ namespace AppConsoleWordPress
 
 		public long PostId { get; set; }
 
-		public MetaDictionary Meta { get; set; }
+		public MetaDictionary Meta { get; set; } = new MetaDictionary();
 	}
 
 	class PostModelWithContent : PostModel
 	{
-		public string Content { get; set; }
+		public string Content { get; set; } = string.Empty;
 	}
 
 	class SermonModel : IEntity

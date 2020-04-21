@@ -4,7 +4,7 @@ using Jeebs;
 using Jeebs.Apps;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ConsoleApp
+namespace AppConsole
 {
 	public sealed class Program : Jeebs.Apps.Program
 	{
@@ -42,7 +42,7 @@ namespace ConsoleApp
 		});
 	}
 
-	class Test
+	internal class Test
 	{
 		public string Text { get; set; } = string.Empty;
 
