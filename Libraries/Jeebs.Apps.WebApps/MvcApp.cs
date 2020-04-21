@@ -145,10 +145,7 @@ namespace Jeebs.Apps
 		/// Override to configure Razor Runtime Compilation
 		/// </summary>
 		/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
-		public virtual void ConfigureServices_RuntimeCompilation(MvcRazorRuntimeCompilationOptions opt)
-		{
-
-		}
+		public virtual void ConfigureServices_RuntimeCompilation(MvcRazorRuntimeCompilationOptions opt) { }
 
 		/// <summary>
 		/// Override to configure endpoints JSON
