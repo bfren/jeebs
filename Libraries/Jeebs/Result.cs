@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace Jeebs
 {
 	/// <inheritdoc cref="IResult{T}"/>
 	public abstract class Result<T> : IResult<T>
 	{
+		/// <summary>
+		/// Field to hold success value
+		/// </summary>
+		private readonly T value;
+
 		/// <inheritdoc/>
 		public T Val
 		{
@@ -29,11 +33,6 @@ namespace Jeebs
 			}
 		}
 
-		/// <summary>
-		/// Field to hold success value
-		/// </summary>
-		private readonly T value;
-
 		/// <inheritdoc/>
 		public IErrorList? Err { get; }
 
@@ -43,32 +42,16 @@ namespace Jeebs
 		/// <param name="value">Success value</param>
 		protected Result(T value) => this.value = value;
 
-		/// <summary>
-		/// Create failure result using specified errors
-		/// </summary>
-		/// <param name="errors">List of errors - MUST contain at least one</param>
-		/// <param name="notFound">Set to true to mark this as a 'Not Found' error</param>
-		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-		protected Result(string[] errors, bool notFound = false)
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+		/// <inheritdoc/>
+		public IResult<TNew> Pipe<TNew>(Func<T, IResult<TNew>> next)
 		{
-			if (errors.Length == 0)
+			if(Err is IErrorList err)
 			{
-				throw new Jx.ResultException("You must pass at least one error.");
+				return Result.Failure<TNew>(err);
 			}
 
-			Err = new ErrorList(errors) { NotFound = notFound };
+			return next(Val);
 		}
-
-		/// <summary>
-		/// Create failure result using specified errors
-		/// </summary>
-		/// <param name="err">IErrorList</param>
-		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-		protected Result(IErrorList err) => Err = err;
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
 		/// <summary>
 		/// Return Err (IErrorList) if there was an error, or Val (T) if not
@@ -85,5 +68,32 @@ namespace Jeebs
 				)
 			;
 		}
+
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+
+		/// <summary>
+		/// Create failure result using specified errors
+		/// </summary>
+		/// <param name="errors">List of errors - MUST contain at least one</param>
+		/// <param name="notFound">Set to true to mark this as a 'Not Found' error</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
+		protected Result(string[] errors, bool notFound = false)
+		{
+			if(errors.Length == 0)
+			{
+				throw new Jx.ResultException("You must pass at least one error.");
+			}
+
+			Err = new ErrorList(errors) { NotFound = notFound };
+		}
+
+		/// <summary>
+		/// Create failure result using specified errors
+		/// </summary>
+		/// <param name="err">IErrorList</param>
+		/// <exception cref="Jx.ResultException">If list contains no errors</exception>
+		protected Result(IErrorList err) => Err = err;
+
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 	}
 }

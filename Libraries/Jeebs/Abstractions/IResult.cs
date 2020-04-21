@@ -18,5 +18,12 @@ namespace Jeebs
 		/// Use <code>Result.Err is IErrorList</code> to check before accessing Result.Val
 		/// </summary>
 		IErrorList? Err { get; }
+
+		/// <summary>
+		/// Pipe the current result into a new function on success - bubbles up errors if not
+		/// </summary>
+		/// <typeparam name="TNew">New value type</typeparam>
+		/// <param name="next">Next function to perform</param>
+		IResult<TNew> Pipe<TNew>(Func<T, IResult<TNew>> next);
 	}
 }
