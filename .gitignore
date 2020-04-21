@@ -6,3 +6,6 @@
 **/bin
 **/obj
 **/jeebsconfig-secrets.json
+
+.fake
+.ionide
