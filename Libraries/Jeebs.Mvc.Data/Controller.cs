@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Jeebs.Data;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Jeebs.Mvc.Controllers
+namespace Jeebs.Mvc
 {
 	/// <summary>
-	/// Controller class
+	/// Controller class for interacting with data
 	/// </summary>
 	/// <typeparam name="TDb">IDb</typeparam>
 	public abstract class Controller<TDb> : Controller
@@ -14,11 +16,6 @@ namespace Jeebs.Mvc.Controllers
 		/// TDb
 		/// </summary>
 		protected TDb Db { get; }
-
-		/// <summary>
-		/// Current page number
-		/// </summary>
-		public long Page => long.TryParse(Request.Query["p"], out long p) ? p : 1;
 
 		/// <summary>
 		/// Create object

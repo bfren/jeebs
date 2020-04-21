@@ -75,14 +75,5 @@ namespace Jeebs.Mvc
 			var result = viewEngine.FindView(ControllerContext, viewPath, true);
 			return result.Success ? View(viewPath) : null;
 		}
-
-		/// <summary>
-		/// Redirect to error page
-		/// </summary>
-		/// <param name="code">HTTP Status Code</param>
-		public static RedirectToActionResult RedirectToError(int code = 500)
-		{
-			return new RedirectToActionResult(nameof(Execute), "Error", new { code });
-		}
 	}
 }
