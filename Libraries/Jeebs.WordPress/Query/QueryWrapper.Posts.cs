@@ -109,9 +109,6 @@ namespace Jeebs.WordPress
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
-			// Shorthand Failure function
-			static IResult<TList> Fail(IErrorList err) => Result.Failure<TList>(err);
-
 			//
 			//
 			//	ADD META AND CUSTOM FIELDS
@@ -197,6 +194,15 @@ namespace Jeebs.WordPress
 
 			// Return posts
 			return Result.Success(posts);
+
+			//
+			//
+			//	LOCAL FUNCTIONS
+			//
+			//
+
+			// Shorthand Failure function
+			static IResult<TList> Fail(IErrorList err) => Result.Failure<TList>(err);
 		}
 
 		/// <summary>
@@ -278,8 +284,8 @@ namespace Jeebs.WordPress
 				// Add each custom field
 				foreach (var info in customFields)
 				{
-					// Get field property
-					var customField = (ICustomField)post.GetProperty(info.Name);
+					// Get custom field
+					var customField = getCustomField(post, info);
 
 					// Hydrate the field
 					var result = await customField.HydrateAsync(db, unitOfWork, metaDictionary);
@@ -287,11 +293,25 @@ namespace Jeebs.WordPress
 					{
 						return Result.Failure(err);
 					}
+
+					// Set the value
+					info.SetValue(post, customField);
 				}
 			}
 
 			// Return success
 			return Result.Success();
+
+			// Get a custom field - if it's null, create it
+			static ICustomField getCustomField(T post, PropertyInfo info)
+			{
+				if (info.GetValue(post) is ICustomField field)
+				{
+					return field;
+				}
+
+				return (ICustomField)Activator.CreateInstance(info.PropertyType);
+			}
 		}
 
 		/// <summary>

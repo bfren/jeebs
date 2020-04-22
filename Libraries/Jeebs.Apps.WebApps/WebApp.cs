@@ -120,7 +120,7 @@ namespace Jeebs.Apps
 		/// <param name="app">IApplicationBuilder</param>
 		protected virtual void Configure_ProductionExceptionHandling(IApplicationBuilder app)
 		{
-			app.UseExceptionHandler();
+			app.UseExceptionHandler("/Error");
 		}
 
 		/// <summary>

@@ -53,25 +53,17 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 
 		/// <summary>
 		/// Get the Video ID based on whether the long or short format has been used
+		/// Regex comes from https://stackoverflow.com/a/27728417/8199362
 		/// </summary>
 		/// <param name="uri">URI</param>
 		private string? GetVideoId(Uri uri)
 		{
-			if (uri.PathAndQuery.Contains("?v=")) // Long link https://youtube.com/?v=xxx
+			var regex = new Regex(@"^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*");
+			var m = regex.Match(uri.AbsoluteUri);
+			
+			if (m.Success && m.Groups[1] is Group g && g.Value is string v)
 			{
-				var parts = HttpUtility.ParseQueryString(uri.Query);
-				if (parts["v"] is string v)
-				{
-					return v;
-				}
-			}
-			else if (uri.Host == "youtu.be") // Short link https://youtu.be/xxx
-			{
-				var path = uri.GetLeftPart(UriPartial.Path).TrimEnd('/');
-				if (path[1..] is string v && !string.IsNullOrEmpty(v))
-				{
-					return v;
-				}
+				return v;
 			}
 
 			return null;
