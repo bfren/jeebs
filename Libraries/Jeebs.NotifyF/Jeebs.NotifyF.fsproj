@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Compile Include="Message.fs" />
+    <Compile Include="Slack.fs" />
+    <Compile Include="Notifier.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+		<PackageReference Update="FSharp.Core" Version="4.7.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
+    <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
+  </ItemGroup>
+
+</Project>
