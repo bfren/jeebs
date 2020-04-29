@@ -10,14 +10,14 @@
 		<Company>bcg|design</Company>
 		<Copyright>Ben Green 2013-2020</Copyright>
 		<Version>4.0.0</Version>
-		<VersionSuffix>-beta.52</VersionSuffix>
+		<VersionSuffix>-beta.55</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
-		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(Version)$(VersionSuffix) --no-build" />
+		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(Version)$(VersionSuffix) --no-build -c Release" />
 		<Exec Command="nuget init &quot;$(ProjectDir)bin\Release&quot; &quot;D:\Software\NuGet\Packages\v4&quot;" />
 	</Target>
 </Project>

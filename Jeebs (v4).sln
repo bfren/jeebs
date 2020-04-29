@@ -96,8 +96,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Data", "Libraries
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.All", "Libraries\Jeebs.Data.All\Jeebs.Data.All.csproj", "{459EFDBE-D207-44FE-A8A9-4AA6B31EFA11}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Jeebs.NotifyF", "Libraries\Jeebs.NotifyF\Jeebs.NotifyF.fsproj", "{6D3077F6-9D5C-466F-BBD4-ABD0EFEB88E2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -228,10 +226,6 @@ Global
 		{459EFDBE-D207-44FE-A8A9-4AA6B31EFA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{459EFDBE-D207-44FE-A8A9-4AA6B31EFA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{459EFDBE-D207-44FE-A8A9-4AA6B31EFA11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D3077F6-9D5C-466F-BBD4-ABD0EFEB88E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D3077F6-9D5C-466F-BBD4-ABD0EFEB88E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D3077F6-9D5C-466F-BBD4-ABD0EFEB88E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D3077F6-9D5C-466F-BBD4-ABD0EFEB88E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -276,7 +270,6 @@ Global
 		{0B737202-DF9D-41BA-B663-5D7BEDD20965} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
 		{41C91591-CAD9-47F4-B1F1-EC34C708D7D1} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{459EFDBE-D207-44FE-A8A9-4AA6B31EFA11} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
-		{6D3077F6-9D5C-466F-BBD4-ABD0EFEB88E2} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
