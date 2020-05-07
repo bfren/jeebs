@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Include="Core.fs" />
+    <Compile Include="Integer/Random.fs" />
+    <Compile Include="Array/Shuffle.fs" />
+    <Compile Include="String/Random.fs" />
+    <Compile Include="All.fs" />
+  </ItemGroup>
+</Project>

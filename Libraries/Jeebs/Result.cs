@@ -43,11 +43,11 @@ namespace Jeebs
 		protected Result(T value) => this.value = value;
 
 		/// <inheritdoc/>
-		public IResult<TNew> Pipe<TNew>(Func<T, IResult<TNew>> next)
+		public IResult<TNext> Pipe<TNext>(Func<T, IResult<TNext>> next)
 		{
 			if(Err is IErrorList err)
 			{
-				return Result.Failure<TNew>(err);
+				return Result.Failure<TNext>(err);
 			}
 
 			return next(Val);
