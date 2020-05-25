@@ -21,7 +21,7 @@ namespace Jeebs.Mvc.TagHelpers
 		/// <summary>
 		/// The text to display in the link - if null, will display the email address
 		/// </summary>
-		public string Display { get; set; } = string.Empty;
+		public string? Display { get; set; }
 
 		/// <summary>
 		/// Email subject
