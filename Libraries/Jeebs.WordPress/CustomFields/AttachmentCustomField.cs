@@ -49,7 +49,7 @@ namespace Jeebs.WordPress
 				opt.Type = PostType.Attachment;
 				opt.Status = PostStatus.Inherit;
 				opt.Limit = 1;
-			});
+			}).ConfigureAwait(false);
 
 			if (result.Err is IErrorList)
 			{
