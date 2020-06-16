@@ -44,7 +44,7 @@ namespace Jeebs
 		/// Add a range of messages
 		/// </summary>
 		/// <param name="add">Array of messages</param>
-		public void AddRange(IMessage[] add) => add.ToList().ForEach(m => messages.Add(m));
+		public void AddRange(params IMessage[] add) => add.ToList().ForEach(m => messages.Add(m));
 
 		/// <summary>
 		/// Returns whether or not the message list contains at least one message of type <typeparamref name="T"/>

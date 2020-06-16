@@ -12,7 +12,7 @@ namespace Jeebs
 		/// <summary>
 		/// Start a synchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		public static Ok Chain { get => new Ok(); }
+		public static R<object> Chain { get => new Ok(); }
 
 		/// <summary>
 		/// Start an asynchronous result chain with an <see cref="Ok"/> result
@@ -33,10 +33,10 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain
-		/// <para>Action <paramref name="a"/> receives no input and gives no output</para>
+		/// <para>Action <paramref name="a"/> receives no input and returns <see cref="Ok()"/> as output</para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
-		/// <param name="a">The action will be executed if the current object is an Ok result</param>
+		/// <param name="a">The action will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
 		public R<T> Link(Action a) => this switch
 		{
 			Ok<T> _ => Catch(() => { a(); return Ok(); }),
@@ -45,10 +45,10 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain
-		/// <para>Action <paramref name="a"/> receives the current object as an input and gives no output</para>
+		/// <para>Action <paramref name="a"/> receives the current object as an input and returns <see cref="Ok()"/> as output</para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
-		/// <param name="a">The action will be executed if the current object is an Ok result</param>
+		/// <param name="a">The action will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
 		public R<T> Link(Action<Ok<T>> a) => this switch
 		{
 			Ok<T> ok => Catch(() => { a(ok); return Ok(); }),
@@ -57,10 +57,10 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain
-		/// <para>Action <paramref name="a"/> receives the current object as an input and gives no output</para>
+		/// <para>Action <paramref name="a"/> receives the current object as an input and returns <see cref="Ok()"/> as output</para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
-		/// <param name="a">The action will be executed if the current object is an OkV result</param>
+		/// <param name="a">The action will be executed if the current object is an <see cref="Jeebs.OkV{T}"/> result</param>
 		public R<T> Link(Action<OkV<T>> a) => this switch
 		{
 			OkV<T> ok => Catch(() => { a(ok); return Ok(); }),
@@ -69,11 +69,11 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain and map to a new result type
-		/// <para>Action <paramref name="f"/> receives no input and returns a new value as output, which is wrapped in an OkV object</para>
+		/// <para>Func <paramref name="f"/> receives no input and returns a value of type <typeparamref name="TNext"/>, which is then wrapped in an <see cref="Jeebs.OkV{TNext}"/> object</para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
-		/// <param name="f">The function will be executed if the current object is an Ok result</param>
+		/// <param name="f">The function will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
 		public R<TNext> LinkMap<TNext>(Func<TNext> f) => this switch
 		{
 			Ok<T> _ => Catch(() => { var v = f(); return OkV(v); }),
@@ -82,11 +82,11 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain and map to a new result type
-		/// <para>Action <paramref name="f"/> receives the current object as an input and returns an OK result with a value of type <typeparamref name="TNext"/></para>
+		/// <para>Func <paramref name="f"/> receives the current object as an input and returns a new result of type <see cref="R{TNext}"/></para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
-		/// <param name="f">The function will be executed if the current object is an OkV result</param>
+		/// <param name="f">The function will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
 		public R<TNext> LinkMap<TNext>(Func<Ok<T>, R<TNext>> f) => this switch
 		{
 			Ok<T> s => Catch(() => f(s)),
@@ -95,11 +95,11 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain and map to a new result type
-		/// <para>Action <paramref name="f"/> receives the current object as an input and returns an OK result with a value of type <typeparamref name="TNext"/></para>
+		/// <para>Func <paramref name="f"/> receives the current object as an input and returns a new result of type <see cref="R{TNext}"/></para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
-		/// <param name="f">The function will be executed if the current object is an OkV result</param>
+		/// <param name="f">The function will be executed if the current object is an <see cref="Jeebs.OkV{T}"/> result</param>
 		public R<TNext> LinkMap<TNext>(Func<OkV<T>, R<TNext>> f) => this switch
 		{
 			OkV<T> s => Catch(() => f(s)),
@@ -107,12 +107,12 @@ namespace Jeebs
 		};
 
 		/// <summary>
-		/// Skip ahead by returning the current object as an Error
+		/// Skip ahead by returning the current object as an <see cref="Error{T}"/>
 		/// </summary>
 		private Error<T> SkipAhead() => (Error<T>)this;
 
 		/// <summary>
-		/// Skip ahead by returning the current object as an Error
+		/// Skip ahead by returning the current object as an <see cref="Error{TNext}"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		private Error<TNext> SkipAhead<TNext>() => new Error<TNext> { Messages = Messages };

@@ -6,14 +6,14 @@ using Jeebs;
 namespace Jm
 {
 	/// <summary>
-	/// Async exception handling message
+	/// Audit exception handling message
 	/// </summary>
-	public class AsyncException : Exception
+	public class AuditException : Exception
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="ex">Exception</param>
-		public AsyncException(System.Exception ex) : base(ex) { }
+		public AuditException(System.Exception ex) : base(ex) { }
 	}
 }

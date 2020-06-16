@@ -9,14 +9,14 @@ namespace Jeebs
 	public static partial class RExtensions
 	{
 		/// <summary>
-		/// Skip ahead by returning the current object as an Error
+		/// Skip ahead by returning the current object as an <see cref="Error{TSource}"/>
 		/// </summary>
 		/// <typeparam name="TSource">Source value type</typeparam>
 		/// <param name="r">Source result</param>
 		private static Error<TSource> SkipAhead<TSource>(R<TSource> r) => (Error<TSource>)r;
 
 		/// <summary>
-		/// Skip ahead by returning the current object as an Error
+		/// Skip ahead by returning the current object as an <see cref="Error{TResult}"/>
 		/// </summary>
 		/// <typeparam name="TSource">Source value type</typeparam>
 		/// <typeparam name="TResult">Result value type</typeparam>
