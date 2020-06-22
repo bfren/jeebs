@@ -19,7 +19,7 @@ namespace Jeebs
 	public class Error<T> : R<T>
 	{
 		/// <summary>
-		/// Only created in <see cref="R{T}.Error{TNext, TMessage}"/>.
+		/// Only created in <see cref="R{T}.ErrorNew{TNext, TMessage}"/>.
 		/// </summary>
 		internal Error() { }
 	}

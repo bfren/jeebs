@@ -14,7 +14,7 @@ namespace Tests.Jeebs.Result.LinkMap
 			// Arrange
 			const int value = 18;
 			const string str = "18";
-			var chain = R.Chain.OkV(value);
+			var chain = R<int>.ChainV(value);
 			static R<string> f(OkV<int> r) => r.OkV(r.Val.ToString());
 
 			// Act
@@ -29,7 +29,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		public void Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			static R<string> f(OkV<int> _) => throw new Exception("Something went wrong.");
 
 			// Act
@@ -43,7 +43,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		public void Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static R<string> f(OkV<int> _) => throw new Exception(msg);
@@ -61,7 +61,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		{
 			// Arrange
 			int value = 18;
-			var chain = R.Chain.Ok();
+			var chain = R.Chain;
 			static R<string> f0(OkV<object> _) => throw new Exception("Something went wrong.");
 			R<int> f1(OkV<string> r) { value = 0; return r.OkV(value); }
 

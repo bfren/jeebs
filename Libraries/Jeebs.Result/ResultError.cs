@@ -19,7 +19,7 @@ namespace Jeebs
 		}
 
 		/// <summary>
-		/// Return Error result with a single message
+		/// Return Error result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		public Error<T> Error<TMessage>() where TMessage : IMessage, new()
@@ -29,7 +29,7 @@ namespace Jeebs
 		}
 
 		/// <summary>
-		/// Return Error result with a single message
+		/// Return Error result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		public Error<T> Error<TMessage>(TMessage message) where TMessage : IMessage
@@ -47,47 +47,33 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="messages">IMessage array</param>
-		public Error<TNext> Error<TNext>(params IMessage[] messages)
+		public Error<TNext> ErrorNew<TNext>(params IMessage[] messages)
 		{
 			Messages.AddRange(messages);
 			return SkipAhead<TNext>();
 		}
 
 		/// <summary>
-		/// Return Error result with a single message
+		/// Return Error result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Error<TNext> Error<TNext, TMessage>() where TMessage : IMessage, new()
+		public Error<TNext> ErrorNew<TNext, TMessage>() where TMessage : IMessage, new()
 		{
 			Messages.Add<TMessage>();
 			return SkipAhead<TNext>();
 		}
 
 		/// <summary>
-		/// Return Error result with a single message
+		/// Return Error result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		/// <param name="message">Message value</param>
-		public Error<TNext> Error<TNext, TMessage>(TMessage message) where TMessage : IMessage, new()
+		public Error<TNext> ErrorNew<TNext, TMessage>(TMessage message) where TMessage : IMessage, new()
 		{
 			Messages.Add(message);
 			return SkipAhead<TNext>();
-		}
-
-		#endregion
-
-		#region Simple
-
-		/// <summary>
-		/// Return Simple Error result with optional messages
-		/// </summary>
-		/// <param name="messages">IMessage array</param>
-		public Error ErrorSimple(params IMessage[] messages)
-		{
-			Messages.AddRange(messages);
-			return new Error { Messages = Messages };
 		}
 
 		#endregion

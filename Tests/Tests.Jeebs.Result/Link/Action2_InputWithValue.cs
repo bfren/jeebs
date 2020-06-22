@@ -12,7 +12,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Successful_Returns_OkV()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			var index = 10;
 			void a(OkV<int> r) => index += r.Val;
 
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			static void a(OkV<int> _) => throw new Exception("Something went wrong.");
 
 			// Act
@@ -42,7 +42,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static void a(OkV<int> _) => throw new Exception(msg);
@@ -59,7 +59,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			var index = 10;
 			static void a0(OkV<int> _) => throw new Exception("Something went wrong.");
 			void a1(OkV<int> r) => index += r.Val;

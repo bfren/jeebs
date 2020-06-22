@@ -13,7 +13,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartSync_Successful_Returns_OkV()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			var index = 10;
 			async Task t(OkV<int> r) => await Task.Run(() => index += r.Val);
 
@@ -29,7 +29,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartSync_Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
 
 			// Act
@@ -43,7 +43,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartSync_Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception(msg));
@@ -60,7 +60,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartSync_Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18);
+			var chain = R<int>.ChainV(18);
 			var index = 10;
 			static async Task t0(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
 			async Task t1(OkV<int> r) => await Task.Run(() => index += r.Val);
@@ -75,7 +75,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartAsync_Successful_Returns_OkV()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18).LinkAsync(() => Task.CompletedTask);
+			var chain = R<int>.ChainVAsync(18);
 			var index = 10;
 			async Task t(OkV<int> r) => await Task.Run(() => index += r.Val);
 
@@ -91,7 +91,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartAsync_Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18).LinkAsync(() => Task.CompletedTask);
+			var chain = R<int>.ChainVAsync(18);
 			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
 
 			// Act
@@ -105,7 +105,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartAsync_Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18).LinkAsync(() => Task.CompletedTask);
+			var chain = R<int>.ChainVAsync(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception(msg));
@@ -122,7 +122,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 		public async Task StartAsync_Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18).LinkAsync(() => Task.CompletedTask);
+			var chain = R<int>.ChainVAsync(18);
 			var index = 10;
 			static async Task t0(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
 			async Task t1(OkV<int> r) => await Task.Run(() => index += r.Val);

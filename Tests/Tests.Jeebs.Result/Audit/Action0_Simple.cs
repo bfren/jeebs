@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.Audit
 {
-	public class Audit0_Simple
+	public class Action0_Simple
 	{
 		[Fact]
 		public void Audit_Returns_Original_Object()

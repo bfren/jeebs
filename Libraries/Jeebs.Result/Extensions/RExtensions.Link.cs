@@ -30,7 +30,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result task (will be awaited before executing <paramref name="t"/>)</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="Ok{TSource}"/> result</param>
-		public static async Task<R<TSource>> LinkAsync<TSource>(this Task<R<TSource>> @this, Func<Ok<TSource>, Task> t) => await @this switch
+		public static async Task<R<TSource>> LinkAsync<TSource>(this Task<R<TSource>> @this, Func<Ok<TSource>, Task> t) => await @this.ConfigureAwait(false) switch
 		{
 			Ok<TSource> s => Catch<TSource, TSource>(s, async () => { await t(s).ConfigureAwait(false); return s.Ok(); }),
 			{ } r => SkipAhead(r)
@@ -43,7 +43,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result task (will be awaited before executing <paramref name="t"/>)</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="OkV{TSource}"/> result</param>
-		public static async Task<R<TSource>> LinkAsync<TSource>(this Task<R<TSource>> @this, Func<OkV<TSource>, Task> t) => await @this switch
+		public static async Task<R<TSource>> LinkAsync<TSource>(this Task<R<TSource>> @this, Func<OkV<TSource>, Task> t) => await @this.ConfigureAwait(false) switch
 		{
 			OkV<TSource> s => Catch<TSource, TSource>(s, async () => { await t(s).ConfigureAwait(false); return s.Ok(); }),
 			{ } r => SkipAhead(r)

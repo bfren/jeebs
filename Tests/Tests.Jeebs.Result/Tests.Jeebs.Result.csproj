@@ -19,8 +19,4 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Result\Jeebs.Result.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AuditAsync\" />
-  </ItemGroup>
-
 </Project>

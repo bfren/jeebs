@@ -14,7 +14,7 @@ namespace Tests.Jeebs.Result.LinkMap
 			// Arrange
 			var chain = R.Chain;
 			var index = 0;
-			R<string> f(Ok<object> r) { index++; return r.Ok<string>(); }
+			R<string> f(Ok<object> r) { index++; return r.OkNew<string>(); }
 
 			// Act
 			var r = chain.LinkMap(f);
@@ -62,7 +62,7 @@ namespace Tests.Jeebs.Result.LinkMap
 			var chain = R.Chain;
 			var index = 0;
 			static R<string> f0(Ok<object> _) => throw new Exception("Something went wrong.");
-			R<int> f1(Ok<string> r) { index++; return r.Ok<int>(); }
+			R<int> f1(Ok<string> r) { index++; return r.OkNew<int>(); }
 
 			// Act
 			var r = chain.LinkMap(f0).LinkMap(f1);

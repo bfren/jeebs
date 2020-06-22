@@ -13,14 +13,6 @@ namespace Jeebs
 	}
 
 	/// <summary>
-	/// Represents an OK result without a value
-	/// </summary>
-	public class Ok<T> : R<T>
-	{
-		internal Ok() { }
-	}
-
-	/// <summary>
 	/// Represents an OK result with a value
 	/// </summary>
 	/// <typeparam name="T">Result value type</typeparam>
@@ -32,5 +24,13 @@ namespace Jeebs
 		public T Val { get; }
 
 		internal OkV(T val) => Val = val;
+	}
+
+	/// <summary>
+	/// Represents an OK result without a value
+	/// </summary>
+	public partial class Ok<T> : R<T>
+	{
+		internal Ok() { }
 	}
 }

@@ -15,7 +15,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			// Arrange
 			var chain = R.Chain;
 			var index = 0;
-			async Task<R<string>> t(Ok<object> r) { index++; return r.Ok<string>(); }
+			async Task<R<string>> t(Ok<object> r) { index++; return r.OkNew<string>(); }
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
@@ -63,7 +63,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			var chain = R.Chain;
 			var index = 0;
 			static async Task<R<string>> t0(Ok<object> _) => throw new Exception("Something went wrong.");
-			async Task<R<int>> t1(Ok<string> r) { index++; return r.Ok<int>(); }
+			async Task<R<int>> t1(Ok<string> r) { index++; return r.OkNew<int>(); }
 
 			// Act
 			var r = await chain.LinkMapAsync(t0).LinkMapAsync(t1);
@@ -78,7 +78,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var index = 0;
-			async Task<R<string>> t(Ok<object> r) { index++; return r.Ok<string>(); }
+			async Task<R<string>> t(Ok<object> r) { index++; return r.OkNew<string>(); }
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
@@ -126,7 +126,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			var chain = R.ChainAsync;
 			var index = 0;
 			static async Task<R<string>> t0(Ok<object> _) => throw new Exception("Something went wrong.");
-			async Task<R<int>> t1(Ok<string> r) { index++; return r.Ok<int>(); }
+			async Task<R<int>> t1(Ok<string> r) { index++; return r.OkNew<int>(); }
 
 			// Act
 			var r = await chain.LinkMapAsync(t0).LinkMapAsync(t1);

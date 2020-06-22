@@ -13,7 +13,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		{
 			// Arrange
 			const string msg = "Hello, world!";
-			var chain = R.Chain.Ok<int>();
+			var chain = R<int>.Chain;
 			static string f() => msg;
 
 			// Act
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		public void Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.Ok<int>();
+			var chain = R.Chain.OkNew<int>();
 			static string f() => throw new Exception("Something went wrong.");
 
 			// Act

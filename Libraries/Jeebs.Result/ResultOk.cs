@@ -6,37 +6,52 @@ namespace Jeebs
 {
 	public abstract partial class R<T>
 	{
+		/// <summary>
+		/// Return this object if <typeparamref name="TNext"/> is actually <typeparamref name="T"/>
+		/// </summary>
+		/// <typeparam name="TNext">Next Result value type</typeparam>
+		/// <param name="addMessages">Action to add messages</param>
+		private Ok<TNext> Ok<TNext>(Action addMessages)
+		{
+			addMessages();
+			return this switch
+			{
+				Ok<TNext> ok => ok,
+				_ => new Ok<TNext> { Messages = Messages }
+			};
+		}
+
+		/// <summary>
+		/// Return new object of type <see cref="Jeebs.OkV{T}"/> with value <paramref name="value"/>
+		/// </summary>
+		/// <typeparam name="TNext">Next Result value type</typeparam>
+		/// <param name="value">Ok result value</param>
+		/// <param name="addMessages">Action to add messages</param>
+		private OkV<TNext> OkV<TNext>(TNext value, Action addMessages)
+		{
+			addMessages();
+			return new OkV<TNext>(value) { Messages = Messages };
+		}
+
 		#region Keep Result Type
 
 		/// <summary>
 		/// Return Ok result with optional messages
 		/// </summary>
 		/// <param name="messages">IMessage array</param>
-		public Ok<T> Ok(params IMessage[] messages)
-		{
-			Messages.AddRange(messages);
-			return (Ok<T>)this;
-		}
+		public Ok<T> Ok(params IMessage[] messages) => Ok<T>(() => Messages.AddRange(messages));
 
 		/// <summary>
-		/// Return Ok result with a single message
+		/// Return Ok result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Ok<T> Ok<TMessage>() where TMessage : IMessage, new()
-		{
-			Messages.Add<TMessage>();
-			return (Ok<T>)this;
-		}
+		public Ok<T> Ok<TMessage>() where TMessage : IMessage, new() => Ok<T>(() => Messages.Add<TMessage>());
 
 		/// <summary>
-		/// Return Ok result with a single message
+		/// Return Ok result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Ok<T> Ok<TMessage>(TMessage message) where TMessage : IMessage
-		{
-			Messages.Add(message);
-			return (Ok<T>)this;
-		}
+		public Ok<T> Ok<TMessage>(TMessage message) where TMessage : IMessage => Ok<T>(() => Messages.Add(message));
 
 		#endregion
 
@@ -47,34 +62,22 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="messages">IMessage array</param>
-		public Ok<TNext> Ok<TNext>(params IMessage[] messages)
-		{
-			Messages.AddRange(messages);
-			return new Ok<TNext> { Messages = Messages };
-		}
+		public Ok<TNext> OkNew<TNext>(params IMessage[] messages) => Ok<TNext>(() => Messages.AddRange(messages));
 
 		/// <summary>
-		/// Return Ok result with a single message
+		/// Return Ok result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Ok<TNext> Ok<TNext, TMessage>() where TMessage : IMessage, new()
-		{
-			Messages.Add<TMessage>();
-			return new Ok<TNext> { Messages = Messages };
-		}
+		public Ok<TNext> OkNew<TNext, TMessage>() where TMessage : IMessage, new() => Ok<TNext>(() => Messages.Add<TMessage>());
 
 		/// <summary>
-		/// Return Ok result with a single message
+		/// Return Ok result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		/// <param name="message">Message value</param>
-		public Ok<TNext> Ok<TNext, TMessage>(TMessage message) where TMessage : IMessage, new()
-		{
-			Messages.Add(message);
-			return new Ok<TNext> { Messages = Messages };
-		}
+		public Ok<TNext> OkNew<TNext, TMessage>(TMessage message) where TMessage : IMessage, new() => Ok<TNext>(() => Messages.Add(message));
 
 		#endregion
 
@@ -86,50 +89,24 @@ namespace Jeebs
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="value">Ok result value</param>
 		/// <param name="messages">IMessage array</param>
-		public OkV<TNext> OkV<TNext>(TNext value, params IMessage[] messages)
-		{
-			Messages.AddRange(messages);
-			return new OkV<TNext>(value) { Messages = Messages };
-		}
+		public OkV<TNext> OkV<TNext>(TNext value, params IMessage[] messages) => OkV(value, () => Messages.AddRange(messages));
 
 		/// <summary>
-		/// Return Ok result with a single message
+		/// Return Ok result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		/// <param name="value">Ok result value</param>
-		public OkV<TNext> OkV<TNext, TMessage>(TNext value) where TMessage : IMessage, new()
-		{
-			Messages.Add<TMessage>();
-			return new OkV<TNext>(value) { Messages = Messages };
-		}
+		public OkV<TNext> OkV<TNext, TMessage>(TNext value) where TMessage : IMessage, new() => OkV(value, () => Messages.Add<TMessage>());
 
 		/// <summary>
-		/// Return Ok result with a single message
+		/// Return Ok result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		/// <param name="value">Ok result value</param>
 		/// <param name="message">Message value</param>
-		public OkV<TNext> OkV<TNext, TMessage>(TNext value, TMessage message) where TMessage : IMessage, new()
-		{
-			Messages.Add(message);
-			return new OkV<TNext>(value) { Messages = Messages };
-		}
-
-		#endregion
-
-		#region Simple
-
-		/// <summary>
-		/// Return Simple Ok result with optional messages
-		/// </summary>
-		/// <param name="messages">IMessage array</param>
-		public Ok OkSimple(params IMessage[] messages)
-		{
-			Messages.AddRange(messages);
-			return new Ok { Messages = Messages };
-		}
+		public OkV<TNext> OkV<TNext, TMessage>(TNext value, TMessage message) where TMessage : IMessage, new() => OkV(value, () => Messages.Add(message));
 
 		#endregion
 	}
