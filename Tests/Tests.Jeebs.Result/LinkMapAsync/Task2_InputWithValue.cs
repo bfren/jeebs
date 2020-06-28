@@ -16,14 +16,14 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			const int value = 18;
 			const string str = "18";
 			var chain = R.Chain.OkV(value);
-			async Task<R<string>> t(OkV<int> r) => await Task.Run(() => r.OkV(r.Val.ToString()));
+			async Task<IR<string>> t(IOkV<int> r) => await Task.Run(() => r.OkV(r.Val.ToString()));
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
 
 			// Assert
-			Assert.IsType<OkV<string>>(r);
-			Assert.Equal(str, ((OkV<string>)r).Val);
+			Assert.IsAssignableFrom<IOkV<string>>(r);
+			Assert.Equal(str, ((IOkV<string>)r).Val);
 		}
 
 		[Fact]
@@ -31,13 +31,13 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		{
 			// Arrange
 			var chain = R.Chain.OkV(18);
-			static async Task<R<string>> t(OkV<int> _) => throw new Exception("Something went wrong.");
+			static async Task<IR<string>> t(IOkV<int> _) => throw new Exception("Something went wrong.");
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
 
 			// Assert
-			Assert.IsType<Error<string>>(r);
+			Assert.IsAssignableFrom<IError<string>>(r);
 		}
 
 		[Fact]
@@ -47,7 +47,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			var chain = R.Chain.OkV(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
-			static async Task<R<string>> t(OkV<int> _) => throw new Exception(msg);
+			static async Task<IR<string>> t(IOkV<int> _) => throw new Exception(msg);
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
@@ -63,8 +63,8 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			// Arrange
 			int value = 18;
 			var chain = R.Chain.Ok();
-			static async Task<R<string>> t0(OkV<object> _) => throw new Exception("Something went wrong.");
-			async Task<R<int>> t1(OkV<string> r) { value = 0; return r.OkV(value); }
+			static async Task<IR<string>> t0(IOkV<bool> _) => throw new Exception("Something went wrong.");
+			async Task<IR<int>> t1(IOkV<string> r) { value = 0; return r.OkV(value); }
 
 			// Act
 			var r = await chain.LinkMapAsync(t0).LinkMapAsync(t1);
@@ -79,39 +79,41 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			// Arrange
 			const int value = 18;
 			const string str = "18";
-			var chain = R.Chain.OkV(value).LinkAsync(() => Task.CompletedTask);
-			async Task<R<string>> t(OkV<int> r) => await Task.Run(() => r.OkV(r.Val.ToString()));
+			var chain = R<int>.ChainVAsync(value);
+			async Task<IR<string>> t(IOkV<int> r) => await Task.Run(() => r.OkV(r.Val.ToString()));
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
 
 			// Assert
-			Assert.IsType<OkV<string>>(r);
-			Assert.Equal(str, ((OkV<string>)r).Val);
+			Assert.IsAssignableFrom<IOkV<string>>(r);
+			Assert.Equal(str, ((IOkV<string>)r).Val);
 		}
 
 		[Fact]
 		public async Task StartAsync_Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18).LinkAsync(() => Task.CompletedTask);
-			static async Task<R<string>> t(OkV<int> _) => throw new Exception("Something went wrong.");
+			const int value = 18;
+			var chain = R<int>.ChainVAsync(value);
+			static async Task<IR<string>> t(IOkV<int> _) => throw new Exception("Something went wrong.");
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
 
 			// Assert
-			Assert.IsType<Error<string>>(r);
+			Assert.IsAssignableFrom<IError<string>>(r);
 		}
 
 		[Fact]
 		public async Task StartAsync_Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.OkV(18).LinkAsync(() => Task.CompletedTask);
+			const int value = 18;
+			var chain = R<int>.ChainVAsync(value);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
-			static async Task<R<string>> t(OkV<int> _) => throw new Exception(msg);
+			static async Task<IR<string>> t(IOkV<int> _) => throw new Exception(msg);
 
 			// Act
 			var r = await chain.LinkMapAsync(t);
@@ -126,9 +128,9 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		{
 			// Arrange
 			int value = 18;
-			var chain = R.Chain.Ok().LinkAsync(() => Task.CompletedTask);
-			static async Task<R<string>> t0(OkV<object> _) => throw new Exception("Something went wrong.");
-			async Task<R<int>> t1(OkV<string> r) { value = 0; return r.OkV(value); }
+			var chain = R.ChainAsync;
+			static async Task<IR<string>> t0(IOkV<bool> _) => throw new Exception("Something went wrong.");
+			async Task<IR<int>> t1(IOkV<string> r) { value = 0; return r.OkV(value); }
 
 			// Act
 			var r = await chain.LinkMapAsync(t0).LinkMapAsync(t1);

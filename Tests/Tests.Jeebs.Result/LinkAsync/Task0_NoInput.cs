@@ -21,7 +21,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<Ok>(r);
+			Assert.IsAssignableFrom<IOk>(r);
 			Assert.Equal(1, index);
 		}
 
@@ -36,7 +36,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<Error<object>>(r);
+			Assert.IsAssignableFrom<IError<bool>>(r);
 		}
 
 		[Fact]
@@ -84,7 +84,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<Ok>(r);
+			Assert.IsAssignableFrom<IOk>(r);
 			Assert.Equal(1, index);
 		}
 
@@ -99,7 +99,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<Error<object>>(r);
+			Assert.IsAssignableFrom<IError<bool>>(r);
 		}
 
 		[Fact]

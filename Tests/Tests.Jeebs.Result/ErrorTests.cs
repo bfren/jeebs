@@ -25,7 +25,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Error<object>>(result);
+			Assert.IsAssignableFrom<IError<bool>>(result);
 		}
 
 		[Fact]
@@ -40,7 +40,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error<object>>(result);
+			Assert.IsAssignableFrom<IError<bool>>(result);
 		}
 
 		[Fact]
@@ -55,7 +55,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error<object>>(result);
+			Assert.IsAssignableFrom<IError<bool>>(result);
 		}
 
 		#endregion
@@ -71,13 +71,13 @@ namespace Tests.Jeebs.Result
 			var m1 = new Jm.WithString("1");
 
 			// Act
-			var result = chain.ErrorNew<object>(m0, m1);
+			var result = chain.ErrorNew<bool>(m0, m1);
 
 			// Assert
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Error<object>>(result);
+			Assert.IsAssignableFrom<IError<bool>>(result);
 		}
 
 		[Fact]
@@ -87,12 +87,12 @@ namespace Tests.Jeebs.Result
 			var chain = R.Chain;
 
 			// Act
-			var result = chain.ErrorNew<object, TestMessage>();
+			var result = chain.ErrorNew<bool, TestMessage>();
 
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error<object>>(result);
+			Assert.IsAssignableFrom<IError<bool>>(result);
 		}
 
 		[Fact]
@@ -102,12 +102,12 @@ namespace Tests.Jeebs.Result
 			var chain = R.Chain;
 
 			// Act
-			var result = chain.ErrorNew<object>(new TestMessage());
+			var result = chain.ErrorNew<bool>(new TestMessage());
 
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error<object>>(result);
+			Assert.IsAssignableFrom<IError<bool>>(result);
 		}
 
 		#endregion
@@ -129,7 +129,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Error<int>>(result);
+			Assert.IsAssignableFrom<IError<int>>(result);
 		}
 
 		[Fact]
@@ -144,7 +144,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error<int>>(result);
+			Assert.IsAssignableFrom<IError<int>>(result);
 		}
 
 		[Fact]
@@ -159,7 +159,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error<int>>(result);
+			Assert.IsAssignableFrom<IError<int>>(result);
 		}
 
 		#endregion

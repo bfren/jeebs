@@ -15,7 +15,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.Chain;
-			static async Task audit<T>(R<T> _) { }
+			static async Task audit<T>(IR<T> _) { }
 
 			// Act
 			var result = await chain.AuditAsync(audit);
@@ -30,17 +30,17 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 
-			static async Task<R<int>> l0<T>(Ok<T> r) => r.OkV(18);
-			static async Task<R<T>> l1<T>(OkV<T> r) => r.Error();
+			static async Task<IR<int>> l0<T>(IOk<T> r) => r.OkV(18);
+			static async Task<IR<T>> l1<T>(IOkV<T> r) => r.Error();
 
 			var log = new List<string>();
-			async Task audit<T>(R<T> r)
+			async Task audit<T>(IR<T> r)
 			{
-				if (r is Error<T> error)
+				if (r is IError<T> error)
 				{
 					log.Add("Error!");
 				}
-				else if (r is OkV<T> ok)
+				else if (r is IOkV<T> ok)
 				{
 					log.Add($"Value: {ok.Val}");
 				}
@@ -69,7 +69,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.Chain;
-			static async Task audit<T>(R<T> _) => throw new Exception();
+			static async Task audit<T>(IR<T> _) => throw new Exception();
 
 			// Act
 			var result = await chain.AuditAsync(audit);
@@ -84,7 +84,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.ChainAsync;
-			static async Task audit<T>(R<T> _) { }
+			static async Task audit<T>(IR<T> _) { }
 
 			// Act
 			var result = await chain.AuditAsync(audit);
@@ -99,17 +99,17 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 
-			static async Task<R<int>> l0<T>(Ok<T> r) => r.OkV(18);
-			static async Task<R<T>> l1<T>(OkV<T> r) => r.Error();
+			static async Task<IR<int>> l0<T>(IOk<T> r) => r.OkV(18);
+			static async Task<IR<T>> l1<T>(IOkV<T> r) => r.Error();
 
 			var log = new List<string>();
-			async Task audit<T>(R<T> r)
+			async Task audit<T>(IR<T> r)
 			{
-				if (r is Error<T> error)
+				if (r is IError<T> error)
 				{
 					log.Add("Error!");
 				}
-				else if (r is OkV<T> ok)
+				else if (r is IOkV<T> ok)
 				{
 					log.Add($"Value: {ok.Val}");
 				}
@@ -138,7 +138,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.ChainAsync;
-			static async Task audit<T>(R<T> _) => throw new Exception();
+			static async Task audit<T>(IR<T> _) => throw new Exception();
 
 			// Act
 			var result = await chain.AuditAsync(audit);

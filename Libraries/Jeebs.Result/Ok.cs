@@ -5,32 +5,15 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Represents a simple OK result without a value
+	/// Represents an OK result without a value
 	/// </summary>
-	public class Ok : Ok<object>
-	{
-		internal Ok() { }
-	}
-
-	/// <summary>
-	/// Represents an OK result with a value
-	/// </summary>
-	/// <typeparam name="T">Result value type</typeparam>
-	public class OkV<T> : Ok<T>
+	public class Ok<T> : R<T>, IOk<T>
 	{
 		/// <summary>
 		/// Success value.
 		/// </summary>
-		public T Val { get; }
+		public override bool Val => true;
 
-		internal OkV(T val) => Val = val;
-	}
-
-	/// <summary>
-	/// Represents an OK result without a value
-	/// </summary>
-	public partial class Ok<T> : R<T>
-	{
 		internal Ok() { }
 	}
 }

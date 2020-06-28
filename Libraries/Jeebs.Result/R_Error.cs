@@ -12,7 +12,7 @@ namespace Jeebs
 		/// Return Error result with optional messages
 		/// </summary>
 		/// <param name="messages">IMessage array</param>
-		public Error<T> Error(params IMessage[] messages)
+		public IError<T> Error(params IMessage[] messages)
 		{
 			Messages.AddRange(messages);
 			return SkipAhead();
@@ -22,7 +22,7 @@ namespace Jeebs
 		/// Return Error result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Error<T> Error<TMessage>() where TMessage : IMessage, new()
+		public IError<T> Error<TMessage>() where TMessage : IMessage, new()
 		{
 			Messages.Add<TMessage>();
 			return SkipAhead();
@@ -32,7 +32,7 @@ namespace Jeebs
 		/// Return Error result with a single message of type <typeparamref name="TMessage"/>
 		/// </summary>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Error<T> Error<TMessage>(TMessage message) where TMessage : IMessage
+		public IError<T> Error<TMessage>(TMessage message) where TMessage : IMessage
 		{
 			Messages.Add(message);
 			return SkipAhead();
@@ -47,7 +47,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="messages">IMessage array</param>
-		public Error<TNext> ErrorNew<TNext>(params IMessage[] messages)
+		public IError<TNext> ErrorNew<TNext>(params IMessage[] messages)
 		{
 			Messages.AddRange(messages);
 			return SkipAhead<TNext>();
@@ -58,7 +58,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
-		public Error<TNext> ErrorNew<TNext, TMessage>() where TMessage : IMessage, new()
+		public IError<TNext> ErrorNew<TNext, TMessage>() where TMessage : IMessage, new()
 		{
 			Messages.Add<TMessage>();
 			return SkipAhead<TNext>();
@@ -70,7 +70,7 @@ namespace Jeebs
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <typeparam name="TMessage">IMessage type</typeparam>
 		/// <param name="message">Message value</param>
-		public Error<TNext> ErrorNew<TNext, TMessage>(TMessage message) where TMessage : IMessage, new()
+		public IError<TNext> ErrorNew<TNext, TMessage>(TMessage message) where TMessage : IMessage, new()
 		{
 			Messages.Add(message);
 			return SkipAhead<TNext>();

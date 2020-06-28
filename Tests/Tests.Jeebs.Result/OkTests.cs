@@ -25,7 +25,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 			Assert.StrictEqual(chain, result);
 		}
 
@@ -41,7 +41,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 			Assert.StrictEqual(chain, result);
 		}
 
@@ -57,7 +57,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 			Assert.StrictEqual(chain, result);
 		}
 
@@ -74,13 +74,13 @@ namespace Tests.Jeebs.Result
 			var m1 = new Jm.WithString("1");
 
 			// Act
-			var result = chain.OkNew<object>(m0, m1);
+			var result = chain.OkNew<bool>(m0, m1);
 
 			// Assert
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 			Assert.StrictEqual(chain, result);
 		}
 
@@ -91,12 +91,12 @@ namespace Tests.Jeebs.Result
 			var chain = R.Chain;
 
 			// Act
-			var result = chain.OkNew<object, TestMessage>();
+			var result = chain.OkNew<bool, TestMessage>();
 
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 			Assert.StrictEqual(chain, result);
 		}
 
@@ -107,12 +107,12 @@ namespace Tests.Jeebs.Result
 			var chain = R.Chain;
 
 			// Act
-			var result = chain.OkNew<object>(new TestMessage());
+			var result = chain.OkNew<bool>(new TestMessage());
 
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 			Assert.StrictEqual(chain, result);
 		}
 
@@ -135,7 +135,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Ok<string>>(result);
+			Assert.IsAssignableFrom<IOk<string>>(result);
 		}
 
 		[Fact]
@@ -150,7 +150,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok<string>>(result);
+			Assert.IsAssignableFrom<IOk<string>>(result);
 		}
 
 		[Fact]
@@ -165,7 +165,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok<string>>(result);
+			Assert.IsAssignableFrom<IOk<string>>(result);
 		}
 
 		#endregion
@@ -188,7 +188,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<OkV<int>>(result);
+			Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, result.Val);
 			Assert.NotStrictEqual(chain, result);
 		}
@@ -206,7 +206,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<OkV<int>>(result);
+			Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, result.Val);
 			Assert.NotStrictEqual(chain, result);
 		}
@@ -224,7 +224,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<OkV<int>>(result);
+			Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, result.Val);
 			Assert.NotStrictEqual(chain, result);
 		}
@@ -249,7 +249,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<OkV<int>>(result);
+			Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, result.Val);
 		}
 
@@ -266,7 +266,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<OkV<int>>(result);
+			Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, result.Val);
 		}
 
@@ -283,7 +283,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<OkV<int>>(result);
+			Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, result.Val);
 		}
 

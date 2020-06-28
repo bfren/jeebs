@@ -13,7 +13,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TSource">Source value type</typeparam>
 		/// <param name="r">Source result</param>
-		private static Error<TSource> SkipAhead<TSource>(R<TSource> r) => (Error<TSource>)r;
+		private static IError<TSource> SkipAhead<TSource>(IR<TSource> r) => (Error<TSource>)r;
 
 		/// <summary>
 		/// Skip ahead by returning the current object as an <see cref="Error{TResult}"/>
@@ -21,7 +21,7 @@ namespace Jeebs
 		/// <typeparam name="TSource">Source value type</typeparam>
 		/// <typeparam name="TResult">Result value type</typeparam>
 		/// <param name="r">Source result</param>
-		private static Error<TResult> SkipAhead<TSource, TResult>(R<TSource> r) => new Error<TResult> { Messages = r.Messages };
+		private static IError<TResult> SkipAhead<TSource, TResult>(IR<TSource> r) => new Error<TResult> { Messages = r.Messages };
 
 		/// <summary>
 		/// Execute a function, catching any exceptions and skipping head with an error message
@@ -30,7 +30,7 @@ namespace Jeebs
 		/// <typeparam name="TResult">Result value type</typeparam>
 		/// <param name="r">Source result</param>
 		/// <param name="f">Async function to execute</param>
-		private static R<TResult> Catch<TSource, TResult>(R<TSource> r, Func<Task<R<TResult>>> f)
+		private static IR<TResult> Catch<TSource, TResult>(IR<TSource> r, Func<Task<IR<TResult>>> f)
 		{
 			try
 			{

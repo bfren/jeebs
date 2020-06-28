@@ -14,13 +14,13 @@ namespace Tests.Jeebs.Result.Link
 			// Arrange
 			var chain = R<int>.ChainV(18);
 			var index = 10;
-			void a(OkV<int> r) => index += r.Val;
+			void a(IOkV<int> r) => index += r.Val;
 
 			// Act
 			var r = chain.Link(a);
 
 			// Assert
-			Assert.IsType<OkV<int>>(r);
+			Assert.IsAssignableFrom<IOkV<int>>(r);
 			Assert.Equal(28, index);
 		}
 
@@ -29,13 +29,13 @@ namespace Tests.Jeebs.Result.Link
 		{
 			// Arrange
 			var chain = R<int>.ChainV(18);
-			static void a(OkV<int> _) => throw new Exception("Something went wrong.");
+			static void a(IOkV<int> _) => throw new Exception("Something went wrong.");
 
 			// Act
 			var r = chain.Link(a);
 
 			// Assert
-			Assert.IsType<Error<int>>(r);
+			Assert.IsAssignableFrom<IError<int>>(r);
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ namespace Tests.Jeebs.Result.Link
 			var chain = R<int>.ChainV(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
-			static void a(OkV<int> _) => throw new Exception(msg);
+			static void a(IOkV<int> _) => throw new Exception(msg);
 
 			// Act
 			var r = chain.Link(a);
@@ -61,8 +61,8 @@ namespace Tests.Jeebs.Result.Link
 			// Arrange
 			var chain = R<int>.ChainV(18);
 			var index = 10;
-			static void a0(OkV<int> _) => throw new Exception("Something went wrong.");
-			void a1(OkV<int> r) => index += r.Val;
+			static void a0(IOkV<int> _) => throw new Exception("Something went wrong.");
+			void a1(IOkV<int> r) => index += r.Val;
 
 			// Act
 			var r = chain.Link(a0).Link(a1);

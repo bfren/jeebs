@@ -16,7 +16,7 @@ namespace Tests.Jeebs.Result
 			var r = R.Chain;
 
 			// Assert
-			Assert.IsType<Ok>(r);
+			Assert.IsAssignableFrom<IOk>(r);
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result
 			var r = await R.ChainAsync;
 
 			// Assert
-			Assert.IsType<Ok>(r);
+			Assert.IsAssignableFrom<IOk>(r);
 		}
 	}
 }

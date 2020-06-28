@@ -23,7 +23,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 		}
 
 		[Fact]
@@ -38,7 +38,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 		}
 
 		[Fact]
@@ -53,7 +53,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Ok>(result);
+			Assert.IsAssignableFrom<IOk>(result);
 		}
 
 		[Fact]
@@ -71,7 +71,7 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsType<Error>(result);
+			Assert.IsAssignableFrom<IError>(result);
 		}
 
 		[Fact]
@@ -86,7 +86,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error>(result);
+			Assert.IsAssignableFrom<IError>(result);
 		}
 
 		[Fact]
@@ -101,7 +101,7 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsType<Error>(result);
+			Assert.IsAssignableFrom<IError>(result);
 		}
 
 		private class TestMessage : IMessage { }

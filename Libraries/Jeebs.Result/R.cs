@@ -7,48 +7,60 @@ namespace Jeebs
 	/// <summary>
 	/// Basic result, can also used to begin the result chain
 	/// </summary>
-	public abstract class R : R<object>
+	public abstract class R : R<bool>
 	{
 		/// <summary>
 		/// Start a synchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		new public static R<object> Chain { get => new Ok(); }
+		new public static IR<bool> Chain { get => new Ok(); }
 
 		/// <summary>
 		/// Start an asynchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		new public static Task<R<object>> ChainAsync { get => Chain.LinkAsync(() => Task.CompletedTask); }
+		new public static Task<IR<bool>> ChainAsync { get => Chain.LinkAsync(() => Task.CompletedTask); }
+	}
+
+	public abstract class R<TResult, TState> : R<TResult>
+	{
+		public TState State { get; }
+
+		protected R(TState state) => State = state;
 	}
 
 	/// <summary>
 	/// Main result class, used for linking functions and auditing values
 	/// </summary>
 	/// <typeparam name="T">Result value type (there is only an actual value in OkV objects)</typeparam>
-	public abstract partial class R<T>
+	public abstract partial class R<T> : IR<T>
 	{
 		#region Static - Start Chain
 
 		/// <summary>
 		/// Start a synchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		public static R<T> Chain { get => new Ok<T>(); }
+		public static IR<T> Chain { get => new Ok<T>(); }
 
 		/// <summary>
 		/// Start an asynchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		public static Task<R<T>> ChainAsync { get => Chain.LinkAsync(() => Task.CompletedTask); }
+		public static Task<IR<T>> ChainAsync { get => Chain.LinkAsync(() => Task.CompletedTask); }
 
 		/// <summary>
 		/// Start a synchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		public static R<T> ChainV(T value) => new OkV<T>(value);
+		public static IR<T> ChainV(T value) => new OkV<T>(value);
 
 		/// <summary>
 		/// Start an asynchronous result chain with an <see cref="Ok"/> result
 		/// </summary>
-		public static Task<R<T>> ChainVAsync(T value) => ChainV(value).LinkAsync(() => Task.CompletedTask);
+		public static Task<IR<T>> ChainVAsync(T value) => ChainV(value).LinkAsync(() => Task.CompletedTask);
 
 		#endregion
+
+		/// <summary>
+		/// Result value.
+		/// </summary>
+		public abstract bool Val { get; }
 
 		/// <summary>
 		/// Message List - used to pass information down the chain to subsequent functions
@@ -61,9 +73,9 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
 		/// <param name="a">The action will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
-		public R<T> Link(Action a) => this switch
+		public IR<T> Link(Action a) => this switch
 		{
-			Ok<T> ok => Catch(() => { a(); return ok; }),
+			IOk<T> ok => Catch(() => { a(); return ok; }),
 			_ => SkipAhead()
 		};
 
@@ -73,9 +85,9 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
 		/// <param name="a">The action will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
-		public R<T> Link(Action<Ok<T>> a) => this switch
+		public IR<T> Link(Action<IOk<T>> a) => this switch
 		{
-			Ok<T> ok => Catch(() => { a(ok); return ok; }),
+			IOk<T> ok => Catch(() => { a(ok); return ok; }),
 			_ => SkipAhead()
 		};
 
@@ -85,9 +97,9 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
 		/// </summary>
 		/// <param name="a">The action will be executed if the current object is an <see cref="Jeebs.OkV{T}"/> result</param>
-		public R<T> Link(Action<OkV<T>> a) => this switch
+		public IR<T> Link(Action<IOkV<T>> a) => this switch
 		{
-			OkV<T> ok => Catch(() => { a(ok); return ok; }),
+			IOkV<T> ok => Catch(() => { a(ok); return ok; }),
 			_ => SkipAhead()
 		};
 
@@ -98,9 +110,9 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="f">The function will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
-		public R<TNext> LinkMap<TNext>(Func<TNext> f) => this switch
+		public IR<TNext> LinkMap<TNext>(Func<TNext> f) => this switch
 		{
-			Ok<T> ok => Catch(() => { var v = f(); return ok.OkV(v); }),
+			IOk<T> ok => Catch(() => { var v = f(); return ok.OkV(v); }),
 			_ => SkipAhead<TNext>()
 		};
 
@@ -111,9 +123,9 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="f">The function will be executed if the current object is an <see cref="Jeebs.Ok{T}"/> result</param>
-		public R<TNext> LinkMap<TNext>(Func<Ok<T>, R<TNext>> f) => this switch
+		public IR<TNext> LinkMap<TNext>(Func<IOk<T>, IR<TNext>> f) => this switch
 		{
-			Ok<T> s => Catch(() => f(s)),
+			IOk<T> s => Catch(() => f(s)),
 			_ => SkipAhead<TNext>()
 		};
 
@@ -124,18 +136,18 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="f">The function will be executed if the current object is an <see cref="Jeebs.OkV{T}"/> result</param>
-		public R<TNext> LinkMap<TNext>(Func<OkV<T>, R<TNext>> f) => this switch
+		public IR<TNext> LinkMap<TNext>(Func<IOkV<T>, IR<TNext>> f) => this switch
 		{
-			OkV<T> s => Catch(() => f(s)),
+			IOkV<T> s => Catch(() => f(s)),
 			_ => SkipAhead<TNext>()
 		};
 
 		/// <summary>
 		/// Skip ahead by returning the current object as an <see cref="Error{T}"/>
 		/// </summary>
-		private Error<T> SkipAhead() => this switch
+		private IError<T> SkipAhead() => this switch
 		{
-			Error<T> e => e,
+			IError<T> e => e,
 			_ => SkipAhead<T>()
 		};
 
@@ -143,14 +155,14 @@ namespace Jeebs
 		/// Skip ahead by returning the current object as an <see cref="Error{TNext}"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
-		private Error<TNext> SkipAhead<TNext>() => new Error<TNext> { Messages = Messages };
+		private IError<TNext> SkipAhead<TNext>() => new Error<TNext> { Messages = Messages };
 
 		/// <summary>
 		/// Execute a function, catching any exceptions and skipping head with an error message
 		/// </summary>
 		/// <typeparam name="TNext">Next Result value type</typeparam>
 		/// <param name="f">Function to execute</param>
-		private R<TNext> Catch<TNext>(Func<R<TNext>> f)
+		private IR<TNext> Catch<TNext>(Func<IR<TNext>> f)
 		{
 			try
 			{
@@ -164,29 +176,12 @@ namespace Jeebs
 		}
 
 		/// <summary>
-		/// Execute the next link in the chain and map to a new result type
-		/// <para>Action <paramref name="f"/> receives no input and returns an Ok result with no value</para>
-		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
+		/// Clear MessageList
 		/// </summary>
-		/// <typeparam name="TNext">Next Result value type</typeparam>
-		/// <param name="f">The function will be executed if the current object is an Ok result</param>
-		//public R<TNext> LinkMap<TNext>(Func<Ok<TNext>> f) => this switch
-		//{
-		//	Ok<T> _ => Catch(f),
-		//	_ => SkipAhead<TNext>()
-		//};
-
-		/// <summary>
-		/// Execute the next link in the chain and map to a new result type
-		/// <para>Action <paramref name="f"/> receives no input and returns an Ok result with a value of type <typeparamref name="TNext"/></para>
-		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.Exception"/> message</para>
-		/// </summary>
-		/// <typeparam name="TNext">Next Result value type</typeparam>
-		/// <param name="f">The function will be executed if the current object is an Ok result</param>
-		//public R<TNext> LinkMap<TNext>(Func<OkV<TNext>> f) => this switch
-		//{
-		//	Ok<T> _ => Catch(f),
-		//	_ => SkipAhead<TNext>()
-		//};
+		public virtual void Dispose()
+		{
+			Messages.Clear();
+			Messages = new MessageList();
+		}
 	}
 }

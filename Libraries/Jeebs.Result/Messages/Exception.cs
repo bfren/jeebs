@@ -13,12 +13,12 @@ namespace Jm
 		/// <summary>
 		/// The full name of the Exception type
 		/// </summary>
-		private readonly string exceptionType;
+		protected string ExceptionType { get; }
 
 		/// <summary>
 		/// Exception text
 		/// </summary>
-		private readonly string exceptionText;
+		protected string ExceptionText { get; }
 
 		/// <summary>
 		/// Create object
@@ -26,13 +26,13 @@ namespace Jm
 		/// <param name="ex">Exception</param>
 		public Exception(System.Exception ex)
 		{
-			exceptionType = ex.GetType().FullName;
-			exceptionText = ex.Message;
+			ExceptionType = ex.GetType().FullName;
+			ExceptionText = ex.Message;
 		}
 
 		/// <summary>
 		/// Output Exception type and message
 		/// </summary>
-		public override string ToString() => $"{exceptionType}: {exceptionText}";
+		public override string ToString() => $"{ExceptionType}: {ExceptionText}";
 	}
 }

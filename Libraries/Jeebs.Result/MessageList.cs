@@ -16,6 +16,11 @@ namespace Jeebs
 		private readonly List<IMessage> messages = new List<IMessage>();
 
 		/// <summary>
+		/// Clear all messages
+		/// </summary>
+		public void Clear() => messages.Clear();
+
+		/// <summary>
 		/// The number of messages
 		/// </summary>
 		public int Count { get => messages.Count; }

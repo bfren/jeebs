@@ -14,7 +14,7 @@ namespace Tests.Jeebs.Result.Audit
 		{
 			// Arrange
 			var chain = R.Chain;
-			static void audit<T>(R<T> _) { }
+			static void audit<T>(IR<T> _) { }
 
 			// Act
 			var result = chain.Audit(audit);
@@ -29,17 +29,17 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain;
 
-			static R<int> l0<T>(Ok<T> r) => r.OkV(18);
-			static R<T> l1<T>(OkV<T> r) => r.Error();
+			static IR<int> l0<T>(IOk<T> r) => r.OkV(18);
+			static IR<T> l1<T>(IOkV<T> r) => r.Error();
 
 			var log = new List<string>();
-			void audit<T>(R<T> r)
+			void audit<T>(IR<T> r)
 			{
-				if (r is Error<T> error)
+				if (r is IError<T> error)
 				{
 					log.Add("Error!");
 				}
-				else if (r is OkV<T> ok)
+				else if (r is IOkV<T> ok)
 				{
 					log.Add($"Value: {ok.Val}");
 				}
@@ -68,7 +68,7 @@ namespace Tests.Jeebs.Result.Audit
 		{
 			// Arrange
 			var chain = R.Chain;
-			static void audit<T>(R<T> _) => throw new Exception();
+			static void audit<T>(IR<T> _) => throw new Exception();
 
 			// Act
 			var result = chain.Audit(audit);

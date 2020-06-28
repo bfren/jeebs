@@ -15,13 +15,13 @@ namespace Tests.Jeebs.Result.LinkAsync
 			// Arrange
 			var chain = R<int>.ChainV(18);
 			var index = 10;
-			async Task t(OkV<int> r) => await Task.Run(() => index += r.Val);
+			async Task t(IOkV<int> r) => await Task.Run(() => index += r.Val);
 
 			// Act
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<OkV<int>>(r);
+			Assert.IsAssignableFrom<IOkV<int>>(r);
 			Assert.Equal(28, index);
 		}
 
@@ -30,13 +30,13 @@ namespace Tests.Jeebs.Result.LinkAsync
 		{
 			// Arrange
 			var chain = R<int>.ChainV(18);
-			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
+			static async Task t(IOkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
 
 			// Act
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<Error<int>>(r);
+			Assert.IsAssignableFrom<IError<int>>(r);
 		}
 
 		[Fact]
@@ -46,7 +46,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 			var chain = R<int>.ChainV(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
-			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception(msg));
+			static async Task t(IOkV<int> _) => await Task.Run(() => throw new Exception(msg));
 
 			// Act
 			var r = await chain.LinkAsync(t);
@@ -62,8 +62,8 @@ namespace Tests.Jeebs.Result.LinkAsync
 			// Arrange
 			var chain = R<int>.ChainV(18);
 			var index = 10;
-			static async Task t0(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
-			async Task t1(OkV<int> r) => await Task.Run(() => index += r.Val);
+			static async Task t0(IOkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
+			async Task t1(IOkV<int> r) => await Task.Run(() => index += r.Val);
 
 			// Act
 			var r = await chain.LinkAsync(t0).LinkAsync(t1);
@@ -77,13 +77,13 @@ namespace Tests.Jeebs.Result.LinkAsync
 			// Arrange
 			var chain = R<int>.ChainVAsync(18);
 			var index = 10;
-			async Task t(OkV<int> r) => await Task.Run(() => index += r.Val);
+			async Task t(IOkV<int> r) => await Task.Run(() => index += r.Val);
 
 			// Act
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<OkV<int>>(r);
+			Assert.IsAssignableFrom<IOkV<int>>(r);
 			Assert.Equal(28, index);
 		}
 
@@ -92,13 +92,13 @@ namespace Tests.Jeebs.Result.LinkAsync
 		{
 			// Arrange
 			var chain = R<int>.ChainVAsync(18);
-			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
+			static async Task t(IOkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
 
 			// Act
 			var r = await chain.LinkAsync(t);
 
 			// Assert
-			Assert.IsType<Error<int>>(r);
+			Assert.IsAssignableFrom<IError<int>>(r);
 		}
 
 		[Fact]
@@ -108,7 +108,7 @@ namespace Tests.Jeebs.Result.LinkAsync
 			var chain = R<int>.ChainVAsync(18);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
-			static async Task t(OkV<int> _) => await Task.Run(() => throw new Exception(msg));
+			static async Task t(IOkV<int> _) => await Task.Run(() => throw new Exception(msg));
 
 			// Act
 			var r = await chain.LinkAsync(t);
@@ -124,8 +124,8 @@ namespace Tests.Jeebs.Result.LinkAsync
 			// Arrange
 			var chain = R<int>.ChainVAsync(18);
 			var index = 10;
-			static async Task t0(OkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
-			async Task t1(OkV<int> r) => await Task.Run(() => index += r.Val);
+			static async Task t0(IOkV<int> _) => await Task.Run(() => throw new Exception("Something went wrong."));
+			async Task t1(IOkV<int> r) => await Task.Run(() => index += r.Val);
 
 			// Act
 			var r = await chain.LinkAsync(t0).LinkAsync(t1);

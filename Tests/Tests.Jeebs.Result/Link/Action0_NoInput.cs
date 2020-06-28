@@ -20,7 +20,7 @@ namespace Tests.Jeebs.Result.Link
 			var r = chain.Link(a);
 
 			// Assert
-			Assert.IsType<Ok>(r);
+			Assert.IsAssignableFrom<IOk>(r);
 			Assert.Equal(1, index);
 		}
 
@@ -35,7 +35,7 @@ namespace Tests.Jeebs.Result.Link
 			var r = chain.Link(a);
 
 			// Assert
-			Assert.IsType<Error<object>>(r);
+			Assert.IsAssignableFrom<IError<bool>>(r);
 		}
 
 		[Fact]

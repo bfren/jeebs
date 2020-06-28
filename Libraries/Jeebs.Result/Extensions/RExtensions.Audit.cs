@@ -15,7 +15,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result task (will be awaited before executing <paramref name="audit"/>)</param>
 		/// <param name="audit">Audit action</param>
-		public static async Task<R<T>> AuditAsync<T>(this Task<R<T>> @this, Func<R<T>, Task> audit)
+		public static async Task<IR<T>> AuditAsync<T>(this Task<IR<T>> @this, Func<IR<T>, Task> audit)
 		{
 			var result = await @this.ConfigureAwait(false);
 
@@ -40,11 +40,11 @@ namespace Jeebs
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="OkV{T}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="Error{T}"/></param>
 		/// <param name="isUnknown">[Optional] Action to run if the current result is unknown</param>
-		public static async Task<R<T>> AuditSwitchAsync<T>(
-			this Task<R<T>> @this,
-			Func<Ok<T>, Task>? isOk = null,
-			Func<OkV<T>, Task>? isOkV = null,
-			Func<Error<T>, Task>? isError = null,
+		public static async Task<IR<T>> AuditSwitchAsync<T>(
+			this Task<IR<T>> @this,
+			Func<IOk<T>, Task>? isOk = null,
+			Func<IOkV<T>, Task>? isOkV = null,
+			Func<IError<T>, Task>? isError = null,
 			Func<Task>? isUnknown = null
 		)
 		{
@@ -57,9 +57,9 @@ namespace Jeebs
 
 			Func<Task> audit = result switch
 			{
-				Error<T> error => () => isError == null ? Task.CompletedTask : isError(error),
-				OkV<T> okV => () => isOkV == null ? Task.CompletedTask : isOkV(okV),
-				Ok<T> ok => () => isOk == null ? Task.CompletedTask : isOk(ok),
+				IError<T> error => () => isError == null ? Task.CompletedTask : isError(error),
+				IOkV<T> okV => () => isOkV == null ? Task.CompletedTask : isOkV(okV),
+				IOk<T> ok => () => isOk == null ? Task.CompletedTask : isOk(ok),
 				_ => isUnknown ?? new Func<Task>(() => throw new InvalidOperationException($"Unknown R<> subtype: '{result.GetType()}'."))
 			};
 
@@ -85,7 +85,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result</param>
 		/// <param name="audit">Audit action</param>
-		public static async Task<R<T>> AuditAsync<T>(this R<T> @this, Func<R<T>, Task> audit) => await AuditAsync(Task.Run(() => @this), audit);
+		public static Task<IR<T>> AuditAsync<T>(this IR<T> @this, Func<IR<T>, Task> audit) => AuditAsync(Task.Run(() => @this), audit);
 
 		/// <summary>
 		/// Audit the current result state asynchronously and return unmodified
@@ -96,13 +96,13 @@ namespace Jeebs
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="OkV{T}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="Error{T}"/></param>
 		/// <param name="isUnknown">[Optional] Action to run if the current result is unknown</param>
-		public static async Task<R<T>> AuditSwitchAsync<T>(
-			this R<T> @this,
-			Func<Ok<T>, Task>? isOk = null,
-			Func<OkV<T>, Task>? isOkV = null,
-			Func<Error<T>, Task>? isError = null,
+		public static Task<IR<T>> AuditSwitchAsync<T>(
+			this IR<T> @this,
+			Func<IOk<T>, Task>? isOk = null,
+			Func<IOkV<T>, Task>? isOkV = null,
+			Func<IError<T>, Task>? isError = null,
 			Func<Task>? isUnknown = null
-		) => await AuditSwitchAsync(Task.Run(() => @this), isOk, isOkV, isError, isUnknown);
+		) => AuditSwitchAsync(Task.Run(() => @this), isOk, isOkV, isError, isUnknown);
 
 		#endregion
 	}

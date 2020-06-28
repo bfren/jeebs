@@ -14,13 +14,13 @@ namespace Tests.Jeebs.Result.LinkMap
 			// Arrange
 			var chain = R.Chain;
 			var index = 0;
-			R<string> f(Ok<object> r) { index++; return r.OkNew<string>(); }
+			IR<string> f(IOk<bool> r) { index++; return r.OkNew<string>(); }
 
 			// Act
 			var r = chain.LinkMap(f);
 
 			// Assert
-			Assert.IsType<Ok<string>>(r);
+			Assert.IsAssignableFrom<IOk<string>>(r);
 			Assert.Equal(1, index);
 		}
 
@@ -29,7 +29,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		{
 			// Arrange
 			var chain = R.Chain;
-			static R<string> f(Ok<object> _) => throw new Exception("Something went wrong.");
+			static IR<string> f(IOk<bool> _) => throw new Exception("Something went wrong.");
 
 			// Act
 			var r = chain.LinkMap(f);
@@ -45,7 +45,7 @@ namespace Tests.Jeebs.Result.LinkMap
 			var chain = R.Chain;
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
-			static R<string> f(Ok<object> _) => throw new Exception(msg);
+			static IR<string> f(IOk<bool> _) => throw new Exception(msg);
 
 			// Act
 			var r = chain.LinkMap(f);
@@ -61,8 +61,8 @@ namespace Tests.Jeebs.Result.LinkMap
 			// Arrange
 			var chain = R.Chain;
 			var index = 0;
-			static R<string> f0(Ok<object> _) => throw new Exception("Something went wrong.");
-			R<int> f1(Ok<string> r) { index++; return r.OkNew<int>(); }
+			static IR<string> f0(IOk<bool> _) => throw new Exception("Something went wrong.");
+			IR<int> f1(IOk<string> r) { index++; return r.OkNew<int>(); }
 
 			// Act
 			var r = chain.LinkMap(f0).LinkMap(f1);

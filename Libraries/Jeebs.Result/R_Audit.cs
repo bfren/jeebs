@@ -11,7 +11,7 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.AuditException"/> message</para>
 		/// </summary>
 		/// <param name="audit">Audit action</param>
-		public R<T> Audit(Action<R<T>> audit)
+		public IR<T> Audit(Action<IR<T>> audit)
 		{
 			try
 			{
@@ -34,7 +34,7 @@ namespace Jeebs
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="Jeebs.OkV{T}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="Jeebs.Error{T}"/></param>
 		/// <param name="isUnknown">[Optional] Action to run if the current result is unknown</param>
-		public R<T> AuditSwitch(Action<Ok<T>>? isOk = null, Action<OkV<T>>? isOkV = null, Action<Error<T>>? isError = null, Action? isUnknown = null)
+		public IR<T> AuditSwitch(Action<IOk<T>>? isOk = null, Action<IOkV<T>>? isOkV = null, Action<IError<T>>? isError = null, Action? isUnknown = null)
 		{
 			if (isOk == null && isOkV == null && isError == null && isUnknown == null)
 			{
@@ -43,9 +43,9 @@ namespace Jeebs
 
 			Action audit = this switch
 			{
-				Error<T> error => () => isError?.Invoke(error),
-				OkV<T> okV => () => isOkV?.Invoke(okV),
-				Ok<T> ok => () => isOk?.Invoke(ok),
+				IError<T> error => () => isError?.Invoke(error),
+				IOkV<T> okV => () => isOkV?.Invoke(okV),
+				IOk<T> ok => () => isOk?.Invoke(ok),
 				_ => isUnknown ?? (() => throw new InvalidOperationException($"Unknown R<> subtype: '{GetType()}'."))
 			};
 
