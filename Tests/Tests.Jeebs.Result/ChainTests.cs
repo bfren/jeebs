@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result
 {
-	public class ChainTests
+	public class ChainTests : IChainTests
 	{
 		[Fact]
 		public void R_Chain_Returns_Ok()

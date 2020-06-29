@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.Audit
 {
-	public class Action0_Simple
+	public class Action0_Simple : IAudit_Action0_Simple
 	{
 		[Fact]
 		public void Audit_Returns_Original_Object()
 		{
 			// Arrange
 			var chain = R.Chain;
-			static void audit<T>(IR<T> _) { }
+			static void audit<TResult>(IR<TResult> _) { }
 
 			// Act
 			var result = chain.Audit(audit);
@@ -29,17 +29,17 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain;
 
-			static IR<int> l0<T>(IOk<T> r) => r.OkV(18);
-			static IR<T> l1<T>(IOkV<T> r) => r.Error();
+			static IR<int> l0<TResult>(IOk<TResult> r) => r.OkV(18);
+			static IR<TResult> l1<TResult>(IOkV<TResult> r) => r.Error();
 
 			var log = new List<string>();
-			void audit<T>(IR<T> r)
+			void audit<TResult>(IR<TResult> r)
 			{
-				if (r is IError<T> error)
+				if (r is IError<TResult> error)
 				{
 					log.Add("Error!");
 				}
-				else if (r is IOkV<T> ok)
+				else if (r is IOkV<TResult> ok)
 				{
 					log.Add($"Value: {ok.Val}");
 				}
@@ -68,7 +68,7 @@ namespace Tests.Jeebs.Result.Audit
 		{
 			// Arrange
 			var chain = R.Chain;
-			static void audit<T>(IR<T> _) => throw new Exception();
+			static void audit<TResult>(IR<TResult> _) => throw new Exception();
 
 			// Act
 			var result = chain.Audit(audit);

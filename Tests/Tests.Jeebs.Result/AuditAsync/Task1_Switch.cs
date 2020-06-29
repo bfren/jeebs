@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.AuditAsync
 {
-	public class Task1_Switch
+	public class Task1_Switch : IAuditAsync_Task1_Switch
 	{
 		#region Start Sync
 
@@ -29,9 +29,9 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.Chain;
-			static async Task ok<T>(IOk<T> _) { }
-			static async Task okV<T>(IOkV<T> _) { }
-			static async Task error<T>(IError<T> _) { }
+			static async Task ok<TResult>(IOk<TResult> _) { }
+			static async Task okV<TResult>(IOkV<TResult> _) { }
+			static async Task error<TResult>(IError<TResult> _) { }
 			static async Task unknown() { }
 
 			// Act
@@ -46,7 +46,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.Chain;
-			static async Task fail<T>(IOk<T> _) => throw new Exception();
+			static async Task fail<TResult>(IOk<TResult> _) => throw new Exception();
 
 			// Act
 			var result = await chain.AuditSwitchAsync(isOk: fail);
@@ -61,7 +61,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			async Task ok<T>(IOk<T> _) { run = true; }
+			async Task ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOk: ok);
@@ -76,7 +76,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			async Task okV<T>(IOkV<T> _) { run = true; }
+			async Task okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOkV: okV);
@@ -91,7 +91,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			async Task error<T>(IError<T> _) { run = true; }
+			async Task error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isError: error);
@@ -106,7 +106,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R<int>.ChainV(10);
 			var run = false;
-			async Task okV<T>(IOkV<T> _) { run = true; }
+			async Task okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOkV: okV);
@@ -121,7 +121,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R<int>.ChainV(10);
 			var run = false;
-			async Task ok<T>(IOk<T> _) { run = true; }
+			async Task ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOk: ok);
@@ -136,7 +136,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R<int>.ChainV(10);
 			var run = false;
-			async Task error<T>(IError<T> _) { run = true; }
+			async Task error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isError: error);
@@ -151,8 +151,8 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			static async Task<IR<T>> fail<T>(IOk<T> r) => r.Error();
-			async Task error<T>(IError<T> _) { run = true; }
+			static async Task<IR<TResult>> fail<TResult>(IOk<TResult> r) => r.Error();
+			async Task error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			await chain.LinkMapAsync(fail).AuditSwitchAsync(isError: error);
@@ -167,8 +167,8 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			static async Task<IR<T>> fail<T>(IOk<T> r) => r.Error();
-			async Task ok<T>(IOk<T> _) { run = true; }
+			static async Task<IR<TResult>> fail<TResult>(IOk<TResult> r) => r.Error();
+			async Task ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			await chain.LinkMapAsync(fail).AuditSwitchAsync(isOk: ok);
@@ -183,8 +183,8 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			static async Task<IR<T>> fail<T>(IOk<T> r) => r.Error();
-			async Task okV<T>(IOkV<T> _) { run = true; }
+			static async Task<IR<TResult>> fail<TResult>(IOk<TResult> r) => r.Error();
+			async Task okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			await chain.LinkMapAsync(fail).AuditSwitchAsync(isOkV: okV);
@@ -230,9 +230,9 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.ChainAsync;
-			static async Task ok<T>(IOk<T> _) { }
-			static async Task okV<T>(IOkV<T> _) { }
-			static async Task error<T>(IError<T> _) { }
+			static async Task ok<TResult>(IOk<TResult> _) { }
+			static async Task okV<TResult>(IOkV<TResult> _) { }
+			static async Task error<TResult>(IError<TResult> _) { }
 			static async Task unknown() { }
 
 			// Act
@@ -247,7 +247,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.ChainAsync;
-			static async Task fail<T>(IOk<T> _) => throw new Exception();
+			static async Task fail<TResult>(IOk<TResult> _) => throw new Exception();
 
 			// Act
 			var result = await chain.AuditSwitchAsync(isOk: fail);
@@ -262,7 +262,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var run = false;
-			async Task ok<T>(IOk<T> _) { run = true; }
+			async Task ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOk: ok);
@@ -277,7 +277,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var run = false;
-			async Task okV<T>(IOkV<T> _) { run = true; }
+			async Task okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOkV: okV);
@@ -292,7 +292,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var run = false;
-			async Task error<T>(IError<T> _) { run = true; }
+			async Task error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isError: error);
@@ -307,7 +307,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R<int>.ChainVAsync(10);
 			var run = false;
-			async Task okV<T>(IOkV<T> _) { run = true; }
+			async Task okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOkV: okV);
@@ -322,7 +322,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R<int>.ChainVAsync(10);
 			var run = false;
-			async Task ok<T>(IOk<T> _) { run = true; }
+			async Task ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isOk: ok);
@@ -337,7 +337,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R<int>.ChainVAsync(10);
 			var run = false;
-			async Task error<T>(IError<T> _) { run = true; }
+			async Task error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			await chain.AuditSwitchAsync(isError: error);
@@ -352,8 +352,8 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var run = false;
-			static async Task<IR<T>> fail<T>(IOk<T> r) => r.Error();
-			async Task error<T>(IError<T> _) { run = true; }
+			static async Task<IR<TResult>> fail<TResult>(IOk<TResult> r) => r.Error();
+			async Task error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			await chain.LinkMapAsync(fail).AuditSwitchAsync(isError: error);
@@ -368,8 +368,8 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var run = false;
-			static async Task<IR<T>> fail<T>(IOk<T> r) => r.Error();
-			async Task ok<T>(IOk<T> _) { run = true; }
+			static async Task<IR<TResult>> fail<TResult>(IOk<TResult> r) => r.Error();
+			async Task ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			await chain.LinkMapAsync(fail).AuditSwitchAsync(isOk: ok);
@@ -384,8 +384,8 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 			var run = false;
-			static async Task<IR<T>> fail<T>(IOk<T> r) => r.Error();
-			async Task okV<T>(IOkV<T> _) { run = true; }
+			static async Task<IR<TResult>> fail<TResult>(IOk<TResult> r) => r.Error();
+			async Task okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			await chain.LinkMapAsync(fail).AuditSwitchAsync(isOkV: okV);

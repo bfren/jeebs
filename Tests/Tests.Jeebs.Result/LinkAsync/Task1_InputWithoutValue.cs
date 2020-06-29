@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.LinkAsync
 {
-	public class Task1_InputWithoutValue
+	public class Task1_InputWithoutValue : ILinkAsync_Task1_InputWithoutValue
 	{
 		[Fact]
 		public async Task StartSync_Successful_Returns_Ok()

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.Audit
 {
-	public class Action1_Switch
+	public class Action1_Switch : IAudit_Action1_Switch
 	{
 		[Fact]
 		public void AuditSwitch_Returns_Original_Object_Without_Parameters()
@@ -26,9 +26,9 @@ namespace Tests.Jeebs.Result.Audit
 		{
 			// Arrange
 			var chain = R.Chain;
-			static void ok<T>(IOk<T> _) { }
-			static void okV<T>(IOkV<T> _) { }
-			static void error<T>(IError<T> _) { }
+			static void ok<TResult>(IOk<TResult> _) { }
+			static void okV<TResult>(IOkV<TResult> _) { }
+			static void error<TResult>(IError<TResult> _) { }
 			static void unknown() { }
 
 			// Act
@@ -43,7 +43,7 @@ namespace Tests.Jeebs.Result.Audit
 		{
 			// Arrange
 			var chain = R.Chain;
-			static void fail<T>(IOk<T> _) => throw new Exception();
+			static void fail<TResult>(IOk<TResult> _) => throw new Exception();
 
 			// Act
 			var result = chain.AuditSwitch(isOk: fail);
@@ -58,7 +58,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			void ok<T>(IOk<T> _) { run = true; }
+			void ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isOk: ok);
@@ -73,7 +73,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			void okV<T>(IOkV<T> _) { run = true; }
+			void okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isOkV: okV);
@@ -88,7 +88,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain;
 			var run = false;
-			void error<T>(IError<T> _) { run = true; }
+			void error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isError: error);
@@ -103,7 +103,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R<int>.ChainV(10);
 			var run = false;
-			void okV<T>(IOkV<T> _) { run = true; }
+			void okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isOkV: okV);
@@ -118,7 +118,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R<int>.ChainV(10);
 			var run = false;
-			void ok<T>(IOk<T> _) { run = true; }
+			void ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isOk: ok);
@@ -133,7 +133,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R<int>.ChainV(10);
 			var run = false;
-			void error<T>(IError<T> _) { run = true; }
+			void error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isError: error);
@@ -148,7 +148,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain.Error();
 			var run = false;
-			void error<T>(IError<T> _) { run = true; }
+			void error<TResult>(IError<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isError: error);
@@ -163,7 +163,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain.Error();
 			var run = false;
-			void ok<T>(IOk<T> _) { run = true; }
+			void ok<TResult>(IOk<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isOk: ok);
@@ -178,7 +178,7 @@ namespace Tests.Jeebs.Result.Audit
 			// Arrange
 			var chain = R.Chain.Error();
 			var run = false;
-			void okV<T>(IOkV<T> _) { run = true; }
+			void okV<TResult>(IOkV<TResult> _) { run = true; }
 
 			// Act
 			chain.AuditSwitch(isOkV: okV);

@@ -8,14 +8,14 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.AuditAsync
 {
-	public class Task0_Simple
+	public class Task0_Simple : IAuditAsync_Task0_Simple
 	{
 		[Fact]
 		public async Task StartSync_AuditAsync_Returns_Original_Object()
 		{
 			// Arrange
 			var chain = R.Chain;
-			static async Task audit<T>(IR<T> _) { }
+			static async Task audit<TResult>(IR<TResult> _) { }
 
 			// Act
 			var result = await chain.AuditAsync(audit);
@@ -30,17 +30,17 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.Chain;
 
-			static async Task<IR<int>> l0<T>(IOk<T> r) => r.OkV(18);
-			static async Task<IR<T>> l1<T>(IOkV<T> r) => r.Error();
+			static async Task<IR<int>> l0<TResult>(IOk<TResult> r) => r.OkV(18);
+			static async Task<IR<TResult>> l1<TResult>(IOkV<TResult> r) => r.Error();
 
 			var log = new List<string>();
-			async Task audit<T>(IR<T> r)
+			async Task audit<TResult>(IR<TResult> r)
 			{
-				if (r is IError<T> error)
+				if (r is IError<TResult> error)
 				{
 					log.Add("Error!");
 				}
-				else if (r is IOkV<T> ok)
+				else if (r is IOkV<TResult> ok)
 				{
 					log.Add($"Value: {ok.Val}");
 				}
@@ -69,7 +69,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.Chain;
-			static async Task audit<T>(IR<T> _) => throw new Exception();
+			static async Task audit<TResult>(IR<TResult> _) => throw new Exception();
 
 			// Act
 			var result = await chain.AuditAsync(audit);
@@ -84,7 +84,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.ChainAsync;
-			static async Task audit<T>(IR<T> _) { }
+			static async Task audit<TResult>(IR<TResult> _) { }
 
 			// Act
 			var result = await chain.AuditAsync(audit);
@@ -99,17 +99,17 @@ namespace Tests.Jeebs.Result.AuditAsync
 			// Arrange
 			var chain = R.ChainAsync;
 
-			static async Task<IR<int>> l0<T>(IOk<T> r) => r.OkV(18);
-			static async Task<IR<T>> l1<T>(IOkV<T> r) => r.Error();
+			static async Task<IR<int>> l0<TResult>(IOk<TResult> r) => r.OkV(18);
+			static async Task<IR<TResult>> l1<TResult>(IOkV<TResult> r) => r.Error();
 
 			var log = new List<string>();
-			async Task audit<T>(IR<T> r)
+			async Task audit<TResult>(IR<TResult> r)
 			{
-				if (r is IError<T> error)
+				if (r is IError<TResult> error)
 				{
 					log.Add("Error!");
 				}
-				else if (r is IOkV<T> ok)
+				else if (r is IOkV<TResult> ok)
 				{
 					log.Add($"Value: {ok.Val}");
 				}
@@ -138,7 +138,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		{
 			// Arrange
 			var chain = R.ChainAsync;
-			static async Task audit<T>(IR<T> _) => throw new Exception();
+			static async Task audit<TResult>(IR<TResult> _) => throw new Exception();
 
 			// Act
 			var result = await chain.AuditAsync(audit);

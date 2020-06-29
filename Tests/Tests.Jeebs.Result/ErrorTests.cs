@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result
 {
-	public class ErrorTests
+	public class ErrorTests : IErrorTests
 	{
 		#region Error
 

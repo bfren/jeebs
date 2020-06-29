@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result
 {
-	public class OkTests
+	public class OkTests : IOkTests
 	{
 		#region Ok
 

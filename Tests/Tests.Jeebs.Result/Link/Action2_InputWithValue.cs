@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.Link
 {
-	public class Action2_InputWithValue
+	public class Action2_InputWithValue : ILink_Action2_InputWithValue
 	{
 		[Fact]
 		public void Successful_Returns_OkV()

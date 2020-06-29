@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tests.Jeebs.Result.LinkMap
 {
-	public class Func1_InputWithoutValue
+	public class Func1_InputWithoutValue : ILinkMap_Func1_InputWithoutValue
 	{
 		[Fact]
 		public void Successful_Returns_Ok()
