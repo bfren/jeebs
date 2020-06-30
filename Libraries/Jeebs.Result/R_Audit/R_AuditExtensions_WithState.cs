@@ -91,7 +91,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result</param>
 		/// <param name="audit">Audit action</param>
-		public static Task<IR<TResult, TState>> AuditAsync<TResult, TState>(this IR<TResult, TState> @this, Func<IR<TResult, TState>, Task> audit) => AuditAsync(Task.Run(() => @this), audit);
+		public static Task<IR<TResult, TState>> AuditAsync<TResult, TState>(this IR<TResult, TState> @this, Func<IR<TResult, TState>, Task> audit) => AuditAsync(Task.FromResult(@this), audit);
 
 		/// <summary>
 		/// Audit the current result state asynchronously and return unmodified
@@ -110,7 +110,7 @@ namespace Jeebs
 			Func<IOkV<TResult, TState>, Task>? isOkV = null,
 			Func<IError<TResult, TState>, Task>? isError = null,
 			Func<Task>? isUnknown = null
-		) => AuditSwitchAsync(Task.Run(() => @this), isOk, isOkV, isError, isUnknown);
+		) => AuditSwitchAsync(Task.FromResult(@this), isOk, isOkV, isError, isUnknown);
 
 		#endregion
 	}

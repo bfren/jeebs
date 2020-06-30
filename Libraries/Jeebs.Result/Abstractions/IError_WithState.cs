@@ -9,5 +9,9 @@ namespace Jeebs
 	/// </summary>
 	/// <typeparam name="TResult">Result value type - not used in Error classes, only Ok classes have a value</typeparam>
 	/// <typeparam name="TState">State value type</typeparam>
-	public interface IError<TResult, TState> : IR<TResult, TState> { }
+	public interface IError<TResult, TState> : IR<TResult, TState>
+	{
+		/// <inheritdoc cref="IR{TResult, TState}.RemoveState"/>
+		new IError<TResult> RemoveState();
+	}
 }

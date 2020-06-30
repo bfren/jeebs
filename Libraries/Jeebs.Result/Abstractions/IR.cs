@@ -10,7 +10,8 @@ namespace Jeebs
 	public interface IR : IDisposable
 	{
 		/// <summary>
-		/// Result value
+		/// Result value - true if Ok, false if Error
+		/// <para>Overridden by <see cref="IOkV{TResult}"/> to be a custom value rather than a boolean</para>
 		/// </summary>
 		bool Val { get; }
 
@@ -31,7 +32,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="state">State value</param>
-		IR<TResult, TState> WithState<TState>(TState state);
+		IR<TResult, TState> AddState<TState>(TState state);
 
 		#region Link & LinkMap
 

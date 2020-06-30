@@ -12,7 +12,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Successful_Returns_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var index = 0;
 			void a(IOk<bool, bool> _) => index++;
 
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static void a(IOk<bool, bool> _) => throw new Exception("Something went wrong.");
 
 			// Act
@@ -42,7 +42,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static void a(IOk<bool, bool> _) => throw new Exception(msg);
@@ -59,7 +59,7 @@ namespace Tests.Jeebs.Result.Link
 		public void Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var index = 0;
 			static void a0(IOk<bool, bool> _) => throw new Exception("Something went wrong.");
 			void a1(IOk<bool, bool> _) => index++;

@@ -15,7 +15,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_Returns_Original_Object_Without_Parameters()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 
 			// Act
 			var result = await chain.AuditSwitchAsync();
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_Returns_Original_Object_With_Parameters()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static async Task ok<TResult, TState>(IOk<TResult, TState> _) { }
 			static async Task okV<TResult, TState>(IOkV<TResult, TState> _) { }
 			static async Task error<TResult, TState>(IError<TResult, TState> _) { }
@@ -45,7 +45,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_Catches_Exception_Adds_Message()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static async Task fail<TResult, TState>(IOk<TResult, TState> _) => throw new Exception();
 
 			// Act
@@ -59,7 +59,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_Runs_Ok_When_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			async Task ok<TResult, TState>(IOk<TResult, TState> _) { run = true; }
 
@@ -74,7 +74,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_DoesNot_Run_OkV_When_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			async Task okV<TResult, TState>(IOkV<TResult, TState> _) { run = true; }
 
@@ -89,7 +89,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_DoesNot_Run_Error_When_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			async Task error<TResult, TState>(IError<TResult, TState> _) { run = true; }
 
@@ -149,7 +149,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_Runs_Error_When_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			static async Task<IR<TResult, TState>> fail<TResult, TState>(IOk<TResult, TState> r) => r.Error();
 			async Task error<TResult, TState>(IError<TResult, TState> _) { run = true; }
@@ -165,7 +165,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_DoesNot_Run_Ok_When_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			static async Task<IR<TResult, TState>> fail<TResult, TState>(IOk<TResult, TState> r) => r.Error();
 			async Task ok<TResult, TState>(IOk<TResult, TState> _) { run = true; }
@@ -181,7 +181,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditSwitchAsync_DoesNot_Run_OkV_When_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			static async Task<IR<TResult, TState>> fail<TResult, TState>(IOk<TResult, TState> r) => r.Error();
 			async Task okV<TResult, TState>(IOkV<TResult, TState> _) { run = true; }
@@ -216,7 +216,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_Returns_Original_Object_Without_Parameters()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 
 			// Act
 			var result = await chain.AuditSwitchAsync();
@@ -229,7 +229,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_Returns_Original_Object_With_Parameters()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			static async Task ok<TResult, TState>(IOk<TResult, TState> _) { }
 			static async Task okV<TResult, TState>(IOkV<TResult, TState> _) { }
 			static async Task error<TResult, TState>(IError<TResult, TState> _) { }
@@ -246,7 +246,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_Catches_Exception_Adds_Message()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			static async Task fail<TResult, TState>(IOk<TResult, TState> _) => throw new Exception();
 
 			// Act
@@ -260,7 +260,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_Runs_Ok_When_Ok()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var run = false;
 			async Task ok<TResult, TState>(IOk<TResult, TState> _) { run = true; }
 
@@ -275,7 +275,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_DoesNot_Run_OkV_When_Ok()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var run = false;
 			async Task okV<TResult, TState>(IOkV<TResult, TState> _) { run = true; }
 
@@ -290,7 +290,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_DoesNot_Run_Error_When_Ok()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var run = false;
 			async Task error<TResult, TState>(IError<TResult, TState> _) { run = true; }
 
@@ -350,7 +350,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_Runs_Error_When_Error()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var run = false;
 			static async Task<IR<TResult, TState>> fail<TResult, TState>(IOk<TResult, TState> r) => r.Error();
 			async Task error<TResult, TState>(IError<TResult, TState> _) { run = true; }
@@ -366,7 +366,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_DoesNot_Run_Ok_When_Error()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var run = false;
 			static async Task<IR<TResult, TState>> fail<TResult, TState>(IOk<TResult, TState> r) => r.Error();
 			async Task ok<TResult, TState>(IOk<TResult, TState> _) { run = true; }
@@ -382,7 +382,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditSwitchAsync_DoesNot_Run_OkV_When_Error()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var run = false;
 			static async Task<IR<TResult, TState>> fail<TResult, TState>(IOk<TResult, TState> r) => r.Error();
 			async Task okV<TResult, TState>(IOkV<TResult, TState> _) { run = true; }

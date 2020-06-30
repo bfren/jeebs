@@ -53,12 +53,8 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public MessageList Messages { get; internal set; } = new MessageList();
 
-		/// <summary>
-		/// Add state to the current result object.
-		/// </summary>
-		/// <typeparam name="TState">State value type</typeparam>
-		/// <param name="state">State value</param>
-		public IR<TResult, TState> WithState<TState>(TState state) => this switch
+		/// <inheritdoc/>
+		public IR<TResult, TState> AddState<TState>(TState state) => this switch
 		{
 			IOkV<TResult> okV => new OkV<TResult, TState>(okV.Val, state) { Messages = Messages },
 			IOk<TResult> _ => new Ok<TResult, TState>(state) { Messages = Messages },

@@ -13,7 +13,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartSync_Successful_Returns_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var index = 0;
 			async Task<IR<string, bool>> t(IOk<bool, bool> r) { index++; return r.OkNew<string>(); }
 
@@ -29,7 +29,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartSync_Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static async Task<IR<string, bool>> t(IOk<bool, bool> _) => throw new Exception("Something went wrong.");
 
 			// Act
@@ -43,7 +43,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartSync_Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static async Task<IR<string, bool>> t(IOk<bool, bool> _) => throw new Exception(msg);
@@ -60,7 +60,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartSync_Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var index = 0;
 			static async Task<IR<string, bool>> t0(IOk<bool, bool> _) => throw new Exception("Something went wrong.");
 			async Task<IR<int, bool>> t1(IOk<string, bool> r) { index++; return r.OkNew<int>(); }
@@ -76,7 +76,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartAsync_Successful_Returns_Ok()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var index = 0;
 			async Task<IR<string, bool>> t(IOk<bool, bool> r) { index++; return r.OkNew<string>(); }
 
@@ -92,7 +92,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartAsync_Unsuccessful_Returns_Error()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			static async Task<IR<string, bool>> t(IOk<bool, bool> _) => throw new Exception("Something went wrong.");
 
 			// Act
@@ -106,7 +106,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartAsync_Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static async Task<IR<string, bool>> t(IOk<bool, bool> _) => throw new Exception(msg);
@@ -123,7 +123,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		public async Task StartAsync_Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			var index = 0;
 			static async Task<IR<string, bool>> t0(IOk<bool, bool> _) => throw new Exception("Something went wrong.");
 			async Task<IR<int, bool>> t1(IOk<string, bool> r) { index++; return r.OkNew<int>(); }

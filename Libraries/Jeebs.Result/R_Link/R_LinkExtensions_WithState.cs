@@ -68,7 +68,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="IOk{TResult, TState}"/> result</param>
-		public static Task<IR<TResult, TState>> LinkAsync<TResult, TState>(this IR<TResult, TState> @this, Func<Task> t) => LinkAsync(Task.Run(() => @this), t);
+		public static Task<IR<TResult, TState>> LinkAsync<TResult, TState>(this IR<TResult, TState> @this, Func<Task> t) => LinkAsync(Task.FromResult(@this), t);
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously
@@ -79,7 +79,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="IOk{TResult, TState}"/> result</param>
-		public static Task<IR<TResult, TState>> LinkAsync<TResult, TState>(this IR<TResult, TState> @this, Func<IOk<TResult, TState>, Task> t) => LinkAsync(Task.Run(() => @this), t);
+		public static Task<IR<TResult, TState>> LinkAsync<TResult, TState>(this IR<TResult, TState> @this, Func<IOk<TResult, TState>, Task> t) => LinkAsync(Task.FromResult(@this), t);
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously
@@ -90,7 +90,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="IOkV{TResult, TState}"/> result</param>
-		public static Task<IR<TResult, TState>> LinkAsync<TResult, TState>(this IR<TResult, TState> @this, Func<IOkV<TResult, TState>, Task> t) => LinkAsync(Task.Run(() => @this), t);
+		public static Task<IR<TResult, TState>> LinkAsync<TResult, TState>(this IR<TResult, TState> @this, Func<IOkV<TResult, TState>, Task> t) => LinkAsync(Task.FromResult(@this), t);
 
 		#endregion
 	}

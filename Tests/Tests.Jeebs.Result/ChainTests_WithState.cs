@@ -14,7 +14,7 @@ namespace Tests.Jeebs.Result
 			const int state = 18;
 
 			// Act
-			var r = R.Chain.WithState(state);
+			var r = R.Chain.AddState(state);
 
 			// Assert
 			Assert.IsAssignableFrom<IOk<bool, int>>(r);
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result
 			const int state = 18;
 
 			// Act
-			var r = R.Chain.WithState(state);
+			var r = R.Chain.AddState(state);
 
 			// Assert
 			Assert.IsAssignableFrom<IOk<bool, int>>(r);

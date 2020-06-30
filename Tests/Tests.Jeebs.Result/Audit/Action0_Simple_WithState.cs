@@ -13,7 +13,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void Audit_Returns_Original_Object()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static void audit<TResult, TState>(IR<TResult, TState> _) { }
 
 			// Act
@@ -27,7 +27,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void Successful_Audit_Writes_To_Log()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 
 			static IR<int, TState> l0<TResult, TState>(IOk<TResult, TState> r) => r.OkV(18);
 			static IR<TResult, TState> l1<TResult, TState>(IOkV<TResult, TState> r) => r.Error();
@@ -67,7 +67,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void Unsuccessful_Audit_Captures_Exception()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static void audit<TResult, TState>(IR<TResult, TState> _) => throw new Exception();
 
 			// Act

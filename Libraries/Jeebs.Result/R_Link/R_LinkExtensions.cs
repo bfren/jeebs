@@ -60,7 +60,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="IOk{TResult}"/> result</param>
-		public static Task<IR<TResult>> LinkAsync<TResult>(this IR<TResult> @this, Func<Task> t) => LinkAsync(Task.Run(() => @this), t);
+		public static Task<IR<TResult>> LinkAsync<TResult>(this IR<TResult> @this, Func<Task> t) => LinkAsync(Task.FromResult(@this), t);
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously
@@ -69,7 +69,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="IOk{TResult}"/> result</param>
-		public static Task<IR<TResult>> LinkAsync<TResult>(this IR<TResult> @this, Func<IOk<TResult>, Task> t) => LinkAsync(Task.Run(() => @this), t);
+		public static Task<IR<TResult>> LinkAsync<TResult>(this IR<TResult> @this, Func<IOk<TResult>, Task> t) => LinkAsync(Task.FromResult(@this), t);
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously
@@ -78,7 +78,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Current result</param>
 		/// <param name="t">The task will be executed if <paramref name="this"/> is an <see cref="IOkV{TResult}"/> result</param>
-		public static Task<IR<TResult>> LinkAsync<TResult>(this IR<TResult> @this, Func<IOkV<TResult>, Task> t) => LinkAsync(Task.Run(() => @this), t);
+		public static Task<IR<TResult>> LinkAsync<TResult>(this IR<TResult> @this, Func<IOkV<TResult>, Task> t) => LinkAsync(Task.FromResult(@this), t);
 
 		#endregion
 	}

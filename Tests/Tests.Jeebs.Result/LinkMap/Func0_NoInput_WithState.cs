@@ -42,7 +42,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		public void Unsuccessful_Adds_Exception_Message()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			const string msg = "Something went wrong.";
 			var exMsg = $"System.Exception: {msg}";
 			static string f() => throw new Exception(msg);
@@ -59,7 +59,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		public void Unsuccessful_Then_SkipsAhead()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var index = 0;
 			static string f0() => throw new Exception("Something went wrong.");
 			int f1() => index++;

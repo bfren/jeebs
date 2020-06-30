@@ -62,7 +62,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		{
 			// Arrange
 			int value = 18;
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static async Task<IR<string, bool>> t0(IOkV<bool, bool> _) => throw new Exception("Something went wrong.");
 			async Task<IR<int, bool>> t1(IOkV<string, bool> r) { value = 0; return r.OkV(value); }
 
@@ -128,7 +128,7 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 		{
 			// Arrange
 			int value = 18;
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			static async Task<IR<string, bool>> t0(IOkV<bool, bool> _) => throw new Exception("Something went wrong.");
 			async Task<IR<int, bool>> t1(IOkV<string, bool> r) { value = 0; return r.OkV(value); }
 

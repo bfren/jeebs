@@ -12,7 +12,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_Returns_Original_Object_Without_Parameters()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 
 			// Act
 			var result = chain.AuditSwitch();
@@ -25,7 +25,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_Returns_Original_Object_With_Parameters()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static void ok<TResult, TState>(IOk<TResult, TState> _) { }
 			static void okV<TResult, TState>(IOkV<TResult, TState> _) { }
 			static void error<TResult, TState>(IError<TResult, TState> _) { }
@@ -42,7 +42,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_Catches_Exception_Adds_Message()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static void fail<TResult, TState>(IOk<TResult, TState> _) => throw new Exception();
 
 			// Act
@@ -56,7 +56,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_Runs_Ok_When_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			void ok<TResult, TState>(IOk<TResult, TState> _) { run = true; }
 
@@ -71,7 +71,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_DoesNot_Run_OkV_When_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			void okV<TResult, TState>(IOkV<TResult, TState> _) { run = true; }
 
@@ -86,7 +86,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_DoesNot_Run_Error_When_Ok()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var run = false;
 			void error<TResult, TState>(IError<TResult, TState> _) { run = true; }
 
@@ -146,7 +146,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_Runs_Error_When_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false).Error();
+			var chain = R.Chain.AddState(false).Error();
 			var run = false;
 			void error<TResult, TState>(IError<TResult, TState> _) { run = true; }
 
@@ -161,7 +161,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_DoesNot_Run_Ok_When_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false).Error();
+			var chain = R.Chain.AddState(false).Error();
 			var run = false;
 			void ok<TResult, TState>(IOk<TResult, TState> _) { run = true; }
 
@@ -176,7 +176,7 @@ namespace Tests.Jeebs.Result.Audit
 		public void AuditSwitch_DoesNot_Run_OkV_When_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false).Error();
+			var chain = R.Chain.AddState(false).Error();
 			var run = false;
 			void okV<TResult, TState>(IOkV<TResult, TState> _) { run = true; }
 

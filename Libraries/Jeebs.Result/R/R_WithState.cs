@@ -53,6 +53,24 @@ namespace Jeebs
 			Messages = new MessageList();
 		}
 
+		/// <inheritdoc/>
+		public IR<TResult, TNext> ChangeState<TNext>(TNext state) => this switch
+		{
+			IOkV<TResult, TState> okV => new OkV<TResult, TNext>(okV.Val, state) { Messages = Messages },
+			IOk<TResult, TState> _ => new Ok<TResult, TNext>(state) { Messages = Messages },
+			IError<TResult, TState> _ => new Error<TResult, TNext>(state) { Messages = Messages },
+			_ => throw new InvalidOperationException($"Unknown R<> subtype: '{GetType()}'.")
+		};
+
+		/// <inheritdoc/>
+		public IR<TResult> RemoveState() => this switch
+		{
+			IOkV<TResult, TState> okV => okV.RemoveState(),
+			IOk<TResult, TState> ok => ok.RemoveState(),
+			IError<TResult, TState> error => error.RemoveState(),
+			_ => throw new InvalidOperationException($"Unknown R<> subtype: '{GetType()}'.")
+		};
+
 		#region Private Methods
 
 		/// <summary>

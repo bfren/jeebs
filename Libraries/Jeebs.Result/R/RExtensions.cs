@@ -13,7 +13,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="state">State value</param>
-		public static async Task<IR<TResult, TState>> WithState<TResult, TState>(this Task<IR<TResult>> @this, TState state) => await @this switch
+		public static async Task<IR<TResult, TState>> AddState<TResult, TState>(this Task<IR<TResult>> @this, TState state) => await @this.ConfigureAwait(false) switch
 		{
 			IOkV<TResult> okV => new OkV<TResult, TState>(okV.Val, state) { Messages = okV.Messages },
 			IOk<TResult> ok => new Ok<TResult, TState>(state) { Messages = ok.Messages },

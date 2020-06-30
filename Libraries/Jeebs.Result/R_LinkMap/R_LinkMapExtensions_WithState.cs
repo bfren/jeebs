@@ -72,7 +72,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously and map to a new result type
-		/// <para>Func <paramref name="t"/> receives no input and returns a value of type <typeparamref name="TNext"/>, which is then wrapped in an <see cref="OkV{TNext, TState}"/> object</para>
+		/// <para>Func <paramref name="t"/> receives no input and returns a value of type <typeparamref name="TNext"/>, which is then wrapped in an <see cref="IOkV{TNext, TState}"/> object</para>
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.AsyncException"/> message</para>
 		/// </summary>
 		/// <typeparam name="TResult">Result value type</typeparam>
@@ -80,7 +80,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result>/param>
 		/// <param name="t">The task will be executed if the current object is an <see cref="IOk{TNext, TState}"/> result</param>
-		public static Task<IR<TNext, TState>> LinkMapAsync<TResult, TNext, TState>(this IR<TResult, TState> @this, Func<Task<TNext>> t) => LinkMapAsync(Task.Run(() => @this), t);
+		public static Task<IR<TNext, TState>> LinkMapAsync<TResult, TNext, TState>(this IR<TResult, TState> @this, Func<Task<TNext>> t) => LinkMapAsync(Task.FromResult(@this), t);
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously and map to a new result type
@@ -92,7 +92,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result>/param>
 		/// <param name="t">The task will be executed if the current object is an <see cref="IOk{TNext, TState}"/> result</param>
-		public static Task<IR<TNext, TState>> LinkMapAsync<TResult, TNext, TState>(this IR<TResult, TState> @this, Func<IOk<TResult, TState>, Task<IR<TNext, TState>>> t) => LinkMapAsync(Task.Run(() => @this), t);
+		public static Task<IR<TNext, TState>> LinkMapAsync<TResult, TNext, TState>(this IR<TResult, TState> @this, Func<IOk<TResult, TState>, Task<IR<TNext, TState>>> t) => LinkMapAsync(Task.FromResult(@this), t);
 
 		/// <summary>
 		/// Execute the next link in the chain asynchronously and map to a new result type
@@ -104,7 +104,7 @@ namespace Jeebs
 		/// <typeparam name="TState">State value type</typeparam>
 		/// <param name="this">Current result>/param>
 		/// <param name="t">The task will be executed if the current object is an <see cref="IOkV{TNext}"/> result</param>
-		public static Task<IR<TNext, TState>> LinkMapAsync<TResult, TNext, TState>(this IR<TResult, TState> @this, Func<IOkV<TResult, TState>, Task<IR<TNext, TState>>> t) => LinkMapAsync(Task.Run(() => @this), t);
+		public static Task<IR<TNext, TState>> LinkMapAsync<TResult, TNext, TState>(this IR<TResult, TState> @this, Func<IOkV<TResult, TState>, Task<IR<TNext, TState>>> t) => LinkMapAsync(Task.FromResult(@this), t);
 
 		#endregion
 	}

@@ -16,6 +16,18 @@ namespace Jeebs
 		/// </summary>
 		TState State { get; }
 
+		/// <summary>
+		/// Change state on the current result object.
+		/// </summary>
+		/// <typeparam name="TNext">Next state value type</typeparam>
+		/// <param name="state">State value</param>
+		IR<TResult, TNext> ChangeState<TNext>(TNext state);
+
+		/// <summary>
+		/// Remove state from the current result object.
+		/// </summary>
+		IR<TResult> RemoveState();
+
 		#region Link & LinkMap
 
 		/// <summary>

@@ -13,5 +13,8 @@ namespace Jeebs
 		public override bool Val => true;
 
 		internal Ok(TState state) : base(state) { }
+
+		/// <inheritdoc/>
+		new public IOk<TResult> RemoveState() => new Ok<TResult> { Messages = Messages };
 	}
 }

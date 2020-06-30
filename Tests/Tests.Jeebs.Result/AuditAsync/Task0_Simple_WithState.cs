@@ -14,7 +14,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_AuditAsync_Returns_Original_Object()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static async Task audit<TResult, TState>(IR<TResult, TState> _) { }
 
 			// Act
@@ -28,7 +28,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_Successful_AuditAsync_Writes_To_Log()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 
 			static async Task<IR<int, TState>> l0<TResult, TState>(IOk<TResult, TState> r) => r.OkV(18);
 			static async Task<IR<TResult, TState>> l1<TResult, TState>(IOkV<TResult, TState> r) => r.Error();
@@ -68,7 +68,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartSync_Unsuccessful_Audit_Captures_Exception()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static async Task audit<TResult, TState>(IR<TResult, TState> _) => throw new Exception();
 
 			// Act
@@ -83,7 +83,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_AuditAsync_Returns_Original_Object()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			static async Task audit<TResult, TState>(IR<TResult, TState> _) { }
 
 			// Act
@@ -97,7 +97,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_Successful_AuditAsync_Writes_To_Log()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 
 			static async Task<IR<int, TState>> l0<TResult, TState>(IOk<TResult, TState> r) => r.OkV(18);
 			static async Task<IR<TResult, TState>> l1<TResult, TState>(IOkV<TResult, TState> r) => r.Error();
@@ -137,7 +137,7 @@ namespace Tests.Jeebs.Result.AuditAsync
 		public async Task StartAsync_Unsuccessful_Audit_Captures_Exception()
 		{
 			// Arrange
-			var chain = R.ChainAsync.WithState(false);
+			var chain = R.ChainAsync.AddState(false);
 			static async Task audit<TResult, TState>(IR<TResult, TState> _) => throw new Exception();
 
 			// Act

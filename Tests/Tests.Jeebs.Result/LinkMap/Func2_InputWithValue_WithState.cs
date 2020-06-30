@@ -61,7 +61,7 @@ namespace Tests.Jeebs.Result.LinkMap
 		{
 			// Arrange
 			int value = 18;
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			static IR<string, bool> f0(IOkV<bool, bool> _) => throw new Exception("Something went wrong.");
 			IR<int, bool> f1(IOkV<string, bool> r) { value = 0; return r.OkV(value); }
 

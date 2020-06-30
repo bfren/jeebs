@@ -13,5 +13,8 @@ namespace Jeebs
 		public override bool Val => false;
 
 		internal Error(TState state) : base(state) { }
+
+		/// <inheritdoc cref="IR{TResult, TState}.RemoveState"/>
+		new public IError<TResult> RemoveState() => new Error<TResult> { Messages = Messages };
 	}
 }

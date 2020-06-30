@@ -14,7 +14,7 @@ namespace Tests.Jeebs.Result
 		public void Error_Adds_Messages_Params_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 			var m0 = new Jm.WithInt32(0);
 			var m1 = new Jm.WithString("1");
 
@@ -32,7 +32,7 @@ namespace Tests.Jeebs.Result
 		public void Error_Adds_Message_ByType_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 
 			// Act
 			var result = chain.Error<TestMessage>();
@@ -47,7 +47,7 @@ namespace Tests.Jeebs.Result
 		public void Error_Adds_Message_OfType_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			var chain = R.Chain.AddState(false);
 
 			// Act
 			var result = chain.Error(new TestMessage());
@@ -66,7 +66,8 @@ namespace Tests.Jeebs.Result
 		public void ErrorNew_Same_Type_Adds_Messages_Params_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			const int state = 1993;
+			var chain = R.Chain.AddState(state);
 			var m0 = new Jm.WithInt32(0);
 			var m1 = new Jm.WithString("1");
 
@@ -77,14 +78,16 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsAssignableFrom<IError<bool, bool>>(result);
+			Assert.IsAssignableFrom<IError<bool, int>>(result);
+			Assert.Equal(state, result.State);
 		}
 
 		[Fact]
 		public void ErrorNew_Same_Type_Adds_Message_ByType_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			const int state = 1993;
+			var chain = R.Chain.AddState(state);
 
 			// Act
 			var result = chain.ErrorNew<bool, TestMessage>();
@@ -92,14 +95,16 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsAssignableFrom<IError<bool, bool>>(result);
+			Assert.IsAssignableFrom<IError<bool, int>>(result);
+			Assert.Equal(state, result.State);
 		}
 
 		[Fact]
 		public void ErrorNew_Same_Type_Adds_Message_OfType_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			const int state = 1993;
+			var chain = R.Chain.AddState(state);
 
 			// Act
 			var result = chain.ErrorNew<bool>(new TestMessage());
@@ -107,7 +112,8 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsAssignableFrom<IError<bool, bool>>(result);
+			Assert.IsAssignableFrom<IError<bool, int>>(result);
+			Assert.Equal(state, result.State);
 		}
 
 		#endregion
@@ -118,7 +124,8 @@ namespace Tests.Jeebs.Result
 		public void ErrorNew_Different_Type_Adds_Messages_Params_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			const int state = 1993;
+			var chain = R.Chain.AddState(state);
 			var m0 = new Jm.WithInt32(0);
 			var m1 = new Jm.WithString("1");
 
@@ -129,14 +136,16 @@ namespace Tests.Jeebs.Result
 			Assert.Equal(2, result.Messages.Count);
 			Assert.True(result.Messages.Contains<Jm.WithInt32>());
 			Assert.True(result.Messages.Contains<Jm.WithString>());
-			Assert.IsAssignableFrom<IError<int, bool>>(result);
+			Assert.IsAssignableFrom<IError<int, int>>(result);
+			Assert.Equal(state, result.State);
 		}
 
 		[Fact]
 		public void ErrorNew_Different_Type_Adds_Message_ByType_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			const int state = 1993;
+			var chain = R.Chain.AddState(state);
 
 			// Act
 			var result = chain.ErrorNew<int, TestMessage>();
@@ -144,14 +153,16 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsAssignableFrom<IError<int, bool>>(result);
+			Assert.IsAssignableFrom<IError<int, int>>(result);
+			Assert.Equal(state, result.State);
 		}
 
 		[Fact]
 		public void ErrorNew_Different_Type_Adds_Message_OfType_And_Returns_Error()
 		{
 			// Arrange
-			var chain = R.Chain.WithState(false);
+			const int state = 1993;
+			var chain = R.Chain.AddState(state);
 
 			// Act
 			var result = chain.ErrorNew<int>(new TestMessage());
@@ -159,7 +170,8 @@ namespace Tests.Jeebs.Result
 			// Assert
 			Assert.Equal(1, result.Messages.Count);
 			Assert.True(result.Messages.Contains<TestMessage>());
-			Assert.IsAssignableFrom<IError<int, bool>>(result);
+			Assert.IsAssignableFrom<IError<int, int>>(result);
+			Assert.Equal(state, result.State);
 		}
 
 		#endregion

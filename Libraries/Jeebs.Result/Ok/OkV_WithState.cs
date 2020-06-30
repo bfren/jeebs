@@ -13,5 +13,8 @@ namespace Jeebs
 		new public TResult Val { get; }
 
 		internal OkV(TResult val, TState state) : base(state) => Val = val;
+
+		/// <inheritdoc/>
+		new public IOkV<TResult> RemoveState() => new OkV<TResult>(Val) { Messages = Messages };
 	}
 }
