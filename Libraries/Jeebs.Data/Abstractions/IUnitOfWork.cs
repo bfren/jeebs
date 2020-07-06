@@ -51,6 +51,11 @@ namespace Jeebs.Data
 		#region Logging & Failure
 
 		/// <summary>
+		/// Send a simple message to the debug log
+		/// </summary>
+		void LogDebug<T>(T message) where T : IMessage;
+
+		/// <summary>
 		/// Log a query
 		/// </summary>
 		/// <typeparam name="T">Parameter object type</typeparam>
@@ -61,48 +66,38 @@ namespace Jeebs.Data
 		void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text);
 
 		/// <summary>
-		/// Query failure -
+		/// General failure -
 		///	<para>	Rollback</para>
-		///	<para>	Log Error</para>
-		///	<para>	Return Failure Result</para>
+		///	<para>	Return Error Result</para>
 		/// </summary>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
-		IResult<bool> Fail(string error, params object[] args);
+		/// <typeparam name="T">Result value type</typeparam>
+		/// <typeparam name="TMessage">Message type</typeparam>
+		/// <param name="r">Result</param>
+		//Error<T> Fail<T, TMessage>(Ok<dynamic> r) where TMessage : IMessage, new();
 
 		/// <summary>
-		/// Query failure -
+		/// General failure -
 		///	<para>	Rollback</para>
 		///	<para>	Log Error</para>
-		///	<para>	Return Failure Result</para>
+		///	<para>	Return Error Result</para>
 		/// </summary>
+		/// <typeparam name="T">Result value type</typeparam>
+		/// <typeparam name="TMessage">Message type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="ex">Exception</param>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
-		IResult<bool> Fail(Exception ex, string error, params object[] args);
+		//Error<T> Fail<T, TMessage>(Ok<dynamic> r, Exception ex) where TMessage : IMessage, new();
 
 		/// <summary>
 		/// Query failure -
 		///	<para>	Rollback</para>
 		///	<para>	Log Error</para>
-		///	<para>	Return Failure Result</para>
+		///	<para>	Return Error Result</para>
 		/// </summary>
-		/// <typeparam name="T">Return value type</typeparam>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
-		IResult<T> Fail<T>(string error, params object[] args);
-
-		/// <summary>
-		/// Query failure -
-		///	<para>	Rollback</para>
-		///	<para>	Log Error</para>
-		///	<para>	Return Failure Result</para>
-		/// </summary>
-		/// <typeparam name="T">Return value type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="ex">Exception</param>
-		/// <param name="error">Error message</param>
-		/// <param name="args">Error message arguments</param>
-		IResult<T> Fail<T>(Exception ex, string error, params object[] args);
+		/// <param name="query">Query being executed</param>
+		/// <param name="parameters">Query parameters</param>
+		//Error<T> Fail<T>(Ok<dynamic> r, Exception ex, string query, object? parameters = null);
 
 		#endregion
 
@@ -111,36 +106,40 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Perform a query, returning a dynamic object
 		/// </summary>
+		/// <param name="r">Result</param>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IResult<IEnumerable<dynamic>> Query(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<IEnumerable<dynamic>> Query(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
 		/// </summary>
+		/// <param name="r">Result</param>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IResult<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Run a query against the database
 		/// </summary>
 		/// <typeparam name="T">Object type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IResult<IEnumerable<T>> Query<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<IEnumerable<T>> Query<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Run a query against the database
 		/// </summary>
 		/// <typeparam name="T">Object type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		#endregion
 
@@ -149,18 +148,20 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
 		/// </summary>
+		/// <param name="r">Result</param>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IResult<T> Single<T>(string query, object parameters, CommandType commandType = CommandType.Text);
+		IR<T> Single<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
 		/// </summary>
+		/// <param name="r">Result</param>
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IResult<T>> SingleAsync<T>(string query, object parameters, CommandType commandType = CommandType.Text);
+		Task<IR<T>> SingleAsync<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text);
 
 		#endregion
 
@@ -169,38 +170,42 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Execute a query on the database
 		/// </summary>
+		/// <param name="r">Result</param>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		IResult<int> Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<int> Execute(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Execute a query on the database
 		/// </summary>
+		/// <param name="r">Result</param>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		Task<IResult<int>> ExecuteAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<int>> ExecuteAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
 		/// </summary>
 		/// <typeparam name="T">Return type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IResult<T> ExecuteScalar<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<T> ExecuteScalar<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
 		/// </summary>
 		/// <typeparam name="T">Return type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<T>> ExecuteScalarAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		#endregion
 	}

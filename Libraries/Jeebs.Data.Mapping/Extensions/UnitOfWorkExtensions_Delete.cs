@@ -16,11 +16,12 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="poco">Entity to delete</param>
-		public static IResult<bool> Delete<T>(this IUnitOfWork w, T poco)
+		/// <param name="r">Result object - the value should be the poco to delete</param>
+		public static IR<bool> Delete<T>(this IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
 		{
-			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
+			// Get poco
+			var poco = r.Val;
 
 			try
 			{
@@ -28,18 +29,24 @@ namespace Jeebs.Data
 				var query = w.Adapter.DeleteSingle<T>();
 				w.LogQuery(nameof(Delete), query, poco);
 
-				// Execute and return
+				// Execute
 				var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
 				if (rowsAffected == 1)
 				{
-					return Result.Success();
+					// Add debug and result messages
+					var message = new Jm.Data.Retrieve(typeof(T), poco.Id);
+					w.LogDebug(message);
+					r.Messages.Add(message);
+
+					// Return
+					return r.OkSimple();
 				}
 
-				return w.Fail(error);
+				return r.ErrorSimple(new Jm.Data.DeleteError(typeof(T), poco.Id));
 			}
 			catch (Exception ex)
 			{
-				return w.Fail(ex, error);
+				return r.ErrorSimple(new Jm.Data.DeleteException(ex, typeof(T), poco.Id));
 			}
 		}
 
@@ -48,11 +55,12 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="poco">Entity to delete</param>
-		public static async Task<IResult<bool>> DeleteAsync<T>(this IUnitOfWork w, T poco)
+		/// <param name="r">Result object - the value should be the poco to delete</param>
+		public static async Task<IR<bool>> DeleteAsync<T>(this IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
 		{
-			var error = $"Unable to delete {typeof(T)} '{poco.Id}'.";
+			// Get poco
+			var poco = r.Val;
 
 			try
 			{
@@ -61,17 +69,23 @@ namespace Jeebs.Data
 				w.LogQuery(nameof(DeleteAsync), query, poco);
 
 				// Execute and return
-				var rowsAffected = await w.Connection.ExecuteAsync(query, param: poco, transaction: w.Transaction);
+				var rowsAffected = await w.Connection.ExecuteAsync(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);
 				if (rowsAffected == 1)
 				{
-					return Result.Success();
+					// Add debug and result messages
+					var message = new Jm.Data.Retrieve(typeof(T), poco.Id);
+					w.LogDebug(message);
+					r.Messages.Add(message);
+
+					// Return
+					return r.OkSimple();
 				}
 
-				return w.Fail(error);
+				return r.ErrorSimple(new Jm.Data.DeleteError(typeof(T), poco.Id));
 			}
 			catch (Exception ex)
 			{
-				return w.Fail(ex, error);
+				return r.ErrorSimple(new Jm.Data.DeleteException(ex, typeof(T), poco.Id));
 			}
 		}
 	}

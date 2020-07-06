@@ -43,7 +43,7 @@ namespace Jeebs.WordPress
 			using var w = db.GetQueryWrapper();
 
 			// Get terms
-			var result = await w.QueryTaxonomyAsync<Term>(opt => opt.Id = termId);
+			var result = await w.QueryTaxonomyAsync<Term>(opt => opt.Id = termId).ConfigureAwait(false);
 			if (result.Err is IErrorList)
 			{
 				return Result.Failure(result.Err);

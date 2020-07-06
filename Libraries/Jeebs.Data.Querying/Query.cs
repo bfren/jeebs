@@ -31,7 +31,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<long>> GetCountAsync()
+		public async Task<IR<long>> GetCountAsync(IOk<dynamic> r)
 		{
 			// Store original SELECT
 			var originalSelect = parts.Select;
@@ -43,7 +43,7 @@ namespace Jeebs.Data
 			var countQuery = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute
-			var count = await unitOfWork.ExecuteScalarAsync<long>(countQuery, parts.Parameters);
+			var count = await unitOfWork.ExecuteScalarAsync<long>(r, countQuery, parts.Parameters);
 
 			// Restore SELECT and return
 			parts.Select = originalSelect;
@@ -51,42 +51,51 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<IEnumerable<T>>> ExecuteQueryAsync()
+		public async Task<IR<IEnumerable<T>>> ExecuteQueryAsync(IOk<dynamic> r)
 		{
 			// Get query
 			var query = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute and return
-			return await unitOfWork.QueryAsync<T>(query, parts.Parameters);
+			return await unitOfWork.QueryAsync<T>(r, query, parts.Parameters);
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<IPagedList<T>>> ExecuteQueryAsync(long page)
+		public async Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk<dynamic> r, long page)
 		{
 			// Get the count
-			var count = await GetCountAsync();
-			if (count.Err is IErrorList)
-			{
-				return Result.Failure<IPagedList<T>>(count.Err);
-			}
+			async Task<IR<long>> getCount(IOk<dynamic> r) => await GetCountAsync(r);
 
 			// Get paging values
-			var values = new PagingValues(count.Val, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
-
-			// Set the OFFSET and LIMIT values
-			parts.Offset = (values.Page - 1) * values.ItemsPer;
-			parts.Limit = values.ItemsPer;
-
-			// Get the items
-			var items = await ExecuteQueryAsync();
-			if (items.Err is IErrorList)
+			async Task getPagingValues(IOkV<long> r)
 			{
-				return Result.Failure<IPagedList<T>>(items.Err);
+				// Create values object
+				var values = new PagingValues(r.Val, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
+
+				// Set the OFFSET and LIMIT values
+				parts.Offset = (values.Page - 1) * values.ItemsPer;
+				parts.Limit = values.ItemsPer;
 			}
 
-			// Add the items to the list and return success
-			var list = new PagedList<T>(items.Val);
-			return Result.Success<IPagedList<T>>(list);
+			// Get the items
+			async Task<IR<IEnumerable<T>>> getItems(IOkV<long> r)
+			{
+				return await ExecuteQueryAsync(r.OkNew<dynamic>()).ConfigureAwait(false);
+			}
+
+			// Convert to a paged list
+			async Task<IR<PagedList<T>>> getPagedList(IOkV<IEnumerable<T>> r)
+			{
+				var list = new PagedList<T>(r.Val);
+				return r.OkV(list);
+			}
+
+			// Run chain
+			return await r
+				.LinkMapAsync(getCount)
+				.LinkAsync(getPagingValues)
+				.LinkMapAsync(getItems)
+				.LinkMapAsync(getPagedList);
 		}
 	}
 }

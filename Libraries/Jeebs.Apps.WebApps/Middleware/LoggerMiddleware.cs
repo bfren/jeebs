@@ -52,7 +52,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 			try
 			{
 				// Call the rest of the pipeline
-				await next(context);
+				await next(context).ConfigureAwait(false);
 				stopwatch.Stop();
 
 				// If the status is HTTP 200 (success) return

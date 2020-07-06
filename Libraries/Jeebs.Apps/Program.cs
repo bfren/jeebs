@@ -31,7 +31,7 @@ namespace Jeebs.Apps
 			// Run default
 			if (run is null)
 			{
-				await host.RunAsync();
+				await host.RunAsync().ConfigureAwait(false);
 			}
 
 			// Run custom

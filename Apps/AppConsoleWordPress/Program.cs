@@ -31,9 +31,9 @@ namespace AppConsoleWordPress
 			var usa = provider.GetService<WpUsa>();
 
 			// Perform tests
-			await TermsAsync("BCG", bcg.Db);
-			await TermsAsync("USA", usa.Db);
-			await InsertOptionAsync(bcg.Db);
+			await TermsAsync("BCG", bcg.Db).ConfigureAwait(false);
+			await TermsAsync("USA", usa.Db).ConfigureAwait(false);
+			await InsertOptionAsync(bcg.Db).ConfigureAwait(false);
 			await SearchSermonsAsync("holiness", bcg.Db, opt =>
 			{
 				opt.SearchText = "holiness";
@@ -41,7 +41,7 @@ namespace AppConsoleWordPress
 				opt.Type = WpBcg.PostTypes.Sermon;
 				opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 				opt.Limit = 4;
-			});
+			}).ConfigureAwait(false);
 			await SearchSermonsAsync("jesus", bcg.Db, opt =>
 			{
 				opt.Type = WpBcg.PostTypes.Sermon;
@@ -49,17 +49,17 @@ namespace AppConsoleWordPress
 				opt.SearchFields = SearchPostFields.Title;
 				opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424) };
 				opt.Limit = 5;
-			});
-			await FetchMeta(bcg.Db);
-			await FetchCustomFields(bcg.Db);
-			await FetchTaxonomies(bcg.Db);
-			await ApplyContentFilters(bcg.Db);
+			}).ConfigureAwait(false);
+			await FetchMeta(bcg.Db).ConfigureAwait(false);
+			await FetchCustomFields(bcg.Db).ConfigureAwait(false);
+			await FetchTaxonomies(bcg.Db).ConfigureAwait(false);
+			await ApplyContentFilters(bcg.Db).ConfigureAwait(false);
 
 			// End
 			Console.WriteLine();
 			Console.WriteLine("Complete.");
 			Console.Read();
-		});
+		}).ConfigureAwait(false);
 
 		/// <summary>
 		/// Select Terms
@@ -117,7 +117,7 @@ namespace AppConsoleWordPress
 
 			using var q = bcg.GetQueryWrapper();
 
-			var query = await q.QueryPostsAsync<SermonModel>(modify: opt);
+			var query = await q.QueryPostsAsync<SermonModel>(modify: opt).ConfigureAwait(false);
 
 			Console.WriteLine(query.Err is IErrorList
 				? $"{query.Err}"
@@ -141,7 +141,7 @@ namespace AppConsoleWordPress
 
 			using var w = db.GetQueryWrapper();
 
-			var result = await w.QueryPostsAsync<PostModel>(modify: opt => opt.Limit = 3);
+			var result = await w.QueryPostsAsync<PostModel>(modify: opt => opt.Limit = 3).ConfigureAwait(false);
 			if (result.Err is IErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts");
@@ -178,7 +178,7 @@ namespace AppConsoleWordPress
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
 					opt.Limit = 10;
-				});
+				}).ConfigureAwait(false);
 
 				if (query.Err is IErrorList sermonsErr)
 				{
@@ -223,7 +223,7 @@ namespace AppConsoleWordPress
 					opt.Type = WpBcg.PostTypes.Sermon;
 					opt.SortRandom = true;
 					opt.Limit = 10;
-				});
+				}).ConfigureAwait(false);
 
 				if (query.Err is IErrorList sermonsErr)
 				{
@@ -267,7 +267,7 @@ namespace AppConsoleWordPress
 
 			using var w = db.GetQueryWrapper();
 
-			var result = await w.QueryPostsAsync<PostModelWithContent>(modify: opt => opt.Limit = 3, filters: GenerateExcerpt.Create());
+			var result = await w.QueryPostsAsync<PostModelWithContent>(modify: opt => opt.Limit = 3, filters: GenerateExcerpt.Create()).ConfigureAwait(false);
 			if (result.Err is IErrorList postsErr)
 			{
 				Console.WriteLine("Error fetching posts with content filter");

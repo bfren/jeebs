@@ -39,7 +39,7 @@ namespace AppConsole
 			{
 				Console.WriteLine(r.Err is IErrorList e ? $"r{num} failed : {e}" : $"r{num} value : Text = '{r.Val.Text}', Num = {r.Val.Num}");
 			}
-		});
+		}).ConfigureAwait(false);
 	}
 
 	internal class Test

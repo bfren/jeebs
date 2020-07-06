@@ -19,7 +19,7 @@ namespace AppWeb
 
 			app.Run(async ctx =>
 			{
-				await ctx.Response.WriteAsync("Hello, world!");
+				await ctx.Response.WriteAsync("Hello, world!").ConfigureAwait(false);
 			});
 		}
 	}

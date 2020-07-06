@@ -85,7 +85,7 @@ namespace Jeebs.Mvc.Models
 				try
 				{
 					// Load the URL and ensure it is successful
-					var response = await http.CreateClient().GetAsync(uri);
+					var response = await http.CreateClient().GetAsync(uri).ConfigureAwait(false);
 					response.EnsureSuccessStatusCode();
 
 					// Successful
@@ -103,7 +103,7 @@ namespace Jeebs.Mvc.Models
 				if (item.Children is List<MenuItem> children)
 				{
 					Write("Loading children..<br/>");
-					await LoadItemsAsync(http, url, children);
+					await LoadItemsAsync(http, url, children).ConfigureAwait(false);
 					Write(".. done<br/>");
 				}
 			}

@@ -16,23 +16,33 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="id">Entity ID</param>
-		public static IResult<T> Single<T>(this IUnitOfWork w, int id)
+		/// <param name="r">Result object - the value should be the entity ID</param>
+		public static IR<T> Single<T>(this IUnitOfWork w, IOkV<long> r)
 			where T : class, IEntity
 		{
+			// Get id
+			var id = r.Val;
+
 			try
 			{
 				// Build query
 				var query = w.Adapter.RetrieveSingleById<T>();
 				w.LogQuery(nameof(Single), query, new { id });
 
-				// Execute and return
+				// Execute
 				var result = w.Connection.QuerySingle<T>(query, param: new { id }, transaction: w.Transaction);
-				return Result.Success(result);
+
+				// Add debug and result messages
+				var message = new Jm.Data.Retrieve(typeof(T), id);
+				w.LogDebug(message);
+				r.Messages.Add(message);
+
+				// Return
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return w.Fail<T>(ex, $"An error occured while retrieving {typeof(T)} with ID '{id}'.");
+				return r.ErrorNew<T>(new Jm.Data.RetrieveException(ex, typeof(T), id));
 			}
 		}
 
@@ -41,10 +51,13 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="id">Entity ID</param>
-		private static async Task<IResult<T>> SingleAsync<T>(this IUnitOfWork w, int id)
+		/// <param name="r">Result object - the value should be the entity ID</param>
+		private static async Task<IR<T>> SingleAsync<T>(this IUnitOfWork w, IOkV<long> r)
 			where T : class, IEntity
 		{
+			// Get id
+			var id = r.Val;
+
 			try
 			{
 				// Build query
@@ -52,12 +65,19 @@ namespace Jeebs.Data
 				w.LogQuery(nameof(SingleAsync), query, new { id });
 
 				// Execute and return
-				var result = await w.Connection.QuerySingleAsync<T>(query, param: new { id }, transaction: w.Transaction);
-				return Result.Success(result);
+				var result = await w.Connection.QuerySingleAsync<T>(query, param: new { id }, transaction: w.Transaction).ConfigureAwait(false);
+
+				// Add debug and result messages
+				var message = new Jm.Data.Retrieve(typeof(T), id);
+				w.LogDebug(message);
+				r.Messages.Add(message);
+
+				// Return
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return w.Fail<T>(ex, $"An error occured while retrieving {typeof(T)} with ID '{id}'.");
+				return r.ErrorNew<T>(new Jm.Data.RetrieveException(ex, typeof(T), id));
 			}
 		}
 	}

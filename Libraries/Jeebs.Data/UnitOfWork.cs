@@ -83,63 +83,30 @@ namespace Jeebs.Data
 		#region Logging & Failure
 
 		/// <inheritdoc/>
+		public void LogDebug<T>(T message) where T : IMessage => log.Debug(message.ToString());
+
+		/// <inheritdoc/>
 		public void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
 		{
-			log.Debug("Method: UnitOfWork.{0}()", method);
-			log.Debug("Query [{0}]: {1}", commandType, query);
-			log.Debug("Parameters: {0}", Json.Serialise(parameters));
+			var sb = new StringBuilder();
+			sb.AppendLine($"Method: UnitOfWork.{method}()");
+			sb.AppendLine($"Query [{commandType}]: {query}");
+			sb.AppendLine($"Parameters: {Json.Serialise(parameters)}");
+			log.Debug(sb.ToString());
 		}
 
 		/// <inheritdoc/>
-		public IResult<bool> Fail(string error, params object[] args)
+		private IError<T> Fail<T>(IOk<dynamic> r, Exception ex, string query, object? parameters = null)
 		{
 			// Rollback transaction
 			Rollback();
 
 			// Log error
-			log.Error(error, args);
+			var message = new Jm.Data.QueryException(ex, query, parameters);
+			log.Error(ex, message.ToString());
 
-			// Return failure object
-			return Result.Failure(error);
-		}
-
-		/// <inheritdoc/>
-		public IResult<bool> Fail(Exception ex, string error, params object[] args)
-		{
-			// Rollback transaction
-			Rollback();
-
-			// Log exception
-			log.Error(ex, error, args);
-
-			// Return failure object
-			return Result.Failure(error);
-		}
-
-		/// <inheritdoc/>
-		public IResult<T> Fail<T>(string error, params object[] args)
-		{
-			// Rollback transaction
-			Rollback();
-
-			// Log error
-			log.Error(error, args);
-
-			// Return failure object
-			return Result.Failure<T>(error);
-		}
-
-		/// <inheritdoc/>
-		public IResult<T> Fail<T>(Exception ex, string error, params object[] args)
-		{
-			// Rollback transaction
-			Rollback();
-
-			// Log exception
-			log.Error(ex, error, args);
-
-			// Return failure object
-			return Result.Failure<T>(error);
+			// Return error
+			return r.ErrorNew<T>(message);
 		}
 
 		#endregion
@@ -147,86 +114,74 @@ namespace Jeebs.Data
 		#region R: Query
 
 		/// <inheritdoc/>
-		public IResult<IEnumerable<dynamic>> Query(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<dynamic>> Query(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Query), query, parameters, commandType);
+				LogQuery(nameof(Query), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = Connection.Query<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(result);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<dynamic>>(
-					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					"An error occurred while executing the query."
-				);
+				return Fail<IEnumerable<dynamic>>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(QueryAsync), query, parameters, commandType);
+				LogQuery(nameof(QueryAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
-				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(result);
+				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<dynamic>>(
-					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					"An error occurred while executing the query."
-				);
+				return Fail<IEnumerable<dynamic>>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IResult<IEnumerable<T>> Query<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<T>> Query<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Query), query, parameters, commandType);
+				LogQuery(nameof(Query), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = Connection.Query<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(result);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<T>>(
-					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					"An error occurred while executing the query."
-				);
+				return Fail<IEnumerable<T>>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(QueryAsync), query, parameters, commandType);
+				LogQuery(nameof(QueryAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
-				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(result);
+				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<T>>(
-					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					"An error occurred while executing the query."
-				);
+				return Fail<IEnumerable<T>>(r, ex, query, parameters);
 			}
 		}
 
@@ -235,7 +190,7 @@ namespace Jeebs.Data
 		#region R: Single
 
 		/// <inheritdoc/>
-		public IResult<T> Single<T>(string query, object parameters, CommandType commandType = CommandType.Text)
+		public IR<T> Single<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -244,19 +199,16 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(result);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(
-					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					$"An error occurred while retrieving {typeof(T)}."
-				);
+				return Fail<T>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<T>> SingleAsync<T>(string query, object parameters, CommandType commandType = CommandType.Text)
+		public async Task<IR<T>> SingleAsync<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -264,15 +216,12 @@ namespace Jeebs.Data
 				LogQuery(nameof(SingleAsync), query, parameters, commandType);
 
 				// Execute and return
-				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(result);
+				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(
-					new Jx.Data.UnitOfWorkException(query, parameters, ex),
-					$"An error occurred while retrieving {typeof(T)}."
-				);
+				return Fail<T>(r, ex, query, parameters);
 			}
 		}
 
@@ -281,74 +230,74 @@ namespace Jeebs.Data
 		#region Execute
 
 		/// <inheritdoc/>
-		public IResult<int> Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<int> Execute(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(Execute), query, parameters, commandType);
+				LogQuery(nameof(Execute), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var affectedRows = Connection.Execute(query, param: parameters, transaction: Transaction, commandType: commandType);
-				return Result.Success(affectedRows);
+				return r.OkV(affectedRows);
 			}
 			catch (Exception ex)
 			{
-				return Fail<int>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
+				return Fail<int>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<int>> ExecuteAsync(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<int>> ExecuteAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteAsync), query, parameters, commandType);
+				LogQuery(nameof(ExecuteAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
-				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: Transaction);
-				return Result.Success(affectedRows);
+				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: Transaction).ConfigureAwait(false);
+				return r.OkV(affectedRows);
 			}
 			catch (Exception ex)
 			{
-				return Fail<int>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
+				return Fail<int>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IResult<T> ExecuteScalar<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<T> ExecuteScalar<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteScalar), query, parameters, commandType);
+				LogQuery(nameof(ExecuteScalar), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: Transaction);
-				return Result.Success(result);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
+				return Fail<T>(r, ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IResult<T>> ExecuteScalarAsync<T>(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteScalarAsync), query, parameters, commandType);
+				LogQuery(nameof(ExecuteScalarAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
-				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: Transaction);
-				return Result.Success(result);
+				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: Transaction).ConfigureAwait(false);
+				return r.OkV(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(new Jx.Data.UnitOfWorkException(query, parameters, ex), "Error executing query.");
+				return Fail<T>(r, ex, query, parameters);
 			}
 		}
 

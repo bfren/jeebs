@@ -26,7 +26,7 @@ namespace Jeebs.WordPress
 				.GetQuery();
 
 			// Execute query
-			var results = await query.ExecuteQueryAsync();
+			var results = await query.ExecuteQueryAsync().ConfigureAwait(false);
 			if (results.Err is IErrorList)
 			{
 				return Result.Failure<List<T>>(results.Err);
@@ -60,7 +60,7 @@ namespace Jeebs.WordPress
 				{
 					opt.CountAtLeast = null;
 				}
-			});
+			}).ConfigureAwait(false);
 		}
 	}
 }

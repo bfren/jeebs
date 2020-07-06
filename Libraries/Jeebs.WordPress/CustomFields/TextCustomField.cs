@@ -32,15 +32,15 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return await Result.FailureAsync($"Key not found in meta dictionary: '{Key}'.");
+					return await Result.FailureAsync($"Key not found in meta dictionary: '{Key}'.").ConfigureAwait(false);
 				}
 
-				return await Result.SuccessAsync();
+				return await Result.SuccessAsync().ConfigureAwait(false);
 			}
 
 			// Set value from met and return success
 			ValueObj = ValueStr = meta[Key];
-			return await Result.SuccessAsync();
+			return await Result.SuccessAsync().ConfigureAwait(false);
 		}
 	}
 }

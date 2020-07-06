@@ -30,7 +30,7 @@ namespace Jeebs.WordPress
 			var query = GetQuery<T>(modify);
 
 			// Execute query
-			var results = await query.ExecuteQueryAsync();
+			var results = await query.ExecuteQueryAsync().ConfigureAwait(false);
 			if (results.Err is IErrorList)
 			{
 				return Result.Failure<List<T>>(results.Err);
@@ -45,7 +45,7 @@ namespace Jeebs.WordPress
 			var posts = results.Val.ToList();
 
 			// Process posts
-			return await Process<List<T>, T>(posts, filters);
+			return await Process<List<T>, T>(posts, filters).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace Jeebs.WordPress
 			var query = GetQuery<T>(modify);
 
 			// Execute query
-			var results = await query.ExecuteQueryAsync(page);
+			var results = await query.ExecuteQueryAsync(page).ConfigureAwait(false);
 			if (results.Err is IErrorList)
 			{
 				return Result.Failure<PagedList<T>>(results.Err);
@@ -81,7 +81,7 @@ namespace Jeebs.WordPress
 			var posts = new PagedList<T>(results.Val);
 
 			// Process posts
-			return await Process<PagedList<T>, T>(posts, filters);
+			return await Process<PagedList<T>, T>(posts, filters).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -122,7 +122,7 @@ namespace Jeebs.WordPress
 				var meta = new PropertyInfo<TModel, MetaDictionary>(metaInfo);
 
 				// Add meta
-				var addMetaResult = await AddMetaToPostsAsync(posts, meta);
+				var addMetaResult = await AddMetaToPostsAsync(posts, meta).ConfigureAwait(false);
 				if (addMetaResult.Err is IErrorList)
 				{
 					return Fail(addMetaResult.Err);
@@ -133,7 +133,7 @@ namespace Jeebs.WordPress
 				if (customFields.Count > 0)
 				{
 					// Add custom fields
-					var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta, customFields);
+					var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta, customFields).ConfigureAwait(false);
 					if (addCustomFieldsResult.Err is IErrorList)
 					{
 						return Fail(addCustomFieldsResult.Err);
@@ -152,7 +152,7 @@ namespace Jeebs.WordPress
 			if (termLists.Count > 0)
 			{
 				// Add taxonomies
-				var addTaxonomiesResult = await AddTaxonomiesToPostsAsync(posts, termLists);
+				var addTaxonomiesResult = await AddTaxonomiesToPostsAsync(posts, termLists).ConfigureAwait(false);
 				if (addTaxonomiesResult.Err is IErrorList)
 				{
 					return Fail(addTaxonomiesResult.Err);
@@ -228,7 +228,7 @@ namespace Jeebs.WordPress
 				.GetQuery();
 
 			// Get meta
-			var metaResult = await query.ExecuteQueryAsync();
+			var metaResult = await query.ExecuteQueryAsync().ConfigureAwait(false);
 			if (metaResult.Err is IErrorList)
 			{
 				return Result.Failure(metaResult.Err);
@@ -288,7 +288,7 @@ namespace Jeebs.WordPress
 					var customField = getCustomField(post, info);
 
 					// Hydrate the field
-					var result = await customField.HydrateAsync(db, unitOfWork, metaDictionary);
+					var result = await customField.HydrateAsync(db, unitOfWork, metaDictionary).ConfigureAwait(false);
 					if (result.Err is IErrorList err && customField.IsRequired)
 					{
 						return Result.Failure(err);
@@ -354,7 +354,7 @@ namespace Jeebs.WordPress
 				.GetQuery();
 
 			// Get terms
-			var termsResult = await query.ExecuteQueryAsync();
+			var termsResult = await query.ExecuteQueryAsync().ConfigureAwait(false);
 			if (termsResult.Err is IErrorList)
 			{
 				return Result.Failure(termsResult.Err);

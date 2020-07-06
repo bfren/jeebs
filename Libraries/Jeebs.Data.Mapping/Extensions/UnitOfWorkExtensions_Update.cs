@@ -20,20 +20,37 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="poco">Entity object</param>
-		public static IResult<bool> Update<T>(this IUnitOfWork w, T poco)
+		/// <param name="r">Result</param>
+		public static IR<bool> Update<T>(this IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
 		{
-			lock (_)
+			try
 			{
-				if (poco is IEntityWithVersion pocoWithVersion)
+				lock (_)
 				{
-					return UpdateWithVersion(w, pocoWithVersion);
+					// Perform the update
+					var result = r.Val switch
+					{
+						IEntityWithVersion e => UpdateWithVersion(w, r.OkV(e)),
+						_ => UpdateWithoutVersion(w, r)
+					};
+
+					// Add debug and result messages
+					var message = new Jm.Data.Update(typeof(T), r.Val.Id);
+					w.LogDebug(message);
+					result.Messages.Add(message);
+
+					// Return result
+					return result;
 				}
-				else
-				{
-					return UpdateWithoutVersion(w, poco);
-				}
+			}
+			catch (Exception ex)
+			{
+				return r.ErrorSimple(new Jm.Data.UpdateException(ex, typeof(T), r.Val.Id));
+			}
+			finally
+			{
+				w.Rollback();
 			}
 		}
 
@@ -42,33 +59,25 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="poco">Object</param>
-		private static IResult<bool> UpdateWithVersion<T>(IUnitOfWork w, T poco)
+		/// <param name="r">Result</param>
+		private static IR<bool> UpdateWithVersion<T>(IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntityWithVersion
 		{
-			var currentVersion = poco.Version;
-			var error = $"Unable to update {typeof(T)} '{poco.Id}'.";
+			var poco = r.Val;
 
-			try
+			// Build query and increase the version number
+			var query = w.Adapter.UpdateSingle<T>();
+			poco.Version++;
+			w.LogQuery(nameof(UpdateWithVersion), query, poco);
+
+			// Execute and return
+			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
+			if (rowsAffected == 1)
 			{
-				// Build query and increase the version number
-				var query = w.Adapter.UpdateSingle<T>();
-				poco.Version++;
-				w.LogQuery(nameof(UpdateWithVersion), query, poco);
-
-				// Execute and return
-				var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
-				if (rowsAffected == 1)
-				{
-					return Result.Success();
-				}
-
-				return w.Fail(error);
+				return r.OkSimple();
 			}
-			catch (Exception ex)
-			{
-				return w.Fail(ex, error);
-			}
+
+			return r.ErrorSimple(new Jm.Data.UpdateError(typeof(T), poco.Id));
 		}
 
 		/// <summary>
@@ -76,31 +85,24 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="poco">Object</param>
-		private static IResult<bool> UpdateWithoutVersion<T>(IUnitOfWork w, T poco)
+		/// <param name="r">Result</param>
+		private static IR<bool> UpdateWithoutVersion<T>(IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
 		{
-			var error = $"Unable to update {typeof(T)} '{poco.Id}'.";
+			var poco = r.Val;
 
-			try
+			// Build query
+			var query = w.Adapter.UpdateSingle<T>();
+			w.LogQuery(nameof(UpdateWithoutVersion), query, poco);
+
+			// Execute and return
+			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
+			if (rowsAffected == 1)
 			{
-				// Build query
-				var query = w.Adapter.UpdateSingle<T>();
-				w.LogQuery(nameof(UpdateWithoutVersion), query, poco);
-
-				// Execute and return
-				var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
-				if (rowsAffected == 1)
-				{
-					return Result.Success();
-				}
-
-				return w.Fail(error);
+				return r.OkSimple();
 			}
-			catch (Exception ex)
-			{
-				return w.Fail(ex, error);
-			}
+
+			return r.ErrorSimple(new Jm.Data.UpdateError(typeof(T), poco.Id));
 		}
 	}
 }

@@ -85,7 +85,7 @@ namespace Jeebs.Util
 
 			public int Bar { get; set; }
 
-			public string Empty { get; set; } = string.Empty;
+			public string? Empty { get; set; }
 		}
 
 		public class TestComparer : IEqualityComparer<Test>

@@ -40,39 +40,37 @@ namespace Jeebs.Mvc
 		/// Do something, process the result and return errors if necessary, or perform the success function
 		/// </summary>
 		/// <typeparam name="T">Result type</typeparam>
-		/// <param name="result">The result of some action</param>
+		/// <param name="r">The result of some action</param>
 		/// <param name="success">Function to run when the result is successful</param>
-		protected IActionResult ProcessResult<T>(IResult<T> result, Func<T, IActionResult> success)
+		protected IActionResult ProcessResult<T>(IR<T> r, Func<T, IActionResult> success) => r switch
 		{
-			if(result.Err is IErrorList err)
-			{
-				if(err.NotFound)
-				{
-					return NotFound();
-				}
+			IOkV<T> okV => success(okV.Val),
+			IError<T> error => HandleError(error),
+			{ } other => HandleError(other.Error<Jm.Mvc.Controller_ProcessResult_Unknown_IR>())
+		};
 
-				Log.Warning("Error while processing controller action: {0}", err);
-				return RedirectToError();
+		/// <inheritdoc cref="ProcessResult{T}(IR{T}, Func{T, IActionResult})"/>
+		protected async Task<IActionResult> ProcessResultAsync<T>(IR<T> r, Func<T, Task<IActionResult>> success) => r switch
+		{
+			IOkV<T> okV => await success(okV.Val).ConfigureAwait(false),
+			IError<T> error => HandleError(error),
+			{ } other => HandleError(other.Error<Jm.Mvc.Controller_ProcessResult_Unknown_IR>())
+		};
+
+		/// <summary>
+		/// Handle a process error
+		/// </summary>
+		/// <typeparam name="T">Result type</typeparam>
+		/// <param name="error">Error result</param>
+		private IActionResult HandleError<T>(IError<T> error)
+		{
+			if (error.Messages.Contains<Jm.NotFound>())
+			{
+				return NotFound();
 			}
 
-			return success(result.Val);
-		}
-
-		/// <inheritdoc cref="ProcessResult{T}(IResult{T}, Func{T, IActionResult})"/>
-		protected async Task<IActionResult> ProcessResultAsync<T>(IResult<T> result, Func<T, Task<IActionResult>> success)
-		{
-			if(result.Err is IErrorList err)
-			{
-				if(err.NotFound)
-				{
-					return NotFound();
-				}
-
-				Log.Warning("Error while processing controller action: {0}", err);
-				return RedirectToError();
-			}
-
-			return await success(result.Val);
+			Log.Warning("Error while processing controller action: {0}", error.Messages);
+			return RedirectToError();
 		}
 	}
 }

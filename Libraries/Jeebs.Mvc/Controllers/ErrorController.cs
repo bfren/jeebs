@@ -32,7 +32,7 @@ namespace Jeebs.Mvc
 		/// Default error view
 		/// </summary>
 		/// <returns>IActionResult</returns>
-		public async Task<IActionResult> Index() => await Execute(StatusCodes.Status500InternalServerError);
+		public async Task<IActionResult> Index() => await Execute(StatusCodes.Status500InternalServerError).ConfigureAwait(false);
 
 		/// <summary>
 		/// Execute error view
@@ -57,7 +57,7 @@ namespace Jeebs.Mvc
 			{
 				Response.Clear();
 				Response.StatusCode = StatusCodes.Status500InternalServerError;
-				await Response.WriteAsync($"Unable to find views '{viewName}' or 'Default' in Views/Shared/Error/.");
+				await Response.WriteAsync($"Unable to find views '{viewName}' or 'Default' in Views/Shared/Error/.").ConfigureAwait(false);
 			}
 
 			// Return empty result
