@@ -23,23 +23,21 @@ namespace Jeebs
 			IOkV<TResult, TState> okV => new OkV<TResult, TNext>(okV.Val, state) { Messages = okV.Messages },
 			IOk<TResult, TState> ok => new Ok<TResult, TNext>(state) { Messages = ok.Messages },
 			IError<TResult, TState> error => new Error<TResult, TNext>(state) { Messages = error.Messages },
-			IR<TResult, TState> r => throw new InvalidOperationException($"Unknown R<> subtype: '{r.GetType()}'.")
+			{ } r => throw new InvalidOperationException($"Unknown R<> subtype: '{r.GetType()}'.")
 		};
 
 		/// <summary>
-		/// Change state on the current result object.
+		/// Remove state from the current result object.
 		/// </summary>
 		/// <typeparam name="TResult">Result value type</typeparam>
 		/// <typeparam name="TState">State value type</typeparam>
-		/// <typeparam name="TNext">Next state value type</typeparam>
-		/// <param name="this">Current result task (will be executed before changing state)</param>
-		/// <param name="state">State value</param>
+		/// <param name="this">Current result task (will be executed before removing state)</param>
 		public static async Task<IR<TResult>> RemoveState<TResult, TState>(this Task<IR<TResult, TState>> @this) => await @this.ConfigureAwait(false) switch
 		{
 			IOkV<TResult, TState> okV => okV.RemoveState(),
 			IOk<TResult, TState> ok => ok.RemoveState(),
 			IError<TResult, TState> error => error.RemoveState(),
-			IR<TResult, TState> r => throw new InvalidOperationException($"Unknown R<> subtype: '{r.GetType()}'.")
+			{ } r => throw new InvalidOperationException($"Unknown R<> subtype: '{r.GetType()}'.")
 		};
 
 		/// <summary>

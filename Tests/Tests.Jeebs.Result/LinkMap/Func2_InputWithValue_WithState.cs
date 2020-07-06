@@ -21,8 +21,8 @@ namespace Tests.Jeebs.Result.LinkMap
 			var r = chain.LinkMap(f);
 
 			// Assert
-			Assert.IsAssignableFrom<IOkV<string, bool>>(r);
-			Assert.Equal(str, ((IOkV<string, bool>)r).Val);
+			var cast = Assert.IsAssignableFrom<IOkV<string, bool>>(r);
+			Assert.Equal(str, cast.Val);
 		}
 
 		[Fact]

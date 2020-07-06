@@ -18,7 +18,7 @@ namespace Jeebs
 			IOkV<TResult> okV => new OkV<TResult, TState>(okV.Val, state) { Messages = okV.Messages },
 			IOk<TResult> ok => new Ok<TResult, TState>(state) { Messages = ok.Messages },
 			IError error => new Error<TResult, TState>(state) { Messages = error.Messages },
-			IR<TResult> r => throw new InvalidOperationException($"Unknown R<> subtype: '{r.GetType()}'.")
+			{ } r => throw new InvalidOperationException($"Unknown R<> subtype: '{r.GetType()}'.")
 		};
 
 		/// <summary>

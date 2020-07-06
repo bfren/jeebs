@@ -21,8 +21,8 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			var r = await chain.LinkMapAsync(t);
 
 			// Assert
-			Assert.IsAssignableFrom<IOkV<string>>(r);
-			Assert.Equal(msg, ((IOkV<string>)r).Val);
+			var cast = Assert.IsAssignableFrom<IOkV<string>>(r);
+			Assert.Equal(msg, cast.Val);
 		}
 
 		[Fact]
@@ -84,8 +84,8 @@ namespace Tests.Jeebs.Result.LinkMapAsync
 			var r = await chain.LinkMapAsync(t);
 
 			// Assert
-			Assert.IsAssignableFrom<IOkV<string>>(r);
-			Assert.Equal(msg, ((IOkV<string>)r).Val);
+			var cast = Assert.IsAssignableFrom<IOkV<string>>(r);
+			Assert.Equal(msg, cast.Val);
 		}
 
 		[Fact]
