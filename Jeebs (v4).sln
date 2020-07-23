@@ -101,7 +101,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibrariesF", "LibrariesF", 
 		LibrariesF\Directory.Build.props = LibrariesF\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "JeebsF", "LibrariesF\JeebsF\JeebsF.fsproj", "{56167F95-69D3-477C-BF2F-6C2489E9CB30}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "JeebsF", "LibrariesF\JeebsF\JeebsF.fsproj", "{56167F95-69D3-477C-BF2F-6C2489E9CB30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Result", "Libraries\Jeebs.Result\Jeebs.Result.csproj", "{815447DC-3AAC-4E36-9455-50BE6ADC31BC}"
 EndProject
@@ -111,6 +111,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Result2", "Libraries\Jeebs.Result2\Jeebs.Result2.csproj", "{590FDBE0-20BD-47AD-A22E-DB123939036B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -254,6 +256,10 @@ Global
 		{AD49A21F-C3B1-49FD-B4B5-339C547E60F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD49A21F-C3B1-49FD-B4B5-339C547E60F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD49A21F-C3B1-49FD-B4B5-339C547E60F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590FDBE0-20BD-47AD-A22E-DB123939036B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590FDBE0-20BD-47AD-A22E-DB123939036B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590FDBE0-20BD-47AD-A22E-DB123939036B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590FDBE0-20BD-47AD-A22E-DB123939036B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -301,6 +307,7 @@ Global
 		{56167F95-69D3-477C-BF2F-6C2489E9CB30} = {CD7BEFF5-6193-451E-9760-F180A46B6CE1}
 		{815447DC-3AAC-4E36-9455-50BE6ADC31BC} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{AD49A21F-C3B1-49FD-B4B5-339C547E60F4} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{590FDBE0-20BD-47AD-A22E-DB123939036B} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
