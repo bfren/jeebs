@@ -45,15 +45,16 @@ namespace Jeebs
 		/// <typeparam name="T">Enum value type</typeparam>
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
-		private static IResult<T> Check<T>(string name, T value)
+		private static Option<T> Check<T>(string name, T value)
 			where T : Enum
 		{
 			if (string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase))
 			{
-				return Result.Success(value);
+				return Option.Some(value);
 			}
 
-			return Result.Failure<T>($"'{value}' does not match '{name}'.");
+			//return R.Error<T>().With().Message($"'{value}' does not match '{name}'.");
+			return Option.None<T>();
 		}
 
 		/// <summary>
@@ -64,25 +65,26 @@ namespace Jeebs
 		/// <param name="values">Enum values to check name against</param>
 		/// <exception cref="Jx.ParseException">If string <paramref name="name"/> is not a valid value of Enum type <typeparamref name="T"/>.</exception>
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
-		protected static T Parse<T>(string name, T[] values)
+		protected static Option<T> Parse<T>(string name, T[] values)
 			where T : Enum
 		{
 			// Return the Enum value
-			return (T)cache.GetOrAdd(
+			return (Option<T>)cache.GetOrAdd(
 				$"{typeof(T)}-{name}",
 				(_, args) =>
 				{
 					// Check all given values against name
 					foreach (var item in args.Values)
 					{
-						if (Check(args.Name, item) is Success<T> success)
+						if (Check(args.Name, item) is Some<T> s)
 						{
-							return success.Val;
+							return s;
 						}
 					}
 
 					// If we get here the name was never matched
-					throw new Jx.ParseException($"'{args.Name}' is not a valid value of '{typeof(T)}'.");
+					//throw new Jx.ParseException($"'{args.Name}' is not a valid value of '{typeof(T)}'.");
+					return Option.None<T>();
 				},
 				new ParseArgs<T>(name, values)
 			);

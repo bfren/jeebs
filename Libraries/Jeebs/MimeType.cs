@@ -118,36 +118,31 @@
 				return Blank;
 			}
 
-			// Parse - if there is an error (usually because name is not a recognised Mime Type) return General
-			try
+			var types = new[]
 			{
-				return Parse(mimeType, new[]
-				{
-					Blank,
-					General,
-					Bmp,
-					Doc,
-					Docx,
-					Gif,
-					Jpg,
-					M4a,
-					Mp3,
-					Pdf,
-					Png,
-					Ppt,
-					Pptx,
-					Rar,
-					Tar,
-					Text,
-					Xls,
-					Xlsx,
-					Zip
-				});
-			}
-			catch (Jx.ParseException)
-			{
-				return General;
-			}
+				Blank,
+				General,
+				Bmp,
+				Doc,
+				Docx,
+				Gif,
+				Jpg,
+				M4a,
+				Mp3,
+				Pdf,
+				Png,
+				Ppt,
+				Pptx,
+				Rar,
+				Tar,
+				Text,
+				Xls,
+				Xlsx,
+				Zip
+			};
+
+			// Parse and return value - if None, return General
+			return Parse(mimeType, types).Unwrap(() => General);
 		}
 	}
 }
