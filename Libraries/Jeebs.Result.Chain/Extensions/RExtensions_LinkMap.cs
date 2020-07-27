@@ -23,7 +23,7 @@ namespace Jeebs
 			where TResult : IR => result switch
 			{
 				IOk ok => ok.Catch(() => { var v = f(); return ok.OkV(v); }),
-				_ => result.SkipAhead<TNext>()
+				_ => result.Error<TNext>()
 			};
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace Jeebs
 			where TResult : IR => await result.ConfigureAwait(false) switch
 			{
 				IOk ok => ok.Catch(async () => { var v = await f().ConfigureAwait(false); return ok.OkV(v); }),
-				{ } r => r.SkipAhead<TNext>()
+				{ } r => r.Error<TNext>()
 			};
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace Jeebs
 			where TResult : IR<TValue, TState> => result switch
 			{
 				IOk<TValue, TState> ok => ok.Catch(() => { var v = f(); return ok.OkV(v); }),
-				_ => result.SkipAhead<TNext>()
+				_ => result.Error<TNext>()
 			};
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace Jeebs
 			where TResult : IR<TValue, TState> => await result.ConfigureAwait(false) switch
 			{
 				IOk<TValue, TState> ok => ok.Catch(async () => { var v = await f().ConfigureAwait(false); return ok.OkV(v); }),
-				{ } r => r.SkipAhead<TNext>()
+				{ } r => r.Error<TNext>()
 			};
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace Jeebs
 			where TResult : IR<TValue> => result switch
 			{
 				IOk<TValue> ok => ok.Catch(() => f(ok)),
-				_ => result.SkipAhead<TNext>()
+				_ => result.Error<TNext>()
 			};
 
 		/// <summary>
@@ -109,7 +109,7 @@ namespace Jeebs
 			where TResult : IR<TValue> => await result.ConfigureAwait(false) switch
 			{
 				IOk<TValue> ok => ok.Catch(async () => await f(ok).ConfigureAwait(false)),
-				{ } r => r.SkipAhead<TNext>()
+				{ } r => r.Error<TNext>()
 			};
 
 		/// <summary>
@@ -127,7 +127,7 @@ namespace Jeebs
 			where TResult : IR<TValue, TState> => result switch
 			{
 				IOk<TValue, TState> ok => ok.Catch(() => f(ok)),
-				_ => result.SkipAhead<TNext>()
+				_ => result.Error<TNext>()
 			};
 
 		/// <summary>
@@ -145,7 +145,7 @@ namespace Jeebs
 			where TResult : IR<TValue, TState> => await result.ConfigureAwait(false) switch
 			{
 				IOk<TValue, TState> ok => ok.Catch(async () => await f(ok).ConfigureAwait(false)),
-				{ } r => r.SkipAhead<TNext>()
+				{ } r => r.Error<TNext>()
 			};
 
 		/// <summary>
@@ -162,7 +162,7 @@ namespace Jeebs
 			where TResult : IR<TValue> => result switch
 			{
 				IOkV<TValue> okV => okV.Catch(() => f(okV)),
-				_ => result.SkipAhead<TNext>()
+				_ => result.Error<TNext>()
 			};
 
 		/// <summary>
@@ -179,7 +179,7 @@ namespace Jeebs
 			where TResult : IR<TValue> => await result.ConfigureAwait(false) switch
 			{
 				IOkV<TValue> okV => okV.Catch(async () => await f(okV).ConfigureAwait(false)),
-				{ } r => r.SkipAhead<TNext>()
+				{ } r => r.Error<TNext>()
 			};
 
 		/// <summary>
@@ -197,7 +197,7 @@ namespace Jeebs
 			where TResult : IR<TValue, TState> => result switch
 			{
 				IOkV<TValue, TState> okV => okV.Catch(() => f(okV)),
-				_ => result.SkipAhead<TNext>()
+				_ => result.Error<TNext>()
 			};
 
 		/// <summary>
@@ -215,7 +215,7 @@ namespace Jeebs
 			where TResult : IR<TValue, TState> => await result.ConfigureAwait(false) switch
 			{
 				IOkV<TValue, TState> okV => okV.Catch(async () => await f(okV).ConfigureAwait(false)),
-				{ } r => r.SkipAhead<TNext>()
+				{ } r => r.Error<TNext>()
 			};
 	}
 }

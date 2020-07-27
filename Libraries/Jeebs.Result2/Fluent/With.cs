@@ -28,6 +28,18 @@ namespace Jeebs.Result.Fluent
 		}
 
 		/// <summary>
+		/// Add a message of type <typeparamref name="TMessage"/> to the result chain and returns <typeparamref name="TResult"/> object
+		/// </summary>
+		/// <typeparam name="TMessage">Message type</typeparam>
+		/// <param name="message">Message</param>
+		public TResult Message<TMessage>(TMessage message)
+			where TMessage : IMsg
+		{
+			result.Messages.Add(message);
+			return result;
+		}
+
+		/// <summary>
 		/// Adds message(s) to the result chain and returns <typeparamref name="TResult"/> object
 		/// </summary>
 		/// <param name="messages">Messages to add - must be at least one</param>

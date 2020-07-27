@@ -9,8 +9,6 @@ namespace Jeebs
 	{
 		internal ROk(TState state) : base(state) { }
 
-		#region Ok
-
 		/// <inheritdoc cref="IOk{TValue, TState}.Ok"/>
 		public IOk<TResult, TState> Ok() => Ok<TResult>();
 
@@ -24,18 +22,6 @@ namespace Jeebs
 		/// <inheritdoc cref="IOk{TValue, TState}.OkV{TNext}(TNext)"/>
 		public IOkV<TNext, TState> OkV<TNext>(TNext value) => new ROkV<TNext, TState>(value, State) { Messages = Messages };
 
-		#endregion
-
-		#region Error
-
-		/// <inheritdoc cref="IOk{TValue, TState}.Error"/>
-		public IError<TResult, TState> Error() => Error<TResult>();
-
-		/// <inheritdoc cref="IOk{TValue, TState}.Error{TNext}"/>
-		public IError<TNext, TState> Error<TNext>() => new RError<TNext, TState>(State) { Messages = Messages };
-
-		#endregion
-
 		#region Explicit implementations
 
 		IOk IOk.Ok() => Ok();
@@ -45,12 +31,6 @@ namespace Jeebs
 		IOk<TNext> IOk.Ok<TNext>() => Ok<TNext>();
 
 		IOkV<TValue> IOk.OkV<TValue>(TValue value) => OkV(value);
-
-		IError<TResult> IOk<TResult>.Error() => Error();
-
-		IError IOk.Error() => Error();
-
-		IError<TNext> IOk.Error<TNext>() => Error<TNext>();
 
 		#endregion
 	}

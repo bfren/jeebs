@@ -12,11 +12,11 @@ namespace Jeebs
 
 		internal protected R(TState state) => State = state;
 
-		/// <inheritdoc cref="IR.SkipAhead"/>
-		new public IError<TValue, TState> SkipAhead() => SkipAhead<TValue>();
+		/// <inheritdoc cref="IR.Error"/>
+		new public IError<TValue, TState> Error() => Error<TValue>();
 
-		/// <inheritdoc cref="IR.SkipAhead{TValue}"/>
-		new public IError<TNext, TState> SkipAhead<TNext>() => this switch
+		/// <inheritdoc cref="IR.Error{TValue}"/>
+		new public IError<TNext, TState> Error<TNext>() => this switch
 		{
 			IError<TNext, TState> e => e,
 			_ => new RError<TNext, TState>(State) { Messages = Messages }
@@ -24,8 +24,7 @@ namespace Jeebs
 
 		#region Explicit implementations
 
-		/// <inheritdoc/>
-		IError<TValue, TState> IR<TValue, TState>.SkipAhead() => SkipAhead();
+		IError<TValue, TState> IR<TValue, TState>.Error() => Error();
 
 		#endregion
 	}

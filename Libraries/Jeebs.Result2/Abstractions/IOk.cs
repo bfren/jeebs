@@ -26,17 +26,6 @@ namespace Jeebs
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		/// <param name="value">Result value</param>
         IOkV<TNext> OkV<TNext>(TNext value);
-
-        /// <summary>
-		/// Return a simple <see cref="IError"/> result
-		/// </summary>
-        IError Error();
-
-        /// <summary>
-		/// Return an <see cref="IError{TNext}"/> result with a new value type
-		/// </summary>
-		/// <typeparam name="TNext">Next result value type</typeparam>
-        IError<TNext> Error<TNext>();
     }
 
     /// <summary>
@@ -49,10 +38,5 @@ namespace Jeebs
 		/// Return an <see cref="IOk{TValue}"/> result with the current value type
 		/// </summary>
         new IOk<TValue> Ok();
-
-        /// <summary>
-        /// Return an <see cref="IError{TValue}"/> result with the current value type
-        /// </summary>
-        new IError<TValue> Error();
     }
 }

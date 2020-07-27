@@ -16,10 +16,10 @@ namespace Jeebs
 		/// </summary>
         TState State { get; }
 
-        /// <inheritdoc cref="IR.SkipAhead"/>
-        new IError<TValue, TState> SkipAhead();
+        /// <inheritdoc cref="IR.Error"/>
+        new IError<TValue, TState> Error();
 
-        /// <inheritdoc cref="IR.SkipAhead{TValue}"/>
-        new IError<TNext, TState> SkipAhead<TNext>();
+        /// <inheritdoc cref="IR.Error{TValue}"/>
+        new IError<TNext, TState> Error<TNext>();
     }
 }

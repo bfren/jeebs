@@ -15,15 +15,15 @@ namespace Jeebs
         MsgList Messages { get; }
 
         /// <summary>
-		/// Skip ahead instead of performing an action
+		/// Return a simple <see cref="IError"/> result
 		/// </summary>
-        IError SkipAhead();
+        IError Error();
 
         /// <summary>
-		/// Skip ahead instead of performing an action
+		/// Return an <see cref="IError{TNext}"/> result with a new value type
 		/// </summary>
-		/// <typeparam name="TValue">Next result value type</typeparam>
-        IError<TValue> SkipAhead<TValue>();
+		/// <typeparam name="TNext">Next result value type</typeparam>
+        IError<TNext> Error<TNext>();
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace Jeebs
 	/// <typeparam name="TValue">Result value type</typeparam>
     public interface IR<TValue> : IR
     {
-        /// <inheritdoc cref="IR.SkipAhead"/>
-        new IError<TValue> SkipAhead();
+        /// <inheritdoc cref="IR.Error"/>
+        new IError<TValue> Error();
     }
 }

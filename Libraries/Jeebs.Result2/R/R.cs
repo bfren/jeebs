@@ -19,10 +19,10 @@ namespace Jeebs
 		public virtual void Dispose() => Messages.Clear();
 
 		/// <inheritdoc/>
-		public IError<TValue> SkipAhead() => SkipAhead<TValue>();
+		public IError<TValue> Error() => Error<TValue>();
 
-		/// <inheritdoc cref="IR.SkipAhead{TValue}"/>
-		public IError<TNext> SkipAhead<TNext>() => this switch
+		/// <inheritdoc/>
+		public IError<TNext> Error<TNext>() => this switch
 		{
 			IError<TNext> e => e,
 			_ => new RError<TNext> { Messages = Messages }
@@ -30,7 +30,7 @@ namespace Jeebs
 
 		#region Explicit implementations
 
-		IError IR.SkipAhead() => SkipAhead();
+		IError IR.Error() => Error();
 
 		#endregion
 	}
