@@ -1,15 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>Jeebs</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Result2\Jeebs.Result.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Messages\" />
+    <ProjectReference Include="..\Jeebs.Result\Jeebs.Result.csproj" />
   </ItemGroup>
 </Project>

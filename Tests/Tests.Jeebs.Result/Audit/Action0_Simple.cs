@@ -5,7 +5,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result.Audit
+namespace Tests.Jeebs.Result_old.Audit
 {
 	public class Action0_Simple : IAudit_Action0_Simple
 	{

@@ -1,4 +1,4 @@
-﻿namespace Tests.Jeebs.Result.LinkMap
+﻿namespace Tests.Jeebs.Result_old.LinkMap
 {
 	public interface ILinkMap_Func1_InputWithoutValue
 	{

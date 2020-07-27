@@ -1,4 +1,4 @@
-﻿namespace Tests.Jeebs.Result.Audit
+﻿namespace Tests.Jeebs.Result_old.Audit
 {
 	public interface IAudit_Action1_Switch
 	{

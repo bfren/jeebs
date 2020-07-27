@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result
+namespace Tests.Jeebs.Result_old
 {
 	public class OkTests : IOkTests
 	{

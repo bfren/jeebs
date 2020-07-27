@@ -1,17 +1,24 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// Represents an error result.
+	/// General result error, used for pattern matching, for example:
+	/// <code>r is IError e</code>
 	/// </summary>
-	/// <typeparam name="TResult">Result value type - not used in Error classes, only Ok classes have a value</typeparam>
-	public interface IError<TResult> : IR<TResult> { }
+	public interface IError : IR
+	{
+
+	}
 
 	/// <summary>
-	/// Represents a simple error result.
+	/// Main result error
 	/// </summary>
-	public interface IError : IError<bool> { }
+	/// <typeparam name="TValue">Result value type</typeparam>
+	public interface IError<TValue> : IError, IR<TValue>
+	{
+
+	}
 }

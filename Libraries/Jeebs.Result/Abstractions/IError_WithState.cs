@@ -5,13 +5,12 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Represents an error result with state.
+	/// Result error, used when chain has a state
 	/// </summary>
-	/// <typeparam name="TResult">Result value type - not used in Error classes, only Ok classes have a value</typeparam>
-	/// <typeparam name="TState">State value type</typeparam>
-	public interface IError<TResult, TState> : IR<TResult, TState>
+	/// <typeparam name="TValue">Result value type</typeparam>
+	/// <typeparam name="TState">Chain state type</typeparam>
+	public interface IError<TValue, TState> : IError<TValue>, IR<TValue, TState>
 	{
-		/// <inheritdoc cref="IR{TResult, TState}.RemoveState"/>
-		new IError<TResult> RemoveState();
+
 	}
 }

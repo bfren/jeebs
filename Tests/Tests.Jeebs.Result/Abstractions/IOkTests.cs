@@ -1,4 +1,4 @@
-﻿namespace Tests.Jeebs.Result
+﻿namespace Tests.Jeebs.Result_old
 {
 	public interface IOkTests
 	{

@@ -6,7 +6,7 @@ using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Tests.Jeebs.Result
+namespace Tests.Jeebs.Result_old
 {
 	public class MessageListTests
 	{

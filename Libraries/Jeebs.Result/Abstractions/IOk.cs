@@ -1,27 +1,42 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// Represents an OK result without a value
+	/// General result success, used to pass chain as method parameters
 	/// </summary>
-	/// <typeparam name="TResult">Result value type</typeparam>
-	public interface IOk<TResult> : IR<TResult> { }
-
-	/// <summary>
-	/// Represents an OK result with a value
-	/// </summary>
-	/// <typeparam name="TResult">Result value type</typeparam>
-	public interface IOkV<TResult> : IOk<TResult>
+	public interface IOk : IR
 	{
-		new public TResult Val { get; }
+		/// <summary>
+		/// Return a simple <see cref="IOk"/> result
+		/// </summary>
+		IOk Ok();
+
+		/// <summary>
+		/// Return an <see cref="IOk{TValue}"/> result with a new value type
+		/// </summary>
+		/// <typeparam name="TNext">Next result value type</typeparam>
+		IOk<TNext> Ok<TNext>();
+
+		/// <summary>
+		/// Return an <see cref="IOkV{TValue}"/> result
+		/// </summary>
+		/// <typeparam name="TNext">Next result value type</typeparam>
+		/// <param name="value">Result value</param>
+		IOkV<TNext> OkV<TNext>(TNext value);
 	}
 
 	/// <summary>
-	/// Represents a simple OK result without a value
+	/// Main result success
 	/// </summary>
-	public interface IOk : IOk<bool> { }
-
+	/// <typeparam name="TValue">Result value type</typeparam>
+	public interface IOk<TValue> : IOk, IR<TValue>
+	{
+		/// <summary>
+		/// Return an <see cref="IOk{TValue}"/> result with the current value type
+		/// </summary>
+		new IOk<TValue> Ok();
+	}
 }

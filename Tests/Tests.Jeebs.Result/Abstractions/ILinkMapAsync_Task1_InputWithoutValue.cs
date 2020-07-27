@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Tests.Jeebs.Result.LinkMapAsync
+namespace Tests.Jeebs.Result_old.LinkMapAsync
 {
 	public interface ILinkMapAsync_Task1_InputWithoutValue
 	{

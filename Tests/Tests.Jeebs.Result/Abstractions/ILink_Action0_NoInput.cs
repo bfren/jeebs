@@ -1,4 +1,4 @@
-﻿namespace Tests.Jeebs.Result.Link
+﻿namespace Tests.Jeebs.Result_old.Link
 {
 	public interface ILink_Action0_NoInput
 	{

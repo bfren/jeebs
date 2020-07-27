@@ -17,6 +17,12 @@ namespace Jeebs.Result.Fluent
 		internal With(TResult result) => this.result = result;
 
 		/// <summary>
+		/// Add a message of type <see cref="Jm.WithStringMsg"/> to the result chain and returns <typeparamref name="TResult"/> object
+		/// </summary>
+		/// <param name="message">Simple error message</param>
+		public TResult Message(string message) => Message(new Jm.WithStringMsg(message));
+
+		/// <summary>
 		/// Add a message of type <typeparamref name="TMessage"/> to the result chain and returns <typeparamref name="TResult"/> object
 		/// </summary>
 		/// <typeparam name="TMessage">Message type</typeparam>

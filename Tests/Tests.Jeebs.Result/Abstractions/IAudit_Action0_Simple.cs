@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tests.Jeebs.Result.Audit
+namespace Tests.Jeebs.Result_old.Audit
 {
 	public interface IAudit_Action0_Simple
 	{

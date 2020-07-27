@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result.LinkMap
+namespace Tests.Jeebs.Result_old.LinkMap
 {
 	public class Func0_NoInput : ILinkMap_Func0_NoInput
 	{
