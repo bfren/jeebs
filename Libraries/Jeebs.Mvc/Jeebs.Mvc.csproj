@@ -10,7 +10,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
-	  <ProjectReference Include="..\Jeebs.Result\Jeebs.Result.csproj" />
 	</ItemGroup>
 
 </Project>

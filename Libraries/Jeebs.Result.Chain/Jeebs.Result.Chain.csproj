@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Jeebs</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Result2\Jeebs.Result2.csproj" />
+    <ProjectReference Include="..\Jeebs.Result2\Jeebs.Result.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Jeebs.Result2\Jeebs.Result2.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Result2\Jeebs.Result.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="R\" />
