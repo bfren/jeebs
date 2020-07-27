@@ -102,7 +102,7 @@ namespace Jeebs.Data
 			Rollback();
 
 			// Log error
-			var message = new Jm.Data.QueryException(ex, query, parameters);
+			var message = new Jm.Data.QueryExceptionMsg(ex, query, parameters);
 			log.Error(ex, message.ToString());
 
 			// Return error

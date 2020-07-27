@@ -53,7 +53,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Send a simple message to the debug log
 		/// </summary>
-		void LogDebug<T>(T message) where T : IMessage;
+		void LogDebug<T>(T message) where T : IMsg;
 
 		/// <summary>
 		/// Log a query
@@ -110,7 +110,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IR<IEnumerable<dynamic>> Query(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
@@ -119,7 +119,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Run a query against the database
@@ -129,7 +129,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IR<IEnumerable<T>> Query<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Run a query against the database
@@ -139,7 +139,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		#endregion
 
@@ -152,7 +152,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IR<T> Single<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text);
+		IR<T> Single<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
@@ -161,7 +161,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IR<T>> SingleAsync<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text);
+		Task<IR<T>> SingleAsync<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text);
 
 		#endregion
 
@@ -175,7 +175,7 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		IR<int> Execute(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<int> Execute(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Execute a query on the database
@@ -185,7 +185,7 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		Task<IR<int>> ExecuteAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
@@ -195,7 +195,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IR<T> ExecuteScalar<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
@@ -205,7 +205,7 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IR<T>> ExecuteScalarAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		#endregion
 	}

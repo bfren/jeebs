@@ -8,7 +8,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Retrieve success message
 	/// </summary>
-	public class Retrieve : IMessage
+	public class RetrieveMsg : IMsg
 	{
 		protected readonly Type type;
 
@@ -19,7 +19,7 @@ namespace Jm.Data
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public Retrieve(Type type, long id)
+		public RetrieveMsg(Type type, long id)
 		{
 			this.type = type;
 			this.id = id;
@@ -34,14 +34,14 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an error that has occurred during a Retrieve operation
 	/// </summary>
-	public class RetrieveError : Retrieve
+	public class RetrieveErrorMsg : RetrieveMsg
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public RetrieveError(Type type, long id) : base(type, id) { }
+		public RetrieveErrorMsg(Type type, long id) : base(type, id) { }
 
 		/// <summary>
 		/// Output error message
@@ -52,7 +52,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an exception that has occurred during a Retrieve operation
 	/// </summary>
-	public class RetrieveException : RetrieveError
+	public class RetrieveExceptionMsg : RetrieveErrorMsg
 	{
 		private readonly string exceptionMessage;
 
@@ -62,9 +62,9 @@ namespace Jm.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public RetrieveException(System.Exception ex, Type type, long id) : base(type, id)
+		public RetrieveExceptionMsg(Exception ex, Type type, long id) : base(type, id)
 		{
-			var message = new Exception(ex);
+			var message = new ExceptionMsg(ex);
 			exceptionMessage = message.ToString();
 		}
 

@@ -8,15 +8,15 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an error that has occurred during a data query
 	/// </summary>
-	public sealed class QueryError : WithString
+	public sealed class QueryErrorMsg : WithStringMsg
 	{
-		internal QueryError(string error) : base(error) { }
+		internal QueryErrorMsg(string error) : base(error) { }
 	}
 
 	/// <summary>
 	/// Message about an exception that has occurred during a data query
 	/// </summary>
-	public sealed class QueryException : Exception
+	public sealed class QueryExceptionMsg : ExceptionMsg
 	{
 		/// <summary>
 		/// Sql query text
@@ -28,7 +28,7 @@ namespace Jm.Data
 		/// </summary>
 		public string Parameters { get; }
 
-		internal QueryException(System.Exception ex, string query, object? parameters = null) : base(ex)
+		internal QueryExceptionMsg(Exception ex, string query, object? parameters = null) : base(ex)
 		{
 			Sql = query;
 			Parameters = Json.Serialise(parameters);

@@ -8,7 +8,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Create success message
 	/// </summary>
-	public class Create : IMessage
+	public class CreateMsg : IMsg
 	{
 		protected readonly Type type;
 
@@ -19,7 +19,7 @@ namespace Jm.Data
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">[Optional] POCO id</param>
-		public Create(Type type, long? id = null)
+		public CreateMsg(Type type, long? id = null)
 		{
 			this.type = type;
 			this.id = id;
@@ -34,13 +34,13 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an error that has occurred during a Create operation
 	/// </summary>
-	public class CreateError : Create
+	public class CreateErrorMsg : CreateMsg
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
-		public CreateError(Type type) : base(type) { }
+		public CreateErrorMsg(Type type) : base(type) { }
 
 		/// <summary>
 		/// Output error message
@@ -51,7 +51,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an exception that has occurred during a Create operation
 	/// </summary>
-	public class CreateException : CreateError
+	public class CreateExceptionMsg : CreateErrorMsg
 	{
 		private readonly string exceptionMessage;
 
@@ -60,9 +60,9 @@ namespace Jm.Data
 		/// </summary>
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
-		public CreateException(System.Exception ex, Type type) : base(type)
+		public CreateExceptionMsg(Exception ex, Type type) : base(type)
 		{
-			var message = new Exception(ex);
+			var message = new ExceptionMsg(ex);
 			exceptionMessage = message.ToString();
 		}
 

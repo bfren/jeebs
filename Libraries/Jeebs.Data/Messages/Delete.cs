@@ -8,7 +8,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Delete success message
 	/// </summary>
-	public class Delete : IMessage
+	public class DeleteMsg : IMsg
 	{
 		protected readonly Type type;
 
@@ -19,7 +19,7 @@ namespace Jm.Data
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public Delete(Type type, long id)
+		public DeleteMsg(Type type, long id)
 		{
 			this.type = type;
 			this.id = id;
@@ -34,14 +34,14 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an error that has occurred during a Delete operation
 	/// </summary>
-	public class DeleteError : Delete
+	public class DeleteErrorMsg : DeleteMsg
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public DeleteError(Type type, long id) : base(type, id) { }
+		public DeleteErrorMsg(Type type, long id) : base(type, id) { }
 
 		/// <summary>
 		/// Output error message
@@ -52,7 +52,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an exception that has occurred during a Delete operation
 	/// </summary>
-	public class DeleteException : DeleteError
+	public class DeleteExceptionMsg : DeleteErrorMsg
 	{
 		private readonly string exceptionMessage;
 
@@ -62,9 +62,9 @@ namespace Jm.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public DeleteException(System.Exception ex, Type type, long id) : base(type, id)
+		public DeleteExceptionMsg(Exception ex, Type type, long id) : base(type, id)
 		{
-			var message = new Exception(ex);
+			ExceptionMsg? message = new ExceptionMsg(ex);
 			exceptionMessage = message.ToString();
 		}
 

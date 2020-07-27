@@ -8,7 +8,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Update success message
 	/// </summary>
-	public class Update : IMessage
+	public class UpdateMsg : IMsg
 	{
 		protected readonly Type type;
 
@@ -19,7 +19,7 @@ namespace Jm.Data
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public Update(Type type, long id)
+		public UpdateMsg(Type type, long id)
 		{
 			this.type = type;
 			this.id = id;
@@ -34,14 +34,14 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an error that has occurred during an update operation
 	/// </summary>
-	public class UpdateError : Update
+	public class UpdateErrorMsg : UpdateMsg
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public UpdateError(Type type, long id) : base(type, id) { }
+		public UpdateErrorMsg(Type type, long id) : base(type, id) { }
 
 		/// <summary>
 		/// Output error message
@@ -52,7 +52,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Message about an exception that has occurred during an update operation
 	/// </summary>
-	public class UpdateException : UpdateError
+	public class UpdateExceptionMsg : UpdateErrorMsg
 	{
 		private readonly string exceptionMessage;
 
@@ -62,9 +62,9 @@ namespace Jm.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public UpdateException(System.Exception ex, Type type, long id) : base(type, id)
+		public UpdateExceptionMsg(Exception ex, Type type, long id) : base(type, id)
 		{
-			var message = new Exception(ex);
+			var message = new ExceptionMsg(ex);
 			exceptionMessage = message.ToString();
 		}
 
