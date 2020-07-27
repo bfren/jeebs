@@ -4,23 +4,23 @@ using System.Text;
 
 namespace Jeebs
 {
-    /// <summary>
+	/// <summary>
 	/// Result success, used when chain has a state
 	/// </summary>
 	/// <typeparam name="TValue">Result value type</typeparam>
 	/// <typeparam name="TState">Chain state type</typeparam>
-    public interface IOk<TValue, TState> : IOk<TValue>, IR<TValue, TState>
-    {
-        /// <summary>
+	public interface IOk<TValue, TState> : IOk<TValue>, IR<TValue, TState>
+	{
+		/// <summary>
 		/// Return an <see cref="IOk{TValue, TState}"/> result with the current value type
 		/// </summary>
-        new IOk<TValue, TState> Ok();
+		new IOk<TValue, TState> Ok();
 
-        /// <summary>
+		/// <summary>
 		/// Return an <see cref="IOk{TValue, TState}"/> result with a new value type
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
-        new IOk<TNext, TState> Ok<TNext>();
+		new IOk<TNext, TState> Ok<TNext>();
 
 		/// <summary>
 		/// Return an <see cref="IOkV{TValue, TState}"/> result
@@ -39,5 +39,5 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		new IError<TNext, TState> Error<TNext>();
-    }
+	}
 }

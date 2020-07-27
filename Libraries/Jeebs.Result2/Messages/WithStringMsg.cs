@@ -1,4 +1,8 @@
-﻿namespace Jm
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Jm
 {
 	/// <summary>
 	/// Special case: String value

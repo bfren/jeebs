@@ -4,15 +4,15 @@ using System.Text;
 
 namespace Jeebs
 {
-    /// <summary>
+	/// <summary>
 	/// Result success with a value
 	/// </summary>
 	/// <typeparam name="TValue">Result value type</typeparam>
-    public interface IOkV<TValue> : IOk, IR<TValue>
-    {
-        /// <summary>
+	public interface IOkV<TValue> : IOk, IR<TValue>
+	{
+		/// <summary>
 		/// Result value
 		/// </summary>
-        TValue Value { get; }
-    }
+		TValue Value { get; }
+	}
 }

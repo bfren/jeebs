@@ -10,7 +10,7 @@ namespace Jeebs
 	/// <typeparam name="TValue">Result value type</typeparam>
 	/// <typeparam name="TState">Chain state type</typeparam>
 	public interface IOkV<TValue, TState> : IOkV<TValue>, IR<TValue, TState>
-    {
+	{
 
-    }
+	}
 }
