@@ -7,6 +7,7 @@ namespace Jeebs
 {
 	public partial class Link
 	{
+		/// <inheritdoc/>
 		public IR Run(Action a)
 			=> result switch
 			{
@@ -14,6 +15,7 @@ namespace Jeebs
 				_ => result.Error()
 			};
 
+		/// <inheritdoc/>
 		public IR Run(Action<IOk> a)
 			=> result switch
 			{

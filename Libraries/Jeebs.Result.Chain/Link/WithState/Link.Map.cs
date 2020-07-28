@@ -14,9 +14,11 @@ namespace Jeebs
 				_ => result.Error<TNext>()
 			};
 
+		/// <inheritdoc/>
 		public IR<TNext, TState> Map<TNext>(Func<IOk<TValue, TState>, IR<TNext, TState>> f)
 			=> PrivateMap(f);
 
+		/// <inheritdoc/>
 		public IR<TNext, TState> Map<TNext>(Func<IOkV<TValue, TState>, IR<TNext, TState>> f)
 			=> PrivateMap(f);
 	}

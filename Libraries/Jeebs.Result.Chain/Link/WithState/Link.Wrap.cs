@@ -7,6 +7,7 @@ namespace Jeebs
 {
 	public partial class Link<TValue, TState>
 	{
+		/// <inheritdoc/>
 		new public IR<TValue, TState> Wrap(TValue value)
 			=> result switch
 			{
@@ -14,6 +15,7 @@ namespace Jeebs
 				_ => result.Error()
 			};
 
+		/// <inheritdoc/>
 		new public IR<TValue, TState> Wrap(Func<TValue> f)
 			=> result switch
 			{

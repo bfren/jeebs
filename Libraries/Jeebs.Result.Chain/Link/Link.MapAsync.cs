@@ -7,6 +7,7 @@ namespace Jeebs
 {
 	public partial class Link
 	{
+		/// <inheritdoc/>
 		public async Task<IR<TNext>> MapAsync<TNext>(Func<IOk, Task<IR<TNext>>> f)
 			=> result switch
 			{

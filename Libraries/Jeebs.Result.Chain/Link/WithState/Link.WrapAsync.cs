@@ -7,6 +7,7 @@ namespace Jeebs
 {
 	public partial class Link<TValue, TState>
 	{
+		/// <inheritdoc/>
 		new public async Task<IR<TValue, TState>> WrapAsync(Func<Task<TValue>> f)
 			=> result switch
 			{

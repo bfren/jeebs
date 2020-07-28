@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
+	/// <inheritdoc cref="ILink"/>
 	public partial class Link : ILink
 	{
 		private readonly IR result;

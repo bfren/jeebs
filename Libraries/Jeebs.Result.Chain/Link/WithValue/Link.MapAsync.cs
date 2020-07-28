@@ -15,9 +15,11 @@ namespace Jeebs
 				_ => result.Error<TNext>()
 			};
 
+		/// <inheritdoc/>
 		public Task<IR<TNext>> MapAsync<TNext>(Func<IOk<TValue>, Task<IR<TNext>>> f)
 			=> PrivateMapAsync(f);
 
+		/// <inheritdoc/>
 		public Task<IR<TNext>> MapAsync<TNext>(Func<IOkV<TValue>, Task<IR<TNext>>> f)
 			=> PrivateMapAsync(f);
 	}

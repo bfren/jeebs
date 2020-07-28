@@ -7,6 +7,7 @@ namespace Jeebs
 {
 	public partial class Link
 	{
+		/// <inheritdoc/>
 		public IR<TNext> Map<TNext>(Func<IOk, IR<TNext>> f)
 			=> result switch
 			{
