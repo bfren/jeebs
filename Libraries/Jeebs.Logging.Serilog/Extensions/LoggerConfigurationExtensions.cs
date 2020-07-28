@@ -29,8 +29,7 @@ namespace Jeebs.Logging
 			}
 
 			// Set the minimum log level
-			const LogLevel defaultLevel = LogLevel.Information;
-			var minimumLevel = F.EnumF.Convert(jeebs.Logging.MinimumLevel ?? defaultLevel).To<LogEventLevel>();
+			var minimumLevel = (LogEventLevel)(jeebs.Logging.MinimumLevel ?? LogLevel.Information);
 			config.MinimumLevel.Is(minimumLevel);
 
 			// Add a provider to the Serilog configuration

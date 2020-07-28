@@ -13,7 +13,7 @@ namespace Tests.Jeebs.Result2
 		{
 			// Arrange
 			var r = R.Ok();
-			var with = r.With();
+			var with = r.AddMsg();
 			var m0 = new Jm.WithIntMsg(18);
 			var m1 = new Jm.WithStringMsg("July");
 

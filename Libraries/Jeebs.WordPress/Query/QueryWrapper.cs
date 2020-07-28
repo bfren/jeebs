@@ -64,11 +64,11 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Get MetaDictionary for specified model
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		private static PropertyInfo? GetMetaDictionary<T>()
+		/// <typeparam name="TModel">Model type</typeparam>
+		private static Option<PropertyInfo> GetMetaDictionary<TModel>()
 		{
 			// Get from or Add to the cache
-			var metaDictionary = metaDictionaryCache.GetOrAdd(typeof(T), type =>
+			var metaDictionary = metaDictionaryCache.GetOrAdd(typeof(TModel), type =>
 			{
 				return from m in type.GetProperties()
 					   where m.PropertyType.IsEquivalentTo(typeof(MetaDictionary))
@@ -78,26 +78,26 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				throw new Jx.WordPress.QueryException("You must have no more than one MetaDictionary property in a model.");
+				return Option.None<PropertyInfo>().AddReason($"Only one {typeof(MetaDictionary)} property is supported (model: {typeof(TModel)}).");
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return null;
+				return Option.None<PropertyInfo>().AddReason($"No {typeof(MetaDictionary)} property is defined (model: {typeof(TModel)}).");
 			}
 
-			return metaDictionary.Single();
+			return Option.Some(metaDictionary.Single());
 		}
 
 		/// <summary>
 		/// Get Term Lists for specified model
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		private static List<PropertyInfo> GetTermLists<T>()
+		/// <typeparam name="TModel">Model type</typeparam>
+		private static List<PropertyInfo> GetTermLists<TModel>()
 		{
 			// Get from or Add to the cache
-			var taxonomies = termListsCache.GetOrAdd(typeof(T), type =>
+			var taxonomies = termListsCache.GetOrAdd(typeof(TModel), type =>
 			{
 				return from t in type.GetProperties()
 					   where t.PropertyType.IsEquivalentTo(typeof(TermList))
@@ -116,11 +116,11 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Get Custom Fields for specified model
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		private static List<PropertyInfo> GetCustomFields<T>()
+		/// <typeparam name="TModel">Model type</typeparam>
+		private static List<PropertyInfo> GetCustomFields<TModel>()
 		{
 			// Get from or Add to the cache
-			var customFields = customFieldsCache.GetOrAdd(typeof(T), type =>
+			var customFields = customFieldsCache.GetOrAdd(typeof(TModel), type =>
 			{
 				return from cf in type.GetProperties()
 					   where cf.PropertyType.GetInterfaces().Contains(typeof(ICustomField))
@@ -139,11 +139,11 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Get Post Content property for specified model
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		private static PropertyInfo? GetPostContent<T>()
+		/// <typeparam name="TModel">Model type</typeparam>
+		private static Option<PropertyInfo> GetPostContent<TModel>()
 		{
 			// Get from or Add to the cache
-			var content = contentCache.GetOrAdd(typeof(T), type =>
+			var content = contentCache.GetOrAdd(typeof(TModel), type =>
 			{
 				return from c in type.GetProperties()
 					   where c.Name == nameof(WpPostEntity.Content)
@@ -153,10 +153,10 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return null;
+				return Option.None<PropertyInfo>().AddReason($"{nameof(WpPostEntity.Content)} property not found (model: {typeof(TModel)})."); ;
 			}
 
-			return content.Single();
+			return Option.Some(content.Single());
 		}
 
 		#endregion

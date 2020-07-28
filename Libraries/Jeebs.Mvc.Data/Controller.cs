@@ -22,6 +22,7 @@ namespace Jeebs.Mvc
 		/// </summary>
 		/// <param name="log">ILog</param>
 		/// <param name="db">TDb</param>
-		protected Controller(ILog log, TDb db) : base(log) => Db = db;
+		protected Controller(ILog log, TDb db) : base(log)
+			=> Db = db;
 	}
 }

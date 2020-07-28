@@ -29,14 +29,14 @@ namespace Jeebs.Data
 				lock (_)
 				{
 					// Perform the update
-					var result = r.Val switch
+					var result = r.Value switch
 					{
 						IEntityWithVersion e => UpdateWithVersion(w, r.OkV(e)),
 						_ => UpdateWithoutVersion(w, r)
 					};
 
 					// Add debug and result messages
-					var message = new Jm.Data.Update(typeof(T), r.Val.Id);
+					var message = new Jm.Data.UpdateMsg(typeof(T), r.Value.Id);
 					w.LogDebug(message);
 					result.Messages.Add(message);
 
@@ -46,7 +46,7 @@ namespace Jeebs.Data
 			}
 			catch (Exception ex)
 			{
-				return r.ErrorSimple(new Jm.Data.UpdateException(ex, typeof(T), r.Val.Id));
+				return r.False(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), r.Value.Id));
 			}
 			finally
 			{
@@ -63,7 +63,7 @@ namespace Jeebs.Data
 		private static IR<bool> UpdateWithVersion<T>(IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntityWithVersion
 		{
-			var poco = r.Val;
+			var poco = r.Value;
 
 			// Build query and increase the version number
 			var query = w.Adapter.UpdateSingle<T>();
@@ -74,10 +74,10 @@ namespace Jeebs.Data
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return r.OkSimple();
+				return r.True();
 			}
 
-			return r.ErrorSimple(new Jm.Data.UpdateError(typeof(T), poco.Id));
+			return r.False(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace Jeebs.Data
 		private static IR<bool> UpdateWithoutVersion<T>(IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
 		{
-			var poco = r.Val;
+			var poco = r.Value;
 
 			// Build query
 			var query = w.Adapter.UpdateSingle<T>();
@@ -99,10 +99,10 @@ namespace Jeebs.Data
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return r.OkSimple();
+				return r.True();
 			}
 
-			return r.ErrorSimple(new Jm.Data.UpdateError(typeof(T), poco.Id));
+			return r.False(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
 		}
 	}
 }

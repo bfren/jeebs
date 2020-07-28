@@ -21,7 +21,7 @@ namespace Jeebs.Data
 			where T : class, IEntity
 		{
 			// Get id
-			var id = r.Val;
+			var id = r.Value;
 
 			try
 			{
@@ -33,7 +33,7 @@ namespace Jeebs.Data
 				var result = w.Connection.QuerySingle<T>(query, param: new { id }, transaction: w.Transaction);
 
 				// Add debug and result messages
-				var message = new Jm.Data.Retrieve(typeof(T), id);
+				var message = new Jm.Data.RetrieveMsg(typeof(T), id);
 				w.LogDebug(message);
 				r.Messages.Add(message);
 
@@ -42,7 +42,7 @@ namespace Jeebs.Data
 			}
 			catch (Exception ex)
 			{
-				return r.ErrorNew<T>(new Jm.Data.RetrieveException(ex, typeof(T), id));
+				return r.Error<T>().AddMsg(new Jm.Data.RetrieveExceptionMsg(ex, typeof(T), id));
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace Jeebs.Data
 			where T : class, IEntity
 		{
 			// Get id
-			var id = r.Val;
+			var id = r.Value;
 
 			try
 			{
@@ -68,7 +68,7 @@ namespace Jeebs.Data
 				var result = await w.Connection.QuerySingleAsync<T>(query, param: new { id }, transaction: w.Transaction).ConfigureAwait(false);
 
 				// Add debug and result messages
-				var message = new Jm.Data.Retrieve(typeof(T), id);
+				var message = new Jm.Data.RetrieveMsg(typeof(T), id);
 				w.LogDebug(message);
 				r.Messages.Add(message);
 
@@ -77,7 +77,7 @@ namespace Jeebs.Data
 			}
 			catch (Exception ex)
 			{
-				return r.ErrorNew<T>(new Jm.Data.RetrieveException(ex, typeof(T), id));
+				return r.Error<T>().AddMsg(new Jm.Data.RetrieveExceptionMsg(ex, typeof(T), id));
 			}
 		}
 	}

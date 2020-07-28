@@ -11,26 +11,42 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public MsgList Messages { get; internal set; }
 
-		internal protected R() => Messages = new MsgList();
+		internal R()
+			=> Messages = new MsgList();
 
 		/// <summary>
 		/// Clear all messages
 		/// </summary>
-		public virtual void Dispose() => Messages.Clear();
+		public virtual void Dispose()
+			=> Messages.Clear();
 
 		/// <inheritdoc/>
-		public IError<TValue> Error() => Error<TValue>();
+		public IError<TValue> Error()
+			=> Error<TValue>();
 
 		/// <inheritdoc/>
-		public IError<TNext> Error<TNext>() => this switch
+		public IError<TNext> Error<TNext>()
+			=> this switch
+			{
+				IError<TNext> e => e,
+				_ => new RError<TNext> { Messages = Messages }
+			};
+
+		/// <inheritdoc/>
+		public IError<bool> False(IMsg? message = null)
 		{
-			IError<TNext> e => e,
-			_ => new RError<TNext> { Messages = Messages }
-		};
+			if (message is IMsg msg)
+			{
+				Messages.Add(msg);
+			}
+
+			return Error<bool>();
+		}
 
 		#region Explicit implementations
 
-		IError IR.Error() => Error();
+		IError IR.Error()
+			=> Error();
 
 		#endregion
 	}

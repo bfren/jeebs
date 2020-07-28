@@ -14,17 +14,19 @@ namespace Jm
 		/// <summary>
 		/// Value
 		/// </summary>
-		public TValue Val { get; }
+		public TValue Value { get; }
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="value">Value</param>
-		public WithValueMsg(TValue value) => Val = value;
+		public WithValueMsg(TValue value)
+			=> Value = value;
 
 		/// <summary>
 		/// Return <see cref="Val"/>.ToString() or (if null) base.ToString();
 		/// </summary>
-		public override string ToString() => Val?.ToString() ?? base.ToString();
+		public override string ToString()
+			=> Value?.ToString() ?? base.ToString();
 	}
 }

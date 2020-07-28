@@ -15,7 +15,8 @@ namespace Jeebs.Util.JsonConverters
 		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enum"/>
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
-		public override bool CanConvert(Type typeToConvert) => typeToConvert.IsSubclassOf(typeof(Enum));
+		public override bool CanConvert(Type typeToConvert)
+			=> typeToConvert.IsSubclassOf(typeof(Enum));
 
 		/// <summary>
 		/// Creates JsonConverter using Enum type as generic argument

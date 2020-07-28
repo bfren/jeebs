@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jm.WordPress.CustomField.Hydrate;
 
 namespace Jeebs.WordPress
 {
@@ -24,7 +25,7 @@ namespace Jeebs.WordPress
 		protected TextCustomField(string key, bool isRequired = false) : base(key, isRequired) { }
 
 		/// <inheritdoc/>
-		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
@@ -32,15 +33,15 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return await Result.FailureAsync($"Key not found in meta dictionary: '{Key}'.").ConfigureAwait(false);
+					return r.False().AddMsg(new MetaKeyNotFoundMsg(Key));
 				}
 
-				return await Result.SuccessAsync().ConfigureAwait(false);
+				return r.True();
 			}
 
 			// Set value from met and return success
 			ValueObj = ValueStr = meta[Key];
-			return await Result.SuccessAsync().ConfigureAwait(false);
+			return r.True();
 		}
 	}
 }

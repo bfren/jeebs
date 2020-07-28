@@ -26,6 +26,12 @@ namespace Jeebs
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		/// <param name="value">Result value</param>
 		IOkV<TNext> OkV<TNext>(TNext value);
+
+		/// <summary>
+		/// Shorthand to return a 'true' result
+		/// </summary>
+		/// <param name="message">[Optional] Message to add</param>
+		IOk<bool> True(IMsg? message = null);
 	}
 
 	/// <summary>
@@ -38,5 +44,12 @@ namespace Jeebs
 		/// Return an <see cref="IOk{TValue}"/> result with the current value type
 		/// </summary>
 		new IOk<TValue> Ok();
+
+		/// <summary>
+		/// Add state to the result
+		/// </summary>
+		/// <typeparam name="TState">Result state type</typeparam>
+		/// <param name="state">Result state</param>
+		IOk<TValue, TState> WithState<TState>(TState state);
 	}
 }

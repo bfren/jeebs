@@ -52,9 +52,7 @@ namespace Jeebs.Mvc.TagHelpers
 			IUrlHelperFactory urlHelperFactory,
 			HtmlEncoder htmlEncoder)
 			: base(urlHelperFactory, htmlEncoder)
-		{
-			this.fileVersionProvider = fileVersionProvider;
-		}
+			=> this.fileVersionProvider = fileVersionProvider;
 
 		/// <summary>
 		/// Process the tag helper

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Jeebs;
 
 namespace F
 {
@@ -11,10 +12,9 @@ namespace F
 		/// <summary>
 		/// Parse a boolean value
 		/// </summary>
-		/// <param name="value">String value to parse</param>
-		/// <param name="result">Parsed result</param>
+		/// <param name="value">Value to parse</param>
 		/// <returns>True / false</returns>
-		public static bool TryParse<T>(T value, out bool result)
+		public static Option<bool> Parse<T>(T value)
 			where T : notnull
 		{
 			// String
@@ -27,18 +27,18 @@ namespace F
 			// Match checkbox binding from MVC form
 			if (trueValues.Contains(val))
 			{
-				result = true;
-				return true;
+				return Option.Some(true);
 			}
 			else if (falseValues.Contains(val))
 			{
-				result = false;
-				return true;
+				return Option.Some(false);
 			}
-			else
+			else if (bool.TryParse(val, out bool result))
 			{
-				return bool.TryParse(val, out result);
+				return Option.Some(result);
 			}
+
+			return Option.None<bool>();
 		}
 	}
 }

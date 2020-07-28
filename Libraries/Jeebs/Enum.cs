@@ -37,7 +37,8 @@ namespace Jeebs
 		/// <summary>
 		/// Create cache object
 		/// </summary>
-		static Enum() => cache = new ConcurrentDictionary<string, object>();
+		static Enum()
+			=> cache = new ConcurrentDictionary<string, object>();
 
 		/// <summary>
 		/// Check whether or not the specified name matches the given value
@@ -63,7 +64,6 @@ namespace Jeebs
 		/// <typeparam name="T">Enum value type</typeparam>
 		/// <param name="name">Enum name</param>
 		/// <param name="values">Enum values to check name against</param>
-		/// <exception cref="Jx.ParseException">If string <paramref name="name"/> is not a valid value of Enum type <typeparamref name="T"/>.</exception>
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
 		protected static Option<T> Parse<T>(string name, T[] values)
 			where T : Enum
@@ -98,17 +98,7 @@ namespace Jeebs
 		/// <param name="values">Enum values to check name against</param>
 		protected static bool IsRegistered<T>(string name, T[] values)
 			where T : Enum
-		{
-			try
-			{
-				Parse(name, values);
-				return true;
-			}
-			catch (Jx.ParseException)
-			{
-				return false;
-			}
-		}
+			=> Parse(name, values) is Some<T>;
 
 		/// <summary>
 		/// Parse Arguments

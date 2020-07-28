@@ -69,9 +69,7 @@ namespace Jeebs.Mvc.TagHelpers
 		/// </summary>
 		/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
 		/// <param name="htmlEncoder">HtmlEncoder</param>
-		public NavMenuTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder)
-		{
-		}
+		public NavMenuTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder) { }
 
 		/// <summary>
 		/// Process TagHelper

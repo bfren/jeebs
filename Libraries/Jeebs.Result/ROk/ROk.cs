@@ -10,27 +10,49 @@ namespace Jeebs
 		internal ROk() { }
 
 		/// <inheritdoc cref="IOk{TValue}.Ok"/>
-		public IOk<TValue> Ok() => Ok<TValue>();
+		public IOk<TValue> Ok()
+			=> Ok<TValue>();
 
 		/// <inheritdoc cref="IOk.Ok{TNext}"/>
-		public IOk<TNext> Ok<TNext>() => this switch
-		{
-			IOk<TNext> ok => ok,
-			_ => new ROk<TNext> { Messages = Messages }
-		};
+		public IOk<TNext> Ok<TNext>()
+			=> this switch
+			{
+				IOk<TNext> ok => ok,
+				_ => new ROk<TNext> { Messages = Messages }
+			};
+
+		/// <inheritdoc/>
+		public IOk<TValue, TState> WithState<TState>(TState state)
+			=> new ROk<TValue, TState>(state) { Messages = Messages };
 
 		/// <inheritdoc cref="IOk.OkV{TNext}(TNext)"/>
-		public IOkV<TNext> OkV<TNext>(TNext value) => new ROkV<TNext>(value) { Messages = Messages };
+		public IOkV<TNext> OkV<TNext>(TNext value)
+			=> new ROkV<TNext>(value) { Messages = Messages };
+
+		/// <inheritdoc/>
+		public IOk<bool> True(IMsg? message = null)
+		{
+			if (message is IMsg msg)
+			{
+				Messages.Add(msg);
+			}
+
+			return Ok<bool>();
+		}
 
 		#region Explicit implementations
 
-		IOk IOk.Ok() => Ok<TValue>();
+		IOk IOk.Ok()
+			=> Ok<TValue>();
 
-		IOk<TNext> IOk.Ok<TNext>() => Ok<TNext>();
+		IOk<TNext> IOk.Ok<TNext>()
+			=> Ok<TNext>();
 
-		IOk<TValue> IOk<TValue>.Ok() => Ok<TValue>();
+		IOk<TValue> IOk<TValue>.Ok()
+			=> Ok<TValue>();
 
-		IOkV<TNext> IOk.OkV<TNext>(TNext value) => OkV(value);
+		IOkV<TNext> IOk.OkV<TNext>(TNext value)
+			=> OkV(value);
 
 		#endregion
 	}

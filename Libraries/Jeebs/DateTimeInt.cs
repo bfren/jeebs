@@ -48,13 +48,15 @@ namespace Jeebs
 		/// <param name="day">Day</param>
 		/// <param name="hour">Hour</param>
 		/// <param name="minute">Minute</param>
-		public DateTimeInt(int year, int month, int day, int hour, int minute) => Init(year, month, day, hour, minute);
+		public DateTimeInt(int year, int month, int day, int hour, int minute)
+			=> Init(year, month, day, hour, minute);
 
 		/// <summary>
 		/// Construct object using a DateTime object
 		/// </summary>
 		/// <param name="dt">DateTime</param>
-		public DateTimeInt(DateTime dt) => Init(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute);
+		public DateTimeInt(DateTime dt)
+			=> Init(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute);
 
 		/// <summary>
 		/// Construct object using a nullable DateTime object
@@ -183,20 +185,23 @@ namespace Jeebs
 		/// <param name="start">Substring start</param>
 		/// <param name="length">Substring length</param>
 		/// <returns>Integer parsed part of a string</returns>
-		private int GetPart(string val, int start, int length) => int.Parse(val.Substring(start, length));
+		private int GetPart(string val, int start, int length)
+			=> int.Parse(val.Substring(start, length));
 
 		/// <summary>
 		/// Outputs object values as correctly formatted string
 		/// If the object is not valid, returns an empty string
 		/// </summary>
 		/// <returns>String value of object, or empty string</returns>
-		public override string ToString() => IsValidDateTime() ? $"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}" : string.Empty;
+		public override string ToString()
+			=> IsValidDateTime() ? $"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}" : string.Empty;
 
 		/// <summary>
 		/// Outputs object values as long
 		/// If the object is not valid, returns 0
 		/// </summary>
 		/// <returns>Long value of object, or zero</returns>
-		public long ToLong() => IsValidDateTime() ? long.Parse(ToString()) : 0;
+		public long ToLong()
+			=> IsValidDateTime() ? long.Parse(ToString()) : 0;
 	}
 }

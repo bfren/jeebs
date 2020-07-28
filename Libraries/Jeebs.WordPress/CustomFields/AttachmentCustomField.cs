@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Enums;
+using Jm.WordPress.CustomField.Hydrate;
 
 namespace Jeebs.WordPress
 {
@@ -14,69 +15,95 @@ namespace Jeebs.WordPress
 	public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
 		/// <inheritdoc/>
-		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, isRequired) => ValueObj = new Attachment();
+		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, isRequired)
+			=> ValueObj = new Attachment();
 
 		/// <inheritdoc/>
-		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
+			// First, get the Attachment Post ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
 			if (!meta.ContainsKey(Key))
 			{
 				if (IsRequired)
 				{
-					return Result.Failure($"Key not found in meta dictionary: '{Key}'.");
+					return r.False(new MetaKeyNotFoundMsg(Key));
 				}
 
-				return Result.Success();
+				return r.True();
 			}
 
-			ValueStr = meta[Key];
+			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
+			return await r
+				.LinkMap(parseAttachmentPostId)
+				.LinkMapAsync(getAttachment)
+				.LinkMapAsync(hydrate);
 
-			// Get meta value as post ID
-			if (!long.TryParse(ValueStr, out var postId))
+			//
+			// Parse the Attachment Post ID
+			//
+			IR<long> parseAttachmentPostId(IOk r)
 			{
-				return Result.Failure($"'{ValueStr}' is not a valid Post ID.");
+				if (!long.TryParse(ValueStr, out var attachmentPostId))
+				{
+					return r.Error<long>().AddMsg(new ValueIsInvalidPostIdMsg(ValueStr));
+				}
+
+				return r.OkV(attachmentPostId);
 			}
 
-			// Create new query
-			using var w = db.GetQueryWrapper();
-
-			// Get matching posts
-			var result = await w.QueryPostsAsync<Attachment>(modify: opt =>
+			//
+			// Get the Attachment by Post ID
+			//
+			async Task<IR<Attachment>> getAttachment(IOkV<long> r)
 			{
-				opt.Id = postId;
-				opt.Type = PostType.Attachment;
-				opt.Status = PostStatus.Inherit;
-				opt.Limit = 1;
-			}).ConfigureAwait(false);
+				// Create new query
+				using var w = db.GetQueryWrapper();
 
-			if (result.Err is IErrorList)
-			{
-				return Result.Failure(result.Err);
+				// Get matching posts
+				var attachments = await w.QueryPostsAsync<Attachment>(r, modify: opt =>
+				{
+					opt.Id = r.Value;
+					opt.Type = PostType.Attachment;
+					opt.Status = PostStatus.Inherit;
+					opt.Limit = 1;
+				});
+
+				// If there is more than one attachment, return an error
+				return attachments switch
+				{
+					IOkV<List<Attachment>> x when x.Value.Count == 1 => x.OkV(x.Value.Single()),
+					{ } x => x.Error<Attachment>().AddMsg().OfType<MultipleAttachmentsFound>()
+				};
 			}
 
-			// Get attachment (there should be only one)
-			ValueObj = result.Val.Single();
-
-			if (ValueObj.Meta.TryGetValue(Constants.AttachedFile, out var urlPath))
+			//
+			// Hydrate the custom field using Attachment info
+			//
+			async Task<IR<bool>> hydrate(IOkV<Attachment> r)
 			{
-				ValueObj.UrlPath = urlPath;
-			}
+				ValueObj = r.Value;
 
-			if (ValueObj.Meta.TryGetValue(Constants.AttachmentMetadata, out var info))
-			{
-				ValueObj.Info = info;
-			}
+				if (ValueObj.Meta.TryGetValue(Constants.AttachedFile, out var urlPath))
+				{
+					ValueObj.UrlPath = urlPath;
+				}
 
-			// Return success
-			return Result.Success();
+				if (ValueObj.Meta.TryGetValue(Constants.AttachmentMetadata, out var info))
+				{
+					ValueObj.Info = info;
+				}
+
+				return r.True();
+			}
 		}
 
 		/// <summary>
 		/// Return term Title
 		/// </summary>
-		public override string ToString() => ValueObj?.Title ?? base.ToString();
+		public override string ToString()
+			=> ValueObj?.Title ?? base.ToString();
 
 		/// <summary>
 		/// Attachment class

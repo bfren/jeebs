@@ -60,7 +60,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		{
 			var regex = new Regex(@"^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*");
 			var m = regex.Match(uri.AbsoluteUri);
-			
+
 			if (m.Success && m.Groups[1] is Group g && g.Value is string v)
 			{
 				return v;

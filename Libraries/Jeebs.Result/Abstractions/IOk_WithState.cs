@@ -5,10 +5,10 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Result success, used when chain has a state
+	/// Result success, used when result has a state
 	/// </summary>
 	/// <typeparam name="TValue">Result value type</typeparam>
-	/// <typeparam name="TState">Chain state type</typeparam>
+	/// <typeparam name="TState">Result state type</typeparam>
 	public interface IOk<TValue, TState> : IOk<TValue>, IR<TValue, TState>
 	{
 		/// <summary>
@@ -25,7 +25,7 @@ namespace Jeebs
 		/// <summary>
 		/// Return an <see cref="IOkV{TValue, TState}"/> result
 		/// </summary>
-		/// <typeparam name="TValue">Next result value type</typeparam>
+		/// <typeparam name="TNext">Next result value type</typeparam>
 		/// <param name="value">Result value</param>
 		new IOkV<TNext, TState> OkV<TNext>(TNext value);
 
@@ -39,5 +39,11 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		new IError<TNext, TState> Error<TNext>();
+
+		/// <summary>
+		/// Shorthand to return a 'true' result
+		/// </summary>
+		/// <param name="message">[Optional] Message to add</param>
+		new IOk<bool, TState> True(IMsg? message = null);
 	}
 }

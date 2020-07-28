@@ -13,10 +13,10 @@ namespace Tests.Jeebs.Result2
 		{
 			// Arrange
 			var r = R.Ok();
-			var with = r.With();
+			var with = r.AddMsg();
 
 			// Act
-			with.Message<MsgTest>();
+			with.OfType<MsgTest>();
 
 			// Assert
 			Assert.True(r.Messages.Contains<MsgTest>());
@@ -27,7 +27,7 @@ namespace Tests.Jeebs.Result2
 		{
 			// Arrange
 			var r = R.Ok();
-			var with = r.With();
+			var with = r.AddMsg();
 			var msg = new MsgTest();
 
 			// Act

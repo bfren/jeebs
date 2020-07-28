@@ -14,12 +14,16 @@ namespace Jeebs
 		/// <summary>
 		/// Get the version of the assembly the calling type belongs to
 		/// </summary>
-		public static Version V { get => version.Value; }
+		public static Version V
+		{
+			get => version.Value;
+		}
 
 		/// <summary>
 		/// Lazy property to avoid multiple reflection calls
 		/// </summary>
-		private static readonly Lazy<Version> version = new Lazy<Version>(() => typeof(T).GetTypeInfo().Assembly.GetName().Version);
+		private static readonly Lazy<Version> version = new Lazy<Version>(()
+			=> typeof(T).GetTypeInfo().Assembly.GetName().Version);
 
 		/// <summary>
 		/// Return a short version string (e.g. v1.1)

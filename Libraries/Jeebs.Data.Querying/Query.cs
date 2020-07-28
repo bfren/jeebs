@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Util;
@@ -31,7 +32,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<long>> GetCountAsync(IOk<dynamic> r)
+		public async Task<IR<long>> GetCountAsync(IOk r)
 		{
 			// Store original SELECT
 			var originalSelect = parts.Select;
@@ -51,26 +52,37 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<T>>> ExecuteQueryAsync(IOk<dynamic> r)
+		public async Task<IR<List<T>>> ExecuteQueryAsync(IOk r)
 		{
 			// Get query
 			var query = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute and return
-			return await unitOfWork.QueryAsync<T>(r, query, parts.Parameters);
+			return await unitOfWork.QueryAsync<T>(r, query, parts.Parameters) switch
+			{
+				IOkV<IEnumerable<T>> x => x.OkV(x.Value.ToList()),
+				{ } x => x.Error<List<T>>()
+			};
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk<dynamic> r, long page)
+		public async Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk r, long page)
 		{
+			// Run chain
+			return await r
+				.LinkMapAsync(getCount)
+				.LinkAsync(getPagingValues)
+				.LinkMapAsync(getItems)
+				.LinkMapAsync(getPagedList);
+
 			// Get the count
-			async Task<IR<long>> getCount(IOk<dynamic> r) => await GetCountAsync(r);
+			async Task<IR<long>> getCount(IOk r) => await GetCountAsync(r);
 
 			// Get paging values
 			async Task getPagingValues(IOkV<long> r)
 			{
 				// Create values object
-				var values = new PagingValues(r.Val, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
+				var values = new PagingValues(r.Value, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
 
 				// Set the OFFSET and LIMIT values
 				parts.Offset = (values.Page - 1) * values.ItemsPer;
@@ -78,24 +90,17 @@ namespace Jeebs.Data
 			}
 
 			// Get the items
-			async Task<IR<IEnumerable<T>>> getItems(IOkV<long> r)
+			async Task<IR<List<T>>> getItems(IOkV<long> r)
 			{
-				return await ExecuteQueryAsync(r.OkNew<dynamic>()).ConfigureAwait(false);
+				return await ExecuteQueryAsync(r.Ok()).ConfigureAwait(false);
 			}
 
 			// Convert to a paged list
-			async Task<IR<PagedList<T>>> getPagedList(IOkV<IEnumerable<T>> r)
+			async Task<IR<PagedList<T>>> getPagedList(IOkV<List<T>> r)
 			{
-				var list = new PagedList<T>(r.Val);
+				var list = new PagedList<T>(r.Value);
 				return r.OkV(list);
 			}
-
-			// Run chain
-			return await r
-				.LinkMapAsync(getCount)
-				.LinkAsync(getPagingValues)
-				.LinkMapAsync(getItems)
-				.LinkMapAsync(getPagedList);
 		}
 	}
 }

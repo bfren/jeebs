@@ -21,7 +21,7 @@ namespace Jeebs.Data
 			where T : class, IEntity
 		{
 			// Get poco
-			var poco = r.Val;
+			var poco = r.Value;
 
 			try
 			{
@@ -34,19 +34,19 @@ namespace Jeebs.Data
 				if (rowsAffected == 1)
 				{
 					// Add debug and result messages
-					var message = new Jm.Data.Retrieve(typeof(T), poco.Id);
+					var message = new Jm.Data.RetrieveMsg(typeof(T), poco.Id);
 					w.LogDebug(message);
 					r.Messages.Add(message);
 
 					// Return
-					return r.OkSimple();
+					return r.True();
 				}
 
-				return r.ErrorSimple(new Jm.Data.DeleteError(typeof(T), poco.Id));
+				return r.False(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
 			}
 			catch (Exception ex)
 			{
-				return r.ErrorSimple(new Jm.Data.DeleteException(ex, typeof(T), poco.Id));
+				return r.False(new Jm.Data.DeleteExceptionMsg(ex, typeof(T), poco.Id));
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace Jeebs.Data
 			where T : class, IEntity
 		{
 			// Get poco
-			var poco = r.Val;
+			var poco = r.Value;
 
 			try
 			{
@@ -73,19 +73,19 @@ namespace Jeebs.Data
 				if (rowsAffected == 1)
 				{
 					// Add debug and result messages
-					var message = new Jm.Data.Retrieve(typeof(T), poco.Id);
+					var message = new Jm.Data.RetrieveMsg(typeof(T), poco.Id);
 					w.LogDebug(message);
 					r.Messages.Add(message);
 
 					// Return
-					return r.OkSimple();
+					return r.True();
 				}
 
-				return r.ErrorSimple(new Jm.Data.DeleteError(typeof(T), poco.Id));
+				return r.False(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
 			}
 			catch (Exception ex)
 			{
-				return r.ErrorSimple(new Jm.Data.DeleteException(ex, typeof(T), poco.Id));
+				return r.False(new Jm.Data.DeleteExceptionMsg(ex, typeof(T), poco.Id));
 			}
 		}
 	}

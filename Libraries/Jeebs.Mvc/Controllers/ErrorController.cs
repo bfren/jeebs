@@ -23,16 +23,15 @@ namespace Jeebs.Mvc
 		/// </summary>
 		/// <param name="log">ILog</param>
 		/// <param name="viewEngine">ICompositeViewEngine</param>
-		protected ErrorController(ILog log, ICompositeViewEngine viewEngine): base(log)
-		{
-			this.viewEngine = viewEngine;
-		}
+		protected ErrorController(ILog log, ICompositeViewEngine viewEngine) : base(log)
+			=> this.viewEngine = viewEngine;
 
 		/// <summary>
 		/// Default error view
 		/// </summary>
 		/// <returns>IActionResult</returns>
-		public async Task<IActionResult> Index() => await Execute(StatusCodes.Status500InternalServerError).ConfigureAwait(false);
+		public async Task<IActionResult> Index()
+			=> await Execute(StatusCodes.Status500InternalServerError).ConfigureAwait(false);
 
 		/// <summary>
 		/// Execute error view

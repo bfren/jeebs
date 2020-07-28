@@ -41,10 +41,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string Escape(object element) => Adapter.SplitAndEscape(element.ToString());
+		public string Escape(object element)
+			=> Adapter.SplitAndEscape(element.ToString());
 
 		/// <inheritdoc/>
-		public string Escape(params string?[] elements) => Adapter.EscapeAndJoin(elements);
+		public string Escape(params string?[] elements)
+			=> Adapter.EscapeAndJoin(elements);
 
 		/// <inheritdoc/>
 		public void Commit()
@@ -83,7 +85,8 @@ namespace Jeebs.Data
 		#region Logging & Failure
 
 		/// <inheritdoc/>
-		public void LogDebug<T>(T message) where T : IMessage => log.Debug(message.ToString());
+		public void LogDebug<T>(T message) where T : IMsg
+			=> log.Debug(message.ToString());
 
 		/// <inheritdoc/>
 		public void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
@@ -96,7 +99,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		private IError<T> Fail<T>(IOk<dynamic> r, Exception ex, string query, object? parameters = null)
+		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters = null)
 		{
 			// Rollback transaction
 			Rollback();
@@ -106,7 +109,7 @@ namespace Jeebs.Data
 			log.Error(ex, message.ToString());
 
 			// Return error
-			return r.ErrorNew<T>(message);
+			return r.Error<T>().AddMsg(message);
 		}
 
 		#endregion
@@ -114,7 +117,7 @@ namespace Jeebs.Data
 		#region R: Query
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -132,7 +135,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -150,7 +153,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -168,7 +171,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -190,7 +193,7 @@ namespace Jeebs.Data
 		#region R: Single
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text)
+		public IR<T> Single<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -208,7 +211,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> SingleAsync<T>(IOk<dynamic> r, string query, object parameters, CommandType commandType = CommandType.Text)
+		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -230,7 +233,7 @@ namespace Jeebs.Data
 		#region Execute
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<int> Execute(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -248,7 +251,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<int>> ExecuteAsync(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -266,7 +269,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -284,7 +287,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk<dynamic> r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{

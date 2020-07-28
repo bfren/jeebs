@@ -10,21 +10,39 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public TState State { get; }
 
-		internal protected R(TState state) => State = state;
+		internal R(TState state)
+			=> State = state;
 
 		/// <inheritdoc cref="IR.Error"/>
-		new public IError<TValue, TState> Error() => Error<TValue>();
+		new public IError<TValue, TState> Error()
+			=> Error<TValue>();
 
 		/// <inheritdoc cref="IR.Error{TValue}"/>
-		new public IError<TNext, TState> Error<TNext>() => this switch
+		new public IError<TNext, TState> Error<TNext>()
+			=> this switch
+			{
+				IError<TNext, TState> e => e,
+				_ => new RError<TNext, TState>(State) { Messages = Messages }
+			};
+
+		/// <inheritdoc cref="IR.Error{TNext}"/>
+		new public IError<bool, TState> False(IMsg? message = null)
 		{
-			IError<TNext, TState> e => e,
-			_ => new RError<TNext, TState>(State) { Messages = Messages }
-		};
+			if (message is IMsg msg)
+			{
+				Messages.Add(msg);
+			}
+
+			return Error<bool>();
+		}
 
 		#region Explicit implementations
 
-		IError<TValue, TState> IR<TValue, TState>.Error() => Error();
+		IError<TValue, TState> IR<TValue, TState>.Error()
+			=> Error();
+
+		IError<bool> IR.False(IMsg? message)
+			=> False(message);
 
 		#endregion
 	}

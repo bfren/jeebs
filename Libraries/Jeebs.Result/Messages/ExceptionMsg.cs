@@ -33,6 +33,7 @@ namespace Jm
 		/// <summary>
 		/// Output Exception type and message
 		/// </summary>
-		public override string ToString() => $"{ExceptionType}: {ExceptionText}";
+		public override string ToString()
+			=> $"{ExceptionType}: {ExceptionText}";
 	}
 }

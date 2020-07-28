@@ -18,7 +18,8 @@ namespace Jeebs.Cryptography
 		/// </summary>
 		/// <param name="value">Value to encrypt</param>
 		/// <param name="key">Encryption key</param>
-		public Encrypted(T value, string key) : base(value) => Lock(key);
+		public Encrypted(T value, string key) : base(value)
+			=> Lock(key);
 
 		/// <summary>
 		/// Decrypt value

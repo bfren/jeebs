@@ -14,44 +14,38 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Query Taxonomy
 		/// </summary>
-		/// <typeparam name="T">Term type</typeparam>
+		/// <typeparam name="TModel">Term type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public async Task<IResult<List<T>>> QueryTaxonomyAsync<T>(Action<QueryTaxonomy.Options>? modifyOptions = null)
+		public async Task<IR<List<TModel>>> QueryTaxonomyAsync<TModel>(IOk r, Action<QueryTaxonomy.Options>? modifyOptions = null)
 		{
 			// Get terms
 			var query = StartNewQuery()
-				.WithModel<T>()
+				.WithModel<TModel>()
 				.WithOptions(modifyOptions)
-				.WithParts(new QueryTaxonomy.Builder<T>(db))
+				.WithParts(new QueryTaxonomy.Builder<TModel>(db))
 				.GetQuery();
 
 			// Execute query
-			var results = await query.ExecuteQueryAsync().ConfigureAwait(false);
-			if (results.Err is IErrorList)
+			return await query.ExecuteQueryAsync(r) switch
 			{
-				return Result.Failure<List<T>>(results.Err);
-			}
-
-			// If nothing matches, return Not Found
-			if (!results.Val.Any())
-			{
-				return Result.NotFound<List<T>>();
-			}
-
-			// Return success
-			return Result.Success(results.Val.ToList());
+				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<Jm.NotFoundMsg>(),
+				IOkV<List<TModel>> x => x,
+				{ } x => x.Error(),
+			};
 		}
 
 		/// <summary>
 		/// Simple query - get terms from a particular taxonomy, with optional sorting
 		/// </summary>
-		/// <typeparam name="T">Term type</typeparam>
+		/// <typeparam name="TModel">Term type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="taxonomy">Taxonomy to get</param>
 		/// <param name="all">If true, will return all terms (even if the count is 0)</param>
 		/// <param name="sort">[Optional] Sort columns</param>
-		public async Task<IResult<List<T>>> QueryTaxonomyAsync<T>(Taxonomy taxonomy, bool all = true, params (string column, SortOrder order)[] sort)
+		public async Task<IR<List<TModel>>> QueryTaxonomyAsync<TModel>(IOk r, Taxonomy taxonomy, bool all = true, params (string column, SortOrder order)[] sort)
 		{
-			return await QueryTaxonomyAsync<T>(opt =>
+			return await QueryTaxonomyAsync<TModel>(r, opt =>
 			{
 				opt.Taxonomy = taxonomy;
 				opt.Sort = sort;
@@ -60,7 +54,7 @@ namespace Jeebs.WordPress
 				{
 					opt.CountAtLeast = null;
 				}
-			}).ConfigureAwait(false);
+			});
 		}
 	}
 }

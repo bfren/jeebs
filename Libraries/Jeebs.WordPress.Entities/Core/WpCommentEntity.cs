@@ -13,7 +13,11 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id { get => CommentId; set => CommentId = value; }
+		public long Id
+		{
+			get => CommentId;
+			set => CommentId = value;
+		}
 
 		/// <summary>
 		/// CommentId

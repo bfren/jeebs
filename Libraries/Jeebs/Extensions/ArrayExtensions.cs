@@ -14,17 +14,17 @@ namespace Jeebs
 		/// Extend an array with additional items
 		/// </summary>
 		/// <typeparam name="T">Type</typeparam>
-		/// <param name="array">Original array</param>
+		/// <param name="this">Original array</param>
 		/// <param name="additionalItems">Additional items</param>
 		/// <returns>Extended array</returns>
-		public static T[] ExtendWith<T>(this T[] array, params T[] additionalItems)
+		public static T[] ExtendWith<T>(this T[] @this, params T[] additionalItems)
 		{
 			if (additionalItems is null)
 			{
-				return array;
+				return @this;
 			}
 
-			return array.Concat(additionalItems).ToArray();
+			return @this.Concat(additionalItems).ToArray();
 		}
 
 		/// <summary>
@@ -32,11 +32,11 @@ namespace Jeebs
 		/// See https://forums.asp.net/post/4869658.aspx
 		/// </summary>
 		/// <typeparam name="T">Type</typeparam>
-		/// <param name="array">Array to shuffle</param>
+		/// <param name="this">Array to shuffle</param>
 		/// <returns>Shuffled array</returns>
-		public static T[] Shuffle<T>(this T[] array)
+		public static T[] Shuffle<T>(this T[] @this)
 		{
-			var shuffled = array.ToArray();
+			var shuffled = @this.ToArray();
 			var random = new Random();
 
 			for (int i = shuffled.Length; i > 1; i--)

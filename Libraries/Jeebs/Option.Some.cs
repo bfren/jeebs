@@ -15,6 +15,7 @@ namespace Jeebs
 		/// </summary>
 		public T Value { get; }
 
-		internal Some(T value) => Value = value;
+		internal Some(T value)
+			=> Value = value;
 	}
 }

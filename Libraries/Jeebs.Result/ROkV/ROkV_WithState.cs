@@ -10,6 +10,14 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public TValue Value { get; }
 
-		internal ROkV(TValue value, TState state) : base(state) => Value = value;
+		internal ROkV(TValue value, TState state) : base(state)
+			=> Value = value;
+
+		#region Explicit implementations
+
+		IOkV<TValue, TNext> IOkV<TValue>.WithState<TNext>(TNext state)
+			=> new ROkV<TValue, TNext>(Value, state) { Messages = Messages };
+
+		#endregion
 	}
 }

@@ -20,10 +20,16 @@ namespace Jeebs
 		IError Error();
 
 		/// <summary>
-		/// Return an <see cref="IError{TNext}"/> result with a new value type
+		/// Return an <see cref="IError{TValue}"/> result with a new value type
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		IError<TNext> Error<TNext>();
+
+		/// <summary>
+		/// Shorthand to return a 'false' result
+		/// </summary>
+		/// <param name="message">[Optional] Message to add</param>
+		IError<bool> False(IMsg? message = null);
 	}
 
 	/// <summary>
@@ -32,7 +38,9 @@ namespace Jeebs
 	/// <typeparam name="TValue">Result value type</typeparam>
 	public interface IR<TValue> : IR
 	{
-		/// <inheritdoc cref="IR.Error"/>
+		/// <summary>
+		/// Return an <see cref="IError{TValue}"/> with the current value type
+		/// </summary>
 		new IError<TValue> Error();
 	}
 }

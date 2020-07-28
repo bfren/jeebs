@@ -11,7 +11,12 @@ namespace Jeebs.WordPress.Entities
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id { get => OptionId; set => OptionId = value; }
+		public long Id
+		{
+			get => OptionId;
+			set => OptionId = value;
+		}
+
 		/// <summary>
 		/// OptionId
 		/// </summary>

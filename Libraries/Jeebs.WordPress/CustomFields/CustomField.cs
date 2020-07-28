@@ -38,11 +38,12 @@ namespace Jeebs.WordPress
 		}
 
 		/// <inheritdoc/>
-		public abstract Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
+		public abstract Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)
 		/// </summary>
-		public override string ToString() => ValueObj?.ToString() ?? (ValueStr ?? Key);
+		public override string ToString()
+			=> ValueObj?.ToString() ?? (ValueStr ?? Key);
 	}
 }

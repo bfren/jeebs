@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities;
+using Jm.WordPress.CustomField.Hydrate;
 
 namespace Jeebs.WordPress
 {
@@ -17,43 +18,68 @@ namespace Jeebs.WordPress
 		protected TermCustomField(string key, bool isRequired = false) : base(key, isRequired) => ValueObj = new Term();
 
 		/// <inheritdoc/>
-		public override async Task<IResult<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
+			// First, get the Term ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
 			if (!meta.ContainsKey(Key))
 			{
 				if (IsRequired)
 				{
-					return Result.Failure($"Key not found in meta dictionary: '{Key}'.");
+					return r.False(new MetaKeyNotFoundMsg(Key));
 				}
 
-				return Result.Success();
+				return r.True();
 			}
 
-			ValueStr = meta[Key];
+			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
+			return await r
+				.LinkMap(parseTermId)
+				.LinkMapAsync(getTerm)
+				.LinkMapAsync(hydrate);
 
-			// Get meta value as post ID
-			if (!long.TryParse(ValueStr, out var termId))
+			//
+			// Parse the Term ID
+			//
+			IR<long> parseTermId(IOk r)
 			{
-				return Result.Failure($"'{ValueStr}' is not a valid Term ID.");
+				if (!long.TryParse(ValueStr, out var termId))
+				{
+					return r.Error<long>().AddMsg(new ValueIsInvalidPostIdMsg(ValueStr));
+				}
+
+				return r.OkV(termId);
 			}
 
-			// Start a new query
-			using var w = db.GetQueryWrapper();
-
-			// Get terms
-			var result = await w.QueryTaxonomyAsync<Term>(opt => opt.Id = termId).ConfigureAwait(false);
-			if (result.Err is IErrorList)
+			//
+			// Get the Term by ID
+			//
+			async Task<IR<Term>> getTerm(IOkV<long> r)
 			{
-				return Result.Failure(result.Err);
+				// Create new query
+				using var w = db.GetQueryWrapper();
+
+				// Get matching terms
+				var terms = await w.QueryPostsAsync<Term>(r, modify: opt => opt.Id = r.Value);
+
+				// If there is more than one term, return an error
+				return terms switch
+				{
+					IOkV<List<Term>> x when x.Value.Count == 1 => x.OkV(x.Value.Single()),
+					{ } x => x.Error<Term>().AddMsg().OfType<MultipleTermsFound>()
+				};
 			}
 
-			// Get term
-			ValueObj = result.Val.Single();
-
-			// Return success
-			return Result.Success();
+			//
+			// Hydrate the custom field using Term info
+			//
+			async Task<IR<bool>> hydrate(IOkV<Term> r)
+			{
+				// Get term
+				ValueObj = r.Value;
+				return r.True();
+			}
 		}
 
 		/// <summary>

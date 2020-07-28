@@ -20,7 +20,7 @@ namespace Jeebs.Data
 		{
 			// Get values
 			var w = r.State;
-			var poco = r.Val;
+			var poco = r.Value;
 
 			try
 			{
@@ -37,7 +37,7 @@ namespace Jeebs.Data
 			catch (Exception ex)
 			{
 				// Return error
-				return r.ErrorNew<long>(new Jm.Data.CreateException(ex, typeof(T)));
+				return r.Error<long>().AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T)));
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace Jeebs.Data
 		{
 			// Get values
 			var w = r.State;
-			var poco = r.Val;
+			var poco = r.Value;
 
 			try
 			{
@@ -67,7 +67,7 @@ namespace Jeebs.Data
 			catch (Exception ex)
 			{
 				// Return error
-				return r.ErrorNew<long>(new Jm.Data.CreateException(ex, typeof(T)));
+				return r.Error<long>().AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T)));
 			}
 		}
 
@@ -79,9 +79,9 @@ namespace Jeebs.Data
 		private static IR<long, IUnitOfWork> CheckId<T>(IOkV<long, IUnitOfWork> r)
 		{
 			// Check ID and return error
-			if (r.Val == 0)
+			if (r.Value == 0)
 			{
-				return r.Error(new Jm.Data.CreateError(typeof(T)));
+				return r.Error().AddMsg(new Jm.Data.CreateErrorMsg(typeof(T)));
 			}
 
 			// Continue
@@ -110,11 +110,10 @@ namespace Jeebs.Data
 			var w = r.State;
 
 			// Add create message
-			r.Messages.Add(new Jm.Data.Create(typeof(T), r.Val));
+			r.Messages.Add(new Jm.Data.CreateMsg(typeof(T), r.Value));
 
 			// Get fresh poco
-			var poco = Single<T>(w, r.RemoveState());
-			return poco.AddState(r.State);
+			return (IR<T, IUnitOfWork>)Single<T>(w, r);
 		}
 
 		/// <summary>
@@ -127,14 +126,13 @@ namespace Jeebs.Data
 		{
 			// Get values
 			var w = r.State;
-			var newId = r.Val;
+			var newId = r.Value;
 
 			// Add create message
-			r.Messages.Add(new Jm.Data.Create(typeof(T), newId));
+			r.Messages.Add(new Jm.Data.CreateMsg(typeof(T), newId));
 
 			// Get fresh poco
-			var poco = await w.SingleAsync<T>(r.RemoveState());
-			return poco.AddState(r.State);
+			return (IR<T, IUnitOfWork>)await w.SingleAsync<T>(r);
 		}
 
 		/// <summary>
@@ -148,11 +146,10 @@ namespace Jeebs.Data
 			where T : class, IEntity
 		{
 			return r
-				.AddState(w)
+				.WithState(w)
 				.LinkMap(InsertAndReturnId)
 				.LinkMap(CheckId<T>)
-				.LinkMap(GetFreshPoco<T>)
-				.RemoveState();
+				.LinkMap(GetFreshPoco<T>);
 		}
 
 		/// <summary>
@@ -166,11 +163,10 @@ namespace Jeebs.Data
 			where T : class, IEntity
 		{
 			return await r
-				.AddState(w)
+				.WithState(w)
 				.LinkMapAsync(InsertAndReturnIdAsync)
 				.LinkMapAsync(CheckIdAsync<T>)
-				.LinkMapAsync(GetFreshPocoAsync<T>)
-				.RemoveState();
+				.LinkMapAsync(GetFreshPocoAsync<T>);
 		}
 	}
 }

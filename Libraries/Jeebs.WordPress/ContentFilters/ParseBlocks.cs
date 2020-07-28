@@ -16,17 +16,18 @@ namespace Jeebs.WordPress.ContentFilters
 		/// <summary>
 		/// Create filter
 		/// </summary>
-		public static ContentFilter Create() => new ParseBlocks(content =>
-		{
-			// Parse Galleries
-			content = new Gallery().Parse(content);
+		public static ContentFilter Create()
+			=> new ParseBlocks(content =>
+			{
+				// Parse Galleries
+				content = new Gallery().Parse(content);
 
-			// Parse YouTube Videos
-			content = new YouTube().Parse(content);
+				// Parse YouTube Videos
+				content = new YouTube().Parse(content);
 
-			// Return parsed content
-			return content;
-		});
+				// Return parsed content
+				return content;
+			});
 
 		/// <summary>
 		/// Block

@@ -31,7 +31,8 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="value">Database value</param>
 		/// <returns>True / False</returns>
-		public override bool Parse(object value) => new[] { "1", "y", "yes" }.Contains(value.ToString().ToLower());
+		public override bool Parse(object value)
+			=> new[] { "1", "y", "yes" }.Contains(value.ToString().ToLower());
 
 		/// <summary>
 		/// Set the value based on the column name
@@ -44,11 +45,11 @@ namespace Jeebs.WordPress.TypeHandlers
 			{
 				parameter.Value = value ? "1" : "0";
 			}
-			else if(yesNo.Contains(parameter.SourceColumn))
+			else if (yesNo.Contains(parameter.SourceColumn))
 			{
 				parameter.Value = value ? "yes" : "no";
 			}
-			else if(yN.Contains(parameter.SourceColumn))
+			else if (yN.Contains(parameter.SourceColumn))
 			{
 				parameter.Value = value ? "Y" : "N";
 			}

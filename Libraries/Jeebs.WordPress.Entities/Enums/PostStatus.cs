@@ -50,6 +50,7 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>PostStatus object</returns>
-		public static PostStatus Parse(string name) => Parse(name, values: new[] { Publish, Inherit, Pending, Draft, AutoDraft });
+		public static Option<PostStatus> Parse(string name)
+			=> Parse(name, values: new[] { Publish, Inherit, Pending, Draft, AutoDraft });
 	}
 }

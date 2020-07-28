@@ -10,7 +10,7 @@ namespace Jeebs
 	/// </summary>
 	/// <typeparam name="TObject">Object type</typeparam>
 	/// <typeparam name="TProperty">Property type</typeparam>
-	public sealed class PropertyInfo<TObject, TProperty>
+	public class PropertyInfo<TObject, TProperty>
 	{
 		/// <summary>
 		/// PropertyInfo object
@@ -21,7 +21,8 @@ namespace Jeebs
 		/// Create object
 		/// </summary>
 		/// <param name="info">PropertyInfo object</param>
-		public PropertyInfo(PropertyInfo info) => this.info = info;
+		public PropertyInfo(PropertyInfo info)
+			=> this.info = info;
 
 		/// <summary>
 		/// Create object

@@ -13,9 +13,10 @@ namespace Jeebs
 		/// <summary>
 		/// Execute a function, catching any exceptions and skipping head with an error message
 		/// </summary>
-		/// <typeparam name="TNext">Next Result value type</typeparam>
+		/// <typeparam name="TResult">Result type</typeparam>
+		/// <param name="this">Ok result</param>
 		/// <param name="f">Function to execute</param>
-		internal static TResult Catch<TResult>(this IOk ok, Func<TResult> f)
+		internal static TResult Catch<TResult>(this IOk @this, Func<TResult> f)
 			where TResult : IR
 		{
 			try
@@ -24,16 +25,17 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				return (TResult)ok.Error().With().Messages(new Jm.ExceptionMsg(ex));
+				return (TResult)@this.Error().AddMsg(new Jm.ExceptionMsg(ex));
 			}
 		}
 
 		/// <summary>
 		/// Execute a function, catching any exceptions and skipping head with an error message
 		/// </summary>
-		/// <typeparam name="TNext">Next Result value type</typeparam>
+		/// <typeparam name="TResult">Result type</typeparam>
+		/// <param name="this">Ok result</param>
 		/// <param name="f">Function to execute</param>
-		internal static TResult Catch<TResult>(this IOk ok, Func<Task<TResult>> f)
+		internal static TResult Catch<TResult>(this IOk @this, Func<Task<TResult>> f)
 			where TResult : IR
 		{
 			try
@@ -42,7 +44,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				return (TResult)ok.Error().With().Messages(new Jm.ExceptionMsg(ex));
+				return (TResult)@this.Error().AddMsg(new Jm.ExceptionMsg(ex));
 			}
 		}
 	}

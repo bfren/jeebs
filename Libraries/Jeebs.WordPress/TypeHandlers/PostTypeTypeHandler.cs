@@ -17,13 +17,15 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="value">Database table value</param>
 		/// <returns>PostType object</returns>
-		public override PostType Parse(object value) => PostType.Parse(value.ToString());
+		public override PostType Parse(object value)
+			=> PostType.Parse(value.ToString()).Unwrap(() => PostType.Post);
 
 		/// <summary>
 		/// Set the PostType table value
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter object</param>
 		/// <param name="value">PostType value</param>
-		public override void SetValue(IDbDataParameter parameter, PostType value) => parameter.Value = value.ToString();
+		public override void SetValue(IDbDataParameter parameter, PostType value)
+			=> parameter.Value = value.ToString();
 	}
 }

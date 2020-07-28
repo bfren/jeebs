@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,6 +9,8 @@ using Jeebs.Data;
 using Jeebs.Reflection;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
+using Jm;
+using Jm.WordPress.Query.Wrapper.Posts;
 
 namespace Jeebs.WordPress
 {
@@ -20,32 +23,23 @@ namespace Jeebs.WordPress
 		/// <para>Result.NotFound - if the query executes successfully but no posts are found</para>
 		/// <para>Result.Success - if the query and post processing execute successfully</para>
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
+		/// <typeparam name="TModel">Entity type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
-		public async Task<IResult<List<T>>> QueryPostsAsync<T>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
-			where T : IEntity
+		public async Task<IR<List<TModel>>> QueryPostsAsync<TModel>(IOk r, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
+			where TModel : IEntity
 		{
 			// Get query
-			var query = GetQuery<T>(modify);
+			var query = GetQuery<TModel>(modify);
 
 			// Execute query
-			var results = await query.ExecuteQueryAsync().ConfigureAwait(false);
-			if (results.Err is IErrorList)
+			return await query.ExecuteQueryAsync(r) switch
 			{
-				return Result.Failure<List<T>>(results.Err);
-			}
-
-			// If nothing matches, return Not Found
-			if (!results.Val.Any())
-			{
-				return Result.NotFound<List<T>>();
-			}
-
-			var posts = results.Val.ToList();
-
-			// Process posts
-			return await Process<List<T>, T>(posts, filters).ConfigureAwait(false);
+				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
+				IOkV<List<TModel>> x => await Process<List<TModel>, TModel>(x, filters),
+				{ } x => x.Error(),
+			};
 		}
 
 		/// <summary>
@@ -55,46 +49,37 @@ namespace Jeebs.WordPress
 		/// <para>Result.NotFound - if the query executes successfully but no posts are found</para>
 		/// <para>Result.Success - if the query and post processing execute successfully</para>
 		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="page">[Optional] Page number</param>
+		/// <typeparam name="TModel">Entity type</typeparam>
+		/// <param name="r">Result</param>
+		/// <param name="page">Page number</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
-		public async Task<IResult<PagedList<T>>> QueryPostsAsync<T>(long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
-			where T : IEntity
+		public async Task<IR<PagedList<TModel>>> QueryPostsAsync<TModel>(IOk r, long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
+			where TModel : IEntity
 		{
 			// Get query
-			var query = GetQuery<T>(modify);
+			var query = GetQuery<TModel>(modify);
 
 			// Execute query
-			var results = await query.ExecuteQueryAsync(page).ConfigureAwait(false);
-			if (results.Err is IErrorList)
+			return await query.ExecuteQueryAsync(r, page) switch
 			{
-				return Result.Failure<PagedList<T>>(results.Err);
-			}
-
-			// If nothing matches, return Not Found
-			if (results.Val.Count == 0)
-			{
-				return Result.NotFound<PagedList<T>>();
-			}
-
-			var posts = new PagedList<T>(results.Val);
-
-			// Process posts
-			return await Process<PagedList<T>, T>(posts, filters).ConfigureAwait(false);
+				IOkV<PagedList<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
+				IOkV<PagedList<TModel>> x => await Process<PagedList<TModel>, TModel>(x, filters),
+				{ } x => x.Error<PagedList<TModel>>(),
+			};
 		}
 
 		/// <summary>
 		/// Get query object
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
+		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		private IQuery<T> GetQuery<T>(Action<QueryPosts.Options>? modify = null)
+		private IQuery<TModel> GetQuery<TModel>(Action<QueryPosts.Options>? modify = null)
 		{
 			return StartNewQuery()
-				.WithModel<T>()
+				.WithModel<TModel>()
 				.WithOptions(modify)
-				.WithParts(new QueryPosts.Builder<T>(db))
+				.WithParts(new QueryPosts.Builder<TModel>(db))
 				.GetQuery();
 		}
 
@@ -105,205 +90,156 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="posts">List of posts</param>
 		/// <param name="filters">Content filters</param>
-		private async Task<IResult<TList>> Process<TList, TModel>(TList posts, ContentFilter[] filters)
+		private async Task<IR<TList>> Process<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
-			//
-			//
-			//	ADD META AND CUSTOM FIELDS
-			//
-			//
-
-			// If the type has a MetaDictionary, add Meta and check for Custom Fields
-			if (GetMetaDictionary<TModel>() is PropertyInfo metaInfo)
-			{
-				// Convert to info class
-				var meta = new PropertyInfo<TModel, MetaDictionary>(metaInfo);
-
-				// Add meta
-				var addMetaResult = await AddMetaToPostsAsync(posts, meta).ConfigureAwait(false);
-				if (addMetaResult.Err is IErrorList)
-				{
-					return Fail(addMetaResult.Err);
-				}
-
-				// Get custom fields from the cache
-				var customFields = GetCustomFields<TModel>();
-				if (customFields.Count > 0)
-				{
-					// Add custom fields
-					var addCustomFieldsResult = await AddCustomFieldsToPostsAsync(posts, meta, customFields).ConfigureAwait(false);
-					if (addCustomFieldsResult.Err is IErrorList)
-					{
-						return Fail(addCustomFieldsResult.Err);
-					}
-				}
-			}
-
-			//
-			//
-			//	ADD TAXONOMIES
-			//
-			//
-
-			// Get term lists from the cache
-			var termLists = GetTermLists<TModel>();
-			if (termLists.Count > 0)
-			{
-				// Add taxonomies
-				var addTaxonomiesResult = await AddTaxonomiesToPostsAsync(posts, termLists).ConfigureAwait(false);
-				if (addTaxonomiesResult.Err is IErrorList)
-				{
-					return Fail(addTaxonomiesResult.Err);
-				}
-			}
-
-			//
-			//
-			//	APPLY CONTENT FILTERS
-			//
-			//
-
-			// If there are some filters to apply, get post content from the cache
-			if (filters.Length > 0)
-			{
-				if (GetPostContent<TModel>() is PropertyInfo contentInfo)
-				{
-					// Convert to info class
-					var content = new PropertyInfo<TModel, string>(contentInfo);
-
-					// Apply content filters
-					var applyContentFiltersResult = ApplyContentFilters(posts, content, filters);
-					if (applyContentFiltersResult.Err is IErrorList)
-					{
-						return Fail(applyContentFiltersResult.Err);
-					}
-				}
-				else
-				{
-					throw new Jx.WordPress.QueryException($"Cannot find the {nameof(WpPostEntity.Content)} property of {typeof(TModel)}.");
-				}
-			}
-
-			//
-			//
-			//	RETURN POSTS
-			//
-			//
-
-			// Return posts
-			return Result.Success(posts);
-
-			//
-			//
-			//	LOCAL FUNCTIONS
-			//
-			//
-
-			// Shorthand Failure function
-			static IResult<TList> Fail(IErrorList err) => Result.Failure<TList>(err);
+			return await r
+				.LinkMapAsync(AddMetaAsync<TList, TModel>)
+				.LinkMapAsync(AddCustomFieldsAsync<TList, TModel>)
+				.LinkMapAsync(AddTaxonomiesAsync<TList, TModel>)
+				.LinkMapAsync(okV => ApplyContentFiltersAsync<TList, TModel>(okV, filters));
 		}
 
 		/// <summary>
-		/// Add meta values to posts
+		/// Add meta dictionary to posts
 		/// </summary>
-		/// <typeparam name="T">Post model</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="meta">MetaDictionary property</param>
-		private async Task<IResult<bool>> AddMetaToPostsAsync<T>(List<T> posts, PropertyInfo<T, MetaDictionary> meta)
-			where T : IEntity
+		/// <typeparam name="TList">List type</typeparam>
+		/// <typeparam name="TModel">Model type</typeparam>
+		/// <param name="r">Result - value is list of posts</param>
+		private async Task<IR<TList>> AddMetaAsync<TList, TModel>(IOkV<TList> r)
+			where TList : List<TModel>
+			where TModel : IEntity
 		{
-			// Create options
-			var options = new QueryPostsMeta.Options
+			// Only proceed if there is a meta property for this model
+			if (GetMetaDictionaryInfo<TModel>() is Some<Meta<TModel>> s)
 			{
-				PostIds = posts.Select(p => p.Id).ToList()
-			};
-
-			// Get Exec
-			var query = StartNewQuery()
-				.WithModel<PostMeta>()
-				.WithOptions(options)
-				.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
-				.GetQuery();
-
-			// Get meta
-			var metaResult = await query.ExecuteQueryAsync().ConfigureAwait(false);
-			if (metaResult.Err is IErrorList)
-			{
-				return Result.Failure(metaResult.Err);
-			}
-			// If no meta, return success
-			else if (!metaResult.Val.Any())
-			{
-				return Result.Success();
+				return await r
+					.LinkMapAsync(getMeta)
+					.LinkMapAsync(okV => setMeta(okV, s.Value));
 			}
 
-			// Add meta to each post
-			foreach (var post in posts)
-			{
-				var postMeta = from m in metaResult.Val
-							   where m.PostId == post.Id
-							   select new KeyValuePair<string, string>(m.Key, m.Value);
+			return r;
 
-				if (!postMeta.Any())
+			//
+			// Get Post Meta values
+			//
+			async Task<IR<(TList, IEnumerable<PostMeta>)>> getMeta(IOkV<TList> r)
+			{
+				// Create options
+				var options = new QueryPostsMeta.Options
 				{
-					continue;
+					PostIds = r.Value.Select(p => p.Id).ToList()
+				};
+
+				// Get query
+				var query = StartNewQuery()
+					.WithModel<PostMeta>()
+					.WithOptions(options)
+					.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
+					.GetQuery();
+
+				// Get meta
+				return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
+				{
+					IOkV<IEnumerable<PostMeta>> x => x.OkV((r.Value, x.Value)),
+					{ } x => x.Error<(TList, IEnumerable<PostMeta>)>()
+				};
+			}
+
+			//
+			// Set Meta for each Post
+			//
+			async Task<IR<TList>> setMeta(IOkV<(TList, IEnumerable<PostMeta>)> r, Meta<TModel> meta)
+			{
+				var (posts, postsMeta) = r.Value;
+
+				// If no meta, return success
+				if (!postsMeta.Any())
+				{
+					return r.OkV(posts);
 				}
 
-				// Set the value of the meta property
-				meta.Set(post, new MetaDictionary(postMeta));
-			}
+				// Add meta to each post
+				foreach (var post in posts)
+				{
+					var postMeta = from m in postsMeta
+								   where m.PostId == post.Id
+								   select new KeyValuePair<string, string>(m.Key, m.Value);
 
-			// Return success
-			return Result.Success();
+					if (!postMeta.Any())
+					{
+						continue;
+					}
+
+					// Set the value of the meta property
+					meta.Set(post, new MetaDictionary(postMeta));
+				}
+
+				return r.OkV(posts);
+			}
 		}
 
 		/// <summary>
 		/// Add custom fields to posts
 		/// </summary>
-		/// <typeparam name="T">Post model</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="meta">MetaDictionary property</param>
-		/// <param name="customFields">List of CustomFields</param>
-		private async Task<IResult<bool>> AddCustomFieldsToPostsAsync<T>(List<T> posts, PropertyInfo<T, MetaDictionary> meta, List<PropertyInfo> customFields)
-			where T : IEntity
+		/// <typeparam name="TList">List type</typeparam>
+		/// <typeparam name="TModel">Model type</typeparam>
+		/// <param name="r">Result - value is list of posts</param>
+		private async Task<IR<TList>> AddCustomFieldsAsync<TList, TModel>(IOkV<TList> r)
+			where TList : List<TModel>
+			where TModel : IEntity
 		{
-			// Hydrate all custom fields for all posts
-			foreach (var post in posts)
+			// Only proceed if there are custom fields, and a meta property for this model
+			var fields = GetCustomFields<TModel>();
+			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				// If post is null, continue
-				if (post == null)
+				Some<Meta<TModel>> x when fields.Count > 0 => await r.LinkMapAsync(okV => hydrate(okV, x.Value, fields)),
+				_ => r
+			};
+
+			//
+			// Hydrate each custom field
+			//
+			async Task<IR<TList>> hydrate(IOkV<TList> r, Meta<TModel> meta, List<PropertyInfo> customFields)
+			{
+				var posts = r.Value;
+
+				// Hydrate all custom fields for all posts
+				foreach (var post in posts)
 				{
-					continue;
-				}
-
-				// Get meta
-				var metaDictionary = meta.Get(post);
-
-				// Add each custom field
-				foreach (var info in customFields)
-				{
-					// Get custom field
-					var customField = getCustomField(post, info);
-
-					// Hydrate the field
-					var result = await customField.HydrateAsync(db, unitOfWork, metaDictionary).ConfigureAwait(false);
-					if (result.Err is IErrorList err && customField.IsRequired)
+					// If post is null, continue
+					if (post == null)
 					{
-						return Result.Failure(err);
+						continue;
 					}
 
-					// Set the value
-					info.SetValue(post, customField);
+					// Get meta
+					var metaDictionary = meta.Get(post);
+
+					// Add each custom field
+					foreach (var info in customFields)
+					{
+						// Get custom field
+						var customField = getCustomField(post, info);
+
+						// Hydrate the field
+						var result = await customField.HydrateAsync(r, db, unitOfWork, metaDictionary).ConfigureAwait(false);
+						if (result is IError && customField.IsRequired)
+						{
+							return result.Error<TList>().AddMsg(new RequiredCustomFieldNotFound(post.Id, info.Name, customField.Key));
+						}
+
+						// Set the value
+						info.SetValue(post, customField);
+					}
 				}
+
+				return r.OkV(posts);
 			}
 
-			// Return success
-			return Result.Success();
-
 			// Get a custom field - if it's null, create it
-			static ICustomField getCustomField(T post, PropertyInfo info)
+			static ICustomField getCustomField(TModel post, PropertyInfo info)
 			{
 				if (info.GetValue(post) is ICustomField field)
 				{
@@ -320,72 +256,97 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T">Post model</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="termLists">TermList properties</param>
-		private async Task<IResult<bool>> AddTaxonomiesToPostsAsync<T>(List<T> posts, List<PropertyInfo> termLists)
-			where T : IEntity
+		private async Task<IR<TList>> AddTaxonomiesAsync<TList, TModel>(IOkV<TList> r)
+			where TList : List<TModel>
+			where TModel : IEntity
 		{
-			// Create options
-			var options = new QueryPostsTaxonomy.Options
+			// Only proceed if there is at least one term list in this model
+			var termLists = GetTermLists<TModel>();
+			if (termLists.Count == 0)
 			{
-				PostIds = posts.Select(p => p.Id).ToList()
-			};
+				return r;
+			}
 
-			// Add each taxonomy to the query options
-			var firstPost = posts[0];
-			foreach (var info in termLists)
+			return await r
+				.LinkMapAsync(okV => getTerms(okV, termLists))
+				.LinkMapAsync(okV => addTerms(okV, termLists));
+
+			//
+			//	Get terms
+			//
+			async Task<IR<(TList, IEnumerable<Term>)>> getTerms(IOkV<TList> r, List<PropertyInfo> termLists)
 			{
-				// Get taxonomy
-				var taxonomy = new PropertyInfo<T, TermList>(info).Get(firstPost).Taxonomy;
-
-				// Make sure taxonomy has been registered
-				if (!Taxonomy.IsRegistered(taxonomy))
+				// Create options
+				var options = new QueryPostsTaxonomy.Options
 				{
-					throw new Jx.WordPress.QueryException($"Taxonomy '{taxonomy}' must be registered in WpDb.RegisterCustomTaxonomies().");
-				}
+					PostIds = r.Value.Select(p => p.Id).ToList()
+				};
 
-				// Add to query
-				options.Taxonomies.Add(taxonomy);
-			}
-
-			// Build query
-			var query = StartNewQuery()
-				.WithModel<Term>()
-				.WithOptions(options)
-				.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
-				.GetQuery();
-
-			// Get terms
-			var termsResult = await query.ExecuteQueryAsync().ConfigureAwait(false);
-			if (termsResult.Err is IErrorList)
-			{
-				return Result.Failure(termsResult.Err);
-			}
-
-			// Now add the terms to each post
-			foreach (var post in posts)
-			{
+				// Add each taxonomy to the query options
+				var firstPost = r.Value[0];
 				foreach (var info in termLists)
 				{
-					// Get PropertyInfo<> for the TermList
-					var list = new PropertyInfo<T, TermList>(info).Get(post);
+					// Get taxonomy
+					var taxonomy = new PropertyInfo<TModel, TermList>(info).Get(firstPost).Taxonomy;
 
-					// Get terms
-					var terms = from t in termsResult.Val
-								where t.PostId == post.Id
-								&& t.Taxonomy == list.Taxonomy
-								select (TermList.Term)t;
-
-					// Add terms to post
-					if (!terms.Any())
+					// Make sure taxonomy has been registered
+					if (!Taxonomy.IsRegistered(taxonomy))
 					{
-						continue;
+						return r.Error<(TList, IEnumerable<Term>)>().AddMsg($"Taxonomy '{taxonomy}' must be registered in {nameof(IWp.RegisterCustomTaxonomies)}.");
 					}
 
-					list.AddRange(terms);
+					// Add to query
+					options.Taxonomies.Add(taxonomy);
 				}
+
+				// Build query
+				var query = StartNewQuery()
+					.WithModel<Term>()
+					.WithOptions(options)
+					.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
+					.GetQuery();
+
+				// Execute query
+				return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
+				{
+					IOkV<IEnumerable<Term>> x => x.OkV((r.Value, x.Value)),
+					{ } x => x.Error<(TList, IEnumerable<Term>)>()
+				};
 			}
 
-			// Return success
-			return Result.Success();
+			//
+			//	Add terms
+			//
+			async Task<IR<TList>> addTerms(IOkV<(TList, IEnumerable<Term>)> r, List<PropertyInfo> termLists)
+			{
+				var (posts, terms) = r.Value;
+
+				// Now add the terms to each post
+				foreach (var post in posts)
+				{
+					foreach (var info in termLists)
+					{
+						// Get PropertyInfo<> for the TermList
+						var list = new PropertyInfo<TModel, TermList>(info).Get(post);
+
+						// Get terms
+						var termsForThisPost = from t in terms
+											   where t.PostId == post.Id
+											   && t.Taxonomy == list.Taxonomy
+											   select (TermList.Term)t;
+
+						// Add terms to post
+						if (!termsForThisPost.Any())
+						{
+							continue;
+						}
+
+						list.AddRange(termsForThisPost);
+					}
+				}
+
+				return r.OkV(posts);
+			}
 		}
 
 		/// <summary>
@@ -395,36 +356,75 @@ namespace Jeebs.WordPress
 		/// <param name="posts">Posts</param>
 		/// <param name="content">Content property</param>
 		/// <param name="contentFilters">Content filters</param>
-		private IResult<bool> ApplyContentFilters<T>(List<T> posts, PropertyInfo<T, string> content, ContentFilter[] contentFilters)
+		private async Task<IR<TList>> ApplyContentFiltersAsync<TList, TModel>(IOkV<TList> r, ContentFilter[] contentFilters)
+			where TList : List<TModel>
+			where TModel : IEntity
 		{
-			// Apply filters to each post
-			foreach (var post in posts)
+			// Only proceed if there are content filters
+			if (contentFilters.Length == 0)
 			{
-				// Get post content
-				var postContent = content.Get(post);
-
-				// Apply filters
-				foreach (var filter in contentFilters)
-				{
-					postContent = filter.Execute(postContent);
-				}
-
-				// Set filtered content
-				content.Set(post, postContent);
+				return r;
 			}
 
-			// Return success
-			return Result.Success();
+			// Post content field is required as we are expected to apply content filters
+			return GetPostContentInfo<TModel>() switch
+			{
+				Some<Content<TModel>> x => await r.LinkMapAsync(okV => apply(okV, x.Value)),
+				_ => r.Error().AddMsg().OfType<RequiredContentPropertyNotFound<TModel>>()
+			};
+
+			//
+			// Apply content filters to each posts
+			//
+			async Task<IR<TList>> apply(IOkV<TList> r, Content<TModel> content)
+			{
+				var posts = r.Value;
+
+				foreach (var post in posts)
+				{
+					// Get post content
+					var postContent = content.Get(post);
+
+					// Apply filters
+					foreach (var filter in contentFilters)
+					{
+						postContent = filter.Execute(postContent);
+					}
+
+					// Set filtered content
+					content.Set(post, postContent);
+				}
+
+				return r.OkV(posts);
+			}
 		}
 
-		/// <summary>
-		/// Private PostMeta entity for meta queries
-		/// </summary>
-		private class PostMeta : Entities.WpPostMetaEntity { }
+		private Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
+			=> GetMetaDictionary<TModel>() switch
+			{
+				Some<PropertyInfo> x => Option.Some(new Meta<TModel>(x.Value)),
+				_ => Option.None<Meta<TModel>>()
+			};
 
-		/// <summary>
-		/// Private Term entity for taxonomy queries
-		/// </summary>
+		private class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>
+		{
+			public Meta(PropertyInfo info) : base(info) { }
+		}
+
+		private Option<Content<TModel>> GetPostContentInfo<TModel>()
+			=> GetPostContent<TModel>() switch
+			{
+				Some<PropertyInfo> x => Option.Some(new Content<TModel>(x.Value)),
+				_ => Option.None<Content<TModel>>()
+			};
+
+		private class Content<TModel> : PropertyInfo<TModel, string>
+		{
+			public Content(PropertyInfo info) : base(info) { }
+		}
+
+		private class PostMeta : WpPostMetaEntity { }
+
 		private class Term : TermList.Term
 		{
 			/// <summary>

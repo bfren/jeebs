@@ -9,14 +9,8 @@ namespace Jeebs.WordPress
 	/// WordPress wrapper
 	/// </summary>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
-	public interface IWp<TConfig>
-		where TConfig : WpConfig
+	public interface IWp
 	{
-		/// <summary>
-		/// WordPress configuration
-		/// </summary>
-		TConfig Config { get; }
-
 		/// <summary>
 		/// WordPress database instance
 		/// </summary>
@@ -31,5 +25,18 @@ namespace Jeebs.WordPress
 		/// Register custom taxonomies
 		/// </summary>
 		void RegisterCustomTaxonomies();
+	}
+
+	/// <summary>
+	/// WordPress wrapper
+	/// </summary>
+	/// <typeparam name="TConfig">WpConfig type</typeparam>
+	public interface IWp<TConfig> : IWp
+		where TConfig : WpConfig
+	{
+		/// <summary>
+		/// WordPress configuration
+		/// </summary>
+		TConfig Config { get; }
 	}
 }

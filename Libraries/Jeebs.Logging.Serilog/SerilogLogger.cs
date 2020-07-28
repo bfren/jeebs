@@ -9,30 +9,39 @@ namespace Jeebs.Logging
 	public sealed class SerilogLogger : ILog
 	{
 		/// <inheritdoc/>
-		public bool IsEnabled(LogLevel level) => Log.Logger.IsEnabled(F.EnumF.Convert(level).To<LogEventLevel>());
+		public bool IsEnabled(LogLevel level)
+			=> Log.Logger.IsEnabled((LogEventLevel)level);
 
 		/// <inheritdoc/>
-		public void Verbose(string message, params object[] args) => Log.Logger.Verbose(message, args);
+		public void Verbose(string message, params object[] args)
+			=> Log.Logger.Verbose(message, args);
 
 		/// <inheritdoc/>
-		public void Debug(string message, params object[] args) => Log.Logger.Debug(message, args);
+		public void Debug(string message, params object[] args)
+			=> Log.Logger.Debug(message, args);
 
 		/// <inheritdoc/>
-		public void Information(string message, params object[] args) => Log.Logger.Information(message, args);
+		public void Information(string message, params object[] args)
+			=> Log.Logger.Information(message, args);
 
 		/// <inheritdoc/>
-		public void Warning(string message, params object[] args) => Log.Logger.Warning(message, args);
+		public void Warning(string message, params object[] args)
+			=> Log.Logger.Warning(message, args);
 
 		/// <inheritdoc/>
-		public void Error(string message, params object[] args) => Log.Logger.Error(message, args);
+		public void Error(string message, params object[] args)
+			=> Log.Logger.Error(message, args);
 
 		/// <inheritdoc/>
-		public void Error(Exception ex, string message, params object[] args) => Log.Logger.Error(ex, message, args);
+		public void Error(Exception ex, string message, params object[] args)
+			=> Log.Logger.Error(ex, message, args);
 
 		/// <inheritdoc/>
-		public void Fatal(string message, params object[] args) => Log.Logger.Fatal(message, args);
+		public void Fatal(string message, params object[] args)
+			=> Log.Logger.Fatal(message, args);
 
 		/// <inheritdoc/>
-		public void Fatal(Exception ex, string message, params object[] args) => Log.Logger.Fatal(ex, message, args);
+		public void Fatal(Exception ex, string message, params object[] args)
+			=> Log.Logger.Fatal(ex, message, args);
 	}
 }
