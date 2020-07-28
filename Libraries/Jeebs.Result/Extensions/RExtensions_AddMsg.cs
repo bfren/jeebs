@@ -8,9 +8,9 @@ using Jeebs.Result.Fluent;
 namespace Jeebs
 {
 	/// <summary>
-	/// Extension methods for IR interface: Add
+	/// Extension methods for IR interface: AddMsg
 	/// </summary>
-	public static class RExtensions_Add
+	public static class RExtensions_AddMsg
 	{
 		/// <summary>
 		/// Begins a fluent With operation, used to add message(s) to the result chain

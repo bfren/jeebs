@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result2
+namespace Tests.Jeebs.Result
 {
 	public class ROkV_WithState_Ok_Tests
 	{
@@ -45,7 +45,7 @@ namespace Tests.Jeebs.Result2
 			var m0 = new Jm.WithIntMsg(18);
 			var m1 = new Jm.WithStringMsg("July");
 			var state = 18;
-			var r = R.Ok(state).AddMsg().Messages(m0, m1);
+			var r = R.Ok(state).AddMsg(m0, m1);
 
 			// Act
 			var next = r.Ok<int>();

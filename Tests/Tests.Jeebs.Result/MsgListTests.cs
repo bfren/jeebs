@@ -5,7 +5,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result2
+namespace Tests.Jeebs.Result
 {
 	public class MsgListTests
 	{

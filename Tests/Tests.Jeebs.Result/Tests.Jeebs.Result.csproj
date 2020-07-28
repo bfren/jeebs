@@ -18,12 +18,6 @@
     <PackageReference Include="NSubstitute" Version="4.2.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="R\" />
-    <Folder Include="ROk_WithState\" />
-    <Folder Include="R_WithState\" />
-    <Folder Include="With\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Result\Jeebs.Result.csproj" />
   </ItemGroup>
 </Project>

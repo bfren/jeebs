@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result2
+namespace Tests.Jeebs.Result
 {
 	public class R_Error_Tests
 	{
@@ -56,7 +56,7 @@ namespace Tests.Jeebs.Result2
 			// Arrange
 			var m0 = new Jm.WithIntMsg(18);
 			var m1 = new Jm.WithStringMsg("July");
-			var r = R.Ok().AddMsg().Messages(m0, m1);
+			var r = R.Ok().AddMsg(m0, m1);
 
 			// Act
 			var next = r.Error<int>();

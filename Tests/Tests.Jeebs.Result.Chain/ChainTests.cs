@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result2
+namespace Tests.Jeebs.Result
 {
 	public class ChainTests
 	{

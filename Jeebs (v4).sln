@@ -103,7 +103,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LibrariesF", "LibrariesF", 
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "JeebsF", "LibrariesF\JeebsF\JeebsF.fsproj", "{56167F95-69D3-477C-BF2F-6C2489E9CB30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Result_old", "Tests\Tests.Jeebs.Result\Tests.Jeebs.Result_old.csproj", "{AD49A21F-C3B1-49FD-B4B5-339C547E60F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Result_old", "Tests\Tests.Jeebs.Result_old\Tests.Jeebs.Result_old.csproj", "{AD49A21F-C3B1-49FD-B4B5-339C547E60F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{337B1DDD-1850-4F1A-8539-1854DD014FC0}"
 	ProjectSection(SolutionItems) = preProject
@@ -112,7 +112,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Result", "Libraries\Jeebs.Result\Jeebs.Result.csproj", "{590FDBE0-20BD-47AD-A22E-DB123939036B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Result", "Tests\Tests.Jeebs.Result2\Tests.Jeebs.Result.csproj", "{96D263BA-D4BF-4889-82FE-84246F4228A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Result", "Tests\Tests.Jeebs.Result\Tests.Jeebs.Result.csproj", "{96D263BA-D4BF-4889-82FE-84246F4228A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Result.Chain", "Libraries\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj", "{8A2B4831-8F5E-43F3-A39E-FEF6AE2BE603}"
 EndProject
