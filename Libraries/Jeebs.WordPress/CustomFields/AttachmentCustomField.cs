@@ -36,9 +36,9 @@ namespace Jeebs.WordPress
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 			return await r
-				.LinkMap(parseAttachmentPostId)
-				.LinkMapAsync(getAttachment)
-				.LinkMapAsync(hydrate);
+				.Link().Map(parseAttachmentPostId)
+				.Link().MapAsync(getAttachment).Await()
+				.Link().MapAsync(hydrate);
 
 			//
 			// Parse the Attachment Post ID

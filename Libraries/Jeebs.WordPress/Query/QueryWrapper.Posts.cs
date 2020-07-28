@@ -94,11 +94,11 @@ namespace Jeebs.WordPress
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
-			return await r
-				.LinkMapAsync(AddMetaAsync<TList, TModel>)
-				.LinkMapAsync(AddCustomFieldsAsync<TList, TModel>)
-				.LinkMapAsync(AddTaxonomiesAsync<TList, TModel>)
-				.LinkMapAsync(okV => ApplyContentFiltersAsync<TList, TModel>(okV, filters));
+			return r
+				.Link().MapAsync(AddMetaAsync<TList, TModel>).Await()
+				.Link().MapAsync(AddCustomFieldsAsync<TList, TModel>).Await()
+				.Link().MapAsync(AddTaxonomiesAsync<TList, TModel>).Await()
+				.Link().Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
 		}
 
 		/// <summary>
@@ -114,9 +114,9 @@ namespace Jeebs.WordPress
 			// Only proceed if there is a meta property for this model
 			if (GetMetaDictionaryInfo<TModel>() is Some<Meta<TModel>> s)
 			{
-				return await r
-					.LinkMapAsync(getMeta)
-					.LinkMapAsync(okV => setMeta(okV, s.Value));
+				return r
+					.Link().MapAsync(getMeta).Await()
+					.Link().Map(okV => setMeta(okV, s.Value));
 			}
 
 			return r;
@@ -150,7 +150,7 @@ namespace Jeebs.WordPress
 			//
 			// Set Meta for each Post
 			//
-			async Task<IR<TList>> setMeta(IOkV<(TList, IEnumerable<PostMeta>)> r, Meta<TModel> meta)
+			IR<TList> setMeta(IOkV<(TList, IEnumerable<PostMeta>)> r, Meta<TModel> meta)
 			{
 				var (posts, postsMeta) = r.Value;
 
@@ -194,7 +194,7 @@ namespace Jeebs.WordPress
 			var fields = GetCustomFields<TModel>();
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 => await r.LinkMapAsync(okV => hydrate(okV, x.Value, fields)),
+				Some<Meta<TModel>> x when fields.Count > 0 => await r.Link().MapAsync(okV => hydrate(okV, x.Value, fields)),
 				_ => r
 			};
 
@@ -267,9 +267,9 @@ namespace Jeebs.WordPress
 				return r;
 			}
 
-			return await r
-				.LinkMapAsync(okV => getTerms(okV, termLists))
-				.LinkMapAsync(okV => addTerms(okV, termLists));
+			return r
+				.Link().MapAsync(okV => getTerms(okV, termLists)).Await()
+				.Link().Map(okV => addTerms(okV, termLists));
 
 			//
 			//	Get terms
@@ -317,7 +317,7 @@ namespace Jeebs.WordPress
 			//
 			//	Add terms
 			//
-			async Task<IR<TList>> addTerms(IOkV<(TList, IEnumerable<Term>)> r, List<PropertyInfo> termLists)
+			IR<TList> addTerms(IOkV<(TList, IEnumerable<Term>)> r, List<PropertyInfo> termLists)
 			{
 				var (posts, terms) = r.Value;
 
@@ -356,7 +356,7 @@ namespace Jeebs.WordPress
 		/// <param name="posts">Posts</param>
 		/// <param name="content">Content property</param>
 		/// <param name="contentFilters">Content filters</param>
-		private async Task<IR<TList>> ApplyContentFiltersAsync<TList, TModel>(IOkV<TList> r, ContentFilter[] contentFilters)
+		private IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] contentFilters)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
@@ -369,14 +369,14 @@ namespace Jeebs.WordPress
 			// Post content field is required as we are expected to apply content filters
 			return GetPostContentInfo<TModel>() switch
 			{
-				Some<Content<TModel>> x => await r.LinkMapAsync(okV => apply(okV, x.Value)),
+				Some<Content<TModel>> x => r.Link().Map(okV => apply(okV, x.Value)),
 				_ => r.Error().AddMsg().OfType<RequiredContentPropertyNotFound<TModel>>()
 			};
 
 			//
 			// Apply content filters to each posts
 			//
-			async Task<IR<TList>> apply(IOkV<TList> r, Content<TModel> content)
+			IR<TList> apply(IOkV<TList> r, Content<TModel> content)
 			{
 				var posts = r.Value;
 

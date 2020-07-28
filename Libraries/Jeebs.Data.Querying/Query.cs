@@ -69,17 +69,17 @@ namespace Jeebs.Data
 		public async Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk r, long page)
 		{
 			// Run chain
-			return await r
-				.LinkMapAsync(getCount)
-				.LinkAsync(getPagingValues)
-				.LinkMapAsync(getItems)
-				.LinkMapAsync(getPagedList);
+			return r
+				.Link().MapAsync(getCount).Await()
+				.Link().Run(getPagingValues)
+				.Link().MapAsync(getItems).Await()
+				.Link().Map(getPagedList);
 
 			// Get the count
 			async Task<IR<long>> getCount(IOk r) => await GetCountAsync(r);
 
 			// Get paging values
-			async Task getPagingValues(IOkV<long> r)
+			void getPagingValues(IOkV<long> r)
 			{
 				// Create values object
 				var values = new PagingValues(r.Value, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
@@ -96,7 +96,7 @@ namespace Jeebs.Data
 			}
 
 			// Convert to a paged list
-			async Task<IR<PagedList<T>>> getPagedList(IOkV<List<T>> r)
+			IR<PagedList<T>> getPagedList(IOkV<List<T>> r)
 			{
 				var list = new PagedList<T>(r.Value);
 				return r.OkV(list);

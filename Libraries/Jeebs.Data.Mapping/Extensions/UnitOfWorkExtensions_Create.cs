@@ -89,16 +89,6 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Check if the New ID is 0, and if so rollback changes - something went wrong
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static Task<IR<long, IUnitOfWork>> CheckIdAsync<T>(IOkV<long, IUnitOfWork> r)
-		{
-			return Task.FromResult(CheckId<T>(r));
-		}
-
-		/// <summary>
 		/// Get a fresh POCO from the database using the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
@@ -147,9 +137,9 @@ namespace Jeebs.Data
 		{
 			return r
 				.WithState(w)
-				.LinkMap(InsertAndReturnId)
-				.LinkMap(CheckId<T>)
-				.LinkMap(GetFreshPoco<T>);
+				.Link().Map(InsertAndReturnId)
+				.Link().Map(CheckId<T>)
+				.Link().Map(GetFreshPoco<T>);
 		}
 
 		/// <summary>
@@ -164,9 +154,9 @@ namespace Jeebs.Data
 		{
 			return await r
 				.WithState(w)
-				.LinkMapAsync(InsertAndReturnIdAsync)
-				.LinkMapAsync(CheckIdAsync<T>)
-				.LinkMapAsync(GetFreshPocoAsync<T>);
+				.Link().MapAsync(InsertAndReturnIdAsync).Await()
+				.Link().Map(CheckId<T>)
+				.Link().MapAsync(GetFreshPocoAsync<T>);
 		}
 	}
 }
