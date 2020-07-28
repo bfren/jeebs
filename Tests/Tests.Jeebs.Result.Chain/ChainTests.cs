@@ -37,7 +37,7 @@ namespace Tests.Jeebs.Result
 		public void R_Chain_WithState_Returns_Ok()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 
 			// Act
 			var r = Chain.Create(state);
@@ -51,7 +51,7 @@ namespace Tests.Jeebs.Result
 		public async Task R_ChainAsync_WithState_Returns_Ok()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 
 			// Act
 			var r = await Chain.CreateAsync(state);
@@ -65,7 +65,7 @@ namespace Tests.Jeebs.Result
 		public void R_ChainV_Returns_OkV()
 		{
 			// Arrange
-			var value = 18;
+			const int value = 18;
 
 			// Act
 			var r = Chain.CreateV(value);
@@ -79,7 +79,7 @@ namespace Tests.Jeebs.Result
 		public async Task R_ChainVAsync_Returns_OkV()
 		{
 			// Arrange
-			var value = 18;
+			const int value = 18;
 
 			// Act
 			var r = await Chain.CreateVAsync(value);
@@ -93,8 +93,8 @@ namespace Tests.Jeebs.Result
 		public void R_ChainV_WithState_Returns_OkV()
 		{
 			// Arrange
-			var value = 18;
-			var state = 7;
+			const int value = 18;
+			const int state = 7;
 
 			// Act
 			var r = Chain.CreateV(value, state);
@@ -109,8 +109,8 @@ namespace Tests.Jeebs.Result
 		public async Task R_ChainVAsync_WithState_Returns_OkV()
 		{
 			// Arrange
-			var value = 18;
-			var state = 7;
+			const int value = 18;
+			const int state = 7;
 
 			// Act
 			var r = await Chain.CreateVAsync(value, state);
