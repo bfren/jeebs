@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// Chain Link interface
 	/// </summary>
-	public interface ILink
+	public interface ILink : IDisposable
 	{
 		#region Map
 

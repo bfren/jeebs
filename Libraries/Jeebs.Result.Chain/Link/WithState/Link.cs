@@ -12,5 +12,11 @@ namespace Jeebs
 
 		internal Link(IR<TValue, TState> result) : base(result)
 			=> this.result = result;
+
+		new public void Dispose()
+		{
+			base.Dispose();
+			result.Dispose();
+		}
 	}
 }

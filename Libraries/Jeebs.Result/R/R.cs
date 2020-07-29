@@ -18,7 +18,7 @@ namespace Jeebs
 		/// Clear all messages
 		/// </summary>
 		public virtual void Dispose()
-			=> Messages.Clear();
+			=> Messages.Dispose();
 
 		/// <inheritdoc/>
 		public IError<TValue> Error()

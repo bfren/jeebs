@@ -12,5 +12,8 @@ namespace Jeebs
 
 		internal Link(IR result)
 			=> this.result = result;
+
+		public void Dispose()
+			=> result.Dispose();
 	}
 }

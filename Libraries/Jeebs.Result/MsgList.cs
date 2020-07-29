@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
 	/// </summary>
-	public sealed class MsgList
+	public sealed class MsgList : IDisposable
 	{
 		/// <summary>
 		/// The list of messages
@@ -20,6 +20,12 @@ namespace Jeebs
 		/// </summary>
 		public void Clear()
 			=> messages.Clear();
+
+		/// <summary>
+		/// Dispose (<seealso cref="Clear"/>)
+		/// </summary>
+		public void Dispose()
+			=> Clear();
 
 		/// <summary>
 		/// The number of messages
