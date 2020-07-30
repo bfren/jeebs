@@ -20,10 +20,7 @@ namespace Jm.Data
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
 		public UpdateMsg(Type type, long id)
-		{
-			this.type = type;
-			this.id = id;
-		}
+			=> (this.type, this.id) = (type, id);
 
 		/// <summary>
 		/// Output success message
@@ -46,7 +43,8 @@ namespace Jm.Data
 		/// <summary>
 		/// Output error message
 		/// </summary>
-		public override string ToString() => $"Unable to update '{type}' with ID '{id}'.";
+		public override string ToString()
+			=> $"Unable to update '{type}' with ID '{id}'.";
 	}
 
 	/// <summary>
@@ -63,14 +61,12 @@ namespace Jm.Data
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
 		public UpdateExceptionMsg(Exception ex, Type type, long id) : base(type, id)
-		{
-			var message = new ExceptionMsg(ex);
-			exceptionMessage = message.ToString();
-		}
+			=> exceptionMessage = new ExceptionMsg(ex).ToString();
 
 		/// <summary>
 		/// Output error message plus exception details
 		/// </summary>
-		public override string ToString() => $"{base.ToString()} {exceptionMessage}";
+		public override string ToString()
+			=> $"{base.ToString()} {exceptionMessage}";
 	}
 }

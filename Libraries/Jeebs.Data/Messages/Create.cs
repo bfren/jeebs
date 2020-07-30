@@ -20,15 +20,13 @@ namespace Jm.Data
 		/// <param name="type">POCO type</param>
 		/// <param name="id">[Optional] POCO id</param>
 		public CreateMsg(Type type, long? id = null)
-		{
-			this.type = type;
-			this.id = id;
-		}
+			=> (this.type, this.id) = (type, id);
 
 		/// <summary>
 		/// Output success message
 		/// </summary>
-		public override string ToString() => $"Created '{type}'" + (id == null ? "" : "with ID '{id}'") + ".";
+		public override string ToString()
+			=> $"Created '{type}'" + (id == null ? "" : "with ID '{id}'") + ".";
 	}
 
 	/// <summary>
@@ -45,7 +43,8 @@ namespace Jm.Data
 		/// <summary>
 		/// Output error message
 		/// </summary>
-		public override string ToString() => $"Unable to Create '{type}'.";
+		public override string ToString()
+			=> $"Unable to Create '{type}'.";
 	}
 
 	/// <summary>
@@ -61,14 +60,12 @@ namespace Jm.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
 		public CreateExceptionMsg(Exception ex, Type type) : base(type)
-		{
-			var message = new ExceptionMsg(ex);
-			exceptionMessage = message.ToString();
-		}
+			=> exceptionMessage = new ExceptionMsg(ex).ToString();
 
 		/// <summary>
 		/// Output error message plus exception details
 		/// </summary>
-		public override string ToString() => $"{base.ToString()} {exceptionMessage}";
+		public override string ToString()
+			=> $"{base.ToString()} {exceptionMessage}";
 	}
 }

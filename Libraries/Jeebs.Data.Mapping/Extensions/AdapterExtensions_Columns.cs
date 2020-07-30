@@ -18,9 +18,7 @@ namespace Jeebs.Data
 		/// <param name="column">Column</param>
 		public static string Escape<T>(this IAdapter adapter, T table, Func<T, string> column)
 			where T : Table
-		{
-			return adapter.EscapeAndJoin(table, column(table));
-		}
+			=> adapter.EscapeAndJoin(table, column(table));
 
 		/// <summary>
 		/// Extracts and escapes matching columns
@@ -29,9 +27,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
 		public static string Extract<T>(this IAdapter adapter, params Table[] tables)
-		{
-			return adapter.Join(Data.Extract<T>.From(tables));
-		}
+			=> adapter.Join(Data.Extract<T>.From(tables));
 
 		/// <summary>
 		/// Join list of ExtractedColumn objects
@@ -57,9 +53,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="col">IExtractedColumn</param>
 		public static string GetColumn(this IAdapter adapter, IExtractedColumn col)
-		{
-			return adapter.EscapeColumn(string.Concat(col.Table, adapter.SchemaSeparator, col.Column), col.Alias);
-		}
+			=> adapter.EscapeColumn(string.Concat(col.Table, adapter.SchemaSeparator, col.Column), col.Alias);
 
 		/// <summary>
 		/// Get a MappedColumn
@@ -67,8 +61,6 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="col">IMappedColumn</param>
 		public static string GetColumn(this IAdapter adapter, IMappedColumn col)
-		{
-			return adapter.EscapeColumn(col.Column, col.Property.Name);
-		}
+			=> adapter.EscapeColumn(col.Column, col.Property.Name);
 	}
 }

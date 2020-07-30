@@ -20,6 +20,7 @@ namespace Jeebs.Config.Logging
 		public bool ShowAttachments { get; set; }
 
 		/// <inheritdoc/>
-		public override bool IsValid() => !string.IsNullOrEmpty(Webhook);
+		public override bool IsValid()
+			=> !string.IsNullOrEmpty(Webhook);
 	}
 }

@@ -25,13 +25,11 @@ namespace Jeebs.Data
 			/// <param name="unitOfWork">IUnitOfWork</param>
 			/// <param name="parts">TOptions</param>
 			internal QueryWithParts(IUnitOfWork unitOfWork, IQueryParts parts)
-			{
-				this.unitOfWork = unitOfWork;
-				this.parts = parts;
-			}
+				=> (this.unitOfWork, this.parts) = (unitOfWork, parts);
 
 			/// <inheritdoc/>
-			public IQuery<TModel> GetQuery() => new Query<TModel>(unitOfWork, parts);
+			public IQuery<TModel> GetQuery()
+				=> new Query<TModel>(unitOfWork, parts);
 		}
 	}
 }

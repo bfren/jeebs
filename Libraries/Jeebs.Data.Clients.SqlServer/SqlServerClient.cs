@@ -10,7 +10,8 @@ namespace Jeebs.Data.Clients.SqlServer
 	public sealed class SqlServerDbClient : IDbClient
 	{
 		/// <inheritdoc/>
-		IAdapter IDbClient.Adapter => Adapter;
+		IAdapter IDbClient.Adapter
+			=> Adapter;
 
 		/// <summary>
 		/// MySqlAdapter
@@ -18,6 +19,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		public SqlServerAdapter Adapter { get; } = new SqlServerAdapter();
 
 		/// <inheritdoc/>
-		public IDbConnection Connect(string connectionString, string? encryptionKey = null) => new SqlConnection(connectionString);
+		public IDbConnection Connect(string connectionString, string? encryptionKey = null)
+			=> new SqlConnection(connectionString);
 	}
 }

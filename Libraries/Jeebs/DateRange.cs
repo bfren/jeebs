@@ -15,19 +15,14 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		public int Length
-		{
-			get => End.Subtract(Start).Days + 1;
-		}
+			=> End.Subtract(Start).Days + 1;
 
 		/// <summary>
 		/// Create range object from a single date
 		/// </summary>
 		/// <param name="single">Range start and end</param>
 		public DateRange(DateTime single)
-		{
-			Start = single.StartOfDay();
-			End = single.EndOfDay();
-		}
+			=> (Start, End) = (single.StartOfDay(), single.EndOfDay());
 
 		/// <summary>
 		/// Create range object, making sure start is before end (!)

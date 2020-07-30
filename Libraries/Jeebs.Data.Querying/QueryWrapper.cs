@@ -16,14 +16,17 @@ namespace Jeebs.Data
 		/// Setup object - start a new IUnitOfWork for this query
 		/// </summary>
 		/// <param name="db">IDb</param>
-		public QueryWrapper(IDb db) => unitOfWork = db.UnitOfWork;
+		public QueryWrapper(IDb db)
+			=> unitOfWork = db.UnitOfWork;
 
 		/// <inheritdoc/>
-		public IQueryBuilder StartNewQuery() => new QueryBuilder(unitOfWork);
+		public IQueryBuilder StartNewQuery()
+			=> new QueryBuilder(unitOfWork);
 
 		/// <summary>
 		/// Dispose <see cref="IUnitOfWork"/>
 		/// </summary>
-		public void Dispose() => unitOfWork.Dispose();
+		public void Dispose()
+			=> unitOfWork.Dispose();
 	}
 }

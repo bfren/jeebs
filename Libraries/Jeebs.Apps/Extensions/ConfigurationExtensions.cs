@@ -15,8 +15,8 @@ namespace Jeebs.Apps
 		/// Get JeebsConfig object from IConfiguration
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
-		public static JeebsConfig GetJeebsConfig(this IConfiguration config) =>
-			config.GetSection(JeebsConfig.Key)?.Get<JeebsConfig>() ?? new JeebsConfig();
+		public static JeebsConfig GetJeebsConfig(this IConfiguration config)
+			=> config.GetSection(JeebsConfig.Key)?.Get<JeebsConfig>() ?? new JeebsConfig();
 
 		/// <summary>
 		/// Return a configuration section as type T
@@ -26,7 +26,7 @@ namespace Jeebs.Apps
 		/// <param name="sectionKey">Section key</param>
 		/// <returns>Configuration section</returns>
 		public static T GetSection<T>(this IConfiguration config, string sectionKey)
-			where T : class, new() =>
-			config.GetSection(JeebsConfig.GetKey(sectionKey))?.Get<T>() ?? new T();
+			where T : class, new()
+			=> config.GetSection(JeebsConfig.GetKey(sectionKey))?.Get<T>() ?? new T();
 	}
 }

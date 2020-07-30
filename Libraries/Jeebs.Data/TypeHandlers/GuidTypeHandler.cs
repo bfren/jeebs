@@ -16,13 +16,15 @@ namespace Jeebs.Data.TypeHandlers
 		/// </summary>
 		/// <param name="value">Guid value</param>
 		/// <returns>Guid</returns>
-		public override Guid Parse(object value) => new Guid(value.ToString());
+		public override Guid Parse(object value)
+			=> new Guid(value.ToString());
 
 		/// <summary>
 		/// Set Guid value
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter</param>
 		/// <param name="value">Guid</param>
-		public override void SetValue(IDbDataParameter parameter, Guid value) => parameter.Value = value.ToString();
+		public override void SetValue(IDbDataParameter parameter, Guid value)
+			=> parameter.Value = value.ToString();
 	}
 }

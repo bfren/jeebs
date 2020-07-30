@@ -343,56 +343,67 @@ namespace Jeebs.Constants
 		/// <summary>
 		/// Books of the Law
 		/// </summary>
-		public static List<string> Law { get => new List<string>(new[] { Genesis, Exodus, Leviticus, Numbers, Deuteronomy }); }
+		public static List<string> Law
+			=> new List<string>(new[] { Genesis, Exodus, Leviticus, Numbers, Deuteronomy });
 
 		/// <summary>
 		/// History Books
 		/// </summary>
-		public static List<string> History { get => new List<string>(new[] { Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther }); }
+		public static List<string> History
+			=> new List<string>(new[] { Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther });
 
 		/// <summary>
 		/// Wisdom Literature
 		/// </summary>
-		public static List<string> Wisdom { get => new List<string>(new[] { Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs }); }
+		public static List<string> Wisdom
+			=> new List<string>(new[] { Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs });
 
 		/// <summary>
 		/// Major Prophets
 		/// </summary>
-		public static List<string> MajorProphets { get => new List<string>(new[] { Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel }); }
+		public static List<string> MajorProphets
+			=> new List<string>(new[] { Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel });
 
 		/// <summary>
 		/// Minor Prophets
 		/// </summary>
-		public static List<string> MinorProphets { get => new List<string>(new[] { Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi }); }
+		public static List<string> MinorProphets
+			=> new List<string>(new[] { Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi });
 
 		/// <summary>
 		/// Old Testament
 		/// </summary>
-		public static List<string> OldTestament { get => Law.Concat(History).Concat(Wisdom).Concat(MajorProphets).Concat(MinorProphets).ToList(); }
+		public static List<string> OldTestament
+			=> Law.Concat(History).Concat(Wisdom).Concat(MajorProphets).Concat(MinorProphets).ToList();
 
 		/// <summary>
 		/// Gospels
 		/// </summary>
-		public static List<string> Gospels { get => new List<string>(new[] { Matthew, Mark, Luke, John }); }
+		public static List<string> Gospels
+			=> new List<string>(new[] { Matthew, Mark, Luke, John });
 
 		/// <summary>
 		/// Pauline Letters
 		/// </summary>
-		public static List<string> PaulineLetters { get => new List<string>(new[] { Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon }); }
+		public static List<string> PaulineLetters
+			=> new List<string>(new[] { Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon });
 
 		/// <summary>
 		/// Epistles
 		/// </summary>
-		public static List<string> Epistles { get => new List<string>(new[] { Acts, Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon, Hebrews, James, FirstPeter, SecondPeter, FirstJohn, SecondJohn, ThirdJohn, Jude, Revelation }); }
+		public static List<string> Epistles
+			=> new List<string>(new[] { Acts, Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon, Hebrews, James, FirstPeter, SecondPeter, FirstJohn, SecondJohn, ThirdJohn, Jude, Revelation });
 
 		/// <summary>
 		/// New Testament
 		/// </summary>
-		public static List<string> NewTestament { get => Gospels.Concat(Epistles).ToList(); }
+		public static List<string> NewTestament
+			=> Gospels.Concat(Epistles).ToList();
 
 		/// <summary>
 		/// All Books
 		/// </summary>
-		public static List<string> All { get => OldTestament.Concat(NewTestament).ToList(); }
+		public static List<string> All
+			=> OldTestament.Concat(NewTestament).ToList();
 	}
 }

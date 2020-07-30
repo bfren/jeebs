@@ -9,7 +9,7 @@ namespace Jeebs.Data
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <typeparam name="TOptions">Options type</typeparam>
-	public abstract class QueryPartsBuilderExtended<TModel, TOptions>: QueryPartsBuilder<TModel, TOptions>
+	public abstract class QueryPartsBuilderExtended<TModel, TOptions> : QueryPartsBuilder<TModel, TOptions>
 		where TOptions : QueryOptions
 	{
 		/// <summary>
@@ -25,9 +25,7 @@ namespace Jeebs.Data
 #pragma warning disable IDE1006 // Naming Styles
 		protected void AddFrom(params Table[] tables)
 #pragma warning restore IDE1006 // Naming Styles
-		{
-			AddFrom(Adapter.EscapeAndJoin(tables));
-		}
+			=> AddFrom(Adapter.EscapeAndJoin(tables));
 
 		/// <summary>
 		/// Add SELECT shorthand
@@ -36,9 +34,7 @@ namespace Jeebs.Data
 #pragma warning disable IDE1006 // Naming Styles
 		protected void AddSelect(params Table[] tables)
 #pragma warning restore IDE1006 // Naming Styles
-		{
-			AddSelect(Adapter.Extract<TModel>(tables));
-		}
+			=> AddSelect(Adapter.Extract<TModel>(tables));
 
 		/// <summary>
 		/// Escape shorthand
@@ -49,9 +45,7 @@ namespace Jeebs.Data
 		protected string __<T>(T table)
 #pragma warning restore IDE1006 // Naming Styles
 			where T : Table
-		{
-			return Adapter.Escape(table);
-		}
+			=> Adapter.Escape(table);
 
 		/// <summary>
 		/// Escape shorthand
@@ -63,9 +57,7 @@ namespace Jeebs.Data
 		protected string __<T>(T table, Func<T, string> column)
 #pragma warning restore IDE1006 // Naming Styles
 			where T : Table
-		{
-			return Adapter.EscapeAndJoin(table, column(table));
-		}
+			=> Adapter.EscapeAndJoin(table, column(table));
 
 		/// <summary>
 		/// Set INNER JOIN
@@ -76,9 +68,7 @@ namespace Jeebs.Data
 		protected void AddInnerJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
 			where T1 : Table
 			where T2 : Table
-		{
-			AddInnerJoin(table, on(table), (equals.table, equals.column(equals.table)));
-		}
+			=> AddInnerJoin(table, on(table), (equals.table, equals.column(equals.table)));
 
 		/// <summary>
 		/// Set LEFT JOIN
@@ -89,9 +79,7 @@ namespace Jeebs.Data
 		protected void AddLeftJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
 			where T1 : Table
 			where T2 : Table
-		{
-			AddLeftJoin(table, on(table), (equals.table, equals.column(equals.table)));
-		}
+			=> AddLeftJoin(table, on(table), (equals.table, equals.column(equals.table)));
 
 		/// <summary>
 		/// Set RIGHT JOIN
@@ -102,8 +90,6 @@ namespace Jeebs.Data
 		protected void AddRightJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
 			where T1 : Table
 			where T2 : Table
-		{
-			AddRightJoin(table, on(table), (equals.table, equals.column(equals.table)));
-		}
+			=> AddRightJoin(table, on(table), (equals.table, equals.column(equals.table)));
 	}
 }

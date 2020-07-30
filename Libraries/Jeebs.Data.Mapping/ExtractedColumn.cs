@@ -23,11 +23,7 @@ namespace Jeebs.Data
 		/// <param name="column">Escaped Column Name</param>
 		/// <param name="alias">Column Alias</param>
 		public ExtractedColumn(string table, string column, string alias)
-		{
-			Table = table;
-			Column = column;
-			Alias = alias;
-		}
+			=> (Table, Column, Alias) = (table, column, alias);
 
 		/// <summary>
 		/// Extracted Column Comparer

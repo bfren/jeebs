@@ -14,6 +14,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="dt">DateTime object</param>
 		/// <returns>MySql Formatted string</returns>
-		public static string ToMySqlString(this DateTime dt) => dt.ToString("yyyy-MM-dd HH:mm:ss");
+		public static string ToMySqlString(this DateTime dt)
+			=> dt.ToString("yyyy-MM-dd HH:mm:ss");
 	}
 }

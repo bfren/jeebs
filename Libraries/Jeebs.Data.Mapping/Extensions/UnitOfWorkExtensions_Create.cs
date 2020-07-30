@@ -134,13 +134,11 @@ namespace Jeebs.Data
 		/// <returns>Entity (complete with new ID)</returns>
 		public static IR<T> Insert<T>(this IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
-		{
-			return r
+			=> r
 				.WithState(w)
 				.Link().Map(InsertAndReturnId)
 				.Link().Map(CheckId<T>)
 				.Link().Map(GetFreshPoco<T>);
-		}
 
 		/// <summary>
 		/// Insert an entity
@@ -151,12 +149,10 @@ namespace Jeebs.Data
 		/// <returns>Entity (complete with new ID)</returns>
 		public static async Task<IR<T>> InsertAsync<T>(this IUnitOfWork w, IOkV<T> r)
 			where T : class, IEntity
-		{
-			return await r
+			=> await r
 				.WithState(w)
 				.Link().MapAsync(InsertAndReturnIdAsync).Await()
 				.Link().Map(CheckId<T>)
 				.Link().MapAsync(GetFreshPocoAsync<T>);
-		}
 	}
 }

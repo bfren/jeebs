@@ -17,7 +17,8 @@ namespace Jeebs.Data
 		public IAdapter Adapter { get; }
 
 		/// <inheritdoc/>
-		public IDbConnection Connection => Transaction.Connection;
+		public IDbConnection Connection
+			=> Transaction.Connection;
 
 		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; }
@@ -34,11 +35,7 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
 		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log)
-		{
-			Adapter = adapter;
-			Transaction = connection.BeginTransaction();
-			this.log = log;
-		}
+			=> (Adapter, Transaction, this.log) = (adapter, connection.BeginTransaction(), log);
 
 		/// <inheritdoc/>
 		public string Escape(object element)

@@ -38,22 +38,20 @@ namespace Jeebs.Data
 		/// <param name="columns">Mapped Columns</param>
 		/// <param name="idColumn">Id Column</param>
 		public TableMap(string name, List<MappedColumn> columns, MappedColumn idColumn)
-		{
-			Name = name;
-			Columns = columns;
-			IdColumn = idColumn;
-		}
+			=> (Name, Columns, IdColumn) = (name, columns, idColumn);
 
 		/// <summary>
 		/// Get all column names (they will be escaped)
 		/// </summary>
-		public IEnumerable<string> GetColumnNames() => Columns.Select(mc => mc.Column);
+		public IEnumerable<string> GetColumnNames()
+			=> Columns.Select(mc => mc.Column);
 
 		/// <summary>
 		/// Get all column aliases
 		/// </summary>
 		/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
-		public IEnumerable<string> GetAliases(bool includeIdAlias) => Columns.Select(mc => mc.Property.Name).Where(a => includeIdAlias || a != IdColumn.Property.Name);
+		public IEnumerable<string> GetAliases(bool includeIdAlias)
+			=> Columns.Select(mc => mc.Property.Name).Where(a => includeIdAlias || a != IdColumn.Property.Name);
 
 		/// <summary>
 		/// Get all column names and aliases for writeable columns
@@ -78,6 +76,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Return Escaped Table Name
 		/// </summary>
-		public override string ToString() => Name;
+		public override string ToString()
+			=> Name;
 	}
 }

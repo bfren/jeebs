@@ -10,6 +10,7 @@ namespace Jeebs.Config.Logging
 	public sealed class ConsoleProvider : LoggingProvider
 	{
 		/// <inheritdoc/>
-		public override bool IsValid() => true;
+		public override bool IsValid()
+			=> true;
 	}
 }

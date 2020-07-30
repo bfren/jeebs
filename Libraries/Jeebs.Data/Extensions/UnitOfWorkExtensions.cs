@@ -90,7 +90,7 @@ namespace Jeebs.Data
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
 		public static IR<int> Execute(this IUnitOfWork w, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-		=> w.Execute(R.Ok(), query, parameters, commandType);
+			=> w.Execute(R.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Execute a query on the database

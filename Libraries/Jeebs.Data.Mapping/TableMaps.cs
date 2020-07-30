@@ -19,13 +19,15 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create object
 		/// </summary>
-		static TableMaps() => maps = new ConcurrentDictionary<Type, TableMap>();
+		static TableMaps()
+			=> maps = new ConcurrentDictionary<Type, TableMap>();
 
 		/// <summary>
 		/// Returns true if <typeparamref name="TEntity"/> has already been mapped
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static bool Exists<TEntity>() => maps.ContainsKey(typeof(TEntity));
+		public static bool Exists<TEntity>()
+			=> maps.ContainsKey(typeof(TEntity));
 
 		/// <summary>
 		/// Add the TableMap
@@ -65,30 +67,35 @@ namespace Jeebs.Data
 		/// Get map for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static TableMap GetMap<TEntity>() => SafeGet(typeof(TEntity), map => map);
+		public static TableMap GetMap<TEntity>()
+			=> SafeGet(typeof(TEntity), map => map);
 
 		/// <summary>
 		/// Get table name for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static string GetTableName<TEntity>() => SafeGet(typeof(TEntity), map => map.Name);
+		public static string GetTableName<TEntity>()
+			=> SafeGet(typeof(TEntity), map => map.Name);
 
 		/// <summary>
 		/// Get mapped columns for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static IEnumerable<MappedColumn> GetColumns<TEntity>() => SafeGet(typeof(TEntity), map => map.Columns);
+		public static IEnumerable<MappedColumn> GetColumns<TEntity>()
+			=> SafeGet(typeof(TEntity), map => map.Columns);
 
 		/// <summary>
 		/// Get Id Property for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static MappedColumn GetIdProperty<TEntity>() => SafeGet(typeof(TEntity), map => map.IdColumn);
+		public static MappedColumn GetIdProperty<TEntity>()
+			=> SafeGet(typeof(TEntity), map => map.IdColumn);
 
 		/// <summary>
 		/// Get Version Property for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static MappedColumn? GetVersionProperty<TEntity>() => SafeGet(typeof(TEntity), map => map.VersionColumn);
+		public static MappedColumn? GetVersionProperty<TEntity>()
+			=> SafeGet(typeof(TEntity), map => map.VersionColumn);
 	}
 }

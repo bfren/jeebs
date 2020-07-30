@@ -25,7 +25,8 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Get properties for <typeparamref name="TModel"/> that have not been marked with <see cref="IgnoreAttribute"/>
 		/// </summary>
-		static Extract() => properties = typeof(TModel).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
+		static Extract()
+			=> properties = typeof(TModel).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
 
 		/// <summary>
 		/// Extract columns from specified tables

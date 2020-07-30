@@ -15,6 +15,7 @@ namespace Jeebs.Config.Logging
 		public string Path { get; set; } = string.Empty;
 
 		/// <inheritdoc/>
-		public override bool IsValid() => !string.IsNullOrEmpty(Path) && System.IO.File.Exists(Path);
+		public override bool IsValid()
+			=> !string.IsNullOrEmpty(Path) && System.IO.File.Exists(Path);
 	}
 }

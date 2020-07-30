@@ -20,14 +20,12 @@ namespace Jeebs.Data
 		/// <param name="column">Escaped Column Name</param>
 		/// <param name="property">Entity property PropertyInfo</param>
 		public MappedColumn(string column, PropertyInfo property)
-		{
-			Column = column;
-			Property = property;
-		}
+			=> (Column, Property) = (column, property);
 
 		/// <summary>
 		/// Return Escaped Column Name
 		/// </summary>
-		public override string ToString() => Column;
+		public override string ToString()
+			=> Column;
 	}
 }

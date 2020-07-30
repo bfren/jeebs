@@ -19,13 +19,15 @@ namespace Jeebs
 		/// Set the name of this value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		protected Enum(string name) => this.name = name;
+		protected Enum(string name)
+			=> this.name = name;
 
 		/// <summary>
 		/// Return the name of this value
 		/// </summary>
 		/// <returns>Name of this value</returns>
-		public override string ToString() => name;
+		public override string ToString()
+			=> name;
 
 		#region Static Members
 
@@ -67,9 +69,7 @@ namespace Jeebs
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
 		protected static Option<T> Parse<T>(string name, T[] values)
 			where T : Enum
-		{
-			// Return the Enum value
-			return (Option<T>)cache.GetOrAdd(
+			=> (Option<T>)cache.GetOrAdd(
 				$"{typeof(T)}-{name}",
 				(_, args) =>
 				{
@@ -88,7 +88,6 @@ namespace Jeebs
 				},
 				new ParseArgs<T>(name, values)
 			);
-		}
 
 		/// <summary>
 		/// Returns true if the given name matches a registered Enum value
@@ -118,10 +117,7 @@ namespace Jeebs
 			public readonly T[] Values;
 
 			public ParseArgs(string name, T[] values)
-			{
-				Name = name;
-				Values = values;
-			}
+				=> (Name, Values) = (name, values);
 		}
 
 		#endregion

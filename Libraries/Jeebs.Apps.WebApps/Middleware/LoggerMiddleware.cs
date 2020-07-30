@@ -35,9 +35,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
 		public LoggerMiddleware(RequestDelegate next)
-		{
-			this.next = next;
-		}
+			=> this.next = next;
 
 		/// <summary>
 		/// Invoke Middleware
@@ -90,9 +88,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
 		internal LoggerMiddleware(RequestDelegate next, ILogger logger) : this(next)
-		{
-			this.logger = logger;
-		}
+			=> this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing

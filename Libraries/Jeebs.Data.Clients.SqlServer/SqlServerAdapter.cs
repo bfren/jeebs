@@ -13,7 +13,8 @@ namespace Jeebs.Data.Clients.SqlServer
 		public SqlServerAdapter() : base('.', ", ", '[', ']', "AS", '[', ']', "ASC", "DESC") { }
 
 		/// <inheritdoc/>
-		public override string GetRandomSortOrder() => "NEWID()";
+		public override string GetRandomSortOrder()
+			=> "NEWID()";
 
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)

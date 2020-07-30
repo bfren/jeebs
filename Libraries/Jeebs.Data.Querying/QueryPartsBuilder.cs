@@ -22,10 +22,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		protected QueryPartsBuilder(IAdapter adapter)
-		{
-			parts = new QueryParts();
-			Adapter = adapter;
-		}
+			=> (parts, Adapter) = (new QueryParts(), adapter);
 
 		/// <summary>
 		/// Build the query
@@ -215,7 +212,7 @@ namespace Jeebs.Data
 		/// <param name="parameters">[Optional] Parameters to add</param>
 		protected void AddWhere(string where, object? parameters = null)
 		{
-			(parts.Where ?? (parts.Where = new List<string>())).Add(where);
+			(parts.Where ??= new List<string>()).Add(where);
 
 			if (parameters != null)
 			{

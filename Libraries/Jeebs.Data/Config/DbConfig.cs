@@ -68,6 +68,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Retrieve the authentication database connection settings
 		/// </summary>
-		public DbConnectionConfig GetAuthenticationConnection() => GetConnection(Authentication);
+		public DbConnectionConfig GetAuthenticationConnection()
+			=> GetConnection(Authentication);
 	}
 }

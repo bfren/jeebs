@@ -14,17 +14,16 @@ namespace Jeebs.Data.Clients.MySql
 		public MySqlAdapter() : base('.', ", ", '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
 
 		/// <inheritdoc/>
-		public override string GetRandomSortOrder() => "RAND()";
+		public override string GetRandomSortOrder()
+			=> "RAND()";
 
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
-		{
-			return string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
+			=> string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
 				table,
 				string.Join(ColumnSeparator, columns),
 				"@" + string.Join($"{ColumnSeparator}@", aliases)
 			);
-		}
 
 		/// <inheritdoc/>
 		public override string Retrieve(IQueryParts parts)
@@ -100,13 +99,11 @@ namespace Jeebs.Data.Clients.MySql
 
 		/// <inheritdoc/>
 		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
-		{
-			return string.Format("SELECT {0} FROM {1} WHERE {2} = @Id;",
+			=> string.Format("SELECT {0} FROM {1} WHERE {2} = @Id;",
 				string.Join(ColumnSeparator, columns),
 				table,
 				idColumn
 			);
-		}
 
 		/// <inheritdoc/>
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)

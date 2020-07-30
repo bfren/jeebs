@@ -31,9 +31,7 @@ namespace Jeebs
 		/// The number of messages
 		/// </summary>
 		public int Count
-		{
-			get => messages.Count;
-		}
+			=> messages.Count;
 
 		/// <summary>
 		/// Returns true if <paramref name="m"/> is of type <typeparamref name="TMsg"/>

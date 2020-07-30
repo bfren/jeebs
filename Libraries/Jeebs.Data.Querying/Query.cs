@@ -26,10 +26,7 @@ namespace Jeebs.Data
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="parts">IQueryParts</param>
 		internal Query(IUnitOfWork unitOfWork, IQueryParts parts)
-		{
-			this.unitOfWork = unitOfWork;
-			this.parts = parts;
-		}
+			=> (this.unitOfWork, this.parts) = (unitOfWork, parts);
 
 		/// <inheritdoc/>
 		public async Task<IR<long>> GetCountAsync(IOk r)

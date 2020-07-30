@@ -80,7 +80,8 @@ namespace Jeebs.Cryptography
 		/// Encrypt the box
 		/// </summary>
 		/// <param name="key">Encryption key</param>
-		internal void Lock(string key) => Lock(GenericHash.Hash(key, Salt, 32));
+		internal void Lock(string key)
+			=> Lock(GenericHash.Hash(key, Salt, 32));
 
 		/// <summary>
 		/// Decrypt the box
@@ -112,7 +113,8 @@ namespace Jeebs.Cryptography
 		/// Decrypt the box
 		/// </summary>
 		/// <param name="key">Encryption key</param>
-		internal void Unlock(string key) => Unlock(GenericHash.Hash(key, Salt, 32));
+		internal void Unlock(string key)
+			=> Unlock(GenericHash.Hash(key, Salt, 32));
 
 		#region Static
 
@@ -121,14 +123,16 @@ namespace Jeebs.Cryptography
 		/// </summary>
 		/// <param name="value">Box contents</param>
 		/// <param name="key">Encryption key</param>
-		internal static LockedBox<T> Create(T value, byte[] key) => Create(value, b => b.Lock(key));
+		internal static LockedBox<T> Create(T value, byte[] key)
+			=> Create(value, b => b.Lock(key));
 
 		/// <summary>
 		/// Create a box
 		/// </summary>
 		/// <param name="value">Box contents</param>
 		/// <param name="key">Encryption key</param>
-		internal static LockedBox<T> Create(T value, string key) => Create(value, b => b.Lock(key));
+		internal static LockedBox<T> Create(T value, string key)
+			=> Create(value, b => b.Lock(key));
 
 		/// <summary>
 		/// Create a box
@@ -163,14 +167,16 @@ namespace Jeebs.Cryptography
 		/// </summary>
 		/// <param name="json">JSON-serialised Box</param>
 		/// <param name="key">Encryption key</param>
-		internal static LockedBox<T> Open(string json, byte[] key) => Open(json, box => box.Unlock(key));
+		internal static LockedBox<T> Open(string json, byte[] key)
+			=> Open(json, box => box.Unlock(key));
 
 		/// <summary>
 		/// Open a box
 		/// </summary>
 		/// <param name="json">JSON-serialised Box</param>
 		/// <param name="key">Encryption key</param>
-		internal static LockedBox<T> Open(string json, string key) => Open(json, box => box.Unlock(key));
+		internal static LockedBox<T> Open(string json, string key)
+			=> Open(json, box => box.Unlock(key));
 
 		/// <summary>
 		/// Open a box

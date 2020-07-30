@@ -86,7 +86,8 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string Escape<TTable>(TTable table) where TTable : notnull => Escape(table.ToString());
+		public string Escape<TTable>(TTable table) where TTable : notnull
+			=> Escape(table.ToString());
 
 		/// <inheritdoc/>
 		public string SplitAndEscape(string element)
@@ -128,20 +129,23 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string EscapeColumn(string name, string alias) => $"{Escape(name)} {this.Alias} {AliasOpen}{alias}{AliasClose}";
+		public string EscapeColumn(string name, string alias)
+			=> $"{Escape(name)} {this.Alias} {AliasOpen}{alias}{AliasClose}";
 
 		#endregion
 
 		#region Querying
 
 		/// <inheritdoc/>
-		public string GetSortOrder(string column, SortOrder order) => string.Concat(Escape(column), " ", order == SortOrder.Ascending ? SortAsc : SortDesc);
+		public string GetSortOrder(string column, SortOrder order)
+			=> string.Concat(Escape(column), " ", order == SortOrder.Ascending ? SortAsc : SortDesc);
 
 		/// <inheritdoc/>
 		public abstract string GetRandomSortOrder();
 
 		/// <inheritdoc/>
-		public virtual string GetSelectCount() => "COUNT(*)";
+		public virtual string GetSelectCount()
+			=> "COUNT(*)";
 
 		/// <inheritdoc/>
 		public abstract string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases);

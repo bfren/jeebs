@@ -16,7 +16,8 @@ namespace Jeebs.Data.TypeHandlers
 		/// </summary>
 		/// <param name="value">T value</param>
 		/// <returns>JSON</returns>
-		protected override string Format(T value) => Util.Json.Serialise(value);
+		protected override string Format(T value)
+			=> Util.Json.Serialise(value);
 
 		/// <summary>
 		/// Deserialise JSON string
