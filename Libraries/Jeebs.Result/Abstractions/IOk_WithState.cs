@@ -30,6 +30,12 @@ namespace Jeebs
 		new IOkV<TNext, TState> OkV<TNext>(TNext value);
 
 		/// <summary>
+		/// Shorthand to return a 'true' result
+		/// </summary>
+		/// <param name="message">[Optional] Message to add</param>
+		new IOk<bool, TState> True(IMsg? message = null);
+
+		/// <summary>
 		/// Return an <see cref="IError{TValue, TState}"/> result with the current value type
 		/// </summary>
 		new IError<TValue, TState> Error();
@@ -39,11 +45,5 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		new IError<TNext, TState> Error<TNext>();
-
-		/// <summary>
-		/// Shorthand to return a 'true' result
-		/// </summary>
-		/// <param name="message">[Optional] Message to add</param>
-		new IOk<bool, TState> True(IMsg? message = null);
 	}
 }

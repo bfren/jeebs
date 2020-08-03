@@ -21,10 +21,6 @@ namespace Jeebs
 				_ => new ROk<TNext> { Messages = Messages }
 			};
 
-		/// <inheritdoc/>
-		public IOk<TValue, TState> WithState<TState>(TState state)
-			=> new ROk<TValue, TState>(state) { Messages = Messages };
-
 		/// <inheritdoc cref="IOk.OkV{TNext}(TNext)"/>
 		public IOkV<TNext> OkV<TNext>(TNext value)
 			=> new ROkV<TNext>(value) { Messages = Messages };
@@ -40,6 +36,10 @@ namespace Jeebs
 			return Ok<bool>();
 		}
 
+		/// <inheritdoc/>
+		public IOk<TValue, TState> WithState<TState>(TState state)
+			=> new ROk<TValue, TState>(state) { Messages = Messages };
+
 		#region Explicit implementations
 
 		IOk IOk.Ok()
@@ -53,6 +53,9 @@ namespace Jeebs
 
 		IOkV<TNext> IOk.OkV<TNext>(TNext value)
 			=> OkV(value);
+
+		IOk<bool, TState> IOk.WithState<TState>(TState state)
+			=> new ROk<bool, TState>(state) { Messages = Messages };
 
 		#endregion
 	}

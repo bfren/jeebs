@@ -47,14 +47,17 @@ namespace Jeebs
 		IOk<TNext> IOk.Ok<TNext>()
 			=> Ok<TNext>();
 
-		IOk<TValue, TNext> IOk<TValue>.WithState<TNext>(TNext state)
-			=> new ROk<TValue, TNext>(state) { Messages = Messages };
-
 		IOkV<TNext> IOk.OkV<TNext>(TNext value)
 			=> OkV(value);
 
 		IOk<bool> IOk.True(IMsg? message)
 			=> True(message);
+
+		IOk<bool, TNext> IOk.WithState<TNext>(TNext state)
+			=> new ROk<bool, TNext>(state) { Messages = Messages };
+
+		IOk<TValue, TNext> IOk<TValue>.WithState<TNext>(TNext state)
+			=> new ROk<TValue, TNext>(state) { Messages = Messages };
 
 		#endregion
 	}

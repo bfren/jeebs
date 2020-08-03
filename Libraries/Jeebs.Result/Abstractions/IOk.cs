@@ -32,6 +32,13 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="message">[Optional] Message to add</param>
 		IOk<bool> True(IMsg? message = null);
+
+		/// <summary>
+		/// Add state to the result
+		/// </summary>
+		/// <typeparam name="TState">Result state type</typeparam>
+		/// <param name="state">Result state</param>
+		IOk<bool, TState> WithState<TState>(TState state);
 	}
 
 	/// <summary>
@@ -45,11 +52,7 @@ namespace Jeebs
 		/// </summary>
 		new IOk<TValue> Ok();
 
-		/// <summary>
-		/// Add state to the result
-		/// </summary>
-		/// <typeparam name="TState">Result state type</typeparam>
-		/// <param name="state">Result state</param>
-		IOk<TValue, TState> WithState<TState>(TState state);
+		/// <inheritdoc cref="IOk.WithState{TState}(TState)"/>
+		new IOk<TValue, TState> WithState<TState>(TState state);
 	}
 }

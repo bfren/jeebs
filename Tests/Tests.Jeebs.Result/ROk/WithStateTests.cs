@@ -12,14 +12,18 @@ namespace Jeebs
 		{
 			// Arrange
 			const int state = 18;
-			var r = R.Ok();
+			var r0 = R.Ok();
+			var r1 = R.Ok<string>();
 
 			// Act
-			var next = r.WithState(state);
+			var n0 = r0.WithState(state);
+			var n1 = r1.WithState(state);
 
 			// Assert
-			Assert.IsAssignableFrom<IOk<bool, int>>(next);
-			Assert.Equal(state, next.State);
+			Assert.IsAssignableFrom<IOk<bool, int>>(n0);
+			Assert.Equal(state, n0.State);
+			Assert.IsAssignableFrom<IOk<string, int>>(n1);
+			Assert.Equal(state, n1.State);
 		}
 
 		[Fact]

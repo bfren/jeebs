@@ -13,7 +13,7 @@ namespace Jeebs
 		/// <summary>
 		/// Ok result
 		/// </summary>
-		public static IOk<bool> Ok()
+		public static IOk Ok()
 			=> new ROk<bool>();
 
 		/// <summary>
