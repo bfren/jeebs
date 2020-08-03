@@ -11,7 +11,7 @@ namespace Jeebs
 		public void False_Returns_Error_Bool()
 		{
 			// Arrange
-			const int state = 18;
+			const int state = 7;
 			var r = R.Ok(state);
 
 			// Act
@@ -25,7 +25,7 @@ namespace Jeebs
 		public void False_With_Message_Returns_Error_With_Msg()
 		{
 			// Arrange
-			const int state = 18;
+			const int state = 7;
 			var r = R.Ok(state);
 			var msg = new MsgTest();
 

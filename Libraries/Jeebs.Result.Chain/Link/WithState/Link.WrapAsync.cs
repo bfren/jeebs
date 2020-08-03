@@ -11,7 +11,7 @@ namespace Jeebs
 		new public async Task<IR<TNext, TState>> WrapAsync<TNext>(Func<Task<TNext>> f)
 			=> result switch
 			{
-				IOk<TValue, TState> x => Catch<TNext>(async () => { var v = await f().ConfigureAwait(false); return x.OkV(v); }),
+				IOk<TValue, TState> x => Catch<TNext>(async () => x.OkV(await f().ConfigureAwait(false))),
 				_ => result.Error<TNext>()
 			};
 	}

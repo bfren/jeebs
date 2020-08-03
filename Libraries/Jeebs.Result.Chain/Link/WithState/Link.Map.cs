@@ -14,6 +14,30 @@ namespace Jeebs
 				_ => result.Error<TNext>()
 			};
 
+		private IR<TNext, TState> PrivateMapAddState<TResult, TNext>(Func<TResult, IR<TNext>> f)
+			where TResult : IOk
+			=> result switch
+			{
+				TResult x => Catch<TNext>(() => f(x) switch
+				{
+					IOk<TNext> y => y.WithState(result.State),
+					_ => result.Error<TNext>()
+				}),
+				_ => result.Error<TNext>()
+			};
+
+		/// <inheritdoc cref="Link{TValue}.Map{TNext}(Func{IOk, IR{TNext}})"/>
+		new public IR<TNext, TState> Map<TNext>(Func<IOk, IR<TNext>> f)
+			=> PrivateMapAddState(f);
+
+		/// <inheritdoc cref="Link{TValue}.Map{TNext}(Func{IOk{TValue}, IR{TNext}})"/>
+		new public IR<TNext, TState> Map<TNext>(Func<IOk<TValue>, IR<TNext>> f)
+			=> PrivateMapAddState(f);
+
+		/// <inheritdoc cref="Link{TValue}.Map{TNext}(Func{IOkV{TValue}, IR{TNext}})"/>
+		new public IR<TNext, TState> Map<TNext>(Func<IOkV<TValue>, IR<TNext>> f)
+			=> PrivateMapAddState(f);
+
 		/// <inheritdoc/>
 		public IR<TNext, TState> Map<TNext>(Func<IOk<TValue, TState>, IR<TNext, TState>> f)
 			=> PrivateMap(f);

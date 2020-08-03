@@ -10,6 +10,9 @@ namespace Jeebs
 	{
 		private readonly IR<TValue> result;
 
+		internal Link(IR result)
+			=> this.result = result.ChangeType().To<TValue>();
+
 		internal Link(IR<TValue> result)
 			=> this.result = result;
 

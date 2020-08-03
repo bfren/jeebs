@@ -11,6 +11,13 @@ namespace Jeebs
 	public static class RExtensions_Link
 	{
 		/// <summary>
+		/// Create a new link in the result chain - special case for starting links when all we have is an <see cref="IOk"/>
+		/// </summary>
+		/// <param name="this">Result</param>
+		public static ILink<bool> Link(this IR @this)
+			=> new Link<bool>(@this);
+
+		/// <summary>
 		/// Create a new link in the result chain
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>

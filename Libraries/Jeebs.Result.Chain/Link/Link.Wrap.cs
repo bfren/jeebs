@@ -11,7 +11,7 @@ namespace Jeebs
 		public IR<TNext> Wrap<TNext>(TNext value)
 			=> result switch
 			{
-				IOk x => Catch(() => x.OkV(value)),
+				IOk x => x.OkV(value),
 				_ => result.Error<TNext>()
 			};
 

@@ -11,7 +11,7 @@ namespace Jeebs
 		public void WithState_Returns_Ok_With_State()
 		{
 			// Arrange
-			const int state = 18;
+			const int state = 7;
 			var r0 = R.Ok();
 			var r1 = R.Ok<string>();
 
@@ -30,7 +30,7 @@ namespace Jeebs
 		public void WithState_Returns_Ok_With_State_And_Keeps_Messages()
 		{
 			// Arrange
-			const int state = 18;
+			const int state = 7;
 			var r = R.Ok();
 			r.AddMsg("Test message.");
 

@@ -55,7 +55,7 @@ namespace Jeebs
 		[Fact]
 		public void To_IOk_With_State_Returns_IOk_New_Type_Same_State()
 		{
-			const int state = 18;
+			const int state = 7;
 			Keeps_State<IOk, bool, int>(R.Ok(state), state);
 			Keeps_State<IOk, int, int>(R.OkV(18, state), state);
 		}
@@ -63,7 +63,7 @@ namespace Jeebs
 		[Fact]
 		public void To_IError_With_State_Returns_IError_New_Type_Same_State()
 		{
-			const int state = 18;
+			const int state = 7;
 			Keeps_State<IError, bool, int>(R.Error(state), state);
 		}
 

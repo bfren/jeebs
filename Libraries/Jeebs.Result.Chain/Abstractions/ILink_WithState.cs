@@ -14,6 +14,24 @@ namespace Jeebs
 	{
 		#region Map
 
+		/// <inheritdoc cref="Map{TNext}(Func{IOk, IR{TNext}})"/>
+		new IR<TNext, TState> Map<TNext>(Func<IOk, IR<TNext>> f);
+
+		/// <inheritdoc cref="Map{TNext}(Func{IOk, IR{TNext}})"/>
+		new Task<IR<TNext, TState>> MapAsync<TNext>(Func<IOk, Task<IR<TNext>>> f);
+
+		/// <inheritdoc cref="Map{TNext}(Func{IOk{TValue}, IR{TNext}})"/>
+		new IR<TNext, TState> Map<TNext>(Func<IOk<TValue>, IR<TNext>> f);
+
+		/// <inheritdoc cref="Map{TNext}(Func{IOk{TValue}, IR{TNext}})"/>
+		new Task<IR<TNext, TState>> MapAsync<TNext>(Func<IOk<TValue>, Task<IR<TNext>>> f);
+
+		/// <inheritdoc cref="Map{TNext}(Func{IOkV{TValue}, IR{TNext}})"/>
+		new IR<TNext, TState> Map<TNext>(Func<IOkV<TValue>, IR<TNext>> f);
+
+		/// <inheritdoc cref="Map{TNext}(Func{IOkV{TValue}, IR{TNext}})"/>
+		new Task<IR<TNext, TState>> MapAsync<TNext>(Func<IOkV<TValue>, Task<IR<TNext>>> f);
+
 		/// <summary>
 		/// Map to a new result with a new value type
 		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError{TValue, TState}"/> will be returned</para>

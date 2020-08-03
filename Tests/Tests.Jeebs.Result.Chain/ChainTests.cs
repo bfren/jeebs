@@ -36,7 +36,7 @@ namespace Jeebs
 		public void Create_WithState_Returns_Ok()
 		{
 			// Arrange
-			const int state = 18;
+			const int state = 7;
 
 			// Act
 			var r = Chain.Create(state);
@@ -50,7 +50,7 @@ namespace Jeebs
 		public void Create_Type_WithState_Returns_Ok()
 		{
 			// Arrange
-			const int state = 18;
+			const int state = 7;
 
 			// Act
 			var r = Chain<int>.Create(state);
