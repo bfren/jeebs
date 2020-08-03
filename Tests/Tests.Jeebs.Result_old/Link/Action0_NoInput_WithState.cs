@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.Link
+namespace Jeebs_old.Link
 {
 	public class Action0_NoInput_WithState : ILink_Action0_NoInput
 	{

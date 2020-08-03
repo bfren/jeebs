@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.LinkAsync
+namespace Jeebs_old.LinkAsync
 {
 	public class Task1_InputWithoutValue : ILinkAsync_Task1_InputWithoutValue
 	{

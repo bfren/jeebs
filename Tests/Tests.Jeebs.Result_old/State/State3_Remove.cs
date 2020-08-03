@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.State
+namespace Jeebs_old.State
 {
 	public class State3_Remove
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Tests.Jeebs.Result_old.LinkAsync
+namespace Jeebs_old.LinkAsync
 {
 	public interface ILinkAsync_Task2_InputWithValue
 	{

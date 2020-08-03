@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old
+namespace Jeebs_old
 {
 	public class ErrorTests : IErrorTests
 	{

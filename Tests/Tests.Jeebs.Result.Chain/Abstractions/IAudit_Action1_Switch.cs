@@ -1,4 +1,8 @@
-﻿namespace Tests.Jeebs.Result.Audit
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Jeebs.AuditTests
 {
 	public interface IAudit_Action1_Switch
 	{

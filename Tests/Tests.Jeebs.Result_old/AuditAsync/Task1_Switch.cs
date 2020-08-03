@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.AuditAsync
+namespace Jeebs_old.AuditAsync
 {
 	public class Task1_Switch : IAuditAsync_Task1_Switch
 	{

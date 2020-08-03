@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.Audit
+namespace Jeebs_old.Audit
 {
 	public class Action1_Switch_WithState : IAudit_Action1_Switch
 	{

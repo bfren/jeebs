@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result
+namespace Jeebs
 {
 	public class MsgListTests
 	{

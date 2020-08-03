@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.LinkMap
+namespace Jeebs_old.LinkMap
 {
 	public class Func1_InputWithoutValue_WithState : ILinkMap_Func1_InputWithoutValue
 	{

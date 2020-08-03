@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Tests.Jeebs.Result_old.AuditAsync
+namespace Jeebs_old.AuditAsync
 {
 	public interface IAuditAsync_Task0_Simple
 	{

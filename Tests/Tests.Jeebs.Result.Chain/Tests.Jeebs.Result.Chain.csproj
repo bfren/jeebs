@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Link\WithValue\" />
     <Folder Include="Link\WithState\" />
   </ItemGroup>
 </Project>

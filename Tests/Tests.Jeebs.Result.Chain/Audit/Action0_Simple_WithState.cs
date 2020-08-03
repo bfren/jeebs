@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result.Audit
+namespace Jeebs.AuditTests
 {
 	public class Action0_Simple_WithState : IAudit_Action0_Simple
 	{

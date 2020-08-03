@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Tests.Jeebs.Result_old
+namespace Jeebs_old
 {
 	public interface IChainTests
 	{

@@ -1,4 +1,4 @@
-﻿namespace Tests.Jeebs.Result_old.LinkMap
+﻿namespace Jeebs_old.LinkMap
 {
 	public interface ILinkMap_Func2_InputWithValue
 	{

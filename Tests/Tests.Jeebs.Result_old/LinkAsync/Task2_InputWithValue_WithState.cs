@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.LinkAsync
+namespace Jeebs_old.LinkAsync
 {
 	public class Task2_InputWithValue_WithState : ILinkAsync_Task2_InputWithValue
 	{

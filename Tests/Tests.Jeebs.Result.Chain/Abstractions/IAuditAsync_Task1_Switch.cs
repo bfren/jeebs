@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Tests.Jeebs.Result.AuditAsync
+namespace Jeebs.AuditAsyncTests
 {
 	public interface IAuditAsync_Task1_Switch
 	{

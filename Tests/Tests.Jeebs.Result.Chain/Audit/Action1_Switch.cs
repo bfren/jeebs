@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result.Audit
+namespace Jeebs.AuditTests
 {
 	public class Action1_Switch : IAudit_Action1_Switch
 	{

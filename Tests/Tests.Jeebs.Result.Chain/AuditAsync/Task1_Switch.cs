@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result.AuditAsync
+namespace Jeebs.AuditAsyncTests
 {
 	public class Task1_Switch : IAuditAsync_Task1_Switch
 	{

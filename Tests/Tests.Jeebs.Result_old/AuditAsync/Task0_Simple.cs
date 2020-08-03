@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Xunit;
 
-namespace Tests.Jeebs.Result_old.AuditAsync
+namespace Jeebs_old.AuditAsync
 {
 	public class Task0_Simple : IAuditAsync_Task0_Simple
 	{
