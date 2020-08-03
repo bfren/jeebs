@@ -5,22 +5,34 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public partial class Link
+	public partial class Link<TValue>
 	{
-		/// <inheritdoc/>
-		public async Task<IR> RunAsync(Func<Task> f)
+		private async Task<IR<TValue>> PrivateRunAsync<TResult>(Func<TResult, Task> f)
+			where TResult : IOk
 			=> result switch
 			{
-				IOk x => x.Catch(async () => { await f().ConfigureAwait(false); return result; }),
+				TResult x => Catch(async () => { await f(x).ConfigureAwait(false); return result; }),
 				_ => result.Error()
 			};
 
 		/// <inheritdoc/>
-		public async Task<IR> RunAsync(Func<IOk, Task> f)
+		public async Task<IR<TValue>> RunAsync(Func<Task> f)
 			=> result switch
 			{
-				IOk x => x.Catch(async () => { await f(x).ConfigureAwait(false); return result; }),
+				IOk<TValue> x => Catch(async () => { await f().ConfigureAwait(false); return result; }),
 				_ => result.Error()
 			};
+
+		/// <inheritdoc/>
+		public Task<IR<TValue>> RunAsync(Func<IOk, Task> f)
+			=> PrivateRunAsync(f);
+
+		/// <inheritdoc/>
+		public Task<IR<TValue>> RunAsync(Func<IOk<TValue>, Task> f)
+			=> PrivateRunAsync(f);
+
+		/// <inheritdoc/>
+		public Task<IR<TValue>> RunAsync(Func<IOkV<TValue>, Task> f)
+			=> PrivateRunAsync(f);
 	}
 }

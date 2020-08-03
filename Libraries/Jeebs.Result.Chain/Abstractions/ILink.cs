@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 namespace Jeebs
 {
 	/// <summary>
-	/// Chain Link interface
+	/// Chain Link interface - with value
 	/// </summary>
-	public interface ILink : IDisposable
+	/// <typeparam name="TValue">Result value type</typeparam>
+	public interface ILink<TValue> : IDisposable
 	{
 		#region Map
 
@@ -17,11 +18,22 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next result type</typeparam>
-		/// <param name="f">Function which receives the current result (if it's an <see cref="IOk"/>) and returns the next result</param>
-		IR<TNext> Map<TNext>(Func<IOk, IR<TNext>> f);
+		/// <param name="f">Function which receives the current result (if it's an <see cref="IOk{TValue}"/>) and returns the next result</param>
+		IR<TNext> Map<TNext>(Func<IOk<TValue>, IR<TNext>> f);
 
-		/// <inheritdoc cref="Map{TNext}(Func{IOk, IR{TNext}})"/>
-		Task<IR<TNext>> MapAsync<TNext>(Func<IOk, Task<IR<TNext>>> f);
+		/// <inheritdoc cref="Map{TNext}(Func{IOk{TValue}, IR{TNext}})"/>
+		Task<IR<TNext>> MapAsync<TNext>(Func<IOk<TValue>, Task<IR<TNext>>> f);
+
+		/// <summary>
+		/// Map to a new result with a new value type
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// </summary>
+		/// <typeparam name="TNext">Next result type</typeparam>
+		/// <param name="f">Function which receives the current result (if it's an <see cref="IOkV{TValue}"/>) and returns the next result</param>
+		IR<TNext> Map<TNext>(Func<IOkV<TValue>, IR<TNext>> f);
+
+		/// <inheritdoc cref="Map{TNext}(Func{IOkV{TValue}, IR{TNext}})"/>
+		Task<IR<TNext>> MapAsync<TNext>(Func<IOkV<TValue>, Task<IR<TNext>>> f);
 
 		#endregion
 
@@ -32,10 +44,10 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError"/> will be returned</para>
 		/// </summary>
 		/// <param name="f">Action to run</param>
-		IR Run(Action f);
+		IR<TValue> Run(Action f);
 
-		/// <inheritdoc cref="Run(Action)"/>
-		Task<IR> RunAsync(Func<Task> f);
+		/// <inheritdoc cref="ILink.RunAsync(Func{Task})"/>
+		Task<IR<TValue>> RunAsync(Func<Task> f);
 
 		/// <summary>
 		/// Run an action and return <see cref="IOk"/>
@@ -43,10 +55,32 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError"/> will be returned</para>
 		/// </summary>
 		/// <param name="f">Action which receives the current result (if it's an <see cref="IOk"/>)</param>
-		IR Run(Action<IOk> f);
+		IR<TValue> Run(Action<IOk> f);
 
-		/// <inheritdoc cref="Run(Action{IOk})"/>
-		Task<IR> RunAsync(Func<IOk, Task> f);
+		/// <inheritdoc cref="ILink.RunAsync(Func{IOk, Task})"/>
+		Task<IR<TValue>> RunAsync(Func<IOk, Task> f);
+
+		/// <summary>
+		/// Run an action and return <see cref="IR{TValue}"/>
+		/// <para>The action will receive the current result as an input - if it's an <see cref="IOk{TValue}"/></para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// </summary>
+		/// <param name="f">Action which receives the current result (if it's an <see cref="IOk{TValue}"/>)</param>
+		IR<TValue> Run(Action<IOk<TValue>> f);
+
+		/// <inheritdoc cref="Run(Action{IOk{TValue}})"/>
+		Task<IR<TValue>> RunAsync(Func<IOk<TValue>, Task> f);
+
+		/// <summary>
+		/// Run an action and return <see cref="IR{TValue}"/>
+		/// <para>The action will receive the current result as an input - if it's an <see cref="IOkV{TValue}"/></para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.ChainExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// </summary>
+		/// <param name="f">Action which receives the current result (if it's an <see cref="IOkV{TValue}"/>)</param>
+		IR<TValue> Run(Action<IOkV<TValue>> f);
+
+		/// <inheritdoc cref="Run(Action{IOkV{TValue}})"/>
+		Task<IR<TValue>> RunAsync(Func<IOkV<TValue>, Task> f);
 
 		#endregion
 
@@ -55,19 +89,17 @@ namespace Jeebs
 		/// <summary>
 		/// Wrap a value in an <see cref="IOkV{TValue}"/> object
 		/// </summary>
-		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="value">Value to wrap</param>
-		IR<TValue> Wrap<TValue>(TValue value);
+		IR<TNext> Wrap<TNext>(TNext value);
 
 		/// <summary>
 		/// Wrap a value in an <see cref="IOkV{TValue}"/> object
 		/// </summary>
-		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="f">Function to return the value to wrap</param>
-		IR<TValue> Wrap<TValue>(Func<TValue> f);
+		IR<TNext> Wrap<TNext>(Func<TNext> f);
 
-		/// <inheritdoc cref="Wrap{TValue}(Func{TValue})"/>
-		Task<IR<TValue>> WrapAsync<TValue>(Func<Task<TValue>> f);
+		/// <inheritdoc cref="Wrap(Func{TValue})"/>
+		Task<IR<TNext>> WrapAsync<TNext>(Func<Task<TNext>> f);
 
 		#endregion
 	}

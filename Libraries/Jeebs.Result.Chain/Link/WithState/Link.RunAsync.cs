@@ -12,7 +12,7 @@ namespace Jeebs
 			where TResult : IOk
 			=> result switch
 			{
-				TResult x => x.Catch(async () => { await f(x).ConfigureAwait(false); return result; }),
+				TResult x => Catch(async () => { await f(x).ConfigureAwait(false); return result; }),
 				_ => result.Error()
 			};
 
@@ -20,7 +20,7 @@ namespace Jeebs
 		new public async Task<IR<TValue, TState>> RunAsync(Func<Task> f)
 			=> result switch
 			{
-				IOk x => x.Catch(async () => { await f().ConfigureAwait(false); return result; }),
+				IOk x => Catch(async () => { await f().ConfigureAwait(false); return result; }),
 				_ => result.Error()
 			};
 

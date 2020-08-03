@@ -5,14 +5,22 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public partial class Link
+	public partial class Link<TValue>
 	{
-		/// <inheritdoc/>
-		public async Task<IR<TNext>> MapAsync<TNext>(Func<IOk, Task<IR<TNext>>> f)
+		private async Task<IR<TNext>> PrivateMapAsync<TResult, TNext>(Func<TResult, Task<IR<TNext>>> f)
+			where TResult : IOk<TValue>
 			=> result switch
 			{
-				IOk x => x.Catch(async () => await f(x).ConfigureAwait(false)),
+				TResult x => Catch(async () => await f(x)),
 				_ => result.Error<TNext>()
 			};
+
+		/// <inheritdoc/>
+		public Task<IR<TNext>> MapAsync<TNext>(Func<IOk<TValue>, Task<IR<TNext>>> f)
+			=> PrivateMapAsync(f);
+
+		/// <inheritdoc/>
+		public Task<IR<TNext>> MapAsync<TNext>(Func<IOkV<TValue>, Task<IR<TNext>>> f)
+			=> PrivateMapAsync(f);
 	}
 }

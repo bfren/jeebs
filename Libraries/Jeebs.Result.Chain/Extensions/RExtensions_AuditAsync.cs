@@ -10,7 +10,7 @@ namespace Jeebs
 	/// </summary>
 	public static class RExtensions_AuditAsync
 	{
-		public static async Task<TResult> PrivateAuditAsync<TResult>(TResult result, Func<TResult, Task> audit)
+		private static async Task<TResult> PrivateAuditAsync<TResult>(TResult result, Func<TResult, Task> audit)
 			where TResult : IR
 		{
 			try

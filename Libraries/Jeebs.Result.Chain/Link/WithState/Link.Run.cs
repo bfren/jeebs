@@ -10,7 +10,7 @@ namespace Jeebs
 			where TResult : IOk
 			=> result switch
 			{
-				TResult x => x.Catch(() => { f(x); return result; }),
+				TResult x => Catch(() => { f(x); return result; }),
 				_ => result.Error()
 			};
 
@@ -18,7 +18,7 @@ namespace Jeebs
 		new public IR<TValue, TState> Run(Action f)
 			=> result switch
 			{
-				IOk<TValue, TState> x => x.Catch(() => { f(); return x; }),
+				IOk<TValue, TState> x => Catch(() => { f(); return x; }),
 				_ => result.Error()
 			};
 

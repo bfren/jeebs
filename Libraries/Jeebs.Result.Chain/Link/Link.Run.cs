@@ -1,26 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public partial class Link
+	public partial class Link<TValue>
 	{
-		/// <inheritdoc/>
-		public IR Run(Action a)
+		private IR<TValue> PrivateRun<TResult>(Action<TResult> f)
+			where TResult : IOk
 			=> result switch
 			{
-				IOk ok => ok.Catch(() => { a(); return ok; }),
+				TResult x => Catch(() => { f(x); return result; }),
 				_ => result.Error()
 			};
 
 		/// <inheritdoc/>
-		public IR Run(Action<IOk> a)
+		public IR<TValue> Run(Action f)
 			=> result switch
 			{
-				IOk ok => ok.Catch(() => { a(ok); return ok; }),
+				IOk x => Catch(() => { f(); return result; }),
 				_ => result.Error()
 			};
+
+		/// <inheritdoc/>
+		public IR<TValue> Run(Action<IOk> f)
+			=> PrivateRun(f);
+
+		/// <inheritdoc/>
+		public IR<TValue> Run(Action<IOk<TValue>> f)
+			=> PrivateRun(f);
+
+		/// <inheritdoc/>
+		public IR<TValue> Run(Action<IOkV<TValue>> f)
+			=> PrivateRun(f);
 	}
 }

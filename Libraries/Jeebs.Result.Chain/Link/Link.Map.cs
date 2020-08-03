@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public partial class Link
+	public partial class Link<TValue>
 	{
-		/// <inheritdoc/>
-		public IR<TNext> Map<TNext>(Func<IOk, IR<TNext>> f)
+		private IR<TNext> PrivateMap<TResult, TNext>(Func<TResult, IR<TNext>> f)
+			where TResult : IOk<TValue>
 			=> result switch
 			{
-				IOk x => x.Catch(() => f(x)),
+				TResult x => Catch(() => f(x)),
 				_ => result.Error<TNext>()
 			};
+
+		/// <inheritdoc/>
+		public IR<TNext> Map<TNext>(Func<IOk<TValue>, IR<TNext>> f)
+			=> PrivateMap(f);
+
+		/// <inheritdoc/>
+		public IR<TNext> Map<TNext>(Func<IOkV<TValue>, IR<TNext>> f)
+			=> PrivateMap(f);
 	}
 }

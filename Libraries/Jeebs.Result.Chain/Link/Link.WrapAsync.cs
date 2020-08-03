@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public partial class Link
+	public partial class Link<TValue>
 	{
 		/// <inheritdoc/>
-		public async Task<IR<TValue>> WrapAsync<TValue>(Func<Task<TValue>> f)
+		public async Task<IR<TNext>> WrapAsync<TNext>(Func<Task<TNext>> f)
 			=> result switch
 			{
-				IOk x => x.Catch(async () => { var v = await f().ConfigureAwait(false); return x.OkV(v); }),
-				_ => result.Error<TValue>()
+				IOk x => Catch<TNext>(async () => { var v = await f().ConfigureAwait(false); return x.OkV(v); }),
+				_ => result.Error<TNext>()
 			};
 	}
 }

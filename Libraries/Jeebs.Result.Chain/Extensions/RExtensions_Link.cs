@@ -13,13 +13,6 @@ namespace Jeebs
 		/// <summary>
 		/// Create a new link in the result chain
 		/// </summary>
-		/// <param name="this">Result</param>
-		public static ILink Link(this IR @this)
-			=> new Link(@this);
-
-		/// <summary>
-		/// Create a new link in the result chain
-		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="this">Result</param>
 		public static ILink<TValue> Link<TValue>(this IR<TValue> @this)

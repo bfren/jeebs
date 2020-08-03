@@ -11,7 +11,7 @@ namespace Jeebs
 			where TResult : IOk<TValue, TState>
 			=> result switch
 			{
-				TResult x => x.Catch(async () => await f(x)),
+				TResult x => Catch(async () => await f(x)),
 				_ => result.Error<TNext>()
 			};
 
