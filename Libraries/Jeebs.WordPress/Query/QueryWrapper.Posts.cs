@@ -123,7 +123,7 @@ namespace Jeebs.WordPress
 			//
 			// Get Post Meta values
 			//
-			async Task<IR<(TList, IEnumerable<PostMeta>)>> getMeta(IOkV<TList> r)
+			async Task<IR<(TList, List<PostMeta>)>> getMeta(IOkV<TList> r)
 			{
 				// Create options
 				var options = new QueryPostsMeta.Options
@@ -141,15 +141,15 @@ namespace Jeebs.WordPress
 				// Get meta
 				return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
 				{
-					IOkV<IEnumerable<PostMeta>> x => x.OkV((r.Value, x.Value)),
-					{ } x => x.Error<(TList, IEnumerable<PostMeta>)>()
+					IOkV<List<PostMeta>> x => x.OkV((r.Value, x.Value)),
+					{ } x => x.Error<(TList, List<PostMeta>)>()
 				};
 			}
 
 			//
 			// Set Meta for each Post
 			//
-			IR<TList> setMeta(IOkV<(TList, IEnumerable<PostMeta>)> r, Meta<TModel> meta)
+			IR<TList> setMeta(IOkV<(TList, List<PostMeta>)> r, Meta<TModel> meta)
 			{
 				var (posts, postsMeta) = r.Value;
 

@@ -22,25 +22,23 @@ namespace Jeebs.WordPress
 		}
 
 		/// <inheritdoc/>
-		protected TextCustomField(string key, bool isRequired = false) : base(key, isRequired) { }
+		protected TextCustomField(string key, bool isRequired = false) : base(key, string.Empty, isRequired) { }
 
 		/// <inheritdoc/>
 		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
-			if (!meta.ContainsKey(Key))
+			if (meta.ContainsKey(Key))
 			{
-				if (IsRequired)
-				{
-					return r.False().AddMsg(new MetaKeyNotFoundMsg(Key));
-				}
-
-				return r.True();
+				ValueObj = ValueStr = meta[Key];
+			}
+			else if (IsRequired)
+			{
+				return r.False().AddMsg(new MetaKeyNotFoundMsg(Key));
 			}
 
-			// Set value from met and return success
-			ValueObj = ValueStr = meta[Key];
+			// Return success
 			return r.True();
 		}
 	}

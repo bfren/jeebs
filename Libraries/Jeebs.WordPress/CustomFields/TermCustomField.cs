@@ -15,7 +15,7 @@ namespace Jeebs.WordPress
 	public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
 		/// <inheritdoc/>
-		protected TermCustomField(string key, bool isRequired = false) : base(key, isRequired) => ValueObj = new Term();
+		protected TermCustomField(string key, bool isRequired = false) : base(key, new Term(), isRequired) { }
 
 		/// <inheritdoc/>
 		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
@@ -23,7 +23,11 @@ namespace Jeebs.WordPress
 			// First, get the Term ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
-			if (!meta.ContainsKey(Key))
+			if (meta.ContainsKey(Key))
+			{
+				ValueStr = meta[Key];
+			}
+			else
 			{
 				if (IsRequired)
 				{

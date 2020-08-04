@@ -15,8 +15,7 @@ namespace Jeebs.WordPress
 	public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
 		/// <inheritdoc/>
-		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, isRequired)
-			=> ValueObj = new Attachment();
+		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, new Attachment(), isRequired) { }
 
 		/// <inheritdoc/>
 		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
@@ -24,7 +23,11 @@ namespace Jeebs.WordPress
 			// First, get the Attachment Post ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
-			if (!meta.ContainsKey(Key))
+			if (meta.ContainsKey(Key))
+			{
+				ValueStr = meta[Key];
+			}
+			else
 			{
 				if (IsRequired)
 				{
