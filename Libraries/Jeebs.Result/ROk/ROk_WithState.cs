@@ -54,10 +54,18 @@ namespace Jeebs
 			=> True(message);
 
 		IOk<bool, TNext> IOk.WithState<TNext>(TNext state)
-			=> new ROk<bool, TNext>(state) { Messages = Messages };
+			=> this switch
+			{
+				IOkV<bool, TNext> x => new ROkV<bool, TNext>(x.Value, state) { Messages = Messages },
+				_ => new ROk<bool, TNext>(state) { Messages = Messages }
+			};
 
 		IOk<TValue, TNext> IOk<TValue>.WithState<TNext>(TNext state)
-			=> new ROk<TValue, TNext>(state) { Messages = Messages };
+			=> this switch
+			{
+				IOkV<TValue, TNext> x => new ROkV<TValue, TNext>(x.Value, state) { Messages = Messages },
+				_ => new ROk<TValue, TNext>(state) { Messages = Messages }
+			};
 
 		#endregion
 	}

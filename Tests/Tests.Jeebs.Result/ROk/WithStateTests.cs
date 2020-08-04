@@ -27,6 +27,22 @@ namespace Jeebs
 		}
 
 		[Fact]
+		public void WithState_Returns_Ok_With_State_And_Keeps_Value()
+		{
+			// Arrange
+			const int value = 18;
+			const int state = 7;
+			var result = R.OkV(value);
+
+			// Act
+			var next = result.WithState(state);
+
+			// Assert
+			Assert.Equal(value, next.Value);
+			Assert.Equal(state, next.State);
+		}
+
+		[Fact]
 		public void WithState_Returns_Ok_With_State_And_Keeps_Messages()
 		{
 			// Arrange
