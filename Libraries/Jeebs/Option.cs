@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Jeebs
 {
@@ -48,17 +45,13 @@ namespace Jeebs
 		public bool IsNone
 			=> this is None<T>;
 
-		public Option<U> Bind<U>(Func<T, Option<U>> map)
-			=> Match(
-				x => map(x).Match<Option<U>>(Option.Some, Option.None<U>),
-				Option.None<U>
-			);
-
-		public Option<U> Map<U>(Func<T, U> map)
-			=> Match<Option<U>>(
-				v => Option.Some(map(v)),
-				Option.None<U>
-			);
+		private U Switch<U>(Func<T, U> some, Func<U> none)
+			=> this switch
+			{
+				Some<T> x => some(x.Value),
+				None<T> _ => none(),
+				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
+			};
 
 		/// <summary>
 		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
@@ -67,12 +60,57 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public U Match<U>(Func<T, U> some, Func<U> none)
-			=> this switch
-			{
-				Some<T> x => some(x.Value),
-				None<T> _ => none(),
-				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
-			};
+			=> Switch(
+				some: some,
+				none: none
+			);
+
+		/// <summary>
+		/// Run a function depending if this is a <see cref="Some{T}"/> or return value <paramref name="none"/>
+		/// </summary>
+		/// <typeparam name="U">Return type</typeparam>
+		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Value to return if <see cref="None{T}"/></param>
+		public U Match<U>(Func<T, U> some, U none)
+			=> Switch(
+				some: some,
+				none: () => none
+			);
+
+		/// <summary>
+		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <typeparam name="U">Next Option value type</typeparam>
+		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		public Option<U> Bind<U>(Func<T, Option<U>> map)
+			=> Switch(
+				some: x => map(x).Switch<Option<U>>(
+					some: Option.Some,
+					none: Option.None<U>
+				),
+				none: Option.None<U>
+			);
+
+		/// <summary>
+		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <typeparam name="U">Next Option value type</typeparam>
+		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		public Option<U> Map<U>(Func<T, U> map)
+			=> Switch<Option<U>>(
+				some: v => Option.Some(map(v)),
+				none: Option.None<U>
+			);
+
+		/// <summary>
+		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
+		public T Unwrap(Func<T> ifNone)
+			=> Switch(
+				some: x => x,
+				none: ifNone
+			);
 
 		/// <summary>
 		/// Alias for <see cref="Option.Some{T}(T)"/>
@@ -87,30 +125,6 @@ namespace Jeebs
 		/// <param name="value">Value to wrap</param>
 		public Option<T> Wrap(T value)
 			=> Option.Some(value);
-
-		/// <summary>
-		/// Get the value of this option
-		/// </summary>
-		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
-		public T Unwrap(Func<T> ifNone)
-			=> this switch
-			{
-				Some<T> x => x.Value,
-				None<T> _ => ifNone(),
-				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
-			};
-
-		/// <summary>
-		/// Folds the value if <see cref="Some{T}"/>, otherwise returns <paramref name="ifNone"/>
-		/// </summary>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="fold">Fold function</param>
-		/// <param name="ifNone">Value if <see cref="None{T}"/></param>
-		public U GetOrElse<U>(Func<T, U> fold, U ifNone)
-			=> Match(
-				fold,
-				() => ifNone
-			);
 
 		#region Operators
 
@@ -128,12 +142,10 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator ==(Option<T> l, T r)
-			=> l switch
-			{
-				Some<T> x => Equals(x.Value, r),
-				None<T> _ => false,
-				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
-			};
+			=> l.Switch(
+				some: x => Equals(x, r),
+				none: () => false
+			);
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -142,12 +154,10 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator !=(Option<T> l, T r)
-			=> l switch
-			{
-				Some<T> x => !Equals(x.Value, r),
-				None<T> _ => true,
-				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
-			};
+			=> l.Switch(
+				some: x => !Equals(x, r),
+				none: () => true
+			);
 
 		/// <summary>
 		/// Compare this <see cref="Option{T}"/> with another object
@@ -195,21 +205,22 @@ namespace Jeebs
 			};
 
 		/// <summary>
-		/// If this is a <see cref="Some{T}"/> get the hash code from <see cref="Some{T}.Value"/>, otherwise use base method
+		/// Generate custom HashCode
 		/// </summary>
 		public override int GetHashCode()
 			=> this switch
 			{
-				Some<T> x => "Some".GetHashCode() ^ typeof(T).GetHashCode() ^ x.GetHashCode(),
-				None<T> _ => "None".GetHashCode() ^ typeof(T).GetHashCode(),
+				Some<T> x when x.Value is T y => typeof(Some<T>).GetHashCode() ^ y.GetHashCode(),
+				None<T> _ => typeof(None<T>).GetHashCode() ^ typeof(T).GetHashCode(),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
 
+		/// <inheritdoc cref="GetHashCode"/>
 		public int GetHashCode(IEqualityComparer comparer)
 			=> this switch
 			{
-				Some<T> x => "Some".GetHashCode() ^ typeof(T).GetHashCode() ^ comparer.GetHashCode(x.Value),
-				None<T> _ => "None".GetHashCode() ^ typeof(T).GetHashCode(),
+				Some<T> x when x.Value is T y => typeof(Some<T>).GetHashCode() ^ comparer.GetHashCode(y),
+				None<T> _ => typeof(None<T>).GetHashCode() ^ typeof(T).GetHashCode(),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
 

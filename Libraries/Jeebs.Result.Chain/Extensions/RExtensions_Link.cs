@@ -33,14 +33,5 @@ namespace Jeebs
 		/// <param name="this">Result</param>
 		public static ILink<TValue, TState> Link<TValue, TState>(this IR<TValue, TState> @this)
 			=> new Link<TValue, TState>(@this);
-
-		/// <summary>
-		/// Await a link in the result chain
-		/// </summary>
-		/// <typeparam name="TResult">Result type</typeparam>
-		/// <param name="this">Result</param>
-		public static TResult Await<TResult>(this Task<TResult> @this)
-			where TResult : IR
-			=> @this.GetAwaiter().GetResult();
 	}
 }
