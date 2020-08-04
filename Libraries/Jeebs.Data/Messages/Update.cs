@@ -10,9 +10,15 @@ namespace Jm.Data
 	/// </summary>
 	public class UpdateMsg : IMsg
 	{
+		/// <summary>
+		/// Entity Type
+		/// </summary>
 		protected readonly Type type;
 
-		protected readonly long id;
+		/// <summary>
+		/// Entity ID
+		/// </summary>
+		protected readonly long? id;
 
 		/// <summary>
 		/// Create object

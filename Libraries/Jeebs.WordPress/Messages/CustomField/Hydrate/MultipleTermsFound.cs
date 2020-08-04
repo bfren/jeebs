@@ -5,7 +5,8 @@ using Jeebs;
 
 namespace Jm.WordPress.CustomField.Hydrate
 {
-	public sealed class MultipleTermsFound : IMsg
-	{
-	}
+	/// <summary>
+	/// Multiple taxonomy terms found when hydrating a custom field
+	/// </summary>
+	public sealed class MultipleTermsFound : IMsg { }
 }

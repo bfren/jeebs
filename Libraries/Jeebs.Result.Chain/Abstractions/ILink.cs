@@ -57,7 +57,7 @@ namespace Jeebs
 		/// <param name="f">Action to run</param>
 		IR<TValue> Run(Action f);
 
-		/// <inheritdoc cref="ILink.RunAsync(Func{Task})"/>
+		/// <inheritdoc cref="ILink{TValue}.RunAsync(Func{Task})"/>
 		Task<IR<TValue>> RunAsync(Func<Task> f);
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace Jeebs
 		/// <param name="f">Action which receives the current result (if it's an <see cref="IOk"/>)</param>
 		IR<TValue> Run(Action<IOk> f);
 
-		/// <inheritdoc cref="ILink.RunAsync(Func{IOk, Task})"/>
+		/// <inheritdoc cref="ILink{TValue}.RunAsync(Func{IOk, Task})"/>
 		Task<IR<TValue>> RunAsync(Func<IOk, Task> f);
 
 		/// <summary>
@@ -109,7 +109,7 @@ namespace Jeebs
 		/// <param name="f">Function to return the value to wrap</param>
 		IR<TNext> Wrap<TNext>(Func<TNext> f);
 
-		/// <inheritdoc cref="Wrap(Func{TValue})"/>
+		/// <inheritdoc cref="Wrap{TNext}(TNext)"/>
 		Task<IR<TNext>> WrapAsync<TNext>(Func<Task<TNext>> f);
 
 		#endregion

@@ -12,7 +12,7 @@ namespace Jeebs
 	public interface IR<TValue, TState> : IR<TValue>
 	{
 		/// <summary>
-		/// Result state - persisted between actions, can be added via <see cref="RExtensions_AddMsg."/>
+		/// Result state - persisted between actions, can be added via <see cref="IOk.WithState{TState}(TState)"/>
 		/// </summary>
 		TState State { get; }
 

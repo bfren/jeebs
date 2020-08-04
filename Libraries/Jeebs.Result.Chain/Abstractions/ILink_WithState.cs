@@ -67,7 +67,7 @@ namespace Jeebs
 		/// <inheritdoc cref="ILink{TValue}.Run(Action{IOk})"/>
 		new IR<TValue, TState> Run(Action<IOk> f);
 
-		/// <inheritdoc cref="ILink.RunAsync(Func{IOk, Task})"/>
+		/// <inheritdoc cref="ILink{TValue}.RunAsync(Func{IOk, Task})"/>
 		new Task<IR<TValue, TState>> RunAsync(Func<IOk, Task> f);
 
 		/// <inheritdoc cref="ILink{TValue}.Run(Action{IOk{TValue}})"/>
@@ -108,13 +108,13 @@ namespace Jeebs
 
 		#region Wrap
 
-		/// <inheritdoc cref="ILink{TValue}.Wrap(TValue)"/>
+		/// <inheritdoc cref="ILink{TValue}.Wrap{TNext}(TNext)"/>
 		new IR<TNext, TState> Wrap<TNext>(TNext value);
 
-		/// <inheritdoc cref="ILink{TValue}.Wrap(Func{TValue})"/>
+		/// <inheritdoc cref="ILink{TValue}.Wrap{TNext}(Func{TNext})"/>
 		new IR<TNext, TState> Wrap<TNext>(Func<TNext> f);
 
-		/// <inheritdoc cref="ILink{TValue}.WrapAsync(Func{Task{TValue}})"/>
+		/// <inheritdoc cref="ILink{TValue}.WrapAsync{TNext}(Func{Task{TNext}})"/>
 		new Task<IR<TNext, TState>> WrapAsync<TNext>(Func<Task<TNext>> f);
 
 		#endregion

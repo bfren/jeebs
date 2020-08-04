@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Jeebs
 {
 	/// <summary>
-	/// Extension methods for IR interface: Audit & AuditSwitch
+	/// Extension methods for <see cref="IR"/>: Audit &amp; AuditSwitch
 	/// </summary>
 	public static class RExtensions_Audit
 	{
@@ -65,6 +65,7 @@ namespace Jeebs
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.AuditExceptionMsg"/> message</para>
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
+		/// <param name="this">Result</param>
 		/// <param name="isOk">[Optional] Action to run if the current result is <see cref="IOk{TValue}"/></param>
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="IOkV{TValue}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue}"/></param>
@@ -77,6 +78,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <typeparam name="TState">Chain state type</typeparam>
+		/// <param name="this">Result</param>
 		/// <param name="isOk">[Optional] Action to run if the current result is <see cref="IOk{TValue, TState}"/></param>
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="IOkV{TValue, TState}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue, TState}"/></param>

@@ -10,9 +10,15 @@ namespace Jm.Data
 	/// </summary>
 	public class RetrieveMsg : IMsg
 	{
+		/// <summary>
+		/// Entity Type
+		/// </summary>
 		protected readonly Type type;
 
-		protected readonly long id;
+		/// <summary>
+		/// Entity ID
+		/// </summary>
+		protected readonly long? id;
 
 		/// <summary>
 		/// Create object
@@ -21,7 +27,6 @@ namespace Jm.Data
 		/// <param name="id">POCO id</param>
 		public RetrieveMsg(Type type, long id)
 			=> (this.type, this.id) = (type, id);
-
 
 		/// <summary>
 		/// Output success message

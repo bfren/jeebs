@@ -4,10 +4,16 @@ using System.Text;
 
 namespace Jm.WordPress.Query.Wrapper.Posts
 {
+	/// <summary>
+	/// Required Custom Field not found when querying posts
+	/// </summary>
 	public class RequiredCustomFieldNotFound : WithValueMsg<(long postId, string propertyName, string metaKey)>
 	{
-		public RequiredCustomFieldNotFound(long postId, string propertyName, string metaKey) : base((postId, propertyName, metaKey)) { }
+		internal RequiredCustomFieldNotFound(long postId, string propertyName, string metaKey) : base((postId, propertyName, metaKey)) { }
 
+		/// <summary>
+		/// Return error message
+		/// </summary>
 		public override string ToString()
 			=> $"Custom field {Value.propertyName} is required and is not set for Post {Value.postId} (meta key: {Value.metaKey}).";
 	}

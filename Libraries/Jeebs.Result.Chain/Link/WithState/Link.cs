@@ -37,6 +37,9 @@ namespace Jeebs
 			}
 		}
 
+		/// <summary>
+		/// Dispose of this Link and <see cref="result"/>
+		/// </summary>
 		new public void Dispose()
 		{
 			base.Dispose();

@@ -65,40 +65,6 @@ namespace Jeebs.Data
 		/// <param name="commandType">CommandType</param>
 		void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text);
 
-		/// <summary>
-		/// General failure -
-		///	<para>	Rollback</para>
-		///	<para>	Return Error Result</para>
-		/// </summary>
-		/// <typeparam name="T">Result value type</typeparam>
-		/// <typeparam name="TMessage">Message type</typeparam>
-		/// <param name="r">Result</param>
-		//Error<T> Fail<T, TMessage>(Ok<dynamic> r) where TMessage : IMessage, new();
-
-		/// <summary>
-		/// General failure -
-		///	<para>	Rollback</para>
-		///	<para>	Log Error</para>
-		///	<para>	Return Error Result</para>
-		/// </summary>
-		/// <typeparam name="T">Result value type</typeparam>
-		/// <typeparam name="TMessage">Message type</typeparam>
-		/// <param name="r">Result</param>
-		/// <param name="ex">Exception</param>
-		//Error<T> Fail<T, TMessage>(Ok<dynamic> r, Exception ex) where TMessage : IMessage, new();
-
-		/// <summary>
-		/// Query failure -
-		///	<para>	Rollback</para>
-		///	<para>	Log Error</para>
-		///	<para>	Return Error Result</para>
-		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="ex">Exception</param>
-		/// <param name="query">Query being executed</param>
-		/// <param name="parameters">Query parameters</param>
-		//Error<T> Fail<T>(Ok<dynamic> r, Exception ex, string query, object? parameters = null);
-
 		#endregion
 
 		#region R: Query

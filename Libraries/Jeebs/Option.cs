@@ -215,7 +215,7 @@ namespace Jeebs
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
 
-		/// <inheritdoc cref="GetHashCode"/>
+		/// <inheritdoc cref="GetHashCode()"/>
 		public int GetHashCode(IEqualityComparer comparer)
 			=> this switch
 			{

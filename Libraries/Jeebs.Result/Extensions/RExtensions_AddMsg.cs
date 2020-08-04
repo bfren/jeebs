@@ -8,7 +8,7 @@ using Jeebs.Result.Fluent;
 namespace Jeebs
 {
 	/// <summary>
-	/// Extension methods for IR interface: AddMsg
+	/// Extension methods for <see cref="IR"/> interface: AddMsg
 	/// </summary>
 	public static class RExtensions_AddMsg
 	{

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// <see cref="IQuery{T}"/> Extension methods
+	/// </summary>
 	public static class QueryExtensions
 	{
 		/// <summary>

@@ -33,10 +33,10 @@ namespace Jeebs.WordPress
 			var query = GetQuery<TModel>(modify);
 
 			// Execute query
-			return await query.ExecuteQueryAsync(r) switch
+			return query.ExecuteQueryAsync(r).Await() switch
 			{
 				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
-				IOkV<List<TModel>> x => await Process<List<TModel>, TModel>(x, filters),
+				IOkV<List<TModel>> x => Process<List<TModel>, TModel>(x, filters).Await(),
 				{ } x => x.Error(),
 			};
 		}
@@ -60,10 +60,10 @@ namespace Jeebs.WordPress
 			var query = GetQuery<TModel>(modify);
 
 			// Execute query
-			return await query.ExecuteQueryAsync(r, page) switch
+			return query.ExecuteQueryAsync(r, page).Await() switch
 			{
 				IOkV<PagedList<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
-				IOkV<PagedList<TModel>> x => await Process<PagedList<TModel>, TModel>(x, filters),
+				IOkV<PagedList<TModel>> x => Process<PagedList<TModel>, TModel>(x, filters).Await(),
 				{ } x => x.Error<PagedList<TModel>>(),
 			};
 		}
@@ -87,7 +87,7 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="posts">List of posts</param>
+		/// <param name="r">Result</param>
 		/// <param name="filters">Content filters</param>
 		private async Task<IR<TList>> Process<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
 			where TList : List<TModel>
@@ -154,7 +154,7 @@ namespace Jeebs.WordPress
 				var (posts, postsMeta) = r.Value;
 
 				// If no meta, return success
-				if (!postsMeta.Any())
+				if (postsMeta.Count == 0)
 				{
 					return r.OkV(posts);
 				}
@@ -193,7 +193,7 @@ namespace Jeebs.WordPress
 			var fields = GetCustomFields<TModel>();
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 => await r.Link().MapAsync(okV => hydrate(okV, x.Value, fields)),
+				Some<Meta<TModel>> x when fields.Count > 0 => r.Link().MapAsync(okV => hydrate(okV, x.Value, fields)).Await(),
 				_ => r
 			};
 
@@ -252,9 +252,9 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Add Taxonomies to posts
 		/// </summary>
-		/// <typeparam name="T">Post model</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="termLists">TermList properties</param>
+		/// <typeparam name="TList">List type</typeparam>
+		/// <typeparam name="TModel">Post type</typeparam>
+		/// <param name="r">Result</param>
 		private async Task<IR<TList>> AddTaxonomiesAsync<TList, TModel>(IOkV<TList> r)
 			where TList : List<TModel>
 			where TModel : IEntity
@@ -351,10 +351,10 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Apply Content Filters to post content
 		/// </summary>
-		/// <typeparam name="T">Post model</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="content">Content property</param>
-		/// <param name="contentFilters">Content filters</param>
+		/// <typeparam name="TList">List type</typeparam>
+		/// <typeparam name="TModel">Post type</typeparam>
+		/// <param name="r">Result</param>
+		/// <param name="contentFilters">Content Filters</param>
 		private IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] contentFilters)
 			where TList : List<TModel>
 			where TModel : IEntity

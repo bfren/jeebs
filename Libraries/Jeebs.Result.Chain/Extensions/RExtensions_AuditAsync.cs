@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Jeebs
 {
 	/// <summary>
-	/// Extension methods for IR interface: AuditAsync & AuditSwitchAsync
+	/// Extension methods for <see cref="IR"/>: AuditAsync &amp; AuditSwitchAsync
 	/// </summary>
 	public static class RExtensions_AuditAsync
 	{
@@ -32,7 +32,6 @@ namespace Jeebs
 			}
 			catch (Exception ex) when (!(result.Messages is null))
 			{
-
 				result.AddMsg(new Jm.AuditAsyncExceptionMsg(ex));
 			}
 

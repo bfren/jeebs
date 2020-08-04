@@ -5,7 +5,8 @@ using Jeebs;
 
 namespace Jm.WordPress.CustomField.Hydrate
 {
-	public sealed class MultipleAttachmentsFound : IMsg
-	{
-	}
+	/// <summary>
+	/// Multiple attachments found when hydrating a custom field
+	/// </summary>
+	public sealed class MultipleAttachmentsFound : IMsg { }
 }

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// <see cref="None{T}"/> Extension Methods
+	/// </summary>
 	public static class NoneExtensions
 	{
 		/// <summary>

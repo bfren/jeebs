@@ -8,7 +8,6 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// WordPress wrapper
 	/// </summary>
-	/// <typeparam name="TConfig">WpConfig type</typeparam>
 	public interface IWp
 	{
 		/// <summary>

@@ -40,6 +40,9 @@ namespace Jeebs
 			}
 		}
 
+		/// <summary>
+		/// Dispose of this <see cref="result"/>
+		/// </summary>
 		public void Dispose()
 			=> result.Dispose();
 	}

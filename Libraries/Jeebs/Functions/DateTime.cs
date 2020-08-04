@@ -29,7 +29,6 @@ namespace F
 		/// </summary>
 		/// <param name="s">Input string</param>
 		/// <param name="format">DateTime format</param>
-		/// <param name="dt">Output DateTime</param>
 		/// <returns>DateTime object, or null if the input string cannot be parsed</returns>
 		public static Option<DateTime> FromFormat(string s, string format)
 		{

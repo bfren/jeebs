@@ -7,6 +7,9 @@ using Jeebs;
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// <see cref="IUnitOfWork"/> Extension Methods
+	/// </summary>
 	public static class UnitOfWorkExtensions
 	{
 		#region R: Query

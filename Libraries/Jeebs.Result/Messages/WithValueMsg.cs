@@ -24,7 +24,7 @@ namespace Jm
 			=> Value = value;
 
 		/// <summary>
-		/// Return <see cref="Val"/>.ToString() or (if null) base.ToString();
+		/// Return <see cref="Value"/>.ToString() or (if null) base.ToString();
 		/// </summary>
 		public override string ToString()
 			=> Value?.ToString() ?? base.ToString();

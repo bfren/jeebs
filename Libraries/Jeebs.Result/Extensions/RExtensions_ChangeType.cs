@@ -5,6 +5,9 @@ using Jeebs.Result.Fluent;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Extension methods for <see cref="IR"/>: AddMsg
+	/// </summary>
 	public static class RExtensions_ChangeType
 	{
 		/// <summary>

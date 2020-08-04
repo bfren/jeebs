@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Jeebs
 {
 	/// <summary>
-	/// Extension methods for IR interface: Await
+	/// Extension methods for <see cref="IR"/>: Await
 	/// </summary>
 	public static class RExtensions_Await
 	{
