@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs;
 using Xunit;
 
 namespace F
@@ -10,19 +11,19 @@ namespace F
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void Parse_NullOrEmpty_ThrowsParseException(string input)
+		public void Parse_NullOrEmpty_Returns_None(string input)
 		{
 			// Arrange
 
 			// Act
-			Action result = () => EnumF.Parse<TestA>(input);
+			var result = EnumF.Parse<TestA>(input);
 
 			// Assert
-			Assert.Throws<Jx.ParseException>(result);
+			Assert.IsType<None<TestA>>(result);
 		}
 
 		[Fact]
-		public void Parse_ValidValue_CorrectType_ReturnsValue()
+		public void Parse_ValidValue_CorrectType_Returns_Some()
 		{
 			// Arrange
 			const string input = nameof(TestA.Test1);
@@ -35,29 +36,29 @@ namespace F
 		}
 
 		[Fact]
-		public void Parse_InvalidValue_CorrectType_ThrowsParseException()
+		public void Parse_InvalidValue_CorrectType_Returns_None()
 		{
 			// Arrange
 			const string input = "Test3";
 
 			// Act
-			Action result = () => EnumF.Parse<TestA>(input);
+			var result = EnumF.Parse<TestA>(input);
 
 			// Assert
-			Assert.Throws<Jx.ParseException>(result);
+			Assert.IsType<None<TestA>>(result);
 		}
 
 		[Fact]
-		public void Parse_ValidValue_IncorrectType_ThrowsArgumentException()
+		public void Parse_ValidValue_IncorrectType_Returns_None()
 		{
 			// Arrange
 			var input = nameof(TestA.Test1);
 
 			// Act
-			Action result = () => EnumF.Parse(typeof(string), input);
+			var result = EnumF.Parse(typeof(string), input);
 
 			// Assert
-			Assert.Throws<ArgumentException>(result);
+			Assert.IsType<None<object>>(result);
 		}
 
 		[Fact]
@@ -74,17 +75,16 @@ namespace F
 		}
 
 		[Fact]
-		public void Convert_NoMatchingValue_ThrowsException()
+		public void Convert_NoMatchingValue_Returns_None()
 		{
 			// Arrange
 			const TestB input = TestB.Test5;
 
 			// Act
-			//var a = F.EnumF.Parse<TestA>(input);
-			Action result = () => EnumF.Convert(input).To<TestA>();
+			var result = EnumF.Convert(input).To<TestA>();
 
 			// Assert
-			Assert.Throws<Jx.ParseException>(result);
+			Assert.IsType<None<TestA>>(result);
 		}
 
 		public enum TestA

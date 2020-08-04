@@ -9,8 +9,8 @@
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
 		<Copyright>Ben Green 2013-2020</Copyright>
-		<Version>4.0.0</Version>
-		<VersionSuffix>-beta.60</VersionSuffix>
+		<Version>4.1.0</Version>
+		<VersionSuffix>-beta.100</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">

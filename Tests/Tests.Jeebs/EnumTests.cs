@@ -22,7 +22,7 @@ namespace Jeebs
 		}
 
 		[Fact]
-		public void Parse_ValidString_ReturnsValue()
+		public void Parse_ValidString_Returns_Some()
 		{
 			// Arrange
 			var input = EnumTest.Test1.ToString();
@@ -31,20 +31,21 @@ namespace Jeebs
 			var result = EnumTest.Parse(input);
 
 			// Assert
-			Assert.Equal(EnumTest.Test1, result);
+			var success = Assert.IsType<Some<EnumTest>>(result);
+			Assert.Equal(EnumTest.Test1, success.Value);
 		}
 
 		[Fact]
-		public void Parse_InvalidString_ReturnsValue()
+		public void Parse_InvalidString_Returns_None()
 		{
 			// Arrange
 			const string input = "test3";
 
 			// Act
-			Action result = () => EnumTest.Parse(input);
+			var result = EnumTest.Parse(input);
 
 			// Assert
-			Assert.Throws<Jx.ParseException>(result);
+			Assert.IsType<None<EnumTest>>(result);
 		}
 	}
 
@@ -55,7 +56,7 @@ namespace Jeebs
 		public static readonly EnumTest Test1 = new EnumTest("test1");
 		public static readonly EnumTest Test2 = new EnumTest("test2");
 
-		public static EnumTest Parse(string value)
+		public static Option<EnumTest> Parse(string value)
 		{
 			return Parse(value, new[] { Test1, Test2 });
 		}

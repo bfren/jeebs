@@ -44,10 +44,10 @@ namespace Jeebs
 		public static string ConvertCurlyQuotes(this string @this, string ls = "‘", string rs = "’", string ld = "“", string rd = "”")
 			=> Modify(@this, () =>
 			{
-				@this = @this.Replace("&#34;", "\"");
-				@this = @this.Replace("&#39;", "'");
-				@this = Regex.Replace(@this, "(\\@this|^)'", $"$1{ls}").Replace("'", rs);
-				return Regex.Replace(@this, "(\\@this|^)\"", $"$1{ld}").Replace("\"", rd);
+				var s = @this.Replace("&#34;", "\"");
+				s = s.Replace("&#39;", "'");
+				s = Regex.Replace(s, "(\\s|^)'", $"$1{ls}").Replace("'", rs);
+				return Regex.Replace(s, "(\\s|^)\"", $"$1{ld}").Replace("\"", rd);
 			});
 
 		/// <summary>

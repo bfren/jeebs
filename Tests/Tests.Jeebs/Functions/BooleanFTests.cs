@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs;
 using Xunit;
 
 namespace F
@@ -22,11 +23,10 @@ namespace F
 			// Arrange
 
 			// Act
-			var success = BooleanF.TryParse(input, out bool result);
+			var result = BooleanF.Parse(input);
 
 			// Assert
-			Assert.True(success);
-			Assert.True(result);
+			Assert.IsType<Some<bool>>(result);
 		}
 
 		[Theory]
@@ -42,11 +42,10 @@ namespace F
 			// Arrange
 
 			// Act
-			var success = BooleanF.TryParse(input, out bool result);
+			var result = BooleanF.Parse(input);
 
 			// Assert
-			Assert.True(success);
-			Assert.False(result);
+			Assert.IsType<Some<bool>>(result);
 		}
 
 		[Fact]
@@ -56,10 +55,10 @@ namespace F
 			const string input = "this is not a valid boolean";
 
 			// Act
-			var result = BooleanF.TryParse(input, out bool _);
+			var result = BooleanF.Parse(input);
 
 			// Assert
-			Assert.False(result);
+			Assert.IsType<None<bool>>(result);
 		}
 	}
 }

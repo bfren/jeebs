@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs;
 using Xunit;
 
 namespace F
@@ -43,11 +44,11 @@ namespace F
 			const string format = "HH:mm dd/MM/yyyy";
 
 			// Act
-			var success = DateTimeF.FromFormat(input, format, out DateTime result);
+			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.True(success);
-			Assert.Equal(expected, result);
+			var success = Assert.IsType<Some<DateTime>>(result);
+			Assert.Equal(expected, success.Value);
 		}
 
 		[Fact]
@@ -58,10 +59,10 @@ namespace F
 			const string format = "this is not a valid format";
 
 			// Act
-			var result = DateTimeF.FromFormat(input, format, out DateTime _);
+			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.False(result);
+			Assert.IsType<None<DateTime>>(result);
 		}
 
 		[Fact]
@@ -72,10 +73,10 @@ namespace F
 			const string format = "HH:mm dd/MM/yyyy";
 
 			// Act
-			var result = DateTimeF.FromFormat(input, format, out DateTime _);
+			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.False(result);
+			Assert.IsType<None<DateTime>>(result);
 		}
 
 		[Fact]
@@ -86,10 +87,10 @@ namespace F
 			const string format = "this is not a valid format";
 
 			// Act
-			var result = DateTimeF.FromFormat(input, format, out DateTime _);
+			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.False(result);
+			Assert.IsType<None<DateTime>>(result);
 		}
 	}
 }
