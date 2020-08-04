@@ -113,5 +113,15 @@ namespace Jeebs
 		Task<IR<TNext>> WrapAsync<TNext>(Func<Task<TNext>> f);
 
 		#endregion
+
+		#region Single
+
+		/// <summary>
+		/// Return a single item if <typeparamref name="TValue"/> is an <see cref="IEnumerable{T}"/>
+		/// </summary>
+		/// <typeparam name="TSingle">Single type</typeparam>
+		IR<TSingle> Single<TSingle>();
+
+		#endregion
 	}
 }

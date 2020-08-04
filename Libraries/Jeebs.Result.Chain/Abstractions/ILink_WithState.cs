@@ -118,5 +118,12 @@ namespace Jeebs
 		new Task<IR<TNext, TState>> WrapAsync<TNext>(Func<Task<TNext>> f);
 
 		#endregion
+
+		#region Single
+
+		/// <inheritdoc cref="ILink{TValue}.Single{TSingle}"/>
+		new IR<TSingle, TState> Single<TSingle>();
+
+		#endregion
 	}
 }
