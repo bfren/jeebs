@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.SingleTests
+namespace Jeebs.UnwrapTests
 {
-	public partial class SingleTests
+	public partial class UnwrapTests
 	{
 		[Fact]
 		public void IEnumberable_Input_Multiple_Items_Returns_IError()
@@ -16,7 +16,7 @@ namespace Jeebs.SingleTests
 			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<int>();
 			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
@@ -32,7 +32,7 @@ namespace Jeebs.SingleTests
 			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<int>();
 			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
@@ -48,7 +48,7 @@ namespace Jeebs.SingleTests
 			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<int>();
 			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert

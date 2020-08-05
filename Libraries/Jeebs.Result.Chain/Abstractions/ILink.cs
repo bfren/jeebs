@@ -114,13 +114,16 @@ namespace Jeebs
 
 		#endregion
 
-		#region Single
+		#region Unwrap
 
 		/// <summary>
-		/// Return a single item if <typeparamref name="TValue"/> is an <see cref="IEnumerable{T}"/>
+		/// If the result is not an <see cref="IOkV{TValue}"/>, returns an <see cref="IError{TValue}"/>
+		/// <para>If <typeparamref name="TValue"/> is an <see cref="IEnumerable{T}"/> with one element, returns that element</para>
+		/// <para>If <typeparamref name="TValue"/> is an <see cref="IEnumerable{T}"/> with multiple elements, returns an <see cref="IError{TValue}"/></para>
+		/// <para>If <typeparamref name="TValue"/> is <typeparamref name="TSingle"/>, returns <see cref="IOkV{TValue}.Value"/></para>
 		/// </summary>
 		/// <typeparam name="TSingle">Single type</typeparam>
-		IR<TSingle> Single<TSingle>();
+		IR<TSingle> Unwrap<TSingle>();
 
 		#endregion
 	}

@@ -1,29 +1,28 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.SingleTests.WithState
+namespace Jeebs.UnwrapTests
 {
-	public partial class SingleTests : ISingle_Single
+	public partial class UnwrapTests : ILink_Unwrap
 	{
 		[Fact]
 		public void IEnumerable_Input_One_Item_Returns_Single()
 		{
 			// Arrange
 			const int value = 18;
-			const int state = 7;
 			var list = new[] { value };
-			var chain = Chain.CreateV(list, state);
+			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<int>();
 
 			// Assert
-			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);
+			var okV = Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, okV.Value);
-			Assert.Equal(state, okV.State);
 		}
 
 		[Fact]
@@ -31,17 +30,15 @@ namespace Jeebs.SingleTests.WithState
 		{
 			// Arrange
 			const int value = 18;
-			const int state = 7;
 			var list = new[] { value }.ToList();
-			var chain = Chain.CreateV(list, state);
+			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<int>();
 
 			// Assert
-			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);
+			var okV = Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, okV.Value);
-			Assert.Equal(state, okV.State);
 		}
 
 		[Fact]
@@ -49,17 +46,15 @@ namespace Jeebs.SingleTests.WithState
 		{
 			// Arrange
 			const int value = 18;
-			const int state = 7;
 			var list = new CustomList(value);
-			var chain = Chain.CreateV(list, state);
+			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<int>();
 
 			// Assert
-			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);
+			var okV = Assert.IsAssignableFrom<IOkV<int>>(result);
 			Assert.Equal(value, okV.Value);
-			Assert.Equal(state, okV.State);
 		}
 
 		public class CustomList : List<int>

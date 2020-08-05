@@ -119,10 +119,10 @@ namespace Jeebs
 
 		#endregion
 
-		#region Single
+		#region Unwrap
 
-		/// <inheritdoc cref="ILink{TValue}.Single{TSingle}"/>
-		new IR<TSingle, TState> Single<TSingle>();
+		/// <inheritdoc cref="ILink{TValue}.Unwrap{TSingle}"/>
+		new IR<TSingle, TState> Unwrap<TSingle>();
 
 		#endregion
 	}

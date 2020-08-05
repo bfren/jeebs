@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.SingleTests
+namespace Jeebs.UnwrapTests
 {
-	public partial class SingleTests
+	public partial class UnwrapTests
 	{
 		[Fact]
-		public void Not_IEnumerable_Input_Returns_IError()
+		public void Not_IEnumerable_Or_Same_Type_Input_Returns_IError()
 		{
 			// Arrange
 			const int value = 18;
 			var chain = Chain.CreateV(value);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<string>();
 			var msg = result.Messages.Get<Jm.Link.Single.NotIEnumerableMsg>();
 
 			// Assert
-			Assert.IsAssignableFrom<IError<int>>(result);
+			Assert.IsAssignableFrom<IError<string>>(result);
 			Assert.NotEmpty(msg);
 		}
 	}

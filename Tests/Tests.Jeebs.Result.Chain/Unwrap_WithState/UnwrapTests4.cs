@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.SingleTests.WithState
+namespace Jeebs.UnwrapTests.WithState
 {
-	public partial class SingleTests
+	public partial class UnwrapTests
 	{
 		[Fact]
-		public void Not_IEnumerable_Input_Returns_IError()
+		public void Not_IEnumerable_Or_Same_Type_Input_Returns_IError()
 		{
 			// Arrange
 			const int value = 18;
@@ -17,11 +17,11 @@ namespace Jeebs.SingleTests.WithState
 			var chain = Chain.CreateV(value, state);
 
 			// Act
-			var result = chain.Link().Single<int>();
+			var result = chain.Link().Unwrap<string>();
 			var msg = result.Messages.Get<Jm.Link.Single.NotIEnumerableMsg>();
 
 			// Assert
-			var e = Assert.IsAssignableFrom<IError<int, int>>(result);
+			var e = Assert.IsAssignableFrom<IError<string, int>>(result);
 			Assert.Equal(state, e.State);
 			Assert.NotEmpty(msg);
 		}
