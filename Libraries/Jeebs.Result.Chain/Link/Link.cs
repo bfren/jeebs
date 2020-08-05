@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jm.Link;
 
 namespace Jeebs
 {
@@ -26,7 +27,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				return result.Error<TNext>().AddMsg(new Jm.ChainExceptionMsg(ex));
+				return result.Error<TNext>().AddMsg(new LinkExceptionMsg(ex));
 			}
 		}
 
@@ -38,7 +39,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				return result.Error<TNext>().AddMsg(new Jm.ChainExceptionMsg(ex));
+				return result.Error<TNext>().AddMsg(new LinkExceptionMsg(ex));
 			}
 		}
 

@@ -36,7 +36,7 @@ namespace Jeebs.LinkTests.WithState.Async
 
 			// Act
 			var next = chain.Link().MapAsync(f).Await();
-			var msg = next.Messages.Get<Jm.ChainExceptionMsg>();
+			var msg = next.Messages.Get<Jm.Link.LinkExceptionMsg>();
 
 			// Assert
 			var e = Assert.IsAssignableFrom<IError<string, int>>(next);

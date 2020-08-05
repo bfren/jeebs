@@ -52,5 +52,20 @@ namespace Jeebs.AuditTests
 			// Assert
 			Assert.Equal(1, sideEffect);
 		}
+
+		[Fact]
+		public void IOk_Input_Catches_Exception()
+		{
+			// Arrange
+			var chain = Chain.Create();
+			static void a(IOk<bool> _) => throw new Exception();
+
+			// Act
+			var next = chain.AuditSwitch(isOk: a);
+
+			// Assert
+			Assert.Equal(1, next.Messages.Count);
+			Assert.True(next.Messages.Contains<Jm.Audit.AuditSwitchExceptionMsg>());
+		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace Jeebs.AuditTests
 {
-	public interface IAudit_AuditSwitch
+	public interface IAuditSwitch_Tests
 	{
 		void IError_Input_Catches_Exception();
 		void IError_Input_When_IError_Runs_Func();

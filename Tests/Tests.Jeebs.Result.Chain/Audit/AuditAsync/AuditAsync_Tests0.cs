@@ -75,7 +75,7 @@ namespace Jeebs.AuditTests.Async
 
 			// Assert
 			Assert.Equal(1, next.Messages.Count);
-			Assert.True(next.Messages.Contains<Jm.AuditAsyncExceptionMsg>());
+			Assert.True(next.Messages.Contains<Jm.AuditAsync.AuditAsyncExceptionMsg>());
 		}
 	}
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using Jeebs;
 
-namespace Jm
+namespace Jm.Audit
 {
 	/// <summary>
-	/// Audit exception handling message
+	/// Audit exception handling message: Audit
 	/// </summary>
 	public sealed class AuditExceptionMsg : ExceptionMsg
 	{

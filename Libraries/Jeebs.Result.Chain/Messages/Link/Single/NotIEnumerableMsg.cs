@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jeebs;
 
-namespace Jm
+namespace Jm.Link.Single
 {
 	/// <summary>
 	/// Used in <see cref="ILink{TValue}.Single{TSingle}"/> when the value type is not an <see cref="IEnumerable{T}"/>

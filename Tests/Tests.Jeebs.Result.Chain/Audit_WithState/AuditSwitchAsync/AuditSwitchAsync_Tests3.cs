@@ -56,5 +56,21 @@ namespace Jeebs.AuditTests.WithState.Async
 			// Assert
 			Assert.Equal(2, sideEffect);
 		}
+
+		[Fact]
+		public void IError_Input_Catches_Exception()
+		{
+			// Arrange
+			const int state = 7;
+			var chain = Chain.Create(state).Error();
+			static async Task a(IError<bool, int> _) => throw new Exception();
+
+			// Act
+			var next = chain.AuditSwitchAsync(isError: a).Await();
+
+			// Assert
+			Assert.Equal(1, next.Messages.Count);
+			Assert.True(next.Messages.Contains<Jm.AuditAsync.AuditSwitchAsyncExceptionMsg>());
+		}
 	}
 }

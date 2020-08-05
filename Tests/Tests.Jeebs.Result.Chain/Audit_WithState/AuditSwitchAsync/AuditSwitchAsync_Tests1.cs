@@ -56,5 +56,22 @@ namespace Jeebs.AuditTests.WithState.Async
 			// Assert
 			Assert.Equal(1, sideEffect);
 		}
+
+		[Fact]
+		public void IOk_Input_Catches_Exception()
+		{
+			// Arrange
+			const int state = 7;
+			var chain = Chain.Create(state);
+			static async Task a<TValue, TState>(IOk<TValue, TState> _) => throw new Exception();
+
+			// Act
+			var next = chain.AuditSwitchAsync(a).Await();
+
+			// Assert
+			Assert.Equal(1, next.Messages.Count);
+			Assert.True(next.Messages.Contains<Jm.AuditAsync.AuditSwitchAsyncExceptionMsg>());
+			Assert.Equal(state, next.State);
+		}
 	}
 }

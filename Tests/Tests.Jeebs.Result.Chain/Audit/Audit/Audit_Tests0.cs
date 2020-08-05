@@ -74,7 +74,7 @@ namespace Jeebs.AuditTests
 
 			// Assert
 			Assert.Equal(1, next.Messages.Count);
-			Assert.True(next.Messages.Contains<Jm.AuditExceptionMsg>());
+			Assert.True(next.Messages.Contains<Jm.Audit.AuditExceptionMsg>());
 		}
 	}
 }

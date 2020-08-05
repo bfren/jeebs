@@ -18,7 +18,7 @@ namespace Jeebs.SingleTests.WithState
 
 			// Act
 			var result = chain.Link().Single<string>();
-			var msg = result.Messages.Get<Jm.IncorrectSingleTypeMsg>();
+			var msg = result.Messages.Get<Jm.Link.Single.IncorrectTypeMsg>();
 
 			// Assert
 			var e = Assert.IsAssignableFrom<IError<string, int>>(result);

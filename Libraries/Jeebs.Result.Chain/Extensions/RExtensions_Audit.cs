@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Jm.Audit;
 
 namespace Jeebs
 {
@@ -32,7 +33,7 @@ namespace Jeebs
 			}
 			catch (Exception ex) when (!(@this.Messages is null))
 			{
-				@this.AddMsg(new Jm.AuditExceptionMsg(ex));
+				@this.AddMsg(new AuditSwitchExceptionMsg(ex));
 			}
 
 			return @this;
@@ -40,7 +41,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Audit the current result state and return unmodified
-		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.AuditExceptionMsg"/> message</para>
+		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="AuditExceptionMsg"/> message</para>
 		/// </summary>
 		/// <typeparam name="TResult">Result type</typeparam>
 		/// <param name="this">Result</param>
@@ -54,7 +55,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				@this.AddMsg(new Jm.AuditExceptionMsg(ex));
+				@this.AddMsg(new AuditExceptionMsg(ex));
 			}
 
 			return @this;
@@ -62,7 +63,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Audit the current result state and return unmodified
-		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.AuditExceptionMsg"/> message</para>
+		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="AuditSwitchExceptionMsg"/> message</para>
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="this">Result</param>
@@ -74,7 +75,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Audit the current result state and return unmodified
-		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="Jm.AuditExceptionMsg"/> message</para>
+		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="AuditSwitchExceptionMsg"/> message</para>
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <typeparam name="TState">Chain state type</typeparam>

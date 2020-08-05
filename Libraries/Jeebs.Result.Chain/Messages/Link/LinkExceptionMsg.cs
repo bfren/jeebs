@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jm
+namespace Jm.Link
 {
 	/// <summary>
 	/// Used to catch and pass exceptions down the result chain
 	/// </summary>
-	public class ChainExceptionMsg : ExceptionMsg
+	public class LinkExceptionMsg : ExceptionMsg
 	{
-		internal ChainExceptionMsg(Exception ex) : base(ex) { }
+		internal LinkExceptionMsg(Exception ex) : base(ex) { }
 	}
 }

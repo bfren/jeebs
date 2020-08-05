@@ -17,7 +17,7 @@ namespace Jeebs.SingleTests
 
 			// Act
 			var result = chain.Link().Single<int>();
-			var msg = result.Messages.Get<Jm.ExpectingSingleReceivingMoreMsg>();
+			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(result);
@@ -33,7 +33,7 @@ namespace Jeebs.SingleTests
 
 			// Act
 			var result = chain.Link().Single<int>();
-			var msg = result.Messages.Get<Jm.ExpectingSingleReceivingMoreMsg>();
+			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(result);
@@ -49,7 +49,7 @@ namespace Jeebs.SingleTests
 
 			// Act
 			var result = chain.Link().Single<int>();
-			var msg = result.Messages.Get<Jm.ExpectingSingleReceivingMoreMsg>();
+			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(result);

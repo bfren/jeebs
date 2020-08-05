@@ -18,7 +18,7 @@ namespace Jeebs.SingleTests.WithState
 
 			// Act
 			var result = chain.Link().Single<int>();
-			var msg = result.Messages.Get<Jm.NotIEnumerableMsg>();
+			var msg = result.Messages.Get<Jm.Link.Single.NotIEnumerableMsg>();
 
 			// Assert
 			var e = Assert.IsAssignableFrom<IError<int, int>>(result);

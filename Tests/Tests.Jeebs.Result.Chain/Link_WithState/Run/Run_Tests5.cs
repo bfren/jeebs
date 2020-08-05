@@ -36,7 +36,7 @@ namespace Jeebs.LinkTests.WithState
 
 			// Act
 			var next = chain.Link().Run(f);
-			var msg = next.Messages.Get<Jm.ChainExceptionMsg>();
+			var msg = next.Messages.Get<Jm.Link.LinkExceptionMsg>();
 
 			// Assert
 			var e = Assert.IsAssignableFrom<IError<bool, int>>(next);
