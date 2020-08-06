@@ -5,20 +5,17 @@ using Jeebs;
 
 namespace Jm
 {
-	/// <summary>
-	/// Exception handling message
-	/// </summary>
-	public class ExceptionMsg : IMsg
+	/// <inheritdoc/>
+	public class ExceptionMsg : IExceptionMsg
 	{
-		/// <summary>
-		/// The full name of the Exception type
-		/// </summary>
-		protected string ExceptionType { get; }
+		/// <inheritdoc/>
+		public string ExceptionType { get; }
 
-		/// <summary>
-		/// Exception text
-		/// </summary>
-		protected string ExceptionText { get; }
+		/// <inheritdoc/>
+		public string ExceptionText { get; }
+
+		/// <inheritdoc/>
+		public string ExceptionTrace { get; }
 
 		/// <summary>
 		/// Create object from exception
@@ -28,12 +25,13 @@ namespace Jm
 		{
 			ExceptionType = ex.GetType().FullName;
 			ExceptionText = ex.Message;
+			ExceptionTrace = ex.StackTrace;
 		}
 
 		/// <summary>
 		/// Output Exception type and message
 		/// </summary>
 		public override string ToString()
-			=> $"{ExceptionType}: {ExceptionText}";
+			=> $"{ExceptionType}: {ExceptionText}\nTrace:\n{ExceptionTrace}";
 	}
 }

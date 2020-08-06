@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Jeebs.Mvc.Extensions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Mvc
 {
@@ -14,7 +18,7 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// ILog
 		/// </summary>
-		protected ILog Log { get; }
+		internal ILog Log { get; }
 
 		/// <summary>
 		/// Current page number
@@ -56,7 +60,7 @@ namespace Jeebs.Mvc
 			{
 				IOkV<T> okV => await success(okV.Value).ConfigureAwait(false),
 				IError<T> error => HandleError(error),
-				{ } other => HandleError(other.Error<Jm.Mvc.Controller_ProcessResult_Unknown_IR>())
+				{ } other => HandleError(other.Error<Jm.Mvc.Controller_ProcessResultAsync_Unknown_IR>())
 			};
 
 		/// <summary>
@@ -71,8 +75,8 @@ namespace Jeebs.Mvc
 				return NotFound();
 			}
 
-			Log.Error("Error while processing controller action: {0}", error.Messages);
-			return RedirectToError();
+			Log.Error("Error while processing controller action:\n{0}", error.Messages.ToString(true));
+			return this.ExecuteErrorAsync().GetAwaiter().GetResult();
 		}
 	}
 }

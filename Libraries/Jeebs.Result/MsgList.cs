@@ -80,13 +80,25 @@ namespace Jeebs
 		/// <summary>
 		/// Get all message values
 		/// </summary>
-		public List<string> GetAll()
-			=> (from m in messages select m.ToString()).ToList();
+		/// <param name="withType">[Optional] If true, will include the message type as well</param>
+		public List<string> GetAll(bool withType = false)
+			=> withType switch
+			{
+				true => (from m in messages select $"{m.GetType()}: {m}").ToList(),
+				false => (from m in messages select m.ToString()).ToList()
+			};
 
 		/// <summary>
-		/// Return all message values on new lines - or default <see cref="ToString"/> if there are no messages
+		/// Return all message values on new lines - or default <see cref="ToString()"/> if there are no messages
 		/// </summary>
 		public override string ToString()
-			=> messages.Count > 0 ? string.Join('\n', GetAll()) : base.ToString();
+			=> ToString(false);
+
+		/// <summary>
+		/// Return all message values on new lines - or default <see cref="ToString(bool)"/> if there are no messages
+		/// </summary>
+		/// <param name="withType">If true, will include the message type as well</param>
+		public string ToString(bool withType)
+			=> messages.Count > 0 ? string.Join('\n', GetAll(withType)) : base.ToString();
 	}
 }

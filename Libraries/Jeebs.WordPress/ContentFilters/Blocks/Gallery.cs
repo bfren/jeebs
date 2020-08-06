@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using Jeebs.Util;
+using Newtonsoft.Json;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {
@@ -34,7 +34,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			{
 				// Info is encoded as JSON
 				var json = match.Groups[1].Value;
-				var gallery = Json.Deserialise<GalleryParsed>(json);
+				var gallery = JsonConvert.DeserializeObject<GalleryParsed>(json);
 
 				// Replace content using output format
 				content = content.Replace(match.Value, string.Format(format, string.Join(",", gallery.Ids), gallery.Columns));
