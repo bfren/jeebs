@@ -71,7 +71,7 @@ namespace Jeebs.Mvc
 				return NotFound();
 			}
 
-			Log.Warning("Error while processing controller action: {0}", error.Messages);
+			Log.Error("Error while processing controller action: {0}", error.Messages);
 			return RedirectToError();
 		}
 	}
