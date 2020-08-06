@@ -27,7 +27,7 @@ namespace Jeebs.WordPress
 				.GetQuery();
 
 			// Execute query
-			return query.ExecuteQueryAsync(r).Await() switch
+			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
 			{
 				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<Jm.NotFoundMsg>(),
 				IOkV<List<TModel>> x => x,

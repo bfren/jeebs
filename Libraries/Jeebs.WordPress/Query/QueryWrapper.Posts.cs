@@ -33,7 +33,7 @@ namespace Jeebs.WordPress
 			var query = GetQuery<TModel>(modify);
 
 			// Execute query
-			return query.ExecuteQueryAsync(r).Await() switch
+			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
 			{
 				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
 				IOkV<List<TModel>> x => Process<List<TModel>, TModel>(x, filters).Await(),
@@ -60,7 +60,7 @@ namespace Jeebs.WordPress
 			var query = GetQuery<TModel>(modify);
 
 			// Execute query
-			return query.ExecuteQueryAsync(r, page).Await() switch
+			return await query.ExecuteQueryAsync(r, page).ConfigureAwait(false) switch
 			{
 				IOkV<PagedList<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
 				IOkV<PagedList<TModel>> x => Process<PagedList<TModel>, TModel>(x, filters).Await(),
@@ -114,7 +114,7 @@ namespace Jeebs.WordPress
 			if (GetMetaDictionaryInfo<TModel>() is Some<Meta<TModel>> s)
 			{
 				return r
-					.Link().MapAsync(getMeta).Await()
+					.Link().MapAsync(getMetaAsync).Await()
 					.Link().Map(okV => setMeta(okV, s.Value));
 			}
 
@@ -123,7 +123,7 @@ namespace Jeebs.WordPress
 			//
 			// Get Post Meta values
 			//
-			async Task<IR<(TList, List<PostMeta>)>> getMeta(IOkV<TList> r)
+			async Task<IR<(TList, List<PostMeta>)>> getMetaAsync(IOkV<TList> r)
 			{
 				// Create options
 				var options = new QueryPostsMeta.Options
@@ -193,14 +193,14 @@ namespace Jeebs.WordPress
 			var fields = GetCustomFields<TModel>();
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 => r.Link().MapAsync(okV => hydrate(okV, x.Value, fields)).Await(),
+				Some<Meta<TModel>> x when fields.Count > 0 => r.Link().MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
 				_ => r
 			};
 
 			//
 			// Hydrate each custom field
 			//
-			async Task<IR<TList>> hydrate(IOkV<TList> r, Meta<TModel> meta, List<PropertyInfo> customFields)
+			async Task<IR<TList>> hydrateAsync(IOkV<TList> r, Meta<TModel> meta, List<PropertyInfo> customFields)
 			{
 				var posts = r.Value;
 
@@ -267,13 +267,13 @@ namespace Jeebs.WordPress
 			}
 
 			return r
-				.Link().MapAsync(okV => getTerms(okV, termLists)).Await()
+				.Link().MapAsync(okV => getTermsAsync(okV, termLists)).Await()
 				.Link().Map(okV => addTerms(okV, termLists));
 
 			//
 			//	Get terms
 			//
-			async Task<IR<(TList, IEnumerable<Term>)>> getTerms(IOkV<TList> r, List<PropertyInfo> termLists)
+			async Task<IR<(TList, IEnumerable<Term>)>> getTermsAsync(IOkV<TList> r, List<PropertyInfo> termLists)
 			{
 				// Create options
 				var options = new QueryPostsTaxonomy.Options
