@@ -13,11 +13,9 @@
 		<VersionSuffix>-beta.113</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
-	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<PropertyGroup>
+		<LibraryPackFile>Libraries.pack.props</LibraryPackFile>
+		<LibraryPackPath>$([MSBuild]::GetPathOfFileAbove('$(LibraryPackFile)', '$(MSBuildThisFileDirectory)../'))</LibraryPackPath>
 	</PropertyGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
-		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(Version)$(VersionSuffix) --no-build -c Release" />
-		<Exec Command="nuget init &quot;$(ProjectDir)bin\Release&quot; &quot;N:\v4&quot;" />
-	</Target>
+	<Import Project="$(LibraryPackPath)" Condition="Exists('$(LibraryPackPath)')"/>
 </Project>

@@ -10,3 +10,4 @@
 .fake
 .ionide
 Libraries/.DS_Store
+/Directory.Build.props
