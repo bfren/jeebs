@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.UnwrapTests
+namespace Jeebs.LinkTests
 {
-	public partial class UnwrapTests
+	public partial class UnwrapSingle_Tests
 	{
 		[Fact]
 		public void IEnumerable_Input_Incorrect_Subtype_Returns_IError()
@@ -16,7 +16,7 @@ namespace Jeebs.UnwrapTests
 			var chain = Chain.CreateV(list);
 
 			// Act
-			var result = chain.Link().Unwrap<string>();
+			var result = chain.Link().UnwrapSingle<string>();
 			var msg = result.Messages.Get<Jm.Link.Single.IncorrectTypeMsg>();
 
 			// Assert

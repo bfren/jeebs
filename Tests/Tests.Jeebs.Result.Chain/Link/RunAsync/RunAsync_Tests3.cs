@@ -43,7 +43,6 @@ namespace Jeebs.LinkTests.Async
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(next);
 			Assert.NotEmpty(msg);
-			Assert.Equal($"{typeof(Exception)}: {error}", msg.Single().ToString());
 		}
 
 		[Fact]

@@ -23,4 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Unwrap\" />
+  </ItemGroup>
 </Project>

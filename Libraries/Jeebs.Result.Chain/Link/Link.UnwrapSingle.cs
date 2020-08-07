@@ -11,7 +11,7 @@ namespace Jeebs
 	public partial class Link<TValue>
 	{
 		/// <inheritdoc/>
-		public IR<TSingle> Unwrap<TSingle>()
+		public IR<TSingle> UnwrapSingle<TSingle>()
 			=> result switch
 			{
 				IOkV<TValue> x => x.Value switch

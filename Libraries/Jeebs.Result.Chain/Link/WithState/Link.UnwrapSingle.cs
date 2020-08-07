@@ -10,8 +10,8 @@ namespace Jeebs
 {
 	public partial class Link<TValue, TState>
 	{
-		/// <inheritdoc cref="ILink{TValue, TState}.Unwrap{TSingle}"/>
-		new public IR<TSingle, TState> Unwrap<TSingle>()
+		/// <inheritdoc cref="ILink{TValue, TState}.UnwrapSingle{TSingle}"/>
+		new public IR<TSingle, TState> UnwrapSingle<TSingle>()
 			=> result switch
 			{
 				IOkV<TValue, TState> x => x.Value switch

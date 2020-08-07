@@ -57,7 +57,7 @@ namespace Jeebs.Util
 		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
 		public static T Deserialise<T>(string str, Func<T>? ifNull = null, JsonSerializerOptions? opt = null)
-			=> JsonSerializer.Deserialize<T>(str, opt ?? DefaultSettings) switch
+			=> JsonSerializer.Deserialize<T>(str.Trim(), opt ?? DefaultSettings) switch
 			{
 				T x => x,
 				_ => ifNull switch

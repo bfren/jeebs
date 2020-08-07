@@ -6,7 +6,7 @@ using Jeebs;
 namespace Jm.Link.Single
 {
 	/// <summary>
-	/// Used in <see cref="ILink{TValue}.Unwrap{TSingle}"/> when there is more than one item in the list
+	/// Used in <see cref="ILink{TValue}.UnwrapSingle{TSingle}"/> when there is more than one item in the list
 	/// </summary>
 	public sealed class MoreThanOneItemMsg : IMsg
 	{

@@ -123,7 +123,7 @@ namespace Jeebs
 		/// <para>If <typeparamref name="TValue"/> is <typeparamref name="TSingle"/>, returns <see cref="IOkV{TValue}.Value"/></para>
 		/// </summary>
 		/// <typeparam name="TSingle">Single type</typeparam>
-		IR<TSingle> Unwrap<TSingle>();
+		IR<TSingle> UnwrapSingle<TSingle>();
 
 		#endregion
 	}

@@ -37,7 +37,6 @@ namespace Jeebs.Util
 		}
 
 		[Theory]
-		[InlineData(null)]
 		[InlineData("")]
 		[InlineData(" ")]
 		[InlineData("\n")]
@@ -49,7 +48,7 @@ namespace Jeebs.Util
 			Action result = () => Json.Deserialise<Test>(input);
 
 			// Assert
-			Assert.Throws<ArgumentNullException>(result);
+			Assert.Throws<JsonException>(result);
 		}
 
 		[Fact]

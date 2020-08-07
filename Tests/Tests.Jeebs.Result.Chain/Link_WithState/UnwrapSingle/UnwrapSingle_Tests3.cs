@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.UnwrapTests.WithState
+namespace Jeebs.LinkTests.WithState
 {
-	public partial class UnwrapTests
+	public partial class UnwrapSingle_Tests
 	{
 		[Fact]
 		public void Other_Input_Same_Type_Returns_Input()
@@ -17,7 +17,7 @@ namespace Jeebs.UnwrapTests.WithState
 			var chain = Chain.CreateV(value, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 
 			// Assert
 			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);

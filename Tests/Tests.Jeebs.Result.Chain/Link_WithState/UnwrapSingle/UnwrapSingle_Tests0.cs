@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.UnwrapTests.WithState
+namespace Jeebs.LinkTests.WithState
 {
-	public partial class UnwrapTests : ILink_Unwrap
+	public partial class UnwrapSingle_Tests : ILink_UnwrapSingle_WithState
 	{
 		[Fact]
 		public void IEnumerable_Input_One_Item_Returns_Single()
@@ -18,7 +18,7 @@ namespace Jeebs.UnwrapTests.WithState
 			var chain = Chain.CreateV(list, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 
 			// Assert
 			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);
@@ -36,7 +36,7 @@ namespace Jeebs.UnwrapTests.WithState
 			var chain = Chain.CreateV(list, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 
 			// Assert
 			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);
@@ -54,7 +54,7 @@ namespace Jeebs.UnwrapTests.WithState
 			var chain = Chain.CreateV(list, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 
 			// Assert
 			var okV = Assert.IsAssignableFrom<IOkV<int, int>>(result);

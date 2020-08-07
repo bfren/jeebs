@@ -6,7 +6,7 @@ using Jeebs;
 namespace Jm.Link.Single
 {
 	/// <summary>
-	/// Used in <see cref="ILink{TValue}.Unwrap{TSingle}"/> when the value type is not an <see cref="IEnumerable{T}"/>
+	/// Used in <see cref="ILink{TValue}.UnwrapSingle{TSingle}"/> when the value type is not an <see cref="IEnumerable{T}"/>
 	/// </summary>
 	public sealed class NotIEnumerableMsg : IMsg
 	{

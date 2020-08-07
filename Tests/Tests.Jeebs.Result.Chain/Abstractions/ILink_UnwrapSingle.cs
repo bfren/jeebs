@@ -1,6 +1,6 @@
-﻿namespace Jeebs.UnwrapTests
+﻿namespace Jeebs.LinkTests
 {
-	public interface ILink_Unwrap
+	public interface ILink_UnwrapSingle
 	{
 		void Custom_Input_Multiple_Items_Returns_IError();
 		void Custom_Input_One_Item_Returns_Single();

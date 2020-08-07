@@ -121,8 +121,8 @@ namespace Jeebs
 
 		#region Unwrap
 
-		/// <inheritdoc cref="ILink{TValue}.Unwrap{TSingle}"/>
-		new IR<TSingle, TState> Unwrap<TSingle>();
+		/// <inheritdoc cref="ILink{TValue}.UnwrapSingle{TSingle}"/>
+		new IR<TSingle, TState> UnwrapSingle<TSingle>();
 
 		#endregion
 	}

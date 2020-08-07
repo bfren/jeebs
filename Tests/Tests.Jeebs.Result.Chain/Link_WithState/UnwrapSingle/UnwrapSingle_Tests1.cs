@@ -4,23 +4,25 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.UnwrapTests
+namespace Jeebs.LinkTests.WithState
 {
-	public partial class UnwrapTests
+	public partial class UnwrapSingle_Tests
 	{
 		[Fact]
 		public void IEnumberable_Input_Multiple_Items_Returns_IError()
 		{
 			// Arrange
 			var list = new[] { 1, 2 };
-			var chain = Chain.CreateV(list);
+			const int state = 7;
+			var chain = Chain.CreateV(list, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
-			Assert.IsAssignableFrom<IError<int>>(result);
+			var e = Assert.IsAssignableFrom<IError<int, int>>(result);
+			Assert.Equal(state, e.State);
 			Assert.NotEmpty(msg);
 		}
 
@@ -29,14 +31,16 @@ namespace Jeebs.UnwrapTests
 		{
 			// Arrange
 			var list = new[] { 1, 2 };
-			var chain = Chain.CreateV(list);
+			const int state = 7;
+			var chain = Chain.CreateV(list, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
-			Assert.IsAssignableFrom<IError<int>>(result);
+			var e = Assert.IsAssignableFrom<IError<int, int>>(result);
+			Assert.Equal(state, e.State);
 			Assert.NotEmpty(msg);
 		}
 
@@ -45,14 +49,16 @@ namespace Jeebs.UnwrapTests
 		{
 			// Arrange
 			var list = new CustomList(1, 2);
-			var chain = Chain.CreateV(list);
+			const int state = 7;
+			var chain = Chain.CreateV(list, state);
 
 			// Act
-			var result = chain.Link().Unwrap<int>();
+			var result = chain.Link().UnwrapSingle<int>();
 			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
 
 			// Assert
-			Assert.IsAssignableFrom<IError<int>>(result);
+			var e = Assert.IsAssignableFrom<IError<int, int>>(result);
+			Assert.Equal(state, e.State);
 			Assert.NotEmpty(msg);
 		}
 	}
