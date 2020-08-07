@@ -153,9 +153,9 @@ namespace Jeebs.Apps
 		/// <param name="opt">JsonOptions</param>
 		public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
 		{
-			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserSettings ?? Json.DefaultSettings).IgnoreNullValues;
+			opt.JsonSerializerOptions.DefaultIgnoreCondition = (jsonSerialiserSettings ?? Json.DefaultSettings).DefaultIgnoreCondition;
 			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserSettings ?? Json.DefaultSettings).PropertyNamingPolicy;
-			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserSettings ?? Json.DefaultSettings).PropertyNamingPolicy;
+			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserSettings ?? Json.DefaultSettings).DictionaryKeyPolicy;
 
 			opt.JsonSerializerOptions.Converters.Clear();
 			foreach (var item in (jsonSerialiserSettings ?? Json.DefaultSettings).Converters)

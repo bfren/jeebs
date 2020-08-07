@@ -22,7 +22,9 @@ namespace Jeebs.Util
 			{
 				var opt = new JsonSerializerOptions
 				{
-					PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+					DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+					DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
 				};
 
 				opt.Converters.Add(new EnumJsonConverterFactory());
@@ -51,10 +53,19 @@ namespace Jeebs.Util
 		/// </summary>
 		/// <typeparam name="T">The type of the object to return</typeparam>
 		/// <param name="str">The string to deserialise</param>
+		/// <param name="ifNull">[Optional] Function to return a default <typeparamref name="T"/> if deserialise returns null - if not set a <see cref="JsonException"/> will be thrown</param>
 		/// <param name="opt">[Optional] JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static T Deserialise<T>(string str, JsonSerializerOptions? opt = null)
-			=> JsonSerializer.Deserialize<T>(str, opt ?? DefaultSettings);
+		public static T Deserialise<T>(string str, Func<T>? ifNull = null, JsonSerializerOptions? opt = null)
+			=> JsonSerializer.Deserialize<T>(str, opt ?? DefaultSettings) switch
+			{
+				T x => x,
+				_ => ifNull switch
+				{
+					Func<T> y => y(),
+					_ => throw new JsonException($"Null return when deserialising JSON: {str}")
+				}
+			};
 
 		/// <summary>
 		/// Clone an object using JSON

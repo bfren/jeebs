@@ -33,7 +33,7 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="json">JSON string</param>
 		protected override EnumList<T> Parse(string json)
 		{
-			var strings = Util.Json.Deserialise<List<string>>(json);
+			var strings = Util.Json.Deserialise(json, () => new List<string>());
 			return new EnumList<T>(strings);
 		}
 	}

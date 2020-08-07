@@ -35,7 +35,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			{
 				// Info is encoded as JSON
 				var json = match.Groups[1].Value;
-				var youTube = Json.Deserialise<YouTubeParsed>(json);
+				var youTube = Json.Deserialise(json, () => new YouTubeParsed());
 
 				// Get URI
 				var uri = new Uri(youTube.Url);
