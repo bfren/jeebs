@@ -9,5 +9,6 @@
 
 .fake
 .ionide
-Libraries/.DS_Store
-/Directory.Build.props
+/Libraries/.DS_Store
+/Libraries.pack.props
+
