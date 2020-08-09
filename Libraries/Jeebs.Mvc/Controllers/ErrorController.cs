@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Mvc.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -25,7 +24,7 @@ namespace Jeebs.Mvc
 		/// </summary>
 		/// <returns>IActionResult</returns>
 		public async Task<IActionResult> Index()
-			=> await this.ExecuteErrorAsync(StatusCodes.Status500InternalServerError);
+			=> await this.ExecuteErrorAsync(R.Error(), StatusCodes.Status500InternalServerError);
 
 		/// <summary>
 		/// Execute error view
@@ -33,6 +32,6 @@ namespace Jeebs.Mvc
 		/// <param name="code">Error code</param>
 		/// <returns>IActionResult</returns>
 		public async Task<IActionResult> Execute(int? code)
-			=> await this.ExecuteErrorAsync(code);
+			=> await this.ExecuteErrorAsync(R.Error(), code ?? StatusCodes.Status500InternalServerError);
 	}
 }

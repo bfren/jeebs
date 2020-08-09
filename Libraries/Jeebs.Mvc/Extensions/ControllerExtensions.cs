@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Mvc.Extensions
+namespace Jeebs.Mvc
 {
 	/// <summary>
 	/// Controller extension methods
@@ -19,8 +19,18 @@ namespace Jeebs.Mvc.Extensions
 		/// </summary>
 		/// <param name="this">Controller</param>
 		/// <param name="code">[Optional] HTTP Status Code</param>
-		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, int? code = null)
+		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IError error, int? code = null)
 		{
+			// Check for 404
+			if (code == null)
+			{
+				code = error.Messages.Contains<Jm.NotFoundMsg>() switch
+				{
+					true => StatusCodes.Status404NotFound,
+					false => StatusCodes.Status500InternalServerError
+				};
+			}
+
 			// Look for a view
 			var viewName = $"Error{code}";
 			if ((findView(viewName) ?? findView("Default")) is string view)

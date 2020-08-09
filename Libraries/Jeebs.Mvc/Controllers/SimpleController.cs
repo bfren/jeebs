@@ -14,14 +14,14 @@ namespace Jeebs.Mvc
 		/// Disable favicon.ico
 		/// </summary>
 		[Route("favicon.ico")]
-		public EmptyResult Favicon() 
+		public EmptyResult Favicon()
 			=> new EmptyResult();
 
 		/// <summary>
 		/// Google Webmaster Tools site verification
 		/// </summary>
 		[Route("google5cfca8ea82e65ef1.html")]
-		public ContentResult GoogleVerification() 
+		public ContentResult GoogleVerification()
 			=> Content("google-site-verification: google5cfca8ea82e65ef1.html");
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace Jeebs.Mvc
 		/// <returns>ContentResult</returns>
 		[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
 		[Route("keep-alive.html")]
-		public ContentResult KeepAlive() 
+		public ContentResult KeepAlive()
 			=> Content(DateTime.UtcNow.ToString("u"));
 	}
 }
