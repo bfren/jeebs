@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,12 @@ namespace Jeebs.Mvc
 		/// </summary>
 		/// <param name="code">HTTP Status Code</param>
 		protected RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError)
-			=> new RedirectToActionResult(nameof(ErrorController.Execute), "Error", new { code });
+			=> new RedirectToActionResult(nameof(ErrorController.Handle), "Error", new { code });
+
+		/// <summary>
+		/// Return a 403 Not Allowed result
+		/// </summary>
+		protected StatusCodeResult NotAllowed()
+			=> StatusCode(403);
 	}
 }

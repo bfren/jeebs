@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Mvc\Jeebs.Mvc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

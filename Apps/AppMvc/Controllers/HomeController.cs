@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Jeebs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcApp.Models;
 
 namespace MvcApp.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : Jeebs.Mvc.Controller
 	{
-		private readonly ILogger<HomeController> _logger;
-
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
+		public HomeController(ILog log) : base(log) { }
 
 		public IActionResult Index()
 		{

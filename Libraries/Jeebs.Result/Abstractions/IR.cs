@@ -15,6 +15,11 @@ namespace Jeebs
 		MsgList Messages { get; }
 
 		/// <summary>
+		/// Returns true if this result contains messages
+		/// </summary>
+		bool HasMessages => Messages.Count > 0;
+
+		/// <summary>
 		/// Return a simple <see cref="IError"/> result
 		/// </summary>
 		IError Error();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Jeebs.Apps.WebApps.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -19,19 +20,15 @@ namespace Jeebs.Mvc
 		/// <param name="log">ILog</param>
 		protected ErrorController(ILog log) : base(log) { }
 
+		[Route("/Error/{code:int}")]
+		public async Task<IActionResult> Handle(int code)
+			=> await this.ExecuteErrorAsync(R.Error(), code);
+
 		/// <summary>
 		/// Default error view
 		/// </summary>
 		/// <returns>IActionResult</returns>
 		public async Task<IActionResult> Index()
-			=> await this.ExecuteErrorAsync(R.Error(), StatusCodes.Status500InternalServerError);
-
-		/// <summary>
-		/// Execute error view
-		/// </summary>
-		/// <param name="code">Error code</param>
-		/// <returns>IActionResult</returns>
-		public async Task<IActionResult> Execute(int? code)
-			=> await this.ExecuteErrorAsync(R.Error(), code ?? StatusCodes.Status500InternalServerError);
+			=> await Handle(StatusCodes.Status500InternalServerError);
 	}
 }

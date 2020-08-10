@@ -1,0 +1,13 @@
+﻿@model Jeebs.IError
+
+<h2>Not Found</h2>
+<p>Resource not found.</p>
+
+@if (Model.HasMessages)
+{
+	<h3>Messages</h3>
+	@foreach (var item in Model.Messages)
+	{
+		<p>@item</p>
+	}
+}

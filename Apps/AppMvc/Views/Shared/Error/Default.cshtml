@@ -1,0 +1,13 @@
+﻿@model Jeebs.IError
+
+<h2>Error</h2>
+<p>Ooops, an error has occured.</p>
+
+@if (Model.HasMessages)
+{
+	<h3>Messages</h3>
+	@foreach (var item in Model.Messages)
+	{
+		<p>@item</p>
+	}
+}

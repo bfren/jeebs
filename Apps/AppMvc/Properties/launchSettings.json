@@ -1,27 +1,28 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:62092",
-      "sslPort": 44369
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
+    "AppMvc": {
+      "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:10021",
+      "applicationUrl": "http://localhost:10021"
+    },
+    "dotnet watch run": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "watch run",
+      "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "AppMvc": {
-      "commandName": "Project",
-      "launchBrowser": true,
+    "dotnet watch run (Staging)": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "watch run",
+      "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:10021"
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      }     
     }
   }
 }

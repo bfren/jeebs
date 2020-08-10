@@ -63,7 +63,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 			else
 			{
 				// No redirections match so move on to the next delegate
-				await next.Invoke(context).ConfigureAwait(false);
+				await next.Invoke(context);
 			}
 		}
 

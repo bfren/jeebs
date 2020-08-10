@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
 	/// </summary>
-	public sealed class MsgList : IDisposable
+	public sealed class MsgList : IDisposable, IEnumerable<IMsg>
 	{
 		/// <summary>
 		/// The list of messages
@@ -100,5 +101,11 @@ namespace Jeebs
 		/// <param name="withType">If true, will include the message type as well</param>
 		public string ToString(bool withType)
 			=> messages.Count > 0 ? string.Join('\n', GetAll(withType)) : base.ToString();
+
+		IEnumerator<IMsg> IEnumerable<IMsg>.GetEnumerator()
+			=> messages.GetEnumerator();
+
+		IEnumerator IEnumerable.GetEnumerator()
+			=> messages.GetEnumerator();
 	}
 }

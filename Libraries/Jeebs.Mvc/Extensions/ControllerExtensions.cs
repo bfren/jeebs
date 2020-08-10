@@ -35,7 +35,7 @@ namespace Jeebs.Mvc
 			var viewName = $"Error{code}";
 			if ((findView(viewName) ?? findView("Default")) is string view)
 			{
-				return @this.View(view);
+				return @this.View(view, error);
 			}
 
 			// If response has stared we can't do anything

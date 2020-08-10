@@ -200,6 +200,18 @@ namespace Jeebs.Apps
 		}
 
 		/// <summary>
+		/// Override to send all errors to the Error Controller
+		/// </summary>
+		/// <param name="app">IApplicationBuilder</param>
+		protected override void Configure_ProductionExceptionHandling(IApplicationBuilder app)
+		{
+			base.Configure_ProductionExceptionHandling(app);
+
+			// Use Error Controller to handle all other errors
+			app.UseStatusCodePagesWithReExecute("/Error/{0}");
+		}
+
+		/// <summary>
 		/// Override to configure response compression
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>

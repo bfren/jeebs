@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Jeebs.Config;
 using Jeebs.Data.TypeHandlers;
 
 namespace Jeebs.Data
@@ -55,6 +56,23 @@ namespace Jeebs.Data
 		/// <param name="log">ILog</param>
 		public Db(ILog log)
 			=> this.log = log;
+
+		/// <summary>
+		/// Create object using the specified config
+		/// </summary>
+		/// <param name="config">DbConfig</param>
+		/// <param name="log">ILog</param>
+		public Db(DbConfig config, ILog log) : this(log)
+			=> ConnectionString = config.GetConnection().ConnectionString;
+
+		/// <summary>
+		/// Create object using the specified config
+		/// </summary>
+		/// <param name="config">DbConfig</param>
+		/// <param name="connectionName">Connection name</param>
+		/// <param name="log">ILog</param>
+		public Db(DbConfig config, string connectionName, ILog log) : this(log)
+			=> ConnectionString = config.GetConnection(connectionName).ConnectionString;
 
 		/// <summary>
 		/// Create object using the specified connection string
