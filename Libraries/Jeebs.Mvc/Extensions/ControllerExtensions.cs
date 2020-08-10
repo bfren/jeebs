@@ -18,6 +18,7 @@ namespace Jeebs.Mvc
 		/// Execute an error result and return the View
 		/// </summary>
 		/// <param name="this">Controller</param>
+		/// <param name="error">IError</param>
 		/// <param name="code">[Optional] HTTP Status Code</param>
 		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IError error, int? code = null)
 		{

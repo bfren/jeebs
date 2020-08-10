@@ -12,11 +12,21 @@ namespace Jm
 	{
 		private readonly string? details;
 
+		/// <summary>
+		/// Create message
+		/// </summary>
 		public NotFoundMsg() { }
 
+		/// <summary>
+		/// Create message with details of what has not been found
+		/// </summary>
+		/// <param name="details"></param>
 		public NotFoundMsg(string details)
 			=> this.details = details;
 
+		/// <summary>
+		/// Return details of what has not been found, or base method
+		/// </summary>
 		public override string ToString()
 			=> details switch
 			{
