@@ -11,6 +11,38 @@ namespace Jeebs
 	/// <typeparam name="TValue">Result value type</typeparam>
 	public interface ILink<TValue> : IDisposable
 	{
+		#region Handle
+
+		/// <summary>
+		/// Add a generic exception handler
+		/// </summary>
+		/// <param name="handler">Exception handler</param>
+		ILink<TValue> Handle(Action<IR<TValue>, Exception> handler);
+
+		/// <summary>
+		/// Add a handler for exceptions of type <typeparamref name="TException"/>
+		/// </summary>
+		/// <typeparam name="TException">Exception type</typeparam>
+		/// <param name="handler">Exception handler</param>
+		ILink<TValue> Handle<TException>(Action<IR<TValue>, TException> handler)
+			where TException : Exception;
+
+		/// <summary>
+		/// Add a generic exception handler
+		/// </summary>
+		/// <param name="asyncHandler">Async exception handler</param>
+		ILink<TValue> Handle(Func<IR<TValue>, Exception, Task> asyncHandler);
+
+		/// <summary>
+		/// Add an asynchronous handler for exceptions of type <typeparamref name="TException"/>
+		/// </summary>
+		/// <typeparam name="TException">Exception type</typeparam>
+		/// <param name="asyncHandler">Async exception handler</param>
+		ILink<TValue> Handle<TException>(Func<IR<TValue>, TException, Task> asyncHandler)
+			where TException : Exception;
+
+		#endregion
+
 		#region Map
 
 		/// <summary>

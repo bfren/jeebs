@@ -11,6 +11,8 @@ namespace Jeebs
 	{
 		private readonly IR<TValue, TState> result;
 
+		private readonly LinkExceptionHandlers<TValue, TState> handlers = new LinkExceptionHandlers<TValue, TState>();
+
 		internal Link(IR<TValue, TState> result) : base(result)
 			=> this.result = result;
 
@@ -22,8 +24,23 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				return result.Error<TNext>().AddMsg(new LinkExceptionMsg(ex));
+				Handle(ex);
+				return result.Error<TNext>();
 			}
+		}
+		private void Handle(Exception ex)
+		{
+			var handle = handlers.Get(ex.GetType()) switch
+			{
+				{ } specific => specific,
+				_ => handlers.Get(typeof(Exception)) switch
+				{
+					{ } generic => generic,
+					_ => (a, b) => a.AddMsg(new LinkExceptionMsg(b))
+				}
+			};
+
+			handle(result, ex);
 		}
 
 		private IR<TNext, TState> Catch<TNext>(Func<Task<IR<TNext, TState>>> f)
@@ -34,7 +51,8 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				return result.Error<TNext>().AddMsg(new LinkExceptionMsg(ex));
+				Handle(ex);
+				return result.Error<TNext>();
 			}
 		}
 
