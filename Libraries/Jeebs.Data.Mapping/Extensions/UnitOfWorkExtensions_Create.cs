@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Jm.Data.Mapping.Extensions.UnitOfWork.Create;
 
 namespace Jeebs.Data
 {
@@ -11,6 +13,48 @@ namespace Jeebs.Data
 	/// </summary>
 	public static partial class UnitOfWorkExtensions
 	{
+		/// <summary>
+		/// Insert an entity
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="r">Result object - the value should be the poco to insert</param>
+		/// <returns>Entity (complete with new ID)</returns>
+		public static IR<T> Insert<T>(this IUnitOfWork w, IOkV<T> r)
+			where T : class, IEntity
+			=> r
+				.WithState(w)
+				.Link()
+					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
+					.Map(InsertAndReturnId)
+				.Link()
+					.Handle().With<CheckIdExceptionMsg>()
+					.Map(CheckId<T>)
+				.Link()
+					.Handle().With<GetFreshPocoExceptionMsg>()
+					.Map(GetFreshPoco<T>);
+
+		/// <summary>
+		/// Insert an entity
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="r">Result object - the value should be the poco to insert</param>
+		/// <returns>Entity (complete with new ID)</returns>
+		public static async Task<IR<T>> InsertAsync<T>(this IUnitOfWork w, IOkV<T> r)
+			where T : class, IEntity
+			=> await r
+				.WithState(w)
+				.Link()
+					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
+					.MapAsync(InsertAndReturnIdAsync).Await()
+				.Link()
+					.Handle().With<CheckIdExceptionMsg>()
+					.Map(CheckId<T>)
+				.Link()
+					.Handle().With<GetFreshPocoExceptionMsg>()
+					.MapAsync(GetFreshPocoAsync<T>);
+
 		/// <summary>
 		/// Perform an INSERT operation and return the ID
 		/// </summary>
@@ -22,23 +66,15 @@ namespace Jeebs.Data
 			var w = r.State;
 			var poco = r.Value;
 
-			try
-			{
-				// Build query
-				var query = w.Adapter.CreateSingleAndReturnId<T>();
-				w.LogQuery(nameof(InsertAndReturnId), query, poco);
+			// Build query
+			var query = w.Adapter.CreateSingleAndReturnId<T>();
+			w.LogQuery(nameof(InsertAndReturnId), query, poco);
 
-				// Insert and capture new ID
-				var newId = w.Connection.ExecuteScalar<long>(query, param: poco, transaction: w.Transaction);
+			// Insert and capture new ID
+			var newId = w.Connection.ExecuteScalar<long>(query, param: poco, transaction: w.Transaction);
 
-				// Continue
-				return r.OkV(newId);
-			}
-			catch (Exception ex)
-			{
-				// Return error
-				return r.Error<long>().AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T)));
-			}
+			// Continue
+			return r.OkV(newId);
 		}
 
 		/// <summary>
@@ -52,23 +88,15 @@ namespace Jeebs.Data
 			var w = r.State;
 			var poco = r.Value;
 
-			try
-			{
-				// Build query
-				var query = w.Adapter.CreateSingleAndReturnId<T>();
-				w.LogQuery(nameof(InsertAndReturnIdAsync), query, poco);
+			// Build query
+			var query = w.Adapter.CreateSingleAndReturnId<T>();
+			w.LogQuery(nameof(InsertAndReturnIdAsync), query, poco);
 
-				// Insert and capture new ID
-				var newId = await w.Connection.ExecuteScalarAsync<long>(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);
+			// Insert and capture new ID
+			var newId = await w.Connection.ExecuteScalarAsync<long>(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);
 
-				// Continue
-				return r.OkV(newId);
-			}
-			catch (Exception ex)
-			{
-				// Return error
-				return r.Error<long>().AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T)));
-			}
+			// Continue
+			return r.OkV(newId);
 		}
 
 		/// <summary>
@@ -124,35 +152,5 @@ namespace Jeebs.Data
 			// Get fresh poco
 			return (IR<T, IUnitOfWork>)await w.SingleAsync<T>(r);
 		}
-
-		/// <summary>
-		/// Insert an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to insert</param>
-		/// <returns>Entity (complete with new ID)</returns>
-		public static IR<T> Insert<T>(this IUnitOfWork w, IOkV<T> r)
-			where T : class, IEntity
-			=> r
-				.WithState(w)
-				.Link().Map(InsertAndReturnId)
-				.Link().Map(CheckId<T>)
-				.Link().Map(GetFreshPoco<T>);
-
-		/// <summary>
-		/// Insert an entity
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to insert</param>
-		/// <returns>Entity (complete with new ID)</returns>
-		public static async Task<IR<T>> InsertAsync<T>(this IUnitOfWork w, IOkV<T> r)
-			where T : class, IEntity
-			=> await r
-				.WithState(w)
-				.Link().MapAsync(InsertAndReturnIdAsync).Await()
-				.Link().Map(CheckId<T>)
-				.Link().MapAsync(GetFreshPocoAsync<T>);
 	}
 }

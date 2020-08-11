@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Util;
+using Jm.Data.Querying.Query;
 
 namespace Jeebs.Data
 {
@@ -67,10 +68,18 @@ namespace Jeebs.Data
 		{
 			// Run chain
 			return r
-				.Link().MapAsync(getCount).Await()
-				.Link().Run(getPagingValues)
-				.Link().MapAsync(getItems).Await()
-				.Link().Map(getPagedList);
+				.Link()
+					.Handle().With<GetCountExceptionMsg>()
+					.MapAsync(getCount).Await()
+				.Link()
+					.Handle().With<GetPagingValuesExceptionMsg>()
+					.Run(getPagingValues)
+				.Link()
+					.Handle().With<GetItemsExceptionMsg>()
+					.MapAsync(getItems).Await()
+				.Link()
+					.Handle().With<GetPagedListExceptionMsg>()
+					.Map(getPagedList);
 
 			// Get the count
 			async Task<IR<long>> getCount(IOk r) => await GetCountAsync(r);
