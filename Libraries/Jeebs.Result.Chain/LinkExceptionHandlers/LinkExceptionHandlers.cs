@@ -31,20 +31,24 @@ namespace Jeebs
 			//   Specific (for this particular exception)
 			//   Generic (custom-defined for any exception)
 			//   Fallback (in case nothing is defined)
-			var handle = Get(ex.GetType()) switch
+			var handle = handlers.Count switch
 			{
-				{ } specific => specific,
-				_ => Get(typeof(Exception)) switch
+				0 => fallback,
+				_ => Get(ex.GetType()) switch
 				{
-					{ } generic => generic,
-					_ => fallback
+					{ } specific => specific,
+					_ => Get(typeof(Exception)) switch
+					{
+						{ } generic => generic,
+						_ => fallback
+					}
 				}
 			};
 
 			// Handle the exception
 			handle(result, ex);
 
-			// Fallback handler (defined here to improve readability of switch statement above)
+			// Fallback handler
 			void fallback(TResult result, Exception ex)
 				=> result.AddMsg(exceptionMsg(ex));
 		}

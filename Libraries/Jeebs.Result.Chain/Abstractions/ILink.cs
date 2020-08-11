@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Jeebs.Result.Chain.Fluent;
 
 namespace Jeebs
 {
@@ -11,34 +12,26 @@ namespace Jeebs
 	/// <typeparam name="TValue">Result value type</typeparam>
 	public interface ILink<TValue> : IDisposable
 	{
+		/// <summary>
+		/// Add an exception handler to this Link
+		/// </summary>
+		/// <typeparam name="TException">Exception type</typeparam>
+		/// <param name="handler">Exception handler</param>
+		void AddExceptionHandler<TException>(Action<IR<TValue>, TException> handler)
+			where TException : Exception;
+
 		#region Handle
 
 		/// <summary>
-		/// Add a generic exception handler
+		/// Fluently add a generic exception handler
 		/// </summary>
-		/// <param name="handler">Exception handler</param>
-		ILink<TValue> Handle(Action<IR<TValue>, Exception> handler);
+		Handle<TValue, Exception> Handle();
 
 		/// <summary>
-		/// Add a handler for exceptions of type <typeparamref name="TException"/>
+		/// Fluently add an exception for the specified <typeparamref name="TException"/>
 		/// </summary>
 		/// <typeparam name="TException">Exception type</typeparam>
-		/// <param name="handler">Exception handler</param>
-		ILink<TValue> Handle<TException>(Action<IR<TValue>, TException> handler)
-			where TException : Exception;
-
-		/// <summary>
-		/// Add a generic exception handler
-		/// </summary>
-		/// <param name="asyncHandler">Async exception handler</param>
-		ILink<TValue> Handle(Func<IR<TValue>, Exception, Task> asyncHandler);
-
-		/// <summary>
-		/// Add an asynchronous handler for exceptions of type <typeparamref name="TException"/>
-		/// </summary>
-		/// <typeparam name="TException">Exception type</typeparam>
-		/// <param name="asyncHandler">Async exception handler</param>
-		ILink<TValue> Handle<TException>(Func<IR<TValue>, TException, Task> asyncHandler)
+		Handle<TValue, TException> Handle<TException>()
 			where TException : Exception;
 
 		#endregion

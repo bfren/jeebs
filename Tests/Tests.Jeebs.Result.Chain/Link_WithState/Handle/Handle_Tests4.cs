@@ -5,46 +5,47 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.HandleTests.WithState
+namespace Jeebs.LinkTests.WithState
 {
 	public partial class Handle_Tests
 	{
 		[Fact]
-		public void Specific_AsyncHandler_Runs_For_That_Exception()
+		public void No_Handler_With_Generic_Custom_ExceptionMsg_Adds_Msg()
 		{
 			// Arrange
 			const int state = 7;
 			var chain = Chain.Create(state);
-			var sideEffect = 1;
-			async Task h0(IR<bool> _, DivideByZeroException __) => sideEffect++;
-			async Task h1(IR<bool, int> _, DivideByZeroException __) => sideEffect++;
-			static void throwException() => throw new DivideByZeroException();
+			static void throwGeneric() => throw new Exception();
+			static void throwOther() => throw new DivideByZeroException();
 
 			// Act
-			chain.Link().Handle<DivideByZeroException>(h0).Run(throwException);
-			chain.Link().Handle<DivideByZeroException>(h1).Run(throwException);
+			chain.Link().Handle().With<CustomExceptionMsg>().Run(throwGeneric);
+			chain.Link().Handle().With<CustomExceptionMsg>().Run(throwOther);
+			var msg = chain.Messages.Get<CustomExceptionMsg>();
 
 			// Assert
-			Assert.Equal(3, sideEffect);
+			Assert.Equal(2, msg.Count);
 		}
 
 		[Fact]
-		public void Specific_AsyncHandler_Does_Not_Run_For_Other_Exceptions()
+		public void No_Handler_With_Specific_Custom_ExceptionMsg_Adds_Msg()
 		{
 			// Arrange
 			const int state = 7;
 			var chain = Chain.Create(state);
-			var sideEffect = 1;
-			async Task h0(IR<bool> _, DivideByZeroException __) => sideEffect++;
-			async Task h1(IR<bool> _, DivideByZeroException __) => sideEffect++;
-			static void throwException() => throw new ArithmeticException();
+			static void throwGeneric() => throw new Exception();
+			static void throwOther() => throw new DivideByZeroException();
 
 			// Act
-			chain.Link().Handle<DivideByZeroException>(h0).Run(throwException);
-			chain.Link().Handle<DivideByZeroException>(h1).Run(throwException);
+			chain.Link().Handle<DivideByZeroException>().With<CustomExceptionMsg>().Run(throwGeneric);
+			chain.Link().Handle<DivideByZeroException>().With<CustomExceptionMsg>().Run(throwOther);
+			chain.Link().Handle<DivideByZeroException>().With<CustomExceptionMsg>().Run(throwOther);
+			var msg = chain.Messages.Get<CustomExceptionMsg>();
 
 			// Assert
-			Assert.Equal(1, sideEffect);
+			Assert.Equal(2, msg.Count);
 		}
+
+		public class CustomExceptionMsg : Jm.ExceptionMsg { }
 	}
 }

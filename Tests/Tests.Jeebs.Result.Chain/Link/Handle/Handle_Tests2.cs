@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.HandleTests
+namespace Jeebs.LinkTests
 {
 	public partial class Handle_Tests
 	{
@@ -17,7 +17,7 @@ namespace Jeebs.HandleTests
 			static async Task handler(IR<bool> _, Exception __) { }
 
 			// Act
-			var next = link.Handle(handler);
+			var next = link.Handle().With(handler);
 
 			// Assert
 			Assert.Same(link, next);
@@ -34,8 +34,8 @@ namespace Jeebs.HandleTests
 			static void throwOther() => throw new DivideByZeroException();
 
 			// Act
-			chain.Link().Handle(handler).Run(throwGeneric);
-			chain.Link().Handle(handler).Run(throwOther);
+			chain.Link().Handle().With(handler).Run(throwGeneric);
+			chain.Link().Handle().With(handler).Run(throwOther);
 
 			// Assert
 			Assert.Equal(3, sideEffect);

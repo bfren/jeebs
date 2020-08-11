@@ -23,5 +23,11 @@ namespace Jeebs
 		/// Exception trace
 		/// </summary>
 		string ExceptionTrace { get; }
+
+		/// <summary>
+		/// Set properties from exception
+		/// </summary>
+		/// <param name="ex">Exception</param>
+		void Set(Exception ex);
 	}
 }

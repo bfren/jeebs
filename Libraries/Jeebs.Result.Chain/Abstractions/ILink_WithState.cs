@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Jeebs.Result.Chain.Fluent;
 
 namespace Jeebs
 {
@@ -12,34 +13,17 @@ namespace Jeebs
 	/// <typeparam name="TState">Result chain type</typeparam>
 	public interface ILink<TValue, TState> : ILink<TValue>
 	{
+		/// <inheritdoc cref="ILink{TValue}.AddExceptionHandler{TException}(Action{IR{TValue}, TException})"/>
+		void AddExceptionHandler<TException>(Action<IR<TValue, TState>, TException> handler)
+			where TException : Exception;
+
 		#region Handle
 
-		/// <inheritdoc cref="ILink{TValue}.Handle(Action{IR{TValue}, Exception})"/>
-		new ILink<TValue, TState> Handle(Action<IR<TValue>, Exception> handler);
+		/// <inheritdoc cref="ILink{TValue}.Handle"/>
+		new Handle<TValue, TState, Exception> Handle();
 
-		/// <inheritdoc cref="ILink{TValue}.Handle{TException}(Action{IR{TValue}, TException})"/>
-		new ILink<TValue, TState> Handle<TException>(Action<IR<TValue>, TException> handler)
-			where TException : Exception;
-
-		/// <inheritdoc cref="ILink{TValue}.Handle(Func{IR{TValue}, Exception, Task})"/>
-		new ILink<TValue, TState> Handle(Func<IR<TValue>, Exception, Task> asyncHandler);
-
-		/// <inheritdoc cref="ILink{TValue}.Handle{TException}(Func{IR{TValue}, TException, Task})"/>
-		new ILink<TValue, TState> Handle<TException>(Func<IR<TValue>, TException, Task> asyncHandler)
-			where TException : Exception;
-
-		/// <inheritdoc cref="ILink{TValue}.Handle(Action{IR{TValue}, Exception})"/>
-		ILink<TValue, TState> Handle(Action<IR<TValue, TState>, Exception> handler);
-
-		/// <inheritdoc cref="ILink{TValue}.Handle{TException}(Action{IR{TValue}, TException})"/>
-		ILink<TValue, TState> Handle<TException>(Action<IR<TValue, TState>, TException> handler)
-			where TException : Exception;
-
-		/// <inheritdoc cref="ILink{TValue}.Handle(Func{IR{TValue}, Exception, Task})"/>
-		ILink<TValue, TState> Handle(Func<IR<TValue, TState>, Exception, Task> asyncHandler);
-
-		/// <inheritdoc cref="ILink{TValue}.Handle{TException}(Func{IR{TValue}, TException, Task})"/>
-		ILink<TValue, TState> Handle<TException>(Func<IR<TValue, TState>, TException, Task> asyncHandler)
+		/// <inheritdoc cref="ILink{TValue}.Handle{TException}"/>
+		new Handle<TValue, TState, TException> Handle<TException>()
 			where TException : Exception;
 
 		#endregion

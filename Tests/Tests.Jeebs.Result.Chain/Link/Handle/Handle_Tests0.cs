@@ -4,9 +4,9 @@ using System.Text;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.HandleTests
+namespace Jeebs.LinkTests
 {
-	public partial class Handle_Tests
+	public partial class Handle_Tests : ILink_Handle
 	{
 		[Fact]
 		public void Generic_Handler_Returns_Original_Link()
@@ -16,7 +16,7 @@ namespace Jeebs.HandleTests
 			static void handler(IR<bool> _, Exception __) { }
 
 			// Act
-			var next = link.Handle(handler);
+			var next = link.Handle().With(handler);
 
 			// Assert
 			Assert.Same(link, next);
@@ -33,8 +33,8 @@ namespace Jeebs.HandleTests
 			static void throwOther() => throw new DivideByZeroException();
 
 			// Act
-			chain.Link().Handle(handler).Run(throwGeneric);
-			chain.Link().Handle(handler).Run(throwOther);
+			chain.Link().Handle().With(handler).Run(throwGeneric);
+			chain.Link().Handle().With(handler).Run(throwOther);
 
 			// Assert
 			Assert.Equal(3, sideEffect);

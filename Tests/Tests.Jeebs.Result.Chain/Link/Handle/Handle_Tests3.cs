@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
@@ -9,12 +10,12 @@ namespace Jeebs.LinkTests
 	public partial class Handle_Tests
 	{
 		[Fact]
-		public void Specific_Handler_Runs_For_That_Exception()
+		public void Specific_AsyncHandler_Runs_For_That_Exception()
 		{
 			// Arrange
 			var chain = Chain.Create();
 			var sideEffect = 1;
-			void handler(IR<bool> _, DivideByZeroException __) => sideEffect++;
+			async Task handler(IR<bool> _, DivideByZeroException __) => sideEffect++;
 			static void throwException() => throw new DivideByZeroException();
 
 			// Act
@@ -25,12 +26,12 @@ namespace Jeebs.LinkTests
 		}
 
 		[Fact]
-		public void Specific_Handler_Does_Not_Run_For_Other_Exceptions()
+		public void Specific_AsyncHandler_Does_Not_Run_For_Other_Exceptions()
 		{
 			// Arrange
 			var chain = Chain.Create();
 			var sideEffect = 1;
-			void handler(IR<bool> _, DivideByZeroException __) => sideEffect++;
+			async Task handler(IR<bool> _, DivideByZeroException __) => sideEffect++;
 			static void throwException() => throw new ArithmeticException();
 
 			// Act

@@ -23,6 +23,11 @@ namespace Jeebs
 			handlers = new LinkExceptionHandlers<IR<TValue>>(exceptionMsg);
 		}
 
+		/// <inheritdoc/>
+		public void AddExceptionHandler<TException>(Action<IR<TValue>, TException> handler)
+			where TException : Exception
+			=> handlers.Add(handler);
+
 		private IR<TNext> Catch<TNext>(Func<Task<IR<TNext>>> f)
 		{
 			try
