@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jm.WordPress.CustomField.Hydrate;
+using Jm.WordPress.CustomFields;
 
 namespace Jeebs.WordPress
 {

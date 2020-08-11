@@ -17,7 +17,7 @@ namespace Jeebs.LinkTests
 
 			// Act
 			var result = chain.Link().UnwrapSingle<int>();
-			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
+			var msg = result.Messages.Get<Jm.Link.Unwrap.MoreThanOneItemMsg>();
 
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(result);
@@ -33,7 +33,7 @@ namespace Jeebs.LinkTests
 
 			// Act
 			var result = chain.Link().UnwrapSingle<int>();
-			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
+			var msg = result.Messages.Get<Jm.Link.Unwrap.MoreThanOneItemMsg>();
 
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(result);
@@ -49,7 +49,7 @@ namespace Jeebs.LinkTests
 
 			// Act
 			var result = chain.Link().UnwrapSingle<int>();
-			var msg = result.Messages.Get<Jm.Link.Single.MoreThanOneItemMsg>();
+			var msg = result.Messages.Get<Jm.Link.Unwrap.MoreThanOneItemMsg>();
 
 			// Assert
 			Assert.IsAssignableFrom<IError<int>>(result);

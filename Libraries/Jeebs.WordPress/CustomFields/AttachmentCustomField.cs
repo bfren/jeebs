@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Enums;
-using Jm.WordPress.CustomField.Hydrate;
+using Jm.WordPress.CustomFields;
+using Jm.WordPress.CustomFields.Attachment;
 
 namespace Jeebs.WordPress
 {
@@ -39,9 +40,15 @@ namespace Jeebs.WordPress
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 			return await r
-				.Link().Map(parseAttachmentPostId)
-				.Link().MapAsync(getAttachment).Await()
-				.Link().MapAsync(hydrate);
+				.Link()
+					.Handle().With<ParsePostIdExceptionMsg>()
+					.Map(parseAttachmentPostId)
+				.Link()
+					.Handle().With<GetAttachmentExceptionMsg>()
+					.MapAsync(getAttachment).Await()
+				.Link()
+					.Handle().With<HydrateExceptionMsg>()
+					.MapAsync(hydrate);
 
 			//
 			// Parse the Attachment Post ID
@@ -77,7 +84,7 @@ namespace Jeebs.WordPress
 				return attachments switch
 				{
 					IOkV<List<Attachment>> x when x.Value.Count == 1 => x.OkV(x.Value.Single()),
-					{ } x => x.Error<Attachment>().AddMsg().OfType<MultipleAttachmentsFound>()
+					{ } x => x.Error<Attachment>().AddMsg().OfType<MultipleAttachmentsFoundMsg>()
 				};
 			}
 

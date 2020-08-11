@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -94,10 +93,18 @@ namespace Jeebs.WordPress
 			where TModel : IEntity
 		{
 			return r
-				.Link().MapAsync(AddMetaAsync<TList, TModel>).Await()
-				.Link().MapAsync(AddCustomFieldsAsync<TList, TModel>).Await()
-				.Link().MapAsync(AddTaxonomiesAsync<TList, TModel>).Await()
-				.Link().Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
+				.Link()
+					.Handle().With<AddMetaExceptionMsg>()
+					.MapAsync(AddMetaAsync<TList, TModel>).Await()
+				.Link()
+					.Handle().With<AddCustomFieldsExceptionMsg>()
+					.MapAsync(AddCustomFieldsAsync<TList, TModel>).Await()
+				.Link()
+					.Handle().With<AddTaxonomiesExceptionMsg>()
+					.MapAsync(AddTaxonomiesAsync<TList, TModel>).Await()
+				.Link()
+					.Handle().With<ApplyContentFiltersExceptionMsg>()
+					.Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
 		}
 
 		/// <summary>
@@ -114,8 +121,12 @@ namespace Jeebs.WordPress
 			if (GetMetaDictionaryInfo<TModel>() is Some<Meta<TModel>> s)
 			{
 				return r
-					.Link().MapAsync(getMetaAsync).Await()
-					.Link().Map(okV => setMeta(okV, s.Value));
+					.Link()
+						.Handle().With<GetMetaExceptionMsg>()
+						.MapAsync(getMetaAsync).Await()
+					.Link()
+						.Handle().With<SetMetaExceptionMsg>()
+						.Map(okV => setMeta(okV, s.Value));
 			}
 
 			return r;
@@ -193,7 +204,10 @@ namespace Jeebs.WordPress
 			var fields = GetCustomFields<TModel>();
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 => r.Link().MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
+				Some<Meta<TModel>> x when fields.Count > 0 => r
+					.Link()
+						.Handle().With<HydrateCustomFieldExceptionMsg>()
+						.MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
 				_ => r
 			};
 
@@ -226,7 +240,7 @@ namespace Jeebs.WordPress
 						var result = await customField.HydrateAsync(r, db, unitOfWork, metaDictionary).ConfigureAwait(false);
 						if (result is IError && customField.IsRequired)
 						{
-							return result.Error<TList>().AddMsg(new RequiredCustomFieldNotFound(post.Id, info.Name, customField.Key));
+							return result.Error<TList>().AddMsg(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
 						}
 
 						// Set the value
@@ -267,8 +281,12 @@ namespace Jeebs.WordPress
 			}
 
 			return r
-				.Link().MapAsync(okV => getTermsAsync(okV, termLists)).Await()
-				.Link().Map(okV => addTerms(okV, termLists));
+				.Link()
+					.Handle().With<GetTermsExceptionMsg>()
+					.MapAsync(okV => getTermsAsync(okV, termLists)).Await()
+				.Link()
+					.Handle().With<SetTermsExceptionMsg>()
+					.Map(okV => addTerms(okV, termLists));
 
 			//
 			//	Get terms
@@ -316,7 +334,7 @@ namespace Jeebs.WordPress
 			//
 			//	Add terms
 			//
-			IR<TList> addTerms(IOkV<(TList, IEnumerable<Term>)> r, List<PropertyInfo> termLists)
+			static IR<TList> addTerms(IOkV<(TList, IEnumerable<Term>)> r, List<PropertyInfo> termLists)
 			{
 				var (posts, terms) = r.Value;
 
@@ -354,13 +372,13 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
 		/// <param name="r">Result</param>
-		/// <param name="contentFilters">Content Filters</param>
-		private IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] contentFilters)
+		/// <param name="filters">Content Filters</param>
+		private IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
 			// Only proceed if there are content filters
-			if (contentFilters.Length == 0)
+			if (filters.Length == 0)
 			{
 				return r;
 			}
@@ -368,14 +386,17 @@ namespace Jeebs.WordPress
 			// Post content field is required as we are expected to apply content filters
 			return GetPostContentInfo<TModel>() switch
 			{
-				Some<Content<TModel>> x => r.Link().Map(okV => apply(okV, x.Value)),
-				_ => r.Error().AddMsg().OfType<RequiredContentPropertyNotFound<TModel>>()
+				Some<Content<TModel>> x when x.Value is var content => r
+					.Link()
+						.Handle().With<ExecuteContentFiltersExceptionMsg>()
+						.Map(okV => execute(okV, content, filters)),
+				_ => r.Error().AddMsg().OfType<RequiredContentPropertyNotFoundMsg<TModel>>()
 			};
 
 			//
-			// Apply content filters to each posts
+			// Apply content filters to each post
 			//
-			IR<TList> apply(IOkV<TList> r, Content<TModel> content)
+			static IR<TList> execute(IOkV<TList> r, Content<TModel> content, ContentFilter[] filters)
 			{
 				var posts = r.Value;
 
@@ -385,7 +406,7 @@ namespace Jeebs.WordPress
 					var postContent = content.Get(post);
 
 					// Apply filters
-					foreach (var filter in contentFilters)
+					foreach (var filter in filters)
 					{
 						postContent = filter.Execute(postContent);
 					}

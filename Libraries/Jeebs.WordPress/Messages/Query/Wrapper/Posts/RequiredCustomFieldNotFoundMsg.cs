@@ -7,9 +7,9 @@ namespace Jm.WordPress.Query.Wrapper.Posts
 	/// <summary>
 	/// Required Custom Field not found when querying posts
 	/// </summary>
-	public class RequiredCustomFieldNotFound : WithValueMsg<(long postId, string propertyName, string metaKey)>
+	public class RequiredCustomFieldNotFoundMsg : WithValueMsg<(long postId, string propertyName, string metaKey)>
 	{
-		internal RequiredCustomFieldNotFound(long postId, string propertyName, string metaKey) : base((postId, propertyName, metaKey)) { }
+		internal RequiredCustomFieldNotFoundMsg(long postId, string propertyName, string metaKey) : base((postId, propertyName, metaKey)) { }
 
 		/// <summary>
 		/// Return error message

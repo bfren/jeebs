@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jm.WordPress.CustomField.Hydrate
+namespace Jm.WordPress.CustomFields
 {
 	/// <summary>
 	/// ValueStr is an invalid Post ID when hydrating a custom field

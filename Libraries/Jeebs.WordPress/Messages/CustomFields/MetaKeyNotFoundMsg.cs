@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jm.WordPress.CustomField.Hydrate
+namespace Jm.WordPress.CustomFields
 {
 	/// <summary>
 	/// Meta key not found when hydrating a custom field

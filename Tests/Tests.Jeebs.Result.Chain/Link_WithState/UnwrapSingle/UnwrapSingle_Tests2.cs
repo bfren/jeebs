@@ -18,7 +18,7 @@ namespace Jeebs.LinkTests.WithState
 
 			// Act
 			var result = chain.Link().UnwrapSingle<string>();
-			var msg = result.Messages.Get<Jm.Link.Single.IncorrectTypeMsg>();
+			var msg = result.Messages.Get<Jm.Link.Unwrap.IncorrectTypeMsg>();
 
 			// Assert
 			var e = Assert.IsAssignableFrom<IError<string, int>>(result);

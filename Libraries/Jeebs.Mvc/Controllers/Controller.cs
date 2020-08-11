@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Jm.Mvc.Controllers.Controller;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,7 +43,7 @@ namespace Jeebs.Mvc
 			{
 				IOkV<T> okV => await success(okV.Value).ConfigureAwait(false),
 				IError<T> error => await this.ExecuteErrorAsync(error),
-				{ } other => await this.ExecuteErrorAsync(other.Error<Jm.Mvc.Controller_ProcessResultAsync_Unknown_IR>())
+				{ } other => await this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>())
 			};
 
 		/// <inheritdoc cref="ProcessResultAsync{T}(IR{T}, Func{T, Task{IActionResult}})"/>
@@ -51,7 +52,7 @@ namespace Jeebs.Mvc
 			{
 				IOkV<T> okV => success(okV.Value),
 				IError<T> error => this.ExecuteErrorAsync(error).GetAwaiter().GetResult(),
-				{ } other => this.ExecuteErrorAsync(other.Error<Jm.Mvc.Controller_ProcessResult_Unknown_IR>()).GetAwaiter().GetResult()
+				{ } other => this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>()).GetAwaiter().GetResult()
 			};
 
 		/// <summary>

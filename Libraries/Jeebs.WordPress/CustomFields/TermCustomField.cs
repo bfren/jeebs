@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities;
-using Jm.WordPress.CustomField.Hydrate;
+using Jm.WordPress.CustomFields;
+using Jm.WordPress.CustomFields.Term;
 
 namespace Jeebs.WordPress
 {
@@ -39,9 +40,15 @@ namespace Jeebs.WordPress
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 			return await r
-				.Link().Map(parseTermId)
-				.Link().MapAsync(getTerm).Await()
-				.Link().MapAsync(hydrate);
+				.Link()
+					.Handle().With<ParseTermIdExceptionMsg>()
+					.Map(parseTermId)
+				.Link()
+					.Handle().With<GetTermExceptionMsg>()
+					.MapAsync(getTerm).Await()
+				.Link()
+					.Handle().With<HydrateExceptionMsg>()
+					.MapAsync(hydrate);
 
 			//
 			// Parse the Term ID
@@ -71,7 +78,7 @@ namespace Jeebs.WordPress
 				return terms switch
 				{
 					IOkV<List<Term>> x when x.Value.Count == 1 => x.OkV(x.Value.Single()),
-					{ } x => x.Error<Term>().AddMsg().OfType<MultipleTermsFound>()
+					{ } x => x.Error<Term>().AddMsg().OfType<MultipleTermsFoundMsg>()
 				};
 			}
 

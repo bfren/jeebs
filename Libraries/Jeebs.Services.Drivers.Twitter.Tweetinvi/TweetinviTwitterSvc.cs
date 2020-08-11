@@ -47,10 +47,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Get user
 			return await r
 				.Link()
-					.Handle(setCredentialsException)
+					.Handle().With(setCredentialsException)
 					.Run(setCredentials)
 				.Link()
-					.Handle(getUserException)
+					.Handle().With(getUserException)
 					.MapAsync(getUser);
 
 			// Set credentials
@@ -98,10 +98,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				.Link()
 					.MapAsync(GetUser).Await()
 				.Link()
-					.Handle(getUrlException)
+					.Handle().With(getUrlException)
 					.MapAsync(getUrl).Await()
 				.Link()
-					.Handle(getStreamException)
+					.Handle().With(getStreamException)
 					.MapAsync(getStream).Await();
 
 			// Get profile image URL
@@ -141,10 +141,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				.Link()
 					.MapAsync(GetUser).Await()
 				.Link()
-					.Handle(getTimelineException)
+					.Handle().With(getTimelineException)
 					.MapAsync(getTimeline).Await()
 				.Link()
-					.Handle(convertTweetsException)
+					.Handle().With(convertTweetsException)
 					.MapAsync(convertTweets).Await();
 
 			// Get timeline
