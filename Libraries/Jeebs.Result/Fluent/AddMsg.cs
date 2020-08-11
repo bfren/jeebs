@@ -9,7 +9,7 @@ namespace Jeebs.Result.Fluent
 	/// Fluently add a message by type to the result chain, returning the original <typeparamref name="TResult"/> object
 	/// </summary>
 	/// <typeparam name="TResult">Result type</typeparam>
-	public class AddMsg<TResult>
+	public sealed class AddMsg<TResult>
 		where TResult : IR
 	{
 		private readonly TResult result;

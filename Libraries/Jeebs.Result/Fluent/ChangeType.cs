@@ -21,8 +21,8 @@ namespace Jeebs.Result.Fluent
 		public IR<TNext> To<TNext>()
 			=> result switch
 			{
-				IOk ok => ok.Ok<TNext>(),
-				IError error => error.Error<TNext>(),
+				IOk x => x.Ok<TNext>(),
+				IError x => x.Error<TNext>(),
 				_ => throw new InvalidOperationException($"{result.GetType()} is not a supported implementation of {typeof(IR)}.")
 			};
 	}
@@ -43,8 +43,8 @@ namespace Jeebs.Result.Fluent
 		public IR<TNext, TState> To<TNext>()
 			=> result switch
 			{
-				IOk<TValue, TState> ok => ok.Ok<TNext>(),
-				IError<TValue, TState> error => error.Error<TNext>(),
+				IOk<TValue, TState> x => x.Ok<TNext>(),
+				IError<TValue, TState> x => x.Error<TNext>(),
 				_ => throw new InvalidOperationException($"{result.GetType()} is not a supported implementation of {typeof(IR<,>)}.")
 			};
 	}

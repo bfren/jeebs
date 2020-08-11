@@ -13,40 +13,14 @@ namespace Jeebs
 	{
 		private readonly IR<TValue> result;
 
-		private readonly LinkExceptionHandlers<TValue> handlers = new LinkExceptionHandlers<TValue>();
+		private readonly LinkExceptionHandlers<IR<TValue>> handlers = new LinkExceptionHandlers<IR<TValue>>();
 
-		internal Link(IR result)
-			=> this.result = result.ChangeType().To<TValue>();
+		internal Link(IR result, Func<Exception, IMsg>? exceptionMsg = null) : this(result.ChangeType().To<TValue>(), exceptionMsg) { }
 
-		internal Link(IR<TValue> result)
-			=> this.result = result;
-
-		private void Handle(Exception ex)
+		internal Link(IR<TValue> result, Func<Exception, IMsg>? exceptionMsg = null)
 		{
-			var handle = handlers.Get(ex.GetType()) switch
-			{
-				{ } specific => specific,
-				_ => handlers.Get(typeof(Exception)) switch
-				{
-					{ } generic => generic,
-					_ => (a, b) => a.AddMsg(new LinkExceptionMsg(b))
-				}
-			};
-
-			handle(result, ex);
-		}
-
-		private IR<TNext> Catch<TNext>(Func<IR<TNext>> f)
-		{
-			try
-			{
-				return f();
-			}
-			catch (Exception ex)
-			{
-				Handle(ex);
-				return result.Error<TNext>();
-			}
+			this.result = result;
+			handlers = new LinkExceptionHandlers<IR<TValue>>(exceptionMsg);
 		}
 
 		private IR<TNext> Catch<TNext>(Func<Task<IR<TNext>>> f)
@@ -57,15 +31,21 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				Handle(ex);
+				handlers.Handle(result, ex);
 				return result.Error<TNext>();
 			}
 		}
 
+		private IR<TNext> Catch<TNext>(Func<IR<TNext>> f)
+			=> Catch(() => Task.FromResult(f()));
+
 		/// <summary>
-		/// Dispose of this <see cref="result"/>
+		/// Dispose of this Link - including result and handlers objects
 		/// </summary>
 		public void Dispose()
-			=> result.Dispose();
+		{
+			handlers.Dispose();
+			result.Dispose();
+		}
 	}
 }

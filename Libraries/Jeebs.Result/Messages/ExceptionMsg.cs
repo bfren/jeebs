@@ -5,7 +5,7 @@ using Jeebs;
 
 namespace Jm
 {
-	/// <inheritdoc/>
+	/// <inheritdoc cref="IExceptionMsg"/>
 	public class ExceptionMsg : IExceptionMsg
 	{
 		/// <inheritdoc/>

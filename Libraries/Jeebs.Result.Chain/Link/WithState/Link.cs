@@ -11,36 +11,12 @@ namespace Jeebs
 	{
 		private readonly IR<TValue, TState> result;
 
-		private readonly LinkExceptionHandlers<TValue, TState> handlers = new LinkExceptionHandlers<TValue, TState>();
+		private readonly LinkExceptionHandlers<IR<TValue, TState>> handlers = new LinkExceptionHandlers<IR<TValue, TState>>();
 
-		internal Link(IR<TValue, TState> result) : base(result)
-			=> this.result = result;
-
-		private IR<TNext, TState> Catch<TNext>(Func<IR<TNext, TState>> f)
+		internal Link(IR<TValue, TState> result, Func<Exception, IMsg>? exceptionMsg = null) : base(result)
 		{
-			try
-			{
-				return f();
-			}
-			catch (Exception ex)
-			{
-				Handle(ex);
-				return result.Error<TNext>();
-			}
-		}
-		private void Handle(Exception ex)
-		{
-			var handle = handlers.Get(ex.GetType()) switch
-			{
-				{ } specific => specific,
-				_ => handlers.Get(typeof(Exception)) switch
-				{
-					{ } generic => generic,
-					_ => (a, b) => a.AddMsg(new LinkExceptionMsg(b))
-				}
-			};
-
-			handle(result, ex);
+			this.result = result.ChangeType().To<TValue>();
+			handlers = new LinkExceptionHandlers<IR<TValue, TState>>(exceptionMsg);
 		}
 
 		private IR<TNext, TState> Catch<TNext>(Func<Task<IR<TNext, TState>>> f)
@@ -51,17 +27,19 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				Handle(ex);
+				handlers.Handle(result, ex);
 				return result.Error<TNext>();
 			}
 		}
 
-		/// <summary>
-		/// Dispose of this Link and <see cref="result"/>
-		/// </summary>
+		private IR<TNext, TState> Catch<TNext>(Func<IR<TNext, TState>> f)
+			=> Catch(() => Task.FromResult(f()));
+
+		/// <inheritdoc cref="Link{TValue}.Dispose"/>
 		new public void Dispose()
 		{
 			base.Dispose();
+			handlers.Dispose();
 			result.Dispose();
 		}
 	}
