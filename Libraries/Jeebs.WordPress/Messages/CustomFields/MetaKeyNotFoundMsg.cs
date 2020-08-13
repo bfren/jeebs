@@ -7,7 +7,7 @@ namespace Jm.WordPress.CustomFields
 	/// <summary>
 	/// Meta key not found when hydrating a custom field
 	/// </summary>
-	public class MetaKeyNotFoundMsg : WithStringMsg
+	public class MetaKeyNotFoundMsg : WithValueMsg<string>
 	{
 		internal MetaKeyNotFoundMsg(string key) : base(key) { }
 

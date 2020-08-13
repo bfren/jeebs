@@ -15,7 +15,7 @@ namespace Jeebs
 			// Arrange
 
 			// Act
-			var result = input.StartWith(default(char));
+			var result = input.StartWith(default);
 
 			// Assert
 			Assert.Equal(input, result);

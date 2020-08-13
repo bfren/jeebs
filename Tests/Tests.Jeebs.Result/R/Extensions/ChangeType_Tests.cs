@@ -71,8 +71,8 @@ namespace Jeebs
 			where TResult : IR
 		{
 			// Arrange
-			var m0 = new Jm.WithIntMsg(18);
-			var m1 = new Jm.WithStringMsg("July");
+			var m0 = new IntMsg(18);
+			var m1 = new StringMsg("July");
 			var r = result.AddMsg(m0, m1);
 
 			// Act
@@ -80,8 +80,8 @@ namespace Jeebs
 
 			// Assert
 			Assert.Equal(2, next.Messages.Count);
-			Assert.True(next.Messages.Contains<Jm.WithIntMsg>());
-			Assert.True(next.Messages.Contains<Jm.WithStringMsg>());
+			Assert.True(next.Messages.Contains<IntMsg>());
+			Assert.True(next.Messages.Contains<StringMsg>());
 		}
 
 		[Fact]
@@ -116,6 +116,16 @@ namespace Jeebs
 			Assert.Throws<InvalidOperationException>(a0);
 			Assert.Throws<InvalidOperationException>(a1);
 			Assert.Throws<InvalidOperationException>(a2);
+		}
+
+		public class IntMsg : Jm.WithValueMsg<int>
+		{
+			public IntMsg(int value) : base(value) { }
+		}
+
+		public class StringMsg : Jm.WithValueMsg<string>
+		{
+			public StringMsg(string value) : base(value) { }
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Jeebs
 		public void InvalidPage_ThrowsInvalidException()
 		{
 			// Arrange
-			int invalidPage = -1;
+			const int invalidPage = -1;
 
 			// Act
 			Action createPagingValuesWithInvalidPage = () => new PagingValues(items: 0, page: invalidPage);

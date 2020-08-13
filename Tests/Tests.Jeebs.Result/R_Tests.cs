@@ -36,7 +36,7 @@ namespace Jeebs
 		public void R_Ok_Without_Value_Type_With_State_Returns_Ok_Bool_Sets_State()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 
 			// Act
 			var r = R.Ok(state);
@@ -65,7 +65,7 @@ namespace Jeebs
 		public void R_Ok_With_Value_Type_With_State_Returns_Ok_Type_Sets_State()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 
 			// Act
 			var r = R.Ok<int, int>(state);
@@ -81,7 +81,7 @@ namespace Jeebs
 		public void R_OkV_Returns_OkV()
 		{
 			// Arrange
-			var value = 18;
+			const int value = 18;
 
 			// Act
 			var r = R.OkV(value);
@@ -96,8 +96,8 @@ namespace Jeebs
 		public void R_OkV_With_State_Returns_OkV_Sets_State()
 		{
 			// Arrange
-			var value = 18;
-			var state = 7;
+			const int value = 18;
+			const int state = 7;
 
 			// Act
 			var r = R.OkV(value, state);
@@ -165,7 +165,7 @@ namespace Jeebs
 		public void R_Error_Without_Value_Type_With_State_Returns_Error_Sets_State()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 
 			// Act
 			var r = R.Error(state);
@@ -181,7 +181,7 @@ namespace Jeebs
 		public void R_Error_With_Value_Type_With_State_Returns_Error_Sets_State()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 
 			// Act
 			var r = R.Error<int, int>(state);

@@ -8,20 +8,20 @@ namespace Jm
 	/// <summary>
 	/// Resouce cannot be found message
 	/// </summary>
-	public class NotFoundMsg : IMsg
+	public abstract class NotFoundMsg : IMsg
 	{
 		private readonly string? details;
 
 		/// <summary>
 		/// Create message
 		/// </summary>
-		public NotFoundMsg() { }
+		protected NotFoundMsg() { }
 
 		/// <summary>
 		/// Create message with details of what has not been found
 		/// </summary>
 		/// <param name="details"></param>
-		public NotFoundMsg(string details)
+		protected NotFoundMsg(string details)
 			=> this.details = details;
 
 		/// <summary>

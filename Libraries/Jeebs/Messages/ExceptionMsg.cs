@@ -6,7 +6,7 @@ using Jeebs;
 namespace Jm
 {
 	/// <inheritdoc cref="IExceptionMsg"/>
-	public class ExceptionMsg : IExceptionMsg
+	public abstract class ExceptionMsg : IExceptionMsg
 	{
 		/// <inheritdoc/>
 		public string ExceptionType { get; private set; } = string.Empty;
@@ -20,13 +20,13 @@ namespace Jm
 		/// <summary>
 		/// Properties must then be set using <see cref="Set(Exception)"/>
 		/// </summary>
-		public ExceptionMsg() { }
+		protected ExceptionMsg() { }
 
 		/// <summary>
 		/// Create object from exception
 		/// </summary>
 		/// <param name="ex">Exception</param>
-		public ExceptionMsg(Exception ex)
+		protected ExceptionMsg(Exception ex)
 			=> Set(ex);
 
 		/// <inheritdoc/>

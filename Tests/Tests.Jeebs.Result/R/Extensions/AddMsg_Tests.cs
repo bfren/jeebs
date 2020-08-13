@@ -26,13 +26,13 @@ namespace Jeebs
 		{
 			// Arrange
 			var r = R.Ok();
-			const string msg = "Test Message";
+			var msg = new StringMsg("Test Message");
 
 			// Act
 			r.AddMsg(msg);
 
 			// Assert
-			Assert.True(r.Messages.Contains<Jm.WithStringMsg>());
+			Assert.True(r.Messages.Contains<StringMsg>());
 		}
 
 		[Fact]
@@ -54,18 +54,28 @@ namespace Jeebs
 		{
 			// Arrange
 			var r = R.Ok();
-			var m0 = new Jm.WithIntMsg(18);
-			var m1 = new Jm.WithStringMsg("July");
+			var m0 = new IntMsg(18);
+			var m1 = new StringMsg("July");
 
 			// Act
 			r.AddMsg(m0, m1);
 
 			// Assert
 			Assert.Equal(2, r.Messages.Count);
-			Assert.True(r.Messages.Contains<Jm.WithIntMsg>());
-			Assert.True(r.Messages.Contains<Jm.WithStringMsg>());
+			Assert.True(r.Messages.Contains<IntMsg>());
+			Assert.True(r.Messages.Contains<StringMsg>());
 		}
 
 		public class MsgTest : IMsg { }
+
+		public class IntMsg : Jm.WithValueMsg<int>
+		{
+			public IntMsg(int value) : base(value) { }
+		}
+
+		public class StringMsg : Jm.WithValueMsg<string>
+		{
+			public StringMsg(string value) : base(value) { }
+		}
 	}
 }

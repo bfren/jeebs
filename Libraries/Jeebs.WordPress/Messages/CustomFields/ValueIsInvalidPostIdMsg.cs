@@ -7,7 +7,7 @@ namespace Jm.WordPress.CustomFields
 	/// <summary>
 	/// ValueStr is an invalid Post ID when hydrating a custom field
 	/// </summary>
-	public class ValueIsInvalidPostIdMsg : WithStringMsg
+	public class ValueIsInvalidPostIdMsg : WithValueMsg<string>
 	{
 		internal ValueIsInvalidPostIdMsg(string value) : base(value) { }
 

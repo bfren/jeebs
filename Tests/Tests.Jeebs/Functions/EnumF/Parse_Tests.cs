@@ -52,7 +52,7 @@ namespace F
 		public void Parse_ValidValue_IncorrectType_Returns_None()
 		{
 			// Arrange
-			var input = nameof(TestA.Test1);
+			const string input = nameof(TestA.Test1);
 
 			// Act
 			var result = EnumF.Parse(typeof(string), input);

@@ -89,7 +89,7 @@ namespace Jeebs
 			Assert.False(outside1);
 			Assert.False(outside2);
 			Assert.False(justOutside1);
-			Assert.False(justOutside1);
+			Assert.False(justOutside2);
 		}
 
 		[Fact]

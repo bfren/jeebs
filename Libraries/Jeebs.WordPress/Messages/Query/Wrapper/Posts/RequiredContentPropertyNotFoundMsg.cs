@@ -9,7 +9,7 @@ namespace Jm.WordPress.Query.Wrapper.Posts
 	/// Required Content property not found when querying posts
 	/// </summary>
 	/// <typeparam name="TModel">Post Model</typeparam>
-	public class RequiredContentPropertyNotFoundMsg<TModel> : WithStringMsg
+	public class RequiredContentPropertyNotFoundMsg<TModel> : WithValueMsg<string>
 	{
 		/// <summary>
 		/// Create message

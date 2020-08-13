@@ -48,13 +48,18 @@ namespace Jeebs
 			// Arrange
 			const int state = 7;
 			var r = R.Ok();
-			r.AddMsg("Test message.");
+			r.AddMsg(new StringMsg("Test message."));
 
 			// Act
 			var next = r.WithState(state);
 
 			// Assert
-			Assert.True(next.Messages.Contains<Jm.WithStringMsg>());
+			Assert.True(next.Messages.Contains<StringMsg>());
+		}
+
+		public class StringMsg : Jm.WithValueMsg<string>
+		{
+			public StringMsg(string value) : base(value) { }
 		}
 	}
 }

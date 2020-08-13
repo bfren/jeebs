@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Jeebs;
+using Jm.BooleanF;
 
 namespace F
 {
@@ -15,8 +16,12 @@ namespace F
 		/// <param name="value">Value to parse</param>
 		/// <returns>True / false</returns>
 		public static Option<bool> Parse<T>(T value)
-			where T : notnull
 		{
+			if (value is null)
+			{
+				return Option.None<bool>().AddReason<NullValueMsg>();
+			}
+
 			// String
 			var val = value.ToString().ToLower();
 

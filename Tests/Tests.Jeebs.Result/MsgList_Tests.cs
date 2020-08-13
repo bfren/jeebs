@@ -54,8 +54,8 @@ namespace Jeebs
 			// Arrange
 			var l = new MsgList();
 
-			var m0 = new Jm.WithStringMsg("zero");
-			var m1 = new Jm.WithStringMsg("one");
+			var m0 = new StringMsg("zero");
+			var m1 = new StringMsg("one");
 			var ms = new List<string>(new[] { "zero", "one" });
 
 			// Act
@@ -78,7 +78,7 @@ namespace Jeebs
 
 			// Assert
 			Assert.False(l0.Contains<TestMsg>());
-			Assert.False(l1.Contains<Jm.WithStringMsg>());
+			Assert.False(l1.Contains<StringMsg>());
 		}
 
 		[Fact]
@@ -118,7 +118,7 @@ namespace Jeebs
 			l.Add<TestMsg>();
 
 			// Assert
-			Assert.Empty(l.Get<Jm.WithStringMsg>());
+			Assert.Empty(l.Get<StringMsg>());
 		}
 
 		[Fact]
@@ -126,7 +126,7 @@ namespace Jeebs
 		{
 			// Arrange
 			var l = new MsgList();
-			var m = new Jm.WithStringMsg("Hello, world!");
+			var m = new StringMsg("Hello, world!");
 
 			// Act
 			l.Add<TestMsg>();
@@ -156,8 +156,8 @@ namespace Jeebs
 			// Arrange
 			var l = new MsgList();
 
-			var m0 = new Jm.WithStringMsg("zero");
-			var m1 = new Jm.WithStringMsg("one");
+			var m0 = new StringMsg("zero");
+			var m1 = new StringMsg("one");
 			var ms = new List<string>(new[] { "zero", "one" });
 
 			// Act
@@ -186,8 +186,8 @@ namespace Jeebs
 			// Arrange
 			var l = new MsgList();
 
-			var m0 = new Jm.WithStringMsg("zero");
-			var m1 = new Jm.WithStringMsg("one");
+			var m0 = new StringMsg("zero");
+			var m1 = new StringMsg("one");
 			const string str = "zero\none";
 
 			// Act
@@ -198,5 +198,10 @@ namespace Jeebs
 		}
 
 		private class TestMsg : IMsg { }
+
+		public class StringMsg : Jm.WithValueMsg<string>
+		{
+			public StringMsg(string value) : base(value) { }
+		}
 	}
 }

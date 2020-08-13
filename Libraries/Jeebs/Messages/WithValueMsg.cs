@@ -9,7 +9,7 @@ namespace Jm
 	/// Message with value - the value will be output as string when <see cref="ToString"/> is called
 	/// </summary>
 	/// <typeparam name="TValue">Value type</typeparam>
-	public class WithValueMsg<TValue> : IMsg
+	public abstract class WithValueMsg<TValue> : IMsg
 	{
 		/// <summary>
 		/// Value
@@ -20,7 +20,7 @@ namespace Jm
 		/// Create object
 		/// </summary>
 		/// <param name="value">Value</param>
-		public WithValueMsg(TValue value)
+		protected WithValueMsg(TValue value)
 			=> Value = value;
 
 		/// <summary>

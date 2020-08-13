@@ -22,15 +22,6 @@ namespace Jeebs
 			=> new AddMsg<TResult>(@this);
 
 		/// <summary>
-		/// Adds a message of type <see cref="Jm.WithStringMsg"/> to the result and returns original <typeparamref name="TResult"/> object
-		/// </summary>
-		/// <param name="this">Result</param>
-		/// <param name="message">Simple error message</param>
-		public static TResult AddMsg<TResult>(this TResult @this, string message)
-			where TResult : IR
-			=> AddMsg(@this, new Jm.WithStringMsg(message));
-
-		/// <summary>
 		/// Adds a message of type <typeparamref name="TMsg"/> to the result and returns original <typeparamref name="TResult"/> object
 		/// </summary>
 		/// <typeparam name="TResult">Result type</typeparam>

@@ -11,9 +11,9 @@ namespace Jeebs
 		public void OkV_Returns_Object_With_Value_And_State()
 		{
 			// Arrange
-			var state = 18;
+			const int state = 18;
 			var r = R.Ok(state);
-			var value = 7;
+			const int value = 7;
 
 			// Act
 			var next = r.OkV(value);
@@ -29,10 +29,10 @@ namespace Jeebs
 		public void OkV_Keeps_Messages()
 		{
 			// Arrange
-			var state = 18;
-			var value = 7;
-			var m0 = new Jm.WithIntMsg(7);
-			var m1 = new Jm.WithStringMsg("July");
+			const int state = 18;
+			const int value = 7;
+			var m0 = new IntMsg(7);
+			var m1 = new StringMsg("July");
 			var r = R.Ok(state).AddMsg(m0, m1);
 
 			// Act
@@ -40,8 +40,18 @@ namespace Jeebs
 
 			// Assert
 			Assert.Equal(2, next.Messages.Count);
-			Assert.True(next.Messages.Contains<Jm.WithIntMsg>());
-			Assert.True(next.Messages.Contains<Jm.WithStringMsg>());
+			Assert.True(next.Messages.Contains<IntMsg>());
+			Assert.True(next.Messages.Contains<StringMsg>());
+		}
+
+		public class IntMsg : Jm.WithValueMsg<int>
+		{
+			public IntMsg(int value) : base(value) { }
+		}
+
+		public class StringMsg : Jm.WithValueMsg<string>
+		{
+			public StringMsg(string value) : base(value) { }
 		}
 	}
 }

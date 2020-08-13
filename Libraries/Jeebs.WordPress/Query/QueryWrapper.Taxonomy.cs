@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.Enums;
+using Jm.WordPress.Query.Wrapper.Taxonomy;
 
 namespace Jeebs.WordPress
 {
@@ -29,7 +30,7 @@ namespace Jeebs.WordPress
 			// Execute query
 			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
 			{
-				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<Jm.NotFoundMsg>(),
+				IOkV<List<TModel>> x when x.Value.Count == 0 => x.Error().AddMsg().OfType<NotFoundMsg>(),
 				IOkV<List<TModel>> x => x,
 				{ } x => x.Error()
 			};

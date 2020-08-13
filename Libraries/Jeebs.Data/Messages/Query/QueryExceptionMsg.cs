@@ -7,14 +7,6 @@ using Jeebs.Util;
 namespace Jm.Data
 {
 	/// <summary>
-	/// Message about an error that has occurred during a data query
-	/// </summary>
-	public sealed class QueryErrorMsg : WithStringMsg
-	{
-		internal QueryErrorMsg(string error) : base(error) { }
-	}
-
-	/// <summary>
 	/// Message about an exception that has occurred during a data query
 	/// </summary>
 	public sealed class QueryExceptionMsg : ExceptionMsg

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
-using Jm;
 using Jm.WordPress.Query.Wrapper.Posts;
 
 namespace Jeebs.WordPress
@@ -309,7 +308,7 @@ namespace Jeebs.WordPress
 					// Make sure taxonomy has been registered
 					if (!Taxonomy.IsRegistered(taxonomy))
 					{
-						return r.Error<(TList, IEnumerable<Term>)>().AddMsg($"Taxonomy '{taxonomy}' must be registered in {nameof(IWp.RegisterCustomTaxonomies)}.");
+						return r.Error<(TList, IEnumerable<Term>)>().AddMsg(new TaxonomyNotRegisteredMsg(taxonomy));
 					}
 
 					// Add to query

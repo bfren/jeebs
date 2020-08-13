@@ -28,6 +28,8 @@ namespace AppMvc.Controllers
 			=> NotAllowed();
 
 		public async Task<IActionResult> Return_Error404()
-			=> await this.ExecuteErrorAsync(R.Error().AddMsg().OfType<Jm.NotFoundMsg>());
+			=> await this.ExecuteErrorAsync(R.Error().AddMsg().OfType<NotFoundMsg>());
+
+		public class NotFoundMsg : Jm.NotFoundMsg { }
 	}
 }

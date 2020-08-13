@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using Jm.Enum;
 
 namespace Jeebs
 {
@@ -56,7 +57,6 @@ namespace Jeebs
 				return Option.Some(value);
 			}
 
-			//return R.Error<T>().With().Message($"'{value}' does not match '{name}'.");
 			return Option.None<T>();
 		}
 
@@ -83,8 +83,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					//throw new Jx.ParseException($"'{args.Name}' is not a valid value of '{typeof(T)}'.");
-					return Option.None<T>();
+					return Option.None<T>().AddReason(new NotAValidEnumValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);
