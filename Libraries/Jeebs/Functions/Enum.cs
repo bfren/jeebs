@@ -1,4 +1,5 @@
 ﻿using EnumsNET;
+using Jm.EnumF;
 using System;
 using static Jeebs.Option;
 
@@ -11,8 +12,6 @@ namespace F
 	{
 		/// <summary>
 		/// Parse a string value into the specified Enum
-		/// Throws
-		///		KeyNotFoundException when the value does not exist in the specified Enum type
 		/// </summary>
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="value">The value to parse</param>
@@ -27,15 +26,12 @@ namespace F
 			}
 			catch (Exception)
 			{
-				//throw new Jx.ParseException($"'{value}' is not a valid value of '{typeof(T).FullName}'.");
-				return None<T>();
+				return None<T>().AddReason(new NotAValidEnumValueMsg<T>(value));
 			}
 		}
 
 		/// <summary>
 		/// Parse a string value into the specified Enum
-		/// Throws
-		///		KeyNotFoundException when the value does not exist in the specified Enum type
 		/// </summary>
 		/// <param name="t">Enum type</param>
 		/// <param name="value">The value to parse</param>
@@ -55,8 +51,7 @@ namespace F
 			}
 			catch (Exception)
 			{
-				//throw new Jx.ParseException($"'{value}' is not a valid value of '{t.FullName}'.");
-				return None<object>();
+				return None<object>().AddReason(new NotAValidEnumValueMsg(t, value));
 			}
 		}
 
@@ -103,8 +98,7 @@ namespace F
 				}
 				else
 				{
-					//throw new Jx.ParseException($"'{from}' is not a valid value of '{typeof(TTo).FullName}'.");
-					return None<TTo>();
+					return None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from));
 				}
 			}
 		}

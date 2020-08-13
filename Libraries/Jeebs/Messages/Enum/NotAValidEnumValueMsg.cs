@@ -7,9 +7,9 @@ namespace Jm.Enum
 	/// <summary>
 	/// See <see cref="Jeebs.Enum.Parse{T}(string, T[])"/>
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public sealed class NotAValidEnumValueMsg<T> : WithValueMsg<string>
-		where T : Jeebs.Enum
+	/// <typeparam name="TEnum">Enum type</typeparam>
+	public sealed class NotAValidEnumValueMsg<TEnum> : WithValueMsg<string>
+		where TEnum : Jeebs.Enum
 	{
 		/// <summary>
 		///  Set value
@@ -21,6 +21,6 @@ namespace Jm.Enum
 		/// Return message
 		/// </summary>
 		public override string ToString()
-			=> $"'{Value}' is not a valid {typeof(T)}.";
+			=> $"'{Value}' is not a valid value of {typeof(TEnum)}.";
 	}
 }
