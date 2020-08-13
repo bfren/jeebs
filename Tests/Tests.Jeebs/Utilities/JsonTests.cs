@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace Jeebs.Util
@@ -40,7 +40,7 @@ namespace Jeebs.Util
 		[InlineData("")]
 		[InlineData(" ")]
 		[InlineData("\n")]
-		public void Deserialise_NullOrWhitespace_ThrowsArgumentNullException(string input)
+		public void Deserialise_NullOrWhitespace_ThrowsJsonException(string input)
 		{
 			// Arrange
 
@@ -52,7 +52,7 @@ namespace Jeebs.Util
 		}
 
 		[Fact]
-		public void Deserialise_InvalidJson_ThrowsJsonException()
+		public void Deserialise_InvalidJson_ThrowsJsonReaderException()
 		{
 			// Arrange
 			const string input = "this is not valid json";
@@ -61,7 +61,7 @@ namespace Jeebs.Util
 			Action result = () => Json.Deserialise<Test>(input);
 
 			// Assert
-			Assert.Throws<JsonException>(result);
+			Assert.Throws<JsonReaderException>(result);
 		}
 
 		[Fact]

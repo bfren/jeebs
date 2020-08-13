@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Jeebs.Apps.WebApps.Config;
+using Jeebs.Apps.WebApps.Json;
 using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Constants;
 using Jeebs.Util;
@@ -46,7 +48,7 @@ namespace Jeebs.Apps
 		/// <summary>
 		/// [Optional] JsonSerializerOptions
 		/// </summary>
-		protected readonly JsonSerializerOptions? jsonSerialiserSettings;
+		protected readonly JsonSerializerOptions? jsonSerialiserOptions;
 
 		/// <summary>
 		/// Whether or not static files have been enabled
@@ -153,14 +155,36 @@ namespace Jeebs.Apps
 		/// <param name="opt">JsonOptions</param>
 		public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
 		{
-			opt.JsonSerializerOptions.DefaultIgnoreCondition = (jsonSerialiserSettings ?? Json.DefaultSettings).DefaultIgnoreCondition;
-			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserSettings ?? Json.DefaultSettings).PropertyNamingPolicy;
-			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserSettings ?? Json.DefaultSettings).DictionaryKeyPolicy;
+			// Set options
+			opt.JsonSerializerOptions.IgnoreNullValues = jsonSerialiserOptions?.IgnoreNullValues ?? true;
+			opt.JsonSerializerOptions.PropertyNamingPolicy = jsonSerialiserOptions?.PropertyNamingPolicy ?? JsonNamingPolicy.CamelCase;
+			opt.JsonSerializerOptions.DictionaryKeyPolicy = jsonSerialiserOptions?.PropertyNamingPolicy ?? JsonNamingPolicy.CamelCase;
 
+			// Set converters
 			opt.JsonSerializerOptions.Converters.Clear();
-			foreach (var item in (jsonSerialiserSettings ?? Json.DefaultSettings).Converters)
+			if (jsonSerialiserOptions?.Converters.Count > 0)
 			{
-				opt.JsonSerializerOptions.Converters.Add(item);
+				addCustom(jsonSerialiserOptions.Converters);
+			}
+			else
+			{
+				addDefault();
+			}
+
+			// Add custom converters
+			void addCustom(IList<JsonConverter> converters)
+			{
+				foreach (var c in converters)
+				{
+					opt.JsonSerializerOptions.Converters.Add(c);
+				}
+			}
+
+			// Add default converters
+			void addDefault()
+			{
+				opt.JsonSerializerOptions.Converters.Add(new EnumJsonConverterFactory());
+				opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 			}
 		}
 

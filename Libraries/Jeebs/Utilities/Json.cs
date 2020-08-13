@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Jeebs.Util.JsonConverters;
+using Newtonsoft.Json;
 
 namespace Jeebs.Util
 {
@@ -14,38 +11,31 @@ namespace Jeebs.Util
 	public static class Json
 	{
 		/// <summary>
-		/// Default JsonSerializerOptions
+		/// Empty JSON string
 		/// </summary>
-		public static JsonSerializerOptions DefaultSettings
+		public const string Empty = "{ }";
+
+		/// <summary>
+		/// Default JsonSerializerSettings
+		/// </summary>
+		public static JsonSerializerSettings DefaultSettings => new JsonSerializerSettings
 		{
-			get
-			{
-				var opt = new JsonSerializerOptions
-				{
-					PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-					DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-					DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-				};
-
-				opt.Converters.Add(new EnumJsonConverterFactory());
-				opt.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-
-				return opt;
-			}
-		}
+			ContractResolver = new JeebsContractResolver(),
+			NullValueHandling = NullValueHandling.Ignore
+		};
 
 		/// <summary>
 		/// Use JsonSerializer to serialise a given object
 		/// </summary>
 		/// <typeparam name="T">Object Type to be serialised</typeparam>
 		/// <param name="obj">The object to serialise</param>
-		/// <param name="opt">[Optional] JsonSerializerOptions</param>
+		/// <param name="opt">[Optional] JsonSerializerSettings</param>
 		/// <returns>Json String of serialised object</returns>
-		public static string Serialise<T>(T obj, JsonSerializerOptions? opt = null)
+		public static string Serialise<T>(T obj, JsonSerializerSettings? opt = null)
 			=> obj switch
 			{
-				T x => JsonSerializer.Serialize(x, opt ?? DefaultSettings),
-				_ => "{ }"
+				T x => JsonConvert.SerializeObject(x, opt ?? DefaultSettings),
+				_ => Empty
 			};
 
 		/// <summary>
@@ -54,10 +44,10 @@ namespace Jeebs.Util
 		/// <typeparam name="T">The type of the object to return</typeparam>
 		/// <param name="str">The string to deserialise</param>
 		/// <param name="ifNull">[Optional] Function to return a default <typeparamref name="T"/> if deserialise returns null - if not set a <see cref="JsonException"/> will be thrown</param>
-		/// <param name="opt">[Optional] JsonSerializerOptions</param>
+		/// <param name="opt">[Optional] JsonSerializerSettings</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static T Deserialise<T>(string str, Func<T>? ifNull = null, JsonSerializerOptions? opt = null)
-			=> JsonSerializer.Deserialize<T>(str.Trim(), opt ?? DefaultSettings) switch
+		public static T Deserialise<T>(string str, Func<T>? ifNull = null, JsonSerializerSettings? opt = null)
+			=> JsonConvert.DeserializeObject<T>(str.Trim(), opt ?? DefaultSettings) switch
 			{
 				T x => x,
 				_ => ifNull switch

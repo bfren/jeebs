@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Util.JsonConverters
+namespace Jeebs.Apps.WebApps.Json
 {
 	/// <summary>
 	/// Converter Factory for custom Enum types
@@ -26,7 +26,11 @@ namespace Jeebs.Util.JsonConverters
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 		{
 			var converterType = typeof(EnumJsonConverter<>).MakeGenericType(typeToConvert);
-			return (JsonConverter)Activator.CreateInstance(converterType);
+			return Activator.CreateInstance(converterType) switch
+			{
+				JsonConverter x => x,
+				_ => throw new JsonException($"Unable to create {typeof(EnumJsonConverter<>)} for type {typeToConvert}.")
+			};
 		}
 	}
 }

@@ -23,6 +23,13 @@ namespace Jeebs
 		/// <typeparam name="T">Option value type</typeparam>
 		public static None<T> None<T>()
 			=> new None<T>();
+
+		public static Option<T> WrapIf<T>(Func<bool> predicate, Func<T> value)
+			=> predicate() switch
+			{
+				true => Some(value()),
+				false => None<T>()
+			};
 	}
 
 	/// <summary>
@@ -32,18 +39,6 @@ namespace Jeebs
 	public abstract class Option<T> : IEquatable<Option<T>>, IStructuralEquatable
 	{
 		internal Option() { }
-
-		/// <summary>
-		/// True if this Option is <see cref="Some{T}"/>
-		/// </summary>
-		public bool IsSome
-			=> this is Some<T>;
-
-		/// <summary>
-		/// True if this Option is <see cref="None{T}"/>
-		/// </summary>
-		public bool IsNone
-			=> this is None<T>;
 
 		private U Switch<U>(Func<T, U> some, Func<U> none)
 			=> this switch

@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Util.JsonConverters
+namespace Jeebs.Apps.WebApps.Json
 {
 	/// <summary>
 	/// Converter for custom Enum types
@@ -20,7 +20,11 @@ namespace Jeebs.Util.JsonConverters
 		/// <param name="typeToConvert">Enum type</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-			=> (T)Activator.CreateInstance(typeToConvert, args: reader.GetString());
+			=> Activator.CreateInstance(typeToConvert, args: reader.GetString()) switch
+			{
+				T x => x,
+				_ => throw new JsonException($"Unable to create Enum type {typeof(T)} from JSON.")
+			};
 
 		/// <summary>
 		/// Write an Enum type value
