@@ -8,7 +8,7 @@ namespace Jeebs
 	/// Enum List
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public sealed class EnumList<T> : List<T> 
+	public sealed class EnumList<T> : List<T>
 		where T : Enum
 	{
 		/// <summary>
@@ -55,7 +55,12 @@ namespace Jeebs
 		/// <returns>EnumList</returns>
 		public static EnumList<T> Deserialise(string json)
 		{
-			var strings = Util.Json.Deserialise<List<string>>(json);
+			var strings = Util.Json.Deserialise<List<string>>(json) switch
+			{
+				Some<List<string>> x => x.Value,
+				_ => new List<string>()
+			};
+
 			return new EnumList<T>(strings);
 		}
 	}

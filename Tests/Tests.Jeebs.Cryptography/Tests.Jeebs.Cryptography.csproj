@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>
 
 </Project>

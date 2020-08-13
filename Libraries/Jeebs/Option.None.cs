@@ -13,11 +13,44 @@ namespace Jeebs
 		/// <summary>
 		/// Sometimes a reason for the 'None' value may be set
 		/// </summary>
-		public string? Reason { get; private set; }
+		public IMsg? Reason { get; private set; }
 
 		internal None() { }
 
-		internal void AddReason(string reason)
+		internal None(IMsg? reason)
 			=> Reason = reason;
+
+		/// <summary>
+		/// Add a reason why this option is returning <see cref="None{T}"/>
+		/// </summary>
+		/// <typeparam name="TMsg">Reason message type</typeparam>
+		/// <param name="reason">Reason message</param>
+		public None<T> AddReason<TMsg>(TMsg reason)
+			where TMsg : IMsg
+		{
+			Reason = reason;
+			return this;
+		}
+
+		/// <summary>
+		/// Add a reason why this option is returning <see cref="None{T}"/>
+		/// </summary>
+		/// <typeparam name="TMsg">Reason message type</typeparam>
+		public None<T> AddReason<TMsg>()
+			where TMsg : IMsg, new()
+			=> AddReason(new TMsg());
+
+		/// <summary>
+		/// Add a reason why this option is returning <see cref="None{T}"/>
+		/// </summary>
+		/// <typeparam name="TMsg">Reason message type</typeparam>
+		/// <param name="ex">Exception</param>
+		public None<T> AddReason<TMsg>(Exception ex)
+			where TMsg : IExceptionMsg, new()
+		{
+			var msg = new TMsg();
+			msg.Set(ex);
+			return AddReason(msg);
+		}
 	}
 }

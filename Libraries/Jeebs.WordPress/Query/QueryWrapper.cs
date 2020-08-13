@@ -10,7 +10,9 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
+using Jeebs.WordPress.Messages.Query.Wrapper;
 using Jeebs.WordPress.Tables;
+using Jm.WordPress.Query.Wrapper;
 
 namespace Jeebs.WordPress
 {
@@ -78,13 +80,13 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return Option.None<PropertyInfo>().AddReason($"Only one {typeof(MetaDictionary)} property is supported (model: {typeof(TModel)}).");
+				return Option.None<PropertyInfo>().AddReason<OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return Option.None<PropertyInfo>().AddReason($"No {typeof(MetaDictionary)} property is defined (model: {typeof(TModel)}).");
+				return Option.None<PropertyInfo>().AddReason<MetaDictionaryPropertyNotFoundMsg<TModel>>();
 			}
 
 			return Option.Some(metaDictionary.Single());
@@ -153,7 +155,7 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return Option.None<PropertyInfo>().AddReason($"{nameof(WpPostEntity.Content)} property not found (model: {typeof(TModel)})."); ;
+				return Option.None<PropertyInfo>().AddReason<ContentPropertyNotFoundMsg<TModel>>();
 			}
 
 			return Option.Some(content.Single());

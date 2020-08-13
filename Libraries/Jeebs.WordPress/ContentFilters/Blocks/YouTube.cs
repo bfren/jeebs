@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		/// <summary>
 		/// Output format
 		/// </summary>
-		private static readonly string format = @"<div id=""{0}"" class=""hide video-youtube"" data-v=""{1}"">{2}</div>";
+		private const string format = @"<div id=""{0}"" class=""hide video-youtube"" data-v=""{1}"">{2}</div>";
 
 		/// <summary>
 		/// Parse content
@@ -35,15 +35,16 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			{
 				// Info is encoded as JSON
 				var json = match.Groups[1].Value;
-				var youTube = Json.Deserialise(json, () => new YouTubeParsed());
-
-				// Get URI
-				var uri = new Uri(youTube.Url);
-
-				// Get Video ID and replace content using output format
-				if (GetVideoId(uri) is string videoId)
+				if (Json.Deserialise<YouTubeParsed>(json) is Some<YouTubeParsed> youTube)
 				{
-					content = content.Replace(match.Value, string.Format(format, F.StringF.Random(10), videoId, uri));
+					// Get URI
+					var uri = new Uri(youTube.Value.Url);
+
+					// Get Video ID and replace content using output format
+					if (GetVideoId(uri) is string videoId)
+					{
+						content = content.Replace(match.Value, string.Format(format, F.StringF.Random(10), videoId, uri));
+					}
 				}
 			}
 

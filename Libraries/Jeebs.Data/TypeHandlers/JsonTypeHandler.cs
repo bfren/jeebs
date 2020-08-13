@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Dapper;
+using Newtonsoft.Json;
 
 namespace Jeebs.Data.TypeHandlers
 {
@@ -30,7 +31,7 @@ namespace Jeebs.Data.TypeHandlers
 				throw new ArgumentNullException(nameof(json));
 			}
 
-			return Util.Json.Deserialise<T>(json);
+			return Util.Json.Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to deserialise JSON."));
 		}
 	}
 }

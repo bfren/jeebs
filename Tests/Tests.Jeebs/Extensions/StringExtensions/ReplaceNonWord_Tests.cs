@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Xunit;
+
+namespace Jeebs
+{
+	public partial class StringExtensions_Tests
+	{
+		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
+		public void ReplaceNonWord_NullOrEmpty_ReturnsOriginal(string input)
+		{
+			// Arrange
+
+			// Act
+			var result = input.ReplaceNonWord();
+
+			// Assert
+			Assert.Equal(input, result);
+		}
+
+		[Theory]
+		[InlineData(" {B)e(n_ G}re $%en&", null, "Ben_Green")]
+		[InlineData("B!n_Gr@#en", "e", "Ben_Green")]
+		[InlineData(" {B)e(n_ G}re $%en&", "-", "-B-e-n_-G-re-en-")]
+		public void ReplaceNonWord_String_ReturnsValueWithNonWordCharactersReplaced(string input, string with, string expected)
+		{
+			// Arrange
+
+			// Act
+			var result = input.ReplaceNonWord(with);
+
+			// Assert
+			Assert.Equal(expected, result);
+		}
+	}
+}

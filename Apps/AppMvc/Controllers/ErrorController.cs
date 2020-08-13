@@ -16,7 +16,7 @@ namespace AppMvc.Controllers
 			=> throw new Exception("Something");
 
 		public async Task<IActionResult> Return_Error()
-			=> await this.ExecuteErrorAsync(R.Error().AddMsg().OfType<Jm.Mvc.Controller_ProcessResult_Unknown_IR>());
+			=> await this.ExecuteErrorAsync(R.Error().AddMsg().OfType<Jm.Mvc.Controllers.Controller.UnknownResultTypeMsg>());
 
 		public IActionResult Return_NotFound()
 			=> NotFound();

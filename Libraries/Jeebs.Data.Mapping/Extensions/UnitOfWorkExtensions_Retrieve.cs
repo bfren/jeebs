@@ -31,7 +31,7 @@ namespace Jeebs.Data
 				w.LogQuery(method, query, new { id });
 
 				// Execute
-				var result = await execute(query, new { id }, w.Transaction);
+				var result = await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
 
 				// Add debug and result messages
 				var message = new Jm.Data.RetrieveMsg(typeof(T), id);

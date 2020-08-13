@@ -2,4 +2,7 @@
   <PropertyGroup>
     <RootNamespace>Jeebs</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
+  </ItemGroup>
 </Project>

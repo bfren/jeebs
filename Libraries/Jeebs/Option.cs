@@ -24,6 +24,16 @@ namespace Jeebs
 		public static None<T> None<T>()
 			=> new None<T>();
 
+		internal static None<T> None<T>(IMsg? reason)
+			=> new None<T>(reason);
+
+		/// <summary>
+		/// Wrap <paramref name="value"/> in <see cref="Some{T}(T)"/> if <paramref name="predicate"/> is true
+		/// <para>Otherwise, will return <see cref="None{T}"/></para>
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <param name="predicate">Predicate to evaluate</param>
+		/// <param name="value">Function to return value</param>
 		public static Option<T> WrapIf<T>(Func<bool> predicate, Func<T> value)
 			=> predicate() switch
 			{
@@ -40,13 +50,16 @@ namespace Jeebs
 	{
 		internal Option() { }
 
-		private U Switch<U>(Func<T, U> some, Func<U> none)
+		private U Switch<U>(Func<T, U> some, Func<IMsg?, U> none)
 			=> this switch
 			{
 				Some<T> x => some(x.Value),
-				None<T> _ => none(),
+				None<T> y => none(y.Reason),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
+
+		private U Switch<U>(Func<T, U> some, Func<U> none)
+			=> Switch(some, _ => none());
 
 		/// <summary>
 		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
@@ -81,9 +94,9 @@ namespace Jeebs
 			=> Switch(
 				some: x => map(x).Switch<Option<U>>(
 					some: Option.Some,
-					none: Option.None<U>
+					none: r => Option.None<U>(r)
 				),
-				none: Option.None<U>
+				none: r => Option.None<U>(r)
 			);
 
 		/// <summary>
@@ -94,7 +107,7 @@ namespace Jeebs
 		public Option<U> Map<U>(Func<T, U> map)
 			=> Switch<Option<U>>(
 				some: v => Option.Some(map(v)),
-				none: Option.None<U>
+				none: r => Option.None<U>(r)
 			);
 
 		/// <summary>
@@ -128,7 +141,11 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value)
-			=> Option.Some(value);
+			=> value switch
+			{
+				T x => Option.Some(x),
+				_ => Option.None<T>()
+			};
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -205,8 +222,8 @@ namespace Jeebs
 		public override int GetHashCode()
 			=> this switch
 			{
-				Some<T> x when x.Value is T y => typeof(Some<T>).GetHashCode() ^ y.GetHashCode(),
-				None<T> _ => typeof(None<T>).GetHashCode() ^ typeof(T).GetHashCode(),
+				Some<T> x when x.Value is T y => typeof(Some<>).GetHashCode() ^ y.GetHashCode(),
+				None<T> _ => typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
 
@@ -214,8 +231,8 @@ namespace Jeebs
 		public int GetHashCode(IEqualityComparer comparer)
 			=> this switch
 			{
-				Some<T> x when x.Value is T y => typeof(Some<T>).GetHashCode() ^ comparer.GetHashCode(y),
-				None<T> _ => typeof(None<T>).GetHashCode() ^ typeof(T).GetHashCode(),
+				Some<T> x when x.Value is T y => typeof(Some<>).GetHashCode() ^ comparer.GetHashCode(y),
+				None<T> _ => typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
 

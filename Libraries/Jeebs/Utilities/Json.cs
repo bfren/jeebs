@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jm.Util.Json;
 using Newtonsoft.Json;
 
 namespace Jeebs.Util
@@ -46,16 +47,28 @@ namespace Jeebs.Util
 		/// <param name="ifNull">[Optional] Function to return a default <typeparamref name="T"/> if deserialise returns null - if not set a <see cref="JsonException"/> will be thrown</param>
 		/// <param name="opt">[Optional] JsonSerializerSettings</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static T Deserialise<T>(string str, Func<T>? ifNull = null, JsonSerializerSettings? opt = null)
-			=> JsonConvert.DeserializeObject<T>(str.Trim(), opt ?? DefaultSettings) switch
+		public static Option<T> Deserialise<T>(string str, JsonSerializerSettings? opt = null)
+		{
+			// Check for null string
+			if (str is null)
 			{
-				T x => x,
-				_ => ifNull switch
+				return Option.None<T>().AddReason<DeserialisingNullStringMsg>();
+			}
+
+			// Attempt to deserialise JSON
+			try
+			{
+				return JsonConvert.DeserializeObject<T>(str.Trim(), opt ?? DefaultSettings) switch
 				{
-					Func<T> y => y(),
-					_ => throw new JsonException($"Null return when deserialising JSON: {str}")
-				}
-			};
+					T x => x,
+					_ => Option.None<T>().AddReason<DeserialisingReturnedNullMsg>()
+				};
+			}
+			catch (Exception ex)
+			{
+				return Option.None<T>().AddReason<DeserialiseExceptionMsg>(ex);
+			}
+		}
 
 		/// <summary>
 		/// Clone an object using JSON
@@ -65,7 +78,7 @@ namespace Jeebs.Util
 		public static T Clone<T>(this T obj)
 		{
 			var json = Serialise(obj);
-			return Deserialise<T>(json);
+			return Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to clone object."));
 		}
 	}
 }
