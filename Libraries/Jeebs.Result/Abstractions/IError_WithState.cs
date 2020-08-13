@@ -9,8 +9,5 @@ namespace Jeebs
 	/// </summary>
 	/// <typeparam name="TValue">Result value type</typeparam>
 	/// <typeparam name="TState">Result state type</typeparam>
-	public interface IError<TValue, TState> : IError<TValue>, IR<TValue, TState>
-	{
-
-	}
+	public interface IError<TValue, TState> : IError<TValue>, IR<TValue, TState> { }
 }

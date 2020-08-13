@@ -7,8 +7,5 @@ namespace Jeebs
 	/// <summary>
 	/// Represents a message created by a link in the chain
 	/// </summary>
-	public interface IMsg
-	{
-
-	}
+	public interface IMsg { }
 }

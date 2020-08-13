@@ -9,8 +9,5 @@ namespace Jeebs
 	/// </summary>
 	/// <typeparam name="TValue">Result value type</typeparam>
 	/// <typeparam name="TState">Result state type</typeparam>
-	public interface IOkV<TValue, TState> : IOkV<TValue>, IOk<TValue, TState>
-	{
-
-	}
+	public interface IOkV<TValue, TState> : IOkV<TValue>, IOk<TValue, TState> { }
 }
