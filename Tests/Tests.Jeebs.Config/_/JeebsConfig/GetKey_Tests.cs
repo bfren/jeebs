@@ -1,14 +1,14 @@
 using System;
 using Xunit;
 
-namespace Jeebs.Config
+namespace Jeebs.Config.JeebsConfig_Tests
 {
-	public sealed class JeebsConfig_Tests
+	public class GetKey_Tests
 	{
 		[Theory]
 		[InlineData("one:two:three", "one:two:three")]
 		[InlineData(":four", "jeebs:four")]
-		public void GetSettingsKey_Key_ReturnsNormalOrJeebsKey(string input, string expected)
+		public void Key_ReturnsNormalOrJeebsKey(string input, string expected)
 		{
 			// Arrange
 
