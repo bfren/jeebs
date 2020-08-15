@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace F
+namespace F.StringF_Tests
 {
-	public class StringF_Tests
+	public class Random_Tests
 	{
 		[Fact]
-		public void Random_ValidLength_ReturnsString()
+		public void ValidLength_ReturnsString()
 		{
 			// Arrange
 			const int length = 10;
@@ -22,7 +22,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Random_InvalidLength_ThrowsInvalidOperationException()
+		public void InvalidLength_ThrowsInvalidOperationException()
 		{
 			// Arrange
 			const int length = 3;
@@ -35,7 +35,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Random_ReturnsOnlyLowercaseCharacters()
+		public void ReturnsOnlyLowercaseCharacters()
 		{
 			// Arrange
 
@@ -47,7 +47,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Random_ReturnsOnlyLowercaseAndUppercaseCharacters()
+		public void ReturnsOnlyLowercaseAndUppercaseCharacters()
 		{
 			// Arrange
 
@@ -59,7 +59,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Random_ReturnsOnlyLowercaseAndNumericCharacters()
+		public void ReturnsOnlyLowercaseAndNumericCharacters()
 		{
 			// Arrange
 
@@ -71,7 +71,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Random_ReturnsOnlyLowercaseAndSpecialCharacters()
+		public void ReturnsOnlyLowercaseAndSpecialCharacters()
 		{
 			// Arrange
 
@@ -83,7 +83,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Random_ReturnsStringWithAllCharacters()
+		public void ReturnsStringWithAllCharacters()
 		{
 			// Arrange
 

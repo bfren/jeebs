@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class NoLongerThan_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void NoLongerThan_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -27,7 +27,7 @@ namespace Jeebs
 		[InlineData("1234", 4, null, null, "1234")]
 		[InlineData("12345", 4, "..", null, "1234..")]
 		[InlineData("12345", 4, null, null, "1234")]
-		public void NoLongerThan_String_ReturnsTruncatedValue(string input, int max, string continuation, string empty, string expected)
+		public void String_ReturnsTruncatedValue(string input, int max, string continuation, string empty, string expected)
 		{
 			// Arrange
 

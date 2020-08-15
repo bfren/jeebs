@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.ListExtensions_Tests
 {
-	public partial class ListExtensions_Tests
+	public class SortBibleBooks_Tests
 	{
 		[Fact]
-		public void SortBibleBooks_ArrayContainsBibleBooks_ReturnsSortedArray()
+		public void ArrayContainsBibleBooks_ReturnsSortedArray()
 		{
 			// Arrange
 			var books = Constants.BibleBooks.All;
@@ -23,7 +23,7 @@ namespace Jeebs
 		}
 
 		[Fact]
-		public void SortBibleBooks_ArrayDoesNotContainBibleBooks_ReturnsOriginalArray()
+		public void ArrayDoesNotContainBibleBooks_ReturnsOriginalArray()
 		{
 			// Arrange
 			var array = new[] { "one", "two", "three", "four" };

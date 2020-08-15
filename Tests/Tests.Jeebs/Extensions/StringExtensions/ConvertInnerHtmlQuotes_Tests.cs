@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ConvertInnerHtmlQuotes_Tests
 	{
 		[Theory]
 		[InlineData("<a href=\"test\">'Ben'</a>", "<a href=\"test\">&lsquo;Ben&rsquo;</a>")]
@@ -14,7 +14,7 @@ namespace Jeebs
 		[InlineData("<a href=\"test\">\"Ben\"</a>", "<a href=\"test\">&ldquo;Ben&rdquo;</a>")]
 		[InlineData("<a href=\"test\">\"Ben\"</a> \"Green\"", "<a href=\"test\">&ldquo;Ben&rdquo;</a> &ldquo;Green&rdquo;")]
 		[InlineData("<a href=\"test\">\"Ben's Test\"</a>", "<a href=\"test\">&ldquo;Ben&rsquo;s Test&rdquo;</a>")]
-		public void ConvertInnerHtmlQuotes_Html_ReturnsHtmlWithConvertedQuotes(string input, string expected)
+		public void Html_ReturnsHtmlWithConvertedQuotes(string input, string expected)
 		{
 			// Arrange
 

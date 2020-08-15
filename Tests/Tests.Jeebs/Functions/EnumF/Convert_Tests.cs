@@ -4,12 +4,12 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F
+namespace F.EnumF_Tests
 {
-	public partial class EnumF_Tests
+	public partial class Convert_Tests
 	{
 		[Fact]
-		public void Convert_MatchingValue_ReturnsValue()
+		public void MatchingValue_ReturnsValue()
 		{
 			// Arrange
 			const TestB input = TestB.Test3;
@@ -22,7 +22,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Convert_NoMatchingValue_Returns_None()
+		public void NoMatchingValue_Returns_None()
 		{
 			// Arrange
 			const TestB input = TestB.Test5;
@@ -32,6 +32,19 @@ namespace F
 
 			// Assert
 			Assert.IsType<None<TestA>>(result);
+		}
+
+		public enum TestA
+		{
+			Test1,
+			Test2
+		}
+
+		public enum TestB
+		{
+			Test3,
+			Test4,
+			Test5
 		}
 	}
 }

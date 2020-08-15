@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.MimeType_Tests
 {
-	public sealed class MimeType_Tests
+	public class Parse_Tests
 	{
 		[Theory]
 		[MemberData(nameof(GetMimeTypeData))]
-		public void Parse_String_ReturnsMimeType(string input, MimeType expected)
+		public void String_ReturnsMimeType(string input, MimeType expected)
 		{
 			// Arrange
 
@@ -21,7 +21,7 @@ namespace Jeebs
 		}
 
 		[Fact]
-		public void Parse_Null_ReturnsBlank()
+		public void Null_ReturnsBlank()
 		{
 			// Arrange
 
@@ -35,7 +35,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("audio/aiff")]
 		[InlineData("this could be anything")]
-		public void Parse_UnknownMimeType_ReturnsGeneral(string input)
+		public void UnknownMimeType_ReturnsGeneral(string input)
 		{
 			// Arrange
 

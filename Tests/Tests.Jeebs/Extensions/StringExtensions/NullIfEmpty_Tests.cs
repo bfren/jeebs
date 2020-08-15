@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class NullIfEmpty_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void NullIfEmpty_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -23,7 +23,7 @@ namespace Jeebs
 
 		[Theory]
 		[InlineData("Ben")]
-		public void NullIfEmpty_String_ReturnsOriginalValue(string input)
+		public void String_ReturnsOriginalValue(string input)
 		{
 			// Arrange
 

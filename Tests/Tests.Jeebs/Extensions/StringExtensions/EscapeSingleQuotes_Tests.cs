@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class EscapeSingleQuotes_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void EscapeSingleQuotes_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -24,7 +24,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("'", "\\'")]
 		[InlineData("'Ben'", "\\'Ben\\'")]
-		public void EscapeSingleQuotes_String_ReturnsValueWithSingleQuotesEscaped(string input, string expected)
+		public void String_ReturnsValueWithSingleQuotesEscaped(string input, string expected)
 		{
 			// Arrange
 

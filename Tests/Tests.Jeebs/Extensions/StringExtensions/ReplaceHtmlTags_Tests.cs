@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ReplaceHtmlTags_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void ReplaceHtmlTags_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -25,7 +25,7 @@ namespace Jeebs
 		[InlineData("<p>Ben</p>", "Ben")]
 		[InlineData("<p class=\"attr\">Ben</p>", "Ben")]
 		[InlineData("<p class=\"attr\">Ben <strong>Green</strong></p>", "Ben Green")]
-		public void ReplaceHtmlTags_String_ReturnsValueWithHtmlTagsReplaced(string input, string expected)
+		public void String_ReturnsValueWithHtmlTagsReplaced(string input, string expected)
 		{
 			// Arrange
 

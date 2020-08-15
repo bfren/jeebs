@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.DateTimeExtensions_Tests
 {
-	public partial class DateTimeExtensions_Tests
+	public class LastDayOfMonth_Tests
 	{
 		[Fact]
-		public void LastDayOfMonth_Date_ReturnsOneMinuteToMidnightOnLastDayOfMonth()
+		public void Date_ReturnsOneMinuteToMidnightOnLastDayOfMonth()
 		{
 			// Arrange
 			var date = new DateTime(2000, 1, 4, 15, 59, 30);

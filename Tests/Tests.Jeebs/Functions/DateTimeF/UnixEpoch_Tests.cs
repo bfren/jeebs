@@ -4,12 +4,12 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F
+namespace F.DateTimeF_Tests
 {
-	public partial class DateTimeF_Tests
+	public partial class UnixEpoch_Tests
 	{
 		[Fact]
-		public void UnixEpoch_ReturnsUnixEpochAsDateTime()
+		public void ReturnsUnixEpochAsDateTime()
 		{
 			// Arrange
 			var expected = new DateTime(1970, 1, 1, 0, 0, 0);

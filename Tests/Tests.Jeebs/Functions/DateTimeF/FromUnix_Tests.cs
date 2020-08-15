@@ -4,12 +4,12 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F
+namespace F.DateTimeF_Tests
 {
-	public partial class DateTimeF_Tests
+	public partial class FromUnix_Tests
 	{
 		[Fact]
-		public void FromUnix_UnixTimestamp_ReturnsDateTime()
+		public void UnixTimestamp_ReturnsDateTime()
 		{
 			// Arrange
 			const int unix = 947001570;

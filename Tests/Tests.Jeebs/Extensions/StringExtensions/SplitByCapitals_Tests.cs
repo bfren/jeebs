@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class SplitByCapitals_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void SplitByCapitals_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -24,7 +24,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("BenjaminCharlesGreen", "Benjamin Charles Green")]
 		[InlineData(" ben JaminCharlesGreen ", "ben Jamin Charles Green")]
-		public void SplitByCapitals_String_ReturnsValueSplitByCapitals(string input, string expected)
+		public void String_ReturnsValueSplitByCapitals(string input, string expected)
 		{
 			// Arrange
 

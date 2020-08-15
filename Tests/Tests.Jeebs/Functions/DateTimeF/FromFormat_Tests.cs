@@ -4,12 +4,12 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F
+namespace F.DateTimeF_Tests
 {
-	public partial class DateTimeF_Tests
+	public partial class FromFormat_Tests
 	{
 		[Fact]
-		public void FromFormat_CorrectInput_ValidFormat_ReturnsDateTime()
+		public void CorrectInput_ValidFormat_ReturnsDateTime()
 		{
 			// Arrange
 			const string input = "15:59 04/01/2000";
@@ -25,7 +25,7 @@ namespace F
 		}
 
 		[Fact]
-		public void FromFormat_CorrectInput_InvalidFormat_ReturnsFalse()
+		public void CorrectInput_InvalidFormat_ReturnsFalse()
 		{
 			// Arrange
 			const string input = "15:59 04/01/2000";
@@ -39,7 +39,7 @@ namespace F
 		}
 
 		[Fact]
-		public void FromFormat_IncorrectInput_ValidFormat_ReturnsFalse()
+		public void IncorrectInput_ValidFormat_ReturnsFalse()
 		{
 			// Arrange
 			const string input = "15:59:30 01/31/2000";
@@ -53,7 +53,7 @@ namespace F
 		}
 
 		[Fact]
-		public void FromFormat_IncorrectInput_InvalidFormat_ReturnsFalse()
+		public void IncorrectInput_InvalidFormat_ReturnsFalse()
 		{
 			// Arrange
 			const string input = "15:59:30 01/31/2000";

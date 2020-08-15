@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class HtmlDecode_Tests
 	{
 		[Theory]
 		[InlineData("&amp;&lt;&gt;&#39;&#169;&copy;", "&<>'©©")]
 		[InlineData("&lt;p&gt;Paragraph Text&lt;/p&gt;", "<p>Paragraph Text</p>")]
-		public void HtmlDecode_Html_ReturnsDecodedHtml(string input, string expected)
+		public void Html_ReturnsDecodedHtml(string input, string expected)
 		{
 			// Arrange
 
@@ -24,7 +24,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("&<>'©©", "&amp;&lt;&gt;&#39;&#169;&#169;")]
 		[InlineData("<p>Paragraph Text</p>", "&lt;p&gt;Paragraph Text&lt;/p&gt;")]
-		public void HtmlEncode_Html_ReturnsEncodedHtml(string input, string expected)
+		public void Html_ReturnsEncodedHtml(string input, string expected)
 		{
 			// Arrange
 

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.PagedList_Tests
 {
-	public sealed class PagedList_Tests
+	public class CalculateAndApply_Tests
 	{
 		[Fact]
-		public void CalculateAndApply_Empty_ReturnsEmpty()
+		public void Empty_ReturnsEmpty()
 		{
 			// Arrange
 			var list = new PagedList<string>(new string[] { });
@@ -22,7 +22,7 @@ namespace Jeebs
 		}
 
 		[Fact]
-		public void CalculateAndApply_ReturnsNewList()
+		public void ReturnsNewList()
 		{
 			// Arrange
 			var list = new PagedList<string>(new string[] { });
@@ -35,7 +35,7 @@ namespace Jeebs
 		}
 
 		[Fact]
-		public void CalculateAndApply_ReturnsSubsection()
+		public void ReturnsSubsection()
 		{
 			// Arrange
 			var items = new List<string>();

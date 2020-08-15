@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ReplaceNonNumerical_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void ReplaceNonNumerical_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -24,7 +24,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("Bro65ken12", null, "6512")]
 		[InlineData("Bro65ken12", "-", "-65-12")]
-		public void ReplaceNonNumerical_String_ReturnsValueWithNumbersReplaced(string input, string with, string expected)
+		public void String_ReturnsValueWithNumbersReplaced(string input, string with, string expected)
 		{
 			// Arrange
 

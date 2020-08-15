@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ConvertQuotes_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void ConvertQuotes_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -28,7 +28,7 @@ namespace Jeebs
 		[InlineData("\"Ben\"", "“Ben”")]
 		[InlineData("\"Ben\" \"Green\"", "“Ben” “Green”")]
 		[InlineData("\"Ben's Test\"", "“Ben’s Test”")]
-		public void ConvertQuotes_String_ReturnsValueWithQuotesConverted(string input, string expected)
+		public void String_ReturnsValueWithQuotesConverted(string input, string expected)
 		{
 			// Arrange
 

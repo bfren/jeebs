@@ -4,14 +4,14 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F
+namespace F.EnumF_Tests
 {
-	public partial class EnumF_Tests
+	public partial class Parse_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void Parse_NullOrEmpty_Returns_None(string input)
+		public void NullOrEmpty_Returns_None(string input)
 		{
 			// Arrange
 
@@ -23,7 +23,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Parse_ValidValue_CorrectType_Returns_Some()
+		public void ValidValue_CorrectType_Returns_Some()
 		{
 			// Arrange
 			const string input = nameof(TestA.Test1);
@@ -36,7 +36,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Parse_InvalidValue_CorrectType_Returns_None()
+		public void InvalidValue_CorrectType_Returns_None()
 		{
 			// Arrange
 			const string input = "Test3";
@@ -49,7 +49,7 @@ namespace F
 		}
 
 		[Fact]
-		public void Parse_ValidValue_IncorrectType_Returns_None()
+		public void ValidValue_IncorrectType_Returns_None()
 		{
 			// Arrange
 			const string input = nameof(TestA.Test1);

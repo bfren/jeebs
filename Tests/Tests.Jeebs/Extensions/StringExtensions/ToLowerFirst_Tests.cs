@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ToLowerFirst_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void ToLowerFirst_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -24,7 +24,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("Ben", "ben")]
 		[InlineData("bEN", "bEN")]
-		public void ToLowerFirst_String_ReturnsValueWithLowercaseFirstLetter(string input, string expected)
+		public void String_ReturnsValueWithLowercaseFirstLetter(string input, string expected)
 		{
 			// Arrange
 

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ToSentenceCase_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void ToSentenceCase_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -24,7 +24,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("this is a test sentence", "This is a test sentence")]
 		[InlineData("testing The PHP acronym", "Testing the php acronym")]
-		public void ToSentenceCase_String_ReturnsValueInSentenceCase(string input, string expected)
+		public void String_ReturnsValueInSentenceCase(string input, string expected)
 		{
 			// Arrange
 

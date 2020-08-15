@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class EndWith_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void EndWith_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -26,7 +26,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("Be", 'n', "Ben")]
 		[InlineData("Ben", 'n', "Ben")]
-		public void EndWith_String_ReturnsValueEndingWithCharacter(string input, char endWith, string expected)
+		public void String_ReturnsValueEndingWithCharacter(string input, char endWith, string expected)
 		{
 			// Arrange
 
@@ -40,7 +40,7 @@ namespace Jeebs
 		[Theory]
 		[InlineData("Be", "n Green", "Ben Green")]
 		[InlineData("Ben Green", "n Green", "Ben Green")]
-		public void EndWith_String_ReturnsValueEndingWithString(string input, string endWith, string expected)
+		public void String_ReturnsValueEndingWithString(string input, string endWith, string expected)
 		{
 			// Arrange
 

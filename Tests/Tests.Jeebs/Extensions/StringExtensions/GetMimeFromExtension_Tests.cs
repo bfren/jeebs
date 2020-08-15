@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class GetMimeFromExtension_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void GetMimeFromExtension_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -23,7 +23,7 @@ namespace Jeebs
 
 		[Theory]
 		[MemberData(nameof(GetMimeTypeData))]
-		public void GetMimeFromExtension_String_ReturnsMimeType(string input, MimeType expected)
+		public void String_ReturnsMimeType(string input, MimeType expected)
 		{
 			// Arrange
 

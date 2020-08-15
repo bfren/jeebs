@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.ArrayExtensions_Tests
 {
-	public partial class ArrayExtensions_Tests
+	public class ExtendWith_Tests
 	{
 		[Fact]
-		public void ExtendWith_Array_ReturnsExtendedArray()
+		public void Array_ReturnsExtendedArray()
 		{
 			// Arrange
 			var array = new[] { 1, 2, 3, 4, 5 };

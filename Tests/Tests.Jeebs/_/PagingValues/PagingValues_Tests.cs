@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.PagingValues_Tests
 {
-	public sealed class PagingValues_Tests
+	public class Constructor_Tests
 	{
 		[Fact]
 		public void InvalidPage_ThrowsInvalidException()

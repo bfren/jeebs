@@ -4,13 +4,13 @@ using System.Text;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Jeebs.Util
+namespace Jeebs.Util.Json_Tests
 {
-	public partial class Json_Tests
+	public partial class Deserialise_Tests
 	{
 		[Theory]
 		[InlineData(null)]
-		public void Deserialise_Null_Returns_None(string input)
+		public void Null_Returns_None(string input)
 		{
 			// Arrange
 
@@ -26,7 +26,7 @@ namespace Jeebs.Util
 		[InlineData("")]
 		[InlineData(" ")]
 		[InlineData("\n")]
-		public void Deserialise_Whitespace_Returns_None(string input)
+		public void Whitespace_Returns_None(string input)
 		{
 			// Arrange
 
@@ -39,7 +39,7 @@ namespace Jeebs.Util
 		}
 
 		[Fact]
-		public void Deserialise_InvalidJson_Returns_None()
+		public void InvalidJson_Returns_None()
 		{
 			// Arrange
 			const string input = "this is not valid json";
@@ -53,7 +53,7 @@ namespace Jeebs.Util
 		}
 
 		[Fact]
-		public void Deserialise_ValidJson_ReturnsObject()
+		public void ValidJson_ReturnsObject()
 		{
 			// Arrange
 			const string input = "{\"foo\":\"test\",\"bar\":2,\"ignore\":\"this\"}";
@@ -64,6 +64,22 @@ namespace Jeebs.Util
 
 			// Assert
 			Assert.Equal(expected, result, new TestComparer());
+		}
+
+		public class Test
+		{
+			public string Foo { get; set; } = string.Empty;
+
+			public int Bar { get; set; }
+
+			public string? Empty { get; set; }
+		}
+
+		public class TestComparer : IEqualityComparer<Test>
+		{
+			public bool Equals(Test? x, Test? y) => x?.Foo == y?.Foo && x?.Bar == y?.Bar;
+
+			public int GetHashCode(Test obj) => obj.GetHashCode();
 		}
 	}
 }

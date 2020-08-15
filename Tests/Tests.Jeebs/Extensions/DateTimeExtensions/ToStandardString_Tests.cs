@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.DateTimeExtensions_Tests
 {
-	public partial class DateTimeExtensions_Tests
+	public class ToStandardString_Tests
 	{
 		[Fact]
-		public void ToStandardString_Date_ReturnsStandardFormattedString()
+		public void Date_ReturnsStandardFormattedString()
 		{
 			// Arrange
 			const string expected = "15:59 04/01/2000";

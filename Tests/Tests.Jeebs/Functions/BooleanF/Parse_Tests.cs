@@ -4,9 +4,9 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F
+namespace F.BooleanF_Tests
 {
-	public sealed class BooleanF_Tests
+	public class Parse_Tests
 	{
 		[Theory]
 		[InlineData("true")]
@@ -18,7 +18,7 @@ namespace F
 		[InlineData("yes")]
 		[InlineData("YES")]
 		[InlineData("1")]
-		public void Parse_String_Returns_Some_True(string input)
+		public void String_Returns_Some_True(string input)
 		{
 			// Arrange
 
@@ -38,7 +38,7 @@ namespace F
 		[InlineData("no")]
 		[InlineData("NO")]
 		[InlineData("0")]
-		public void Parse_String_Returns_Some_False(string input)
+		public void String_Returns_Some_False(string input)
 		{
 			// Arrange
 
@@ -53,7 +53,7 @@ namespace F
 		[Theory]
 		[InlineData("2")]
 		[InlineData("this is not a valid boolean")]
-		public void TryParse_InvalidString_Returns_None(string input)
+		public void InvalidString_Returns_None(string input)
 		{
 			// Arrange
 

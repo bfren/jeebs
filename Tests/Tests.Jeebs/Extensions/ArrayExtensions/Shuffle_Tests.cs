@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.ArrayExtensions_Tests
 {
-	public partial class ArrayExtensions_Tests
+	public class Shuffle_Tests
 	{
 		[Fact]
-		public void Shuffle_Array_ReturnsShuffledArray()
+		public void Array_ReturnsShuffledArray()
 		{
 			// Arrange
 			var array = new[] { 1, 2, 3, 4, 5, 6 };

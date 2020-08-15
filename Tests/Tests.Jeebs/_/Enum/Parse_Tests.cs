@@ -3,26 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.Enum_Tests
 {
-	public sealed class Enum_Tests
+	public class Parse_Tests
 	{
 		[Fact]
-		public void ToString_ReturnsName()
-		{
-			// Arrange
-			const string input = "test";
-			var test = new EnumTest(input);
-
-			// Act
-			var result = test.ToString();
-
-			// Assert
-			Assert.Equal(input, result);
-		}
-
-		[Fact]
-		public void Parse_ValidString_Returns_Some()
+		public void ValidString_Returns_Some()
 		{
 			// Arrange
 			var input = EnumTest.Test1.ToString();
@@ -36,7 +22,7 @@ namespace Jeebs
 		}
 
 		[Fact]
-		public void Parse_InvalidString_Returns_None()
+		public void InvalidString_Returns_None()
 		{
 			// Arrange
 			const string input = "test3";

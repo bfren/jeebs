@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Xunit;
+
+namespace Jeebs.DateRange_Tests
+{
+	public class UpTo_Tests
+	{
+		[Fact]
+		public void StartIsMinimum_Tests()
+		{
+			// Arrange
+			var date = new DateTime(2000, 1, 1);
+
+			// Act
+			var range = DateRange.UpTo(date);
+
+			// Assert
+			Assert.Equal(DateTime.MinValue.StartOfDay(), range.Start);
+			Assert.Equal(date.EndOfDay(), range.End);
+		}
+	}
+}

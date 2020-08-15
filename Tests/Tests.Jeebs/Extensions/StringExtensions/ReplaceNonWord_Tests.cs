@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class ReplaceNonWord_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void ReplaceNonWord_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -25,7 +25,7 @@ namespace Jeebs
 		[InlineData(" {B)e(n_ G}re $%en&", null, "Ben_Green")]
 		[InlineData("B!n_Gr@#en", "e", "Ben_Green")]
 		[InlineData(" {B)e(n_ G}re $%en&", "-", "-B-e-n_-G-re-en-")]
-		public void ReplaceNonWord_String_ReturnsValueWithNonWordCharactersReplaced(string input, string with, string expected)
+		public void String_ReturnsValueWithNonWordCharactersReplaced(string input, string with, string expected)
 		{
 			// Arrange
 

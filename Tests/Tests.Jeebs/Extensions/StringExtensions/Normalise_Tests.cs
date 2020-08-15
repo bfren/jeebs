@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs
+namespace Jeebs.StringExtensions_Tests
 {
-	public partial class StringExtensions_Tests
+	public class Normalise_Tests
 	{
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void Normalise_NullOrEmpty_ReturnsOriginal(string input)
+		public void NullOrEmpty_ReturnsOriginal(string input)
 		{
 			// Arrange
 
@@ -27,7 +27,7 @@ namespace Jeebs
 		[InlineData("one-two-three", "one-two-three")]
 		[InlineData(" one  two   three    ", "one-two-three")]
 		[InlineData("1-two three", "two-three")]
-		public void Normalise_String_ReturnsNormalisedValue(string input, string expcted)
+		public void String_ReturnsNormalisedValue(string input, string expcted)
 		{
 			// Arrange
 
