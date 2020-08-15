@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace F
+namespace F.CryptoF_Tests
 {
 	public class GenerateNonce_Tests
 	{

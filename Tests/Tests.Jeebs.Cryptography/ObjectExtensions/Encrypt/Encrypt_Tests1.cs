@@ -6,7 +6,7 @@ using Jeebs.Util;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Jeebs.Cryptography
+namespace Jeebs.Cryptography.ObjectExtensions_Tests
 {
 	public partial class Encrypt_Tests
 	{

@@ -4,7 +4,7 @@ using System.Text;
 using static F.CryptoF;
 using Xunit;
 
-namespace Jeebs.Cryptography
+namespace Jeebs.Cryptography.StringExtensions_Tests
 {
 	public partial class Decrypt_Tests
 	{

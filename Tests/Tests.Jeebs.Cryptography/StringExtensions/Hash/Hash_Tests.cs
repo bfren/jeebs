@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.Cryptography
+namespace Jeebs.Cryptography.StringExtensions_Tests
 {
 	public sealed class Hash_Tests
 	{
