@@ -17,6 +17,12 @@ namespace Jeebs
 		private readonly List<IMsg> messages = new List<IMsg>();
 
 		/// <summary>
+		/// The number of messages
+		/// </summary>
+		public int Count
+			=> messages.Count;
+
+		/// <summary>
 		/// Clear all messages
 		/// </summary>
 		public void Clear()
@@ -27,12 +33,6 @@ namespace Jeebs
 		/// </summary>
 		public void Dispose()
 			=> Clear();
-
-		/// <summary>
-		/// The number of messages
-		/// </summary>
-		public int Count
-			=> messages.Count;
 
 		/// <summary>
 		/// Returns true if <paramref name="m"/> is of type <typeparamref name="TMsg"/>

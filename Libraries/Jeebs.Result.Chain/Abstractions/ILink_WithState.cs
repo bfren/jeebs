@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Result.Chain.Fluent;
+using Jeebs.Fluent;
 
 namespace Jeebs
 {

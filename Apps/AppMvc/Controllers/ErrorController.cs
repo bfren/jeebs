@@ -16,7 +16,7 @@ namespace AppMvc.Controllers
 			=> throw new Exception("Something");
 
 		public async Task<IActionResult> Return_Error()
-			=> await this.ExecuteErrorAsync(R.Error().AddMsg().OfType<Jm.Mvc.Controllers.Controller.UnknownResultTypeMsg>());
+			=> await this.ExecuteErrorAsync(Result.Error().AddMsg().OfType<Jm.Mvc.Controllers.Controller.UnknownResultTypeMsg>());
 
 		public IActionResult Return_NotFound()
 			=> NotFound();
@@ -28,7 +28,7 @@ namespace AppMvc.Controllers
 			=> NotAllowed();
 
 		public async Task<IActionResult> Return_Error404()
-			=> await this.ExecuteErrorAsync(R.Error().AddMsg().OfType<NotFoundMsg>());
+			=> await this.ExecuteErrorAsync(Result.Error().AddMsg().OfType<NotFoundMsg>());
 
 		public class NotFoundMsg : Jm.NotFoundMsg { }
 	}

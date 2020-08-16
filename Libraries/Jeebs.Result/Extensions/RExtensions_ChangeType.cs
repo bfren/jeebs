@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Result.Fluent;
+using Jeebs.Fluent;
 
 namespace Jeebs
 {

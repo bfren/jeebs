@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// Create an OK result
 	/// </summary>
-	public static class R
+	public static class Result
 	{
 		/// <summary>
 		/// Ok result

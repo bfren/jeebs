@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Jeebs.Result.Fluent
+namespace Jeebs.Fluent
 {
 	/// <summary>
 	/// Fluently add a message by type to the result chain, returning the original <typeparamref name="TResult"/> object

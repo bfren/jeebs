@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Result.Fluent;
+using Jeebs.Fluent;
 
 namespace Jeebs
 {

@@ -32,6 +32,6 @@ namespace Jeebs.Mvc
 		/// <param name="code">Http Status Code</param>
 		[Route("/Error/{code:int}")]
 		public async Task<IActionResult> Handle(int code)
-			=> await this.ExecuteErrorAsync(R.Error(), code);
+			=> await this.ExecuteErrorAsync(Result.Error(), code);
 	}
 }

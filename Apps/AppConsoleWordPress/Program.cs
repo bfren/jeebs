@@ -32,8 +32,8 @@ namespace AppConsoleWordPress
 				var usa = provider.GetService<WpUsa>();
 
 				// Run test methods
-				TermsAsync(R.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);
-				(await TermsAsync(R.Ok(), "USA", usa.Db)).Audit(AuditTerms);
+				TermsAsync(Result.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);
+				(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
 
 				Chain.Create()
 					.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()

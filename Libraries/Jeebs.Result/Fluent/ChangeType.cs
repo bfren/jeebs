@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Result.Fluent
+namespace Jeebs.Fluent
 {
 	/// <summary>
 	/// Allows result type changing

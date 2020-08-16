@@ -30,7 +30,7 @@ namespace Jeebs
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="value">Result value</param>
 		public static IOkV<TValue> CreateV<TValue>(TValue value)
-			=> R.OkV(value);
+			=> Result.OkV(value);
 
 		/// <summary>
 		/// Begin a chain with a value and state
@@ -40,7 +40,7 @@ namespace Jeebs
 		/// <param name="value">Result value</param>
 		/// <param name="state">Chain state</param>
 		public static IOkV<TValue, TState> CreateV<TValue, TState>(TValue value, TState state)
-			=> R.OkV(value, state);
+			=> Result.OkV(value, state);
 	}
 
 	/// <summary>
@@ -53,7 +53,7 @@ namespace Jeebs
 		/// Begin a chain
 		/// </summary>
 		public static IOk<TValue> Create()
-			=> R.Ok<TValue>();
+			=> Result.Ok<TValue>();
 
 		/// <summary>
 		/// Begin a chain with state
@@ -61,6 +61,6 @@ namespace Jeebs
 		/// <typeparam name="TState">Chain state type</typeparam>
 		/// <param name="state">Chain state</param>
 		public static IOk<TValue, TState> Create<TState>(TState state)
-			=> R.Ok<TValue, TState>(state);
+			=> Result.Ok<TValue, TState>(state);
 	}
 }
