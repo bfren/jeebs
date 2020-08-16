@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.LinkTests.WithState
+namespace Jeebs.Link_Tests.WithState
 {
 	public partial class Handle_Tests
 	{

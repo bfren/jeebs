@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.LinkTests
+namespace Jeebs.Link_Tests
 {
 	public partial class Map_Tests
 	{

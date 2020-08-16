@@ -1,4 +1,4 @@
-﻿namespace Jeebs.LinkTests.WithState
+﻿namespace Jeebs.Link_Tests.WithState
 {
 	public interface ILink_Run_WithState : ILink_Run
 	{

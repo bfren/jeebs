@@ -1,4 +1,4 @@
-﻿namespace Jeebs.LinkTests
+﻿namespace Jeebs.Link_Tests
 {
 	public interface ILink_Map
 	{

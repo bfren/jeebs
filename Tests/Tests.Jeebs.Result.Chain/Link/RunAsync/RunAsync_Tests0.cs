@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.LinkTests;
+using Jeebs.Link_Tests;
 using Xunit;
 
-namespace Jeebs.LinkTests.Async
+namespace Jeebs.Link_Tests
 {
 	public partial class RunAsync_Tests : ILink_Run
 	{

@@ -4,7 +4,7 @@ using System.Text;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.LinkTests.WithState
+namespace Jeebs.Link_Tests.WithState
 {
 	public partial class Handle_Tests : ILink_Handle_WithState
 	{

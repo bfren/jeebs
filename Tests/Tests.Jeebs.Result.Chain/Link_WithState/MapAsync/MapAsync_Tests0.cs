@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.LinkTests.WithState.Async
+namespace Jeebs.Link_Tests.WithState
 {
-	public partial class MapAsync_Tests : ILink_Map_WithState
-	{
-
-	}
+	public partial class MapAsync_Tests : ILink_Map_WithState { }
 }

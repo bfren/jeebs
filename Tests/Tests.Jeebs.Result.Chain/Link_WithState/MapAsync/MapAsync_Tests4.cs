@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Jeebs.LinkTests.WithState.Async
+namespace Jeebs.Link_Tests.WithState
 {
 	public partial class MapAsync_Tests
 	{

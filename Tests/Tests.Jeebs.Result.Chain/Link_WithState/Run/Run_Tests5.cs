@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.LinkTests.WithState
+namespace Jeebs.Link_Tests.WithState
 {
 	public partial class Run_Tests
 	{
