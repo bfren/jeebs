@@ -196,7 +196,7 @@ namespace Jeebs
 			=> other switch
 			{
 				Some<T> x when this is Some<T> y => Equals(x.Value, y.Value),
-				None<T> _ when this is None<T> _ => true,
+				None<T> x when this is None<T> y => Equals(x.Reason, y.Reason),
 				_ => false
 			};
 
@@ -212,7 +212,7 @@ namespace Jeebs
 			=> other switch
 			{
 				Some<T> x when this is Some<T> y => comparer.Equals(x.Value, y.Value),
-				None<T> _ when this is None<T> _ => true,
+				None<T> x when this is None<T> y => comparer.Equals(x.Reason, y.Reason),
 				_ => false
 			};
 
@@ -223,6 +223,7 @@ namespace Jeebs
 			=> this switch
 			{
 				Some<T> x when x.Value is T y => typeof(Some<>).GetHashCode() ^ y.GetHashCode(),
+				None<T> x when x.Reason is IMsg y => typeof(None<>).GetHashCode() ^ y.GetHashCode(),
 				None<T> _ => typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
@@ -232,6 +233,7 @@ namespace Jeebs
 			=> this switch
 			{
 				Some<T> x when x.Value is T y => typeof(Some<>).GetHashCode() ^ comparer.GetHashCode(y),
+				None<T> x when x.Reason is IMsg y => typeof(None<>).GetHashCode() ^ comparer.GetHashCode(y),
 				None<T> _ => typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 				_ => throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
