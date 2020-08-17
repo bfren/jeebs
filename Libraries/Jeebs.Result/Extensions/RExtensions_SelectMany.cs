@@ -25,12 +25,16 @@ namespace Jeebs
 		public static IR<V> SelectMany<T, U, V>(this IR<T> @this, Func<T, IR<U>> bind, Func<T, U, V> map)
 			=> @this switch
 			{
-				IOkV<T> x => bind(x.Value) switch
+				IOkV<T> t => bind(t.Value) switch
 				{
-					IOkV<U> y => y.OkV(map(x.Value, y.Value)),
-					{ } y => y.Error<V>()
+					IOkV<U> u => map(t.Value, u.Value) switch
+					{
+						V v => u.OkV(v),
+						_ => u.Error<V>()
+					},
+					{ } e => e.Error<V>()
 				},
-				_ => @this.Error<V>()
+				{ } e => e.Error<V>()
 			};
 
 		/// <summary>
@@ -50,12 +54,16 @@ namespace Jeebs
 		public static IR<V, S> SelectMany<S, T, U, V>(this IR<T, S> @this, Func<T, IR<U, S>> bind, Func<T, U, V> map)
 			=> @this switch
 			{
-				IOkV<T, S> x => bind(x.Value) switch
+				IOkV<T, S> t => bind(t.Value) switch
 				{
-					IOkV<U, S> y => y.OkV(map(x.Value, y.Value)),
-					{ } y => y.Error<V>()
+					IOkV<U, S> u => map(t.Value, u.Value) switch
+					{
+						V v => u.OkV(v),
+						_ => u.Error<V>()
+					},
+					{ } e => e.Error<V>()
 				},
-				_ => @this.Error<V>()
+				{ } e => e.Error<V>()
 			};
 	}
 }

@@ -10,7 +10,7 @@ namespace Jeebs
 	public interface IR : IDisposable
 	{
 		/// <summary>
-		/// List of messages persisted through the result chain
+		/// List of messages persisted from result to result
 		/// </summary>
 		MsgList Messages { get; }
 
