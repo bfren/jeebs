@@ -36,7 +36,7 @@ namespace Jeebs.Cryptography
 		/// <summary>
 		/// Lock object
 		/// </summary>
-		/// <param name="key">Encryption key - must be <see cref="KeyLength"/> bytes</param>
+		/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
 		public Locked<T> Lock(byte[] key)
 			=> key.Length switch
 			{

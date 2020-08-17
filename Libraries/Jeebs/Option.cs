@@ -29,7 +29,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Wrap <paramref name="value"/> in <see cref="Some{T}(T)"/> if <paramref name="predicate"/> is true
-		/// <para>Otherwise, will return <see cref="None{T}"/></para>
+		/// <para>Otherwise, will return <see cref="Jeebs.None{T}"/></para>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="predicate">Predicate to evaluate</param>

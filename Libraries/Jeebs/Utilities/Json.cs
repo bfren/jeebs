@@ -44,7 +44,6 @@ namespace Jeebs.Util
 		/// </summary>
 		/// <typeparam name="T">The type of the object to return</typeparam>
 		/// <param name="str">The string to deserialise</param>
-		/// <param name="ifNull">[Optional] Function to return a default <typeparamref name="T"/> if deserialise returns null - if not set a <see cref="JsonException"/> will be thrown</param>
 		/// <param name="opt">[Optional] JsonSerializerSettings</param>
 		/// <returns>Deserialised object of given type</returns>
 		public static Option<T> Deserialise<T>(string str, JsonSerializerSettings? opt = null)

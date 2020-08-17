@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Jeebs
 {
-	public static class OptionExtensions
+	/// <summary>
+	/// Extension methods for <see cref="Option{T}"/> objects: ToResult
+	/// </summary>
+	public static class OptionExtensions_ToResult
 	{
 		/// <summary>
 		/// Convert an Option to a Result

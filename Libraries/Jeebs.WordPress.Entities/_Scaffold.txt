@@ -2,6 +2,7 @@
 
 namespace xxx
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	public static class Entities
 	{
 		public sealed class Comment : WpCommentEntity { }
@@ -17,4 +18,5 @@ namespace xxx
 		public sealed class User : WpUserEntity { }
 		public sealed class UserMeta : WpUserMetaEntity { }
 	}
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
