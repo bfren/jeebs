@@ -36,7 +36,7 @@ namespace Jeebs
 
 		#endregion
 
-		#region Map
+		#region Next
 
 		/// <summary>
 		/// Map to a new result with a new value type
@@ -139,7 +139,7 @@ namespace Jeebs
 
 		#endregion
 
-		#region Unwrap
+		#region Unwrap Single
 
 		/// <summary>
 		/// If the result is not an <see cref="IOkV{TValue}"/>, returns an <see cref="IError{TValue}"/>
