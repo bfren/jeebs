@@ -16,8 +16,11 @@ namespace Jeebs
 			{
 				IOkV<TValue, TState> x => x.Value switch
 				{
-					IEnumerable<TSingle> y when y.Count() == 1 => x.OkV(y.Single()),
-					IEnumerable<TSingle> _ => x.Error<TSingle>().AddMsg().OfType<MoreThanOneItemMsg>(),
+					IEnumerable<TSingle> y => y.Count() switch
+					{
+						1 => x.OkV(y.Single()),
+						_ => x.Error<TSingle>().AddMsg().OfType<MoreThanOneItemMsg>()
+					},
 					IEnumerable _ => x.Error<TSingle>().AddMsg().OfType<IncorrectTypeMsg>(),
 					TSingle y => x.OkV(y),
 					_ => result.Error<TSingle>().AddMsg().OfType<NotIEnumerableMsg>()
