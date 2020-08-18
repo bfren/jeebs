@@ -13,7 +13,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			const int value = 18;
-			var some = Option.Some(value);
+			var some = Option.Wrap(value);
 
 			// Act
 			var result = some.ToResult();
@@ -29,7 +29,7 @@ namespace Jeebs.OptionExtensions_Tests
 			// Arrange
 			const int value = 18;
 			const int state = 7;
-			var some = Option.Some(value);
+			var some = Option.Wrap(value);
 
 			// Act
 			var result = some.ToResult(state);

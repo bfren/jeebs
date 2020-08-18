@@ -11,7 +11,7 @@ namespace Jeebs
 	public sealed class Some<T> : Option<T>
 	{
 		/// <summary>
-		/// Value
+		/// Option Value - nullability will match the nullability of <typeparamref name="T"/>
 		/// </summary>
 		public T Value { get; }
 

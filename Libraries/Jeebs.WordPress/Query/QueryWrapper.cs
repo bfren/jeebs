@@ -89,7 +89,7 @@ namespace Jeebs.WordPress
 				return Option.None<PropertyInfo>().AddReason<MetaDictionaryPropertyNotFoundMsg<TModel>>();
 			}
 
-			return Option.Some(metaDictionary.Single());
+			return Option.Wrap(metaDictionary.Single());
 		}
 
 		/// <summary>
@@ -158,7 +158,7 @@ namespace Jeebs.WordPress
 				return Option.None<PropertyInfo>().AddReason<ContentPropertyNotFoundMsg<TModel>>();
 			}
 
-			return Option.Some(content.Single());
+			return Option.Wrap(content.Single());
 		}
 
 		#endregion

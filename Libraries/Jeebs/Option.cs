@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Jm.Option;
 
 namespace Jeebs
 {
@@ -10,25 +12,27 @@ namespace Jeebs
 	public static class Option
 	{
 		/// <summary>
-		/// Create a Some option, containing a value
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="value">Some value</param>
-		public static Some<T> Some<T>(T value)
-			=> new Some<T>(value);
-
-		/// <summary>
 		/// Create a None option
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		public static None<T> None<T>()
 			=> new None<T>();
 
-		internal static None<T> None<T>(IMsg? reason)
-			=> new None<T>(reason);
+		/// <summary>
+		/// Create a Some option, containing a value
+		/// <para>If <paramref name="value"/> is null, <see cref="Jeebs.None{T}"/> will be returned instead</para>
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <param name="value">Some value</param>
+		public static Option<T> Wrap<T>(T value)
+			=> value switch
+			{
+				T x => new Some<T>(x),
+				_ => new None<T>().AddReason<SomeValueWasNullMsg>()
+			};
 
 		/// <summary>
-		/// Wrap <paramref name="value"/> in <see cref="Some{T}(T)"/> if <paramref name="predicate"/> is true
+		/// Wrap <paramref name="value"/> in <see cref="Wrap{T}(T)"/> if <paramref name="predicate"/> is true
 		/// <para>Otherwise, will return <see cref="Jeebs.None{T}"/></para>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
@@ -37,7 +41,7 @@ namespace Jeebs
 		public static Option<T> WrapIf<T>(Func<bool> predicate, Func<T> value)
 			=> predicate() switch
 			{
-				true => Some(value()),
+				true => Wrap(value()),
 				false => None<T>()
 			};
 	}
@@ -59,7 +63,10 @@ namespace Jeebs
 			};
 
 		private U Switch<U>(Func<T, U> some, Func<U> none)
-			=> Switch(some, _ => none());
+			=> Switch(
+				some: some,
+				none: _ => none()
+			);
 
 		/// <summary>
 		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
@@ -86,17 +93,17 @@ namespace Jeebs
 			);
 
 		/// <summary>
-		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
+		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
 		/// </summary>
 		/// <typeparam name="U">Next Option value type</typeparam>
-		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		public Option<U> Bind<U>(Func<T, Option<U>> map)
+		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		public Option<U> Bind<U>(Func<T, Option<U>> bind)
 			=> Switch(
-				some: x => map(x).Switch<Option<U>>(
-					some: Option.Some,
-					none: r => Option.None<U>(r)
+				some: x => bind(x).Switch<Option<U>>(
+					some: Option.Wrap,
+					none: r => new None<U>(r)
 				),
-				none: r => Option.None<U>(r)
+				none: r => new None<U>(r)
 			);
 
 		/// <summary>
@@ -105,9 +112,9 @@ namespace Jeebs
 		/// <typeparam name="U">Next Option value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		public Option<U> Map<U>(Func<T, U> map)
-			=> Switch<Option<U>>(
-				some: v => Option.Some(map(v)),
-				none: r => Option.None<U>(r)
+			=> Switch(
+				some: v => Option.Wrap(map(v)),
+				none: r => new None<U>(r)
 			);
 
 		/// <summary>
@@ -120,20 +127,6 @@ namespace Jeebs
 				none: ifNone
 			);
 
-		/// <summary>
-		/// Alias for <see cref="Option.Some{T}(T)"/>
-		/// </summary>
-		/// <param name="value">Value to wrap</param>
-		public Option<T> Return(T value)
-			=> Option.Some(value);
-
-		/// <summary>
-		/// Alias for <see cref="Option.Some{T}(T)"/>
-		/// </summary>
-		/// <param name="value">Value to wrap</param>
-		public Option<T> Wrap(T value)
-			=> Option.Some(value);
-
 		#region Operators
 
 		/// <summary>
@@ -141,11 +134,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value)
-			=> value switch
-			{
-				T x => Option.Some(x),
-				_ => Option.None<T>()
-			};
+			=> Option.Wrap(value);
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -171,6 +160,10 @@ namespace Jeebs
 				none: () => true
 			);
 
+		#endregion
+
+		#region Overrides
+
 		/// <summary>
 		/// Compare this <see cref="Option{T}"/> with another object
 		/// <para>If both are a <see cref="Some{T}"/> each <see cref="Some{T}.Value"/> will be compared</para>
@@ -193,10 +186,10 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="other"><see cref="Option{T}"/> to compare to this <see cref="Option{T}"/></param>
 		public bool Equals(Option<T> other)
-			=> other switch
+			=> this switch
 			{
-				Some<T> x when this is Some<T> y => Equals(x.Value, y.Value),
-				None<T> x when this is None<T> y => Equals(x.Reason, y.Reason),
+				Some<T> x when other is Some<T> y => Equals(x.Value, y.Value),
+				None<T> x when other is None<T> y => Equals(x.Reason, y.Reason),
 				_ => false
 			};
 
@@ -209,10 +202,10 @@ namespace Jeebs
 		/// <param name="other"><see cref="Option{T}"/> to compare to this <see cref="Option{T}"/></param>
 		/// <param name="comparer">Equality Comparer</param>
 		public bool Equals(object other, IEqualityComparer comparer)
-			=> other switch
+			=> this switch
 			{
-				Some<T> x when this is Some<T> y => comparer.Equals(x.Value, y.Value),
-				None<T> x when this is None<T> y => comparer.Equals(x.Reason, y.Reason),
+				Some<T> x when other is Some<T> y => comparer.Equals(x.Value, y.Value),
+				None<T> x when other is None<T> y => comparer.Equals(x.Reason, y.Reason),
 				_ => false
 			};
 

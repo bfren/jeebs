@@ -421,7 +421,7 @@ namespace Jeebs.WordPress
 		private Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
 			=> GetMetaDictionary<TModel>() switch
 			{
-				Some<PropertyInfo> x => Option.Some(new Meta<TModel>(x.Value)),
+				Some<PropertyInfo> x => Option.Wrap(new Meta<TModel>(x.Value)),
 				_ => Option.None<Meta<TModel>>()
 			};
 
@@ -433,7 +433,7 @@ namespace Jeebs.WordPress
 		private Option<Content<TModel>> GetPostContentInfo<TModel>()
 			=> GetPostContent<TModel>() switch
 			{
-				Some<PropertyInfo> x => Option.Some(new Content<TModel>(x.Value)),
+				Some<PropertyInfo> x => Option.Wrap(new Content<TModel>(x.Value)),
 				_ => Option.None<Content<TModel>>()
 			};
 

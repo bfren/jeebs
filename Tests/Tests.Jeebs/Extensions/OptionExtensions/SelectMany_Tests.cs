@@ -13,8 +13,8 @@ namespace Jeebs.OptionExtensions_Tests
 			// Arrange
 			const int v0 = 18;
 			const int v1 = 7;
-			var o0 = Option.Some(v0);
-			var o1 = Option.Some(v1);
+			var o0 = Option.Wrap(v0);
+			var o1 = Option.Wrap(v1);
 
 			// Act
 			var result = from a in o0
@@ -32,8 +32,8 @@ namespace Jeebs.OptionExtensions_Tests
 			// Arrange
 			const int v0 = 18;
 			const int v1 = 7;
-			var o0 = Option.Some(v0);
-			var o1 = Option.Some(v1);
+			var o0 = Option.Wrap(v0);
+			var o1 = Option.Wrap(v1);
 			var o2 = Option.None<int>().AddReason<InvalidIntegerMsg>();
 
 			// Act

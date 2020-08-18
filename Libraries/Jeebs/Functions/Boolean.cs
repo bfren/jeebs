@@ -32,15 +32,15 @@ namespace F
 			// Match checkbox binding from MVC form
 			if (trueValues.Contains(val))
 			{
-				return Option.Some(true);
+				return Option.Wrap(true);
 			}
 			else if (falseValues.Contains(val))
 			{
-				return Option.Some(false);
+				return Option.Wrap(false);
 			}
 			else if (bool.TryParse(val, out bool result))
 			{
-				return Option.Some(result);
+				return Option.Wrap(result);
 			}
 
 			return Option.None<bool>();

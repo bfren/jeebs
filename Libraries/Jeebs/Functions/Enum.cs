@@ -22,7 +22,7 @@ namespace F
 			try
 			{
 				var parsed = Enums.Parse<T>(value);
-				return Some(parsed);
+				return Wrap(parsed);
 			}
 			catch (Exception)
 			{
@@ -47,7 +47,7 @@ namespace F
 			try
 			{
 				var parsed = Enum.Parse(t, value, true);
-				return Some(parsed);
+				return Wrap(parsed);
 			}
 			catch (Exception)
 			{
@@ -94,7 +94,7 @@ namespace F
 				var fromInt = Enums.ToInt32(from);
 				if (Enums.TryToObject(fromInt, out TTo converted) && Enum.IsDefined(typeof(TTo), converted))
 				{
-					return Some(converted);
+					return Wrap(converted);
 				}
 				else
 				{

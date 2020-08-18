@@ -34,7 +34,7 @@ namespace F
 		{
 			if (DateTime.TryParseExact(s, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
 			{
-				return Option.Some(dt);
+				return Option.Wrap(dt);
 			}
 
 			return Option.None<DateTime>();
