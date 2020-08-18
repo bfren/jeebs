@@ -102,26 +102,44 @@ namespace Jeebs
 
 			if (value.Length != 12)
 			{
-				throw new ArgumentException("DateTimeInt value must be a 12 characters long", nameof(value));
+				throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long", nameof(value));
 			}
 
 			if (!long.TryParse(value, out _))
 			{
-				throw new ArgumentException($"{nameof(value)} is not a valid long");
+				throw new ArgumentException("Not a valid number", nameof(value));
 			}
 
-			Year = GetPart(value, 0, 4);
-			Month = GetPart(value, 4, 2);
-			Day = GetPart(value, 6, 2);
-			Hour = GetPart(value, 8, 2);
-			Minute = GetPart(value, 10, 2);
+			Init(value);
 		}
 
 		/// <summary>
 		/// Construct object from long - will be converted to a 12-digit string with leading zeroes
 		/// </summary>
 		/// <param name="value">DateTime long value - format yyyymmddHHMM</param>
-		public DateTimeInt(long value) : this(value.ToString(format)) { }
+		public DateTimeInt(long value)
+		{
+			if (value <= 99999999999)
+			{
+				throw new ArgumentException("Too small - must be 12 digits long", nameof(value));
+			}
+
+			if (value > 999912312359) // the maximum allowed value - just before midnight on 31 December 9999
+			{
+				throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
+			}
+
+			Init(value.ToString(format));
+		}
+
+		private void Init(string value)
+		{
+			Year = GetPart(value, 0, 4);
+			Month = GetPart(value, 4, 2);
+			Day = GetPart(value, 6, 2);
+			Hour = GetPart(value, 8, 2);
+			Minute = GetPart(value, 10, 2);
+		}
 
 		/// <summary>
 		/// Returns true if the object is a valid DateTime

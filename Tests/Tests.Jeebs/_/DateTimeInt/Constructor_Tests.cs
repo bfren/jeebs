@@ -66,7 +66,7 @@ namespace Jeebs.DateTimeInt_Tests
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void FromNullString_ReturnsEmpty(string input)
+		public void FromNullString_ReturnsZeroes(string input)
 		{
 			// Arrange
 
@@ -74,7 +74,7 @@ namespace Jeebs.DateTimeInt_Tests
 			var result = new DateTimeInt(input);
 
 			// Assert
-			Assert.Equal(string.Empty, result.ToString());
+			Assert.Equal("000000000000", result.ToString());
 		}
 
 		[Fact]
