@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Enums
 	/// <summary>
 	/// Taxonomy enumeration
 	/// </summary>
-	public sealed class Taxonomy : Enum
+	public sealed class Taxonomy : Enumerated
 	{
 		/// <summary>
 		/// Create new value
@@ -44,13 +44,13 @@ namespace Jeebs.WordPress.Enums
 		#endregion
 
 		/// <summary>
-		/// List of all post types
+		/// List of all taxonomies
 		/// Must be public static so it is thread safe
 		/// </summary>
 		private static readonly HashSet<Taxonomy> all;
 
 		/// <summary>
-		/// Populate list of post types
+		/// Populate list of taxonomies
 		/// </summary>
 		static Taxonomy()
 			=> all = new HashSet<Taxonomy>(new[] { PostCategory, PostTag, LinkCategory, NavMenu });
@@ -68,8 +68,8 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>Taxonomy object</returns>
-		public static Option<Taxonomy> Parse(string name)
-			=> Parse(name, all.ToArray());
+		public static Taxonomy Parse(string name)
+			=> Parse(name, all.ToArray()).Unwrap(() => Blank);
 
 		/// <summary>
 		/// Returns whether or not the specified taxonomy has been registered

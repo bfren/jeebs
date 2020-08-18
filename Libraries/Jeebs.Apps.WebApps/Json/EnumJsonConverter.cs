@@ -11,7 +11,7 @@ namespace Jeebs.Apps.WebApps.Json
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
 	public class EnumJsonConverter<T> : JsonConverter<T>
-		where T : Enum
+		where T : Enumerated
 	{
 		/// <summary>
 		/// Read a string value as Enum type

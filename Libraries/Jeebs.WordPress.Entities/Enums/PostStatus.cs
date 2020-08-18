@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Enums
 	/// <summary>
 	/// PostStatus enumeration
 	/// </summary>
-	public sealed class PostStatus : Enum
+	public sealed class PostStatus : Enumerated
 	{
 		/// <summary>
 		/// Create new value

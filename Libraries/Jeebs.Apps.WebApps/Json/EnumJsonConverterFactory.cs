@@ -12,11 +12,11 @@ namespace Jeebs.Apps.WebApps.Json
 	public sealed class EnumJsonConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enum"/>
+		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert)
-			=> typeToConvert.IsSubclassOf(typeof(Enum));
+			=> typeToConvert.IsSubclassOf(typeof(Enumerated));
 
 		/// <summary>
 		/// Creates JsonConverter using Enum type as generic argument

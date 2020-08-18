@@ -10,6 +10,8 @@ namespace Jeebs
 	/// </summary>
 	public sealed class DateTimeInt
 	{
+		private const string format = "000000000000";
+
 		/// <summary>
 		/// Year
 		/// </summary>
@@ -116,10 +118,10 @@ namespace Jeebs
 		}
 
 		/// <summary>
-		/// Construct object from long - must be exactly 12 digits long (yyyymmddHHMM)
+		/// Construct object from long - will be converted to a 12-digit string with leading zeroes
 		/// </summary>
 		/// <param name="value">DateTime long value - format yyyymmddHHMM</param>
-		public DateTimeInt(long value) : this(value.ToString()) { }
+		public DateTimeInt(long value) : this(value.ToString(format)) { }
 
 		/// <summary>
 		/// Returns true if the object is a valid DateTime
@@ -190,11 +192,15 @@ namespace Jeebs
 
 		/// <summary>
 		/// Outputs object values as correctly formatted string
-		/// If the object is not valid, returns an empty string
+		/// If the object is not valid, returns a string of zeroes
 		/// </summary>
-		/// <returns>String value of object, or empty string</returns>
+		/// <returns>String value of object, or string of zeroes</returns>
 		public override string ToString()
-			=> IsValidDateTime() ? $"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}" : string.Empty;
+			=> IsValidDateTime() switch
+			{
+				true => $"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
+				false => 0.ToString(format)
+			};
 
 		/// <summary>
 		/// Outputs object values as long
@@ -202,6 +208,10 @@ namespace Jeebs
 		/// </summary>
 		/// <returns>Long value of object, or zero</returns>
 		public long ToLong()
-			=> IsValidDateTime() ? long.Parse(ToString()) : 0;
+			=> IsValidDateTime() switch
+			{
+				true => long.Parse(ToString()),
+				false => 0
+			};
 	}
 }

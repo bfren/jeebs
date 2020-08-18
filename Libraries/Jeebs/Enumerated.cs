@@ -7,12 +7,12 @@ using Jm.Enum;
 namespace Jeebs
 {
 	/// <summary>
-	/// Custom enum
+	/// Enables custom enumerated values
 	/// </summary>
-	public abstract class Enum
+	public abstract class Enumerated
 	{
 		/// <summary>
-		/// The string representation ('name' in Enum terms) of this enum value
+		/// The string representation ('name' in Enum terms) of this enumerated value
 		/// </summary>
 		private readonly string name;
 
@@ -20,7 +20,7 @@ namespace Jeebs
 		/// Set the name of this value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		protected Enum(string name)
+		protected Enumerated(string name)
 			=> this.name = name;
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace Jeebs
 		/// <summary>
 		/// Create cache object
 		/// </summary>
-		static Enum()
+		static Enumerated()
 			=> cache = new ConcurrentDictionary<string, object>();
 
 		/// <summary>
@@ -50,15 +50,12 @@ namespace Jeebs
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
 		private static Option<T> Check<T>(string name, T value)
-			where T : Enum
-		{
-			if (string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase))
+			where T : Enumerated
+			=> string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
 			{
-				return Option.Some(value);
-			}
-
-			return Option.None<T>();
-		}
+				true => value,
+				false => Option.None<T>()
+			};
 
 		/// <summary>
 		/// Parse a given name and return the correct Enum value - or throw an exception if no match is found
@@ -68,7 +65,7 @@ namespace Jeebs
 		/// <param name="values">Enum values to check name against</param>
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
 		protected static Option<T> Parse<T>(string name, T[] values)
-			where T : Enum
+			where T : Enumerated
 			=> (Option<T>)cache.GetOrAdd(
 				$"{typeof(T)}-{name}",
 				(_, args) =>
@@ -95,7 +92,7 @@ namespace Jeebs
 		/// <param name="name">Enum name</param>
 		/// <param name="values">Enum values to check name against</param>
 		protected static bool IsRegistered<T>(string name, T[] values)
-			where T : Enum
+			where T : Enumerated
 			=> Parse(name, values) is Some<T>;
 
 		/// <summary>
@@ -103,7 +100,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">Enum Type</typeparam>
 		private class ParseArgs<T>
-			where T : Enum
+			where T : Enumerated
 		{
 			/// <summary>
 			/// Enum name to parse

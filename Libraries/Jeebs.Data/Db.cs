@@ -93,7 +93,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Type to handle</typeparam>
 		protected static void AddEnumListTypeHandler<T>()
-			where T : Enum
+			where T : Enumerated
 			=> Dapper.SqlMapper.AddTypeHandler(new EnumListTypeHandler<T>());
 
 		/// <summary>

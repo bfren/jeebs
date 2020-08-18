@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Enums
 	/// <summary>
 	/// CommentType enumeration
 	/// </summary>
-	public sealed class CommentType : Enum
+	public sealed class CommentType : Enumerated
 	{
 		/// <summary>
 		/// Create new value

@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Enums
 	/// <summary>
 	/// PostType enumeration
 	/// </summary>
-	public sealed class PostType : Enum
+	public sealed class PostType : Enumerated
 	{
 		/// <summary>
 		/// Create new value

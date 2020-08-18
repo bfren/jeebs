@@ -35,7 +35,7 @@ namespace Jeebs.Enum_Tests
 		}
 	}
 
-	public class EnumTest : Enum
+	public class EnumTest : Enumerated
 	{
 		public EnumTest(string name) : base(name) { }
 

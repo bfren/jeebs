@@ -5,22 +5,22 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Enum List
+	/// Enumerated List
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public sealed class EnumList<T> : List<T>
-		where T : Enum
+	/// <typeparam name="TEnum">Enumerated value type</typeparam>
+	public sealed class EnumeratedList<TEnum> : List<TEnum>
+		where TEnum : Enumerated
 	{
 		/// <summary>
 		/// Empty constructor
 		/// </summary>
-		public EnumList() { }
+		public EnumeratedList() { }
 
 		/// <summary>
 		/// Construct object from list of string values
 		/// </summary>
 		/// <param name="list">List of values</param>
-		public EnumList(List<string> list)
+		public EnumeratedList(List<string> list)
 		{
 			if (list is null)
 			{
@@ -29,7 +29,7 @@ namespace Jeebs
 
 			foreach (var item in list)
 			{
-				Add((T)Activator.CreateInstance(typeof(T), item));
+				Add((TEnum)Activator.CreateInstance(typeof(TEnum), item));
 			}
 		}
 
@@ -53,7 +53,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="json">JSON</param>
 		/// <returns>EnumList</returns>
-		public static EnumList<T> Deserialise(string json)
+		public static EnumeratedList<TEnum> Deserialise(string json)
 		{
 			var strings = Util.Json.Deserialise<List<string>>(json) switch
 			{
@@ -61,7 +61,7 @@ namespace Jeebs
 				_ => new List<string>()
 			};
 
-			return new EnumList<T>(strings);
+			return new EnumeratedList<TEnum>(strings);
 		}
 	}
 }

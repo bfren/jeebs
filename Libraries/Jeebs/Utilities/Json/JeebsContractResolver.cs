@@ -18,13 +18,13 @@ namespace Jeebs.Util
 			=> NamingStrategy = new CamelCaseNamingStrategy();
 
 		/// <summary>
-		/// If <paramref name="objectType"/> is an <see cref="Enum"/>, returns <see cref="EnumConverter{T}"/>
+		/// If <paramref name="objectType"/> is an <see cref="Enumerated"/>, returns <see cref="EnumConverter{T}"/>
 		/// <para>Otherwise, returns default contract resolved</para>
 		/// </summary>
 		/// <param name="objectType">Object to be converted</param>
 		protected override JsonConverter? ResolveContractConverter(Type objectType)
 		{
-			if (objectType.IsSubclassOf(typeof(Enum)))
+			if (objectType.IsSubclassOf(typeof(Enumerated)))
 			{
 				var converterType = typeof(EnumConverter<>).MakeGenericType(objectType);
 				return (JsonConverter)Activator.CreateInstance(converterType);

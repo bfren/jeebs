@@ -21,7 +21,7 @@ namespace Jeebs.Enum_Tests
 			Assert.Equal(input, result);
 		}
 
-		public class EnumTest : Enum
+		public class EnumTest : Enumerated
 		{
 			public EnumTest(string name) : base(name) { }
 

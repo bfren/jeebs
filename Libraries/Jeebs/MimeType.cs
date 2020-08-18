@@ -1,9 +1,12 @@
-﻿namespace Jeebs
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Jeebs
 {
 	/// <summary>
 	/// MimeType enumeration
 	/// </summary>
-	public class MimeType : Enum
+	public class MimeType : Enumerated
 	{
 		/// <summary>
 		/// Create new value
@@ -107,6 +110,26 @@
 		public static MimeType Zip = new MimeType("application/zip");
 
 		/// <summary>
+		/// List of all mime types
+		/// Must be public static so it is thread safe
+		/// </summary>
+		private static readonly HashSet<MimeType> all;
+
+		/// <summary>
+		/// Populate list of mime types
+		/// </summary>
+		static MimeType()
+			=> all = new HashSet<MimeType>(new[] { Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip });
+
+		/// <summary>
+		/// Add a custom mime types
+		/// </summary>
+		/// <param name="mimeType">Mime types to add</param>
+		/// <returns>False if the mime type already exists</returns>
+		public static bool AddCustomMimeType(MimeType mimeType)
+			=> all.Add(mimeType);
+
+		/// <summary>
 		/// Parse MimeType value
 		/// </summary>
 		/// <param name="mimeType">Value</param>
@@ -118,31 +141,8 @@
 				return Blank;
 			}
 
-			var types = new[]
-			{
-				Blank,
-				General,
-				Bmp,
-				Doc,
-				Docx,
-				Gif,
-				Jpg,
-				M4a,
-				Mp3,
-				Pdf,
-				Png,
-				Ppt,
-				Pptx,
-				Rar,
-				Tar,
-				Text,
-				Xls,
-				Xlsx,
-				Zip
-			};
-
 			// Parse and return value - if None, return General
-			return Parse(mimeType, types).Unwrap(() => General);
+			return Parse(mimeType, all.ToArray()).Unwrap(() => General);
 		}
 	}
 }
