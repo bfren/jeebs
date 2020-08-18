@@ -7,25 +7,25 @@ using Newtonsoft.Json;
 namespace Jeebs.Util
 {
 	/// <summary>
-	/// Converter for custom Enum types
+	/// Converter for custom Enumerated types
 	/// </summary>
-	/// <typeparam name="T">Enum type</typeparam>
-	public class EnumConverter<T> : JsonConverter<T>
+	/// <typeparam name="T">Enumerated type</typeparam>
+	public class EnumeratedConverter<T> : JsonConverter<T>
 		where T : Enumerated
 	{
 		/// <summary>
-		/// Read a string value as Enum type
+		/// Read a string value as Enumerated type
 		/// </summary>
 		/// <param name="reader">JsonReader</param>
-		/// <param name="objectType">Type of Enum</param>
+		/// <param name="objectType">Enumerated type</param>
 		/// <param name="existingValue">Existing value</param>
 		/// <param name="hasExistingValue">Whether or not there is an existing value</param>
 		/// <param name="serializer">JsonSerializer</param>
 		public override T ReadJson(JsonReader reader, Type objectType, [AllowNull] T existingValue, bool hasExistingValue, JsonSerializer serializer)
-			=> (T)Activator.CreateInstance(objectType, args: reader.ToString());
+			=> (T)Activator.CreateInstance(objectType, args: reader.Value?.ToString());
 
 		/// <summary>
-		/// Write an Enum type value
+		/// Write an Enumerated type value
 		/// </summary>
 		/// <param name="writer">JsonWriter</param>
 		/// <param name="value">Value to write</param>

@@ -18,7 +18,7 @@ namespace Jeebs.Util
 			=> NamingStrategy = new CamelCaseNamingStrategy();
 
 		/// <summary>
-		/// If <paramref name="objectType"/> is an <see cref="Enumerated"/>, returns <see cref="EnumConverter{T}"/>
+		/// If <paramref name="objectType"/> is an <see cref="Enumerated"/>, returns <see cref="EnumeratedConverter{T}"/>
 		/// <para>Otherwise, returns default contract resolved</para>
 		/// </summary>
 		/// <param name="objectType">Object to be converted</param>
@@ -26,7 +26,7 @@ namespace Jeebs.Util
 		{
 			if (objectType.IsSubclassOf(typeof(Enumerated)))
 			{
-				var converterType = typeof(EnumConverter<>).MakeGenericType(objectType);
+				var converterType = typeof(EnumeratedConverter<>).MakeGenericType(objectType);
 				return (JsonConverter)Activator.CreateInstance(converterType);
 			}
 

@@ -12,9 +12,9 @@ namespace Jeebs.Util
 	public static class Json
 	{
 		/// <summary>
-		/// Empty JSON string
+		/// Empty JSON
 		/// </summary>
-		public const string Empty = "{ }";
+		public const string Empty = "\"\"";
 
 		/// <summary>
 		/// Default JsonSerializerSettings

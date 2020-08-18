@@ -20,8 +20,16 @@ namespace Jeebs
 		/// Set the name of this value
 		/// </summary>
 		/// <param name="name">Value name</param>
-		protected Enumerated(string name)
-			=> this.name = name;
+		/// <param name="allowEmpty">If <see langword="false"/>, and <paramref name="name"/> is null or empty, will throw an exception</param>
+		protected Enumerated(string name, bool allowEmpty = true)
+		{
+			if (string.IsNullOrWhiteSpace(name) && !allowEmpty)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			this.name = name;
+		}
 
 		/// <summary>
 		/// Return the name of this value
