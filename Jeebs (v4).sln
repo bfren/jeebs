@@ -107,7 +107,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		Libraries.pack.props = Libraries.pack.props
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -122,11 +121,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Result.Chain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Services", ".Services", "{6C31552E-8082-4D9A-BA93-A6BA41A47000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Services.Twitter", "Libraries\Jeebs.Services.Twitter\Jeebs.Services.Twitter.csproj", "{954BD69F-0EBF-4995-A427-ABACD1511D08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Twitter", "Libraries\Jeebs.Services.Twitter\Jeebs.Services.Twitter.csproj", "{954BD69F-0EBF-4995-A427-ABACD1511D08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Drivers", ".Drivers", "{C6413973-B7C3-4B42-90C0-ED07334291EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Services.Drivers.Twitter.Tweetinvi", "Libraries\Jeebs.Services.Drivers.Twitter.Tweetinvi\Jeebs.Services.Drivers.Twitter.Tweetinvi.csproj", "{8CCA640D-0321-4BB1-92ED-034038735172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Twitter.Tweetinvi", "Libraries\Jeebs.Services.Drivers.Twitter.Tweetinvi\Jeebs.Services.Drivers.Twitter.Tweetinvi.csproj", "{8CCA640D-0321-4BB1-92ED-034038735172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
