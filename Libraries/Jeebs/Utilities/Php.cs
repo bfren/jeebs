@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Text;
+using Jeebs.Reflection;
 
 namespace Jeebs.Util
 {
@@ -9,6 +10,14 @@ namespace Jeebs.Util
 	/// </summary>
 	public static class Php
 	{
+		// Value types
+		public const char Array = 'a';
+		public const char Boolean = 'b';
+		public const char Double = 'd';
+		public const char Integer = 'i';
+		public const char String = 's';
+		public const char Null = 'N';
+
 		/// <summary>
 		/// UTF8Encoding
 		/// </summary>
@@ -19,38 +28,39 @@ namespace Jeebs.Util
 		/// </summary>
 		/// <param name="obj">Object</param>
 		/// <returns>Serialised object</returns>
-		public static string Serialise(object obj)
+		public static string Serialise<T>(T obj)
 			=> Serialise(obj, new StringBuilder()).ToString();
 
-		private static StringBuilder Serialise(object obj, StringBuilder sb)
+		private static StringBuilder Serialise<T>(T obj, StringBuilder sb)
 		{
 			return obj switch
 			{
 				string x => appendString(x),
-				bool x => append("b", x ? "1" : "0"),
-				int x => append("i", x),
-				long x => append("i", x),
-				double x => append("d", x),
+				bool x => append(Boolean, x ? "1" : "0"),
+				int x => append(Integer, x),
+				long x => append(Integer, x),
+				float x => append(Double, x),
+				double x => append(Double, x),
 				IList x => appendList(x),
 				IDictionary x => appendDictionary(x),
-				{ } => sb,
-				_ => sb.Append("N;")
+				{ } x => sb,
+				_ => sb.Append(Null).Append(";")
 			};
 
 			// Append a value to the StringBuilder
-			StringBuilder append<T>(string type, T val)
-				=> sb.Append(type).Append(':').Append(val).Append(';');
+			StringBuilder append<U>(char type, U value)
+				=> sb.Append($"{type}:{value};");
 
 			// Append a string to the StringBuilder
 			StringBuilder appendString(string str)
-				=> sb.Append("s:").Append(enc.GetByteCount(str)).Append(":\"").Append(str).Append("\";");
+				=> sb.Append($"{String}:{enc.GetByteCount(str)}:\"{str}\";");
 
 			// Append a Hashtable to the StringBuilder
 			// Enables arrays of different key / value pairs
-			StringBuilder appendHashtable(Hashtable htb)
+			StringBuilder appendHashtable(Hashtable hashtable)
 			{
-				sb.Append("a:").Append(htb.Count).Append(":{");
-				foreach (DictionaryEntry item in htb)
+				sb.Append($"{Array}:{hashtable.Count}:{{");
+				foreach (DictionaryEntry item in hashtable)
 				{
 					Serialise(item.Key, sb);
 					Serialise(item.Value, sb);
@@ -59,12 +69,12 @@ namespace Jeebs.Util
 			}
 
 			// Append a List to the StringBuilder
-			StringBuilder appendList(IList l)
+			StringBuilder appendList(IList list)
 			{
 				var htb = new Hashtable();
-				for (int i = 0; i < l.Count; i++)
+				for (int i = 0; i < list.Count; i++)
 				{
-					htb.Add(i, l[i]);
+					htb.Add(i, list[i]);
 				}
 
 				return appendHashtable(htb);
@@ -72,15 +82,7 @@ namespace Jeebs.Util
 
 			// Append a Dictionary to the StringBuilder
 			StringBuilder appendDictionary(IDictionary d)
-			{
-				var htb = new Hashtable();
-				foreach (var key in d.Keys)
-				{
-					htb.Add(key, d[key]);
-				}
-
-				return appendHashtable(htb);
-			}
+				=> appendHashtable(new Hashtable(d));
 		}
 
 		private static int pointer;
@@ -99,12 +101,12 @@ namespace Jeebs.Util
 
 			return str[pointer] switch
 			{
-				'a' => getHashtable(),
-				'b' => getBoolean(),
-				'd' => getNumber(double.Parse, 0d),
-				'i' => getNumber(long.Parse, 0u),
-				's' => getString(),
-				'N' => getNull(),
+				Array => getHashtable(),
+				Boolean => getBoolean(),
+				Double => getNumber(double.Parse, 0d),
+				Integer => getNumber(long.Parse, 0u),
+				String => getString(),
+				Null => getNull(),
 				_ => string.Empty
 			};
 
@@ -129,7 +131,7 @@ namespace Jeebs.Util
 				// Get string value
 				var colon = str.IndexOf(':', pointer) + 1;
 				var semicolon = str.IndexOf(';', colon);
-				var num = str[colon..semicolon];
+				var num = str[colon..semicolon]; // the number as a string
 				pointer += 3 + num.Length;
 
 				// Attempt to parse number value
@@ -166,7 +168,7 @@ namespace Jeebs.Util
 				// Get start and end positions
 				var colon0 = str.IndexOf(':', pointer) + 1;
 				var colon1 = str.IndexOf(':', colon0);
-				var num = str[colon0..colon1];
+				var num = str[colon0..colon1]; // the number of items in the array
 				var len = int.Parse(num);
 				pointer += 4 + num.Length;
 

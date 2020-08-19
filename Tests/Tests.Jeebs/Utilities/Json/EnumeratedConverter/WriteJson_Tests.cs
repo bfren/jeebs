@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Util.Json_Tests
@@ -13,14 +12,13 @@ namespace Jeebs.Util.Json_Tests
 		{
 			// Arrange
 			const string value = "18";
-			var enumerated = Substitute.For<Enumerated>(value);
+			var enumerated = new Test(value);
 
 			// Act
 			var result = Json.Serialise(enumerated);
 
 			// Assert
 			Assert.Equal($"\"{value}\"", result);
-			enumerated.Received().ToString();
 		}
 
 		[Theory]
@@ -34,6 +32,11 @@ namespace Jeebs.Util.Json_Tests
 
 			// Assert
 			Assert.Equal(Json.Empty, result);
+		}
+
+		public class Test : Enumerated
+		{
+			public Test(string name) : base(name) { }
 		}
 	}
 }

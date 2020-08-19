@@ -13,13 +13,12 @@ namespace Jeebs.Util.Json_Tests
 		public void Null_ReturnsEmpty(object input)
 		{
 			// Arrange
-			const string emptyJson = "{ }";
 
 			// Act
 			var result = Json.Serialise(input);
 
 			// Assert
-			Assert.Equal(emptyJson, result);
+			Assert.Equal(Json.Empty, result);
 		}
 
 		[Fact]
