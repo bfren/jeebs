@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using Jm.DateTimeInt;
 
 namespace Jeebs
 {
@@ -134,87 +136,29 @@ namespace Jeebs
 
 		private void Init(string value)
 		{
-			Year = GetPart(value, 0, 4);
-			Month = GetPart(value, 4, 2);
-			Day = GetPart(value, 6, 2);
-			Hour = GetPart(value, 8, 2);
-			Minute = GetPart(value, 10, 2);
+			Year = int.Parse(value[0..4]);
+			Month = int.Parse(value[4..6]);
+			Day = int.Parse(value[6..8]);
+			Hour = int.Parse(value[8..10]);
+			Minute = int.Parse(value[10..]);
 		}
 
 		/// <summary>
-		/// Returns true if the object is a valid DateTime
+		/// Get the current DateTime
 		/// </summary>
-		/// <returns>True if object is a valid DateTime</returns>
-		public bool IsValidDateTime()
-		{
-			if (Year < 1 || Year > 9999)
+		public Option<DateTime> ToDateTime()
+			=> IsValidDateTime() switch
 			{
-				return false;
-			}
-
-			if (Month < 1 || Month > 12)
-			{
-				return false;
-			}
-
-			if (Day < 1)
-			{
-				return false;
-			}
-
-			if (new[] { 1, 3, 5, 7, 8, 10, 12 }.Contains(Month) && Day > 31)
-			{
-				return false;
-			}
-
-			if (new[] { 4, 6, 9, 11 }.Contains(Month) && Day > 30)
-			{
-				return false;
-			}
-
-			if (Day > 29)
-			{
-				return false;
-			}
-
-			return true;
-		}
-
-		/// <summary>
-		/// Returns true if the object is a valid DateTime
-		/// Also outputs the object's valid as a DateTime
-		/// </summary>
-		/// <param name="dt">[Output] DateTime</param>
-		/// <returns>True if the object is a valid DateTime</returns>
-		public bool IsValidDateTime(out DateTime? dt)
-		{
-			if (!IsValidDateTime())
-			{
-				dt = null;
-				return false;
-			}
-
-			dt = new DateTime(Year, Month, Day, Hour, Minute, 0);
-			return true;
-		}
-
-		/// <summary>
-		/// Get part of a string
-		/// </summary>
-		/// <param name="val">String value</param>
-		/// <param name="start">Substring start</param>
-		/// <param name="length">Substring length</param>
-		/// <returns>Integer parsed part of a string</returns>
-		private int GetPart(string val, int start, int length)
-			=> int.Parse(val.Substring(start, length));
+				{ } x when x.valid => new DateTime(Year, Month, Day, Hour, Minute, 0),
+				{ } x => Option.None<DateTime>().AddReason(new InvalidDateTimeMsg(x.part, this))
+			};
 
 		/// <summary>
 		/// Outputs object values as correctly formatted string
 		/// If the object is not valid, returns a string of zeroes
 		/// </summary>
-		/// <returns>String value of object, or string of zeroes</returns>
 		public override string ToString()
-			=> IsValidDateTime() switch
+			=> IsValidDateTime().valid switch
 			{
 				true => $"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 				false => 0.ToString(format)
@@ -224,12 +168,76 @@ namespace Jeebs
 		/// Outputs object values as long
 		/// If the object is not valid, returns 0
 		/// </summary>
-		/// <returns>Long value of object, or zero</returns>
 		public long ToLong()
-			=> IsValidDateTime() switch
+			=> IsValidDateTime().valid switch
 			{
 				true => long.Parse(ToString()),
 				false => 0
 			};
+
+		private (bool valid, string part) IsValidDateTime()
+		{
+			if (Year < 0 || Year > 9999)
+			{
+				return (false, nameof(Year));
+			}
+
+			if (Month < 1 || Month > 12)
+			{
+				return (false, nameof(Month));
+			}
+
+			if (Day < 1)
+			{
+				return (false, nameof(Day));
+			}
+
+			if (new[] { 1, 3, 5, 7, 8, 10, 12 }.Contains(Month) && Day > 31)
+			{
+				return (false, nameof(Day));
+			}
+			else if (new[] { 4, 6, 9, 11 }.Contains(Month) && Day > 30)
+			{
+				return (false, nameof(Day));
+			}
+			else // February is the only month left
+			{
+				if (IsLeapYear() && Day > 29)
+				{
+					return (false, nameof(Day));
+				}
+				else if (Day > 28)
+				{
+					return (false, nameof(Day));
+				}
+			}
+
+			if (Hour < 0 || Hour > 23)
+			{
+				return (false, nameof(Hour));
+			}
+
+			if (Minute < 0 || Minute > 59)
+			{
+				return (false, nameof(Minute));
+			}
+
+			return (true, string.Empty);
+		}
+
+		private bool IsLeapYear()
+		{
+			if (Year % 400 == 0)
+			{
+				return true;
+			}
+
+			if (Year % 100 == 0)
+			{
+				return false;
+			}
+
+			return Year % 4 == 0;
+		}
 	}
 }
