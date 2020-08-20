@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using Jeebs.Reflection;
 
@@ -94,6 +95,12 @@ namespace Jeebs.Util
 		/// <returns>Deserialised object</returns>
 		public static object Deserialise(string str)
 		{
+			pointer = 0;
+			return PrivateDeserialise(str);
+		}
+
+		private static object PrivateDeserialise(string str)
+		{
 			if (string.IsNullOrWhiteSpace(str) || str.Length <= pointer)
 			{
 				return new object();
@@ -101,10 +108,10 @@ namespace Jeebs.Util
 
 			return str[pointer] switch
 			{
-				Array => getHashtable(),
+				Array => getArray(),
 				Boolean => getBoolean(),
 				Double => getNumber(double.Parse, 0d),
-				Integer => getNumber(long.Parse, 0u),
+				Integer => getNumber(long.Parse, 0L),
 				String => getString(),
 				Null => getNull(),
 				_ => string.Empty
@@ -114,7 +121,7 @@ namespace Jeebs.Util
 			static object getNull()
 			{
 				pointer += 2;
-				return new object();
+				return string.Empty;
 			}
 
 			// Get boolean
@@ -162,8 +169,8 @@ namespace Jeebs.Util
 				return str[from..to];
 			}
 
-			// Get a Hashtable
-			Hashtable getHashtable()
+			// Get AssocArray
+			AssocArray getArray()
 			{
 				// Get start and end positions
 				var colon0 = str.IndexOf(':', pointer) + 1;
@@ -173,15 +180,25 @@ namespace Jeebs.Util
 				pointer += 4 + num.Length;
 
 				// Get each key and value, and add them to a hashtable
-				var table = new Hashtable();
+				var table = new AssocArray();
 				for (int i = 0; i < len; i++)
 				{
-					var key = Deserialise(str);
-					table[key] = Deserialise(str);
+					var (key, value) = (PrivateDeserialise(str), PrivateDeserialise(str));
+					if (int.TryParse(key.ToString(), out int k))
+					{
+						table.Add(k, value);
+					}
+					else
+					{
+						table.Add(key, value);
+					}
 				}
 
+				pointer++;
 				return table;
 			}
 		}
+
+		public class AssocArray : Dictionary<object, object> { }
 	}
 }
