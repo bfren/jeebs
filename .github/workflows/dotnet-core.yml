@@ -26,7 +26,7 @@ jobs:
       if: always()
       with:
         type: ${{ job.status }}
-        job_name: '*Link Check*'
+        job_name: '*Jeebs Build and Test*'
         channel: '#code'
         url: ${{ secrets.RC_WEBHOOK }}
     
