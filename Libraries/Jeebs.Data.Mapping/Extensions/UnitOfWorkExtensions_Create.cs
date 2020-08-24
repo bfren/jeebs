@@ -68,7 +68,7 @@ namespace Jeebs.Data
 
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			w.LogQuery(r, nameof(InsertAndReturnId), query, poco);
+			r.AddMsg(new Jm.Data.QueryMsg(nameof(InsertAndReturnId), query, poco));
 
 			// Insert and capture new ID
 			var newId = w.Connection.ExecuteScalar<long>(query, param: poco, transaction: w.Transaction);
@@ -90,7 +90,7 @@ namespace Jeebs.Data
 
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			w.LogQuery(r, nameof(InsertAndReturnIdAsync), query, poco);
+			r.AddMsg(new Jm.Data.QueryMsg(nameof(InsertAndReturnIdAsync), query, poco));
 
 			// Insert and capture new ID
 			var newId = await w.Connection.ExecuteScalarAsync<long>(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);

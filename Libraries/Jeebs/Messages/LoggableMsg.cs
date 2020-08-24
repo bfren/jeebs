@@ -17,5 +17,11 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public virtual LogLevel Level
 			=> Defaults.Log.Level;
+
+		/// <summary>
+		/// Use <see cref="Format"/> and <see cref="ParamArray"/>
+		/// </summary>
+		public override string ToString()
+			=> string.Format(Format, ParamArray);
 	}
 }

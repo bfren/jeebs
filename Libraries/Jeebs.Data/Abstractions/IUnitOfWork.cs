@@ -48,21 +48,6 @@ namespace Jeebs.Data
 		/// </summary>
 		void Rollback();
 
-		#region Logging & Failure
-
-		/// <summary>
-		/// Log a query
-		/// </summary>
-		/// <typeparam name="T">Parameter object type</typeparam>
-		/// <param name="r">Result</param>
-		/// <param name="method">Calling method</param>
-		/// <param name="query">SQL query</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		void LogQuery<T>(IOk r, string method, string query, T parameters, CommandType commandType = CommandType.Text);
-
-		#endregion
-
 		#region R: Query
 
 		/// <summary>

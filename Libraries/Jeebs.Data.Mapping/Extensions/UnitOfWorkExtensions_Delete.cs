@@ -29,7 +29,7 @@ namespace Jeebs.Data
 
 				// Build query
 				var query = w.Adapter.DeleteSingle<T>();
-				w.LogQuery(r, method, query, poco);
+				r.AddMsg(new Jm.Data.QueryMsg(method, query, poco));
 
 				// Execute
 				var rowsAffected = await execute(query, poco, w.Transaction);

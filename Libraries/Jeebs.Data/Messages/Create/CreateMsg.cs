@@ -26,7 +26,7 @@ namespace Jm.Data
 
 		/// <inheritdoc/>
 		public override object[] ParamArray
-			=> new object[] { type, id };
+			=> new object[] { type.FullName, id };
 
 		/// <summary>
 		/// Create object
@@ -35,11 +35,5 @@ namespace Jm.Data
 		/// <param name="id">POCO id</param>
 		public CreateMsg(Type type, long id)
 			=> (this.type, this.id) = (type, id);
-
-		/// <summary>
-		/// Output success message
-		/// </summary>
-		public override string ToString()
-			=> string.Format(Format, ParamArray);
 	}
 }

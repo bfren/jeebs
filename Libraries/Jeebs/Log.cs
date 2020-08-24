@@ -52,7 +52,7 @@ namespace Jeebs
 			switch (level)
 			{
 				case LogLevel.Trace:
-					Debug(text, args);
+					Trace(text, args);
 					break;
 				case LogLevel.Information:
 					Information(text, args);

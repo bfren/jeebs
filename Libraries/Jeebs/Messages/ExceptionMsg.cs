@@ -31,7 +31,7 @@ namespace Jm
 		/// <summary>
 		/// Log level - default is <see cref="Jeebs.Defaults.Log.ExceptionLevel"/>
 		/// </summary>
-		public LogLevel Level
+		public virtual LogLevel Level
 			=> Jeebs.Defaults.Log.ExceptionLevel;
 
 		/// <summary>

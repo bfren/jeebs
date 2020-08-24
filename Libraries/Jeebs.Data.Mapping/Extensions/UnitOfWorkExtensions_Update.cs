@@ -66,7 +66,7 @@ namespace Jeebs.Data
 			// Build query and increase the version number
 			var query = w.Adapter.UpdateSingle<T>();
 			poco.Version++;
-			w.LogQuery(r, nameof(UpdateWithVersion), query, poco);
+			r.AddMsg(new Jm.Data.QueryMsg(nameof(UpdateWithVersion), query, poco));
 
 			// Execute and return
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
@@ -91,7 +91,7 @@ namespace Jeebs.Data
 
 			// Build query
 			var query = w.Adapter.UpdateSingle<T>();
-			w.LogQuery(r, nameof(UpdateWithoutVersion), query, poco);
+			r.AddMsg(new Jm.Data.QueryMsg(nameof(UpdateWithoutVersion), query, poco));
 
 			// Execute and return
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);

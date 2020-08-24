@@ -28,7 +28,7 @@ namespace Jeebs.Data
 			{
 				// Build query
 				var query = w.Adapter.RetrieveSingleById<T>();
-				w.LogQuery(r, method, query, new { id });
+				r.AddMsg(new Jm.Data.QueryMsg(method, query, new { id }));
 
 				// Execute
 				var result = await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
