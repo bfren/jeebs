@@ -26,7 +26,7 @@ namespace Jeebs
 		}
 
 		/// <inheritdoc/>
-		public IR<TValue> AddLogger(ILog log)
+		public IR<TValue> LogUsing(ILog log)
 		{
 			Log.log = log;
 			return this;
@@ -60,8 +60,8 @@ namespace Jeebs
 		IError IR.Error()
 			=> Error();
 
-		IR IR.AddLogger(ILog log)
-			=> AddLogger(log);
+		IR IR.LogUsing(ILog log)
+			=> LogUsing(log);
 
 		#endregion
 	}

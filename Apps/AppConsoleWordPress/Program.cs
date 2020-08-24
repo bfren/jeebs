@@ -37,7 +37,7 @@ namespace AppConsoleWordPress
 				(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
 
 				Chain.Create()
-					.AddLogger(log)
+					.LogUsing(log)
 					.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
 					.Audit(AuditOption);
 
@@ -64,14 +64,14 @@ namespace AppConsoleWordPress
 					.Audit(AuditSermons);
 
 				Chain.Create(bcg.Db)
-					.AddLogger(log)
+					.LogUsing(log)
 					.Link().MapAsync(FetchMeta).Await()
 					.Audit(AuditMeta)
 					.Link().MapAsync(FetchCustomFields).Await()
 					.Audit(AuditCustomFields);
 
 				Chain.Create()
-					.AddLogger(log)
+					.LogUsing(log)
 					.Link().Map<int>(_ => throw new Exception("Test"));
 
 				// Perform tests

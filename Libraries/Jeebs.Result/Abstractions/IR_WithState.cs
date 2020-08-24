@@ -20,7 +20,7 @@ namespace Jeebs
 		/// Add a log to this result
 		/// </summary>
 		/// <param name="log">ILog</param>
-		new IR<TValue, TState> AddLogger(ILog log);
+		new IR<TValue, TState> LogUsing(ILog log);
 
 		/// <summary>
 		/// Return an <see cref="IError{TValue}"/> with the current value and state types

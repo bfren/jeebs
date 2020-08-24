@@ -20,7 +20,7 @@ namespace Jeebs
 		bool HasMessages => Messages.Count > 0;
 
 		/// <summary>
-		/// Used to log events (e.g. exceptions) - requires <see cref="AddLogger(ILog)"/> to be called to set an application-specific log
+		/// Used to log events (e.g. exceptions) - requires <see cref="LogUsing(ILog)"/> to be called to set an application-specific log
 		/// </summary>
 		Logger Log { get; }
 
@@ -28,7 +28,7 @@ namespace Jeebs
 		/// Add a log to this result
 		/// </summary>
 		/// <param name="log">ILog</param>
-		IR AddLogger(ILog log);
+		IR LogUsing(ILog log);
 
 		/// <summary>
 		/// Return a simple <see cref="IError"/> result
@@ -58,7 +58,7 @@ namespace Jeebs
 		/// Add a log to this result
 		/// </summary>
 		/// <param name="log">ILog</param>
-		new IR<TValue> AddLogger(ILog log);
+		new IR<TValue> LogUsing(ILog log);
 
 		/// <summary>
 		/// Return an <see cref="IError{TValue}"/> with the current value type

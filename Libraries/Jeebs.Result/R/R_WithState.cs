@@ -17,10 +17,10 @@ namespace Jeebs
 		new public IError<TValue, TState> Error()
 			=> Error<TValue>();
 
-		/// <inheritdoc cref="IR.AddLogger(ILog)"/>
-		public new IR<TValue, TState> AddLogger(ILog log)
+		/// <inheritdoc cref="IR.LogUsing(ILog)"/>
+		public new IR<TValue, TState> LogUsing(ILog log)
 		{
-			base.AddLogger(log);
+			base.LogUsing(log);
 			return this;
 		}
 
