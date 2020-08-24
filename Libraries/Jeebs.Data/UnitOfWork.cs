@@ -81,18 +81,8 @@ namespace Jeebs.Data
 		#region Logging & Failure
 
 		/// <inheritdoc/>
-		public void LogDebug<T>(T message) where T : IMsg
-			=> log.Debug(message.ToString());
-
-		/// <inheritdoc/>
-		public void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text)
-		{
-			var sb = new StringBuilder();
-			sb.AppendLine($"Method: UnitOfWork.{method}()");
-			sb.AppendLine($"Query [{commandType}]: {query}");
-			sb.AppendLine($"Parameters: {Json.Serialise(parameters)}");
-			log.Debug(sb.ToString());
-		}
+		public void LogQuery<T>(IOk r, string method, string query, T parameters, CommandType commandType = CommandType.Text)
+			=> r.Log.Trace("UnitOfWork.{method}()\nQuery[{commandType}]: {query}\nParameters{parameters}", method, commandType, query, Json.Serialise(parameters));
 
 		/// <inheritdoc/>
 		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters = null)
@@ -102,7 +92,7 @@ namespace Jeebs.Data
 
 			// Log error
 			var message = new Jm.Data.QueryExceptionMsg(ex, query, parameters);
-			log.Error(ex, message.ToString());
+			log.Error(ex, message.Format, message.ParamArray);
 
 			// Return error
 			return r.Error<T>().AddMsg(message);
@@ -118,7 +108,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(Query), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(Query), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = Connection.Query<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType);
@@ -136,7 +126,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(QueryAsync), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(QueryAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
@@ -154,7 +144,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(Query), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(Query), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = Connection.Query<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
@@ -172,7 +162,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(QueryAsync), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(QueryAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
@@ -194,7 +184,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(Single), query, parameters, commandType);
+				LogQuery(r, nameof(Single), query, parameters, commandType);
 
 				// Execute and return
 				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
@@ -212,7 +202,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(SingleAsync), query, parameters, commandType);
+				LogQuery(r, nameof(SingleAsync), query, parameters, commandType);
 
 				// Execute and return
 				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
@@ -234,7 +224,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(Execute), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(Execute), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var affectedRows = Connection.Execute(query, param: parameters, transaction: Transaction, commandType: commandType);
@@ -252,7 +242,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteAsync), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(ExecuteAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: Transaction).ConfigureAwait(false);
@@ -270,7 +260,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteScalar), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(ExecuteScalar), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: Transaction);
@@ -288,7 +278,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				LogQuery(nameof(ExecuteScalarAsync), query, parameters ?? new object(), commandType);
+				LogQuery(r, nameof(ExecuteScalarAsync), query, parameters ?? new object(), commandType);
 
 				// Execute and return
 				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: Transaction).ConfigureAwait(false);

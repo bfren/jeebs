@@ -68,7 +68,7 @@ namespace Jeebs.Data
 
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			w.LogQuery(nameof(InsertAndReturnId), query, poco);
+			w.LogQuery(r, nameof(InsertAndReturnId), query, poco);
 
 			// Insert and capture new ID
 			var newId = w.Connection.ExecuteScalar<long>(query, param: poco, transaction: w.Transaction);
@@ -90,7 +90,7 @@ namespace Jeebs.Data
 
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			w.LogQuery(nameof(InsertAndReturnIdAsync), query, poco);
+			w.LogQuery(r, nameof(InsertAndReturnIdAsync), query, poco);
 
 			// Insert and capture new ID
 			var newId = await w.Connection.ExecuteScalarAsync<long>(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);
@@ -128,7 +128,7 @@ namespace Jeebs.Data
 			var w = r.State;
 
 			// Add create message
-			r.Messages.Add(new Jm.Data.CreateMsg(typeof(T), r.Value));
+			r.AddMsg(new Jm.Data.CreateMsg(typeof(T), r.Value));
 
 			// Get fresh poco
 			return (IR<T, IUnitOfWork>)Single<T>(w, r);
@@ -147,7 +147,7 @@ namespace Jeebs.Data
 			var newId = r.Value;
 
 			// Add create message
-			r.Messages.Add(new Jm.Data.CreateMsg(typeof(T), newId));
+			r.AddMsg(new Jm.Data.CreateMsg(typeof(T), newId));
 
 			// Get fresh poco
 			return (IR<T, IUnitOfWork>)await w.SingleAsync<T>(r);

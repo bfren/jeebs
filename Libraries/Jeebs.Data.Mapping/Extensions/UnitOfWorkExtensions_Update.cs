@@ -35,10 +35,8 @@ namespace Jeebs.Data
 						_ => UpdateWithoutVersion(w, r)
 					};
 
-					// Add debug and result messages
-					var message = new Jm.Data.UpdateMsg(typeof(T), r.Value.Id);
-					w.LogDebug(message);
-					result.Messages.Add(message);
+					// Add update messages
+					result.AddMsg(new Jm.Data.UpdateMsg(typeof(T), r.Value.Id));
 
 					// Return result
 					return result;
@@ -68,7 +66,7 @@ namespace Jeebs.Data
 			// Build query and increase the version number
 			var query = w.Adapter.UpdateSingle<T>();
 			poco.Version++;
-			w.LogQuery(nameof(UpdateWithVersion), query, poco);
+			w.LogQuery(r, nameof(UpdateWithVersion), query, poco);
 
 			// Execute and return
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
@@ -93,7 +91,7 @@ namespace Jeebs.Data
 
 			// Build query
 			var query = w.Adapter.UpdateSingle<T>();
-			w.LogQuery(nameof(UpdateWithoutVersion), query, poco);
+			w.LogQuery(r, nameof(UpdateWithoutVersion), query, poco);
 
 			// Execute and return
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);

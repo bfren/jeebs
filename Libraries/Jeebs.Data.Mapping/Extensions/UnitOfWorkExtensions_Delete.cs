@@ -29,16 +29,14 @@ namespace Jeebs.Data
 
 				// Build query
 				var query = w.Adapter.DeleteSingle<T>();
-				w.LogQuery(method, query, poco);
+				w.LogQuery(r, method, query, poco);
 
 				// Execute
 				var rowsAffected = await execute(query, poco, w.Transaction);
 				if (rowsAffected == 1)
 				{
-					// Add debug and result messages
-					var message = new Jm.Data.RetrieveMsg(typeof(T), poco.Id);
-					w.LogDebug(message);
-					r.Messages.Add(message);
+					// Add delete message
+					r.AddMsg(new Jm.Data.DeleteMsg(typeof(T), poco.Id));
 
 					// Return
 					return r.True();

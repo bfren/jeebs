@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs;
+using Microsoft.Extensions.Logging;
 
 namespace Jm.Data
 {
 	/// <summary>
 	/// Retrieve success message
 	/// </summary>
-	public class RetrieveMsg : IMsg
+	public class RetrieveMsg : ILoggableMsg
 	{
 		/// <summary>
 		/// Entity Type
@@ -18,7 +19,19 @@ namespace Jm.Data
 		/// <summary>
 		/// Entity ID
 		/// </summary>
-		protected readonly long? id;
+		protected readonly long id;
+
+		/// <inheritdoc/>
+		public string Format
+			=> $"Retrieved '{{{nameof(type)}}}' with ID '{{{nameof(id)}}}'.";
+
+		/// <inheritdoc/>
+		public object[] ParamArray
+			=> new object[] { type, id };
+
+		/// <inheritdoc/>
+		public LogLevel Level
+			=> LogLevel.Debug;
 
 		/// <summary>
 		/// Create object
@@ -32,6 +45,6 @@ namespace Jm.Data
 		/// Output success message
 		/// </summary>
 		public override string ToString()
-			=> $"Retrieved '{type}' with ID '{id}'.";
+			=> string.Format(Format, ParamArray);
 	}
 }

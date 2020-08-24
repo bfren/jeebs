@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
+				result.Log.Error(ex, "Link Error - check Exception for details");
 				handlers.Handle(result, ex);
 				return result.Error<TNext>();
 			}

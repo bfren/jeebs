@@ -5,10 +5,15 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// Exception handling message
+	/// Represents a framework message for handling exceptions
 	/// </summary>
-	public interface IExceptionMsg : IMsg
+	public interface IExceptionMsg : ILoggableMsg
 	{
+		/// <summary>
+		/// The exception that occurred
+		/// </summary>
+		public Exception Exception { get; }
+
 		/// <summary>
 		/// The full name of the Exception type
 		/// </summary>
@@ -18,11 +23,6 @@ namespace Jeebs
 		/// Exception text
 		/// </summary>
 		string ExceptionText { get; }
-
-		/// <summary>
-		/// Exception trace
-		/// </summary>
-		string ExceptionTrace { get; }
 
 		/// <summary>
 		/// Set properties from exception

@@ -15,7 +15,7 @@ namespace Jeebs
 
 		internal Link(IR<TValue, TState> result, Func<Exception, IMsg>? exceptionMsg = null) : base(result)
 		{
-			this.result = result.ChangeType().To<TValue>();
+			this.result = result;
 			handlers = new LinkExceptionHandlers<IR<TValue, TState>>(exceptionMsg);
 		}
 
@@ -37,6 +37,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
+				result.Log.Error(ex, "Link Error - check Exception for details");
 				handlers.Handle(result, ex);
 				return result.Error<TNext>();
 			}

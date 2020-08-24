@@ -6,7 +6,13 @@ namespace Jeebs
 	/// <summary>
 	/// Enables agnostic logging operations
 	/// </summary>
-	public interface ILog
+	/// <typeparam name="TContext">Log context</typeparam>
+	public interface ILog<TContext> : ILog { }
+
+	/// <summary>
+	/// Enables agnostic logging operations
+	/// </summary>
+	public interface ILog : IDisposable
 	{
 		/// <summary>
 		/// Whether or not the log will write for the specified Level
@@ -16,11 +22,17 @@ namespace Jeebs
 		bool IsEnabled(LogLevel level);
 
 		/// <summary>
-		/// Verbose log message
+		/// Log an <see cref="IMsg"/>
+		/// </summary>
+		/// <param name="message">Message to log</param>
+		void Message(IMsg message);
+
+		/// <summary>
+		/// Trace log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Verbose(string message, params object[] args);
+		void Trace(string message, params object[] args);
 
 		/// <summary>
 		/// Debug log message
@@ -59,18 +71,18 @@ namespace Jeebs
 		void Error(Exception ex, string message, params object[] args);
 
 		/// <summary>
-		/// Fatal log message
+		/// Critical log message
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
 		void Fatal(string message, params object[] args);
 
 		/// <summary>
-		/// Fatal log message
+		/// Critical log message
 		/// </summary>
 		/// <param name="ex">Exception</param>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Fatal(Exception ex, string message, params object[] args);
+		void Critical(Exception ex, string message, params object[] args);
 	}
 }

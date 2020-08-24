@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Jeebs.Fluent
@@ -23,9 +22,6 @@ namespace Jeebs.Fluent
 		/// <typeparam name="TMessage">Message type</typeparam>
 		public TResult OfType<TMessage>()
 			where TMessage : IMsg, new()
-		{
-			result.Messages.Add<TMessage>();
-			return result;
-		}
+			=> result.AddMsg(new TMessage());
 	}
 }

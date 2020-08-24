@@ -14,7 +14,7 @@ namespace Jm.Data
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
-		public CreateErrorMsg(Type type) : base(type) { }
+		public CreateErrorMsg(Type type) : base(type, 0) { }
 
 		/// <summary>
 		/// Output error message

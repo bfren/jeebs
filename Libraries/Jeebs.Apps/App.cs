@@ -66,12 +66,12 @@ namespace Jeebs.Apps
 		/// Configure Serilog
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
-		/// <param name="logger">LoggerConfiguration</param>
-		protected virtual void ConfigureSerilog(IConfiguration config, LoggerConfiguration logger)
+		/// <param name="loggerConfig">LoggerConfiguration</param>
+		protected virtual void ConfigureSerilog(IConfiguration config, LoggerConfiguration loggerConfig)
 		{
 			// Load Serilog config
 			var jeebs = config.GetJeebsConfig();
-			logger.LoadFromJeebsConfig(jeebs);
+			loggerConfig.LoadFromJeebsConfig(jeebs);
 		}
 
 		/// <summary>
@@ -87,6 +87,7 @@ namespace Jeebs.Apps
 
 			// Register Serilog Logger
 			services.AddTransient<ILog, SerilogLogger>();
+			services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
 		}
 	}
 }

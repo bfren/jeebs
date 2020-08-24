@@ -20,6 +20,11 @@ namespace Jeebs.Config.Logging
 		public FileProvider File { get; set; } = new FileProvider();
 
 		/// <summary>
+		/// Seq Provider
+		/// </summary>
+		public SeqProvider Seq { get; set; } = new SeqProvider();
+
+		/// <summary>
 		/// Slack Provider
 		/// </summary>
 		public SlackProvider Slack { get; set; } = new SlackProvider();

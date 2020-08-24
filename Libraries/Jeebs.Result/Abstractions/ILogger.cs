@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// Represents a framework message
+	/// Logger wrapper for Result classes
 	/// </summary>
-	public interface IMsg { }
+	public interface ILogger : ILog { }
 }

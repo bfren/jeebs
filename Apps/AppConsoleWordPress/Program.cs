@@ -28,6 +28,7 @@ namespace AppConsoleWordPress
 				Console.WriteLine("= WordPress Console Test =");
 
 				// Get services
+				var log = provider.GetService<ILog<Program>>();
 				var bcg = provider.GetService<WpBcg>();
 				var usa = provider.GetService<WpUsa>();
 
@@ -36,6 +37,7 @@ namespace AppConsoleWordPress
 				(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
 
 				Chain.Create()
+					.AddLogger(log)
 					.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
 					.Audit(AuditOption);
 
@@ -62,6 +64,7 @@ namespace AppConsoleWordPress
 					.Audit(AuditSermons);
 
 				Chain.Create(bcg.Db)
+					.AddLogger(log)
 					.Link().MapAsync(FetchMeta).Await()
 					.Audit(AuditMeta)
 					.Link().MapAsync(FetchCustomFields).Await()

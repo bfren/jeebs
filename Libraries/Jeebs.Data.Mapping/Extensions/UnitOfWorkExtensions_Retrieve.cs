@@ -28,15 +28,13 @@ namespace Jeebs.Data
 			{
 				// Build query
 				var query = w.Adapter.RetrieveSingleById<T>();
-				w.LogQuery(method, query, new { id });
+				w.LogQuery(r, method, query, new { id });
 
 				// Execute
 				var result = await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
 
-				// Add debug and result messages
-				var message = new Jm.Data.RetrieveMsg(typeof(T), id);
-				w.LogDebug(message);
-				r.Messages.Add(message);
+				// Add retrieve message
+				r.AddMsg(new Jm.Data.RetrieveMsg(typeof(T), id));
 
 				// Return
 				return r.OkV(result);

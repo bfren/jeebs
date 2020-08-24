@@ -10,12 +10,21 @@ namespace AppConsole
 	{
 		private static async Task Main(string[] args) => await Main<App>(args, (provider, config) =>
 		{
-			var log = provider.GetService<ILog>();
+			using var log = provider.GetService<ILog<Program>>();
+			Serilog.Debugging.SelfLog.Enable(Console.Error);
 
 			log.Debug("Services loaded");
 			log.Debug("Project {ProjectName}", config.GetJeebsConfig().App.Project);
 
-			Console.ReadLine();
+			log.Error("Test error");
+			log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
+
+			log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
+
+			while (Console.ReadLine() is string output)
+			{
+				log.Information(output);
+			}
 		}).ConfigureAwait(false);
 	}
 }

@@ -8,6 +8,11 @@
 			"providers": {
 				"console": {
 					"enabled": true
+				},
+				"seq": {
+					"enabled": true,
+					"server": "http://sq.bcg.xyz:5341",
+					"apiKey": ""
 				}
 			}
 		}

@@ -54,6 +54,11 @@ namespace Jeebs.Logging
 			);
 
 			AddProvider(
+				providers => providers.Seq,
+				seq => config.WriteTo.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: minimumLevel)
+			);
+
+			AddProvider(
 				providers => providers.Slack,
 				slack => config.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: minimumLevel))
 			);

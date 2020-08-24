@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs;
+using Microsoft.Extensions.Logging;
 
 namespace Jm
 {
@@ -9,38 +10,49 @@ namespace Jm
 	public abstract class ExceptionMsg : IExceptionMsg
 	{
 		/// <inheritdoc/>
-		public string ExceptionType { get; private set; } = string.Empty;
+		public Exception Exception { get; private set; }
 
 		/// <inheritdoc/>
-		public string ExceptionText { get; private set; } = string.Empty;
+		public string ExceptionType
+			=> Exception.GetType().FullName;
 
 		/// <inheritdoc/>
-		public string ExceptionTrace { get; private set; } = string.Empty;
+		public string ExceptionText
+			=> Exception.Message;
+
+		/// <inheritdoc/>
+		public virtual string Format
+			=> $"{{{nameof(ExceptionType)}}}: {{{nameof(ExceptionText)}}}";
+
+		/// <inheritdoc/>
+		public virtual object[] ParamArray
+			=> new[] { ExceptionType, ExceptionText };
+
+		/// <inheritdoc/>
+		public virtual LogLevel Level
+			=> LogLevel.Error;
 
 		/// <summary>
 		/// Properties must then be set using <see cref="Set(Exception)"/>
 		/// </summary>
-		protected ExceptionMsg() { }
+		protected ExceptionMsg()
+			=> Exception = new Exception("Unknown.");
 
 		/// <summary>
 		/// Create object from exception
 		/// </summary>
 		/// <param name="ex">Exception</param>
 		protected ExceptionMsg(Exception ex)
-			=> Set(ex);
+			=> Exception = ex;
 
 		/// <inheritdoc/>
 		public void Set(Exception ex)
-		{
-			ExceptionType = ex.GetType().FullName;
-			ExceptionText = ex.Message;
-			ExceptionTrace = ex.StackTrace;
-		}
+			=> Exception = ex;
 
 		/// <summary>
 		/// Output Exception type and message
 		/// </summary>
 		public override string ToString()
-			=> $"{ExceptionType}: {ExceptionText}\nTrace:\n{ExceptionTrace}";
+			=> string.Format(Format, ParamArray);
 	}
 }

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs;
+using Microsoft.Extensions.Logging;
 
 namespace Jm.Data
 {
 	/// <summary>
 	/// Create success message
 	/// </summary>
-	public class CreateMsg : IMsg
+	public class CreateMsg : ILoggableMsg
 	{
 		/// <summary>
 		/// Entity Type
@@ -18,20 +19,32 @@ namespace Jm.Data
 		/// <summary>
 		/// Entity ID
 		/// </summary>
-		protected readonly long? id;
+		protected readonly long id;
+
+		/// <inheritdoc/>
+		public string Format
+			=> $"Created '{{{nameof(type)}}}' with ID '{{{nameof(id)}}}'.";
+
+		/// <inheritdoc/>
+		public object[] ParamArray
+			=> new object[] { type, id };
+
+		/// <inheritdoc/>
+		public LogLevel Level
+			=> LogLevel.Debug;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
-		/// <param name="id">[Optional] POCO id</param>
-		public CreateMsg(Type type, long? id = null)
+		/// <param name="id">POCO id</param>
+		public CreateMsg(Type type, long id)
 			=> (this.type, this.id) = (type, id);
 
 		/// <summary>
 		/// Output success message
 		/// </summary>
 		public override string ToString()
-			=> $"Created '{type}'" + (id == null ? "" : "with ID '{id}'") + ".";
+			=> string.Format(Format, ParamArray);
 	}
 }

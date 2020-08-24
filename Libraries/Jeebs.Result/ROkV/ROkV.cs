@@ -15,6 +15,6 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		new public IOkV<TValue, TState> WithState<TState>(TState state)
-			=> new ROkV<TValue, TState>(Value, state) { Messages = Messages };
+			=> new ROkV<TValue, TState>(Value, state) { Messages = Messages, Log = Log };
 	}
 }

@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Tests.Jeebs.Result")]
 namespace Jeebs
 {
 	/// <summary>
@@ -46,7 +48,7 @@ namespace Jeebs
 		/// Add a single message of type <typeparamref name="TMsg"/>
 		/// </summary>
 		/// <typeparam name="TMsg">IMsg type</typeparam>
-		public void Add<TMsg>() where TMsg : IMsg, new()
+		internal void Add<TMsg>() where TMsg : IMsg, new()
 			=> messages.Add(new TMsg());
 
 		/// <summary>
@@ -54,14 +56,14 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TMsg">IMsg type</typeparam>
 		/// <param name="message">The message to add</param>
-		public void Add<TMsg>(TMsg message) where TMsg : IMsg
+		internal void Add<TMsg>(TMsg message) where TMsg : IMsg
 			=> messages.Add(message);
 
 		/// <summary>
 		/// Add a range of messages
 		/// </summary>
 		/// <param name="add">Array of messages</param>
-		public void AddRange(params IMsg[] add)
+		internal void AddRange(params IMsg[] add)
 			=> add.ToList().ForEach(m => messages.Add(m));
 
 		/// <summary>

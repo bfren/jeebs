@@ -51,19 +51,15 @@ namespace Jeebs.Data
 		#region Logging & Failure
 
 		/// <summary>
-		/// Send a simple message to the debug log
-		/// </summary>
-		void LogDebug<T>(T message) where T : IMsg;
-
-		/// <summary>
 		/// Log a query
 		/// </summary>
 		/// <typeparam name="T">Parameter object type</typeparam>
+		/// <param name="r">Result</param>
 		/// <param name="method">Calling method</param>
 		/// <param name="query">SQL query</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		void LogQuery<T>(string method, string query, T parameters, CommandType commandType = CommandType.Text);
+		void LogQuery<T>(IOk r, string method, string query, T parameters, CommandType commandType = CommandType.Text);
 
 		#endregion
 

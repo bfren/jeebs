@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Text;
+using Jeebs;
 using Jeebs.Util;
+using Microsoft.Extensions.Logging;
 
 namespace Jm.Data
 {
@@ -21,13 +23,15 @@ namespace Jm.Data
 		/// </summary>
 		public string Parameters { get; }
 
+		/// <inheritdoc/>
+		public override string Format
+			=> $"{{{nameof(ExceptionType)}}}: {{{nameof(ExceptionText)}}} | Query: {{{nameof(Sql)}}} | Parameters: {{{nameof(Parameters)}}}";
+
+		/// <inheritdoc/>
+		public override object[] ParamArray
+			=> new[] { ExceptionType, ExceptionText, Sql, Parameters };
+
 		internal QueryExceptionMsg(Exception ex, string query, object? parameters = null) : base(ex)
 			=> (Sql, Parameters) = (query, Json.Serialise(parameters));
-
-		/// <summary>
-		/// Output exception details with query and parameters
-		/// </summary>
-		public override string ToString()
-			=> $"{ExceptionType}: {ExceptionText} | Query: {Sql} | Parameters: {Parameters}";
 	}
 }

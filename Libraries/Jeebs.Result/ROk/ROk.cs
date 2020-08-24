@@ -18,12 +18,12 @@ namespace Jeebs
 			=> this switch
 			{
 				IOk<TNext> ok => ok,
-				_ => new ROk<TNext> { Messages = Messages }
+				_ => new ROk<TNext> { Messages = Messages, Log = Log }
 			};
 
 		/// <inheritdoc cref="IOk.OkV{TNext}(TNext)"/>
 		public IOkV<TNext> OkV<TNext>(TNext value)
-			=> new ROkV<TNext>(value) { Messages = Messages };
+			=> new ROkV<TNext>(value) { Messages = Messages, Log = Log };
 
 		/// <inheritdoc/>
 		public IOk<bool> True(IMsg? message = null)
@@ -38,7 +38,7 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		public IOk<TValue, TState> WithState<TState>(TState state)
-			=> new ROk<TValue, TState>(state) { Messages = Messages };
+			=> new ROk<TValue, TState>(state) { Messages = Messages, Log = Log };
 
 		#region Explicit implementations
 
@@ -55,7 +55,7 @@ namespace Jeebs
 			=> OkV(value);
 
 		IOk<bool, TState> IOk.WithState<TState>(TState state)
-			=> new ROk<bool, TState>(state) { Messages = Messages };
+			=> new ROk<bool, TState>(state) { Messages = Messages, Log = Log };
 
 		#endregion
 	}

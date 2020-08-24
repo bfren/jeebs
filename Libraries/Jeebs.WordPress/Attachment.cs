@@ -21,7 +21,7 @@ namespace Jeebs.WordPress.Entities
 		public string UrlPath { get; set; } = string.Empty;
 
 		/// <summary>
-		/// Deserialise info and return as JSON
+		/// Deserialise <see cref="info"/> and return as JSON
 		/// </summary>
 		public string Info
 		{
@@ -30,7 +30,7 @@ namespace Jeebs.WordPress.Entities
 		}
 
 		/// <summary>
-		/// Serialised info
+		/// PHP serialised info
 		/// </summary>
 		private string info = string.Empty;
 	}
