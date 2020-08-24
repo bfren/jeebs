@@ -12,7 +12,7 @@ namespace Jeebs
 		public MsgList Messages { get; internal set; } = new MsgList();
 
 		/// <inheritdoc/>
-		public Logger Log { get; internal set; } = new Logger();
+		public Logger Logger { get; internal set; } = new Logger();
 
 		internal R() { }
 
@@ -22,14 +22,7 @@ namespace Jeebs
 		public virtual void Dispose()
 		{
 			Messages.Dispose();
-			Log.Dispose();
-		}
-
-		/// <inheritdoc/>
-		public IR<TValue> LogUsing(ILog log)
-		{
-			Log.log = log;
-			return this;
+			Logger.Dispose();
 		}
 
 		/// <inheritdoc/>
@@ -41,7 +34,7 @@ namespace Jeebs
 			=> this switch
 			{
 				IError<TNext> e => e,
-				_ => new RError<TNext> { Messages = Messages, Log = Log }
+				_ => new RError<TNext> { Messages = Messages, Logger = Logger }
 			};
 
 		/// <inheritdoc/>
@@ -59,9 +52,6 @@ namespace Jeebs
 
 		IError IR.Error()
 			=> Error();
-
-		IR IR.LogUsing(ILog log)
-			=> LogUsing(log);
 
 		#endregion
 	}

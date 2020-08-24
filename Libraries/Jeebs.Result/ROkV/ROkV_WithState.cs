@@ -16,7 +16,7 @@ namespace Jeebs
 		#region Explicit implementations
 
 		IOkV<TValue, TNext> IOkV<TValue>.WithState<TNext>(TNext state)
-			=> new ROkV<TValue, TNext>(Value, state) { Messages = Messages, Log = Log };
+			=> new ROkV<TValue, TNext>(Value, state) { Messages = Messages, Logger = Logger };
 
 		#endregion
 	}

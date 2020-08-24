@@ -22,13 +22,7 @@ namespace Jeebs
 		/// <summary>
 		/// Used to log events (e.g. exceptions) - requires <see cref="LogUsing(ILog)"/> to be called to set an application-specific log
 		/// </summary>
-		Logger Log { get; }
-
-		/// <summary>
-		/// Add a log to this result
-		/// </summary>
-		/// <param name="log">ILog</param>
-		IR LogUsing(ILog log);
+		Logger Logger { get; }
 
 		/// <summary>
 		/// Return a simple <see cref="IError"/> result
@@ -54,12 +48,6 @@ namespace Jeebs
 	/// <typeparam name="TValue">Result value type</typeparam>
 	public interface IR<TValue> : IR
 	{
-		/// <summary>
-		/// Add a log to this result
-		/// </summary>
-		/// <param name="log">ILog</param>
-		new IR<TValue> LogUsing(ILog log);
-
 		/// <summary>
 		/// Return an <see cref="IError{TValue}"/> with the current value type
 		/// </summary>

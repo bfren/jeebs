@@ -17,7 +17,7 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// ILog
 		/// </summary>
-		internal ILog Log { get; }
+		public ILog Log { get; }
 
 		/// <summary>
 		/// Current page number

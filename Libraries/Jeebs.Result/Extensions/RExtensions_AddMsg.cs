@@ -32,7 +32,7 @@ namespace Jeebs
 			where TResult : IR
 			where TMsg : IMsg
 		{
-			@this.Log.Message(message);
+			@this.Logger.Message(message);
 			@this.Messages.Add(message);
 			return @this;
 		}
@@ -48,7 +48,7 @@ namespace Jeebs
 		{
 			foreach (var message in messages)
 			{
-				@this.Log.Message(message);
+				@this.Logger.Message(message);
 			}
 
 			@this.Messages.AddRange(messages);

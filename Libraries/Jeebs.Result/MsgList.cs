@@ -104,10 +104,14 @@ namespace Jeebs
 		public string ToString(bool withType)
 			=> messages.Count > 0 ? string.Join('\n', GetAll(withType)) : base.ToString();
 
+		#region Explicit implementations
+
 		IEnumerator<IMsg> IEnumerable<IMsg>.GetEnumerator()
 			=> messages.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator()
 			=> messages.GetEnumerator();
+
+		#endregion
 	}
 }
