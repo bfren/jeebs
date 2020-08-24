@@ -56,7 +56,6 @@ namespace Jeebs.Data
 			where T : class, IEntity
 			=> Delete(r, w, nameof(Delete), (q, p, t) => Task.FromResult(w.Connection.Execute(q, p, t)));
 
-
 		/// <summary>
 		/// Delete an entity
 		/// </summary>

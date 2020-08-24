@@ -11,12 +11,34 @@ namespace Jeebs.Util
 	/// </summary>
 	public static class Php
 	{
-		// Value types
+		/// <summary>
+		/// Array type
+		/// </summary>
 		public const char Array = 'a';
+
+		/// <summary>
+		/// Boolean type
+		/// </summary>
 		public const char Boolean = 'b';
+
+		/// <summary>
+		/// Double type
+		/// </summary>
 		public const char Double = 'd';
+
+		/// <summary>
+		/// Integer type
+		/// </summary>
 		public const char Integer = 'i';
+
+		/// <summary>
+		/// String type
+		/// </summary>
 		public const char String = 's';
+
+		/// <summary>
+		/// Null type
+		/// </summary>
 		public const char Null = 'N';
 
 		/// <summary>
@@ -199,6 +221,9 @@ namespace Jeebs.Util
 			}
 		}
 
+		/// <summary>
+		/// Alias for use in deserialising associative arrays
+		/// </summary>
 		public class AssocArray : Dictionary<object, object> { }
 	}
 }

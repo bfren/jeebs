@@ -122,7 +122,7 @@ namespace F
 			// If the array is now bigger than the requested length, throw an exception
 			if (random.Count > length)
 			{
-				throw new InvalidOperationException($"Using requested character groups results in a string longer than the one requested.");
+				throw new InvalidOperationException("Using requested character groups results in a string longer than the one requested.");
 			}
 
 			// Generate the rest of the random characters

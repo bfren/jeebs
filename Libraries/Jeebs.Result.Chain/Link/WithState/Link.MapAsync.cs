@@ -40,7 +40,6 @@ namespace Jeebs
 		Task<IR<TNext, TState>> ILink<TValue, TState>.MapAsync<TNext>(Func<IOk, Task<IR<TNext>>> f)
 			=> PrivateMapAsyncAddState(f);
 
-
 		Task<IR<TNext, TState>> ILink<TValue, TState>.MapAsync<TNext>(Func<IOk<TValue>, Task<IR<TNext>>> f)
 			=> PrivateMapAsyncAddState(f);
 
