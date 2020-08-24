@@ -75,7 +75,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Fatal(string message, params object[] args);
+		void Critical(string message, params object[] args);
 
 		/// <summary>
 		/// Critical log message

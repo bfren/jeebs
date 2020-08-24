@@ -34,7 +34,7 @@ namespace Jeebs
 			}
 			catch (Exception ex)
 			{
-				result.Log.Error(ex, "Link Error - check Exception for details");
+				//result.Log.Error(ex, "Link Error - check Exception for details");
 				handlers.Handle(result, ex);
 				return result.Error<TNext>();
 			}

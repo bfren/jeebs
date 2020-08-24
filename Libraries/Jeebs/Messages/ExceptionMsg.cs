@@ -26,7 +26,7 @@ namespace Jm
 
 		/// <inheritdoc/>
 		public virtual object[] ParamArray
-			=> new[] { ExceptionType, ExceptionText };
+			=> new object[] { ExceptionType, ExceptionText };
 
 		/// <inheritdoc/>
 		public virtual LogLevel Level

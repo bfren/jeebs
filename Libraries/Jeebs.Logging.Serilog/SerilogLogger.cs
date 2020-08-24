@@ -45,21 +45,24 @@ namespace Jeebs.Logging
 			{
 				if (exceptionMsg.Level == MS.LogLevel.Critical)
 				{
-					Critical(exceptionMsg.Exception, exceptionMsg.Format, exceptionMsg.ParamArray);
+					Critical(exceptionMsg.Exception, withMsgType(exceptionMsg.Format), exceptionMsg.ParamArray);
 				}
 				else
 				{
-					Error(exceptionMsg.Exception, exceptionMsg.Format, exceptionMsg.ParamArray);
+					Error(exceptionMsg.Exception, withMsgType(exceptionMsg.Format), exceptionMsg.ParamArray);
 				}
 			}
 			else if (msg is ILoggableMsg loggableMsg)
 			{
-				send(loggableMsg.Level, loggableMsg.Format, loggableMsg.ParamArray);
+				send(loggableMsg.Level, withMsgType(loggableMsg.Format), loggableMsg.ParamArray);
 			}
 			else
 			{
-				send(MS.LogLevel.Trace, msg.ToString());
+				send(MS.LogLevel.Trace, withMsgType(msg.ToString()));
 			}
+
+			string withMsgType(string format)
+				=> $"{msg.GetType().FullName} - {format}";
 
 			void send(MS.LogLevel level, string message, params object[] args)
 			{
@@ -78,7 +81,7 @@ namespace Jeebs.Logging
 						Error(message, args);
 						break;
 					case MS.LogLevel.Critical:
-						Critical(new Exception("Unknown caller."), message, args);
+						Critical(message, args);
 						break;
 					default:
 						Trace(message, args);
@@ -112,7 +115,7 @@ namespace Jeebs.Logging
 			=> logger.Error(ex, message, args);
 
 		/// <inheritdoc/>
-		public void Fatal(string message, params object[] args)
+		public void Critical(string message, params object[] args)
 			=> logger.Fatal(message, args);
 
 		/// <inheritdoc/>

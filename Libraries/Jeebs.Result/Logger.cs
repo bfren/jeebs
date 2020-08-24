@@ -40,15 +40,15 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		public void Error(Exception ex, string message, params object[] args)
-			=> log?.Error(message, args);
+			=> log?.Error(ex, message, args);
 
 		/// <inheritdoc/>
-		public void Fatal(string message, params object[] args)
-			=> log?.Fatal(message, args);
+		public void Critical(string message, params object[] args)
+			=> log?.Critical(message, args);
 
 		/// <inheritdoc/>
 		public void Critical(Exception ex, string message, params object[] args)
-			=> log?.Fatal(message, args);
+			=> log?.Critical(ex, message, args);
 
 		/// <inheritdoc/>
 		public void Dispose()

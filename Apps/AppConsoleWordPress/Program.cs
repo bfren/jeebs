@@ -70,6 +70,10 @@ namespace AppConsoleWordPress
 					.Link().MapAsync(FetchCustomFields).Await()
 					.Audit(AuditCustomFields);
 
+				Chain.Create()
+					.AddLogger(log)
+					.Link().Map<int>(_ => throw new Exception("Test"));
+
 				// Perform tests
 				//await FetchMeta(bcg.Db).ConfigureAwait(false);
 				//await FetchCustomFields(bcg.Db).ConfigureAwait(false);
