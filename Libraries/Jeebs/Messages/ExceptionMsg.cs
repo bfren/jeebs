@@ -22,15 +22,17 @@ namespace Jm
 
 		/// <inheritdoc/>
 		public virtual string Format
-			=> $"{{{nameof(ExceptionType)}}}: {{{nameof(ExceptionText)}}}";
+			=> "{ExceptionType}: {ExceptionText}";
 
 		/// <inheritdoc/>
 		public virtual object[] ParamArray
 			=> new object[] { ExceptionType, ExceptionText };
 
-		/// <inheritdoc/>
-		public virtual LogLevel Level
-			=> LogLevel.Error;
+		/// <summary>
+		/// Log level - default is <see cref="Jeebs.Defaults.Log.ExceptionLevel"/>
+		/// </summary>
+		public LogLevel Level
+			=> Jeebs.Defaults.Log.ExceptionLevel;
 
 		/// <summary>
 		/// Properties must then be set using <see cref="Set(Exception)"/>

@@ -21,7 +21,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// ILogger
 		/// </summary>
-		private readonly ILogger logger = Log.ForContext<RedirectExactMiddleware>();
+		private readonly ILogger logger = Serilog.Log.ForContext<RedirectExactMiddleware>();
 
 		/// <summary>
 		/// Registered redirections

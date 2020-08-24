@@ -9,7 +9,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Update success message
 	/// </summary>
-	public class UpdateMsg : ILoggableMsg
+	public class UpdateMsg : LoggableMsg
 	{
 		/// <summary>
 		/// Entity Type
@@ -22,16 +22,12 @@ namespace Jm.Data
 		protected readonly long id;
 
 		/// <inheritdoc/>
-		public string Format
-			=> $"Updated '{{{nameof(type)}}}' with ID '{{{nameof(id)}}}'.";
+		public override string Format
+			=> "Updated '{Type}' with ID '{Id}'.";
 
 		/// <inheritdoc/>
-		public object[] ParamArray
+		public override object[] ParamArray
 			=> new object[] { type, id };
-
-		/// <inheritdoc/>
-		public LogLevel Level
-			=> LogLevel.Debug;
 
 		/// <summary>
 		/// Create object

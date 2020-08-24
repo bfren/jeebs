@@ -9,7 +9,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Delete success message
 	/// </summary>
-	public class DeleteMsg : ILoggableMsg
+	public class DeleteMsg : LoggableMsg
 	{
 		/// <summary>
 		/// Entity Type
@@ -22,16 +22,12 @@ namespace Jm.Data
 		protected readonly long id;
 
 		/// <inheritdoc/>
-		public string Format
-			=> $"Deleted '{{{nameof(type)}' with ID '{nameof(id)}}}'.";
+		public override string Format
+			=> "Deleted '{Type}' with ID '{Id}'.";
 
 		/// <inheritdoc/>
-		public object[] ParamArray
+		public override object[] ParamArray
 			=> new object[] { type, id };
-
-		/// <inheritdoc/>
-		public LogLevel Level
-			=> LogLevel.Debug;
 
 		/// <summary>
 		/// Create object

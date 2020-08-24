@@ -9,7 +9,7 @@ namespace Jm.Data
 	/// <summary>
 	/// Retrieve success message
 	/// </summary>
-	public class RetrieveMsg : ILoggableMsg
+	public class RetrieveMsg : LoggableMsg
 	{
 		/// <summary>
 		/// Entity Type
@@ -22,16 +22,12 @@ namespace Jm.Data
 		protected readonly long id;
 
 		/// <inheritdoc/>
-		public string Format
-			=> $"Retrieved '{{{nameof(type)}}}' with ID '{{{nameof(id)}}}'.";
+		public override string Format
+			=> "Retrieved '{Type}' with ID '{Id}'.";
 
 		/// <inheritdoc/>
-		public object[] ParamArray
+		public override object[] ParamArray
 			=> new object[] { type, id };
-
-		/// <inheritdoc/>
-		public LogLevel Level
-			=> LogLevel.Debug;
 
 		/// <summary>
 		/// Create object

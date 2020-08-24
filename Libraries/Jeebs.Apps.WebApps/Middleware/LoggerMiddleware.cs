@@ -23,7 +23,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// ILogger
 		/// </summary>
-		private readonly ILogger logger = Log.ForContext<LoggerMiddleware>();
+		private readonly ILogger logger = Serilog.Log.ForContext<LoggerMiddleware>();
 
 		/// <summary>
 		/// Log message template

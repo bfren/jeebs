@@ -82,7 +82,18 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public void LogQuery<T>(IOk r, string method, string query, T parameters, CommandType commandType = CommandType.Text)
-			=> r.Log.Trace("UnitOfWork.{method}()\nQuery[{commandType}]: {query}\nParameters{parameters}", method, commandType, query, Json.Serialise(parameters));
+		{
+			const string message = "UnitOfWork.{Method}() - Query [{CommandType}]: {Query}";
+
+			if (parameters is T p)
+			{
+				r.Log.Trace($"{message} Parameters: {{@Parameters}}", method, commandType, query, p);
+			}
+			else
+			{
+				r.Log.Trace(message, method, commandType, query);
+			}
+		}
 
 		/// <inheritdoc/>
 		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters = null)

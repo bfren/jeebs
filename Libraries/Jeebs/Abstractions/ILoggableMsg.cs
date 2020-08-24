@@ -21,7 +21,7 @@ namespace Jeebs
 		object[] ParamArray { get; }
 
 		/// <summary>
-		/// Log level
+		/// Log level - default is set in <see cref="Defaults.Log.Level"/>
 		/// </summary>
 		LogLevel Level { get; }
 	}

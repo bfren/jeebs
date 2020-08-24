@@ -1,9 +1,6 @@
 ﻿using System;
-using MS = Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace Jeebs.Logging
 {
@@ -13,11 +10,11 @@ namespace Jeebs.Logging
 		/// <summary>
 		/// Create logger for <typeparamref name="TContext"/>
 		/// </summary>
-		public SerilogLogger() : base(Log.ForContext<TContext>()) { }
+		public SerilogLogger() : base(Serilog.Log.ForContext<TContext>()) { }
 	}
 
 	/// <inheritdoc cref="ILog"/>
-	public class SerilogLogger : ILog
+	public class SerilogLogger : Log
 	{
 		private readonly ILogger logger;
 
@@ -25,7 +22,7 @@ namespace Jeebs.Logging
 		/// Use global logger
 		/// </summary>
 		public SerilogLogger()
-			=> logger = Log.Logger;
+			=> logger = Serilog.Log.Logger;
 
 		/// <summary>
 		/// Use specified logger
@@ -35,95 +32,43 @@ namespace Jeebs.Logging
 			=> this.logger = logger;
 
 		/// <inheritdoc/>
-		public bool IsEnabled(MS.LogLevel level)
+		public override bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level)
 			=> logger.IsEnabled((LogEventLevel)level);
 
 		/// <inheritdoc/>
-		public void Message(IMsg msg)
-		{
-			if (msg is IExceptionMsg exceptionMsg)
-			{
-				if (exceptionMsg.Level == MS.LogLevel.Critical)
-				{
-					Critical(exceptionMsg.Exception, withMsgType(exceptionMsg.Format), exceptionMsg.ParamArray);
-				}
-				else
-				{
-					Error(exceptionMsg.Exception, withMsgType(exceptionMsg.Format), exceptionMsg.ParamArray);
-				}
-			}
-			else if (msg is ILoggableMsg loggableMsg)
-			{
-				send(loggableMsg.Level, withMsgType(loggableMsg.Format), loggableMsg.ParamArray);
-			}
-			else
-			{
-				send(MS.LogLevel.Trace, withMsgType(msg.ToString()));
-			}
-
-			string withMsgType(string format)
-				=> $"{msg.GetType().FullName} - {format}";
-
-			void send(MS.LogLevel level, string message, params object[] args)
-			{
-				switch (level)
-				{
-					case MS.LogLevel.Debug:
-						Debug(message, args);
-						break;
-					case MS.LogLevel.Information:
-						Information(message, args);
-						break;
-					case MS.LogLevel.Warning:
-						Warning(message, args);
-						break;
-					case MS.LogLevel.Error:
-						Error(message, args);
-						break;
-					case MS.LogLevel.Critical:
-						Critical(message, args);
-						break;
-					default:
-						Trace(message, args);
-						break;
-				}
-			}
-		}
-
-		/// <inheritdoc/>
-		public void Trace(string message, params object[] args)
+		public override void Trace(string message, params object[] args)
 			=> logger.Verbose(message, args);
 
 		/// <inheritdoc/>
-		public void Debug(string message, params object[] args)
+		public override void Debug(string message, params object[] args)
 			=> logger.Debug(message, args);
 
 		/// <inheritdoc/>
-		public void Information(string message, params object[] args)
+		public override void Information(string message, params object[] args)
 			=> logger.Information(message, args);
 
 		/// <inheritdoc/>
-		public void Warning(string message, params object[] args)
+		public override void Warning(string message, params object[] args)
 			=> logger.Warning(message, args);
 
 		/// <inheritdoc/>
-		public void Error(string message, params object[] args)
+		public override void Error(string message, params object[] args)
 			=> logger.Error(message, args);
 
 		/// <inheritdoc/>
-		public void Error(Exception ex, string message, params object[] args)
+		public override void Error(Exception ex, string message, params object[] args)
 			=> logger.Error(ex, message, args);
 
 		/// <inheritdoc/>
-		public void Critical(string message, params object[] args)
+		public override void Critical(string message, params object[] args)
 			=> logger.Fatal(message, args);
 
 		/// <inheritdoc/>
-		public void Critical(Exception ex, string message, params object[] args)
+		public override void Critical(Exception ex, string message, params object[] args)
 			=> logger.Fatal(ex, message, args);
 
 		/// <inheritdoc/>
-		public void Dispose()
-			=> Log.CloseAndFlush();
+		public override void Dispose()
+			=> Serilog.Log.CloseAndFlush();
 	}
 }

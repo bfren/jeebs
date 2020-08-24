@@ -25,7 +25,7 @@ namespace Jm.Data
 
 		/// <inheritdoc/>
 		public override string Format
-			=> $"{{{nameof(ExceptionType)}}}: {{{nameof(ExceptionText)}}} | Query: {{{nameof(Sql)}}} | Parameters: {{{nameof(Parameters)}}}";
+			=> "{ExceptionType}: {ExceptionText} | Query: {Sql} | Parameters: {Parameters}";
 
 		/// <inheritdoc/>
 		public override object[] ParamArray
