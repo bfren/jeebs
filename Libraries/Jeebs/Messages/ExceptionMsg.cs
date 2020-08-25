@@ -55,6 +55,6 @@ namespace Jm
 		/// Output Exception type and message
 		/// </summary>
 		public override string ToString()
-			=> string.Format(Format, ParamArray);
+			=> Format.FormatWith(ParamArray);
 	}
 }

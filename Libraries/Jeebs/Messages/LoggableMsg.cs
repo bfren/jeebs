@@ -22,6 +22,6 @@ namespace Jeebs
 		/// Use <see cref="Format"/> and <see cref="ParamArray"/>
 		/// </summary>
 		public override string ToString()
-			=> string.Format(Format, ParamArray);
+			=> Format.FormatWith(ParamArray);
 	}
 }

@@ -28,7 +28,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Log message template
 		/// </summary>
-		private const string messageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+		private const string messageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
 
 		/// <summary>
 		/// Construct object
@@ -53,7 +53,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 				await next(context);
 				stopwatch.Stop();
 
-				// If the status is HTTP 200 (success) return
+				// If the status is HTTP 200 (success), return
 				var status = context.Response?.StatusCode;
 				if (status == 200)
 				{
@@ -64,12 +64,12 @@ namespace Jeebs.Apps.WebApps.Middleware
 				var level = status > 499 ? LogEventLevel.Error : LogEventLevel.Information;
 
 				// Write event to log
-				logger.Write(level, messageTemplate, context.Request.Method, GetPath(context), status, stopwatch.ElapsedMilliseconds);
+				logger.Write(level, messageTemplate, context.Request.Method, GetPath(context), status, stopwatch.Elapsed.TotalSeconds);
 			}
 			catch (Exception ex)
 			{
 				// Log error
-				logger.Error(ex, messageTemplate, context.Request.Method, GetPath(context), 500, stopwatch.ElapsedMilliseconds);
+				logger.Error(ex, messageTemplate, context.Request.Method, GetPath(context), 500, stopwatch.Elapsed.TotalSeconds);
 			}
 		}
 

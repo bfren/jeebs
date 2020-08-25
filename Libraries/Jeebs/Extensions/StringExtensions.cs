@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using Jeebs.Reflection;
 
 namespace Jeebs
 {
@@ -122,6 +123,45 @@ namespace Jeebs
 		/// <returns>Escaped string</returns>
 		public static string EscapeSingleQuotes(this string @this)
 			=> Modify(@this, () => @this.Replace("'", @"\'"));
+
+		/// <summary>
+		/// Works like string.Format() but with named as well as numbered placeholders
+		/// <para>Object property names must match placeholders or they will be left in place</para>
+		/// <para>Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables</para>
+		/// <para>Altered to work without requiring DataBinder</para>
+		/// </summary>
+		/// <param name="this">String to format</param>
+		/// <param name="source"></param>
+		public static string FormatWith(this string @this, object source)
+			=> Modify(@this, () =>
+			{
+				Regex r = new Regex(@"(?<start>\{)+(?<property>[\w\.\[\]@]+)(?<format>:[^}]+)?(?<end>\})+", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+				List<object> values = new List<object>();
+				int index = 0;
+				string rewrittenFormat = r.Replace(@this, (Match m) =>
+				{
+					Group startGroup = m.Groups["start"];
+					Group propertyGroup = m.Groups["property"];
+					Group formatGroup = m.Groups["format"];
+					Group endGroup = m.Groups["end"];
+
+					var value = source switch
+					{
+						Array array when int.TryParse(propertyGroup.Value, out int index) => array.GetValue(index),
+						Array array when index <= array.Length => array.GetValue(index++),
+						{ } anon when anon.GetProperty(propertyGroup.Value.Replace("@", "")) is Some<object> s => s.Value,
+						_ => $"{{{propertyGroup.Value}}}"
+					};
+
+					values.Add(value);
+
+					return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value
+					  + new string('}', endGroup.Captures.Count);
+				});
+
+				return string.Format(rewrittenFormat, values.ToArray());
+			});
 
 		/// <summary>
 		/// Parse the Mime Type of a filename using its extension

@@ -34,8 +34,10 @@ namespace Jeebs.Mvc
 
 			// Look for a view
 			var viewName = $"Error{code}";
+			error.Logger.Trace("Search for View {ViewName}", viewName);
 			if ((findView(viewName) ?? findView("Default")) is string view)
 			{
+				error.Logger.Trace("Found view {view}", view);
 				return @this.View(view, error);
 			}
 

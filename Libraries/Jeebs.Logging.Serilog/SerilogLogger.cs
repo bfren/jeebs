@@ -68,7 +68,6 @@ namespace Jeebs.Logging
 			=> logger.Fatal(ex, message, args);
 
 		/// <inheritdoc/>
-		public override void Dispose()
-			=> Serilog.Log.CloseAndFlush();
+		public override void Dispose() { }
 	}
 }

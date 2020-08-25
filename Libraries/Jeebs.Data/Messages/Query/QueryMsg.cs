@@ -34,7 +34,7 @@ namespace Jm.Data
 
 		/// <inheritdoc/>
 		public override string Format
-			=> "{Method}() - Query [{CommandType}]: {Query} - Parameters: {Parameters}";
+			=> "{Method}() - Query [{CommandType}]: {Sql} - Parameters: {Parameters}";
 
 		/// <inheritdoc/>
 		public override object[] ParamArray

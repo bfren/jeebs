@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Jm.Extensions.ObjectExtensions;
 
 namespace Jeebs.Reflection
 {
@@ -20,17 +21,28 @@ namespace Jeebs.Reflection
 			=> @this.GetType().GetTypeInfo().GetProperties();
 
 		/// <summary>
+		/// Return whether or not the object contains the specified property
+		/// </summary>
+		/// <param name="this">Object</param>
+		/// <param name="propertyName">The name of the property whose value you want to return</param>
+		public static bool HasProperty(this object @this, string propertyName)
+		{
+			TypeInfo type = @this.GetType().GetTypeInfo();
+			return type.DeclaredProperties.Any(x => x.Name == propertyName);
+		}
+
+		/// <summary>
 		/// Return the value of a property dynamically - i.e. by property name
 		/// </summary>
 		/// <param name="this">Object</param>
 		/// <param name="propertyName">The name of the property whose value you want to return</param>
 		/// <returns>The value of the property, or an empty string if the property does not exist</returns>
-		public static object GetProperty(this object @this, string propertyName)
+		public static Option<object> GetProperty(this object @this, string propertyName)
 		{
 			TypeInfo type = @this.GetType().GetTypeInfo();
-			if (!type.DeclaredProperties.Any(x => x.Name == propertyName))
+			if (!HasProperty(@this, propertyName))
 			{
-				throw new KeyNotFoundException($"Property {propertyName} cannot be found in type {type.FullName}");
+				return Option.None<object>().AddReason(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
 			}
 
 			PropertyInfo info = type.GetProperty(propertyName);
@@ -44,18 +56,18 @@ namespace Jeebs.Reflection
 		/// <param name="this">Object</param>
 		/// <param name="propertyName">The name of the property whose value you want to return</param>
 		/// <returns>The value of the property, or an empty string if the property does not exist</returns>
-		public static T GetProperty<T>(this object @this, string propertyName)
+		public static Option<T> GetProperty<T>(this object @this, string propertyName)
 		{
 			TypeInfo type = @this.GetType().GetTypeInfo();
 			if (!type.DeclaredProperties.Any(x => x.Name == propertyName))
 			{
-				throw new KeyNotFoundException($"Property {propertyName} cannot be found in type {type.FullName}");
+				return Option.None<T>().AddReason(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
 			}
 
 			PropertyInfo info = type.GetProperty(propertyName);
 			if (typeof(T) != info.PropertyType)
 			{
-				throw new InvalidOperationException($"Type parameter {typeof(T)} does not match type of property {propertyName}: {info.GetType()}.");
+				return Option.None<T>().AddReason(new UnexpectedPropertyTypeMsg(@this.GetType(), propertyName, typeof(T)));
 			}
 
 			return (T)info.GetValue(@this, null);

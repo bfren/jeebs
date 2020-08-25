@@ -13,10 +13,14 @@ namespace Jeebs
 		public void Message(IMsg msg)
 		{
 			// Add message type to the message
-			var text = "{MsgType} - " + msg switch
+			var text = (msg.ToString() == msg.GetType().FullName) switch
 			{
-				ILoggableMsg x => x.Format,
-				{ } x => x.ToString()
+				true => msg.ToString(),
+				false => "{MsgType} - " + msg switch
+				{
+					ILoggableMsg x => x.Format,
+					{ } x => x.ToString()
+				}
 			};
 
 			// Add message type to the argument array
