@@ -165,7 +165,7 @@ namespace Jeebs
 						Array arr when replaceIndex <= arr.Length => arr.GetValue(replaceIndex++),
 
 						// "{A} {B}" with source object
-						{ } obj when obj.GetProperty(template) is Some<object> prop => prop.Value,
+						{ } obj when obj.GetProperty(template) is Some<object> property => property.Value,
 
 						// Nothing has matched yet so to be safe put the template back
 						_ => $"{{{template}}}"

@@ -10,7 +10,7 @@
 		<Company>bcg|design</Company>
 		<Copyright>Ben Green 2013-2020</Copyright>
 		<Version>4.1.0</Version>
-		<VersionSuffix>-beta.221</VersionSuffix>
+		<VersionSuffix>-beta.222</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup>
