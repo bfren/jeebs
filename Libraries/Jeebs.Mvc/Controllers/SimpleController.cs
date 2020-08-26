@@ -18,13 +18,6 @@ namespace Jeebs.Mvc
 			=> new EmptyResult();
 
 		/// <summary>
-		/// Google Webmaster Tools site verification
-		/// </summary>
-		[Route("google5cfca8ea82e65ef1.html")]
-		public ContentResult GoogleVerification()
-			=> Content("google-site-verification: google5cfca8ea82e65ef1.html");
-
-		/// <summary>
 		/// Keep alive page
 		/// </summary>
 		[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]

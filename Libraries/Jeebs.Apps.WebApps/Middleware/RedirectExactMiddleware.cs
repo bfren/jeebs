@@ -34,10 +34,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="next">RequestDelegate object</param>
 		/// <param name="redirections">Redirections</param>
 		public RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections)
-		{
-			this.next = next;
-			this.redirections = redirections;
-		}
+			=> (this.next, this.redirections) = (next, redirections);
 
 		/// <summary>
 		/// Invoke middleware and perform any redirections
@@ -55,7 +52,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 			{
 				// Build redirection URL and log action
 				var url = $"{req.Scheme}://{req.Host}{redirectToPath}";
-				logger.Information("Redirecting from '{UrlFrom}' to '{UrlTo}'.");
+				logger.Information("Redirecting from '{RedirectFrom}' to '{RedirectTo}'.", currentPath, url);
 
 				// Perform the (permanent) redirect
 				context.Response.Redirect(url, permanent: true);
@@ -63,7 +60,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 			else
 			{
 				// No redirections match so move on to the next delegate
-				await next.Invoke(context);
+				await next(context);
 			}
 		}
 
@@ -76,9 +73,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="redirections">Redirections</param>
 		/// <param name="logger">ILogger</param>
 		internal RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections, ILogger logger) : this(next, redirections)
-		{
-			this.logger = logger;
-		}
+			=> this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing
@@ -87,9 +82,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="redirections">RedirectionsConfig</param>
 		/// <param name="logger">ILogger</param>
 		public static RedirectExactMiddleware CreateForTesting(RequestDelegate next, RedirectionsConfig redirections, ILogger logger)
-		{
-			return new RedirectExactMiddleware(next, redirections, logger);
-		}
+			=> new RedirectExactMiddleware(next, redirections, logger);
 
 		#endregion
 	}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Jeebs.Apps.WebApps.Config;
 using Jeebs.Apps.WebApps.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -98,6 +99,9 @@ namespace Jeebs.Apps
 			// Logging
 			app.UseMiddleware<LoggerMiddleware>();
 
+			// Site Verification
+			Configure_SiteVerification(app, config);
+
 			if (env.IsDevelopment())
 			{
 				// Useful exception page
@@ -113,6 +117,19 @@ namespace Jeebs.Apps
 			}
 
 			// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
+		}
+
+		/// <summary>
+		/// Override to configure site verification
+		/// </summary>
+		/// <param name="app">IApplicationBuilder</param>
+		/// <param name="config">IConfiguration</param>
+		protected virtual void Configure_SiteVerification(IApplicationBuilder app, IConfiguration config)
+		{
+			if (config.GetSection<SiteVerificationConfig>(":verification") is SiteVerificationConfig verification)
+			{
+				app.UseMiddleware<SiteVerificationMiddleware>(verification);
+			}
 		}
 
 		/// <summary>
