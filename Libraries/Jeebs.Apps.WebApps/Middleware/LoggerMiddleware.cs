@@ -61,7 +61,13 @@ namespace Jeebs.Apps.WebApps.Middleware
 				}
 
 				// Get log level based on HTTP status - 500 or over is an HTTP error
-				var level = status > 499 ? LogEventLevel.Error : LogEventLevel.Information;
+				var level = status switch
+				{
+					int x when x >= 100 && x <= 299 => LogEventLevel.Verbose,
+					int x when x >= 300 && x <= 399 => LogEventLevel.Debug,
+					int x when x >= 400 && x <= 499 => LogEventLevel.Information,
+					_ => LogEventLevel.Error,
+				};
 
 				// Write event to log
 				logger.Write(level, messageTemplate, context.Request.Method, GetPath(context), status, stopwatch.Elapsed.TotalSeconds);
@@ -77,8 +83,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Get Request Path
 		/// </summary>
 		/// <param name="context">HttpContext</param>
-		private static string GetPath(HttpContext context) =>
-			context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
+		private static string GetPath(HttpContext context)
+			=> context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
 
 		#region For Testing
 
