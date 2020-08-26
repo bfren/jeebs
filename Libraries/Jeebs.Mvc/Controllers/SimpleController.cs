@@ -27,10 +27,16 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// Keep alive page
 		/// </summary>
-		/// <returns>ContentResult</returns>
 		[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-		[Route("keep-alive.html")]
+		[Route("keep-alive")]
 		public ContentResult KeepAlive()
-			=> Content(DateTime.UtcNow.ToString("u"));
+			=> Content(DateTime.UtcNow.ToString("u"), "text/plain");
+
+		/// <summary>
+		/// Robots.txt file
+		/// </summary>
+		[Route("robots.txt")]
+		public ContentResult RobotsTxt()
+			=> Content("User-agent: * Allow: /", "text/plain");
 	}
 }
