@@ -44,7 +44,7 @@ namespace Jeebs.WordPress
 			public FluentWordPress(ref IServiceCollection services, string section)
 			{
 				Services = services;
-				this.section = section;
+				this.section = $"{WpConfig.Key}:{section}";
 			}
 
 			/// <summary>

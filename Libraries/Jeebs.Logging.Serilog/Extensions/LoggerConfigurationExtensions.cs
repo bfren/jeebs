@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Jeebs.Config;
 using Jeebs.Config.Logging;
@@ -18,9 +19,9 @@ namespace Jeebs.Logging
 		/// <summary>
 		/// Load Serilog configuration from JeebsConfig object
 		/// </summary>
-		/// <param name="config">LoggerConfiguration</param>
+		/// <param name="configuration">LoggerConfiguration</param>
 		/// <param name="jeebs">JeebsConfig</param>
-		public static void LoadFromJeebsConfig(this LoggerConfiguration config, JeebsConfig jeebs)
+		public static void LoadFromJeebsConfig(this LoggerConfiguration configuration, JeebsConfig jeebs)
 		{
 			// If there are no logging providers, return default configuration
 			if (jeebs.Logging.Providers is null)
@@ -28,40 +29,48 @@ namespace Jeebs.Logging
 				return;
 			}
 
-			// Set the minimum log level
-			var minimumLevel = (LogEventLevel)(jeebs.Logging.MinimumLevel ?? LogLevel.Information);
-			config.MinimumLevel.Is(minimumLevel);
+			LogEventLevel getMinimum(LogLevel? level = null)
+				=> (LogEventLevel)(level ?? jeebs.Logging.MinimumLevel ?? LogLevel.Information);
 
-			// Add a provider to the Serilog configuration
-			void AddProvider<T>(Func<LoggingProviders, T> get, Action<T> configure)
-				where T : LoggingProvider
+			// Set the minimum log level
+			var overallMinimumLevel = getMinimum();
+			configuration.MinimumLevel.Is(overallMinimumLevel);
+
+			// Check for console provider
+			if (jeebs.Logging.Console)
 			{
-				if (get(jeebs.Logging.Providers) is T provider && provider.Enabled && provider.IsValid())
-				{
-					configure(provider);
-				}
+				configuration.WriteTo.Console(restrictedToMinimumLevel: overallMinimumLevel);
 			}
 
-			// Add each provider
-			AddProvider(
-				providers => providers.Console,
-				_ => config.WriteTo.Console(restrictedToMinimumLevel: minimumLevel)
-			);
+			// Add providers
+			foreach (var (service, providerConfig) in jeebs.Logging.Providers)
+			{
+				// Don't do anything if this provider is not enabled (!)
+				if (!providerConfig.Enabled)
+				{
+					continue;
+				}
 
-			AddProvider(
-				providers => providers.File,
-				file => config.WriteTo.Async(a => a.File(file.Path, restrictedToMinimumLevel: minimumLevel, rollingInterval: RollingInterval.Day))
-			);
+				// Get service info
+				var split = service.Split('|');
+				var serviceType = split[0];
+				var serviceName = split[1];
 
-			AddProvider(
-				providers => providers.Seq,
-				seq => config.WriteTo.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: minimumLevel)
-			);
+				// Get provider minimum
+				var providerMinimumLevel = getMinimum(providerConfig.MinimumLevel);
 
-			AddProvider(
-				providers => providers.Slack,
-				slack => config.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: minimumLevel))
-			);
+				// Get service config
+				if (serviceType == "seq")
+				{
+					var seq = jeebs.Services.Seq[serviceName];
+					configuration.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: providerMinimumLevel));
+				}
+				else if (serviceType == "slack")
+				{
+					var slack = jeebs.Services.Slack[serviceName];
+					configuration.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
+				}
+			}
 		}
 	}
 }

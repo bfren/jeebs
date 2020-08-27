@@ -1,15 +1,11 @@
 {
 	"jeebs": {
 		"app": {
-			"project": "MVC App"
+			"project": "Worker App"
 		},
 		"logging": {
-			"minimumLevel": "Debug",
-			"providers": {
-				"console": {
-					"enabled": true
-				}
-			}
+			"minimumLevel": "Trace",
+			"console": true
 		}
 	}
 }

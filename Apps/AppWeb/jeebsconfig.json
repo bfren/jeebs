@@ -5,14 +5,12 @@
 		},
 		"logging": {
 			"minimumLevel": "Debug",
-			"providers": {
-				"console": {
-					"enabled": true
-				}
-			}
+			"console": true
 		},
-		"verification": {
-			"google": "5cfca8ea82e65ef1"
-		}
+		"web": {
+			"verification": {
+				"google": "5cfca8ea82e65ef1"
+			}
+		}		
 	}
 }

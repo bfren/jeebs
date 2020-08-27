@@ -1,12 +1,13 @@
-﻿using Jeebs.Services.Twitter;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Jeebs.Config;
+using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
 using Jm.Services.Twitter.TweetinviTwitterSvc.GetProfileImageAsync;
 using Jm.Services.Twitter.TweetinviTwitterSvc.GetTweetsAsync;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
@@ -77,7 +78,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			}
 
 			// Get user
-			async Task<IR<IUser>> getUser(IOkV<string> r)
+			static async Task<IR<IUser>> getUser(IOkV<string> r)
 			{
 				var user = await UserAsync.GetUserFromScreenName(r.Value).ConfigureAwait(false);
 				return r.OkV(user);
@@ -174,7 +175,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			}
 
 			// Convert the tweets to TweetModel
-			async Task<IR<List<TweetModel>>> convertTweets(IOkV<List<ITweet>> r)
+			static async Task<IR<List<TweetModel>>> convertTweets(IOkV<List<ITweet>> r)
 			{
 				var tweets = from t in r.Value
 							 select new TweetModel

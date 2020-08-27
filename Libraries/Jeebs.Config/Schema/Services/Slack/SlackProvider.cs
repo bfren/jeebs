@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Config.Logging
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// Slack Provider
 	/// </summary>
-	public sealed class SlackProvider : LoggingProvider
+	public class SlackConfig : ServiceConfig
 	{
 		/// <summary>
 		/// Web hook URI

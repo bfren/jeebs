@@ -31,8 +31,8 @@ namespace AppConsoleWordPress
 			services.AddData().Using(config);
 
 			// Add WordPress
-			services.AddWordPressInstance(":wp:bcg").Using<WpBcg, WpBcgConfig>(config);
-			services.AddWordPressInstance(":wp:usa").Using<WpUsa, WpUsaConfig>(config);
+			services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(config);
+			services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(config);
 		}
 	}
 }

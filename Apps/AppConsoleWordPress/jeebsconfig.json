@@ -9,35 +9,37 @@
 				"NAS02": {
 					"connectionString": ""
 				}
+			},
+			"wp": {
+				"bcg": {
+					"tablePrefix": "bcg_main_",
+					"uploadsUrl": "http://localhost/bcg/wp-content/uploads",
+					"uploadsPath": "D:\\Software\\Hosts\\bcg\\Hosts\\apps\\main\\wp-content\\uploads",
+					"virtualUploadsUrl": "http://localhost/files"
+				},
+				"usa": {
+					"tablePrefix": "bcg_usa_",
+					"uploadsUrl": "http://localhost/bcg/wp-content/uploads",
+					"uploadsPath": "D:\\Software\\Hosts\\bcg\\Hosts\\apps\\main\\wp-content\\uploads",
+					"virtualUploadsUrl": "http://localhost/files"
+				}
 			}
 		},
 		"logging": {
 			"minimumLevel": "Trace",
+			"console": true,
 			"providers": {
-				"console": {
+				"seq|bcg-home": {
 					"enabled": true
-				},
-				"seq": {
-					"enabled": true,
-					"server": "http://sq.bcg.xyz:5341",
-					"apiKey": ""
 				}
 			}
 		},
-		"wp": {
-			"bcg": {
-				"db": "NAS02",
-				"tablePrefix": "bcg_main_",
-				"uploadsUrl": "http://localhost/bcg/wp-content/uploads",
-				"uploadsPath": "D:\\Software\\Hosts\\bcg\\Hosts\\apps\\main\\wp-content\\uploads",
-				"virtualUploadsUrl": "http://localhost/files"
-			},
-			"usa": {
-				"db": "NAS02",
-				"tablePrefix": "bcg_usa_",
-				"uploadsUrl": "http://localhost/bcg/wp-content/uploads",
-				"uploadsPath": "D:\\Software\\Hosts\\bcg\\Hosts\\apps\\main\\wp-content\\uploads",
-				"virtualUploadsUrl": "http://localhost/files"
+		"services": {
+			"seq": {
+				"bcg-home": {
+					"server": "http://sq.bcg.xyz:5341",
+					"apiKey": ""
+				}
 			}
 		}
 	}

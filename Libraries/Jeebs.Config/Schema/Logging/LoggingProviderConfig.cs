@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 namespace Jeebs.Config.Logging
 {
 	/// <summary>
-	/// Abstract Logging Provider
+	/// Logging Provider
 	/// </summary>
-	public abstract class LoggingProvider
+	public class LoggingProviderConfig
 	{
 		/// <summary>
 		/// Whether or not this provider is enabled
@@ -16,14 +16,8 @@ namespace Jeebs.Config.Logging
 		public bool Enabled { get; set; }
 
 		/// <summary>
-		/// This provider's minimum log level
+		/// This provider's minimum log level (overrides the default minimum level in main Logging section)
 		/// </summary>
 		public LogLevel? MinimumLevel { get; set; }
-
-		/// <summary>
-		/// Whether or not this provider's configuration is valid
-		/// </summary>
-		/// <returns>True if configuration is valid</returns>
-		public abstract bool IsValid();
 	}
 }

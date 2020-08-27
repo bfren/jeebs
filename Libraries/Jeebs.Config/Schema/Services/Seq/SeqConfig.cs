@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Config.Logging
+namespace Jeebs.Config
 {
 	/// <summary>
-	/// Rocket.Chat Provider
+	/// Seq configuration
 	/// </summary>
-	public sealed class SeqProvider : LoggingProvider
+	public class SeqConfig : ServiceConfig
 	{
 		/// <summary>
 		/// Seq Server URI
@@ -21,6 +21,7 @@ namespace Jeebs.Config.Logging
 
 		/// <inheritdoc/>
 		public override bool IsValid()
-			=> !string.IsNullOrEmpty(Server) && !string.IsNullOrEmpty(ApiKey);
+			=> !string.IsNullOrEmpty(Server)
+			&& !string.IsNullOrEmpty(ApiKey);
 	}
 }

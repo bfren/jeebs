@@ -7,12 +7,12 @@ namespace Jeebs.Config
 	/// <summary>
 	/// WordPress configuration
 	/// </summary>
-	public abstract class WpConfig
+	public class WpConfig
 	{
 		/// <summary>
 		/// Path to WordPress settings configuration section
 		/// </summary>
-		public const string Key = ":wp";
+		public const string Key = DbConfig.Key + ":wp";
 
 		/// <summary>
 		/// Database connection name (accessed via main Jeebs DB settings section)

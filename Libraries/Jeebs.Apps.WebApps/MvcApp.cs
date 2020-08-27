@@ -4,9 +4,9 @@ using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs.Apps.WebApps.Config;
 using Jeebs.Apps.WebApps.Json;
 using Jeebs.Apps.WebApps.Middleware;
+using Jeebs.Config;
 using Jeebs.Constants;
 using Jeebs.Util;
 using Microsoft.AspNetCore.Builder;
@@ -300,7 +300,7 @@ namespace Jeebs.Apps
 		/// <param name="app">IApplicationBuilder</param>
 		protected virtual void Configure_Redirections(IConfiguration config, IApplicationBuilder app)
 		{
-			if (config.GetSection<RedirectionsConfig>(":redirections") is RedirectionsConfig redirectRules)
+			if (config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig redirectRules)
 			{
 				app.UseMiddleware<RedirectExactMiddleware>(redirectRules);
 			}

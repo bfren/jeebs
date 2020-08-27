@@ -7,27 +7,47 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Jeebs Configuration
 	/// </summary>
-	public sealed class JeebsConfig
+	public class JeebsConfig
 	{
 		/// <summary>
-		/// Default path to Jeebs settings configuration section
+		/// Path to Jeebs settings configuration section
 		/// </summary>
 		public const string Key = "jeebs";
 
 		/// <summary>
-		/// AppConfig object
+		/// App congiguration
 		/// </summary>
 		public AppConfig App { get; set; } = new AppConfig();
 
 		/// <summary>
-		/// AzureKeyVault object
+		/// Azure KeyVault congiguration
 		/// </summary>
 		public AzureKeyVaultConfig AzureKeyVault { get; set; } = new AzureKeyVaultConfig();
 
 		/// <summary>
-		/// LoggingConfig object
+		/// Data configuration
+		/// </summary>
+		public DbConfig Db { get; set; } = new DbConfig();
+
+		/// <summary>
+		/// Logging congiguration
 		/// </summary>
 		public LoggingConfig Logging { get; set; } = new LoggingConfig();
+
+		/// <summary>
+		/// Notifier congiguration
+		/// </summary>
+		public NotifierConfig Notifier { get; set; } = new NotifierConfig();
+
+		/// <summary>
+		/// Services configuration
+		/// </summary>
+		public ServicesConfig Services { get; set; } = new ServicesConfig();
+
+		/// <summary>
+		/// Web congiguration
+		/// </summary>
+		public WebConfig Web { get; set; } = new WebConfig();
 
 		/// <summary>
 		/// If key starts with ':', add Jeebs config prefix

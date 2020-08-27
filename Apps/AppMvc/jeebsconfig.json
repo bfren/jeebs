@@ -5,11 +5,7 @@
 		},
 		"logging": {
 			"minimumLevel": "Debug",
-			"providers": {
-				"console": {
-					"enabled": true
-				}
-			}
+			"console": true
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Path to database settings configuration section
 		/// </summary>
-		public const string Key = ":db";
+		public const string Key = JeebsConfig.Key + ":db";
 
 		/// <summary>
 		/// Default database connection name
@@ -36,6 +36,11 @@ namespace Jeebs.Config
 		public Dictionary<string, DbConnectionConfig> Connections { get; set; } = new Dictionary<string, DbConnectionConfig>();
 
 		/// <summary>
+		/// WordPress configuration
+		/// </summary>
+		public Dictionary<string, WpConfig> Wp { get; set; } = new Dictionary<string, WpConfig>();
+
+		/// <summary>
 		/// Retrieve default Connection, unless name is set
 		/// </summary>
 		/// <param name="name">[Optional] Connection name</param>
@@ -43,7 +48,7 @@ namespace Jeebs.Config
 		public DbConnectionConfig GetConnection(string? name = null)
 		{
 			// If name is null, use Default connection
-			string connection = name ?? Default;
+			string connection = string.IsNullOrEmpty(name) ? Default : name;
 			if (string.IsNullOrEmpty(connection))
 			{
 				throw new Jx.ConfigException($"{nameof(Default)} must be defined in DbConfig.");

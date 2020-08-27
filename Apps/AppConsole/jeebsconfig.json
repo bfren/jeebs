@@ -5,12 +5,16 @@
 		},
 		"logging": {
 			"minimumLevel": "Debug",
+			"console": true,
 			"providers": {
-				"console": {
+				"seq|bcg-home": {
 					"enabled": true
-				},
-				"seq": {
-					"enabled": true,
+				}
+			}
+		},
+		"services": {
+			"seq": {
+				"bcg-home": {
 					"server": "http://sq.bcg.xyz:5341",
 					"apiKey": ""
 				}

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Jeebs.Apps.WebApps.Config;
 using Jeebs.Apps.WebApps.Middleware;
+using Jeebs.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -126,7 +126,7 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected virtual void Configure_SiteVerification(IApplicationBuilder app, IConfiguration config)
 		{
-			if (config.GetSection<SiteVerificationConfig>(":verification") is SiteVerificationConfig verification)
+			if (config.GetSection<SiteVerificationConfig>(SiteVerificationConfig.Key) is SiteVerificationConfig verification)
 			{
 				app.UseMiddleware<SiteVerificationMiddleware>(verification);
 			}

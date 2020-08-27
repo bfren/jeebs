@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Services.Twitter
+namespace Jeebs.Config
 {
 	/// <summary>
-	/// Twitter Configuration
+	/// Twitter configuration
 	/// </summary>
-	public sealed class TwitterConfig
+	public class TwitterConfig : ServiceConfig
 	{
 		/// <summary>
 		/// UserAccessToken
@@ -28,5 +28,12 @@ namespace Jeebs.Services.Twitter
 		/// ConsumerSecret
 		/// </summary>
 		public string ConsumerSecret { get; set; } = string.Empty;
+
+		/// <inheritdoc/>
+		public override bool IsValid()
+			=> !string.IsNullOrEmpty(UserAccessToken)
+			&& !string.IsNullOrEmpty(UserAccessSecret)
+			&& !string.IsNullOrEmpty(ConsumerKey)
+			&& !string.IsNullOrEmpty(ConsumerSecret);
 	}
 }

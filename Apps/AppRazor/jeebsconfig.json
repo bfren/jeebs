@@ -1,15 +1,11 @@
 {
 	"jeebs": {
 		"app": {
-			"project": "MVC App"
+			"project": "Razor App"
 		},
 		"logging": {
 			"minimumLevel": "Debug",
-			"providers": {
-				"console": {
-					"enabled": true
-				}
-			}
+			"console": true
 		}
 	}
 }

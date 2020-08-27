@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Apps.WebApps.Config
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// Site Veritifaction Configuration
 	/// </summary>
-	public sealed class SiteVerificationConfig
+	public class SiteVerificationConfig
 	{
+		/// <summary>
+		/// Path to this configuration section
+		/// </summary>
+		public const string Key = WebConfig.Key + ":verification";
+
 		/// <summary>
 		/// Google Site Verification page
 		/// </summary>

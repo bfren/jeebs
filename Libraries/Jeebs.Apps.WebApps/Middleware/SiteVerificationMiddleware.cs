@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Apps.WebApps.Config;
+using Jeebs.Config;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 

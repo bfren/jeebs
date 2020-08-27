@@ -8,8 +8,13 @@ namespace Jeebs.Config
 	/// Azure Key Vault Configuration
 	/// These values should only ever be set in jeebsconfig-secrets.json to avoid them being checked into version control
 	/// </summary>
-	public sealed class AzureKeyVaultConfig
+	public class AzureKeyVaultConfig
 	{
+		/// <summary>
+		/// Path to this configuration section
+		/// </summary>
+		public const string Key = JeebsConfig.Key + ":azureKeyVault";
+
 		/// <summary>
 		/// Azure Key Vault Name
 		/// </summary>
@@ -28,7 +33,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Only returns True if <see cref="Name"/>, <see cref="ClientId"/> and <see cref="ClientSecret"/> are all not null
 		/// </summary>
-		public bool IsValid 
+		public bool IsValid
 			=> !(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(ClientSecret));
 	}
 }
