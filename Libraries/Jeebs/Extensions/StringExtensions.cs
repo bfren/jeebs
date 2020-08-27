@@ -126,15 +126,26 @@ namespace Jeebs
 
 		/// <summary>
 		/// Works like string.Format() but with named as well as numbered placeholders
-		/// <para>Object property names must match placeholders or they will be left in place</para>
+		/// <para>Source is Array: values will be inserted in order (regardless of placeholder values)</para>
+		/// <para>Source is Object: property names must match placeholders or they will be left in place</para>
 		/// <para>Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables</para>
 		/// <para>(Significantly) altered to work without requiring DataBinder</para>
 		/// </summary>
 		/// <param name="this">String to format</param>
 		/// <param name="source"></param>
-		public static string FormatWith(this string @this, object source)
+		public static string FormatWith<T>(this string @this, T source)
 			=> Modify(@this, () =>
 			{
+				// Return original if source is null or if it is an empty array
+				if (source is null)
+				{
+					return @this;
+				}
+				else if (source is Array arr && arr.Length == 0)
+				{
+					return @this;
+				}
+
 				// Thanks James Newton-King!
 				Regex r = new Regex(
 					@"(?<start>\{)+(?<template>[\w\.\[\]@]+)(?<format>:[^}]+)?(?<end>\})+",
@@ -158,13 +169,10 @@ namespace Jeebs
 					// Switch on the source type, using variety of methods to get this template's value
 					var value = source switch
 					{
-						// "{0} {1}" with source array
-						Array arr when int.TryParse(template, out int arrayIndex) => arr.GetValue(arrayIndex),
+						// Source array - get next item in array
+						Array arr when replaceIndex < arr.Length => arr.GetValue(replaceIndex++),
 
-						// "{A} {B}" with source array
-						Array arr when replaceIndex <= arr.Length => arr.GetValue(replaceIndex++),
-
-						// "{A} {B}" with source object
+						// Source object - get matching property value
 						{ } obj when obj.GetProperty(template) is Some<object> property => property.Value,
 
 						// Nothing has matched yet so to be safe put the template back

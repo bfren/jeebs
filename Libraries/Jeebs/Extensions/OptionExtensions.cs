@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs
 {
 	/// <summary>
-	/// <see cref="Option{T}"/> Extension Methods
+	/// <see cref="Option{T}"/> Extensions
 	/// </summary>
 	public static class OptionExtensions
 	{

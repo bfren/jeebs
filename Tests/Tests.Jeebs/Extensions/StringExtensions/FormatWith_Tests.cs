@@ -8,10 +8,24 @@ namespace Jeebs.StringExtensions_Tests
 	public class FormatWith_Tests
 	{
 		[Fact]
-		public void Replace_Numbered_Values()
+		public void Replace_Ordered_Numbered_Values()
 		{
 			// Arrange
 			const string format = "{0} , {1} , {2}";
+			var values = new[] { 3, 4, 5 };
+
+			// Act
+			var result = format.FormatWith(values);
+
+			// Assert
+			Assert.Equal("3 , 4 , 5", result);
+		}
+
+		[Fact]
+		public void Replace_Unordered_Numbered_Values()
+		{
+			// Arrange
+			const string format = "{1} , {0} , {2}";
 			var values = new[] { 3, 4, 5 };
 
 			// Act
@@ -102,6 +116,20 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero} , {one} , {two}";
+			var values = new[] { 3, 4, 5 };
+
+			// Act
+			var result = format.FormatWith(values);
+
+			// Assert
+			Assert.Equal("3 , 4 , 5", result);
+		}
+
+		[Fact]
+		public void Replace_Values_When_Format_Mixed_Values_Numbered()
+		{
+			// Arrange
+			const string format = "{zero} , {0} , {1}";
 			var values = new[] { 3, 4, 5 };
 
 			// Act
