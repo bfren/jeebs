@@ -19,7 +19,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Minimum LogLevel
 		/// </summary>
-		public LogLevel? MinimumLevel { get; set; }
+		public LogLevel MinimumLevel { get; set; }
 
 		/// <summary>
 		/// If true, log to console

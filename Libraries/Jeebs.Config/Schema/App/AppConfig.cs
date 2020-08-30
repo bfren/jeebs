@@ -15,12 +15,12 @@ namespace Jeebs.Config
 		public const string Key = JeebsConfig.Key + ":app";
 
 		/// <summary>
-		/// Project Name
+		/// Application Name
 		/// </summary>
-		public string Project { get; set; } = string.Empty;
+		public string Name { get; set; } = string.Empty;
 
 		/// <summary>
-		/// Project Version
+		/// Application Version
 		/// </summary>
 		public Version Version { get; set; } = new Version(0, 1, 0, 0);
 	}

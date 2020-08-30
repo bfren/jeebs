@@ -1,0 +1,310 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema",
+	"title": "Jeebs Libraries Configuration Settings",
+	"type": "object",
+	"required": [ "jeebs" ],
+	"properties": {
+		"jeebs": {
+			"type": "object",
+			"description": "Jeebs configuration",
+			"required": [ "app" ],
+			"additionalProperties": false,
+			"properties": {
+				"app": {
+					"type": "object",
+					"description": "Application information",
+					"required": [ "name" ],
+					"additionalProperties": false,
+					"properties": {
+						"name": {
+							"type": "string",
+							"description": "Application name"
+						},
+						"version": {
+							"type": "string",
+							"pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$",
+							"description": "[Optional] Application version (format 0.0.0.0)"
+						}
+					}
+				},
+				"azureKeyVault": {
+					"type": "object",
+					"description": "Azure Key Vault configuration",
+					"required": [ "clientId", "clientSecret", "name" ],
+					"additionalProperties": false,
+					"properties": {
+						"clientId": {
+							"type": "string",
+							"pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$",
+							"description": "Client ID (see Azure Key Vault authentication documentation"
+						},
+						"clientSecret": {
+							"type": "string",
+							"description": "Client Secret (see Azure Key Vault authentication documentation"
+						},
+						"name": {
+							"type": "string",
+							"description": "Key Vault identifier"
+						}
+					}
+				},
+				"db": {
+					"type": "object",
+					"description": "Database connection configuration",
+					"required": [ "connections", "default" ],
+					"additionalProperties": false,
+					"properties": {
+						"authentication": {
+							"type": "string",
+							"default": "[Optional] The connection to use for authentication - must be one of the connections defined in 'connections'"
+						},
+						"connections": {
+							"type": "object",
+							"description": "Named database connections",
+							"additionalProperties": {
+								"$ref": "#/definitions/db/connection"
+							}
+						},
+						"default": {
+							"type": "string",
+							"description": "The default connection - must be one of the connections defined in 'connections'"
+						},
+						"wp": {
+							"type": "object",
+							"description": "WordPress instances",
+							"additionalProperties": {
+								"$ref": "#/definitions/db/wpInstance"
+							}
+						}
+					}
+				},
+				"logging": {
+					"type": "object",
+					"description": "Logging configuration",
+					"required": [ "minimumLevel" ],
+					"additionalProperties": false,
+					"properties": {
+						"console": {
+							"type": "boolean",
+							"description": "[Optional] Whether or not to enable console output"
+						},
+						"minimumLevel": {
+							"$ref": "#/definitions/logging/minimumLevel"
+						},
+						"providers": {
+							"type": "object",
+							"description": "[Optional] Logging providers - name should be in format service_type.service_name (e.g. seq.dev-server)",
+							"additionalProperties": {
+								"$ref": "#/definitions/logging/provider"
+							}
+						}
+					}
+				},
+				"notifier": {
+					"type": "object",
+					"description": "Notify configuration",
+					"required": [ "listeners" ],
+					"additionalProperties": false,
+					"properties": {
+						"listeners": {
+							"type": "array",
+							"description": "Notifier listeners - array values should be in format service_type.service_name (e.g. seq.dev-server)",
+							"items": { "type": "string" }
+						}
+					}
+				},
+				"services": {
+					"type": "object",
+					"description": "Third-party services configuration",
+					"additionalProperties": false,
+					"properties": {
+						"rocket-chat": {
+							"type": "object",
+							"default": "Rocket Chat configuration",
+							"additionalProperties": {
+								"type": "object",
+								"required": [ "webhook" ],
+								"additionalProperties": false,
+								"properties": {
+									"webhook": {
+										"type": "string",
+										"format": "uri"
+									}
+								}
+							}
+						},
+						"seq": {
+							"type": "object",
+							"description": "Seq configuration",
+							"additionalProperties": {
+								"type": "object",
+								"required": [ "apiKey", "server" ],
+								"additionalProperties": false,
+								"properties": {
+									"server": {
+										"type": "string",
+										"format": "uri",
+										"description": "Ingest server (don't forget the port)"
+									},
+									"apiKey": {
+										"type": "string",
+										"description": "API Key for accessing the server"
+									}
+								}
+							}
+						},
+						"slack": {
+							"type": "object",
+							"description": "Slack configuration",
+							"additionalProperties": {
+								"type": "object",
+								"required": [ "webhook" ],
+								"additionalProperties": false,
+								"properties": {
+									"webhook": {
+										"type": "string",
+										"format": "uri",
+										"description": "Slack webhook"
+									},
+									"showAttachments": {
+										"type": "boolean",
+										"description": "[Optional] Whether or not to show attachments"
+									}
+								}
+							}
+						},
+						"twitter": {
+							"type": "object",
+							"default": "Twitter configuration",
+							"additionalProperties": {
+								"type": "object",
+								"required": [ "consumerKey", "consumerSecret", "userAccessSecret", "userAccessToken" ],
+								"additionalProperties": false,
+								"properties": {
+									"consumerKey": {
+										"type": "string",
+										"default": "User Access Token - see Twitter API access documentation"
+									},
+									"consumerSecret": {
+										"type": "string",
+										"default": "User Access Token - see Twitter API access documentation"
+									},
+									"userAccessSecret": {
+										"type": "string",
+										"default": "User Access Token - see Twitter API access documentation"
+									},
+									"userAccessToken": {
+										"type": "string",
+										"default": "User Access Token - see Twitter API access documentation"
+									}
+								}
+							}
+						}
+					}
+				},
+				"web": {
+					"type": "object",
+					"description": "Web Application configuration",
+					"additionalProperties": false,
+					"properties": {
+						"redirections": {
+							"type": "object",
+							"description": "Redirections - key is URL to match, value is URL to redirect to (both MUST start with a slash)",
+							"additionalProperties": {
+								"type": "string",
+								"pattern": "^\\/.*$",
+								"description": "URL to redirect to"
+							}
+						},
+						"verification": {
+							"type": "object",
+							"description": "Search engine verification codes",
+							"additionalProperties": false,
+							"properties": {
+								"google": {
+									"type": "string",
+									"pattern": "^(?!^google)[0-9a-z]{16}$",
+									"description": "Google Webmaster Tools verification code (without the 'google' prefix)"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"db": {
+			"connection": {
+				"type": "object",
+				"description": "Database connection configuration",
+				"required": [ "connectionString" ],
+				"additionalProperties": false,
+				"properties": {
+					"connectionString": {
+						"type": "string",
+						"description": "Connection string"
+					},
+					"tablePrefix": {
+						"type": "string",
+						"description": "[Optional] Table prefix"
+					},
+					"additionalProperties": {
+						"type": "object",
+						"description": "[Optional] Additional properties required by this connection (key/value pairs)"
+					}
+				}
+			},
+			"wpInstance": {
+				"type": "object",
+				"description": "WordPress instance configuration",
+				"required": [ "tablePrefix" ],
+				"additionalProperties": false,
+				"properties": {
+					"db": {
+						"type": "string",
+						"description": "[Optional] The connection to use for this instance - must be one of the connections defined in 'connections'"
+					},
+					"tablePrefix": {
+						"type": "string",
+						"description": "Table prefix"
+					},
+					"uploadsUrl": {
+						"type": "string",
+						"description": "The URL of the 'uploads' directory for the WordPress instance (e.g. https://host/wp-content/uploads)"
+					},
+					"uploadsPath": {
+						"type": "string",
+						"description": "The file system path of the 'uploads' directory (e.g. /var/www/html/wp-content/uploads)"
+					},
+					"virtualUploadsUrl": {
+						"type": "string",
+						"description": "Virtual URL of the 'uploads' directory (used with 'uploadsUrl' to hide location of WordPress instance)"
+					}
+				}
+			}
+		},
+		"logging": {
+			"minimumLevel": {
+				"type": "string",
+				"description": "Microsoft compatible logging levels",
+				"enum": [ "Trace", "Debug", "Information", "Warning", "Error", "Critical" ]
+			},
+			"provider": {
+				"type": "object",
+				"default": "Logging provider",
+				"required": [ "enabled" ],
+				"additionalProperties": false,
+				"properties": {
+					"enabled": {
+						"type": "boolean",
+						"description": "Whether or not this provider is enabled"
+					},
+					"minimumLevel": {
+						"$ref": "#/definitions/logging/minimumLevel"
+					}
+				}
+			}
+		}
+	}
+}

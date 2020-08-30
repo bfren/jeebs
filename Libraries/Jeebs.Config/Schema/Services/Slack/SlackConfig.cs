@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs.Config
 {
 	/// <summary>
-	/// Slack Provider
+	/// Slack configuration
 	/// </summary>
 	public class SlackConfig : ServiceConfig
 	{
