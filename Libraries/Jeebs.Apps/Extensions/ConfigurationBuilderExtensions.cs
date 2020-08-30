@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 
 namespace Jeebs.Apps
 {
@@ -20,7 +24,7 @@ namespace Jeebs.Apps
 		public static IConfigurationBuilder AddJeebsConfig(this IConfigurationBuilder builder, IHostEnvironment env)
 		{
 			// Add Jeebs config - keeps Jeebs config away from app settings
-			builder.AddJsonFile("jeebsconfig.json", optional: false);
+			builder.AddJsonFile("jeebsconfig.json".Verify(), optional: false);
 			builder.AddJsonFile($"jeebsconfig.{env.EnvironmentName}.json", optional: true);
 			builder.AddJsonFile("jeebsconfig-secrets.json", optional: false);
 
@@ -42,6 +46,50 @@ namespace Jeebs.Apps
 
 			// Return
 			return builder;
+		}
+
+		private static string Verify(this string file, bool optional = false)
+		{
+			var configPath = $"{Directory.GetCurrentDirectory()}\\{file}";
+			var schemaPath = $"{Directory.GetCurrentDirectory()}\\schema.json";
+
+			if (!File.Exists(configPath))
+			{
+				if (!optional)
+				{
+					throw new FileNotFoundException("Jeebs configuration file not found.", configPath);
+				}
+
+				return file;
+			}
+
+			if (!File.Exists(schemaPath))
+			{
+				throw new FileNotFoundException("Jeebs schema file not found.", schemaPath);
+			}
+
+			using var configFile = File.OpenText(configPath);
+			using var schemaFile = File.OpenText(schemaPath);
+
+			using var configReader = new JsonTextReader(configFile);
+			using var schemaReader = new JsonTextReader(schemaFile);
+
+			var config = JToken.ReadFrom(configReader);
+			var schema = JSchema.Load(schemaReader);
+
+			if (!config.IsValid(schema, out IList<string> errors))
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.AppendLine($"Invalid Jeebs configuration file: {configPath}.");
+				foreach (var item in errors)
+				{
+					sb.AppendLine(item);
+				}
+
+				throw new Jx.ConfigException(sb.ToString());
+			}
+
+			return file;
 		}
 	}
 }
