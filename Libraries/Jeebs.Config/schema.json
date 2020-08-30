@@ -228,7 +228,7 @@
 					"type": "object",
 					"description": "WordPress instances",
 					"additionalProperties": {
-						"$ref": "#/definitions/db/wpInstance"
+						"$ref": "#/definitions/wp/instance"
 					}
 				}
 			}
@@ -255,8 +255,32 @@
 						"description": "[Optional] Additional properties required by this connection (key/value pairs)"
 					}
 				}
+			}
+		},
+		"logging": {
+			"minimumLevel": {
+				"type": "string",
+				"description": "Microsoft compatible logging levels",
+				"enum": [ "Trace", "Debug", "Information", "Warning", "Error", "Critical" ]
 			},
-			"wpInstance": {
+			"provider": {
+				"type": "object",
+				"default": "Logging provider",
+				"required": [ "enabled" ],
+				"additionalProperties": false,
+				"properties": {
+					"enabled": {
+						"type": "boolean",
+						"description": "Whether or not this provider is enabled"
+					},
+					"minimumLevel": {
+						"$ref": "#/definitions/logging/minimumLevel"
+					}
+				}
+			}
+		},
+		"wp": {
+			"instance": {
 				"type": "object",
 				"description": "WordPress instance configuration",
 				"required": [ "tablePrefix" ],
@@ -281,28 +305,6 @@
 					"virtualUploadsUrl": {
 						"type": "string",
 						"description": "Virtual URL of the 'uploads' directory (used with 'uploadsUrl' to hide location of WordPress instance)"
-					}
-				}
-			}
-		},
-		"logging": {
-			"minimumLevel": {
-				"type": "string",
-				"description": "Microsoft compatible logging levels",
-				"enum": [ "Trace", "Debug", "Information", "Warning", "Error", "Critical" ]
-			},
-			"provider": {
-				"type": "object",
-				"default": "Logging provider",
-				"required": [ "enabled" ],
-				"additionalProperties": false,
-				"properties": {
-					"enabled": {
-						"type": "boolean",
-						"description": "Whether or not this provider is enabled"
-					},
-					"minimumLevel": {
-						"$ref": "#/definitions/logging/minimumLevel"
 					}
 				}
 			}
