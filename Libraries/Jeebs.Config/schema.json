@@ -68,13 +68,6 @@
 						"default": {
 							"type": "string",
 							"description": "The default connection - must be one of the connections defined in 'connections'"
-						},
-						"wp": {
-							"type": "object",
-							"description": "WordPress instances",
-							"additionalProperties": {
-								"$ref": "#/definitions/db/wpInstance"
-							}
 						}
 					}
 				},
@@ -228,6 +221,13 @@
 								}
 							}
 						}
+					}
+				},
+				"wp": {
+					"type": "object",
+					"description": "WordPress instances",
+					"additionalProperties": {
+						"$ref": "#/definitions/db/wpInstance"
 					}
 				}
 			}

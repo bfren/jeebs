@@ -1,7 +1,7 @@
 {
 	"jeebs": {
 		"app": {
-			"project": "MVC App"
+			"name": "MVC App"
 		},
 		"logging": {
 			"minimumLevel": "Debug",

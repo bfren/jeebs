@@ -1,7 +1,7 @@
 {
 	"jeebs": {
 		"app": {
-			"project": "Console App"
+			"name": "Console App"
 		},
 		"logging": {
 			"minimumLevel": "Debug",

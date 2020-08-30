@@ -51,6 +51,11 @@ namespace Jeebs.Config
 		public WebConfig Web { get; set; } = new WebConfig();
 
 		/// <summary>
+		/// WordPress configurations
+		/// </summary>
+		public Dictionary<string, WpConfig> Wp { get; set; } = new Dictionary<string, WpConfig>();
+
+		/// <summary>
 		/// If key starts with ':', add Jeebs config prefix
 		/// </summary>
 		/// <param name="key">Section key</param>

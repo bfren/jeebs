@@ -1,7 +1,7 @@
 {
 	"jeebs": {
 		"app": {
-			"project": "Razor App"
+			"name": "Razor App"
 		},
 		"logging": {
 			"minimumLevel": "Debug",

@@ -30,4 +30,6 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://raw.githubusercontent.com/bencgreen/jeebs/main/Libraries/Jeebs.Config/schema.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

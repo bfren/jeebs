@@ -36,11 +36,6 @@ namespace Jeebs.Config
 		public Dictionary<string, DbConnectionConfig> Connections { get; set; } = new Dictionary<string, DbConnectionConfig>();
 
 		/// <summary>
-		/// WordPress configuration
-		/// </summary>
-		public Dictionary<string, WpConfig> Wp { get; set; } = new Dictionary<string, WpConfig>();
-
-		/// <summary>
 		/// Retrieve default Connection, unless name is set
 		/// </summary>
 		/// <param name="name">[Optional] Connection name</param>

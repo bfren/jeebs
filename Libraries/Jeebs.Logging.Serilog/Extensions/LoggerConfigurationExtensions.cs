@@ -30,7 +30,7 @@ namespace Jeebs.Logging
 			}
 
 			LogEventLevel getMinimum(LogLevel? level = null)
-				=> (LogEventLevel)(level ?? jeebs.Logging.MinimumLevel ?? LogLevel.Information);
+				=> (LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();
@@ -52,7 +52,7 @@ namespace Jeebs.Logging
 				}
 
 				// Get service info
-				var split = service.Split('|');
+				var split = service.Split('.');
 				var serviceType = split[0];
 				var serviceName = split[1];
 

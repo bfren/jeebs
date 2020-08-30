@@ -14,7 +14,7 @@ namespace AppConsole
 			Serilog.Debugging.SelfLog.Enable(Console.Error);
 
 			log.Debug("Services loaded");
-			log.Debug("Project {ProjectName}", config.GetJeebsConfig().App.Project);
+			log.Debug("Project {ProjectName}", config.GetJeebsConfig().App.Name);
 
 			log.Error("Test error");
 			log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");

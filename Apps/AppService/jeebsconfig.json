@@ -1,7 +1,7 @@
 {
 	"jeebs": {
 		"app": {
-			"project": "Worker App"
+			"name": "Worker App"
 		},
 		"logging": {
 			"minimumLevel": "Trace",

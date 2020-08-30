@@ -10,13 +10,7 @@
 					"connectionString": ""
 				}
 			},
-			"default": "fred",
-			"wp": {
-				"fred": {
-					"db": "fred",
-					"tablePrefix": "bcg_main"
-				}
-			}
+			"default": "fred"
 		},
 		"logging": {
 			"minimumLevel": "Error"
@@ -27,6 +21,12 @@
 			},
 			"verification": {
 				"google": "abcdef1234567890"
+			}
+		},
+		"wp": {
+			"fred": {
+				"db": "fred",
+				"tablePrefix": "bcg_main"
 			}
 		}
 	}
