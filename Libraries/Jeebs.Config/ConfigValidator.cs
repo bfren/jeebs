@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Jeebs.Config.Properties;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
+
+namespace Jeebs.Config
+{
+	/// <summary>
+	/// Jeebs configuration validator
+	/// </summary>
+	public static class ConfigValidator
+	{
+		/// <summary>
+		/// Validate a Jeebs config file against the schema
+		/// </summary>
+		/// <exception cref="Jx.ConfigException">If the file fails the configuration validation</exception>
+		/// <param name="path">Absolute path to Jeebs configuration file</param>
+		public static string Validate(string path)
+		{
+			// Make sure file exists
+			if (!File.Exists(path))
+			{
+				throw new FileNotFoundException("Jeebs configuration file not found.", path);
+			}
+
+			// Read config file
+			using var configFile = File.OpenText(path);
+			using var configReader = new JsonTextReader(configFile);
+			var config = JToken.ReadFrom(configReader);
+
+			// Read schema file
+			using var schemaStream = new MemoryStream(Resources.schema);
+			using var schemaFile = new StreamReader(schemaStream);
+			using var schemaReader = new JsonTextReader(schemaFile);
+			var schema = JSchema.Load(schemaReader);
+
+			// Validate file using schema
+			if (!config.IsValid(schema, out IList<string> errors))
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.AppendLine($"Invalid Jeebs configuration file: {path}.");
+				foreach (var item in errors)
+				{
+					sb.AppendLine(item);
+				}
+
+				throw new Jx.ConfigException(sb.ToString());
+			}
+
+			// Return original path on success
+			return path;
+		}
+	}
+}
