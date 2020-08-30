@@ -12,23 +12,7 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public void Message(IMsg msg)
 		{
-			// Add message type to the message
-			var text = (msg.ToString() == msg.GetType().FullName) switch
-			{
-				true => msg.ToString(),
-				false => "{MsgType} - " + msg switch
-				{
-					ILoggableMsg x => x.Format,
-					{ } x => x.ToString()
-				}
-			};
-
-			// Add message type to the argument array
-			var args = msg switch
-			{
-				ILoggableMsg x => x.ParamArray.Prepend(msg.GetType().FullName).ToArray(),
-				_ => new object[] { }
-			};
+			var (text, args) = msg.Prepare();
 
 			// Handle exception messages
 			if (msg is IExceptionMsg exceptionMsg)
@@ -58,6 +42,9 @@ namespace Jeebs
 				case LogLevel.Trace:
 					Trace(text, args);
 					break;
+				case LogLevel.Debug:
+					Debug(text, args);
+					break;
 				case LogLevel.Information:
 					Information(text, args);
 					break;
@@ -69,9 +56,6 @@ namespace Jeebs
 					break;
 				case LogLevel.Critical:
 					Critical(text, args);
-					break;
-				default:
-					Debug(text, args);
 					break;
 			}
 		}
