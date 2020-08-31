@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Apps;
+using Jeebs.Config;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AppConsole
@@ -14,12 +15,15 @@ namespace AppConsole
 			Serilog.Debugging.SelfLog.Enable(Console.Error);
 
 			log.Debug("Services loaded");
-			log.Debug("Project {ProjectName}", config.GetJeebsConfig().App.Name);
+			log.Debug("Project {Name}", config.GetJeebsConfig().App.Name);
 
 			log.Error("Test error");
 			log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
 
 			log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
+
+			var seq = provider.GetService<Seq>();
+			seq.Send("test");
 
 			while (Console.ReadLine() is string output)
 			{

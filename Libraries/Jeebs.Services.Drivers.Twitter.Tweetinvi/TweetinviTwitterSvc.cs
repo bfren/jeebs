@@ -17,7 +17,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 	/// <summary>
 	/// Tweetinvi Service
 	/// </summary>
-	public sealed class TweetinviTwitterSvc : ITwitterSvc
+	public sealed class TweetinviTwitterSvc : ITwitterService
 	{
 		private readonly TwitterConfig settings;
 

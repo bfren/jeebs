@@ -7,7 +7,7 @@
 			"minimumLevel": "Debug",
 			"console": true,
 			"providers": {
-				"seq|bcg-home": {
+				"seq.bcg-home": {
 					"enabled": true
 				}
 			}

@@ -6,7 +6,7 @@ using Jeebs.Config;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 
-namespace Jeebs.Apps
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// IConfiguration extension methods

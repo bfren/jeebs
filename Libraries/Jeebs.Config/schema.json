@@ -96,7 +96,7 @@
 				},
 				"notifier": {
 					"type": "object",
-					"description": "Notify configuration",
+					"description": "Notifier configuration",
 					"required": [ "listeners" ],
 					"additionalProperties": false,
 					"properties": {
@@ -122,7 +122,7 @@
 								"properties": {
 									"webhook": {
 										"type": "string",
-										"format": "uri"
+										"description": "Webhooks can be created through Rocket.Chat administration 'Integrations' page"
 									}
 								}
 							}
@@ -157,8 +157,7 @@
 								"properties": {
 									"webhook": {
 										"type": "string",
-										"format": "uri",
-										"description": "Slack webhook"
+										"description": "Webhooks can be created through Slack 'Incoming Webhooks' oage"
 									},
 									"showAttachments": {
 										"type": "boolean",

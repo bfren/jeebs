@@ -52,9 +52,7 @@ namespace Jeebs.Logging
 				}
 
 				// Get service info
-				var split = service.Split('.');
-				var serviceType = split[0];
-				var serviceName = split[1];
+				var (serviceType, serviceName) = ServicesConfig.SplitDefinition(service);
 
 				// Get provider minimum
 				var providerMinimumLevel = getMinimum(providerConfig.MinimumLevel);
@@ -62,12 +60,12 @@ namespace Jeebs.Logging
 				// Get service config
 				if (serviceType == "seq")
 				{
-					var seq = jeebs.Services.Seq[serviceName];
+					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
 					configuration.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: providerMinimumLevel));
 				}
 				else if (serviceType == "slack")
 				{
-					var slack = jeebs.Services.Slack[serviceName];
+					var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
 					configuration.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
 				}
 			}

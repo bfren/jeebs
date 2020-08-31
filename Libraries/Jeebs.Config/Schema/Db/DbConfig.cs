@@ -46,13 +46,13 @@ namespace Jeebs.Config
 			string connection = string.IsNullOrEmpty(name) ? Default : name;
 			if (string.IsNullOrEmpty(connection))
 			{
-				throw new Jx.ConfigException($"{nameof(Default)} must be defined in DbConfig.");
+				throw new Jx.Config.DefaultDbConnectionUndefinedException("Default database connection is not defined.");
 			}
 
 			// Attempt to retrieve the connection
 			if (Connections.Count == 0)
 			{
-				throw new Jx.ConfigException($"{nameof(Connections)} must contain at least one item.");
+				throw new Jx.Config.NoDbConnectionsException("At least one database connection must be defined.");
 			}
 
 			if (Connections.TryGetValue(connection, out var config))
@@ -61,7 +61,7 @@ namespace Jeebs.Config
 			}
 			else
 			{
-				throw new Jx.ConfigException($"Connection '{connection}' was not found in configuration settings.");
+				throw new Jx.Config.NamedDbConnectionNotFoundException(connection);
 			}
 		}
 

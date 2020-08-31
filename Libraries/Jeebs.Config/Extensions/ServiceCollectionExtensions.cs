@@ -5,7 +5,7 @@ using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Apps
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// Extensions for IServiceCollection
@@ -19,7 +19,8 @@ namespace Jeebs.Apps
 		/// <param name="services">IServiceCollection object</param>
 		/// <returns>FluentBind object</returns>
 		public static FluentBind<T> Bind<T>(this IServiceCollection services)
-			where T : class => new FluentBind<T>(services);
+			where T : class
+			=> new FluentBind<T>(services);
 
 		/// <summary>
 		/// Fluent Bind
@@ -47,21 +48,24 @@ namespace Jeebs.Apps
 			/// Setup dependencies
 			/// </summary>
 			/// <param name="services">IServiceCollection object</param>
-			public FluentBind(IServiceCollection services) => this.services = services;
+			public FluentBind(IServiceCollection services)
+				=> this.services = services;
 
 			/// <summary>
 			/// Bind to the specified section
 			/// </summary>
 			/// <param name="sectionKey">Section key (e.g. 'settings:app')</param>
 			/// <returns>FluentBind object</returns>
-			public FluentBind<T> To(string sectionKey) => Check(() => this.sectionKey = sectionKey);
+			public FluentBind<T> To(string sectionKey)
+				=> Check(() => this.sectionKey = sectionKey);
 
 			/// <summary>
 			/// Bind using the specified IConfigurationRoot
 			/// </summary>
 			/// <param name="config">IConfigurationRoot object</param>
 			/// <returns>FluentBind object</returns>
-			public FluentBind<T> Using(IConfiguration config) => Check(() => this.config = config);
+			public FluentBind<T> Using(IConfiguration config)
+				=> Check(() => this.config = config);
 
 			/// <summary>
 			/// Save the binding to the IServiceCollection

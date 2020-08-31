@@ -10,7 +10,7 @@ namespace Jeebs.Services.Twitter
 	/// <summary>
 	/// Twitter Service
 	/// </summary>
-	public interface ITwitterSvc
+	public interface ITwitterService
 	{
 		/// <summary>
 		/// Get the full-size profile image URL for a user

@@ -18,13 +18,13 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
 		/// <param name="section">[Optional] Section Key for retrieving WordPress configuration</param>
-		public static FluentWordPress AddWordPressInstance(this IServiceCollection services, string section = WpConfig.Key)
-			=> new FluentWordPress(ref services, section);
+		public static FluentAddWordPress AddWordPressInstance(this IServiceCollection services, string section = WpConfig.Key)
+			=> new FluentAddWordPress(ref services, section);
 
 		/// <summary>
 		/// Fluently configure WordPress registration
 		/// </summary>
-		public sealed class FluentWordPress
+		public sealed class FluentAddWordPress
 		{
 			/// <summary>
 			/// IServiceCollection
@@ -41,7 +41,7 @@ namespace Jeebs.WordPress
 			/// </summary>
 			/// <param name="services">IServiceCollection</param>
 			/// <param name="section">Configuration Section Key</param>
-			public FluentWordPress(ref IServiceCollection services, string section)
+			public FluentAddWordPress(ref IServiceCollection services, string section)
 			{
 				Services = services;
 				this.section = $"{WpConfig.Key}:{section}";
