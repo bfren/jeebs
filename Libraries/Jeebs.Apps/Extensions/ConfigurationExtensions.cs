@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Config;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 
 namespace Jeebs.Apps
@@ -11,12 +13,14 @@ namespace Jeebs.Apps
 	/// </summary>
 	public static class ConfigurationExtensions
 	{
+		private static readonly MemoryCache cache = new MemoryCache(new MemoryCacheOptions());
+
 		/// <summary>
 		/// Get JeebsConfig object from IConfiguration
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
 		public static JeebsConfig GetJeebsConfig(this IConfiguration config)
-			=> config.GetSection(JeebsConfig.Key)?.Get<JeebsConfig>() ?? new JeebsConfig();
+			=> GetSection<JeebsConfig>(config, JeebsConfig.Key);
 
 		/// <summary>
 		/// Return a configuration section as type T
@@ -27,6 +31,6 @@ namespace Jeebs.Apps
 		/// <returns>Configuration section</returns>
 		public static T GetSection<T>(this IConfiguration config, string sectionKey)
 			where T : class, new()
-			=> config.GetSection(JeebsConfig.GetKey(sectionKey))?.Get<T>() ?? new T();
+			=> cache.GetOrCreate(typeof(T).FullName, _ => config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T());
 	}
 }
