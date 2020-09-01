@@ -9,8 +9,8 @@ using Microsoft.Extensions.Options;
 
 namespace AppConsole
 {
-	public class Seq : SeqWebhookService
+	public class Seq : SeqWebhookDriver
 	{
-		public Seq(ILog log, IOptions<JeebsConfig> config, IHttpClientFactory factory) : base("bcg-home", log, config.Value, factory) { }
+		public Seq(SeqWebhookDriverArgs args) : base("wrong", args) { }
 	}
 }

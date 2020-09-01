@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using Jeebs.Config;
-using Jeebs.Services.Drivers.Webhook.Seq.Models;
 using Jeebs.Services.Webhook;
 using Jeebs.Services.Webhook.Models;
 
@@ -12,10 +11,14 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 	/// <summary>
 	/// Seq service
 	/// </summary>
-	public abstract class SeqWebhookService : WebhookService<SeqConfig>
+	public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig>
 	{
-		protected SeqWebhookService(string name, ILog log, JeebsConfig config, IHttpClientFactory factory)
-			: base(name, log, config, c => c.Seq, factory) { }
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="name">Service name</param>
+		/// <param name="args">SeqWebhookDriverArgs</param>
+		protected SeqWebhookDriver(string name, SeqWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
 		public override void Send(Message message)
@@ -26,7 +29,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 			request.Headers.Add("X-Seq-ApiKey", Config.ApiKey);
 
 			// Create event and add to the message
-			var e = new Event(message.Content, message.Level);
+			var e = new SeqEvent(message.Content, message.Level);
 			request.Content = new SeqHttpContent(e);
 
 			// Send request

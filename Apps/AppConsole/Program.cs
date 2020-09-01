@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Jeebs;
-using Jeebs.Apps;
 using Jeebs.Config;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,6 +28,6 @@ namespace AppConsole
 			{
 				log.Information(output);
 			}
-		}).ConfigureAwait(false);
+		});
 	}
 }

@@ -18,8 +18,6 @@ namespace AppConsole
 		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
 			base.ConfigureServices(env, config, services);
-
-			services.AddHttpClient();
 			services.AddDrivers();
 		}
 	}

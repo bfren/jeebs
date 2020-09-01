@@ -11,7 +11,7 @@ namespace Jeebs.Services.Webhook
 	/// Messenger service
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration</typeparam>
-	public interface IWebhookService<TConfig>
+	public interface IWebhookDriver<TConfig>
 		where TConfig : ServiceConfig
 	{
 		/// <summary>

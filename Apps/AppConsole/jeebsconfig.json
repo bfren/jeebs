@@ -17,6 +17,10 @@
 				"bcg-home": {
 					"server": "http://sq.bcg.xyz:5341",
 					"apiKey": ""
+				},
+				"wrong": {
+					"server": "http://sq.bcg.xyz:5342",
+					"apiKey": ""
 				}
 			}
 		}

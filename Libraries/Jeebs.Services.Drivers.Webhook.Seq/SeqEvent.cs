@@ -4,12 +4,12 @@ using System.Text;
 using Jeebs.Services.Webhook;
 using Newtonsoft.Json;
 
-namespace Jeebs.Services.Drivers.Webhook.Seq.Models
+namespace Jeebs.Services.Drivers.Webhook.Seq
 {
 	/// <summary>
 	/// Seq Event
 	/// </summary>
-	public sealed class Event
+	public sealed class SeqEvent
 	{
 		/// <summary>
 		/// Timestamp - ISO 8601 format
@@ -34,7 +34,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq.Models
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="level"></param>
-		public Event(string message, MessageLevel level)
+		public SeqEvent(string message, MessageLevel level)
 		{
 			Timestamp = DateTime.Now.ToString("O");
 			Message = message;
