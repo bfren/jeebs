@@ -13,11 +13,17 @@ namespace F
 		/// <summary>
 		/// Start a task and forget about it
 		/// </summary>
-		/// <param name="task">ThreadStart can be sync or async - doesn't matter</param>
-		public static void FireAndForget(ThreadStart task)
-		{
-			var thread = new Thread(task) { IsBackground = true };
-			thread.Start();
-		}
+		/// <param name="task">The task be sync or async - doesn't matter</param>
+		public static void FireAndForget(Action task)
+			=> ThreadPool.QueueUserWorkItem(_ => task());
+
+		/// <summary>
+		/// Start a task and forget about it
+		/// </summary>
+		/// <typeparam name="T">Task state object</typeparam>
+		/// <param name="state">State to pass to the task</param>
+		/// <param name="task">The task be sync or async - doesn't matter</param>
+		public static void FireAndForget<T>(T state, Action<T> task)
+			=> ThreadPool.QueueUserWorkItem(task, state, false);
 	}
 }

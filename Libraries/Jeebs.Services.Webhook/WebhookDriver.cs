@@ -19,9 +19,7 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
 		public static void AddRequiredServices(IServiceCollection services)
-		{
-			services.AddHttpClient();
-		}
+			=> services.AddHttpClient();
 
 		/// <summary>
 		/// IHttpClientFactory
@@ -48,15 +46,12 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="request"></param>
 		protected void Send(HttpRequestMessage request)
-		{
-			FireAndForget(async () =>
+			=> FireAndForget(async () =>
 			{
 				try
 				{
 					var client = factory.CreateClient();
-					Log.Trace("Sending message: {@Request}", request);
-
-					var response = await client.SendAsync(request);
+					var response = await client.SendAsync(request).ConfigureAwait(false);
 					if (!response.IsSuccessStatusCode)
 					{
 						Log.Warning("Unable to send message: {@Response}", response);
@@ -67,6 +62,5 @@ namespace Jeebs.Services.Webhook
 					Log.Error(ex, "Error sending message: {@Request}", request);
 				}
 			});
-		}
 	}
 }
