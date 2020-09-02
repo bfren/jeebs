@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using F;
+using Jeebs;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Jeebs.Util.Json_Tests
+namespace F.JsonF_Tests
 {
 	public partial class Deserialise_Tests
 	{

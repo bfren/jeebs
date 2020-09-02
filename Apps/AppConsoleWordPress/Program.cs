@@ -5,17 +5,11 @@ using System.Threading.Tasks;
 using AppConsoleWordPress.Bcg;
 using AppConsoleWordPress.Usa;
 using Jeebs;
-using Jeebs.Apps;
-using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
-using Jeebs.Util;
 using Jeebs.WordPress;
-using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace AppConsoleWordPress
 {

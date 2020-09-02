@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using F;
 using Xunit;
 
-namespace Jeebs.Util.Php_Tests
+namespace F.PhpF_Tests
 {
 	public class Serialise_Tests
 	{

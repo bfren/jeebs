@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using F;
 using Xunit;
 
-namespace Jeebs.Util.Php_Tests
+namespace F.PhpF_Tests
 {
 	public class Deserialise_Tests
 	{
@@ -19,7 +18,7 @@ namespace Jeebs.Util.Php_Tests
 		[InlineData("d:-1.7976931348623157E+308;", double.MinValue)]
 		[InlineData("d:1.7976931348623157E+308;", double.MaxValue)]
 		[InlineData("s:0:\"\";", "")]
-		[InlineData("s:15:\"Serialise_Tests\";", nameof(Serialise_Tests))]
+		[InlineData("s:15:\"Deserialise_Tests\";", nameof(Deserialise_Tests))]
 		[InlineData("N;", "")]
 		public void String_Returns_Deserialised_Value<T>(string input, T expected)
 			where T : notnull
