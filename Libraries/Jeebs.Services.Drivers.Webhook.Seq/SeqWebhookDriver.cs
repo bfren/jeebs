@@ -24,13 +24,13 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		public override void Send(Message message)
 		{
 			// Build request message
-			var uri = $"{Config.Server}/api/events/raw?clef";
+			var uri = $"{ServiceConfig.Server}/api/events/raw?clef";
 			var request = new HttpRequestMessage(HttpMethod.Post, uri);
-			request.Headers.Add("X-Seq-ApiKey", Config.ApiKey);
+			request.Headers.Add("X-Seq-ApiKey", ServiceConfig.ApiKey);
 
 			// Create event and add to the message
 			var e = new SeqEvent(message.Content, message.Level);
-			request.Content = new SeqHttpContent(e);
+			request.Content = new JsonHttpContent(e, "application/vnd.serilog.clef");
 
 			// Send request
 			Send(request);

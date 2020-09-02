@@ -24,6 +24,9 @@ namespace AppConsole
 			var seq = provider.GetService<Seq>();
 			seq.Send("test");
 
+			var slack = provider.GetService<Slack>();
+			slack.Send("test");
+
 			while (Console.ReadLine() is string output)
 			{
 				log.Information(output);

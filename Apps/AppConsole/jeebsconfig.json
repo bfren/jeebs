@@ -22,6 +22,11 @@
 					"server": "http://sq.bcg.xyz:5342",
 					"apiKey": ""
 				}
+			},
+			"slack": {
+				"ben@bcgdesign.com": {
+					"webhook": ""
+				}
 			}
 		}
 	}

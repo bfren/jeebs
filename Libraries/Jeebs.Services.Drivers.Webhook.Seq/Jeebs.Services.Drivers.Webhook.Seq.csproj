@@ -2,6 +2,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
     <ProjectReference Include="..\Jeebs.Services.Webhook\Jeebs.Services.Webhook.csproj" />
-    <ProjectReference Include="..\Jeebs.Services\Jeebs.Services.csproj" />
   </ItemGroup>
 </Project>

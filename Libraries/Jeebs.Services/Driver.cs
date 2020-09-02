@@ -23,9 +23,14 @@ namespace Jeebs.Services
 		protected readonly ILog Log;
 
 		/// <summary>
+		/// Jeebs configuration
+		/// </summary>
+		protected readonly JeebsConfig JeebsConfig;
+
+		/// <summary>
 		/// Service configuration
 		/// </summary>
-		protected readonly TConfig Config;
+		protected readonly TConfig ServiceConfig;
 
 		/// <summary>
 		/// Create object
@@ -35,7 +40,8 @@ namespace Jeebs.Services
 		protected Driver(string name, DriverArgs<TConfig> args)
 		{
 			(Name, Log) = (name, args.Log);
-			Config = args.JeebsConfig.Value.Services.GetServiceConfig(args.ServiceConfigs, name);
+			JeebsConfig = args.JeebsConfig.Value;
+			ServiceConfig = JeebsConfig.Services.GetServiceConfig(args.ServiceConfigs, name);
 		}
 	}
 }
