@@ -137,7 +137,6 @@
 								"properties": {
 									"server": {
 										"type": "string",
-										"format": "uri",
 										"description": "Ingest server (don't forget the port)"
 									},
 									"apiKey": {
