@@ -129,6 +129,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Drivers", ".Drivers", "{C6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Twitter.Tweetinvi", "Libraries\Jeebs.Services.Drivers.Twitter.Tweetinvi\Jeebs.Services.Drivers.Twitter.Tweetinvi.csproj", "{8CCA640D-0321-4BB1-92ED-034038735172}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Notify", ".Notify", "{1D8F10AF-FCC0-48D3-AD87-12F109ADAFD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Notify", "Libraries\Jeebs.Notify\Jeebs.Notify.csproj", "{B9CEF57C-40B8-40F4-8A2B-9B759BC9620C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Webhook", "Libraries\Jeebs.Services.Webhook\Jeebs.Services.Webhook.csproj", "{FE310151-9823-42D8-B565-839E0BC4D093}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Webhook.Slack", "Libraries\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj", "{6B090A78-9165-492A-87E9-E41113B18F8B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Webhook.Seq", "Libraries\Jeebs.Services.Drivers.Webhook.Seq\Jeebs.Services.Drivers.Webhook.Seq.csproj", "{6723F109-7975-4941-9FEE-AD331FAC5ADC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services", "Libraries\Jeebs.Services\Jeebs.Services.csproj", "{F0F3417F-3CC5-457E-A490-6AD6AD6C904C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Services.Drivers.Webhook.RocketChat", "Libraries\Jeebs.Services.Drivers.Webhook.RocketChat\Jeebs.Services.Drivers.Webhook.RocketChat.csproj", "{8E9E8643-96D5-4C57-94D3-85A5A177BB95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -281,6 +295,30 @@ Global
 		{8CCA640D-0321-4BB1-92ED-034038735172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CCA640D-0321-4BB1-92ED-034038735172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CCA640D-0321-4BB1-92ED-034038735172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9CEF57C-40B8-40F4-8A2B-9B759BC9620C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9CEF57C-40B8-40F4-8A2B-9B759BC9620C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9CEF57C-40B8-40F4-8A2B-9B759BC9620C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9CEF57C-40B8-40F4-8A2B-9B759BC9620C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE310151-9823-42D8-B565-839E0BC4D093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE310151-9823-42D8-B565-839E0BC4D093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE310151-9823-42D8-B565-839E0BC4D093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE310151-9823-42D8-B565-839E0BC4D093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B090A78-9165-492A-87E9-E41113B18F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B090A78-9165-492A-87E9-E41113B18F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B090A78-9165-492A-87E9-E41113B18F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B090A78-9165-492A-87E9-E41113B18F8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6723F109-7975-4941-9FEE-AD331FAC5ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6723F109-7975-4941-9FEE-AD331FAC5ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6723F109-7975-4941-9FEE-AD331FAC5ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6723F109-7975-4941-9FEE-AD331FAC5ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0F3417F-3CC5-457E-A490-6AD6AD6C904C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0F3417F-3CC5-457E-A490-6AD6AD6C904C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0F3417F-3CC5-457E-A490-6AD6AD6C904C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0F3417F-3CC5-457E-A490-6AD6AD6C904C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,6 +372,13 @@ Global
 		{954BD69F-0EBF-4995-A427-ABACD1511D08} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
 		{C6413973-B7C3-4B42-90C0-ED07334291EC} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
 		{8CCA640D-0321-4BB1-92ED-034038735172} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
+		{1D8F10AF-FCC0-48D3-AD87-12F109ADAFD0} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{B9CEF57C-40B8-40F4-8A2B-9B759BC9620C} = {1D8F10AF-FCC0-48D3-AD87-12F109ADAFD0}
+		{FE310151-9823-42D8-B565-839E0BC4D093} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
+		{6B090A78-9165-492A-87E9-E41113B18F8B} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
+		{6723F109-7975-4941-9FEE-AD331FAC5ADC} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
+		{F0F3417F-3CC5-457E-A490-6AD6AD6C904C} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
+		{8E9E8643-96D5-4C57-94D3-85A5A177BB95} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

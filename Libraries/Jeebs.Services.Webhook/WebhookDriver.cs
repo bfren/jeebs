@@ -6,7 +6,7 @@ using System.Threading;
 using Jeebs.Config;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
-using static F.ThreadF;
+using static F.Thread;
 
 namespace Jeebs.Services.Webhook
 {

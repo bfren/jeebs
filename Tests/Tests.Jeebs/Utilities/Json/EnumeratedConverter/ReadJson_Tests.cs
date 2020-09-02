@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F;
 using Xunit;
 
 namespace Jeebs.Util.Json_Tests
@@ -15,7 +16,7 @@ namespace Jeebs.Util.Json_Tests
 			var json = $"\"{value}\"";
 
 			// Act
-			var result = Json.Deserialise<EnumeratedTest0>(json);
+			var result = JsonF.Deserialise<EnumeratedTest0>(json);
 
 			// Assert
 			var some = Assert.IsType<Some<EnumeratedTest0>>(result);
@@ -26,10 +27,10 @@ namespace Jeebs.Util.Json_Tests
 		public void Deserialise_Null_Enumerated_Returns_Object_With_Empty_Value()
 		{
 			// Arrange
-			var json = Json.Empty;
+			var json = JsonF.Empty;
 
 			// Act
-			var result = Json.Deserialise<EnumeratedTest0>(json);
+			var result = JsonF.Deserialise<EnumeratedTest0>(json);
 
 			// Assert
 			var value = Assert.IsType<Some<EnumeratedTest0>>(result).Value;
@@ -45,7 +46,7 @@ namespace Jeebs.Util.Json_Tests
 			var json = $"{{ \"id\": \"{id}\", \"enumeratedValue\": \"{value}\" }}";
 
 			// Act
-			var result = Json.Deserialise<WrapperTest0>(json);
+			var result = JsonF.Deserialise<WrapperTest0>(json);
 
 			// Assert
 			var wrapper = Assert.IsType<Some<WrapperTest0>>(result).Value;
@@ -63,7 +64,7 @@ namespace Jeebs.Util.Json_Tests
 			var json = $"{{ \"enumeratedValue\": {input} }}";
 
 			// Act
-			var result = Json.Deserialise<WrapperTest1>(json);
+			var result = JsonF.Deserialise<WrapperTest1>(json);
 
 			// Assert
 			var none = Assert.IsType<None<WrapperTest1>>(result);

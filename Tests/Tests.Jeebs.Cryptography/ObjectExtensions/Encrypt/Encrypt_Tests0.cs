@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using static F.CryptoF;
-using Jeebs.Util;
 using Xunit;
 using Newtonsoft.Json;
+using F;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests
 {
@@ -25,7 +25,7 @@ namespace Jeebs.Cryptography.ObjectExtensions_Tests
 			var result = input.Encrypt(key);
 
 			// Assert
-			Assert.Equal(Json.Empty, result);
+			Assert.Equal(JsonF.Empty, result);
 		}
 
 		[Fact]

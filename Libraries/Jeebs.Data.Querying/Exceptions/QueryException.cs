@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Util;
+using static F.JsonF;
 
 namespace Jx.Data
 {
@@ -28,7 +28,7 @@ namespace Jx.Data
 		/// <param name="parameters">Query Parameters</param>
 		/// <param name="inner">Inner Exception</param>
 		public QueryException(string query, object? parameters, Exception inner)
-			: this($"Query: {query}; Parameters: {Json.Serialise(parameters)}", inner) { }
+			: this($"Query: {query}; Parameters: {Serialise(parameters)}", inner) { }
 
 		/// <summary>
 		/// Construct exception

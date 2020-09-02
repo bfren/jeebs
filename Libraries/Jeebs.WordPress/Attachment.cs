@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Util;
 
 namespace Jeebs.WordPress.Entities
 {
@@ -25,7 +24,7 @@ namespace Jeebs.WordPress.Entities
 		/// </summary>
 		public string Info
 		{
-			get => Json.Serialise(Php.Deserialise(info));
+			get => F.JsonF.Serialise(F.PhpF.Deserialise(info));
 			set => info = value;
 		}
 

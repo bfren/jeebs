@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using Jeebs.Util;
+using F;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -22,7 +22,7 @@ namespace Jeebs.Cryptography.ObjectExtensions_Tests
 			var result = input.Encrypt(defaultStringKey);
 
 			// Assert
-			Assert.Equal(Json.Empty, result);
+			Assert.Equal(JsonF.Empty, result);
 		}
 
 		[Fact]

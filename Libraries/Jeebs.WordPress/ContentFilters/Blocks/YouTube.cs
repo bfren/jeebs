@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using Jeebs.Util;
+using static F.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {
@@ -35,7 +35,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			{
 				// Info is encoded as JSON
 				var json = match.Groups[1].Value;
-				if (Json.Deserialise<YouTubeParsed>(json) is Some<YouTubeParsed> youTube)
+				if (Deserialise<YouTubeParsed>(json) is Some<YouTubeParsed> youTube)
 				{
 					// Get URI
 					var uri = new Uri(youTube.Value.Url);

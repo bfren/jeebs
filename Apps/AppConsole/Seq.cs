@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace AppConsole
 {
-	public class Seq : SeqWebhookDriver
+	internal class Seq : SeqWebhookDriver
 	{
 		public Seq(SeqWebhookDriverArgs args) : base("wrong", args) { }
 	}

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Util;
 using Jm.Data.Querying.Query;
 
 namespace Jeebs.Data
@@ -102,7 +101,7 @@ namespace Jeebs.Data
 			}
 
 			// Convert to a paged list
-			IR<PagedList<T>> getPagedList(IOkV<List<T>> r)
+			static IR<PagedList<T>> getPagedList(IOkV<List<T>> r)
 			{
 				var list = new PagedList<T>(r.Value);
 				return r.OkV(list);

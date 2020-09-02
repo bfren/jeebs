@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using F;
 using Xunit;
 
 namespace Jeebs.Util.Php_Tests
@@ -26,7 +27,7 @@ namespace Jeebs.Util.Php_Tests
 			// Arrange
 
 			// Act
-			var result = Php.Deserialise(input);
+			var result = PhpF.Deserialise(input);
 
 			// Assert
 			Assert.Equal(expected, result);
@@ -38,12 +39,12 @@ namespace Jeebs.Util.Php_Tests
 			// Arrange
 
 			// Act
-			var result = Php.Deserialise(serialisedArray);
+			var result = PhpF.Deserialise(serialisedArray);
 
 			// Assert
-			var outer = Assert.IsType<Php.AssocArray>(result);
+			var outer = Assert.IsType<PhpF.AssocArray>(result);
 			Assert.Equal("Sample Array", outer[0]);
-			var inner = Assert.IsType<Php.AssocArray>(outer[1]);
+			var inner = Assert.IsType<PhpF.AssocArray>(outer[1]);
 			Assert.Equal("Apple", inner[0]);
 			Assert.Equal("Orange", inner[1]);
 		}

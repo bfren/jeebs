@@ -92,47 +92,38 @@ namespace Jeebs.WordPress
 		/// <exception cref="Jx.ConfigException">If WordPress database configuration cannot be found</exception>
 		public WpDb(DbConfig dbConfig, WpConfig wpConfig, ILog log) : base(log)
 		{
-			// Get connection string from WordPress database configuration
-			if (dbConfig.GetConnection(wpConfig.Db) is DbConnectionConfig cfg)
-			{
-				// Set connection string
-				ConnectionString = cfg.ConnectionString;
+			// Get connection from WordPress database configuration
+			var cfg = dbConfig.GetConnection(wpConfig.Db);
+			ConnectionString = cfg.ConnectionString;
+			var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
 
-				// Get table prefix for this instance
-				var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
+			// Create table definitions
+			Comment = new CommentTable(tablePrefix);
+			CommentMeta = new CommentMetaTable(tablePrefix);
+			Link = new LinkTable(tablePrefix);
+			Option = new OptionTable(tablePrefix);
+			Post = new PostTable(tablePrefix);
+			PostMeta = new PostMetaTable(tablePrefix);
+			Term = new TermTable(tablePrefix);
+			TermMeta = new TermMetaTable(tablePrefix);
+			TermRelationship = new TermRelationshipTable(tablePrefix);
+			TermTaxonomy = new TermTaxonomyTable(tablePrefix);
+			User = new UserTable(tablePrefix);
+			UserMeta = new UserMetaTable(tablePrefix);
 
-				// Create table definitions
-				Comment = new CommentTable(tablePrefix);
-				CommentMeta = new CommentMetaTable(tablePrefix);
-				Link = new LinkTable(tablePrefix);
-				Option = new OptionTable(tablePrefix);
-				Post = new PostTable(tablePrefix);
-				PostMeta = new PostMetaTable(tablePrefix);
-				Term = new TermTable(tablePrefix);
-				TermMeta = new TermMetaTable(tablePrefix);
-				TermRelationship = new TermRelationshipTable(tablePrefix);
-				TermTaxonomy = new TermTaxonomyTable(tablePrefix);
-				User = new UserTable(tablePrefix);
-				UserMeta = new UserMetaTable(tablePrefix);
-
-				// Map entities to tables
-				Map<Tc>.To(Comment, Adapter);
-				Map<Tcm>.To(CommentMeta, Adapter);
-				Map<Tl>.To(Link, Adapter);
-				Map<To>.To(Option, Adapter);
-				Map<Tp>.To(Post, Adapter);
-				Map<Tpm>.To(PostMeta, Adapter);
-				Map<Tt>.To(Term, Adapter);
-				Map<Ttm>.To(TermMeta, Adapter);
-				Map<Ttr>.To(TermRelationship, Adapter);
-				Map<Ttt>.To(TermTaxonomy, Adapter);
-				Map<Tu>.To(User, Adapter);
-				Map<Tum>.To(UserMeta, Adapter);
-			}
-			else
-			{
-				throw new Jx.ConfigException("Unable to determine WordPress database configuration.");
-			}
+			// Map entities to tables
+			Map<Tc>.To(Comment, Adapter);
+			Map<Tcm>.To(CommentMeta, Adapter);
+			Map<Tl>.To(Link, Adapter);
+			Map<To>.To(Option, Adapter);
+			Map<Tp>.To(Post, Adapter);
+			Map<Tpm>.To(PostMeta, Adapter);
+			Map<Tt>.To(Term, Adapter);
+			Map<Ttm>.To(TermMeta, Adapter);
+			Map<Ttr>.To(TermRelationship, Adapter);
+			Map<Ttt>.To(TermTaxonomy, Adapter);
+			Map<Tu>.To(User, Adapter);
+			Map<Tum>.To(UserMeta, Adapter);
 		}
 
 		/// <summary>

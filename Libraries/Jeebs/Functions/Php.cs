@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Text;
 using Jeebs.Reflection;
 
-namespace Jeebs.Util
+namespace F
 {
 	/// <summary>
 	/// PHP Serialiser Class
 	/// </summary>
-	public static class Php
+	public static class PhpF
 	{
 		/// <summary>
 		/// Array type

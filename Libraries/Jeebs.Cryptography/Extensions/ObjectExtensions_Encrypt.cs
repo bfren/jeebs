@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Util;
+using F;
 
 namespace Jeebs.Cryptography
 {
@@ -20,7 +20,7 @@ namespace Jeebs.Cryptography
 			=> @this switch
 			{
 				T x => new Lockable<T>(x).Lock(key).Serialise(),
-				_ => Json.Empty
+				_ => JsonF.Empty
 			};
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace Jeebs.Cryptography
 			=> @this switch
 			{
 				T x => new Lockable<T>(x).Lock(key).Serialise(),
-				_ => Json.Empty
+				_ => JsonF.Empty
 			};
 	}
 }

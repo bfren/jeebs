@@ -8,7 +8,7 @@ namespace F
 	/// <summary>
 	/// Thread functions
 	/// </summary>
-	public static class ThreadF
+	public static class Thread
 	{
 		/// <summary>
 		/// Start a task and forget about it

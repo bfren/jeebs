@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F;
 
 namespace Jeebs
 {
@@ -45,7 +46,7 @@ namespace Jeebs
 				list.Add(item.ToString());
 			}
 
-			return Util.Json.Serialise(list);
+			return JsonF.Serialise(list);
 		}
 
 		/// <summary>
@@ -55,7 +56,7 @@ namespace Jeebs
 		/// <returns>EnumList</returns>
 		public static EnumeratedList<TEnum> Deserialise(string json)
 		{
-			var strings = Util.Json.Deserialise<List<string>>(json) switch
+			var strings = JsonF.Deserialise<List<string>>(json) switch
 			{
 				Some<List<string>> x => x.Value,
 				_ => new List<string>()

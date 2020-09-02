@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using F;
 using Xunit;
 
 namespace Jeebs.Util.Php_Tests
@@ -28,7 +29,7 @@ namespace Jeebs.Util.Php_Tests
 			// Arrange
 
 			// Act
-			var result = Php.Serialise(input);
+			var result = PhpF.Serialise(input);
 
 			// Assert
 			Assert.Equal(expected, result);
@@ -48,7 +49,7 @@ namespace Jeebs.Util.Php_Tests
 			arrayOuter.Add(1, arrayInner);
 
 			// Act
-			var result = Php.Serialise(arrayOuter);
+			var result = PhpF.Serialise(arrayOuter);
 
 			// Assert
 			Assert.Equal(serialisedArray, result);
@@ -61,10 +62,10 @@ namespace Jeebs.Util.Php_Tests
 			// Arrange
 
 			// Act
-			var result = Php.Serialise(input);
+			var result = PhpF.Serialise(input);
 
 			// Assert
-			Assert.Equal($"{Php.Null};", result);
+			Assert.Equal($"{PhpF.Null};", result);
 		}
 	}
 }

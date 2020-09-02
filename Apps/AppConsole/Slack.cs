@@ -5,7 +5,7 @@ using Jeebs.Services.Drivers.Webhook.Slack;
 
 namespace AppConsole
 {
-	class Slack : SlackWebhookDriver
+	internal class Slack : SlackWebhookDriver
 	{
 		public Slack(SlackWebhookDriverArgs args) : base("ben@bcgdesign.com", args) { }
 	}

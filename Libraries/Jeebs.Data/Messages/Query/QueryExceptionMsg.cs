@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Text;
+using static F.JsonF;
 using Jeebs;
-using Jeebs.Util;
 using Microsoft.Extensions.Logging;
 
 namespace Jm.Data
@@ -32,6 +32,6 @@ namespace Jm.Data
 			=> new[] { ExceptionType, ExceptionText, Sql, Parameters };
 
 		internal QueryExceptionMsg(Exception ex, string query, object? parameters = null) : base(ex)
-			=> (Sql, Parameters) = (query, Json.Serialise(parameters));
+			=> (Sql, Parameters) = (query, Serialise(parameters));
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -15,10 +16,10 @@ namespace Jeebs.Util.Json_Tests
 			// Arrange
 
 			// Act
-			var result = Json.Serialise(input);
+			var result = JsonF.Serialise(input);
 
 			// Assert
-			Assert.Equal(Json.Empty, result);
+			Assert.Equal(JsonF.Empty, result);
 		}
 
 		[Fact]
@@ -29,7 +30,7 @@ namespace Jeebs.Util.Json_Tests
 			const string expected = "{\"foo\":\"test\",\"bar\":2}";
 
 			// Act
-			var result = Json.Serialise(input);
+			var result = JsonF.Serialise(input);
 
 			// Assert
 			Assert.Equal(expected, result);

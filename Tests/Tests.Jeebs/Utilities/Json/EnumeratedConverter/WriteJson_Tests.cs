@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F;
 using Xunit;
 
 namespace Jeebs.Util.Json_Tests
@@ -15,7 +16,7 @@ namespace Jeebs.Util.Json_Tests
 			var enumerated = new Test(value);
 
 			// Act
-			var result = Json.Serialise(enumerated);
+			var result = JsonF.Serialise(enumerated);
 
 			// Assert
 			Assert.Equal($"\"{value}\"", result);
@@ -28,10 +29,10 @@ namespace Jeebs.Util.Json_Tests
 			// Arrange
 
 			// Act
-			var result = Json.Serialise(input);
+			var result = JsonF.Serialise(input);
 
 			// Assert
-			Assert.Equal(Json.Empty, result);
+			Assert.Equal(JsonF.Empty, result);
 		}
 
 		public class Test : Enumerated

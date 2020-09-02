@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F.Internals;
+using Jeebs;
 using Jm.Util.Json;
 using Newtonsoft.Json;
 
-namespace Jeebs.Util
+namespace F
 {
 	/// <summary>
 	/// JSON shorthands
 	/// </summary>
-	public static class Json
+	public static class JsonF
 	{
 		/// <summary>
 		/// Empty JSON

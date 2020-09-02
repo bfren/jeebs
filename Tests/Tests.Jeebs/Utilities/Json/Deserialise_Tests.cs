@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using F;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace Jeebs.Util.Json_Tests
 			// Arrange
 
 			// Act
-			var result = Json.Deserialise<Test>(input);
+			var result = JsonF.Deserialise<Test>(input);
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
@@ -31,7 +32,7 @@ namespace Jeebs.Util.Json_Tests
 			// Arrange
 
 			// Act
-			var result = Json.Deserialise<Test>(input);
+			var result = JsonF.Deserialise<Test>(input);
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
@@ -45,7 +46,7 @@ namespace Jeebs.Util.Json_Tests
 			const string input = "this is not valid json";
 
 			// Act
-			var result = Json.Deserialise<Test>(input);
+			var result = JsonF.Deserialise<Test>(input);
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
@@ -60,7 +61,7 @@ namespace Jeebs.Util.Json_Tests
 			var expected = new Test { Foo = "test", Bar = 2 };
 
 			// Act
-			var result = Json.Deserialise<Test>(input).Unwrap(() => new Test());
+			var result = JsonF.Deserialise<Test>(input).Unwrap(() => new Test());
 
 			// Assert
 			Assert.Equal(expected, result, new TestComparer());

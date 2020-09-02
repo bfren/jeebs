@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Jeebs.Util
+namespace F.Internals
 {
 	/// <summary>
 	/// Jeebs Contract Resolver

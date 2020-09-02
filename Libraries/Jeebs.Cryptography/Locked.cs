@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using Jeebs.Util;
 using Jm.Cryptography.Locked;
 using Newtonsoft.Json;
 using Sodium;
@@ -41,7 +40,7 @@ namespace Jeebs.Cryptography
 			=> Fill(contents, key);
 
 		internal void Fill(T contents, byte[] key)
-			=> EncryptedContents = SecretBox.Create(Json.Serialise(contents), Nonce, key);
+			=> EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
 
 		internal void Fill(T contents, string key)
 			=> Fill(contents, HashKey(key));
@@ -64,7 +63,7 @@ namespace Jeebs.Cryptography
 
 				// Deserialise contents and return
 				var json = Encoding.UTF8.GetString(secret);
-				return Json.Deserialise<T>(json).Map(x => new Lockable<T>(x));
+				return F.JsonF.Deserialise<T>(json).Map(x => new Lockable<T>(x));
 			}
 			catch (KeyOutOfRangeException ex)
 			{
@@ -100,7 +99,7 @@ namespace Jeebs.Cryptography
 		/// Serialise this LockedBox as JSON
 		/// </summary>
 		public string Serialise()
-			=> Json.Serialise(this);
+			=> F.JsonF.Serialise(this);
 
 		private byte[] HashKey(string key)
 			=> GenericHash.Hash(key, Salt, Lockable.KeyLength);

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Jeebs;
 using Newtonsoft.Json;
 
-namespace Jeebs.Util
+namespace F.Internals
 {
 	/// <summary>
 	/// Converter for custom Enumerated types

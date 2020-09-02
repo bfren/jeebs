@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Dapper;
+using static F.JsonF;
 using Newtonsoft.Json;
 
 namespace Jeebs.Data.TypeHandlers
@@ -18,7 +19,7 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="value">T value</param>
 		/// <returns>JSON</returns>
 		protected override string Format(T value)
-			=> Util.Json.Serialise(value);
+			=> Serialise(value);
 
 		/// <summary>
 		/// Deserialise JSON string
@@ -31,7 +32,7 @@ namespace Jeebs.Data.TypeHandlers
 				throw new ArgumentNullException(nameof(json));
 			}
 
-			return Util.Json.Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to deserialise JSON."));
+			return Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to deserialise JSON."));
 		}
 	}
 }
