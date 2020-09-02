@@ -94,19 +94,6 @@
 						}
 					}
 				},
-				"notifier": {
-					"type": "object",
-					"description": "Notifier configuration",
-					"required": [ "listeners" ],
-					"additionalProperties": false,
-					"properties": {
-						"listeners": {
-							"type": "array",
-							"description": "Notifier listeners - array values should be in format service_type.service_name (e.g. seq.dev-server)",
-							"items": { "type": "string" }
-						}
-					}
-				},
 				"services": {
 					"type": "object",
 					"description": "Third-party services configuration",

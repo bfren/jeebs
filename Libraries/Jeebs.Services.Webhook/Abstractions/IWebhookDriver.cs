@@ -16,10 +16,24 @@ namespace Jeebs.Services.Webhook
 	{
 		/// <summary>
 		/// Send a message using default options
+		/// <para>Separate from <see cref="Send(string, MessageLevel)"/> so webhooks can also be used as <see cref="INotificationListener"/></para>
 		/// </summary>
 		/// <param name="message">Message content</param>
-		/// <param name="level">[Optional] Message level</param>
-		void Send(string message, MessageLevel level = MessageLevel.Information);
+		void Send(string message);
+
+		/// <summary>
+		/// Send a message using default options
+		/// <para>Separate from <see cref="Send(string)"/> so webhooks can also be used as <see cref="INotificationListener"/></para>
+		/// </summary>
+		/// <param name="message">Message content</param>
+		/// <param name="level">Message level</param>
+		void Send(string message, MessageLevel level);
+
+		/// <summary>
+		/// Send an IMsg
+		/// </summary>
+		/// <param name="msg"></param>
+		void Send(IMsg msg);
 
 		/// <summary>
 		/// Send a message

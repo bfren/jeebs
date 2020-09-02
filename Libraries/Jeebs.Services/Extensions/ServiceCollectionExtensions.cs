@@ -18,7 +18,7 @@ namespace Jeebs.Services
 		/// <param name="this">IServiceCollection</param>
 		public static IServiceCollection AddDrivers(this IServiceCollection @this)
 		{
-			// Get implementations of a type with a generic parameter
+			// Get implementations of an interface with a generic parameter
 			IEnumerable<Type> GetImplementations(Type typeWithGenericParam)
 			{
 				return from a in AppDomain.CurrentDomain.GetAssemblies()
@@ -30,6 +30,7 @@ namespace Jeebs.Services
 			}
 
 			// Get drivers and add them to the service collection
+			bool foundListeners = false;
 			foreach (var t in GetImplementations(typeof(IDriver<>)))
 			{
 				@this.AddSingleton(t);
@@ -44,6 +45,19 @@ namespace Jeebs.Services
 				{
 					addRequiredServices.Invoke(null, new object[] { @this });
 				}
+
+				// Add as a listener
+				if (typeof(INotificationListener).IsAssignableFrom(t))
+				{
+					@this.AddTransient(typeof(INotificationListener), t);
+					foundListeners = true;
+				}
+			}
+
+			// If listeres were added, add the notifier
+			if (foundListeners)
+			{
+				@this.AddSingleton<INotifier, Notifier>();
 			}
 
 			// Get driver args and add them to the service collection

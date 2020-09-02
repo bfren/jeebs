@@ -36,11 +36,6 @@ namespace Jeebs.Config
 		public LoggingConfig Logging { get; set; } = new LoggingConfig();
 
 		/// <summary>
-		/// Notifier congiguration
-		/// </summary>
-		public NotifierConfig Notifier { get; set; } = new NotifierConfig();
-
-		/// <summary>
 		/// Services configuration
 		/// </summary>
 		public ServicesConfig Services { get; set; } = new ServicesConfig();

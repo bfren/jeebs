@@ -35,11 +35,53 @@ namespace Jeebs.Services.Webhook
 			=> factory = args.Factory;
 
 		/// <inheritdoc/>
-		public void Send(string message, MessageLevel level = MessageLevel.Information)
+		public void Send(string message)
+			=> Send(message, MessageLevel.Information);
+
+		/// <inheritdoc/>
+		public void Send(string message, MessageLevel level)
 			=> Send(new Message { Content = message, Level = level });
 
 		/// <inheritdoc/>
 		public abstract void Send(Message message);
+
+		/// <inheritdoc/>
+		public virtual void Send(IMsg msg)
+		{
+			// Prepare IMsg
+			var (text, args) = msg.Prepare();
+			var content = text.FormatWith(args);
+
+			// Convert to notification Message
+			var message = msg switch
+			{
+				IExceptionMsg x
+					=> new Message
+					{
+						Content = content,
+						Level = MessageLevel.Error,
+						Fields = new Dictionary<string, object>()
+						{
+							{ "Exception", x.Exception }
+						}
+					},
+				ILoggableMsg x
+					=> new Message
+					{
+						Content = content,
+						Level = x.Level.ToMessageLevel()
+					},
+				{ } x
+					=> new Message
+					{
+						Content = content,
+						Level = MessageLevel.Information
+					}
+			};
+
+			// Send message
+			Send(message);
+		}
 
 		/// <summary>
 		/// Use <see cref="factory"/> to send the message
