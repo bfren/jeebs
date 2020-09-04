@@ -9,6 +9,10 @@ namespace Jeebs.Config
 	/// </summary>
 	public class SeqConfig : WebhookServiceConfig
 	{
+		/// <inheritdoc/>
+		public override string Webhook
+			=> $"{Server}/api/events/raw?clef";
+
 		/// <summary>
 		/// Seq Server URI
 		/// </summary>

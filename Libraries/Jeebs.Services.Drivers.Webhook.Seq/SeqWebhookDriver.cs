@@ -28,8 +28,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		public override void Send(SeqEvent message)
 		{
 			// Build request message
-			var uri = $"{ServiceConfig.Server}/api/events/raw?clef";
-			var request = new HttpRequestMessage(HttpMethod.Post, uri);
+			var request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.Webhook);
 			request.Headers.Add("X-Seq-ApiKey", ServiceConfig.ApiKey);
 
 			// Add content
