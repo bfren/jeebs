@@ -99,7 +99,7 @@
 					"description": "Third-party services configuration",
 					"additionalProperties": false,
 					"properties": {
-						"rocket-chat": {
+						"rocketChat": {
 							"type": "object",
 							"default": "Rocket Chat configuration",
 							"additionalProperties": {

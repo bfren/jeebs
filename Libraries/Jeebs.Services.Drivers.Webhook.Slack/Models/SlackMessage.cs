@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs.Config;
 using Jeebs.Services.Webhook;
 
-namespace Jeebs.Services.Drivers.Webhook.Slack
+namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 {
 	/// <summary>
 	/// Slack Message
@@ -30,10 +30,10 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 		public SlackMessage(JeebsConfig config, string text, MessageLevel level)
 		{
 			Username = config.App.Name;
-			Attachments = new List<SlackAttachment>(new[]
+			Attachments = new List<SlackAttachment>
 			{
-				new SlackAttachment(text, level)
-			});
+				{ new SlackAttachment(text, level) }
+			};
 		}
 	}
 }

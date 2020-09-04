@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Jeebs.Services.Webhook;
+using Newtonsoft.Json;
+
+namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
+{
+	/// <summary>
+	/// RocketChat Attachment
+	/// </summary>
+	public sealed class RocketChatAttachment
+	{
+		/// <summary>
+		/// Text
+		/// </summary>
+		public string Text { get; }
+
+		/// <summary>
+		/// Colour
+		/// </summary>
+		[JsonProperty("color")]
+		public string Colour { get; }
+
+		/// <summary>
+		/// [Optional] Attachment title
+		/// </summary>
+		public string? Title { get; }
+
+		/// <summary>
+		/// [Optional] Attachment link
+		/// </summary>
+		[JsonProperty("title_link")]
+		public string? TitleLink { get; }
+
+		/// <summary>
+		/// Fields
+		/// </summary>
+		public List<RocketChatAttachmentField> Fields { get; set; } = new List<RocketChatAttachmentField>();
+
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="text">Attachment text</param>
+		/// <param name="level">Message level</param>
+		public RocketChatAttachment(string text, MessageLevel level)
+			=> (Text, Colour) = (text, GetColour(level));
+
+		private string GetColour(MessageLevel level)
+			=> level switch
+			{
+				MessageLevel.Information => "#2cbe4e", // green
+				MessageLevel.Warning => "#ffc107", // amber
+				MessageLevel.Error => "#cb2431", // red
+				_ => throw new Jx.Services.Webhook.UnknownMessageLevelException()
+			};
+	}
+}

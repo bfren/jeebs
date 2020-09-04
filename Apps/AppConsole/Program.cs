@@ -27,6 +27,9 @@ namespace AppConsole
 			var slack = provider.GetService<Slack>();
 			slack.Send("test");
 
+			var rc = provider.GetService<RocketChat>();
+			rc.Send("test");
+
 			while (Console.ReadLine() is string output)
 			{
 				log.Information(output);

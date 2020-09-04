@@ -27,6 +27,11 @@
 				"ben@bcgdesign.com": {
 					"webhook": ""
 				}
+			},
+			"rocketChat": {
+				"bcg.xyz": {
+					"webhook": ""
+				}
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Jeebs.Config
 {
@@ -39,7 +40,7 @@ namespace Jeebs.Config
 		public ServiceConfig GetServiceConfig(string definition)
 			=> SplitDefinition(definition) switch
 			{
-				("rocket-chat", string name) => GetServiceConfig(c => c.RocketChat, name),
+				("rocketChat", string name) => GetServiceConfig(c => c.RocketChat, name),
 				("seq", string name) => GetServiceConfig(c => c.Seq, name),
 				("slack", string name) => GetServiceConfig(c => c.Slack, name),
 				("twitter", string name) => GetServiceConfig(c => c.Twitter, name),

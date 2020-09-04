@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Services.Webhook;
+using Newtonsoft.Json;
 
-namespace Jeebs.Services.Drivers.Webhook.Slack
+namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 {
 	/// <summary>
 	/// Slack attachment
@@ -18,7 +19,8 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 		/// <summary>
 		/// Attachment colour
 		/// </summary>
-		public string Color { get; }
+		[JsonProperty("color")]
+		public string Colour { get; }
 
 		/// <summary>
 		/// Create object
@@ -26,15 +28,15 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 		/// <param name="text">Attachment text</param>
 		/// <param name="level">Message level</param>
 		public SlackAttachment(string text, MessageLevel level)
-			=> (Text, Color) = (text, getColour(level));
+			=> (Text, Colour) = (text, GetColour(level));
 
-		private string getColour(MessageLevel level)
+		private string GetColour(MessageLevel level)
 			=> level switch
 			{
 				MessageLevel.Information => "good",
 				MessageLevel.Warning => "warning",
 				MessageLevel.Error => "danger",
-				_ => throw new NotImplementedException()
+				_ => throw new Jx.Services.Webhook.UnknownMessageLevelException()
 			};
 	}
 }
