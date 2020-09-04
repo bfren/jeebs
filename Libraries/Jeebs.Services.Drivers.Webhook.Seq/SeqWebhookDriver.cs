@@ -21,6 +21,10 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		protected SeqWebhookDriver(string name, SeqWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
+		public override void Send(Message message)
+			=> Send(new SeqEvent(message.Content, message.Level));
+
+		/// <inheritdoc/>
 		public override void Send(SeqEvent message)
 		{
 			// Build request message
@@ -34,9 +38,5 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 			// Send request
 			Send(request);
 		}
-
-		/// <inheritdoc/>
-		public override void Send(Message message)
-			=> Send(new SeqEvent(message.Content, message.Level));
 	}
 }

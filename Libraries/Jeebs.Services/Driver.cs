@@ -39,8 +39,7 @@ namespace Jeebs.Services
 		/// <param name="args">DriverArgs</param>
 		protected Driver(string name, DriverArgs<TConfig> args)
 		{
-			(Name, Log) = (name, args.Log);
-			JeebsConfig = args.JeebsConfig.Value;
+			(Name, Log, JeebsConfig) = (name, args.Log, args.JeebsConfig.Value);
 			ServiceConfig = JeebsConfig.Services.GetServiceConfig(args.ServiceConfigs, name);
 		}
 	}
