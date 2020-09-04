@@ -11,8 +11,10 @@ namespace Jeebs.Services.Webhook
 	/// Messenger service
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration</typeparam>
+	/// <typeparam name="TMessage">Message type</typeparam>
 	public interface IWebhookDriver<TConfig, TMessage>
 		where TConfig : ServiceConfig
+		where TMessage : notnull
 	{
 		/// <summary>
 		/// Send a message using default options

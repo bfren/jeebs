@@ -39,7 +39,9 @@ namespace Jeebs.Config
 		/// Retrieve default Connection, unless name is set
 		/// </summary>
 		/// <param name="name">[Optional] Connection name</param>
-		/// <exception cref="Jx.ConfigException">If a default name is not defined, or the requested connection was not found.</exception>
+		/// <exception cref="Jx.Config.DefaultDbConnectionUndefinedException"></exception>
+		/// <exception cref="Jx.Config.NoDbConnectionsException"></exception>
+		/// <exception cref="Jx.Config.NamedDbConnectionNotFoundException"></exception>
 		public DbConnectionConfig GetConnection(string? name = null)
 		{
 			// If name is null, use Default connection

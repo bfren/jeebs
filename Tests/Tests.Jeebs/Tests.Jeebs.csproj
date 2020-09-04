@@ -22,8 +22,4 @@
     <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
-
 </Project>

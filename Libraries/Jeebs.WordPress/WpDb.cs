@@ -89,7 +89,6 @@ namespace Jeebs.WordPress
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
 		/// <param name="log">ILog</param>
-		/// <exception cref="Jx.ConfigException">If WordPress database configuration cannot be found</exception>
 		public WpDb(DbConfig dbConfig, WpConfig wpConfig, ILog log) : base(log)
 		{
 			// Get connection from WordPress database configuration

@@ -10,7 +10,7 @@ using static F.Thread;
 
 namespace Jeebs.Services.Webhook
 {
-	/// <inheritdoc cref="IWebhookDriver{TConfig}"/>
+	/// <inheritdoc cref="IWebhookDriver{TConfig, TMessage}"/>
 	public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebhookDriver<TConfig, TMessage>
 		where TConfig : WebhookServiceConfig
 		where TMessage : notnull

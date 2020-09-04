@@ -13,7 +13,7 @@ namespace Jeebs.Services
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		/// Add IDriver<> and IDriverArgs<> implementations to the <see cref="IServiceCollection"/>
+		/// Add <see cref="IDriver{TConfig}"/> and <see cref="IDriverArgs{TConfig}"/> implementations to the <see cref="IServiceCollection"/>
 		/// </summary>
 		/// <param name="this">IServiceCollection</param>
 		public static IServiceCollection AddDrivers(this IServiceCollection @this)

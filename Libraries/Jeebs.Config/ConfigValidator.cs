@@ -17,7 +17,8 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Validate a Jeebs config file against the schema
 		/// </summary>
-		/// <exception cref="Jx.ConfigException">If the file fails the configuration validation</exception>
+		/// <exception cref="FileNotFoundException"></exception>
+		/// <exception cref="Jx.Config.ConfigurationSchemaValidationFailedException"></exception>
 		/// <param name="path">Absolute path to Jeebs configuration file</param>
 		public static string Validate(string path)
 		{
