@@ -7,13 +7,8 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Slack configuration
 	/// </summary>
-	public class SlackConfig : ServiceConfig
+	public class SlackConfig : WebhookServiceConfig
 	{
-		/// <summary>
-		/// Web hook URI
-		/// </summary>
-		public string Webhook { get; set; } = string.Empty;
-
 		/// <summary>
 		/// Whether or not to add attachments to a message (error type and timestamp)
 		/// </summary>

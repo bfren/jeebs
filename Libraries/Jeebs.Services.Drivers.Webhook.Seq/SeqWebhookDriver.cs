@@ -11,7 +11,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 	/// <summary>
 	/// Seq service
 	/// </summary>
-	public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig>
+	public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 	{
 		/// <summary>
 		/// Create object
@@ -21,19 +21,22 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		protected SeqWebhookDriver(string name, SeqWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message)
+		public override void Send(SeqEvent message)
 		{
 			// Build request message
 			var uri = $"{ServiceConfig.Server}/api/events/raw?clef";
 			var request = new HttpRequestMessage(HttpMethod.Post, uri);
 			request.Headers.Add("X-Seq-ApiKey", ServiceConfig.ApiKey);
 
-			// Create event and add to the message
-			var e = new SeqEvent(message.Content, message.Level);
-			request.Content = new JsonHttpContent(e, "application/vnd.serilog.clef");
+			// Add content
+			request.Content = new JsonHttpContent(message, "application/vnd.serilog.clef");
 
 			// Send request
 			Send(request);
 		}
+
+		/// <inheritdoc/>
+		public override void Send(Message message)
+			=> Send(new SeqEvent(message.Content, message.Level));
 	}
 }

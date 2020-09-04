@@ -11,7 +11,7 @@ namespace Jeebs.Services.Webhook
 	/// Messenger service
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration</typeparam>
-	public interface IWebhookDriver<TConfig>
+	public interface IWebhookDriver<TConfig, TMessage>
 		where TConfig : ServiceConfig
 	{
 		/// <summary>
@@ -40,5 +40,11 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="message"></param>
 		void Send(Message message);
+
+		/// <summary>
+		/// Send a message
+		/// </summary>
+		/// <param name="message"></param>
+		void Send(TMessage message);
 	}
 }

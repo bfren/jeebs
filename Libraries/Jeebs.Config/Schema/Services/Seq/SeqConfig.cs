@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Seq configuration
 	/// </summary>
-	public class SeqConfig : ServiceConfig
+	public class SeqConfig : WebhookServiceConfig
 	{
 		/// <summary>
 		/// Seq Server URI

@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Jeebs.Config
+{
+	/// <summary>
+	/// Webhook Service configuration
+	/// </summary>
+	public abstract class WebhookServiceConfig : ServiceConfig
+	{
+		/// <summary>
+		/// Webhook URI
+		/// </summary>
+		public string Webhook { get; set; } = string.Empty;
+	}
+}

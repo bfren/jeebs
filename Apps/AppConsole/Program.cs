@@ -30,6 +30,9 @@ namespace AppConsole
 			var rc = provider.GetService<RocketChat>();
 			rc.Send("test");
 
+			var notifier = provider.GetService<INotifier>();
+			notifier.Send("test notification");
+
 			while (Console.ReadLine() is string output)
 			{
 				log.Information(output);

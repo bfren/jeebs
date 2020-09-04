@@ -12,7 +12,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 	/// <summary>
 	/// Slack service
 	/// </summary>
-	public abstract class SlackWebhookDriver : WebhookDriver<SlackConfig>
+	public abstract class SlackWebhookDriver : WebhookDriver<SlackConfig, SlackMessage>
 	{
 		/// <summary>
 		/// Create object
@@ -23,16 +23,6 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 
 		/// <inheritdoc/>
 		public override void Send(Message message)
-		{
-			// Build request message
-			var request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.Webhook);
-
-			// Create event and add to the message
-			var m = new SlackMessage(JeebsConfig, message.Content, message.Level);
-			request.Content = new JsonHttpContent(m);
-
-			// Send request
-			Send(request);
-		}
+			=> Send(new SlackMessage(JeebsConfig, message.Content, message.Level));
 	}
 }

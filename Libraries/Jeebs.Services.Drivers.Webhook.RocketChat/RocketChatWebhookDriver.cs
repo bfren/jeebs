@@ -12,7 +12,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat
 	/// <summary>
 	/// Slack service
 	/// </summary>
-	public abstract class RocketChatWebhookDriver : WebhookDriver<RocketChatConfig>
+	public abstract class RocketChatWebhookDriver : WebhookDriver<RocketChatConfig, RocketChatMessage>
 	{
 		/// <summary>
 		/// Create object
@@ -23,16 +23,6 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat
 
 		/// <inheritdoc/>
 		public override void Send(Message message)
-		{
-			// Build request message
-			var request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.Webhook);
-
-			// Create event and add to the message
-			var m = new RocketChatMessage(JeebsConfig, message.Content, message.Level);
-			request.Content = new JsonHttpContent(m);
-
-			// Send request
-			Send(request);
-		}
+			=> Send(new RocketChatMessage(JeebsConfig, message.Content, message.Level));
 	}
 }

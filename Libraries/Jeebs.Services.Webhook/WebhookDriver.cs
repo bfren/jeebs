@@ -11,8 +11,9 @@ using static F.Thread;
 namespace Jeebs.Services.Webhook
 {
 	/// <inheritdoc cref="IWebhookDriver{TConfig}"/>
-	public abstract class WebhookDriver<TConfig> : Driver<TConfig>, IWebhookDriver<TConfig>
-		where TConfig : ServiceConfig
+	public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebhookDriver<TConfig, TMessage>
+		where TConfig : WebhookServiceConfig
+		where TMessage : notnull
 	{
 		/// <summary>
 		/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
@@ -41,9 +42,6 @@ namespace Jeebs.Services.Webhook
 		/// <inheritdoc/>
 		public void Send(string message, MessageLevel level)
 			=> Send(new Message { Content = message, Level = level });
-
-		/// <inheritdoc/>
-		public abstract void Send(Message message);
 
 		/// <inheritdoc/>
 		public virtual void Send(IMsg msg)
@@ -81,6 +79,22 @@ namespace Jeebs.Services.Webhook
 
 			// Send message
 			Send(message);
+		}
+
+		/// <inheritdoc/>
+		public abstract void Send(Message message);
+
+		/// <inheritdoc/>
+		public virtual void Send(TMessage message)
+		{
+			// Build request message
+			var request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.Webhook);
+
+			// Create event and add to the message
+			request.Content = new JsonHttpContent(message);
+
+			// Send request
+			Send(request);
 		}
 
 		/// <summary>
