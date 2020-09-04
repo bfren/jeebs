@@ -88,10 +88,10 @@ namespace Jeebs.Services.Webhook
 		public virtual void Send(TMessage message)
 		{
 			// Build request message
-			var request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.Webhook);
-
-			// Create event and add to the message
-			request.Content = new JsonHttpContent(message);
+			var request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.Webhook)
+			{
+				Content = new JsonHttpContent(message)
+			};
 
 			// Send request
 			Send(request);

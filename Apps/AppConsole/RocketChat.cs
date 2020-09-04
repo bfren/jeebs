@@ -6,7 +6,7 @@ using Jeebs.Services.Drivers.Webhook.RocketChat;
 
 namespace AppConsole
 {
-	class RocketChat : RocketChatWebhookDriver, INotificationListener
+	internal class RocketChat : RocketChatWebhookDriver, INotificationListener
 	{
 		public RocketChat(RocketChatWebhookDriverArgs args) : base("bcg.xyz", args) { }
 	}
