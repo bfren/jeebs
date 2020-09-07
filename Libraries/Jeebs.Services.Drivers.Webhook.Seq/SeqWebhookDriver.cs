@@ -9,7 +9,7 @@ using Jeebs.Services.Webhook.Models;
 namespace Jeebs.Services.Drivers.Webhook.Seq
 {
 	/// <summary>
-	/// Seq service
+	/// Seq Webhook driver
 	/// </summary>
 	public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 	{

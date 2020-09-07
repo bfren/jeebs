@@ -10,7 +10,7 @@ using Jeebs.Services.Webhook.Models;
 namespace Jeebs.Services.Drivers.Webhook.Slack
 {
 	/// <summary>
-	/// Slack service
+	/// Slack Webhook Driver
 	/// </summary>
 	public abstract class SlackWebhookDriver : WebhookDriver<SlackConfig, SlackMessage>
 	{

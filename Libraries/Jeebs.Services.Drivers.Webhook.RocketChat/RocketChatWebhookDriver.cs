@@ -10,7 +10,7 @@ using Jeebs.Services.Webhook.Models;
 namespace Jeebs.Services.Drivers.Webhook.RocketChat
 {
 	/// <summary>
-	/// Slack service
+	/// RocketChat Webhook Driver
 	/// </summary>
 	public abstract class RocketChatWebhookDriver : WebhookDriver<RocketChatConfig, RocketChatMessage>
 	{

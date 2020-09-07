@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Jeebs.Config;
 using Microsoft.Extensions.Caching.Memory;
@@ -28,9 +29,20 @@ namespace Jeebs.Config
 		/// <typeparam name="T">Configuration settings type</typeparam>
 		/// <param name="config">IConfigurationRoot object</param>
 		/// <param name="sectionKey">Section key</param>
+		/// <param name="addToCache">[Optional] If true the returned settings will be added to the cache</param>
 		/// <returns>Configuration section</returns>
-		public static T GetSection<T>(this IConfiguration config, string sectionKey)
+		public static T GetSection<T>(this IConfiguration config, string sectionKey, bool addToCache = true)
 			where T : class, new()
-			=> cache.GetOrCreate(typeof(T).FullName, _ => config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T());
+		{
+			T getSection()
+				=> config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T();
+
+			if (addToCache)
+			{
+				return cache.GetOrCreate(typeof(T).FullName, _ => getSection());
+			}
+
+			return getSection();
+		}
 	}
 }

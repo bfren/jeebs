@@ -33,7 +33,7 @@ namespace Jeebs.Apps
 			builder.AddEnvironmentVariables();
 
 			// Check for Azure Key Vault section
-			var jeebs = builder.Build().GetSection<JeebsConfig>(JeebsConfig.Key);
+			var jeebs = builder.Build().GetSection<JeebsConfig>(JeebsConfig.Key, false);
 
 			// If the config is valid, add Azure Key Vault to IConfigurationBuilder
 			if (jeebs.AzureKeyVault.IsValid)
