@@ -17,7 +17,7 @@ namespace Jeebs.Services.Webhook.Models
 		/// <summary>
 		/// Message level
 		/// </summary>
-		public MessageLevel Level { get; set; }
+		public NotificationLevel Level { get; set; }
 
 		/// <summary>
 		/// Additional fields to send

@@ -8,9 +8,9 @@ using Jeebs.Services.Twitter.Models;
 namespace Jeebs.Services.Twitter
 {
 	/// <summary>
-	/// Twitter Service
+	/// Twitter Driver
 	/// </summary>
-	public interface ITwitterService
+	public interface ITwitterDriver
 	{
 		/// <summary>
 		/// Get the full-size profile image URL for a user

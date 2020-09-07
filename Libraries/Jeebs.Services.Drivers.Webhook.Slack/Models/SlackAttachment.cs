@@ -27,15 +27,15 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 		/// </summary>
 		/// <param name="text">Attachment text</param>
 		/// <param name="level">Message level</param>
-		public SlackAttachment(string text, MessageLevel level)
+		public SlackAttachment(string text, NotificationLevel level)
 			=> (Text, Colour) = (text, GetColour(level));
 
-		private string GetColour(MessageLevel level)
+		private string GetColour(NotificationLevel level)
 			=> level switch
 			{
-				MessageLevel.Information => "good",
-				MessageLevel.Warning => "warning",
-				MessageLevel.Error => "danger",
+				NotificationLevel.Information => "good",
+				NotificationLevel.Warning => "warning",
+				NotificationLevel.Error => "danger",
 				_ => throw new Jx.Services.Webhook.UnknownMessageLevelException()
 			};
 	}

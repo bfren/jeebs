@@ -17,7 +17,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 	/// <summary>
 	/// Tweetinvi Service
 	/// </summary>
-	public sealed class TweetinviTwitterSvc : ITwitterService
+	public sealed class TweetinviTwitterDriver : ITwitterDriver
 	{
 		private readonly TwitterConfig settings;
 
@@ -31,7 +31,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// <param name="settings">TwitterSettings</param>
 		/// <param name="client">HttpClient</param>
 		/// <param name="log">ILog</param>
-		public TweetinviTwitterSvc(IOptions<TwitterConfig> settings, HttpClient client, ILog log)
+		public TweetinviTwitterDriver(IOptions<TwitterConfig> settings, HttpClient client, ILog log)
 			: this(settings.Value, client, log) { }
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// <param name="settings">TwitterSettings</param>
 		/// <param name="client">HttpClient</param>
 		/// <param name="log">ILog</param>
-		public TweetinviTwitterSvc(TwitterConfig settings, HttpClient client, ILog log)
+		public TweetinviTwitterDriver(TwitterConfig settings, HttpClient client, ILog log)
 			=> (this.settings, this.client, this.log) = (settings, client, log);
 
 		private async Task<IR<IUser>> GetUser(IOkV<string> r)

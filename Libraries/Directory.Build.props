@@ -10,7 +10,7 @@
 		<Company>bcg|design</Company>
 		<Copyright>Ben Green 2013-2020</Copyright>
 		<Version>4.1.0</Version>
-		<VersionSuffix>-beta.252</VersionSuffix>
+		<VersionSuffix>-beta.254</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -22,5 +22,5 @@
 		<LibraryNugetPath>$([MSBuild]::GetPathOfFileAbove('$(LibraryNugetFile)', '$(MSBuildThisFileDirectory)../'))</LibraryNugetPath>
 	</PropertyGroup>
 	<Import Project="$(LibraryPackPath)" Condition="Exists('$(LibraryPackPath)')"/>
-	<Import Project="$(LibraryNugetPath)" Condition="Exists('$(LibraryNugetPath)')"/>
+	<!--<Import Project="$(LibraryNugetPath)" Condition="Exists('$(LibraryNugetPath)')"/>-->
 </Project>

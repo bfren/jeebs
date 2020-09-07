@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Constants;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs
 {
@@ -19,11 +17,11 @@ namespace Jeebs
 			=> this.listeners = listeners;
 
 		/// <inheritdoc/>
-		public void Send(string message)
+		public void Send(string message, NotificationLevel level = NotificationLevel.Information)
 		{
 			foreach (var listener in listeners)
 			{
-				listener.Send(message);
+				listener.Send(message, level);
 			}
 		}
 

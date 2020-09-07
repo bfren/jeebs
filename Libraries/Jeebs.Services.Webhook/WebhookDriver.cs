@@ -35,51 +35,49 @@ namespace Jeebs.Services.Webhook
 		protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args)
 			=> factory = args.Factory;
 
-		/// <inheritdoc/>
-		public void Send(string message)
-			=> Send(message, MessageLevel.Information);
+		#region Convert to Jeebs.Services.Webhook.Models.Message and Send
 
 		/// <inheritdoc/>
-		public void Send(string message, MessageLevel level)
+		public void Send(string message, NotificationLevel level = NotificationLevel.Information)
 			=> Send(new Message { Content = message, Level = level });
 
 		/// <inheritdoc/>
 		public virtual void Send(IMsg msg)
 		{
-			// Prepare IMsg
-			var (text, args) = msg.Prepare();
-			var content = text.FormatWith(args);
+			// Get message content
+			var content = msg.Prepare().Format();
 
 			// Convert to notification Message
 			var message = msg switch
 			{
-				IExceptionMsg x
-					=> new Message
+				IExceptionMsg x => new Message
+				{
+					Content = content,
+					Level = x.Level.ToNotificationLevel(),
+					Fields = new Dictionary<string, object>()
 					{
-						Content = content,
-						Level = MessageLevel.Error,
-						Fields = new Dictionary<string, object>()
-						{
-							{ "Exception", x.Exception }
-						}
-					},
-				ILoggableMsg x
-					=> new Message
-					{
-						Content = content,
-						Level = x.Level.ToMessageLevel()
-					},
-				{ } x
-					=> new Message
-					{
-						Content = content,
-						Level = MessageLevel.Information
+						{ "Exception", x.Exception }
 					}
+				},
+				ILoggableMsg x => new Message
+				{
+					Content = content,
+					Level = x.Level.ToNotificationLevel()
+				},
+				_ => new Message
+				{
+					Content = content,
+					Level = NotificationLevel.Information
+				}
 			};
 
 			// Send message
 			Send(message);
 		}
+
+		#endregion
+
+		#region Convert to System.Net.Http.HttpRequestMessage and Send
 
 		/// <inheritdoc/>
 		public abstract void Send(Message message);
@@ -96,6 +94,10 @@ namespace Jeebs.Services.Webhook
 			// Send request
 			Send(request);
 		}
+
+		#endregion
+
+		#region Actually Send
 
 		/// <summary>
 		/// Use <see cref="factory"/> to send the message
@@ -118,5 +120,7 @@ namespace Jeebs.Services.Webhook
 					Log.Error(ex, "Error sending message: {@Request}", request);
 				}
 			});
+
+		#endregion
 	}
 }

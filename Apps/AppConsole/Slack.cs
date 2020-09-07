@@ -8,6 +8,6 @@ namespace AppConsole
 {
 	internal class Slack : SlackWebhookDriver, INotificationListener
 	{
-		public Slack(SlackWebhookDriverArgs args) : base("ben@bcgdesign.com", args) { }
+		public Slack(SlackWebhookDriverArgs args) : base("bcgdesign", args) { }
 	}
 }

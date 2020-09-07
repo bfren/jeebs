@@ -8,7 +8,7 @@ using Jeebs.Services.Webhook.Models;
 namespace Jeebs.Services.Webhook
 {
 	/// <summary>
-	/// Messenger service
+	/// Webhook Driver
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration</typeparam>
 	/// <typeparam name="TMessage">Message type</typeparam>
@@ -16,25 +16,10 @@ namespace Jeebs.Services.Webhook
 		where TConfig : ServiceConfig
 		where TMessage : notnull
 	{
-		/// <summary>
-		/// Send a message using default options
-		/// <para>Separate from <see cref="Send(string, MessageLevel)"/> so webhooks can also be used as <see cref="INotificationListener"/></para>
-		/// </summary>
-		/// <param name="message">Message content</param>
-		void Send(string message);
+		/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
+		void Send(string message, NotificationLevel level = NotificationLevel.Information);
 
-		/// <summary>
-		/// Send a message using default options
-		/// <para>Separate from <see cref="Send(string)"/> so webhooks can also be used as <see cref="INotificationListener"/></para>
-		/// </summary>
-		/// <param name="message">Message content</param>
-		/// <param name="level">Message level</param>
-		void Send(string message, MessageLevel level);
-
-		/// <summary>
-		/// Send an IMsg
-		/// </summary>
-		/// <param name="msg"></param>
+		/// <inheritdoc cref="INotifier.Send(IMsg)"/>
 		void Send(IMsg msg);
 
 		/// <summary>

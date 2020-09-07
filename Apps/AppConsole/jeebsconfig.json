@@ -7,29 +7,24 @@
 			"minimumLevel": "Debug",
 			"console": true,
 			"providers": {
-				"seq.bcg-home": {
+				"seq.server04": {
 					"enabled": true
 				}
 			}
 		},
 		"services": {
 			"seq": {
-				"bcg-home": {
-					"server": "http://sq.bcg.xyz:5341",
+				"server04": {
+					"server": "",
 					"apiKey": ""
 				},
 				"wrong": {
-					"server": "http://sq.bcg.xyz:5342",
+					"server": "",
 					"apiKey": ""
 				}
 			},
 			"slack": {
-				"ben@bcgdesign.com": {
-					"webhook": ""
-				}
-			},
-			"rocketChat": {
-				"bcg.xyz": {
+				"bcgdesign": {
 					"webhook": ""
 				}
 			}

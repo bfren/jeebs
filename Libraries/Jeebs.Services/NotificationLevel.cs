@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Constants
+namespace Jeebs
 {
 	/// <summary>
-	/// Levels of notifications
+	/// Message levels
 	/// </summary>
-	public enum NotifyLevel
+	public enum NotificationLevel
 	{
 		/// <summary>
-		/// Information, or 'Green' notification
+		/// Information, or 'Green' message
 		/// </summary>
 		Information,
 
 		/// <summary>
-		/// Warning, or 'Amber' notification
+		/// Warning, or 'Amber' message
 		/// </summary>
 		Warning,
 
 		/// <summary>
-		/// Error, or 'Red' notification
+		/// Error, or 'Red' message
 		/// </summary>
 		Error
 	}

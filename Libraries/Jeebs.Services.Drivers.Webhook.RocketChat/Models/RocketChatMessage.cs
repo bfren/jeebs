@@ -32,7 +32,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// <param name="config">JeebsConfig</param>
 		/// <param name="text">Message text</param>
 		/// <param name="level">MessageLevel</param>
-		public RocketChatMessage(JeebsConfig config, string text, MessageLevel level)
+		public RocketChatMessage(JeebsConfig config, string text, NotificationLevel level)
 		{
 			Alias = config.App.Name;
 			Attachments = new List<RocketChatAttachment>

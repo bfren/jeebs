@@ -41,5 +41,12 @@ namespace Jeebs
 
 			return (text, args);
 		}
+
+		/// <summary>
+		/// Enables immediate formatting of a prepared message
+		/// </summary>
+		/// <param name="this"></param>
+		public static string Format(this (string text, object[] args) @this)
+			=> @this.text.FormatWith(@this.args);
 	}
 }

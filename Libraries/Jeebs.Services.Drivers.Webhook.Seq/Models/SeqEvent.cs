@@ -34,11 +34,11 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="level"></param>
-		public SeqEvent(string message, MessageLevel level)
+		public SeqEvent(string message, NotificationLevel level)
 		{
 			Timestamp = DateTime.Now.ToString("O");
 			Message = message;
-			Level = Enum.GetName(typeof(MessageLevel), level);
+			Level = Enum.GetName(typeof(NotificationLevel), level);
 		}
 	}
 }

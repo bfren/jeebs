@@ -11,10 +11,11 @@ namespace Jeebs
 	public interface INotifier
 	{
 		/// <summary>
-		/// Send a notification message
+		/// Send a notification
 		/// </summary>
-		/// <param name="message"></param>
-		void Send(string message);
+		/// <param name="message">Message content</param>
+		/// <param name="level">[Optional] Notification level</param>
+		void Send(string message, NotificationLevel level = NotificationLevel.Information);
 
 		/// <summary>
 		/// Send a notification message

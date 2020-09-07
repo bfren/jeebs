@@ -9,16 +9,10 @@ namespace Jeebs
 	/// </summary>
 	public interface INotificationListener
 	{
-		/// <summary>
-		/// Send a notification message
-		/// </summary>
-		/// <param name="message"></param>
-		void Send(string message);
+		/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
+		void Send(string message, NotificationLevel level = NotificationLevel.Information);
 
-		/// <summary>
-		/// Send an IMsg
-		/// </summary>
-		/// <param name="msg"></param>
+		/// <inheritdoc cref="INotifier.Send(IMsg)"/>
 		public void Send(IMsg msg);
 	}
 }

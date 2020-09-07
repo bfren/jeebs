@@ -4,13 +4,26 @@
 			"name": "MVC App"
 		},
 		"logging": {
-			"minimumLevel": "Debug",
-			"console": true
+			"minimumLevel": "Trace",
+			"console": true,
+			"providers": {
+				"seq.server04": {
+					"enabled": true
+				}
+			}
+		},
+		"services": {
+			"seq": {
+				"server04": {
+					"server": "",
+					"apiKey": ""
+				}
+			}
 		},
 		"web": {
 			"verification": {
 				"google": "5cfca8ea82e65ef1"
 			}
-		}		
+		}
 	}
 }

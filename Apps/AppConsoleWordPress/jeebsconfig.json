@@ -4,9 +4,9 @@
 			"name": "WordPress App"
 		},
 		"db": {
-			"default": "NAS02",
+			"default": "server04",
 			"connections": {
-				"NAS02": {
+				"server04": {
 					"connectionString": ""
 				}
 			}
@@ -15,15 +15,15 @@
 			"minimumLevel": "Trace",
 			"console": true,
 			"providers": {
-				"seq.bcg-home": {
+				"seq.server04": {
 					"enabled": true
 				}
 			}
 		},
 		"services": {
 			"seq": {
-				"bcg-home": {
-					"server": "http://sq.bcg.xyz:5341",
+				"server04": {
+					"server": "",
 					"apiKey": ""
 				}
 			}
