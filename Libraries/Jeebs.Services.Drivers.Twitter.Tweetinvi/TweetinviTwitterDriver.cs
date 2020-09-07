@@ -7,6 +7,7 @@ using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
 using Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync;
 using Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync;
+using Microsoft.Extensions.DependencyInjection;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
@@ -18,6 +19,13 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 	/// </summary>
 	public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDriver
 	{
+		/// <summary>
+		/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
+		/// </summary>
+		/// <param name="services">IServiceCollection</param>
+		public static void AddRequiredServices(IServiceCollection services)
+			=> services.AddHttpClient();
+
 		private readonly IHttpClientFactory factory;
 
 		/// <summary>
