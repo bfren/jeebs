@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jeebs;
 
-namespace Jm.Services.Twitter.TweetinviTwitterSvc.GetProfileImageAsync
+namespace Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync
 {
 	/// <summary>
 	/// Twitter service was unable to find the specified user

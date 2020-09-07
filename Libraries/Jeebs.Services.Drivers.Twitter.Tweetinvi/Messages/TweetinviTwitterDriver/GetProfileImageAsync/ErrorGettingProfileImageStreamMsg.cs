@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jm.Services.Twitter.TweetinviTwitterSvc.GetProfileImageAsync
+namespace Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync
 {
 	/// <summary>
 	/// Something went wrong while retrieving Twitter profile image

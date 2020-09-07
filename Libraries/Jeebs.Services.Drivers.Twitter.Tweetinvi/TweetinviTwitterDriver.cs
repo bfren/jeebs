@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Jeebs.Config;
 using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
-using Jm.Services.Twitter.TweetinviTwitterSvc.GetProfileImageAsync;
-using Jm.Services.Twitter.TweetinviTwitterSvc.GetTweetsAsync;
-using Microsoft.Extensions.Options;
+using Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync;
+using Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
@@ -15,33 +14,19 @@ using Tweetinvi.Parameters;
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 {
 	/// <summary>
-	/// Tweetinvi Service
+	/// Tweetinvi Twitter Driver
 	/// </summary>
-	public sealed class TweetinviTwitterDriver : ITwitterDriver
+	public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDriver
 	{
-		private readonly TwitterConfig settings;
-
-		private readonly HttpClient client;
-
-		private readonly ILog log;
+		private readonly IHttpClientFactory factory;
 
 		/// <summary>
-		/// Setup dependencies
+		/// Create object
 		/// </summary>
-		/// <param name="settings">TwitterSettings</param>
-		/// <param name="client">HttpClient</param>
-		/// <param name="log">ILog</param>
-		public TweetinviTwitterDriver(IOptions<TwitterConfig> settings, HttpClient client, ILog log)
-			: this(settings.Value, client, log) { }
-
-		/// <summary>
-		/// Setup dependencies
-		/// </summary>
-		/// <param name="settings">TwitterSettings</param>
-		/// <param name="client">HttpClient</param>
-		/// <param name="log">ILog</param>
-		public TweetinviTwitterDriver(TwitterConfig settings, HttpClient client, ILog log)
-			=> (this.settings, this.client, this.log) = (settings, client, log);
+		/// <param name="name">Service name</param>
+		/// <param name="args">TweetinviTwitterDriverArgs</param>
+		protected TweetinviTwitterDriver(string name, TweetinviTwitterDriverArgs args) : base(name, args)
+			=> factory = args.Factory;
 
 		private async Task<IR<IUser>> GetUser(IOkV<string> r)
 		{
@@ -57,23 +42,17 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Set credentials
 			void setCredentials()
 			{
-				log.Information("Setting Twitter authorisation credentials");
-				log.Information($"Twitter consumerSecret: {settings.ConsumerSecret}");
-				log.Information($"Twitter consumerKey: {settings.ConsumerKey}");
-				log.Information($"Twitter userAccessSecret: {settings.UserAccessSecret}");
-				log.Information($"Twitter userAccessToken: {settings.UserAccessToken}");
-
 				Auth.SetUserCredentials(
-					consumerKey: settings.ConsumerKey,
-					consumerSecret: settings.ConsumerSecret,
-					userAccessToken: settings.UserAccessToken,
-					userAccessSecret: settings.UserAccessSecret);
+					consumerKey: ServiceConfig.ConsumerKey,
+					consumerSecret: ServiceConfig.ConsumerSecret,
+					userAccessToken: ServiceConfig.UserAccessToken,
+					userAccessSecret: ServiceConfig.UserAccessSecret);
 			}
 
 			// Handle set credentials exception
 			void setCredentialsException(IR<string> r, System.Exception ex)
 			{
-				log.Error(ex, "Error setting credentials");
+				Log.Error(ex, "Error setting credentials");
 				r.AddMsg(new ErrorSettingCredentialsMsg(ex));
 			}
 
@@ -87,7 +66,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Handle get user exceptions
 			void getUserException(IR<string> r, System.Exception ex)
 			{
-				log.Information("Unable to find user");
+				Log.Information("Unable to find user");
 				r.AddMsg(new ErrorGettingUserMsg(ex));
 			}
 		}
@@ -109,20 +88,21 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			async Task<IR<string>> getUrl(IOkV<IUser> r)
 			{
 				var url = r.Value.ProfileImageUrlFullSize.Replace("http://", "https://");
-				log.Information("Twitter profile image: '{0}'", url);
+				Log.Information("Twitter profile image: '{0}'", url);
 				return r.OkV(url);
 			}
 
 			// Handle get profile image URL exceptions
 			void getUrlException(IR<IUser> r, System.Exception ex)
 			{
-				log.Error(ex, "Error getting Twitter Profile image URL");
+				Log.Error(ex, "Error getting Twitter Profile image URL");
 				r.AddMsg(new ErrorGettingProfileImageUrlMsg(ex));
 			}
 
 			// Get profile image stream
 			async Task<IR<System.IO.Stream>> getStream(IOkV<string> r)
 			{
+				using var client = factory.CreateClient();
 				var stream = await client.GetStreamAsync(r.Value).ConfigureAwait(false);
 				return r.OkV(stream);
 			}
@@ -130,7 +110,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Handle get profile image stream exceptions
 			void getStreamException(IR<string> r, System.Exception ex)
 			{
-				log.Error(ex, "Error getting Twitter Profile image stream");
+				Log.Error(ex, "Error getting Twitter Profile image stream");
 				r.AddMsg(new ErrorGettingProfileImageStreamMsg(ex));
 			}
 		}
@@ -170,7 +150,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Handle get timeline exceptions
 			void getTimelineException(IR<IUser> r, System.Exception ex)
 			{
-				log.Error(ex, "Error getting Twitter timeline");
+				Log.Error(ex, "Error getting Twitter timeline");
 				r.AddMsg(new ErrorGettingTimelineMsg(ex));
 			}
 
@@ -197,7 +177,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Handle get timeline exceptions
 			void convertTweetsException(IR<List<ITweet>> r, System.Exception ex)
 			{
-				log.Error(ex, "Error converting tweets");
+				Log.Error(ex, "Error converting tweets");
 				r.AddMsg(new ErrorConvertingTweetsMsg(ex));
 			}
 		}
