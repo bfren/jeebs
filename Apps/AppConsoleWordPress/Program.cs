@@ -52,7 +52,7 @@ namespace AppConsoleWordPress
 						opt.Type = WpBcg.PostTypes.Sermon;
 						opt.SearchText = "jesus";
 						opt.SearchFields = SearchPostFields.Title;
-						opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424) };
+						opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
 						opt.Limit = 5;
 					})).Await()
 					.Audit(AuditSermons);

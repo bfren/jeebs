@@ -61,6 +61,12 @@ namespace Jeebs.Mvc.TagHelpers
 		/// <param name="output">TagHelperOutput object</param>
 		public override void Process(TagHelperContext context, TagHelperOutput output)
 		{
+			// Check source
+			if (string.IsNullOrWhiteSpace(Src))
+			{
+				return;
+			}
+
 			// By default the url is the raw Src attribute
 			var url = Src;
 

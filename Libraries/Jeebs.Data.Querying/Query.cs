@@ -41,7 +41,7 @@ namespace Jeebs.Data
 			var countQuery = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute
-			var count = await unitOfWork.ExecuteScalarAsync<long>(r, countQuery, parts.Parameters);
+			var count = await unitOfWork.ExecuteScalarAsync<long>(r, countQuery, parts.Parameters).ConfigureAwait(false);
 
 			// Restore SELECT and return
 			parts.Select = originalSelect;
@@ -55,7 +55,7 @@ namespace Jeebs.Data
 			var query = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute and return
-			return await unitOfWork.QueryAsync<T>(r, query, parts.Parameters) switch
+			return await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false) switch
 			{
 				IOkV<IEnumerable<T>> x => x.OkV(x.Value.ToList()),
 				{ } x => x.Error<List<T>>()
@@ -72,7 +72,7 @@ namespace Jeebs.Data
 					.MapAsync(getCount).Await()
 				.Link()
 					.Handle().With<GetPagingValuesExceptionMsg>()
-					.Run(getPagingValues)
+					.Map(getPagingValues)
 				.Link()
 					.Handle().With<GetItemsExceptionMsg>()
 					.MapAsync(getItems).Await()
@@ -81,10 +81,11 @@ namespace Jeebs.Data
 					.Map(getPagedList);
 
 			// Get the count
-			async Task<IR<long>> getCount(IOk r) => await GetCountAsync(r);
+			async Task<IR<long>> getCount(IOk r)
+				=> await GetCountAsync(r).ConfigureAwait(false);
 
 			// Get paging values
-			void getPagingValues(IOkV<long> r)
+			IR<PagingValues> getPagingValues(IOkV<long> r)
 			{
 				// Create values object
 				var values = new PagingValues(r.Value, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
@@ -92,20 +93,21 @@ namespace Jeebs.Data
 				// Set the OFFSET and LIMIT values
 				parts.Offset = (values.Page - 1) * values.ItemsPer;
 				parts.Limit = values.ItemsPer;
+
+				return r.OkV(values);
 			}
 
 			// Get the items
-			async Task<IR<List<T>>> getItems(IOkV<long> r)
-			{
-				return await ExecuteQueryAsync(r.Ok()).ConfigureAwait(false);
-			}
+			async Task<IR<(List<T>, PagingValues)>> getItems(IOkV<PagingValues> r)
+				=> await ExecuteQueryAsync(r).ConfigureAwait(false) switch
+				{
+					IOkV<List<T>> x => r.OkV((x.Value, r.Value)),
+					_ => r.Error<(List<T>, PagingValues)>()
+				};
 
 			// Convert to a paged list
-			static IR<PagedList<T>> getPagedList(IOkV<List<T>> r)
-			{
-				var list = new PagedList<T>(r.Value);
-				return r.OkV(list);
-			}
+			static IR<PagedList<T>> getPagedList(IOkV<(List<T> items, PagingValues values)> r)
+				=> r.OkV(new PagedList<T>(r.Value.values, r.Value.items));
 		}
 	}
 }

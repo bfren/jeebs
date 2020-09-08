@@ -62,13 +62,29 @@ namespace Jeebs.Mvc.Models
 		/// <param name="url">IUrlHelper</param>
 		/// <param name="list">[Optional] Menu Items</param>
 		/// <returns>Result to output as response</returns>
-		public async Task<string> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
+		public async Task<IR<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
 		{
-			// Local function to write something to the StringBuilder
-			StringBuilder result = new StringBuilder();
-			void Write(string content)
+			// Write to StringBuilder
+			var result = new StringBuilder();
+			void Write(string content) => result.Append(content);
+
+			// Load a URI
+			var client = http.CreateClient();
+			async Task Load(string uri)
 			{
-				result.Append(content);
+				try
+				{
+					// Load the URL and ensure it is successful
+					var response = await client.GetAsync(uri);
+					response.EnsureSuccessStatusCode();
+
+					// Successful
+					Write("done");
+				}
+				catch (HttpRequestException ex)
+				{
+					Write($"failed: {ex}");
+				}
 			}
 
 			// Make the respose HTML
@@ -82,19 +98,7 @@ namespace Jeebs.Mvc.Models
 				Write($"Loading {uri} .. ");
 
 				// Attempt to load the URL
-				try
-				{
-					// Load the URL and ensure it is successful
-					var response = await http.CreateClient().GetAsync(uri).ConfigureAwait(false);
-					response.EnsureSuccessStatusCode();
-
-					// Successful
-					Write("done");
-				}
-				catch (HttpRequestException ex)
-				{
-					Write($"failed: {ex}");
-				}
+				await Load(uri);
 
 				// Put the next URL on a new line
 				Write("<br/>");
@@ -109,7 +113,7 @@ namespace Jeebs.Mvc.Models
 			}
 
 			// Return result
-			return result.ToString();
+			return Result.OkV(result.ToString());
 		}
 	}
 }

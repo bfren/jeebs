@@ -42,6 +42,12 @@ namespace Jeebs.Mvc.TagHelpers
 		/// <param name="output">TagHelperOutput object</param>
 		public override void Process(TagHelperContext context, TagHelperOutput output)
 		{
+			// Check To
+			if (string.IsNullOrWhiteSpace(To))
+			{
+				return;
+			}
+
 			// Create the mailto link
 			var href = "mailto:" + To;
 			if (!string.IsNullOrEmpty(Subject))

@@ -13,4 +13,8 @@
 	  <ProjectReference Include="..\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="HtmlHelpers\" />
+	</ItemGroup>
+
 </Project>

@@ -130,7 +130,12 @@ namespace Jeebs.Mvc.TagHelpers
 					}
 
 					// Generate the link URL
-					var urlActionContext = new UrlActionContext { Controller = menuItem.Controller, Action = menuItem.Action };
+					var urlActionContext = new UrlActionContext
+					{
+						Controller = menuItem.Controller,
+						Action = menuItem.Action
+					};
+
 					link.Attributes.Add("href", urlHelper.Action(urlActionContext));
 
 					// Add link text - if not set use getText() function

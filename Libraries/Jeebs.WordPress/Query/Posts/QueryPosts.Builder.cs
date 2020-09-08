@@ -75,13 +75,13 @@ namespace Jeebs.WordPress
 				}
 
 				// WHERE taxonomies
-				if (opt.Taxonomies is IList<(Taxonomy taxonomy, int id)> taxonomiesList && taxonomiesList.Count > 0)
+				if (opt.Taxonomies is var taxonomiesList && taxonomiesList.Count > 0)
 				{
 					AddWhereTaxonomies(taxonomiesList);
 				}
 
 				// WHERE custom fields
-				if (opt.CustomFields is IList<(ICustomField field, SearchOperators op, object value)> fields && fields.Count > 0)
+				if (opt.CustomFields is var fields && fields.Count > 0)
 				{
 					AddWhereCustomFields(fields);
 				}
@@ -151,7 +151,7 @@ namespace Jeebs.WordPress
 			/// Add WHERE for taxonomies search
 			/// </summary>
 			/// <param name="taxonomiesList">List of taxonomies to search</param>
-			private void AddWhereTaxonomies(IList<(Taxonomy taxonomy, int id)> taxonomiesList)
+			private void AddWhereTaxonomies(IList<(Taxonomy taxonomy, long id)> taxonomiesList)
 			{
 				// Setup variables
 				var taxonomyWhere = string.Empty;

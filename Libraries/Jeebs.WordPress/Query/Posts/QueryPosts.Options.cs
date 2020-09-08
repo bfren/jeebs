@@ -57,12 +57,12 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Search post taxonomies
 			/// </summary>
-			public IList<(Taxonomy taxonomy, int id)>? Taxonomies { get; set; }
+			public IList<(Taxonomy taxonomy, long id)> Taxonomies { get; set; } = new List<(Taxonomy, long)>();
 
 			/// <summary>
 			/// Search custom fields
 			/// </summary>
-			public IList<(ICustomField field, SearchOperators op, object value)>? CustomFields { get; set; }
+			public IList<(ICustomField field, SearchOperators op, object value)> CustomFields { get; set; } = new List<(ICustomField, SearchOperators, object)>();
 		}
 	}
 }

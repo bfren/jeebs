@@ -24,7 +24,7 @@ namespace Jeebs.Mvc.TagHelpers
 		public override void Process(TagHelperContext context, TagHelperOutput output)
 		{
 			// Check library
-			if (string.IsNullOrEmpty(Library))
+			if (string.IsNullOrWhiteSpace(Library))
 			{
 				return;
 			}

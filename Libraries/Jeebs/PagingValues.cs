@@ -42,6 +42,11 @@ namespace Jeebs
 		public int Take { get; }
 
 		/// <summary>
+		/// Create empty values
+		/// </summary>
+		public PagingValues() { }
+
+		/// <summary>
 		/// Set and calculate values
 		/// If itemsPerPage is 0, paging will not be used
 		/// If numberOfPages
