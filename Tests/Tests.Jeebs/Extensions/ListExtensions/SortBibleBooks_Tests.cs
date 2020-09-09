@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
+using static F.JsonF;
 
 namespace Jeebs.ListExtensions_Tests
 {
@@ -14,12 +16,13 @@ namespace Jeebs.ListExtensions_Tests
 			var books = Constants.BibleBooks.All;
 
 			// Act
-			var shuffled = books.ToArray().Shuffle();
-			var sorted = shuffled.SortBibleBooks(b => b);
+			var shuffled = books.ToArray().Shuffle().ToList();
+			Assert.NotEqual(books, shuffled);
+
+			shuffled.SortBibleBooks(b => b);
+			Assert.Equal(books, shuffled);
 
 			// Assert
-			Assert.NotEqual(books, shuffled);
-			Assert.Equal(books, sorted);
 		}
 
 		[Fact]
@@ -29,11 +32,14 @@ namespace Jeebs.ListExtensions_Tests
 			var array = new[] { "one", "two", "three", "four" };
 
 			// Act
-			var shuffled = array.Shuffle();
-			var sorted = shuffled.SortBibleBooks(b => b);
+			var shuffled = array.Shuffle().ToList();
+			var order0 = Serialise(shuffled);
+
+			shuffled.SortBibleBooks(b => b);
+			var order1 = Serialise(shuffled);
 
 			// Assert
-			Assert.Equal(shuffled, sorted);
+			Assert.Equal(order0, order1);
 		}
 	}
 }
