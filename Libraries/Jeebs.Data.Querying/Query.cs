@@ -55,11 +55,9 @@ namespace Jeebs.Data
 			var query = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute and return
-			return await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false) switch
-			{
-				IOkV<IEnumerable<T>> x => x.OkV(x.Value.ToList()),
-				{ } x => x.Error<List<T>>()
-			};
+			return (await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false)).Switch(
+				x => x.OkV(x.Value.ToList())
+			);
 		}
 
 		/// <inheritdoc/>
@@ -99,11 +97,9 @@ namespace Jeebs.Data
 
 			// Get the items
 			async Task<IR<(List<T>, PagingValues)>> getItems(IOkV<PagingValues> r)
-				=> await ExecuteQueryAsync(r).ConfigureAwait(false) switch
-				{
-					IOkV<List<T>> x => r.OkV((x.Value, r.Value)),
-					_ => r.Error<(List<T>, PagingValues)>()
-				};
+				=> (await ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
+					x => x.OkV((x.Value, r.Value))
+				);
 
 			// Convert to a paged list
 			static IR<PagedList<T>> getPagedList(IOkV<(List<T> items, PagingValues values)> r)

@@ -20,7 +20,8 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// No limit on meta - return it all
 			/// </summary>
-			public Options() => Limit = null;
+			public Options()
+				=> Limit = null;
 		}
 	}
 }

@@ -149,11 +149,9 @@ namespace Jeebs.WordPress
 					.GetQuery();
 
 				// Get meta
-				return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
-				{
-					IOkV<List<PostMeta>> x => x.OkV((r.Value, x.Value)),
-					{ } x => x.Error<(TList, List<PostMeta>)>()
-				};
+				return (await query.ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
+					x => x.OkV((r.Value, x.Value))
+				);
 			}
 
 			//
@@ -290,7 +288,7 @@ namespace Jeebs.WordPress
 			//
 			//	Get terms
 			//
-			async Task<IR<(TList, IEnumerable<Term>)>> getTermsAsync(IOkV<TList> r, List<PropertyInfo> termLists)
+			async Task<IR<(TList, List<Term>)>> getTermsAsync(IOkV<TList> r, List<PropertyInfo> termLists)
 			{
 				// Create options
 				var options = new QueryPostsTaxonomy.Options
@@ -308,7 +306,7 @@ namespace Jeebs.WordPress
 					// Make sure taxonomy has been registered
 					if (!Taxonomy.IsRegistered(taxonomy))
 					{
-						return r.Error<(TList, IEnumerable<Term>)>().AddMsg(new TaxonomyNotRegisteredMsg(taxonomy));
+						return r.Error<(TList, List<Term>)>().AddMsg(new TaxonomyNotRegisteredMsg(taxonomy));
 					}
 
 					// Add to query
@@ -323,17 +321,15 @@ namespace Jeebs.WordPress
 					.GetQuery();
 
 				// Execute query
-				return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
-				{
-					IOkV<IEnumerable<Term>> x => x.OkV((r.Value, x.Value)),
-					{ } x => x.Error<(TList, IEnumerable<Term>)>()
-				};
+				return (await query.ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
+					x => x.OkV((r.Value, x.Value))
+				);
 			}
 
 			//
 			//	Add terms
 			//
-			static IR<TList> addTerms(IOkV<(TList, IEnumerable<Term>)> r, List<PropertyInfo> termLists)
+			static IR<TList> addTerms(IOkV<(TList, List<Term>)> r, List<PropertyInfo> termLists)
 			{
 				var (posts, terms) = r.Value;
 
@@ -419,11 +415,7 @@ namespace Jeebs.WordPress
 		}
 
 		private Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
-			=> GetMetaDictionary<TModel>() switch
-			{
-				Some<PropertyInfo> x => Option.Wrap(new Meta<TModel>(x.Value)),
-				_ => Option.None<Meta<TModel>>()
-			};
+			=> GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x));
 
 		private class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>
 		{
@@ -431,11 +423,7 @@ namespace Jeebs.WordPress
 		}
 
 		private Option<Content<TModel>> GetPostContentInfo<TModel>()
-			=> GetPostContent<TModel>() switch
-			{
-				Some<PropertyInfo> x => Option.Wrap(new Content<TModel>(x.Value)),
-				_ => Option.None<Content<TModel>>()
-			};
+			=> GetPostContent<TModel>().Map(x => new Content<TModel>(x));
 
 		private class Content<TModel> : PropertyInfo<TModel, string>
 		{

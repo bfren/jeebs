@@ -70,12 +70,12 @@ namespace Jeebs.WordPress
 		private static Option<PropertyInfo> GetMetaDictionary<TModel>()
 		{
 			// Get from or Add to the cache
-			var metaDictionary = metaDictionaryCache.GetOrAdd(typeof(TModel), type =>
-			{
-				return from m in type.GetProperties()
-					   where m.PropertyType.IsEquivalentTo(typeof(MetaDictionary))
-					   select m;
-			});
+			var metaDictionary = metaDictionaryCache.GetOrAdd(
+				typeof(TModel),
+				type => from m in type.GetProperties()
+						where m.PropertyType.IsEquivalentTo(typeof(MetaDictionary))
+						select m
+			);
 
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
@@ -89,7 +89,7 @@ namespace Jeebs.WordPress
 				return Option.None<PropertyInfo>().AddReason<MetaDictionaryPropertyNotFoundMsg<TModel>>();
 			}
 
-			return Option.Wrap(metaDictionary.Single());
+			return metaDictionary.Single();
 		}
 
 		/// <summary>
@@ -99,12 +99,12 @@ namespace Jeebs.WordPress
 		private static List<PropertyInfo> GetTermLists<TModel>()
 		{
 			// Get from or Add to the cache
-			var taxonomies = termListsCache.GetOrAdd(typeof(TModel), type =>
-			{
-				return from t in type.GetProperties()
-					   where t.PropertyType.IsEquivalentTo(typeof(TermList))
-					   select t;
-			});
+			var taxonomies = termListsCache.GetOrAdd(
+				typeof(TModel),
+				type => from t in type.GetProperties()
+						where t.PropertyType.IsEquivalentTo(typeof(TermList))
+						select t
+			);
 
 			// If there aren't any return an empty list
 			if (!taxonomies.Any())
@@ -122,12 +122,12 @@ namespace Jeebs.WordPress
 		private static List<PropertyInfo> GetCustomFields<TModel>()
 		{
 			// Get from or Add to the cache
-			var customFields = customFieldsCache.GetOrAdd(typeof(TModel), type =>
-			{
-				return from cf in type.GetProperties()
-					   where cf.PropertyType.GetInterfaces().Contains(typeof(ICustomField))
-					   select cf;
-			});
+			var customFields = customFieldsCache.GetOrAdd(
+				typeof(TModel),
+				type => from cf in type.GetProperties()
+						where cf.PropertyType.GetInterfaces().Contains(typeof(ICustomField))
+						select cf
+			);
 
 			// If there aren't any return an empty list
 			if (!customFields.Any())
@@ -145,12 +145,12 @@ namespace Jeebs.WordPress
 		private static Option<PropertyInfo> GetPostContent<TModel>()
 		{
 			// Get from or Add to the cache
-			var content = contentCache.GetOrAdd(typeof(TModel), type =>
-			{
-				return from c in type.GetProperties()
-					   where c.Name == nameof(WpPostEntity.Content)
-					   select c;
-			});
+			var content = contentCache.GetOrAdd(
+				typeof(TModel),
+				type => from c in type.GetProperties()
+						where c.Name == nameof(WpPostEntity.Content)
+						select c
+			);
 
 			// If content is not defined return null
 			if (!content.Any())
@@ -158,7 +158,7 @@ namespace Jeebs.WordPress
 				return Option.None<PropertyInfo>().AddReason<ContentPropertyNotFoundMsg<TModel>>();
 			}
 
-			return Option.Wrap(content.Single());
+			return content.Single();
 		}
 
 		#endregion

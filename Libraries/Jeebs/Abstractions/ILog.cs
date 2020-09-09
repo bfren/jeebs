@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
 namespace Jeebs
@@ -26,6 +27,12 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="message">Message to log</param>
 		void Message(IMsg message);
+
+		/// <summary>
+		/// Log a list of <see cref="IMsg"/>
+		/// </summary>
+		/// <param name="messages">Messages to log</param>
+		void Messages(IEnumerable<IMsg> messages);
 
 		/// <summary>
 		/// Trace log message

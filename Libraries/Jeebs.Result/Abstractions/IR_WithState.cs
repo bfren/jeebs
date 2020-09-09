@@ -32,5 +32,13 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="message">[Optional] Message to add</param>
 		new IError<bool, TState> False(IMsg? message = null);
+
+		/// <summary>
+		/// Type-safe switching - runs <paramref name="okV"/> when current object is <see cref="IOkV{TValue, TState}"/>
+		/// </summary>
+		/// <typeparam name="TNext">Next result value type</typeparam>
+		/// <param name="okV">Runs when current object is <see cref="IOkV{TValue, TState}"/></param>
+		/// <param name="other">[Optional] Runs when current object is not - if not supplied will return <see cref="IError{TNext, TState}"/></param>
+		IR<TNext, TState> Switch<TNext>(Func<IOkV<TValue>, IR<TNext, TState>> okV, Func<IR<TValue, TState>, IR<TNext, TState>>? other = null);
 	}
 }

@@ -36,6 +36,7 @@ namespace AppConsoleWordPress
 					.Audit(AuditOption);
 
 				Chain.Create(bcg.Db)
+					.UseLog(log)
 					.Link().MapAsync(r => SearchSermonsAsync(r, "holiness", opt =>
 					{
 						opt.SearchText = "holiness";
@@ -47,6 +48,7 @@ namespace AppConsoleWordPress
 					.Audit(AuditSermons);
 
 				Chain.Create(bcg.Db)
+					.UseLog(log)
 					.Link().MapAsync(r => SearchSermonsAsync(r, "jesus", opt =>
 					{
 						opt.Type = WpBcg.PostTypes.Sermon;
@@ -68,8 +70,12 @@ namespace AppConsoleWordPress
 					.UseLog(log)
 					.Link().Map<int>(_ => throw new Exception("Test"));
 
+				Chain.Create(bcg.Db)
+					.UseLog(log)
+					.Link().MapAsync(FetchTaxonomies).Await()
+					.Audit(AuditTaxonomies);
+
 				// Perform tests
-				//await FetchMeta(bcg.Db).ConfigureAwait(false);
 				//await FetchCustomFields(bcg.Db).ConfigureAwait(false);
 				//await FetchTaxonomies(bcg.Db).ConfigureAwait(false);
 				//await ApplyContentFilters(bcg.Db).ConfigureAwait(false);
@@ -80,11 +86,6 @@ namespace AppConsoleWordPress
 				Console.Read();
 			}).ConfigureAwait(false);
 
-		/// <summary>
-		/// Select Terms
-		/// </summary>
-		/// <param name="section"></param>
-		/// <param name="db"></param>
 		internal static async Task<IR<int>> TermsAsync(IOk r, string section, IWpDb db)
 		{
 			Console.WriteLine();
@@ -104,10 +105,6 @@ namespace AppConsoleWordPress
 				{ } e => $"{e.Messages}"
 			});
 
-		/// <summary>
-		/// Insert an Option
-		/// </summary>
-		/// <param name="bcg"></param>
 		internal static async Task<IR<Bcg.Entities.Option>> InsertOptionAsync(IOk r, IWpDb bcg)
 		{
 			Console.WriteLine();
@@ -130,12 +127,6 @@ namespace AppConsoleWordPress
 				{ } e => $"{e.Messages}"
 			});
 
-		/// <summary>
-		/// Search sermons
-		/// </summary>
-		/// <param name="search"></param>
-		/// <param name="bcg"></param>
-		/// <param name="opt"></param>
 		internal static async Task<IR<List<SermonModel>, IWpDb>> SearchSermonsAsync(IOk<bool, IWpDb> r, string search, Action<QueryPosts.Options> opt)
 		{
 			Console.WriteLine();
@@ -162,10 +153,6 @@ namespace AppConsoleWordPress
 			}
 		}
 
-		/// <summary>
-		/// Fetch post meta
-		/// </summary>
-		/// <param name="db"></param>
 		internal static async Task<IR<List<PostModel>, IWpDb>> FetchMeta<TIgnore>(IOk<TIgnore, IWpDb> r)
 		{
 			Console.WriteLine();
@@ -195,10 +182,6 @@ namespace AppConsoleWordPress
 			}
 		}
 
-		/// <summary>
-		/// Fetch post custom fields
-		/// </summary>
-		/// <param name="db"></param>
 		internal static async Task<IR<List<SermonModelWithCustomFields>, IWpDb>> FetchCustomFields<TIgnore>(IOk<TIgnore, IWpDb> r)
 		{
 			Console.WriteLine();
@@ -235,56 +218,47 @@ namespace AppConsoleWordPress
 			}
 		}
 
-		///// <summary>
-		///// Fetch taxonomies
-		///// </summary>
-		///// <param name="db"></param>
-		//internal static async Task FetchTaxonomies(IWpDb db)
-		//{
-		//	try
-		//	{
-		//		Console.WriteLine();
-		//		Console.WriteLine("== Taxonomies ==");
+		internal static async Task<IR<List<SermonModelWithTaxonomies>, IWpDb>> FetchTaxonomies<TIgnore>(IOk<TIgnore, IWpDb> r)
+		{
+			Console.WriteLine();
+			Console.WriteLine("== Taxonomies ==");
 
-		//		using var q = db.GetQueryWrapper();
+			using var w = r.State.GetQueryWrapper();
+			return await r.Link().MapAsync(ok => w.QueryPostsAsync<SermonModelWithTaxonomies>(ok, modify: opt =>
+			{
+				opt.Type = WpBcg.PostTypes.Sermon;
+				opt.SortRandom = true;
+				opt.Limit = 10;
+			}));
+		}
 
-		//		var query = await q.QueryPostsAsync<SermonModelWithTaxonomies>(modify: opt =>
-		//		{
-		//			opt.Type = WpBcg.PostTypes.Sermon;
-		//			opt.SortRandom = true;
-		//			opt.Limit = 10;
-		//		}).ConfigureAwait(false);
+		internal static async void AuditTaxonomies(IR<List<SermonModelWithTaxonomies>> r)
+		{
+			if (r is IError)
+			{
+				r.Logger.Messages(r.Messages);
+			}
 
-		//		if (query.Err is IErrorList sermonsErr)
-		//		{
-		//			Console.WriteLine("Error fetching sermons");
-		//			Console.WriteLine(sermonsErr);
-		//			return;
-		//		}
+			if (r is IOkV<List<SermonModelWithTaxonomies>> ok)
+			{
+				Console.WriteLine($"{ok.Value.Count} sermons found");
 
-		//		var sermons = query.Val;
-		//		Console.WriteLine($"{sermons.Count} sermons found");
+				foreach (var sermon in ok.Value)
+				{
+					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
 
-		//		foreach (var sermon in sermons)
-		//		{
-		//			Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
+					foreach (var book in sermon.BibleBooks)
+					{
+						Console.WriteLine("  - Bible Book: {0}", book);
+					}
 
-		//			foreach (var book in sermon.BibleBooks)
-		//			{
-		//				Console.WriteLine("  - Bible Book: {0}", book);
-		//			}
-
-		//			foreach (var series in sermon.Series)
-		//			{
-		//				Console.WriteLine("  - Series: {0}", series);
-		//			}
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		Console.WriteLine(ex);
-		//	}
-		//}
+					foreach (var series in sermon.Series)
+					{
+						Console.WriteLine("  - Series: {0}", series);
+					}
+				}
+			}
+		}
 
 		///// <summary>
 		///// Apply content filters

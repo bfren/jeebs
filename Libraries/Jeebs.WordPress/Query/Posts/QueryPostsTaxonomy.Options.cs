@@ -26,7 +26,8 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// No limit on taxonomies - return them all
 			/// </summary>
-			public Options() => Limit = null;
+			public Options()
+				=> Limit = null;
 		}
 	}
 }

@@ -32,6 +32,12 @@ namespace Jeebs.Mvc
 				};
 			}
 
+			// Log errors
+			foreach (var item in error.Messages)
+			{
+				error.Logger.Message(item);
+			}
+
 			// Look for a view
 			var viewName = $"Error{code}";
 			error.Logger.Trace("Search for View {ViewName}", viewName);

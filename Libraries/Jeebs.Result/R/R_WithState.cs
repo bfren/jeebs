@@ -36,6 +36,14 @@ namespace Jeebs
 			return Error<bool>();
 		}
 
+		/// <inheritdoc/>
+		public IR<TNext, TState> Switch<TNext>(Func<IOkV<TValue>, IR<TNext, TState>> okV, Func<IR<TValue, TState>, IR<TNext, TState>>? other = null)
+			=> this switch
+			{
+				IOkV<TValue, TState> x => okV(x),
+				_ => other?.Invoke(this) ?? Error<TNext>()
+			};
+
 		#region Explicit implementations
 
 		IError<TValue, TState> IR<TValue, TState>.Error()

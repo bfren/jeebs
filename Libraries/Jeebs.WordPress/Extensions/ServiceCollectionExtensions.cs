@@ -42,10 +42,7 @@ namespace Jeebs.WordPress
 			/// <param name="services">IServiceCollection</param>
 			/// <param name="name">Name of the WordPress Instance</param>
 			public FluentAddWordPress(ref IServiceCollection services, string name)
-			{
-				Services = services;
-				section = $"{WpConfig.Key}:{name}";
-			}
+				=> (Services, section) = (services, $"{WpConfig.Key}:{name}");
 
 			/// <summary>
 			/// Register WordPress instance and configuration type

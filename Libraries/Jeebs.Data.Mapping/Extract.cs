@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,7 +16,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Cached maps of table classes to columns
 		/// </summary>
-		private static readonly Dictionary<string, IExtractedColumns> cache = new Dictionary<string, IExtractedColumns>();
+		private static readonly ConcurrentDictionary<string, IExtractedColumns> cache = new ConcurrentDictionary<string, IExtractedColumns>();
 
 		/// <summary>
 		/// Model properties
@@ -95,7 +96,7 @@ namespace Jeebs.Data
 			}
 
 			// Add to the cache
-			cache.Add(table.ToString(), extracted);
+			cache.TryAdd(table.ToString(), extracted);
 
 			// Return extracted columns
 			return extracted;

@@ -19,6 +19,10 @@ namespace Jeebs
 			=> log?.Message(message);
 
 		/// <inheritdoc/>
+		public void Messages(IEnumerable<IMsg> messages)
+			=> log?.Messages(messages);
+
+		/// <inheritdoc/>
 		public void Trace(string message, params object[] args)
 			=> log?.Trace(message, args);
 

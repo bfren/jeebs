@@ -29,5 +29,11 @@ namespace Jeebs.Data
 				}
 			}
 		}
+
+		/// <summary>
+		/// Return parameters as JSON
+		/// </summary>
+		public override string ToString()
+			=> F.JsonF.Serialise(this);
 	}
 }

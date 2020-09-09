@@ -61,6 +61,20 @@ namespace Jeebs
 		}
 
 		/// <inheritdoc/>
+		public void Messages(IEnumerable<IMsg> messages)
+		{
+			if (!messages.Any())
+			{
+				return;
+			}
+
+			foreach (var item in messages)
+			{
+				Message(item);
+			}
+		}
+
+		/// <inheritdoc/>
 		public abstract bool IsEnabled(LogLevel level);
 
 		/// <inheritdoc/>

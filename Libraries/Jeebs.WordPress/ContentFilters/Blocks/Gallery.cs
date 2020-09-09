@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using static F.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {
@@ -34,10 +35,14 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			{
 				// Info is encoded as JSON
 				var json = match.Groups[1].Value;
-				var gallery = JsonConvert.DeserializeObject<GalleryParsed>(json);
-
-				// Replace content using output format
-				content = content.Replace(match.Value, string.Format(format, string.Join(",", gallery.Ids), gallery.Columns));
+				if (Deserialise<GalleryParsed>(json) is Some<GalleryParsed> gallery)
+				{
+					// Replace content using output format
+					content = content.Replace(
+						match.Value,
+						string.Format(format, string.Join(",", gallery.Value.Ids), gallery.Value.Columns)
+					);
+				}
 			}
 
 			// Return parsed content
