@@ -32,7 +32,7 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Search text fields
 			/// </summary>
-			public SearchPostFields SearchFields { get; set; } = SearchPostFields.Title | SearchPostFields.Slug | SearchPostFields.Content;
+			public SearchPostFields SearchFields { get; set; } = SearchPostFields.All;
 
 			/// <summary>
 			/// Search text operator (= or LIKE)

@@ -28,6 +28,16 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Search Content field
 		/// </summary>
-		Content = 4
+		Content = 4,
+
+		/// <summary>
+		/// Search Excerpt field
+		/// </summary>
+		Excerpt = 8,
+
+		/// <summary>
+		/// Search All fields
+		/// </summary>
+		All = Title | Slug | Content | Excerpt
 	}
 }

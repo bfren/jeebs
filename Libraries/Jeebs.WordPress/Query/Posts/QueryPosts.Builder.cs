@@ -144,6 +144,17 @@ namespace Jeebs.WordPress
 					where += $"{__(db.Post, p => p.Content)} {comparison} @{nameof(search)}";
 				}
 
+				// Search excerpt
+				if ((opt.SearchFields & SearchPostFields.Excerpt) != 0)
+				{
+					if (!string.IsNullOrEmpty(where))
+					{
+						where += " OR ";
+					}
+
+					where += $"{__(db.Post, p => p.Excerpt)} {comparison} @{nameof(search)}";
+				}
+
 				// Add to WHERE
 				AddWhere($"({where})", new { search });
 			}
