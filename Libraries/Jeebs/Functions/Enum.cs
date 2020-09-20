@@ -1,5 +1,4 @@
-﻿using EnumsNET;
-using Jm.EnumF;
+﻿using Jm.EnumF;
 using System;
 using static Jeebs.Option;
 
@@ -21,8 +20,11 @@ namespace F
 		{
 			try
 			{
-				var parsed = Enums.Parse<T>(value);
-				return Wrap(parsed);
+				return Enum.Parse(typeof(T), value) switch
+				{
+					T x => x,
+					_ => None<T>().AddReason(new NotAValidEnumValueMsg<T>(value))
+				};
 			}
 			catch (Exception)
 			{
@@ -91,15 +93,17 @@ namespace F
 			public Jeebs.Option<TTo> To<TTo>()
 				where TTo : struct, Enum
 			{
-				var fromInt = Enums.ToInt32(from);
-				if (Enums.TryToObject(fromInt, out TTo converted) && Enum.IsDefined(typeof(TTo), converted))
+				// Convert to long so we can get the value of the receiving enum
+				var fromLong = System.Convert.ChangeType(from, typeof(long));
+
+				// Convert to receiving Enum - if fromLong is not defined in TTo, Enum.ToObject() will return
+				// fromLong, rather than the Enum value, so we also need to check the parsed object exists in
+				// TTo before returning it
+				return Enum.ToObject(typeof(TTo), fromLong) switch
 				{
-					return Wrap(converted);
-				}
-				else
-				{
-					return None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from));
-				}
+					TTo x when Enum.IsDefined(typeof(TTo), x) => x,
+					_ => None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+				};
 			}
 		}
 	}
