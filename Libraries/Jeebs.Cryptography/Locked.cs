@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Jm.Cryptography.Locked;
-using Newtonsoft.Json;
 using Sodium;
 using Sodium.Exceptions;
 
@@ -30,7 +30,10 @@ namespace Jeebs.Cryptography
 		/// </summary>
 		public byte[] Nonce { get; set; }
 
-		internal Locked()
+		/// <summary>
+		/// Create new Locked box with random salt and nonce
+		/// </summary>
+		public Locked()
 			=> (Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
 
 		internal Locked(T contents, byte[] key) : this()
@@ -72,10 +75,6 @@ namespace Jeebs.Cryptography
 			catch (CryptographicException ex)
 			{
 				return handle<CryptographicExceptionMsg>(ex);
-			}
-			catch (JsonException ex)
-			{
-				return handle<DeserialiseExceptionMsg>(ex);
 			}
 			catch (Exception ex)
 			{

@@ -43,7 +43,7 @@ namespace F.JsonF_Tests
 			// Arrange
 			const int id = 18;
 			const string value = "7";
-			var json = $"{{ \"id\": \"{id}\", \"enumeratedValue\": \"{value}\" }}";
+			var json = $"{{ \"id\": {id}, \"enumeratedValue\": \"{value}\" }}";
 
 			// Act
 			var result = JsonF.Deserialise<WrapperTest0>(json);

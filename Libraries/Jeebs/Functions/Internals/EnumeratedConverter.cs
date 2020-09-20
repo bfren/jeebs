@@ -2,36 +2,39 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Jeebs;
-using Newtonsoft.Json;
 
 namespace F.Internals
 {
 	/// <summary>
-	/// Converter for custom Enumerated types
+	/// Converter for Enumerated types
 	/// </summary>
 	/// <typeparam name="T">Enumerated type</typeparam>
 	internal class EnumeratedConverter<T> : JsonConverter<T>
 		where T : Enumerated
 	{
 		/// <summary>
-		/// Read a string value as Enumerated type
+		/// Read an Enumerated type value - which requires the 'name' (value) to be passed in the constructor
 		/// </summary>
-		/// <param name="reader">JsonReader</param>
-		/// <param name="objectType">Enumerated type</param>
-		/// <param name="existingValue">Existing value</param>
-		/// <param name="hasExistingValue">Whether or not there is an existing value</param>
-		/// <param name="serializer">JsonSerializer</param>
-		public override T ReadJson(JsonReader reader, Type objectType, [AllowNull] T existingValue, bool hasExistingValue, JsonSerializer serializer)
-			=> (T)Activator.CreateInstance(objectType, args: reader.Value?.ToString());
+		/// <param name="reader">Utf8JsonReader</param>
+		/// <param name="typeToConvert">Enumerated type</param>
+		/// <param name="options">JsonSerializerOptions</param>
+		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+			=> Activator.CreateInstance(typeToConvert, args: reader.GetString()) switch
+			{
+				T x => x,
+				_ => throw new JsonException($"Unable to create Enum type {typeof(T)} from JSON.")
+			};
 
 		/// <summary>
 		/// Write an Enumerated type value
 		/// </summary>
-		/// <param name="writer">JsonWriter</param>
-		/// <param name="value">Value to write</param>
-		/// <param name="serializer">JsonSerializer</param>
-		public override void WriteJson(JsonWriter writer, [AllowNull] T value, JsonSerializer serializer)
-			=> writer.WriteValue(value?.ToString());
+		/// <param name="writer">Utf8JsonWriter</param>
+		/// <param name="value">Enumerated value</param>
+		/// <param name="options">JsonSerializerOptions</param>
+		public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+			=> writer.WriteStringValue(value.ToString());
 	}
 }

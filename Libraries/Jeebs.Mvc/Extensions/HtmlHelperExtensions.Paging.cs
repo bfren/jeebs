@@ -14,7 +14,6 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// Output paging links
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="this">IHtmlHelper</param>
 		/// <param name="values">IPagedList</param>
 		/// <param name="url">Base URL</param>

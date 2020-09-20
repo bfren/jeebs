@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 using Jeebs.Services.Webhook;
-using Newtonsoft.Json;
 
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 {
@@ -19,7 +19,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 		/// <summary>
 		/// Attachment colour
 		/// </summary>
-		[JsonProperty("color")]
+		[JsonPropertyName("color")]
 		public string Colour { get; }
 
 		/// <summary>

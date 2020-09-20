@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs;
 
-namespace Jeebs.Apps.WebApps.Json
+namespace F.Internals
 {
 	/// <summary>
-	/// Converter Factory for custom Enum types
+	/// Enumerated Converter Factory
 	/// </summary>
-	public sealed class EnumJsonConverterFactory : JsonConverterFactory
+	public sealed class EnumeratedConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
 		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>
@@ -25,11 +26,11 @@ namespace Jeebs.Apps.WebApps.Json
 		/// <param name="options">JsonSerializerOptions</param>
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 		{
-			var converterType = typeof(EnumJsonConverter<>).MakeGenericType(typeToConvert);
+			var converterType = typeof(EnumeratedConverter<>).MakeGenericType(typeToConvert);
 			return Activator.CreateInstance(converterType) switch
 			{
 				JsonConverter x => x,
-				_ => throw new JsonException($"Unable to create {typeof(EnumJsonConverter<>)} for type {typeToConvert}.")
+				_ => throw new JsonException($"Unable to create {typeof(EnumeratedConverter<>)} for type {typeToConvert}.")
 			};
 		}
 	}

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Services.Webhook;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Jeebs.Services.Drivers.Webhook.Seq
 {
@@ -14,19 +13,19 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		/// <summary>
 		/// Timestamp - ISO 8601 format
 		/// </summary>
-		[JsonProperty("@t")]
+		[JsonPropertyName("@t")]
 		public string Timestamp { get; set; }
 
 		/// <summary>
 		/// Message content
 		/// </summary>
-		[JsonProperty("@m")]
+		[JsonPropertyName("@m")]
 		public string Message { get; set; }
 
 		/// <summary>
 		/// Message level
 		/// </summary>
-		[JsonProperty("@l")]
+		[JsonPropertyName("@l")]
 		public string Level { get; set; }
 
 		/// <summary>

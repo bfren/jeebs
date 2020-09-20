@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace Jeebs.Config
 {

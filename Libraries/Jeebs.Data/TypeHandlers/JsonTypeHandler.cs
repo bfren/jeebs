@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using Dapper;
 using static F.JsonF;
-using Newtonsoft.Json;
 
 namespace Jeebs.Data.TypeHandlers
 {

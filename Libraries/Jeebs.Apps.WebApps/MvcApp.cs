@@ -4,7 +4,6 @@ using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs.Apps.WebApps.Json;
 using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Config;
 using Jeebs.Constants;
@@ -155,35 +154,28 @@ namespace Jeebs.Apps
 		public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
 		{
 			// Set options
-			opt.JsonSerializerOptions.IgnoreNullValues = jsonSerialiserOptions?.IgnoreNullValues ?? true;
-			opt.JsonSerializerOptions.PropertyNamingPolicy = jsonSerialiserOptions?.PropertyNamingPolicy ?? JsonNamingPolicy.CamelCase;
-			opt.JsonSerializerOptions.DictionaryKeyPolicy = jsonSerialiserOptions?.PropertyNamingPolicy ?? JsonNamingPolicy.CamelCase;
+			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? F.JsonF.Settings).IgnoreNullValues;
+			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? F.JsonF.Settings).DictionaryKeyPolicy;
+			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? F.JsonF.Settings).PropertyNamingPolicy;
 
 			// Set converters
 			opt.JsonSerializerOptions.Converters.Clear();
 			if (jsonSerialiserOptions?.Converters.Count > 0)
 			{
-				addCustom(jsonSerialiserOptions.Converters);
+				add(jsonSerialiserOptions.Converters);
 			}
 			else
 			{
-				addDefault();
+				add(F.JsonF.Settings.Converters);
 			}
 
-			// Add custom converters
-			void addCustom(IList<JsonConverter> converters)
+			// Add  converters
+			void add(IList<JsonConverter> converters)
 			{
 				foreach (var c in converters)
 				{
 					opt.JsonSerializerOptions.Converters.Add(c);
 				}
-			}
-
-			// Add default converters
-			void addDefault()
-			{
-				opt.JsonSerializerOptions.Converters.Add(new EnumJsonConverterFactory());
-				opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 			}
 		}
 

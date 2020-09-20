@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Services.Webhook;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 {
@@ -19,7 +18,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// <summary>
 		/// Colour
 		/// </summary>
-		[JsonProperty("color")]
+		[JsonPropertyName("color")]
 		public string Colour { get; }
 
 		/// <summary>
@@ -30,7 +29,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// <summary>
 		/// [Optional] Attachment link
 		/// </summary>
-		[JsonProperty("title_link")]
+		[JsonPropertyName("title_link")]
 		public string? TitleLink { get; }
 
 		/// <summary>

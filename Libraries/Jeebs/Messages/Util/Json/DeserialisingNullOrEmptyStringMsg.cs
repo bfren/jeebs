@@ -9,5 +9,5 @@ namespace Jm.Util.Json
 	/// <summary>
 	/// See <see cref="JsonF.Deserialise{T}(string, System.Text.Json.JsonSerializerOptions?)"/>
 	/// </summary>
-	public sealed class DeserialisingReturnedNullMsg : IMsg { }
+	public sealed class DeserialisingNullOrEmptyStringMsg : IMsg { }
 }

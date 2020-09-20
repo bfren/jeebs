@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using static F.CryptoF;
+using static F.JsonF;
 using Xunit;
-using Newtonsoft.Json;
-using F;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests
 {
@@ -25,7 +24,7 @@ namespace Jeebs.Cryptography.ObjectExtensions_Tests
 			var result = input.Encrypt(key);
 
 			// Assert
-			Assert.Equal(JsonF.Empty, result);
+			Assert.Equal(Empty, result);
 		}
 
 		[Fact]
@@ -48,7 +47,7 @@ namespace Jeebs.Cryptography.ObjectExtensions_Tests
 			var key = GenerateKey();
 
 			// Act
-			var json = JsonConvert.SerializeObject(defaultInputObject);
+			var json = Serialise(defaultInputObject);
 			var result = defaultInputObject.Encrypt(key);
 
 			// Assert
