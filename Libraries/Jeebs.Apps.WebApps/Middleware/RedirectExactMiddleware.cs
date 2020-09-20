@@ -43,16 +43,29 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <returns>Task</returns>
 		public async Task Invoke(HttpContext context)
 		{
-			// Get current path
+			// Get current path and query
 			var req = context.Request;
-			var currentPath = req.Path.ToString();
+			var current = req.Path.ToString();
+			var currentWithQuery = req.QueryString.HasValue switch
+			{
+				true => current + req.QueryString.Value,
+				false => current
+			};
 
-			// If the current path matches a redirection, go there
-			if (redirections.ContainsKey(currentPath) && redirections[currentPath] is string redirectToPath)
+			// Check for current path and current path with query
+			var redirect = (redirections.ContainsKey(current), redirections.ContainsKey(currentWithQuery)) switch
+			{
+				(true, _) => redirections[current],
+				(false, true) => redirections[currentWithQuery],
+				(false, false) => null
+			};
+
+			// If there is a match redirect to it
+			if (redirect is string redirectTo)
 			{
 				// Build redirection URL and log action
-				var url = $"{req.Scheme}://{req.Host}{redirectToPath}";
-				logger.Information("Redirecting from '{RedirectFrom}' to '{RedirectTo}'.", currentPath, url);
+				var url = $"{req.Scheme}://{req.Host}{redirectTo}";
+				logger.Information("Redirecting from '{RedirectFrom}' to '{RedirectTo}'.", current, url);
 
 				// Perform the (permanent) redirect
 				context.Response.Redirect(url, permanent: true);

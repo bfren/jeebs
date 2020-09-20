@@ -153,10 +153,13 @@ namespace Jeebs.Apps
 		/// <param name="opt">JsonOptions</param>
 		public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
 		{
+			// Get default options
+			var defaultOptions = F.JsonF.GetOptions();
+
 			// Set options
-			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? F.JsonF.Settings).IgnoreNullValues;
-			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? F.JsonF.Settings).DictionaryKeyPolicy;
-			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? F.JsonF.Settings).PropertyNamingPolicy;
+			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? defaultOptions).IgnoreNullValues;
+			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
+			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
 
 			// Set converters
 			opt.JsonSerializerOptions.Converters.Clear();
@@ -166,10 +169,10 @@ namespace Jeebs.Apps
 			}
 			else
 			{
-				add(F.JsonF.Settings.Converters);
+				add(defaultOptions.Converters);
 			}
 
-			// Add  converters
+			// Add converters
 			void add(IList<JsonConverter> converters)
 			{
 				foreach (var c in converters)
