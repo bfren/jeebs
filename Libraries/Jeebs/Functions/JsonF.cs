@@ -22,22 +22,42 @@ namespace F
 		/// <summary>
 		/// Default JsonSerializerOptions
 		/// </summary>
-		public static JsonSerializerOptions Settings;
+		private static readonly JsonSerializerOptions options;
 
 		/// <summary>
 		/// Define default settings
 		/// </summary>
 		static JsonF()
 		{
-			Settings = new JsonSerializerOptions
+			options = new JsonSerializerOptions
 			{
 				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 				DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 			};
 
-			Settings.Converters.Add(new EnumeratedConverterFactory());
-			Settings.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+			options.Converters.Add(new EnumeratedConverterFactory());
+			options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+		}
+
+		/// <summary>
+		/// Get a copy of the default serialiser options
+		/// </summary>
+		public static JsonSerializerOptions GetOptions()
+		{
+			var options = new JsonSerializerOptions
+			{
+				DefaultIgnoreCondition = JsonF.options.DefaultIgnoreCondition,
+				DictionaryKeyPolicy = JsonF.options.DictionaryKeyPolicy,
+				PropertyNamingPolicy = JsonF.options.PropertyNamingPolicy
+			};
+
+			foreach (var item in JsonF.options.Converters)
+			{
+				options.Converters.Add(item);
+			}
+
+			return options;
 		}
 
 		/// <summary>
@@ -45,12 +65,12 @@ namespace F
 		/// </summary>
 		/// <typeparam name="T">Object Type to be serialised</typeparam>
 		/// <param name="obj">The object to serialise</param>
-		/// <param name="opt">[Optional] JsonSerializerOptions</param>
+		/// <param name="options">[Optional] JsonSerializerOptions</param>
 		/// <returns>Json String of serialised object</returns>
-		public static string Serialise<T>(T obj, JsonSerializerOptions? opt = null)
+		public static string Serialise<T>(T obj, JsonSerializerOptions? options = null)
 			=> obj switch
 			{
-				T x => JsonSerializer.Serialize(x, opt ?? Settings),
+				T x => JsonSerializer.Serialize(x, options ?? JsonF.options),
 				_ => Empty
 			};
 
@@ -59,9 +79,9 @@ namespace F
 		/// </summary>
 		/// <typeparam name="T">The type of the object to return</typeparam>
 		/// <param name="str">The string to deserialise</param>
-		/// <param name="opt">[Optional] JsonSerializerOptions</param>
+		/// <param name="options">[Optional] JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static Option<T> Deserialise<T>(string str, JsonSerializerOptions? opt = null)
+		public static Option<T> Deserialise<T>(string str, JsonSerializerOptions? options = null)
 		{
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
@@ -72,7 +92,7 @@ namespace F
 			// Attempt to deserialise JSON
 			try
 			{
-				return JsonSerializer.Deserialize<T>(str, opt ?? Settings) switch
+				return JsonSerializer.Deserialize<T>(str, options ?? JsonF.options) switch
 				{
 					T x => x,
 					_ => Option.None<T>().AddReason<DeserialisingReturnedNullMsg>() // should never get here
