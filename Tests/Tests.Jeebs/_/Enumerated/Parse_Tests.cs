@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.Enum_Tests
+namespace Jeebs.Enumerated_Tests
 {
 	public class Parse_Tests
 	{

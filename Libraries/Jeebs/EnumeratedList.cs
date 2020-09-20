@@ -56,12 +56,7 @@ namespace Jeebs
 		/// <returns>EnumList</returns>
 		public static EnumeratedList<TEnum> Deserialise(string json)
 		{
-			var strings = JsonF.Deserialise<List<string>>(json) switch
-			{
-				Some<List<string>> x => x.Value,
-				_ => new List<string>()
-			};
-
+			var strings = JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
 			return new EnumeratedList<TEnum>(strings);
 		}
 	}
