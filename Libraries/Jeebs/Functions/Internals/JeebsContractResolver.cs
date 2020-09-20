@@ -15,7 +15,7 @@ namespace F.Internals
 		/// <summary>
 		/// Set <see cref="NamingStrategy"/> to <see cref="CamelCaseNamingStrategy"/>
 		/// </summary>
-		public JeebsContractResolver()
+		internal JeebsContractResolver()
 			=> NamingStrategy = new CamelCaseNamingStrategy();
 
 		/// <summary>

@@ -11,7 +11,7 @@ namespace F.Internals
 	/// Converter for custom Enumerated types
 	/// </summary>
 	/// <typeparam name="T">Enumerated type</typeparam>
-	public class EnumeratedConverter<T> : JsonConverter<T>
+	internal class EnumeratedConverter<T> : JsonConverter<T>
 		where T : Enumerated
 	{
 		/// <summary>
