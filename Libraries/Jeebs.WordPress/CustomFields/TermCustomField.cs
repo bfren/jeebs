@@ -96,7 +96,8 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Return term Title
 		/// </summary>
-		public override string ToString() => ValueObj?.Title ?? base.ToString();
+		public override string ToString() 
+			=> ValueObj?.Title ?? base.ToString();
 
 		/// <summary>
 		/// Term class

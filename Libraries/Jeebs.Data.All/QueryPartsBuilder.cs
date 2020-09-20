@@ -22,18 +22,14 @@ namespace Jeebs.Data
 		/// Add FROM shorthand
 		/// </summary>
 		/// <param name="tables">List of tables</param>
-#pragma warning disable IDE1006 // Naming Styles
 		protected void AddFrom(params Table[] tables)
-#pragma warning restore IDE1006 // Naming Styles
 			=> AddFrom(Adapter.EscapeAndJoin(tables));
 
 		/// <summary>
 		/// Add SELECT shorthand
 		/// </summary>
 		/// <param name="tables">List of tables</param>
-#pragma warning disable IDE1006 // Naming Styles
 		protected void AddSelect(params Table[] tables)
-#pragma warning restore IDE1006 // Naming Styles
 			=> AddSelect(Adapter.Extract<TModel>(tables));
 
 		/// <summary>
