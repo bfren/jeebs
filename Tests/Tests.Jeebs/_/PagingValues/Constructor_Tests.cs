@@ -8,7 +8,7 @@ namespace Jeebs.PagingValues_Tests
 	public class Constructor_Tests
 	{
 		[Fact]
-		public void InvalidPage_ThrowsInvalidException()
+		public void Invalid_Page_Throws_InvalidException()
 		{
 			// Arrange
 			const int invalidPage = -1;
@@ -21,7 +21,7 @@ namespace Jeebs.PagingValues_Tests
 		}
 
 		[Fact]
-		public void NoPageOrItems_CurrentPage_Equals_1()
+		public void No_Page_Or_Items_Current_Page_Equals_1()
 		{
 			// Arrange
 			var pageNoItems = new PagingValues(items: 0, page: 1);
@@ -38,7 +38,7 @@ namespace Jeebs.PagingValues_Tests
 		[InlineData(1, 1, 10)]
 		[InlineData(2, 11, 20)]
 		[InlineData(3, 21, 25)]
-		public void FirstAndLastItems(int page, int firstItem, int lastItem)
+		public void Correct_First_And_Last_Items(int page, int firstItem, int lastItem)
 		{
 			// Arrange
 			var values = new PagingValues(items: 25, page: page);
@@ -55,7 +55,7 @@ namespace Jeebs.PagingValues_Tests
 		[InlineData(4, 478, 1, 10)]
 		[InlineData(17, 478, 11, 20)]
 		[InlineData(45, 478, 41, 48)]
-		public void UpperAndLowerPages(int page, int items, int lowerPage, int upperPage)
+		public void Correct_Upper_And_Lower_Pages(int page, int items, int lowerPage, int upperPage)
 		{
 			// Arrange
 			var values = new PagingValues(items: items, page: page);

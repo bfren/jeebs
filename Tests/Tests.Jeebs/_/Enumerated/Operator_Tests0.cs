@@ -1,24 +1,24 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
 namespace Jeebs.Enumerated_Tests
 {
-	public class ToString_Tests
+	public partial class Operator_Tests
 	{
 		[Fact]
-		public void ReturnsName()
+		public void Implicit_Returns_String()
 		{
 			// Arrange
-			const string input = "test";
-			var test = new Foo(input);
+			const string value = "foo";
+			var foo = new Foo(value);
 
 			// Act
-			var result = test.ToString();
+			string result = foo;
 
 			// Assert
-			Assert.Equal(input, result);
+			Assert.Equal(value, result);
 		}
 
 		public class Foo : Enumerated

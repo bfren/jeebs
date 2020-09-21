@@ -148,7 +148,16 @@ namespace Jeebs
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
 		public static bool operator ==(Enumerated l, string r)
-			=> l.ToString() == r;
+			=> l.Equals(r);
+
+		/// <summary>
+		/// Compare an enumerated type with a value type
+		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Enumerated</param>
+		/// <param name="r">Value</param>
+		public static bool operator ==(Enumerated l, Enumerated r)
+			=> l.Equals(r);
 
 		/// <summary>
 		/// Compare an enumerated type with a value type
@@ -157,7 +166,16 @@ namespace Jeebs
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
 		public static bool operator !=(Enumerated l, string r)
-			=> l.ToString() != r;
+			=> !l.Equals(r);
+
+		/// <summary>
+		/// Compare an enumerated type with a value type
+		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Enumerated</param>
+		/// <param name="r">Value</param>
+		public static bool operator !=(Enumerated l, Enumerated r)
+			=> !l.Equals(r);
 
 		#endregion
 
@@ -173,6 +191,7 @@ namespace Jeebs
 			=> other switch
 			{
 				Enumerated x => Equals(x),
+				string x => name == x,
 				_ => false
 			};
 
@@ -182,7 +201,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
 		public bool Equals(Enumerated other)
-			=> (name == other.name) && (GetType() == other.GetType());
+			=> (name == other.name) && (GetType().FullName == other.GetType().FullName);
 
 		/// <summary>
 		/// Generate custom HashCode
