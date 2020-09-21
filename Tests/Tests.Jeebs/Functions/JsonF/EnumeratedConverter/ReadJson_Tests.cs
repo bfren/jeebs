@@ -68,7 +68,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsType<None<WrapperTest1>>(result);
-			Assert.IsType<Jm.Util.Json.DeserialiseExceptionMsg>(none.Reason);
+			Assert.IsType<Jm.Functions.JsonF.DeserialiseExceptionMsg>(none.Reason);
 		}
 
 		public class EnumeratedTest0 : Enumerated

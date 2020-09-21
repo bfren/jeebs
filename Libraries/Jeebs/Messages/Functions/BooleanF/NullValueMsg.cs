@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jeebs;
 
-namespace Jm.BooleanF
+namespace Jm.Functions.BooleanF
 {
 	/// <summary>
 	/// See <see cref="F.BooleanF.Parse{T}(T)"/>

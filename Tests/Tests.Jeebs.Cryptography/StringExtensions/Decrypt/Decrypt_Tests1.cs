@@ -23,7 +23,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Util.Json.DeserialisingNullOrEmptyStringMsg);
+			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg);
 		}
 
 		[Fact]
@@ -38,7 +38,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Util.Json.DeserialiseExceptionMsg);
+			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialiseExceptionMsg);
 		}
 
 		[Fact]

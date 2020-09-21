@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
 
-namespace F.Internals
+namespace Jeebs.Functions.Internals
 {
 	/// <summary>
 	/// Converter for Enumerated types

@@ -22,7 +22,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.True(none.Reason is Jm.Util.Json.DeserialisingNullOrEmptyStringMsg);
+			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg);
 		}
 
 		[Fact]
@@ -36,7 +36,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.True(none.Reason is Jm.Util.Json.DeserialiseExceptionMsg);
+			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialiseExceptionMsg);
 		}
 
 		[Fact]

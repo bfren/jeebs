@@ -4,10 +4,10 @@ using System.Text;
 using F;
 using Jeebs;
 
-namespace Jm.Util.Json
+namespace Jm.Functions.JsonF
 {
 	/// <summary>
-	/// See <see cref="JsonF.Deserialise{T}(string, System.Text.Json.JsonSerializerOptions?)"/>
+	/// See <see cref="F.JsonF.Deserialise{T}(string, System.Text.Json.JsonSerializerOptions?)"/>
 	/// </summary>
 	public sealed class DeserialisingReturnedNullMsg : IMsg { }
 }

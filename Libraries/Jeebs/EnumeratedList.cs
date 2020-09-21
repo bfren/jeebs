@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using F;
 
 namespace Jeebs
 {
 	/// <summary>
 	/// Enumerated List
 	/// </summary>
-	/// <typeparam name="TEnum">Enumerated value type</typeparam>
-	public sealed class EnumeratedList<TEnum> : List<TEnum>
-		where TEnum : Enumerated
+	/// <typeparam name="T">Enumerated value type</typeparam>
+	public sealed class EnumeratedList<T> : List<T>
+		where T : Enumerated
 	{
 		/// <summary>
 		/// Empty constructor
@@ -30,34 +29,33 @@ namespace Jeebs
 
 			foreach (var item in list)
 			{
-				Add((TEnum)Activator.CreateInstance(typeof(TEnum), item));
+				Add((T)Activator.CreateInstance(typeof(T), item));
 			}
 		}
 
 		/// <summary>
 		/// Serialise list as JSON
 		/// </summary>
-		/// <returns>JSON</returns>
 		public string Serialise()
 		{
 			var list = new List<string>();
-			foreach (var item in this)
-			{
-				list.Add(item.ToString());
-			}
+			ForEach(e => list.Add(e));
 
-			return JsonF.Serialise(list);
+			return (list.Count > 0) switch
+			{
+				true => F.JsonF.Serialise(list),
+				false => F.JsonF.Empty
+			};
 		}
 
 		/// <summary>
 		/// Deserialise list from JSON
 		/// </summary>
-		/// <param name="json">JSON</param>
-		/// <returns>EnumList</returns>
-		public static EnumeratedList<TEnum> Deserialise(string json)
+		/// <param name="json">JSON serialised list</param>
+		public static EnumeratedList<T> Deserialise(string json)
 		{
-			var strings = JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
-			return new EnumeratedList<TEnum>(strings);
+			var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
+			return new EnumeratedList<T>(strings);
 		}
 	}
 }

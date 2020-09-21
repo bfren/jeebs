@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Jeebs;
-using Jm.BooleanF;
+using Jm.Functions.BooleanF;
 
 namespace F
 {

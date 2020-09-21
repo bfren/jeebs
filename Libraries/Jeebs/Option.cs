@@ -174,7 +174,7 @@ namespace Jeebs
 		public override bool Equals(object other)
 			=> other switch
 			{
-				Option<T> x => x.Equals(this),
+				Option<T> x => Equals(x),
 				_ => false
 			};
 

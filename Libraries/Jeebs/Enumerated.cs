@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using Jm.Enum;
+using Jm.Enumerated;
 
 namespace Jeebs
 {
@@ -28,7 +29,7 @@ namespace Jeebs
 				throw new ArgumentNullException(nameof(name));
 			}
 
-			this.name = name;
+			this.name = name.Trim();
 		}
 
 		/// <summary>
@@ -88,7 +89,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					return Option.None<T>().AddReason(new NotAValidEnumValueMsg<T>(name));
+					return Option.None<T>().AddReason(new NotAValidEnumeratedValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);
@@ -120,9 +121,78 @@ namespace Jeebs
 			/// </summary>
 			public readonly T[] Values;
 
+			/// <summary>
+			/// Create object
+			/// </summary>
+			/// <param name="name">Enumerated name to parse</param>
+			/// <param name="values">Enumerated values to check <paramref name="name"/> against</param>
 			public ParseArgs(string name, T[] values)
 				=> (Name, Values) = (name, values);
 		}
+
+		#endregion
+
+		#region Operators
+
+		/// <summary>
+		/// Allow implicit conversion to string
+		/// </summary>
+		/// <param name="e">Enumerated value</param>
+		public static implicit operator string(Enumerated e)
+			=> e.ToString();
+
+		/// <summary>
+		/// Compare an enumerated type with a value type
+		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Enumerated</param>
+		/// <param name="r">Value</param>
+		public static bool operator ==(Enumerated l, string r)
+			=> l.ToString() == r;
+
+		/// <summary>
+		/// Compare an enumerated type with a value type
+		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Enumerated</param>
+		/// <param name="r">Value</param>
+		public static bool operator !=(Enumerated l, string r)
+			=> l.ToString() != r;
+
+		#endregion
+
+		#region Overrides
+
+		/// <summary>
+		/// Compare this <see cref="Enumerated"/> with another object
+		/// <para>If <paramref name="other"/> is <see cref="Enumerated"/>, <see cref="Equals(Enumerated)"/> will be used</para>
+		/// <para>Otherwise this will return false</para>
+		/// </summary>
+		/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
+		public override bool Equals(object other)
+			=> other switch
+			{
+				Enumerated x => Equals(x),
+				_ => false
+			};
+
+		/// <summary>
+		/// Compare this <see cref="Enumerated"/> with another object
+		/// <para>Each <see cref="name"/> and type will be compared</para>
+		/// </summary>
+		/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
+		public bool Equals(Enumerated other)
+			=> (name == other.name) && (GetType() == other.GetType());
+
+		/// <summary>
+		/// Generate custom HashCode
+		/// </summary>
+		public override int GetHashCode()
+			=> GetType().GetHashCode() ^ name.GetHashCode();
+
+		/// <inheritdoc cref="GetHashCode()"/>
+		public int GetHashCode(IEqualityComparer comparer)
+			=> GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
 		#endregion
 	}

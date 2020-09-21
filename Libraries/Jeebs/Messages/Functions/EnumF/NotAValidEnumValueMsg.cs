@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jm.EnumF
+namespace Jm.Functions.EnumF
 {
 	/// <summary>
 	/// See <see cref="F.EnumF.Parse(Type, string)"/>
