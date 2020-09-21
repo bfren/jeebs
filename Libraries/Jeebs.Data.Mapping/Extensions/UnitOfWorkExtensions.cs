@@ -13,9 +13,9 @@ namespace Jeebs.Data
 		/// Shorthand for Table[].ExtractColumns and then IAdapter.Join
 		/// </summary>
 		/// <typeparam name="T">Model type</typeparam>
-		/// <param name="unitOfWork">IUnitOfWork</param>
+		/// <param name="this">IUnitOfWork</param>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
-		public static string Extract<T>(this IUnitOfWork unitOfWork, params Table[] tables)
-			=> unitOfWork.Adapter.Extract<T>(tables);
+		public static string Extract<T>(this IUnitOfWork @this, params Table[] tables)
+			=> @this.Adapter.Extract<T>(tables);
 	}
 }

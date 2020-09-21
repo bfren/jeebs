@@ -179,10 +179,8 @@ namespace Jeebs.Data
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		protected void AddInnerJoin(object table, string on, (object table, string column) equals)
-		{
-			parts.InnerJoin = AddJoin(parts.InnerJoin, table, on, equals);
-		}
-
+			=> parts.InnerJoin = AddJoin(parts.InnerJoin, table, on, equals);
+		
 		/// <summary>
 		/// Set LEFT JOIN
 		/// </summary>
@@ -190,10 +188,8 @@ namespace Jeebs.Data
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		protected void AddLeftJoin(object table, string on, (object table, string column) equals)
-		{
-			parts.LeftJoin = AddJoin(parts.LeftJoin, table, on, equals);
-		}
-
+			=> parts.LeftJoin = AddJoin(parts.LeftJoin, table, on, equals);
+		
 		/// <summary>
 		/// Set RIGHT JOIN
 		/// </summary>
@@ -201,10 +197,8 @@ namespace Jeebs.Data
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		protected void AddRightJoin(object table, string on, (object table, string column) equals)
-		{
-			parts.RightJoin = AddJoin(parts.RightJoin, table, on, equals);
-		}
-
+			=> parts.RightJoin = AddJoin(parts.RightJoin, table, on, equals);
+		
 		/// <summary>
 		/// Add WHERE clause
 		/// </summary>

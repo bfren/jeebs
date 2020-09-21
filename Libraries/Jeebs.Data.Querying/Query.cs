@@ -55,7 +55,8 @@ namespace Jeebs.Data
 			var query = unitOfWork.Adapter.Retrieve(parts);
 
 			// Execute and return
-			return (await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false)).Switch(
+			var items = await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false);
+			return items.Switch(
 				x => x.OkV(x.Value.ToList())
 			);
 		}
@@ -67,43 +68,34 @@ namespace Jeebs.Data
 			return r
 				.Link()
 					.Handle().With<GetCountExceptionMsg>()
-					.MapAsync(getCount).Await()
+					.MapAsync(GetCountAsync).Await()
 				.Link()
 					.Handle().With<GetPagingValuesExceptionMsg>()
 					.Map(getPagingValues)
 				.Link()
 					.Handle().With<GetItemsExceptionMsg>()
-					.MapAsync(getItems).Await()
-				.Link()
-					.Handle().With<GetPagedListExceptionMsg>()
-					.Map(getPagedList);
-
-			// Get the count
-			async Task<IR<long>> getCount(IOk r)
-				=> await GetCountAsync(r).ConfigureAwait(false);
+					.MapAsync(getItems).Await();
 
 			// Get paging values
 			IR<PagingValues> getPagingValues(IOkV<long> r)
-			{
-				// Create values object
-				var values = new PagingValues(r.Value, page, parts.Limit ?? Defaults.PagingValues.ItemsPer);
-
-				// Set the OFFSET and LIMIT values
-				parts.Offset = (values.Page - 1) * values.ItemsPer;
-				parts.Limit = values.ItemsPer;
-
-				return r.OkV(values);
-			}
-
+				=> r.OkV(new PagingValues(r.Value, page, parts.Limit ?? Defaults.PagingValues.ItemsPer));
+			
 			// Get the items
-			async Task<IR<(List<T>, PagingValues)>> getItems(IOkV<PagingValues> r)
-				=> (await ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
-					x => x.OkV((x.Value, r.Value))
-				);
+			async Task<IR<PagedList<T>>> getItems(IOkV<PagingValues> r)
+			{
+				// Set the OFFSET and LIMIT values based on the calculated paging values
+				parts.Offset = (r.Value.Page - 1) * r.Value.ItemsPer;
+				parts.Limit = r.Value.ItemsPer;
 
-			// Convert to a paged list
-			static IR<PagedList<T>> getPagedList(IOkV<(List<T> items, PagingValues values)> r)
-				=> r.OkV(new PagedList<T>(r.Value.values, r.Value.items));
+				// Get query
+				var query = unitOfWork.Adapter.Retrieve(parts);
+
+				// Execute and return
+				var items = await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false);
+				return items.Switch(
+					x => x.OkV(new PagedList<T>(r.Value, x.Value))
+				);
+			}
 		}
 	}
 }

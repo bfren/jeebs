@@ -8,16 +8,16 @@ namespace Jeebs.Services
 {
 	internal static class AssemblyExtensions
 	{
-		internal static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
+		internal static IEnumerable<Type> GetLoadableTypes(this Assembly @this)
 		{
-			if (assembly == null)
+			if (@this == null)
 			{
-				throw new ArgumentNullException(nameof(assembly));
+				throw new ArgumentNullException(nameof(@this));
 			}
 
 			try
 			{
-				return assembly.GetTypes();
+				return @this.GetTypes();
 			}
 			catch (ReflectionTypeLoadException e)
 			{

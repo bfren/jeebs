@@ -16,10 +16,10 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Register data configuration
 		/// </summary>
-		/// <param name="services">IServiceCollection</param>
+		/// <param name="this">IServiceCollection</param>
 		/// <param name="section">[Optional] Section Key for retrieving database configuration</param>
-		public static FluentData AddData(this IServiceCollection services, string section = DbConfig.Key)
-			=> new FluentData(ref services, section);
+		public static FluentData AddData(this IServiceCollection @this, string section = DbConfig.Key)
+			=> new FluentData(ref @this, section);
 
 		/// <summary>
 		/// Fluently configure data registration

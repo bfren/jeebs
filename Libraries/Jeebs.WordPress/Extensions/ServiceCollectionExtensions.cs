@@ -16,10 +16,10 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Register WordPress instance
 		/// </summary>
-		/// <param name="services">IServiceCollection</param>
+		/// <param name="this">IServiceCollection</param>
 		/// <param name="name">Name of the WordPress Instance</param>
-		public static FluentAddWordPress AddWordPressInstance(this IServiceCollection services, string name)
-			=> new FluentAddWordPress(ref services, name);
+		public static FluentAddWordPress AddWordPressInstance(this IServiceCollection @this, string name)
+			=> new FluentAddWordPress(ref @this, name);
 
 		/// <summary>
 		/// Fluently configure WordPress registration

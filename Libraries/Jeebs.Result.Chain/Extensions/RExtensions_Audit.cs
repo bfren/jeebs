@@ -11,34 +11,6 @@ namespace Jeebs
 	/// </summary>
 	public static class RExtensions_Audit
 	{
-		private static TResult PrivateAuditSwitch<TResult, TOk, TOkV, TError>(TResult @this, Action<TOk>? isOk, Action<TOkV>? isOkV, Action<TError>? isError)
-			where TResult : IR
-		{
-			if (isOk == null && isOkV == null && isError == null)
-			{
-				return @this;
-			}
-
-			Action audit = @this switch
-			{
-				TOkV okV => () => isOkV?.Invoke(okV),
-				TOk ok => () => isOk?.Invoke(ok),
-				TError error => () => isError?.Invoke(error),
-				_ => () => throw new Jx.Result.UnknownImplementationException()
-			};
-
-			try
-			{
-				audit();
-			}
-			catch (Exception ex) when (!(@this.Messages is null))
-			{
-				@this.AddMsg(new AuditSwitchExceptionMsg(ex));
-			}
-
-			return @this;
-		}
-
 		/// <summary>
 		/// Audit the current result state and return unmodified
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="AuditExceptionMsg"/> message</para>
@@ -85,5 +57,33 @@ namespace Jeebs
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue, TState}"/></param>
 		public static IR<TValue, TState> AuditSwitch<TValue, TState>(this IR<TValue, TState> @this, Action<IOk<TValue, TState>>? isOk = null, Action<IOkV<TValue, TState>>? isOkV = null, Action<IError<TValue, TState>>? isError = null)
 			=> PrivateAuditSwitch(@this, isOk, isOkV, isError);
+
+		private static TResult PrivateAuditSwitch<TResult, TOk, TOkV, TError>(TResult result, Action<TOk>? isOk, Action<TOkV>? isOkV, Action<TError>? isError)
+			where TResult : IR
+		{
+			if (isOk == null && isOkV == null && isError == null)
+			{
+				return result;
+			}
+
+			Action audit = result switch
+			{
+				TOkV okV => () => isOkV?.Invoke(okV),
+				TOk ok => () => isOk?.Invoke(ok),
+				TError error => () => isError?.Invoke(error),
+				_ => () => throw new Jx.Result.UnknownImplementationException()
+			};
+
+			try
+			{
+				audit();
+			}
+			catch (Exception ex) when (!(result.Messages is null))
+			{
+				result.AddMsg(new AuditSwitchExceptionMsg(ex));
+			}
+
+			return result;
+		}
 	}
 }

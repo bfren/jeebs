@@ -19,9 +19,9 @@ namespace Jeebs.Data
 		/// Update an object
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
+		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result</param>
-		public static IR<bool> Update<T>(this IUnitOfWork w, IOkV<T> r)
+		public static IR<bool> Update<T>(this IUnitOfWork @this, IOkV<T> r)
 			where T : class, IEntity
 		{
 			try
@@ -31,8 +31,8 @@ namespace Jeebs.Data
 					// Perform the update
 					var result = r.Value switch
 					{
-						IEntityWithVersion e => UpdateWithVersion(w, r.OkV(e)),
-						_ => UpdateWithoutVersion(w, r)
+						IEntityWithVersion e => UpdateWithVersion(@this, r.OkV(e)),
+						_ => UpdateWithoutVersion(@this, r)
 					};
 
 					// Add update messages
@@ -48,7 +48,7 @@ namespace Jeebs.Data
 			}
 			finally
 			{
-				w.Rollback();
+				@this.Rollback();
 			}
 		}
 

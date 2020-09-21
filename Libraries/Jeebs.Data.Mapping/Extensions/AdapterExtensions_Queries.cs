@@ -13,23 +13,23 @@ namespace Jeebs.Data
 		/// Query to insert a single row and return the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="adapter">IAdapter</param>
-		public static string CreateSingleAndReturnId<T>(this IAdapter adapter)
+		/// <param name="this">IAdapter</param>
+		public static string CreateSingleAndReturnId<T>(this IAdapter @this)
 		{
 			// Get map and columns
 			var map = TableMaps.GetMap<T>();
 			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
 
 			// Get SQL from adapter
-			return adapter.CreateSingleAndReturnId(map.Name, columns, aliases);
+			return @this.CreateSingleAndReturnId(map.Name, columns, aliases);
 		}
 
 		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="adapter">IAdapter</param>
-		public static string RetrieveSingleById<T>(this IAdapter adapter)
+		/// <param name="this">IAdapter</param>
+		public static string RetrieveSingleById<T>(this IAdapter @this)
 		{
 			// Get map and select list
 			var map = TableMaps.GetMap<T>();
@@ -38,19 +38,19 @@ namespace Jeebs.Data
 			// Add each column to the select list
 			foreach (var mc in map.Columns)
 			{
-				select.Add(adapter.GetColumn(mc));
+				select.Add(@this.GetColumn(mc));
 			}
 
 			// Get SQL from adapter
-			return adapter.RetrieveSingleById(select, map.Name, map.IdColumn.Column);
+			return @this.RetrieveSingleById(select, map.Name, map.IdColumn.Column);
 		}
 
 		/// <summary>
 		/// Query to update a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="adapter">IAdapter</param>
-		public static string UpdateSingle<T>(this IAdapter adapter)
+		/// <param name="this">IAdapter</param>
+		public static string UpdateSingle<T>(this IAdapter @this)
 		{
 			// Get map and columns
 			var map = TableMaps.GetMap<T>();
@@ -62,11 +62,11 @@ namespace Jeebs.Data
 			// Get SQL from adapter
 			if (version is MappedColumn v)
 			{
-				return adapter.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name, v.Column, v.Property.Name);
+				return @this.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name, v.Column, v.Property.Name);
 			}
 			else
 			{
-				return adapter.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name);
+				return @this.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name);
 			}
 		}
 
@@ -74,8 +74,8 @@ namespace Jeebs.Data
 		/// Query to delete a single row
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="adapter">IAdapter</param>
-		public static string DeleteSingle<T>(this IAdapter adapter)
+		/// <param name="this">IAdapter</param>
+		public static string DeleteSingle<T>(this IAdapter @this)
 		{
 			// Get map and columns
 			var map = TableMaps.GetMap<T>();
@@ -86,11 +86,11 @@ namespace Jeebs.Data
 			// Get SQL from adapter
 			if (version is MappedColumn v)
 			{
-				return adapter.DeleteSingle(map.Name, id.Column, id.Property.Name, v.Column, v.Property.Name);
+				return @this.DeleteSingle(map.Name, id.Column, id.Property.Name, v.Column, v.Property.Name);
 			}
 			else
 			{
-				return adapter.DeleteSingle(map.Name, id.Column, id.Property.Name);
+				return @this.DeleteSingle(map.Name, id.Column, id.Property.Name);
 			}
 		}
 	}

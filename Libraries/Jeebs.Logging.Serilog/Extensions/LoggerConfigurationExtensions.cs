@@ -19,9 +19,9 @@ namespace Jeebs.Logging
 		/// <summary>
 		/// Load Serilog configuration from JeebsConfig object
 		/// </summary>
-		/// <param name="configuration">LoggerConfiguration</param>
+		/// <param name="this">LoggerConfiguration</param>
 		/// <param name="jeebs">JeebsConfig</param>
-		public static void LoadFromJeebsConfig(this LoggerConfiguration configuration, JeebsConfig jeebs)
+		public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 		{
 			// If there are no logging providers, return default configuration
 			if (jeebs.Logging.Providers is null)
@@ -34,12 +34,12 @@ namespace Jeebs.Logging
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();
-			configuration.MinimumLevel.Is(overallMinimumLevel);
+			@this.MinimumLevel.Is(overallMinimumLevel);
 
 			// Check for console provider
 			if (jeebs.Logging.Console)
 			{
-				configuration.WriteTo.Console(restrictedToMinimumLevel: overallMinimumLevel);
+				@this.WriteTo.Console(restrictedToMinimumLevel: overallMinimumLevel);
 			}
 
 			// Add providers
@@ -61,12 +61,12 @@ namespace Jeebs.Logging
 				if (serviceType == "seq")
 				{
 					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
-					configuration.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: providerMinimumLevel));
+					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: providerMinimumLevel));
 				}
 				else if (serviceType == "slack")
 				{
 					var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
-					configuration.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
+					@this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
 				}
 			}
 		}

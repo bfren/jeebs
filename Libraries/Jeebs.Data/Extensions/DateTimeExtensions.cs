@@ -12,9 +12,9 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Return a MySql formatted DateTime string for the specified date (yyyy-MM-dd HH:mm:ss)
 		/// </summary>
-		/// <param name="dt">DateTime object</param>
+		/// <param name="this">DateTime object</param>
 		/// <returns>MySql Formatted string</returns>
-		public static string ToMySqlString(this DateTime dt)
-			=> dt.ToString("yyyy-MM-dd HH:mm:ss");
+		public static string ToMySqlString(this DateTime @this)
+			=> @this.ToString("yyyy-MM-dd HH:mm:ss");
 	}
 }

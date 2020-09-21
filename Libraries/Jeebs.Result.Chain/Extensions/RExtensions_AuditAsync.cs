@@ -11,34 +11,6 @@ namespace Jeebs
 	/// </summary>
 	public static class RExtensions_AuditAsync
 	{
-		private static async Task<TResult> PrivateAuditSwitchAsync<TResult, TOk, TOkV, TError>(TResult result, Func<TOk, Task>? isOk, Func<TOkV, Task>? isOkV, Func<TError, Task>? isError)
-			where TResult : IR
-		{
-			if (isOk == null && isOkV == null && isError == null)
-			{
-				return result;
-			}
-
-			Func<Task> audit = result switch
-			{
-				TOkV okV => () => isOkV?.Invoke(okV),
-				TOk ok => () => isOk?.Invoke(ok),
-				TError error => () => isError?.Invoke(error),
-				_ => () => throw new Jx.Result.UnknownImplementationException()
-			};
-
-			try
-			{
-				await audit().ConfigureAwait(false);
-			}
-			catch (Exception ex) when (!(result.Messages is null))
-			{
-				result.AddMsg(new AuditSwitchAsyncExceptionMsg(ex));
-			}
-
-			return result;
-		}
-
 		/// <summary>
 		/// Audit the current result state and return unmodified
 		/// <para>Any exceptions will be caught and passed down the pipeline as a <see cref="AuditAsyncExceptionMsg"/> message</para>
@@ -85,5 +57,33 @@ namespace Jeebs
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue, TState}"/></param>
 		public static Task<IR<TValue, TState>> AuditSwitchAsync<TValue, TState>(this IR<TValue, TState> @this, Func<IOk<TValue, TState>, Task>? isOk = null, Func<IOkV<TValue, TState>, Task>? isOkV = null, Func<IError<TValue, TState>, Task>? isError = null)
 			=> PrivateAuditSwitchAsync(@this, isOk, isOkV, isError);
+
+		private static async Task<TResult> PrivateAuditSwitchAsync<TResult, TOk, TOkV, TError>(TResult result, Func<TOk, Task>? isOk, Func<TOkV, Task>? isOkV, Func<TError, Task>? isError)
+			where TResult : IR
+		{
+			if (isOk == null && isOkV == null && isError == null)
+			{
+				return result;
+			}
+
+			Func<Task> audit = result switch
+			{
+				TOkV okV => () => isOkV?.Invoke(okV),
+				TOk ok => () => isOk?.Invoke(ok),
+				TError error => () => isError?.Invoke(error),
+				_ => () => throw new Jx.Result.UnknownImplementationException()
+			};
+
+			try
+			{
+				await audit().ConfigureAwait(false);
+			}
+			catch (Exception ex) when (!(result.Messages is null))
+			{
+				result.AddMsg(new AuditSwitchAsyncExceptionMsg(ex));
+			}
+
+			return result;
+		}
 	}
 }

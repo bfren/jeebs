@@ -13,9 +13,9 @@ namespace Jeebs.Services
 		/// <summary>
 		/// Convert a <see cref="LogLevel"/> to a <see cref="NotificationLevel"/>
 		/// </summary>
-		/// <param name="level"></param>
-		public static NotificationLevel ToNotificationLevel(this LogLevel level)
-			=> level switch
+		/// <param name="this"></param>
+		public static NotificationLevel ToNotificationLevel(this LogLevel @this)
+			=> @this switch
 			{
 				LogLevel.Warning => NotificationLevel.Warning,
 				LogLevel.Error => NotificationLevel.Error,

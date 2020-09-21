@@ -16,29 +16,29 @@ namespace Jeebs.Apps
 		/// <summary>
 		/// Add App and Jeebs configuration JSON files to IConfigurationBuilder
 		/// </summary>
-		/// <param name="builder">IConfigurationBuilder</param>
+		/// <param name="this">IConfigurationBuilder</param>
 		/// <param name="env">IHostEnvironment</param>
-		public static IConfigurationBuilder AddJeebsConfig(this IConfigurationBuilder builder, IHostEnvironment env)
+		public static IConfigurationBuilder AddJeebsConfig(this IConfigurationBuilder @this, IHostEnvironment env)
 		{
 			// Validate main configuration file
 			var path = $"{Directory.GetCurrentDirectory()}/jeebsconfig.json";
 			ConfigValidator.Validate(path);
 
 			// Add Jeebs config - keeps Jeebs config away from app settings
-			builder.AddJsonFile("jeebsconfig.json", optional: false);
-			builder.AddJsonFile($"jeebsconfig.{env.EnvironmentName}.json", optional: true);
-			builder.AddJsonFile("jeebsconfig-secrets.json", optional: false);
+			@this.AddJsonFile("jeebsconfig.json", optional: false);
+			@this.AddJsonFile($"jeebsconfig.{env.EnvironmentName}.json", optional: true);
+			@this.AddJsonFile("jeebsconfig-secrets.json", optional: false);
 
 			// Add Environment Variables
-			builder.AddEnvironmentVariables();
+			@this.AddEnvironmentVariables();
 
 			// Check for Azure Key Vault section
-			var jeebs = builder.Build().GetSection<JeebsConfig>(JeebsConfig.Key, false);
+			var jeebs = @this.Build().GetSection<JeebsConfig>(JeebsConfig.Key, false);
 
 			// If the config is valid, add Azure Key Vault to IConfigurationBuilder
 			if (jeebs.AzureKeyVault.IsValid)
 			{
-				builder.AddAzureKeyVault(
+				@this.AddAzureKeyVault(
 					$"https://{jeebs.AzureKeyVault.Name}.vault.azure.net/",
 					jeebs.AzureKeyVault.ClientId,
 					jeebs.AzureKeyVault.ClientSecret
@@ -46,7 +46,7 @@ namespace Jeebs.Apps
 			}
 
 			// Return
-			return builder;
+			return @this;
 		}
 	}
 }

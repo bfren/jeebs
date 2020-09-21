@@ -17,13 +17,13 @@ namespace Jeebs.Data
 		/// Insert an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
+		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result object - the value should be the poco to insert</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static IR<T> Insert<T>(this IUnitOfWork w, IOkV<T> r)
+		public static IR<T> Insert<T>(this IUnitOfWork @this, IOkV<T> r)
 			where T : class, IEntity
 			=> r
-				.WithState(w)
+				.WithState(@this)
 				.Link()
 					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
 					.Map(InsertAndReturnId)
@@ -38,13 +38,13 @@ namespace Jeebs.Data
 		/// Insert an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
+		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result object - the value should be the poco to insert</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static async Task<IR<T>> InsertAsync<T>(this IUnitOfWork w, IOkV<T> r)
+		public static async Task<IR<T>> InsertAsync<T>(this IUnitOfWork @this, IOkV<T> r)
 			where T : class, IEntity
 			=> await r
-				.WithState(w)
+				.WithState(@this)
 				.Link()
 					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
 					.MapAsync(InsertAndReturnIdAsync).Await()

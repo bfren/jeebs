@@ -12,6 +12,26 @@ namespace Jeebs.Data
 	/// </summary>
 	public static partial class UnitOfWorkExtensions
 	{
+		/// <summary>
+		/// Get an entity from the database by ID
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="this">IUnitOfWork</param>
+		/// <param name="r">Result object - the value should be the entity ID</param>
+		public static IR<T> Single<T>(this IUnitOfWork @this, IOkV<long> r)
+			where T : class, IEntity
+			=> Single(r, @this, nameof(Single), (q, p, t) => Task.FromResult(@this.Connection.QuerySingle<T>(q, p, t)));
+
+		/// <summary>
+		/// Get an entity from the database by ID
+		/// </summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="this">IUnitOfWork</param>
+		/// <param name="r">Result object - the value should be the entity ID</param>
+		private static async Task<IR<T>> SingleAsync<T>(this IUnitOfWork @this, IOkV<long> r)
+			where T : class, IEntity
+			=> Single(r, @this, nameof(SingleAsync), async (q, p, t) => await @this.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false));
+
 		private static IR<T> Single<T>(IOkV<long> r, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
 			where T : class, IEntity
 		{
@@ -40,25 +60,5 @@ namespace Jeebs.Data
 				return r.OkV(result);
 			}
 		}
-
-		/// <summary>
-		/// Get an entity from the database by ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the entity ID</param>
-		public static IR<T> Single<T>(this IUnitOfWork w, IOkV<long> r)
-			where T : class, IEntity
-			=> Single(r, w, nameof(Single), (q, p, t) => Task.FromResult(w.Connection.QuerySingle<T>(q, p, t)));
-
-		/// <summary>
-		/// Get an entity from the database by ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the entity ID</param>
-		private static async Task<IR<T>> SingleAsync<T>(this IUnitOfWork w, IOkV<long> r)
-			where T : class, IEntity
-			=> Single(r, w, nameof(SingleAsync), async (q, p, t) => await w.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false));
 	}
 }
