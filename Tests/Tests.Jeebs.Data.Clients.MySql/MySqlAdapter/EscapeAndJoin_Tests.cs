@@ -1,15 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 {
-	public partial class MySqlAdapter_Tests
+	public class EscapeAndJoin_Tests
 	{
 		[Theory]
 		[InlineData(new[] { "foo" }, "`foo`")]
 		[InlineData(new[] { "foo", "bar" }, "`foo`.`bar`")]
 		[InlineData(new[] { "foo", "", null, "   ", "bar", "" }, "`foo`.`bar`")]
-		public void EscapeAndJoin_Name_ReturnsEscapedAndJoinedName(string[] input, string expected)
+		public void Returns_Escaped_And_Joined(string[] input, string expected)
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();

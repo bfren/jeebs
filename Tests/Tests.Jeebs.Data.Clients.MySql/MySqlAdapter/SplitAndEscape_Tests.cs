@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 {
-	public partial class MySqlAdapter_Tests
+	public class SplitAndEscape_Tests
 	{
 		[Theory]
 		[InlineData("foo", "`foo`")]
@@ -12,7 +14,7 @@ namespace Jeebs.Data.Clients.MySql
 		[InlineData("foo..bar", "`foo`.`bar`")]
 		[InlineData("foo.   .bar", "`foo`.`bar`")]
 		[InlineData("foo.bar.foo.bar", "`foo`.`bar`.`foo`.`bar`")]
-		public void SplitAndEscape_Name_ReturnsSplitAndEscapedName(string input, string expected)
+		public void Splits_Escapes_And_Rejoins(string input, string expected)
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();

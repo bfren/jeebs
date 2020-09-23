@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 {
-	public partial class MySqlAdapter_Tests
+	public class RetrieveSingleById_Tests
 	{
 		[Fact]
-		public void RetrieveSingleById()
+		public void Returns_Retrieve_Single_Query()
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
