@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
+using static Jeebs.Option;
 
 namespace Jeebs.EnumerableExtensions_Tests
 {
@@ -37,6 +38,22 @@ namespace Jeebs.EnumerableExtensions_Tests
 			Assert.Collection(result,
 				x => Assert.Equal(one, x),
 				x => Assert.Equal(two, x)
+			);
+		}
+
+		[Fact]
+		public void Removes_None()
+		{
+			// Arrange
+			var list = new[] { None<int>(), Wrap(1), None<int>(), Wrap(2), None<int>() };
+
+			// Act
+			var result = list.Filter();
+
+			// Assert
+			Assert.Collection(result,
+				x => Assert.Equal(1, Assert.IsType<Some<int>>(x).Value),
+				x => Assert.Equal(2, Assert.IsType<Some<int>>(x).Value)
 			);
 		}
 
