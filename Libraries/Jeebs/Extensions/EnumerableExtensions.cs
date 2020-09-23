@@ -12,6 +12,70 @@ namespace Jeebs
 	public static class EnumerableExtensions
 	{
 		/// <summary>
+		/// Filter out null items from a list
+		/// </summary>
+		/// <typeparam name="T">List value type</typeparam>
+		/// <param name="this">List</param>
+		public static IEnumerable<T> Filter<T>(this IEnumerable<T> @this)
+			=> @this.Where(x => x is T);
+
+		/// <summary>
+		/// Like <see cref="Filter{T}(IEnumerable{T})"/>, but removes values unless they are <see cref="Some{T}"/>
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <param name="this">List</param>
+		public static IEnumerable<Option<T>> Filter<T>(this IEnumerable<Option<T>> @this)
+			=> @this.Where(x => x is Some<T>);
+
+		/// <summary>
+		/// Filter out null items (and empty / whitespace strings) from a list
+		/// </summary>
+		/// <typeparam name="T">Input value type</typeparam>
+		/// <typeparam name="U">Output value type</typeparam>
+		/// <param name="this">List</param>
+		/// <param name="map">Mapping function</param>
+		public static IEnumerable<U> Filter<T, U>(this IEnumerable<T> @this, Func<T, U?> map)
+			where U : class
+		{
+			foreach (var x in @this)
+			{
+				if (map(x) is U y)
+				{
+					if (y is string z)
+					{
+						if (!string.IsNullOrWhiteSpace(z))
+						{
+							yield return y;
+						}
+					}
+					else
+					{
+						yield return y;
+					}
+				};
+			}
+		}
+
+		/// <summary>
+		/// Filter out null items from a list
+		/// </summary>
+		/// <typeparam name="T">Input value type</typeparam>
+		/// <typeparam name="U">Output value type</typeparam>
+		/// <param name="this">List</param>
+		/// <param name="map">Mapping function</param>
+		public static IEnumerable<U> Filter<T, U>(this IEnumerable<T> @this, Func<T, U?> map)
+			where U : struct
+		{ 
+			foreach (var x in @this)
+			{
+				if (map(x) is U y)
+				{
+					yield return y;
+				};
+			}
+		}
+
+		/// <summary>
 		/// Convert a collection to a paged list
 		/// </summary>
 		/// <typeparam name="T">Item type</typeparam>

@@ -8,7 +8,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 	public class ToPagedList_Tests
 	{
 		[Fact]
-		public void Empty_ReturnsEmpty()
+		public void Empty_Returns_Empty()
 		{
 			// Arrange
 			var list = new List<string>();
@@ -21,7 +21,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 		}
 
 		[Fact]
-		public void ReturnsValuesAndItems()
+		public void Returns_Values_And_Items()
 		{
 			// Arrange
 			var items = new List<string>();

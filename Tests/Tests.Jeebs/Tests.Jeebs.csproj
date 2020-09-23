@@ -21,10 +21,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="_\EnumeratedList\" />
-    <Folder Include="Constants\" />
-    <Folder Include="Constants\BibleBooks\" />
-  </ItemGroup>
 </Project>
