@@ -57,7 +57,7 @@ namespace Jeebs.Data
 			// Random sort
 			if (opt.SortRandom)
 			{
-				(parts.OrderBy ?? (parts.OrderBy = new List<string>())).Clear();
+				(parts.OrderBy ??= new List<string>()).Clear();
 				parts.OrderBy.Add(Adapter.GetRandomSortOrder());
 			}
 			// Specified sort

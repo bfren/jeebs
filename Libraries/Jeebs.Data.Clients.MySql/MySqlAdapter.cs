@@ -29,9 +29,9 @@ namespace Jeebs.Data.Clients.MySql
 		public override string Retrieve(IQueryParts parts)
 		{
 			// Make sure FROM is not null
-			if (parts.From == null)
+			if (string.IsNullOrWhiteSpace(parts.From))
 			{
-				throw new InvalidOperationException($"{nameof(IQueryParts)} must have FROM set before using it to retrieve a query.");
+				throw new InvalidOperationException($"FROM is invalid: '{parts.From}'.");
 			}
 
 			// Start query

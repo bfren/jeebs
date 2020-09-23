@@ -55,12 +55,10 @@ namespace Jeebs.Data
 			// Get map and columns
 			var map = TableMaps.GetMap<T>();
 			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
-
 			var id = map.IdColumn;
-			var version = map.VersionColumn;
 
 			// Get SQL from adapter
-			if (version is MappedColumn v)
+			if (map.VersionColumn is MappedColumn v)
 			{
 				return @this.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name, v.Column, v.Property.Name);
 			}
@@ -79,12 +77,10 @@ namespace Jeebs.Data
 		{
 			// Get map and columns
 			var map = TableMaps.GetMap<T>();
-
 			var id = map.IdColumn;
-			var version = map.VersionColumn;
 
 			// Get SQL from adapter
-			if (version is MappedColumn v)
+			if (map.VersionColumn is MappedColumn v)
 			{
 				return @this.DeleteSingle(map.Name, id.Column, id.Property.Name, v.Column, v.Property.Name);
 			}
