@@ -12,7 +12,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// From table
 		/// </summary>
-		string? From { get; set; }
+		string From { get; }
 
 		/// <summary>
 		/// Select columns

@@ -8,7 +8,7 @@ namespace Jeebs.Data
 	public sealed class QueryParts : IQueryParts
 	{
 		/// <inheritdoc/>
-		public string? From { get; set; }
+		public string From { get; }
 
 		/// <inheritdoc/>
 		public string? Select { get; set; }
@@ -40,6 +40,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Only allow internal construction - usually from QueryBuilder
 		/// </summary>
-		internal QueryParts() { }
+		internal QueryParts(string from)
+			=> From = from;
 	}
 }

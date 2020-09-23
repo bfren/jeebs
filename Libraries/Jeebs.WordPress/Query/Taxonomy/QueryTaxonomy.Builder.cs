@@ -23,7 +23,7 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal Builder(IWpDb db) : base(db.Adapter)
+			internal Builder(IWpDb db) : base(db.Adapter, db.Term)
 				=> this.db = db;
 
 			/// <inheritdoc/>
@@ -31,9 +31,6 @@ namespace Jeebs.WordPress
 			{
 				// SELECT columns
 				AddSelect(db.Term, db.TermTaxonomy);
-
-				// FROM table
-				AddFrom(db.Term);
 
 				// INNER JOIN table
 				AddInnerJoin(db.TermTaxonomy, tx => tx.TermId, (db.Term, tm => tm.TermId));

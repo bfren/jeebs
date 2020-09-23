@@ -9,20 +9,21 @@ namespace Jeebs.Data
 	public abstract class QueryPartsBuilder<TModel, TOptions> : IQueryPartsBuilder<TModel, TOptions>
 		where TOptions : QueryOptions
 	{
+		/// <inheritdoc/>
+		public IAdapter Adapter { get; }
+
 		/// <summary>
 		/// QueryParts
 		/// </summary>
 		private readonly IQueryParts parts;
 
-		/// <inheritdoc/>
-		public IAdapter Adapter { get; }
-
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
-		protected QueryPartsBuilder(IAdapter adapter)
-			=> (parts, Adapter) = (new QueryParts(), adapter);
+		/// <param name="from">FROM command</param>
+		protected QueryPartsBuilder(IAdapter adapter, string from)
+			=> (Adapter, parts) = (adapter, new QueryParts(from));
 
 		/// <summary>
 		/// Build the query
@@ -107,23 +108,6 @@ namespace Jeebs.Data
 			if (opt.Offset is long offset)
 			{
 				parts.Offset = offset;
-			}
-		}
-
-		/// <summary>
-		/// Set FROM
-		/// </summary>
-		/// <param name="from">FROM string</param>
-		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in FROM</param>
-		protected void AddFrom(string from, bool overwrite = false)
-		{
-			if (string.IsNullOrEmpty(parts.From) || overwrite)
-			{
-				parts.From = from;
-			}
-			else
-			{
-				throw new Jx.Data.QueryException("FROM has already been set.");
 			}
 		}
 

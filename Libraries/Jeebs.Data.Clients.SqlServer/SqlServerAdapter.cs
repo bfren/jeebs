@@ -25,6 +25,12 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <inheritdoc/>
 		public override string Retrieve(IQueryParts parts)
 		{
+			// Make sure FROM is not empty
+			if (string.IsNullOrWhiteSpace(parts.From))
+			{
+				throw new InvalidOperationException($"FROM is invalid: '{parts.From}'.");
+			}
+
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
 

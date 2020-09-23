@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Jeebs.Data
@@ -16,14 +17,7 @@ namespace Jeebs.Data
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
-		protected QueryPartsBuilderExtended(IAdapter adapter) : base(adapter) { }
-
-		/// <summary>
-		/// Add FROM shorthand
-		/// </summary>
-		/// <param name="tables">List of tables</param>
-		protected void AddFrom(params Table[] tables)
-			=> AddFrom(Adapter.EscapeAndJoin(tables));
+		protected QueryPartsBuilderExtended(IAdapter adapter, Table table, params Table[] tables) : base(adapter, adapter.EscapeAndJoin(tables.Prepend(table))) { }
 
 		/// <summary>
 		/// Add SELECT shorthand

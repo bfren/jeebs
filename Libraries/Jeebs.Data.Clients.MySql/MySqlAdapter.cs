@@ -19,23 +19,61 @@ namespace Jeebs.Data.Clients.MySql
 
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
-			=> string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
-				table,
-				string.Join(ColumnSeparator, columns),
+		{
+			// Handle no table
+			if (string.IsNullOrWhiteSpace(table))
+			{
+				throw new InvalidOperationException($"Table is invalid: '{table}'.");
+			}
+
+			// Handle empty columns
+			if (columns.Count == 0)
+			{
+				throw new InvalidOperationException($"The list of {nameof(columns)} cannot be empty.");
+			}
+
+			// Handle empty aliases
+			if (aliases.Count == 0)
+			{
+				throw new InvalidOperationException($"The list of {nameof(aliases)} cannot be empty.");
+			}
+
+			// Columns and aliases must contain the same number of items
+			if (columns.Count != aliases.Count)
+			{
+				throw new InvalidOperationException($"The number of {nameof(columns)} ({columns.Count}) and {nameof(aliases)} ({aliases.Count}) must be the same.");
+			}
+
+			var columnsEscaped = new List<string>();
+			foreach (var item in columns)
+			{
+				columnsEscaped.Add(Escape(item));
+			}
+
+			return string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
+				Escape(table),
+				string.Join(ColumnSeparator, columnsEscaped),
 				"@" + string.Join($"{ColumnSeparator}@", aliases)
 			);
+		}
 
 		/// <inheritdoc/>
 		public override string Retrieve(IQueryParts parts)
 		{
-			// Make sure FROM is not null
+			// Make sure FROM is not empty
 			if (string.IsNullOrWhiteSpace(parts.From))
 			{
-				throw new InvalidOperationException($"FROM is invalid: '{parts.From}'.");
+				throw new InvalidOperationException($"FROM table is invalid: '{parts.From}'.");
 			}
 
 			// Start query
-			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
+			var select = "*";
+			if (!string.IsNullOrWhiteSpace(parts.Select))
+			{
+				select = parts.Select;
+			}
+
+			StringBuilder sql = new StringBuilder($"SELECT {select} FROM {Escape(parts.From)}");
 
 			// Add INNER JOIN
 			if (parts.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)

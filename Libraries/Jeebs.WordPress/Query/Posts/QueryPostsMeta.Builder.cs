@@ -22,7 +22,7 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal Builder(IWpDb db) : base(db.Adapter)
+			internal Builder(IWpDb db) : base(db.Adapter, db.PostMeta)
 				=> this.db = db;
 
 			/// <inheritdoc/>
@@ -30,9 +30,6 @@ namespace Jeebs.WordPress
 			{
 				// SELECT
 				AddSelect(db.PostMeta);
-
-				// FROM
-				AddFrom(db.PostMeta);
 
 				// WHERE Post IDs
 				if (opt.PostIds is List<long> postIds && postIds.Count > 0)

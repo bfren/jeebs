@@ -25,7 +25,7 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal Builder(IWpDb db) : base(db.Adapter)
+			internal Builder(IWpDb db) : base(db.Adapter, db.Post)
 				=> this.db = db;
 
 			/// <inheritdoc/>
@@ -33,9 +33,6 @@ namespace Jeebs.WordPress
 			{
 				// SELECT columns
 				AddSelect(db.Post);
-
-				// FROM table
-				AddFrom(db.Post);
 
 				// WHERE type
 				var type = opt.Type;
