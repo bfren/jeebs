@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using Jeebs.Data.Enums;
 
@@ -66,13 +67,13 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public string Escape(string name)
 		{
-			// Don't allow blank names
+			// Handle empty names
 			if (string.IsNullOrWhiteSpace(name))
 			{
-				throw new ArgumentNullException(nameof(name));
+				return string.Empty;
 			}
 
-			// If the name contains the separator character, use SplitAndJoin() instead
+			// If the name contains the separator character, use SplitAndEscape() instead
 			if (name.Contains(SchemaSeparator))
 			{
 				return SplitAndEscape(name);
@@ -86,51 +87,68 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string Escape<TTable>(TTable table) where TTable : notnull
+		public string Escape<TTable>(TTable table)
+			where TTable : notnull
 			=> Escape(table.ToString());
 
 		/// <inheritdoc/>
 		public string SplitAndEscape(string element)
 		{
-			// Split an element by the default separator
+			// Handle empty elements
+			if (string.IsNullOrWhiteSpace(element))
+			{
+				return string.Empty;
+			}
+
+			// Split element by the separator
 			var elements = element.Split(SchemaSeparator);
 
-			// Now escape the elements and re-jothem
+			// Now escape the elements and re-join them
 			return EscapeAndJoin(elements);
 		}
 
 		/// <inheritdoc/>
 		public string EscapeAndJoin(params object?[] elements)
 		{
-			// Check for no elements
-			if (elements.Length == 0)
+			// Handle no elements
+			if (elements is null || elements.Length == 0)
 			{
-				throw new ArgumentNullException(nameof(elements));
+				return string.Empty;
 			}
 
-			// The list of elements to escape
-			var escaped = new List<string>();
+			// Escape each element the array
+			var list = new List<string>();
+			var escaped = elements
+				.Filter(x => x?.ToString())
+				.Filter(x => Escape(x));
 
-			// Escape each element the array, skipping elements that are null / empty / whitespace
-			foreach (var element in elements)
+			foreach (var element in escaped)
 			{
-				var str = element?.ToString();
-
-				if (string.IsNullOrWhiteSpace(str))
-				{
-					continue;
-				}
-
-				escaped.Add(Escape(str));
+				list.Add(element);
 			}
 
 			// Return escaped elements joined with the separator
-			return string.Join(SchemaSeparator.ToString(), escaped);
+			return string.Join(SchemaSeparator, list);
 		}
 
 		/// <inheritdoc/>
 		public string EscapeColumn(string name, string alias)
-			=> $"{Escape(name)} {this.Alias} {AliasOpen}{alias}{AliasClose}";
+		{
+			// Handle no name
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				return string.Empty;
+			}
+
+			// Handle no alias
+			if (string.IsNullOrWhiteSpace(alias))
+			{
+				return Escape(name);
+			}
+
+			// Escape with alias
+			return $"{Escape(name)} {Alias} {AliasOpen}{alias}{AliasClose}";
+		}
 
 		#endregion
 
@@ -138,7 +156,15 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public string GetSortOrder(string column, SortOrder order)
-			=> string.Concat(Escape(column), " ", order == SortOrder.Ascending ? SortAsc : SortDesc);
+		{
+			// Handle no column
+			if (string.IsNullOrWhiteSpace(column))
+			{
+				return string.Empty;
+			}
+
+			return $"{Escape(column)} {(order == SortOrder.Ascending ? SortAsc : SortDesc)}";
+		}
 
 		/// <inheritdoc/>
 		public abstract string GetRandomSortOrder();
