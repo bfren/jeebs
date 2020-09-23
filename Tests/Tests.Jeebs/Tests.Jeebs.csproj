@@ -24,5 +24,7 @@
 
   <ItemGroup>
     <Folder Include="_\EnumeratedList\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Constants\BibleBooks\" />
   </ItemGroup>
 </Project>
