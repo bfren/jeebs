@@ -21,12 +21,20 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-    - name: Rocket.Chat Notification
-      uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
-      if: always()
-      with:
-        type: ${{ job.status }}
-        job_name: '*Jeebs Build and Test*'
-        channel: '#code'
-        url: ${{ secrets.RC_WEBHOOK }}
+    - if: success()
+      name: Send build success message
+      uses: bencgreen/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Jeebs (GitHub)
+        SLACK_MESSAGE: Build Succeeded
+        SLACK_COLOR: good
+    - if: failure()
+      name: Send build fail message
+      uses: bencgreen/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Jeebs (GitHub)
+        SLACK_MESSAGE: Build Failed
+        SLACK_COLOR: danger
     
