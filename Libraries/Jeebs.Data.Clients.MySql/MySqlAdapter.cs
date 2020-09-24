@@ -11,7 +11,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public MySqlAdapter() : base('.', ", ", '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
+		public MySqlAdapter() : base('.', ',', '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
 
 		/// <inheritdoc/>
 		public override string GetRandomSortOrder()
@@ -44,17 +44,25 @@ namespace Jeebs.Data.Clients.MySql
 				throw new InvalidOperationException($"The number of {nameof(columns)} ({columns.Count}) and {nameof(aliases)} ({aliases.Count}) must be the same.");
 			}
 
+			// Escape all column names
 			var columnsEscaped = new List<string>();
 			foreach (var item in columns)
 			{
 				columnsEscaped.Add(Escape(item));
 			}
 
-			return string.Format("INSERT INTO {0} ({1}) VALUES ({2}); SELECT LAST_INSERT_ID();",
-				Escape(table),
-				string.Join(ColumnSeparator, columnsEscaped),
-				"@" + string.Join($"{ColumnSeparator}@", aliases)
-			);
+			var aliasesAmped = new List<string>();
+			foreach (var item in aliases)
+			{
+				aliasesAmped.Add($"@{item}");
+			}
+
+			// Create separated columns and values strings
+			var cols = JoinColumns(columnsEscaped);
+			var vals = JoinColumns(aliasesAmped);
+
+			// Return query string
+			return $"INSERT INTO {Escape(table)} ({cols}) VALUES ({vals}); SELECT LAST_INSERT_ID();";
 		}
 
 		/// <inheritdoc/>
@@ -70,7 +78,14 @@ namespace Jeebs.Data.Clients.MySql
 			var select = "*";
 			if (!string.IsNullOrWhiteSpace(parts.Select))
 			{
-				select = parts.Select;
+				var columns = parts.Select.Split(ColumnSeparator);
+				var columnsEscaped = new List<string>();
+				foreach (var column in columns.Filter())
+				{
+					columnsEscaped.Add(Escape(column));
+				}
+
+				select = JoinColumns(columnsEscaped);
 			}
 
 			StringBuilder sql = new StringBuilder($"SELECT {select} FROM {Escape(parts.From)}");
@@ -80,7 +95,7 @@ namespace Jeebs.Data.Clients.MySql
 			{
 				foreach (var (table, on, equals) in innerJoinValues)
 				{
-					sql.Append($" INNER JOIN {table} ON {on} = {equals}");
+					sql.Append($" INNER JOIN {Escape(table)} ON {Escape(on)} = {Escape(equals)}");
 				}
 			}
 
@@ -89,7 +104,7 @@ namespace Jeebs.Data.Clients.MySql
 			{
 				foreach (var (table, on, equals) in leftJoinValues)
 				{
-					sql.Append($" LEFT JOIN {table} ON {on} = {equals}");
+					sql.Append($" LEFT JOIN {Escape(table)} ON {Escape(on)} = {Escape(equals)}");
 				}
 			}
 
@@ -98,7 +113,7 @@ namespace Jeebs.Data.Clients.MySql
 			{
 				foreach (var (table, on, equals) in rightJoinValues)
 				{
-					sql.Append($" RIGHT JOIN {table} ON {on} = {equals}");
+					sql.Append($" RIGHT JOIN {Escape(table)} ON {Escape(on)} = {Escape(equals)}");
 				}
 			}
 
@@ -111,7 +126,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Add ORDER BY
 			if (parts.OrderBy is List<string> orderByValue)
 			{
-				sql.Append($" ORDER BY {string.Join(ColumnSeparator, orderByValue)}");
+				sql.Append($" ORDER BY {JoinColumns(orderByValue)}");
 			}
 
 			// Add LIMIT
@@ -137,11 +152,7 @@ namespace Jeebs.Data.Clients.MySql
 
 		/// <inheritdoc/>
 		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
-			=> string.Format("SELECT {0} FROM {1} WHERE {2} = @Id;",
-				string.Join(ColumnSeparator, columns),
-				table,
-				idColumn
-			);
+			=> $"SELECT {JoinColumns(columns)} FROM {Escape(table)} WHERE {Escape(idColumn)} = @Id;";
 
 		/// <inheritdoc/>
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
@@ -150,24 +161,19 @@ namespace Jeebs.Data.Clients.MySql
 			var update = new List<string>();
 			for (int i = 0; i < columns.Count; i++)
 			{
-				update.Add($"{columns[i]} = @{aliases[i]}");
+				update.Add($"{Escape(columns[i])} = @{aliases[i]}");
 			}
 
 			// Build SQL
-			var sql = string.Format("UPDATE {0} SET {1} WHERE {2} = @{3}",
-				table,
-				string.Join(ColumnSeparator, update),
-				idColumn,
-				idAlias
-			);
+			var sql = $"UPDATE {Escape(table)} SET {JoinColumns(update)} WHERE {Escape(idColumn)} = @{idAlias}";
 
 			// Add Version column
 			if (versionColumn is string column && versionAlias is string alias)
 			{
-				sql += string.Format(" AND {0} = @{1} - 1", column, alias);
+				sql += $" AND {Escape(column)} = @{alias} - 1";
 			}
 
-			// Return SQL
+			// Return query string
 			return $"{sql};";
 		}
 
@@ -175,19 +181,15 @@ namespace Jeebs.Data.Clients.MySql
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Build SQL
-			var sql = string.Format("DELETE FROM {0} WHERE {1} = @{2}",
-				table,
-				idColumn,
-				idAlias
-			);
+			var sql = $"DELETE FROM {Escape(table)} WHERE {Escape(idColumn)} = @{idAlias}";
 
 			// Add Version column
 			if (versionColumn is string column && versionAlias is string alias)
 			{
-				sql += string.Format(" AND {0} = @{1} - 1", column, alias);
+				sql += $" AND {Escape(column)} = @{alias} - 1";
 			}
 
-			// Return SQL
+			// Return query string
 			return $"{sql};";
 		}
 	}

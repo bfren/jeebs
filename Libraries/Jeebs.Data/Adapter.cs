@@ -14,7 +14,7 @@ namespace Jeebs.Data
 		public char SchemaSeparator { get; }
 
 		/// <inheritdoc/>
-		public string ColumnSeparator { get; }
+		public char ColumnSeparator { get; }
 
 		/// <inheritdoc/>
 		public char EscapeOpen { get; }
@@ -49,7 +49,7 @@ namespace Jeebs.Data
 		/// <param name="aliasClose">Alias close character</param>
 		/// <param name="sortAsc">Sort Ascending string</param>
 		/// <param name="sortDesc">Sort Descending string</param>
-		protected Adapter(char schemaSeparator, string columnSeparator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
+		protected Adapter(char schemaSeparator, char columnSeparator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
 		{
 			SchemaSeparator = schemaSeparator;
 			ColumnSeparator = columnSeparator;
@@ -62,25 +62,34 @@ namespace Jeebs.Data
 			SortDesc = sortDesc;
 		}
 
+		/// <summary>
+		/// Join columns using <see cref="ColumnSeparator"/> and a space
+		/// </summary>
+		/// <param name="columns">List of columns</param>
+		protected string JoinColumns(IEnumerable<string> columns)
+			=> string.Join($"{ColumnSeparator} ", columns);
+
 		#region Escaping
 
 		/// <inheritdoc/>
 		public string Escape(string name)
 		{
+			// Trim escape characters and start / ending whitespace
+			var trimmed = name?
+				.ReplaceAll(new[] { EscapeOpen.ToString(), EscapeClose.ToString()}, string.Empty)
+				.Trim();
+
 			// Handle empty names
-			if (string.IsNullOrWhiteSpace(name))
+			if (string.IsNullOrWhiteSpace(trimmed))
 			{
 				return string.Empty;
 			}
 
 			// If the name contains the separator character, use SplitAndEscape() instead
-			if (name.Contains(SchemaSeparator))
+			if (trimmed.Contains(SchemaSeparator))
 			{
-				return SplitAndEscape(name);
+				return SplitAndEscape(trimmed);
 			}
-
-			// Trim escape characters
-			var trimmed = name.Trim(EscapeOpen, EscapeClose);
 
 			// Return escaped name
 			return $"{EscapeOpen}{trimmed}{EscapeClose}";

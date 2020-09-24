@@ -39,11 +39,11 @@ namespace Jeebs.Data.Adapter_Tests
 		}
 
 		[Fact]
-		public void Trim_Escape_Characters()
+		public void Remove_Escape_Characters_And_Trim_First()
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var input = $"{EscapeClose}{EscapeOpen}{EscapeClose}one{EscapeOpen}{EscapeClose}{EscapeOpen}";
+			var input = $" {EscapeClose}{EscapeOpen}{EscapeClose} one {EscapeOpen}{EscapeClose}{EscapeOpen} ";
 
 			// Act
 			var result = adapter.Escape(input);

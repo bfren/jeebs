@@ -8,7 +8,7 @@ namespace Jeebs.Data.Adapter_Tests
 	public static class Adapter
 	{
 		public const char SchemaSeparator = '.';
-		public const string ColumnSeparator = "|";
+		public const char ColumnSeparator = '|';
 		public const char EscapeOpen = '[';
 		public const char EscapeClose = ']';
 		public const string Alias = "AS";

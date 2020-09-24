@@ -42,20 +42,24 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			Assert.Equal("SELECT * FROM `one`;", result);
 		}
 
-		[Fact]
-		public void Selects_Columns()
+		[Theory]
+		[InlineData("two, three")]
+		[InlineData("`two`,`three`")]
+		[InlineData("`two,three`")]
+		[InlineData("`    ``two`` ,  three  ")]
+		public void Selects_Columns(string input)
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
 			parts.From.Returns("one");
-			parts.Select.Returns("`two`,`three`");
+			parts.Select.Returns(input);
 
 			// Act
 			var result = adapter.Retrieve(parts);
 
 			// Assert
-			Assert.Equal("SELECT `two`,`three` FROM `one`;", result);
+			Assert.Equal("SELECT `two`, `three` FROM `one`;", result);
 		}
 	}
 }

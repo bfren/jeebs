@@ -16,9 +16,9 @@ namespace Jeebs.Data
 		char SchemaSeparator { get; }
 
 		/// <summary>
-		/// Select column separator string
+		/// Select column separator character
 		/// </summary>
-		string ColumnSeparator { get; }
+		char ColumnSeparator { get; }
 
 		/// <summary>
 		/// Escape character
