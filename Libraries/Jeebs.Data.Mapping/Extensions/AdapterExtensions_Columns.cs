@@ -44,7 +44,7 @@ namespace Jeebs.Data
 			}
 
 			// Return joined
-			return string.Join(@this.ColumnSeparator, select);
+			return string.Join($"{@this.ColumnSeparator} ", select);
 		}
 
 		/// <summary>

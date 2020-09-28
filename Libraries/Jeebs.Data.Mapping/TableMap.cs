@@ -66,6 +66,11 @@ namespace Jeebs.Data
 							&& c.Property.GetCustomAttribute<ReadonlyAttribute>() == null
 							select c;
 
+			if (!writeable.Any())
+			{
+				throw new Jx.Data.MappingException($"Table {Name} does not have any writeable columns.");
+			}
+
 			// Return
 			return (
 				writeable.Select(w => w.Column).ToList(),

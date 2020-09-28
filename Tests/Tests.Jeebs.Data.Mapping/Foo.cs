@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data
 {
 	public class Foo : IEntity
 	{
+		[Id]
 		public long Id { get; set; }
 
 		public string Bar0 { get; set; } = string.Empty;

@@ -132,6 +132,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services", "Libraries
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Webhook.RocketChat", "Libraries\Jeebs.Services.Drivers.Webhook.RocketChat\Jeebs.Services.Drivers.Webhook.RocketChat.csproj", "{8E9E8643-96D5-4C57-94D3-85A5A177BB95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Mapping", "Tests\Tests.Jeebs.Data.Mapping\Tests.Jeebs.Data.Mapping.csproj", "{C78A7899-0DF9-4F2C-BA68-B15A21A20D95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -300,6 +302,10 @@ Global
 		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E9E8643-96D5-4C57-94D3-85A5A177BB95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C78A7899-0DF9-4F2C-BA68-B15A21A20D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C78A7899-0DF9-4F2C-BA68-B15A21A20D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C78A7899-0DF9-4F2C-BA68-B15A21A20D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C78A7899-0DF9-4F2C-BA68-B15A21A20D95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -357,6 +363,7 @@ Global
 		{6723F109-7975-4941-9FEE-AD331FAC5ADC} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
 		{F0F3417F-3CC5-457E-A490-6AD6AD6C904C} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
 		{8E9E8643-96D5-4C57-94D3-85A5A177BB95} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
+		{C78A7899-0DF9-4F2C-BA68-B15A21A20D95} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

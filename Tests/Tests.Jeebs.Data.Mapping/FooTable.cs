@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Xunit;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data
 {
-	public class FooWithVersionTable : Table
+	public class FooTable : Table
 	{
 		public readonly string Id = "foo_id";
 
@@ -13,8 +12,6 @@ namespace Jeebs.Data.Clients.MySql
 
 		public readonly string Bar1 = "foo_bar1";
 
-		public readonly string Version = "foo_version";
-
-		public FooWithVersionTable() : base("foo_with_version") { }
+		public FooTable() : base("foo") { }
 	}
 }
