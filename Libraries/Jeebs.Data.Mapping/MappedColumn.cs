@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IMappedColumn"/>
 	public sealed class MappedColumn : IMappedColumn

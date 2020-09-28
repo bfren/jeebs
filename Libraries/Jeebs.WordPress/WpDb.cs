@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
+using Jeebs.Data.Mapping;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Tables;
 using Jeebs.WordPress.TypeHandlers;

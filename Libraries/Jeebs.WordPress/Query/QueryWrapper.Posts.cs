@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Enums;
 using Jm.WordPress.Query.Wrapper.Posts;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// Map an entity to a table
@@ -14,6 +14,8 @@ namespace Jeebs.Data
 	public static class Map<TEntity>
 		where TEntity : IEntity
 	{
+		private static readonly object _ = new object();
+
 		/// <summary>
 		/// Valid tables
 		/// </summary>
@@ -27,59 +29,62 @@ namespace Jeebs.Data
 		public static void To<TTable>(TTable table, IAdapter adapter)
 			where TTable : Table
 		{
-			// Check TablesMap cache before doing anything
-			if (TableMaps.Exists<TEntity>())
+			lock (_)
 			{
-				return;
-			}
-
-			// Validate table
-			if (!validTables.Contains(typeof(TTable)))
-			{
-				Validate<TTable>();
-				validTables.Add(typeof(TTable));
-			}
-
-			// Get mapped properties and the corresponding column names
-			var columns = from column in typeof(TTable).GetFields()
-						  join property in typeof(TEntity).GetProperties() on column.Name equals property.Name
-						  where property.GetCustomAttribute<IgnoreAttribute>() == null
-						  select new MappedColumn
-						  (
-							  column: adapter.Escape(column.GetValue(table).ToString()),
-							  property: property
-						  );
-
-			// Get ID property
-			var id = GetPropertyWith<IdAttribute>("Id");
-
-			// Create Table Map
-			var map = new TableMap(adapter.Escape(table.ToString()), columns.ToList(), id);
-
-			// Get Version property
-			if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
-			{
-				map.VersionColumn = GetPropertyWith<VersionAttribute>("Version");
-			}
-
-			// Add Map
-			TableMaps.Add<TEntity>(map);
-
-			// Get the property with the specified attribute
-			MappedColumn GetPropertyWith<TAttribute>(string attr)
-				where TAttribute : Attribute
-			{
-				var pi = columns.Where(p => p.Property.GetCustomAttribute<TAttribute>() != null);
-				if (!pi.Any())
+				// Check TablesMap cache before doing anything
+				if (TableMaps.Exists<TEntity>())
 				{
-					throw new Jx.Data.MappingException($"You must define [{attr}] property for entity type '{typeof(TEntity)}'.");
-				}
-				else if (pi.Count() > 1)
-				{
-					throw new Jx.Data.MappingException($"There is more than one [{attr}] property defined in '{typeof(TEntity)}'.");
+					return;
 				}
 
-				return pi.Single();
+				// Validate table
+				if (!validTables.Contains(typeof(TTable)))
+				{
+					Validate<TTable>();
+					validTables.Add(typeof(TTable));
+				}
+
+				// Get mapped properties and the corresponding column names
+				var columns = from column in typeof(TTable).GetFields()
+							  join property in typeof(TEntity).GetProperties() on column.Name equals property.Name
+							  where property.GetCustomAttribute<IgnoreAttribute>() == null
+							  select new MappedColumn
+							  (
+								  column: adapter.Escape(column.GetValue(table).ToString()),
+								  property: property
+							  );
+
+				// Get ID property
+				var id = GetPropertyWith<IdAttribute>("Id");
+
+				// Create Table Map
+				var map = new TableMap(adapter.Escape(table.ToString()), columns.ToList(), id);
+
+				// Get Version property
+				if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
+				{
+					map.VersionColumn = GetPropertyWith<VersionAttribute>("Version");
+				}
+
+				// Add Map
+				TableMaps.Add<TEntity>(map);
+
+				// Get the property with the specified attribute
+				MappedColumn GetPropertyWith<TAttribute>(string attr)
+					where TAttribute : Attribute
+				{
+					var pi = columns.Where(p => p.Property.GetCustomAttribute<TAttribute>() != null);
+					if (!pi.Any())
+					{
+						throw new Jx.Data.MappingException($"You must define [{attr}] property for entity type '{typeof(TEntity)}'.");
+					}
+					else if (pi.Count() > 1)
+					{
+						throw new Jx.Data.MappingException($"There is more than one [{attr}] property defined in '{typeof(TEntity)}'.");
+					}
+
+					return pi.Single();
+				}
 			}
 		}
 

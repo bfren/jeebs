@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Jeebs.Data.Mapping;
+using Jeebs.Data.Querying;
 
 namespace Jeebs.Data
 {

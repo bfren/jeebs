@@ -4,7 +4,7 @@ using System.Text;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.AdapterExtensions_Tests
+namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
 	public class UpdateSingle_Tests
 	{
@@ -12,6 +12,7 @@ namespace Jeebs.Data.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
+			TableMaps.Clear();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act

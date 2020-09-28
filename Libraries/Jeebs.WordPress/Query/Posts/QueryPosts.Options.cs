@@ -12,7 +12,7 @@ namespace Jeebs.WordPress
 	public partial class QueryPosts
 	{
 		/// <inheritdoc/>
-		public sealed class Options : Data.QueryOptions
+		public sealed class Options : Data.Querying.QueryOptions
 		{
 			/// <summary>
 			/// Search Post type

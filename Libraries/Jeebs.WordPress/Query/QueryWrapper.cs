@@ -17,7 +17,7 @@ using Jm.WordPress.Query.Wrapper;
 namespace Jeebs.WordPress
 {
 	/// <inheritdoc/>
-	public sealed partial class QueryWrapper : Data.QueryWrapper
+	public sealed partial class QueryWrapper : Data.Querying.QueryWrapper
 	{
 		/// <summary>
 		/// IWpDb

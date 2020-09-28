@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <summary>
 	/// <see cref="IQuery{T}"/> Extension methods

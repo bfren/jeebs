@@ -4,7 +4,7 @@ using System.Text;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.AdapterExtensions_Tests
+namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
 	public class Escape_Tests
 	{

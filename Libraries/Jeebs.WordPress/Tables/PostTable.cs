@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Data;
-using Jeebs.Data.Clients.MySql;
-using Jeebs.WordPress.Entities;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.WordPress.Tables
 {

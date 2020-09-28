@@ -11,7 +11,7 @@ namespace Jeebs.WordPress
 	internal partial class QueryPostsTaxonomy
 	{
 		/// <inheritdoc/>
-		internal sealed class Options : Data.QueryOptions
+		internal sealed class Options : Data.Querying.QueryOptions
 		{
 			/// <summary>
 			/// The taxonomy to query

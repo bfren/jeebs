@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// IUnitOfWork extensions

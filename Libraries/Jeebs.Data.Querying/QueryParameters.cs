@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryParameters"/>
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters

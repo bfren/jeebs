@@ -7,6 +7,7 @@ using AppConsoleWordPress.Usa;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.WordPress;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.DependencyInjection;

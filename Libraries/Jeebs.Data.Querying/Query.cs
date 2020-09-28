@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jm.Data.Querying.Query;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQuery{T}"/>
 	public sealed class Query<T> : IQuery<T>

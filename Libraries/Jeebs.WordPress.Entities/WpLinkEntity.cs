@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Jeebs.Data;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.WordPress.Entities
 {

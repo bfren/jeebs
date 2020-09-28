@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Jm.Data.Mapping.Extensions.UnitOfWork;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// IUnitOfWork extensions - CREATE

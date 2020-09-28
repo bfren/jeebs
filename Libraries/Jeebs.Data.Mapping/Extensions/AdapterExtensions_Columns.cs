@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// IAdapter extensions - columns
@@ -27,7 +27,7 @@ namespace Jeebs.Data
 		/// <param name="this">IAdapter</param>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
 		public static string Extract<T>(this IAdapter @this, params Table[] tables)
-			=> @this.Join(Data.Extract<T>.From(tables));
+			=> @this.Join(Mapping.Extract<T>.From(tables));
 
 		/// <summary>
 		/// Join list of ExtractedColumn objects

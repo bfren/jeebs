@@ -1,6 +1,9 @@
-﻿using Jeebs.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Jeebs.Data;
+using Jeebs.Data.Mapping;
 using Jeebs.WordPress.Enums;
-using System;
 
 namespace Jeebs.WordPress.Entities
 {

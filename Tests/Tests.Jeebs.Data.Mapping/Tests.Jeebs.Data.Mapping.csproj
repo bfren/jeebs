@@ -7,7 +7,7 @@
 
     <AssemblyName>Tests.Jeebs.Data.Mapping</AssemblyName>
 
-    <RootNamespace>Jeebs.Data</RootNamespace>
+    <RootNamespace>Jeebs.Data.Mapping</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

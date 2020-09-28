@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// Holds TableMaps of mapped entities
@@ -21,6 +21,12 @@ namespace Jeebs.Data
 		/// </summary>
 		static TableMaps()
 			=> maps = new ConcurrentDictionary<Type, TableMap>();
+
+		/// <summary>
+		/// Clear all mapped tables
+		/// </summary>
+		public static void Clear()
+			=> maps.Clear();
 
 		/// <summary>
 		/// Returns true if <typeparamref name="TEntity"/> has already been mapped

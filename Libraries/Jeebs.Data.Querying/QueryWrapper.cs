@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryWrapper"/>
 	public class QueryWrapper : IQueryWrapper

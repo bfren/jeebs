@@ -10,7 +10,7 @@ namespace Jeebs.WordPress
 	internal partial class QueryPostsMeta
 	{
 		/// <inheritdoc/>
-		internal sealed class Options : Data.QueryOptions
+		internal sealed class Options : Data.Querying.QueryOptions
 		{
 			/// <summary>
 			/// Search for multiple Posts

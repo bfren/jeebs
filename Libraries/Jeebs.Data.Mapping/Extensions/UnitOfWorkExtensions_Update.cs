@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Dapper;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// IUnitOfWork extensions - UPDATE
