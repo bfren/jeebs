@@ -4,18 +4,18 @@ using System.Text;
 
 namespace Jeebs.Data.Mapping
 {
-	/// <inheritdoc cref="IColumns"/>
-	public sealed class Columns : List<IColumn>, IColumns
+	/// <inheritdoc cref="IColumnList"/>
+	public sealed class ColumnList : List<IColumn>, IColumnList
 	{
 		/// <summary>
 		/// Empty constructor
 		/// </summary>
-		public Columns() { }
+		public ColumnList() { }
 
 		/// <summary>
 		/// Construct object from IEnumerable
 		/// </summary>
 		/// <param name="ienum">IEnumerable</param>
-		public Columns(IEnumerable<IColumn> ienum) : base(ienum) { }
+		public ColumnList(IEnumerable<IColumn> ienum) : base(ienum) { }
 	}
 }

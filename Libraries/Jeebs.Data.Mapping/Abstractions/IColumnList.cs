@@ -7,5 +7,5 @@ namespace Jeebs.Data.Mapping
 	/// <summary>
 	/// Holds and processes a list of <seealso cref="IColumn"/> objects
 	/// </summary>
-	public interface IColumns : IList<IColumn> { }
+	public interface IColumnList : IList<IColumn> { }
 }

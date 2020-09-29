@@ -68,7 +68,7 @@ namespace Jeebs.Data.Mapping
 
 			if (!writeable.Any())
 			{
-				throw new Jx.Data.MappingException($"Table {Name} does not have any writeable columns.");
+				throw new Jx.Data.Mapping.NoWriteableColumnsException(Name);
 			}
 
 			// Return

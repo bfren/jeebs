@@ -16,7 +16,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Cached maps of table classes to columns
 		/// </summary>
-		private static readonly ConcurrentDictionary<string, IColumns> cache = new ConcurrentDictionary<string, IColumns>();
+		private static readonly ConcurrentDictionary<string, IColumnList> cache = new ConcurrentDictionary<string, IColumnList>();
 
 		/// <summary>
 		/// Properties of <typeparamref name="TModel"/> that have not been marked with <see cref="IgnoreAttribute"/>
@@ -33,12 +33,12 @@ namespace Jeebs.Data.Mapping
 		/// Extract columns from specified tables
 		/// </summary>
 		/// <param name="tables">List of tables</param>
-		public static IColumns From(params Table[] tables)
+		public static IColumnList From(params Table[] tables)
 		{
 			// If no tables, return empty extracted list
 			if (tables.Length == 0)
 			{
-				return new Columns();
+				return new ColumnList();
 			}
 
 			// Extract columns from each table
@@ -53,24 +53,24 @@ namespace Jeebs.Data.Mapping
 			}
 
 			// Get only distinct columns
-			var distinctColumns = columns.Distinct(new Column.Comparer());
+			var distinctColumns = columns.Distinct(new Column.AliasComparer());
 
 			// Return
-			return new Columns(distinctColumns);
+			return new ColumnList(distinctColumns);
 		}
 
 		/// <summary>
 		/// Extract columns from a single table
 		/// </summary>
 		/// <param name="table">Table</param>
-		private static IColumns ExtractColumnsFromTable(Table table)
+		private static IColumnList ExtractColumnsFromTable(Table table)
 			=> cache.GetOrAdd(table.ToString(), tableName =>
 			{
 				// Get the list of fields
 				var tableFields = table.GetType().GetFields();
 
 				// Holds the list of column names being extracted
-				var extracted = new Columns();
+				var extracted = new ColumnList();
 				foreach (var property in modelProperties)
 				{
 					// Get the corresponding field

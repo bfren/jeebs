@@ -19,7 +19,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			void action() => AdapterExtensions.UpdateSingle<Foo>(adapter, maps);
 
 			// Assert
-			var ex = Assert.Throws<Jx.Data.MappingException>(action);
+			var ex = Assert.Throws<Jx.Data.Mapping.UnmappedEntityException>(action);
 			Assert.Equal($"Entity {typeof(Foo)} has not been mapped.", ex.Message);
 		}
 
@@ -39,7 +39,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			void action() => AdapterExtensions.UpdateSingle<FooUnwriteable>(adapter, maps);
 
 			// Assert
-			var ex = Assert.Throws<Jx.Data.MappingException>(action);
+			var ex = Assert.Throws<Jx.Data.Mapping.NoWriteableColumnsException>(action);
 			Assert.Equal($"Table {table} does not have any writeable columns.", ex.Message);
 		}
 

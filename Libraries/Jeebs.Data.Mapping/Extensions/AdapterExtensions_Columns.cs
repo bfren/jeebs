@@ -34,7 +34,7 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <param name="this">IAdapter</param>
 		/// <param name="columns">IColumns</param>
-		public static string Join(this IAdapter @this, IColumns columns)
+		public static string Join(this IAdapter @this, IColumnList columns)
 		{
 			// Get each column
 			var select = new List<string>();

@@ -56,7 +56,7 @@ namespace Jeebs.Data.Mapping
 				return expression.Compile().Invoke(map);
 			}
 
-			throw new Jx.Data.MappingException($"Entity {type} has not been mapped.");
+			throw new Jx.Data.Mapping.UnmappedEntityException(type);
 		}
 
 		/// <summary>

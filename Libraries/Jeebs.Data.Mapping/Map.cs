@@ -60,10 +60,10 @@ namespace Jeebs.Data.Mapping
 							  );
 
 				// Get ID property
-				var id = GetPropertyWith<IdAttribute>(columns);
+				var idProperty = GetPropertyWith<IdAttribute>(columns);
 
 				// Create Table Map
-				var map = new TableMap(table.ToString(), columns.ToList(), id);
+				var map = new TableMap(table.ToString(), columns.ToList(), idProperty);
 
 				// Get Version property
 				if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
@@ -98,32 +98,30 @@ namespace Jeebs.Data.Mapping
 		private static void Validate<TTable>()
 			where TTable : Table
 		{
-			// Get the table columns
-			var tableColumns = typeof(TTable)
-				.GetFields()
-				.Select(p => p.Name);
+			// Get the table field names
+			var tableFieldNames = from f in typeof(TTable).GetFields()
+								  select f.Name;
 
-			// Get the entity properties
-			var entityProperties = typeof(TEntity)
-				.GetProperties()
-				.Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null)
-				.Select(p => p.Name);
+			// Get the entity property names
+			var entityPropertyNames = from p in typeof(TEntity).GetProperties()
+									  where p.GetCustomAttribute<IgnoreAttribute>() == null
+									  select p.Name;
 
 			// Compare the table columns with the entity properties
 			var errors = new List<string>();
 
 			// Check for missing table columns
-			var missingTableColumns = entityProperties.Except(tableColumns);
-			if (missingTableColumns.Any())
+			var missingTableFields = entityPropertyNames.Except(tableFieldNames);
+			if (missingTableFields.Any())
 			{
-				foreach (var column in missingTableColumns)
+				foreach (var field in missingTableFields)
 				{
-					errors.Add($"The definition of table '{typeof(TTable).FullName}' is missing column '{column}'.");
+					errors.Add($"The definition of table '{typeof(TTable).FullName}' is missing field '{field}'.");
 				}
 			}
 
 			// Check for missing entity properties
-			var missingEntityProperties = tableColumns.Except(entityProperties);
+			var missingEntityProperties = tableFieldNames.Except(entityPropertyNames);
 			if (missingEntityProperties.Any())
 			{
 				foreach (var property in missingEntityProperties)
@@ -135,7 +133,7 @@ namespace Jeebs.Data.Mapping
 			// If there are any errors, throw a MappingException
 			if (errors.Count > 0)
 			{
-				throw new Jx.Data.MappingException(string.Join("\n", errors));
+				throw new Jx.Data.Mapping.InvalidTableMapException(string.Join("\n", errors));
 			}
 		}
 	}
