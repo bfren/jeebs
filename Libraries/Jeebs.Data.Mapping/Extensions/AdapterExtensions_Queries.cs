@@ -15,7 +15,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
 		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string CreateSingleAndReturnId<T>(this IAdapter @this, TableMaps? maps = null)
+		public static string CreateSingleAndReturnId<T>(this IAdapter @this, ITableMaps? maps = null)
 		{
 			// Get map and columns
 			var map = (maps ?? TableMaps.Instance).GetMap<T>();
@@ -31,7 +31,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
 		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string RetrieveSingleById<T>(this IAdapter @this, TableMaps? maps = null)
+		public static string RetrieveSingleById<T>(this IAdapter @this, ITableMaps? maps = null)
 		{
 			// Get map and select list
 			var map = (maps ?? TableMaps.Instance).GetMap<T>();
@@ -53,7 +53,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
 		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string UpdateSingle<T>(this IAdapter @this, TableMaps? maps = null)
+		public static string UpdateSingle<T>(this IAdapter @this, ITableMaps? maps = null)
 		{
 			// Get map and columns
 			var map = (maps ?? TableMaps.Instance).GetMap<T>();
@@ -77,7 +77,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
 		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string DeleteSingle<T>(this IAdapter @this, TableMaps? maps = null)
+		public static string DeleteSingle<T>(this IAdapter @this, ITableMaps? maps = null)
 		{
 			// Get map and columns
 			var map = (maps ?? TableMaps.Instance).GetMap<T>();

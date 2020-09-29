@@ -30,7 +30,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="table">Table to map TEntity to</param>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static void To<TTable>(TTable table, TableMaps? maps = null)
+		public static void To<TTable>(TTable table, ITableMaps? maps = null)
 			where TTable : Table
 		{
 			lock (_)
@@ -45,7 +45,6 @@ namespace Jeebs.Data.Mapping
 				if (!validTables.Contains(typeof(TTable)))
 				{
 					Validate<TTable>();
-					validTables.Add(typeof(TTable));
 				}
 
 				// Get mapped properties and the corresponding column names
@@ -60,7 +59,7 @@ namespace Jeebs.Data.Mapping
 							  );
 
 				// Get ID property
-				var idProperty = GetPropertyWith<IdAttribute>(columns);
+				var idProperty = GetColumnWith<IdAttribute>(columns);
 
 				// Create Table Map
 				var map = new TableMap(table.ToString(), columns.ToList(), idProperty);
@@ -68,14 +67,14 @@ namespace Jeebs.Data.Mapping
 				// Get Version property
 				if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
 				{
-					map.VersionColumn = GetPropertyWith<VersionAttribute>(columns);
+					map.VersionColumn = GetColumnWith<VersionAttribute>(columns);
 				}
 
 				// Add Map
 				(maps ?? TableMaps.Instance).TryAdd<TEntity>(map);
 
-				// Get the property with the specified attribute
-				static MappedColumn GetPropertyWith<TAttribute>(IEnumerable<MappedColumn> columns)
+				// Get the column with the specified attribute
+				static MappedColumn GetColumnWith<TAttribute>(IEnumerable<MappedColumn> columns)
 					where TAttribute : Attribute
 				{
 					var name = typeof(TAttribute).Name.Replace(nameof(Attribute), string.Empty);
@@ -135,6 +134,9 @@ namespace Jeebs.Data.Mapping
 			{
 				throw new Jx.Data.Mapping.InvalidTableMapException(string.Join("\n", errors));
 			}
+
+			// Add to the list of valid tables
+			validTables.Add(typeof(TTable));
 		}
 	}
 }

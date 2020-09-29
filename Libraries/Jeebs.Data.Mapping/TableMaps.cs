@@ -6,17 +6,15 @@ using System.Text;
 
 namespace Jeebs.Data.Mapping
 {
-	/// <summary>
-	/// Caches mappings of entities to tables
-	/// </summary>
-	public sealed class TableMaps
+	/// <inheritdoc/>
+	public sealed class TableMaps : ITableMaps
 	{
 		#region Static 
 
 		/// <summary>
 		/// TableMaps default instance
 		/// </summary>
-		public static readonly TableMaps Instance = new TableMaps();
+		public static readonly ITableMaps Instance = new TableMaps();
 
 		#endregion
 
@@ -27,10 +25,7 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		internal TableMaps() { }
 
-		/// <summary>
-		/// Returns true if <typeparamref name="TEntity"/> has already been mapped
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <inheritdoc/>
 		public bool Exists<TEntity>()
 			=> maps.ContainsKey(typeof(TEntity));
 
@@ -40,7 +35,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <exception cref="Jx.Data.MappingException">If <typeparamref name="TEntity"/> has already been mapped</exception>
 		/// <param name="map">TableMap</param>
-		internal bool TryAdd<TEntity>(TableMap map)
+		public bool TryAdd<TEntity>(TableMap map)
 			=> maps.TryAdd(typeof(TEntity), map);
 
 		/// <summary>
@@ -59,39 +54,24 @@ namespace Jeebs.Data.Mapping
 			throw new Jx.Data.Mapping.UnmappedEntityException(type);
 		}
 
-		/// <summary>
-		/// Get map for <typeparamref name="TEntity"/>
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <inheritdoc/>
 		public TableMap GetMap<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map);
 
-		/// <summary>
-		/// Get table name for <typeparamref name="TEntity"/>
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <inheritdoc/>
 		public string GetTableName<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.Name);
 
-		/// <summary>
-		/// Get mapped columns for <typeparamref name="TEntity"/>
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		public IEnumerable<MappedColumn> GetColumns<TEntity>()
+		/// <inheritdoc/>
+		public IEnumerable<IMappedColumn> GetColumns<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.Columns);
 
-		/// <summary>
-		/// Get Id Property for <typeparamref name="TEntity"/>
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		public MappedColumn GetIdProperty<TEntity>()
+		/// <inheritdoc/>
+		public IMappedColumn GetIdProperty<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.IdColumn);
 
-		/// <summary>
-		/// Get Version Property for <typeparamref name="TEntity"/>
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		public MappedColumn? GetVersionProperty<TEntity>()
+		/// <inheritdoc/>
+		public IMappedColumn? GetVersionProperty<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.VersionColumn);
 	}
 }
