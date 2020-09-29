@@ -116,18 +116,18 @@ namespace Jeebs.WordPress
 			UserMeta = new UserMetaTable(tablePrefix);
 
 			// Map entities to tables
-			Map<Tc>.To(Comment, Adapter);
-			Map<Tcm>.To(CommentMeta, Adapter);
-			Map<Tl>.To(Link, Adapter);
-			Map<To>.To(Option, Adapter);
-			Map<Tp>.To(Post, Adapter);
-			Map<Tpm>.To(PostMeta, Adapter);
-			Map<Tt>.To(Term, Adapter);
-			Map<Ttm>.To(TermMeta, Adapter);
-			Map<Ttr>.To(TermRelationship, Adapter);
-			Map<Ttt>.To(TermTaxonomy, Adapter);
-			Map<Tu>.To(User, Adapter);
-			Map<Tum>.To(UserMeta, Adapter);
+			Map<Tc>.To(Comment);
+			Map<Tcm>.To(CommentMeta);
+			Map<Tl>.To(Link);
+			Map<To>.To(Option);
+			Map<Tp>.To(Post);
+			Map<Tpm>.To(PostMeta);
+			Map<Tt>.To(Term);
+			Map<Ttm>.To(TermMeta);
+			Map<Ttr>.To(TermRelationship);
+			Map<Ttt>.To(TermTaxonomy);
+			Map<Tu>.To(User);
+			Map<Tum>.To(UserMeta);
 		}
 
 		/// <summary>

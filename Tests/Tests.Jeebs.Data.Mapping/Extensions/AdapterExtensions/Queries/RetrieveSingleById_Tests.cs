@@ -35,7 +35,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
 
 			var table = new FooTable();
-			Map<Foo>.To(table, adapter, maps);
+			Map<Foo>.To(table, maps);
 
 			// Act
 			AdapterExtensions.RetrieveSingleById<Foo>(adapter, maps);

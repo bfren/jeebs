@@ -10,7 +10,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public SqlServerAdapter() : base('.', ',', '[', ']', "AS", '[', ']', "ASC", "DESC") { }
+		public SqlServerAdapter() : base('.', ',', ',', '[', ']', "AS", '[', ']', "ASC", "DESC") { }
 
 		/// <inheritdoc/>
 		public override string GetRandomSortOrder()

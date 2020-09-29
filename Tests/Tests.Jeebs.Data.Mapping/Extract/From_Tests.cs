@@ -48,9 +48,9 @@ namespace Jeebs.Data.Mapping.Extract_Tests
 			// Assert
 			Assert.Equal(3, result.Count);
 			Assert.Equal(t0.ToString(), result[0].Table);
-			Assert.Equal(t0.Id, result[0].Column);
-			Assert.Equal(t0.Bar0, result[1].Column);
-			Assert.Equal(t1.Bar2, result[2].Column);
+			Assert.Equal(t0.Id, result[0].Name);
+			Assert.Equal(t0.Bar0, result[1].Name);
+			Assert.Equal(t1.Bar2, result[2].Name);
 		}
 
 		public class FooCombined

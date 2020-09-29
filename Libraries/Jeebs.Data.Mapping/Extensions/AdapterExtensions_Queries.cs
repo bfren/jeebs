@@ -19,7 +19,7 @@ namespace Jeebs.Data.Mapping
 		{
 			// Get map and columns
 			var map = (maps ?? TableMaps.Instance).GetMap<T>();
-			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
+			(var columns, var aliases) = map.GetWriteableColumnNamesAndAliases();
 
 			// Get SQL from adapter
 			return @this.CreateSingleAndReturnId(map.Name, columns, aliases);
@@ -44,7 +44,7 @@ namespace Jeebs.Data.Mapping
 			}
 
 			// Get SQL from adapter
-			return @this.RetrieveSingleById(select, map.Name, map.IdColumn.Column);
+			return @this.RetrieveSingleById(select, map.Name, map.IdColumn.Name);
 		}
 
 		/// <summary>
@@ -57,17 +57,17 @@ namespace Jeebs.Data.Mapping
 		{
 			// Get map and columns
 			var map = (maps ?? TableMaps.Instance).GetMap<T>();
-			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
+			(var columns, var aliases) = map.GetWriteableColumnNamesAndAliases();
 			var id = map.IdColumn;
 
 			// Get SQL from adapter
 			if (map.VersionColumn is MappedColumn v)
 			{
-				return @this.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name, v.Column, v.Property.Name);
+				return @this.UpdateSingle(map.Name, columns, aliases, id.Name, id.Property.Name, v.Name, v.Property.Name);
 			}
 			else
 			{
-				return @this.UpdateSingle(map.Name, columns, aliases, id.Column, id.Property.Name);
+				return @this.UpdateSingle(map.Name, columns, aliases, id.Name, id.Property.Name);
 			}
 		}
 
@@ -86,11 +86,11 @@ namespace Jeebs.Data.Mapping
 			// Get SQL from adapter
 			if (map.VersionColumn is MappedColumn v)
 			{
-				return @this.DeleteSingle(map.Name, id.Column, id.Property.Name, v.Column, v.Property.Name);
+				return @this.DeleteSingle(map.Name, id.Name, id.Property.Name, v.Name, v.Property.Name);
 			}
 			else
 			{
-				return @this.DeleteSingle(map.Name, id.Column, id.Property.Name);
+				return @this.DeleteSingle(map.Name, id.Name, id.Property.Name);
 			}
 		}
 	}

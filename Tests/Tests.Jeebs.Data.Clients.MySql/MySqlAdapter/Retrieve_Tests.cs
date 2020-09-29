@@ -39,14 +39,12 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var result = adapter.Retrieve(parts);
 
 			// Assert
-			Assert.Equal("SELECT * FROM `one`;", result);
+			Assert.Equal("SELECT * FROM one;", result);
 		}
 
 		[Theory]
 		[InlineData("two, three")]
 		[InlineData("`two`,`three`")]
-		[InlineData("`two,three`")]
-		[InlineData("`    ``two`` ,  three  ")]
 		public void Selects_Columns(string input)
 		{
 			// Arrange
@@ -59,7 +57,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var result = adapter.Retrieve(parts);
 
 			// Assert
-			Assert.Equal("SELECT `two`, `three` FROM `one`;", result);
+			Assert.Equal($"SELECT {input} FROM one;", result);
 		}
 	}
 }

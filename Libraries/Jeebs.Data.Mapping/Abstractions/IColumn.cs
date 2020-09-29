@@ -5,19 +5,19 @@ using System.Text;
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
-	/// Holds information about a column extracted from a Model for the select clause of a query
+	/// Holds information about a column
 	/// </summary>
-	public interface IExtractedColumn
+	public interface IColumn
 	{
 		/// <summary>
-		/// Escaped Table Name
+		/// Table Name
 		/// </summary>
 		string Table { get; }
 
 		/// <summary>
-		/// Escaped Column Name
+		/// Column Name
 		/// </summary>
-		string Column { get; }
+		string Name { get; }
 
 		/// <summary>
 		/// Column Alias

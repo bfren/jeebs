@@ -6,11 +6,8 @@ using System.Text;
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IMappedColumn"/>
-	public sealed class MappedColumn : IMappedColumn
+	public sealed class MappedColumn : Column, IMappedColumn
 	{
-		/// <inheritdoc/>
-		public string Column { get; }
-
 		/// <inheritdoc/>
 		public PropertyInfo Property { get; }
 
@@ -19,13 +16,13 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <param name="column">Escaped Column Name</param>
 		/// <param name="property">Entity property PropertyInfo</param>
-		public MappedColumn(string column, PropertyInfo property)
-			=> (Column, Property) = (column, property);
+		public MappedColumn(string table, string name, PropertyInfo property) : base(table, name, property.Name)
+			=> Property = property;
 
 		/// <summary>
 		/// Return Escaped Column Name
 		/// </summary>
 		public override string ToString()
-			=> Column;
+			=> Name;
 	}
 }

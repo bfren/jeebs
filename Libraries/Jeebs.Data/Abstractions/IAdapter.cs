@@ -21,6 +21,11 @@ namespace Jeebs.Data
 		char ColumnSeparator { get; }
 
 		/// <summary>
+		/// List separator character
+		/// </summary>
+		char ListSeparator { get; }
+
+		/// <summary>
 		/// Escape character
 		/// </summary>
 		char EscapeOpen { get; }
@@ -91,7 +96,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="name">Column name</param>
 		/// <param name="alias">Column alias</param>
-		string EscapeColumn(string name, string alias);
+		/// <param name="table">Table name</param>
+		string EscapeColumn(string name, string alias, string? table = null);
 
 		#endregion
 

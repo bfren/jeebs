@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Jeebs.Data.Mapping
 {
-	/// <inheritdoc cref="IExtractedColumn"/>
-	public sealed class ExtractedColumn : IExtractedColumn
+	/// <inheritdoc cref="IColumn"/>
+	public class Column : IColumn
 	{
 		/// <inheritdoc/>
 		public string Table { get; }
 
 		/// <inheritdoc/>
-		public string Column { get; }
+		public string Name { get; }
 
 		/// <inheritdoc/>
 		public string Alias { get; }
@@ -19,32 +19,32 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="table">Escaped Table Name</param>
-		/// <param name="column">Escaped Column Name</param>
+		/// <param name="table">Table Name</param>
+		/// <param name="name">Column Name</param>
 		/// <param name="alias">Column Alias</param>
-		public ExtractedColumn(string table, string column, string alias)
-			=> (Table, Column, Alias) = (table, column, alias);
+		public Column(string table, string name, string alias)
+			=> (Table, Name, Alias) = (table, name, alias);
 
 		/// <summary>
 		/// Extracted Column Comparer
 		/// </summary>
-		public class Comparer : IEqualityComparer<IExtractedColumn>
+		public class Comparer : IEqualityComparer<IColumn>
 		{
 			/// <summary>
 			/// Returns true if the two aliases are identical
 			/// </summary>
-			/// <param name="x">IExtractedColumn 1</param>
-			/// <param name="y">IExtractedColumn 2</param>
+			/// <param name="x">IColumn 1</param>
+			/// <param name="y">IColumn 2</param>
 			/// <returns>True if the aliases of the two columns are identical</returns>
-			public bool Equals(IExtractedColumn x, IExtractedColumn y)
+			public bool Equals(IColumn x, IColumn y)
 				=> x.Alias == y.Alias;
 
 			/// <summary>
 			/// Return object's hash code
 			/// </summary>
-			/// <param name="obj">IExtractedColumn</param>
+			/// <param name="obj">IColumn</param>
 			/// <returns>Hash code</returns>
-			public int GetHashCode(IExtractedColumn obj) 
+			public int GetHashCode(IColumn obj) 
 				=> obj.Alias.GetHashCode();
 		}
 	}

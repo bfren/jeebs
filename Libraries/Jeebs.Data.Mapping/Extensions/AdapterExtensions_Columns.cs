@@ -33,8 +33,8 @@ namespace Jeebs.Data.Mapping
 		/// Join list of ExtractedColumn objects
 		/// </summary>
 		/// <param name="this">IAdapter</param>
-		/// <param name="columns">IExtractedColumns</param>
-		public static string Join(this IAdapter @this, IExtractedColumns columns)
+		/// <param name="columns">IColumns</param>
+		public static string Join(this IAdapter @this, IColumns columns)
 		{
 			// Get each column
 			var select = new List<string>();
@@ -48,19 +48,11 @@ namespace Jeebs.Data.Mapping
 		}
 
 		/// <summary>
-		/// Get an ExtractedColumn
+		/// Escape a Column
 		/// </summary>
 		/// <param name="this">IAdapter</param>
-		/// <param name="col">IExtractedColumn</param>
-		public static string GetColumn(this IAdapter @this, IExtractedColumn col)
-			=> @this.EscapeColumn(string.Concat(col.Table, @this.SchemaSeparator, col.Column), col.Alias);
-
-		/// <summary>
-		/// Get a MappedColumn
-		/// </summary>
-		/// <param name="this">IAdapter</param>
-		/// <param name="col">IMappedColumn</param>
-		public static string GetColumn(this IAdapter @this, IMappedColumn col)
-			=> @this.EscapeColumn(col.Column, col.Property.Name);
+		/// <param name="col">IColumn</param>
+		public static string GetColumn(this IAdapter @this, IColumn col)
+			=> @this.EscapeColumn(name: col.Name, alias: col.Alias, table: col.Table);
 	}
 }

@@ -9,6 +9,7 @@ namespace Jeebs.Data.Adapter_Tests
 	{
 		public const char SchemaSeparator = '.';
 		public const char ColumnSeparator = '|';
+		public const char ListSeparator = '+';
 		public const char EscapeOpen = '[';
 		public const char EscapeClose = ']';
 		public const string Alias = "AS";
@@ -18,6 +19,6 @@ namespace Jeebs.Data.Adapter_Tests
 		public const string SortDesc = "DESC";
 
 		public static Data.Adapter GetAdapter()
-			=> Substitute.For<Data.Adapter>(SchemaSeparator, ColumnSeparator, EscapeOpen, EscapeClose, Alias, AliasOpen, AliasClose, SortAsc, SortDesc);
+			=> Substitute.For<Data.Adapter>(SchemaSeparator, ColumnSeparator, ListSeparator, EscapeOpen, EscapeClose, Alias, AliasOpen, AliasClose, SortAsc, SortDesc);
 	}
 }

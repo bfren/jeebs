@@ -9,7 +9,6 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 	{
 		[Theory]
 		[InlineData("foo", "`foo`")]
-		[InlineData("`foo`", "`foo`")]
 		[InlineData("foo.bar", "`foo`.`bar`")]
 		public void Returns_Escaped(string input, string expected)
 		{

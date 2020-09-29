@@ -25,7 +25,7 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal Builder(IWpDb db) : base(db.Adapter, db.PostMeta)
+			internal Builder(IWpDb db) : base(db.Adapter, db.Term)
 				=> this.db = db;
 
 			/// <inheritdoc/>
@@ -41,14 +41,14 @@ namespace Jeebs.WordPress
 				// WHERE Taxonomies
 				if (opt.Taxonomies.Count > 0)
 				{
-					var taxonomies = string.Join($"'{Adapter.ColumnSeparator}'", opt.Taxonomies);
+					var taxonomies = string.Join($"'{Adapter.ListSeparator}'", opt.Taxonomies);
 					AddWhere($"{__(db.TermTaxonomy, tx => tx.Taxonomy)} IN ('{taxonomies}')");
 				}
 
 				// WHERE Post IDs
 				if (opt.PostIds.Count > 0)
 				{
-					var postIds = string.Join(Adapter.ColumnSeparator, opt.PostIds);
+					var postIds = string.Join(Adapter.ListSeparator, opt.PostIds);
 					AddWhere($"{__(db.TermRelationship, tr => tr.PostId)} IN ({postIds})");
 				}
 

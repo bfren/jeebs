@@ -19,6 +19,7 @@ namespace Jeebs.Data.Adapter_Tests
 			// Assert
 			Assert.Equal(SchemaSeparator, adapter.SchemaSeparator);
 			Assert.Equal(ColumnSeparator, adapter.ColumnSeparator);
+			Assert.Equal(ListSeparator, adapter.ListSeparator);
 			Assert.Equal(EscapeOpen, adapter.EscapeOpen);
 			Assert.Equal(EscapeClose, adapter.EscapeClose);
 			Assert.Equal(Alias, adapter.Alias);

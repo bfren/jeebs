@@ -27,10 +27,9 @@ namespace Jeebs.Data.Adapter_Tests
 		}
 
 		[Theory]
-		[InlineData("one", SortOrder.Ascending, "[one] ASC")]
-		[InlineData("][[one][]", SortOrder.Ascending, "[one] ASC")]
-		[InlineData("two", SortOrder.Descending, "[two] DESC")]
-		public void Returns_Escaped_Column_And_Order(string column, SortOrder order, string expected)
+		[InlineData("one", SortOrder.Ascending, "one ASC")]
+		[InlineData("two", SortOrder.Descending, "two DESC")]
+		public void Returns_Column_And_Order(string column, SortOrder order, string expected)
 		{
 			// Arrange
 			var adapter = GetAdapter();

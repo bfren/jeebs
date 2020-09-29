@@ -12,7 +12,7 @@ namespace Jeebs.Data.Mapping
 	public sealed class TableMap
 	{
 		/// <summary>
-		/// Escaped Table Name
+		/// Table Name
 		/// </summary>
 		public string Name { get; set; }
 
@@ -41,23 +41,23 @@ namespace Jeebs.Data.Mapping
 			=> (Name, Columns, IdColumn) = (name, columns, idColumn);
 
 		/// <summary>
-		/// Get all column names (they will be escaped)
+		/// Get all column names
 		/// </summary>
 		public IEnumerable<string> GetColumnNames()
-			=> Columns.Select(mc => mc.Column);
+			=> Columns.Select(mc => mc.Name);
 
 		/// <summary>
 		/// Get all column aliases
 		/// </summary>
 		/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
 		public IEnumerable<string> GetAliases(bool includeIdAlias)
-			=> Columns.Select(mc => mc.Property.Name).Where(a => includeIdAlias || a != IdColumn.Property.Name);
+			=> Columns.Select(mc => mc.Alias).Where(a => includeIdAlias || a != IdColumn.Alias);
 
 		/// <summary>
 		/// Get all column names and aliases for writeable columns
 		/// (i.e. not marked with <see cref="IdAttribute"/>, <see cref="ComputedAttribute"/> or <see cref="ReadonlyAttribute"/>
 		/// </summary>
-		public (List<string> columns, List<string> aliases) GetWriteableColumnsAndAliases()
+		public (List<string> names, List<string> aliases) GetWriteableColumnNamesAndAliases()
 		{
 			// Query
 			var writeable = from c in Columns
@@ -73,8 +73,8 @@ namespace Jeebs.Data.Mapping
 
 			// Return
 			return (
-				writeable.Select(w => w.Column).ToList(),
-				writeable.Select(w => w.Property.Name).ToList()
+				writeable.Select(w => w.Name).ToList(),
+				writeable.Select(w => w.Alias).ToList()
 			);
 		}
 

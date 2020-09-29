@@ -9,7 +9,6 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 	{
 		[Theory]
 		[InlineData("foo", "`foo`")]
-		[InlineData("`foo`", "`foo`")]
 		[InlineData("foo.bar", "`foo`.`bar`")]
 		[InlineData("foo..bar", "`foo`.`bar`")]
 		[InlineData("foo.   .bar", "`foo`.`bar`")]

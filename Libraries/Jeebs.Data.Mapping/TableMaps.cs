@@ -7,7 +7,7 @@ using System.Text;
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
-	/// Holds TableMaps of mapped entities
+	/// Caches mappings of entities to tables
 	/// </summary>
 	public sealed class TableMaps
 	{

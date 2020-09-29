@@ -8,13 +8,8 @@ namespace Jeebs.Data.Mapping
 	/// <summary>
 	/// Holds information about a column mapped using <seealso cref="Map{TEntity}"/>
 	/// </summary>
-	public interface IMappedColumn
+	public interface IMappedColumn : IColumn
 	{
-		/// <summary>
-		/// Escaped Column Name
-		/// </summary>
-		string Column { get; }
-
 		/// <summary>
 		/// Entity Property
 		/// </summary>

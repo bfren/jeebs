@@ -39,20 +39,6 @@ namespace Jeebs.Data.Adapter_Tests
 		}
 
 		[Fact]
-		public void Remove_Escape_Characters_And_Trim_First()
-		{
-			// Arrange
-			var adapter = GetAdapter();
-			var input = $" {EscapeClose}{EscapeOpen}{EscapeClose} one {EscapeOpen}{EscapeClose}{EscapeOpen} ";
-
-			// Act
-			var result = adapter.Escape(input);
-
-			// Assert
-			Assert.Equal("[one]", result);
-		}
-
-		[Fact]
 		public void Escape_Simple()
 		{
 			// Arrange

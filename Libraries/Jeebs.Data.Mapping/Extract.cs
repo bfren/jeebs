@@ -16,7 +16,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Cached maps of table classes to columns
 		/// </summary>
-		private static readonly ConcurrentDictionary<string, IExtractedColumns> cache = new ConcurrentDictionary<string, IExtractedColumns>();
+		private static readonly ConcurrentDictionary<string, IColumns> cache = new ConcurrentDictionary<string, IColumns>();
 
 		/// <summary>
 		/// Properties of <typeparamref name="TModel"/> that have not been marked with <see cref="IgnoreAttribute"/>
@@ -33,12 +33,12 @@ namespace Jeebs.Data.Mapping
 		/// Extract columns from specified tables
 		/// </summary>
 		/// <param name="tables">List of tables</param>
-		public static IExtractedColumns From(params Table[] tables)
+		public static IColumns From(params Table[] tables)
 		{
 			// If no tables, return empty extracted list
 			if (tables.Length == 0)
 			{
-				return new ExtractedColumns();
+				return new Columns();
 			}
 
 			// Extract columns from each table
@@ -53,24 +53,24 @@ namespace Jeebs.Data.Mapping
 			}
 
 			// Get only distinct columns
-			var distinctColumns = columns.Distinct(new ExtractedColumn.Comparer());
+			var distinctColumns = columns.Distinct(new Column.Comparer());
 
 			// Return
-			return new ExtractedColumns(distinctColumns);
+			return new Columns(distinctColumns);
 		}
 
 		/// <summary>
 		/// Extract columns from a single table
 		/// </summary>
 		/// <param name="table">Table</param>
-		private static IExtractedColumns ExtractColumnsFromTable(Table table)
-			=> cache.GetOrAdd(table.ToString(), tbl =>
+		private static IColumns ExtractColumnsFromTable(Table table)
+			=> cache.GetOrAdd(table.ToString(), tableName =>
 			{
 				// Get the list of fields
 				var tableFields = table.GetType().GetFields();
 
 				// Holds the list of column names being extracted
-				var extracted = new ExtractedColumns();
+				var extracted = new Columns();
 				foreach (var property in modelProperties)
 				{
 					// Get the corresponding field
@@ -85,7 +85,7 @@ namespace Jeebs.Data.Mapping
 					// Add the column to the extraction list
 					var column = field.GetValue(table).ToString();
 					var alias = property.Name;
-					extracted.Add(new ExtractedColumn(tbl, column, alias));
+					extracted.Add(new Column(tableName, column, alias));
 				}
 
 				// Return extracted columns

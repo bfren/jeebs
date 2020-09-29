@@ -34,7 +34,7 @@ namespace Jeebs.WordPress
 				// WHERE Post IDs
 				if (opt.PostIds is List<long> postIds && postIds.Count > 0)
 				{
-					AddWhere($"{__(db.PostMeta, pm => pm.PostId)} IN ({string.Join(Adapter.ColumnSeparator, postIds)})");
+					AddWhere($"{__(db.PostMeta, pm => pm.PostId)} IN ({string.Join(Adapter.ListSeparator, postIds)})");
 				}
 
 				// Finish and return

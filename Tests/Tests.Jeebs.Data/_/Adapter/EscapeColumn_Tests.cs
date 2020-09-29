@@ -56,5 +56,21 @@ namespace Jeebs.Data.Adapter_Tests
 			// Assert
 			Assert.Equal("[one] AS {two}", result);
 		}
+
+		[Fact]
+		public void Escaped_Name_With_Alias_And_Table()
+		{
+			// Arrange
+			var name = "one";
+			var alias = "two";
+			var table = "three";
+			var adapter = GetAdapter();
+
+			// Act
+			var result = adapter.EscapeColumn(name, alias, table);
+
+			// Assert
+			Assert.Equal("[three].[one] AS {two}", result);
+		}
 	}
 }

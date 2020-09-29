@@ -33,7 +33,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var table = new FooUnwriteableTable();
-			Map<FooUnwriteable>.To(table, adapter, maps);
+			Map<FooUnwriteable>.To(table, maps);
 
 			// Act
 			void action() => AdapterExtensions.UpdateSingle<FooUnwriteable>(adapter, maps);
@@ -53,10 +53,10 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var foo0 = new FooTable();
-			Map<Foo>.To(foo0, adapter, maps);
+			Map<Foo>.To(foo0, maps);
 
 			var foo1 = new FooWithVersionTable();
-			Map<FooWithVersion>.To(foo1, adapter, maps);
+			Map<FooWithVersion>.To(foo1, maps);
 
 			// Act
 			AdapterExtensions.UpdateSingle<Foo>(adapter, maps);

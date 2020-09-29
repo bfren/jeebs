@@ -17,6 +17,9 @@ namespace Jeebs.Data
 		public char ColumnSeparator { get; }
 
 		/// <inheritdoc/>
+		public char ListSeparator { get; }
+
+		/// <inheritdoc/>
 		public char EscapeOpen { get; }
 
 		/// <inheritdoc/>
@@ -42,6 +45,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="schemaSeparator">Schema separator character</param>
 		/// <param name="columnSeparator">Column separator string</param>
+		/// <param name="listSeparator">List separator string</param>
 		/// <param name="escapeOpen">Open escape character</param>
 		/// <param name="escapeClose">Close escape character</param>
 		/// <param name="alias">Alias keyword</param>
@@ -49,10 +53,11 @@ namespace Jeebs.Data
 		/// <param name="aliasClose">Alias close character</param>
 		/// <param name="sortAsc">Sort Ascending string</param>
 		/// <param name="sortDesc">Sort Descending string</param>
-		protected Adapter(char schemaSeparator, char columnSeparator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
+		protected Adapter(char schemaSeparator, char columnSeparator, char listSeparator, char escapeOpen, char escapeClose, string alias, char aliasOpen, char aliasClose, string sortAsc, string sortDesc)
 		{
 			SchemaSeparator = schemaSeparator;
 			ColumnSeparator = columnSeparator;
+			ListSeparator = listSeparator;
 			EscapeOpen = escapeOpen;
 			EscapeClose = escapeClose;
 			Alias = alias;
@@ -74,25 +79,20 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public string Escape(string name)
 		{
-			// Trim escape characters and start / ending whitespace
-			var trimmed = name?
-				.ReplaceAll(new[] { EscapeOpen.ToString(), EscapeClose.ToString()}, string.Empty)
-				.Trim();
-
 			// Handle empty names
-			if (string.IsNullOrWhiteSpace(trimmed))
+			if (string.IsNullOrWhiteSpace(name))
 			{
 				return string.Empty;
 			}
 
 			// If the name contains the separator character, use SplitAndEscape() instead
-			if (trimmed.Contains(SchemaSeparator))
+			if (name.Contains(SchemaSeparator))
 			{
-				return SplitAndEscape(trimmed);
+				return SplitAndEscape(name);
 			}
 
 			// Return escaped name
-			return $"{EscapeOpen}{trimmed}{EscapeClose}";
+			return $"{EscapeOpen}{name}{EscapeClose}";
 		}
 
 		/// <inheritdoc/>
@@ -141,7 +141,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string EscapeColumn(string name, string alias)
+		public string EscapeColumn(string name, string alias, string? table = null)
 		{
 			// Handle no name
 			if (string.IsNullOrWhiteSpace(name))
@@ -156,7 +156,7 @@ namespace Jeebs.Data
 			}
 
 			// Escape with alias
-			return $"{Escape(name)} {Alias} {AliasOpen}{alias}{AliasClose}";
+			return $"{EscapeAndJoin(table, name)} {Alias} {AliasOpen}{alias}{AliasClose}";
 		}
 
 		#endregion
@@ -172,7 +172,7 @@ namespace Jeebs.Data
 				return string.Empty;
 			}
 
-			return $"{Escape(column)} {(order == SortOrder.Ascending ? SortAsc : SortDesc)}";
+			return $"{column} {(order == SortOrder.Ascending ? SortAsc : SortDesc)}";
 		}
 
 		/// <inheritdoc/>

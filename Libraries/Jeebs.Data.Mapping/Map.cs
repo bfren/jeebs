@@ -30,7 +30,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="table">Table to map TEntity to</param>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static void To<TTable>(TTable table, IAdapter adapter, TableMaps? maps = null)
+		public static void To<TTable>(TTable table, TableMaps? maps = null)
 			where TTable : Table
 		{
 			lock (_)
@@ -54,7 +54,8 @@ namespace Jeebs.Data.Mapping
 							  where property.GetCustomAttribute<IgnoreAttribute>() == null
 							  select new MappedColumn
 							  (
-								  column: adapter.Escape(column.GetValue(table).ToString()),
+								  table: table.ToString(),
+								  name: column.GetValue(table).ToString(),
 								  property: property
 							  );
 
@@ -62,7 +63,7 @@ namespace Jeebs.Data.Mapping
 				var id = GetPropertyWith<IdAttribute>(columns);
 
 				// Create Table Map
-				var map = new TableMap(adapter.Escape(table.ToString()), columns.ToList(), id);
+				var map = new TableMap(table.ToString(), columns.ToList(), id);
 
 				// Get Version property
 				if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))

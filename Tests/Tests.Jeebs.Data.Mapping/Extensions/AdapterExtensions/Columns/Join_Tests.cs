@@ -13,8 +13,6 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		{
 			// Arrange
 			var adapter = Substitute.For<IAdapter>();
-			adapter.SchemaSeparator
-				.Returns('/');
 			adapter.ColumnSeparator
 				.Returns('|');
 			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>())
@@ -27,7 +25,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			var result = AdapterExtensions.Join(adapter, columns);
 
 			// Assert
-			Assert.Equal($"{t}/{t.Id}| {t}/{t.Bar0}| {t}/{t.Bar1}", result);
+			Assert.Equal($"{t.Id}| {t.Bar0}| {t.Bar1}", result);
 		}
 	}
 }

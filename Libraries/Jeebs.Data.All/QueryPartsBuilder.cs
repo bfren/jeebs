@@ -19,7 +19,7 @@ namespace Jeebs.Data
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
-		protected QueryPartsBuilderExtended(IAdapter adapter, Table table, params Table[] tables) : base(adapter, adapter.EscapeAndJoin(tables.Prepend(table))) { }
+		protected QueryPartsBuilderExtended(IAdapter adapter, Table table) : base(adapter, adapter.Escape(table)) { }
 
 		/// <summary>
 		/// Add SELECT shorthand

@@ -88,7 +88,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var result = adapter.CreateSingleAndReturnId(table, columns, aliases);
 
 			// Assert
-			Assert.Equal("INSERT INTO `one` (`two`, `three`) VALUES (@four, @five); SELECT LAST_INSERT_ID();", result);
+			Assert.Equal("INSERT INTO one (two, three) VALUES (@four, @five); SELECT LAST_INSERT_ID();", result);
 		}
 	}
 }

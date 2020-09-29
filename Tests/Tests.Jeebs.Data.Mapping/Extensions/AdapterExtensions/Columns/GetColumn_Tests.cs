@@ -14,14 +14,12 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		{
 			// Arrange
 			var adapter = Substitute.For<IAdapter>();
-			var sep = '/';
-			adapter.SchemaSeparator.Returns(sep);
 
-			var extracted = Substitute.For<IExtractedColumn>();
+			var extracted = Substitute.For<IColumn>();
 			var table = "foo";
 			extracted.Table.Returns(table);
 			var column = "bar";
-			extracted.Column.Returns(column);
+			extracted.Name.Returns(column);
 			var alias = "Bar";
 			extracted.Alias.Returns(alias);
 
@@ -30,8 +28,9 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			// Assert
 			adapter.Received().EscapeColumn(
-				Arg.Is($"{table}{sep}{column}"),
-				Arg.Is(alias)
+				Arg.Is(column),
+				Arg.Is(alias),
+				Arg.Is(table)
 			);
 		}
 
@@ -45,11 +44,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			var mapped = Substitute.For<IMappedColumn>();
 			var column = "bar";
-			mapped.Column.Returns(column);
+			mapped.Name.Returns(column);
 			var alias = "Bar";
-			var aliasProperty = Substitute.For<PropertyInfo>();
-			aliasProperty.Name.Returns(alias);
-			mapped.Property.Returns(aliasProperty);
+			mapped.Alias.Returns(alias);
+			var table = "foo";
+			mapped.Table.Returns(table);
 
 			// Act
 			AdapterExtensions.GetColumn(adapter, mapped);
@@ -57,7 +56,8 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			// Assert
 			adapter.Received().EscapeColumn(
 				Arg.Is(column),
-				Arg.Is(alias)
+				Arg.Is(alias),
+				Arg.Is(table)
 			);
 		}
 	}
