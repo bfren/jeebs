@@ -12,11 +12,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
-			TableMaps.Clear();
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act
-			void action() => AdapterExtensions.UpdateSingle<Foo>(adapter);
+			void action() => AdapterExtensions.UpdateSingle<Foo>(adapter, maps);
 
 			// Assert
 			var ex = Assert.Throws<Jx.Data.MappingException>(action);
@@ -27,15 +27,16 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Mapped_Model_No_Writeable_Columns_Throws_MappingException()
 		{
 			// Arrange
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var table = new FooUnwriteableTable();
-			Map<FooUnwriteable>.To(table, adapter);
+			Map<FooUnwriteable>.To(table, adapter, maps);
 
 			// Act
-			void action() => AdapterExtensions.UpdateSingle<FooUnwriteable>(adapter);
+			void action() => AdapterExtensions.UpdateSingle<FooUnwriteable>(adapter, maps);
 
 			// Assert
 			var ex = Assert.Throws<Jx.Data.MappingException>(action);
@@ -46,19 +47,20 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_UpdateSingle_With_Correct_Arguments()
 		{
 			// Arrange
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var foo0 = new FooTable();
-			Map<Foo>.To(foo0, adapter);
+			Map<Foo>.To(foo0, adapter, maps);
 
 			var foo1 = new FooWithVersionTable();
-			Map<FooWithVersion>.To(foo1, adapter);
+			Map<FooWithVersion>.To(foo1, adapter, maps);
 
 			// Act
-			AdapterExtensions.UpdateSingle<Foo>(adapter);
-			AdapterExtensions.UpdateSingle<FooWithVersion>(adapter);
+			AdapterExtensions.UpdateSingle<Foo>(adapter, maps);
+			AdapterExtensions.UpdateSingle<FooWithVersion>(adapter, maps);
 
 			// Assert
 			adapter.Received().UpdateSingle(

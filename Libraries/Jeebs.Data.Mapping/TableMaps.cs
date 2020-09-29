@@ -9,24 +9,29 @@ namespace Jeebs.Data.Mapping
 	/// <summary>
 	/// Holds TableMaps of mapped entities
 	/// </summary>
-	public static class TableMaps
+	public sealed class TableMaps
 	{
-		/// <summary>
-		/// Mapped entities
-		/// </summary>
-		private static readonly ConcurrentDictionary<Type, TableMap> maps = new ConcurrentDictionary<Type, TableMap>();
+		#region Static 
 
 		/// <summary>
-		/// Clear all mapped tables
+		/// TableMaps default instance
 		/// </summary>
-		public static void Clear()
-			=> maps.Clear();
+		public static readonly TableMaps Instance = new TableMaps();
+
+		#endregion
+
+		private readonly ConcurrentDictionary<Type, TableMap> maps = new ConcurrentDictionary<Type, TableMap>();
+
+		/// <summary>
+		/// Only allow internal construction
+		/// </summary>
+		internal TableMaps() { }
 
 		/// <summary>
 		/// Returns true if <typeparamref name="TEntity"/> has already been mapped
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static bool Exists<TEntity>()
+		public bool Exists<TEntity>()
 			=> maps.ContainsKey(typeof(TEntity));
 
 		/// <summary>
@@ -35,7 +40,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <exception cref="Jx.Data.MappingException">If <typeparamref name="TEntity"/> has already been mapped</exception>
 		/// <param name="map">TableMap</param>
-		internal static bool TryAdd<TEntity>(TableMap map)
+		internal bool TryAdd<TEntity>(TableMap map)
 			=> maps.TryAdd(typeof(TEntity), map);
 
 		/// <summary>
@@ -44,7 +49,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TReturn">Return type</typeparam>
 		/// <param name="type">Entity type</param>
 		/// <param name="expression">Expression to get the mapped value</param>
-		private static TReturn SafeGet<TReturn>(Type type, Expression<Func<TableMap, TReturn>> expression)
+		private TReturn SafeGet<TReturn>(Type type, Expression<Func<TableMap, TReturn>> expression)
 		{
 			if (maps.TryGetValue(type, out var map))
 			{
@@ -58,35 +63,35 @@ namespace Jeebs.Data.Mapping
 		/// Get map for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static TableMap GetMap<TEntity>()
+		public TableMap GetMap<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map);
 
 		/// <summary>
 		/// Get table name for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static string GetTableName<TEntity>()
+		public string GetTableName<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.Name);
 
 		/// <summary>
 		/// Get mapped columns for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static IEnumerable<MappedColumn> GetColumns<TEntity>()
+		public IEnumerable<MappedColumn> GetColumns<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.Columns);
 
 		/// <summary>
 		/// Get Id Property for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static MappedColumn GetIdProperty<TEntity>()
+		public MappedColumn GetIdProperty<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.IdColumn);
 
 		/// <summary>
 		/// Get Version Property for <typeparamref name="TEntity"/>
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public static MappedColumn? GetVersionProperty<TEntity>()
+		public MappedColumn? GetVersionProperty<TEntity>()
 			=> SafeGet(typeof(TEntity), map => map.VersionColumn);
 	}
 }

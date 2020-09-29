@@ -12,11 +12,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
-			TableMaps.Clear();
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act
-			void action() => AdapterExtensions.CreateSingleAndReturnId<Foo>(adapter);
+			void action() => AdapterExtensions.CreateSingleAndReturnId<Foo>(adapter, maps);
 
 			// Assert
 			var ex = Assert.Throws<Jx.Data.MappingException>(action);
@@ -27,15 +27,16 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Mapped_Model_No_Writeable_Columns_Throws_MappingException()
 		{
 			// Arrange
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var table = new FooUnwriteableTable();
-			Map<FooUnwriteable>.To(table, adapter);
+			Map<FooUnwriteable>.To(table, adapter, maps);
 
 			// Act
-			void action() => AdapterExtensions.CreateSingleAndReturnId<FooUnwriteable>(adapter);
+			void action() => AdapterExtensions.CreateSingleAndReturnId<FooUnwriteable>(adapter, maps);
 
 			// Assert
 			var ex = Assert.Throws<Jx.Data.MappingException>(action);
@@ -46,16 +47,17 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_CreateSingleAndReturnId_With_Correct_Arguments()
 		{
 			// Arrange
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter
 				.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var table = new FooTable();
-			Map<Foo>.To(table, adapter);
+			Map<Foo>.To(table, adapter, maps);
 
 			// Act
-			AdapterExtensions.CreateSingleAndReturnId<Foo>(adapter);
+			AdapterExtensions.CreateSingleAndReturnId<Foo>(adapter, maps);
 
 			// Assert
 			adapter.Received().CreateSingleAndReturnId(

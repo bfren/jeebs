@@ -12,11 +12,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
-			TableMaps.Clear();
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act
-			void action() => AdapterExtensions.RetrieveSingleById<Foo>(adapter);
+			void action() => AdapterExtensions.RetrieveSingleById<Foo>(adapter, maps);
 
 			// Assert
 			var ex = Assert.Throws<Jx.Data.MappingException>(action);
@@ -27,6 +27,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_RetrieveSingleById_With_Correct_Arguments()
 		{
 			// Arrange
+			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
@@ -34,10 +35,10 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
 
 			var table = new FooTable();
-			Map<Foo>.To(table, adapter);
+			Map<Foo>.To(table, adapter, maps);
 
 			// Act
-			AdapterExtensions.RetrieveSingleById<Foo>(adapter);
+			AdapterExtensions.RetrieveSingleById<Foo>(adapter, maps);
 
 			// Assert
 			adapter.Received().RetrieveSingleById(

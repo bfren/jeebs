@@ -29,13 +29,14 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <param name="table">Table to map TEntity to</param>
 		/// <param name="adapter">IAdapter</param>
-		public static void To<TTable>(TTable table, IAdapter adapter)
+		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
+		public static void To<TTable>(TTable table, IAdapter adapter, TableMaps? maps = null)
 			where TTable : Table
 		{
 			lock (_)
 			{
 				// Check TablesMap cache before doing anything
-				if (TableMaps.Exists<TEntity>())
+				if ((maps ?? TableMaps.Instance).Exists<TEntity>())
 				{
 					return;
 				}
@@ -70,7 +71,7 @@ namespace Jeebs.Data.Mapping
 				}
 
 				// Add Map
-				TableMaps.TryAdd<TEntity>(map);
+				(maps ?? TableMaps.Instance).TryAdd<TEntity>(map);
 
 				// Get the property with the specified attribute
 				static MappedColumn GetPropertyWith<TAttribute>(IEnumerable<MappedColumn> columns)

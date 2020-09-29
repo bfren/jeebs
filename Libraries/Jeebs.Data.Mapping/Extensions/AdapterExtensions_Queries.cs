@@ -14,10 +14,11 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		public static string CreateSingleAndReturnId<T>(this IAdapter @this)
+		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
+		public static string CreateSingleAndReturnId<T>(this IAdapter @this, TableMaps? maps = null)
 		{
 			// Get map and columns
-			var map = TableMaps.GetMap<T>();
+			var map = (maps ?? TableMaps.Instance).GetMap<T>();
 			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
 
 			// Get SQL from adapter
@@ -29,10 +30,11 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		public static string RetrieveSingleById<T>(this IAdapter @this)
+		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
+		public static string RetrieveSingleById<T>(this IAdapter @this, TableMaps? maps = null)
 		{
 			// Get map and select list
-			var map = TableMaps.GetMap<T>();
+			var map = (maps ?? TableMaps.Instance).GetMap<T>();
 			var select = new List<string>();
 
 			// Add each column to the select list
@@ -50,10 +52,11 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		public static string UpdateSingle<T>(this IAdapter @this)
+		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
+		public static string UpdateSingle<T>(this IAdapter @this, TableMaps? maps = null)
 		{
 			// Get map and columns
-			var map = TableMaps.GetMap<T>();
+			var map = (maps ?? TableMaps.Instance).GetMap<T>();
 			(var columns, var aliases) = map.GetWriteableColumnsAndAliases();
 			var id = map.IdColumn;
 
@@ -73,10 +76,11 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		public static string DeleteSingle<T>(this IAdapter @this)
+		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
+		public static string DeleteSingle<T>(this IAdapter @this, TableMaps? maps = null)
 		{
 			// Get map and columns
-			var map = TableMaps.GetMap<T>();
+			var map = (maps ?? TableMaps.Instance).GetMap<T>();
 			var id = map.IdColumn;
 
 			// Get SQL from adapter
