@@ -12,6 +12,9 @@ namespace Jx.Data.Mapping
 	[Serializable]
 	public class NoWriteableColumnsException : Exception
 	{
+		/// <summary>
+		/// Exception message format
+		/// </summary>
 		public const string Format = "Table {0} does not have any writeable columns.";
 
 		/// <summary>

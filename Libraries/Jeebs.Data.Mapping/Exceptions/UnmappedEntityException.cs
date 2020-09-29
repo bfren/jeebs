@@ -12,6 +12,9 @@ namespace Jx.Data.Mapping
 	[Serializable]
 	public class UnmappedEntityException : Exception
 	{
+		/// <summary>
+		/// Exception message format
+		/// </summary>
 		public const string Format = "Entity {0} has not been mapped.";
 
 		/// <summary>

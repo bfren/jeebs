@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jx.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
@@ -19,8 +20,8 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			void action() => AdapterExtensions.UpdateSingle<Foo>(adapter, maps);
 
 			// Assert
-			var ex = Assert.Throws<Jx.Data.Mapping.UnmappedEntityException>(action);
-			Assert.Equal($"Entity {typeof(Foo)} has not been mapped.", ex.Message);
+			var ex = Assert.Throws<UnmappedEntityException>(action);
+			Assert.Equal(string.Format(UnmappedEntityException.Format, typeof(Foo)), ex.Message);
 		}
 
 		[Fact]
@@ -39,8 +40,8 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			void action() => AdapterExtensions.UpdateSingle<FooUnwriteable>(adapter, maps);
 
 			// Assert
-			var ex = Assert.Throws<Jx.Data.Mapping.NoWriteableColumnsException>(action);
-			Assert.Equal($"Table {table} does not have any writeable columns.", ex.Message);
+			var ex = Assert.Throws<NoWriteableColumnsException>(action);
+			Assert.Equal(string.Format(NoWriteableColumnsException.Format, table), ex.Message);
 		}
 
 		[Fact]
