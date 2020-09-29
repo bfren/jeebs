@@ -31,22 +31,21 @@ namespace Jeebs.Data.Mapping
 		public class Comparer : IEqualityComparer<IExtractedColumn>
 		{
 			/// <summary>
-			/// Returns true if the two columns are identical
+			/// Returns true if the two aliases are identical
 			/// </summary>
 			/// <param name="x">IExtractedColumn 1</param>
 			/// <param name="y">IExtractedColumn 2</param>
-			/// <returns>True if the two columns are identical</returns>
+			/// <returns>True if the aliases of the two columns are identical</returns>
 			public bool Equals(IExtractedColumn x, IExtractedColumn y)
-			{
-				return x.Table.Equals(y.Table) && x.Column.Equals(y.Column) && x.Alias.Equals(y.Alias);
-			}
+				=> x.Alias == y.Alias;
 
 			/// <summary>
 			/// Return object's hash code
 			/// </summary>
 			/// <param name="obj">IExtractedColumn</param>
 			/// <returns>Hash code</returns>
-			public int GetHashCode(IExtractedColumn obj) => obj.GetHashCode();
+			public int GetHashCode(IExtractedColumn obj) 
+				=> obj.Alias.GetHashCode();
 		}
 	}
 }

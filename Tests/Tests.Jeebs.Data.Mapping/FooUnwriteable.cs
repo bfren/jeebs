@@ -10,9 +10,9 @@ namespace Jeebs.Data.Mapping
 		public long Id { get; set; }
 
 		[Computed]
-		public string Bar0 { get; set; } = string.Empty;
+		public string Bar2 { get; set; } = string.Empty;
 
 		[Readonly]
-		public string Bar1 { get; set; } = string.Empty;
+		public string Bar3 { get; set; } = string.Empty;
 	}
 }

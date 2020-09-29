@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Tests.Jeebs.Result")]
 namespace Jeebs
 {
 	/// <summary>

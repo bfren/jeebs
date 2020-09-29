@@ -14,13 +14,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Mapped entities
 		/// </summary>
-		private static readonly ConcurrentDictionary<Type, TableMap> maps;
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		static TableMaps()
-			=> maps = new ConcurrentDictionary<Type, TableMap>();
+		private static readonly ConcurrentDictionary<Type, TableMap> maps = new ConcurrentDictionary<Type, TableMap>();
 
 		/// <summary>
 		/// Clear all mapped tables
@@ -41,17 +35,8 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <exception cref="Jx.Data.MappingException">If <typeparamref name="TEntity"/> has already been mapped</exception>
 		/// <param name="map">TableMap</param>
-		internal static void Add<TEntity>(TableMap map)
-		{
-			// Don't map the same entity twice
-			if (Exists<TEntity>())
-			{
-				throw new Jx.Data.MappingException($"Entity {typeof(TEntity).FullName} has already been mapped.");
-			}
-
-			// Add the table map
-			maps.TryAdd(typeof(TEntity), map);
-		}
+		internal static bool TryAdd<TEntity>(TableMap map)
+			=> maps.TryAdd(typeof(TEntity), map);
 
 		/// <summary>
 		/// Safely get a value from a mapped entity

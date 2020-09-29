@@ -14,6 +14,9 @@ namespace Jeebs.Data.Mapping
 	public static class Map<TEntity>
 		where TEntity : IEntity
 	{
+		/// <summary>
+		/// Provides thread-safe locking
+		/// </summary>
 		private static readonly object _ = new object();
 
 		/// <summary>
@@ -55,7 +58,7 @@ namespace Jeebs.Data.Mapping
 							  );
 
 				// Get ID property
-				var id = GetPropertyWith<IdAttribute>("Id");
+				var id = GetPropertyWith<IdAttribute>(columns);
 
 				// Create Table Map
 				var map = new TableMap(adapter.Escape(table.ToString()), columns.ToList(), id);
@@ -63,27 +66,24 @@ namespace Jeebs.Data.Mapping
 				// Get Version property
 				if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
 				{
-					map.VersionColumn = GetPropertyWith<VersionAttribute>("Version");
+					map.VersionColumn = GetPropertyWith<VersionAttribute>(columns);
 				}
 
 				// Add Map
-				TableMaps.Add<TEntity>(map);
+				TableMaps.TryAdd<TEntity>(map);
 
 				// Get the property with the specified attribute
-				MappedColumn GetPropertyWith<TAttribute>(string attr)
+				static MappedColumn GetPropertyWith<TAttribute>(IEnumerable<MappedColumn> columns)
 					where TAttribute : Attribute
 				{
-					var pi = columns.Where(p => p.Property.GetCustomAttribute<TAttribute>() != null);
-					if (!pi.Any())
+					var name = typeof(TAttribute).Name.Replace(nameof(Attribute), string.Empty);
+					var cols = columns.Where(p => p.Property.GetCustomAttribute<TAttribute>() != null).ToList();
+					return cols.Count switch
 					{
-						throw new Jx.Data.MappingException($"You must define [{attr}] property for entity type '{typeof(TEntity)}'.");
-					}
-					else if (pi.Count() > 1)
-					{
-						throw new Jx.Data.MappingException($"There is more than one [{attr}] property defined in '{typeof(TEntity)}'.");
-					}
-
-					return pi.Single();
+						1 => cols.Single(),
+						0 => throw new Jx.Data.Mapping.MissingAttributeException(typeof(TEntity), name),
+						_ => throw new Jx.Data.Mapping.MultipleAttributesException(typeof(TEntity), name)
+					};
 				}
 			}
 		}
