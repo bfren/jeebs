@@ -90,20 +90,29 @@ namespace Jeebs.Data.Mapping.Map_Tests
 		{
 			// Arrange
 			var maps = Substitute.For<ITableMaps>();
-			var table = new FooWithVersionTable();
+			var t0 = new FooTable();
+			var t1 = new FooWithVersionTable();
 
 			// Act
-			Map<FooWithVersion>.To(table, maps);
+			Map<Foo>.To(t0, maps);
+			Map<FooWithVersion>.To(t1, maps);
 
 			// Assert
+			maps.Received().TryAdd<Foo>(
+				Arg.Is<TableMap>(x =>
+					x.Name == t1.ToString()
+					&& x.IdColumn.Name == t1.Id
+					&& x.IdColumn.Alias == nameof(t1.Id)
+				)
+			);
 			maps.Received().TryAdd<FooWithVersion>(
 				Arg.Is<TableMap>(x =>
-					x.Name == table.ToString()
-					&& x.IdColumn.Name == table.Id
-					&& x.IdColumn.Alias == nameof(table.Id)
+					x.Name == t1.ToString()
+					&& x.IdColumn.Name == t1.Id
+					&& x.IdColumn.Alias == nameof(t1.Id)
 					&& x.VersionColumn != null
-					&& x.VersionColumn.Name == table.Version
-					&& x.VersionColumn.Alias == nameof(table.Version)
+					&& x.VersionColumn.Name == t1.Version
+					&& x.VersionColumn.Alias == nameof(t1.Version)
 				)
 			);
 		}

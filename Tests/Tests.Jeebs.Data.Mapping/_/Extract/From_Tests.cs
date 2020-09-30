@@ -46,11 +46,11 @@ namespace Jeebs.Data.Mapping.Extract_Tests
 			var result = Extract<FooCombined>.From(t0, t1);
 
 			// Assert
-			Assert.Equal(3, result.Count);
-			Assert.Equal(t0.ToString(), result[0].Table);
-			Assert.Equal(t0.Id, result[0].Name);
-			Assert.Equal(t0.Bar0, result[1].Name);
-			Assert.Equal(t1.Bar2, result[2].Name);
+			Assert.Collection(result,
+				x => Assert.Equal((t0.ToString(), t0.Id), (x.Table, x.Name)),
+				x => Assert.Equal(t0.Bar0, x.Name),
+				x => Assert.Equal(t1.Bar2, x.Name)
+			);
 		}
 
 		public class FooCombined
