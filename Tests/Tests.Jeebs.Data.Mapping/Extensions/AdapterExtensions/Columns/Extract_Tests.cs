@@ -18,13 +18,13 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
 
-			var t = new FooTable();
+			var table = new FooTable();
 
 			// Act
-			var result= AdapterExtensions.Extract<Foo>(adapter, t);
+			var result = adapter.Extract<Foo>(table);
 
 			// Assert
-			Assert.Equal($"{t.Id}| {t.Bar0}| {t.Bar1}", result);
+			Assert.Equal($"{table.Id}| {table.Bar0}| {table.Bar1}", result);
 		}
 	}
 }

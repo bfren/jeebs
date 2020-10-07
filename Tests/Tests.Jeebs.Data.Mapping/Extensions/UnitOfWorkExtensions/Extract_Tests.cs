@@ -13,13 +13,21 @@ namespace Jeebs.Data.Mapping.UnitOfWorkExtensions_Tests
 		{
 			// Arrange
 			var unitOfWork = Substitute.For<IUnitOfWork>();
+
+			var adapter = Substitute.For<IAdapter>();
+			adapter.ColumnSeparator
+				.Returns('|');
+			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>())
+				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
+
+			unitOfWork.Adapter.Returns(adapter);
 			var table = new FooTable();
 
 			// Act
-			UnitOfWorkExtensions.Extract<Foo>(unitOfWork, table);
+			var result = unitOfWork.Extract<Foo>(table);
 
 			// Assert
-
+			Assert.Equal($"{table.Id}| {table.Bar0}| {table.Bar1}", result);
 		}
 	}
 }

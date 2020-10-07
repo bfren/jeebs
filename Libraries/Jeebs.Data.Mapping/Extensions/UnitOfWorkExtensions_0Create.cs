@@ -14,13 +14,13 @@ namespace Jeebs.Data.Mapping
 	public static partial class UnitOfWorkExtensions
 	{
 		/// <summary>
-		/// Insert an entity
+		/// Create an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result object - the value should be the poco to insert</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static IR<T> Insert<T>(this IUnitOfWork @this, IOkV<T> r)
+		public static IR<T> Create<T>(this IUnitOfWork @this, IOkV<T> r)
 			where T : class, IEntity
 			=> r
 				.WithState(@this)
@@ -35,13 +35,13 @@ namespace Jeebs.Data.Mapping
 					.Map(GetFreshPoco<T>);
 
 		/// <summary>
-		/// Insert an entity
+		/// Create an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result object - the value should be the poco to insert</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static async Task<IR<T>> InsertAsync<T>(this IUnitOfWork @this, IOkV<T> r)
+		public static async Task<IR<T>> CreateAsync<T>(this IUnitOfWork @this, IOkV<T> r)
 			where T : class, IEntity
 			=> await r
 				.WithState(@this)

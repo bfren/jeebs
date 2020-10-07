@@ -24,7 +24,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			extracted.Alias.Returns(alias);
 
 			// Act
-			AdapterExtensions.GetColumn(adapter, extracted);
+			adapter.GetColumn(extracted);
 
 			// Assert
 			adapter.Received().EscapeColumn(
@@ -51,7 +51,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			mapped.Table.Returns(table);
 
 			// Act
-			AdapterExtensions.GetColumn(adapter, mapped);
+			adapter.GetColumn(mapped);
 
 			// Assert
 			adapter.Received().EscapeColumn(

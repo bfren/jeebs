@@ -16,7 +16,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			var table = new FooTable();
 
 			// Act
-			AdapterExtensions.Escape(adapter, table, x => x.Bar0);
+			adapter.Escape(table, x => x.Bar0);
 
 			// Assert
 			adapter.Received().EscapeAndJoin(

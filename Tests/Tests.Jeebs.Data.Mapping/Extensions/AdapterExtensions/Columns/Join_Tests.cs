@@ -22,7 +22,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			var columns = Extract<Foo>.From(t);
 
 			// Act
-			var result = AdapterExtensions.Join(adapter, columns);
+			var result = adapter.Join(columns);
 
 			// Assert
 			Assert.Equal($"{t.Id}| {t.Bar0}| {t.Bar1}", result);

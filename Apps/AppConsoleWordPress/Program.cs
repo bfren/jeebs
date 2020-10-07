@@ -118,7 +118,7 @@ namespace AppConsoleWordPress
 			};
 
 			using var w = bcg.UnitOfWork;
-			return await w.InsertAsync(r.OkV(opt));
+			return await w.CreateAsync(r.OkV(opt));
 		}
 
 		internal static void AuditOption(IR<Bcg.Entities.Option> r)
