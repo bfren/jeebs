@@ -86,8 +86,8 @@ namespace F
 				byte[] b = new byte[4];
 				csp.GetBytes(b);
 
-				var rnd = (double)BitConverter.ToUInt32(b, 0) / UInt32.MaxValue;
-				var idx = (int)Math.Round(rnd * ((list).Count - 1));
+				var rnd = (double)BitConverter.ToUInt32(b, 0) / uint.MaxValue;
+				var idx = (int)Math.Round(rnd * (list.Count - 1));
 
 				random.Add(list[idx]);
 			}

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data.Mapping.Map_Tests
+namespace Jeebs.Data.Mapping.MapService_Tests
 {
-	public class FooTableWithBar2 : Table
+	public class FooTableWithBar234 : Table
 	{
 		public readonly string Id = "foo_id";
 
@@ -14,6 +14,10 @@ namespace Jeebs.Data.Mapping.Map_Tests
 
 		public readonly string Bar2 = "foo_bar2";
 
-		public FooTableWithBar2() : base("foo") { }
+		public readonly string Bar3 = "foo_bar3";
+
+		public readonly string Bar4 = "foo_bar4";
+
+		public FooTableWithBar234() : base("foo_with_bar2") { }
 	}
 }

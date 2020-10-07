@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.MappedColumn_Tests
+namespace Jeebs.Data.Mapping.TableMap_Tests
 {
 	public class ToString_Tests
 	{
@@ -13,14 +12,11 @@ namespace Jeebs.Data.Mapping.MappedColumn_Tests
 		public void Returns_Name()
 		{
 			// Arrange
-			var table = F.StringF.Random(6);
 			var name = F.StringF.Random(6);
-			var prop = Substitute.For<PropertyInfo>();
-			prop.Name.Returns(F.StringF.Random(6));
-			var column = new MappedColumn(table, name, prop);
+			var map = new TableMap(name, Substitute.For<IMappedColumnList>(), GetColumnNames_Tests.Get().column);
 
 			// Act
-			var result = column.ToString();
+			var result = map.ToString();
 
 			// Assert
 			Assert.Equal(name, result);

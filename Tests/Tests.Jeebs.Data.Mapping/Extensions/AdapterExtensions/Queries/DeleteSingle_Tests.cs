@@ -13,11 +13,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
-			var maps = new TableMaps();
+			using var svc = new MapService();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act
-			void action() => AdapterExtensions.DeleteSingle<Foo>(adapter, maps);
+			void action() => adapter.DeleteSingle<Foo>(svc);
 
 			// Assert
 			var ex = Assert.Throws<UnmappedEntityException>(action);
@@ -28,20 +28,19 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_DeleteSingle_With_Correct_Arguments()
 		{
 			// Arrange
-			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
+			using var svc = new MapService();
 			var foo0 = new FooTable();
-			Map<Foo>.To(foo0, maps);
-
+			Map<Foo>.To<FooTable>(svc);
 			var foo1 = new FooWithVersionTable();
-			Map<FooWithVersion>.To(foo1, maps);
+			Map<FooWithVersion>.To<FooWithVersionTable>(svc);
 
 			// Act
-			AdapterExtensions.DeleteSingle<Foo>(adapter, maps);
-			AdapterExtensions.DeleteSingle<FooWithVersion>(adapter, maps);
+			adapter.DeleteSingle<Foo>(svc);
+			adapter.DeleteSingle<FooWithVersion>(svc);
 
 			// Assert
 			adapter.Received().DeleteSingle(

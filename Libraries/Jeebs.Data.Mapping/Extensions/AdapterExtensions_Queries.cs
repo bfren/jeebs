@@ -14,11 +14,12 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string CreateSingleAndReturnId<T>(this IAdapter @this, ITableMaps? maps = null)
+		/// <param name="maps">[Optional] IMapService - if null will use default static instance</param>
+		public static string CreateSingleAndReturnId<T>(this IAdapter @this, IMapService? maps = null)
+			where T : IEntity
 		{
 			// Get map and columns
-			var map = (maps ?? TableMaps.Instance).GetMap<T>();
+			var map = (maps ?? MapService.Instance).GetTableMapFor<T>();
 			(var columns, var aliases) = map.GetWriteableColumnNamesAndAliases();
 
 			// Get SQL from adapter
@@ -30,11 +31,12 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string RetrieveSingleById<T>(this IAdapter @this, ITableMaps? maps = null)
+		/// <param name="maps">[Optional] IMapService - if null will use default static instance</param>
+		public static string RetrieveSingleById<T>(this IAdapter @this, IMapService? maps = null)
+			where T : IEntity
 		{
 			// Get map and select list
-			var map = (maps ?? TableMaps.Instance).GetMap<T>();
+			var map = (maps ?? MapService.Instance).GetTableMapFor<T>();
 			var select = new List<string>();
 
 			// Add each column to the select list
@@ -52,11 +54,12 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string UpdateSingle<T>(this IAdapter @this, ITableMaps? maps = null)
+		/// <param name="maps">[Optional] IMapService - if null will use default static instance</param>
+		public static string UpdateSingle<T>(this IAdapter @this, IMapService? maps = null)
+			where T : IEntity
 		{
 			// Get map and columns
-			var map = (maps ?? TableMaps.Instance).GetMap<T>();
+			var map = (maps ?? MapService.Instance).GetTableMapFor<T>();
 			(var columns, var aliases) = map.GetWriteableColumnNamesAndAliases();
 			var id = map.IdColumn;
 
@@ -76,11 +79,12 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IAdapter</param>
-		/// <param name="maps">[Optional] TableMaps - if null will use default static instance</param>
-		public static string DeleteSingle<T>(this IAdapter @this, ITableMaps? maps = null)
+		/// <param name="maps">[Optional] IMapService - if null will use default static instance</param>
+		public static string DeleteSingle<T>(this IAdapter @this, IMapService? maps = null)
+			where T : IEntity
 		{
 			// Get map and columns
-			var map = (maps ?? TableMaps.Instance).GetMap<T>();
+			var map = (maps ?? MapService.Instance).GetTableMapFor<T>();
 			var id = map.IdColumn;
 
 			// Get SQL from adapter

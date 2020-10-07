@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data.Mapping.Map_Tests
+namespace Jeebs.Data.Mapping.MapService_Tests
 {
 	public class FooTableWithoutBar0 : Table
 	{
@@ -10,6 +10,6 @@ namespace Jeebs.Data.Mapping.Map_Tests
 
 		public readonly string Bar1 = "foo_bar1";
 
-		public FooTableWithoutBar0() : base("foo") { }
+		public FooTableWithoutBar0() : base("foo_without_bar0") { }
 	}
 }

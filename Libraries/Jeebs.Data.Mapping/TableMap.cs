@@ -19,17 +19,17 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Mapped Columns
 		/// </summary>
-		public List<MappedColumn> Columns { get; set; }
+		public IMappedColumnList Columns { get; set; }
 
 		/// <summary>
 		/// Id Column
 		/// </summary>
-		public MappedColumn IdColumn { get; set; }
+		public IMappedColumn IdColumn { get; set; }
 
 		/// <summary>
 		/// [Optional] Version Column
 		/// </summary>
-		public MappedColumn? VersionColumn { get; set; }
+		public IMappedColumn? VersionColumn { get; set; }
 
 		/// <summary>
 		/// Create object
@@ -37,7 +37,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="name">Table Name - must be escaped</param>
 		/// <param name="columns">Mapped Columns</param>
 		/// <param name="idColumn">Id Column</param>
-		public TableMap(string name, List<MappedColumn> columns, MappedColumn idColumn)
+		public TableMap(string name, IMappedColumnList columns, IMappedColumn idColumn)
 			=> (Name, Columns, IdColumn) = (name, columns, idColumn);
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Jeebs.Data.Mapping
 		/// Get all column aliases
 		/// </summary>
 		/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
-		public IEnumerable<string> GetAliases(bool includeIdAlias)
+		public IEnumerable<string> GetColumnAliases(bool includeIdAlias)
 			=> Columns.Select(mc => mc.Alias).Where(a => includeIdAlias || a != IdColumn.Alias);
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		public (List<string> names, List<string> aliases) GetWriteableColumnNamesAndAliases()
 		{
-			// Query
+			// Search for writeatble columns
 			var writeable = from c in Columns
 							where c.Property.GetCustomAttribute<IdAttribute>() == null
 							&& c.Property.GetCustomAttribute<ComputedAttribute>() == null

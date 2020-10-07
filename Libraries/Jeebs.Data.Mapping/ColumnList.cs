@@ -15,7 +15,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Construct object from IEnumerable
 		/// </summary>
-		/// <param name="ienum">IEnumerable</param>
-		public ColumnList(IEnumerable<IColumn> ienum) : base(ienum) { }
+		/// <param name="collection">IEnumerable</param>
+		public ColumnList(IEnumerable<IColumn> collection) : base(collection) { }
 	}
 }

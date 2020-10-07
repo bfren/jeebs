@@ -26,7 +26,7 @@ namespace Jx.Data.Mapping
 		/// </summary>
 		/// <param name="entity">Entity type</param>
 		/// <param name="attribute">Attribute name</param>
-		public MissingAttributeException(Type entity, string attribute) : this(string.Format(Format, entity, attribute)) { }
+		public MissingAttributeException(Type entity, string attribute) : this(string.Format(Format, attribute, entity)) { }
 
 		/// <summary>
 		/// Create exception

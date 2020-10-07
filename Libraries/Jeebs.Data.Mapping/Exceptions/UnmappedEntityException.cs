@@ -15,7 +15,7 @@ namespace Jx.Data.Mapping
 		/// <summary>
 		/// Exception message format
 		/// </summary>
-		public const string Format = "Entity {0} has not been mapped.";
+		public const string Format = "Entity '{0}' has not been mapped.";
 
 		/// <summary>
 		/// Create exception

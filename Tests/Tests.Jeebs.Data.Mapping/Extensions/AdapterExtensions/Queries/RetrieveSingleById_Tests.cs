@@ -13,11 +13,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
-			var maps = new TableMaps();
+			using var svc = new MapService();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act
-			void action() => AdapterExtensions.RetrieveSingleById<Foo>(adapter, maps);
+			void action() => adapter.RetrieveSingleById<Foo>(svc);
 
 			// Assert
 			var ex = Assert.Throws<UnmappedEntityException>(action);
@@ -28,18 +28,19 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_RetrieveSingleById_With_Correct_Arguments()
 		{
 			// Arrange
-			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
 
+			using var svc = new MapService();
+			Map<Foo>.To<FooTable>(svc);
+
 			var table = new FooTable();
-			Map<Foo>.To(table, maps);
 
 			// Act
-			AdapterExtensions.RetrieveSingleById<Foo>(adapter, maps);
+			adapter.RetrieveSingleById<Foo>(svc);
 
 			// Assert
 			adapter.Received().RetrieveSingleById(

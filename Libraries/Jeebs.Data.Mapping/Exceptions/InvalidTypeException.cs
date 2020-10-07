@@ -1,52 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Jeebs.Data;
 using Jeebs.Data.Mapping;
 
 namespace Jx.Data.Mapping
 {
 	/// <summary>
-	/// See <see cref="Map{TEntity}.To{TTable}(TTable, Jeebs.Data.IAdapter)"/>
+	/// See <see cref="MappedColumnList(Type)"/> and <see cref="MappedColumnList(Type, IEnumerable{IMappedColumn})"/>
 	/// </summary>
 	[Serializable]
-	public class MultipleAttributesException : Exception
+	public class InvalidTypeException : Exception
 	{
 		/// <summary>
 		/// Exception message format
 		/// </summary>
-		public const string Format = "There may only be one [{0}] property for entity type '{1}'.";
+		public const string Format = "'{0}' must inherit from " + nameof(IEntity) + ".";
 
 		/// <summary>
 		/// Create exception
 		/// </summary>
-		public MultipleAttributesException() { }
+		public InvalidTypeException() { }
 
 		/// <summary>
 		/// Create exception
 		/// </summary>
-		/// <param name="entity">Entity type</param>
-		/// <param name="attribute">Attribute name</param>
-		public MultipleAttributesException(Type entity, string attribute) : this(string.Format(Format, attribute, entity)) { }
+		/// <param name="entityType">Entity type</param>
+		public InvalidTypeException(Type entityType) : this(string.Format(Format, entityType)) { }
 
 		/// <summary>
 		/// Create exception
 		/// </summary>
 		/// <param name="message">Message</param>
-		public MultipleAttributesException(string message) : base(message) { }
+		public InvalidTypeException(string message) : base(message) { }
 
 		/// <summary>
 		/// Create exception
 		/// </summary>
 		/// <param name="message">Message</param>
 		/// <param name="inner">Exception</param>
-		public MultipleAttributesException(string message, Exception inner) : base(message, inner) { }
+		public InvalidTypeException(string message, Exception inner) : base(message, inner) { }
 
 		/// <summary>
 		/// Create exception
 		/// </summary>
 		/// <param name="info">SerializationInfo</param>
 		/// <param name="context">StreamingContext</param>
-		protected MultipleAttributesException(
+		protected InvalidTypeException(
 		  System.Runtime.Serialization.SerializationInfo info,
 		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}

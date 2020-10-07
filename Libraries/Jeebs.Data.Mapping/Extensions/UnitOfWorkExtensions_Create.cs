@@ -61,6 +61,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="r">Result object</param>
 		private static IR<long, IUnitOfWork> InsertAndReturnId<T>(IOkV<T, IUnitOfWork> r)
+			where T : IEntity
 		{
 			// Get values
 			var w = r.State;
@@ -83,6 +84,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="r">Result object</param>
 		private static async Task<IR<long, IUnitOfWork>> InsertAndReturnIdAsync<T>(IOkV<T, IUnitOfWork> r)
+			where T : IEntity
 		{
 			// Get values
 			var w = r.State;

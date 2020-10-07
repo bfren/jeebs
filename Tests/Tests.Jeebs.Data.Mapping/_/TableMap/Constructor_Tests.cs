@@ -14,11 +14,12 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 		{
 			// Arrange
 			var name = F.StringF.Random(6);
-			var columns = Substitute.For<List<MappedColumn>>();
+			var columns = Substitute.For<IMappedColumnList>();
 
 			var prop = Substitute.For<PropertyInfo>();
 			prop.Name.Returns(F.StringF.Random(6));
-			var idColumn = new MappedColumn(Arg.Any<string>(), Arg.Any<string>(), prop);
+			var idColumn = Substitute.For<IMappedColumn>();
+			idColumn.Property.Returns(prop);
 
 			// Act
 			var map = new TableMap(name, columns, idColumn);

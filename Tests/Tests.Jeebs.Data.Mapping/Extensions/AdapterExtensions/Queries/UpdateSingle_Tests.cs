@@ -13,11 +13,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Unmapped_Model_Throws_MappingException()
 		{
 			// Arrange
-			var maps = new TableMaps();
+			using var svc = new MapService();
 			var adapter = Substitute.For<IAdapter>();
 
 			// Act
-			void action() => AdapterExtensions.UpdateSingle<Foo>(adapter, maps);
+			void action() => adapter.UpdateSingle<Foo>(svc);
 
 			// Assert
 			var ex = Assert.Throws<UnmappedEntityException>(action);
@@ -28,16 +28,16 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Mapped_Model_No_Writeable_Columns_Throws_MappingException()
 		{
 			// Arrange
-			var maps = new TableMaps();
+			using var svc = new MapService();
 			var adapter = Substitute.For<IAdapter>();
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.Arg<string>());
 
 			var table = new FooUnwriteableTable();
-			Map<FooUnwriteable>.To(table, maps);
+			Map<FooUnwriteable>.To<FooUnwriteableTable>(svc);
 
 			// Act
-			void action() => AdapterExtensions.UpdateSingle<FooUnwriteable>(adapter, maps);
+			void action() => adapter.UpdateSingle<FooUnwriteable>(svc);
 
 			// Assert
 			var ex = Assert.Throws<NoWriteableColumnsException>(action);
@@ -48,20 +48,17 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_UpdateSingle_With_Correct_Arguments()
 		{
 			// Arrange
-			var maps = new TableMaps();
 			var adapter = Substitute.For<IAdapter>();
-			adapter.Escape(Arg.Any<string>())
-				.ReturnsForAnyArgs(x => x.Arg<string>());
 
+			using var svc = new MapService();
 			var foo0 = new FooTable();
-			Map<Foo>.To(foo0, maps);
-
+			Map<Foo>.To<FooTable>(svc);
 			var foo1 = new FooWithVersionTable();
-			Map<FooWithVersion>.To(foo1, maps);
+			Map<FooWithVersion>.To<FooWithVersionTable>(svc);
 
 			// Act
-			AdapterExtensions.UpdateSingle<Foo>(adapter, maps);
-			AdapterExtensions.UpdateSingle<FooWithVersion>(adapter, maps);
+			adapter.UpdateSingle<Foo>(svc);
+			adapter.UpdateSingle<FooWithVersion>(svc);
 
 			// Assert
 			adapter.Received().UpdateSingle(
