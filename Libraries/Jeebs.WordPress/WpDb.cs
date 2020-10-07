@@ -44,7 +44,7 @@ namespace Jeebs.WordPress
 	{
 		/// <inheritdoc/>
 		public MySqlAdapter Adapter
-			=> client.Adapter;
+			=> Client.Adapter;
 
 		#region Tables
 

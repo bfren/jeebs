@@ -8,19 +8,17 @@ using Jeebs.Data.TypeHandlers;
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IDb"/>
-	/// <typeparam name="TDbClient">Database Client type</typeparam>
-	public class Db<TDbClient> : IDb
-		where TDbClient : IDbClient, new()
+	public abstract class Db : IDb
 	{
 		/// <summary>
 		/// ILog
 		/// </summary>
-		protected readonly ILog log;
+		protected ILog Log { get; }
 
 		/// <summary>
-		/// TDbClient
+		/// IDbClient
 		/// </summary>
-		protected readonly TDbClient client = new TDbClient();
+		protected IDbClient Client { get; }
 
 		/// <summary>
 		/// Connection String
@@ -28,59 +26,65 @@ namespace Jeebs.Data
 		protected string ConnectionString { get; set; } = string.Empty;
 
 		/// <inheritdoc/>
-		public IUnitOfWork UnitOfWork
+		public virtual IUnitOfWork UnitOfWork
 		{
 			get
 			{
 				// Make sure the connection string has been defined
-				if (string.IsNullOrEmpty(ConnectionString))
+				if (string.IsNullOrWhiteSpace(ConnectionString))
 				{
 					throw new Jx.Data.ConnectionException("You must define the connection string before creating a Unit of Work.");
 				}
 
 				// Connect to the database client
-				var connection = client.Connect(ConnectionString);
+				var connection = Client.Connect(ConnectionString);
 				if (connection.State != ConnectionState.Open)
 				{
 					connection.Open();
 				}
 
 				// Create Unit of Work
-				return new UnitOfWork(connection, client.Adapter, log);
+				return new UnitOfWork(connection, Client.Adapter, Log);
 			}
 		}
 
 		/// <summary>
 		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
 		/// </summary>
+		/// <param name="client">IDbClient</param>
 		/// <param name="log">ILog</param>
-		public Db(ILog log)
-			=> this.log = log;
+		protected Db(IDbClient client, ILog log)
+			=> (Client, Log) = (client, log);
 
 		/// <summary>
-		/// Create object using the specified config
+		/// Create object
 		/// </summary>
-		/// <param name="config">DbConfig</param>
+		/// <param name="client">IDbClient</param>
 		/// <param name="log">ILog</param>
-		public Db(DbConfig config, ILog log) : this(log)
+		/// <param name="config">DbConfig</param>
+		protected Db(IDbClient client, ILog log, DbConfig config) : this(client, log)
 			=> ConnectionString = config.GetConnection().ConnectionString;
 
 		/// <summary>
-		/// Create object using the specified config
+		/// Create object
 		/// </summary>
+		/// <param name="client">IDbClient</param>
+		/// <param name="log">ILog</param>
 		/// <param name="config">DbConfig</param>
 		/// <param name="connectionName">Connection name</param>
-		/// <param name="log">ILog</param>
-		public Db(DbConfig config, string connectionName, ILog log) : this(log)
+		protected Db(IDbClient client, ILog log, DbConfig config, string connectionName) : this(client, log)
 			=> ConnectionString = config.GetConnection(connectionName).ConnectionString;
 
 		/// <summary>
-		/// Create object using the specified connection string
+		/// Create object
 		/// </summary>
-		/// <param name="connectionString">Connection String</param>
+		/// <param name="client">IDbClient</param>
 		/// <param name="log">ILog</param>
-		public Db(string connectionString, ILog log) : this(log)
+		/// <param name="connectionString">Connection String</param>
+		protected Db(IDbClient client, ILog log, string connectionString) : this(client, log)
 			=> ConnectionString = connectionString;
+
+		#region Static
 
 		/// <summary>
 		/// Add default type handlers
@@ -92,9 +96,9 @@ namespace Jeebs.Data
 		/// Persist an EnumList to the database by encoding it as JSON
 		/// </summary>
 		/// <typeparam name="T">Type to handle</typeparam>
-		protected static void AddEnumListTypeHandler<T>()
+		protected static void AddEnumeratedListTypeHandler<T>()
 			where T : Enumerated
-			=> Dapper.SqlMapper.AddTypeHandler(new EnumListTypeHandler<T>());
+			=> Dapper.SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
 
 		/// <summary>
 		/// Persist a type to the database by encoding it as JSON
@@ -102,5 +106,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Type to handle</typeparam>
 		protected static void AddJsonTypeHandler<T>()
 			=> Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
+
+		#endregion
 	}
 }

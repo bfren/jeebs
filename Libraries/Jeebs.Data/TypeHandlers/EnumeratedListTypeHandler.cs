@@ -5,17 +5,16 @@ using System.Text;
 namespace Jeebs.Data.TypeHandlers
 {
 	/// <summary>
-	/// EnumList TypeHandler
+	/// EnumeratedList TypeHandler
 	/// </summary>
-	/// <typeparam name="T">Enum type</typeparam>
-	public sealed class EnumListTypeHandler<T> : JsonTypeHandler<EnumeratedList<T>>
+	/// <typeparam name="T">Enumerated type</typeparam>
+	public sealed class EnumeratedListTypeHandler<T> : JsonTypeHandler<EnumeratedList<T>>
 		where T : Enumerated
 	{
 		/// <summary>
 		/// Convert to list of string values
 		/// </summary>
-		/// <param name="value">Enum list</param>
-		/// <returns>JSON</returns>
+		/// <param name="value">EnumeratedList</param>
 		protected override string Format(EnumeratedList<T> value)
 			=> value.Serialise();
 
