@@ -19,5 +19,20 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var l = log ?? Substitute.For<ILog>();
 			return (new Data.UnitOfWork(c, a, l), c, a, l);
 		}
+
+		public static (IOk, ILogger, MsgList) GetResult(
+			ILogger? logger = null,
+			MsgList? messages = null
+		)
+		{
+			var l = logger ?? Substitute.For<ILogger>();
+			var m = messages ?? Substitute.For<MsgList>();
+
+			var r = Substitute.For<IOk>();
+			r.Logger.Returns(l);
+			r.Messages.Returns(m);
+
+			return (r, l, m);
+		}
 	}
 }

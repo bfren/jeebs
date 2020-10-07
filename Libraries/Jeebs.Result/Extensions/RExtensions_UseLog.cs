@@ -18,7 +18,11 @@ namespace Jeebs
 		public static TResult UseLog<TResult>(this TResult @this, ILog log)
 			where TResult : IR
 		{
-			@this.Logger.log = log;
+			if (@this.Logger is Logger logger)
+			{
+				logger.log = log;
+			}
+
 			return @this;
 		}
 	}

@@ -12,7 +12,7 @@ namespace Jeebs
 		public MsgList Messages { get; internal set; } = new MsgList();
 
 		/// <inheritdoc/>
-		public Logger Logger { get; internal set; } = new Logger();
+		public ILogger Logger { get; internal set; } = new Logger();
 
 		internal R() { }
 

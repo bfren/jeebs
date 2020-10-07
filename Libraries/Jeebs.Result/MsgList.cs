@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
 	/// </summary>
-	public sealed class MsgList : IDisposable, IEnumerable<IMsg>
+	public class MsgList : IDisposable, IEnumerable<IMsg>
 	{
 		/// <summary>
 		/// The list of messages

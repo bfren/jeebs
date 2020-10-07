@@ -22,7 +22,7 @@ namespace Jeebs
 		/// <summary>
 		/// Used to log events (e.g. exceptions) - requires <see cref="RExtensions_UseLog.UseLog{TResult}(TResult, ILog)"/> to be called to set an application-specific log
 		/// </summary>
-		Logger Logger { get; }
+		ILogger Logger { get; }
 
 		/// <summary>
 		/// Return a simple <see cref="IError"/> result
