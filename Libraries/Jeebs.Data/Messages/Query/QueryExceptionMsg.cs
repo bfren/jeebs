@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Text;
 using static F.JsonF;
-using Jeebs;
-using Microsoft.Extensions.Logging;
 
 namespace Jm.Data
 {

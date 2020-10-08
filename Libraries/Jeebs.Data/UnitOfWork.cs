@@ -20,6 +20,9 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; }
 
+		/// <inheritdoc/>
+		public IQueryDriver Driver { get; }
+
 		/// <summary>
 		/// ILog
 		/// </summary>
@@ -31,8 +34,8 @@ namespace Jeebs.Data
 		/// <param name="connection">IDbConnection</param>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
-		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log)
-			=> (Adapter, Transaction, this.log) = (adapter, connection.BeginTransaction(), log);
+		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log, IQueryDriver? driver = null)
+			=> (Adapter, Transaction, this.log, Driver) = (adapter, connection.BeginTransaction(), log, driver ?? new DapperQueryDriver());
 
 		/// <inheritdoc/>
 		public string Escape(object element)
@@ -105,7 +108,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
 
 				// Execute and return
-				var result = Connection.Query<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType);
+				var result = Driver.Query(Connection, query, parameters, Transaction, commandType);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -123,7 +126,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
 
 				// Execute and return
-				var result = await Connection.QueryAsync<dynamic>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
+				var result = await Driver.QueryAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -141,7 +144,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
 
 				// Execute and return
-				var result = Connection.Query<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
+				var result = Driver.Query<T>(Connection, query, parameters, Transaction, commandType);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -159,7 +162,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
 
 				// Execute and return
-				var result = await Connection.QueryAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
+				var result = await Driver.QueryAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -173,7 +176,7 @@ namespace Jeebs.Data
 		#region R: Single
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text)
+		public IR<T> Single<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -181,7 +184,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(Single), query, parameters, commandType));
 
 				// Execute and return
-				var result = Connection.QuerySingle<T>(query, param: parameters, transaction: Transaction, commandType: commandType);
+				var result = Driver.QuerySingle<T>(Connection, query, parameters, Transaction, commandType);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -191,7 +194,7 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text)
+		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
 		{
 			try
 			{
@@ -199,7 +202,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(SingleAsync), query, parameters, commandType));
 
 				// Execute and return
-				var result = await Connection.QuerySingleAsync<T>(query, param: parameters, transaction: Transaction, commandType: commandType).ConfigureAwait(false);
+				var result = await Driver.QuerySingleAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -221,7 +224,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(Execute), query, parameters, commandType));
 
 				// Execute and return
-				var affectedRows = Connection.Execute(query, param: parameters, transaction: Transaction, commandType: commandType);
+				var affectedRows = Driver.Execute(Connection, query, parameters, Transaction, commandType);
 				return r.OkV(affectedRows);
 			}
 			catch (Exception ex)
@@ -239,7 +242,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(ExecuteAsync), query, parameters, commandType));
 
 				// Execute and return
-				var affectedRows = await Connection.ExecuteAsync(query, param: parameters, transaction: Transaction).ConfigureAwait(false);
+				var affectedRows = await Driver.ExecuteAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 				return r.OkV(affectedRows);
 			}
 			catch (Exception ex)
@@ -257,7 +260,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(ExecuteScalar), query, parameters, commandType));
 
 				// Execute and return
-				var result = Connection.ExecuteScalar<T>(query, param: parameters, transaction: Transaction);
+				var result = Driver.ExecuteScalar<T>(Connection, query, parameters, Transaction, commandType);
 				return r.OkV(result);
 			}
 			catch (Exception ex)
@@ -275,7 +278,7 @@ namespace Jeebs.Data
 				r.AddMsg(new Jm.Data.QueryMsg(nameof(ExecuteScalarAsync), query, parameters, commandType));
 
 				// Execute and return
-				var result = await Connection.ExecuteScalarAsync<T>(query, param: parameters, transaction: Transaction).ConfigureAwait(false);
+				var result = await Driver.ExecuteScalarAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 				return r.OkV(result);
 			}
 			catch (Exception ex)

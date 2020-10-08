@@ -14,11 +14,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Calls_Transaction_Rollback()
 		{
 			// Arrange
-			var transaction = Substitute.For<IDbTransaction>();
-			var connection = Substitute.For<IDbConnection>();
-			connection.BeginTransaction().Returns(transaction);
-
-			var (w, _, _, _) = GetUnitOfWork(connection: connection);
+			var (w, _, transaction, _, _, _) = GetUnitOfWork();
 
 			// Act
 			w.Rollback();
@@ -36,10 +32,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 			transaction.When(t => t.Rollback()).Throw(exception);
 
-			var connection = Substitute.For<IDbConnection>();
-			connection.BeginTransaction().Returns(transaction);
-
-			var (w, _, _, log) = GetUnitOfWork(connection: connection);
+			var (w, _, _, _, log, _) = GetUnitOfWork(transaction: transaction);
 
 			// Act
 			w.Rollback();

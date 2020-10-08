@@ -7,7 +7,7 @@ using static Jeebs.Data.UnitOfWork_Tests.UnitOfWork;
 
 namespace Jeebs.Data.UnitOfWork_Tests
 {
-	public class QueryDynamicAsync_Tests
+	public class Execute_Tests
 	{
 		[Theory]
 		[InlineData(CommandType.StoredProcedure)]
@@ -15,7 +15,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Logs_Query(CommandType commandType)
 		{
 			QueryMethodIsLogged(
-				w => w.Query,
+				w => w.Execute,
 				commandType
 			);
 		}
@@ -23,11 +23,11 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[Theory]
 		[InlineData(CommandType.StoredProcedure)]
 		[InlineData(CommandType.Text)]
-		public void Calls_Driver_Query(CommandType commandType)
+		public void Calls_Driver_Execute(CommandType commandType)
 		{
-			QueryMethodCallsDriver<IEnumerable<dynamic>>(
-				w => w.Query,
-				d => d.Query,
+			QueryMethodCallsDriver<int>(
+				w => w.Execute,
+				d => d.Execute,
 				commandType
 			);
 		}

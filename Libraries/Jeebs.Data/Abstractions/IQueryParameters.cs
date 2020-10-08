@@ -7,7 +7,7 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Shorthand to make working with query parameters easier
 	/// </summary>
-	public interface IQueryParameters : IDictionary<string,object>
+	public interface IQueryParameters : IDictionary<string, object>
 	{
 		/// <summary>
 		/// Add an anonymous object of parameters to the dictionary

@@ -14,12 +14,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Commits_Then_Disposes_Transaction_And_Connection()
 		{
 			// Arrange
-			var transaction = Substitute.For<IDbTransaction>();
-			var connection = Substitute.For<IDbConnection>();
-			connection.BeginTransaction().Returns(transaction);
-			transaction.Connection.Returns(connection);
-
-			var (w, _, _, _) = GetUnitOfWork(connection: connection);
+			var (w, connection, transaction, _, _, _) = GetUnitOfWork();
 
 			// Act
 			w.Dispose();

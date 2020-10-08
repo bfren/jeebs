@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 using static Jeebs.Data.UnitOfWork_Tests.UnitOfWork;
 
 namespace Jeebs.Data.UnitOfWork_Tests
 {
-	public class QueryDynamicAsync_Tests
+	public class QueryDynamic_Tests
 	{
 		[Theory]
 		[InlineData(CommandType.StoredProcedure)]
@@ -15,7 +16,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Logs_Query(CommandType commandType)
 		{
 			QueryMethodIsLogged(
-				w => w.Query,
+				w => w.QueryAsync,
 				commandType
 			);
 		}
@@ -23,11 +24,11 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[Theory]
 		[InlineData(CommandType.StoredProcedure)]
 		[InlineData(CommandType.Text)]
-		public void Calls_Driver_Query(CommandType commandType)
+		public void Calls_Driver_QueryAsync(CommandType commandType)
 		{
-			QueryMethodCallsDriver<IEnumerable<dynamic>>(
-				w => w.Query,
-				d => d.Query,
+			QueryMethodCallsDriver<Task<IEnumerable<dynamic>>>(
+				w => w.QueryAsync,
+				d => d.QueryAsync,
 				commandType
 			);
 		}

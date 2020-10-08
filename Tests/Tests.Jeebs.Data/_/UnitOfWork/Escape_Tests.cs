@@ -14,7 +14,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Single_Element_Calls_Adapter_SplitAndEscape()
 		{
 			// Arrange
-			var (w, _, adapter, _) = GetUnitOfWork();
+			var (w, _, _, adapter, _, _) = GetUnitOfWork();
 
 			const int vInt = 18;
 			var vString = vInt.ToString();
@@ -30,7 +30,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Multiple_Elements_Calls_EscapeAndJoin()
 		{
 			// Arrange
-			var (w, _, adapter, _) = GetUnitOfWork();
+			var (w, _, _, adapter, _, _) = GetUnitOfWork();
 
 			const string? s0 = "one";
 			const string? s1 = "two";

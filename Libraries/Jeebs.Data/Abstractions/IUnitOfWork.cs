@@ -27,6 +27,11 @@ namespace Jeebs.Data
 		IDbTransaction Transaction { get; }
 
 		/// <summary>
+		/// Provider-agnostic query methods
+		/// </summary>
+		IQueryDriver Driver { get; }
+
+		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
 		/// <param name="element">The element to split and escape</param>
@@ -99,7 +104,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		IR<T> Single<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text);
+		IR<T> Single<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
@@ -108,7 +113,7 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		Task<IR<T>> SingleAsync<T>(IOk r, string query, object parameters, CommandType commandType = CommandType.Text);
+		Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
 
 		#endregion
 
