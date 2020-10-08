@@ -19,6 +19,6 @@ namespace Jeebs.Data.Adapter_Tests
 		public const string SortDesc = "DESC";
 
 		public static Data.Adapter GetAdapter()
-			=> Substitute.For<Data.Adapter>(SchemaSeparator, ColumnSeparator, ListSeparator, EscapeOpen, EscapeClose, Alias, AliasOpen, AliasClose, SortAsc, SortDesc);
+			=> Substitute.ForPartsOf<Data.Adapter>(SchemaSeparator, ColumnSeparator, ListSeparator, EscapeOpen, EscapeClose, Alias, AliasOpen, AliasClose, SortAsc, SortDesc);
 	}
 }

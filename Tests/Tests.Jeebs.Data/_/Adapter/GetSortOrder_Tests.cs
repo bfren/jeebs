@@ -20,7 +20,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.GetSortOrder(input, Arg.Any<Enums.SortOrder>());
+			var result = adapter.GetSortOrder(input, SortOrder.Ascending);
 
 			// Assert
 			Assert.Equal(string.Empty, result);

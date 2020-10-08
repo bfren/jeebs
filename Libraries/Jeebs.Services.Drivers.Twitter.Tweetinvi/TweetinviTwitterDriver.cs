@@ -28,46 +28,36 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 
 		private readonly IHttpClientFactory factory;
 
+		private readonly TwitterClient client;
+
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="name">Service name</param>
 		/// <param name="args">TweetinviTwitterDriverArgs</param>
 		protected TweetinviTwitterDriver(string name, TweetinviTwitterDriverArgs args) : base(name, args)
-			=> factory = args.Factory;
+		{
+			factory = args.Factory;
+			client = new TwitterClient(
+				ServiceConfig.ConsumerKey,
+				ServiceConfig.ConsumerSecret,
+				ServiceConfig.UserAccessToken,
+				ServiceConfig.UserAccessSecret
+			);
+		}
 
 		private async Task<IR<IUser>> GetUser(IOkV<string> r)
 		{
 			// Get user
 			return await r
 				.Link()
-					.Handle().With(setCredentialsException)
-					.Run(setCredentials)
-				.Link()
 					.Handle().With(getUserException)
 					.MapAsync(getUser);
 
-			// Set credentials
-			void setCredentials()
-			{
-				Auth.SetUserCredentials(
-					consumerKey: ServiceConfig.ConsumerKey,
-					consumerSecret: ServiceConfig.ConsumerSecret,
-					userAccessToken: ServiceConfig.UserAccessToken,
-					userAccessSecret: ServiceConfig.UserAccessSecret);
-			}
-
-			// Handle set credentials exception
-			void setCredentialsException(IR<string> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error setting credentials");
-				r.AddMsg(new ErrorSettingCredentialsMsg(ex));
-			}
-
 			// Get user
-			static async Task<IR<IUser>> getUser(IOkV<string> r)
+			async Task<IR<IUser>> getUser(IOkV<string> r)
 			{
-				var user = await UserAsync.GetUserFromScreenName(r.Value).ConfigureAwait(false);
+				var user = await client.Users.GetUserAsync(r.Value).ConfigureAwait(false);
 				return r.OkV(user);
 			}
 
@@ -140,14 +130,14 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			async Task<IR<List<ITweet>>> getTimeline(IOkV<IUser> r)
 			{
 				// Set parameters
-				var param = new UserTimelineParameters
+				var param = new GetUserTimelineParameters(r.Value)
 				{
-					MaximumNumberOfTweetsToRetrieve = limit,
+					PageSize = limit,
 					ExcludeReplies = excludeReplies
 				};
 
 				// Get tweets - return empty list if null or empty
-				var timeline = await TimelineAsync.GetUserTimeline(r.Value, param).ConfigureAwait(false);
+				var timeline = await client.Timelines.GetUserTimelineAsync(param).ConfigureAwait(false);
 				return r.OkV(timeline switch
 				{
 					IEnumerable<ITweet> x => x.ToList(),
@@ -173,9 +163,9 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 									 ScreenName = t.CreatedBy.ScreenName,
 									 FullName = t.CreatedBy.Name,
 									 ProfileUrl = t.CreatedBy.Url,
-									 ProfileImageUrl = t.CreatedBy.ProfileImageUrlHttps
+									 ProfileImageUrl = t.CreatedBy.ProfileImageUrl400x400
 								 },
-								 TweetedOn = t.CreatedAt,
+								 TweetedOn = t.CreatedAt.Date,
 								 Text = t.Text
 							 };
 

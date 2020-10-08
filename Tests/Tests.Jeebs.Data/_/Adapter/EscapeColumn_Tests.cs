@@ -19,7 +19,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeColumn(input, Arg.Any<string>());
+			var result = adapter.EscapeColumn(input, F.StringF.Random(6));
 
 			// Assert
 			Assert.Equal(string.Empty, result);

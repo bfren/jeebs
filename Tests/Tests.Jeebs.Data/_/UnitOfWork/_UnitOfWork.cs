@@ -109,7 +109,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 				.Invoke(r, query, parameters, commandType);
 
 			// Assert
+#pragma warning disable NS5000 // Received check.
 			assert(driver.Received())
+#pragma warning restore NS5000 // Received check.
 				.Invoke(connection, query, parameters, transaction, commandType);
 		}
 
