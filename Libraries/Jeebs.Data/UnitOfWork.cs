@@ -79,7 +79,7 @@ namespace Jeebs.Data
 			Connection.Dispose();
 		}
 
-		#region Logging & Failure
+		#region Failure
 
 		/// <inheritdoc/>
 		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters = null)

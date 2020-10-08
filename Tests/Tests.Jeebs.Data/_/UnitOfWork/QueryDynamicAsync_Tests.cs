@@ -15,7 +15,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[InlineData(CommandType.Text)]
 		public void Logs_Query(CommandType commandType)
 		{
-			QueryMethodIsLogged(
+			LogsQuery(
 				w => w.QueryAsync,
 				commandType
 			);
@@ -26,9 +26,20 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[InlineData(CommandType.Text)]
 		public void Calls_Driver_QueryAsync(CommandType commandType)
 		{
-			QueryMethodCallsDriver<Task<IEnumerable<dynamic>>>(
+			CallsDriver<Task<IEnumerable<dynamic>>>(
 				w => w.QueryAsync,
 				d => d.QueryAsync,
+				commandType
+			);
+		}
+
+		[Theory]
+		[InlineData(CommandType.StoredProcedure)]
+		[InlineData(CommandType.Text)]
+		public void Catches_Exception_Rolls_Back_Logs_Exception_Returns_Error(CommandType commandType)
+		{
+			HandlesFailure<IEnumerable<dynamic>>(
+				w => w.QueryAsync,
 				commandType
 			);
 		}

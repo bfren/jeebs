@@ -18,7 +18,7 @@ namespace Jm.Data
 		/// <summary>
 		/// Sql query parameters (JSON-encoded)
 		/// </summary>
-		public string Parameters { get; }
+		public object? Parameters { get; }
 
 		/// <inheritdoc/>
 		public override string Format
@@ -26,9 +26,9 @@ namespace Jm.Data
 
 		/// <inheritdoc/>
 		public override object[] ParamArray
-			=> new[] { ExceptionType, ExceptionText, Sql, Parameters };
+			=> new[] { ExceptionType, ExceptionText, Sql, Parameters ?? new object() };
 
 		internal QueryExceptionMsg(Exception ex, string query, object? parameters = null) : base(ex)
-			=> (Sql, Parameters) = (query, Serialise(parameters));
+			=> (Sql, Parameters) = (query, parameters);
 	}
 }

@@ -15,7 +15,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[InlineData(CommandType.Text)]
 		public void Logs_Query(CommandType commandType)
 		{
-			QueryMethodIsLogged(
+			LogsQuery(
 				w => w.ExecuteScalarAsync<string>,
 				commandType
 			);
@@ -26,9 +26,20 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[InlineData(CommandType.Text)]
 		public void Calls_Driver_ExecuteScalarAsync(CommandType commandType)
 		{
-			QueryMethodCallsDriver<Task<string>>(
+			CallsDriver<Task<string>>(
 				w => w.ExecuteScalarAsync<string>,
 				d => d.ExecuteScalarAsync<string>,
+				commandType
+			);
+		}
+
+		[Theory]
+		[InlineData(CommandType.StoredProcedure)]
+		[InlineData(CommandType.Text)]
+		public void Catches_Exception_Rolls_Back_Logs_Exception_Returns_Error(CommandType commandType)
+		{
+			HandlesFailure<int>(
+				w => w.ExecuteScalarAsync<int>,
 				commandType
 			);
 		}
