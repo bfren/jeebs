@@ -26,7 +26,7 @@ namespace Jeebs.RExtensions_Tests
 		public void IOk_Input_When_IOkV_Does_Nothing()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var chain = Chain.CreateV(value);
 			int sideEffect = 1;
 			void a(IOk<int> _) => sideEffect++;

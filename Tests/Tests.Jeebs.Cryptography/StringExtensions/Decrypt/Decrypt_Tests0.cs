@@ -32,7 +32,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		{
 			// Arrange
 			var key = GenerateKey();
-			var json = F.Rand.String;
+			var json = F.Rnd.String;
 
 			// Act
 			var result = json.Decrypt<int>(key);

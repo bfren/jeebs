@@ -11,8 +11,8 @@ namespace Jeebs.RExtensions_Tests
 		public void Linq_SelectMany_With_OkV_Returns_OkV()
 		{
 			// Arrange
-			var v0 = F.Rand.Integer;
-			var v1 = F.Rand.Integer;
+			var v0 = F.Rnd.Integer;
+			var v1 = F.Rnd.Integer;
 			IR<int> r0() => Result.OkV(v0);
 			IR<int> r1(int x) => Result.OkV(x + v1);
 
@@ -30,8 +30,8 @@ namespace Jeebs.RExtensions_Tests
 		public void Linq_SelectMany_With_Ok_Returns_Error()
 		{
 			// Arrange
-			var v0 = F.Rand.Integer;
-			var v1 = F.Rand.Integer;
+			var v0 = F.Rnd.Integer;
+			var v1 = F.Rnd.Integer;
 			IR<int> r0() => Result.OkV(v0);
 			IR<int> r1(int x) => Result.OkV(x + v1);
 			IR<int> r2 = Result.Ok<int>();
@@ -50,8 +50,8 @@ namespace Jeebs.RExtensions_Tests
 		public void Linq_SelectMany_With_Error_Returns_Error()
 		{
 			// Arrange
-			var v0 = F.Rand.Integer;
-			var v1 = F.Rand.Integer;
+			var v0 = F.Rnd.Integer;
+			var v1 = F.Rnd.Integer;
 			IR<int> r0() => Result.OkV(v0);
 			IR<int> r1(int x) => Result.OkV(x + v1);
 			IR<int> r2() => Result.Error<int>().AddMsg().OfType<InvalidIntegerMsg>();

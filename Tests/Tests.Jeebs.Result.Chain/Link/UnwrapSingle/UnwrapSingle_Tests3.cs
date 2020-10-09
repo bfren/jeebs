@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests
 		public void Other_Input_Same_Type_Returns_Input()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var chain = Chain.CreateV(value);
 
 			// Act

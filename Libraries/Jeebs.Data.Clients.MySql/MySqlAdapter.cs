@@ -20,29 +20,8 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
 		{
-			// Handle invalid table
-			if (IsInvalidIdentifier(table))
-			{
-				throw new InvalidOperationException($"Table is invalid: '{table}'.");
-			}
-
-			// Handle empty columns
-			if (columns.Count == 0)
-			{
-				throw new InvalidOperationException($"The list of {nameof(columns)} cannot be empty.");
-			}
-
-			// Handle empty aliases
-			if (aliases.Count == 0)
-			{
-				throw new InvalidOperationException($"The list of {nameof(aliases)} cannot be empty.");
-			}
-
-			// Columns and aliases must contain the same number of items
-			if (columns.Count != aliases.Count)
-			{
-				throw new InvalidOperationException($"The number of {nameof(columns)} ({columns.Count}) and {nameof(aliases)} ({aliases.Count}) must be the same.");
-			}
+			// Perform checks
+			CreateSingleAndReturnIdChecks(table, columns, aliases);
 
 			// Add @ to aliases (for use as parameters)
 			var aliasesAtted = new List<string>();
@@ -62,11 +41,8 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		public override string Retrieve(IQueryParts parts)
 		{
-			// Make sure FROM is not empty
-			if (IsInvalidIdentifier(parts.From))
-			{
-				throw new InvalidOperationException($"Table is invalid: '{parts.From}'.");
-			}
+			// Perform checks
+			RetrieveChecks(parts);
 
 			// Start query
 			var select = "*";
@@ -138,74 +114,23 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		public override string RetrieveSingleById(List<string> columns, string table, string idColumn, string? idAlias = null)
+		public override string RetrieveSingleById(string table, List<string> columns, string idColumn, string? idAlias = null)
 		{
-			// Handle empty columns
-			if (columns.Count == 0)
-			{
-				throw new InvalidOperationException($"The list of {nameof(columns)} cannot be empty.");
-			}
-
-			// Handle invalid table
-			if (IsInvalidIdentifier(table))
-			{
-				throw new InvalidOperationException($"Table is invalid: '{table}'.");
-			}
-
-			// Handle invalid ID column
-			if (IsInvalidIdentifier(idColumn))
-			{
-				throw new InvalidOperationException($"ID Column is invalid: '{idColumn}'.");
-			}
-
-			// Handle invalid ID alias
+			// Set default ID Alias
 			idAlias ??= nameof(IEntity.Id);
-			if (IsInvalidIdentifier(idAlias))
-			{
-				throw new InvalidOperationException($"ID Alias is invalid: '{idAlias}'.");
-			}
 
+			// Perform checks
+			RetrieveSingleByIdChecks(table, columns, idColumn, idAlias);
+
+			// Return query string
 			return $"SELECT {JoinColumns(columns)} FROM {table} WHERE {idColumn} = @{idAlias};";
 		}
 
 		/// <inheritdoc/>
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
-			// Handle invalid table
-			if (IsInvalidIdentifier(table))
-			{
-				throw new InvalidOperationException($"Table is invalid: '{table}'.");
-			}
-
-			// Handle empty columns
-			if (columns.Count == 0)
-			{
-				throw new InvalidOperationException($"The list of {nameof(columns)} cannot be empty.");
-			}
-
-			// Handle empty aliases
-			if (aliases.Count == 0)
-			{
-				throw new InvalidOperationException($"The list of {nameof(aliases)} cannot be empty.");
-			}
-
-			// Columns and aliases must contain the same number of items
-			if (columns.Count != aliases.Count)
-			{
-				throw new InvalidOperationException($"The number of {nameof(columns)} ({columns.Count}) and {nameof(aliases)} ({aliases.Count}) must be the same.");
-			}
-
-			// Handle invalid ID column
-			if (IsInvalidIdentifier(idColumn))
-			{
-				throw new InvalidOperationException($"ID Column is invalid: '{idColumn}'.");
-			}
-
-			// Handle invalid ID Alias
-			if (IsInvalidIdentifier(idAlias))
-			{
-				throw new InvalidOperationException($"ID Alias is invalid: '{idAlias}'.");
-			}
+			// Perform checks
+			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias, versionColumn, versionAlias);
 
 			// Add each column to the update list
 			var update = new List<string>();
@@ -230,23 +155,8 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
-			// Handle invalid table
-			if (IsInvalidIdentifier(table))
-			{
-				throw new InvalidOperationException($"Table is invalid: '{table}'.");
-			}
-
-			// Handle invalid ID column
-			if (IsInvalidIdentifier(idColumn))
-			{
-				throw new InvalidOperationException($"ID Column is invalid: '{idColumn}'.");
-			}
-
-			// Handle invalid ID Alias
-			if (IsInvalidIdentifier(idAlias))
-			{
-				throw new InvalidOperationException($"ID Alias is invalid: '{idAlias}'.");
-			}
+			// Perform checks
+			DeleteSingleChecks(table, idColumn, idAlias, versionColumn, versionAlias);
 
 			// Build SQL
 			var sql = $"DELETE FROM {table} WHERE {idColumn} = @{idAlias}";

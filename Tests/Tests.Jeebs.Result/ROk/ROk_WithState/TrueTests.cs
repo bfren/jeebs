@@ -11,7 +11,7 @@ namespace Jeebs.ROk_Tests.WithState
 		public void Returns_IOk_Bool()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
+			var state = F.Rnd.Integer;
 			var r = Result.Ok(state);
 
 			// Act
@@ -25,7 +25,7 @@ namespace Jeebs.ROk_Tests.WithState
 		public void With_Message_Returns_IOk_With_Msg()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
+			var state = F.Rnd.Integer;
 			var r = Result.Ok(state);
 			var msg = new MsgTest();
 

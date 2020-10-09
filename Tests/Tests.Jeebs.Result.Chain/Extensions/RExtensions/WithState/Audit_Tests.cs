@@ -12,7 +12,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Returns_Original_Object()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
+			var state = F.Rnd.Integer;
 			var chain = Chain.Create(state);
 			static void a(IR _) { }
 
@@ -27,17 +27,17 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Runs_Audit_Action()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
-			var value = F.Rand.Integer;
+			var state = F.Rnd.Integer;
+			var value = F.Rnd.Integer;
 			var chain = Chain.Create(state);
 
 			IR<int, int> l0(IOk<bool, int> r) => r.OkV(value);
 			static IR<TValue, int> l1<TValue>(IOkV<TValue, int> r) => r.Error();
 
 			var log = new List<string>();
-			var a0 = F.Rand.String;
-			var a1 = F.Rand.String;
-			var a2 = F.Rand.String;
+			var a0 = F.Rnd.String;
+			var a1 = F.Rnd.String;
+			var a2 = F.Rnd.String;
 
 			void a<TValue>(IR<TValue, int> r)
 			{
@@ -74,7 +74,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Catches_Exception()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
+			var state = F.Rnd.Integer;
 			var chain = Chain.Create(state);
 			static void a(IR _) => throw new Exception();
 

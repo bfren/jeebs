@@ -33,7 +33,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rand.String;
+			var from = F.Rnd.String;
 			parts.From.Returns(from);
 
 			// Act
@@ -51,7 +51,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rand.String;
+			var from = F.Rnd.String;
 			parts.From.Returns(from);
 			parts.Select.Returns(input);
 

@@ -44,8 +44,8 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			// Assert
 			adapter.Received().RetrieveSingleById(
-				Arg.Is<List<string>>(x => x.Count == 3 && x[0] == table.Id && x[1] == table.Bar0 && x[2] == table.Bar1),
 				Arg.Is(table.ToString()),
+				Arg.Is<List<string>>(x => x.Count == 3 && x[0] == table.Id && x[1] == table.Bar0 && x[2] == table.Bar1),
 				Arg.Is(table.Id)
 			);
 		}

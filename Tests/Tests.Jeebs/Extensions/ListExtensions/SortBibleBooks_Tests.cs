@@ -29,7 +29,7 @@ namespace Jeebs.ListExtensions_Tests
 		public void ArrayDoesNotContainBibleBooks_ReturnsOriginalArray()
 		{
 			// Arrange
-			var array = new[] { F.Rand.String, F.Rand.String, F.Rand.String, F.Rand.String };
+			var array = new[] { F.Rnd.String, F.Rnd.String, F.Rnd.String, F.Rnd.String };
 
 			// Act
 			var shuffled = array.Shuffle().ToList();

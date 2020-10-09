@@ -27,7 +27,7 @@ namespace Jeebs.RExtensions_Tests
 		public void IError_Input_When_IOkV_Does_Nothing()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var chain = Chain.CreateV(value);
 			int sideEffect = 1;
 			async Task a(IError<int> _) => sideEffect++;

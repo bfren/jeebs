@@ -29,7 +29,7 @@ namespace Jeebs.Link_Tests
 		{
 			// Arrange
 			var chain = Chain.Create();
-			var error = F.Rand.String;
+			var error = F.Rnd.String;
 			void f(IOk _) => throw new Exception(error);
 
 			// Act

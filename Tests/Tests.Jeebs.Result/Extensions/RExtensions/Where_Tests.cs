@@ -11,7 +11,7 @@ namespace Jeebs.RExtensions_Tests
 		public void Linq_Where_True_With_OkV_Returns_OkV()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var result = Result.OkV(value);
 
 			// Act
@@ -28,7 +28,7 @@ namespace Jeebs.RExtensions_Tests
 		public void Linq_Where_False_With_OkV_Returns_Error()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var result = Result.OkV(value);
 
 			// Act

@@ -19,17 +19,17 @@ namespace Jeebs.Data.Clients.SqlServer
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
 		{
+			// Perform checks
+			CreateSingleAndReturnIdChecks(table, columns, aliases);
+
 			throw new NotImplementedException();
 		}
 
 		/// <inheritdoc/>
 		public override string Retrieve(IQueryParts parts)
 		{
-			// Make sure FROM is not empty
-			if (string.IsNullOrWhiteSpace(parts.From))
-			{
-				throw new InvalidOperationException($"FROM is invalid: '{parts.From}'.");
-			}
+			// Perform checks
+			RetrieveChecks(parts);
 
 			// Start query
 			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
@@ -90,20 +90,32 @@ namespace Jeebs.Data.Clients.SqlServer
 		}
 
 		/// <inheritdoc/>
-		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
+		public override string RetrieveSingleById(string table, List<string> columns, string idColumn, string idAlias = "Id")
 		{
+			// Set default ID Alias
+			idAlias ??= nameof(IEntity.Id);
+
+			// Perform checks
+			RetrieveSingleByIdChecks(table, columns, idColumn, idAlias);
+
 			throw new NotImplementedException();
 		}
 
 		/// <inheritdoc/>
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
+			// Perform checks
+			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias, versionColumn, versionAlias);
+
 			throw new NotImplementedException();
 		}
 
 		/// <inheritdoc/>
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
+			// Perform checks
+			DeleteSingleChecks(table, idColumn, idAlias, versionColumn, versionAlias);
+
 			throw new NotImplementedException();
 		}
 	}

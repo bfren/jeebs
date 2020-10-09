@@ -12,8 +12,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void Other_Input_Same_Type_Returns_Input()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
-			var state = F.Rand.Integer;
+			var value = F.Rnd.Integer;
+			var state = F.Rnd.Integer;
 			var chain = Chain.CreateV(value, state);
 
 			// Act

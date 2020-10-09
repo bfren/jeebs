@@ -11,7 +11,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Linq_Where_True_With_Some_Returns_Some()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var option = Option.Wrap(value);
 
 			// Act
@@ -28,7 +28,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Linq_Where_False_With_Some_Returns_None()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var option = Option.Wrap(value);
 
 			// Act

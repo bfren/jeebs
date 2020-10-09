@@ -13,7 +13,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Specific_AsyncHandler_Runs_For_That_Exception()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
+			var state = F.Rnd.Integer;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			async Task h0(IR<bool> _, DivideByZeroException __) => sideEffect++;
@@ -32,7 +32,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Specific_AsyncHandler_Does_Not_Run_For_Other_Exceptions()
 		{
 			// Arrange
-			var state = F.Rand.Integer;
+			var state = F.Rnd.Integer;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			async Task h0(IR<bool> _, DivideByZeroException __) => sideEffect++;

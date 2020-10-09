@@ -11,7 +11,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Linq_Select_With_Some_Returns_Some()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var option = Option.Wrap(value);
 
 			// Act

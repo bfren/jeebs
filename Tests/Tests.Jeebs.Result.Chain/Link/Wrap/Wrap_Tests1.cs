@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests
 		public void Func_Input_When_IOk_Wraps_Value()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			int f() => value;
 			var r = Chain.Create();
 

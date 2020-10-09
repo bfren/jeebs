@@ -7,6 +7,25 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 {
 	public class RetrieveSingleById_Tests
 	{
+
+		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
+		[InlineData(" ")]
+		public void Invalid_Table_Throws_InvalidOperationException(string input)
+		{
+			// Arrange
+			var adapter = new MySqlAdapter();
+			var columns = new List<string> { F.Rnd.String, F.Rnd.String };
+
+			// Act
+			void action() => adapter.RetrieveSingleById(input, columns, F.Rnd.String);
+
+			// Assert
+			var ex = Assert.Throws<InvalidOperationException>(action);
+			Assert.Equal($"Table is invalid: '{input}'.", ex.Message);
+		}
+
 		[Fact]
 		public void Empty_Columns_Throws_InvalidOperationException()
 		{
@@ -14,7 +33,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.RetrieveSingleById(new List<string>(), F.Rand.String, F.Rand.String);
+			void action() => adapter.RetrieveSingleById(F.Rnd.String, new List<string>(), F.Rnd.String);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -25,32 +44,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		[InlineData(null)]
 		[InlineData("")]
 		[InlineData(" ")]
-		public void Invalid_Table_Throws_InvalidOperationException(string input)
-		{
-			// Arrange
-			var adapter = new MySqlAdapter();
-			var columns = new List<string> { F.Rand.String, F.Rand.String };
-
-			// Act
-			void action() => adapter.RetrieveSingleById(columns, input, F.Rand.String);
-
-			// Assert
-			var ex = Assert.Throws<InvalidOperationException>(action);
-			Assert.Equal($"Table is invalid: '{input}'.", ex.Message);
-		}
-
-		[Theory]
-		[InlineData(null)]
-		[InlineData("")]
-		[InlineData(" ")]
 		public void Invalid_IdColumn_Throws_InvalidOperationException(string input)
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { F.Rand.String, F.Rand.String };
+			var columns = new List<string> { F.Rnd.String, F.Rnd.String };
 
 			// Act
-			void action() => adapter.RetrieveSingleById(columns, F.Rand.String, input);
+			void action() => adapter.RetrieveSingleById(F.Rnd.String, columns, input);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -65,11 +66,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var columns = new List<string> { "one", "two", input, "`fo our`" };
-			var table = F.Rand.String;
-			var idColumn = F.Rand.String;
+			var table = F.Rnd.String;
+			var idColumn = F.Rnd.String;
 
 			// Act
-			var result = adapter.RetrieveSingleById(columns, table, idColumn);
+			var result = adapter.RetrieveSingleById(table, columns, idColumn);
 
 			// Assert
 			Assert.Equal($"SELECT one, two, `fo our` FROM {table} WHERE {idColumn} = @Id;", result);
@@ -82,14 +83,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var c0 = F.Rand.String;
-			var c1 = F.Rand.String;
+			var c0 = F.Rnd.String;
+			var c1 = F.Rnd.String;
 			var columns = new List<string> { c0, c1 };
-			var table = F.Rand.String;
-			var idColumn = F.Rand.String;
+			var table = F.Rnd.String;
+			var idColumn = F.Rnd.String;
 
 			// Act
-			var result = adapter.RetrieveSingleById(columns, table, idColumn, input);
+			var result = adapter.RetrieveSingleById(table, columns, idColumn, input);
 
 			// Assert
 			Assert.Equal($"SELECT {c0}, {c1} FROM {table} WHERE {idColumn} = @{expected};", result);

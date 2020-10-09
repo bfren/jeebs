@@ -18,7 +18,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.DeleteSingle(input, F.Rand.String, F.Rand.String);
+			void action() => adapter.DeleteSingle(input, F.Rnd.String, F.Rnd.String);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -35,7 +35,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.DeleteSingle(F.Rand.String, input, F.Rand.String);
+			void action() => adapter.DeleteSingle(F.Rnd.String, input, F.Rnd.String);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -52,7 +52,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.DeleteSingle(F.Rand.String, F.Rand.String, input);
+			void action() => adapter.DeleteSingle(F.Rnd.String, F.Rnd.String, input);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -64,9 +64,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rand.String;
-			var idColumn = F.Rand.String;
-			var idAlias = F.Rand.String;
+			var table = F.Rnd.String;
+			var idColumn = F.Rnd.String;
+			var idAlias = F.Rnd.String;
 
 			// Act
 			var result = adapter.DeleteSingle(table, idColumn, idAlias);
@@ -80,11 +80,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rand.String;
-			var idColumn = F.Rand.String;
-			var idAlias = F.Rand.String;
-			var versionColumn = F.Rand.String;
-			var versionAlias = F.Rand.String;
+			var table = F.Rnd.String;
+			var idColumn = F.Rnd.String;
+			var idAlias = F.Rnd.String;
+			var versionColumn = F.Rnd.String;
+			var versionAlias = F.Rnd.String;
 
 			// Act
 			var result = adapter.DeleteSingle(table, idColumn, idAlias, versionColumn, versionAlias);

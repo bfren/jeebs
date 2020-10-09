@@ -8,7 +8,7 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IAdapter"/>
-	public abstract class Adapter : IAdapter
+	public abstract partial class Adapter : IAdapter
 	{
 		/// <inheritdoc/>
 		public char SchemaSeparator { get; }
@@ -203,7 +203,7 @@ namespace Jeebs.Data
 		public abstract string Retrieve(IQueryParts parts);
 
 		/// <inheritdoc/>
-		public abstract string RetrieveSingleById(List<string> columns, string table, string idColumn, string idAlias = nameof(IEntity.Id));
+		public abstract string RetrieveSingleById(string table, List<string> columns, string idColumn, string idAlias = nameof(IEntity.Id));
 
 		/// <inheritdoc/>
 		public abstract string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);

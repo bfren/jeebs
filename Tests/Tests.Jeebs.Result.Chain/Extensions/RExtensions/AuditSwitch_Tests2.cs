@@ -26,7 +26,7 @@ namespace Jeebs.RExtensions_Tests
 		public void IOkV_Input_When_IOkV_Runs_Func()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var chain = Chain.CreateV(value);
 			int sideEffect = 1;
 			void a(IOkV<int> _) => sideEffect++;
@@ -57,7 +57,7 @@ namespace Jeebs.RExtensions_Tests
 		public void IOkV_Input_Catches_Exception()
 		{
 			// Arrange
-			var value = F.Rand.Integer;
+			var value = F.Rnd.Integer;
 			var chain = Chain.CreateV(value);
 			static void a(IOkV<int> _) => throw new Exception();
 

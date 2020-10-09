@@ -145,11 +145,11 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
-		/// <param name="columns">The columns to SELECT</param>
 		/// <param name="table">Table name</param>
+		/// <param name="columns">The columns to SELECT</param>
 		/// <param name="idColumn">ID column</param>
 		/// <param name="idAlias">[Optional] ID Alias (parameter name / POCO property name) - should normally be <see cref="IEntity.Id"/></param>
-		string RetrieveSingleById(List<string> columns, string table, string idColumn, string idAlias = nameof(IEntity.Id));
+		string RetrieveSingleById(string table, List<string> columns, string idColumn, string idAlias = nameof(IEntity.Id));
 
 		/// <summary>
 		/// Query to update a single row

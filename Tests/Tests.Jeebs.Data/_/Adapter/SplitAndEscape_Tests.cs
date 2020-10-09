@@ -30,9 +30,9 @@ namespace Jeebs.Data.Adapter_Tests
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var one = F.Rand.String;
-			var two = F.Rand.String;
-			var three = F.Rand.String;
+			var one = F.Rnd.String;
+			var two = F.Rnd.String;
+			var three = F.Rnd.String;
 			var input = $"{one}{SchemaSeparator}{two}{SchemaSeparator}{three}";
 
 			// Act

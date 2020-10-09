@@ -46,7 +46,7 @@ namespace Jeebs.Data.Mapping
 			}
 
 			// Get SQL from adapter
-			return @this.RetrieveSingleById(select, map.Name, map.IdColumn.Name);
+			return @this.RetrieveSingleById(map.Name, select, map.IdColumn.Name);
 		}
 
 		/// <summary>
