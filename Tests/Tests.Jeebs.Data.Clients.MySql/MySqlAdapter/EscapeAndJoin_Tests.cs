@@ -10,8 +10,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		[Theory]
 		[InlineData(new[] { "foo" }, "`foo`")]
 		[InlineData(new[] { "foo", "bar" }, "`foo`.`bar`")]
-		[InlineData(new[] { "foo", "", null, "   ", "bar", "" }, "`foo`.`bar`")]
-		public void Returns_Escaped_And_Joined(string[] input, string expected)
+		[InlineData(new object?[] { "foo", 5, "", null, "   ", "bar", "" }, "`foo`.`5`.`bar`")]
+		public void Removes_Invalid_Returns_Escaped_And_Joined(object?[] input, string expected)
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();

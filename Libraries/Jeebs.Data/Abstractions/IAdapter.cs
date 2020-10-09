@@ -60,6 +60,12 @@ namespace Jeebs.Data
 		/// </summary>
 		string SortDesc { get; }
 
+		/// <summary>
+		/// Returns true if the specified <paramref name="name"/> is an invalid table / column name / alias
+		/// </summary>
+		/// <param name="name">Table / column name or alias</param>
+		bool IsInvalidIdentifier(string name);
+
 		#region Escaping
 
 		/// <summary>
@@ -142,7 +148,8 @@ namespace Jeebs.Data
 		/// <param name="columns">The columns to SELECT</param>
 		/// <param name="table">Table name</param>
 		/// <param name="idColumn">ID column</param>
-		string RetrieveSingleById(List<string> columns, string table, string idColumn);
+		/// <param name="idAlias">[Optional] ID Alias (parameter name / POCO property name) - should normally be <see cref="IEntity.Id"/></param>
+		string RetrieveSingleById(List<string> columns, string table, string idColumn, string idAlias = nameof(IEntity.Id));
 
 		/// <summary>
 		/// Query to update a single row

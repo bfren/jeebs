@@ -7,5 +7,92 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 {
 	public class RetrieveSingleById_Tests
 	{
+		[Fact]
+		public void Empty_Columns_Throws_InvalidOperationException()
+		{
+			// Arrange
+			var adapter = new MySqlAdapter();
+
+			// Act
+			void action() => adapter.RetrieveSingleById(new List<string>(), F.Rand.String, F.Rand.String);
+
+			// Assert
+			var ex = Assert.Throws<InvalidOperationException>(action);
+			Assert.Equal("The list of columns cannot be empty.", ex.Message);
+		}
+
+		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
+		[InlineData(" ")]
+		public void Invalid_Table_Throws_InvalidOperationException(string input)
+		{
+			// Arrange
+			var adapter = new MySqlAdapter();
+			var columns = new List<string> { F.Rand.String, F.Rand.String };
+
+			// Act
+			void action() => adapter.RetrieveSingleById(columns, input, F.Rand.String);
+
+			// Assert
+			var ex = Assert.Throws<InvalidOperationException>(action);
+			Assert.Equal($"Table is invalid: '{input}'.", ex.Message);
+		}
+
+		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
+		[InlineData(" ")]
+		public void Invalid_IdColumn_Throws_InvalidOperationException(string input)
+		{
+			// Arrange
+			var adapter = new MySqlAdapter();
+			var columns = new List<string> { F.Rand.String, F.Rand.String };
+
+			// Act
+			void action() => adapter.RetrieveSingleById(columns, F.Rand.String, input);
+
+			// Assert
+			var ex = Assert.Throws<InvalidOperationException>(action);
+			Assert.Equal($"ID Column is invalid: '{input}'.", ex.Message);
+		}
+
+		[Theory]
+		[InlineData("  ")]
+		[InlineData("th ree")]
+		public void Removes_Invalid_Columns_From_Query(string input)
+		{
+			// Arrange
+			var adapter = new MySqlAdapter();
+			var columns = new List<string> { "one", "two", input, "`fo our`" };
+			var table = F.Rand.String;
+			var idColumn = F.Rand.String;
+
+			// Act
+			var result = adapter.RetrieveSingleById(columns, table, idColumn);
+
+			// Assert
+			Assert.Equal($"SELECT one, two, `fo our` FROM {table} WHERE {idColumn} = @Id;", result);
+		}
+
+		[Theory]
+		[InlineData(null, "Id")]
+		[InlineData("otherAlias", "otherAlias")]
+		public void Returns_RetrieveSingleById_Query(string input, string expected)
+		{
+			// Arrange
+			var adapter = new MySqlAdapter();
+			var c0 = F.Rand.String;
+			var c1 = F.Rand.String;
+			var columns = new List<string> { c0, c1 };
+			var table = F.Rand.String;
+			var idColumn = F.Rand.String;
+
+			// Act
+			var result = adapter.RetrieveSingleById(columns, table, idColumn, input);
+
+			// Assert
+			Assert.Equal($"SELECT {c0}, {c1} FROM {table} WHERE {idColumn} = @{expected};", result);
+		}
 	}
 }

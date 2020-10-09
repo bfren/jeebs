@@ -18,7 +18,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			Action action = () => adapter.CreateSingleAndReturnId(input, Arg.Any<List<string>>(), Arg.Any<List<string>>());
+			void action() => adapter.CreateSingleAndReturnId(input, new List<string>(), new List<string>());
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -30,11 +30,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = "one";
+			var table = F.Rand.String;
 			var columns = new List<string>();
 
 			// Act
-			Action action = () => adapter.CreateSingleAndReturnId(table, columns, Arg.Any<List<string>>());
+			void action() => adapter.CreateSingleAndReturnId(table, columns, new List<string>());
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -46,12 +46,12 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = "one";
-			var columns = new List<string> { "two" };
+			var table = F.Rand.String;
+			var columns = new List<string> { F.Rand.String };
 			var aliases = new List<string>();
 
 			// Act
-			Action action = () => adapter.CreateSingleAndReturnId(table, columns, aliases);
+			void action() => adapter.CreateSingleAndReturnId(table, columns, aliases);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -63,12 +63,12 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = "one";
-			var columns = new List<string> { "two" };
-			var aliases = new List<string> { "three", "four" };
+			var table = F.Rand.String;
+			var columns = new List<string> { F.Rand.String };
+			var aliases = new List<string> { F.Rand.String, F.Rand.String };
 
 			// Act
-			Action action = () => adapter.CreateSingleAndReturnId(table, columns, aliases);
+			void action() => adapter.CreateSingleAndReturnId(table, columns, aliases);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -76,19 +76,25 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		}
 
 		[Fact]
-		public void	Returns_Insert_Query()
+		public void Returns_Insert_Query()
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = "one";
-			var columns = new List<string> { "two", "three" };
-			var aliases = new List<string> { "four", "five" };
+			var table = F.Rand.String;
+
+			var c0 = F.Rand.String;
+			var c1 = F.Rand.String;
+			var columns = new List<string> { c0, c1 };
+
+			var a0 = F.Rand.String;
+			var a1 = F.Rand.String;
+			var aliases = new List<string> { a0, a1 };
 
 			// Act
 			var result = adapter.CreateSingleAndReturnId(table, columns, aliases);
 
 			// Assert
-			Assert.Equal("INSERT INTO one (two, three) VALUES (@four, @five); SELECT LAST_INSERT_ID();", result);
+			Assert.Equal($"INSERT INTO {table} ({c0}, {c1}) VALUES (@{a0}, @{a1}); SELECT LAST_INSERT_ID();", result);
 		}
 	}
 }

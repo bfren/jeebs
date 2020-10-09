@@ -12,7 +12,7 @@ namespace Jeebs.Data.Adapter_Tests
 		[InlineData(null)]
 		[InlineData("")]
 		[InlineData(" ")]
-		public void Null_Or_Empty_Returns_Empty(string input)
+		public void Invalid_Identifier_Returns_Empty(string input)
 		{
 			// Arrange
 			var adapter = GetAdapter();
@@ -25,46 +25,49 @@ namespace Jeebs.Data.Adapter_Tests
 		}
 
 		[Fact]
-		public void Containing_SchemaSeparator_Splits_Escapes_And_Rejoins()
+		public void Contains_SchemaSeparator_Splits_Escapes_And_Rejoins()
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var input = $"one{SchemaSeparator}two{SchemaSeparator}three";
+			var one = F.Rand.String;
+			var two = F.Rand.String;
+			var three = F.Rand.String;
+			var input = $"{one}{SchemaSeparator}{two}{SchemaSeparator}{three}";
 
 			// Act
 			var result = adapter.Escape(input);
 
 			// Assert
-			Assert.Equal("[one].[two].[three]", result);
+			Assert.Equal($"[{one}].[{two}].[{three}]", result);
 		}
 
 		[Fact]
-		public void Escape_Simple()
+		public void Escapes_Simple()
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var input = "one";
+			var input = F.Rand.String;
 
 			// Act
 			var result = adapter.Escape(input);
 
 			// Assert
-			Assert.Equal("[one]", result);
+			Assert.Equal($"[{input}]", result);
 		}
 
 		[Fact]
-		public void Escape_Table_Name()
+		public void Escapes_Table_Name()
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var name = "one";
+			var name = F.Rand.String;
 			var table = new Table(name);
 
 			// Act
 			var result = adapter.Escape(table);
 
 			// Assert
-			Assert.Equal("[one]", result);
+			Assert.Equal($"[{name}]", result);
 		}
 
 		public class Table

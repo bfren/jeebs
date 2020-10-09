@@ -32,7 +32,7 @@ namespace Jeebs.Data.Db_Tests
 			// Arrange
 			var client = Substitute.For<IDbClient>();
 			var log = Substitute.For<ILog>();
-			var connectionString = F.StringF.Random(6);
+			var connectionString = F.Rand.String;
 			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
 
 			// Act
@@ -58,7 +58,7 @@ namespace Jeebs.Data.Db_Tests
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
 			var log = Substitute.For<ILog>();
-			var connectionString = F.StringF.Random(6);
+			var connectionString = F.Rand.String;
 
 			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
 
@@ -80,7 +80,7 @@ namespace Jeebs.Data.Db_Tests
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
 			var log = Substitute.For<ILog>();
-			var connectionString = F.StringF.Random(6);
+			var connectionString = F.Rand.String;
 
 			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
 
@@ -107,7 +107,7 @@ namespace Jeebs.Data.Db_Tests
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
 			var log = Substitute.For<ILog>();
-			var connectionString = F.StringF.Random(6);
+			var connectionString = F.Rand.String;
 
 			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
 

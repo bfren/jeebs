@@ -19,7 +19,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeColumn(input, F.StringF.Random(6));
+			var result = adapter.EscapeColumn(input, F.Rand.String);
 
 			// Assert
 			Assert.Equal(string.Empty, result);
@@ -32,45 +32,45 @@ namespace Jeebs.Data.Adapter_Tests
 		public void Name_Without_Alias_Returns_Escaped_Name(string input)
 		{
 			// Arrange
-			var name = "one";
+			var name = F.Rand.String;
 			var adapter = GetAdapter();
 
 			// Act
 			var result = adapter.EscapeColumn(name, input);
 
 			// Assert
-			Assert.Equal("[one]", result);
+			Assert.Equal($"[{name}]", result);
 		}
 
 		[Fact]
 		public void Escaped_Name_With_Alias()
 		{
 			// Arrange
-			var name = "one";
-			var alias = "two";
+			var name = F.Rand.String;
+			var alias = F.Rand.String;
 			var adapter = GetAdapter();
 
 			// Act
 			var result = adapter.EscapeColumn(name, alias);
 
 			// Assert
-			Assert.Equal("[one] AS {two}", result);
+			Assert.Equal($"[{name}] AS {{{alias}}}", result);
 		}
 
 		[Fact]
 		public void Escaped_Name_With_Alias_And_Table()
 		{
 			// Arrange
-			var name = "one";
-			var alias = "two";
-			var table = "three";
+			var name = F.Rand.String;
+			var alias = F.Rand.String;
+			var table = F.Rand.String;
 			var adapter = GetAdapter();
 
 			// Act
 			var result = adapter.EscapeColumn(name, alias, table);
 
 			// Assert
-			Assert.Equal("[three].[one] AS {two}", result);
+			Assert.Equal($"[{table}].[{name}] AS {{{alias}}}", result);
 		}
 	}
 }

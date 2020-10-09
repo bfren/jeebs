@@ -20,11 +20,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			parts.From.Returns(input);
 
 			// Act
-			Action action = () => adapter.Retrieve(parts);
+			void action() => adapter.Retrieve(parts);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
-			Assert.Equal($"FROM table is invalid: '{input}'.", ex.Message);
+			Assert.Equal($"Table is invalid: '{input}'.", ex.Message);
 		}
 
 		[Fact]
@@ -33,13 +33,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			parts.From.Returns("one");
-			
+			var from = F.Rand.String;
+			parts.From.Returns(from);
+
 			// Act
 			var result = adapter.Retrieve(parts);
 
 			// Assert
-			Assert.Equal("SELECT * FROM one;", result);
+			Assert.Equal($"SELECT * FROM {from};", result);
 		}
 
 		[Theory]
@@ -50,14 +51,15 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			parts.From.Returns("one");
+			var from = F.Rand.String;
+			parts.From.Returns(from);
 			parts.Select.Returns(input);
 
 			// Act
 			var result = adapter.Retrieve(parts);
 
 			// Assert
-			Assert.Equal($"SELECT {input} FROM one;", result);
+			Assert.Equal($"SELECT {input} FROM {from};", result);
 		}
 	}
 }

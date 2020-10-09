@@ -20,8 +20,8 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)
 		{
-			// Handle no table
-			if (string.IsNullOrWhiteSpace(table))
+			// Handle invalid table
+			if (IsInvalidIdentifier(table))
 			{
 				throw new InvalidOperationException($"Table is invalid: '{table}'.");
 			}
@@ -63,9 +63,9 @@ namespace Jeebs.Data.Clients.MySql
 		public override string Retrieve(IQueryParts parts)
 		{
 			// Make sure FROM is not empty
-			if (string.IsNullOrWhiteSpace(parts.From))
+			if (IsInvalidIdentifier(parts.From))
 			{
-				throw new InvalidOperationException($"FROM table is invalid: '{parts.From}'.");
+				throw new InvalidOperationException($"Table is invalid: '{parts.From}'.");
 			}
 
 			// Start query
@@ -138,12 +138,75 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		public override string RetrieveSingleById(List<string> columns, string table, string idColumn)
-			=> $"SELECT {JoinColumns(columns)} FROM {table} WHERE {idColumn} = @Id;";
+		public override string RetrieveSingleById(List<string> columns, string table, string idColumn, string? idAlias = null)
+		{
+			// Handle empty columns
+			if (columns.Count == 0)
+			{
+				throw new InvalidOperationException($"The list of {nameof(columns)} cannot be empty.");
+			}
+
+			// Handle invalid table
+			if (IsInvalidIdentifier(table))
+			{
+				throw new InvalidOperationException($"Table is invalid: '{table}'.");
+			}
+
+			// Handle invalid ID column
+			if (IsInvalidIdentifier(idColumn))
+			{
+				throw new InvalidOperationException($"ID Column is invalid: '{idColumn}'.");
+			}
+
+			// Handle invalid ID alias
+			idAlias ??= nameof(IEntity.Id);
+			if (IsInvalidIdentifier(idAlias))
+			{
+				throw new InvalidOperationException($"ID Alias is invalid: '{idAlias}'.");
+			}
+
+			return $"SELECT {JoinColumns(columns)} FROM {table} WHERE {idColumn} = @{idAlias};";
+		}
 
 		/// <inheritdoc/>
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
+			// Handle invalid table
+			if (IsInvalidIdentifier(table))
+			{
+				throw new InvalidOperationException($"Table is invalid: '{table}'.");
+			}
+
+			// Handle empty columns
+			if (columns.Count == 0)
+			{
+				throw new InvalidOperationException($"The list of {nameof(columns)} cannot be empty.");
+			}
+
+			// Handle empty aliases
+			if (aliases.Count == 0)
+			{
+				throw new InvalidOperationException($"The list of {nameof(aliases)} cannot be empty.");
+			}
+
+			// Columns and aliases must contain the same number of items
+			if (columns.Count != aliases.Count)
+			{
+				throw new InvalidOperationException($"The number of {nameof(columns)} ({columns.Count}) and {nameof(aliases)} ({aliases.Count}) must be the same.");
+			}
+
+			// Handle invalid ID column
+			if (IsInvalidIdentifier(idColumn))
+			{
+				throw new InvalidOperationException($"ID Column is invalid: '{idColumn}'.");
+			}
+
+			// Handle invalid ID Alias
+			if (IsInvalidIdentifier(idAlias))
+			{
+				throw new InvalidOperationException($"ID Alias is invalid: '{idAlias}'.");
+			}
+
 			// Add each column to the update list
 			var update = new List<string>();
 			for (int i = 0; i < columns.Count; i++)
@@ -152,7 +215,7 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Build SQL
-			var sql = $"UPDATE {table} SET {JoinColumns(update)} WHERE {idColumn} = @{idAlias}";
+			var sql = $"UPDATE {table} SET {JoinColumns(update, true)} WHERE {idColumn} = @{idAlias}";
 
 			// Add Version column
 			if (versionColumn is string column && versionAlias is string alias)
@@ -167,6 +230,24 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
+			// Handle invalid table
+			if (IsInvalidIdentifier(table))
+			{
+				throw new InvalidOperationException($"Table is invalid: '{table}'.");
+			}
+
+			// Handle invalid ID column
+			if (IsInvalidIdentifier(idColumn))
+			{
+				throw new InvalidOperationException($"ID Column is invalid: '{idColumn}'.");
+			}
+
+			// Handle invalid ID Alias
+			if (IsInvalidIdentifier(idAlias))
+			{
+				throw new InvalidOperationException($"ID Alias is invalid: '{idAlias}'.");
+			}
+
 			// Build SQL
 			var sql = $"DELETE FROM {table} WHERE {idColumn} = @{idAlias}";
 

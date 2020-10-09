@@ -71,16 +71,29 @@ namespace Jeebs.Data
 		/// Join columns using <see cref="ColumnSeparator"/> and a space
 		/// </summary>
 		/// <param name="columns">List of columns</param>
-		protected string JoinColumns(IEnumerable<string> columns)
-			=> string.Join($"{ColumnSeparator} ", columns);
+		/// <param name="skipIdentifierCheck">If true, the valid identifier check will be skipped</param>
+		protected string JoinColumns(IEnumerable<string> columns, bool skipIdentifierCheck = false)
+			=> string.Join($"{ColumnSeparator} ", columns.Where(x => skipIdentifierCheck || !IsInvalidIdentifier(x)));
+
+		/// <inheritdoc/>
+		public virtual bool IsInvalidIdentifier(string? name)
+		{
+			return isNullOrEmpty() || containsUnescapedSpaces();
+
+			bool isNullOrEmpty()
+				=> string.IsNullOrWhiteSpace(name);
+
+			bool containsUnescapedSpaces()
+				=> name?.IndexOfAny(new[] { EscapeOpen, EscapeClose }) == -1 && name.Contains(' ');
+		}
 
 		#region Escaping
 
 		/// <inheritdoc/>
 		public string Escape(string name)
 		{
-			// Handle empty names
-			if (string.IsNullOrWhiteSpace(name))
+			// Handle invalid names
+			if (IsInvalidIdentifier(name))
 			{
 				return string.Empty;
 			}
@@ -129,6 +142,7 @@ namespace Jeebs.Data
 			var list = new List<string>();
 			var escaped = elements
 				.Filter(x => x?.ToString())
+				.Where(x => !IsInvalidIdentifier(x))
 				.Filter(x => Escape(x));
 
 			foreach (var element in escaped)
@@ -143,14 +157,14 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public string EscapeColumn(string name, string alias, string? table = null)
 		{
-			// Handle no name
-			if (string.IsNullOrWhiteSpace(name))
+			// Handle invalid names
+			if (IsInvalidIdentifier(name))
 			{
 				return string.Empty;
 			}
 
-			// Handle no alias
-			if (string.IsNullOrWhiteSpace(alias))
+			// Handle invalid aliases
+			if (IsInvalidIdentifier(alias))
 			{
 				return Escape(name);
 			}
@@ -189,7 +203,7 @@ namespace Jeebs.Data
 		public abstract string Retrieve(IQueryParts parts);
 
 		/// <inheritdoc/>
-		public abstract string RetrieveSingleById(List<string> columns, string table, string idColumn);
+		public abstract string RetrieveSingleById(List<string> columns, string table, string idColumn, string idAlias = nameof(IEntity.Id));
 
 		/// <inheritdoc/>
 		public abstract string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null);
