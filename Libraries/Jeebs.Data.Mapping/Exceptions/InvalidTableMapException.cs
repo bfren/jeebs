@@ -6,7 +6,7 @@ using Jeebs.Data.Mapping;
 namespace Jx.Data.Mapping
 {
 	/// <summary>
-	/// See <see cref="Map{TEntity}.Validate{TTable}"/>
+	/// See <see cref="MapService.Map{TEntity}(Table)"/>
 	/// </summary>
 
 	[Serializable]

@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
-	/// Provides services for <see cref="Map{TEntity}"/> to enable better testing - normal usage is via <see cref="Map{TEntity}.To{TTable}"/> and <see cref="Map{TEntity}.To{TTable}(TTable)"/>
+	/// Provides services for <see cref="Map{TEntity}"/> to enable better testing - normal usage is via <see cref="Mapping.Map{TEntity}.To{TTable}()"/> and <see cref="Map{TEntity}.To{TTable}(TTable)"/>
 	/// </summary>
 	public interface IMapService : IDisposable
 	{
@@ -36,6 +36,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Returns the column in the list marked with the specified attribute
 		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
 		/// <param name="columns">IMappedColumnList</param>
 		IMappedColumn GetColumnWithAttribute<TEntity, TAttribute>(IMappedColumnList columns)

@@ -6,7 +6,7 @@ using Jeebs.Data.Mapping;
 namespace Jx.Data.Mapping
 {
 	/// <summary>
-	/// See <see cref="Map{TEntity}.To{TTable}(TTable, Jeebs.Data.IAdapter)"/>
+	/// See <see cref="MapService.GetColumnWithAttribute{TEntity, TAttribute}(IMappedColumnList)"/>
 	/// </summary>
 	[Serializable]
 	public class MissingAttributeException : Exception

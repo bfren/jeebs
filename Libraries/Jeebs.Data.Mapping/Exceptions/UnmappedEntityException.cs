@@ -7,7 +7,7 @@ using Jeebs.Data.Mapping;
 namespace Jx.Data.Mapping
 {
 	/// <summary>
-	/// See <see cref="TableMaps.SafeGet{TReturn}(Type, Expression{Func{TableMap, TReturn}})"/>
+	/// See <see cref="MapService.GetTableMapFor{TEntity}"/>
 	/// </summary>
 	[Serializable]
 	public class UnmappedEntityException : Exception

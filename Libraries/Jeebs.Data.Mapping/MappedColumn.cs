@@ -14,7 +14,8 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="column">Escaped Column Name</param>
+		/// <param name="table">Escaped table name</param>
+		/// <param name="name">Escaped Column Name</param>
 		/// <param name="property">Entity property PropertyInfo</param>
 		public MappedColumn(string table, string name, PropertyInfo property) : base(table, name, property.Name)
 			=> Property = property;

@@ -19,6 +19,7 @@ namespace Jeebs.Data
 		/// Create object
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
+		/// <param name="table">Table name</param>
 		protected QueryPartsBuilderExtended(IAdapter adapter, Table table) : base(adapter, adapter.Escape(table)) { }
 
 		/// <summary>

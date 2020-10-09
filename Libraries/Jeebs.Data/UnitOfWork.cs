@@ -34,6 +34,7 @@ namespace Jeebs.Data
 		/// <param name="connection">IDbConnection</param>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
+		/// <param name="driver">[Optional] IQueryDriver</param>
 		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log, IQueryDriver? driver = null)
 			=> (Adapter, Transaction, this.log, Driver) = (adapter, connection.BeginTransaction(), log, driver ?? new DapperQueryDriver());
 
