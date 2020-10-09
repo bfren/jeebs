@@ -32,7 +32,15 @@ namespace F
 		/// </summary>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
-		public static long RandomInteger(long min = 0, long max = long.MaxValue)
+		public static int RandomInt32(int min = 0, int max = int.MaxValue)
+			=> (int)RandomInt64(min, max);
+
+		/// <summary>
+		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
+		/// </summary>
+		/// <param name="min">Minimum acceptable value</param>
+		/// <param name="max">Maximum acceptable value</param>
+		public static long RandomInt64(long min = 0, long max = long.MaxValue)
 		{
 			// Check arguments
 			if (min >= max)

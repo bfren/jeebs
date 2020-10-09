@@ -7,17 +7,17 @@ using static F.MathsF;
 
 namespace F.MathsF_Tests
 {
-	public class RandomInteger_Tests
+	public class RandomInt32_Tests
 	{
 		[Fact]
 		public void Min_GreaterThan_Max_Throws_ArgumentOutOfRangeException()
 		{
 			// Arrange
-			const long min = 3L;
-			const long max = 2L;
+			const int min = 3;
+			const int max = 2;
 
 			// Act
-			static void action() => RandomInteger(min, max);
+			static void action() => RandomInt64(min, max);
 
 			// Assert
 			var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
@@ -28,10 +28,10 @@ namespace F.MathsF_Tests
 		public void Min_LessThan_Zero_Throws_ArgumentException()
 		{
 			// Arrange
-			const long min = long.MinValue;
+			const int min = int.MinValue;
 
 			// Act
-			static void action() => RandomInteger(min: min);
+			static void action() => RandomInt32(min: min);
 
 			// Assert
 			var ex = Assert.Throws<ArgumentException>(action);
@@ -42,14 +42,14 @@ namespace F.MathsF_Tests
 		public void Never_Returns_Number_Out_Of_Bounds()
 		{
 			// Arrange
-			const long min = 1L;
-			const long max = 10L;
-			var numbers = new List<double>();
+			const int min = 1;
+			const int max = 10;
+			var numbers = new List<int>();
 
 			// Act
 			for (int i = 0; i < 1000000; i++)
 			{
-				numbers.Add(RandomInteger(min,max));
+				numbers.Add(RandomInt32(min, max));
 			}
 
 			// Assert
@@ -61,12 +61,12 @@ namespace F.MathsF_Tests
 		public void Returns_Different_Number_Each_Time()
 		{
 			// Arrange
-			var numbers = new List<double>();
+			var numbers = new List<int>();
 
 			// Act
-			for (int i = 0; i < 1000000; i++)
+			for (int i = 0; i < 100000; i++)
 			{
-				numbers.Add(RandomInteger());
+				numbers.Add(RandomInt32());
 			}
 
 			var unique = numbers.Distinct();
