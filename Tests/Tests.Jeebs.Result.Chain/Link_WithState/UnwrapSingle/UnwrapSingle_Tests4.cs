@@ -12,8 +12,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void Not_IEnumerable_Or_Same_Type_Input_Returns_IError()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var chain = Chain.CreateV(value, state);
 
 			// Act

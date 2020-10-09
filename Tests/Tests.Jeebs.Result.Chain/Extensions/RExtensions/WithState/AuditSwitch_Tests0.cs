@@ -12,7 +12,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void No_Input_Returns_Original_Result()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
 
 			// Act

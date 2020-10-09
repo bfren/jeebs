@@ -26,8 +26,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Removes_Empty_Items()
 		{
 			// Arrange
-			var one = 1;
-			var two = "two";
+			var one = F.Rand.Integer;
+			var two = F.Rand.String;
 			var list = new object?[] { null, one, null, two, null };
 
 			// Act
@@ -45,15 +45,17 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Removes_None()
 		{
 			// Arrange
-			var list = new[] { None<int>(), Wrap(1), None<int>(), Wrap(2), None<int>() };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var list = new[] { None<int>(), Wrap(n0), None<int>(), Wrap(n1), None<int>() };
 
 			// Act
 			var result = list.Filter();
 
 			// Assert
 			Assert.Collection(result,
-				x => Assert.Equal(1, Assert.IsType<Some<int>>(x).Value),
-				x => Assert.Equal(2, Assert.IsType<Some<int>>(x).Value)
+				x => Assert.Equal(n0, Assert.IsType<Some<int>>(x).Value),
+				x => Assert.Equal(n1, Assert.IsType<Some<int>>(x).Value)
 			);
 		}
 
@@ -61,9 +63,9 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Maps_Class_And_Removes_Empty_Items()
 		{
 			// Arrange
-			var one = "1";
-			var two = "2";
-			var list = new object?[] { null, one, null, two, null };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var list = new object?[] { null, n0.ToString(), null, n1.ToString(), null };
 			static int? parse(object? x)
 			{
 				if (x is string y)
@@ -80,8 +82,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			// Assert
 			Assert.Equal(2, result.Count());
 			Assert.Collection(result,
-				x => Assert.Equal(1, x),
-				x => Assert.Equal(2, x)
+				x => Assert.Equal(n0, x),
+				x => Assert.Equal(n1, x)
 			);
 		}
 
@@ -89,9 +91,9 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Maps_Struct_And_Removes_Empty_Items()
 		{
 			// Arrange
-			var one = 1;
-			var two = 2;
-			var list = new int?[] { null, one, null, two, null };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var list = new int?[] { null, n0, null, n1, null };
 			static string? parse(int? x) => x?.ToString();
 
 			// Act
@@ -100,8 +102,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			// Assert
 			Assert.Equal(2, result.Count());
 			Assert.Collection(result,
-				x => Assert.Equal(one.ToString(), x),
-				x => Assert.Equal(two.ToString(), x)
+				x => Assert.Equal(n0.ToString(), x),
+				x => Assert.Equal(n1.ToString(), x)
 			);
 		}
 	}

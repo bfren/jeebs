@@ -42,12 +42,13 @@ namespace F.MathsF_Tests
 		public void Never_Returns_Number_Out_Of_Bounds()
 		{
 			// Arrange
+			const int iterations = 1000000;
 			const long min = 1L;
 			const long max = 10L;
 			var numbers = new List<long>();
 
 			// Act
-			for (int i = 0; i < 1000000; i++)
+			for (int i = 0; i < iterations; i++)
 			{
 				numbers.Add(RandomInt64(min, max));
 			}
@@ -61,10 +62,11 @@ namespace F.MathsF_Tests
 		public void Returns_Different_Number_Each_Time()
 		{
 			// Arrange
+			const int iterations = 1000;
 			var numbers = new List<long>();
 
 			// Act
-			for (int i = 0; i < 1000000; i++)
+			for (int i = 0; i < iterations; i++)
 			{
 				numbers.Add(RandomInt64());
 			}

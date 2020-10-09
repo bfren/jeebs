@@ -12,7 +12,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Returns_Original_Object()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
 			static void a(IR _) { }
 
@@ -27,30 +27,35 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Runs_Audit_Action()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
+			var value = F.Rand.Integer;
 			var chain = Chain.Create(state);
 
-			static IR<int, int> l0(IOk<bool, int> r) => r.OkV(18);
+			IR<int, int> l0(IOk<bool, int> r) => r.OkV(value);
 			static IR<TValue, int> l1<TValue>(IOkV<TValue, int> r) => r.Error();
 
 			var log = new List<string>();
+			var a0 = F.Rand.String;
+			var a1 = F.Rand.String;
+			var a2 = F.Rand.String;
+
 			void a<TValue>(IR<TValue, int> r)
 			{
 				if (r is IError<TValue, int> error)
 				{
-					log.Add("Error!");
+					log.Add(a0);
 				}
 				else if (r is IOkV<TValue, int> ok)
 				{
-					log.Add($"Value: {ok.Value}");
+					log.Add($"{a1}: {ok.Value}");
 				}
 				else
 				{
-					log.Add("Unknown state.");
+					log.Add(a2);
 				}
 			}
 
-			var expected = new[] { "Unknown state.", "Value: 18", "Error!" }.ToList();
+			var expected = new[] { a2, $"{a1}: {value}", a0 }.ToList();
 
 			// Act
 			var next = chain
@@ -69,7 +74,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Catches_Exception()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
 			static void a(IR _) => throw new Exception();
 

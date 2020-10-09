@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Generic_Handler_Returns_Original_Link()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var link = Chain.Create(state).Link();
 			static void h0(IR<bool> _, Exception __) { }
 			static void h1(IR<bool, int> _, Exception __) { }
@@ -30,7 +30,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Generic_Handler_Runs_For_Any_Exception()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			void h0(IR<bool> _, Exception __) => sideEffect++;

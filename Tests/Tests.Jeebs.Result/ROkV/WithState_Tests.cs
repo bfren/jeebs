@@ -11,8 +11,8 @@ namespace Jeebs.ROkV_Tests
 		public void Returns_OkV_With_State()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var r = Result.OkV(value);
 
 			// Act
@@ -28,10 +28,10 @@ namespace Jeebs.ROkV_Tests
 		public void Returns_OkV_With_State_And_Keeps_Messages()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var r = Result.OkV(value);
-			r.AddMsg(new StringMsg("Test message."));
+			r.AddMsg(new StringMsg(F.Rand.String));
 
 			// Act
 			var next = r.WithState(state);

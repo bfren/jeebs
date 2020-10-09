@@ -11,17 +11,17 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 	{
 		internal static (string alias, MappedColumn column) Get()
 		{
-			var alias = F.StringF.Random(6);
+			var alias = F.Rnd.String;
 			var prop = Substitute.For<PropertyInfo>();
 			prop.Name.Returns(alias);
-			return (alias, new MappedColumn(F.StringF.Random(6), F.StringF.Random(6), prop));
+			return (alias, new MappedColumn(F.Rnd.String, F.Rnd.String, prop));
 		}
 
 		[Fact]
 		public void No_Columns_Returns_Empty_List()
 		{
 			// Arrange
-			var map = new TableMap(F.StringF.Random(6), new MappedColumnList(), Get().column);
+			var map = new TableMap(F.Rnd.String, new MappedColumnList(), Get().column);
 
 			// Act
 			var result = map.GetColumnAliases(false);
@@ -38,7 +38,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 			var (a1, c1) = Get();
 			var (a2, c2) = Get();
 			var (a3, c3) = Get();
-			var map = new TableMap(F.StringF.Random(6), new MappedColumnList() { c0, c1, c2, c3 }, c0);
+			var map = new TableMap(F.Rnd.String, new MappedColumnList() { c0, c1, c2, c3 }, c0);
 
 			// Act
 			var result = map.GetColumnAliases(true);
@@ -60,7 +60,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 			var (a1, c1) = Get();
 			var (a2, c2) = Get();
 			var (a3, c3) = Get();
-			var map = new TableMap(F.StringF.Random(6), new MappedColumnList() { c0, c1, c2, c3 }, c0);
+			var map = new TableMap(F.Rnd.String, new MappedColumnList() { c0, c1, c2, c3 }, c0);
 
 			// Act
 			var result = map.GetColumnAliases(false);

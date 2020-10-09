@@ -12,13 +12,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{0} , {1} , {2}";
-			var values = new[] { 3, 4, 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new[] { n0, n1, n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("3 , 4 , 5", result);
+			Assert.Equal($"{n0} , {n1} , {n2}", result);
 		}
 
 		[Fact]
@@ -26,13 +29,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{1} , {0} , {2}";
-			var values = new[] { 3, 4, 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new[] { n0, n1, n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("3 , 4 , 5", result);
+			Assert.Equal($"{n0} , {n1} , {n2}", result);
 		}
 
 		[Fact]
@@ -40,13 +46,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero} , {@one} , {two}";
-			var values = new { zero = 3, one = 4, two = 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new { zero = n0, one = n1, two = n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("3 , 4 , 5", result);
+			Assert.Equal($"{n0} , {n1} , {n2}", result);
 		}
 
 		[Fact]
@@ -54,16 +63,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero} , {one} , {two:0.0}";
-			var zero = 3;
-			var one = "four";
-			var two = 5.0d;
+			var zero = F.Rand.Integer;
+			var one = F.Rand.String;
+			var two = (double)F.Rand.Integer;
 			var values = new object[] { zero, one, two };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("3 , four , 5.0", result);
+			Assert.Equal($"{zero} , {one} , {two:0.0}", result);
 		}
 
 		[Fact]
@@ -71,13 +80,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{0:00} , {1:0.00} , {2:0,000.0}";
-			var values = new[] { 3, 4, 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new[] { n0, n1, n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("03 , 4.00 , 0,005.0", result);
+			Assert.Equal($"{n0:00} , {n1:0.00} , {n2:0,000.0}", result);
 		}
 
 		[Fact]
@@ -85,13 +97,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero:00} , {one:0.00} , {two:0,000.0}";
-			var values = new { zero = 3, one = 4, two = 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new { zero = n0, one = n1, two = n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("03 , 4.00 , 0,005.0", result);
+			Assert.Equal($"{n0:00} , {n1:0.00} , {n2:0,000.0}", result);
 		}
 
 		[Fact]
@@ -99,16 +114,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero:00} , {one:0.00} , {2:0,000.0}";
-			var zero = 3;
-			var one = 4;
-			var two = 5;
-			var values = new object[] { zero, one, two };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new object[] { n0, n1, n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("03 , 4.00 , 0,005.0", result);
+			Assert.Equal($"{n0:00} , {n1:0.00} , {n2:0,000.0}", result);
 		}
 
 		[Fact]
@@ -116,13 +131,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero} , {one} , {two}";
-			var values = new[] { 3, 4, 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new[] { n0, n1, n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("3 , 4 , 5", result);
+			Assert.Equal($"{n0} , {n1} , {n2}", result);
 		}
 
 		[Fact]
@@ -130,13 +148,16 @@ namespace Jeebs.StringExtensions_Tests
 		{
 			// Arrange
 			const string format = "{zero} , {0} , {1}";
-			var values = new[] { 3, 4, 5 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var n2 = F.Rand.Integer;
+			var values = new[] { n0, n1, n2 };
 
 			// Act
 			var result = format.FormatWith(values);
 
 			// Assert
-			Assert.Equal("3 , 4 , 5", result);
+			Assert.Equal($"{n0} , {n1} , {n2}", result);
 		}
 
 		[Fact]

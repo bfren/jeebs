@@ -12,8 +12,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void Value_Input_When_IOk_Wraps_Value()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var r = Chain.Create(state);
 
 			// Act
@@ -29,8 +29,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void Value_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var r = Chain.Create(state).Error();
 
 			// Act

@@ -26,7 +26,7 @@ namespace Jeebs.MsgList_Tests
 		{
 			// Arrange
 			var l = new MsgList();
-			var m = new StringMsg("Hello, world!");
+			var m = new StringMsg(F.Rand.String);
 
 			// Act
 			l.Add<TestMsg>();

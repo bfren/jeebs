@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests
 		public void Not_IEnumerable_Or_Same_Type_Input_Returns_IError()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var chain = Chain.CreateV(value);
 
 			// Act

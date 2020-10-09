@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_ValueType_WithState_Input_When_IOk_Runs_Action()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			void f(IOk<bool, int> _) => sideEffect++;
@@ -29,10 +29,10 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_ValueType_WithState_Input_When_IOk_Catches_Exception()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
-			const string error = "Error!";
-			static void f(IOk<bool, int> _) => throw new Exception(error);
+			var error = F.Rand.String;
+			void f(IOk<bool, int> _) => throw new Exception(error);
 
 			// Act
 			var next = chain.Link().Run(f);
@@ -48,7 +48,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_ValueType_WithState_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var error = Chain.Create(state).Error();
 			static void f(IOk<bool, int> _) => throw new Exception();
 

@@ -26,7 +26,7 @@ namespace Jeebs.MsgExtensions_Tests
 		public void Msg_ToString_Is_Not_Type_Adds_Type_To_Return()
 		{
 			// Arrange
-			const string error = "Error message";
+			var error = F.Rand.String;
 			var msg = new MsgWithValueTest(error);
 
 			// Act
@@ -43,7 +43,9 @@ namespace Jeebs.MsgExtensions_Tests
 		{
 			// Arrange
 			const string format = "{0} {1}";
-			var values = new object[] { 2, 3 };
+			var n0 = F.Rand.Integer;
+			var n1 = F.Rand.Integer;
+			var values = new object[] { n0, n1 };
 			var msg = Substitute.For<ILoggableMsg>();
 			msg.Format.Returns(format);
 			msg.ParamArray.Returns(values);
@@ -55,8 +57,8 @@ namespace Jeebs.MsgExtensions_Tests
 			Assert.Equal($"{{MsgType}} - {format}", text);
 			Assert.Equal(3, args.Length);
 			Assert.Equal(msg.GetType().ToString(), args[0]);
-			Assert.Equal(2, args[1]);
-			Assert.Equal(3, args[2]);
+			Assert.Equal(n0, args[1]);
+			Assert.Equal(n1, args[2]);
 		}
 
 		public class MsgTest : IMsg { }

@@ -11,7 +11,7 @@ namespace Jeebs.ROk_Tests
 		public void Returns_Ok_With_State()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var r0 = Result.Ok();
 			var r1 = Result.Ok<string>();
 
@@ -30,8 +30,8 @@ namespace Jeebs.ROk_Tests
 		public void Returns_Ok_With_State_And_Keeps_Value()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var result = Result.OkV(value);
 
 			// Act
@@ -46,9 +46,9 @@ namespace Jeebs.ROk_Tests
 		public void Returns_Ok_With_State_And_Keeps_Messages()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var r = Result.Ok();
-			r.AddMsg(new StringMsg("Test message."));
+			r.AddMsg(new StringMsg(F.Rand.String));
 
 			// Act
 			var next = r.WithState(state);

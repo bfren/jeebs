@@ -12,9 +12,9 @@ namespace Jeebs.Link_Tests.WithState
 		public void Func_Input_When_IOk_Wraps_Value()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
-			static int f() => value;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
+			int f() => value;
 			var r = Chain.Create(state);
 
 			// Act
@@ -30,7 +30,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Func_Input_When_IOk_Catches_Exception_Returns_IError()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var r = Chain.Create(state);
 			const string error = "Ooops!";
 			static int f() => throw new Exception(error);
@@ -49,7 +49,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Func_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var r = Chain.Create(state).Error();
 			static int f() => throw new Exception();
 

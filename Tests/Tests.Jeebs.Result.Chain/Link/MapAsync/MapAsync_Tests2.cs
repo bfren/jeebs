@@ -29,8 +29,8 @@ namespace Jeebs.Link_Tests
 		{
 			// Arrange
 			var chain = Chain.Create();
-			const string error = "Error!";
-			static async Task<IR<string>> f(IOk<bool> _) => throw new Exception(error);
+			var error = F.Rand.String;
+			async Task<IR<string>> f(IOk<bool> _) => throw new Exception(error);
 
 			// Act
 			var next = chain.Link().MapAsync(f).Await();

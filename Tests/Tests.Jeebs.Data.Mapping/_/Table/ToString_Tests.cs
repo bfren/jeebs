@@ -12,7 +12,7 @@ namespace Jeebs.Data.Mapping.Table_Tests
 		public void Returns_Name()
 		{
 			// Arrange
-			var name = F.StringF.Random(6);
+			var name = F.Rnd.String;
 			var table = Substitute.For<Table>(name);
 
 			// Act

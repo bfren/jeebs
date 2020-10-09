@@ -14,8 +14,8 @@ namespace Jeebs.Link_Tests
 		public void Func_Input_When_IOk_Wraps_Value()
 		{
 			// Arrange
-			const int value = 18;
-			static async Task<int> f() => value;
+			var value = F.Rand.Integer;
+			async Task<int> f() => value;
 			var r = Chain.Create();
 
 			// Act

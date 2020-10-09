@@ -12,7 +12,7 @@ namespace F.JsonF_Tests
 		public void Serialise_Enumerated_Returns_Json_Value()
 		{
 			// Arrange
-			const string value = "18";
+			var value = Rnd.String;
 			var enumerated = new Test(value);
 
 			// Act

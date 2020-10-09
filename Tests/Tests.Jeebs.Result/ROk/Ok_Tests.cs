@@ -40,8 +40,8 @@ namespace Jeebs.ROk_Tests
 		public void Different_Type_Keeps_Messages()
 		{
 			// Arrange
-			var m0 = new IntMsg(18);
-			var m1 = new StringMsg("July");
+			var m0 = new IntMsg(F.Rand.Integer);
+			var m1 = new StringMsg(F.Rand.String);
 			var r = Result.Ok().AddMsg(m0, m1);
 
 			// Act

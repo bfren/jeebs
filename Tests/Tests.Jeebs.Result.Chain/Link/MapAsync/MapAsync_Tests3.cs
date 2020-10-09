@@ -14,7 +14,7 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IOk_Maps_To_Next_Type()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var chain = Chain.CreateV(value);
 			static async Task<IR<string>> f(IOkV<int> r) => r.Ok<string>();
 
@@ -29,10 +29,10 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IOk_Catches_Exception()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var chain = Chain.CreateV(value);
-			const string error = "Error!";
-			static async Task<IR<string>> f(IOkV<int> _) => throw new Exception(error);
+			var error = F.Rand.String;
+			async Task<IR<string>> f(IOkV<int> _) => throw new Exception(error);
 
 			// Act
 			var next = chain.Link().MapAsync(f).Await();

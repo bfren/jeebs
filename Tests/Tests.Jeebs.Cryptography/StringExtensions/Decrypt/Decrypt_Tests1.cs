@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static F.StringF;
 using Xunit;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
@@ -16,7 +15,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Null_Input_String_Key_Returns_None(string input)
 		{
 			// Arrange
-			var key = Random(10);
+			var key = F.Rand.String;
 
 			// Act
 			var result = input.Decrypt<int>(key);
@@ -30,8 +29,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Invalid_Json_Input_String_Key_Returns_None()
 		{
 			// Arrange
-			var key = Random(10);
-			const string json = "invalid";
+			var key = F.Rand.String;
+			var json = F.Rand.String;
 
 			// Act
 			var result = json.Decrypt<int>(key);
@@ -58,7 +57,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Incorrect_String_Key_Returns_None()
 		{
 			// Arrange
-			var key = Random(10);
+			var key = F.Rand.String;
 
 			// Act
 			var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
@@ -72,7 +71,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Incorrect_Json_Input_String_Key_Returns_None()
 		{
 			// Arrange
-			var key = Random(10);
+			var key = F.Rand.String;
 			const string json = "{\"foo\":\"bar\"}";
 
 			// Act

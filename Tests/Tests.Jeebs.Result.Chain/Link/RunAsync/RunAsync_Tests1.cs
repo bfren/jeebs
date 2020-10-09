@@ -31,8 +31,8 @@ namespace Jeebs.Link_Tests
 		{
 			// Arrange
 			var chain = Chain.Create();
-			const string error = "Error!";
-			static async Task f(IOk _) => throw new Exception(error);
+			var error = F.Rand.String;
+			async Task f(IOk _) => throw new Exception(error);
 
 			// Act
 			var next = chain.Link().RunAsync(f).Await();

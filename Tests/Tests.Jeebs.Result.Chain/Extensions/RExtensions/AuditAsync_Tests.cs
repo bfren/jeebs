@@ -28,28 +28,33 @@ namespace Jeebs.RExtensions_Tests
 		{
 			// Arrange
 			var chain = Chain.Create();
+			var value = F.Rand.Integer;
 
-			static async Task<IR<int>> l0(IOk r) => r.OkV(18);
+			async Task<IR<int>> l0(IOk r) => r.OkV(value);
 			static async Task<IR<TValue>> l1<TValue>(IOkV<TValue> r) => r.Error();
 
 			var log = new List<string>();
+			var a0 = F.Rand.String;
+			var a1 = F.Rand.String;
+			var a2 = F.Rand.String;
+
 			async Task a<TValue>(IR<TValue> r)
 			{
 				if (r is IError<TValue> error)
 				{
-					log.Add("Error!");
+					log.Add(a0);
 				}
 				else if (r is IOkV<TValue> ok)
 				{
-					log.Add($"Value: {ok.Value}");
+					log.Add($"{a1}: {ok.Value}");
 				}
 				else
 				{
-					log.Add("Unknown state.");
+					log.Add(a2);
 				}
 			}
 
-			var expected = new[] { "Unknown state.", "Value: 18", "Error!" }.ToList();
+			var expected = new[] { a2, $"{a1}: {value}", a0 }.ToList();
 
 			// Act
 			chain

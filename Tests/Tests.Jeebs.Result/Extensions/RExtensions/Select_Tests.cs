@@ -11,7 +11,7 @@ namespace Jeebs.RExtensions_Tests
 		public void Linq_Select_With_OkV_Returns_OkV()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var result = Result.OkV(value);
 
 			// Act

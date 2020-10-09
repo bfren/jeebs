@@ -27,15 +27,14 @@ namespace Jeebs.MsgList_Tests
 			// Arrange
 			var l = new MsgList();
 
-			var m0 = new StringMsg("zero");
-			var m1 = new StringMsg("one");
-			const string str = "zero\none";
+			var m0 = new StringMsg(F.Rand.String);
+			var m1 = new StringMsg(F.Rand.String);
 
 			// Act
 			l.AddRange(m0, m1);
 
 			// Assert
-			Assert.Equal(str, l.ToString());
+			Assert.Equal($"{m0}\n{m1}", l.ToString());
 		}
 
 		public class StringMsg : Jm.WithValueMsg<string>

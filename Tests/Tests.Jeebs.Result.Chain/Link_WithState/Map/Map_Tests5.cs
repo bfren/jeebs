@@ -12,8 +12,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_Value_WithState_Input_When_IOk_Maps_To_Next_Type()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var chain = Chain.CreateV(value, state);
 			static IR<string, int> f(IOkV<int, int> r) => r.Ok<string>();
 
@@ -29,11 +29,11 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_Value_WithState_Input_When_IOk_Catches_Exception()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var chain = Chain.CreateV(value, state);
-			const string error = "Error!";
-			static IR<string, int> f(IOkV<int, int> _) => throw new Exception(error);
+			var error = F.Rand.String;
+			IR<string, int> f(IOkV<int, int> _) => throw new Exception(error);
 
 			// Act
 			var next = chain.Link().Map(f);
@@ -49,7 +49,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_Value_WithState_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var error = Chain<int>.Create(state).Error();
 			static IR<int, int> f(IOkV<int, int> _) => throw new Exception();
 

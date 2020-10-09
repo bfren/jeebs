@@ -26,7 +26,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			// Arrange
 			var r = Result.Ok();
-			var msg = new StringMsg("Test Message");
+			var msg = new StringMsg(F.Rand.String);
 
 			// Act
 			r.AddMsg(msg);
@@ -55,7 +55,7 @@ namespace Jeebs.RExtensions_Tests
 			// Arrange
 			var r = Result.Ok();
 			var m0 = new IntMsg(18);
-			var m1 = new StringMsg("July");
+			var m1 = new StringMsg(F.Rand.String);
 
 			// Act
 			r.AddMsg(m0, m1);

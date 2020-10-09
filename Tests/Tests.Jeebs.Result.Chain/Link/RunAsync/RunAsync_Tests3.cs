@@ -14,7 +14,7 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IOk_Runs_Action()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var chain = Chain.CreateV(value);
 			var sideEffect = 1;
 			async Task f(IOkV<int> _) => sideEffect++;
@@ -31,10 +31,10 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IOk_Catches_Exception()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var chain = Chain.CreateV(value);
-			const string error = "Error!";
-			static async Task f(IOkV<int> _) => throw new Exception(error);
+			var error = F.Rand.String;
+			async Task f(IOkV<int> _) => throw new Exception(error);
 
 			// Act
 			var next = chain.Link().RunAsync(f).Await();

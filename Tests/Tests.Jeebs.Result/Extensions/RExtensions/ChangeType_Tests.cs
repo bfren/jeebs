@@ -28,7 +28,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			Keeps_Base_Interface<IOk, string>(Result.Ok());
 			Keeps_Base_Interface<IOk, string>(Result.Ok<int>());
-			Keeps_Base_Interface<IOk, string>(Result.OkV(18));
+			Keeps_Base_Interface<IOk, string>(Result.OkV(F.Rand.Integer));
 		}
 
 		[Fact]
@@ -57,7 +57,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			const int state = 7;
 			Keeps_State<IOk, bool, int>(Result.Ok(state), state);
-			Keeps_State<IOk, int, int>(Result.OkV(18, state), state);
+			Keeps_State<IOk, int, int>(Result.OkV(F.Rand.Integer, state), state);
 		}
 
 		[Fact]
@@ -72,7 +72,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			// Arrange
 			var m0 = new IntMsg(18);
-			var m1 = new StringMsg("July");
+			var m1 = new StringMsg(F.Rand.String);
 			var r = result.AddMsg(m0, m1);
 
 			// Act
@@ -89,7 +89,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			Keeps_Messages(Result.Ok());
 			Keeps_Messages(Result.Ok<int>());
-			Keeps_Messages(Result.OkV(18));
+			Keeps_Messages(Result.OkV(F.Rand.Integer));
 		}
 
 		[Fact]

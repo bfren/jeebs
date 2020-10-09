@@ -13,9 +13,9 @@ namespace Jeebs.Data.Mapping.MappedColumn_Tests
 		public void Properties_Set()
 		{
 			// Arrange
-			var table = F.StringF.Random(6);
-			var name = F.StringF.Random(6);
-			var alias = F.StringF.Random(6);
+			var table = F.Rnd.String;
+			var name = F.Rnd.String;
+			var alias = F.Rnd.String;
 			var prop = Substitute.For<PropertyInfo>();
 			prop.Name.Returns(alias);
 

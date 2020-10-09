@@ -13,7 +13,7 @@ namespace Jeebs.Link_Tests.WithState
 		{
 			// Arrange
 			var list = new[] { 1, 2 };
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.CreateV(list, state);
 
 			// Act

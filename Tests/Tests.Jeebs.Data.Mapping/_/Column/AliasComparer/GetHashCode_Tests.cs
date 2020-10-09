@@ -16,13 +16,13 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 			var ha = alias.GetHashCode();
 
 			var c0 = Substitute.For<IColumn>();
-			c0.Name.Returns(F.StringF.Random(6));
+			c0.Name.Returns(F.Rnd.String);
 			c0.Alias.Returns(alias);
-			
+
 			var c1 = Substitute.For<IColumn>();
-			c1.Name.Returns(F.StringF.Random(6));
+			c1.Name.Returns(F.Rnd.String);
 			c1.Alias.Returns(alias);
-			
+
 			var comparer = new Column.AliasComparer();
 
 			// Act

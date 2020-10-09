@@ -36,7 +36,7 @@ namespace Jeebs.Chain_Tests
 		public void With_State_Returns_Ok_With_State()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 
 			// Act
 			var r = Chain.Create(state);
@@ -50,7 +50,7 @@ namespace Jeebs.Chain_Tests
 		public void With_Type_With_State_Returns_Ok_Of_Type_With_State()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 
 			// Act
 			var r = Chain<int>.Create(state);

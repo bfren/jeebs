@@ -11,7 +11,7 @@ namespace Jeebs.ROk_Tests.WithState
 		public void Returns_Original_Object()
 		{
 			// Arrange
-			const int state = 18;
+			var state = F.Rand.Integer;
 			var r = Result.Ok(state);
 
 			// Act
@@ -26,7 +26,7 @@ namespace Jeebs.ROk_Tests.WithState
 		public void Same_Type_Returns_Original_Object()
 		{
 			// Arrange
-			const int state = 18;
+			var state = F.Rand.Integer;
 			var r = Result.Ok(state);
 
 			// Act
@@ -41,9 +41,9 @@ namespace Jeebs.ROk_Tests.WithState
 		public void Different_Type_Keeps_Messages()
 		{
 			// Arrange
-			var m0 = new IntMsg(18);
-			var m1 = new StringMsg("July");
-			const int state = 18;
+			var m0 = new IntMsg(F.Rand.Integer);
+			var m1 = new StringMsg(F.Rand.String);
+			var state = F.Rand.Integer;
 			var r = Result.Ok(state).AddMsg(m0, m1);
 
 			// Act

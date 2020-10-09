@@ -13,7 +13,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Generic_AsyncHandler_Returns_Original_Link()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var link = Chain.Create(state).Link();
 			static async Task h0(IR<bool> _, Exception __) { }
 			static async Task h1(IR<bool, int> _, Exception __) { }
@@ -31,7 +31,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Generic_AsyncHandler_Runs_For_Any_Exception()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			async Task h0(IR<bool> _, Exception __) => sideEffect++;

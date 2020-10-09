@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests
 		public void Value_Input_When_IOk_Wraps_Value()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var r = Chain.Create();
 
 			// Act
@@ -27,7 +27,7 @@ namespace Jeebs.Link_Tests
 		public void Value_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var r = Chain.Create().Error();
 
 			// Act

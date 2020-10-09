@@ -14,9 +14,9 @@ namespace Jeebs.Link_Tests.WithState
 		public void Func_Input_When_IOk_Wraps_Value()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
-			static async Task<int> f() => value;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
+			async Task<int> f() => value;
 			var r = Chain.Create(state);
 
 			// Act
@@ -34,7 +34,7 @@ namespace Jeebs.Link_Tests.WithState
 			// Arrange
 			const string error = "Ooops!";
 			static async Task<int> f() => throw new Exception(error);
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var r = Chain.Create(state);
 
 			// Act
@@ -52,7 +52,7 @@ namespace Jeebs.Link_Tests.WithState
 		{
 			// Arrange
 			static async Task<int> f() => throw new Exception();
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var r = Chain.Create(state).Error();
 
 			// Act

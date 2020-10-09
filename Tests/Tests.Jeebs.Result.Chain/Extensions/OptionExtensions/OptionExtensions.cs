@@ -12,7 +12,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Some_Returns_OkV()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rand.Integer;
 			var some = Option.Wrap(value);
 
 			// Act
@@ -27,8 +27,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Some_With_State_Returns_OkV_With_State()
 		{
 			// Arrange
-			const int value = 18;
-			const int state = 7;
+			var value = F.Rand.Integer;
+			var state = F.Rand.Integer;
 			var some = Option.Wrap(value);
 
 			// Act
@@ -57,7 +57,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void None_With_State_Returns_Error_With_State()
 		{
 			// Arrange
-			const int state = 7;
+			var state = F.Rand.Integer;
 			var some = Option.None<int>();
 
 			// Act

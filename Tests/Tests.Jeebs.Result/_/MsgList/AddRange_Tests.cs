@@ -28,16 +28,16 @@ namespace Jeebs.MsgList_Tests
 			// Arrange
 			var l = new MsgList();
 
-			var m0 = new StringMsg("zero");
-			var m1 = new StringMsg("one");
-			var ms = new List<string>(new[] { "zero", "one" });
+			var m0 = new StringMsg(F.Rand.String);
+			var m1 = new StringMsg(F.Rand.String);
+			var expected = new List<string>(new[] { m0.Value, m1.Value });
 
 			// Act
 			l.AddRange(m0, m1);
 
 			// Assert
 			Assert.Equal(2, l.Count);
-			Assert.Equal(ms, l.GetAll());
+			Assert.Equal(expected, l.GetAll());
 		}
 
 		public class StringMsg : Jm.WithValueMsg<string>

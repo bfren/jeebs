@@ -24,8 +24,10 @@ namespace F.JsonF_Tests
 		public void Object_ReturnsJson()
 		{
 			// Arrange
-			var input = new Test { Foo = "test", Bar = 2 };
-			const string expected = "{\"foo\":\"test\",\"bar\":2}";
+			var v0 = Rnd.String;
+			var v1 = Rnd.Integer;
+			var input = new Test { Foo = v0, Bar = v1 };
+			var expected = $"{{\"foo\":\"{v0}\",\"bar\":{v1}}}";
 
 			// Act
 			var result = JsonF.Serialise(input);

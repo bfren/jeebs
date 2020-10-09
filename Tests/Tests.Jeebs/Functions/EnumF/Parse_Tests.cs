@@ -39,7 +39,7 @@ namespace F.EnumF_Tests
 		public void InvalidValue_CorrectType_Returns_None()
 		{
 			// Arrange
-			const string input = "Test3";
+			var input = Rand.String;
 
 			// Act
 			var result = EnumF.Parse<TestA>(input);
