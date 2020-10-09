@@ -21,7 +21,7 @@ namespace F.MathsF_Tests
 
 			// Assert
 			var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
-			Assert.Equal("Minimium value must be less than the maximum value. (Parameter 'min')\r\nActual value was 3.", ex.Message);
+			Assert.Equal($"Minimium value must be less than the maximum value. (Parameter 'min'){Environment.NewLine}Actual value was 3.", ex.Message);
 		}
 
 		[Fact]
