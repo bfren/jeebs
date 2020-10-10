@@ -40,6 +40,10 @@ namespace Jeebs.WordPress.ContentFilters
 				var squareBrackets2 = new Regex(@"\[(\w+) (.*)\]", RegexOptions.Multiline);
 				content = squareBrackets1.Replace(content, " ");
 
+				// Strip out new lines
+				var newLines = new Regex(@"\n");
+				content = newLines.Replace(content, " ");
+
 				// Cut out everything after <!--more--> tag, or at a maximum length
 				var more = content.IndexOf("<!--more-->");
 				if (more > 0)

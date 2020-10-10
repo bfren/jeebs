@@ -9,8 +9,10 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.WordPress;
+using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.DependencyInjection;
+using Org.BouncyCastle.Crypto.Digests;
 
 namespace AppConsoleWordPress
 {
@@ -76,10 +78,10 @@ namespace AppConsoleWordPress
 					.Link().MapAsync(FetchTaxonomies).Await()
 					.Audit(AuditTaxonomies);
 
-				// Perform tests
-				//await FetchCustomFields(bcg.Db).ConfigureAwait(false);
-				//await FetchTaxonomies(bcg.Db).ConfigureAwait(false);
-				//await ApplyContentFilters(bcg.Db).ConfigureAwait(false);
+				Chain.Create(bcg.Db)
+					.UseLog(log)
+					.Link().MapAsync(ApplyContentFilters).Await()
+					.Audit(AuditApplyContentFilters);
 
 				// End
 				Console.WriteLine();
@@ -261,31 +263,36 @@ namespace AppConsoleWordPress
 			}
 		}
 
-		///// <summary>
-		///// Apply content filters
-		///// </summary>
-		///// <param name="db"></param>
-		//internal static async Task ApplyContentFilters(IWpDb db)
-		//{
-		//	Console.WriteLine();
-		//	Console.WriteLine("== Content Filters ==");
+		internal static async Task<IR<List<PostModelWithContent>, IWpDb>> ApplyContentFilters<TIgnore>(IOk<TIgnore, IWpDb> r)
+		{
+			Console.WriteLine();
+			Console.WriteLine("== Apply Content Filters ==");
 
-		//	using var w = db.GetQueryWrapper();
+			using var w = r.State.GetQueryWrapper();
+			return await r.Link().MapAsync(ok => w.QueryPostsAsync<PostModelWithContent>(
+				ok, 
+				modify: opt => opt.Limit = 3,
+				filters: GenerateExcerpt.Create()
+			));
+		}
 
-		//	var result = await w.QueryPostsAsync<PostModelWithContent>(modify: opt => opt.Limit = 3, filters: GenerateExcerpt.Create()).ConfigureAwait(false);
-		//	if (result.Err is IErrorList postsErr)
-		//	{
-		//		Console.WriteLine("Error fetching posts with content filter");
-		//		Console.WriteLine(postsErr);
-		//		return;
-		//	}
+		internal static async void AuditApplyContentFilters(IR<List<PostModelWithContent>> r)
+		{
+			if (r is IError)
+			{
+				r.Logger.Messages(r.Messages);
+			}
 
-		//	foreach (var post in result.Val)
-		//	{
-		//		Console.WriteLine("Post {0}", post.PostId);
-		//		Console.WriteLine("  - {0}", post.Content);
-		//	}
-		//}
+			if (r is IOkV<List<PostModelWithContent>> ok)
+			{
+				Console.WriteLine($"{ok.Value.Count} posts found");
+
+				foreach (var post in ok.Value)
+				{
+					Console.WriteLine("{0:0000} {1}", post.PostId, post.Content);
+				}
+			}
+		}
 	}
 
 	class TermModel

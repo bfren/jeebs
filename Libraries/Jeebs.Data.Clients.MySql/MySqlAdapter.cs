@@ -89,7 +89,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Add ORDER BY
 			if (parts.OrderBy is List<string> orderByValue)
 			{
-				sql.Append($" ORDER BY {JoinColumns(orderByValue)}");
+				sql.Append($" ORDER BY {JoinColumns(orderByValue, true)}");
 			}
 
 			// Add LIMIT
