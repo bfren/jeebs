@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.Config.RocketChatConfig_Tests
+namespace Jeebs.Config.SlackConfig_Tests
 {
 	public class IsValid_Tests
 	{
@@ -15,7 +15,7 @@ namespace Jeebs.Config.RocketChatConfig_Tests
 		public void Returns_False(string webhook)
 		{
 			// Arrange
-			var config = new RocketChatConfig { Webhook = webhook };
+			var config = new SlackConfig { Webhook = webhook };
 
 			// Act
 			var result = config.IsValid;
@@ -29,7 +29,7 @@ namespace Jeebs.Config.RocketChatConfig_Tests
 		public void Returns_True(string webhook)
 		{
 			// Arrange
-			var config = new RocketChatConfig { Webhook = webhook };
+			var config = new SlackConfig { Webhook = webhook };
 
 			// Act
 			var result = config.IsValid;

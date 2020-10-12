@@ -34,6 +34,8 @@ namespace Jeebs.Config
 		/// Only returns True if <see cref="Name"/>, <see cref="ClientId"/> and <see cref="ClientSecret"/> are all not null or empty
 		/// </summary>
 		public bool IsValid
-			=> !(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(ClientId) || string.IsNullOrWhiteSpace(ClientSecret));
+			=> !string.IsNullOrWhiteSpace(Name)
+			&& !string.IsNullOrWhiteSpace(ClientId)
+			&& !string.IsNullOrWhiteSpace(ClientSecret);
 	}
 }

@@ -31,9 +31,9 @@ namespace Jeebs.Config
 
 		/// <inheritdoc/>
 		public override bool IsValid
-			=> !string.IsNullOrEmpty(UserAccessToken)
-			&& !string.IsNullOrEmpty(UserAccessSecret)
-			&& !string.IsNullOrEmpty(ConsumerKey)
-			&& !string.IsNullOrEmpty(ConsumerSecret);
+			=> !string.IsNullOrWhiteSpace(UserAccessToken)
+			&& !string.IsNullOrWhiteSpace(UserAccessSecret)
+			&& !string.IsNullOrWhiteSpace(ConsumerKey)
+			&& !string.IsNullOrWhiteSpace(ConsumerSecret);
 	}
 }
