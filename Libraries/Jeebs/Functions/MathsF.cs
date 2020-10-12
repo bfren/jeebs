@@ -24,7 +24,7 @@ namespace F
 			var dbl = (double)BitConverter.ToInt64(b, 0);
 
 			// Convert to a random number between 0 and 1
-			return dbl / long.MaxValue * (dbl < 0 ? -1 : 1);
+			return Math.Abs(dbl) / long.MinValue * -1;
 		}
 
 		/// <summary>
