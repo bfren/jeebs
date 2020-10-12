@@ -24,7 +24,7 @@ namespace Jeebs.Config
 		public string ApiKey { get; set; } = string.Empty;
 
 		/// <inheritdoc/>
-		public override bool IsValid()
+		public override bool IsValid
 			=> !string.IsNullOrEmpty(Server)
 			&& !string.IsNullOrEmpty(ApiKey);
 	}

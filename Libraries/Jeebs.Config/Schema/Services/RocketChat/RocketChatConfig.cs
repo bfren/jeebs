@@ -10,7 +10,7 @@ namespace Jeebs.Config
 	public class RocketChatConfig : WebhookServiceConfig
 	{
 		/// <inheritdoc/>
-		public override bool IsValid()
-			=> !string.IsNullOrEmpty(Webhook);
+		public override bool IsValid
+			=> F.UriF.IsHttp(Webhook);
 	}
 }

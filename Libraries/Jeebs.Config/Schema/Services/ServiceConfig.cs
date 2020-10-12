@@ -12,6 +12,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Whether or not this service configuration is valid
 		/// </summary>
-		public abstract bool IsValid();
+		public abstract bool IsValid { get; }
 	}
 }

@@ -30,7 +30,7 @@ namespace Jeebs.Config
 		public string ConsumerSecret { get; set; } = string.Empty;
 
 		/// <inheritdoc/>
-		public override bool IsValid()
+		public override bool IsValid
 			=> !string.IsNullOrEmpty(UserAccessToken)
 			&& !string.IsNullOrEmpty(UserAccessSecret)
 			&& !string.IsNullOrEmpty(ConsumerKey)

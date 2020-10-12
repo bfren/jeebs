@@ -65,7 +65,7 @@ namespace Jeebs.Config
 			}
 
 			var config = services[name];
-			if (!config.IsValid())
+			if (!config.IsValid)
 			{
 				throw new Jx.Config.InvalidServiceConfigurationException(name, typeof(TConfig));
 			}
