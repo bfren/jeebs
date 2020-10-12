@@ -47,7 +47,7 @@ namespace Jeebs.Config.ServicesConfig_Tests
 			var name = F.Rnd.String;
 			var service = new SeqConfig
 			{
-				Server = F.Rnd.String,
+				Server = "https://www.contoso.com",
 				ApiKey = F.Rnd.String
 			};
 
