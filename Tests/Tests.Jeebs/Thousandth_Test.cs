@@ -14,19 +14,19 @@ namespace Jeebs
 
 			// Act
 			var seconds = new TimeSpan(0, 16, 40);
-			var base10 = Math.Pow(10, 3);
+			var tenCubed = Math.Pow(10, 3);
 			var binary = 0b1111101000;
-			var hex = 0x3E8;
+			var hexadecimal = 0x3E8;
 			var primeFactors = Math.Pow(2, 3) * Math.Pow(5, 3);
 			var greek = (Gk.Π - Gk.III) * (Gk.Δ * Gk.ΠΔ);
 
 			// Assert
 			Assert.Equal(1000, seconds.TotalSeconds);
-			Assert.Equal(1000, base10);
+			Assert.Equal(1000, tenCubed);
 			Assert.Equal(1000, binary);
-			Assert.Equal(1000, hex);
+			Assert.Equal(1000, hexadecimal);
 			Assert.Equal(1000, primeFactors);
-			Assert.Equal(Gk.X.Value, greek);
+			Assert.Equal(Gk.Christ.Value, greek);
 		}
 
 		public class Gk
@@ -39,7 +39,7 @@ namespace Jeebs
 
 			public static Gk ΠΔ => new Gk(50);
 
-			public static Gk X => new Gk(1000);
+			public static Gk Christ => new Gk(1000);
 
 			public static int operator -(Gk a, Gk b)
 				=> a.Value - b.Value;

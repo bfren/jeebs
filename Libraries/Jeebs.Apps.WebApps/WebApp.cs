@@ -126,7 +126,7 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected virtual void Configure_SiteVerification(IApplicationBuilder app, IConfiguration config)
 		{
-			if (config.GetSection<SiteVerificationConfig>(SiteVerificationConfig.Key) is SiteVerificationConfig verification)
+			if (config.GetSection<VerificationConfig>(VerificationConfig.Key) is VerificationConfig verification)
 			{
 				app.UseMiddleware<SiteVerificationMiddleware>(verification);
 			}

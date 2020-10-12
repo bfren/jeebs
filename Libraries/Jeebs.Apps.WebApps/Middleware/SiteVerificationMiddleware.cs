@@ -18,7 +18,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		private readonly RequestDelegate next;
 
-		private readonly SiteVerificationConfig config;
+		private readonly VerificationConfig config;
 
 		private readonly ILogger logger = Serilog.Log.ForContext<SiteVerificationMiddleware>();
 
@@ -27,7 +27,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next"></param>
 		/// <param name="config">Verification code</param>
-		public SiteVerificationMiddleware(RequestDelegate next, SiteVerificationConfig config)
+		public SiteVerificationMiddleware(RequestDelegate next, VerificationConfig config)
 			=> (this.next, this.config) = (next, config);
 
 		/// <summary>

@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Configuration options for Web Apps
 	/// </summary>
-	public sealed class WebConfig
+	public class WebConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
@@ -22,6 +22,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// SiteVerificationConfig
 		/// </summary>
-		public SiteVerificationConfig Verification { get; set; } = new SiteVerificationConfig();
+		public VerificationConfig Verification { get; set; } = new VerificationConfig();
 	}
 }
