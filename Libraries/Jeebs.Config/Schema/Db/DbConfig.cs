@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Database configuration
 	/// </summary>
-	public sealed class DbConfig
+	public class DbConfig
 	{
 		/// <summary>
 		/// Path to database settings configuration section
@@ -44,8 +44,8 @@ namespace Jeebs.Config
 		/// <exception cref="Jx.Config.NamedDbConnectionNotFoundException"></exception>
 		public DbConnectionConfig GetConnection(string? name = null)
 		{
-			// If name is null, use Default connection
-			string connection = string.IsNullOrEmpty(name) ? Default : name;
+			// If name is null or empty, use Default connection
+			string connection = string.IsNullOrWhiteSpace(name) ? Default : name;
 			if (string.IsNullOrEmpty(connection))
 			{
 				throw new Jx.Config.DefaultDbConnectionUndefinedException("Default database connection is not defined.");

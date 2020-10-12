@@ -11,6 +11,11 @@ namespace Jx.Config
 	public class UnsupportedServiceException : Exception
 	{
 		/// <summary>
+		/// Exception message format
+		/// </summary>
+		public const string Format = "Unsupported service type '{0}'.";
+
+		/// <summary>
 		/// Create exception
 		/// </summary>
 		public UnsupportedServiceException() { }
@@ -19,7 +24,7 @@ namespace Jx.Config
 		/// Create exception
 		/// </summary>
 		/// <param name="message"></param>
-		public UnsupportedServiceException(string message) : base(message) { }
+		public UnsupportedServiceException(string type) : base(string.Format(Format, type)) { }
 
 		/// <summary>
 		/// Create exception
@@ -27,12 +32,6 @@ namespace Jx.Config
 		/// <param name="message"></param>
 		/// <param name="inner"></param>
 		public UnsupportedServiceException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="type"></param>
-		public UnsupportedServiceException(Type type) : this($"Unsupported service type '{type}'.") { }
 
 		/// <summary>
 		/// Create exception

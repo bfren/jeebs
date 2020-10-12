@@ -11,6 +11,11 @@ namespace Jx.Config
 	public class NamedDbConnectionNotFoundException : Exception
 	{
 		/// <summary>
+		/// Exception message format
+		/// </summary>
+		public const string Format = "Connection '{0}' was not found in configuration settings.";
+
+		/// <summary>
 		/// Create exception
 		/// </summary>
 		public NamedDbConnectionNotFoundException() { }
@@ -19,7 +24,7 @@ namespace Jx.Config
 		/// Create exception
 		/// </summary>
 		/// <param name="connection"></param>
-		public NamedDbConnectionNotFoundException(string connection) : base($"Connection '{connection}' was not found in configuration settings.") { }
+		public NamedDbConnectionNotFoundException(string connection) : base(string.Format(Format, connection)) { }
 
 		/// <summary>
 		/// Create exception

@@ -81,13 +81,18 @@ namespace Jeebs.Config
 		/// <param name="definition">Service definition - in format <code>service_type.service_name</code></param>
 		public static (string type, string name) SplitDefinition(string definition)
 		{
-			var split = definition.Split('.');
-			if (split.Length != 2)
+			try
+			{
+				return definition.Split('.') switch
+				{
+					var x when x.Length == 2 => (x[0], x[1]),
+					_ => throw new Jx.Config.InvalidServiceDefinitionException(definition)
+				};
+			}
+			catch (Exception)
 			{
 				throw new Jx.Config.InvalidServiceDefinitionException(definition);
 			}
-
-			return (split[0], split[1]);
 		}
 	}
 }

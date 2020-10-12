@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Jx.Config
@@ -10,6 +11,11 @@ namespace Jx.Config
 	[Serializable]
 	public class UnknownServiceException : Exception
 	{
+		/// <summary>
+		/// Exception message format
+		/// </summary>
+		public const string Format = "Unknown service '{0}' in {1} collection.";
+
 		/// <summary>
 		/// Create exception
 		/// </summary>
@@ -33,7 +39,7 @@ namespace Jx.Config
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="type"></param>
-		public UnknownServiceException(string name, Type type) : this($"Unknown service '{name}' in {type} collection.") { }
+		public UnknownServiceException(string name, Type type) : this(string.Format(Format, name, type)) { }
 
 		/// <summary>
 		/// Create exception

@@ -11,6 +11,11 @@ namespace Jx.Config
 	public class InvalidServiceDefinitionException : Exception
 	{
 		/// <summary>
+		/// Exception message format
+		/// </summary>
+		public const string Format = "Invalid service definition '{0}': should be [service_type].[service_name].";
+
+		/// <summary>
 		/// Create exception
 		/// </summary>
 		public InvalidServiceDefinitionException() { }
@@ -19,7 +24,7 @@ namespace Jx.Config
 		/// Create exception
 		/// </summary>
 		/// <param name="definition"></param>
-		public InvalidServiceDefinitionException(string definition) : base($"Invalid service definition '{definition}': should be [service_type].[service_name].") { }
+		public InvalidServiceDefinitionException(string definition) : base(string.Format(Format, definition)) { }
 
 		/// <summary>
 		/// Create exception
