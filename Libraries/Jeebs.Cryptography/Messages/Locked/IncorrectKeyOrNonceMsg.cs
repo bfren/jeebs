@@ -7,5 +7,5 @@ namespace Jm.Cryptography.Locked
 	/// <summary>
 	/// See <see cref="Jeebs.Cryptography.Locked{T}.Unlock(byte[])"/>
 	/// </summary>
-	public sealed class CryptographicExceptionMsg : ExceptionMsg { }
+	public sealed class IncorrectKeyOrNonceMsg : ExceptionMsg { }
 }

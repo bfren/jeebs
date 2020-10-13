@@ -46,7 +46,7 @@ namespace Jeebs.Cryptography
 			=> EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
 
 		internal void Fill(T contents, string key)
-			=> Fill(contents, HashKey(key));
+			=> EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, HashKey(key));
 
 		/// <summary>
 		/// Unlock this LockedBox
@@ -72,9 +72,13 @@ namespace Jeebs.Cryptography
 			{
 				return handle<InvalidKeyExceptionMsg>(ex);
 			}
+			catch (NonceOutOfRangeException ex)
+			{
+				return handle<InvalidNonceExceptionMsg>(ex);
+			}
 			catch (CryptographicException ex)
 			{
-				return handle<CryptographicExceptionMsg>(ex);
+				return handle<IncorrectKeyOrNonceMsg>(ex);
 			}
 			catch (Exception ex)
 			{
@@ -98,7 +102,11 @@ namespace Jeebs.Cryptography
 		/// Serialise this LockedBox as JSON
 		/// </summary>
 		public string Serialise()
-			=> F.JsonF.Serialise(this);
+			=> EncryptedContents?.Length switch
+			{
+				int x when x > 0 => F.JsonF.Serialise(this),
+				_ => F.JsonF.Empty
+			};
 
 		private byte[] HashKey(string key)
 			=> GenericHash.Hash(key, Salt, Lockable.KeyLength);

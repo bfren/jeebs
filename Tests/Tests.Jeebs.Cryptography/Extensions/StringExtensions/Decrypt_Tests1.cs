@@ -50,7 +50,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Cryptography.Locked.CryptographicExceptionMsg);
+			Assert.True(none.Reason is Jm.Cryptography.Locked.IncorrectKeyOrNonceMsg);
 		}
 
 		[Fact]
@@ -64,7 +64,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<string>>(result);
-			Assert.True(none.Reason is Jm.Cryptography.Locked.CryptographicExceptionMsg);
+			Assert.True(none.Reason is Jm.Cryptography.Locked.IncorrectKeyOrNonceMsg);
 		}
 
 		[Fact]

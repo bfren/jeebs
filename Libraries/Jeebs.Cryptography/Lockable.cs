@@ -41,7 +41,7 @@ namespace Jeebs.Cryptography
 			=> key.Length switch
 			{
 				Lockable.KeyLength => new Locked<T>(Contents, key),
-				_ => throw new NotSupportedException($"Key length must be {Lockable.KeyLength} bytes.")
+				_ => throw new Jx.Cryptography.InvalidKeyLengthException()
 			};
 
 		/// <summary>
