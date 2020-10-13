@@ -14,6 +14,9 @@ namespace Jeebs.Config
 	/// </summary>
 	public static class ConfigurationExtensions
 	{
+		/// <summary>
+		/// Caches configuration section values
+		/// </summary>
 		private static readonly MemoryCache cache = new MemoryCache(new MemoryCacheOptions());
 
 		/// <summary>
@@ -29,20 +32,18 @@ namespace Jeebs.Config
 		/// <typeparam name="T">Configuration settings type</typeparam>
 		/// <param name="config">IConfigurationRoot object</param>
 		/// <param name="sectionKey">Section key</param>
-		/// <param name="addToCache">[Optional] If true the returned settings will be added to the cache</param>
-		/// <returns>Configuration section</returns>
-		public static T GetSection<T>(this IConfiguration config, string sectionKey, bool addToCache = true)
+		/// <param name="useCache">[Optional] If true the config section will be retrieved from / added to the cache</param>
+		public static T GetSection<T>(this IConfiguration config, string sectionKey, bool useCache = true)
 			where T : class, new()
 		{
-			T getSection()
-				=> config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T();
-
-			if (addToCache)
+			return useCache switch
 			{
-				return cache.GetOrCreate(typeof(T).FullName, _ => getSection());
-			}
+				true => cache.GetOrCreate(typeof(T).FullName, _ => getSection(config, sectionKey)),
+				false => getSection(config, sectionKey)
+			};
 
-			return getSection();
+			static T getSection(IConfiguration config, string sectionKey)
+				=> config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T();
 		}
 	}
 }

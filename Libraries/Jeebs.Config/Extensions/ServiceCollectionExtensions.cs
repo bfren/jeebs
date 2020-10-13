@@ -76,7 +76,7 @@ namespace Jeebs.Config
 				run();
 
 				// Check services
-				if (services is null || config is null || sectionKey is null)
+				if (config is null || sectionKey is null)
 				{
 					return this;
 				}

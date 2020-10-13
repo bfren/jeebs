@@ -5,12 +5,12 @@ using System.Text;
 namespace F
 {
 	/// <summary>
-	/// Random generator functions
+	/// Random generator functions - very useful for testing
 	/// </summary>
 	public static class Rnd
 	{
 		/// <summary>
-		/// Generate a random string 6 characters long
+		/// Generate a random string 6 characters long, containing uppercase and lowercase letters but no numbers or special characters
 		/// </summary>
 		public static string String
 			=> StringF.Random(6);
