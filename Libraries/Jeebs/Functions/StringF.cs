@@ -73,22 +73,17 @@ namespace F
 		/// <param name="upper">If true (default) uppercase letters will be included</param>
 		/// <param name="numbers">If true numbers will be included</param>
 		/// <param name="special">If true special characters will be included</param>
+		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 		/// <returns>Random string including specified character groups</returns>
-		public static string Random(int length, bool upper = true, bool numbers = false, bool special = false)
+		public static string Random(int length, bool upper = true, bool numbers = false, bool special = false, RandomNumberGenerator? generator = null)
 		{
 			// Setup
-			var csp = new RNGCryptoServiceProvider();
 			var random = new List<char>();
 
 			// Function to return a random list index
 			void AppendOneOf(List<char> list)
 			{
-				byte[] b = new byte[4];
-				csp.GetBytes(b);
-
-				var rnd = (double)BitConverter.ToUInt32(b, 0) / uint.MaxValue;
-				var idx = (int)Math.Round(rnd * (list.Count - 1));
-
+				var idx = MathsF.RandomInt32(max: list.Count - 1, generator: generator);
 				random.Add(list[idx]);
 			}
 

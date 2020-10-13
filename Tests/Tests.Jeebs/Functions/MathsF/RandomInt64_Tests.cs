@@ -62,7 +62,7 @@ namespace F.MathsF_Tests
 		public void Returns_Different_Number_Each_Time()
 		{
 			// Arrange
-			const int iterations = 1000;
+			const int iterations = 10000;
 			var numbers = new List<long>();
 
 			// Act

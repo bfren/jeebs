@@ -13,18 +13,15 @@ namespace F
 		/// <summary>
 		/// Returns a random number between 0 and 1
 		/// </summary>
-		public static double Random()
+		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
+		public static double Random(RandomNumberGenerator? generator = null)
 		{
-			// Get a fresh provider
-			using var csp = new RNGCryptoServiceProvider();
-
 			// 8 bytes = 64-bit
-			byte[] b = new byte[8];
-			csp.GetBytes(b);
-			var dbl = (double)BitConverter.ToInt64(b, 0);
+			var lng = BitConverter.ToInt64(ByteF.Random(8, generator), 0);
+			var dbl = (double)(lng < 0 ? ~lng : lng);
 
 			// Convert to a random number between 0 and 1
-			return Math.Abs(dbl) / long.MinValue * -1;
+			return dbl / long.MaxValue;
 		}
 
 		/// <summary>
@@ -32,15 +29,17 @@ namespace F
 		/// </summary>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
-		public static int RandomInt32(int min = 0, int max = int.MaxValue)
-			=> (int)RandomInt64(min, max);
+		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
+		public static int RandomInt32(int min = 0, int max = int.MaxValue, RandomNumberGenerator? generator = null)
+			=> (int)RandomInt64(min, max, generator);
 
 		/// <summary>
 		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 		/// </summary>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
-		public static long RandomInt64(long min = 0, long max = long.MaxValue)
+		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
+		public static long RandomInt64(long min = 0, long max = long.MaxValue, RandomNumberGenerator? generator = null)
 		{
 			// Check arguments
 			if (min >= max)
@@ -57,7 +56,7 @@ namespace F
 			var range = max - min;
 
 			// Now add a random amount of the range to the minimum value - it will never exceed maximum value
-			var add = Math.Round(range * Random());
+			var add = Math.Round(range * Random(generator));
 			return (long)(min + add);
 		}
 	}
