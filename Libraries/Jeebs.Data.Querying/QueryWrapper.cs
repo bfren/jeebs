@@ -7,10 +7,8 @@ namespace Jeebs.Data.Querying
 	/// <inheritdoc cref="IQueryWrapper"/>
 	public class QueryWrapper : IQueryWrapper
 	{
-		/// <summary>
-		/// IUnitOfWork
-		/// </summary>
-		internal IUnitOfWork UnitOfWork { get; }
+		/// <inheritdoc/>
+		public IUnitOfWork UnitOfWork { get; }
 
 		/// <summary>
 		/// Setup object - start a new IUnitOfWork for this query
