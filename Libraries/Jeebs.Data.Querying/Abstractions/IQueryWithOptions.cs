@@ -10,7 +10,7 @@ namespace Jeebs.Data.Querying
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <typeparam name="TOptions">QueryOptions</typeparam>
 	public interface IQueryWithOptions<TModel, TOptions>
-		where TOptions : QueryOptions
+		where TOptions : IQueryOptions
 	{
 		/// <summary>
 		/// Query Stage 3: Use existing query parts

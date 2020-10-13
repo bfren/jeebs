@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <RootNamespace>Jeebs.Data.Querying</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +21,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Jeebs.Data.Querying\Jeebs.Data.Querying.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,12 +12,12 @@ namespace Jeebs.Data.Querying
 			/// <summary>
 			/// IUnitOfWork
 			/// </summary>
-			private readonly IUnitOfWork unitOfWork;
+			internal IUnitOfWork UnitOfWork { get; }
 
 			/// <summary>
 			/// IQueryParts
 			/// </summary>
-			private readonly IQueryParts parts;
+			internal IQueryParts Parts { get; }
 
 			/// <summary>
 			/// Create object
@@ -25,11 +25,11 @@ namespace Jeebs.Data.Querying
 			/// <param name="unitOfWork">IUnitOfWork</param>
 			/// <param name="parts">TOptions</param>
 			internal QueryWithParts(IUnitOfWork unitOfWork, IQueryParts parts)
-				=> (this.unitOfWork, this.parts) = (unitOfWork, parts);
+				=> (UnitOfWork, Parts) = (unitOfWork, parts);
 
 			/// <inheritdoc/>
 			public IQuery<TModel> GetQuery()
-				=> new Query<TModel>(unitOfWork, parts);
+				=> new Query<TModel>(UnitOfWork, Parts);
 		}
 	}
 }

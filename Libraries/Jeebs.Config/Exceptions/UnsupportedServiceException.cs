@@ -23,7 +23,7 @@ namespace Jx.Config
 		/// <summary>
 		/// Create exception
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="type">Service type</param>
 		public UnsupportedServiceException(string type) : base(string.Format(Format, type)) { }
 
 		/// <summary>

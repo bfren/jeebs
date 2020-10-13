@@ -13,12 +13,12 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// IUnitOfWork
 		/// </summary>
-		private readonly IUnitOfWork unitOfWork;
+		internal IUnitOfWork UnitOfWork { get; }
 
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		private readonly IQueryParts parts;
+		internal IQueryParts Parts { get; }
 
 		/// <summary>
 		/// Create object
@@ -26,25 +26,25 @@ namespace Jeebs.Data.Querying
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="parts">IQueryParts</param>
 		internal Query(IUnitOfWork unitOfWork, IQueryParts parts)
-			=> (this.unitOfWork, this.parts) = (unitOfWork, parts);
+			=> (UnitOfWork, Parts) = (unitOfWork, parts);
 
 		/// <inheritdoc/>
 		public async Task<IR<long>> GetCountAsync(IOk r)
 		{
 			// Store original SELECT
-			var originalSelect = parts.Select;
+			var originalSelect = Parts.Select;
 
 			// Alter SELECT
-			parts.Select = unitOfWork.Adapter.GetSelectCount();
+			Parts.Select = UnitOfWork.Adapter.GetSelectCount();
 
 			// Get count query
-			var countQuery = unitOfWork.Adapter.Retrieve(parts);
+			var countQuery = UnitOfWork.Adapter.Retrieve(Parts);
 
 			// Execute
-			var count = await unitOfWork.ExecuteScalarAsync<long>(r, countQuery, parts.Parameters).ConfigureAwait(false);
+			var count = await UnitOfWork.ExecuteScalarAsync<long>(r, countQuery, Parts.Parameters).ConfigureAwait(false);
 
 			// Restore SELECT and return
-			parts.Select = originalSelect;
+			Parts.Select = originalSelect;
 			return count;
 		}
 
@@ -52,10 +52,10 @@ namespace Jeebs.Data.Querying
 		public async Task<IR<List<T>>> ExecuteQueryAsync(IOk r)
 		{
 			// Get query
-			var query = unitOfWork.Adapter.Retrieve(parts);
+			var query = UnitOfWork.Adapter.Retrieve(Parts);
 
 			// Execute and return
-			var items = await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false);
+			var items = await UnitOfWork.QueryAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
 			return items.Switch(
 				x => x.OkV(x.Value.ToList())
 			);
@@ -78,20 +78,20 @@ namespace Jeebs.Data.Querying
 
 			// Get paging values
 			IR<PagingValues> getPagingValues(IOkV<long> r)
-				=> r.OkV(new PagingValues(r.Value, page, parts.Limit ?? Defaults.PagingValues.ItemsPer));
-			
+				=> r.OkV(new PagingValues(r.Value, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer));
+
 			// Get the items
 			async Task<IR<PagedList<T>>> getItems(IOkV<PagingValues> r)
 			{
 				// Set the OFFSET and LIMIT values based on the calculated paging values
-				parts.Offset = (r.Value.Page - 1) * r.Value.ItemsPer;
-				parts.Limit = r.Value.ItemsPer;
+				Parts.Offset = (r.Value.Page - 1) * r.Value.ItemsPer;
+				Parts.Limit = r.Value.ItemsPer;
 
 				// Get query
-				var query = unitOfWork.Adapter.Retrieve(parts);
+				var query = UnitOfWork.Adapter.Retrieve(Parts);
 
 				// Execute and return
-				var items = await unitOfWork.QueryAsync<T>(r, query, parts.Parameters).ConfigureAwait(false);
+				var items = await UnitOfWork.QueryAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
 				return items.Switch(
 					x => x.OkV(new PagedList<T>(r.Value, x.Value))
 				);

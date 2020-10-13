@@ -12,19 +12,19 @@ namespace Jeebs.Data.Querying
 			/// <summary>
 			/// IUnitOfWork
 			/// </summary>
-			private readonly IUnitOfWork unitOfWork;
+			internal IUnitOfWork UnitOfWork { get; }
 
 			/// <summary>
 			/// Create object
 			/// </summary>
 			/// <param name="unitOfWork">IUnitOfWork</param>
 			internal QueryWithModel(IUnitOfWork unitOfWork)
-				=> this.unitOfWork = unitOfWork;
+				=> UnitOfWork = unitOfWork;
 
 			/// <inheritdoc/>
 			public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(TOptions options)
-				where TOptions : QueryOptions, new()
-				=> new QueryWithOptions<TOptions>(unitOfWork, options);
+				where TOptions : QueryOptions
+				=> new QueryWithOptions<TOptions>(UnitOfWork, options);
 
 			/// <inheritdoc/>
 			public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)

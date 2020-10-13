@@ -5,34 +5,22 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data.Querying
 {
-	/// <summary>
-	/// Query options
-	/// </summary>
-	public abstract class QueryOptions
+	/// <inheritdoc/>
+	public abstract class QueryOptions : IQueryOptions
 	{
-		/// <summary>
-		/// Query Id
-		/// </summary>
+		/// <inheritdoc/>
 		public long? Id { get; set; }
 
-		/// <summary>
-		/// Query ORDER BY
-		/// </summary>
+		/// <inheritdoc/>
 		public (string selectColumn, SortOrder order)[]? Sort { get; set; }
 
-		/// <summary>
-		/// Set ORDER BY to random (will override Sort)
-		/// </summary>
+		/// <inheritdoc/>
 		public bool SortRandom { get; set; }
 
-		/// <summary>
-		/// Query LIMIT
-		/// </summary>
+		/// <inheritdoc/>
 		public long? Limit { get; set; } = 10;
 
-		/// <summary>
-		/// Query OFFSET
-		/// </summary>
+		/// <inheritdoc/>
 		public long? Offset { get; set; }
 	}
 }

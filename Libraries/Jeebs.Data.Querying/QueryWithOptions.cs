@@ -8,17 +8,17 @@ namespace Jeebs.Data.Querying
 	{
 		/// <inheritdoc cref="IQueryWithOptions{TModel, TOptions}"/>
 		public sealed class QueryWithOptions<TOptions> : IQueryWithOptions<TModel, TOptions>
-			where TOptions : QueryOptions
+			where TOptions : IQueryOptions
 		{
 			/// <summary>
 			/// IUnitOfWork
 			/// </summary>
-			private readonly IUnitOfWork unitOfWork;
+			internal IUnitOfWork UnitOfWork { get; }
 
 			/// <summary>
 			/// TOptions
 			/// </summary>
-			private readonly TOptions options;
+			internal TOptions Options { get; }
 
 			/// <summary>
 			/// Create object
@@ -26,15 +26,15 @@ namespace Jeebs.Data.Querying
 			/// <param name="unitOfWork">IUnitOfWork</param>
 			/// <param name="options">TOptions</param>
 			internal QueryWithOptions(IUnitOfWork unitOfWork, TOptions options)
-				=> (this.unitOfWork, this.options) = (unitOfWork, options);
+				=> (UnitOfWork, Options) = (unitOfWork, options);
 
 			/// <inheritdoc/>
 			public IQueryWithParts<TModel> WithParts(IQueryParts parts)
-				=> new QueryWithParts(unitOfWork, parts);
+				=> new QueryWithParts(UnitOfWork, parts);
 
 			/// <inheritdoc/>
 			public IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder)
-				=> WithParts(builder.Build(options));
+				=> WithParts(builder.Build(Options));
 		}
 	}
 }

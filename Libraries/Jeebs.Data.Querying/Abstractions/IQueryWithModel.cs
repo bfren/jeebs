@@ -16,7 +16,7 @@ namespace Jeebs.Data.Querying
 		/// <typeparam name="TOptions">QueryOptions</typeparam>
 		/// <param name="options">Options to use</param>
 		public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(TOptions options)
-			where TOptions : QueryOptions, new();
+			where TOptions : QueryOptions;
 
 		/// <summary>
 		/// Query Stage 2: Set the options for this query

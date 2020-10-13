@@ -10,23 +10,23 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// IUnitOfWork
 		/// </summary>
-		protected readonly IUnitOfWork unitOfWork;
+		internal IUnitOfWork UnitOfWork { get; }
 
 		/// <summary>
 		/// Setup object - start a new IUnitOfWork for this query
 		/// </summary>
 		/// <param name="db">IDb</param>
 		public QueryWrapper(IDb db)
-			=> unitOfWork = db.UnitOfWork;
+			=> UnitOfWork = db.UnitOfWork;
 
 		/// <inheritdoc/>
 		public IQueryBuilder StartNewQuery()
-			=> new QueryBuilder(unitOfWork);
+			=> new QueryBuilder(UnitOfWork);
 
 		/// <summary>
 		/// Dispose <see cref="IUnitOfWork"/>
 		/// </summary>
 		public void Dispose()
-			=> unitOfWork.Dispose();
+			=> UnitOfWork.Dispose();
 	}
 }

@@ -235,7 +235,7 @@ namespace Jeebs.WordPress
 						var customField = getCustomField(post, info);
 
 						// Hydrate the field
-						var result = await customField.HydrateAsync(r, db, unitOfWork, metaDictionary).ConfigureAwait(false);
+						var result = await customField.HydrateAsync(r, db, UnitOfWork, metaDictionary).ConfigureAwait(false);
 						if (result is IError && customField.IsRequired)
 						{
 							return result.Error<TList>().AddMsg(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));

@@ -7,7 +7,7 @@ namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryPartsBuilder{TModel, TOptions}"/>
 	public abstract class QueryPartsBuilder<TModel, TOptions> : IQueryPartsBuilder<TModel, TOptions>
-		where TOptions : QueryOptions
+		where TOptions : IQueryOptions
 	{
 		/// <inheritdoc/>
 		public IAdapter Adapter { get; }
@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// QueryParts
 		/// </summary>
-		private readonly IQueryParts parts;
+		internal IQueryParts Parts { get; }
 
 		/// <summary>
 		/// Create object
@@ -23,7 +23,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="from">FROM command</param>
 		protected QueryPartsBuilder(IAdapter adapter, string from)
-			=> (Adapter, parts) = (adapter, new QueryParts(from));
+			=> (Adapter, Parts) = (adapter, new QueryParts(from));
 
 		/// <summary>
 		/// Build the query
@@ -45,7 +45,7 @@ namespace Jeebs.Data.Querying
 			AddLimitAndOffset(opt);
 
 			// Return
-			return parts;
+			return Parts;
 		}
 
 		/// <summary>
@@ -53,13 +53,12 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <param name="opt">TOptions</param>
 		/// <param name="defaultSort">Default sort columns</param>
-		private void AddSort(TOptions opt, (string column, SortOrder order)[] defaultSort)
+		internal void AddSort(TOptions opt, params (string column, SortOrder order)[] defaultSort)
 		{
 			// Random sort
 			if (opt.SortRandom)
 			{
-				(parts.OrderBy ??= new List<string>()).Clear();
-				parts.OrderBy.Add(Adapter.GetRandomSortOrder());
+				Parts.OrderBy = new List<string> { Adapter.GetRandomSortOrder() };
 			}
 			// Specified sort
 			else if (opt.Sort is (string column, SortOrder order)[] sort && sort.Length > 0)
@@ -80,14 +79,14 @@ namespace Jeebs.Data.Querying
 					return;
 				}
 
-				if (parts.OrderBy == null)
+				if (Parts.OrderBy == null)
 				{
-					parts.OrderBy = new List<string>();
+					Parts.OrderBy = new List<string>();
 				}
 
 				foreach (var (column, order) in sort)
 				{
-					parts.OrderBy.Add(Adapter.GetSortOrder(column, order));
+					Parts.OrderBy.Add(Adapter.GetSortOrder(column, order));
 				}
 			}
 		}
@@ -96,18 +95,18 @@ namespace Jeebs.Data.Querying
 		/// Add Limit and Offset
 		/// </summary>
 		/// <param name="opt">TOptions</param>
-		private void AddLimitAndOffset(TOptions opt)
+		internal void AddLimitAndOffset(TOptions opt)
 		{
 			// LIMIT
 			if (opt.Limit is long limit)
 			{
-				parts.Limit = limit;
+				Parts.Limit = limit;
 			}
 
 			// OFFSET
 			if (opt.Offset is long offset)
 			{
-				parts.Offset = offset;
+				Parts.Offset = offset;
 			}
 		}
 
@@ -118,9 +117,9 @@ namespace Jeebs.Data.Querying
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in SELECT</param>
 		protected void AddSelect(string select, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(parts.Select) || overwrite)
+			if (string.IsNullOrEmpty(Parts.Select) || overwrite)
 			{
-				parts.Select = select;
+				Parts.Select = select;
 			}
 			else
 			{
@@ -135,7 +134,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="table">JOIN table</param>
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
-		private IList<(string table, string on, string equals)> AddJoin(
+		internal IList<(string table, string on, string equals)> AddJoin(
 			IList<(string table, string on, string equals)>? join,
 			object table,
 			string on,
@@ -163,8 +162,8 @@ namespace Jeebs.Data.Querying
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		protected void AddInnerJoin(object table, string on, (object table, string column) equals)
-			=> parts.InnerJoin = AddJoin(parts.InnerJoin, table, on, equals);
-		
+			=> Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals);
+
 		/// <summary>
 		/// Set LEFT JOIN
 		/// </summary>
@@ -172,8 +171,8 @@ namespace Jeebs.Data.Querying
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		protected void AddLeftJoin(object table, string on, (object table, string column) equals)
-			=> parts.LeftJoin = AddJoin(parts.LeftJoin, table, on, equals);
-		
+			=> Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals);
+
 		/// <summary>
 		/// Set RIGHT JOIN
 		/// </summary>
@@ -181,8 +180,8 @@ namespace Jeebs.Data.Querying
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		protected void AddRightJoin(object table, string on, (object table, string column) equals)
-			=> parts.RightJoin = AddJoin(parts.RightJoin, table, on, equals);
-		
+			=> Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals);
+
 		/// <summary>
 		/// Add WHERE clause
 		/// </summary>
@@ -190,11 +189,11 @@ namespace Jeebs.Data.Querying
 		/// <param name="parameters">[Optional] Parameters to add</param>
 		protected void AddWhere(string where, object? parameters = null)
 		{
-			(parts.Where ??= new List<string>()).Add(where);
+			(Parts.Where ??= new List<string>()).Add(where);
 
 			if (parameters != null)
 			{
-				parts.Parameters.Add(parameters);
+				Parts.Parameters.Add(parameters);
 			}
 		}
 	}

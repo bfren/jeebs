@@ -10,18 +10,18 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// IUnitOfWork
 		/// </summary>
-		private readonly IUnitOfWork unitOfWork;
+		internal IUnitOfWork UnitOfWork { get; }
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		internal QueryBuilder(IUnitOfWork unitOfWork)
-			=> this.unitOfWork = unitOfWork;
+			=> UnitOfWork = unitOfWork;
 
 		/// <inheritdoc/>
 		public IQueryWithModel<T> WithModel<T>()
-			=> new QueryBuilder<T>.QueryWithModel(unitOfWork);
+			=> new QueryBuilder<T>.QueryWithModel(UnitOfWork);
 	}
 
 	/// <summary>
