@@ -38,7 +38,7 @@ namespace Jeebs.Data.Querying.QueryWithModel_Tests
 
 			// Assert
 			modify.Received().Invoke(Arg.Any<Options>());
-			var withOptions = Assert.IsType<QueryBuilder<string>.QueryWithOptions<QueryOptions>>(result);
+			var withOptions = Assert.IsType<QueryBuilder<string>.QueryWithOptions<Options>>(result);
 			Assert.Equal(unitOfWork, withOptions.UnitOfWork);
 		}
 
