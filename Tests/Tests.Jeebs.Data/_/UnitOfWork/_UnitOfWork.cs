@@ -17,34 +17,16 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		/// <summary>
 		/// Get a substituted Unit of Work
 		/// </summary>
-		/// <param name="connection">[Optional] IDbConnection - if not set a fresh substitute will be made</param>
-		/// <param name="transaction">[Optional] IDbTransaction - if not set a fresh substitute will be made</param>
-		/// <param name="adapter">[Optional] IAdapter - if not set a fresh substitute will be made</param>
-		/// <param name="log">[Optional] ILog - if not set a fresh substitute will be made</param>
-		/// <param name="driver">[Optional] IQueryDriver - if not set a fresh substitute will be made</param>
-		public static (IUnitOfWork, IDbConnection, IDbTransaction, IAdapter, ILog, IQueryDriver) GetUnitOfWork(
-			IDbConnection? connection = null,
-			IDbTransaction? transaction = null,
-			IAdapter? adapter = null,
-			ILog? log = null,
-			IQueryDriver? driver = null
-		)
+		public static (IUnitOfWork, IDbConnection, IDbTransaction, IAdapter, ILog, IQueryDriver) GetUnitOfWork()
 		{
-			var c = connection ?? Substitute.For<IDbConnection>();
-			var t = transaction ?? Substitute.For<IDbTransaction>();
-			var a = adapter ?? Substitute.For<IAdapter>();
-			var l = log ?? Substitute.For<ILog>();
-			var d = driver ?? Substitute.For<IQueryDriver>();
+			var c = Substitute.For<IDbConnection>();
+			var t = Substitute.For<IDbTransaction>();
+			var a = Substitute.For<IAdapter>();
+			var l = Substitute.For<ILog>();
+			var d = Substitute.For<IQueryDriver>();
 
-			if (transaction == null)
-			{
-				t.Connection.Returns(c);
-			}
-
-			if (connection == null)
-			{
-				c.BeginTransaction().Returns(t);
-			}
+			t.Connection.Returns(c);
+			c.BeginTransaction().Returns(t);
 
 			return (new Data.UnitOfWork(c, a, l, d), c, t, a, l, d);
 		}
@@ -52,15 +34,10 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		/// <summary>
 		/// Get a substituted OK Result
 		/// </summary>
-		/// <param name="logger">[Optional] ILogger - if not set a fresh substitute will be made</param>
-		/// <param name="messages">[Optional] Messages List - if not set a fresh substitute will be made</param>
-		public static (IOk, ILogger, MsgList) GetOkResult(
-			ILogger? logger = null,
-			MsgList? messages = null
-		)
+		public static (IOk, ILogger, MsgList) GetOkResult()
 		{
-			var l = logger ?? Substitute.For<ILogger>();
-			var m = messages ?? Substitute.For<MsgList>();
+			var l = Substitute.For<ILogger>();
+			var m = Substitute.For<MsgList>();
 
 			var r = Substitute.For<IOk>();
 			r.Logger.Returns(l);
@@ -72,14 +49,10 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		/// <summary>
 		/// Get a substituted Error Result
 		/// </summary>
-		/// <param name="logger">[Optional] ILogger - if not set a fresh substitute will be made</param>
 		/// <param name="messages">[Optional] Messages List - if not set a fresh substitute will be made</param>
-		public static IError<T> GetErrorResult<T>(
-			ILogger? logger = null,
-			MsgList? messages = null
-		)
+		public static IError<T> GetErrorResult<T>(MsgList? messages = null)
 		{
-			var l = logger ?? Substitute.For<ILogger>();
+			var l = Substitute.For<ILogger>();
 			var m = messages ?? Substitute.For<MsgList>();
 
 			var r = Substitute.For<IError<T>>();
@@ -180,17 +153,15 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		)
 		{
 			// Arrange
-			var ex = F.Rnd.String;
+			var (w, _, transaction, _, log, driver) = GetUnitOfWork();
 
-			var driver = Substitute.For<IQueryDriver>();
+			var ex = F.Rnd.String;
 			driver.ReturnsForAll<TReturn>(_ => throw new Exception(ex));
 			driver.ReturnsForAll<Task<TReturn>>(_ => throw new Exception(ex));
 
 			var (r, _, messages) = GetOkResult();
 			var error = GetErrorResult<TReturn>(messages: messages);
 			r.Error<TReturn>().Returns(error);
-
-			var (w, _, transaction, _, log, _) = GetUnitOfWork(driver: driver);
 
 			var query = F.Rnd.String;
 			var p0 = F.MathsF.RandomInt64(max: 1000);

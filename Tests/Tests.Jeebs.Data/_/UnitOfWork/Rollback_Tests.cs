@@ -27,12 +27,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public void Catches_And_Logs_Commit_Exception()
 		{
 			// Arrange
+			var (w, _, transaction, _, log, _) = GetUnitOfWork();
 			var exception = new Exception();
-
-			var transaction = Substitute.For<IDbTransaction>();
 			transaction.When(t => t.Rollback()).Throw(exception);
-
-			var (w, _, _, _, log, _) = GetUnitOfWork(transaction: transaction);
 
 			// Act
 			w.Rollback();

@@ -79,11 +79,7 @@ namespace Jeebs.Data.Querying
 					return;
 				}
 
-				if (Parts.OrderBy == null)
-				{
-					Parts.OrderBy = new List<string>();
-				}
-
+				Parts.OrderBy ??= new List<string>();
 				foreach (var (column, order) in sort)
 				{
 					Parts.OrderBy.Add(Adapter.GetSortOrder(column, order));
@@ -98,16 +94,10 @@ namespace Jeebs.Data.Querying
 		internal void AddLimitAndOffset(TOptions opt)
 		{
 			// LIMIT
-			if (opt.Limit is long limit)
-			{
-				Parts.Limit = limit;
-			}
+			Parts.Limit = opt.Limit;
 
 			// OFFSET
-			if (opt.Offset is long offset)
-			{
-				Parts.Offset = offset;
-			}
+			Parts.Offset = opt.Offset;
 		}
 
 		/// <summary>
