@@ -67,24 +67,17 @@ namespace Jeebs.Data
 			SortDesc = sortDesc;
 		}
 
-		/// <summary>
-		/// Join columns using <see cref="ColumnSeparator"/> and a space
-		/// </summary>
-		/// <param name="columns">List of columns</param>
-		/// <param name="skipIdentifierCheck">If true, the valid identifier check will be skipped</param>
-		protected string JoinColumns(IEnumerable<string> columns, bool skipIdentifierCheck = false)
-			=> string.Join($"{ColumnSeparator} ", columns.Where(x => skipIdentifierCheck || !IsInvalidIdentifier(x)));
+		/// <inheritdoc/>
+		public string JoinColumns(params object[] columns)
+			=> string.Join($"{ColumnSeparator} ", from c in columns where !IsInvalidIdentifier(c.ToString()) select c);
 
 		/// <inheritdoc/>
 		public virtual bool IsInvalidIdentifier(string? name)
 		{
-			return isNullOrEmpty() || containsUnescapedSpaces();
+			return isNullOrEmpty();
 
 			bool isNullOrEmpty()
 				=> string.IsNullOrWhiteSpace(name);
-
-			bool containsUnescapedSpaces()
-				=> name?.IndexOfAny(new[] { EscapeOpen, EscapeClose }) == -1 && name.Contains(' ');
 		}
 
 		#region Escaping

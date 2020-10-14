@@ -107,13 +107,13 @@ namespace Jeebs.Data.Querying
 		/// <param name="overwrite">[Optional] If true, will overwrite whatever already exists in SELECT</param>
 		protected void AddSelect(string select, bool overwrite = false)
 		{
-			if (string.IsNullOrEmpty(Parts.Select) || overwrite)
+			if (string.IsNullOrWhiteSpace(Parts.Select) || overwrite)
 			{
 				Parts.Select = select;
 			}
 			else
 			{
-				throw new Jx.Data.QueryException("SELECT has already been set.");
+				throw new Jx.Data.Querying.SelectAlreadySetException();
 			}
 		}
 
@@ -128,7 +128,8 @@ namespace Jeebs.Data.Querying
 			IList<(string table, string on, string equals)>? join,
 			object table,
 			string on,
-			(object table, string column) equals
+			(object table, string column) equals,
+			bool escape
 		)
 		{
 			// Use existing list or create new one
@@ -136,9 +137,21 @@ namespace Jeebs.Data.Querying
 
 			// Add the join
 			joinList.Add((
-				Adapter.Escape(table),
-				Adapter.EscapeAndJoin(table, on),
-				Adapter.EscapeAndJoin(equals.table, equals.column)
+				escape switch
+				{
+					true => Adapter.Escape(table),
+					false => table.ToString()
+				},
+				escape switch
+				{
+					true => Adapter.EscapeAndJoin(table, on),
+					false => Adapter.JoinColumns(table, on)
+				},
+				escape switch
+				{
+					true => Adapter.EscapeAndJoin(equals.table, equals.column),
+					false => Adapter.JoinColumns(equals.table, equals.column)
+				}
 			));
 
 			// Return the join list
@@ -151,8 +164,9 @@ namespace Jeebs.Data.Querying
 		/// <param name="table">JOIN table</param>
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
-		protected void AddInnerJoin(object table, string on, (object table, string column) equals)
-			=> Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals);
+		/// <param name="escape">[Optional] Set to true to enable automatic escaping of JOIN statement</param>
+		protected void AddInnerJoin(object table, string on, (object table, string column) equals, bool escape = false)
+			=> Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals, escape);
 
 		/// <summary>
 		/// Set LEFT JOIN
@@ -160,8 +174,9 @@ namespace Jeebs.Data.Querying
 		/// <param name="table">JOIN table</param>
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
-		protected void AddLeftJoin(object table, string on, (object table, string column) equals)
-			=> Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals);
+		/// <param name="escape">[Optional] Set to true to enable automatic escaping of JOIN statement</param>
+		protected void AddLeftJoin(object table, string on, (object table, string column) equals, bool escape = false)
+			=> Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals, escape);
 
 		/// <summary>
 		/// Set RIGHT JOIN
@@ -169,8 +184,9 @@ namespace Jeebs.Data.Querying
 		/// <param name="table">JOIN table</param>
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
-		protected void AddRightJoin(object table, string on, (object table, string column) equals)
-			=> Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals);
+		/// <param name="escape">[Optional] Set to true to enable automatic escaping of JOIN statement</param>
+		protected void AddRightJoin(object table, string on, (object table, string column) equals, bool escape = false)
+			=> Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals, escape);
 
 		/// <summary>
 		/// Add WHERE clause

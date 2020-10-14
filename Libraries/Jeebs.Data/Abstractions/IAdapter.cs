@@ -66,6 +66,12 @@ namespace Jeebs.Data
 		/// <param name="name">Table / column name or alias</param>
 		bool IsInvalidIdentifier(string name);
 
+		/// <summary>
+		/// Join columns using <see cref="ColumnSeparator"/> and a space
+		/// </summary>
+		/// <param name="columns">List of columns</param>
+		string JoinColumns(params object[] columns);
+
 		#region Escaping
 
 		/// <summary>

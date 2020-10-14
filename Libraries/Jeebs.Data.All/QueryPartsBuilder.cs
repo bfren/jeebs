@@ -23,7 +23,7 @@ namespace Jeebs.Data
 		protected QueryPartsBuilderExtended(IAdapter adapter, Table table) : base(adapter, adapter.Escape(table)) { }
 
 		/// <summary>
-		/// Add SELECT shorthand
+		/// Add SELECT shorthand - escapes column names before adding them
 		/// </summary>
 		/// <param name="tables">List of tables</param>
 		protected void AddSelect(params Table[] tables)
@@ -53,36 +53,39 @@ namespace Jeebs.Data
 			=> Adapter.EscapeAndJoin(table, column(table));
 
 		/// <summary>
-		/// Set INNER JOIN
+		/// Set INNER JOIN - tables and column names will be escaped automatically unless you set <paramref name="escape"/> to false
 		/// </summary>
 		/// <param name="table">The table to JOIN</param>
 		/// <param name="on">The column to JOIN (from <paramref name="table"/>)</param>
 		/// <param name="equals">The table and colum to join TO (must already be part of the query)</param>
-		protected void AddInnerJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
+		/// <param name="escape">[Optional] Set to false to disable automatic escaping of JOIN statement</param>
+		protected void AddInnerJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals, bool escape = true)
 			where T1 : Table
 			where T2 : Table
-			=> AddInnerJoin(table, on(table), (equals.table, equals.column(equals.table)));
+			=> AddInnerJoin(table, on(table), (equals.table, equals.column(equals.table)), escape);
 
 		/// <summary>
-		/// Set LEFT JOIN
+		/// Set LEFT JOIN - tables and column names will be escaped automatically unless you set <paramref name="escape"/> to false
 		/// </summary>
 		/// <param name="table">The table to JOIN</param>
 		/// <param name="on">The column to JOIN (from <paramref name="table"/>)</param>
 		/// <param name="equals">The table and colum to join TO (must already be part of the query)</param>
-		protected void AddLeftJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
+		/// <param name="escape">[Optional] Set to false to disable automatic escaping of JOIN statement</param>
+		protected void AddLeftJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals, bool escape = true)
 			where T1 : Table
 			where T2 : Table
-			=> AddLeftJoin(table, on(table), (equals.table, equals.column(equals.table)));
+			=> AddLeftJoin(table, on(table), (equals.table, equals.column(equals.table)), escape);
 
 		/// <summary>
-		/// Set RIGHT JOIN
+		/// Set RIGHT JOIN - tables and column names will be escaped automatically unless you set <paramref name="escape"/> to false
 		/// </summary>
 		/// <param name="table">The table to JOIN</param>
 		/// <param name="on">The column to JOIN (from <paramref name="table"/>)</param>
 		/// <param name="equals">The table and colum to join TO (must already be part of the query)</param>
-		protected void AddRightJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
+		/// <param name="escape">[Optional] Set to false to disable automatic escaping of JOIN statement</param>
+		protected void AddRightJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals, bool escape = true)
 			where T1 : Table
 			where T2 : Table
-			=> AddRightJoin(table, on(table), (equals.table, equals.column(equals.table)));
+			=> AddRightJoin(table, on(table), (equals.table, equals.column(equals.table)), escape);
 	}
 }

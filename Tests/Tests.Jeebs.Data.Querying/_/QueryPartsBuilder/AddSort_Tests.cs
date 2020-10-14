@@ -12,10 +12,12 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 	public class AddSort_Tests
 	{
 		[Fact]
-		public void Random_Calls_Adapter_GetRandomSortOrder()
+		public void SortRandom_True_Calls_Adapter_GetRandomSortOrder_Sets_Parts_OrderBy()
 		{
 			// Arrange
 			var (builder, adapter) = GetQueryPartsBuilder();
+			var sort = F.Rnd.String;
+			adapter.GetRandomSortOrder().Returns(sort);
 			var options = new Options { SortRandom = true };
 
 			// Act
@@ -23,10 +25,13 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 			// Assert
 			adapter.Received().GetRandomSortOrder();
+			Assert.Collection(builder.Parts.OrderBy,
+				x => Assert.Equal(sort, x)
+			);
 		}
 
 		[Fact]
-		public void Adds_Specified_Sort_Not_Default_Sort()
+		public void Sets_Parts_OrderBy_With_Specified_Sort_Not_Default_Sort()
 		{
 			// Arrange
 			var (builder, adapter) = GetQueryPartsBuilder();
