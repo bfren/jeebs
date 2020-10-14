@@ -4,6 +4,7 @@ using System.Text;
 using Jx.Data.Mapping;
 using NSubstitute;
 using Xunit;
+using static Jeebs.Data.Mapping.AdapterExtensions_Tests.Adapter;
 
 namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
@@ -28,15 +29,9 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_RetrieveSingleById_With_Correct_Arguments()
 		{
 			// Arrange
-			var adapter = Substitute.For<IAdapter>();
-			adapter.Escape(Arg.Any<string>())
-				.ReturnsForAnyArgs(x => x.Arg<string>());
-			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>())
-				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
-
+			var adapter = GetAdapter();
 			using var svc = new MapService();
 			Map<Foo>.To<FooTable>(svc);
-
 			var table = new FooTable();
 
 			// Act
@@ -44,9 +39,10 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			// Assert
 			adapter.Received().RetrieveSingleById(
-				Arg.Is(table.ToString()),
-				Arg.Is<List<string>>(x => x.Count == 3 && x[0] == table.Id && x[1] == table.Bar0 && x[2] == table.Bar1),
-				Arg.Is(table.Id)
+				__(table),
+				Arg.Is<List<string>>(x => x.Count == 3 && x[0] == __(table.Id) && x[1] == __(table.Bar0) && x[2] == __(table.Bar1)),
+				__(table.Id),
+				nameof(table.Id)
 			);
 		}
 	}

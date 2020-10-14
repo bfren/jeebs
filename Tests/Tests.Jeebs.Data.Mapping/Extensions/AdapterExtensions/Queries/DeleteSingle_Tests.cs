@@ -4,6 +4,7 @@ using System.Text;
 using Jx.Data.Mapping;
 using NSubstitute;
 using Xunit;
+using static Jeebs.Data.Mapping.AdapterExtensions_Tests.Adapter;
 
 namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
@@ -28,10 +29,7 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_DeleteSingle_With_Correct_Arguments()
 		{
 			// Arrange
-			var adapter = Substitute.For<IAdapter>();
-			adapter.Escape(Arg.Any<string>())
-				.ReturnsForAnyArgs(x => x.Arg<string>());
-
+			var adapter = GetAdapter();
 			using var svc = new MapService();
 			var foo0 = new FooTable();
 			Map<Foo>.To<FooTable>(svc);
@@ -44,16 +42,16 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			// Assert
 			adapter.Received().DeleteSingle(
-				foo0.ToString(),
-				foo0.Id,
+				__(foo0),
+				__(foo0.Id),
 				nameof(foo0.Id)
 			);
 
 			adapter.Received().DeleteSingle(
-				foo1.ToString(),
-				foo1.Id,
+				__(foo1),
+				__(foo1.Id),
 				nameof(foo1.Id),
-				foo1.Version,
+				__(foo1.Version),
 				nameof(foo1.Version)
 			);
 		}

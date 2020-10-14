@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
-	public class GetColumn_Tests
+	public class EscapeColumn_Tests
 	{
 		[Fact]
 		public void With_ExtractedColumn_Calls_EscapeColumn_With_Correct_Arguments()
@@ -15,23 +14,20 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			// Arrange
 			var adapter = Substitute.For<IAdapter>();
 
-			var extracted = Substitute.For<IColumn>();
+			var column = Substitute.For<IColumn>();
 			var table = F.Rnd.String;
-			extracted.Table.Returns(table);
-			var column = F.Rnd.String;
-			extracted.Name.Returns(column);
+			column.Table.Returns(table);
+			var name = F.Rnd.String;
+			column.Name.Returns(name);
 			var alias = F.Rnd.String;
-			extracted.Alias.Returns(alias);
+			column.Alias.Returns(alias);
 
 			// Act
-			adapter.GetColumn(extracted);
+			adapter.EscapeColumn(column);
 
 			// Assert
-			adapter.Received().EscapeColumn(
-				Arg.Is(column),
-				Arg.Is(alias),
-				Arg.Is(table)
-			);
+			adapter.Received(1).EscapeColumn(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+			adapter.Received().EscapeColumn(name, alias, table);
 		}
 
 		[Fact]
@@ -39,26 +35,21 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		{
 			// Arrange
 			var adapter = Substitute.For<IAdapter>();
-			var sep = '/';
-			adapter.SchemaSeparator.Returns(sep);
 
 			var mapped = Substitute.For<IMappedColumn>();
-			var column = F.Rnd.String;
-			mapped.Name.Returns(column);
+			var name = F.Rnd.String;
+			mapped.Name.Returns(name);
 			var alias = F.Rnd.String;
 			mapped.Alias.Returns(alias);
 			var table = F.Rnd.String;
 			mapped.Table.Returns(table);
 
 			// Act
-			adapter.GetColumn(mapped);
+			adapter.EscapeColumn(mapped);
 
 			// Assert
-			adapter.Received().EscapeColumn(
-				Arg.Is(column),
-				Arg.Is(alias),
-				Arg.Is(table)
-			);
+			adapter.Received(1).EscapeColumn(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+			adapter.Received().EscapeColumn(name, alias, table);
 		}
 	}
 }

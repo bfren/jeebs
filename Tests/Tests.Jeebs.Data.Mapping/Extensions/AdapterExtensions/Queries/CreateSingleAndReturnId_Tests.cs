@@ -4,6 +4,7 @@ using System.Text;
 using Jx.Data.Mapping;
 using NSubstitute;
 using Xunit;
+using static Jeebs.Data.Mapping.AdapterExtensions_Tests.Adapter;
 
 namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
@@ -28,13 +29,9 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Mapped_Model_No_Writeable_Columns_Throws_MappingException()
 		{
 			// Arrange
-			var adapter = Substitute.For<IAdapter>();
-			adapter.Escape(Arg.Any<string>())
-				.ReturnsForAnyArgs(x => x.Arg<string>());
-
+			var adapter = GetAdapter();
 			using var svc = new MapService();
 			Map<FooUnwriteable>.To<FooUnwriteableTable>(svc);
-
 			var table = new FooUnwriteableTable();
 
 			// Act
@@ -49,11 +46,9 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public void Calls_CreateSingleAndReturnId_With_Correct_Arguments()
 		{
 			// Arrange
-			var adapter = Substitute.For<IAdapter>();
-
+			var adapter = GetAdapter();
 			using var svc = new MapService();
 			Map<Foo>.To<FooTable>(svc);
-
 			var table = new FooTable();
 
 			// Act
@@ -61,8 +56,8 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			// Assert
 			adapter.Received().CreateSingleAndReturnId(
-				table.ToString(),
-				Arg.Is<List<string>>(x => x.Count == 2 && x[0] == table.Bar0 && x[1] == table.Bar1),
+				__(table),
+				Arg.Is<List<string>>(x => x.Count == 2 && x[0] == __(table.Bar0) && x[1] == __(table.Bar1)),
 				Arg.Is<List<string>>(x => x.Count == 2 && x[0] == nameof(table.Bar0) && x[1] == nameof(table.Bar1))
 			);
 		}

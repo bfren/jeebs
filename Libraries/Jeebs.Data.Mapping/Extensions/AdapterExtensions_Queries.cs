@@ -23,7 +23,11 @@ namespace Jeebs.Data.Mapping
 			(var columns, var aliases) = map.GetWriteableColumnNamesAndAliases();
 
 			// Get SQL from adapter
-			return @this.CreateSingleAndReturnId(map.Name, columns, aliases);
+			return @this.CreateSingleAndReturnId(
+				@this.Escape(map.Name),
+				@this.EscapeColumns(columns),
+				aliases
+			);
 		}
 
 		/// <summary>
@@ -42,11 +46,16 @@ namespace Jeebs.Data.Mapping
 			// Add each column to the select list
 			foreach (var mc in map.Columns)
 			{
-				select.Add(@this.GetColumn(mc));
+				select.Add(@this.EscapeColumn(mc));
 			}
 
 			// Get SQL from adapter
-			return @this.RetrieveSingleById(map.Name, select, map.IdColumn.Name);
+			return @this.RetrieveSingleById(
+				@this.Escape(map.Name),
+				@this.EscapeColumns(map.Columns),
+				@this.Escape(map.IdColumn.Name),
+				map.IdColumn.Alias
+			);
 		}
 
 		/// <summary>
@@ -66,11 +75,25 @@ namespace Jeebs.Data.Mapping
 			// Get SQL from adapter
 			if (map.VersionColumn is MappedColumn v)
 			{
-				return @this.UpdateSingle(map.Name, columns, aliases, id.Name, id.Property.Name, v.Name, v.Property.Name);
+				return @this.UpdateSingle(
+					@this.Escape(map.Name),
+					@this.EscapeColumns(columns),
+					aliases,
+					@this.Escape(id.Name),
+					id.Property.Name,
+					@this.Escape(v.Name),
+					v.Property.Name
+				);
 			}
 			else
 			{
-				return @this.UpdateSingle(map.Name, columns, aliases, id.Name, id.Property.Name);
+				return @this.UpdateSingle(
+					@this.Escape(map.Name),
+					@this.EscapeColumns(columns),
+					aliases,
+					@this.Escape(id.Name),
+					id.Property.Name
+				);
 			}
 		}
 
@@ -90,11 +113,21 @@ namespace Jeebs.Data.Mapping
 			// Get SQL from adapter
 			if (map.VersionColumn is MappedColumn v)
 			{
-				return @this.DeleteSingle(map.Name, id.Name, id.Property.Name, v.Name, v.Property.Name);
+				return @this.DeleteSingle(
+					@this.Escape(map.Name),
+					@this.Escape(id.Name),
+					id.Property.Name,
+					@this.Escape(v.Name),
+					v.Property.Name
+				);
 			}
 			else
 			{
-				return @this.DeleteSingle(map.Name, id.Name, id.Property.Name);
+				return @this.DeleteSingle(
+					@this.Escape(map.Name),
+					@this.Escape(id.Name),
+					id.Property.Name
+				);
 			}
 		}
 	}

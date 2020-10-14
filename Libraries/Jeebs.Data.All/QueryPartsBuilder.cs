@@ -27,7 +27,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="tables">List of tables</param>
 		protected void AddSelect(params Table[] tables)
-			=> AddSelect(Adapter.Extract<TModel>(tables));
+			=> AddSelect(Adapter.ExtractEscapeAndJoinColumns<TModel>(tables));
 
 		/// <summary>
 		/// Escape shorthand
