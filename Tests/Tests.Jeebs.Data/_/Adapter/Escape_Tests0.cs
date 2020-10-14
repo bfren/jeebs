@@ -6,7 +6,7 @@ using static Jeebs.Data.Adapter_Tests.Adapter;
 
 namespace Jeebs.Data.Adapter_Tests
 {
-	public class Escape_Tests
+	public partial class Escape_Tests
 	{
 		[Theory]
 		[InlineData(null)]
@@ -64,7 +64,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var table = new Table(name);
 
 			// Act
-			var result = adapter.Escape(table);
+			var result = adapter.EscapeTable(table);
 
 			// Assert
 			Assert.Equal($"[{name}]", result);

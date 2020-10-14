@@ -7,7 +7,7 @@ using static Jeebs.Data.Adapter_Tests.Adapter;
 
 namespace Jeebs.Data.Adapter_Tests
 {
-	public class EscapeColumn_Tests
+	public partial class Escape_Tests
 	{
 		[Theory]
 		[InlineData(null)]
@@ -19,7 +19,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeColumn(input, F.Rnd.String);
+			var result = adapter.Escape(input, F.Rnd.String);
 
 			// Assert
 			Assert.Equal(string.Empty, result);
@@ -36,7 +36,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeColumn(name, input);
+			var result = adapter.Escape(name, input);
 
 			// Assert
 			Assert.Equal($"[{name}]", result);
@@ -51,7 +51,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeColumn(name, alias);
+			var result = adapter.Escape(name, alias);
 
 			// Assert
 			Assert.Equal($"[{name}] AS {{{alias}}}", result);
@@ -67,7 +67,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeColumn(name, alias, table);
+			var result = adapter.Escape(name, alias, table);
 
 			// Assert
 			Assert.Equal($"[{table}].[{name}] AS {{{alias}}}", result);

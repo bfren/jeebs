@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {
-	public class EscapeColumn_Tests
+	public partial class Escape_Tests
 	{
 		[Fact]
 		public void With_ExtractedColumn_Calls_EscapeColumn_With_Correct_Arguments()
@@ -23,11 +23,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			column.Alias.Returns(alias);
 
 			// Act
-			adapter.EscapeColumn(column);
+			adapter.Escape(column);
 
 			// Assert
-			adapter.Received(1).EscapeColumn(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
-			adapter.Received().EscapeColumn(name, alias, table);
+			adapter.Received(1).Escape(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+			adapter.Received().Escape(name, alias, table);
 		}
 
 		[Fact]
@@ -45,11 +45,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			mapped.Table.Returns(table);
 
 			// Act
-			adapter.EscapeColumn(mapped);
+			adapter.Escape(mapped);
 
 			// Assert
-			adapter.Received(1).EscapeColumn(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
-			adapter.Received().EscapeColumn(name, alias, table);
+			adapter.Received(1).Escape(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+			adapter.Received().Escape(name, alias, table);
 		}
 	}
 }

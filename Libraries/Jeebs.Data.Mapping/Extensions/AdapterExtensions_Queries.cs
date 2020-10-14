@@ -25,7 +25,7 @@ namespace Jeebs.Data.Mapping
 			// Get SQL from adapter
 			return @this.CreateSingleAndReturnId(
 				@this.Escape(map.Name),
-				@this.EscapeColumns(columns),
+				Escape(@this, columns),
 				aliases
 			);
 		}
@@ -46,13 +46,13 @@ namespace Jeebs.Data.Mapping
 			// Add each column to the select list
 			foreach (var mc in map.Columns)
 			{
-				select.Add(@this.EscapeColumn(mc));
+				select.Add(Escape(@this, mc));
 			}
 
 			// Get SQL from adapter
 			return @this.RetrieveSingleById(
 				@this.Escape(map.Name),
-				@this.EscapeColumns(map.Columns),
+				Escape(@this, map.Columns),
 				@this.Escape(map.IdColumn.Name),
 				map.IdColumn.Alias
 			);
@@ -77,7 +77,7 @@ namespace Jeebs.Data.Mapping
 			{
 				return @this.UpdateSingle(
 					@this.Escape(map.Name),
-					@this.EscapeColumns(columns),
+					Escape(@this, columns),
 					aliases,
 					@this.Escape(id.Name),
 					id.Property.Name,
@@ -89,7 +89,7 @@ namespace Jeebs.Data.Mapping
 			{
 				return @this.UpdateSingle(
 					@this.Escape(map.Name),
-					@this.EscapeColumns(columns),
+					Escape(@this, columns),
 					aliases,
 					@this.Escape(id.Name),
 					id.Property.Name

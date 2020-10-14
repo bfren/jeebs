@@ -70,13 +70,13 @@ namespace Jeebs.Data
 		/// Join columns using <see cref="ColumnSeparator"/> and a space
 		/// </summary>
 		/// <param name="columns">List of columns</param>
-		string JoinColumns(params object[] columns);
+		string Join(params object[] columns);
 
 		/// <summary>
 		/// Join columns using <see cref="ColumnSeparator"/> and a space
 		/// </summary>
 		/// <param name="columns">List of columns</param>
-		string JoinColumns(IEnumerable<string> columns);
+		string Join(IEnumerable<string> columns);
 
 		#region Escaping
 
@@ -88,12 +88,20 @@ namespace Jeebs.Data
 		string Escape(string name);
 
 		/// <summary>
+		/// Escape a column using its table and alias
+		/// </summary>
+		/// <param name="name">Column name</param>
+		/// <param name="alias">Column alias</param>
+		/// <param name="table">Table name</param>
+		string Escape(string name, string alias, string? table = null);
+
+		/// <summary>
 		/// Escape a table name
 		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Mapped Table</param>
 		/// <returns>Escaped name</returns>
-		string Escape<TTable>(TTable table) where TTable : notnull;
+		string EscapeTable<TTable>(TTable table)
+			where TTable : notnull;
 
 		/// <summary>
 		/// Split a string by '.', escape the elements, and rejothem
@@ -108,14 +116,6 @@ namespace Jeebs.Data
 		/// <param name="elements">Elements (table or column names)</param>
 		/// <returns>Escaped and joined elements</returns>
 		string EscapeAndJoin(params object?[] elements);
-
-		/// <summary>
-		/// Escape a column using its table and alias
-		/// </summary>
-		/// <param name="name">Column name</param>
-		/// <param name="alias">Column alias</param>
-		/// <param name="table">Table name</param>
-		string EscapeColumn(string name, string alias, string? table = null);
 
 		#endregion
 

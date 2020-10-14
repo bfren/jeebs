@@ -31,8 +31,8 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Create separated columns and values strings
-			var cols = JoinColumns(columns);
-			var vals = JoinColumns(aliasesAtted);
+			var cols = Join(columns);
+			var vals = Join(aliasesAtted);
 
 			// Return query string
 			return $"INSERT INTO {table} ({cols}) VALUES ({vals}); SELECT LAST_INSERT_ID();";
@@ -89,7 +89,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Add ORDER BY
 			if (parts.OrderBy is List<string> orderByValue)
 			{
-				sql.Append($" ORDER BY {JoinColumns(orderByValue)}");
+				sql.Append($" ORDER BY {Join(orderByValue)}");
 			}
 
 			// Add LIMIT
@@ -123,7 +123,7 @@ namespace Jeebs.Data.Clients.MySql
 			RetrieveSingleByIdChecks(table, columns, idColumn, idAlias);
 
 			// Return query string
-			return $"SELECT {JoinColumns(columns)} FROM {table} WHERE {idColumn} = @{idAlias};";
+			return $"SELECT {Join(columns)} FROM {table} WHERE {idColumn} = @{idAlias};";
 		}
 
 		/// <inheritdoc/>
@@ -140,7 +140,7 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Build SQL
-			var sql = $"UPDATE {table} SET {JoinColumns(update)} WHERE {idColumn} = @{idAlias}";
+			var sql = $"UPDATE {table} SET {Join(update)} WHERE {idColumn} = @{idAlias}";
 
 			// Add Version column
 			if (versionColumn is string column && versionAlias is string alias)

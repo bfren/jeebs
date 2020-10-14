@@ -7,7 +7,7 @@ using static Jeebs.Data.Adapter_Tests.Adapter;
 
 namespace Jeebs.Data.Adapter_Tests
 {
-	public class JoinColumns_Tests
+	public class Join_Tests
 	{
 		[Fact]
 		public void No_Columns_Returns_Empty()
@@ -16,7 +16,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.JoinColumns();
+			var result = adapter.Join();
 
 			// Assert
 			Assert.Equal(string.Empty, result);
@@ -30,7 +30,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var input = new[] { " one ", "  two", "", " ", "three " }.ToList();
 
 			// Act
-			var result = adapter.JoinColumns(input);
+			var result = adapter.Join(input);
 
 			// Assert
 			Assert.Equal(" one |   two| three ", result);

@@ -68,11 +68,11 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string JoinColumns(params object[] columns)
-			=> JoinColumns(from c in columns select c.ToString());
+		public string Join(params object[] columns)
+			=> Join(from c in columns select c.ToString());
 
 		/// <inheritdoc/>
-		public string JoinColumns(IEnumerable<string> columns)
+		public string Join(IEnumerable<string> columns)
 			=> string.Join($"{ColumnSeparator} ", from c in columns where !IsInvalidIdentifier(c) select c);
 
 		/// <inheritdoc/>
@@ -106,7 +106,26 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string Escape<TTable>(TTable table)
+		public string Escape(string name, string alias, string? table = null)
+		{
+			// Handle invalid names
+			if (IsInvalidIdentifier(name))
+			{
+				return string.Empty;
+			}
+
+			// Handle invalid aliases
+			if (IsInvalidIdentifier(alias))
+			{
+				return Escape(name);
+			}
+
+			// Escape with alias
+			return $"{EscapeAndJoin(table, name)} {Alias} {AliasOpen}{alias}{AliasClose}";
+		}
+
+		/// <inheritdoc/>
+		public string EscapeTable<TTable>(TTable table)
 			where TTable : notnull
 			=> Escape(table.ToString());
 
@@ -149,25 +168,6 @@ namespace Jeebs.Data
 
 			// Return escaped elements joined with the separator
 			return string.Join(SchemaSeparator, list);
-		}
-
-		/// <inheritdoc/>
-		public string EscapeColumn(string name, string alias, string? table = null)
-		{
-			// Handle invalid names
-			if (IsInvalidIdentifier(name))
-			{
-				return string.Empty;
-			}
-
-			// Handle invalid aliases
-			if (IsInvalidIdentifier(alias))
-			{
-				return Escape(name);
-			}
-
-			// Escape with alias
-			return $"{EscapeAndJoin(table, name)} {Alias} {AliasOpen}{alias}{AliasClose}";
 		}
 
 		#endregion

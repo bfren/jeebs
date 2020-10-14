@@ -32,7 +32,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var table = F.Rnd.Integer;
 
 			// Act
-			var result = adapter.Escape(table);
+			var result = adapter.EscapeTable(table);
 
 			// Assert
 			Assert.Equal($"`{table}`", result);

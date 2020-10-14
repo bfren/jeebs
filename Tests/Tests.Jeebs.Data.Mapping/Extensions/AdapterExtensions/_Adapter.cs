@@ -21,9 +21,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		public static IAdapter GetAdapter()
 		{
 			var adapter = Substitute.For<IAdapter>();
+			adapter.ColumnSeparator
+				.Returns('|');
 			adapter.Escape(Arg.Any<string>())
 				.ReturnsForAnyArgs(x => __(x.Arg<string>()));
-			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
+			adapter.Escape(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
 				.ReturnsForAnyArgs(x => __(x.ArgAt<string>(0)));
 			return adapter;
 		}

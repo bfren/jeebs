@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryParts"/>
-	public sealed class QueryParts : IQueryParts
+	public class QueryParts : IQueryParts
 	{
 		/// <inheritdoc/>
 		public string From { get; }

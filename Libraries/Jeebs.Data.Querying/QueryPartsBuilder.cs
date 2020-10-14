@@ -124,6 +124,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="table">JOIN table</param>
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
+		/// <param name="escape">Whether or not to escape table and column names</param>
 		internal IList<(string table, string on, string equals)> AddJoin(
 			IList<(string table, string on, string equals)>? join,
 			object table,
@@ -136,23 +137,22 @@ namespace Jeebs.Data.Querying
 			var joinList = join ?? new List<(string table, string on, string equals)>();
 
 			// Add the join
-			joinList.Add((
-				escape switch
-				{
-					true => Adapter.Escape(table),
-					false => table.ToString()
-				},
-				escape switch
-				{
-					true => Adapter.EscapeAndJoin(table, on),
-					false => Adapter.JoinColumns(table, on)
-				},
-				escape switch
-				{
-					true => Adapter.EscapeAndJoin(equals.table, equals.column),
-					false => Adapter.JoinColumns(equals.table, equals.column)
-				}
-			));
+			if (escape)
+			{
+				joinList.Add((
+					Adapter.EscapeTable(table),
+					Adapter.EscapeAndJoin(table, on),
+					Adapter.EscapeAndJoin(equals.table, equals.column)
+				));
+			}
+			else
+			{
+				joinList.Add((
+					table.ToString(),
+					Adapter.Join(table, on),
+					Adapter.Join(equals.table, equals.column)
+				));
+			}
 
 			// Return the join list
 			return joinList;

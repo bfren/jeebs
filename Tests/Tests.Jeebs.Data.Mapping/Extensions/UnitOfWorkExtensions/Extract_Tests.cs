@@ -17,7 +17,7 @@ namespace Jeebs.Data.Mapping.UnitOfWorkExtensions_Tests
 			var adapter = Substitute.For<IAdapter>();
 			adapter.ColumnSeparator
 				.Returns('|');
-			adapter.EscapeColumn(Arg.Any<string>(), Arg.Any<string>())
+			adapter.Escape(Arg.Any<string>(), Arg.Any<string>())
 				.ReturnsForAnyArgs(x => x.ArgAt<string>(0));
 
 			unitOfWork.Adapter.Returns(adapter);
