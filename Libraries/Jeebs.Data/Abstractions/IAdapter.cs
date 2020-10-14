@@ -72,6 +72,12 @@ namespace Jeebs.Data
 		/// <param name="columns">List of columns</param>
 		string JoinColumns(params object[] columns);
 
+		/// <summary>
+		/// Join columns using <see cref="ColumnSeparator"/> and a space
+		/// </summary>
+		/// <param name="columns">List of columns</param>
+		string JoinColumns(IEnumerable<string> columns);
+
 		#region Escaping
 
 		/// <summary>

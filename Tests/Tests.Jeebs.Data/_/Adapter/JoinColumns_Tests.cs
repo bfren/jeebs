@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 using static Jeebs.Data.Adapter_Tests.Adapter;
@@ -26,7 +27,7 @@ namespace Jeebs.Data.Adapter_Tests
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var input = new string[] { " one ", "  two", "", " ", "three " };
+			var input = new[] { " one ", "  two", "", " ", "three " }.ToList();
 
 			// Act
 			var result = adapter.JoinColumns(input);

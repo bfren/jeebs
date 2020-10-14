@@ -12,7 +12,6 @@ namespace Jeebs.Data.Adapter_Tests
 		[InlineData(null)]
 		[InlineData("")]
 		[InlineData(" ")]
-		[InlineData("one two three")]
 		public void Invalid_Characters_Returns_Empty(string input)
 		{
 			// Arrange

@@ -89,7 +89,7 @@ namespace Jeebs.Data.Clients.MySql
 			// Add ORDER BY
 			if (parts.OrderBy is List<string> orderByValue)
 			{
-				sql.Append($" ORDER BY {JoinColumns(orderByValue, true)}");
+				sql.Append($" ORDER BY {JoinColumns(orderByValue)}");
 			}
 
 			// Add LIMIT
@@ -140,7 +140,7 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Build SQL
-			var sql = $"UPDATE {table} SET {JoinColumns(update, true)} WHERE {idColumn} = @{idAlias}";
+			var sql = $"UPDATE {table} SET {JoinColumns(update)} WHERE {idColumn} = @{idAlias}";
 
 			// Add Version column
 			if (versionColumn is string column && versionAlias is string alias)

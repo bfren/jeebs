@@ -59,8 +59,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		}
 
 		[Theory]
+		[InlineData(null)]
+		[InlineData("")]
 		[InlineData("  ")]
-		[InlineData("th ree")]
 		public void Removes_Invalid_Columns_From_Query(string input)
 		{
 			// Arrange

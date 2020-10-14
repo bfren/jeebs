@@ -69,7 +69,11 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public string JoinColumns(params object[] columns)
-			=> string.Join($"{ColumnSeparator} ", from c in columns where !IsInvalidIdentifier(c.ToString()) select c);
+			=> JoinColumns(from c in columns select c.ToString());
+
+		/// <inheritdoc/>
+		public string JoinColumns(IEnumerable<string> columns)
+			=> string.Join($"{ColumnSeparator} ", from c in columns where !IsInvalidIdentifier(c) select c);
 
 		/// <inheritdoc/>
 		public virtual bool IsInvalidIdentifier(string? name)
