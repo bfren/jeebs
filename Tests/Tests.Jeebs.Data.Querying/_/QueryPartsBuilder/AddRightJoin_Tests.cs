@@ -9,7 +9,20 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class AddRightJoin_Tests
 	{
+		[Fact]
+		public void Creates_New_List_And_Adds_Join()
+		{
+			// Arrange
+			var (builder, _) = GetQueryPartsBuilder();
 
+			// Act
+			Assert.Null(builder.Parts.RightJoin);
+			builder.AddRightJoin(F.Rnd.String, F.Rnd.String, (F.Rnd.String, F.Rnd.String), false);
+
+			// Assert
+			var join = Assert.IsType<List<(string, string, string)>>(builder.Parts.RightJoin);
+			Assert.Single(join);
+		}
 
 		[Fact]
 		public void Escape_True_Calls_Adapter_Escape_Methods()
