@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NSubstitute;
+using Xunit;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
@@ -17,6 +18,26 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var builder = new Builder(adapter, from);
 
 			return (builder, adapter);
+		}
+
+		public static void CreatesNewListAndAddsJoin(
+			Func<IQueryParts, IList<(string, string, string)>?> join,
+			Action<Builder, string, string, (string, string)> addJoin
+		)
+		{
+			// Arrange
+			var (builder, _) = GetQueryPartsBuilder();
+			var table = F.Rnd.String;
+			var on = F.Rnd.String;
+			(string table, string column) equals = (F.Rnd.String, F.Rnd.String);
+
+			// Act
+			Assert.Null(join(builder.Parts));
+			addJoin(builder, table, on, equals);
+
+			// Assert
+			var list = Assert.IsType<List<(string table, string on, string equals)>>(join(builder.Parts));
+			var single = Assert.Single(list);
 		}
 
 		/// <summary>
