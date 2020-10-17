@@ -77,11 +77,11 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 		}
 
 		[Theory]
+		[InlineData(null)]
 		[InlineData(42)]
 		[InlineData(true)]
 		[InlineData('c')]
-		[InlineData("42")]
-		public void Ignores_Other_Types(object input)
+		public void Ignores_Null_And_Primitive_Types(object input)
 		{
 			// Arrange
 			var parameters = new QueryParameters();

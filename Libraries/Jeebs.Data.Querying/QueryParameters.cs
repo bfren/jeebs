@@ -11,9 +11,9 @@ namespace Jeebs.Data.Querying
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
 	{
 		/// <inheritdoc/>
-		public bool TryAdd<T>(T parameters)
+		public bool TryAdd(object parameters)
 		{
-			if (parameters is null)
+			if (parameters is null || parameters.GetType().IsPrimitive)
 			{
 				return false;
 			}
@@ -40,11 +40,13 @@ namespace Jeebs.Data.Querying
 
 			return false;
 
-			static IEnumerable<PropertyInfo> getReadableProperties()
+			IEnumerable<PropertyInfo> getReadableProperties()
 			{
-				return from p in typeof(T).GetProperties()
+				var properties = parameters.GetType().GetProperties();
+
+				return from p in properties
 					   where p.MemberType == MemberTypes.Property
-					   && p.GetMethod.IsPublic
+					   && p.GetMethod.IsPublic && p.GetMethod.GetParameters().Length == 0
 					   select p;
 			}
 		}
