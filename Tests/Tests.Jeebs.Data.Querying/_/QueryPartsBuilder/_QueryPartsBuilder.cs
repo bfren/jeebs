@@ -86,6 +86,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 			new public void AddRightJoin(object table, string on, (object table, string column) equals, bool escape = false)
 				=> base.AddRightJoin(table, on, equals, escape);
+
+			new public void AddWhere(string where, object? parameters = null)
+				=> base.AddWhere(where, parameters);
 		}
 
 		public class Options : QueryOptions { }

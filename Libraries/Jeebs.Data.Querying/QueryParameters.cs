@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using Jeebs.Reflection;
 
@@ -9,24 +11,41 @@ namespace Jeebs.Data.Querying
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
 	{
 		/// <inheritdoc/>
-		public void Add(object parameters)
+		public bool TryAdd<T>(T parameters)
 		{
-			if (parameters is QueryParameters keyValuePairs)
+			if (parameters is null)
 			{
-				foreach (var p in keyValuePairs)
+				return false;
+			}
+			else if (parameters is IQueryParameters queryParameters)
+			{
+				foreach (var p in queryParameters)
 				{
 					Add(p.Key, p.Value);
 				}
+
+				return true;
 			}
-			else
+			else if(getReadableProperties() is var objectProperties && objectProperties.Count() > 0)
 			{
-				foreach (var p in parameters.GetProperties())
+				foreach (var p in objectProperties)
 				{
 					var name = p.Name;
 					var value = p.GetValue(parameters);
-
 					Add(name, value);
 				}
+
+				return true;
+			}
+
+			return false;
+
+			static IEnumerable<PropertyInfo> getReadableProperties()
+			{
+				return from p in typeof(T).GetProperties()
+					   where p.MemberType == MemberTypes.Property
+					   && p.GetMethod.IsPublic
+					   select p;
 			}
 		}
 

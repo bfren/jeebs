@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using System.Text;
 using Jeebs.Data.Enums;
 using NSubstitute;
@@ -84,6 +83,5 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 				x => Assert.Equal($"{c1}:{s1}", x)
 			);
 		}
-
 	}
 }

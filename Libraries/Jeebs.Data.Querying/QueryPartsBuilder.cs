@@ -199,7 +199,7 @@ namespace Jeebs.Data.Querying
 
 			if (parameters != null)
 			{
-				Parts.Parameters.Add(parameters);
+				Parts.Parameters.TryAdd(parameters);
 			}
 		}
 	}

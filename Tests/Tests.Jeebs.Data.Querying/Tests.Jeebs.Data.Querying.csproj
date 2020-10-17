@@ -27,4 +27,7 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Data.Querying\Jeebs.Data.Querying.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_\QueryParameters\" />
+  </ItemGroup>
 </Project>

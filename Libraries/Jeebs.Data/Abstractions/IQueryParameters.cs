@@ -13,7 +13,8 @@ namespace Jeebs.Data
 		/// Add an anonymous object of parameters to the dictionary
 		/// Properties must be simple key/value pairs
 		/// </summary>
+		/// <typeparam name="T">Parameters type</typeparam>
 		/// <param name="parameters">Parameters to add</param>
-		void Add(object parameters);
+		bool TryAdd<T>(T parameters);
 	}
 }
