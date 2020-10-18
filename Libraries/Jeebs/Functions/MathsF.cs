@@ -10,10 +10,17 @@ namespace F
 	/// </summary>
 	public static class MathsF
 	{
+		private const string MinimumMustBeLessThanMaximum = "Minimium value must be less than the maximum value.";
+
+		private const string MinimumMustBeAtLeastZero = "Minimum value must be at least 0.";
+
 		/// <summary>
 		/// Returns a random number between 0 and 1
 		/// </summary>
-		/// <remarks>Thanks to https://stackoverflow.com/users/11178549/theodor-zoulias for comments and suggested improvements</remarks>
+		/// <remarks>
+		/// Thanks to https://stackoverflow.com/users/11178549/theodor-zoulias for comments and suggested improvements
+		/// - see https://stackoverflow.com/a/64264895/8199362
+		/// </remarks>
 		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 		public static double Random(RandomNumberGenerator? generator = null)
 		{
@@ -28,15 +35,39 @@ namespace F
 		/// <summary>
 		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 		/// </summary>
+		/// <remarks>
+		/// Don't share code with <see cref="RandomInt64(long, long, RandomNumberGenerator?)"/> for memory allocation reasons
+		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
 		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 		public static int RandomInt32(int min = 0, int max = int.MaxValue, RandomNumberGenerator? generator = null)
-			=> (int)RandomInt64(min, max, generator);
+		{
+			// Check arguments
+			if (min >= max)
+			{
+				throw new ArgumentOutOfRangeException(nameof(min), min, MinimumMustBeLessThanMaximum);
+			}
+
+			if (min < 0)
+			{
+				throw new ArgumentException(MinimumMustBeAtLeastZero, nameof(min));
+			}
+
+			// Get the range between the specified minimum and maximum values
+			var range = max - min;
+
+			// Now add a random amount of the range to the minimum value - it will never exceed maximum value
+			var add = Math.Round(range * Random(generator));
+			return (int)(min + add);
+		}
 
 		/// <summary>
 		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 		/// </summary>
+		/// <remarks>
+		/// Don't share code with <see cref="RandomInt32(long, long, RandomNumberGenerator?)"/> for memory allocation reasons
+		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
 		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
@@ -45,12 +76,12 @@ namespace F
 			// Check arguments
 			if (min >= max)
 			{
-				throw new ArgumentOutOfRangeException(nameof(min), min, "Minimium value must be less than the maximum value.");
+				throw new ArgumentOutOfRangeException(nameof(min), min, MinimumMustBeLessThanMaximum);
 			}
 
 			if (min < 0)
 			{
-				throw new ArgumentException("Minimum value must be at least 0.", nameof(min));
+				throw new ArgumentException(MinimumMustBeAtLeastZero, nameof(min));
 			}
 
 			// Get the range between the specified minimum and maximum values
