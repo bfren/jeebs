@@ -12,7 +12,7 @@ namespace F.JsonF_Tests
 		public void Deserialise_Enumerated_Returns_Object_With_Value()
 		{
 			// Arrange
-			var value = Rnd.String;
+			var value = Rnd.Str;
 			var json = $"\"{value}\"";
 
 			// Act
@@ -41,8 +41,8 @@ namespace F.JsonF_Tests
 		public void Deserialise_Object_With_Enumerated_Property_Returns_Object()
 		{
 			// Arrange
-			var id = Rnd.Integer;
-			var value = Rnd.String;
+			var id = Rnd.Int;
+			var value = Rnd.Str;
 			var json = $"{{ \"id\": {id}, \"enumeratedValue\": \"{value}\" }}";
 
 			// Act

@@ -29,7 +29,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
+			var table = F.Rnd.Str;
 			var columns = new List<string>();
 
 			// Act
@@ -45,8 +45,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
-			var columns = new List<string> { F.Rnd.String };
+			var table = F.Rnd.Str;
+			var columns = new List<string> { F.Rnd.Str };
 			var aliases = new List<string>();
 
 			// Act
@@ -62,9 +62,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
-			var columns = new List<string> { F.Rnd.String };
-			var aliases = new List<string> { F.Rnd.String, F.Rnd.String };
+			var table = F.Rnd.Str;
+			var columns = new List<string> { F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
 			void action() => adapter.UpdateSingle(table, columns, aliases, string.Empty, string.Empty);
@@ -82,11 +82,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { F.Rnd.String, F.Rnd.String };
-			var aliases = new List<string> { F.Rnd.String, F.Rnd.String };
+			var columns = new List<string> { F.Rnd.Str, F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
-			void action() => adapter.UpdateSingle(F.Rnd.String, columns, aliases, input, string.Empty);
+			void action() => adapter.UpdateSingle(F.Rnd.Str, columns, aliases, input, string.Empty);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -101,11 +101,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { F.Rnd.String, F.Rnd.String };
-			var aliases = new List<string> { F.Rnd.String, F.Rnd.String };
+			var columns = new List<string> { F.Rnd.Str, F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
-			void action() => adapter.UpdateSingle(F.Rnd.String, columns, aliases, F.Rnd.String, input);
+			void action() => adapter.UpdateSingle(F.Rnd.Str, columns, aliases, F.Rnd.Str, input);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -117,18 +117,18 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
+			var table = F.Rnd.Str;
 
-			var c0 = F.Rnd.String;
-			var c1 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 			var columns = new List<string> { c0, c1 };
 
-			var a0 = F.Rnd.String;
-			var a1 = F.Rnd.String;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
 			var aliases = new List<string> { a0, a1 };
 
-			var idColumn = F.Rnd.String;
-			var idAlias = F.Rnd.String;
+			var idColumn = F.Rnd.Str;
+			var idAlias = F.Rnd.Str;
 
 			// Act
 			var result = adapter.UpdateSingle(table, columns, aliases, idColumn, idAlias);
@@ -142,21 +142,21 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
+			var table = F.Rnd.Str;
 
-			var c0 = F.Rnd.String;
-			var c1 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 			var columns = new List<string> { c0, c1 };
 
-			var a0 = F.Rnd.String;
-			var a1 = F.Rnd.String;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
 			var aliases = new List<string> { a0, a1 };
 
-			var idColumn = F.Rnd.String;
-			var idAlias = F.Rnd.String;
+			var idColumn = F.Rnd.Str;
+			var idAlias = F.Rnd.Str;
 
-			var versionColumn = F.Rnd.String;
-			var versionAlias = F.Rnd.String;
+			var versionColumn = F.Rnd.Str;
+			var versionAlias = F.Rnd.Str;
 
 			// Act
 			var result = adapter.UpdateSingle(table, columns, aliases, idColumn, idAlias, versionColumn, versionAlias);

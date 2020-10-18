@@ -30,7 +30,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
+			var table = F.Rnd.Str;
 			var columns = new List<string>();
 
 			// Act
@@ -46,8 +46,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
-			var columns = new List<string> { F.Rnd.String };
+			var table = F.Rnd.Str;
+			var columns = new List<string> { F.Rnd.Str };
 			var aliases = new List<string>();
 
 			// Act
@@ -63,9 +63,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
-			var columns = new List<string> { F.Rnd.String };
-			var aliases = new List<string> { F.Rnd.String, F.Rnd.String };
+			var table = F.Rnd.Str;
+			var columns = new List<string> { F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
 			void action() => adapter.CreateSingleAndReturnId(table, columns, aliases);
@@ -80,14 +80,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
+			var table = F.Rnd.Str;
 
-			var c0 = F.Rnd.String;
-			var c1 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 			var columns = new List<string> { c0, c1 };
 
-			var a0 = F.Rnd.String;
-			var a1 = F.Rnd.String;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
 			var aliases = new List<string> { a0, a1 };
 
 			// Act

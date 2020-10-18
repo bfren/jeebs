@@ -37,7 +37,7 @@ namespace Jeebs.Config.SeqConfig_Tests
 			var config = new SeqConfig
 			{
 				Server = "https://news.contoso.com",
-				ApiKey = F.Rnd.String
+				ApiKey = F.Rnd.Str
 			};
 
 			// Act

@@ -15,11 +15,11 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 			var alias = "alias";
 
 			var c0 = Substitute.For<IColumn>();
-			c0.Name.Returns(F.Rnd.String);
+			c0.Name.Returns(F.Rnd.Str);
 			c0.Alias.Returns(alias);
 
 			var c1 = Substitute.For<IColumn>();
-			c1.Name.Returns(F.Rnd.String);
+			c1.Name.Returns(F.Rnd.Str);
 			c1.Alias.Returns(alias);
 
 			var comparer = new Column.AliasComparer();
@@ -35,10 +35,10 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 		{
 			// Arrange
 			var c0 = Substitute.For<IColumn>();
-			c0.Alias.Returns(F.Rnd.String);
+			c0.Alias.Returns(F.Rnd.Str);
 
 			var c1 = Substitute.For<IColumn>();
-			c1.Alias.Returns(F.Rnd.String);
+			c1.Alias.Returns(F.Rnd.Str);
 
 			var comparer = new Column.AliasComparer();
 

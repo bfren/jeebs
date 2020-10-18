@@ -18,7 +18,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.DeleteSingle(input, F.Rnd.String, F.Rnd.String);
+			void action() => adapter.DeleteSingle(input, F.Rnd.Str, F.Rnd.Str);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -35,7 +35,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.DeleteSingle(F.Rnd.String, input, F.Rnd.String);
+			void action() => adapter.DeleteSingle(F.Rnd.Str, input, F.Rnd.Str);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -52,7 +52,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.DeleteSingle(F.Rnd.String, F.Rnd.String, input);
+			void action() => adapter.DeleteSingle(F.Rnd.Str, F.Rnd.Str, input);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -64,9 +64,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
-			var idColumn = F.Rnd.String;
-			var idAlias = F.Rnd.String;
+			var table = F.Rnd.Str;
+			var idColumn = F.Rnd.Str;
+			var idAlias = F.Rnd.Str;
 
 			// Act
 			var result = adapter.DeleteSingle(table, idColumn, idAlias);
@@ -80,11 +80,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.String;
-			var idColumn = F.Rnd.String;
-			var idAlias = F.Rnd.String;
-			var versionColumn = F.Rnd.String;
-			var versionAlias = F.Rnd.String;
+			var table = F.Rnd.Str;
+			var idColumn = F.Rnd.Str;
+			var idAlias = F.Rnd.Str;
+			var versionColumn = F.Rnd.Str;
+			var versionAlias = F.Rnd.Str;
 
 			// Act
 			var result = adapter.DeleteSingle(table, idColumn, idAlias, versionColumn, versionAlias);

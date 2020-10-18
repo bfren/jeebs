@@ -13,7 +13,7 @@ namespace Jeebs.Link_Tests.WithState
 		{
 			// Arrange
 			var list = new[] { 1, 2 };
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.CreateV(list, state);
 
 			// Act
@@ -31,7 +31,7 @@ namespace Jeebs.Link_Tests.WithState
 		{
 			// Arrange
 			var list = new[] { 1, 2 };
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.CreateV(list, state);
 
 			// Act
@@ -49,7 +49,7 @@ namespace Jeebs.Link_Tests.WithState
 		{
 			// Arrange
 			var list = new CustomList(1, 2);
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.CreateV(list, state);
 
 			// Act

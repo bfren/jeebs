@@ -12,8 +12,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void IEnumerable_Input_One_Item_Returns_Single()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var state = F.Rnd.Integer;
+			var value = F.Rnd.Int;
+			var state = F.Rnd.Int;
 			var list = new[] { value };
 			var chain = Chain.CreateV(list, state);
 
@@ -30,8 +30,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void List_Input_One_Item_Returns_Single()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var state = F.Rnd.Integer;
+			var value = F.Rnd.Int;
+			var state = F.Rnd.Int;
 			var list = new[] { value }.ToList();
 			var chain = Chain.CreateV(list, state);
 
@@ -48,8 +48,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void Custom_Input_One_Item_Returns_Single()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var state = F.Rnd.Integer;
+			var value = F.Rnd.Int;
+			var state = F.Rnd.Int;
 			var list = new CustomList(value);
 			var chain = Chain.CreateV(list, state);
 

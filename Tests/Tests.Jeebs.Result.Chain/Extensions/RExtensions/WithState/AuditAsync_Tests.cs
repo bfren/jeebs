@@ -13,7 +13,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Returns_Original_Object()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			static async Task a<TValue, TState>(IR<TValue, TState> _) { }
 
@@ -28,17 +28,17 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Runs_Audit_Action()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
-			var value = F.Rnd.Integer;
+			var state = F.Rnd.Int;
+			var value = F.Rnd.Int;
 			var chain = Chain.Create(state);
 
 			async Task<IR<int, int>> l0(IOk<bool, int> r) => r.OkV(value);
 			static async Task<IR<TValue, int>> l1<TValue>(IOkV<TValue, int> r) => r.Error();
 
 			var log = new List<string>();
-			var a0 = F.Rnd.String;
-			var a1 = F.Rnd.String;
-			var a2 = F.Rnd.String;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
+			var a2 = F.Rnd.Str;
 
 			async Task a<TValue>(IR<TValue, int> r)
 			{
@@ -74,7 +74,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void Catches_Exception()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			static async Task a(IR _) => throw new Exception();
 

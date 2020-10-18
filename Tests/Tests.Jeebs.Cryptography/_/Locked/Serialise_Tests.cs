@@ -24,7 +24,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Returns_Json()
 		{
 			// Arrange
-			var value = F.Rnd.String;
+			var value = F.Rnd.Str;
 			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 			var json = string.Format("{{\"encryptedContents\":\"{0}\",\"salt\":\"{1}\",\"nonce\":\"{2}\"}}",

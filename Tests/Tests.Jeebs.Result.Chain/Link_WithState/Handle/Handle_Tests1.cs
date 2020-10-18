@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Specific_Handler_Runs_For_That_Exception()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			void h0(IR<bool> _, DivideByZeroException __) => sideEffect++;
@@ -31,7 +31,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void Specific_Handler_Does_Not_Run_For_Other_Exceptions()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			var sideEffect = 1;
 			void h0(IR<bool> _, DivideByZeroException __) => sideEffect++;

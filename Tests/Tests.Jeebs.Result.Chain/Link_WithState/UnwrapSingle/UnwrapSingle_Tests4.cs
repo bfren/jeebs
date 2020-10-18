@@ -12,8 +12,8 @@ namespace Jeebs.Link_Tests.WithState
 		public void Not_IEnumerable_Or_Same_Type_Input_Returns_IError()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var state = F.Rnd.Integer;
+			var value = F.Rnd.Int;
+			var state = F.Rnd.Int;
 			var chain = Chain.CreateV(value, state);
 
 			// Act

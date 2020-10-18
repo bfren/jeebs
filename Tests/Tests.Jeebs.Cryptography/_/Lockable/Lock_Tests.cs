@@ -11,7 +11,7 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		public void Incorrect_Key_Length_Throws_InvalidKeyLengthException()
 		{
 			// Arrange
-			var box = new Lockable<string>(F.Rnd.String);
+			var box = new Lockable<string>(F.Rnd.Str);
 			var key = F.ByteF.Random(20);
 
 			// Act
@@ -26,7 +26,7 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		public void Byte_Key_Returns_Locked()
 		{
 			// Arrange
-			var box = new Lockable<string>(F.Rnd.String);
+			var box = new Lockable<string>(F.Rnd.Str);
 			var key = F.ByteF.Random(32);
 
 			// Act
@@ -40,8 +40,8 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		public void String_Key_Returns_Locked()
 		{
 			// Arrange
-			var box = new Lockable<string>(F.Rnd.String);
-			var key = F.Rnd.String;
+			var box = new Lockable<string>(F.Rnd.Str);
+			var key = F.Rnd.Str;
 
 			// Act
 			var result = box.Lock(key);

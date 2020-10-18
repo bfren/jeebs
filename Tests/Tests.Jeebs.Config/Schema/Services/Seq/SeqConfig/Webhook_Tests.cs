@@ -14,7 +14,7 @@ namespace Jeebs.Config.SeqConfig_Tests
 			var config = new SeqConfig();
 
 			// Act
-			config.Webhook = F.Rnd.String;
+			config.Webhook = F.Rnd.Str;
 			var result = config.Webhook;
 
 			// Assert
@@ -25,7 +25,7 @@ namespace Jeebs.Config.SeqConfig_Tests
 		public void Returns_With_Server_Value()
 		{
 			// Arrange
-			var server = F.Rnd.String;
+			var server = F.Rnd.Str;
 			var config = new SeqConfig { Server = server };
 
 			// Act

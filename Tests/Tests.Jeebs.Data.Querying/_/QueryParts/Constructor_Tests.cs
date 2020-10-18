@@ -12,7 +12,7 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 		public void Sets_From()
 		{
 			// Arrange
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 
 			// Act
 			var result = new QueryParts(from);

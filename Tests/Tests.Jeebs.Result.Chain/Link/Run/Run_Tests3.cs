@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IOk_Runs_Action()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 			var chain = Chain.CreateV(value);
 			var sideEffect = 1;
 			void f(IOkV<int> _) => sideEffect++;
@@ -29,9 +29,9 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IOk_Catches_Exception()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 			var chain = Chain.CreateV(value);
-			var error = F.Rnd.String;
+			var error = F.Rnd.Str;
 			void f(IOkV<int> _) => throw new Exception(error);
 
 			// Act
@@ -47,7 +47,7 @@ namespace Jeebs.Link_Tests
 		public void IOk_Value_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 			var error = Chain.CreateV(value).Error();
 			static void f(IOkV<int> _) => throw new Exception();
 

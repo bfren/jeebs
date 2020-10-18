@@ -16,7 +16,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, _) = GetQueryPartsBuilder();
 
 			// Act
-			builder.AddWhere(F.Rnd.String);
+			builder.AddWhere(F.Rnd.Str);
 
 			// Assert
 			Assert.NotNull(builder.Parts.Where);
@@ -27,9 +27,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			var w0 = F.Rnd.String;
-			var w1 = F.Rnd.String;
-			var w2 = F.Rnd.String;
+			var w0 = F.Rnd.Str;
+			var w1 = F.Rnd.Str;
+			var w2 = F.Rnd.Str;
 
 			// Act
 			builder.AddWhere(w0);
@@ -49,13 +49,13 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			var p0 = F.Rnd.String;
-			var p1 = F.Rnd.String;
-			var p2 = F.Rnd.String;
+			var p0 = F.Rnd.Str;
+			var p1 = F.Rnd.Str;
+			var p2 = F.Rnd.Str;
 
 			// Act
-			builder.AddWhere(F.Rnd.String, new { p0, p1 });
-			builder.AddWhere(F.Rnd.String, new { p2 });
+			builder.AddWhere(F.Rnd.Str, new { p0, p1 });
+			builder.AddWhere(F.Rnd.Str, new { p2 });
 
 			// Assert
 			Assert.Collection(builder.Parts.Parameters,

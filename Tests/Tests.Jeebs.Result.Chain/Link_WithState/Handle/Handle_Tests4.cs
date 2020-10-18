@@ -13,7 +13,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void No_Handler_With_Generic_Custom_ExceptionMsg_Adds_Msg()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			static void throwGeneric() => throw new Exception();
 			static void throwOther() => throw new DivideByZeroException();
@@ -31,7 +31,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void No_Handler_With_Specific_Custom_ExceptionMsg_Adds_Msg()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			static void throwGeneric() => throw new Exception();
 			static void throwOther() => throw new DivideByZeroException();

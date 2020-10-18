@@ -11,7 +11,7 @@ namespace Jeebs.R_Tests.WithState
 		public void Without_Type_Returns_Error_Of_Type()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var r = Result.Ok(state);
 
 			// Act
@@ -27,7 +27,7 @@ namespace Jeebs.R_Tests.WithState
 		public void Same_Type_Returns_Error_Of_Type()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var r = Result.Ok(state);
 
 			// Act
@@ -43,7 +43,7 @@ namespace Jeebs.R_Tests.WithState
 		public void Different_Type_Returns_Error_Of_Different_Type()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var r = Result.Ok(state);
 
 			// Act
@@ -59,9 +59,9 @@ namespace Jeebs.R_Tests.WithState
 		public void Different_Type_Keeps_Messages()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
-			var m0 = new IntMsg(F.Rnd.Integer);
-			var m1 = new StringMsg(F.Rnd.String);
+			var state = F.Rnd.Int;
+			var m0 = new IntMsg(F.Rnd.Int);
+			var m1 = new StringMsg(F.Rnd.Str);
 			var r = Result.Ok(state).AddMsg(m0, m1);
 
 			// Act

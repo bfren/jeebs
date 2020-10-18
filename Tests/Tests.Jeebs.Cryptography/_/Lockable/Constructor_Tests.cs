@@ -11,7 +11,7 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		public void Sets_Properties()
 		{
 			// Arrange
-			var value = F.Rnd.String;
+			var value = F.Rnd.Str;
 			var box = new Lockable<string>(value);
 
 			// Act

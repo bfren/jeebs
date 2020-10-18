@@ -12,7 +12,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 		public void Returns_Name()
 		{
 			// Arrange
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			var map = new TableMap(name, Substitute.For<IMappedColumnList>(), GetColumnNames_Tests.Get().column);
 
 			// Act

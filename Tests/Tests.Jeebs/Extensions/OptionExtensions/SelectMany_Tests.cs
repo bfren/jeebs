@@ -11,8 +11,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Linq_SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = F.Rnd.Integer;
-			var v1 = F.Rnd.Integer;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Option.Wrap(v0);
 			var o1 = Option.Wrap(v1);
 
@@ -30,8 +30,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Linq_SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = F.Rnd.Integer;
-			var v1 = F.Rnd.Integer;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Option.Wrap(v0);
 			var o1 = Option.Wrap(v1);
 			var o2 = Option.None<int>().AddReason<InvalidIntegerMsg>();

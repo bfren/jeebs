@@ -12,7 +12,7 @@ namespace Jeebs.Config.DbConfig_Tests
 		public void Returns_Default_Connection_When_Authentication_Name_Not_Set()
 		{
 			// Arrange
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			var connection = new DbConnectionConfig();
 			var config = new DbConfig
 			{
@@ -31,7 +31,7 @@ namespace Jeebs.Config.DbConfig_Tests
 		public void Returns_Authentication_Connection_When_Authentication_Name_Set()
 		{
 			// Arrange
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			var connection = new DbConnectionConfig();
 			var config = new DbConfig
 			{

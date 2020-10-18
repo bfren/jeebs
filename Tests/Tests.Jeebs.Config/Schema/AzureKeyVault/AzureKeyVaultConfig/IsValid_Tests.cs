@@ -40,9 +40,9 @@ namespace Jeebs.Config.AzureKeyVault_Tests
 			// Arrange
 			var config = new AzureKeyVaultConfig
 			{
-				Name = F.Rnd.String,
-				ClientId = F.Rnd.String,
-				ClientSecret = F.Rnd.String
+				Name = F.Rnd.Str,
+				ClientId = F.Rnd.Str,
+				ClientSecret = F.Rnd.Str
 			};
 
 			// Act

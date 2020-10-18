@@ -79,9 +79,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var (w, _, _, _, _, _) = GetUnitOfWork();
 			var (r, logger, messages) = GetOkResult();
 
-			var query = F.Rnd.String;
+			var query = F.Rnd.Str;
 			var p0 = F.MathsF.RandomInt64(max: 1000);
-			var p1 = F.Rnd.String;
+			var p1 = F.Rnd.Str;
 			var parameters = new { p0, p1 };
 
 			var f = act(w);
@@ -125,9 +125,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var (w, connection, transaction, _, _, driver) = GetUnitOfWork();
 			var (r, _, _) = GetOkResult();
 
-			var query = F.Rnd.String;
+			var query = F.Rnd.Str;
 			var p0 = F.MathsF.RandomInt64(max: 1000);
-			var p1 = F.Rnd.String;
+			var p1 = F.Rnd.Str;
 			var parameters = new { p0, p1 };
 
 			// Act
@@ -155,7 +155,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			// Arrange
 			var (w, _, transaction, _, log, driver) = GetUnitOfWork();
 
-			var ex = F.Rnd.String;
+			var ex = F.Rnd.Str;
 			driver.ReturnsForAll<TReturn>(_ => throw new Exception(ex));
 			driver.ReturnsForAll<Task<TReturn>>(_ => throw new Exception(ex));
 
@@ -163,9 +163,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var error = GetErrorResult<TReturn>(messages: messages);
 			r.Error<TReturn>().Returns(error);
 
-			var query = F.Rnd.String;
+			var query = F.Rnd.Str;
 			var p0 = F.MathsF.RandomInt64(max: 1000);
-			var p1 = F.Rnd.String;
+			var p1 = F.Rnd.Str;
 			var parameters = new { p0, p1 };
 
 			var f = act(w);

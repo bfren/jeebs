@@ -13,7 +13,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var adapter = Substitute.For<IAdapter>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 
 			// Act
 			var result = Substitute.For<QueryPartsBuilder<string, QueryOptions>>(adapter, from);

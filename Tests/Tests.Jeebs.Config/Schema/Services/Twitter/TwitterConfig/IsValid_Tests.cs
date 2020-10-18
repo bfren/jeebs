@@ -44,10 +44,10 @@ namespace Jeebs.Config.TwitterConfig_Tests
 			// Arrange
 			var config = new TwitterConfig
 			{
-				UserAccessToken = F.Rnd.String,
-				UserAccessSecret = F.Rnd.String,
-				ConsumerKey = F.Rnd.String,
-				ConsumerSecret = F.Rnd.String
+				UserAccessToken = F.Rnd.Str,
+				UserAccessSecret = F.Rnd.Str,
+				ConsumerKey = F.Rnd.Str,
+				ConsumerSecret = F.Rnd.Str
 			};
 
 			// Act

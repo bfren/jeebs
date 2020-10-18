@@ -14,8 +14,8 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		{
 			// Arrange
 			var adapter = Substitute.For<IAdapter>();
-			var c0 = F.Rnd.String;
-			var c1 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 
 			// Act
 			var result = adapter.Escape(new[] { c0, c1 });

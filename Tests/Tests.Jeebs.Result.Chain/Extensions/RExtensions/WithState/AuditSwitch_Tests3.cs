@@ -11,7 +11,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void IError_Input_When_IOk_Does_Nothing()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			int sideEffect = 1;
 			void a(IError<bool, int> _) => sideEffect++;
@@ -27,8 +27,8 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void IError_Input_When_IOkV_Does_Nothing()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var state = F.Rnd.Integer;
+			var value = F.Rnd.Int;
+			var state = F.Rnd.Int;
 			var chain = Chain.CreateV(value, state);
 			int sideEffect = 1;
 			void a(IError<int, int> _) => sideEffect++;
@@ -44,7 +44,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void IError_Input_When_IError_Runs_Func()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state).Error();
 			int sideEffect = 1;
 			void a(IError<bool, int> _) => sideEffect++;
@@ -60,7 +60,7 @@ namespace Jeebs.RExtensions_Tests.WithState
 		public void IError_Input_Catches_Exception()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state).Error();
 			static void a(IError<bool, int> _) => throw new Exception();
 

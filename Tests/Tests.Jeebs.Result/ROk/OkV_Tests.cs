@@ -12,7 +12,7 @@ namespace Jeebs.ROk_Tests
 		{
 			// Arrange
 			var r = Result.Ok();
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 
 			// Act
 			var next = r.OkV(value);
@@ -26,9 +26,9 @@ namespace Jeebs.ROk_Tests
 		public void Keeps_Messages()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var m0 = new IntMsg(F.Rnd.Integer);
-			var m1 = new StringMsg(F.Rnd.String);
+			var value = F.Rnd.Int;
+			var m0 = new IntMsg(F.Rnd.Int);
+			var m1 = new StringMsg(F.Rnd.Str);
 			var r = Result.Ok().AddMsg(m0, m1);
 
 			// Act

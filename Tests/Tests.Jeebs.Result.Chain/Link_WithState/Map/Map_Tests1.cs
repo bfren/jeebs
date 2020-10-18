@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_Input_Maps_To_Next_Type()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			IR<int> f(IOk r) => r.WithState(state).Ok<int>();
 
@@ -28,9 +28,9 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_Input_When_IOk_Catches_Exception()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
-			var error = F.Rnd.String;
+			var error = F.Rnd.Str;
 			IR<int> f(IOk _) => throw new Exception(error);
 
 			// Act
@@ -47,7 +47,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void IOk_Input_When_IError_Returns_IError()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var error = Chain.Create(state).Error();
 			static IR<int> f(IOk _) => throw new Exception();
 

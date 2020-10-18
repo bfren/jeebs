@@ -10,7 +10,7 @@ namespace Jeebs.Chain_Tests
 		public void Returns_OkV()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 
 			// Act
 			var r = Chain.CreateV(value);
@@ -24,8 +24,8 @@ namespace Jeebs.Chain_Tests
 		public void With_State_Returns_OkV_With_State()
 		{
 			// Arrange
-			var value = F.Rnd.Integer;
-			var state = F.Rnd.Integer;
+			var value = F.Rnd.Int;
+			var state = F.Rnd.Int;
 
 			// Act
 			var r = Chain.CreateV(value, state);

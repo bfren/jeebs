@@ -30,8 +30,8 @@ namespace Jeebs.Config.ServicesConfig_Tests
 		public void Returns_Split_Definition()
 		{
 			// Arrange
-			var t0 = F.Rnd.String;
-			var n0 = F.Rnd.String;
+			var t0 = F.Rnd.Str;
+			var n0 = F.Rnd.Str;
 			var definition = $"{t0}.{n0}";
 
 			// Act

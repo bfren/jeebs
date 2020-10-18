@@ -13,7 +13,7 @@ namespace Jeebs.Config.ServicesConfig_Tests
 		{
 			// Arrange
 			var config = new ServicesConfig();
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 
 			// Act
 			void action() => config.GetServiceConfig(x => x.Seq, name);
@@ -28,7 +28,7 @@ namespace Jeebs.Config.ServicesConfig_Tests
 		{
 			// Arrange
 			var config = new ServicesConfig();
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			config.Seq.Add(name, new SeqConfig());
 
 			// Act
@@ -44,11 +44,11 @@ namespace Jeebs.Config.ServicesConfig_Tests
 		{
 			// Arrange
 			var config = new ServicesConfig();
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			var service = new SeqConfig
 			{
 				Server = "https://www.contoso.com",
-				ApiKey = F.Rnd.String
+				ApiKey = F.Rnd.Str
 			};
 
 			config.Seq.Add(name, service);

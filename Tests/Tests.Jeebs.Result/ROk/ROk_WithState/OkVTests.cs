@@ -11,9 +11,9 @@ namespace Jeebs.ROk_Tests.WithState
 		public void Returns_Object_With_Value()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var r = Result.Ok(state);
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 
 			// Act
 			var next = r.OkV(value);
@@ -29,10 +29,10 @@ namespace Jeebs.ROk_Tests.WithState
 		public void Keeps_Messages()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
-			var value = F.Rnd.Integer;
-			var m0 = new IntMsg(F.Rnd.Integer);
-			var m1 = new StringMsg(F.Rnd.String);
+			var state = F.Rnd.Int;
+			var value = F.Rnd.Int;
+			var m0 = new IntMsg(F.Rnd.Int);
+			var m1 = new StringMsg(F.Rnd.Str);
 			var r = Result.Ok(state).AddMsg(m0, m1);
 
 			// Act

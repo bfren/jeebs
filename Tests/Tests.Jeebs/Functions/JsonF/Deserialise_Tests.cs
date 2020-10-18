@@ -29,7 +29,7 @@ namespace F.JsonF_Tests
 		public void InvalidJson_Returns_None()
 		{
 			// Arrange
-			var input = Rnd.String;
+			var input = Rnd.Str;
 
 			// Act
 			var result = JsonF.Deserialise<Test>(input);
@@ -43,8 +43,8 @@ namespace F.JsonF_Tests
 		public void ValidJson_ReturnsObject()
 		{
 			// Arrange
-			var v0 = Rnd.String;
-			var v1 = Rnd.Integer;
+			var v0 = Rnd.Str;
+			var v1 = Rnd.Int;
 			var input = $"{{\"foo\":\"{v0}\",\"bar\":{v1},\"ignore\":\"this\"}}";
 			var expected = new Test { Foo = v0, Bar = v1 };
 

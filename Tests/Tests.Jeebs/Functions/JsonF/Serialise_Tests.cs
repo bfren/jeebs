@@ -24,8 +24,8 @@ namespace F.JsonF_Tests
 		public void Object_ReturnsJson()
 		{
 			// Arrange
-			var v0 = Rnd.String;
-			var v1 = Rnd.Integer;
+			var v0 = Rnd.Str;
+			var v1 = Rnd.Int;
 			var input = new Test { Foo = v0, Bar = v1 };
 			var expected = $"{{\"foo\":\"{v0}\",\"bar\":{v1}}}";
 

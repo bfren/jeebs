@@ -16,10 +16,10 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { F.Rnd.String, F.Rnd.String };
+			var columns = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
-			void action() => adapter.RetrieveSingleById(input, columns, F.Rnd.String);
+			void action() => adapter.RetrieveSingleById(input, columns, F.Rnd.Str);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -33,7 +33,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			var adapter = new MySqlAdapter();
 
 			// Act
-			void action() => adapter.RetrieveSingleById(F.Rnd.String, new List<string>(), F.Rnd.String);
+			void action() => adapter.RetrieveSingleById(F.Rnd.Str, new List<string>(), F.Rnd.Str);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -48,10 +48,10 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { F.Rnd.String, F.Rnd.String };
+			var columns = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
-			void action() => adapter.RetrieveSingleById(F.Rnd.String, columns, input);
+			void action() => adapter.RetrieveSingleById(F.Rnd.Str, columns, input);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -67,8 +67,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var columns = new List<string> { "one", "two", input, "`fo our`" };
-			var table = F.Rnd.String;
-			var idColumn = F.Rnd.String;
+			var table = F.Rnd.Str;
+			var idColumn = F.Rnd.Str;
 
 			// Act
 			var result = adapter.RetrieveSingleById(table, columns, idColumn);
@@ -84,11 +84,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var c0 = F.Rnd.String;
-			var c1 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 			var columns = new List<string> { c0, c1 };
-			var table = F.Rnd.String;
-			var idColumn = F.Rnd.String;
+			var table = F.Rnd.Str;
+			var idColumn = F.Rnd.Str;
 
 			// Act
 			var result = adapter.RetrieveSingleById(table, columns, idColumn, input);

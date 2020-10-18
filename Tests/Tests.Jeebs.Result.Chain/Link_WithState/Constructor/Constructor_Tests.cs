@@ -12,7 +12,7 @@ namespace Jeebs.Link_Tests.WithState
 		public void With_Exception_Handler_Adds_Exception_Handler()
 		{
 			// Arrange
-			var state = F.Rnd.Integer;
+			var state = F.Rnd.Int;
 			var chain = Chain.Create(state);
 			var handler = Substitute.For<Func<Exception, IMsg>>();
 			var msg = Substitute.For<IMsg>();

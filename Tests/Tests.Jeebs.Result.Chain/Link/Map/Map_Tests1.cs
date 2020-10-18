@@ -27,7 +27,7 @@ namespace Jeebs.Link_Tests
 		{
 			// Arrange
 			var chain = Chain.Create();
-			var error = F.Rnd.String;
+			var error = F.Rnd.Str;
 			IR<int> f(IOk _) => throw new Exception(error);
 
 			// Act

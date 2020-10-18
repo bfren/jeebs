@@ -34,7 +34,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 			parts.From.Returns(from);
 
 			// Act
@@ -52,7 +52,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 			parts.From.Returns(from);
 			parts.Select.Returns(input);
 
@@ -69,14 +69,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 
-			var ij0_table = F.Rnd.String;
-			var ij0_on = F.Rnd.String;
-			var ij0_equals = F.Rnd.String;
-			var ij1_table = F.Rnd.String;
-			var ij1_on = F.Rnd.String;
-			var ij1_equals = F.Rnd.String;
+			var ij0_table = F.Rnd.Str;
+			var ij0_on = F.Rnd.Str;
+			var ij0_equals = F.Rnd.Str;
+			var ij1_table = F.Rnd.Str;
+			var ij1_on = F.Rnd.Str;
+			var ij1_equals = F.Rnd.Str;
 
 			var innerJoin = new List<(string, string, string)>
 			{
@@ -102,14 +102,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 
-			var lj0_table = F.Rnd.String;
-			var lj0_on = F.Rnd.String;
-			var lj0_equals = F.Rnd.String;
-			var lj1_table = F.Rnd.String;
-			var lj1_on = F.Rnd.String;
-			var lj1_equals = F.Rnd.String;
+			var lj0_table = F.Rnd.Str;
+			var lj0_on = F.Rnd.Str;
+			var lj0_equals = F.Rnd.Str;
+			var lj1_table = F.Rnd.Str;
+			var lj1_on = F.Rnd.Str;
+			var lj1_equals = F.Rnd.Str;
 
 			var leftJoin = new List<(string, string, string)>
 			{
@@ -135,14 +135,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 
-			var rj0_table = F.Rnd.String;
-			var rj0_on = F.Rnd.String;
-			var rj0_equals = F.Rnd.String;
-			var rj1_table = F.Rnd.String;
-			var rj1_on = F.Rnd.String;
-			var rj1_equals = F.Rnd.String;
+			var rj0_table = F.Rnd.Str;
+			var rj0_on = F.Rnd.Str;
+			var rj0_equals = F.Rnd.Str;
+			var rj1_table = F.Rnd.Str;
+			var rj1_on = F.Rnd.Str;
+			var rj1_equals = F.Rnd.Str;
 
 			var leftJoin = new List<(string, string, string)>
 			{
@@ -168,9 +168,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
-			var w0 = F.Rnd.String;
-			var w1 = F.Rnd.String;
+			var from = F.Rnd.Str;
+			var w0 = F.Rnd.Str;
+			var w1 = F.Rnd.Str;
 
 			parts.From.Returns(from);
 			parts.Where.Returns(new List<string> { w0, w1 });
@@ -188,9 +188,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
-			var ob0 = F.Rnd.String;
-			var ob1 = F.Rnd.String;
+			var from = F.Rnd.Str;
+			var ob0 = F.Rnd.Str;
+			var ob1 = F.Rnd.Str;
 
 			parts.From.Returns(from);
 			parts.OrderBy.Returns(new List<string> { ob0, ob1 });
@@ -211,7 +211,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
+			var from = F.Rnd.Str;
 
 			parts.From.Returns(from);
 			parts.Limit.Returns(limit);
@@ -232,8 +232,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 			// Arrange
 			var adapter = new MySqlAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.String;
-			var limit = F.Rnd.Integer;
+			var from = F.Rnd.Str;
+			var limit = F.Rnd.Int;
 
 			parts.From.Returns(from);
 			parts.Limit.Returns(limit);

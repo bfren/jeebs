@@ -40,8 +40,8 @@ namespace Jeebs.ROk_Tests
 		public void Different_Type_Keeps_Messages()
 		{
 			// Arrange
-			var m0 = new IntMsg(F.Rnd.Integer);
-			var m1 = new StringMsg(F.Rnd.String);
+			var m0 = new IntMsg(F.Rnd.Int);
+			var m1 = new StringMsg(F.Rnd.Str);
 			var r = Result.Ok().AddMsg(m0, m1);
 
 			// Act

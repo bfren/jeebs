@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, adapter) = GetQueryPartsBuilder();
-			var sort = F.Rnd.String;
+			var sort = F.Rnd.Str;
 			adapter.GetRandomSortOrder().Returns(sort);
 			var options = new Options { SortRandom = true };
 
@@ -37,11 +37,11 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			adapter.GetSortOrder(Arg.Any<string>(), Arg.Any<SortOrder>())
 				.Returns(x => $"{x.ArgAt<string>(0)}:{x.ArgAt<SortOrder>(1)}");
 
-			var c0 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
 			var s0 = SortOrder.Ascending;
-			var c1 = F.Rnd.String;
+			var c1 = F.Rnd.Str;
 			var s1 = SortOrder.Descending;
-			var c2 = F.Rnd.String;
+			var c2 = F.Rnd.Str;
 			var s2 = SortOrder.Descending;
 			var options = new Options { Sort = new[] { (c0, s0), (c1, s1) } };
 
@@ -66,9 +66,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			adapter.GetSortOrder(Arg.Any<string>(), Arg.Any<SortOrder>())
 				.Returns(x => $"{x.ArgAt<string>(0)}:{x.ArgAt<SortOrder>(1)}");
 
-			var c0 = F.Rnd.String;
+			var c0 = F.Rnd.Str;
 			var s0 = SortOrder.Ascending;
-			var c1 = F.Rnd.String;
+			var c1 = F.Rnd.Str;
 			var s1 = SortOrder.Descending;
 			var options = new Options();
 

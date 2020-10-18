@@ -13,10 +13,11 @@ namespace F
 		/// <summary>
 		/// Returns a random number between 0 and 1
 		/// </summary>
+		/// <remarks>Thanks to https://stackoverflow.com/users/11178549/theodor-zoulias for comments and suggested improvements</remarks>
 		/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 		public static double Random(RandomNumberGenerator? generator = null)
 		{
-			// 8 bytes = 64-bit
+			// Get 8 random bytes to convert into a 64-bit integer
 			var lng = BitConverter.ToInt64(ByteF.Random(8, generator), 0);
 			var dbl = (double)(lng < 0 ? ~lng : lng);
 

@@ -26,8 +26,8 @@ namespace Jeebs.MsgList_Tests
 			// Arrange
 			var l = new MsgList();
 
-			var m0 = new StringMsg(F.Rnd.String);
-			var m1 = new StringMsg(F.Rnd.String);
+			var m0 = new StringMsg(F.Rnd.Str);
+			var m1 = new StringMsg(F.Rnd.Str);
 			var expected = new List<string>(new[] { m0.Value, m1.Value });
 
 			// Act

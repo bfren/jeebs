@@ -28,7 +28,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			Keeps_Base_Interface<IOk, string>(Result.Ok());
 			Keeps_Base_Interface<IOk, string>(Result.Ok<int>());
-			Keeps_Base_Interface<IOk, string>(Result.OkV(F.Rnd.Integer));
+			Keeps_Base_Interface<IOk, string>(Result.OkV(F.Rnd.Int));
 		}
 
 		[Fact]
@@ -57,7 +57,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			const int state = 7;
 			Keeps_State<IOk, bool, int>(Result.Ok(state), state);
-			Keeps_State<IOk, int, int>(Result.OkV(F.Rnd.Integer, state), state);
+			Keeps_State<IOk, int, int>(Result.OkV(F.Rnd.Int, state), state);
 		}
 
 		[Fact]
@@ -72,7 +72,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			// Arrange
 			var m0 = new IntMsg(18);
-			var m1 = new StringMsg(F.Rnd.String);
+			var m1 = new StringMsg(F.Rnd.Str);
 			var r = result.AddMsg(m0, m1);
 
 			// Act
@@ -89,7 +89,7 @@ namespace Jeebs.RExtensions_Tests
 		{
 			Keeps_Messages(Result.Ok());
 			Keeps_Messages(Result.Ok<int>());
-			Keeps_Messages(Result.OkV(F.Rnd.Integer));
+			Keeps_Messages(Result.OkV(F.Rnd.Int));
 		}
 
 		[Fact]

@@ -27,15 +27,15 @@ namespace Jeebs.RExtensions_Tests
 		{
 			// Arrange
 			var chain = Chain.Create();
-			var value = F.Rnd.Integer;
+			var value = F.Rnd.Int;
 
 			IR<int> l0(IOk r) => r.OkV(value);
 			static IR<TValue> l1<TValue>(IOkV<TValue> r) => r.Error();
 
 			var log = new List<string>();
-			var a0 = F.Rnd.String;
-			var a1 = F.Rnd.String;
-			var a2 = F.Rnd.String;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
+			var a2 = F.Rnd.Str;
 
 			void a<TValue>(IR<TValue> r)
 			{

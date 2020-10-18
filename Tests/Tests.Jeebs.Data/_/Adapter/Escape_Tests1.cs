@@ -19,7 +19,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.Escape(input, F.Rnd.String);
+			var result = adapter.Escape(input, F.Rnd.Str);
 
 			// Assert
 			Assert.Equal(string.Empty, result);
@@ -32,7 +32,7 @@ namespace Jeebs.Data.Adapter_Tests
 		public void Name_Without_Alias_Returns_Escaped_Name(string input)
 		{
 			// Arrange
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			var adapter = GetAdapter();
 
 			// Act
@@ -46,8 +46,8 @@ namespace Jeebs.Data.Adapter_Tests
 		public void Escaped_Name_With_Alias()
 		{
 			// Arrange
-			var name = F.Rnd.String;
-			var alias = F.Rnd.String;
+			var name = F.Rnd.Str;
+			var alias = F.Rnd.Str;
 			var adapter = GetAdapter();
 
 			// Act
@@ -61,9 +61,9 @@ namespace Jeebs.Data.Adapter_Tests
 		public void Escaped_Name_With_Alias_And_Table()
 		{
 			// Arrange
-			var name = F.Rnd.String;
-			var alias = F.Rnd.String;
-			var table = F.Rnd.String;
+			var name = F.Rnd.Str;
+			var alias = F.Rnd.Str;
+			var table = F.Rnd.Str;
 			var adapter = GetAdapter();
 
 			// Act

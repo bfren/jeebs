@@ -12,9 +12,9 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 		public void Adds_QueryParameters_To_Dictionary()
 		{
 			// Arrange
-			var p0 = F.Rnd.String;
-			var p1 = F.Rnd.String;
-			var p2 = F.Rnd.String;
+			var p0 = F.Rnd.Str;
+			var p1 = F.Rnd.Str;
+			var p2 = F.Rnd.Str;
 			var parametersToAdd = new QueryParameters
 			{
 				{ nameof(p0), p0 },
@@ -40,9 +40,9 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 		public void Adds_AnonymousType_To_Dictionary()
 		{
 			// Arrange
-			var p0 = F.Rnd.String;
-			var p1 = F.Rnd.String;
-			var p2 = F.Rnd.String;
+			var p0 = F.Rnd.Str;
+			var p1 = F.Rnd.Str;
+			var p2 = F.Rnd.Str;
 			var parametersToAdd = new { p0, p1, p2 };
 
 			var parameters = new QueryParameters();
@@ -98,7 +98,7 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 		{
 			public int Bar0 { get; set; } = 42;
 
-			public string Bar1 { private get; set; } = F.Rnd.String;
+			public string Bar1 { private get; set; } = F.Rnd.Str;
 
 			public readonly bool Bar2 = false;
 		}

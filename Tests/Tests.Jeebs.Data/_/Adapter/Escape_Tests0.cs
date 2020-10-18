@@ -29,9 +29,9 @@ namespace Jeebs.Data.Adapter_Tests
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var one = F.Rnd.String;
-			var two = F.Rnd.String;
-			var three = F.Rnd.String;
+			var one = F.Rnd.Str;
+			var two = F.Rnd.Str;
+			var three = F.Rnd.Str;
 			var input = $"{one}{SchemaSeparator}{two}{SchemaSeparator}{three}";
 
 			// Act
@@ -46,7 +46,7 @@ namespace Jeebs.Data.Adapter_Tests
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var input = F.Rnd.String;
+			var input = F.Rnd.Str;
 
 			// Act
 			var result = adapter.Escape(input);
@@ -60,7 +60,7 @@ namespace Jeebs.Data.Adapter_Tests
 		{
 			// Arrange
 			var adapter = GetAdapter();
-			var name = F.Rnd.String;
+			var name = F.Rnd.Str;
 			var table = new Table(name);
 
 			// Act
