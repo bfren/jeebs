@@ -6,7 +6,7 @@ namespace Jeebs.Data.Mapping
 {
 	public class FooUnwriteableTable : Table
 	{
-		public readonly string Id = "foo_unwriteable_id";
+		public readonly string FooId = "foo_unwriteable_id";
 
 		public readonly string Bar2 = "foo_unwriteable_bar2";
 

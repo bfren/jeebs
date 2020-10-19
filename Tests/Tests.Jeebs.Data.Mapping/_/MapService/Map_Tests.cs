@@ -120,12 +120,12 @@ namespace Jeebs.Data.Mapping.MapService_Tests
 
 			// Assert
 			Assert.Equal(t0.ToString(), m0.Name);
-			Assert.Equal(t0.Id, m0.IdColumn.Name);
-			Assert.Equal(nameof(t0.Id), m0.IdColumn.Alias);
+			Assert.Equal(t0.FooId, m0.IdColumn.Name);
+			Assert.Equal(nameof(t0.FooId), m0.IdColumn.Alias);
 
 			Assert.Equal(t1.ToString(), m1.Name);
-			Assert.Equal(t1.Id, m1.IdColumn.Name);
-			Assert.Equal(nameof(t1.Id), m1.IdColumn.Alias);
+			Assert.Equal(t1.FooId, m1.IdColumn.Name);
+			Assert.Equal(nameof(t1.FooId), m1.IdColumn.Alias);
 			Assert.Equal(t1.Version, m1.VersionColumn?.Name);
 			Assert.Equal(nameof(t1.Version), m1.VersionColumn?.Alias);
 		}

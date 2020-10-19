@@ -21,10 +21,10 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 
 			// Assert
 			adapter.Received(3).Escape(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
-			adapter.Received().Escape(table.Id, nameof(table.Id), table.ToString());
+			adapter.Received().Escape(table.FooId, nameof(table.FooId), table.ToString());
 			adapter.Received().Escape(table.Bar0, nameof(table.Bar0), table.ToString());
 			adapter.Received().Escape(table.Bar1, nameof(table.Bar1), table.ToString());
-			Assert.Equal($"{__(table.Id)}| {__(table.Bar0)}| {__(table.Bar1)}", result);
+			Assert.Equal($"{__(table.FooId)}| {__(table.Bar0)}| {__(table.Bar1)}", result);
 		}
 	}
 }

@@ -36,7 +36,7 @@ namespace Jeebs.Data.Mapping.MapService_Tests
 			// Assert
 			Assert.False(valid);
 			Assert.Equal(
-				$"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.Id)}'.\n" +
+				$"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.FooId)}'.\n" +
 				$"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.Bar0)}'.\n" +
 				$"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.Bar1)}'.",
 				errors

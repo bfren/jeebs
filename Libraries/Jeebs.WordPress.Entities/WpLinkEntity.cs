@@ -20,6 +20,7 @@ namespace Jeebs.WordPress.Entities
 			get => LinkId;
 			set => LinkId = value;
 		}
+
 		/// <summary>
 		/// LinkId
 		/// </summary>

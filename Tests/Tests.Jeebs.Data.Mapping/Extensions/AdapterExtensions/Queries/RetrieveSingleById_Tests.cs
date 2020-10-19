@@ -40,9 +40,9 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			// Assert
 			adapter.Received().RetrieveSingleById(
 				__(table),
-				Arg.Is<List<string>>(x => x.Count == 3 && x[0] == __(table.Id) && x[1] == __(table.Bar0) && x[2] == __(table.Bar1)),
-				__(table.Id),
-				nameof(table.Id)
+				Arg.Is<List<string>>(x => x.Count == 3 && x[0] == __(table.FooId) && x[1] == __(table.Bar0) && x[2] == __(table.Bar1)),
+				__(table.FooId),
+				nameof(IEntity.Id)
 			);
 		}
 	}

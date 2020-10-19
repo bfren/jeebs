@@ -54,7 +54,7 @@ namespace Jeebs.Data.Mapping
 				@this.Escape(map.Name),
 				Escape(@this, map.Columns),
 				@this.Escape(map.IdColumn.Name),
-				map.IdColumn.Alias
+				nameof(IEntity.Id)
 			);
 		}
 
@@ -80,7 +80,7 @@ namespace Jeebs.Data.Mapping
 					Escape(@this, columns),
 					aliases,
 					@this.Escape(id.Name),
-					id.Property.Name,
+					nameof(IEntity.Id),
 					@this.Escape(v.Name),
 					v.Property.Name
 				);
@@ -92,7 +92,7 @@ namespace Jeebs.Data.Mapping
 					Escape(@this, columns),
 					aliases,
 					@this.Escape(id.Name),
-					id.Property.Name
+					nameof(IEntity.Id)
 				);
 			}
 		}
@@ -116,7 +116,7 @@ namespace Jeebs.Data.Mapping
 				return @this.DeleteSingle(
 					@this.Escape(map.Name),
 					@this.Escape(id.Name),
-					id.Property.Name,
+					nameof(IEntity.Id),
 					@this.Escape(v.Name),
 					v.Property.Name
 				);
@@ -126,7 +126,7 @@ namespace Jeebs.Data.Mapping
 				return @this.DeleteSingle(
 					@this.Escape(map.Name),
 					@this.Escape(id.Name),
-					id.Property.Name
+					nameof(IEntity.Id)
 				);
 			}
 		}

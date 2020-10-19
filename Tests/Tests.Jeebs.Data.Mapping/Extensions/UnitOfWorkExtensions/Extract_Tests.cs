@@ -27,7 +27,7 @@ namespace Jeebs.Data.Mapping.UnitOfWorkExtensions_Tests
 			var result = unitOfWork.Extract<Foo>(table);
 
 			// Assert
-			Assert.Equal($"{table.Id}| {table.Bar0}| {table.Bar1}", result);
+			Assert.Equal($"{table.FooId}| {table.Bar0}| {table.Bar1}", result);
 		}
 	}
 }

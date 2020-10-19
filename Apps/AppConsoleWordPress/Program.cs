@@ -270,7 +270,7 @@ namespace AppConsoleWordPress
 
 			using var w = r.State.GetQueryWrapper();
 			return await r.Link().MapAsync(ok => w.QueryPostsAsync<PostModelWithContent>(
-				ok, 
+				ok,
 				modify: opt => opt.Limit = 3,
 				filters: GenerateExcerpt.Create()
 			));

@@ -6,7 +6,7 @@ namespace Jeebs.Data.Mapping
 {
 	public class FooWithVersionTable : Table
 	{
-		public readonly string Id = "foo_with_version_id";
+		public readonly string FooId = "foo_with_version_id";
 
 		public readonly string Bar0 = "foo_with_version_bar0";
 

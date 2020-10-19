@@ -7,7 +7,6 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 {
 	public class RetrieveSingleById_Tests
 	{
-
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]

@@ -43,14 +43,14 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			// Assert
 			adapter.Received().DeleteSingle(
 				__(foo0),
-				__(foo0.Id),
-				nameof(foo0.Id)
+				__(foo0.FooId),
+				nameof(IEntity.Id)
 			);
 
 			adapter.Received().DeleteSingle(
 				__(foo1),
-				__(foo1.Id),
-				nameof(foo1.Id),
+				__(foo1.FooId),
+				nameof(IEntity.Id),
 				__(foo1.Version),
 				nameof(foo1.Version)
 			);

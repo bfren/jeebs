@@ -47,7 +47,7 @@ namespace Jeebs.Data.Mapping.Extract_Tests
 
 			// Assert
 			Assert.Collection(result,
-				x => Assert.Equal((t0.ToString(), t0.Id), (x.Table, x.Name)),
+				x => Assert.Equal((t0.ToString(), t0.FooId), (x.Table, x.Name)),
 				x => Assert.Equal(t0.Bar0, x.Name),
 				x => Assert.Equal(t1.Bar2, x.Name)
 			);
@@ -56,7 +56,7 @@ namespace Jeebs.Data.Mapping.Extract_Tests
 		public class FooCombined
 		{
 			[Id]
-			public long Id { get; set; }
+			public long FooId { get; set; }
 
 			public string Bar0 { get; set; } = string.Empty;
 
