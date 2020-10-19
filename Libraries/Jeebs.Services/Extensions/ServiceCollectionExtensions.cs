@@ -18,17 +18,6 @@ namespace Jeebs.Services
 		/// <param name="this">IServiceCollection</param>
 		public static IServiceCollection AddDrivers(this IServiceCollection @this)
 		{
-			// Get implementations of an interface with a generic parameter
-			IEnumerable<Type> GetImplementations(Type typeWithGenericParam)
-			{
-				return from a in AppDomain.CurrentDomain.GetAssemblies()
-					   from t in a.GetLoadableTypes()
-					   from i in t.GetInterfaces()
-					   where !t.IsAbstract && !t.IsInterface
-					   && i.IsGenericType && i.GetGenericTypeDefinition() == typeWithGenericParam
-					   select t;
-			}
-
 			// Get drivers and add them to the service collection
 			bool foundListeners = false;
 			foreach (var t in GetImplementations(typeof(IDriver<>)))
@@ -68,6 +57,15 @@ namespace Jeebs.Services
 
 			// Return service collection
 			return @this;
+
+			// Get implementations of an interface with a generic parameter
+			static IEnumerable<Type> GetImplementations(Type typeWithGenericParam)
+				=> from a in AppDomain.CurrentDomain.GetAssemblies()
+				   from t in a.GetLoadableTypes()
+				   from i in t.GetInterfaces()
+				   where !t.IsAbstract && !t.IsInterface
+				   && i.IsGenericType && i.GetGenericTypeDefinition() == typeWithGenericParam
+				   select t;
 		}
 	}
 }
