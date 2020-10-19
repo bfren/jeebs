@@ -11,12 +11,14 @@ namespace Jeebs.Data.Querying
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
 	{
 		/// <inheritdoc/>
-		public bool TryAdd(object parameters)
+		public bool TryAdd(object? parameters)
 		{
-			if (parameters is null || parameters.GetType().IsPrimitive)
+			// Stop int / long / char / etc being added as parameters
+			if (parameters?.GetType().IsPrimitive != false)
 			{
 				return false;
 			}
+			// Merge another IQueryParameters with this one 
 			else if (parameters is IQueryParameters queryParameters)
 			{
 				foreach (var p in queryParameters)
@@ -26,7 +28,8 @@ namespace Jeebs.Data.Querying
 
 				return true;
 			}
-			else if(getReadableProperties() is var objectProperties && objectProperties.Count() > 0)
+			// Handle anonymous / standard objects
+			else if (getProperties() is var objectProperties && objectProperties.Any())
 			{
 				foreach (var p in objectProperties)
 				{
@@ -40,15 +43,13 @@ namespace Jeebs.Data.Querying
 
 			return false;
 
-			IEnumerable<PropertyInfo> getReadableProperties()
-			{
-				var properties = parameters.GetType().GetProperties();
-
-				return from p in properties
-					   where p.MemberType == MemberTypes.Property
-					   && p.GetMethod.IsPublic && p.GetMethod.GetParameters().Length == 0
-					   select p;
-			}
+			// Get all publicly-readable properties
+			IEnumerable<PropertyInfo> getProperties()
+				=> from p in parameters.GetProperties()
+				   where p.MemberType == MemberTypes.Property
+				   && p.GetMethod.IsPublic
+				   && p.GetMethod.GetParameters().Length == 0 // exclude index get accessors e.g. this[1]
+				   select p;
 		}
 
 		/// <summary>

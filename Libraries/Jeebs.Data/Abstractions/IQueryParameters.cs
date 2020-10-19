@@ -15,6 +15,6 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="T">Parameters type</typeparam>
 		/// <param name="parameters">Parameters to add</param>
-		bool TryAdd(object parameters);
+		bool TryAdd(object? parameters);
 	}
 }

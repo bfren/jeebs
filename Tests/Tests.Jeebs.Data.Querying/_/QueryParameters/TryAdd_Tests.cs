@@ -8,6 +8,24 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 {
 	public class TryAdd_Tests
 	{
+		[Theory]
+		[InlineData(null)]
+		[InlineData(42)]
+		[InlineData(true)]
+		[InlineData('c')]
+		public void Ignores_Null_And_Primitive_Types(object input)
+		{
+			// Arrange
+			var parameters = new QueryParameters();
+
+			// Act
+			var result = parameters.TryAdd(input);
+
+			// Assert
+			Assert.False(result);
+			Assert.Empty(parameters);
+		}
+
 		[Fact]
 		public void Adds_QueryParameters_To_Dictionary()
 		{
@@ -74,24 +92,6 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 			Assert.Collection(parameters,
 				x => { Assert.Equal(nameof(Foo.Bar0), x.Key); Assert.Equal(42, x.Value); }
 			);
-		}
-
-		[Theory]
-		[InlineData(null)]
-		[InlineData(42)]
-		[InlineData(true)]
-		[InlineData('c')]
-		public void Ignores_Null_And_Primitive_Types(object input)
-		{
-			// Arrange
-			var parameters = new QueryParameters();
-
-			// Act
-			var result = parameters.TryAdd(input);
-
-			// Assert
-			Assert.False(result);
-			Assert.Empty(parameters);
 		}
 
 		public class Foo
