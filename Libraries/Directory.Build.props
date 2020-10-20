@@ -13,9 +13,9 @@
 	<PropertyGroup Label="Package">
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
-		<Copyright>Ben Green 2013-2020</Copyright>
+		<Copyright>Copyright © bcg 2013-2020</Copyright>
 		<Version>4.1.0</Version>
-		<VersionSuffix>-beta.303</VersionSuffix>
+		<VersionSuffix>-beta.303-$([System.DateTime]::Now.ToString(yyMMddhhmm))</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup>
