@@ -19,7 +19,7 @@ namespace Jeebs.Data
 		/// <param name="this">IServiceCollection</param>
 		/// <param name="section">[Optional] Section Key for retrieving database configuration</param>
 		public static FluentData AddData(this IServiceCollection @this, string section = DbConfig.Key)
-			=> new FluentData(ref @this, section);
+			=> new FluentData(@this, section);
 
 		/// <summary>
 		/// Fluently configure data registration
@@ -29,20 +29,20 @@ namespace Jeebs.Data
 			/// <summary>
 			/// IServiceCollection
 			/// </summary>
-			private IServiceCollection Services { get; }
+			internal IServiceCollection Services { get; }
 
 			/// <summary>
 			/// Configuration Section Key
 			/// </summary>
-			private readonly string section;
+			internal string Section { get; }
 
 			/// <summary>
 			/// Start configuring data
 			/// </summary>
 			/// <param name="services">IServiceCollection</param>
 			/// <param name="section">Configuration Section Key</param>
-			public FluentData(ref IServiceCollection services, string section)
-				=> (Services, this.section) = (services, section);
+			public FluentData(IServiceCollection services, string section)
+				=> (Services, Section) = (services, section);
 
 			/// <summary>
 			/// Register data configuration
@@ -50,7 +50,7 @@ namespace Jeebs.Data
 			/// <param name="config">IConfiguration</param>
 			public IServiceCollection Using(IConfiguration config)
 			{
-				Services.Bind<DbConfig>().To(section).Using(config);
+				Services.Bind<DbConfig>().To(Section).Using(config);
 				return Services;
 			}
 		}

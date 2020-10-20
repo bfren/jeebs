@@ -32,24 +32,24 @@ namespace Jeebs.Config
 			/// <summary>
 			/// IServiceCollection object
 			/// </summary>
-			private readonly IServiceCollection services;
+			internal IServiceCollection Services { get; }
 
 			/// <summary>
 			/// Configuration section key (e.g. 'settings:app')
 			/// </summary>
-			private string? sectionKey;
+			internal string? SectionKey { get; private set; }
 
 			/// <summary>
 			/// IConfiguration object
 			/// </summary>
-			private IConfiguration? config;
+			internal IConfiguration? Config { get; private set; }
 
 			/// <summary>
 			/// Setup dependencies
 			/// </summary>
 			/// <param name="services">IServiceCollection object</param>
 			public FluentBind(IServiceCollection services)
-				=> this.services = services;
+				=> Services = services;
 
 			/// <summary>
 			/// Bind to the specified section
@@ -57,7 +57,7 @@ namespace Jeebs.Config
 			/// <param name="sectionKey">Section key (e.g. 'settings:app')</param>
 			/// <returns>FluentBind object</returns>
 			public FluentBind<T> To(string sectionKey)
-				=> Check(() => this.sectionKey = sectionKey);
+				=> Check(() => SectionKey = JeebsConfig.GetKey(sectionKey));
 
 			/// <summary>
 			/// Bind using the specified IConfigurationRoot
@@ -65,7 +65,7 @@ namespace Jeebs.Config
 			/// <param name="config">IConfigurationRoot object</param>
 			/// <returns>FluentBind object</returns>
 			public FluentBind<T> Using(IConfiguration config)
-				=> Check(() => this.config = config);
+				=> Check(() => Config = config);
 
 			/// <summary>
 			/// Save the binding to the IServiceCollection
@@ -76,16 +76,13 @@ namespace Jeebs.Config
 				run();
 
 				// Check services
-				if (config is null || sectionKey is null)
+				if (Config is null || SectionKey is null)
 				{
 					return this;
 				}
 
-				// Get section key
-				sectionKey = JeebsConfig.GetKey(sectionKey);
-
 				// Configure the options and return
-				services.Configure<T>(opt => config.GetSection(sectionKey).Bind(opt));
+				Services.Configure<T>(opt => Config.GetSection(SectionKey).Bind(opt));
 				return this;
 			}
 		}
