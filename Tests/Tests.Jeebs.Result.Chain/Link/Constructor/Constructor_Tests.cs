@@ -16,7 +16,8 @@ namespace Jeebs.Link_Tests
 			var handler = Substitute.For<Func<Exception, IMsg>>();
 			var msg = Substitute.For<IMsg>();
 			handler.Invoke(Arg.Any<Exception>()).Returns(_ => msg);
-			Action throwException = () => throw new Exception();
+
+			static void throwException() => throw new Exception();
 
 			// Act
 			var link = chain.Link(handler).Run(throwException);

@@ -19,7 +19,9 @@ namespace Jeebs.Services.Webhook
 		/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
+#pragma warning disable RCS1158 // Static member in generic type should use a type parameter.
 		public static void AddRequiredServices(IServiceCollection services)
+#pragma warning restore RCS1158 // Static member in generic type should use a type parameter.
 			=> services.AddHttpClient();
 
 		/// <summary>

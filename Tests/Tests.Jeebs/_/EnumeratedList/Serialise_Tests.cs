@@ -25,7 +25,7 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			// Arrange
 			var list = new EnumeratedList<Foo> { { Foo.A }, { Foo.B } };
-			var json = "[\"Item A\",\"Item B\"]";
+			const string? json = "[\"Item A\",\"Item B\"]";
 
 			// Act
 			var result = list.Serialise();

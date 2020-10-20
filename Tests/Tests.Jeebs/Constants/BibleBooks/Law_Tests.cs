@@ -11,7 +11,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 		public void Returns_Law_Books()
 		{
 			// Arrange
-			var law = "[\"Genesis\",\"Exodus\",\"Leviticus\",\"Numbers\",\"Deuteronomy\"]";
+			const string? law = "[\"Genesis\",\"Exodus\",\"Leviticus\",\"Numbers\",\"Deuteronomy\"]";
 
 			// Act
 			var result = F.JsonF.Serialise(BibleBooks.Law);

@@ -15,8 +15,8 @@ namespace Jeebs
 			// Act
 			var seconds = new TimeSpan(0, 16, 40);
 			var tenCubed = Math.Pow(10, 3);
-			var binary = 0b1111101000;
-			var hexadecimal = 0x3E8;
+			const int binary = 0b1111101000;
+			const int hexadecimal = 0x3E8;
 			var primeFactors = Math.Pow(2, 3) * Math.Pow(5, 3);
 			var greek = (Gk.Π - Gk.III) * (Gk.Δ * Gk.ΠΔ);
 

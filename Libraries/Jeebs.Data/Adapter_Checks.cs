@@ -94,9 +94,7 @@ namespace Jeebs.Data
 		/// <param name="aliases"></param>
 		/// <param name="idColumn"></param>
 		/// <param name="idAlias"></param>
-		/// <param name="versionColumn"></param>
-		/// <param name="versionAlias"></param>
-		protected void UpdateSingleChecks(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
+		protected void UpdateSingleChecks(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias)
 		{
 			// Handle invalid table
 			if (IsInvalidIdentifier(table))
@@ -141,9 +139,7 @@ namespace Jeebs.Data
 		/// <param name="table"></param>
 		/// <param name="idColumn"></param>
 		/// <param name="idAlias"></param>
-		/// <param name="versionColumn"></param>
-		/// <param name="versionAlias"></param>
-		protected void DeleteSingleChecks(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
+		protected void DeleteSingleChecks(string table, string idColumn, string idAlias)
 		{
 			// Handle invalid table
 			if (IsInvalidIdentifier(table))

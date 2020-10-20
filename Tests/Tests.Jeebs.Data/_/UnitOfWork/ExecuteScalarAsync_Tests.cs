@@ -24,7 +24,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		[Theory]
 		[InlineData(CommandType.StoredProcedure)]
 		[InlineData(CommandType.Text)]
+#pragma warning disable RCS1047 // Non-asynchronous method name should not end with 'Async'.
 		public void Calls_Driver_ExecuteScalarAsync(CommandType commandType)
+#pragma warning restore RCS1047 // Non-asynchronous method name should not end with 'Async'.
 		{
 			CallsDriver<Task<string>>(
 				w => w.ExecuteScalarAsync<string>,

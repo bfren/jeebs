@@ -10,7 +10,6 @@ namespace ServiceApp
 {
 	public class App : Jeebs.Apps.ServiceApp<AppService>
 	{
-
 	}
 
 	public class AppService : IHostedService

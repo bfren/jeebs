@@ -38,14 +38,17 @@ namespace F.PhpF_Tests
 		public void Array_Returns_Serialised_String()
 		{
 			// Arrange
-			var arrayOuter = new Hashtable();
-			var arrayInner = new Hashtable();
+			var arrayInner = new Hashtable
+			{
+				{ 0, "Apple" },
+				{ 1, "Orange" }
+			};
 
-			arrayInner.Add(0, "Apple");
-			arrayInner.Add(1, "Orange");
-
-			arrayOuter.Add(0, "Sample Array");
-			arrayOuter.Add(1, arrayInner);
+			var arrayOuter = new Hashtable
+			{
+				{ 0, "Sample Array" },
+				{ 1, arrayInner }
+			};
 
 			// Act
 			var result = PhpF.Serialise(arrayOuter);

@@ -40,28 +40,24 @@ namespace Jeebs.Apps
 				.ConfigureWebHostDefaults(builder => builder
 
 					// App Configuration
-					.ConfigureAppConfiguration((host, config) =>
-					{
-						ConfigureApp(host.HostingEnvironment, config);
-					})
+					.ConfigureAppConfiguration(
+						(host, config) => ConfigureApp(host.HostingEnvironment, config)
+					)
 
 					// Serilog
-					.UseSerilog((host, logger) =>
-					{
-						ConfigureSerilog(host.Configuration, logger);
-					})
+					.UseSerilog(
+						(host, logger) => ConfigureSerilog(host.Configuration, logger)
+					)
 
 					// Services
-					.ConfigureServices((host, services) =>
-					{
-						ConfigureServices(host.HostingEnvironment, host.Configuration, services);
-					})
+					.ConfigureServices(
+						(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
+					)
 
 					// Configure
-					.Configure((host, app) =>
-					{
-						Configure(host.HostingEnvironment, host.Configuration, app);
-					})
+					.Configure(
+						(host, app) => Configure(host.HostingEnvironment, host.Configuration, app)
+					)
 
 					// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
 					.UseSetting(WebHostDefaults.ApplicationKey, GetType().Assembly.FullName)

@@ -27,7 +27,7 @@ namespace F.JsonF_Tests
 		public void Deserialise_Null_Enumerated_Returns_Object_With_Empty_Value()
 		{
 			// Arrange
-			var json = JsonF.Empty;
+			const string? json = JsonF.Empty;
 
 			// Act
 			var result = JsonF.Deserialise<EnumeratedTest0>(json);

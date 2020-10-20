@@ -11,8 +11,8 @@ namespace Jeebs
 	{
 		/// <summary>
 		/// Enables LINQ select on Result objects, e.g.
-		/// <code>from x in Result</code>
-		/// <code>select x</code>
+		/// <c>from x in Result</c>
+		/// <c>select x</c>
 		/// <para>NB: only works with <see cref="IOkV{TValue}"/> - otherwise will return <see cref="IError{TValue}"/></para>
 		/// </summary>
 		/// <typeparam name="T">Result value type</typeparam>
@@ -28,8 +28,8 @@ namespace Jeebs
 
 		/// <summary>
 		/// Enables LINQ select on Result objects, e.g.
-		/// <code>from x in Result</code>
-		/// <code>select x</code>
+		/// <c>from x in Result</c>
+		/// <c>select x</c>
 		/// <para>NB: only works with <see cref="IOkV{TValue, TState}"/> - otherwise will return <see cref="IError{TValue, TState}"/></para>
 		/// </summary>
 		/// <typeparam name="S">Result state type</typeparam>

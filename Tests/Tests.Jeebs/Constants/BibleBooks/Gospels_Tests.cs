@@ -11,7 +11,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 		public void Returns_Gospels()
 		{
 			// Arrange
-			var gospels = "[\"Matthew\",\"Mark\",\"Luke\",\"John\"]";
+			const string? gospels = "[\"Matthew\",\"Mark\",\"Luke\",\"John\"]";
 
 			// Act
 			var result = F.JsonF.Serialise(BibleBooks.Gospels);

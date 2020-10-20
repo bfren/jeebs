@@ -11,10 +11,12 @@ namespace Jeebs.Config.SeqConfig_Tests
 		public void Set_Does_Nothing()
 		{
 			// Arrange
-			var config = new SeqConfig();
+			var config = new SeqConfig
+			{
+				Webhook = F.Rnd.Str
+			};
 
 			// Act
-			config.Webhook = F.Rnd.Str;
 			var result = config.Webhook;
 
 			// Assert

@@ -6,7 +6,7 @@ namespace Jeebs
 {
 	/// <summary>
 	/// General result error, used for pattern matching, for example:
-	/// <code>r is IError e</code>
+	/// <c>r is IError e</c>
 	/// </summary>
 	public interface IError : IR { }
 

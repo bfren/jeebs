@@ -108,9 +108,9 @@ namespace Jeebs.RExtensions_Tests
 			var r2 = Substitute.For<IR<int, bool>>();
 
 			// Act
-			Action a0 = () => r0.ChangeType().To<int>();
-			Action a1 = () => r1.ChangeType().To<int>();
-			Action a2 = () => r2.ChangeType().To<int>();
+			void a0() => r0.ChangeType().To<int>();
+			void a1() => r1.ChangeType().To<int>();
+			void a2() => r2.ChangeType().To<int>();
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(a0);

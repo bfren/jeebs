@@ -11,8 +11,8 @@ namespace Jeebs
 	{
 		/// <summary>
 		/// Enables LINQ select on Option objects, e.g.
-		/// <code>from x in Option</code>
-		/// <code>select x</code>
+		/// <c>from x in Option</c>
+		/// <c>select x</c>
 		/// </summary>
 		/// <typeparam name="T">Option type</typeparam>
 		/// <typeparam name="U">Return type</typeparam>
@@ -23,9 +23,9 @@ namespace Jeebs
 
 		/// <summary>
 		/// Enables LINQ select many on Option objects, e.g.
-		/// <code>from x in Option</code>
-		/// <code>from y in Option</code>
-		/// <code>select y</code>
+		/// <c>from x in Option</c>
+		/// <c>from y in Option</c>
+		/// <c>select y</c>
 		/// </summary>
 		/// <typeparam name="T">Option type</typeparam>
 		/// <typeparam name="U">Interim type</typeparam>
@@ -38,9 +38,9 @@ namespace Jeebs
 
 		/// <summary>
 		/// Enables LINQ where on Option objects, e.g.
-		/// <code>from x in Option</code>
-		/// <code>where x == y</code>
-		/// <code>select x</code>
+		/// <c>from x in Option</c>
+		/// <c>where x == y</c>
+		/// <c>select x</c>
 		/// </summary>
 		/// <typeparam name="T">Option type</typeparam>
 		/// <param name="this">Option</param>

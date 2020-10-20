@@ -68,9 +68,9 @@ namespace Jeebs
 
 			Func<Task> audit = result switch
 			{
-				TOkV okV => () => isOkV?.Invoke(okV),
-				TOk ok => () => isOk?.Invoke(ok),
-				TError error => () => isError?.Invoke(error),
+				TOkV okV => () => isOkV?.Invoke(okV) ?? Task.CompletedTask,
+				TOk ok => () => isOk?.Invoke(ok) ?? Task.CompletedTask,
+				TError error => () => isError?.Invoke(error) ?? Task.CompletedTask,
 				_ => () => throw new Jx.Result.UnknownImplementationException()
 			};
 

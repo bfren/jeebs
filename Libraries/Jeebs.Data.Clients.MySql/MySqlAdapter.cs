@@ -130,7 +130,7 @@ namespace Jeebs.Data.Clients.MySql
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Perform checks
-			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias, versionColumn, versionAlias);
+			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias);
 
 			// Add each column to the update list
 			var update = new List<string>();
@@ -156,7 +156,7 @@ namespace Jeebs.Data.Clients.MySql
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Perform checks
-			DeleteSingleChecks(table, idColumn, idAlias, versionColumn, versionAlias);
+			DeleteSingleChecks(table, idColumn, idAlias);
 
 			// Build SQL
 			var sql = $"DELETE FROM {table} WHERE {idColumn} = @{idAlias}";

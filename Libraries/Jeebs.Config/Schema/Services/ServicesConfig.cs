@@ -32,10 +32,10 @@ namespace Jeebs.Config
 
 		/// <summary>
 		/// Get a service configuration from the definition
-		/// <para>Definition must be in the format <code>service_type.service_name</code></para>
+		/// <para>Definition must be in the format <c>service_type.service_name</c></para>
 		/// </summary>
 		/// <exception cref="Jx.Config.UnsupportedServiceException"></exception>
-		/// <param name="definition">Service definition - in format <code>service_type.service_name</code></param>
+		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 		public ServiceConfig GetServiceConfig(string definition)
 			=> SplitDefinition(definition) switch
 			{
@@ -75,10 +75,10 @@ namespace Jeebs.Config
 
 		/// <summary>
 		/// Split a service definition
-		/// <para>Definition must be in the format <code>service_type.service_name</code></para>
+		/// <para>Definition must be in the format <c>service_type.service_name</c></para>
 		/// </summary>
 		/// <exception cref="Jx.Config.InvalidServiceDefinitionException"></exception>
-		/// <param name="definition">Service definition - in format <code>service_type.service_name</code></param>
+		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 		public static (string type, string name) SplitDefinition(string definition)
 		{
 			try

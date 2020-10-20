@@ -11,7 +11,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 		public void Returns_Wisdom_Books()
 		{
 			// Arrange
-			var wisdom = "[\"Job\",\"Psalms\",\"Proverbs\",\"Ecclesiastes\",\"Song of Songs\"]";
+			const string? wisdom = "[\"Job\",\"Psalms\",\"Proverbs\",\"Ecclesiastes\",\"Song of Songs\"]";
 
 			// Act
 			var result = F.JsonF.Serialise(BibleBooks.Wisdom);

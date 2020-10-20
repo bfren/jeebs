@@ -12,7 +12,7 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 		public void Returns_Alias_Hash()
 		{
 			// Arrange
-			var alias = "alias";
+			var alias = F.Rnd.Str;
 			var ha = alias.GetHashCode();
 
 			var c0 = Substitute.For<IColumn>();

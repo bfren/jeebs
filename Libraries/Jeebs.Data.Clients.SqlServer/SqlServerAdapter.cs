@@ -105,7 +105,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		public override string UpdateSingle(string table, List<string> columns, List<string> aliases, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Perform checks
-			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias, versionColumn, versionAlias);
+			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias);
 
 			throw new NotImplementedException();
 		}
@@ -114,7 +114,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		public override string DeleteSingle(string table, string idColumn, string idAlias, string? versionColumn = null, string? versionAlias = null)
 		{
 			// Perform checks
-			DeleteSingleChecks(table, idColumn, idAlias, versionColumn, versionAlias);
+			DeleteSingleChecks(table, idColumn, idAlias);
 
 			throw new NotImplementedException();
 		}

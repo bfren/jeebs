@@ -7,6 +7,5 @@ namespace AppConsoleWordPress.Usa
 {
 	public sealed class WpUsaConfig : WpConfig
 	{
-
 	}
 }

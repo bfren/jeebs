@@ -72,6 +72,5 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 				x => Assert.Equal(a3, x)
 			);
 		}
-
 	}
 }

@@ -11,9 +11,9 @@ namespace Jeebs
 	{
 		/// <summary>
 		/// Enables LINQ where on Result objects, e.g.
-		/// <code>from x in Result</code>
-		/// <code>where x == y</code>
-		/// <code>select x</code>
+		/// <c>from x in Result</c>
+		/// <c>where x == y</c>
+		/// <c>select x</c>
 		/// <para>NB: only works with <see cref="IOkV{TValue}"/> - otherwise will return <see cref="IError{TValue}"/></para>
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
@@ -32,9 +32,9 @@ namespace Jeebs
 
 		/// <summary>
 		/// Enables LINQ where on Result objects, e.g.
-		/// <code>from x in Result</code>
-		/// <code>where x == y</code>
-		/// <code>select x</code>
+		/// <c>from x in Result</c>
+		/// <c>where x == y</c>
+		/// <c>select x</c>
 		/// <para>NB: only works with <see cref="IOkV{TValue, TState}"/> - otherwise will return <see cref="IError{TValue, TState}"/></para>
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>

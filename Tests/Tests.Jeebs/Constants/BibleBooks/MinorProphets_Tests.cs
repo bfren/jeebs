@@ -11,7 +11,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 		public void Returns_MinorProphets_Books()
 		{
 			// Arrange
-			var prophets = "[\"Hosea\",\"Joel\",\"Amos\",\"Obadiah\",\"Jonah\",\"Micah\",\"Nahum\",\"Habakkuk\",\"Zephaniah\",\"Haggai\",\"Zechariah\",\"Malachi\"]";
+			const string? prophets = "[\"Hosea\",\"Joel\",\"Amos\",\"Obadiah\",\"Jonah\",\"Micah\",\"Nahum\",\"Habakkuk\",\"Zephaniah\",\"Haggai\",\"Zechariah\",\"Malachi\"]";
 
 			// Act
 			var result = F.JsonF.Serialise(BibleBooks.MinorProphets);

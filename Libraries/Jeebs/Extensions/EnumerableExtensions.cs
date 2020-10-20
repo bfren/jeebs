@@ -52,7 +52,7 @@ namespace Jeebs
 					{
 						yield return y;
 					}
-				};
+				}
 			}
 		}
 
@@ -65,13 +65,13 @@ namespace Jeebs
 		/// <param name="map">Mapping function</param>
 		public static IEnumerable<U> Filter<T, U>(this IEnumerable<T> @this, Func<T, U?> map)
 			where U : struct
-		{ 
+		{
 			foreach (var x in @this)
 			{
 				if (map(x) is U y)
 				{
 					yield return y;
-				};
+				}
 			}
 		}
 

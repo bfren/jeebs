@@ -295,7 +295,7 @@ namespace AppConsoleWordPress
 		}
 	}
 
-	class TermModel
+	internal class TermModel
 	{
 		public string Title { get; set; } = string.Empty;
 
@@ -304,7 +304,7 @@ namespace AppConsoleWordPress
 		public int Count { get; set; }
 	}
 
-	class PostModel : IEntity
+	internal class PostModel : IEntity
 	{
 		public long Id { get => PostId; set => PostId = value; }
 
@@ -313,12 +313,12 @@ namespace AppConsoleWordPress
 		public MetaDictionary Meta { get; set; } = new MetaDictionary();
 	}
 
-	class PostModelWithContent : PostModel
+	internal class PostModelWithContent : PostModel
 	{
 		public string Content { get; set; } = string.Empty;
 	}
 
-	class SermonModel : IEntity
+	internal class SermonModel : IEntity
 	{
 		public long Id { get => PostId; set => PostId = value; }
 
@@ -329,7 +329,7 @@ namespace AppConsoleWordPress
 		public DateTime PublishedOn { get; set; }
 	}
 
-	class SermonModelWithCustomFields : SermonModel
+	internal class SermonModelWithCustomFields : SermonModel
 	{
 		public MetaDictionary Meta { get; set; } = new MetaDictionary();
 
@@ -342,7 +342,7 @@ namespace AppConsoleWordPress
 		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
 	}
 
-	class SermonModelWithTaxonomies : SermonModel
+	internal class SermonModelWithTaxonomies : SermonModel
 	{
 		public TermList BibleBooks { get; set; } = new TermList(WpBcg.Taxonomies.BibleBook);
 

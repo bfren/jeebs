@@ -54,7 +54,8 @@ namespace Jeebs.RExtensions_Tests
 			var v1 = F.Rnd.Int;
 			IR<int> r0() => Result.OkV(v0);
 			IR<int> r1(int x) => Result.OkV(x + v1);
-			IR<int> r2() => Result.Error<int>().AddMsg().OfType<InvalidIntegerMsg>();
+
+			static IR<int> r2() => Result.Error<int>().AddMsg().OfType<InvalidIntegerMsg>();
 
 			// Act
 			var result = from a in r0()

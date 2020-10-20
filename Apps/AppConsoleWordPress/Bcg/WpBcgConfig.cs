@@ -7,6 +7,5 @@ namespace AppConsoleWordPress.Bcg
 {
 	public sealed class WpBcgConfig : WpConfig
 	{
-
 	}
 }

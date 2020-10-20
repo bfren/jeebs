@@ -7,7 +7,6 @@ namespace Jx.Cryptography
 	/// <summary>
 	/// Decryption Exception
 	/// </summary>
-
 	public class DecryptionException : Exception
 	{
 		/// <summary>

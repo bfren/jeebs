@@ -13,7 +13,7 @@ namespace Jeebs.Mvc.TagBuilders
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public JsTagBuilder() : base("script") 
+		public JsTagBuilder() : base("script")
 			=> Attributes.Add("type", "text/javascript");
 
 		/// <summary>

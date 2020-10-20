@@ -12,7 +12,7 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 		public void Equal_Alias_Returns_True()
 		{
 			// Arrange
-			var alias = "alias";
+			var alias = F.Rnd.Str;
 
 			var c0 = Substitute.For<IColumn>();
 			c0.Name.Returns(F.Rnd.Str);

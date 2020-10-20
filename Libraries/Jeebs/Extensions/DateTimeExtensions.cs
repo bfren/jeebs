@@ -26,7 +26,7 @@ namespace Jeebs
 			=> new DateTime(@this.Year, @this.Month, @this.Day, 23, 59, 59);
 
 		/// <summary>
-		/// Return midnight on the the first day of the week for the specified date
+		/// Return midnight on the first day of the week for the specified date
 		/// </summary>
 		/// <param name="this">DateTime object</param>
 		/// <returns>First day of the specified week</returns>

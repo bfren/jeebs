@@ -17,10 +17,7 @@ namespace AppWeb
 		{
 			base.Configure(env, config, app);
 
-			app.Run(async ctx =>
-			{
-				await ctx.Response.WriteAsync("Hello, world!").ConfigureAwait(false);
-			});
+			app.Run(async ctx => await ctx.Response.WriteAsync("Hello, world!").ConfigureAwait(false));
 		}
 	}
 }

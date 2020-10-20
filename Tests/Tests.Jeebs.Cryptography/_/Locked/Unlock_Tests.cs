@@ -46,8 +46,10 @@ namespace Jeebs.Cryptography.Locked_Tests
 			// Arrange
 			var value = F.Rnd.Str;
 			var key = F.CryptoF.GenerateKey();
-			var box = new Locked<string>(value, key);
-			box.Nonce = F.ByteF.Random(8);
+			var box = new Locked<string>(value, key)
+			{
+				Nonce = F.ByteF.Random(8)
+			};
 
 			// Act
 			var result = box.Unlock(key);
@@ -79,8 +81,10 @@ namespace Jeebs.Cryptography.Locked_Tests
 			// Arrange
 			var value = F.Rnd.Str;
 			var key = F.CryptoF.GenerateKey();
-			var box = new Locked<string>(value, key);
-			box.Nonce = F.CryptoF.GenerateNonce();
+			var box = new Locked<string>(value, key)
+			{
+				Nonce = F.CryptoF.GenerateNonce()
+			};
 
 			// Act
 			var result = box.Unlock(key);

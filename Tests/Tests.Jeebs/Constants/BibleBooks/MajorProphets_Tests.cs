@@ -11,7 +11,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 		public void Returns_MajorProphets_Books()
 		{
 			// Arrange
-			var prophets = "[\"Isaiah\",\"Jeremiah\",\"Lamentations\",\"Ezekiel\",\"Daniel\"]";
+			const string? prophets = "[\"Isaiah\",\"Jeremiah\",\"Lamentations\",\"Ezekiel\",\"Daniel\"]";
 
 			// Act
 			var result = F.JsonF.Serialise(BibleBooks.MajorProphets);

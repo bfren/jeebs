@@ -11,9 +11,9 @@ namespace Jeebs
 	{
 		/// <summary>
 		/// Enables LINQ select many on Result objects, e.g.
-		/// <code>from x in Result A</code>
-		/// <code>from y in Result B</code>
-		/// <code>select x + y</code>
+		/// <c>from x in Result A</c>
+		/// <c>from y in Result B</c>
+		/// <c>select x + y</c>
 		/// <para>NB: only works with <see cref="IOkV{TValue}"/> - otherwise will return <see cref="IError{TValue}"/></para>
 		/// </summary>
 		/// <typeparam name="T">Result value type</typeparam>
@@ -39,9 +39,9 @@ namespace Jeebs
 
 		/// <summary>
 		/// Enables LINQ select many on Result objects, e.g.
-		/// <code>from x in Result A</code>
-		/// <code>from y in Result B</code>
-		/// <code>select x + y</code>
+		/// <c>from x in Result A</c>
+		/// <c>from y in Result B</c>
+		/// <c>select x + y</c>
 		/// <para>NB: only works with <see cref="IOkV{TValue, TState}"/> - otherwise will return <see cref="IError{TValue, TState}"/></para>
 		/// </summary>
 		/// <typeparam name="S">Result state value</typeparam>

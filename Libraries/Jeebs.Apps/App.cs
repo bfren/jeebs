@@ -29,13 +29,19 @@ namespace Jeebs.Apps
 				.ConfigureHostConfiguration(ConfigureHost)
 
 				// Configure App
-				.ConfigureAppConfiguration((host, config) => ConfigureApp(host.HostingEnvironment, config))
+				.ConfigureAppConfiguration(
+					(host, config) => ConfigureApp(host.HostingEnvironment, config)
+				)
 
 				// Configure Serilog
-				.UseSerilog((host, logger) => ConfigureSerilog(host.Configuration, logger))
+				.UseSerilog(
+					(host, logger) => ConfigureSerilog(host.Configuration, logger)
+				)
 
 				// Configure Services
-				.ConfigureServices((host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services))
+				.ConfigureServices(
+					(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
+				)
 
 				// Build Host
 				.Build()
