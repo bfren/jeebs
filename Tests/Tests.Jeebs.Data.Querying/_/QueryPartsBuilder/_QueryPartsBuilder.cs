@@ -32,12 +32,11 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			(string table, string column) equals = (F.Rnd.Str, F.Rnd.Str);
 
 			// Act
-			Assert.Null(join(builder.Parts));
 			addJoin(builder, table, on, equals);
 
 			// Assert
 			var list = Assert.IsType<List<(string table, string on, string equals)>>(join(builder.Parts));
-			var single = Assert.Single(list);
+			Assert.Single(list);
 		}
 
 		/// <summary>
@@ -92,9 +91,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			public Builder(IAdapter adapter, string from) : base(adapter, from) { }
 
 			public override IQueryParts Build(Options opt)
-			{
-				throw new NotImplementedException();
-			}
+				=> Parts;
 
 			new public void AddSelect(string select, bool overwrite = false)
 				=> base.AddSelect(select, overwrite);

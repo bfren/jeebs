@@ -3,4 +3,9 @@
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
     <ProjectReference Include="..\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Tests.Jeebs.Data.All</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -8,7 +7,7 @@ using Jeebs.Data.Querying;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Extended methods for building a query from mapped tables
+	/// Extended methods for building a query from mapped tables - table and column names will all be escaped automatically
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <typeparam name="TOptions">Options type</typeparam>
