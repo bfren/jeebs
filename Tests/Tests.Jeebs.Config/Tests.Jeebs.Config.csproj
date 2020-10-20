@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <RootNamespace>Jeebs.Config</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
@@ -18,10 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Config\Jeebs.Config.csproj" />
-    <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>
-
 </Project>
