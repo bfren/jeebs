@@ -67,7 +67,7 @@ namespace Jeebs
 			=> @this.GetInterfaces().Any(x => x.ImplementsGeneric(@interface));
 
 		/// <summary>
-		/// True if <paramref name="this"/> implements <paramref name="@class"/>
+		/// True if <paramref name="this"/> implements <paramref name="class"/>
 		/// </summary>
 		/// <param name="this">Base type</param>
 		/// <param name="class">Class type</param>

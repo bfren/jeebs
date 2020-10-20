@@ -15,7 +15,7 @@
 		<Company>bcg|design</Company>
 		<Copyright>Copyright © bcg 2013-2020</Copyright>
 		<Version>4.1.0</Version>
-		<VersionSuffix>-beta.303-$([System.DateTime]::Now.ToString(yyMMddhhmm))</VersionSuffix>
+		<VersionSuffix>-beta.$([System.DateTime]::Now.ToString(yyMMddhhmm))</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
 	<PropertyGroup>

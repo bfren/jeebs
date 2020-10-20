@@ -66,7 +66,7 @@ namespace F
 		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 		/// </summary>
 		/// <remarks>
-		/// Don't share code with <see cref="RandomInt32(long, long, RandomNumberGenerator?)"/> for memory allocation reasons
+		/// Don't share code with <see cref="RandomInt32(int, int, RandomNumberGenerator?)"/> for memory allocation reasons
 		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>

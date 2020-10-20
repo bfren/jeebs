@@ -35,7 +35,9 @@ namespace Jeebs.Data.QueryPartsBuilderExtended_Tests
 			var (builder, adapter, _) = GetQueryPartsBuilder();
 			var foo = new FooTable();
 			var bar = new BarTable();
+#pragma warning disable IDE0039 // Use local function
 			Func<FooTable, string> on = f => f.FooId;
+#pragma warning restore IDE0039 // Use local function
 			(BarTable, Func<BarTable, string>) equals = (bar, b => b.BarId);
 
 			// Act
@@ -60,11 +62,15 @@ namespace Jeebs.Data.QueryPartsBuilderExtended_Tests
 			new public void AddSelect(params Table[] tables)
 				=> base.AddSelect(tables);
 
+#pragma warning disable IDE1006 // Naming Styles
 			new public string __<T>(T table)
+#pragma warning restore IDE1006 // Naming Styles
 				where T : Table
 				=> base.__(table);
 
+#pragma warning disable IDE1006 // Naming Styles
 			new public string __<T>(T table, Func<T, string> column)
+#pragma warning restore IDE1006 // Naming Styles
 				where T : Table
 				=> base.__(table, column);
 
