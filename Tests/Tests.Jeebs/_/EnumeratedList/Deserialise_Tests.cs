@@ -26,7 +26,7 @@ namespace Jeebs.EnumeratedList_Tests
 		public void Invalid_Json_Returns_Empty_List()
 		{
 			// Arrange
-			const string? json = "this is invalid json";
+			var json = F.Rnd.Str;
 
 			// Act
 			var result = EnumeratedList<Foo>.Deserialise(json);
@@ -52,10 +52,10 @@ namespace Jeebs.EnumeratedList_Tests
 		public void Correct_Json_Returns_List()
 		{
 			// Arrange
-			var itemA = new Foo("Item A");
-			var itemB = new Foo("Item B");
-			var itemC = new Foo("Item C");
-			var itemD = new Foo("Item D");
+			var itemA = new Foo(F.Rnd.Str);
+			var itemB = new Foo(F.Rnd.Str);
+			var itemC = new Foo(F.Rnd.Str);
+			var itemD = new Foo(F.Rnd.Str);
 			var json = $"[\"{itemB}\",\"{itemD}\",\"{itemA}\",\"{itemC}\"]";
 
 			// Act
@@ -73,10 +73,6 @@ namespace Jeebs.EnumeratedList_Tests
 		public class Foo : Enumerated
 		{
 			public Foo(string name) : base(name) { }
-
-			public static Foo A = new Foo("Item A");
-
-			public static Foo B = new Foo("Item B");
 		}
 	}
 }

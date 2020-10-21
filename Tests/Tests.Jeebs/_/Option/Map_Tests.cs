@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void Some_Runs_Map_Function()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
 			var map = Substitute.For<Func<int, string>>();
 

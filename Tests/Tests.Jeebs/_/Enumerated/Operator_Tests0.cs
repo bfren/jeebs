@@ -12,10 +12,9 @@ namespace Jeebs.Enumerated_Tests
 		{
 			// Arrange
 			const string value = "foo";
-			var foo = new Foo(value);
 
 			// Act
-			string result = foo;
+			string result = new Foo(value);
 
 			// Assert
 			Assert.Equal(value, result);

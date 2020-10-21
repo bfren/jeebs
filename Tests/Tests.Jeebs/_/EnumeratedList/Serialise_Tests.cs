@@ -25,7 +25,7 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			// Arrange
 			var list = new EnumeratedList<Foo> { { Foo.A }, { Foo.B } };
-			const string? json = "[\"Item A\",\"Item B\"]";
+			var json = $"[\"{Foo.A}\",\"{Foo.B}\"]";
 
 			// Act
 			var result = list.Serialise();
@@ -38,9 +38,9 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			public Foo(string name) : base(name) { }
 
-			public static Foo A = new Foo("Item A");
+			public static Foo A = new Foo(F.Rnd.Str);
 
-			public static Foo B = new Foo("Item B");
+			public static Foo B = new Foo(F.Rnd.Str);
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void True_Returns_Some()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 
 			// Act
 			var result = Option.WrapIf(() => true, () => value);
@@ -26,7 +26,7 @@ namespace Jeebs.Option_Tests
 		public void False_Returns_None()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 
 			// Act
 			var result = Option.WrapIf(() => false, () => value);

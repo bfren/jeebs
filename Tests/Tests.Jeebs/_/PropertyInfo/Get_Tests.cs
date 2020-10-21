@@ -11,7 +11,7 @@ namespace Jeebs.PropertyInfo_Tests
 		public void WithPropertySet_ReturnsValue()
 		{
 			// Arrange
-			var foo = new Foo { Bar = "value" };
+			var foo = new Foo { Bar = F.Rnd.Str };
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act

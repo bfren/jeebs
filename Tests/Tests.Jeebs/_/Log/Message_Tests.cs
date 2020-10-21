@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -27,7 +28,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Trace);
+			msg.Level.Returns(LogLevel.Trace);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -42,7 +43,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Debug);
+			msg.Level.Returns(LogLevel.Debug);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -57,7 +58,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Information);
+			msg.Level.Returns(LogLevel.Information);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -72,7 +73,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Warning);
+			msg.Level.Returns(LogLevel.Warning);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -87,7 +88,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Error);
+			msg.Level.Returns(LogLevel.Error);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -102,7 +103,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Critical);
+			msg.Level.Returns(LogLevel.Critical);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -117,7 +118,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<IExceptionMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Error);
+			msg.Level.Returns(LogLevel.Error);
 			var log = Substitute.For<Log>();
 
 			// Act
@@ -131,7 +132,7 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<IExceptionMsg>();
-			msg.Level.Returns(Microsoft.Extensions.Logging.LogLevel.Critical);
+			msg.Level.Returns(LogLevel.Critical);
 			var log = Substitute.For<Log>();
 
 			// Act

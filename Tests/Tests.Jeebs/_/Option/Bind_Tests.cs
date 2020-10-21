@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void Some_Runs_Bind_Returns_Some_Returns_Some()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
 			static Option<string> bind(int x) => x.ToString();
 
@@ -28,7 +28,7 @@ namespace Jeebs.Option_Tests
 		public void Some_Runs_Bind_Returns_None_Returns_None()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
 			static Option<string> bind(int _) => Option.None<string>();
 

@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void Some_Returns_Value()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 			var some = Option.Wrap(value);
 			var ifNone = Substitute.For<Func<int>>();
 

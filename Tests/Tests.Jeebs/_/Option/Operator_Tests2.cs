@@ -11,7 +11,7 @@ namespace Jeebs.Option_Tests
 		public void DoesNotEqual_When_Equal_Returns_False()
 		{
 			// Arrange
-			const int value = 18;
+			var value = F.Rnd.Int;
 			var some = Option.Wrap(value);
 
 			// Act
