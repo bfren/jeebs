@@ -8,7 +8,7 @@ Please [view the wiki](https://github.com/bencgreen/jeebs/wiki) for information 
 
 ## History
 
-I am definitely a backend developer at heart, although like everyone I have to write front-facing things sometimes!  However I am happiest when I'm writing code that makes frontend developer easier - and more beautiful.
+I am definitely a backend developer at heart, although like everyone I have to write front-facing things sometimes!  However I am happiest when I'm writing code that makes frontend development easier - and more beautiful.
 
 The code in these libraries has been under active development and use for over a decade, powering all my own websites, and some for other people as well.
 
