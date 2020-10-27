@@ -18,14 +18,20 @@
 		<VersionSuffix>-beta.$([System.DateTime]::Now.ToString(yyMMddhhmm))</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
 	</PropertyGroup>
+	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
+	</ItemGroup>
 	<PropertyGroup>
-		<LibraryPackFile>Libraries.pack.props</LibraryPackFile>
-		<LibraryPackPath>$([MSBuild]::GetPathOfFileAbove('$(LibraryPackFile)', '$(MSBuildThisFileDirectory)../'))</LibraryPackPath>
+		<LocalPackFile>Local.pack.props</LocalPackFile>
+		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)', '$(MSBuildThisFileDirectory)../'))</LocalPackPath>
 	</PropertyGroup>
 	<PropertyGroup>
 		<LibraryNugetFile>Libraries.nuget.props</LibraryNugetFile>
 		<LibraryNugetPath>$([MSBuild]::GetPathOfFileAbove('$(LibraryNugetFile)', '$(MSBuildThisFileDirectory)../'))</LibraryNugetPath>
 	</PropertyGroup>
-	<Import Project="$(LibraryPackPath)" Condition="Exists('$(LibraryPackPath)')"/>
+	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
 	<!--<Import Project="$(LibraryNugetPath)" Condition="Exists('$(LibraryNugetPath)')"/>-->
 </Project>

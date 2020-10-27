@@ -100,9 +100,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		Build.csproj = Build.csproj
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 		Libraries.nuget.props = Libraries.nuget.props
-		Libraries.pack.props = Libraries.pack.props
 		LICENSE = LICENSE
+		Local.pack.props = Local.pack.props
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -138,7 +140,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Querying",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.All", "Tests\Tests.Jeebs.Data.All\Tests.Jeebs.Data.All.csproj", "{51A7C00A-A195-4761-AD4A-AC034CF8B39A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Apps", "Tests\Tests.Jeebs.Data.Apps\Tests.Jeebs.Data.Apps.csproj", "{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Apps", "Tests\Tests.Jeebs.Data.Apps\Tests.Jeebs.Data.Apps.csproj", "{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
