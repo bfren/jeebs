@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+	<PropertyGroup Label="Packaging" Condition="'$(Configuration)'=='Release'">
+		<ApiKey>oy2fvw3y4zjgo4owbqxqwvy2swupf45uhexy36xfdgjw2i</ApiKey>
+		<RepositoryUrl>https://api.nuget.org/v3/index.json</RepositoryUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
+		<Exec Command="dotnet nuget push &quot;$(ProjectDir)bin\Release\$(ProjectName).$(Version)$(VersionSuffix).nupkg&quot; --api-key $(ApiKey) --source $(RepositoryUrl) --skip-duplicate" />
+	</Target>
+</Project>

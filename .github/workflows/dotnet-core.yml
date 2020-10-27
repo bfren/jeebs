@@ -17,14 +17,14 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: dotnet restore BuildForTesting.csproj
-    - name: Build
-      run: dotnet build BuildForTesting.csproj --no-restore --configuration Release
-    - name: Test
+      run: dotnet restore Test.csproj
+    - name: Build projects for testing
+      run: dotnet build Test.csproj --no-restore --configuration Release
+    - name: Run unit tests
       run: dotnet test --no-restore --no-build --configuration Release --verbosity normal
     - if: success()
-      name: Pack NuGet packages
-      run: dotnet pack BuildForPacking.csproj --no-build --configuration Release /p:PackageOutputPath=.nupkgs
+      name: Create NuGet packages
+      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=.nupkgs
     - if: success()
       name: Push NuGet packages
       run: dotnet nuget push .nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+**/.DS_Store
 **/.vs
 **/bin
 **/obj
@@ -9,7 +10,4 @@
 
 .fake
 .ionide
-/Libraries/.DS_Store
-Libraries.pack.props
-Libraries.nuget.props
-.DS_Store
+Local.pack.props
