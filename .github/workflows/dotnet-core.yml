@@ -36,7 +36,7 @@ jobs:
     - 
       if: success()
       name: D - Pack
-      run: dotnet pack Pack.csproj --no-build -c Release /p:PackageOutputPath=$HOME/.nupkgs -p:PackageVersion={{ steps.version.outputs.content }}
+      run: dotnet pack Pack.csproj --no-build -c Release /p:PackageOutputPath=$HOME/.nupkgs -p:PackageVersion=${{ steps.version.outputs.content }}
     - 
       if: success()
       name: E - Push
