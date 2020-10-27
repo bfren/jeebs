@@ -24,7 +24,7 @@ jobs:
       run: dotnet test Test.csproj --no-restore --no-build --configuration Release --verbosity normal
     - if: success()
       name: D - Pack
-      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=$HOME/.nupkgs /p:PackageVersion=$(Version)$(VersionSuffix)
+      run: dotnet pack Libraries/Libraries.csproj --no-build --configuration Release /p:PackageOutputPath=$HOME/.nupkgs /p:PackageVersion=$(Version)$(VersionSuffix)
     - if: success()
       name: E - Push
       run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

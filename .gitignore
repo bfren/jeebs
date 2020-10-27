@@ -10,4 +10,5 @@
 
 .fake
 .ionide
-Local.pack.props
+/Local.pack.props
+/Local.push.props

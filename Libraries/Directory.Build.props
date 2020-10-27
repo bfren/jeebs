@@ -5,10 +5,13 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<ItemGroup>
+	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>Tests.$(AssemblyName)</_Parameter1>
 		</AssemblyAttribute>
+	</ItemGroup>
+	<ItemGroup Label="Licence">
+		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
 	<PropertyGroup Label="Package">
 		<Authors>Ben Green</Authors>
@@ -17,21 +20,19 @@
 		<Version>4.1.0</Version>
 		<VersionSuffix>-beta.$([System.DateTime]::Now.ToString(yyMMddhhmm))</VersionSuffix>
 		<Description>$(MSBuildProjectName) library</Description>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	<ItemGroup>
-		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
-	</ItemGroup>
 	<PropertyGroup>
 		<LocalPackFile>Local.pack.props</LocalPackFile>
 		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)', '$(MSBuildThisFileDirectory)../'))</LocalPackPath>
 	</PropertyGroup>
 	<PropertyGroup>
-		<LibraryNugetFile>Libraries.nuget.props</LibraryNugetFile>
-		<LibraryNugetPath>$([MSBuild]::GetPathOfFileAbove('$(LibraryNugetFile)', '$(MSBuildThisFileDirectory)../'))</LibraryNugetPath>
+		<LocalPushFile>Local.push.props</LocalPushFile>
+		<LocalPushPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPushFile)', '$(MSBuildThisFileDirectory)../'))</LocalPushPath>
 	</PropertyGroup>
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
-	<!--<Import Project="$(LibraryNugetPath)" Condition="Exists('$(LibraryNugetPath)')"/>-->
+	<!--<Import Project="$(LocalPushPath)" Condition="Exists('$(LocalPushPath)')"/>-->
 </Project>

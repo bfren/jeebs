@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
 		Tests\Directory.Build.props = Tests\Directory.Build.props
+		Tests\Tests.csproj = Tests\Tests.csproj
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data", "Libraries\Jeebs.Data\Jeebs.Data.csproj", "{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}"
@@ -21,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}"
 	ProjectSection(SolutionItems) = preProject
 		Libraries\Directory.Build.props = Libraries\Directory.Build.props
+		Libraries\Libraries.csproj = Libraries\Libraries.csproj
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{A256449B-4234-43DD-B18F-741D69906712}"
@@ -101,10 +103,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
-		Libraries.nuget.props = Libraries.nuget.props
 		LICENSE = LICENSE
 		Local.pack.props = Local.pack.props
-		Pack.csproj = Pack.csproj
+		Local.push.props = Local.push.props
 		README.md = README.md
 		Test.csproj = Test.csproj
 	EndProjectSection
