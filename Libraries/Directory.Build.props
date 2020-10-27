@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+	
+	<!-- Standard Configuration -->
 	<PropertyGroup Label="Framework and Language">
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<ItemGroup Label="Test Internals">
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>Tests.$(AssemblyName)</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
+	
+	<!-- Import Licence and Version -->
 	<ItemGroup Label="Licence">
 		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
@@ -18,6 +17,8 @@
 			<Output TaskParameter="Lines" PropertyName="PackageVersion"/>
 		</ReadLinesFromFile>
 	</Target>
+	
+	<!-- Package Configuration -->
 	<PropertyGroup Label="Package">
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
@@ -29,14 +30,19 @@
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+	
+	<!-- [Optional] Create Local Packages -->
 	<PropertyGroup>
 		<LocalPackFile>Local.pack.props</LocalPackFile>
 		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)', '$(MSBuildThisFileDirectory)../'))</LocalPackPath>
 	</PropertyGroup>
-	<PropertyGroup>
-		<LocalPushFile>Local.push.props</LocalPushFile>
-		<LocalPushPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPushFile)', '$(MSBuildThisFileDirectory)../'))</LocalPushPath>
-	</PropertyGroup>
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
-	<!--<Import Project="$(LocalPushPath)" Condition="Exists('$(LocalPushPath)')"/>-->
+	
+	<!-- Enable Internal Testing -->
+	<ItemGroup Label="Test Internals">
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Tests.$(AssemblyName)</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
 </Project>
