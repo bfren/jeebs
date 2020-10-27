@@ -26,14 +26,21 @@ namespace Jeebs
 			=> new ROkV<TNext, TState>(value, State) { Messages = Messages, Logger = Logger };
 
 		/// <inheritdoc/>
-		public IOk<bool, TState> True(IMsg? message = null)
+		public IOkV<bool, TState> OkTrue(IMsg? message = null)
+			=> OkBoolean(true, message);
+
+		/// <inheritdoc/>
+		public IOkV<bool, TState> OkFalse(IMsg? message = null)
+			=> OkBoolean(false, message);
+
+		private IOkV<bool, TState> OkBoolean(bool value, IMsg? message = null)
 		{
 			if (message is IMsg msg)
 			{
 				Messages.Add(msg);
 			}
 
-			return Ok<bool>();
+			return OkV(value);
 		}
 
 		#region Explicit implementations
@@ -50,8 +57,11 @@ namespace Jeebs
 		IOkV<TNext> IOk.OkV<TNext>(TNext value)
 			=> OkV(value);
 
-		IOk<bool> IOk.True(IMsg? message)
-			=> True(message);
+		IOkV<bool> IOk.OkTrue(IMsg? message)
+			=> OkTrue(message);
+
+		IOkV<bool> IOk.OkFalse(IMsg? message)
+			=> OkFalse(message);
 
 		IOk<bool, TNext> IOk.WithState<TNext>(TNext state)
 			=> this switch

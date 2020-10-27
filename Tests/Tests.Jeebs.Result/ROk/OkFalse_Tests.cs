@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Jeebs.ROk_Tests
 {
-	public class True_Tests : IOk_True
+	public class OkFalse_Tests : IOk_Boolean
 	{
 		[Fact]
 		public void Returns_IOk_Bool()
@@ -14,10 +14,11 @@ namespace Jeebs.ROk_Tests
 			var r = Result.Ok();
 
 			// Act
-			var f = r.True();
+			var f = r.OkFalse();
 
 			// Assert
-			Assert.IsAssignableFrom<IOk<bool>>(f);
+			var ok = Assert.IsAssignableFrom<IOkV<bool>>(f);
+			Assert.False(ok.Value);
 		}
 
 		[Fact]
@@ -28,10 +29,11 @@ namespace Jeebs.ROk_Tests
 			var msg = new MsgTest();
 
 			// Act
-			var f = r.True(msg);
+			var f = r.OkFalse(msg);
 
 			// Assert
-			Assert.IsAssignableFrom<IOk<bool>>(f);
+			var ok = Assert.IsAssignableFrom<IOkV<bool>>(f);
+			Assert.False(ok.Value);
 			Assert.True(f.Messages.Contains<MsgTest>());
 		}
 

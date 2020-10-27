@@ -28,12 +28,6 @@ namespace Jeebs
 		new IError<TNext, TState> Error<TNext>();
 
 		/// <summary>
-		/// Shorthand to return a 'false' result
-		/// </summary>
-		/// <param name="message">[Optional] Message to add</param>
-		new IError<bool, TState> False(IMsg? message = null);
-
-		/// <summary>
 		/// Type-safe switching - runs <paramref name="okV"/> when current object is <see cref="IOkV{TValue, TState}"/>
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>

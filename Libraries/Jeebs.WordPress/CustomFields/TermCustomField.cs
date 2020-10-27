@@ -32,10 +32,10 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return r.False(new MetaKeyNotFoundMsg(Key));
+					return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(Key));
 				}
 
-				return r.True();
+				return r.OkTrue();
 			}
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
@@ -89,14 +89,14 @@ namespace Jeebs.WordPress
 			{
 				// Get term
 				ValueObj = r.Value;
-				return r.True();
+				return r.OkTrue();
 			}
 		}
 
 		/// <summary>
 		/// Return term Title
 		/// </summary>
-		public override string ToString() 
+		public override string ToString()
 			=> ValueObj?.Title ?? base.ToString();
 
 		/// <summary>

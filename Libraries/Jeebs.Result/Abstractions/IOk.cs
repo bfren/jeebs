@@ -31,7 +31,13 @@ namespace Jeebs
 		/// Shorthand to return a 'true' result
 		/// </summary>
 		/// <param name="message">[Optional] Message to add</param>
-		IOk<bool> True(IMsg? message = null);
+		IOkV<bool> OkTrue(IMsg? message = null);
+
+		/// <summary>
+		/// Shorthand to return a 'false' <see cref="IOk{TValue}"/> result
+		/// </summary>
+		/// <param name="message">[Optional] Message to add</param>
+		IOkV<bool> OkFalse(IMsg? message = null);
 
 		/// <summary>
 		/// Add state to the result

@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Jeebs.R_Tests.WithState
+namespace Jeebs.ROk_Tests.WithState
 {
-	public class False_Tests : IR_False
+	public class OkTrue_Tests : IOk_Boolean
 	{
 		[Fact]
-		public void Returns_Error_Bool()
+		public void Returns_IOk_Bool()
 		{
 			// Arrange
 			var state = F.Rnd.Int;
 			var r = Result.Ok(state);
 
 			// Act
-			var f = r.False();
+			var f = r.OkTrue();
 
 			// Assert
-			Assert.IsAssignableFrom<IError<bool, int>>(f);
+			var ok = Assert.IsAssignableFrom<IOkV<bool, int>>(f);
+			Assert.True(ok.Value);
 		}
 
 		[Fact]
-		public void With_Message_Returns_Error_With_Msg()
+		public void With_Message_Returns_IOk_With_Msg()
 		{
 			// Arrange
 			var state = F.Rnd.Int;
@@ -30,10 +31,11 @@ namespace Jeebs.R_Tests.WithState
 			var msg = new MsgTest();
 
 			// Act
-			var f = r.False(msg);
+			var f = r.OkTrue(msg);
 
 			// Assert
-			Assert.IsAssignableFrom<IError<bool, int>>(f);
+			var ok = Assert.IsAssignableFrom<IOkV<bool, int>>(f);
+			Assert.True(ok.Value);
 			Assert.True(f.Messages.Contains<MsgTest>());
 		}
 

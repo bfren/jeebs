@@ -1,39 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.ROk_Tests.WithState
+namespace Jeebs.ROk_Tests
 {
-	public class True_Tests : IOk_True
+	public class OkTrue_Tests : IOk_Boolean
 	{
 		[Fact]
 		public void Returns_IOk_Bool()
 		{
 			// Arrange
-			var state = F.Rnd.Int;
-			var r = Result.Ok(state);
+			var r = Result.Ok();
 
 			// Act
-			var f = r.True();
+			var f = r.OkTrue();
 
 			// Assert
-			Assert.IsAssignableFrom<IOk<bool, int>>(f);
+			var ok = Assert.IsAssignableFrom<IOkV<bool>>(f);
+			Assert.True(ok.Value);
 		}
 
 		[Fact]
 		public void With_Message_Returns_IOk_With_Msg()
 		{
 			// Arrange
-			var state = F.Rnd.Int;
-			var r = Result.Ok(state);
+			var r = Result.Ok();
 			var msg = new MsgTest();
 
 			// Act
-			var f = r.True(msg);
+			var f = r.OkTrue(msg);
 
 			// Assert
-			Assert.IsAssignableFrom<IOk<bool, int>>(f);
+			var ok = Assert.IsAssignableFrom<IOkV<bool>>(f);
+			Assert.True(ok.Value);
 			Assert.True(f.Messages.Contains<MsgTest>());
 		}
 

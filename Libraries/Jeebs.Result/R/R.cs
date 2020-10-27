@@ -38,17 +38,6 @@ namespace Jeebs
 			};
 
 		/// <inheritdoc/>
-		public IError<bool> False(IMsg? message = null)
-		{
-			if (message is IMsg msg)
-			{
-				Messages.Add(msg);
-			}
-
-			return Error<bool>();
-		}
-
-		/// <inheritdoc/>
 		public IR<TNext> Switch<TNext>(Func<IOkV<TValue>, IR<TNext>> okV, Func<IR<TValue>, IR<TNext>>? other = null)
 			=> this switch
 			{

@@ -34,12 +34,6 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
 		IError<TNext> Error<TNext>();
-
-		/// <summary>
-		/// Shorthand to return a 'false' result
-		/// </summary>
-		/// <param name="message">[Optional] Message to add</param>
-		IError<bool> False(IMsg? message = null);
 	}
 
 	/// <summary>

@@ -59,10 +59,10 @@ namespace Jeebs.Data.Mapping
 					r.AddMsg(new Jm.Data.DeleteMsg(typeof(T), poco.Id));
 
 					// Return
-					return r.True();
+					return r.OkTrue();
 				}
 
-				return r.False(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
+				return r.Error<bool>().AddMsg(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
 			}
 		}
 	}

@@ -33,6 +33,12 @@ namespace Jeebs
 				return false;
 			}
 
+			// Handle identical types
+			if (@this == type)
+			{
+				return false;
+			}
+
 			// Handle value types
 			if (@this.IsValueType)
 			{

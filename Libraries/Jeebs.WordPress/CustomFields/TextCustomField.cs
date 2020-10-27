@@ -35,11 +35,11 @@ namespace Jeebs.WordPress
 			}
 			else if (IsRequired)
 			{
-				return r.False().AddMsg(new MetaKeyNotFoundMsg(Key));
+				return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(Key));
 			}
 
 			// Return success
-			return r.True();
+			return r.OkTrue();
 		}
 	}
 }

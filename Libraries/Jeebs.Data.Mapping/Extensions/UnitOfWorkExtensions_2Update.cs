@@ -44,7 +44,7 @@ namespace Jeebs.Data.Mapping
 			}
 			catch (Exception ex)
 			{
-				return r.False(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), r.Value.Id));
+				return r.Error<bool>().AddMsg(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), r.Value.Id));
 			}
 			finally
 			{
@@ -72,10 +72,10 @@ namespace Jeebs.Data.Mapping
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return r.True();
+				return r.OkTrue();
 			}
 
-			return r.False(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
+			return r.Error<bool>().AddMsg(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
 		}
 
 		/// <summary>
@@ -97,10 +97,10 @@ namespace Jeebs.Data.Mapping
 			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return r.True();
+				return r.OkTrue();
 			}
 
-			return r.False(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
+			return r.Error<bool>().AddMsg(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
 		}
 	}
 }

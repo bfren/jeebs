@@ -26,14 +26,21 @@ namespace Jeebs
 			=> new ROkV<TNext>(value) { Messages = Messages, Logger = Logger };
 
 		/// <inheritdoc/>
-		public IOk<bool> True(IMsg? message = null)
+		public IOkV<bool> OkTrue(IMsg? message = null)
+			=> OkBoolean(true, message);
+
+		/// <inheritdoc/>
+		public IOkV<bool> OkFalse(IMsg? message = null)
+			=> OkBoolean(false, message);
+
+		private IOkV<bool> OkBoolean(bool value, IMsg? message = null)
 		{
 			if (message is IMsg msg)
 			{
 				Messages.Add(msg);
 			}
 
-			return Ok<bool>();
+			return OkV(value);
 		}
 
 		/// <inheritdoc/>

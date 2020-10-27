@@ -25,17 +25,6 @@ namespace Jeebs
 				_ => new RError<TNext, TState>(State) { Messages = Messages, Logger = Logger }
 			};
 
-		/// <inheritdoc cref="IR.Error{TNext}"/>
-		new public IError<bool, TState> False(IMsg? message = null)
-		{
-			if (message is IMsg msg)
-			{
-				Messages.Add(msg);
-			}
-
-			return Error<bool>();
-		}
-
 		/// <inheritdoc/>
 		public IR<TNext, TState> Switch<TNext>(Func<IOkV<TValue>, IR<TNext, TState>> okV, Func<IR<TValue, TState>, IR<TNext, TState>>? other = null)
 			=> this switch
@@ -48,9 +37,6 @@ namespace Jeebs
 
 		IError<TValue, TState> IR<TValue, TState>.Error()
 			=> Error();
-
-		IError<bool> IR.False(IMsg? message)
-			=> False(message);
 
 		#endregion
 	}

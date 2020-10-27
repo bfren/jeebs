@@ -22,6 +22,20 @@ namespace Jeebs.TypeExtensions_Tests
 			Assert.False(result);
 		}
 
+		[Theory]
+		[InlineData(typeof(Foo))]
+		[InlineData(typeof(IDoesImplement))]
+		public void Identical_Types_Returns_False(Type type)
+		{
+			// Arrange
+
+			// Act
+			var result = type.Implements(type);
+
+			// Assert
+			Assert.False(result);
+		}
+
 		[Fact]
 		public void With_Generic_Base_Is_Value_Type_Returns_False()
 		{
