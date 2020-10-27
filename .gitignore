@@ -3,12 +3,13 @@
 ################################################################################
 
 **/.DS_Store
+**/.fake
+**/.ionide
 **/.vs
 **/bin
 **/obj
+
 **/jeebsconfig-secrets.json
 
-.fake
-.ionide
 /Local.pack.props
 /Local.push.props
