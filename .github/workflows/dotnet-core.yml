@@ -14,8 +14,8 @@ jobs:
       name: Prepare - Checkout Code
       uses: actions/checkout@v2
     -
-      name: Prepare - Read version
-      uses: juliangruber/read-file-action@v1
+      name: Prepare - Read Version
+      uses: bencgreen/read-file-action@v1
       with:
         path: ./Version
       id: version
@@ -30,9 +30,9 @@ jobs:
     - 
       name: B - Build
       run: dotnet build Test.csproj --no-restore -c Release
-    #- 
-    #  name: C - Test
-    #  run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
+    - 
+      name: C - Test
+      run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
     - 
       if: success()
       name: D - Pack
@@ -40,7 +40,7 @@ jobs:
     - 
       if: success()
       name: E - Push
-      run: dotnet nuget push "$HOME/.nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "$HOME/.nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicates
     - 
       if: success()
       name: Finish - Success
@@ -61,4 +61,3 @@ jobs:
         SLACK_MESSAGE: Publish Failed
         SLACK_COLOR: danger
         SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
-    
