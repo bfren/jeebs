@@ -7,27 +7,27 @@ on:
     branches: [ main ]
 
 jobs:
-  build-test-pack-push:
+  restore-build-test-pack-push:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: Prepare: Checkout Code
       uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Prepare: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.x'
-    - name: Restore
+    - name: A: Restore
       run: dotnet restore Test.csproj
-    - name: Build
+    - name: B: Build
       run: dotnet build Test.csproj --no-restore --configuration Release
-    - name: Test
+    - name: C: Test
       run: dotnet test Test.csproj --no-restore --no-build --configuration Release --verbosity normal
     - if: success()
-      name: Pack
-      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=%CD%/.nupkgs
+      name: D: Pack
+      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=$HOME/.nupkgs
     - if: success()
-      name: Push
-      run: dotnet nuget push %CD%/.nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      name: E: Push
+      run: dotnet nuget push $HOME/.nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
     - if: success()
       name: Success
       uses: bencgreen/action-slack-notify@master
