@@ -1,6 +1,6 @@
 # Jeebs
 
-![GitHub](https://img.shields.io/github/license/bencgreen/jeebs) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bencgreen/jeebs/.Publish) ![Publish](https://github.com/bencgreen/jeebs/workflows/Publish/badge.svg)
+![GitHub](https://img.shields.io/github/license/bencgreen/jeebs) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bencgreen/jeebs/Publish) ![Publish](https://github.com/bencgreen/jeebs/workflows/Publish/badge.svg)
 
 Libraries for use in .NET Core projects for rapid application development.
 
