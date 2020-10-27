@@ -5,7 +5,7 @@ using System.Text;
 namespace Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync
 {
 	/// <summary>
-	/// Twitter service was unable to get a user's timeline 
+	/// Twitter service was unable to get a user's timeline
 	/// </summary>
 	public sealed class ErrorGettingTimelineMsg : ExceptionMsg
 	{

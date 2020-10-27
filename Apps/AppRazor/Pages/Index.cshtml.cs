@@ -17,9 +17,6 @@ namespace AppRazor.Pages
 			_logger = logger;
 		}
 
-		public void OnGet()
-		{
-
-		}
+		public void OnGet() { }
 	}
 }

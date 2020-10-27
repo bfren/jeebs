@@ -5,7 +5,7 @@ using System.Text;
 namespace Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync
 {
 	/// <summary>
-	/// Twitter service was unable to convert tweets to <see cref="Jeebs.Services.Twitter.Models.TweetModel"/> 
+	/// Twitter service was unable to convert tweets to <see cref="Jeebs.Services.Twitter.Models.TweetModel"/>
 	/// </summary>
 	public sealed class ErrorConvertingTweetsMsg : ExceptionMsg
 	{
