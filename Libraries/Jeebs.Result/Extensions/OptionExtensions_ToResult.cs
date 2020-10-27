@@ -33,7 +33,7 @@ namespace Jeebs
 		/// <typeparam name="TState">Result state type</typeparam>
 		/// <param name="this">Option</param>
 		/// <param name="state">Result state</param>
-		public static IR<TValue> ToResult<TValue, TState>(this Option<TValue> @this, TState state)
+		public static IR<TValue, TState> ToResult<TValue, TState>(this Option<TValue> @this, TState state)
 			=> @this switch
 			{
 				Some<TValue> x => Result.OkV(x.Value, state),
