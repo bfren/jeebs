@@ -12,7 +12,9 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
+#pragma warning disable IDE1006 // Naming Styles
 		public static string __(object o)
+#pragma warning restore IDE1006 // Naming Styles
 			=> $"[{o}]";
 
 		/// <summary>
