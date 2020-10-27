@@ -30,9 +30,9 @@ jobs:
     - 
       name: B - Build
       run: dotnet build Test.csproj --no-restore -c Release
-    - 
-      name: C - Test
-      run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
+    #- 
+    #  name: C - Test
+    #  run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
     - 
       if: success()
       name: D - Pack
@@ -40,10 +40,10 @@ jobs:
     - 
       if: success()
       name: E - Push
-      run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "$HOME/.nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
     - 
       if: success()
-      name: Success
+      name: Finish - Success
       uses: bencgreen/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -53,7 +53,7 @@ jobs:
         SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
     - 
       if: failure()
-      name: Failure
+      name: Finish - Failure
       uses: bencgreen/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
