@@ -10,23 +10,23 @@ jobs:
   restore-build-test-pack-push:
     runs-on: ubuntu-latest
     steps:
-    - name: Prepare: Checkout Code
+    - name: Prepare - Checkout Code
       uses: actions/checkout@v2
-    - name: Prepare: Setup .NET
+    - name: Prepare - Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.x'
-    - name: A: Restore
+    - name: A - Restore
       run: dotnet restore Test.csproj
-    - name: B: Build
+    - name: B - Build
       run: dotnet build Test.csproj --no-restore --configuration Release
-    - name: C: Test
+    - name: C - Test
       run: dotnet test Test.csproj --no-restore --no-build --configuration Release --verbosity normal
     - if: success()
-      name: D: Pack
+      name: D - Pack
       run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=$HOME/.nupkgs
     - if: success()
-      name: E: Push
+      name: E - Push
       run: dotnet nuget push $HOME/.nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
     - if: success()
       name: Success
