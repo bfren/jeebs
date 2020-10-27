@@ -8,7 +8,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 	public class SplitAndEscape_Tests
 	{
 		[Theory]
-		[InlineData("foo", "[foo`")]
+		[InlineData("foo", "[foo]")]
 		[InlineData("foo.bar", "[foo].[bar]")]
 		[InlineData("foo..bar", "[foo].[bar]")]
 		[InlineData("foo.   .bar", "[foo].[bar]")]
