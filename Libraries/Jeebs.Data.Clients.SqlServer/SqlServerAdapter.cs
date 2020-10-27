@@ -22,7 +22,19 @@ namespace Jeebs.Data.Clients.SqlServer
 			// Perform checks
 			CreateSingleAndReturnIdChecks(table, columns, aliases);
 
-			throw new NotImplementedException();
+			// Add @ to aliases (for use as parameters)
+			var aliasesAtted = new List<string>();
+			foreach (var item in aliases)
+			{
+				aliasesAtted.Add($"@{item}");
+			}
+
+			// Create separated columns and values strings
+			var cols = Join(columns);
+			var vals = Join(aliasesAtted);
+
+			// Return query string
+			return $"INSERT INTO {table} ({cols}) VALUES ({vals}); SELECT SCOPE_IDENTITY();";
 		}
 
 		/// <inheritdoc/>
@@ -32,7 +44,13 @@ namespace Jeebs.Data.Clients.SqlServer
 			RetrieveChecks(parts);
 
 			// Start query
-			StringBuilder sql = new StringBuilder($"SELECT {parts.Select ?? "*"} FROM {parts.From}");
+			var select = "*";
+			if (!string.IsNullOrWhiteSpace(parts.Select))
+			{
+				select = parts.Select;
+			}
+
+			StringBuilder sql = new StringBuilder($"SELECT {select} FROM {parts.From}");
 
 			// Add INNER JOIN
 			if (parts.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)
@@ -70,20 +88,25 @@ namespace Jeebs.Data.Clients.SqlServer
 			// Add ORDER BY
 			if (parts.OrderBy is List<string> orderByValue)
 			{
-				sql.Append($" ORDER BY {string.Join(", ", orderByValue)}");
+				sql.Append($" ORDER BY {Join(orderByValue)}");
 			}
 
 			// Add LIMIT
 			if (parts.Limit is long limitValue && limitValue > 0)
 			{
-				sql.Append($" LIMIT {limitValue}");
+				// Add OFFSET
+				if (parts.Offset is long offsetValue && offsetValue > 0)
+				{
+					sql.Append($" LIMIT {offsetValue}, {limitValue}");
+				}
+				else
+				{
+					sql.Append($" LIMIT {limitValue}");
+				}
 			}
 
-			// Add OFFSET
-			if (parts.Offset is long offsetValue && offsetValue > 0)
-			{
-				sql.Append($" OFFSET {offsetValue}");
-			}
+			// Append semi-colon
+			sql.Append(";");
 
 			// Return query string
 			return sql.ToString();
@@ -98,7 +121,8 @@ namespace Jeebs.Data.Clients.SqlServer
 			// Perform checks
 			RetrieveSingleByIdChecks(table, columns, idColumn, idAlias);
 
-			throw new NotImplementedException();
+			// Return query string
+			return $"SELECT {Join(columns)} FROM {table} WHERE {idColumn} = @{idAlias};";
 		}
 
 		/// <inheritdoc/>
@@ -107,7 +131,24 @@ namespace Jeebs.Data.Clients.SqlServer
 			// Perform checks
 			UpdateSingleChecks(table, columns, aliases, idColumn, idAlias);
 
-			throw new NotImplementedException();
+			// Add each column to the update list
+			var update = new List<string>();
+			for (int i = 0; i < columns.Count; i++)
+			{
+				update.Add($"{columns[i]} = @{aliases[i]}");
+			}
+
+			// Build SQL
+			var sql = $"UPDATE {table} SET {Join(update)} WHERE {idColumn} = @{idAlias}";
+
+			// Add Version column
+			if (versionColumn is string column && versionAlias is string alias)
+			{
+				sql += $" AND {column} = @{alias} - 1";
+			}
+
+			// Return query string
+			return $"{sql};";
 		}
 
 		/// <inheritdoc/>
@@ -116,7 +157,17 @@ namespace Jeebs.Data.Clients.SqlServer
 			// Perform checks
 			DeleteSingleChecks(table, idColumn, idAlias);
 
-			throw new NotImplementedException();
+			// Build SQL
+			var sql = $"DELETE FROM {table} WHERE {idColumn} = @{idAlias}";
+
+			// Add Version column
+			if (versionColumn is string column && versionAlias is string alias)
+			{
+				sql += $" AND {column} = @{alias} - 1";
+			}
+
+			// Return query string
+			return $"{sql};";
 		}
 	}
 }
