@@ -21,7 +21,7 @@ jobs:
     - name: Build projects for testing
       run: dotnet build Test.csproj --no-restore --configuration Release
     - name: Run unit tests
-      run: dotnet test --no-restore --no-build --configuration Release --verbosity normal
+      run: dotnet test Test.csproj --no-restore --no-build --configuration Release --verbosity normal
     - if: success()
       name: Create NuGet packages
       run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=.nupkgs
