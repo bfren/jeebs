@@ -7,29 +7,29 @@ on:
     branches: [ main ]
 
 jobs:
-  ci:
+  build-test-pack-push:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.x'
-    - name: Install dependencies
+    - name: Restore
       run: dotnet restore Test.csproj
-    - name: Build projects for testing
+    - name: Build
       run: dotnet build Test.csproj --no-restore --configuration Release
-    - name: Run unit tests
+    - name: Test
       run: dotnet test Test.csproj --no-restore --no-build --configuration Release --verbosity normal
     - if: success()
-      name: Create NuGet packages
-      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=.nupkgs
+      name: Pack
+      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=%CD%/.nupkgs
     - if: success()
-      name: Push NuGet packages
-      run: dotnet nuget push .nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      name: Push
+      run: dotnet nuget push %CD%/.nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
     - if: success()
-      name: Send success message
+      name: Success
       uses: bencgreen/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -38,7 +38,7 @@ jobs:
         SLACK_COLOR: good
         SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
     - if: failure()
-      name: Send fail message
+      name: Failure
       uses: bencgreen/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
