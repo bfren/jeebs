@@ -1,4 +1,4 @@
-name: .NET Core
+name: Publish
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
     - 
       if: success()
       name: E - Push
-      run: dotnet nuget push "$HOME/.nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicates
+      run: dotnet nuget push "$HOME/.nupkgs/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
     - 
       if: success()
       name: Finish - Success
