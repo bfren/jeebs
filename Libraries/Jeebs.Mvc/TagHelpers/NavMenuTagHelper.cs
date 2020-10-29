@@ -133,7 +133,8 @@ namespace Jeebs.Mvc.TagHelpers
 					var urlActionContext = new UrlActionContext
 					{
 						Controller = menuItem.Controller,
-						Action = menuItem.Action
+						Action = menuItem.Action,
+						Values = menuItem.RouteValues
 					};
 
 					link.Attributes.Add("href", urlHelper.Action(urlActionContext));

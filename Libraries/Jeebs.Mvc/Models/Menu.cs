@@ -44,15 +44,16 @@ namespace Jeebs.Mvc.Models
 		/// <returns>Menu Item URL</returns>
 		private string GetUri(IUrlHelper url, MenuItem item)
 		{
-			UrlActionContext c = new UrlActionContext
+			UrlActionContext actionContext = new UrlActionContext
 			{
 				Protocol = url.ActionContext.HttpContext.Request.Scheme,
 				Host = url.ActionContext.HttpContext.Request.Host.ToString(),
 				Controller = item.Controller ?? string.Empty,
-				Action = item.Action ?? "Index"
+				Action = item.Action ?? "Index",
+				Values = item.RouteValues
 			};
 
-			return url.Action(c);
+			return url.Action(actionContext);
 		}
 
 		/// <summary>

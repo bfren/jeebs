@@ -16,6 +16,8 @@ namespace AppConsole
 			log.Debug("Services loaded");
 			log.Debug("Project {Name}", config.GetJeebsConfig().App.Name);
 
+			log.Debug("Version: {0}", Version<DateRange>.Full);
+
 			log.Error("Test error");
 			log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
 

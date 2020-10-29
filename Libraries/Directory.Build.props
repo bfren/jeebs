@@ -12,7 +12,7 @@
 	<ItemGroup Label="Licence">
 		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
-	<Target Name="ReadVersion" BeforeTargets="BeforeBuild" Condition="'$(Configuration)'=='Release'">
+	<Target Name="ReadVersion" BeforeTargets="BeforeResolveReferences">
 		<ReadLinesFromFile File="../../Version">
 			<Output TaskParameter="Lines" PropertyName="PackageVersion"/>
 		</ReadLinesFromFile>
@@ -22,8 +22,8 @@
 	<PropertyGroup Label="Package">
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
-		<Copyright>Copyright © bcg 2013-2020</Copyright>
-		<Version>$(PackageVersion)</Version>
+		<Copyright>Copyright © bcg 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
+		<Version>4.1.1</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
