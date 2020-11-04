@@ -98,7 +98,7 @@ namespace Jeebs.WordPress
 			{
 				// Trim search text
 				var search = searchText.Trim();
-				var where = string.Empty;
+				var where = new StringBuilder();
 
 				// Set comparison operator and modify search string accordingly
 				var comparison = "=";
@@ -117,40 +117,40 @@ namespace Jeebs.WordPress
 				// Search title
 				if ((opt.SearchFields & SearchPostFields.Title) != 0)
 				{
-					where += $"{__(db.Post, p => p.Title)} {comparison} @{nameof(search)}";
+					where.Append($"{__(db.Post, p => p.Title)} {comparison} @{nameof(search)}");
 				}
 
 				// Search slug
 				if ((opt.SearchFields & SearchPostFields.Slug) != 0)
 				{
-					if (!string.IsNullOrEmpty(where))
+					if (where.Length > 0)
 					{
-						where += " OR ";
+						where.Append(" OR ");
 					}
 
-					where += $"{__(db.Post, p => p.Slug)} {comparison} @{nameof(search)}";
+					where.Append($"{__(db.Post, p => p.Slug)} {comparison} @{nameof(search)}");
 				}
 
 				// Search content
 				if ((opt.SearchFields & SearchPostFields.Content) != 0)
 				{
-					if (!string.IsNullOrEmpty(where))
+					if (where.Length > 0)
 					{
-						where += " OR ";
+						where.Append(" OR ");
 					}
 
-					where += $"{__(db.Post, p => p.Content)} {comparison} @{nameof(search)}";
+					where.Append($"{__(db.Post, p => p.Content)} {comparison} @{nameof(search)}");
 				}
 
 				// Search excerpt
 				if ((opt.SearchFields & SearchPostFields.Excerpt) != 0)
 				{
-					if (!string.IsNullOrEmpty(where))
+					if (where.Length > 0)
 					{
-						where += " OR ";
+						where.Append(" OR ");
 					}
 
-					where += $"{__(db.Post, p => p.Excerpt)} {comparison} @{nameof(search)}";
+					where.Append($"{__(db.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
 				}
 
 				// Add to WHERE
