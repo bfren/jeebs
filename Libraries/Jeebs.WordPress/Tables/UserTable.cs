@@ -13,57 +13,57 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// UserId
 		/// </summary>
-		public readonly string UserId = "ID";
+		public string UserId { get; } = "ID";
 
 		/// <summary>
 		/// Username
 		/// </summary>
-		public readonly string Username = "user_login";
+		public string Username { get; } = "user_login";
 
 		/// <summary>
 		/// Password
 		/// </summary>
-		public readonly string Password = "user_pass";
+		public string Password { get; } = "user_pass";
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public readonly string Slug = "user_nicename";
+		public string Slug { get; } = "user_nicename";
 
 		/// <summary>
 		/// Email
 		/// </summary>
-		public readonly string Email = "user_email";
+		public string Email { get; } = "user_email";
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public readonly string Url = "user_url";
+		public string Url { get; } = "user_url";
 
 		/// <summary>
 		/// RegisteredOn
 		/// </summary>
-		public readonly string RegisteredOn = "user_registered";
+		public string RegisteredOn { get; } = "user_registered";
 
 		/// <summary>
 		/// ActivationKey
 		/// </summary>
-		public readonly string ActivationKey = "user_activation_key";
+		public string ActivationKey { get; } = "user_activation_key";
 
 		/// <summary>
 		/// Status
 		/// </summary>
-		public readonly string Status = "user_status";
+		public string Status { get; } = "user_status";
 
 		/// <summary>
 		/// DisplayName
 		/// </summary>
-		public readonly string DisplayName = "display_name";
+		public string DisplayName { get; } = "display_name";
 
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="prefix">Table prefix</param>
+		/// <param name{ get; }="prefix">Table prefix</param>
 		public UserTable(string prefix) : base($"{prefix}users") { }
 	}
 }

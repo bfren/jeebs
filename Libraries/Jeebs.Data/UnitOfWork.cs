@@ -83,7 +83,7 @@ namespace Jeebs.Data
 		#region Failure
 
 		/// <inheritdoc/>
-		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters = null)
+		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters)
 		{
 			// Rollback transaction
 			Rollback();
@@ -101,7 +101,7 @@ namespace Jeebs.Data
 		#region R: Query
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -119,7 +119,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters)
+			=> Query(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<IEnumerable<dynamic>> Query(IOk r, string query)
+			=> Query(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -137,7 +145,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters)
+			=> QueryAsync(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query)
+			=> QueryAsync(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -155,7 +171,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters)
+			=> Query<T>(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<IEnumerable<T>> Query<T>(IOk r, string query)
+			=> Query<T>(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -172,12 +196,20 @@ namespace Jeebs.Data
 			}
 		}
 
+		/// <inheritdoc/>
+		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters)
+			=> QueryAsync<T>(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query)
+			=> QueryAsync<T>(r, query, null, CommandType.Text);
+
 		#endregion
 
 		#region R: Single
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<T> Single<T>(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -195,7 +227,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<T> Single<T>(IOk r, string query, object? parameters)
+			=> Single<T>(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<T> Single<T>(IOk r, string query)
+			=> Single<T>(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -212,12 +252,20 @@ namespace Jeebs.Data
 			}
 		}
 
+		/// <inheritdoc/>
+		public Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters)
+			=> SingleAsync<T>(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<IR<T>> SingleAsync<T>(IOk r, string query)
+			=> SingleAsync<T>(r, query, null, CommandType.Text);
+
 		#endregion
 
 		#region Execute
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<int> Execute(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -235,7 +283,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<int> Execute(IOk r, string query, object? parameters)
+			=> Execute(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<int> Execute(IOk r, string query)
+			=> Execute(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public async Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -253,7 +309,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters)
+			=> ExecuteAsync(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<IR<int>> ExecuteAsync(IOk r, string query)
+			=> ExecuteAsync(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -271,7 +335,15 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text)
+		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters)
+			=> ExecuteScalar<T>(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public IR<T> ExecuteScalar<T>(IOk r, string query)
+			=> ExecuteScalar<T>(r, query, null, CommandType.Text);
+
+		/// <inheritdoc/>
+		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
@@ -287,6 +359,14 @@ namespace Jeebs.Data
 				return Fail<T>(r, ex, query, parameters);
 			}
 		}
+
+		/// <inheritdoc/>
+		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters)
+			=> ExecuteScalarAsync<T>(r, query, parameters, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query)
+			=> ExecuteScalarAsync<T>(r, query, null, CommandType.Text);
 
 		#endregion
 	}

@@ -13,72 +13,72 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// LinkId
 		/// </summary>
-		public readonly string LinkId = "link_id";
+		public string LinkId { get; } = "link_id";
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public readonly string Url = "link_url";
+		public string Url { get; } = "link_url";
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public readonly string Title = "link_name";
+		public string Title { get; } = "link_name";
 
 		/// <summary>
 		/// Image
 		/// </summary>
-		public readonly string Image = "link_image";
+		public string Image { get; } = "link_image";
 
 		/// <summary>
 		/// Target
 		/// </summary>
-		public readonly string Target = "link_target";
+		public string Target { get; } = "link_target";
 
 		/// <summary>
 		/// CategoryId
 		/// </summary>
-		public readonly string CategoryId = "link_category";
+		public string CategoryId { get; } = "link_category";
 
 		/// <summary>
 		/// Description
 		/// </summary>
-		public readonly string Description = "link_description";
+		public string Description { get; } = "link_description";
 
 		/// <summary>
 		/// Visible
 		/// </summary>
-		public readonly string Visible = "link_visible";
+		public string Visible { get; } = "link_visible";
 
 		/// <summary>
 		/// OwnerId
 		/// </summary>
-		public readonly string OwnerId = "link_owner";
+		public string OwnerId { get; } = "link_owner";
 
 		/// <summary>
 		/// Rating
 		/// </summary>
-		public readonly string Rating = "link_rating";
+		public string Rating { get; } = "link_rating";
 
 		/// <summary>
 		/// LastUpdatedOn
 		/// </summary>
-		public readonly string LastUpdatedOn = "link_updated";
+		public string LastUpdatedOn { get; } = "link_updated";
 
 		/// <summary>
 		/// Rel
 		/// </summary>
-		public readonly string Rel = "link_rel";
+		public string Rel { get; } = "link_rel";
 
 		/// <summary>
 		/// Notes
 		/// </summary>
-		public readonly string Notes = "link_notes";
+		public string Notes { get; } = "link_notes";
 
 		/// <summary>
 		/// Rss
 		/// </summary>
-		public readonly string Rss = "link_rss";
+		public string Rss { get; } = "link_rss";
 
 		/// <summary>
 		/// Create object

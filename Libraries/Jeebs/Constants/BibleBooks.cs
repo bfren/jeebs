@@ -13,332 +13,332 @@ namespace Jeebs.Constants
 		/// <summary>
 		///	Genesis
 		/// </summary>
-		public const string Genesis = "Genesis";
+		public static string Genesis = "Genesis";
 
 		/// <summary>
 		///	Exodus
 		/// </summary>
-		public const string Exodus = "Exodus";
+		public static string Exodus = "Exodus";
 
 		/// <summary>
 		///	Leviticus
 		/// </summary>
-		public const string Leviticus = "Leviticus";
+		public static string Leviticus = "Leviticus";
 
 		/// <summary>
 		///	Numbers
 		/// </summary>
-		public const string Numbers = "Numbers";
+		public static string Numbers = "Numbers";
 
 		/// <summary>
 		///	Deuteronomy
 		/// </summary>
-		public const string Deuteronomy = "Deuteronomy";
+		public static string Deuteronomy = "Deuteronomy";
 
 		/// <summary>
 		///	Joshua
 		/// </summary>
-		public const string Joshua = "Joshua";
+		public static string Joshua = "Joshua";
 
 		/// <summary>
 		///	Judges
 		/// </summary>
-		public const string Judges = "Judges";
+		public static string Judges = "Judges";
 
 		/// <summary>
 		///	Ruth
 		/// </summary>
-		public const string Ruth = "Ruth";
+		public static string Ruth = "Ruth";
 
 		/// <summary>
 		///	1 Samuel
 		/// </summary>
-		public const string FirstSamuel = "1 Samuel";
+		public static string FirstSamuel = "1 Samuel";
 
 		/// <summary>
 		///	2 Samuel
 		/// </summary>
-		public const string SecondSamuel = "2 Samuel";
+		public static string SecondSamuel = "2 Samuel";
 
 		/// <summary>
 		///	1 Kings
 		/// </summary>
-		public const string FirstKings = "1 Kings";
+		public static string FirstKings = "1 Kings";
 
 		/// <summary>
 		///	2 Kings
 		/// </summary>
-		public const string SecondKings = "2 Kings";
+		public static string SecondKings = "2 Kings";
 
 		/// <summary>
 		///	1 Chronicles
 		/// </summary>
-		public const string FirstChronicles = "1 Chronicles";
+		public static string FirstChronicles = "1 Chronicles";
 
 		/// <summary>
 		///	2 Chronicles
 		/// </summary>
-		public const string SecondChronicles = "2 Chronicles";
+		public static string SecondChronicles = "2 Chronicles";
 
 		/// <summary>
 		///	Ezra
 		/// </summary>
-		public const string Ezra = "Ezra";
+		public static string Ezra = "Ezra";
 
 		/// <summary>
 		///	Nehemiah
 		/// </summary>
-		public const string Nehemiah = "Nehemiah";
+		public static string Nehemiah = "Nehemiah";
 
 		/// <summary>
 		///	Esther
 		/// </summary>
-		public const string Esther = "Esther";
+		public static string Esther = "Esther";
 
 		/// <summary>
 		///	Job
 		/// </summary>
-		public const string Job = "Job";
+		public static string Job = "Job";
 
 		/// <summary>
 		///	Psalms
 		/// </summary>
-		public const string Psalms = "Psalms";
+		public static string Psalms = "Psalms";
 
 		/// <summary>
 		///	Proverbs
 		/// </summary>
-		public const string Proverbs = "Proverbs";
+		public static string Proverbs = "Proverbs";
 
 		/// <summary>
 		///	Ecclesiastes
 		/// </summary>
-		public const string Ecclesiastes = "Ecclesiastes";
+		public static string Ecclesiastes = "Ecclesiastes";
 
 		/// <summary>
 		///	SongOfSongs
 		/// </summary>
-		public const string SongOfSongs = "Song of Songs";
+		public static string SongOfSongs = "Song of Songs";
 
 		/// <summary>
 		///	Isaiah
 		/// </summary>
-		public const string Isaiah = "Isaiah";
+		public static string Isaiah = "Isaiah";
 
 		/// <summary>
 		///	Jeremiah
 		/// </summary>
-		public const string Jeremiah = "Jeremiah";
+		public static string Jeremiah = "Jeremiah";
 
 		/// <summary>
 		///	Lamentations
 		/// </summary>
-		public const string Lamentations = "Lamentations";
+		public static string Lamentations = "Lamentations";
 
 		/// <summary>
 		///	Ezekiel
 		/// </summary>
-		public const string Ezekiel = "Ezekiel";
+		public static string Ezekiel = "Ezekiel";
 
 		/// <summary>
 		///	Daniel
 		/// </summary>
-		public const string Daniel = "Daniel";
+		public static string Daniel = "Daniel";
 
 		/// <summary>
 		///	Hosea
 		/// </summary>
-		public const string Hosea = "Hosea";
+		public static string Hosea = "Hosea";
 
 		/// <summary>
 		///	Joel
 		/// </summary>
-		public const string Joel = "Joel";
+		public static string Joel = "Joel";
 
 		/// <summary>
 		///	Amos
 		/// </summary>
-		public const string Amos = "Amos";
+		public static string Amos = "Amos";
 
 		/// <summary>
 		///	Obadiah
 		/// </summary>
-		public const string Obadiah = "Obadiah";
+		public static string Obadiah = "Obadiah";
 
 		/// <summary>
 		///	Jonah
 		/// </summary>
-		public const string Jonah = "Jonah";
+		public static string Jonah = "Jonah";
 
 		/// <summary>
 		///	Micah
 		/// </summary>
-		public const string Micah = "Micah";
+		public static string Micah = "Micah";
 
 		/// <summary>
 		///	Nahum
 		/// </summary>
-		public const string Nahum = "Nahum";
+		public static string Nahum = "Nahum";
 
 		/// <summary>
 		///	Habakkuk
 		/// </summary>
-		public const string Habakkuk = "Habakkuk";
+		public static string Habakkuk = "Habakkuk";
 
 		/// <summary>
 		///	Zephaniah
 		/// </summary>
-		public const string Zephaniah = "Zephaniah";
+		public static string Zephaniah = "Zephaniah";
 
 		/// <summary>
 		///	Haggai
 		/// </summary>
-		public const string Haggai = "Haggai";
+		public static string Haggai = "Haggai";
 
 		/// <summary>
 		///	Zechariah
 		/// </summary>
-		public const string Zechariah = "Zechariah";
+		public static string Zechariah = "Zechariah";
 
 		/// <summary>
 		///	Malachi
 		/// </summary>
-		public const string Malachi = "Malachi";
+		public static string Malachi = "Malachi";
 
 		/// <summary>
 		///	Matthew
 		/// </summary>
-		public const string Matthew = "Matthew";
+		public static string Matthew = "Matthew";
 
 		/// <summary>
 		///	Mark
 		/// </summary>
-		public const string Mark = "Mark";
+		public static string Mark = "Mark";
 
 		/// <summary>
 		///	Luke
 		/// </summary>
-		public const string Luke = "Luke";
+		public static string Luke = "Luke";
 
 		/// <summary>
 		///	John
 		/// </summary>
-		public const string John = "John";
+		public static string John = "John";
 
 		/// <summary>
 		///	Acts
 		/// </summary>
-		public const string Acts = "Acts";
+		public static string Acts = "Acts";
 
 		/// <summary>
 		///	Romans
 		/// </summary>
-		public const string Romans = "Romans";
+		public static string Romans = "Romans";
 
 		/// <summary>
 		///	1 Corinthians
 		/// </summary>
-		public const string FirstCorinthians = "1 Corinthians";
+		public static string FirstCorinthians = "1 Corinthians";
 
 		/// <summary>
 		///	2 Corinthians
 		/// </summary>
-		public const string SecondCorinthians = "2 Corinthians";
+		public static string SecondCorinthians = "2 Corinthians";
 
 		/// <summary>
 		///	Galations
 		/// </summary>
-		public const string Galatians = "Galatians";
+		public static string Galatians = "Galatians";
 
 		/// <summary>
 		///	Ephesians
 		/// </summary>
-		public const string Ephesians = "Ephesians";
+		public static string Ephesians = "Ephesians";
 
 		/// <summary>
 		///	Philippians
 		/// </summary>
-		public const string Philippians = "Philippians";
+		public static string Philippians = "Philippians";
 
 		/// <summary>
 		///	Colossians
 		/// </summary>
-		public const string Colossians = "Colossians";
+		public static string Colossians = "Colossians";
 
 		/// <summary>
 		///	1 Thessalonians
 		/// </summary>
-		public const string FirstThessalonians = "1 Thessalonians";
+		public static string FirstThessalonians = "1 Thessalonians";
 
 		/// <summary>
 		///	2 Thessalonians
 		/// </summary>
-		public const string SecondThessalonians = "2 Thessalonians";
+		public static string SecondThessalonians = "2 Thessalonians";
 
 		/// <summary>
 		///	1 Timothy
 		/// </summary>
-		public const string FirstTimothy = "1 Timothy";
+		public static string FirstTimothy = "1 Timothy";
 
 		/// <summary>
 		///	2 Timothy
 		/// </summary>
-		public const string SecondTimothy = "2 Timothy";
+		public static string SecondTimothy = "2 Timothy";
 
 		/// <summary>
 		///	Titus
 		/// </summary>
-		public const string Titus = "Titus";
+		public static string Titus = "Titus";
 
 		/// <summary>
 		///	Philemon
 		/// </summary>
-		public const string Philemon = "Philemon";
+		public static string Philemon = "Philemon";
 
 		/// <summary>
 		///	Hebrews
 		/// </summary>
-		public const string Hebrews = "Hebrews";
+		public static string Hebrews = "Hebrews";
 
 		/// <summary>
 		///	James
 		/// </summary>
-		public const string James = "James";
+		public static string James = "James";
 
 		/// <summary>
 		///	1 Peter
 		/// </summary>
-		public const string FirstPeter = "1 Peter";
+		public static string FirstPeter = "1 Peter";
 
 		/// <summary>
 		///	2 Peter
 		/// </summary>
-		public const string SecondPeter = "2 Peter";
+		public static string SecondPeter = "2 Peter";
 
 		/// <summary>
 		///	1 John
 		/// </summary>
-		public const string FirstJohn = "1 John";
+		public static string FirstJohn = "1 John";
 
 		/// <summary>
 		///	2 John
 		/// </summary>
-		public const string SecondJohn = "2 John";
+		public static string SecondJohn = "2 John";
 
 		/// <summary>
 		///	3 John
 		/// </summary>
-		public const string ThirdJohn = "3 John";
+		public static string ThirdJohn = "3 John";
 
 		/// <summary>
 		///	Jude
 		/// </summary>
-		public const string Jude = "Jude";
+		public static string Jude = "Jude";
 
 		/// <summary>
 		///	Revelation
 		/// </summary>
-		public const string Revelation = "Revelation";
+		public static string Revelation = "Revelation";
 
 		/// <summary>
 		/// Books of the Law

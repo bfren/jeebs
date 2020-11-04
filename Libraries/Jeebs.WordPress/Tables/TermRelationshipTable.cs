@@ -13,17 +13,17 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public readonly string PostId = "object_id";
+		public string PostId { get; } = "object_id";
 
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public readonly string TermTaxonomyId = "term_taxonomy_id";
+		public string TermTaxonomyId { get; } = "term_taxonomy_id";
 
 		/// <summary>
 		/// SortOrder
 		/// </summary>
-		public readonly string SortOrder = "term_order";
+		public string SortOrder { get; } = "term_order";
 
 		/// <summary>
 		/// Create object

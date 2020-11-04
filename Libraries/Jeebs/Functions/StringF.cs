@@ -14,51 +14,55 @@ namespace F
 		/// <summary>
 		/// List of all characters
 		/// </summary>
-		public static List<char> AllChars = new List<char>();
+		public static List<char> AllChars { get; }
 
 		/// <summary>
 		/// List of lowercase characters
 		/// </summary>
-		public static List<char> LowercaseChars = new List<char>();
+		public static List<char> LowercaseChars { get; }
 
 		/// <summary>
 		/// List of uppercase characters
 		/// </summary>
-		public static List<char> UppercaseChars = new List<char>();
+		public static List<char> UppercaseChars { get; }
 
 		/// <summary>
 		/// List of numeric characters
 		/// </summary>
-		public static List<char> NumberChars = new List<char>();
+		public static List<char> NumberChars { get; }
 
 		/// <summary>
 		/// List of special characters
 		/// </summary>
-		public static List<char> SpecialChars = new List<char>();
+		public static List<char> SpecialChars { get; }
 
 		/// <summary>
 		/// Fill character lists
 		/// </summary>
 		static StringF()
 		{
+			LowercaseChars = new List<char>();
 			for (int i = 97; i <= 122; i++)
 			{
 				LowercaseChars.Add(Convert.ToChar(i));
 			}
 
+			UppercaseChars = new List<char>();
 			for (int i = 65; i <= 90; i++)
 			{
 				UppercaseChars.Add(Convert.ToChar(i));
 			}
 
+			NumberChars = new List<char>();
 			for (int i = 48; i <= 57; i++)
 			{
 				NumberChars.Add(Convert.ToChar(i));
 			}
 
 			// Don't include % so we don't confuse SQL databases
-			SpecialChars.AddRange(new[] { '!', '#', '@', '+', '-', '*', '^', '=', ':', ';', '£', '$', '~', '`', '¬' });
+			SpecialChars = new List<char>(new[] { '!', '#', '@', '+', '-', '*', '^', '=', ':', ';', '£', '$', '~', '`', '¬' });
 
+			AllChars = new List<char>();
 			AllChars.AddRange(LowercaseChars);
 			AllChars.AddRange(UppercaseChars);
 			AllChars.AddRange(NumberChars);

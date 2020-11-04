@@ -13,82 +13,82 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// CommentId
 		/// </summary>
-		public readonly string CommentId = "comment_ID";
+		public string CommentId { get; } = "comment_ID";
 
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public readonly string PostId = "comment_post_ID";
+		public string PostId { get; } = "comment_post_ID";
 
 		/// <summary>
 		/// AuthorName
 		/// </summary>
-		public readonly string AuthorName = "comment_author";
+		public string AuthorName { get; } = "comment_author";
 
 		/// <summary>
 		/// AuthorEmail
 		/// </summary>
-		public readonly string AuthorEmail = "comment_author_email";
+		public string AuthorEmail { get; } = "comment_author_email";
 
 		/// <summary>
 		/// AuthorUrl
 		/// </summary>
-		public readonly string AuthorUrl = "comment_author_url";
+		public string AuthorUrl { get; } = "comment_author_url";
 
 		/// <summary>
 		/// AuthorIp
 		/// </summary>
-		public readonly string AuthorIp = "comment_author_IP";
+		public string AuthorIp { get; } = "comment_author_IP";
 
 		/// <summary>
 		/// PublishedOn
 		/// </summary>
-		public readonly string PublishedOn = "comment_date";
+		public string PublishedOn { get; } = "comment_date";
 
 		/// <summary>
 		/// PublishedOnGmt
 		/// </summary>
-		public readonly string PublishedOnGmt = "comment_date_gmt";
+		public string PublishedOnGmt { get; } = "comment_date_gmt";
 
 		/// <summary>
 		/// Content
 		/// </summary>
-		public readonly string Content = "comment_content";
+		public string Content { get; } = "comment_content";
 
 		/// <summary>
 		/// Karma
 		/// </summary>
-		public readonly string Karma = "comment_karma";
+		public string Karma { get; } = "comment_karma";
 
 		/// <summary>
 		/// IsApproved
 		/// </summary>
-		public readonly string IsApproved = "comment_approved";
+		public string IsApproved { get; } = "comment_approved";
 
 		/// <summary>
 		/// AuthorUserAgent
 		/// </summary>
-		public readonly string AuthorUserAgent = "comment_agent";
+		public string AuthorUserAgent { get; } = "comment_agent";
 
 		/// <summary>
 		/// Type
 		/// </summary>
-		public readonly string Type = "comment_type";
+		public string Type { get; } = "comment_type";
 
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public readonly string ParentId = "comment_parent";
+		public string ParentId { get; } = "comment_parent";
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public readonly string AuthorId = "user_id";
+		public string AuthorId { get; } = "user_id";
 
 		/// <summary>
 		/// AuthorIsSubscribed
 		/// </summary>
-		public readonly string AuthorIsSubscribed = "comment_subscribe";
+		public string AuthorIsSubscribed { get; } = "comment_subscribe";
 
 		/// <summary>
 		/// Create object

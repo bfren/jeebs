@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Jeebs.Reflection;
@@ -42,7 +43,7 @@ namespace Jeebs
 		/// <param name="ld">Left double quote mark</param>
 		/// <param name="rd">Right double quote mark</param>
 		/// <returns>Input string with straight quotes converted to curly quotes</returns>
-		public static string ConvertCurlyQuotes(this string @this, string ls = "‘", string rs = "’", string ld = "“", string rd = "”")
+		public static string ConvertCurlyQuotes(this string @this, string ls, string rs, string ld, string rd)
 			=> Modify(@this, () =>
 			{
 				var s = @this.Replace("&#34;", "\"");
@@ -50,6 +51,22 @@ namespace Jeebs
 				s = Regex.Replace(s, "(\\s|^)'", $"$1{ls}").Replace("'", rs);
 				return Regex.Replace(s, "(\\s|^)\"", $"$1{ld}").Replace("\"", rd);
 			});
+
+		/// <inheritdoc cref="ConvertCurlyQuotes(string, string, string, string, string)"/>
+		public static string ConvertCurlyQuotes(this string @this, string ls, string rs, string ld)
+			=> ConvertCurlyQuotes(@this, ls, rs, ld, "”");
+
+		/// <inheritdoc cref="ConvertCurlyQuotes(string, string, string, string, string)"/>
+		public static string ConvertCurlyQuotes(this string @this, string ls, string rs)
+			=> ConvertCurlyQuotes(@this, ls, rs, "“", "”");
+
+		/// <inheritdoc cref="ConvertCurlyQuotes(string, string, string, string, string)"/>
+		public static string ConvertCurlyQuotes(this string @this, string ls)
+			=> ConvertCurlyQuotes(@this, ls, "’", "“", "”");
+
+		/// <inheritdoc cref="ConvertCurlyQuotes(string, string, string, string, string)"/>
+		public static string ConvertCurlyQuotes(this string @this)
+			=> ConvertCurlyQuotes(@this, "‘", "’", "“", "”");
 
 		/// <summary>
 		/// Convert straight quotes to curly quotes, but not inside HTML tags / attributes
@@ -59,9 +76,6 @@ namespace Jeebs
 		public static string ConvertInnerHtmlQuotes(this string @this)
 			=> Modify(@this, () =>
 			{
-				// Will hold the result
-				string result = string.Empty;
-
 				// Convert using HTML entities
 				static string convert(string input)
 				{
@@ -76,14 +90,15 @@ namespace Jeebs
 
 				// Loop through each HTML tag, replacing the quotes in the text in between
 				int lastIndex = 0;
+				var builder = new StringBuilder();
 				while (match.Success)
 				{
 					// Replace text between this match and the previous one
 					string textBetween = @this[lastIndex..match.Index];
-					result += convert(textBetween);
+					builder.Append(convert(textBetween));
 
 					// Add the text in this section unchanged
-					result += match.Value;
+					builder.Append(match.Value);
 
 					// Move to the next section
 					lastIndex = match.Index + match.Length;
@@ -92,10 +107,10 @@ namespace Jeebs
 
 				// Replace any remaining quotes
 				string remaining = @this[lastIndex..];
-				result += convert(remaining);
+				builder.Append(convert(remaining));
 
 				// Return result string
-				return result;
+				return builder.ToString();
 			});
 
 		/// <summary>
@@ -205,7 +220,7 @@ namespace Jeebs
 				}
 
 				// Get the extension and switch to get the mime type
-				switch (@this.Substring(lastPeriod + 1).ToLower())
+				switch (@this.Substring(lastPeriod + 1).ToLowerInvariant())
 				{
 					case "bmp":
 						return MimeType.Bmp.ToString();
@@ -288,8 +303,16 @@ namespace Jeebs
 		/// <param name="continuation">The continuation string to append to strings longer than the maximum</param>
 		/// <param name="empty">Text to return if the primary string is empty</param>
 		/// <returns>Modified input string</returns>
-		public static string NoLongerThan(this string @this, int maxLength, string continuation = "..", string? empty = null)
+		public static string NoLongerThan(this string @this, int maxLength, string continuation, string? empty)
 			=> Modify(@this, () => (maxLength > 0 && @this.Length > maxLength) ? @this.Substring(0, maxLength) + continuation : @this, empty);
+
+		/// <inheritdoc cref="NoLongerThan(string, int, string, string?)"/>
+		public static string NoLongerThan(this string @this, int maxLength, string continuation)
+			=> NoLongerThan(@this, maxLength, continuation, null);
+
+		/// <inheritdoc cref="NoLongerThan(string, int, string, string?)"/>
+		public static string NoLongerThan(this string @this, int maxLength)
+			=> NoLongerThan(@this, maxLength, "..", null);
 
 		/// <summary>
 		/// Normalise a string by making it lowercase, stripping all non-letters and replacing spaces with -
@@ -300,7 +323,7 @@ namespace Jeebs
 			=> Modify(@this, () =>
 			{
 				// Make lowercase, and remove non-letters characters
-				string normalised = Regex.Replace(@this.ToLower(), "[^a-z -]", "").Trim();
+				string normalised = Regex.Replace(@this.ToLowerInvariant(), "[^a-z -]", "").Trim();
 
 				// Remove hyphens from the start of the string
 				normalised = normalised.TrimStart('-');
@@ -343,7 +366,7 @@ namespace Jeebs
 		/// <param name="this">The input string</param>
 		/// <param name="replaceWith">String to replace non-numerical characters with</param>
 		/// <returns>Input string with all non-numerical characters removed</returns>
-		public static string ReplaceNonNumerical(this string @this, string? replaceWith = null)
+		public static string ReplaceNonNumerical(this string @this, string? replaceWith)
 			=> Modify(@this, () =>
 			{
 				// Make sure replaceWith isn't null
@@ -356,13 +379,17 @@ namespace Jeebs
 				return Regex.Replace(@this, "[^0-9]+", replaceWith);
 			});
 
+		/// <inheritdoc cref="ReplaceNonNumerical(string, string?)"/>
+		public static string ReplaceNonNumerical(this string @this)
+			=> ReplaceNonNumerical(@this, null);
+
 		/// <summary>
 		/// Replace non-word characters in a string, useful for creating HTML IDs (for example)
 		/// </summary>
 		/// <param name="this">String to perform operation on</param>
 		/// <param name="replaceWith">String to replace unwanted characters with</param>
 		/// <returns>String with unwanted characters replaced</returns>
-		public static string ReplaceNonWord(this string @this, string? replaceWith = null)
+		public static string ReplaceNonWord(this string @this, string? replaceWith)
 			=> Modify(@this, () =>
 			{
 				// Make sure replaceWith isn't null
@@ -374,6 +401,10 @@ namespace Jeebs
 				// Now replace all non-word characters
 				return Regex.Replace(@this, @"\W+", replaceWith);
 			});
+
+		/// <inheritdoc cref="ReplaceNonWord(string, string?)"/>
+		public static string ReplaceNonWord(this string @this)
+			=> ReplaceNonWord(@this, null);
 
 		/// <summary>
 		/// Split a CamelCase string by capitals
@@ -404,13 +435,13 @@ namespace Jeebs
 				 // Get ASCII encoding and convert byte by byte
 				 byte[] a = Encoding.ASCII.GetBytes(@this);
 
-				 string encoded = string.Empty;
+				 var encoded = new StringBuilder();
 				 foreach (byte b in a)
 				 {
-					 encoded += string.Format("&#{0};", b);
+					 encoded.AppendFormat("&#{0};", b);
 				 }
 
-				 return encoded;
+				 return encoded.ToString();
 			 });
 
 		/// <summary>
@@ -427,7 +458,7 @@ namespace Jeebs
 		/// <param name="this">String object</param>
 		/// <returns>String, with the first letter forced to Uppercase</returns>
 		public static string ToSentenceCase(this string @this)
-			=> Modify(@this, () => char.ToUpper(@this[0]) + @this.Substring(1).ToLower());
+			=> Modify(@this, () => char.ToUpper(@this[0]) + @this.Substring(1).ToLowerInvariant());
 
 		/// <summary>
 		/// Converts a string to Title Case (ignoring acronyms)
@@ -452,12 +483,9 @@ namespace Jeebs
 				// ... Uppercase the lowercase letters following spaces.
 				for (int i = 1; i < array.Length; i++)
 				{
-					if (array[i - 1] == ' ')
+					if (array[i - 1] == ' ' && char.IsLower(array[i]))
 					{
-						if (char.IsLower(array[i]))
-						{
-							array[i] = char.ToUpper(array[i]);
-						}
+						array[i] = char.ToUpper(array[i]);
 					}
 				}
 
@@ -479,7 +507,7 @@ namespace Jeebs
 		/// <param name="value">Value to trim</param>
 		/// <returns>String, with <paramref name="value"/> trimmed from the end</returns>
 		public static string TrimEnd(this string @this, string value)
-			=> @this.EndsWith(value) ? @this.Remove(@this.LastIndexOf(value)) : @this;
+			=> @this.EndsWith(value) ? @this.Remove(@this.LastIndexOf(value, StringComparison.InvariantCulture)) : @this;
 
 		// This comes from http://lotsacode.wordpress.com/2010/03/05/singularization-pluralization-in-c/
 		#region Singularise
@@ -614,7 +642,7 @@ namespace Jeebs
 		/// <param name="this">The string to pluralise</param>
 		/// <param name="count">The number of items</param>
 		/// <returns>Pluralised string</returns>
-		public static string Pluralise(this string @this, double count)
+		public static string Pluralise(this string @this, long count)
 		{
 			if (count == 1)
 			{
@@ -648,7 +676,7 @@ namespace Jeebs
 		/// <param name="this">The input string</param>
 		/// <param name="replaceWith">String to replace HTML tags with</param>
 		/// <returns>Input string with all HTML tags removed</returns>
-		public static string ReplaceHtmlTags(this string @this, string? replaceWith = null)
+		public static string ReplaceHtmlTags(this string @this, string? replaceWith)
 			=> Modify(@this, () =>
 			{
 				// Make sure replaceWith isn't null
@@ -661,5 +689,9 @@ namespace Jeebs
 				Regex re = new Regex("<.*?>");
 				return re.Replace(@this, replaceWith);
 			});
+
+		/// <inheritdoc cref="ReplaceHtmlTags(string, string?)"/>
+		public static string ReplaceHtmlTags(this string @this)
+			=> ReplaceHtmlTags(@this, null);
 	}
 }

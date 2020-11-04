@@ -13,22 +13,22 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// TermMetaId
 		/// </summary>
-		public readonly string TermMetaId = "meta_id";
+		public string TermMetaId { get; } = "meta_id";
 
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public readonly string TermId = "term_id";
+		public string TermId { get; } = "term_id";
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		public readonly string Key = "meta_key";
+		public string Key { get; } = "meta_key";
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public readonly string Value = "meta_value";
+		public string Value { get; } = "meta_value";
 
 		/// <summary>
 		/// Create object

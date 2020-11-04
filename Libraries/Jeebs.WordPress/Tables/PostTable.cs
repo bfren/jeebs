@@ -13,82 +13,82 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public readonly string PostId = "ID";
+		public string PostId { get; } = "ID";
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public readonly string AuthorId = "post_author";
+		public string AuthorId { get; } = "post_author";
 
 		/// <summary>
 		/// PublishedOn
 		/// </summary>
-		public readonly string PublishedOn = "post_date";
+		public string PublishedOn { get; } = "post_date";
 
 		/// <summary>
 		/// PublishedOnGmt
 		/// </summary>
-		public readonly string PublishedOnGmt = "post_date_gmt";
+		public string PublishedOnGmt { get; } = "post_date_gmt";
 
 		/// <summary>
 		/// Content
 		/// </summary>
-		public readonly string Content = "post_content";
+		public string Content { get; } = "post_content";
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public readonly string Title = "post_title";
+		public string Title { get; } = "post_title";
 
 		/// <summary>
 		/// Excerpt
 		/// </summary>
-		public readonly string Excerpt = "post_excerpt";
+		public string Excerpt { get; } = "post_excerpt";
 
 		/// <summary>
 		/// Status
 		/// </summary>
-		public readonly string Status = "post_status";
+		public string Status { get; } = "post_status";
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public readonly string Slug = "post_name";
+		public string Slug { get; } = "post_name";
 
 		/// <summary>
 		/// LastModifiedOn
 		/// </summary>
-		public readonly string LastModifiedOn = "post_modified";
+		public string LastModifiedOn { get; } = "post_modified";
 
 		/// <summary>
 		/// LastModifiedOnGmt
 		/// </summary>
-		public readonly string LastModifiedOnGmt = "post_modified_gmt";
+		public string LastModifiedOnGmt { get; } = "post_modified_gmt";
 
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public readonly string ParentId = "post_parent";
+		public string ParentId { get; } = "post_parent";
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public readonly string Url = "guid";
+		public string Url { get; } = "guid";
 
 		/// <summary>
 		/// Type
 		/// </summary>
-		public readonly string Type = "post_type";
+		public string Type { get; } = "post_type";
 
 		/// <summary>
 		/// MimeType
 		/// </summary>
-		public readonly string MimeType = "post_mime_type";
+		public string MimeType { get; } = "post_mime_type";
 
 		/// <summary>
 		/// CommentsCount
 		/// </summary>
-		public readonly string CommentsCount = "comment_count";
+		public string CommentsCount { get; } = "comment_count";
 
 		/// <summary>
 		/// Create object

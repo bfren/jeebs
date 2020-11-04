@@ -56,64 +56,71 @@ namespace Jeebs.Data
 		#region R: Query
 
 		/// <summary>
-		/// Perform a query, returning a dynamic object
-		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
-
-		/// <summary>
-		/// Perform a query, returning a dynamic object
-		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
-
-		/// <summary>
 		/// Run a query against the database
 		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
 		/// <param name="r">Result</param>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
+		/// <param name="sql">Query string</param>
+		/// <param name="parameters">Query parameters - should normally be an object with properties matching parameter names</param>
 		/// <param name="commandType">CommandType</param>
-		IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		IR<IEnumerable<dynamic>> Query(IOk r, string sql, object? parameters, CommandType commandType);
 
-		/// <summary>
-		/// Run a query against the database
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="r">Result</param>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<IEnumerable<dynamic>> Query(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<IEnumerable<dynamic>> Query(IOk r, string sql);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string sql);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<IEnumerable<T>> Query<T>(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<IEnumerable<T>> Query<T>(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<IEnumerable<T>> Query<T>(IOk r, string sql);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string sql);
 
 		#endregion
 
 		#region R: Single
 
 		/// <summary>
-		/// Return a single object by query, or default value if the object cannot be found
+		/// Return a single object
 		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		IR<T> Single<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<T> Single<T>(IOk r, string sql, object? parameters, CommandType commandType);
 
-		/// <summary>
-		/// Return a single object by query, or default value if the object cannot be found
-		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="query">Query string</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
+		IR<T> Single<T>(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
+		IR<T> Single<T>(IOk r, string sql);
+
+		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<T>> SingleAsync<T>(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<T>> SingleAsync<T>(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<T>> SingleAsync<T>(IOk r, string sql);
 
 		#endregion
 
@@ -122,42 +129,44 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Execute a query on the database
 		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		/// <returns>Affected rows</returns>
-		IR<int> Execute(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<int> Execute(IOk r, string sql, object? parameters, CommandType commandType);
 
-		/// <summary>
-		/// Execute a query on the database
-		/// </summary>
-		/// <param name="r">Result</param>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		/// <returns>Affected rows</returns>
-		Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		IR<int> Execute(IOk r, string sql, object? parameters);
 
-		/// <summary>
-		/// Execute a query and return a scalar value
-		/// </summary>
-		/// <typeparam name="T">Return type</typeparam>
-		/// <param name="r">Result</param>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		IR<int> Execute(IOk r, string sql);
+
+		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<int>> ExecuteAsync(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<int>> ExecuteAsync(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<int>> ExecuteAsync(IOk r, string sql);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
 		/// </summary>
-		/// <typeparam name="T">Return type</typeparam>
-		/// <param name="r">Result</param>
-		/// <param name="query">SQL qyery</param>
-		/// <param name="parameters">Parameters</param>
-		/// <param name="commandType">CommandType</param>
-		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters = null, CommandType commandType = CommandType.Text);
+		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
+		IR<T> ExecuteScalar<T>(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
+		IR<T> ExecuteScalar<T>(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
+		IR<T> ExecuteScalar<T>(IOk r, string sql);
+
+		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string sql, object? parameters, CommandType commandType);
+
+		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string sql, object? parameters);
+
+		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
+		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string sql);
 
 		#endregion
 	}
