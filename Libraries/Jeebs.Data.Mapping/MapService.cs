@@ -99,9 +99,9 @@ namespace Jeebs.Data.Mapping
 			var tableType = table.GetType();
 
 			// Get the table field names
-			var tableFieldNames = from f in tableType.GetFields()
-								  where f.IsPublic && !f.IsStatic
-								  select f.Name;
+			var tablePropertyNames = from p in tableType.GetProperties()
+									 where p.PropertyType.IsPublic
+									 select p.Name;
 
 			// Get the entity property names
 			var entityPropertyNames = from p in typeof(TEntity).GetProperties()
@@ -112,7 +112,7 @@ namespace Jeebs.Data.Mapping
 			var errors = new List<string>();
 
 			// Check for missing table columns
-			var missingTableFields = entityPropertyNames.Except(tableFieldNames);
+			var missingTableFields = entityPropertyNames.Except(tablePropertyNames);
 			if (missingTableFields.Any())
 			{
 				foreach (var field in missingTableFields)
@@ -122,7 +122,7 @@ namespace Jeebs.Data.Mapping
 			}
 
 			// Check for missing entity properties
-			var missingEntityProperties = tableFieldNames.Except(entityPropertyNames);
+			var missingEntityProperties = tablePropertyNames.Except(entityPropertyNames);
 			if (missingEntityProperties.Any())
 			{
 				foreach (var property in missingEntityProperties)
@@ -157,7 +157,7 @@ namespace Jeebs.Data.Mapping
 			where TEntity : IEntity
 		{
 			// Get non-ignored columns
-			var columns = from column in table.GetType().GetFields()
+			var columns = from column in table.GetType().GetProperties()
 						  join property in typeof(TEntity).GetProperties() on column.Name equals property.Name
 						  where property.GetCustomAttribute<IgnoreAttribute>() == null
 						  select new MappedColumn

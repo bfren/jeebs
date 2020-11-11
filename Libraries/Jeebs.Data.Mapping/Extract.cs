@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Jeebs.Reflection;
 
 namespace Jeebs.Data.Mapping
 {
@@ -66,15 +67,15 @@ namespace Jeebs.Data.Mapping
 		private static IColumnList ExtractColumnsFromTable(Table table)
 			=> cache.GetOrAdd(table.ToString(), tableName =>
 			{
-				// Get the list of fields
-				var tableFields = table.GetType().GetFields();
+				// Get the list of properties
+				var tableProperties = table.GetType().GetProperties();
 
 				// Holds the list of column names being extracted
 				var extracted = new ColumnList();
 				foreach (var property in modelProperties)
 				{
 					// Get the corresponding field
-					var field = tableFields.SingleOrDefault(p => p.Name == property.Name);
+					var field = tableProperties.SingleOrDefault(p => p.Name == property.Name);
 
 					// If the table field is not present in the model, continue
 					if (field is null)
