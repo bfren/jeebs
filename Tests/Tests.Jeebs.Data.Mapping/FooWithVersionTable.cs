@@ -6,13 +6,13 @@ namespace Jeebs.Data.Mapping
 {
 	public class FooWithVersionTable : Table
 	{
-		public readonly string FooId = "foo_with_version_id";
+		public string FooId { get; } = "foo_with_version_id";
 
-		public readonly string Bar0 = "foo_with_version_bar0";
+		public string Bar0 { get; } = "foo_with_version_bar0";
 
-		public readonly string Bar1 = "foo_with_version_bar1";
+		public string Bar1 { get; } = "foo_with_version_bar1";
 
-		public readonly string Version = "foo_with_version_version";
+		public string Version { get; } = "foo_with_version_version";
 
 		public FooWithVersionTable() : base("foo_with_version") { }
 	}

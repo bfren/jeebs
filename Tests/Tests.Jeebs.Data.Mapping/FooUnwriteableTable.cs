@@ -6,11 +6,11 @@ namespace Jeebs.Data.Mapping
 {
 	public class FooUnwriteableTable : Table
 	{
-		public readonly string FooId = "foo_unwriteable_id";
+		public string FooId { get; } = "foo_unwriteable_id";
 
-		public readonly string Bar2 = "foo_unwriteable_bar2";
+		public string Bar2 { get; } = "foo_unwriteable_bar2";
 
-		public readonly string Bar3 = "foo_unwriteable_bar3";
+		public string Bar3 { get; } = "foo_unwriteable_bar3";
 
 		public FooUnwriteableTable() : base("foo_unwriteable") { }
 	}
