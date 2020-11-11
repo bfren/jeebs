@@ -132,19 +132,19 @@ namespace Jeebs.Data
 		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
 		IR<int> Execute(IOk r, string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
 		IR<int> Execute(IOk r, string sql, object? parameters);
 
-		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
 		IR<int> Execute(IOk r, string sql);
 
-		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
 		Task<IR<int>> ExecuteAsync(IOk r, string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
 		Task<IR<int>> ExecuteAsync(IOk r, string sql, object? parameters);
 
-		/// <inheritdoc cref="Execute{T}(IOk, string, object?, CommandType)"/>
+		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
 		Task<IR<int>> ExecuteAsync(IOk r, string sql);
 
 		/// <summary>

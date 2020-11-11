@@ -27,7 +27,7 @@ namespace Jeebs.WordPress
 				// Extend or add the item
 				if (ContainsKey(item.Key))
 				{
-					this[item.Key] += $";{item.Value}";
+					this[item.Key] = string.Concat(this[item.Key], ";", item.Value);
 				}
 				else
 				{
