@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
@@ -21,13 +22,13 @@ namespace Jeebs.Apps
 		public static IConfigurationBuilder AddJeebsConfig(this IConfigurationBuilder @this, IHostEnvironment env)
 		{
 			// Validate main configuration file
-			var path = $"{Directory.GetCurrentDirectory()}/jeebsconfig.json";
+			var path = $"{env.ContentRootPath}/jeebsconfig.json";
 			ConfigValidator.Validate(path);
 
 			// Add Jeebs config - keeps Jeebs config away from app settings
-			@this.AddJsonFile("jeebsconfig.json", optional: false);
-			@this.AddJsonFile($"jeebsconfig.{env.EnvironmentName}.json", optional: true);
-			@this.AddJsonFile("jeebsconfig-secrets.json", optional: false);
+			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false);
+			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true);
+			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: false);
 
 			// Add Environment Variables
 			@this.AddEnvironmentVariables();
