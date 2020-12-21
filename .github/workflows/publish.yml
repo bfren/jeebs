@@ -2,8 +2,11 @@ name: Publish
 
 on:
   push:
-    branches: [ v5 ]
-    paths: [ 'Version' ]
+    branches:
+      - v5
+    paths:
+      - '.github/workflows/publish.yml'
+      - 'Version'
 
 jobs:
   restore-build-test-pack-push:
