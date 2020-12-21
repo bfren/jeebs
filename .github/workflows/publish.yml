@@ -2,7 +2,7 @@ name: Publish
 
 on:
   push:
-    branches: [ main ]
+    branches: [ v5 ]
     paths: [ 'Version' ]
 
 jobs:
