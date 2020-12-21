@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="jeebsconfig-secrets.json" />
     <None Remove="jeebsconfig.json" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -22,14 +18,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Services\Jeebs.Services.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.WordPress\Jeebs.WordPress.csproj" />
   </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://raw.githubusercontent.com/bencgreen/jeebs/main/Libraries/Jeebs.Config/schema.json" /></VisualStudio></ProjectExtensions>
-
 </Project>

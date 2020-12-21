@@ -1,15 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
     <ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     branches: [ main ]
-    paths: [ '/Version' ]
+    paths: [ 'Version' ]
 
 jobs:
   restore-build-test-pack-push:
@@ -22,7 +22,7 @@ jobs:
       name: Prepare - Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.x'
+        dotnet-version: '5.0.x'
     - 
       name: A - Restore
       run: dotnet restore Test.csproj
