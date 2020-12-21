@@ -24,7 +24,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		internal override string Parse(string content)
 		{
 			// Get YouTube info
-			var matches = Regex.Matches(content, "<!-- wp:core-embed/youtube ({.*?}) -->(.*?)<!-- /wp:core-embed/youtube -->", RegexOptions.Singleline);
+			var matches = Regex.Matches(content, "<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->", RegexOptions.Singleline);
 			if (matches.Count == 0)
 			{
 				return content;
@@ -34,7 +34,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			foreach (Match match in matches)
 			{
 				// Info is encoded as JSON
-				var json = match.Groups[1].Value;
+				var json = match.Groups[2].Value;
 				if (Deserialise<YouTubeParsed>(json) is Some<YouTubeParsed> youTube)
 				{
 					// Get URI
