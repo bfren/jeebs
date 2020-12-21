@@ -66,14 +66,17 @@ namespace Jeebs.Mvc
 			string? findView(string viewName)
 			{
 				// Get View Engine
-				var viewEngine = @this.HttpContext.RequestServices.GetService<ICompositeViewEngine>();
+				if (@this.HttpContext.RequestServices.GetService<ICompositeViewEngine>() is ICompositeViewEngine viewEngine)
+				{
+					// Find View
+					var viewPath = $"Error/{viewName}";
+					var result = viewEngine.FindView(@this.ControllerContext, viewPath, true);
 
-				// Find View
-				var viewPath = $"Error/{viewName}";
-				var result = viewEngine.FindView(@this.ControllerContext, viewPath, true);
+					// Return result
+					return result.Success ? viewPath : null;
+				}
 
-				// Return result
-				return result.Success ? viewPath : null;
+				return null;
 			}
 		}
 	}

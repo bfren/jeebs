@@ -35,10 +35,15 @@ namespace Jeebs.Apps
 			}
 
 			// Run custom
+			else if (host.Services.GetService<IConfiguration>() is IConfiguration config)
+			{
+				run(host.Services, config);
+			}
+
+			// IConfiguration is required
 			else
 			{
-				var config = host.Services.GetService<IConfiguration>();
-				run(host.Services, config);
+				throw new InvalidOperationException("Unable to get IConfiguration service.");
 			}
 		}
 	}
