@@ -24,7 +24,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		internal override string Parse(string content)
 		{
 			// Get YouTube info
-			var matches = Regex.Matches(content, "<!-- wp:core-embed/youtube ({.*?}) -->(.*?)<!-- /wp:core-embed/youtube -->", RegexOptions.Singleline);
+			var matches = Regex.Matches(content, "<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->", RegexOptions.Singleline);
 			if (matches.Count == 0)
 			{
 				return content;
