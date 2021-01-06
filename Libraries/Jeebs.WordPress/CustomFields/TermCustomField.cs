@@ -72,7 +72,7 @@ namespace Jeebs.WordPress
 				using var w = db.GetQueryWrapper();
 
 				// Get matching terms
-				var terms = await w.QueryPostsAsync<Term>(r, modify: opt => opt.Id = r.Value);
+				var terms = await w.QueryTaxonomyAsync<Term>(r, modify: opt => opt.Id = r.Value);
 
 				// If there is more than one term, return an error
 				return terms switch
