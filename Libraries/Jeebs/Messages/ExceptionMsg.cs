@@ -14,7 +14,7 @@ namespace Jm
 
 		/// <inheritdoc/>
 		public string ExceptionType
-			=> Exception.GetType().FullName;
+			=> Exception.GetType().ToString();
 
 		/// <inheritdoc/>
 		public string ExceptionText

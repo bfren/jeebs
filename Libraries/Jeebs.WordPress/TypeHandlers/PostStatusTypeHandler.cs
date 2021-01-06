@@ -18,7 +18,11 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>PostStatus object</returns>
 		public override PostStatus Parse(object value)
-			=> PostStatus.Parse(value.ToString()).Unwrap(() => PostStatus.Draft);
+			=> value.ToString() switch
+			{
+				string postStatus => PostStatus.Parse(postStatus),
+				_ => PostStatus.Draft
+			};
 
 		/// <summary>
 		/// Set the PostStatus table value

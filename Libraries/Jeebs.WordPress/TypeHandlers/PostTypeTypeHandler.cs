@@ -18,7 +18,11 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>PostType object</returns>
 		public override PostType Parse(object value)
-			=> PostType.Parse(value.ToString()).Unwrap(() => PostType.Post);
+			=> value.ToString() switch
+			{
+				string postType => PostType.Parse(postType),
+				_ => PostType.Post
+			};
 
 		/// <summary>
 		/// Set the PostType table value

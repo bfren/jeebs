@@ -11,6 +11,11 @@ namespace AppConsole
 		private static async Task Main(string[] args) => await Main<App>(args, (provider, config) =>
 		{
 			using var log = provider.GetService<ILog<Program>>();
+			if (log == null)
+			{
+				return;
+			}
+
 			Serilog.Debugging.SelfLog.Enable(Console.Error);
 
 			log.Debug("Services loaded");
@@ -24,13 +29,13 @@ namespace AppConsole
 			log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
 			var seq = provider.GetService<Seq>();
-			seq.Send("test");
+			seq?.Send("test");
 
 			var slack = provider.GetService<Slack>();
-			slack.Send("test");
+			slack?.Send("test");
 
 			var notifier = provider.GetService<INotifier>();
-			notifier.Send("test notification");
+			notifier?.Send("test notification");
 
 			while (Console.ReadLine() is string output)
 			{

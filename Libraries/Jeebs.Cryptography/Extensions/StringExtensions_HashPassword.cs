@@ -20,7 +20,7 @@ namespace Jeebs.Cryptography
 		{
 			if (string.IsNullOrEmpty(@this))
 			{
-				throw new ArgumentNullException(nameof(@this));
+				return string.Empty;
 			}
 
 			return PasswordHash.ArgonHashString(@this, PasswordHash.StrengthArgon.Moderate);

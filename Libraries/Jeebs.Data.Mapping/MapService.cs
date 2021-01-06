@@ -158,12 +158,13 @@ namespace Jeebs.Data.Mapping
 		{
 			// Get non-ignored columns
 			var columns = from column in table.GetType().GetProperties()
+						  let columnName = column.GetValue(table)?.ToString()
 						  join property in typeof(TEntity).GetProperties() on column.Name equals property.Name
 						  where property.GetCustomAttribute<IgnoreAttribute>() == null
 						  select new MappedColumn
 						  (
 							  table: table.ToString(),
-							  name: column.GetValue(table).ToString(),
+							  name: columnName,
 							  property: property
 						  );
 

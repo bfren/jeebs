@@ -32,7 +32,7 @@ namespace Jx.Services
 		/// Create exception
 		/// </summary>
 		/// <param name="t"></param>
-		public UnknownDriverException(Type t) : this(t.FullName) { }
+		public UnknownDriverException(Type t) : this(t.ToString()) { }
 
 		/// <summary>
 		/// Create exception

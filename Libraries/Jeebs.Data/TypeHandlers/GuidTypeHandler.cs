@@ -17,7 +17,11 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="value">Guid value</param>
 		/// <returns>Guid</returns>
 		public override Guid Parse(object value)
-			=> new Guid(value.ToString());
+			=> value.ToString() switch
+			{
+				string guid => new Guid(guid),
+				_ => Guid.Empty
+			};
 
 		/// <summary>
 		/// Set Guid value

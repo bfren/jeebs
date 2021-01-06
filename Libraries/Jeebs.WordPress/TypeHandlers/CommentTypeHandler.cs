@@ -18,7 +18,11 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>CommentType object</returns>
 		public override CommentType Parse(object value)
-			=> CommentType.Parse(value.ToString()).Unwrap(() => CommentType.Blank);
+			=> value.ToString() switch
+			{
+				string commentType => CommentType.Parse(commentType),
+				_ => CommentType.Blank
+			};
 
 		/// <summary>
 		/// Set the CommentType table value

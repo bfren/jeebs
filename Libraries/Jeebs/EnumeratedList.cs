@@ -29,7 +29,10 @@ namespace Jeebs
 
 			foreach (var item in list)
 			{
-				Add((T)Activator.CreateInstance(typeof(T), item));
+				if (Activator.CreateInstance(typeof(T), item) is T obj)
+				{
+					Add(obj);
+				}
 			}
 		}
 

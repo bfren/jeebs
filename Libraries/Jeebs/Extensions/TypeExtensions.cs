@@ -78,7 +78,7 @@ namespace Jeebs
 		/// <param name="this">Base type</param>
 		/// <param name="class">Class type</param>
 		internal static bool ImplementsGenericClass(this Type @this, Type @class)
-			=> @this.BaseType.ImplementsGeneric(@class);
+			=> @this.BaseType?.ImplementsGeneric(@class) ?? false;
 
 		private static bool ImplementsGeneric(this Type @this, Type generic)
 			=> @this.IsGenericType && (@this.GetGenericTypeDefinition() == generic || @this == generic);

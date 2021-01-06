@@ -187,7 +187,7 @@ namespace Jeebs
 		/// <para>Otherwise this will return false</para>
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
-		public override bool Equals(object other)
+		public override bool Equals(object? other)
 			=> other switch
 			{
 				Enumerated x => Equals(x),

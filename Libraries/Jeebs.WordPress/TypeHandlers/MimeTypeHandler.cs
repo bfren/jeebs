@@ -17,7 +17,11 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>MimeType object</returns>
 		public override MimeType Parse(object value)
-			=> MimeType.Parse(value.ToString());
+			=> value.ToString() switch
+			{
+				string mimeType => MimeType.Parse(mimeType),
+				_ => MimeType.Blank
+			};
 
 		/// <summary>
 		/// Set the MimeType table value

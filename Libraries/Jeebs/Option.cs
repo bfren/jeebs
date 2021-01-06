@@ -171,7 +171,7 @@ namespace Jeebs
 		/// <para>Otherwise this will return false</para>
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Option{T}"/></param>
-		public override bool Equals(object other)
+		public override bool Equals(object? other)
 			=> other switch
 			{
 				Option<T> x => Equals(x),
@@ -185,7 +185,7 @@ namespace Jeebs
 		/// <para>Otherwise this will return false</para>
 		/// </summary>
 		/// <param name="other"><see cref="Option{T}"/> to compare to this <see cref="Option{T}"/></param>
-		public bool Equals(Option<T> other)
+		public bool Equals(Option<T>? other)
 			=> this switch
 			{
 				Some<T> x when other is Some<T> y => Equals(x.Value, y.Value),
@@ -201,7 +201,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="other"><see cref="Option{T}"/> to compare to this <see cref="Option{T}"/></param>
 		/// <param name="comparer">Equality Comparer</param>
-		public bool Equals(object other, IEqualityComparer comparer)
+		public bool Equals(object? other, IEqualityComparer comparer)
 			=> this switch
 			{
 				Some<T> x when other is Some<T> y => comparer.Equals(x.Value, y.Value),

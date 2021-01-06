@@ -25,13 +25,13 @@ namespace Jm
 			=> this.details = details;
 
 		/// <summary>
-		/// Return details of what has not been found, or base method
+		/// Return details of what has not been found, or class type
 		/// </summary>
 		public override string ToString()
 			=> details switch
 			{
 				string x => $"Not found: {x}",
-				_ => base.ToString()
+				_ => GetType().ToString()
 			};
 	}
 }

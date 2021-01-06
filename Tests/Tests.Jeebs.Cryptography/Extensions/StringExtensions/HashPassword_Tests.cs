@@ -17,10 +17,10 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			// Arrange
 
 			// Act
-			Action result = () => input.HashPassword();
+			var result = input.HashPassword();
 
 			// Assert
-			Assert.Throws<ArgumentNullException>(result);
+			Assert.Equal(string.Empty, result);
 		}
 
 		[Fact]

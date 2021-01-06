@@ -84,9 +84,11 @@ namespace Jeebs.Data.Mapping
 					}
 
 					// Add the column to the extraction list
-					var column = field.GetValue(table).ToString();
-					var alias = property.Name;
-					extracted.Add(new Column(tableName, column, alias));
+					if (field.GetValue(table)?.ToString() is string column)
+					{
+						var alias = property.Name;
+						extracted.Add(new Column(tableName, column, alias));
+					}
 				}
 
 				// Return extracted columns

@@ -25,7 +25,7 @@ namespace F
 			}
 
 			// String
-			var val = value.ToString().ToLower();
+			var val = value.ToString()?.ToLower();
 
 			// Alternative boolean values
 			var trueValues = new[] { "true,false", "on", "yes", "1" };

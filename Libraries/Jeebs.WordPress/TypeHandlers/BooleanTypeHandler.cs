@@ -32,7 +32,7 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <param name="value">Database value</param>
 		/// <returns>True / False</returns>
 		public override bool Parse(object value)
-			=> new[] { "1", "y", "yes" }.Contains(value.ToString().ToLower());
+			=> new[] { "1", "y", "yes" }.Contains(value.ToString()?.ToLower());
 
 		/// <summary>
 		/// Set the value based on the column name

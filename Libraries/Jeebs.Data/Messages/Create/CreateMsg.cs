@@ -26,7 +26,7 @@ namespace Jm.Data
 
 		/// <inheritdoc/>
 		public override object[] ParamArray
-			=> new object[] { type.FullName, id };
+			=> new object[] { type.ToString(), id };
 
 		/// <summary>
 		/// Create object

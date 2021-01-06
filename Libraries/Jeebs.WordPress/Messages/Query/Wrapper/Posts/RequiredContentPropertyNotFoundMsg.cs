@@ -14,7 +14,7 @@ namespace Jm.WordPress.Query.Wrapper.Posts
 		/// <summary>
 		/// Create message
 		/// </summary>
-		public RequiredContentPropertyNotFoundMsg() : base(typeof(TModel).GetType().FullName) { }
+		public RequiredContentPropertyNotFoundMsg() : base(typeof(TModel).GetType().ToString()) { }
 
 		/// <summary>
 		/// Return error message

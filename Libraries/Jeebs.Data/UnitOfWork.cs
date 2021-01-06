@@ -15,7 +15,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public IDbConnection Connection
-			=> Transaction.Connection;
+			=> Transaction.Connection ?? throw new InvalidOperationException("Transaction Connection cannot be null.");
 
 		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; }
@@ -40,7 +40,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public string Escape(object element)
-			=> Adapter.SplitAndEscape(element.ToString());
+			=> Adapter.SplitAndEscape(element.ToString() ?? string.Empty);
 
 		/// <inheritdoc/>
 		public string Escape(params string?[] elements)

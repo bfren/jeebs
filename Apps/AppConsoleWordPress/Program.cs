@@ -25,9 +25,9 @@ namespace AppConsoleWordPress
 				Console.WriteLine("= WordPress Console Test =");
 
 				// Get services
-				var log = provider.GetService<ILog<Program>>();
-				var bcg = provider.GetService<WpBcg>();
-				var usa = provider.GetService<WpUsa>();
+				var log = provider.GetService<ILog<Program>>() ?? throw new Exception();
+				var bcg = provider.GetService<WpBcg>() ?? throw new Exception();
+				var usa = provider.GetService<WpUsa>() ?? throw new Exception();
 
 				// Run test methods
 				TermsAsync(Result.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);

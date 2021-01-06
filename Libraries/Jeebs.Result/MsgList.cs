@@ -100,7 +100,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="withType">If true, will include the message type as well</param>
 		public string ToString(bool withType)
-			=> messages.Count > 0 ? string.Join('\n', GetAll(withType)) : base.ToString();
+			=> messages.Count > 0 ? string.Join('\n', GetAll(withType)) : GetType().ToString();
 
 		#region Explicit implementations
 

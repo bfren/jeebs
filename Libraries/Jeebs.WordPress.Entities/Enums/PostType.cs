@@ -73,7 +73,7 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>PostType object</returns>
-		public static Option<PostType> Parse(string name)
-			=> Parse(name, all.ToArray());
+		public static PostType Parse(string name)
+			=> Parse(name, all.ToArray()).Unwrap(() => Post);
 	}
 }

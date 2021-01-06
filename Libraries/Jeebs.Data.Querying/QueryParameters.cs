@@ -34,8 +34,10 @@ namespace Jeebs.Data.Querying
 				foreach (var p in objectProperties)
 				{
 					var name = p.Name;
-					var value = p.GetValue(parameters);
-					Add(name, value);
+					if (p.GetValue(parameters) is object value)
+					{
+						Add(name, value);
+					}
 				}
 
 				return true;
@@ -47,8 +49,8 @@ namespace Jeebs.Data.Querying
 			IEnumerable<PropertyInfo> getProperties()
 				=> from p in parameters.GetProperties()
 				   where p.MemberType == MemberTypes.Property
-				   && p.GetMethod.IsPublic
-				   && p.GetMethod.GetParameters().Length == 0 // exclude index get accessors e.g. this[1]
+				   && p.GetMethod?.IsPublic == true
+				   && p.GetMethod?.GetParameters().Length == 0 // exclude index get accessors e.g. this[1]
 				   select p;
 		}
 

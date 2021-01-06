@@ -21,12 +21,12 @@ namespace Jeebs.Cryptography
 		{
 			if (string.IsNullOrEmpty(@this))
 			{
-				throw new ArgumentNullException(nameof(@this));
+				return false;
 			}
 
 			if (string.IsNullOrEmpty(password))
 			{
-				throw new ArgumentNullException(nameof(password));
+				return false;
 			}
 
 			return PasswordHash.ArgonHashStringVerify(@this, password);

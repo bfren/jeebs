@@ -20,8 +20,9 @@ namespace Jeebs
 		/// <summary>
 		/// Lazy property to avoid multiple reflection calls
 		/// </summary>
-		private static readonly Lazy<Version> version = new Lazy<Version>(()
-			=> typeof(T).GetTypeInfo().Assembly.GetName().Version);
+		private static readonly Lazy<Version> version = new Lazy<Version>(
+			() => typeof(T).GetTypeInfo().Assembly.GetName().Version ?? new Version()
+		);
 
 		/// <summary>
 		/// Return a short version string (e.g. v1.1)

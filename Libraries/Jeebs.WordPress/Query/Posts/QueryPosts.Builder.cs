@@ -108,7 +108,7 @@ namespace Jeebs.WordPress
 					comparison = "LIKE";
 
 					// If % has not already been added to the search string, add it
-					if (search.IndexOf("%") == -1)
+					if (!search.Contains("%", StringComparison.CurrentCulture))
 					{
 						search = $"%{search}%";
 					}
@@ -255,16 +255,23 @@ namespace Jeebs.WordPress
 						customFieldWhere += " AND ";
 					}
 
+					// Ensure there is a search value
+					var customFieldSearch = value.ToString();
+					if (customFieldSearch == null)
+					{
+						continue;
+					}
+
 					// Set comparison operators and modify search string accordingly
 					var customFieldComparison = "=";
-					var customFieldSearch = value.ToString();
+
 					if (op == SearchOperators.Like)
 					{
 						// Change the comparison
 						customFieldComparison = "LIKE";
 
 						// If % has not already been added to the search string, add it
-						if (customFieldSearch.IndexOf("%") == -1)
+						if (!customFieldSearch.Contains("%", StringComparison.CurrentCulture))
 						{
 							customFieldSearch = $"%{customFieldSearch}%";
 						}

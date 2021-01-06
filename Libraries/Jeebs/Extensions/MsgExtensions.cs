@@ -17,12 +17,12 @@ namespace Jeebs
 		public static (string text, object[] args) Prepare(this IMsg @this)
 		{
 			// Get message type
-			var type = @this.GetType().FullName;
+			var type = @this.GetType().ToString();
 
 			// Check for simple message type return
 			if (@this.ToString() == type)
 			{
-				return (type, new object[] { });
+				return (type, Array.Empty<object>());
 			}
 
 			// Add message type to the message

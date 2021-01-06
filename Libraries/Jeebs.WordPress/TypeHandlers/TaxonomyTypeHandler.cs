@@ -17,7 +17,11 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>Taxonomy object</returns>
 		public override Taxonomy Parse(object value)
-			=> Taxonomy.Parse(value.ToString());
+			=> value.ToString() switch
+			{
+				string taxonomy => Taxonomy.Parse(taxonomy),
+				_ => Taxonomy.Blank
+			};
 
 		/// <summary>
 		/// Set the Taxonomy table value

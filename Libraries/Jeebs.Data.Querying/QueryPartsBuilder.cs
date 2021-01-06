@@ -145,10 +145,10 @@ namespace Jeebs.Data.Querying
 					Adapter.EscapeAndJoin(equals.table, equals.column)
 				));
 			}
-			else
+			else if (table.ToString() is string tableName)
 			{
 				joinList.Add((
-					table.ToString(),
+					tableName,
 					Adapter.Join(table, on),
 					Adapter.Join(equals.table, equals.column)
 				));

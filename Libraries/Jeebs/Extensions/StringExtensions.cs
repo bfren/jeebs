@@ -26,11 +26,6 @@ namespace Jeebs
 				return empty ?? @this;
 			}
 
-			if (perform == null)
-			{
-				throw new ArgumentNullException(nameof(perform));
-			}
-
 			return perform();
 		}
 
@@ -185,13 +180,19 @@ namespace Jeebs
 					var value = source switch
 					{
 						// Source array - get next item in array
-						Array arr when replaceIndex < arr.Length => arr.GetValue(replaceIndex++),
+						Array arr
+							when replaceIndex < arr.Length
+							&& arr.GetValue(replaceIndex++) is object val
+							=> val,
 
 						// Source object - get matching property value
-						{ } obj when obj.GetProperty(template) is Some<object> property => property.Value,
+						{ } obj
+							when obj.GetProperty(template) is Some<object> property
+							=> property.Value,
 
 						// Nothing has matched yet so to be safe put the template back
-						_ => $"{{{template}}}"
+						_
+							=> $"{{{template}}}"
 					};
 
 					values.Add(value);
@@ -220,63 +221,27 @@ namespace Jeebs
 				}
 
 				// Get the extension and switch to get the mime type
-				switch (@this.Substring(lastPeriod + 1).ToLowerInvariant())
+				return (@this[(lastPeriod + 1)..].ToLowerInvariant()) switch
 				{
-					case "bmp":
-						return MimeType.Bmp.ToString();
-
-					case "doc":
-						return MimeType.Doc.ToString();
-
-					case "docx":
-						return MimeType.Docx.ToString();
-
-					case "gif":
-						return MimeType.Gif.ToString();
-
-					case "jpg":
-					case "jpeg":
-						return MimeType.Jpg.ToString();
-
-					case "m4a":
-						return MimeType.M4a.ToString();
-
-					case "mp3":
-						return MimeType.Mp3.ToString();
-
-					case "pdf":
-						return MimeType.Pdf.ToString();
-
-					case "png":
-						return MimeType.Png.ToString();
-
-					case "ppt":
-						return MimeType.Ppt.ToString();
-
-					case "pptx":
-						return MimeType.Pptx.ToString();
-
-					case "rar":
-						return MimeType.Rar.ToString();
-
-					case "tar":
-						return MimeType.Tar.ToString();
-
-					case "txt":
-						return MimeType.Text.ToString();
-
-					case "xls":
-						return MimeType.Xls.ToString();
-
-					case "xlsx":
-						return MimeType.Xlsx.ToString();
-
-					case "zip":
-						return MimeType.Zip.ToString();
-
-					default:
-						return MimeType.General.ToString();
-				}
+					"bmp" => MimeType.Bmp.ToString(),
+					"doc" => MimeType.Doc.ToString(),
+					"docx" => MimeType.Docx.ToString(),
+					"gif" => MimeType.Gif.ToString(),
+					"jpg" or "jpeg" => MimeType.Jpg.ToString(),
+					"m4a" => MimeType.M4a.ToString(),
+					"mp3" => MimeType.Mp3.ToString(),
+					"pdf" => MimeType.Pdf.ToString(),
+					"png" => MimeType.Png.ToString(),
+					"ppt" => MimeType.Ppt.ToString(),
+					"pptx" => MimeType.Pptx.ToString(),
+					"rar" => MimeType.Rar.ToString(),
+					"tar" => MimeType.Tar.ToString(),
+					"txt" => MimeType.Text.ToString(),
+					"xls" => MimeType.Xls.ToString(),
+					"xlsx" => MimeType.Xlsx.ToString(),
+					"zip" => MimeType.Zip.ToString(),
+					_ => MimeType.General.ToString(),
+				};
 			});
 
 		/// <summary>
@@ -450,7 +415,7 @@ namespace Jeebs
 		/// <param name="this">String object</param>
 		/// <returns>String, with the first letter forced to Lowercase</returns>
 		public static string ToLowerFirst(this string @this)
-			=> Modify(@this, () => char.ToLower(@this[0]) + @this.Substring(1));
+			=> Modify(@this, () => char.ToLower(@this[0]) + @this[1..]);
 
 		/// <summary>
 		/// Equivalent of PHP ucfirst() - except it lowers the case of all subsequent letters as well
@@ -458,7 +423,7 @@ namespace Jeebs
 		/// <param name="this">String object</param>
 		/// <returns>String, with the first letter forced to Uppercase</returns>
 		public static string ToSentenceCase(this string @this)
-			=> Modify(@this, () => char.ToUpper(@this[0]) + @this.Substring(1).ToLowerInvariant());
+			=> Modify(@this, () => char.ToUpper(@this[0]) + @this[1..].ToLowerInvariant());
 
 		/// <summary>
 		/// Converts a string to Title Case (ignoring acronyms)
@@ -498,7 +463,7 @@ namespace Jeebs
 		/// <param name="this">String object</param>
 		/// <returns>String, with the first letter forced to Uppercase</returns>
 		public static string ToUpperFirst(this string @this)
-			=> Modify(@this, () => char.ToUpper(@this[0]) + @this.Substring(1));
+			=> Modify(@this, () => char.ToUpper(@this[0]) + @this[1..]);
 
 		/// <summary>
 		/// Trim a string from the end of another string

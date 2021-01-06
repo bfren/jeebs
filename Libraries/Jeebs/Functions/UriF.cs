@@ -16,7 +16,7 @@ namespace F
 		/// <param name="requireHttps">[Optional] Set to false if you want to match HTTP URIs</param>
 		public static bool IsHttp(string input, bool requireHttps = true)
 			=> !string.IsNullOrEmpty(input)
-			&& Uri.TryCreate(input, UriKind.Absolute, out Uri uri)
+			&& Uri.TryCreate(input, UriKind.Absolute, out Uri? uri)
 			&& (uri.Scheme == Uri.UriSchemeHttps
 				|| (!requireHttps && uri.Scheme == Uri.UriSchemeHttp)
 			);

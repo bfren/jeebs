@@ -17,8 +17,8 @@ namespace Jeebs.Data.Mapping
 			/// <param name="x">IColumn 1</param>
 			/// <param name="y">IColumn 2</param>
 			/// <returns>True if the aliases of the two columns are identical</returns>
-			public bool Equals(IColumn x, IColumn y)
-				=> x.Alias == y.Alias;
+			public bool Equals(IColumn? x, IColumn? y)
+				=> x?.Alias == y?.Alias;
 
 			/// <summary>
 			/// Return object's hash code
