@@ -32,14 +32,15 @@ namespace Jeebs.WordPress
 			if (meta.ContainsKey(Key))
 			{
 				ValueObj = ValueStr = meta[Key];
+				return r.OkTrue();
 			}
 			else if (IsRequired)
 			{
 				return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(Key));
 			}
 
-			// Return success
-			return r.OkTrue();
+			// Return OK but not set
+			return r.OkFalse();
 		}
 	}
 }

@@ -64,7 +64,10 @@ namespace Jeebs.WordPress
 							}
 
 							// Set the value
-							info.SetValue(post, customField);
+							if (result is IOkV<bool> ok && ok.Value)
+							{
+								info.SetValue(post, customField);
+							}
 						}
 					}
 				}

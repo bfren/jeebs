@@ -35,7 +35,7 @@ namespace Jeebs.WordPress
 					return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(Key));
 				}
 
-				return r.OkTrue();
+				return r.OkFalse();
 			}
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
