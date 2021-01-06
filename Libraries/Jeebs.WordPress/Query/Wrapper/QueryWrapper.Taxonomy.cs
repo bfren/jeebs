@@ -16,13 +16,13 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TModel">Term type</typeparam>
 		/// <param name="r">Result</param>
-		/// <param name="modifyOptions">[Optional] Action to modify the options for this query</param>
-		public async Task<IR<List<TModel>>> QueryTaxonomyAsync<TModel>(IOk r, Action<QueryTaxonomy.Options>? modifyOptions = null)
+		/// <param name="modify">[Optional] Action to modify the options for this query</param>
+		public async Task<IR<List<TModel>>> QueryTaxonomyAsync<TModel>(IOk r, Action<QueryTaxonomy.Options>? modify = null)
 		{
 			// Get terms
 			var query = StartNewQuery()
 				.WithModel<TModel>()
-				.WithOptions(modifyOptions)
+				.WithOptions(modify)
 				.WithParts(new QueryTaxonomy.Builder<TModel>(db))
 				.GetQuery();
 

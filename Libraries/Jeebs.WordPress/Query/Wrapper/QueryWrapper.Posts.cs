@@ -107,7 +107,7 @@ namespace Jeebs.WordPress
 					.Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
 		}
 
-		private Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
+		private static Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
 			=> GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x));
 
 		private class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>

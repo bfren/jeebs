@@ -217,6 +217,7 @@ namespace AppConsoleWordPress
 					Console.WriteLine("  - PDF: {0}", sermon.Pdf);
 					Console.WriteLine("  - Audio: {0}", sermon.Audio);
 					Console.WriteLine("  - First Preached: {0}", sermon.FirstPreached);
+					Console.WriteLine("  - Feed Image: {0}", sermon.Image);
 				}
 			}
 		}
@@ -340,6 +341,8 @@ namespace AppConsoleWordPress
 		public AudioRecordingCustomField Audio { get; set; } = new AudioRecordingCustomField();
 
 		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+
+		public FeedImageCustomField Image { get; set; } = new FeedImageCustomField();
 	}
 
 	internal class SermonModelWithTaxonomies : SermonModel
