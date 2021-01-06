@@ -43,10 +43,14 @@ namespace Jeebs.WordPress
 				var status = opt.Status;
 				AddWhere($"{__(db.Post, p => p.Status)} = @{nameof(status)}", new { status });
 
-				// WHERE Id
+				// WHERE Id / Ids
 				if (opt.Id is long postId)
 				{
 					AddWhere($"{__(db.Post, p => p.PostId)} = @{nameof(postId)}", new { postId });
+				}
+				else if (opt.Ids is long[] ids && ids.Length > 0)
+				{
+					AddWhere($"{__(db.Post, p => p.PostId)} IN ({string.Join(',', ids)})");
 				}
 
 				// WHERE search

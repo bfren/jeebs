@@ -12,6 +12,9 @@ namespace Jeebs.Data.Querying
 		public long? Id { get; set; }
 
 		/// <inheritdoc/>
+		public long[]? Ids { get; set; }
+
+		/// <inheritdoc/>
 		public (string selectColumn, SortOrder order)[]? Sort { get; set; }
 
 		/// <inheritdoc/>

@@ -16,6 +16,11 @@ namespace Jeebs.Data.Querying
 		long? Id { get; set; }
 
 		/// <summary>
+		/// Query IDs
+		/// </summary>
+		public long[]? Ids { get; set; }
+
+		/// <summary>
 		/// Query ORDER BY
 		/// </summary>
 		(string selectColumn, SortOrder order)[]? Sort { get; set; }
