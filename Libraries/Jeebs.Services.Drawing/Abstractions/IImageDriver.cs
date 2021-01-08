@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Jeebs.Services.Drawing
 {
 	/// <summary>
-	/// Service for creating image objects
+	/// Image Driver
 	/// </summary>
-	public interface IImageSvc
+	public interface IImageDriver
 	{
 		/// <summary>
 		/// Create image object from a file path

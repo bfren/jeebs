@@ -10,9 +10,9 @@ using Jm.Services.Drawing.ImageWrapper;
 namespace Jeebs.Services.Drivers.Drawing.Common
 {
 	/// <summary>
-	/// Image Service - using System.Drawing.Common
+	/// Image Driver implemented using System.Drawing.Common
 	/// </summary>
-	public sealed class ImageSvc : IImageSvc
+	public sealed class ImageDriver : IImageDriver
 	{
 		/// <inheritdoc/>
 		public Option<IImageWrapper> FromFile(string path)
