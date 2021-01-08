@@ -18,7 +18,7 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Query IDs
 		/// </summary>
-		public long[]? Ids { get; set; }
+		long[]? Ids { get; set; }
 
 		/// <summary>
 		/// Query ORDER BY

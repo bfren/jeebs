@@ -97,5 +97,15 @@ namespace Jeebs.Data.Querying
 				);
 			}
 		}
+
+		/// <inheritdoc/>
+		public async Task<IR<T>> ExecuteScalarAsync(IOk r)
+		{
+			// Get query
+			var query = UnitOfWork.Adapter.Retrieve(Parts);
+
+			// Execute and return
+			return await UnitOfWork.ExecuteScalarAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
+		}
 	}
 }

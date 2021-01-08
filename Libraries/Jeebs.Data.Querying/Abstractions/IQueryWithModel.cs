@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <typeparam name="TOptions">QueryOptions</typeparam>
 		/// <param name="options">Options to use</param>
-		public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(TOptions options)
+		IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(TOptions options)
 			where TOptions : QueryOptions;
 
 		/// <summary>
@@ -23,7 +23,7 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <typeparam name="TOptions">QueryOptions</typeparam>
 		/// <param name="modify">[Optional] Action to modify default options</param>
-		public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
+		IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
 			where TOptions : QueryOptions, new();
 	}
 }

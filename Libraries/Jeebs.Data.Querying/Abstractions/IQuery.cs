@@ -15,19 +15,25 @@ namespace Jeebs.Data.Querying
 		/// Returns the number of items to be retrieved by the current query parts
 		/// </summary>
 		/// <param name="r">Result object</param>
-		public Task<IR<long>> GetCountAsync(IOk r);
+		Task<IR<long>> GetCountAsync(IOk r);
 
 		/// <summary>
 		/// Retrieves the items using the current query parts
 		/// </summary>
 		/// <param name="r">Result object</param>
-		public Task<IR<List<T>>> ExecuteQueryAsync(IOk r);
+		Task<IR<List<T>>> ExecuteQueryAsync(IOk r);
 
 		/// <summary>
 		/// Retrieves the items using the current query parts, using LIMIT / OFFSET to select only the items on a particular page
 		/// </summary>
 		/// <param name="r">Result object</param>
 		/// <param name="page">Current page number</param>
-		public Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk r, long page);
+		Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk r, long page);
+
+		/// <summary>
+		/// Executes the query and returns a scalar value
+		/// </summary>
+		/// <param name="r">Result object</param>
+		Task<IR<T>> ExecuteScalarAsync(IOk r);
 	}
 }

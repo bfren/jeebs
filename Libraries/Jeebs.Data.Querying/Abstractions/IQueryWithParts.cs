@@ -13,6 +13,6 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Query Stage 4: Get query object
 		/// </summary>
-		public IQuery<T> GetQuery();
+		IQuery<T> GetQuery();
 	}
 }
