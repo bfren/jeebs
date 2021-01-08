@@ -17,7 +17,7 @@ namespace Jeebs.WordPress
 		public async Task<IR<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(IOkV<long> r, Action<QueryPosts.Options>? modify = null)
 		{
 			// Get query
-			var query = GetQuery<PostWithId>(opt =>
+			var query = GetPostsQuery<PostWithId>(opt =>
 			{
 				modify?.Invoke(opt);
 				opt.Limit = null;

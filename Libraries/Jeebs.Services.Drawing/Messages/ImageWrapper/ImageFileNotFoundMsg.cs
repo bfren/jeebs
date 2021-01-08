@@ -10,7 +10,7 @@ namespace Jm.Services.Drawing.ImageWrapper
 	/// <summary>
 	/// Image File Not Found
 	/// </summary>
-	public sealed class ImageFileNotFoundMsg : WithValueMsg<string>
+	public sealed class ImageFileNotFoundMsg : NotFoundMsg
 	{
 		/// <summary>
 		/// Create message

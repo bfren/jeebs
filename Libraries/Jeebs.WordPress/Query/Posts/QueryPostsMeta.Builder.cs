@@ -8,10 +8,10 @@ namespace Jeebs.WordPress
 	/// <summary>
 	/// Query Post Meta
 	/// </summary>
-	internal partial class QueryPostsMeta
+	public partial class QueryPostsMeta
 	{
 		/// <inheritdoc/>
-		internal sealed class Builder<T> : QueryPartsBuilderExtended<T, Options>
+		public sealed class Builder<T> : QueryPartsBuilderExtended<T, Options>
 		{
 			/// <summary>
 			/// IWpDb
@@ -31,10 +31,21 @@ namespace Jeebs.WordPress
 				// SELECT
 				AddSelect(db.PostMeta);
 
+				// WHERE Post ID
+				if (opt.PostId is long postId && postId > 0)
+				{
+					AddWhere($"{__(db.PostMeta, pm => pm.PostId)} = @{nameof(postId)}", new { postId });
+				}
 				// WHERE Post IDs
-				if (opt.PostIds is List<long> postIds && postIds.Count > 0)
+				else if (opt.PostIds is List<long> postIds && postIds.Count > 0)
 				{
 					AddWhere($"{__(db.PostMeta, pm => pm.PostId)} IN ({string.Join(Adapter.ListSeparator, postIds)})");
+				}
+
+				// WHERE Meta Key
+				if (opt.Key is string metaKey)
+				{
+					AddWhere($"{__(db.PostMeta, pm => pm.Key)} = @{nameof(metaKey)}", new { metaKey });
 				}
 
 				// Finish and return

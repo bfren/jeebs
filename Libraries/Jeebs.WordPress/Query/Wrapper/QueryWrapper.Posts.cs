@@ -29,7 +29,7 @@ namespace Jeebs.WordPress
 			where TModel : IEntity
 		{
 			// Get query
-			var query = GetQuery<TModel>(modify);
+			var query = GetPostsQuery<TModel>(modify);
 
 			// Execute query
 			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
@@ -56,7 +56,7 @@ namespace Jeebs.WordPress
 			where TModel : IEntity
 		{
 			// Get query
-			var query = GetQuery<TModel>(modify);
+			var query = GetPostsQuery<TModel>(modify);
 
 			// Execute query
 			return await query.ExecuteQueryAsync(r, page).ConfigureAwait(false) switch
@@ -72,14 +72,12 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		private IQuery<TModel> GetQuery<TModel>(Action<QueryPosts.Options>? modify = null)
-		{
-			return StartNewQuery()
+		private IQuery<TModel> GetPostsQuery<TModel>(Action<QueryPosts.Options>? modify = null)
+			=> StartNewQuery()
 				.WithModel<TModel>()
 				.WithOptions(modify)
 				.WithParts(new QueryPosts.Builder<TModel>(db))
 				.GetQuery();
-		}
 
 		/// <summary>
 		/// Process a list of posts
@@ -91,8 +89,7 @@ namespace Jeebs.WordPress
 		private async Task<IR<TList>> Process<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity
-		{
-			return r
+			=> r
 				.Link()
 					.Handle().With<AddMetaExceptionMsg>()
 					.MapAsync(AddMetaAsync<TList, TModel>).Await()
@@ -105,7 +102,6 @@ namespace Jeebs.WordPress
 				.Link()
 					.Handle().With<ApplyContentFiltersExceptionMsg>()
 					.Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
-		}
 
 		private static Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
 			=> GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x));
