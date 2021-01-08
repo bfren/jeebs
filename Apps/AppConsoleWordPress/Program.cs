@@ -33,34 +33,34 @@ namespace AppConsoleWordPress
 				TermsAsync(Result.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);
 				(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
 
-				//Chain.Create()
-				//	.UseLog(log)
-				//	.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
-				//	.Audit(AuditOption);
+				Chain.Create()
+					.UseLog(log)
+					.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
+					.Audit(AuditOption);
 
-				//Chain.Create(bcg.Db)
-				//	.UseLog(log)
-				//	.Link().MapAsync(r => SearchSermonsAsync(r, "holiness", opt =>
-				//	{
-				//		opt.SearchText = "holiness";
-				//		opt.SearchOperator = SearchOperators.Like;
-				//		opt.Type = WpBcg.PostTypes.Sermon;
-				//		opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
-				//		opt.Limit = 4;
-				//	})).Await()
-				//	.Audit(AuditSermons);
+				Chain.Create(bcg.Db)
+					.UseLog(log)
+					.Link().MapAsync(r => SearchSermonsAsync(r, "holiness", opt =>
+					{
+						opt.SearchText = "holiness";
+						opt.SearchOperator = SearchOperators.Like;
+						opt.Type = WpBcg.PostTypes.Sermon;
+						opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+						opt.Limit = 4;
+					})).Await()
+					.Audit(AuditSermons);
 
-				//Chain.Create(bcg.Db)
-				//	.UseLog(log)
-				//	.Link().MapAsync(r => SearchSermonsAsync(r, "jesus", opt =>
-				//	{
-				//		opt.Type = WpBcg.PostTypes.Sermon;
-				//		opt.SearchText = "jesus";
-				//		opt.SearchFields = SearchPostFields.Title;
-				//		opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
-				//		opt.Limit = 5;
-				//	})).Await()
-				//	.Audit(AuditSermons);
+				Chain.Create(bcg.Db)
+					.UseLog(log)
+					.Link().MapAsync(r => SearchSermonsAsync(r, "jesus", opt =>
+					{
+						opt.Type = WpBcg.PostTypes.Sermon;
+						opt.SearchText = "jesus";
+						opt.SearchFields = SearchPostFields.Title;
+						opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
+						opt.Limit = 5;
+					})).Await()
+					.Audit(AuditSermons);
 
 				Chain.Create(bcg.Db)
 					.UseLog(log)
@@ -69,19 +69,19 @@ namespace AppConsoleWordPress
 					.Link().MapAsync(FetchCustomFields).Await()
 					.Audit(AuditCustomFields);
 
-				//Chain.Create()
-				//	.UseLog(log)
-				//	.Link().Map<int>(_ => throw new Exception("Test"));
+				Chain.Create()
+					.UseLog(log)
+					.Link().Map<int>(_ => throw new Exception("Test"));
 
-				//Chain.Create(bcg.Db)
-				//	.UseLog(log)
-				//	.Link().MapAsync(FetchTaxonomies).Await()
-				//	.Audit(AuditTaxonomies);
+				Chain.Create(bcg.Db)
+					.UseLog(log)
+					.Link().MapAsync(FetchTaxonomies).Await()
+					.Audit(AuditTaxonomies);
 
-				//Chain.Create(bcg.Db)
-				//	.UseLog(log)
-				//	.Link().MapAsync(ApplyContentFilters).Await()
-				//	.Audit(AuditApplyContentFilters);
+				Chain.Create(bcg.Db)
+					.UseLog(log)
+					.Link().MapAsync(ApplyContentFilters).Await()
+					.Audit(AuditApplyContentFilters);
 
 				// End
 				Console.WriteLine();

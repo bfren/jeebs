@@ -62,7 +62,7 @@ namespace Jeebs.WordPress
 			}
 		}
 
-		private Option<Content<TModel>> GetPostContentInfo<TModel>()
+		private static Option<Content<TModel>> GetPostContentInfo<TModel>()
 			=> GetPostContent<TModel>().Map(x => new Content<TModel>(x));
 
 		private class Content<TModel> : PropertyInfo<TModel, string>

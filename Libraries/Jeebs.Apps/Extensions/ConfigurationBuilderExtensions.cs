@@ -26,9 +26,14 @@ namespace Jeebs.Apps
 			ConfigValidator.Validate(path);
 
 			// Add Jeebs config - keeps Jeebs config away from app settings
-			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false);
-			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true);
-			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: false);
+			@this
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false)
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: false);
+
+			// Add environment-specific Jeebs config
+			@this
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true)
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.{env.EnvironmentName}.json", optional: true);
 
 			// Add Environment Variables
 			@this.AddEnvironmentVariables();

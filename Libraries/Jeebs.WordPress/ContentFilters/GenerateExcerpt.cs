@@ -45,15 +45,14 @@ namespace Jeebs.WordPress.ContentFilters
 				content = newLines.Replace(content, " ");
 
 				// Cut out everything after <!--more--> tag, or at a maximum length
-				var more = content.IndexOf("<!--more-->");
-				if (more > 0)
+				content = content.IndexOf("<!--more-->") switch
 				{
-					content = content.Substring(0, more).ReplaceHtmlTags(" ");
-				}
-				else
-				{
-					content = content.ReplaceHtmlTags(" ").NoLongerThan(maxLength);
-				}
+					int more when more > 0 =>
+						content.Substring(0, more).ReplaceHtmlTags(" "),
+
+					_ =>
+						content.ReplaceHtmlTags(" ").NoLongerThan(maxLength)
+				};
 
 				// Return filtered content
 				return content.Trim();
