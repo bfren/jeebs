@@ -16,7 +16,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TModel">Post type</typeparam>
 		/// <param name="r">Result</param>
 		/// <param name="filters">Content Filters</param>
-		private IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
+		private static IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{

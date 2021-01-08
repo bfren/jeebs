@@ -59,7 +59,7 @@ namespace Jeebs.Mvc
 		/// Redirect to error page
 		/// </summary>
 		/// <param name="code">HTTP Status Code</param>
-		protected RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError)
+		protected static RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError)
 			=> new RedirectToActionResult(nameof(ErrorController.Handle), "Error", new { code });
 
 		/// <summary>
