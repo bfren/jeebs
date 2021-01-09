@@ -35,28 +35,27 @@ namespace Jeebs.Mvc
 			// Log errors
 			foreach (var item in error.Messages)
 			{
-				error.Logger.Message(item);
+				@this.Log.Message(item);
 			}
 
 			// Look for a view
 			var viewName = $"Error{code}";
-			error.Logger.Trace("Search for View {ViewName}", viewName);
+			@this.Log.Trace("Search for View {ViewName}", viewName);
 			if ((findView(viewName) ?? findView("Default")) is string view)
 			{
-				error.Logger.Trace("Found view {view}", view);
+				@this.Log.Trace("Found view {view}", view);
 				return @this.View(view, error);
 			}
 
 			// If response has stared we can't do anything
-			if (@this.Response.HasStarted)
-			{
-				@this.Log.Warning("Unable to execute Error view: output already started.");
-			}
-			else
+			var unableToFindViews = $"Unable to find views '{viewName}' or 'Default'.";
+			@this.Log.Warning(unableToFindViews);
+
+			if (!@this.Response.HasStarted)
 			{
 				@this.Response.Clear();
 				@this.Response.StatusCode = StatusCodes.Status500InternalServerError;
-				await @this.Response.WriteAsync($"Unable to find views '{viewName}' or 'Default'.").ConfigureAwait(false);
+				await @this.Response.WriteAsync(unableToFindViews).ConfigureAwait(false);
 			}
 
 			// Return empty result
