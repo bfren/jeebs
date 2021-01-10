@@ -596,8 +596,8 @@ namespace Jeebs
 			{ "(octop|vir|radi|fung)us$", "$1i" },
 			{ "(phyl|milleni|spectr)um$", "$1a" },
 			{ "(cris|ax)is$", "$1es" },
-			{ "(.+(s|x|sh|ch))$", "$1es" },
 			{ "(.+)ies$", "$1ies" },
+			{ "(.+(s|x|sh|ch))$", "$1es" },
 			{ "(.+)", "$1s" }
 		};
 
