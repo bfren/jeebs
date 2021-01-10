@@ -474,167 +474,6 @@ namespace Jeebs
 		public static string TrimEnd(this string @this, string value)
 			=> @this.EndsWith(value) ? @this.Remove(@this.LastIndexOf(value, StringComparison.InvariantCulture)) : @this;
 
-		// This comes from http://lotsacode.wordpress.com/2010/03/05/singularization-pluralization-in-c/
-		#region Singularise
-
-		/// <summary>
-		/// Words that cannot be pluralised
-		/// </summary>
-		private static readonly IList<string> unpluralisables = new List<string>
-		{
-			"equipment",
-			"information",
-			"rice",
-			"money",
-			"species",
-			"series",
-			"fish",
-			"sheep",
-			"deer"
-		};
-
-		/// <summary>
-		/// Rules for converting plural words into singular words
-		/// </summary>
-		private static readonly IDictionary<string, string> singularisations = new Dictionary<string, string>
-		{
-			{ "people", "person" },
-			{ "oxen", "ox" },
-			{ "children", "child" },
-			{ "feet", "foot" },
-			{ "teeth", "tooth" },
-			{ "geese", "goose" },
-			{ "(.*)ives?", "$1ife" },
-			{ "(.*)ves?", "$1f" },
-			{ "(.*)men$", "$1man" },
-			{ "(.+[aeiou])ys$", "$1y" },
-			{ "(.+[^aeiou])ies$", "$1y" },
-			{ "(.+)zes$", "$1" },
-			{ "([m|l])ice$", "$1ouse" },
-			{ "matrices", "matrix" },
-			{ "indices", "index" },
-			{ "(.+[^aeiou])ices$","$1ice" },
-			{ "(.*)ices", "$1ex" },
-			{ "(octop|vir)i$", "$1us" },
-			{ "(.+(s|x|sh|ch))es$", "$1" },
-			{ "(.+)s", "$1" }
-		};
-
-		/// <summary>
-		/// 'Singularise' a string
-		/// </summary>
-		/// <param name="this">The string to singularise</param>
-		/// <returns>Singularised string</returns>
-		public static string Singularise(this string @this)
-		{
-			if (unpluralisables.Contains(@this.ToLowerInvariant()))
-			{
-				return @this;
-			}
-
-			string r = @this;
-			foreach (var item in singularisations)
-			{
-				if (Regex.IsMatch(@this, item.Key))
-				{
-					r = Regex.Replace(@this, item.Key, item.Value);
-				}
-			}
-
-			return r;
-		}
-
-		/// <summary>
-		/// Returns true if the word is plural
-		/// </summary>
-		/// <param name="this">The word to check</param>
-		/// <returns>True if the word is plural</returns>
-		public static bool IsPlural(this String @this)
-		{
-			if (unpluralisables.Contains(@this.ToLowerInvariant()))
-			{
-				return true;
-			}
-
-			foreach (var item in singularisations)
-			{
-				if (Regex.IsMatch(@this, item.Key))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		#endregion
-
-		// This comes from https://mattgrande.wordpress.com/2009/10/28/pluralization-helper-for-c/
-		// and https://github.com/mattgrande/Grande.Pluralizer/blob/master/Grande.Pluralization/Pluralizer.cs
-		#region Pluralise
-
-		/// <summary>
-		/// Rules for converting singular words into plural words
-		/// </summary>
-		private static readonly IDictionary<string, string> _pluralisations = new Dictionary<string, string>
-		{
-			{ "person", "people" },
-			{ "ox$", "oxen" },
-			{ "^criterion$", "criteria" },
-			{ "child", "children" },
-			{ "foot", "feet" },
-			{ "tooth", "teeth" },
-			{ "goose", "geese" },
-			{ "(.*[^af])fe?$", "$1ves" },					// ie, wolf, wife, but not giraffe, gaffe, safe
-			{ "(hu|talis|otto|Ger|Ro)man$", "$1mans" },		// Exceptions for man -> men
-			{ "(.*)man$", "$1men" },
-			{ "(.+[^aeiou])y$", "$1ies" },
-			{ "(.+zz)$", "$1es" },							// Buzz -> Buzzes
-			{ "(.+z)$", "$1zes" },							// Quiz -> Quizzes
-			{ "([m|l])ouse$", "$1ice" },
-			{ "(append|matr|ind)(e|i)x$", "$1ices" },		// ie, Matrix, Index
-			{ "(octop|vir|radi|fung)us$", "$1i" },
-			{ "(phyl|milleni|spectr)um$", "$1a" },
-			{ "(cris|ax)is$", "$1es" },
-			{ "(.+)ies$", "$1ies" },
-			{ "(.+(s|x|sh|ch))$", "$1es" },
-			{ "(.+)", "$1s" }
-		};
-
-		/// <summary>
-		/// 'Pluralise' a string
-		/// </summary>
-		/// <param name="this">The string to pluralise</param>
-		/// <param name="count">The number of items</param>
-		/// <returns>Pluralised string</returns>
-		public static string Pluralise(this string @this, long count)
-		{
-			if (count == 1)
-			{
-				return @this;
-			}
-
-			if (unpluralisables.Contains(@this))
-			{
-				return @this;
-			}
-
-			var plural = "unknown";
-
-			foreach (var pluralisation in _pluralisations)
-			{
-				if (Regex.IsMatch(@this, pluralisation.Key))
-				{
-					plural = Regex.Replace(@this, pluralisation.Key, pluralisation.Value);
-					break;
-				}
-			}
-
-			return plural;
-		}
-
-		#endregion
-
 		/// <summary>
 		/// Replace all HTML tags
 		/// </summary>
@@ -658,5 +497,143 @@ namespace Jeebs
 		/// <inheritdoc cref="ReplaceHtmlTags(string, string?)"/>
 		public static string ReplaceHtmlTags(this string @this)
 			=> ReplaceHtmlTags(@this, null);
+
+		#region Singularise & Pluralise
+
+		/// <summary>
+		/// Words that cannot be pluralised
+		/// </summary>
+		private static readonly IList<string> unpluralisables = new List<string>
+		{
+			"aircraft",
+			"deer",
+			"equipment",
+			"fish",
+			"information",
+			"money",
+			"rice",
+			"series",
+			"sheep",
+			"species",
+			"swine",
+			"trout",
+		};
+
+		/// <summary>
+		/// Rules for converting plural words into singular words
+		/// This comes from http://lotsacode.wordpress.com/2010/03/05/singularization-pluralization-in-c/
+		/// </summary>
+		private static readonly IDictionary<string, string> singularisations = new Dictionary<string, string>
+		{
+			{ "people", "person" },
+			{ "oxen", "ox" },
+			{ "criteria", "criterion" },
+			{ "children", "child" },
+			{ "feet", "foot" },
+			{ "teeth", "tooth" },
+			{ "geese", "goose" },
+			{ "(.*)ives?", "$1ife" },
+			{ "(.*)ves?", "$1f" },
+			{ "(.*)men$", "$1man" },
+			{ "(.+[aeiou])ys$", "$1y" },
+			{ "(.+[^aeiou])ies$", "$1y" },
+			{ "(.+)zes$", "$1" },
+			{ "([m|l])ice$", "$1ouse" },
+			{ "matrices", "matrix" },
+			{ "indices", "index" },
+			{ "(.+[^aeiou])ices$","$1ice" },
+			{ "(.*)ices", "$1ex" },
+			{ "(octop|vir)i$", "$1us" },
+			{ "(.+(s|x|sh|ch))es$", "$1" },
+			{ "(.+)s", "$1" }
+		};
+
+		/// <summary>
+		/// Rules for converting singular words into plural words
+		/// This comes from https://mattgrande.wordpress.com/2009/10/28/pluralization-helper-for-c/
+		/// and https://github.com/mattgrande/Grande.Pluralizer/blob/master/Grande.Pluralization/Pluralizer.cs
+		/// </summary>
+		private static readonly IDictionary<string, string> pluralisations = new Dictionary<string, string>
+		{
+			{ "person", "people" },
+			{ "ox$", "oxen" },
+			{ "^criterion$", "criteria" },
+			{ "child", "children" },
+			{ "foot", "feet" },
+			{ "tooth", "teeth" },
+			{ "goose", "geese" },
+			{ "(.*[^af])fe?$", "$1ves" },					// ie, wolf, wife, but not giraffe, gaffe, safe
+			{ "(hu|talis|otto|Ger|Ro)man$", "$1mans" },		// Exceptions for man -> men
+			{ "(.*)man$", "$1men" },
+			{ "(.+[^aeiou])y$", "$1ies" },
+			{ "(.+zz)$", "$1es" },							// Buzz -> Buzzes
+			{ "(.+z)$", "$1zes" },							// Quiz -> Quizzes
+			{ "([m|l])ouse$", "$1ice" },
+			{ "(append|matr|ind)(e|i)x$", "$1ices" },		// ie, Matrix, Index
+			{ "(octop|vir|radi|fung)us$", "$1i" },
+			{ "(phyl|milleni|spectr)um$", "$1a" },
+			{ "(cris|ax)is$", "$1es" },
+			{ "(.+(s|x|sh|ch))$", "$1es" },
+			{ "(.+)ies$", "$1ies" },
+			{ "(.+)", "$1s" }
+		};
+
+		/// <summary>
+		/// 'Singularise' a string
+		/// </summary>
+		/// <param name="this">The string to singularise</param>
+		/// <returns>Singularised string</returns>
+		public static string Singularise(this string @this)
+		{
+			if (unpluralisables.Contains(@this.ToLowerInvariant()))
+			{
+				return @this;
+			}
+
+			string singular = @this;
+			foreach (var item in singularisations)
+			{
+				if (Regex.IsMatch(@this, item.Key))
+				{
+					singular = Regex.Replace(@this, item.Key, item.Value);
+					break;
+				}
+			}
+
+			return singular;
+		}
+
+		/// <summary>
+		/// 'Pluralise' a string
+		/// </summary>
+		/// <param name="this">The string to pluralise</param>
+		/// <param name="count">The number of items</param>
+		/// <returns>Pluralised string</returns>
+		public static string Pluralise(this string @this, long count)
+		{
+			if (count == 1)
+			{
+				return @this;
+			}
+
+			if (unpluralisables.Contains(@this.ToLowerInvariant()))
+			{
+				return @this;
+			}
+
+			var plural = @this;
+			foreach (var pluralisation in pluralisations)
+			{
+				if (Regex.IsMatch(@this, pluralisation.Key))
+				{
+					plural = Regex.Replace(@this, pluralisation.Key, pluralisation.Value);
+					break;
+				}
+			}
+
+			return plural;
+		}
+
+		#endregion
 	}
 }
