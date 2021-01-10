@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 using static F.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
@@ -43,7 +42,10 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 					// Get Video ID and replace content using output format
 					if (GetVideoId(uri) is string videoId)
 					{
-						content = content.Replace(match.Value, string.Format(format, F.StringF.Random(10), videoId, uri));
+						content = content.Replace(
+							match.Value,
+							string.Format(format, F.StringF.Random(10), videoId, uri)
+						);
 					}
 				}
 			}

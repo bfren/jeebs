@@ -34,6 +34,7 @@ namespace F
 				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 				DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+				NumberHandling = JsonNumberHandling.AllowReadingFromString
 			};
 
 			options.Converters.Add(new EnumeratedConverterFactory());
@@ -49,7 +50,8 @@ namespace F
 			{
 				DefaultIgnoreCondition = JsonF.options.DefaultIgnoreCondition,
 				DictionaryKeyPolicy = JsonF.options.DictionaryKeyPolicy,
-				PropertyNamingPolicy = JsonF.options.PropertyNamingPolicy
+				PropertyNamingPolicy = JsonF.options.PropertyNamingPolicy,
+				NumberHandling = JsonF.options.NumberHandling
 			};
 
 			foreach (var item in JsonF.options.Converters)
