@@ -100,6 +100,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		jeebs-v5.code-workspace = jeebs-v5.code-workspace
 		LICENSE = LICENSE
 		Local.pack.props = Local.pack.props
 		Local.push.props = Local.push.props
@@ -144,9 +145,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.All", "Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Apps", "Tests\Tests.Jeebs.Data.Apps\Tests.Jeebs.Data.Apps.csproj", "{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Services.Drawing", "Libraries\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj", "{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drawing", "Libraries\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj", "{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Services.Drivers.Drawing.Common", "Libraries\Jeebs.Services.Drivers.Drawing.Common\Jeebs.Services.Drivers.Drawing.Common.csproj", "{0331C1AF-1DE0-4FCF-8862-6122CC028493}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Drawing.Common", "Libraries\Jeebs.Services.Drivers.Drawing.Common\Jeebs.Services.Drivers.Drawing.Common.csproj", "{0331C1AF-1DE0-4FCF-8862-6122CC028493}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
