@@ -80,7 +80,7 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Assert
 			var error = Assert.IsAssignableFrom<IError<int>>(result);
-			Assert.Contains(error.Messages, m => m == reason);
+			Assert.Contains(error.Messages.GetEnumerable(), m => m == reason);
 		}
 	}
 }

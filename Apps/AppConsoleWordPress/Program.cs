@@ -241,7 +241,7 @@ namespace AppConsoleWordPress
 		{
 			if (r is IError)
 			{
-				r.Logger.Messages(r.Messages);
+				r.Logger.Messages(r.Messages.GetEnumerable());
 			}
 
 			if (r is IOkV<List<SermonModelWithTaxonomies>> ok)
@@ -282,7 +282,7 @@ namespace AppConsoleWordPress
 		{
 			if (r is IError)
 			{
-				r.Logger.Messages(r.Messages);
+				r.Logger.Messages(r.Messages.GetEnumerable());
 			}
 
 			if (r is IOkV<List<PostModelWithContent>> ok)

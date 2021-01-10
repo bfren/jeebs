@@ -11,9 +11,9 @@ namespace Jeebs.Defaults
 	public static class Log
 	{
 		/// <summary>
-		/// Default log level is <see cref="LogLevel.Debug"/>
+		/// Default log level is <see cref="LogLevel.Information"/>
 		/// </summary>
-		public const LogLevel Level = LogLevel.Debug;
+		public const LogLevel Level = LogLevel.Information;
 
 		/// <summary>
 		/// Default exception log level is <see cref="LogLevel.Error"/>

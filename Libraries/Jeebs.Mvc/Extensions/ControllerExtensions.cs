@@ -33,7 +33,7 @@ namespace Jeebs.Mvc
 			}
 
 			// Log errors
-			foreach (var item in error.Messages)
+			foreach (var item in error.Messages.GetEnumerable())
 			{
 				@this.Log.Message(item);
 			}

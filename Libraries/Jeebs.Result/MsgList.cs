@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
 	/// </summary>
-	public class MsgList : IDisposable, IEnumerable<IMsg>
+	public class MsgList : IDisposable
 	{
 		/// <summary>
 		/// The list of messages
@@ -39,7 +39,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TMsg">IMsg type</typeparam>
 		/// <param name="m">IMsg value</param>
-		private bool Match<TMsg>(IMsg m)
+		private static bool Match<TMsg>(IMsg m)
 			=> typeof(TMsg).IsInstanceOfType(m);
 
 		/// <summary>
@@ -90,6 +90,17 @@ namespace Jeebs
 			};
 
 		/// <summary>
+		/// Returns the messages list as an Enumerable
+		/// </summary>
+		public IEnumerable<IMsg> GetEnumerable()
+		{
+			foreach (var m in messages)
+			{
+				yield return m;
+			}
+		}
+
+		/// <summary>
 		/// Return all message values on new lines - or default <see cref="ToString()"/> if there are no messages
 		/// </summary>
 		public override string ToString()
@@ -101,15 +112,5 @@ namespace Jeebs
 		/// <param name="withType">If true, will include the message type as well</param>
 		public string ToString(bool withType)
 			=> messages.Count > 0 ? string.Join('\n', GetAll(withType)) : GetType().ToString();
-
-		#region Explicit implementations
-
-		IEnumerator<IMsg> IEnumerable<IMsg>.GetEnumerator()
-			=> messages.GetEnumerator();
-
-		IEnumerator IEnumerable.GetEnumerator()
-			=> messages.GetEnumerator();
-
-		#endregion
 	}
 }

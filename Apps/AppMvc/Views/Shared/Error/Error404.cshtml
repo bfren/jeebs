@@ -6,7 +6,7 @@
 @if (Model.HasMessages)
 {
 	<h3>Messages</h3>
-	@foreach (var item in Model.Messages)
+	@foreach (var item in Model.Messages.GetEnumerable())
 	{
 		<p>@item</p>
 	}

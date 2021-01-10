@@ -22,7 +22,7 @@ namespace Jeebs
 					Option.Wrap(ok.Value),
 
 				{ } e when e.HasMessages =>
-					Option.None<TValue>().AddReason(e.Messages.Last()),
+					Option.None<TValue>().AddReason(e.Messages.GetEnumerable().Last()),
 
 				_ =>
 					Option.None<TValue>()
