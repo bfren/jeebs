@@ -498,31 +498,26 @@ namespace Jeebs
 		/// </summary>
 		private static readonly IDictionary<string, string> singularisations = new Dictionary<string, string>
 		{
-			// Start with the rarest cases, and move to the most common
-			{"people", "person"},
-			{"oxen", "ox"},
-			{"children", "child"},
-			{"feet", "foot"},
-			{"teeth", "tooth"},
-			{"geese", "goose"},
-			// E.g. wolf, wife
-			{"(.*)ives?", "$1ife"},
-			{"(.*)ves?", "$1f"},
-			// Matrix, index etc
-			{"matrices", "matrix"},
-			{"indices", "index"},
-			{"(.+[^aeiou])ices$","$1ice"},
-			{"(.*)ices", "$1ex"},
-			// Octopus, virus etc
-			{"(octop|vir)i$", "$1us"},
-			{"(.+(@this|x|sh|ch))es$", "$1"},
-			{"(.+)@this", "$1"},
-			// And now the more standard rules.
-			{"(.*)men$", "$1man"},
-			{"(.+[aeiou])ys$", "$1y"},
-			{"(.+[^aeiou])ies$", "$1y"},
-			{"(.+)zes$", "$1"},
-			{"([m|l])ice$", "$1ouse"}
+			{ "people", "person" },
+			{ "oxen", "ox" },
+			{ "children", "child" },
+			{ "feet", "foot" },
+			{ "teeth", "tooth" },
+			{ "geese", "goose" },
+			{ "(.*)ives?", "$1ife" },
+			{ "(.*)ves?", "$1f" },
+			{ "(.*)men$", "$1man" },
+			{ "(.+[aeiou])ys$", "$1y" },
+			{ "(.+[^aeiou])ies$", "$1y" },
+			{ "(.+)zes$", "$1" },
+			{ "([m|l])ice$", "$1ouse" },
+			{ "matrices", "matrix" },
+			{ "indices", "index" },
+			{ "(.+[^aeiou])ices$","$1ice" },
+			{ "(.*)ices", "$1ex" },
+			{ "(octop|vir)i$", "$1us" },
+			{ "(.+(s|x|sh|ch))es$", "$1" },
+			{ "(.+)s", "$1" }
 		};
 
 		/// <summary>
@@ -574,7 +569,8 @@ namespace Jeebs
 
 		#endregion
 
-		// This comes from http://mattgrande.wordpress.com/2009/10/28/pluralization-helper-for-c/
+		// This comes from https://mattgrande.wordpress.com/2009/10/28/pluralization-helper-for-c/
+		// and https://github.com/mattgrande/Grande.Pluralizer/blob/master/Grande.Pluralization/Pluralizer.cs
 		#region Pluralise
 
 		/// <summary>
@@ -582,22 +578,26 @@ namespace Jeebs
 		/// </summary>
 		private static readonly IDictionary<string, string> _pluralisations = new Dictionary<string, string>
 		{
-			// Start with the rarest cases, and move to the most common
 			{ "person", "people" },
-			{ "ox", "oxen" },
+			{ "ox$", "oxen" },
+			{ "^criterion$", "criteria" },
 			{ "child", "children" },
 			{ "foot", "feet" },
 			{ "tooth", "teeth" },
 			{ "goose", "geese" },
-			// And now the more standard rules.
-			{ "(.*)fe?$", "$1ves" },         // ie, wolf, wife
+			{ "(.*[^af])fe?$", "$1ves" },					// ie, wolf, wife, but not giraffe, gaffe, safe
+			{ "(hu|talis|otto|Ger|Ro)man$", "$1mans" },		// Exceptions for man -> men
 			{ "(.*)man$", "$1men" },
-			{ "(.+[aeiou]y)$", "$1s" },
 			{ "(.+[^aeiou])y$", "$1ies" },
-			{ "(.+z)$", "$1zes" },
+			{ "(.+zz)$", "$1es" },							// Buzz -> Buzzes
+			{ "(.+z)$", "$1zes" },							// Quiz -> Quizzes
 			{ "([m|l])ouse$", "$1ice" },
-			{ "(.+)(e|i)x$", "$1ices"},    // ie, Matrix, Index
-			{ "(.+(@this|x|sh|ch))$", "$1es"},
+			{ "(append|matr|ind)(e|i)x$", "$1ices" },		// ie, Matrix, Index
+			{ "(octop|vir|radi|fung)us$", "$1i" },
+			{ "(phyl|milleni|spectr)um$", "$1a" },
+			{ "(cris|ax)is$", "$1es" },
+			{ "(.+(s|x|sh|ch))$", "$1es" },
+			{ "(.+)ies$", "$1ies" },
 			{ "(.+)", "$1s" }
 		};
 
