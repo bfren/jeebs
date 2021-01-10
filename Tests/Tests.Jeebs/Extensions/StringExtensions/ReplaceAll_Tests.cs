@@ -15,7 +15,7 @@ namespace Jeebs.StringExtensions_Tests
 			// Arrange
 
 			// Act
-			var result = input.ReplaceAll(new string[] { }, string.Empty);
+			var result = input.ReplaceAll(Array.Empty<string>(), string.Empty);
 
 			// Assert
 			Assert.Equal(input, result);

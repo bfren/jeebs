@@ -52,7 +52,7 @@ namespace Jeebs.Mvc.Models
 		/// <summary>
 		/// Required user roles - if set, the item will only be shown if the user HAS one of the specified roles
 		/// </summary>
-		public string[] Roles { get; set; } = new string[] { };
+		public string[] Roles { get; set; } = Array.Empty<string>();
 
 		/// <summary>
 		/// Add a child menu item, using action as text if text is null

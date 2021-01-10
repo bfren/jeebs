@@ -48,7 +48,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			// Arrange
 
 			// Act
-			var result = defaultInputStringEncryptedWithByteKey.Decrypt<int>(new byte[0]);
+			var result = defaultInputStringEncryptedWithByteKey.Decrypt<int>(Array.Empty<byte>());
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
