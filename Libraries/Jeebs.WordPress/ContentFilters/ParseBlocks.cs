@@ -25,6 +25,9 @@ namespace Jeebs.WordPress.ContentFilters
 				// Parse YouTube Videos
 				content = new YouTube().Parse(content);
 
+				// Parse Vimeo Videos
+				content = new Vimeo().Parse(content);
+
 				// Return parsed content
 				return content;
 			});
