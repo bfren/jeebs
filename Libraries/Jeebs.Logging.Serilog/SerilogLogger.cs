@@ -21,8 +21,7 @@ namespace Jeebs.Logging
 		/// <summary>
 		/// Use global logger
 		/// </summary>
-		public SerilogLogger()
-			=> logger = Serilog.Log.Logger;
+		public SerilogLogger() : this(Serilog.Log.Logger) { }
 
 		/// <summary>
 		/// Use specified logger
