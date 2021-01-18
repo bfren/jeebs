@@ -56,8 +56,11 @@ namespace Jeebs
 			{
 				return type.IsInterface switch
 				{
-					true => @this.ImplementsGenericInterface(type),
-					false => @this.ImplementsGenericClass(type)
+					true =>
+						@this.ImplementsGenericInterface(type),
+
+					false =>
+						@this.ImplementsGenericClass(type)
 				};
 			}
 

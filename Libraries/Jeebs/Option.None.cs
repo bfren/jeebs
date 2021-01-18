@@ -17,8 +17,8 @@ namespace Jeebs
 
 		internal None() { }
 
-		internal None(IMsg? reason)
-			=> Reason = reason;
+		internal None(IMsg? reason) =>
+			Reason = reason;
 
 		/// <summary>
 		/// Add a reason why this option is returning <see cref="None{T}"/>
@@ -37,8 +37,8 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TMsg">Reason message type</typeparam>
 		public None<T> AddReason<TMsg>()
-			where TMsg : IMsg, new()
-			=> AddReason(new TMsg());
+			where TMsg : IMsg, new() =>
+			AddReason(new TMsg());
 
 		/// <summary>
 		/// Add a reason why this option is returning <see cref="None{T}"/>

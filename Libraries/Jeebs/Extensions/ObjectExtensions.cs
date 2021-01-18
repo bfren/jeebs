@@ -17,8 +17,8 @@ namespace Jeebs.Reflection
 		/// </summary>
 		/// <param name="this">Object</param>
 		/// <returns>Array of properties</returns>
-		public static PropertyInfo[] GetProperties(this object @this)
-			=> @this.GetType().GetTypeInfo().GetProperties();
+		public static PropertyInfo[] GetProperties(this object @this) =>
+			@this.GetType().GetTypeInfo().GetProperties();
 
 		/// <summary>
 		/// Return whether or not the object contains the specified property
@@ -47,8 +47,11 @@ namespace Jeebs.Reflection
 
 			return type.GetProperty(propertyName)?.GetValue(@this, null) switch
 			{
-				object val => val,
-				_ => Option.None<object>().AddReason(new NullPropertyOrValueMsg(@this.GetType(), propertyName))
+				object val =>
+					val,
+
+				_ =>
+					Option.None<object>().AddReason(new NullPropertyOrValueMsg(@this.GetType(), propertyName))
 			};
 		}
 
@@ -76,8 +79,11 @@ namespace Jeebs.Reflection
 
 				return (T)info.GetValue(@this, null) switch
 				{
-					T val => val,
-					_ => Option.None<T>().AddReason(new NullValueMsg(@this.GetType(), propertyName))
+					T val =>
+						val,
+
+					_ =>
+						Option.None<T>().AddReason(new NullValueMsg(@this.GetType(), propertyName))
 				};
 			}
 

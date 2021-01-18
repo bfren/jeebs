@@ -15,13 +15,13 @@ namespace Jeebs
 		public abstract object[] ParamArray { get; }
 
 		/// <inheritdoc/>
-		public virtual LogLevel Level
-			=> Defaults.Log.Level;
+		public virtual LogLevel Level =>
+			Defaults.Log.Level;
 
 		/// <summary>
 		/// Use <see cref="Format"/> and <see cref="ParamArray"/>
 		/// </summary>
-		public override string ToString()
-			=> Format.FormatWith(ParamArray);
+		public override string ToString() =>
+			Format.FormatWith(ParamArray);
 	}
 }

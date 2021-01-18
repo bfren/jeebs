@@ -24,8 +24,11 @@ namespace F
 			{
 				return Enum.Parse(typeof(T), value) switch
 				{
-					T x => x,
-					_ => None<T>().AddReason(new NotAValidEnumValueMsg<T>(value))
+					T x =>
+						x,
+
+					_ =>
+						None<T>().AddReason(new NotAValidEnumValueMsg<T>(value))
 				};
 			}
 			catch (Exception)
@@ -68,8 +71,8 @@ namespace F
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
 		public static FluentConvert<TFrom> Convert<TFrom>(TFrom value)
-			where TFrom : struct, Enum
-			=> new FluentConvert<TFrom>(value);
+			where TFrom : struct, Enum =>
+			new FluentConvert<TFrom>(value);
 
 		/// <summary>
 		/// FluentConvert
@@ -84,8 +87,8 @@ namespace F
 			/// Construct object
 			/// </summary>
 			/// <param name="from">Convert from type</param>
-			public FluentConvert(TFrom from)
-				=> this.from = from;
+			public FluentConvert(TFrom from) =>
+				this.from = from;
 
 			/// <summary>
 			/// Convert value to specified type
@@ -103,8 +106,11 @@ namespace F
 				// TTo before returning it
 				return Enum.ToObject(typeof(TTo), fromLong) switch
 				{
-					TTo x when Enum.IsDefined(typeof(TTo), x) => x,
-					_ => None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+					TTo x when Enum.IsDefined(typeof(TTo), x) =>
+						x,
+
+					_ =>
+						None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 				};
 			}
 		}

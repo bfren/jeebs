@@ -46,8 +46,11 @@ namespace Jeebs
 
 			return (list.Count > 0) switch
 			{
-				true => F.JsonF.Serialise(list),
-				false => F.JsonF.Empty
+				true =>
+					F.JsonF.Serialise(list),
+
+				false =>
+					F.JsonF.Empty
 			};
 		}
 

@@ -28,7 +28,9 @@ namespace Jeebs
 			var bibleBooks = Constants.BibleBooks.All;
 
 			// Create comparison
-			var comp = new Comparison<T>((x, y) => bibleBooks.IndexOf(getName(x)) - bibleBooks.IndexOf(getName(y)));
+			var comp = new Comparison<T>(
+				(x, y) => bibleBooks.IndexOf(getName(x)) - bibleBooks.IndexOf(getName(y))
+			);
 
 			// Sort list
 			@this.Sort(comp);

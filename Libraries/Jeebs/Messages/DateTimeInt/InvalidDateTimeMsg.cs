@@ -19,7 +19,7 @@ namespace Jm.DateTimeInt
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"Invalid {Value.part} - 'Y:{Value.dt.Year} M:{Value.dt.Minute} D:{Value.dt.Day} H:{Value.dt.Hour} m:{Value.dt.Minute}'.";
+		public override string ToString() =>
+			$"Invalid {Value.part} - 'Y:{Value.dt.Year} M:{Value.dt.Minute} D:{Value.dt.Day} H:{Value.dt.Hour} m:{Value.dt.Minute}'.";
 	}
 }

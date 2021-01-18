@@ -20,7 +20,7 @@ namespace Jm.Enumerated
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"'{Value}' is not a valid value of {typeof(T)}.";
+		public override string ToString() =>
+			$"'{Value}' is not a valid value of {typeof(T)}.";
 	}
 }

@@ -21,17 +21,20 @@ namespace Jm
 		/// Create message with details of what has not been found
 		/// </summary>
 		/// <param name="details"></param>
-		protected NotFoundMsg(string details)
-			=> this.details = details;
+		protected NotFoundMsg(string details) =>
+			this.details = details;
 
 		/// <summary>
 		/// Return details of what has not been found, or class type
 		/// </summary>
-		public override string ToString()
-			=> details switch
+		public override string ToString() =>
+			details switch
 			{
-				string x => $"Not found: {x}",
-				_ => GetType().ToString()
+				string x =>
+					$"Not found: {x}",
+
+				_ =>
+					GetType().ToString()
 			};
 	}
 }

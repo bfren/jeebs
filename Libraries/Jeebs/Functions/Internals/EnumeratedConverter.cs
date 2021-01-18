@@ -21,11 +21,14 @@ namespace Jeebs.Functions.Internals
 		/// <param name="reader">Utf8JsonReader</param>
 		/// <param name="typeToConvert">Enumerated type</param>
 		/// <param name="options">JsonSerializerOptions</param>
-		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-			=> Activator.CreateInstance(typeToConvert, args: reader.GetString()) switch
+		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+			Activator.CreateInstance(typeToConvert, args: reader.GetString()) switch
 			{
-				T x => x,
-				_ => throw new JsonException($"Unable to create Enum type {typeof(T)} from JSON.")
+				T x =>
+					x,
+
+				_ =>
+					throw new JsonException($"Unable to create Enum type {typeof(T)} from JSON.")
 			};
 
 		/// <summary>
@@ -34,7 +37,7 @@ namespace Jeebs.Functions.Internals
 		/// <param name="writer">Utf8JsonWriter</param>
 		/// <param name="value">Enumerated value</param>
 		/// <param name="options">JsonSerializerOptions</param>
-		public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-			=> writer.WriteStringValue(value.ToString());
+		public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options) =>
+			writer.WriteStringValue(value.ToString());
 	}
 }
