@@ -21,14 +21,14 @@ namespace Jm.Data
 		public object? Parameters { get; }
 
 		/// <inheritdoc/>
-		public override string Format
-			=> "{ExceptionType}: {ExceptionText} | Query: {Sql} | Parameters: {Parameters}";
+		public override string Format =>
+			"{ExceptionType}: {ExceptionText} | Query: {Sql} | Parameters: {Parameters}";
 
 		/// <inheritdoc/>
-		public override object[] ParamArray
-			=> new[] { ExceptionType, ExceptionText, Sql, Parameters ?? new object() };
+		public override object[] ParamArray =>
+			new[] { ExceptionType, ExceptionText, Sql, Parameters ?? new object() };
 
-		internal QueryExceptionMsg(Exception ex, string query, object? parameters = null) : base(ex)
-			=> (Sql, Parameters) = (query, parameters);
+		internal QueryExceptionMsg(Exception ex, string query, object? parameters = null) : base(ex) =>
+			(Sql, Parameters) = (query, parameters);
 	}
 }

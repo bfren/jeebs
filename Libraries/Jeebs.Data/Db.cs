@@ -62,8 +62,8 @@ namespace Jeebs.Data
 		/// <param name="client">IDbClient</param>
 		/// <param name="log">ILog</param>
 		/// <param name="config">DbConfig</param>
-		protected Db(IDbClient client, ILog log, DbConfig config) : this(client, log)
-			=> ConnectionString = config.GetConnection().ConnectionString;
+		protected Db(IDbClient client, ILog log, DbConfig config) : this(client, log) =>
+			ConnectionString = config.GetConnection().ConnectionString;
 
 		/// <summary>
 		/// Create object
@@ -72,8 +72,8 @@ namespace Jeebs.Data
 		/// <param name="log">ILog</param>
 		/// <param name="config">DbConfig</param>
 		/// <param name="connectionName">Connection name</param>
-		protected Db(IDbClient client, ILog log, DbConfig config, string connectionName) : this(client, log)
-			=> ConnectionString = config.GetConnection(connectionName).ConnectionString;
+		protected Db(IDbClient client, ILog log, DbConfig config, string connectionName) : this(client, log) =>
+			ConnectionString = config.GetConnection(connectionName).ConnectionString;
 
 		/// <summary>
 		/// Create object
@@ -81,31 +81,31 @@ namespace Jeebs.Data
 		/// <param name="client">IDbClient</param>
 		/// <param name="log">ILog</param>
 		/// <param name="connectionString">Connection String</param>
-		protected Db(IDbClient client, ILog log, string connectionString) : this(client, log)
-			=> ConnectionString = connectionString;
+		protected Db(IDbClient client, ILog log, string connectionString) : this(client, log) =>
+			ConnectionString = connectionString;
 
 		#region Static
 
 		/// <summary>
 		/// Add default type handlers
 		/// </summary>
-		static Db()
-			=> Dapper.SqlMapper.AddTypeHandler(new GuidTypeHandler());
+		static Db() =>
+			Dapper.SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
 		/// <summary>
 		/// Persist an EnumList to the database by encoding it as JSON
 		/// </summary>
 		/// <typeparam name="T">Type to handle</typeparam>
 		protected static void AddEnumeratedListTypeHandler<T>()
-			where T : Enumerated
-			=> Dapper.SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
+			where T : Enumerated =>
+			Dapper.SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
 
 		/// <summary>
 		/// Persist a type to the database by encoding it as JSON
 		/// </summary>
 		/// <typeparam name="T">Type to handle</typeparam>
-		protected static void AddJsonTypeHandler<T>()
-			=> Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
+		protected static void AddJsonTypeHandler<T>() =>
+			Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 		#endregion
 	}

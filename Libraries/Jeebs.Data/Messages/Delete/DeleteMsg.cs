@@ -22,19 +22,19 @@ namespace Jm.Data
 		protected readonly long id;
 
 		/// <inheritdoc/>
-		public override string Format
-			=> "Deleted '{Type}' with ID '{Id}'.";
+		public override string Format =>
+			"Deleted '{Type}' with ID '{Id}'.";
 
 		/// <inheritdoc/>
-		public override object[] ParamArray
-			=> new object[] { type.ToString(), id };
+		public override object[] ParamArray =>
+			new object[] { type.ToString(), id };
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public DeleteMsg(Type type, long id)
-			=> (this.type, this.id) = (type, id);
+		public DeleteMsg(Type type, long id) =>
+			(this.type, this.id) = (type, id);
 	}
 }

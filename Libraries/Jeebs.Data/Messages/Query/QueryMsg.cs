@@ -33,16 +33,16 @@ namespace Jm.Data
 		public CommandType CommandType { get; set; }
 
 		/// <inheritdoc/>
-		public override string Format
-			=> "{Method}() - Query [{CommandType}]: {Sql} - Parameters: {Parameters}";
+		public override string Format =>
+			"{Method}() - Query [{CommandType}]: {Sql} - Parameters: {Parameters}";
 
 		/// <inheritdoc/>
-		public override object[] ParamArray
-			=> new[] { Method, CommandType, Sql, Parameters ?? new object() };
+		public override object[] ParamArray =>
+			new[] { Method, CommandType, Sql, Parameters ?? new object() };
 
 		/// <inheritdoc/>
-		public override LogLevel Level
-			=> LogLevel.Trace;
+		public override LogLevel Level =>
+			LogLevel.Trace;
 
 		/// <summary>
 		/// Create object
@@ -51,7 +51,7 @@ namespace Jm.Data
 		/// <param name="sql">Query SQL</param>
 		/// <param name="parameters">Query parameters</param>
 		/// <param name="commandType">Query command type</param>
-		public QueryMsg(string method, string sql, object? parameters, CommandType commandType = CommandType.Text)
-			=> (Method, Sql, Parameters, CommandType) = (method, sql, parameters, commandType);
+		public QueryMsg(string method, string sql, object? parameters, CommandType commandType = CommandType.Text) =>
+			(Method, Sql, Parameters, CommandType) = (method, sql, parameters, commandType);
 	}
 }

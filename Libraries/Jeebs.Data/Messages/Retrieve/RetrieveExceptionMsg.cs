@@ -24,7 +24,7 @@ namespace Jm.Data
 		/// <summary>
 		/// Output error message plus exception details
 		/// </summary>
-		public override string ToString()
-			=> $"{errorMessage} {base.ToString()} ";
+		public override string ToString() =>
+			$"{errorMessage} {base.ToString()} ";
 	}
 }

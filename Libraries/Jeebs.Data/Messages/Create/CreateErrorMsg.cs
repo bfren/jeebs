@@ -19,7 +19,7 @@ namespace Jm.Data
 		/// <summary>
 		/// Output error message
 		/// </summary>
-		public override string ToString()
-			=> $"Unable to Create '{type}'.";
+		public override string ToString() =>
+			$"Unable to Create '{type}'.";
 	}
 }

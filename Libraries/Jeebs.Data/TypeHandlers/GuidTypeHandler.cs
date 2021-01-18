@@ -16,11 +16,14 @@ namespace Jeebs.Data.TypeHandlers
 		/// </summary>
 		/// <param name="value">Guid value</param>
 		/// <returns>Guid</returns>
-		public override Guid Parse(object value)
-			=> value.ToString() switch
+		public override Guid Parse(object value) =>
+			value.ToString() switch
 			{
-				string guid => new Guid(guid),
-				_ => Guid.Empty
+				string guid =>
+					new Guid(guid),
+
+				_ =>
+					Guid.Empty
 			};
 
 		/// <summary>
@@ -28,7 +31,7 @@ namespace Jeebs.Data.TypeHandlers
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter</param>
 		/// <param name="value">Guid</param>
-		public override void SetValue(IDbDataParameter parameter, Guid value)
-			=> parameter.Value = value.ToString();
+		public override void SetValue(IDbDataParameter parameter, Guid value) =>
+			parameter.Value = value.ToString();
 	}
 }

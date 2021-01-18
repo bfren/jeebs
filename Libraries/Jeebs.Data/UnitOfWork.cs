@@ -14,8 +14,8 @@ namespace Jeebs.Data
 		public IAdapter Adapter { get; }
 
 		/// <inheritdoc/>
-		public IDbConnection Connection
-			=> Transaction.Connection ?? throw new InvalidOperationException("Transaction Connection cannot be null.");
+		public IDbConnection Connection =>
+			Transaction.Connection ?? throw new InvalidOperationException("Transaction Connection cannot be null.");
 
 		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; }
@@ -35,16 +35,16 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
 		/// <param name="driver">[Optional] IQueryDriver</param>
-		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log, IQueryDriver? driver = null)
-			=> (Adapter, Transaction, this.log, Driver) = (adapter, connection.BeginTransaction(), log, driver ?? new DapperQueryDriver());
+		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log, IQueryDriver? driver = null) =>
+			(Adapter, Transaction, this.log, Driver) = (adapter, connection.BeginTransaction(), log, driver ?? new DapperQueryDriver());
 
 		/// <inheritdoc/>
-		public string Escape(object element)
-			=> Adapter.SplitAndEscape(element.ToString() ?? string.Empty);
+		public string Escape(object element) =>
+			Adapter.SplitAndEscape(element.ToString() ?? string.Empty);
 
 		/// <inheritdoc/>
-		public string Escape(params string?[] elements)
-			=> Adapter.EscapeAndJoin(elements);
+		public string Escape(params string?[] elements) =>
+			Adapter.EscapeAndJoin(elements);
 
 		/// <inheritdoc/>
 		public void Commit()
@@ -119,12 +119,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters)
-			=> Query(r, query, parameters, CommandType.Text);
+		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters) =>
+			 Query(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk r, string query)
-			=> Query(r, query, null, CommandType.Text);
+		public IR<IEnumerable<dynamic>> Query(IOk r, string query) =>
+			 Query(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters, CommandType commandType)
@@ -145,12 +145,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters)
-			=> QueryAsync(r, query, parameters, CommandType.Text);
+		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters) =>
+			 QueryAsync(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query)
-			=> QueryAsync(r, query, null, CommandType.Text);
+		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query) =>
+			 QueryAsync(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters, CommandType commandType)
@@ -171,12 +171,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters)
-			=> Query<T>(r, query, parameters, CommandType.Text);
+		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters) =>
+			 Query<T>(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk r, string query)
-			=> Query<T>(r, query, null, CommandType.Text);
+		public IR<IEnumerable<T>> Query<T>(IOk r, string query) =>
+			 Query<T>(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
@@ -197,12 +197,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters)
-			=> QueryAsync<T>(r, query, parameters, CommandType.Text);
+		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters) =>
+			 QueryAsync<T>(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query)
-			=> QueryAsync<T>(r, query, null, CommandType.Text);
+		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query) =>
+			 QueryAsync<T>(r, query, null, CommandType.Text);
 
 		#endregion
 
@@ -227,12 +227,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query, object? parameters)
-			=> Single<T>(r, query, parameters, CommandType.Text);
+		public IR<T> Single<T>(IOk r, string query, object? parameters) =>
+			 Single<T>(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query)
-			=> Single<T>(r, query, null, CommandType.Text);
+		public IR<T> Single<T>(IOk r, string query) =>
+			 Single<T>(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
@@ -253,12 +253,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters)
-			=> SingleAsync<T>(r, query, parameters, CommandType.Text);
+		public Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters) =>
+			 SingleAsync<T>(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<T>> SingleAsync<T>(IOk r, string query)
-			=> SingleAsync<T>(r, query, null, CommandType.Text);
+		public Task<IR<T>> SingleAsync<T>(IOk r, string query) =>
+			 SingleAsync<T>(r, query, null, CommandType.Text);
 
 		#endregion
 
@@ -283,12 +283,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk r, string query, object? parameters)
-			=> Execute(r, query, parameters, CommandType.Text);
+		public IR<int> Execute(IOk r, string query, object? parameters) =>
+			 Execute(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk r, string query)
-			=> Execute(r, query, null, CommandType.Text);
+		public IR<int> Execute(IOk r, string query) =>
+			 Execute(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public async Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters, CommandType commandType)
@@ -309,12 +309,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters)
-			=> ExecuteAsync(r, query, parameters, CommandType.Text);
+		public Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters) =>
+			 ExecuteAsync(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<int>> ExecuteAsync(IOk r, string query)
-			=> ExecuteAsync(r, query, null, CommandType.Text);
+		public Task<IR<int>> ExecuteAsync(IOk r, string query) =>
+			 ExecuteAsync(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters, CommandType commandType)
@@ -335,12 +335,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters)
-			=> ExecuteScalar<T>(r, query, parameters, CommandType.Text);
+		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters) =>
+			 ExecuteScalar<T>(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk r, string query)
-			=> ExecuteScalar<T>(r, query, null, CommandType.Text);
+		public IR<T> ExecuteScalar<T>(IOk r, string query) =>
+			 ExecuteScalar<T>(r, query, null, CommandType.Text);
 
 		/// <inheritdoc/>
 		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
@@ -361,12 +361,12 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters)
-			=> ExecuteScalarAsync<T>(r, query, parameters, CommandType.Text);
+		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters) =>
+			 ExecuteScalarAsync<T>(r, query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query)
-			=> ExecuteScalarAsync<T>(r, query, null, CommandType.Text);
+		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query) =>
+			 ExecuteScalarAsync<T>(r, query, null, CommandType.Text);
 
 		#endregion
 	}

@@ -27,8 +27,7 @@ namespace Jx.Data
 		/// <param name="query">Query SQL</param>
 		/// <param name="parameters">Query Parameters</param>
 		/// <param name="inner">Inner Exception</param>
-		public UnitOfWorkException(string query, object? parameters, Exception inner)
-			: this($"Query: {query}; Parameters: {Serialise(parameters)}", inner) { }
+		public UnitOfWorkException(string query, object? parameters, Exception inner) : this($"Query: {query}; Parameters: {Serialise(parameters)}", inner) { }
 
 		/// <summary>
 		/// Construct exception
