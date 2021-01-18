@@ -21,6 +21,11 @@ namespace Jeebs.Config
 		public string Name { get; set; } = string.Empty;
 
 		/// <summary>
+		/// Tenant (or Directory) ID
+		/// </summary>
+		public string TenantId { get; set; } = string.Empty;
+
+		/// <summary>
 		/// Client ID
 		/// </summary>
 		public string ClientId { get; set; } = string.Empty;

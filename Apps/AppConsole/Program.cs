@@ -17,9 +17,10 @@ namespace AppConsole
 			}
 
 			Serilog.Debugging.SelfLog.Enable(Console.Error);
+			var jeebs = config.GetJeebsConfig();
 
 			log.Debug("Services loaded");
-			log.Debug("Project {Name}", config.GetJeebsConfig().App.Name);
+			log.Debug("Project {Name}", jeebs.App.Name);
 
 			log.Debug("Version: {0}", Version<DateRange>.Full);
 

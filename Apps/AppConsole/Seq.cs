@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using Jeebs;
-using Jeebs.Config;
 using Jeebs.Services.Drivers.Webhook.Seq;
-using Microsoft.Extensions.Options;
 
 namespace AppConsole
 {

@@ -31,9 +31,14 @@
 				"azureKeyVault": {
 					"type": "object",
 					"description": "Azure Key Vault configuration",
-					"required": [ "clientId", "clientSecret", "name" ],
+					"required": [ "tenantId", "clientId", "clientSecret", "name" ],
 					"additionalProperties": false,
 					"properties": {
+						"tenantId": {
+							"type": "string",
+							"pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$",
+							"description": "Tenant / Directory ID (see Azure Key Vault authentication documentation"
+						},
 						"clientId": {
 							"type": "string",
 							"pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$",
