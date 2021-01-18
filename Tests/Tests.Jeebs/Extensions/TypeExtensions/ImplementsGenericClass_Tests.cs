@@ -12,6 +12,8 @@ namespace Jeebs.TypeExtensions_Tests
 		[InlineData(typeof(Foo), typeof(DoesImplement<string>))]
 		[InlineData(typeof(Foo<>), typeof(DoesImplement<>))]
 		[InlineData(typeof(Foo<string>), typeof(DoesImplement<string>))]
+		[InlineData(typeof(FooLevel2), typeof(DoesImplement<>))]
+		[InlineData(typeof(FooLevel2), typeof(DoesImplement<string>))]
 		public void Does_Implement_Returns_True(Type @base, Type @class)
 		{
 			// Arrange
@@ -42,5 +44,6 @@ namespace Jeebs.TypeExtensions_Tests
 		public class DoesNotImplement<T> { }
 		public class Foo : DoesImplement<string> { }
 		public class Foo<T> : DoesImplement<T> { }
+		public class FooLevel2 : Foo { }
 	}
 }
