@@ -48,6 +48,7 @@ namespace Jeebs
 		/// </summary>
 		public void Dispose()
 		{
+			GC.SuppressFinalize(this);
 			handlers.Dispose();
 			result.Dispose();
 		}

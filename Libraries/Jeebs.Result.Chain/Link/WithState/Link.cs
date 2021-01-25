@@ -49,7 +49,7 @@ namespace Jeebs
 		/// <inheritdoc cref="Link{TValue}.Dispose"/>
 		new public void Dispose()
 		{
-			base.Dispose();
+			GC.SuppressFinalize(this);
 			handlers.Dispose();
 			result.Dispose();
 		}

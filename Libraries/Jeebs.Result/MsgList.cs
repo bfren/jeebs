@@ -31,8 +31,11 @@ namespace Jeebs
 		/// <summary>
 		/// Dispose (<seealso cref="Clear"/>)
 		/// </summary>
-		public void Dispose() =>
+		public void Dispose()
+		{
 			Clear();
+			GC.SuppressFinalize(this);
+		}
 
 		/// <summary>
 		/// Returns true if <paramref name="m"/> is of type <typeparamref name="TMsg"/>
