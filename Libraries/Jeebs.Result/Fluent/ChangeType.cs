@@ -11,19 +11,24 @@ namespace Jeebs.Fluent
 	{
 		private readonly IR result;
 
-		internal ChangeType(IR result)
-			=> this.result = result;
+		internal ChangeType(IR result) =>
+			this.result = result;
 
 		/// <summary>
 		/// Change result to use <typeparamref name="TNext"/> as the result value type
 		/// </summary>
 		/// <typeparam name="TNext">Next result value type</typeparam>
-		public IR<TNext> To<TNext>()
-			=> result switch
+		public IR<TNext> To<TNext>() =>
+			result switch
 			{
-				IOk x => x.Ok<TNext>(),
-				IError x => x.Error<TNext>(),
-				_ => throw new InvalidOperationException($"{result.GetType()} is not a supported implementation of {typeof(IR)}.")
+				IOk x =>
+					x.Ok<TNext>(),
+
+				IError x =>
+					x.Error<TNext>(),
+
+				_ =>
+					throw new InvalidOperationException($"{result.GetType()} is not a supported implementation of {typeof(IR)}.")
 			};
 	}
 
@@ -36,16 +41,21 @@ namespace Jeebs.Fluent
 	{
 		private readonly IR<TValue, TState> result;
 
-		internal ChangeType(IR<TValue, TState> result)
-			=> this.result = result;
+		internal ChangeType(IR<TValue, TState> result) =>
+			this.result = result;
 
 		/// <inheritdoc cref="ChangeType.To{TNext}"/>
-		public IR<TNext, TState> To<TNext>()
-			=> result switch
+		public IR<TNext, TState> To<TNext>() =>
+			result switch
 			{
-				IOk<TValue, TState> x => x.Ok<TNext>(),
-				IError<TValue, TState> x => x.Error<TNext>(),
-				_ => throw new InvalidOperationException($"{result.GetType()} is not a supported implementation of {typeof(IR<,>)}.")
+				IOk<TValue, TState> x =>
+					x.Ok<TNext>(),
+
+				IError<TValue, TState> x =>
+					x.Error<TNext>(),
+
+				_ =>
+					throw new InvalidOperationException($"{result.GetType()} is not a supported implementation of {typeof(IR<,>)}.")
 			};
 	}
 }

@@ -16,11 +16,11 @@ namespace Jeebs
 		/// <para>However, if <paramref name="this"/> is an <see cref="IOkV{TValue}"/> the <see cref="IOkV{TValue}.Value"/> will be lost.</para>
 		/// </summary>
 		/// <param name="this">Result</param>
-		public static ChangeType ChangeType(this IR @this)
-			=> new ChangeType(@this);
+		public static ChangeType ChangeType(this IR @this) =>
+			new ChangeType(@this);
 
 		/// <inheritdoc cref="ChangeType(IR)"/>
-		public static ChangeType<TValue, TState> ChangeType<TValue, TState>(this IR<TValue, TState> @this)
-			=> new ChangeType<TValue, TState>(@this);
+		public static ChangeType<TValue, TState> ChangeType<TValue, TState>(this IR<TValue, TState> @this) =>
+			new ChangeType<TValue, TState>(@this);
 	}
 }

@@ -19,15 +19,21 @@ namespace Jeebs
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="this">Result</param>
 		/// <param name="predicate">Select where predicate</param>
-		public static IR<TValue> Where<TValue>(this IR<TValue> @this, Func<TValue, bool> predicate)
-			=> @this switch
+		public static IR<TValue> Where<TValue>(this IR<TValue> @this, Func<TValue, bool> predicate) =>
+			@this switch
 			{
-				IOkV<TValue> x => predicate(x.Value) switch
-				{
-					true => x,
-					false => @this.Error(),
-				},
-				_ => @this.Error()
+				IOkV<TValue> x =>
+					predicate(x.Value) switch
+					{
+						true =>
+							x,
+
+						false =>
+							@this.Error(),
+					},
+
+				_ =>
+					@this.Error()
 			};
 
 		/// <summary>
@@ -41,15 +47,21 @@ namespace Jeebs
 		/// <typeparam name="TState">Result state type</typeparam>
 		/// <param name="this">Result</param>
 		/// <param name="predicate">Select where predicate</param>
-		public static IR<TValue, TState> Where<TValue, TState>(this IR<TValue, TState> @this, Func<TValue, bool> predicate)
-			=> @this switch
+		public static IR<TValue, TState> Where<TValue, TState>(this IR<TValue, TState> @this, Func<TValue, bool> predicate) =>
+			@this switch
 			{
-				IOkV<TValue, TState> x => predicate(x.Value) switch
-				{
-					true => x,
-					false => @this.Error(),
-				},
-				_ => @this.Error()
+				IOkV<TValue, TState> x =>
+					predicate(x.Value) switch
+					{
+						true =>
+							x,
+
+						false =>
+							@this.Error(),
+					},
+
+				_ =>
+					@this.Error()
 			};
 	}
 }

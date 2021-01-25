@@ -9,10 +9,10 @@ namespace Jeebs
 	public abstract class R<TValue> : IR<TValue>
 	{
 		/// <inheritdoc/>
-		public MsgList Messages { get; internal set; } = new MsgList();
+		public MsgList Messages { get; internal init; } = new MsgList();
 
 		/// <inheritdoc/>
-		public ILogger Logger { get; internal set; } = new Logger();
+		public ILogger Logger { get; internal init; } = new Logger();
 
 		internal R() { }
 
@@ -26,29 +26,35 @@ namespace Jeebs
 		}
 
 		/// <inheritdoc/>
-		public IError<TValue> Error()
-			=> Error<TValue>();
+		public IError<TValue> Error() =>
+			Error<TValue>();
 
 		/// <inheritdoc/>
-		public IError<TNext> Error<TNext>()
-			=> this switch
+		public IError<TNext> Error<TNext>() =>
+			this switch
 			{
-				IError<TNext> e => e,
-				_ => new RError<TNext> { Messages = Messages, Logger = Logger }
+				IError<TNext> e =>
+					e,
+
+				_ =>
+					new RError<TNext> { Messages = Messages, Logger = Logger }
 			};
 
 		/// <inheritdoc/>
-		public IR<TNext> Switch<TNext>(Func<IOkV<TValue>, IR<TNext>> okV, Func<IR<TValue>, IR<TNext>>? other = null)
-			=> this switch
+		public IR<TNext> Switch<TNext>(Func<IOkV<TValue>, IR<TNext>> okV, Func<IR<TValue>, IR<TNext>>? other = null) =>
+			this switch
 			{
-				IOkV<TValue> x => okV(x),
-				_ => other?.Invoke(this) ?? Error<TNext>()
+				IOkV<TValue> x =>
+					okV(x),
+
+				_ =>
+					other?.Invoke(this) ?? Error<TNext>()
 			};
 
 		#region Explicit implementations
 
-		IError IR.Error()
-			=> Error();
+		IError IR.Error() =>
+			Error();
 
 		#endregion
 	}

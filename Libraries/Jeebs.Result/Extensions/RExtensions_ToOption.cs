@@ -15,8 +15,8 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TValue">Value type</typeparam>
 		/// <param name="this">Result</param>
-		public static Option<TValue> ToOption<TValue>(this IR<TValue> @this)
-			=> @this switch
+		public static Option<TValue> ToOption<TValue>(this IR<TValue> @this) =>
+			@this switch
 			{
 				IOkV<TValue> ok =>
 					Option.Wrap(ok.Value),

@@ -18,8 +18,8 @@ namespace Jeebs
 		/// <typeparam name="TResult">Result type</typeparam>
 		/// <param name="this">Result</param>
 		public static AddMsg<TResult> AddMsg<TResult>(this TResult @this)
-			where TResult : IR
-			=> new AddMsg<TResult>(@this);
+			where TResult : IR =>
+			new AddMsg<TResult>(@this);
 
 		/// <summary>
 		/// Adds a message of type <typeparamref name="TMsg"/> to the result and returns original <typeparamref name="TResult"/> object

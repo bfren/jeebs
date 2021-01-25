@@ -19,11 +19,14 @@ namespace Jeebs
 		/// <typeparam name="U">Next result value type</typeparam>
 		/// <param name="this">Result</param>
 		/// <param name="map">Map function</param>
-		public static IR<U> Select<T, U>(this IR<T> @this, Func<T, U> map)
-			=> @this switch
+		public static IR<U> Select<T, U>(this IR<T> @this, Func<T, U> map) =>
+			@this switch
 			{
-				IOkV<T> x => x.OkV(map(x.Value)),
-				_ => @this.Error<U>()
+				IOkV<T> x =>
+					x.OkV(map(x.Value)),
+
+				_ =>
+					@this.Error<U>()
 			};
 
 		/// <summary>
@@ -37,11 +40,14 @@ namespace Jeebs
 		/// <typeparam name="U">Next result value type</typeparam>
 		/// <param name="this">Result</param>
 		/// <param name="map">Map function</param>
-		public static IR<U, S> Select<S, T, U>(this IR<T, S> @this, Func<T, U> map)
-			=> @this switch
+		public static IR<U, S> Select<S, T, U>(this IR<T, S> @this, Func<T, U> map) =>
+			@this switch
 			{
-				IOkV<T, S> x => x.OkV(map(x.Value)),
-				_ => @this.Error<U>()
+				IOkV<T, S> x =>
+					x.OkV(map(x.Value)),
+
+				_ =>
+					@this.Error<U>()
 			};
 	}
 }

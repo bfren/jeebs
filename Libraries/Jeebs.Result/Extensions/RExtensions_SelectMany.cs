@@ -22,19 +22,28 @@ namespace Jeebs
 		/// <param name="this">Result</param>
 		/// <param name="bind">Interim bind function</param>
 		/// <param name="map">Next map function</param>
-		public static IR<V> SelectMany<T, U, V>(this IR<T> @this, Func<T, IR<U>> bind, Func<T, U, V> map)
-			=> @this switch
+		public static IR<V> SelectMany<T, U, V>(this IR<T> @this, Func<T, IR<U>> bind, Func<T, U, V> map) =>
+			@this switch
 			{
-				IOkV<T> t => bind(t.Value) switch
-				{
-					IOkV<U> u => map(t.Value, u.Value) switch
+				IOkV<T> t =>
+					bind(t.Value) switch
 					{
-						V v => u.OkV(v),
-						_ => u.Error<V>()
+						IOkV<U> u =>
+							map(t.Value, u.Value) switch
+							{
+								V v =>
+									u.OkV(v),
+
+								_ =>
+									u.Error<V>()
+							},
+
+						{ } e =>
+							e.Error<V>()
 					},
-					{ } e => e.Error<V>()
-				},
-				{ } e => e.Error<V>()
+
+				{ } e =>
+					e.Error<V>()
 			};
 
 		/// <summary>
@@ -51,19 +60,28 @@ namespace Jeebs
 		/// <param name="this">Result</param>
 		/// <param name="bind">Interim bind function</param>
 		/// <param name="map">Next map function</param>
-		public static IR<V, S> SelectMany<S, T, U, V>(this IR<T, S> @this, Func<T, IR<U, S>> bind, Func<T, U, V> map)
-			=> @this switch
+		public static IR<V, S> SelectMany<S, T, U, V>(this IR<T, S> @this, Func<T, IR<U, S>> bind, Func<T, U, V> map) =>
+			@this switch
 			{
-				IOkV<T, S> t => bind(t.Value) switch
-				{
-					IOkV<U, S> u => map(t.Value, u.Value) switch
+				IOkV<T, S> t =>
+					bind(t.Value) switch
 					{
-						V v => u.OkV(v),
-						_ => u.Error<V>()
+						IOkV<U, S> u =>
+							map(t.Value, u.Value) switch
+							{
+								V v =>
+									u.OkV(v),
+
+								_ =>
+									u.Error<V>()
+							},
+
+						{ } e =>
+							e.Error<V>()
 					},
-					{ } e => e.Error<V>()
-				},
-				{ } e => e.Error<V>()
+
+				{ } e =>
+					e.Error<V>()
 			};
 	}
 }
