@@ -13,6 +13,7 @@ namespace Jeebs.Functions.Internals
 	/// <typeparam name="TId">StrongId type</typeparam>
 	internal abstract class StrongIdConverter<TId, TValue> : JsonConverter<TId>
 		where TId : StrongId<TValue>
+		where TValue : notnull
 	{
 		private readonly TValue blank;
 

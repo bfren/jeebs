@@ -10,7 +10,8 @@ namespace Jeebs
 	/// Strongly Typed ID record type
 	/// </summary>
 	/// <typeparam name="T">ID Value Type</typeparam>
-	public abstract record StrongId<T>(T Value) : IStrongId<T>;
+	public abstract record StrongId<T>(T Value) : IStrongId<T>
+		where T : notnull;
 
 	/// <summary>
 	/// 32-bit Integer ID
