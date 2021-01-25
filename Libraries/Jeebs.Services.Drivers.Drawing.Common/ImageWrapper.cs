@@ -16,21 +16,21 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 	public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 	{
 		/// <inheritdoc/>
-		public override int Width
-			=> image.Width;
+		public override int Width =>
+			image.Width;
 
 		/// <inheritdoc/>
-		public override int Height
-			=> image.Height;
+		public override int Height =>
+			image.Height;
 
 		private readonly Image image;
 
-		internal ImageWrapper(Image image)
-			=> this.image = image;
+		internal ImageWrapper(Image image) =>
+			this.image = image;
 
 		/// <inheritdoc/>
-		public override void Save(string path)
-			=> image.Save(path);
+		public override void Save(string path) =>
+			image.Save(path);
 
 		/// <inheritdoc/>
 		public override byte[] ToJpegByteArray()
@@ -41,8 +41,8 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		}
 
 		/// <inheritdoc/>
-		public override Option<IImageWrapper> ApplyMask(int width, int height)
-			=> ApplyMask(width, height, (size, mask) =>
+		public override Option<IImageWrapper> ApplyMask(int width, int height) =>
+			ApplyMask(width, height, (size, mask) =>
 			{
 				// Create source and destination rectangles
 				var source = new Rectangle(mask.X, mask.Y, mask.Width, mask.Height);
