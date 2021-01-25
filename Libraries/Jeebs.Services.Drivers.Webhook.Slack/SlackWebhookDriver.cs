@@ -22,7 +22,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 		protected SlackWebhookDriver(string name, SlackWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message)
-			=> Send(new SlackMessage(JeebsConfig, message.Content, message.Level));
+		public override void Send(Message message) =>
+			Send(new SlackMessage(JeebsConfig, message.Content, message.Level));
 	}
 }
