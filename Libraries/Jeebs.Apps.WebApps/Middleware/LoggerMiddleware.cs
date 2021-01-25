@@ -34,8 +34,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Construct object
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
-		public LoggerMiddleware(RequestDelegate next)
-			=> this.next = next;
+		public LoggerMiddleware(RequestDelegate next) =>
+			this.next = next;
 
 		/// <summary>
 		/// Invoke Middleware
@@ -63,10 +63,17 @@ namespace Jeebs.Apps.WebApps.Middleware
 				// Get log level based on HTTP status - 500 or over is an HTTP error
 				var level = status switch
 				{
-					int x when x >= 100 && x <= 299 => LogEventLevel.Verbose,
-					int x when x >= 300 && x <= 399 => LogEventLevel.Debug,
-					int x when x >= 400 && x <= 499 => LogEventLevel.Information,
-					_ => LogEventLevel.Error,
+					int x when x >= 100 && x <= 299 =>
+						LogEventLevel.Verbose,
+
+					int x when x >= 300 && x <= 399 =>
+						LogEventLevel.Debug,
+
+					int x when x >= 400 && x <= 499 =>
+						LogEventLevel.Information,
+
+					_ =>
+						LogEventLevel.Error,
 				};
 
 				// Write event to log
@@ -83,8 +90,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Get Request Path
 		/// </summary>
 		/// <param name="context">HttpContext</param>
-		private static string GetPath(HttpContext context)
-			=> context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
+		private static string GetPath(HttpContext context) =>
+			context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
 
 		#region For Testing
 
@@ -93,16 +100,16 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		internal LoggerMiddleware(RequestDelegate next, ILogger logger) : this(next)
-			=> this.logger = logger;
+		internal LoggerMiddleware(RequestDelegate next, ILogger logger) : this(next) =>
+			this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing
 		/// </summary>
 		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		public static LoggerMiddleware CreateForTesting(RequestDelegate next, ILogger logger)
-			=> new LoggerMiddleware(next, logger);
+		public static LoggerMiddleware CreateForTesting(RequestDelegate next, ILogger logger) =>
+			new LoggerMiddleware(next, logger);
 
 		#endregion
 	}

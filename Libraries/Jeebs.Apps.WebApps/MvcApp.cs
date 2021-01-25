@@ -160,6 +160,7 @@ namespace Jeebs.Apps
 			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? defaultOptions).IgnoreNullValues;
 			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
 			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
+			opt.JsonSerializerOptions.NumberHandling = (jsonSerialiserOptions ?? defaultOptions).NumberHandling;
 
 			// Set converters
 			opt.JsonSerializerOptions.Converters.Clear();

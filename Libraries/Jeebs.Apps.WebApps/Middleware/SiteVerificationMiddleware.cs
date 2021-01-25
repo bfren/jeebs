@@ -27,8 +27,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// </summary>
 		/// <param name="next"></param>
 		/// <param name="config">Verification code</param>
-		public SiteVerificationMiddleware(RequestDelegate next, VerificationConfig config)
-			=> (this.next, this.config) = (next, config);
+		public SiteVerificationMiddleware(RequestDelegate next, VerificationConfig config) =>
+			(this.next, this.config) = (next, config);
 
 		/// <summary>
 		/// Invoke Middleware
@@ -55,7 +55,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 			await next(context);
 		}
 
-		private async Task WriteAsync(HttpContext context, string contentType, string content)
+		private static async Task WriteAsync(HttpContext context, string contentType, string content)
 		{
 			context.Response.Clear();
 			context.Response.ContentType = contentType;
