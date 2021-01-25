@@ -21,13 +21,13 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		public void AddExceptionHandler<TException>(Action<IR<TValue, TState>, TException> handler)
-			where TException : Exception
-			=> handlers.Add(handler);
+			where TException : Exception =>
+			handlers.Add(handler);
 
 		/// <inheritdoc/>
 		new public void AddExceptionHandler<TException>(Action<IR<TValue>, TException> handler)
-			where TException : Exception
-			=> handlers.Add(handler);
+			where TException : Exception =>
+			handlers.Add(handler);
 
 		private IR<TNext, TState> Catch<TNext>(Func<Task<IR<TNext, TState>>> f)
 		{
@@ -43,8 +43,8 @@ namespace Jeebs
 			}
 		}
 
-		private IR<TNext, TState> Catch<TNext>(Func<IR<TNext, TState>> f)
-			=> Catch(() => Task.FromResult(f()));
+		private IR<TNext, TState> Catch<TNext>(Func<IR<TNext, TState>> f) =>
+			Catch(() => Task.FromResult(f()));
 
 		/// <inheritdoc cref="Link{TValue}.Dispose"/>
 		new public void Dispose()

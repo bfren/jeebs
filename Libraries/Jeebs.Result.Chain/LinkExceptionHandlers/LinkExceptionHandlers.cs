@@ -19,11 +19,11 @@ namespace Jeebs
 		}
 
 		internal void Add<TException>(Action<TResult, TException> handler)
-			where TException : Exception
-			=> handlers[typeof(TException)] = (r, ex) => { if (ex is TException t) handler(r, t); };
+			where TException : Exception =>
+			handlers[typeof(TException)] = (r, ex) => { if (ex is TException t) handler(r, t); };
 
-		private Action<TResult, Exception>? Get(Type ex)
-			=> handlers.TryGetValue(ex, out var value) ? value : null;
+		private Action<TResult, Exception>? Get(Type ex) =>
+			handlers.TryGetValue(ex, out var value) ? value : null;
 
 		internal void Handle(TResult result, Exception ex)
 		{
@@ -33,30 +33,39 @@ namespace Jeebs
 			//   Fallback (in case nothing is defined)
 			var handle = handlers.Count switch
 			{
-				0 => fallback,
-				_ => Get(ex.GetType()) switch
-				{
-					{ } specific => specific,
-					_ => Get(typeof(Exception)) switch
+				0 =>
+					fallback,
+
+				_ =>
+					Get(ex.GetType()) switch
 					{
-						{ } generic => generic,
-						_ => fallback
+						{ } specific =>
+							specific,
+
+						_ =>
+							Get(typeof(Exception)) switch
+							{
+								{ } generic =>
+									generic,
+
+								_ =>
+									fallback
+							}
 					}
-				}
 			};
 
 			// Handle the exception
 			handle(result, ex);
 
 			// Fallback handler
-			void fallback(TResult result, Exception ex)
-				=> result.AddMsg(exceptionMsg(ex));
+			void fallback(TResult result, Exception ex) =>
+				result.AddMsg(exceptionMsg(ex));
 		}
 
 		/// <summary>
 		/// Clear all handlers
 		/// </summary>
-		public void Dispose()
-			=> handlers.Clear();
+		public void Dispose() =>
+			handlers.Clear();
 	}
 }

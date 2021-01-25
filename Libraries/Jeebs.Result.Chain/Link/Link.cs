@@ -23,8 +23,8 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		public void AddExceptionHandler<TException>(Action<IR<TValue>, TException> handler)
-			where TException : Exception
-			=> handlers.Add(handler);
+			where TException : Exception =>
+			handlers.Add(handler);
 
 		private IR<TNext> Catch<TNext>(Func<Task<IR<TNext>>> f)
 		{
@@ -40,8 +40,8 @@ namespace Jeebs
 			}
 		}
 
-		private IR<TNext> Catch<TNext>(Func<IR<TNext>> f)
-			=> Catch(() => Task.FromResult(f()));
+		private IR<TNext> Catch<TNext>(Func<IR<TNext>> f) =>
+			Catch(() => Task.FromResult(f()));
 
 		/// <summary>
 		/// Dispose of this Link - including result and handlers objects

@@ -15,8 +15,8 @@ namespace Jeebs.Fluent
 	{
 		private readonly ILink<TValue> link;
 
-		internal Handle(ILink<TValue> link)
-			=> this.link = link;
+		internal Handle(ILink<TValue> link) =>
+			this.link = link;
 
 		/// <summary>
 		/// Add an exception handler to the current link
@@ -43,8 +43,8 @@ namespace Jeebs.Fluent
 		/// </summary>
 		/// <typeparam name="TExceptionMsg">Exception message type</typeparam>
 		public ILink<TValue> With<TExceptionMsg>()
-			where TExceptionMsg : IExceptionMsg, new()
-			=> With((r, ex) =>
+			where TExceptionMsg : IExceptionMsg, new() =>
+			With((r, ex) =>
 			{
 				var msg = new TExceptionMsg();
 				msg.Set(ex);

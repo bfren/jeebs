@@ -13,24 +13,24 @@ namespace Jeebs
 		/// <summary>
 		/// Begin a chain (result value type will be <see cref="bool"/>)
 		/// </summary>
-		public static IOk<bool> Create()
-			=> Chain<bool>.Create();
+		public static IOk<bool> Create() =>
+			Chain<bool>.Create();
 
 		/// <summary>
 		/// Begin a chain with state (result value type will be <see cref="bool"/>)
 		/// </summary>
 		/// <typeparam name="TState">Chain state type</typeparam>
 		/// <param name="state">Chain state</param>
-		public static IOk<bool, TState> Create<TState>(TState state)
-			=> Chain<bool>.Create(state);
+		public static IOk<bool, TState> Create<TState>(TState state) =>
+			Chain<bool>.Create(state);
 
 		/// <summary>
 		/// Begin a chain with a value
 		/// </summary>
 		/// <typeparam name="TValue">Result value type</typeparam>
 		/// <param name="value">Result value</param>
-		public static IOkV<TValue> CreateV<TValue>(TValue value)
-			=> Result.OkV(value);
+		public static IOkV<TValue> CreateV<TValue>(TValue value) =>
+			Result.OkV(value);
 
 		/// <summary>
 		/// Begin a chain with a value and state
@@ -39,8 +39,8 @@ namespace Jeebs
 		/// <typeparam name="TState">Chain state type</typeparam>
 		/// <param name="value">Result value</param>
 		/// <param name="state">Chain state</param>
-		public static IOkV<TValue, TState> CreateV<TValue, TState>(TValue value, TState state)
-			=> Result.OkV(value, state);
+		public static IOkV<TValue, TState> CreateV<TValue, TState>(TValue value, TState state) =>
+			Result.OkV(value, state);
 	}
 
 	/// <summary>
@@ -52,15 +52,15 @@ namespace Jeebs
 		/// <summary>
 		/// Begin a chain
 		/// </summary>
-		public static IOk<TValue> Create()
-			=> Result.Ok<TValue>();
+		public static IOk<TValue> Create() =>
+			Result.Ok<TValue>();
 
 		/// <summary>
 		/// Begin a chain with state
 		/// </summary>
 		/// <typeparam name="TState">Chain state type</typeparam>
 		/// <param name="state">Chain state</param>
-		public static IOk<TValue, TState> Create<TState>(TState state)
-			=> Result.Ok<TValue, TState>(state);
+		public static IOk<TValue, TState> Create<TState>(TState state) =>
+			Result.Ok<TValue, TState>(state);
 	}
 }
