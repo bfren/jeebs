@@ -25,8 +25,8 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="parts">IQueryParts</param>
-		internal Query(IUnitOfWork unitOfWork, IQueryParts parts)
-			=> (UnitOfWork, Parts) = (unitOfWork, parts);
+		internal Query(IUnitOfWork unitOfWork, IQueryParts parts) =>
+			(UnitOfWork, Parts) = (unitOfWork, parts);
 
 		/// <inheritdoc/>
 		public async Task<IR<long>> GetCountAsync(IOk r)
@@ -77,8 +77,8 @@ namespace Jeebs.Data.Querying
 					.MapAsync(getItems).Await();
 
 			// Get paging values
-			IR<PagingValues> getPagingValues(IOkV<long> r)
-				=> r.OkV(new PagingValues(r.Value, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer));
+			IR<PagingValues> getPagingValues(IOkV<long> r) =>
+				r.OkV(new PagingValues(r.Value, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer));
 
 			// Get the items
 			async Task<IR<PagedList<T>>> getItems(IOkV<PagingValues> r)

@@ -22,8 +22,8 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="from">FROM command</param>
-		protected QueryPartsBuilder(IAdapter adapter, string from)
-			=> (Adapter, Parts) = (adapter, new QueryParts(from));
+		protected QueryPartsBuilder(IAdapter adapter, string from) =>
+			(Adapter, Parts) = (adapter, new QueryParts(from));
 
 		/// <summary>
 		/// Build the query
@@ -165,8 +165,8 @@ namespace Jeebs.Data.Querying
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		/// <param name="escape">[Optional] Set to true to enable automatic escaping of JOIN statement</param>
-		protected void AddInnerJoin(object table, string on, (object table, string column) equals, bool escape = false)
-			=> Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals, escape);
+		protected void AddInnerJoin(object table, string on, (object table, string column) equals, bool escape = false) =>
+			Parts.InnerJoin = AddJoin(Parts.InnerJoin, table, on, equals, escape);
 
 		/// <summary>
 		/// Set LEFT JOIN
@@ -175,8 +175,8 @@ namespace Jeebs.Data.Querying
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		/// <param name="escape">[Optional] Set to true to enable automatic escaping of JOIN statement</param>
-		protected void AddLeftJoin(object table, string on, (object table, string column) equals, bool escape = false)
-			=> Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals, escape);
+		protected void AddLeftJoin(object table, string on, (object table, string column) equals, bool escape = false) =>
+			Parts.LeftJoin = AddJoin(Parts.LeftJoin, table, on, equals, escape);
 
 		/// <summary>
 		/// Set RIGHT JOIN
@@ -185,8 +185,8 @@ namespace Jeebs.Data.Querying
 		/// <param name="on">JOIN column - should be a column on the JOIN table</param>
 		/// <param name="equals">EQUALS table and column</param>
 		/// <param name="escape">[Optional] Set to true to enable automatic escaping of JOIN statement</param>
-		protected void AddRightJoin(object table, string on, (object table, string column) equals, bool escape = false)
-			=> Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals, escape);
+		protected void AddRightJoin(object table, string on, (object table, string column) equals, bool escape = false) =>
+			Parts.RightJoin = AddJoin(Parts.RightJoin, table, on, equals, escape);
 
 		/// <summary>
 		/// Add WHERE clause

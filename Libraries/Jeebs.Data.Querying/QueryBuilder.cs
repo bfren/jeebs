@@ -16,12 +16,12 @@ namespace Jeebs.Data.Querying
 		/// Create object
 		/// </summary>
 		/// <param name="unitOfWork">IUnitOfWork</param>
-		internal QueryBuilder(IUnitOfWork unitOfWork)
-			=> UnitOfWork = unitOfWork;
+		internal QueryBuilder(IUnitOfWork unitOfWork) =>
+			UnitOfWork = unitOfWork;
 
 		/// <inheritdoc/>
-		public IQueryWithModel<T> WithModel<T>()
-			=> new QueryBuilder<T>.QueryWithModel(UnitOfWork);
+		public IQueryWithModel<T> WithModel<T>() =>
+			new QueryBuilder<T>.QueryWithModel(UnitOfWork);
 	}
 
 	/// <summary>

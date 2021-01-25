@@ -25,16 +25,16 @@ namespace Jeebs.Data.Querying
 			/// </summary>
 			/// <param name="unitOfWork">IUnitOfWork</param>
 			/// <param name="options">TOptions</param>
-			internal QueryWithOptions(IUnitOfWork unitOfWork, TOptions options)
-				=> (UnitOfWork, Options) = (unitOfWork, options);
+			internal QueryWithOptions(IUnitOfWork unitOfWork, TOptions options) =>
+				(UnitOfWork, Options) = (unitOfWork, options);
 
 			/// <inheritdoc/>
-			public IQueryWithParts<TModel> WithParts(IQueryParts parts)
-				=> new QueryWithParts(UnitOfWork, parts);
+			public IQueryWithParts<TModel> WithParts(IQueryParts parts) =>
+				new QueryWithParts(UnitOfWork, parts);
 
 			/// <inheritdoc/>
-			public IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder)
-				=> WithParts(builder.Build(Options));
+			public IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder) =>
+				WithParts(builder.Build(Options));
 		}
 	}
 }

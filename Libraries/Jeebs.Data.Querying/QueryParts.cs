@@ -40,7 +40,7 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Only allow internal construction - usually from QueryBuilder
 		/// </summary>
-		internal QueryParts(string from)
-			=> From = from;
+		internal QueryParts(string from) =>
+			From = from;
 	}
 }

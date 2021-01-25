@@ -46,18 +46,18 @@ namespace Jeebs.Data.Querying
 			return false;
 
 			// Get all publicly-readable properties
-			IEnumerable<PropertyInfo> getProperties()
-				=> from p in parameters.GetProperties()
-				   where p.MemberType == MemberTypes.Property
-				   && p.GetMethod?.IsPublic == true
-				   && p.GetMethod?.GetParameters().Length == 0 // exclude index get accessors e.g. this[1]
-				   select p;
+			IEnumerable<PropertyInfo> getProperties() =>
+				from p in parameters.GetProperties()
+				where p.MemberType == MemberTypes.Property
+				&& p.GetMethod?.IsPublic == true
+				&& p.GetMethod?.GetParameters().Length == 0 // exclude index get accessors e.g. this[1]
+				select p;
 		}
 
 		/// <summary>
 		/// Return parameters as JSON
 		/// </summary>
-		public override string ToString()
-			=> F.JsonF.Serialise(this);
+		public override string ToString() =>
+			F.JsonF.Serialise(this);
 	}
 }

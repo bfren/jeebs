@@ -13,7 +13,7 @@ namespace Jeebs.Data.Querying
 		/// Start a new query
 		/// </summary>
 		/// <param name="this">IDb</param>
-		public static IQueryWrapper GetQueryWrapper(this IDb @this)
-			=> new QueryWrapper(@this);
+		public static IQueryWrapper GetQueryWrapper(this IDb @this)			=> 
+			new QueryWrapper(@this);
 	}
 }
