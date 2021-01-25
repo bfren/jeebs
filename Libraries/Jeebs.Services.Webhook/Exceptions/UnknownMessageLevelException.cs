@@ -7,7 +7,6 @@ namespace Jx.Services.Webhook
 	/// <summary>
 	/// Unknown MessageLevel
 	/// </summary>
-	[Serializable]
 	public class UnknownMessageLevelException : Exception
 	{
 		/// <summary>
@@ -27,14 +26,5 @@ namespace Jx.Services.Webhook
 		/// <param name="message"></param>
 		/// <param name="inner"></param>
 		public UnknownMessageLevelException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected UnknownMessageLevelException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }
