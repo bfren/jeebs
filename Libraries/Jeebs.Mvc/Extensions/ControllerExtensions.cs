@@ -27,8 +27,11 @@ namespace Jeebs.Mvc
 			{
 				code = error.Messages.Contains<Jm.NotFoundMsg>() switch
 				{
-					true => StatusCodes.Status404NotFound,
-					false => StatusCodes.Status500InternalServerError
+					true =>
+						StatusCodes.Status404NotFound,
+
+					false =>
+						StatusCodes.Status500InternalServerError
 				};
 			}
 

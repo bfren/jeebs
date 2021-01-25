@@ -22,15 +22,22 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// Current page number
 		/// </summary>
-		public long Page
-			=> long.TryParse(Request.Query["p"], out long p) ? p : 1;
+		public long Page =>
+			long.TryParse(Request.Query["p"], out long p) switch
+			{
+				true =>
+					p,
+
+				false =>
+					1
+			};
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="log">ILog</param>
-		protected Controller(ILog log)
-			=> Log = log;
+		protected Controller(ILog log) =>
+			Log = log;
 
 		/// <summary>
 		/// Do something, process the result and return errors if necessary, or perform the success function
@@ -38,34 +45,44 @@ namespace Jeebs.Mvc
 		/// <typeparam name="T">Result type</typeparam>
 		/// <param name="r">The result of some action</param>
 		/// <param name="success">Function to run when the result is successful</param>
-		protected async Task<IActionResult> ProcessResultAsync<T>(IR<T> r, Func<T, Task<IActionResult>> success)
-			=> r switch
+		protected async Task<IActionResult> ProcessResultAsync<T>(IR<T> r, Func<T, Task<IActionResult>> success) =>
+			r switch
 			{
-				IOkV<T> okV => await success(okV.Value).ConfigureAwait(false),
-				IError<T> error => await this.ExecuteErrorAsync(error),
-				{ } other => await this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>())
+				IOkV<T> okV =>
+					await success(okV.Value).ConfigureAwait(false),
+
+				IError<T> error =>
+					await this.ExecuteErrorAsync(error),
+
+				{ } other =>
+					await this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>())
 			};
 
 		/// <inheritdoc cref="ProcessResultAsync{T}(IR{T}, Func{T, Task{IActionResult}})"/>
-		protected IActionResult ProcessResult<T>(IR<T> r, Func<T, IActionResult> success)
-			=> r switch
+		protected IActionResult ProcessResult<T>(IR<T> r, Func<T, IActionResult> success) =>
+			r switch
 			{
-				IOkV<T> okV => success(okV.Value),
-				IError<T> error => this.ExecuteErrorAsync(error).GetAwaiter().GetResult(),
-				{ } other => this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>()).GetAwaiter().GetResult()
+				IOkV<T> okV =>
+					success(okV.Value),
+
+				IError<T> error =>
+					this.ExecuteErrorAsync(error).GetAwaiter().GetResult(),
+
+				{ } other =>
+					this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>()).GetAwaiter().GetResult()
 			};
 
 		/// <summary>
 		/// Redirect to error page
 		/// </summary>
 		/// <param name="code">HTTP Status Code</param>
-		protected static RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError)
-			=> new RedirectToActionResult(nameof(ErrorController.Handle), "Error", new { code });
+		protected static RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError) =>
+			new RedirectToActionResult(nameof(ErrorController.Handle), "Error", new { code });
 
 		/// <summary>
 		/// Return a 403 Not Allowed result
 		/// </summary>
-		protected StatusCodeResult NotAllowed()
-			=> StatusCode(403);
+		protected StatusCodeResult NotAllowed() =>
+			StatusCode(403);
 	}
 }

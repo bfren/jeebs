@@ -70,7 +70,14 @@ namespace Jeebs.Mvc.Models
 			}
 
 			// Add the child item
-			Children.Add(new MenuItem { Controller = Controller, Action = action, Text = text, Description = description, RouteValues = RouteValues });
+			Children.Add(new MenuItem
+			{
+				Controller = Controller,
+				Action = action,
+				Text = text,
+				Description = description,
+				RouteValues = RouteValues
+			});
 		}
 	}
 }
