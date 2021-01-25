@@ -35,7 +35,7 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>CommentType object</returns>
-		public static CommentType Parse(string name)
-			=> Parse(name, values: new[] { Blank, Pingback }).Unwrap(() => Blank);
+		public static CommentType Parse(string name) =>
+			Parse(name, values: new[] { Blank, Pingback }).Unwrap(() => Blank);
 	}
 }

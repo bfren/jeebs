@@ -57,23 +57,23 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Populate set of post types
 		/// </summary>
-		static PostType()
-			=> all = new HashSet<PostType>(new[] { Post, Page, Revision, Attachment, MenuItem, AdvancedCustomField });
+		static PostType() =>
+			all = new HashSet<PostType>(new[] { Post, Page, Revision, Attachment, MenuItem, AdvancedCustomField });
 
 		/// <summary>
 		/// Add a custom post type
 		/// </summary>
 		/// <param name="type">PostType to add</param>
 		/// <returns>False if the post type already exists</returns>
-		public static bool AddCustomPostType(PostType type)
-			=> all.Add(type);
+		public static bool AddCustomPostType(PostType type) =>
+			all.Add(type);
 
 		/// <summary>
 		/// Parse PostType value name
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>PostType object</returns>
-		public static PostType Parse(string name)
-			=> Parse(name, all.ToArray()).Unwrap(() => Post);
+		public static PostType Parse(string name) =>
+			Parse(name, all.ToArray()).Unwrap(() => Post);
 	}
 }
