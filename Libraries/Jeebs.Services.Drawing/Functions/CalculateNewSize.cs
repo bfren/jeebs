@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Services.Drawing.Structs;
+using Jeebs.Services.Drawing.Geometry;
 
 namespace F
 {
@@ -19,8 +19,8 @@ namespace F
 		/// <param name="imgHeight">Image height</param>
 		/// <param name="newWidth">New image width</param>
 		/// <param name="newHeight">New image height</param>
-		public static Size CalculateNewSize(int imgWidth, int imgHeight, int newWidth, int newHeight)
-			=> CalculateNewSize(
+		public static Size CalculateNewSize(int imgWidth, int imgHeight, int newWidth, int newHeight) =>
+			CalculateNewSize(
 				new Size { Width = imgWidth, Height = imgHeight },
 				new Size { Width = newWidth, Height = newHeight }
 			);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jeebs.Services.Drawing.Structs;
+using Jeebs.Services.Drawing.Geometry;
 using Jm.Services.Drawing.ImageWrapper;
 
 namespace Jeebs.Services.Drawing

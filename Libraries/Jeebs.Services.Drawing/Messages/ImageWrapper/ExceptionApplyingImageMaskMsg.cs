@@ -8,7 +8,7 @@ using Jm;
 namespace Jm.Services.Drawing.ImageWrapper
 {
 	/// <summary>
-	/// Exception while applying image mask - see <see cref="Jeebs.Services.Drawing.ImageWrapper.ApplyMask(int, int, Func{Jeebs.Services.Drawing.Structs.Size, Jeebs.Services.Drawing.Structs.Rectangle, Jeebs.Services.Drawing.IImageWrapper})"/>
+	/// Exception while applying image mask - see <see cref="Jeebs.Services.Drawing.ImageWrapper.ApplyMask(int, int, Func{Jeebs.Services.Drawing.Geometry.Size, Jeebs.Services.Drawing.Geometry.Rectangle, Jeebs.Services.Drawing.IImageWrapper})"/>
 	/// </summary>
 	public sealed class ExceptionApplyingImageMaskMsg : ExceptionMsg
 	{
