@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Comment entity
 	/// </summary>
-	public abstract class WpCommentEntity : IEntity
+	public abstract record WpCommentEntity : IEntity
 	{
 		/// <summary>
 		/// Id

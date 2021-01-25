@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// TermTaxonomy entity
 	/// </summary>
-	public abstract class WpTermTaxonomyEntity : IEntity
+	public abstract record WpTermTaxonomyEntity : IEntity
 	{
 		/// <summary>
 		/// Id

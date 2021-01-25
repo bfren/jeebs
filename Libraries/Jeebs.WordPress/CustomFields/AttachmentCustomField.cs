@@ -121,6 +121,6 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Attachment class
 		/// </summary>
-		public sealed class Attachment : Entities.Attachment { }
+		public sealed record Attachment : Entities.Attachment { }
 	}
 }

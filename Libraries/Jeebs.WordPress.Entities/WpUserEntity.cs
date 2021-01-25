@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// User entity
 	/// </summary>
-	public abstract class WpUserEntity : IEntity
+	public abstract record WpUserEntity : IEntity
 	{
 		/// <summary>
 		/// Id

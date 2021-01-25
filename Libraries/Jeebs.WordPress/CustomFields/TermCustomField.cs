@@ -105,6 +105,6 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Term class
 		/// </summary>
-		public sealed class Term : WpTermEntity { }
+		public sealed record Term : WpTermEntity { }
 	}
 }

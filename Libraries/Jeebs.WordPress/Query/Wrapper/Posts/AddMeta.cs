@@ -92,6 +92,6 @@ namespace Jeebs.WordPress
 			}
 		}
 
-		private class PostMeta : WpPostMetaEntity { }
+		private record PostMeta : WpPostMetaEntity { }
 	}
 }
