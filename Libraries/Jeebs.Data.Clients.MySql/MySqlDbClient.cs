@@ -10,8 +10,8 @@ namespace Jeebs.Data.Clients.MySql
 	public sealed class MySqlDbClient : IDbClient
 	{
 		/// <inheritdoc/>
-		IAdapter IDbClient.Adapter
-			=> Adapter;
+		IAdapter IDbClient.Adapter =>
+			Adapter;
 
 		/// <summary>
 		/// MySqlAdapter
@@ -19,7 +19,7 @@ namespace Jeebs.Data.Clients.MySql
 		public MySqlAdapter Adapter { get; } = new MySqlAdapter();
 
 		/// <inheritdoc/>
-		public IDbConnection Connect(string connectionString, string? encryptionKey = null)
-			=> new MySqlConnection(connectionString);
+		public IDbConnection Connect(string connectionString, string? encryptionKey = null) =>
+			new MySqlConnection(connectionString);
 	}
 }
