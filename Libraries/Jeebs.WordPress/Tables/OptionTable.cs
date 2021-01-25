@@ -13,22 +13,22 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// OptionId
 		/// </summary>
-		public string OptionId { get; } = "option_id";
+		public string OptionId => "option_id";
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key { get; } = "option_name";
+		public string Key => "option_name";
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string Value { get; } = "option_value";
+		public string Value => "option_value";
 
 		/// <summary>
 		/// IsAutoloaded
 		/// </summary>
-		public string IsAutoloaded { get; } = "autoload";
+		public string IsAutoloaded => "autoload";
 
 		/// <summary>
 		/// Create object

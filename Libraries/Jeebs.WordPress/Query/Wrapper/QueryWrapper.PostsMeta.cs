@@ -36,8 +36,8 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		private IQuery<TModel> GetPostsMetaQuery<TModel>(Action<QueryPostsMeta.Options>? modify = null)
-			=> StartNewQuery()
+		private IQuery<TModel> GetPostsMetaQuery<TModel>(Action<QueryPostsMeta.Options>? modify = null) =>
+			StartNewQuery()
 				.WithModel<TModel>()
 				.WithOptions(modify)
 				.WithParts(new QueryPostsMeta.Builder<TModel>(db))

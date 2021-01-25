@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.ContentFilters
 		/// <summary>
 		/// Create filter
 		/// </summary>
-		public static ContentFilter Create()
-			=> new CurlyQuotes(content => content.ConvertInnerHtmlQuotes());
+		public static ContentFilter Create() =>
+			new CurlyQuotes(content => content.ConvertInnerHtmlQuotes());
 	}
 }

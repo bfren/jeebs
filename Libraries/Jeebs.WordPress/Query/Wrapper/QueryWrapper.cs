@@ -28,7 +28,8 @@ namespace Jeebs.WordPress
 		/// Setup object
 		/// </summary>
 		/// <param name="db">IWpDb</param>
-		public QueryWrapper(IWpDb db) : base(db) => this.db = db;
+		public QueryWrapper(IWpDb db) : base(db) =>
+			this.db = db;
 
 		#region Caches
 

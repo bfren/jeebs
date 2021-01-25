@@ -22,8 +22,8 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal Builder(IWpDb db) : base(db.Adapter, db.PostMeta)
-				=> this.db = db;
+			internal Builder(IWpDb db) : base(db.Adapter, db.PostMeta) =>
+				this.db = db;
 
 			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)

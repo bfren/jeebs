@@ -54,8 +54,11 @@ namespace Jeebs.WordPress
 				// Execute query
 				return await w.QueryAsync<T>(r, r.Value).ConfigureAwait(false) switch
 				{
-					IOkV<IEnumerable<T>> x => r.OkV(x.Value.ToList()),
-					{ } e => e.Error<List<T>>()
+					IOkV<IEnumerable<T>> x =>
+						r.OkV(x.Value.ToList()),
+
+					{ } e =>
+						e.Error<List<T>>()
 				};
 			}
 		}

@@ -20,8 +20,8 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		/// </summary>
 		/// <param name="type">EmbedType</param>
 		/// <param name="provider">Provider</param>
-		protected Embed(EmbedType type, Provider provider)
-			=> (this.type, this.provider) = (type, provider);
+		protected Embed(EmbedType type, Provider provider) =>
+			(this.type, this.provider) = (type, provider);
 
 		/// <summary>
 		/// Format a parsed block

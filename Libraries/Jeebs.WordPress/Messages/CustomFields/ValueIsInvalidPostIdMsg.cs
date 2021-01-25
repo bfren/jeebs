@@ -17,7 +17,7 @@ namespace Jm.WordPress.CustomFields
 		/// <summary>
 		/// Return error message
 		/// </summary>
-		public override string ToString()
-			=> $"'{Value}' is not a valid Post ID for Custom Field '{CustomFieldType}'.";
+		public override string ToString() =>
+			$"'{Value}' is not a valid Post ID for Custom Field '{CustomFieldType}'.";
 	}
 }

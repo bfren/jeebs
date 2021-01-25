@@ -14,7 +14,7 @@ namespace Jm.WordPress.Query.Wrapper.Posts
 		/// <summary>
 		/// Return error message
 		/// </summary>
-		public override string ToString()
-			=> $"Custom field {Value.propertyName} is required and is not set for Post {Value.postId} (meta key: {Value.metaKey}).";
+		public override string ToString() =>
+			$"Custom field {Value.propertyName} is required and is not set for Post {Value.postId} (meta key: {Value.metaKey}).";
 	}
 }

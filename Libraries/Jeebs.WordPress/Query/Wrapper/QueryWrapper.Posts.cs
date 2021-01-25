@@ -72,8 +72,8 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		private IQuery<TModel> GetPostsQuery<TModel>(Action<QueryPosts.Options>? modify = null)
-			=> StartNewQuery()
+		private IQuery<TModel> GetPostsQuery<TModel>(Action<QueryPosts.Options>? modify = null) =>
+			StartNewQuery()
 				.WithModel<TModel>()
 				.WithOptions(modify)
 				.WithParts(new QueryPosts.Builder<TModel>(db))
@@ -88,8 +88,8 @@ namespace Jeebs.WordPress
 		/// <param name="filters">Content filters</param>
 		private async Task<IR<TList>> Process<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
 			where TList : List<TModel>
-			where TModel : IEntity
-			=> r
+			where TModel : IEntity =>
+			r
 				.Link()
 					.Handle().With<AddMetaExceptionMsg>()
 					.MapAsync(AddMetaAsync<TList, TModel>).Await()
@@ -103,8 +103,8 @@ namespace Jeebs.WordPress
 					.Handle().With<ApplyContentFiltersExceptionMsg>()
 					.Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
 
-		private static Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>()
-			=> GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x));
+		private static Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>() =>
+			GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x));
 
 		private class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>
 		{

@@ -17,7 +17,7 @@ namespace Jm.WordPress.CustomFields
 		/// <summary>
 		/// Return error message
 		/// </summary>
-		public override string ToString()
-			=> $"Key '{Value}' not found in meta dictionary for Custom Field '{CustomFieldType}'.";
+		public override string ToString() =>
+			$"Key '{Value}' not found in meta dictionary for Custom Field '{CustomFieldType}'.";
 	}
 }

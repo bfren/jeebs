@@ -17,11 +17,14 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="value">Database table value</param>
 		/// <returns>CommentType object</returns>
-		public override CommentType Parse(object value)
-			=> value.ToString() switch
+		public override CommentType Parse(object value) =>
+			value.ToString() switch
 			{
-				string commentType => CommentType.Parse(commentType),
-				_ => CommentType.Blank
+				string commentType =>
+					CommentType.Parse(commentType),
+
+				_ =>
+					CommentType.Blank
 			};
 
 		/// <summary>
@@ -29,7 +32,7 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter object</param>
 		/// <param name="value">CommentType value</param>
-		public override void SetValue(IDbDataParameter parameter, CommentType value)
-			=> parameter.Value = value.ToString();
+		public override void SetValue(IDbDataParameter parameter, CommentType value) =>
+			parameter.Value = value.ToString();
 	}
 }

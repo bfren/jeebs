@@ -13,22 +13,22 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// PostMetaId
 		/// </summary>
-		public string PostMetaId { get; } = "meta_id";
+		public string PostMetaId => "meta_id";
 
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public string PostId { get; } = "post_id";
+		public string PostId => "post_id";
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key { get; } = "meta_key";
+		public string Key => "meta_key";
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string Value { get; } = "meta_value";
+		public string Value => "meta_value";
 
 		/// <summary>
 		/// Create object

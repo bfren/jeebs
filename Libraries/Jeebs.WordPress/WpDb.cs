@@ -43,8 +43,8 @@ namespace Jeebs.WordPress
 		where Tum : WpUserMetaEntity
 	{
 		/// <inheritdoc/>
-		public MySqlAdapter Adapter
-			=> Client.Adapter;
+		public MySqlAdapter Adapter =>
+			Client.Adapter;
 
 		#region Tables
 
@@ -146,7 +146,7 @@ namespace Jeebs.WordPress
 		}
 
 		/// <inheritdoc/>
-		public QueryWrapper GetQueryWrapper()
-			=> new QueryWrapper(this);
+		public QueryWrapper GetQueryWrapper() =>
+			new QueryWrapper(this);
 	}
 }

@@ -17,11 +17,14 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="value">Database table value</param>
 		/// <returns>PostType object</returns>
-		public override PostType Parse(object value)
-			=> value.ToString() switch
+		public override PostType Parse(object value) =>
+			value.ToString() switch
 			{
-				string postType => PostType.Parse(postType),
-				_ => PostType.Post
+				string postType =>
+					PostType.Parse(postType),
+
+				_ =>
+					PostType.Post
 			};
 
 		/// <summary>
@@ -29,7 +32,7 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter object</param>
 		/// <param name="value">PostType value</param>
-		public override void SetValue(IDbDataParameter parameter, PostType value)
-			=> parameter.Value = value.ToString();
+		public override void SetValue(IDbDataParameter parameter, PostType value) =>
+			parameter.Value = value.ToString();
 	}
 }

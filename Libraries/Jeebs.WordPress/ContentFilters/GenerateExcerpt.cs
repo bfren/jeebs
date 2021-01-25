@@ -17,15 +17,15 @@ namespace Jeebs.WordPress.ContentFilters
 		/// <summary>
 		/// Create filter with default max length
 		/// </summary>
-		public static ContentFilter Create()
-			=> Create(200);
+		public static ContentFilter Create() =>
+			Create(200);
 
 		/// <summary>
 		/// Create filter
 		/// </summary>
 		/// <param name="maxLength">Maximum length of excerpt - ignored if <!--more--> is present</param>
-		public static ContentFilter Create(int maxLength)
-			=> new GenerateExcerpt(content =>
+		public static ContentFilter Create(int maxLength) =>
+			new GenerateExcerpt(content =>
 			{
 				// If there's nothing there, return an empty string
 				if (string.IsNullOrEmpty(content))

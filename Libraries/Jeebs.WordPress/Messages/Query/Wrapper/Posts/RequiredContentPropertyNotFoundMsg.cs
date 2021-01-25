@@ -19,7 +19,7 @@ namespace Jm.WordPress.Query.Wrapper.Posts
 		/// <summary>
 		/// Return error message
 		/// </summary>
-		public override string ToString()
-			=> $"Cannot find the {nameof(WpPostEntity.Content)} property of {Value}.";
+		public override string ToString() =>
+			$"Cannot find the {nameof(WpPostEntity.Content)} property of {Value}.";
 	}
 }

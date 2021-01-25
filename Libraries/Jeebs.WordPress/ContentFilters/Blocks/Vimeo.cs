@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 
 		public Vimeo() : base(EmbedType.Video, Provider.Vimeo) { }
 
-		protected override string Format(string id, Parsed block)
-			=> string.Format(format, id, block.Url);
+		protected override string Format(string id, Parsed block) =>
+			string.Format(format, id, block.Url);
 	}
 }

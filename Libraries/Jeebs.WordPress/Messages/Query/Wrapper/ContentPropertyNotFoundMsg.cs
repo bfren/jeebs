@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Messages.Query.Wrapper
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"{nameof(WpPostEntity.Content)} property not found (model: {typeof(TModel)}).";
+		public override string ToString() =>
+			$"{nameof(WpPostEntity.Content)} property not found (model: {typeof(TModel)}).";
 	}
 }

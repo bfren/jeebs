@@ -13,72 +13,72 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// LinkId
 		/// </summary>
-		public string LinkId { get; } = "link_id";
+		public string LinkId => "link_id";
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; } = "link_url";
+		public string Url => "link_url";
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; } = "link_name";
+		public string Title => "link_name";
 
 		/// <summary>
 		/// Image
 		/// </summary>
-		public string Image { get; } = "link_image";
+		public string Image => "link_image";
 
 		/// <summary>
 		/// Target
 		/// </summary>
-		public string Target { get; } = "link_target";
+		public string Target => "link_target";
 
 		/// <summary>
 		/// CategoryId
 		/// </summary>
-		public string CategoryId { get; } = "link_category";
+		public string CategoryId => "link_category";
 
 		/// <summary>
 		/// Description
 		/// </summary>
-		public string Description { get; } = "link_description";
+		public string Description => "link_description";
 
 		/// <summary>
 		/// Visible
 		/// </summary>
-		public string Visible { get; } = "link_visible";
+		public string Visible => "link_visible";
 
 		/// <summary>
 		/// OwnerId
 		/// </summary>
-		public string OwnerId { get; } = "link_owner";
+		public string OwnerId => "link_owner";
 
 		/// <summary>
 		/// Rating
 		/// </summary>
-		public string Rating { get; } = "link_rating";
+		public string Rating => "link_rating";
 
 		/// <summary>
 		/// LastUpdatedOn
 		/// </summary>
-		public string LastUpdatedOn { get; } = "link_updated";
+		public string LastUpdatedOn => "link_updated";
 
 		/// <summary>
 		/// Rel
 		/// </summary>
-		public string Rel { get; } = "link_rel";
+		public string Rel => "link_rel";
 
 		/// <summary>
 		/// Notes
 		/// </summary>
-		public string Notes { get; } = "link_notes";
+		public string Notes => "link_notes";
 
 		/// <summary>
 		/// Rss
 		/// </summary>
-		public string Rss { get; } = "link_rss";
+		public string Rss => "link_rss";
 
 		/// <summary>
 		/// Create object

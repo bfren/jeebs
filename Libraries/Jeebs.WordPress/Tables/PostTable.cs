@@ -13,82 +13,82 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public string PostId { get; } = "ID";
+		public string PostId => "ID";
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public string AuthorId { get; } = "post_author";
+		public string AuthorId => "post_author";
 
 		/// <summary>
 		/// PublishedOn
 		/// </summary>
-		public string PublishedOn { get; } = "post_date";
+		public string PublishedOn => "post_date";
 
 		/// <summary>
 		/// PublishedOnGmt
 		/// </summary>
-		public string PublishedOnGmt { get; } = "post_date_gmt";
+		public string PublishedOnGmt => "post_date_gmt";
 
 		/// <summary>
 		/// Content
 		/// </summary>
-		public string Content { get; } = "post_content";
+		public string Content => "post_content";
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; } = "post_title";
+		public string Title => "post_title";
 
 		/// <summary>
 		/// Excerpt
 		/// </summary>
-		public string Excerpt { get; } = "post_excerpt";
+		public string Excerpt => "post_excerpt";
 
 		/// <summary>
 		/// Status
 		/// </summary>
-		public string Status { get; } = "post_status";
+		public string Status => "post_status";
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public string Slug { get; } = "post_name";
+		public string Slug => "post_name";
 
 		/// <summary>
 		/// LastModifiedOn
 		/// </summary>
-		public string LastModifiedOn { get; } = "post_modified";
+		public string LastModifiedOn => "post_modified";
 
 		/// <summary>
 		/// LastModifiedOnGmt
 		/// </summary>
-		public string LastModifiedOnGmt { get; } = "post_modified_gmt";
+		public string LastModifiedOnGmt => "post_modified_gmt";
 
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public string ParentId { get; } = "post_parent";
+		public string ParentId => "post_parent";
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; } = "guid";
+		public string Url => "guid";
 
 		/// <summary>
 		/// Type
 		/// </summary>
-		public string Type { get; } = "post_type";
+		public string Type => "post_type";
 
 		/// <summary>
 		/// MimeType
 		/// </summary>
-		public string MimeType { get; } = "post_mime_type";
+		public string MimeType => "post_mime_type";
 
 		/// <summary>
 		/// CommentsCount
 		/// </summary>
-		public string CommentsCount { get; } = "comment_count";
+		public string CommentsCount => "comment_count";
 
 		/// <summary>
 		/// Create object

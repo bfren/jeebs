@@ -37,8 +37,8 @@ namespace Jeebs.WordPress
 		/// <param name="r">Result: value is taxonomy to get</param>
 		/// <param name="all">If true, will return all terms (even if the count is 0)</param>
 		/// <param name="sort">[Optional] Sort columns</param>
-		public Task<IR<List<TModel>>> QueryTaxonomyAsync<TModel>(IOkV<Taxonomy> r, bool all = true, params (string column, SortOrder order)[] sort)
-			=> QueryTaxonomyAsync<TModel>(r, opt =>
+		public Task<IR<List<TModel>>> QueryTaxonomyAsync<TModel>(IOkV<Taxonomy> r, bool all = true, params (string column, SortOrder order)[] sort) =>
+			QueryTaxonomyAsync<TModel>(r, opt =>
 			{
 				opt.Taxonomy = r.Value;
 				opt.Sort = sort;

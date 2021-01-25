@@ -16,11 +16,14 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="value">Database table value</param>
 		/// <returns>Taxonomy object</returns>
-		public override Taxonomy Parse(object value)
-			=> value.ToString() switch
+		public override Taxonomy Parse(object value) =>
+			value.ToString() switch
 			{
-				string taxonomy => Taxonomy.Parse(taxonomy),
-				_ => Taxonomy.Blank
+				string taxonomy =>
+					Taxonomy.Parse(taxonomy),
+
+				_ =>
+					Taxonomy.Blank
 			};
 
 		/// <summary>
@@ -28,7 +31,7 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter object</param>
 		/// <param name="value">Taxonomy value</param>
-		public override void SetValue(IDbDataParameter parameter, Taxonomy value)
-			=> parameter.Value = value.ToString();
+		public override void SetValue(IDbDataParameter parameter, Taxonomy value) =>
+			parameter.Value = value.ToString();
 	}
 }
