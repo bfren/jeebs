@@ -39,11 +39,20 @@ namespace Jeebs.Config
 		public ServiceConfig GetServiceConfig(string definition)
 			=> SplitDefinition(definition) switch
 			{
-				("rocketChat", string name) => GetServiceConfig(c => c.RocketChat, name),
-				("seq", string name) => GetServiceConfig(c => c.Seq, name),
-				("slack", string name) => GetServiceConfig(c => c.Slack, name),
-				("twitter", string name) => GetServiceConfig(c => c.Twitter, name),
-				(string type, _) => throw new Jx.Config.UnsupportedServiceException(type)
+				("rocketChat", string name) =>
+					GetServiceConfig(c => c.RocketChat, name),
+
+				("seq", string name) =>
+					GetServiceConfig(c => c.Seq, name),
+
+				("slack", string name) =>
+					GetServiceConfig(c => c.Slack, name),
+
+				("twitter", string name) =>
+					GetServiceConfig(c => c.Twitter, name),
+
+				(string type, _) =>
+					throw new Jx.Config.UnsupportedServiceException(type)
 			};
 
 		/// <summary>
@@ -85,8 +94,11 @@ namespace Jeebs.Config
 			{
 				return definition.Split('.') switch
 				{
-					var x when x.Length == 2 => (x[0], x[1]),
-					_ => throw new Jx.Config.InvalidServiceDefinitionException(definition)
+					var x when x.Length == 2 =>
+						(x[0], x[1]),
+
+					_ =>
+						throw new Jx.Config.InvalidServiceDefinitionException(definition)
 				};
 			}
 			catch (Exception)

@@ -10,10 +10,8 @@ namespace Jeebs.Config
 	public class SeqConfig : WebhookServiceConfig
 	{
 		/// <inheritdoc/>
-		public override string Webhook
-		{
-			get => $"{Server}/api/events/raw?clef";
-		}
+		public override string Webhook =>
+			$"{Server}/api/events/raw?clef";
 
 		/// <summary>
 		/// Seq Server URI
@@ -26,8 +24,8 @@ namespace Jeebs.Config
 		public string ApiKey { get; set; } = string.Empty;
 
 		/// <inheritdoc/>
-		public override bool IsValid
-			=> !string.IsNullOrEmpty(Server)
+		public override bool IsValid =>
+			!string.IsNullOrEmpty(Server)
 			&& !string.IsNullOrEmpty(ApiKey)
 			&& F.UriF.IsHttps(Webhook);
 	}

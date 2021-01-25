@@ -19,8 +19,11 @@ namespace Jeebs.Config
 		/// </summary>
 		public string? Google
 		{
-			get => googleCode is null ? null : $"google{googleCode}.html";
-			set => googleCode = value;
+			get =>
+				googleCode is null ? null : $"google{googleCode}.html";
+
+			set =>
+				googleCode = value;
 		}
 
 		private string? googleCode;

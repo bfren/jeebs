@@ -36,10 +36,11 @@ namespace Jeebs.Config
 		public string ClientSecret { get; set; } = string.Empty;
 
 		/// <summary>
-		/// Only returns True if <see cref="Name"/>, <see cref="ClientId"/> and <see cref="ClientSecret"/> are all not null or empty
+		/// Only returns True if <see cref="Name"/>, <see cref="TenantId"/>, <see cref="ClientId"/> and <see cref="ClientSecret"/> are all not null or empty
 		/// </summary>
-		public bool IsValid
-			=> !string.IsNullOrWhiteSpace(Name)
+		public bool IsValid =>
+			!string.IsNullOrWhiteSpace(Name)
+			&& !string.IsNullOrWhiteSpace(TenantId)
 			&& !string.IsNullOrWhiteSpace(ClientId)
 			&& !string.IsNullOrWhiteSpace(ClientSecret);
 	}

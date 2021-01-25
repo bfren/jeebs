@@ -15,7 +15,7 @@ namespace Jeebs.Config
 		public bool ShowAttachments { get; set; }
 
 		/// <inheritdoc/>
-		public override bool IsValid
-			=> F.UriF.IsHttps(Webhook);
+		public override bool IsValid =>
+			F.UriF.IsHttps(Webhook);
 	}
 }
