@@ -14,7 +14,8 @@ namespace AppRazor.Pages
 	{
 		public string? RequestId { get; set; }
 
-		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+		public bool ShowRequestId =>
+			!string.IsNullOrEmpty(RequestId);
 
 		private readonly ILogger<ErrorModel> _logger;
 
