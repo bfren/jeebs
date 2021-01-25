@@ -17,8 +17,11 @@ namespace Jeebs.WordPress
 		/// </summary>
 		public override string ValueObj
 		{
-			get => ValueStr;
-			protected set => ValueStr = value;
+			get =>
+				ValueStr;
+
+			protected set =>
+				ValueStr = value;
 		}
 
 		/// <inheritdoc/>
@@ -27,16 +30,17 @@ namespace Jeebs.WordPress
 		/// <inheritdoc/>
 		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
-			// If meta doesn't contain the key and this is a required field, return failure
-			// Otherwise return success
-			if (meta.ContainsKey(Key))
+			// If meta contains the key and the value is not null / empty, return it
+			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
 			{
-				ValueObj = ValueStr = meta[Key];
+				ValueObj = ValueStr = value;
 				return r.OkTrue();
 			}
-			else if (IsRequired)
+
+			// Return error if the field is required
+			if (IsRequired)
 			{
-				return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(Key));
+				return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(GetType(), Key));
 			}
 
 			// Return OK but not set

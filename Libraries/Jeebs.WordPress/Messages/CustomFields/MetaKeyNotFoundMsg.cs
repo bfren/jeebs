@@ -9,12 +9,15 @@ namespace Jm.WordPress.CustomFields
 	/// </summary>
 	public class MetaKeyNotFoundMsg : WithValueMsg<string>
 	{
-		internal MetaKeyNotFoundMsg(string key) : base(key) { }
+		private Type CustomFieldType { get; }
+
+		internal MetaKeyNotFoundMsg(Type customFieldType, string metaKey) : base(metaKey) =>
+			CustomFieldType = customFieldType;
 
 		/// <summary>
 		/// Return error message
 		/// </summary>
 		public override string ToString()
-			=> $"Key not found in meta dictionary: '{Value}'.";
+			=> $"Key '{Value}' not found in meta dictionary for Custom Field '{CustomFieldType}'.";
 	}
 }

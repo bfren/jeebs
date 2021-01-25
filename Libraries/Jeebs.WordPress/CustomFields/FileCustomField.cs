@@ -15,7 +15,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Return URL Path
 		/// </summary>
-		public override string ToString()
-			=> ValueObj?.UrlPath ?? base.ToString();
+		public override string ToString() =>
+			ValueObj?.UrlPath ?? base.ToString();
 	}
 }
