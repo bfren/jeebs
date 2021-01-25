@@ -52,7 +52,7 @@ namespace F
 			}
 
 			// Return dimensions as a Rectangle object
-			return new Rectangle { X = (int)x, Y = (int)y, Width = (int)w, Height = (int)h };
+			return new Rectangle((int)x, (int)y, (int)w, (int)h);
 		}
 	}
 }

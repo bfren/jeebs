@@ -30,7 +30,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 		public SlackAttachment(string text, NotificationLevel level) =>
 			(Text, Colour) = (text, GetColour(level));
 
-		private string GetColour(NotificationLevel level) =>
+		private static string GetColour(NotificationLevel level) =>
 			level switch
 			{
 				NotificationLevel.Information =>

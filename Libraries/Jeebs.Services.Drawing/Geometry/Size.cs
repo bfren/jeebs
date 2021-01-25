@@ -27,7 +27,5 @@ namespace Jeebs.Services.Drawing.Geometry
 	//	/// Width
 	//	/// </summary>
 	//	public int Width { get; set; }
-
-
 	//}
 }

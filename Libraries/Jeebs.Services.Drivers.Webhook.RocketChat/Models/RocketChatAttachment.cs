@@ -45,7 +45,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		public RocketChatAttachment(string text, NotificationLevel level) =>
 			(Text, Colour) = (text, GetColour(level));
 
-		private string GetColour(NotificationLevel level) =>
+		private static string GetColour(NotificationLevel level) =>
 			level switch
 			{
 				NotificationLevel.Information =>

@@ -21,8 +21,8 @@ namespace F
 		/// <param name="newHeight">New image height</param>
 		public static Size CalculateNewSize(int imgWidth, int imgHeight, int newWidth, int newHeight) =>
 			CalculateNewSize(
-				new Size { Width = imgWidth, Height = imgHeight },
-				new Size { Width = newWidth, Height = newHeight }
+				new Size(imgWidth, imgHeight),
+				new Size(newWidth, newHeight)
 			);
 
 		/// <summary>
@@ -34,11 +34,11 @@ namespace F
 		{
 			if (newSize.Width == 0 && newSize.Height > 0)
 			{
-				newSize.Width = (int)(newSize.Height * currentSize.Ratio);
+				return newSize with { Width = (int)(newSize.Height * currentSize.Ratio) };
 			}
 			else if (newSize.Width > 0 && newSize.Height == 0)
 			{
-				newSize.Height = (int)(newSize.Width / currentSize.Ratio);
+				return newSize with { Height = (int)(newSize.Width / currentSize.Ratio) };
 			}
 
 			return newSize;

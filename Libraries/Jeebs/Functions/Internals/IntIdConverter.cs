@@ -45,7 +45,5 @@ namespace Jeebs.Functions.Internals
 						HandleDefault(ref reader)
 				}
 			};
-
-
 	}
 }
