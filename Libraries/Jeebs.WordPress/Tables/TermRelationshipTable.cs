@@ -13,17 +13,20 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public string PostId => "object_id";
+		public string PostId =>
+			"object_id";
 
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public string TermTaxonomyId => "term_taxonomy_id";
+		public string TermTaxonomyId =>
+			"term_taxonomy_id";
 
 		/// <summary>
 		/// SortOrder
 		/// </summary>
-		public string SortOrder => "term_order";
+		public string SortOrder =>
+			"term_order";
 
 		/// <summary>
 		/// Create object

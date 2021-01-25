@@ -18,8 +18,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => TermTaxonomyId;
-			set => TermTaxonomyId = value;
+			get =>
+				TermTaxonomyId;
+
+			set =>
+				TermTaxonomyId = value;
 		}
 
 		/// <summary>

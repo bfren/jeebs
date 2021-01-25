@@ -18,8 +18,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => PostId;
-			set => PostId = value;
+			get =>
+				PostId;
+
+			set =>
+				PostId = value;
 		}
 
 		/// <summary>

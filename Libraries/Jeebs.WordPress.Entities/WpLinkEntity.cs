@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => LinkId;
-			set => LinkId = value;
+			get =>
+				LinkId;
+
+			set =>
+				LinkId = value;
 		}
 
 		/// <summary>

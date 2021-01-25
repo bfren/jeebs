@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => UserMetaId;
-			set => UserMetaId = value;
+			get =>
+				UserMetaId;
+
+			set =>
+				UserMetaId = value;
 		}
 
 		/// <summary>
