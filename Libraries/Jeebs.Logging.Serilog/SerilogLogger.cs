@@ -27,44 +27,44 @@ namespace Jeebs.Logging
 		/// Use specified logger
 		/// </summary>
 		/// <param name="logger">Serilog.ILogger</param>
-		internal SerilogLogger(ILogger logger)
-			=> this.logger = logger;
+		internal SerilogLogger(ILogger logger) =>
+			this.logger = logger;
 
 		/// <inheritdoc/>
-		public override bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level)
-			=> logger.IsEnabled((LogEventLevel)level);
+		public override bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level) =>
+			logger.IsEnabled((LogEventLevel)level);
 
 		/// <inheritdoc/>
-		public override void Trace(string message, params object[] args)
-			=> logger.Verbose(message, args);
+		public override void Trace(string message, params object[] args) =>
+			logger.Verbose(message, args);
 
 		/// <inheritdoc/>
-		public override void Debug(string message, params object[] args)
-			=> logger.Debug(message, args);
+		public override void Debug(string message, params object[] args) =>
+			logger.Debug(message, args);
 
 		/// <inheritdoc/>
-		public override void Information(string message, params object[] args)
-			=> logger.Information(message, args);
+		public override void Information(string message, params object[] args) =>
+			logger.Information(message, args);
 
 		/// <inheritdoc/>
-		public override void Warning(string message, params object[] args)
-			=> logger.Warning(message, args);
+		public override void Warning(string message, params object[] args) =>
+			logger.Warning(message, args);
 
 		/// <inheritdoc/>
-		public override void Error(string message, params object[] args)
-			=> logger.Error(message, args);
+		public override void Error(string message, params object[] args) =>
+			logger.Error(message, args);
 
 		/// <inheritdoc/>
-		public override void Error(Exception ex, string message, params object[] args)
-			=> logger.Error(ex, message, args);
+		public override void Error(Exception ex, string message, params object[] args) =>
+			logger.Error(ex, message, args);
 
 		/// <inheritdoc/>
-		public override void Critical(string message, params object[] args)
-			=> logger.Fatal(message, args);
+		public override void Critical(string message, params object[] args) =>
+			logger.Fatal(message, args);
 
 		/// <inheritdoc/>
-		public override void Critical(Exception ex, string message, params object[] args)
-			=> logger.Fatal(ex, message, args);
+		public override void Critical(Exception ex, string message, params object[] args) =>
+			logger.Fatal(ex, message, args);
 
 		/// <inheritdoc/>
 		public override void Dispose() { }

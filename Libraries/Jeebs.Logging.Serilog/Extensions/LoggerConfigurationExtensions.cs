@@ -29,8 +29,8 @@ namespace Jeebs.Logging
 				return;
 			}
 
-			LogEventLevel getMinimum(LogLevel? level = null)
-				=> (LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
+			LogEventLevel getMinimum(LogLevel? level = null) =>
+				(LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();
