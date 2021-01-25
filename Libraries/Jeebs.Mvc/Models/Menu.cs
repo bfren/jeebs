@@ -70,7 +70,8 @@ namespace Jeebs.Mvc.Models
 		{
 			// Write to StringBuilder
 			var result = new StringBuilder();
-			void Write(string content) => result.Append(content);
+			void Write(string content) =>
+				result.Append(content);
 
 			// Load a URI
 			var client = http.CreateClient();

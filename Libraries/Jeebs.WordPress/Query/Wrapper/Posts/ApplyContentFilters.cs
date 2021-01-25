@@ -29,11 +29,13 @@ namespace Jeebs.WordPress
 			// Post content field is required as we are expected to apply content filters
 			return GetPostContentInfo<TModel>() switch
 			{
-				Some<Content<TModel>> x when x.Value is var content => r
-					.Link()
+				Some<Content<TModel>> x when x.Value is var content =>
+					r.Link()
 						.Handle().With<ExecuteContentFiltersExceptionMsg>()
 						.Map(okV => execute(okV, content, filters)),
-				_ => r.Error().AddMsg().OfType<RequiredContentPropertyNotFoundMsg<TModel>>()
+
+				_ =>
+					r.Error().AddMsg().OfType<RequiredContentPropertyNotFoundMsg<TModel>>()
 			};
 
 			//
@@ -62,8 +64,8 @@ namespace Jeebs.WordPress
 			}
 		}
 
-		private static Option<Content<TModel>> GetPostContentInfo<TModel>()
-			=> GetPostContent<TModel>().Map(x => new Content<TModel>(x));
+		private static Option<Content<TModel>> GetPostContentInfo<TModel>() =>
+			GetPostContent<TModel>().Map(x => new Content<TModel>(x));
 
 		private class Content<TModel> : PropertyInfo<TModel, string>
 		{

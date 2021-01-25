@@ -35,8 +35,8 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="name">Service name</param>
 		/// <param name="args">WebhookServiceArgs</param>
-		protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args)
-			=> factory = args.Factory;
+		protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args) =>
+			factory = args.Factory;
 
 		#region Convert to Jeebs.Services.Webhook.Models.Message and Send
 

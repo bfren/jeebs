@@ -14,7 +14,8 @@ namespace Jeebs.Services.Drawing.Geometry
 		/// <summary>
 		/// Ratio of Width / Height
 		/// </summary>
-		public double Ratio => (double)Width / Height;
+		public double Ratio =>
+			(double)Width / Height;
 	}
 	//{
 	//	/// <summary>

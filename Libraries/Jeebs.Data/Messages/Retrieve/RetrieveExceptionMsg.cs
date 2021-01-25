@@ -18,8 +18,8 @@ namespace Jm.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public RetrieveExceptionMsg(Exception ex, Type type, long id) : base(ex)
-			=> errorMessage = new RetrieveErrorMsg(type, id).ToString();
+		public RetrieveExceptionMsg(Exception ex, Type type, long id) : base(ex) =>
+			errorMessage = new RetrieveErrorMsg(type, id).ToString();
 
 		/// <summary>
 		/// Output error message plus exception details

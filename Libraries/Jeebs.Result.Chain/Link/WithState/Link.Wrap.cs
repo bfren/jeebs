@@ -23,7 +23,11 @@ namespace Jeebs
 			result switch
 			{
 				IOk<TValue, TState> x =>
-					Catch(() => { var v = f(); return x.OkV(v); }),
+					Catch(() =>
+					{
+						var v = f();
+						return x.OkV(v);
+					}),
 
 				_ =>
 					result.Error<TNext>()

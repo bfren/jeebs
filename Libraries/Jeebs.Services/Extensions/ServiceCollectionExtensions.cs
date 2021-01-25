@@ -59,13 +59,13 @@ namespace Jeebs.Services
 			return @this;
 
 			// Get implementations of an interface with a generic parameter
-			static IEnumerable<Type> GetImplementations(Type typeWithGenericParam)
-				=> from a in AppDomain.CurrentDomain.GetAssemblies()
-				   from t in a.GetLoadableTypes()
-				   from i in t.GetInterfaces()
-				   where !t.IsAbstract && !t.IsInterface
-				   && i.IsGenericType && i.GetGenericTypeDefinition() == typeWithGenericParam
-				   select t;
+			static IEnumerable<Type> GetImplementations(Type typeWithGenericParam) =>
+				from a in AppDomain.CurrentDomain.GetAssemblies()
+				from t in a.GetLoadableTypes()
+				from i in t.GetInterfaces()
+				where !t.IsAbstract && !t.IsInterface
+				&& i.IsGenericType && i.GetGenericTypeDefinition() == typeWithGenericParam
+				select t;
 		}
 	}
 }

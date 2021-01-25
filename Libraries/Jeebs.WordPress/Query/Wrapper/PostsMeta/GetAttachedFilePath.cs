@@ -41,8 +41,8 @@ namespace Jeebs.WordPress
 					.Map(addUploadsPath);
 
 			// Add uploads path 
-			IR<string> addUploadsPath(IOkV<AttachedFileMetaValue> r)
-				=> r.OkV(uploadsPath.EndWith('/') + r.Value.Value);
+			IR<string> addUploadsPath(IOkV<AttachedFileMetaValue> r) =>
+				r.OkV(uploadsPath.EndWith('/') + r.Value.Value);
 		}
 
 		private record AttachedFileMetaValue(string Value);

@@ -36,8 +36,8 @@ namespace Jeebs.Config
 		/// </summary>
 		/// <exception cref="Jx.Config.UnsupportedServiceException"></exception>
 		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
-		public ServiceConfig GetServiceConfig(string definition)
-			=> SplitDefinition(definition) switch
+		public ServiceConfig GetServiceConfig(string definition) =>
+			SplitDefinition(definition) switch
 			{
 				("rocketChat", string name) =>
 					GetServiceConfig(c => c.RocketChat, name),

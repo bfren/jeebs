@@ -34,8 +34,8 @@ namespace Jeebs.WordPress
 					.MapAsync(getAttachedFiles).Await();
 
 			// Build custom query
-			IR<string> getQuery(IOkV<List<long>> r)
-				=> r.OkV("SELECT " +
+			IR<string> getQuery(IOkV<List<long>> r) =>
+				r.OkV("SELECT " +
 						$"`p`.`{db.Post.Title}` AS '{nameof(WpAttachedFile.Title)}', " +
 						$"`p`.`{db.Post.Excerpt}` AS '{nameof(WpAttachedFile.Description)}', " +
 						$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{db.PostMeta.Value}`) AS '{nameof(WpAttachedFile.Url)}' " +

@@ -126,8 +126,8 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public string EscapeTable<TTable>(TTable table)
-			where TTable : notnull
-			=> Escape(table.ToString() ?? string.Empty);
+			where TTable : notnull =>
+			Escape(table.ToString() ?? string.Empty);
 
 		/// <inheritdoc/>
 		public string SplitAndEscape(string element)

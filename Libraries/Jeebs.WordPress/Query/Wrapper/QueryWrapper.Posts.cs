@@ -34,9 +34,14 @@ namespace Jeebs.WordPress
 			// Execute query
 			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
 			{
-				IOkV<List<TModel>> x when x.Value.Count == 0 => x,
-				IOkV<List<TModel>> x => Process<List<TModel>, TModel>(x, filters).Await(),
-				{ } x => x.Error(),
+				IOkV<List<TModel>> x when x.Value.Count == 0 =>
+					x,
+
+				IOkV<List<TModel>> x =>
+					Process<List<TModel>, TModel>(x, filters).Await(),
+
+				{ } x =>
+					x.Error(),
 			};
 		}
 
@@ -61,9 +66,14 @@ namespace Jeebs.WordPress
 			// Execute query
 			return await query.ExecuteQueryAsync(r, page).ConfigureAwait(false) switch
 			{
-				IOkV<PagedList<TModel>> x when x.Value.Count == 0 => x,
-				IOkV<PagedList<TModel>> x => Process<PagedList<TModel>, TModel>(x, filters).Await(),
-				{ } x => x.Error<PagedList<TModel>>(),
+				IOkV<PagedList<TModel>> x when x.Value.Count == 0 =>
+					x,
+
+				IOkV<PagedList<TModel>> x =>
+					Process<PagedList<TModel>, TModel>(x, filters).Await(),
+
+				{ } x =>
+					x.Error<PagedList<TModel>>(),
 			};
 		}
 

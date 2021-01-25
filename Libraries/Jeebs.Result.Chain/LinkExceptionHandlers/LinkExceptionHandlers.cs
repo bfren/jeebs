@@ -20,7 +20,13 @@ namespace Jeebs
 
 		internal void Add<TException>(Action<TResult, TException> handler)
 			where TException : Exception =>
-			handlers[typeof(TException)] = (r, ex) => { if (ex is TException t) handler(r, t); };
+			handlers[typeof(TException)] = (r, ex) =>
+			{
+				if (ex is TException t)
+				{
+					handler(r, t);
+				}
+			};
 
 		private Action<TResult, Exception>? Get(Type ex) =>
 			handlers.TryGetValue(ex, out var value) ? value : null;

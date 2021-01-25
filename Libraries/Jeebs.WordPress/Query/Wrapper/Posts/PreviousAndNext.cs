@@ -24,8 +24,8 @@ namespace Jeebs.WordPress
 			});
 
 			// Shorthand for returning result
-			IR<(long? prev, long? next)> val(long? prev, long? next)
-				=> r.OkV((prev, next));
+			IR<(long? prev, long? next)> val(long? prev, long? next) =>
+				r.OkV((prev, next));
 
 			// Handle scenarios
 			IR<(long? prev, long? next)> handle(long currentId, List<long> ids)
@@ -59,8 +59,11 @@ namespace Jeebs.WordPress
 			// Execute query
 			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
 			{
-				IOkV<List<PostWithId>> ids => handle(r.Value, ids.Value.ConvertAll(x => x.PostId)),
-				{ } x => x.Error<(long?, long?)>()
+				IOkV<List<PostWithId>> ids =>
+					handle(r.Value, ids.Value.ConvertAll(x => x.PostId)),
+
+				{ } x =>
+					x.Error<(long?, long?)>()
 			};
 		}
 

@@ -24,11 +24,12 @@ namespace Jeebs.WordPress
 			var fields = GetCustomFields<TModel>();
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 => r
-					.Link()
+				Some<Meta<TModel>> x when fields.Count > 0 =>
+					r.Link()
 						.Handle().With<HydrateCustomFieldExceptionMsg>()
 						.MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
-				_ => r
+				_ =>
+					r
 			};
 
 			//
@@ -85,8 +86,11 @@ namespace Jeebs.WordPress
 
 				return Activator.CreateInstance(info.PropertyType) switch
 				{
-					ICustomField customField => customField,
-					_ => null
+					ICustomField customField =>
+						customField,
+
+					_ =>
+						null
 				};
 			}
 		}
