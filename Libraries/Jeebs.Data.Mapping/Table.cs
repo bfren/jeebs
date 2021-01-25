@@ -14,20 +14,20 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Table name
 		/// </summary>
-		private readonly string name;
+		private string Name { get; }
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="name">Table name</param>
-		protected Table(string name)
-			=> this.name = name;
+		protected Table(string name) =>
+			Name = name;
 
 		/// <summary>
 		/// Table name (unescaped)
 		/// </summary>
 		/// <returns>Table name</returns>
-		public override string ToString()
-			=> name;
+		public override string ToString() =>
+			Name;
 	}
 }

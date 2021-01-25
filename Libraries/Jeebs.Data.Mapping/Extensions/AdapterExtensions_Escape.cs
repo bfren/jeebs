@@ -16,32 +16,32 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <param name="this">IAdapter</param>
 		/// <param name="col">IColumn</param>
-		public static string Escape(this IAdapter @this, IColumn col)
-			=> @this.Escape(col.Name, col.Alias, col.Table);
+		public static string Escape(this IAdapter @this, IColumn col) =>
+			@this.Escape(col.Name, col.Alias, col.Table);
 
 		/// <summary>
 		/// Escape a list of columns
 		/// </summary>
 		/// <param name="this">IAdapter</param>
 		/// <param name="columns">Columns</param>
-		public static List<string> Escape(this IAdapter @this, IEnumerable<string> columns)
-			=> (from c in columns select @this.Escape(c)).ToList();
+		public static List<string> Escape(this IAdapter @this, IEnumerable<string> columns) =>
+			(from c in columns select @this.Escape(c)).ToList();
 
 		/// <summary>
 		/// Escape a list of columns
 		/// </summary>
 		/// <param name="this">IAdapter</param>
 		/// <param name="columns">Columns</param>
-		public static List<string> Escape(this IAdapter @this, IColumnList columns)
-			=> (from c in columns select @this.Escape(c)).ToList();
+		public static List<string> Escape(this IAdapter @this, IColumnList columns) =>
+			(from c in columns select @this.Escape(c)).ToList();
 
 		/// <summary>
 		/// Escape a list of mapped columns
 		/// </summary>
 		/// <param name="this">IAdapter</param>
 		/// <param name="columns">Mapped columns</param>
-		public static List<string> Escape(this IAdapter @this, IMappedColumnList columns)
-			=> (from c in columns select @this.Escape(c)).ToList();
+		public static List<string> Escape(this IAdapter @this, IMappedColumnList columns) =>
+			(from c in columns select @this.Escape(c)).ToList();
 
 		/// <summary>
 		/// Extracts and escapes matching columns

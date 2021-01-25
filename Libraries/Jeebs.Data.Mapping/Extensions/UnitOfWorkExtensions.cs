@@ -15,7 +15,7 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Model type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="tables">List of tables from which to extract columns that match <typeparamref name="T"/></param>
-		public static string Extract<T>(this IUnitOfWork @this, params Table[] tables)
-			=> @this.Adapter.ExtractEscapeAndJoin<T>(tables);
+		public static string Extract<T>(this IUnitOfWork @this, params Table[] tables) =>
+			@this.Adapter.ExtractEscapeAndJoin<T>(tables);
 	}
 }

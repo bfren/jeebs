@@ -37,21 +37,21 @@ namespace Jeebs.Data.Mapping
 		/// <param name="name">Table Name - must be escaped</param>
 		/// <param name="columns">Mapped Columns</param>
 		/// <param name="idColumn">Id Column</param>
-		public TableMap(string name, IMappedColumnList columns, IMappedColumn idColumn)
-			=> (Name, Columns, IdColumn) = (name, columns, idColumn);
+		public TableMap(string name, IMappedColumnList columns, IMappedColumn idColumn) =>
+			(Name, Columns, IdColumn) = (name, columns, idColumn);
 
 		/// <summary>
 		/// Get all column names
 		/// </summary>
-		public IEnumerable<string> GetColumnNames()
-			=> Columns.Select(mc => mc.Name);
+		public IEnumerable<string> GetColumnNames() =>
+			Columns.Select(mc => mc.Name);
 
 		/// <summary>
 		/// Get all column aliases
 		/// </summary>
 		/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
-		public IEnumerable<string> GetColumnAliases(bool includeIdAlias)
-			=> Columns.Select(mc => mc.Alias).Where(a => includeIdAlias || a != IdColumn.Alias);
+		public IEnumerable<string> GetColumnAliases(bool includeIdAlias) =>
+			Columns.Select(mc => mc.Alias).Where(a => includeIdAlias || a != IdColumn.Alias);
 
 		/// <summary>
 		/// Get all column names and aliases for writeable columns
@@ -81,7 +81,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Return Escaped Table Name
 		/// </summary>
-		public override string ToString()
-			=> Name;
+		public override string ToString() =>
+			Name;
 	}
 }

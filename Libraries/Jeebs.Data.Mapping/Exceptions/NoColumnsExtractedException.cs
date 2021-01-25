@@ -9,7 +9,6 @@ namespace Jx.Data.Mapping
 	/// <summary>
 	/// See <see cref="Extract{TModel}.From(Table[])"/>
 	/// </summary>
-	[Serializable]
 	public class NoColumnsExtractedException : Exception
 	{
 		/// <summary>
@@ -41,14 +40,5 @@ namespace Jx.Data.Mapping
 		/// <param name="message">Message</param>
 		/// <param name="inner">Exception</param>
 		public NoColumnsExtractedException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info">SerializationInfo</param>
-		/// <param name="context">StreamingContext</param>
-		protected NoColumnsExtractedException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

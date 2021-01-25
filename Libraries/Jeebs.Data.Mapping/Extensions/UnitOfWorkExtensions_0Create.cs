@@ -21,8 +21,8 @@ namespace Jeebs.Data.Mapping
 		/// <param name="r">Result object - the value should be the poco to insert</param>
 		/// <returns>Entity (complete with new ID)</returns>
 		public static IR<T> Create<T>(this IUnitOfWork @this, IOkV<T> r)
-			where T : class, IEntity
-			=> r
+			where T : class, IEntity =>
+			r
 				.WithState(@this)
 				.Link()
 					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
@@ -42,8 +42,8 @@ namespace Jeebs.Data.Mapping
 		/// <param name="r">Result object - the value should be the poco to insert</param>
 		/// <returns>Entity (complete with new ID)</returns>
 		public static async Task<IR<T>> CreateAsync<T>(this IUnitOfWork @this, IOkV<T> r)
-			where T : class, IEntity
-			=> await r
+			where T : class, IEntity =>
+			await r
 				.WithState(@this)
 				.Link()
 					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))

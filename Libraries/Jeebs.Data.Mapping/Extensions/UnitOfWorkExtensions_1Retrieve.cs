@@ -19,8 +19,8 @@ namespace Jeebs.Data.Mapping
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result object - the value should be the entity ID</param>
 		public static IR<T> Single<T>(this IUnitOfWork @this, IOkV<long> r)
-			where T : class, IEntity
-			=> Single(r, @this, nameof(Single), (q, p, t) => Task.FromResult(@this.Connection.QuerySingle<T>(q, p, t)));
+			where T : class, IEntity =>
+			Single(r, @this, nameof(Single), (q, p, t) => Task.FromResult(@this.Connection.QuerySingle<T>(q, p, t)));
 
 		/// <summary>
 		/// Get an entity from the database by ID
@@ -29,8 +29,8 @@ namespace Jeebs.Data.Mapping
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="r">Result object - the value should be the entity ID</param>
 		private static async Task<IR<T>> SingleAsync<T>(this IUnitOfWork @this, IOkV<long> r)
-			where T : class, IEntity
-			=> Single(r, @this, nameof(SingleAsync), async (q, p, t) => await @this.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false));
+			where T : class, IEntity =>
+			Single(r, @this, nameof(SingleAsync), async (q, p, t) => await @this.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false));
 
 		private static IR<T> Single<T>(IOkV<long> r, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
 			where T : class, IEntity

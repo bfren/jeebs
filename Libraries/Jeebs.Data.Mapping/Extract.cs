@@ -27,8 +27,8 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Get model properties
 		/// </summary>
-		static Extract()
-			=> modelProperties = typeof(TModel).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
+		static Extract() =>
+			modelProperties = typeof(TModel).GetProperties().Where(p => p.GetCustomAttribute<IgnoreAttribute>() == null);
 
 		/// <summary>
 		/// Extract columns from specified tables
@@ -64,8 +64,8 @@ namespace Jeebs.Data.Mapping
 		/// Extract columns from a single table
 		/// </summary>
 		/// <param name="table">Table</param>
-		private static IColumnList ExtractColumnsFromTable(Table table)
-			=> cache.GetOrAdd(table.ToString(), tableName =>
+		private static IColumnList ExtractColumnsFromTable(Table table) =>
+			cache.GetOrAdd(table.ToString(), tableName =>
 			{
 				// Get the list of properties
 				var tableProperties = table.GetType().GetProperties();
