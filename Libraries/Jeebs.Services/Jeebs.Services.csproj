@@ -7,7 +7,4 @@
     <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Constants\" />
-  </ItemGroup>
 </Project>
