@@ -5,7 +5,7 @@ using Jeebs.Config;
 
 namespace AppConsoleWordPress.Bcg
 {
-	public sealed class WpBcgConfig : WpConfig
+	public sealed record WpBcgConfig : WpConfig
 	{
 	}
 }

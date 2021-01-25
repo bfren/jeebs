@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Database configuration
 	/// </summary>
-	public class DbConfig
+	public record DbConfig
 	{
 		/// <summary>
 		/// Path to database settings configuration section

@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Third-party services configuration
 	/// </summary>
-	public class ServicesConfig
+	public record ServicesConfig
 	{
 		/// <summary>
 		/// Rocket.Chat configurations

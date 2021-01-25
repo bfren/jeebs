@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Service configuration
 	/// </summary>
-	public abstract class ServiceConfig
+	public abstract record ServiceConfig
 	{
 		/// <summary>
 		/// Whether or not this service configuration is valid

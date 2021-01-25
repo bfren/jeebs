@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Twitter configuration
 	/// </summary>
-	public class TwitterConfig : ServiceConfig
+	public record TwitterConfig : ServiceConfig
 	{
 		/// <summary>
 		/// UserAccessToken
