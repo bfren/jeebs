@@ -11,6 +11,7 @@ namespace Jeebs.Functions.Internals
 	/// Converter for <see cref="StrongId{T}"/> types
 	/// </summary>
 	/// <typeparam name="TId">StrongId type</typeparam>
+	/// <typeparam name="TValue">StrongId Value type</typeparam>
 	internal abstract class StrongIdConverter<TId, TValue> : JsonConverter<TId>
 		where TId : StrongId<TValue>
 		where TValue : notnull
