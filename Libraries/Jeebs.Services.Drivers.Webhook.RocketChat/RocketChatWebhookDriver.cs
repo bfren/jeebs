@@ -22,7 +22,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat
 		protected RocketChatWebhookDriver(string name, RocketChatWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message)
-			=> Send(new RocketChatMessage(JeebsConfig, message.Content, message.Level));
+		public override void Send(Message message) =>
+			Send(new RocketChatMessage(JeebsConfig, message.Content, message.Level));
 	}
 }

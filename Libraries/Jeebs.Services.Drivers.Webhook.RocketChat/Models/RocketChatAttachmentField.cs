@@ -29,7 +29,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// </summary>
 		/// <param name="title">Field title</param>
 		/// <param name="value">Field value</param>
-		public RocketChatAttachmentField(string title, string value)
-			=> (Title, Value) = (title, value);
+		public RocketChatAttachmentField(string title, string value) =>
+			(Title, Value) = (title, value);
 	}
 }
