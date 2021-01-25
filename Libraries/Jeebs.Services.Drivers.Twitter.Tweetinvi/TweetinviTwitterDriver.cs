@@ -23,8 +23,8 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
-		public static void AddRequiredServices(IServiceCollection services)
-			=> services.AddHttpClient();
+		public static void AddRequiredServices(IServiceCollection services) =>
+			services.AddHttpClient();
 
 		private readonly IHttpClientFactory factory;
 
@@ -140,8 +140,11 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				var timeline = await client.Timelines.GetUserTimelineAsync(param).ConfigureAwait(false);
 				return r.OkV(timeline switch
 				{
-					IEnumerable<ITweet> x => x.ToList(),
-					_ => new List<ITweet>()
+					IEnumerable<ITweet> x =>
+						x.ToList(),
+
+					_ =>
+						new List<ITweet>()
 				});
 			}
 
