@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data
+namespace Jeebs
 {
 	/// <summary>
 	/// Represents a strong-typed ID
@@ -18,14 +18,4 @@ namespace Jeebs.Data
 		/// </summary>
 		T Value { get; }
 	}
-
-	public abstract record StrongId<T> : IStrongId<T>
-	{
-		public T Value { get; init; }
-
-		public StrongId(T value, T defaultValue) =>
-			Value = value ?? defaultValue;
-	}
-
-	public record PostId(long Value) : StrongId<long>(Value, 0);
 }

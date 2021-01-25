@@ -4,7 +4,7 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F.JsonF_Tests.EnumeratedConverter_Tests
+namespace F.JsonF_Tests.LongIdConverter_Tests
 {
 	public class WriteJson_Tests
 	{
@@ -12,11 +12,11 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 		public void Serialise_Returns_Json_Value()
 		{
 			// Arrange
-			var value = Rnd.Str;
-			var enumerated = new EnumeratedTest(value);
+			var value = Rnd.Lng;
+			var id = new TestLongId { Value = value };
 
 			// Act
-			var result = JsonF.Serialise(enumerated);
+			var result = JsonF.Serialise(id);
 
 			// Assert
 			Assert.Equal($"\"{value}\"", result);
@@ -24,7 +24,7 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 
 		[Theory]
 		[InlineData(null)]
-		public void Serialise_Null_Returns_Empty_Json(Enumerated input)
+		public void Serialise_Returns_Empty_Json(TestLongId input)
 		{
 			// Arrange
 
@@ -35,9 +35,6 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public class EnumeratedTest : Enumerated
-		{
-			public EnumeratedTest(string name) : base(name) { }
-		}
+		public record TestLongId : LongId { }
 	}
 }

@@ -40,10 +40,10 @@ namespace Jeebs
 				int replaceIndex = 0; // keeps track of replace loop so we can match named template values with an array source
 				string rewrittenFormat = r.Replace(@this, (Match m) =>
 				{
-					Group startGroup = m.Groups["start"];
-					Group templateGroup = m.Groups["template"];
-					Group formatGroup = m.Groups["format"];
-					Group endGroup = m.Groups["end"];
+					var startGroup = m.Groups["start"];
+					var templateGroup = m.Groups["template"];
+					var formatGroup = m.Groups["format"];
+					var endGroup = m.Groups["end"];
 
 					// This is the value inside the braces, e.g. "0" in "{0}" or "A" in "{A}"
 					// Remove any @ symbols from the start - used by Serilog to denote an object format

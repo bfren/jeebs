@@ -20,7 +20,7 @@ namespace Jeebs.Data.TypeHandlers
 			value.ToString() switch
 			{
 				string guid =>
-					new Guid(guid),
+					Guid.Parse(guid),
 
 				_ =>
 					Guid.Empty

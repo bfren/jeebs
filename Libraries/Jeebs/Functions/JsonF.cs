@@ -39,6 +39,7 @@ namespace F
 
 			options.Converters.Add(new EnumeratedConverterFactory());
 			options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+			options.Converters.Add(new StrongIdConverterFactory());
 		}
 
 		/// <summary>
@@ -119,16 +120,5 @@ namespace F
 		/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
 		public static Option<T> Deserialise<T>(string str) =>
 			Deserialise<T>(str, options);
-
-		/// <summary>
-		/// Clone an object using JSON
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="obj">Object to clone</param>
-		public static T Clone<T>(this T obj)
-		{
-			var json = Serialise(obj);
-			return Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to clone object."));
-		}
 	}
 }
