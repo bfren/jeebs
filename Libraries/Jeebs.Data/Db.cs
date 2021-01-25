@@ -53,8 +53,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="client">IDbClient</param>
 		/// <param name="log">ILog</param>
-		protected Db(IDbClient client, ILog log)
-			=> (Client, Log) = (client, log);
+		protected Db(IDbClient client, ILog log) =>
+			(Client, Log) = (client, log);
 
 		/// <summary>
 		/// Create object
