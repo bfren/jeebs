@@ -80,23 +80,5 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <param name="context">HttpContext</param>
 		private static string GetPath(HttpContext context) =>
 			context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
-
-		#region For Testing
-
-		/// <summary>
-		/// Construct object
-		/// </summary>
-		/// <param name="logger">ILogger</param>
-		internal LoggerMiddleware(ILogger logger) =>
-			this.logger = logger;
-
-		/// <summary>
-		/// Construct an object for testing
-		/// </summary>
-		/// <param name="logger">ILogger</param>
-		public static LoggerMiddleware CreateForTesting(ILogger logger) =>
-			new LoggerMiddleware(logger);
-
-		#endregion
 	}
 }

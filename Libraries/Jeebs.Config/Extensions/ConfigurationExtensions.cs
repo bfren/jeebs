@@ -20,13 +20,6 @@ namespace Jeebs.Config
 		private static readonly MemoryCache cache = new MemoryCache(new MemoryCacheOptions());
 
 		/// <summary>
-		/// Get JeebsConfig object from IConfiguration
-		/// </summary>
-		/// <param name="config">IConfiguration</param>
-		public static JeebsConfig GetJeebsConfig(this IConfiguration config) =>
-			GetSection<JeebsConfig>(config, JeebsConfig.Key);
-
-		/// <summary>
 		/// Return a configuration section as type T
 		/// </summary>
 		/// <typeparam name="T">Configuration settings type</typeparam>
