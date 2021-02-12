@@ -43,7 +43,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Jeebs (GitHub)
-        SLACK_MESSAGE: Test Succeeded
+        SLACK_MESSAGE: Tests Passed
         SLACK_COLOR: good
         SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
     - 
