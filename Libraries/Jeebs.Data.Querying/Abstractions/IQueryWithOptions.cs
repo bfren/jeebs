@@ -16,12 +16,12 @@ namespace Jeebs.Data.Querying
 		/// Query Stage 3: Use existing query parts
 		/// </summary>
 		/// <param name="parts">IQueryParts</param>
-		public IQueryWithParts<TModel> WithParts(IQueryParts parts);
+		IQueryWithParts<TModel> WithParts(IQueryParts parts);
 
 		/// <summary>
 		/// Query Stage 3: Build the query parts
 		/// </summary>
 		/// <param name="builder">IQueryPartsBuilder</param>
-		public IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder);
+		IQueryWithParts<TModel> WithParts(IQueryPartsBuilder<TModel, TOptions> builder);
 	}
 }

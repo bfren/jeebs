@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Webhook Service configuration
 	/// </summary>
-	public abstract class WebhookServiceConfig : ServiceConfig
+	public abstract record WebhookServiceConfig : ServiceConfig
 	{
 		/// <summary>
 		/// Webhook URI

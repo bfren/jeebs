@@ -13,13 +13,13 @@ namespace Jeebs.Data.Mapping
 	/// <inheritdoc/>
 	public sealed class MapService : IMapService
 	{
-		#region Static 
+		#region Static
 
 		/// <summary>
 		/// Default (global) instance
 		/// </summary>
-		internal static IMapService Instance
-			=> instance.Value;
+		internal static IMapService Instance =>
+			instance.Value;
 
 		/// <summary>
 		/// Lazily create a <see cref="MapService"/>
@@ -46,13 +46,13 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TTable">Table type</typeparam>
 		internal TableMap Map<TEntity, TTable>()
 			where TEntity : IEntity
-			where TTable : Table, new()
-			=> Map<TEntity>(new TTable());
+			where TTable : Table, new() =>
+			Map<TEntity>(new TTable());
 
 		/// <inheritdoc/>
 		public TableMap Map<TEntity>(Table table)
-			where TEntity : IEntity
-			=> mappedEntities.GetOrAdd(typeof(TEntity), _ =>
+			where TEntity : IEntity =>
+			mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 			{
 				// Validate table
 				var (valid, errors) = ValidateTable<TEntity>(table);
@@ -88,8 +88,8 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TTable">Table type</typeparam>
 		internal (bool valid, string errors) ValidateTable<TEntity, TTable>()
 			where TEntity : IEntity
-			where TTable : Table, new()
-			=> ValidateTable<TEntity>(new TTable());
+			where TTable : Table, new() =>
+			ValidateTable<TEntity>(new TTable());
 
 		/// <inheritdoc/>
 		public (bool valid, string errors) ValidateTable<TEntity>(Table table)
@@ -149,8 +149,8 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="TTable">Table type</typeparam>
 		internal IMappedColumnList GetMappedColumns<TEntity, TTable>()
 			where TEntity : IEntity
-			where TTable : Table, new()
-			=> GetMappedColumns<TEntity>(new TTable());
+			where TTable : Table, new() =>
+			GetMappedColumns<TEntity>(new TTable());
 
 		/// <inheritdoc/>
 		public IMappedColumnList GetMappedColumns<TEntity>(Table table)
@@ -158,12 +158,13 @@ namespace Jeebs.Data.Mapping
 		{
 			// Get non-ignored columns
 			var columns = from column in table.GetType().GetProperties()
+						  let columnName = column.GetValue(table)?.ToString()
 						  join property in typeof(TEntity).GetProperties() on column.Name equals property.Name
 						  where property.GetCustomAttribute<IgnoreAttribute>() == null
 						  select new MappedColumn
 						  (
 							  table: table.ToString(),
-							  name: column.GetValue(table).ToString(),
+							  name: columnName,
 							  property: property
 						  );
 
@@ -182,9 +183,14 @@ namespace Jeebs.Data.Mapping
 
 			return cols.Count() switch
 			{
-				1 => cols.Single(),
-				0 => throw new MissingAttributeException(typeof(TEntity), name),
-				_ => throw new MultipleAttributesException(typeof(TEntity), name)
+				1 =>
+					cols.Single(),
+
+				0 =>
+					throw new MissingAttributeException(typeof(TEntity), name),
+
+				_ =>
+					throw new MultipleAttributesException(typeof(TEntity), name)
 			};
 		}
 
@@ -203,7 +209,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Clear caches
 		/// </summary>
-		public void Dispose()
-			=> mappedEntities.Clear();
+		public void Dispose() =>
+			mappedEntities.Clear();
 	}
 }

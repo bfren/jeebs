@@ -1,19 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="jeebsconfig-secrets.json" />
     <None Remove="jeebsconfig.json" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.10" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -25,14 +21,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Services.Drivers.Webhook.RocketChat\Jeebs.Services.Drivers.Webhook.RocketChat.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Services.Drivers.Webhook.Seq\Jeebs.Services.Drivers.Webhook.Seq.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
   </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://raw.githubusercontent.com/bencgreen/jeebs/main/Libraries/Jeebs.Config/schema.json" /></VisualStudio></ProjectExtensions>
-
 </Project>

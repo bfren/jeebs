@@ -25,8 +25,8 @@ namespace Jeebs.Data
 		/// Add SELECT shorthand - escapes column names before adding them
 		/// </summary>
 		/// <param name="tables">List of tables</param>
-		protected void AddSelect(params Table[] tables)
-			=> AddSelect(Adapter.ExtractEscapeAndJoin<TModel>(tables));
+		protected void AddSelect(params Table[] tables) =>
+			AddSelect(Adapter.ExtractEscapeAndJoin<TModel>(tables));
 
 		/// <summary>
 		/// Escape shorthand
@@ -36,8 +36,8 @@ namespace Jeebs.Data
 #pragma warning disable IDE1006 // Naming Styles
 		protected string __<T>(T table)
 #pragma warning restore IDE1006 // Naming Styles
-			where T : Table
-			=> Adapter.EscapeTable(table);
+			where T : Table =>
+			Adapter.EscapeTable(table);
 
 		/// <summary>
 		/// Escape shorthand
@@ -48,8 +48,8 @@ namespace Jeebs.Data
 #pragma warning disable IDE1006 // Naming Styles
 		protected string __<T>(T table, Func<T, string> column)
 #pragma warning restore IDE1006 // Naming Styles
-			where T : Table
-			=> Adapter.EscapeAndJoin(table, column(table));
+			where T : Table =>
+			Adapter.EscapeAndJoin(table, column(table));
 
 		/// <summary>
 		/// Set INNER JOIN - tables and column names will be escaped
@@ -59,8 +59,8 @@ namespace Jeebs.Data
 		/// <param name="equals">The table and colum to join TO (must already be part of the query)</param>
 		protected void AddInnerJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
 			where T1 : Table
-			where T2 : Table
-			=> AddInnerJoin(table, on(table), (equals.table, equals.column(equals.table)), true);
+			where T2 : Table =>
+			AddInnerJoin(table, on(table), (equals.table, equals.column(equals.table)), true);
 
 		/// <summary>
 		/// Set LEFT JOIN - tables and column names will be escaped
@@ -70,8 +70,8 @@ namespace Jeebs.Data
 		/// <param name="equals">The table and colum to join TO (must already be part of the query)</param>
 		protected void AddLeftJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
 			where T1 : Table
-			where T2 : Table
-			=> AddLeftJoin(table, on(table), (equals.table, equals.column(equals.table)), true);
+			where T2 : Table =>
+			AddLeftJoin(table, on(table), (equals.table, equals.column(equals.table)), true);
 
 		/// <summary>
 		/// Set RIGHT JOIN - tables and column names will be escaped
@@ -81,7 +81,7 @@ namespace Jeebs.Data
 		/// <param name="equals">The table and colum to join TO (must already be part of the query)</param>
 		protected void AddRightJoin<T1, T2>(T1 table, Func<T1, string> on, (T2 table, Func<T2, string> column) equals)
 			where T1 : Table
-			where T2 : Table
-			=> AddRightJoin(table, on(table), (equals.table, equals.column(equals.table)), true);
+			where T2 : Table =>
+			AddRightJoin(table, on(table), (equals.table, equals.column(equals.table)), true);
 	}
 }

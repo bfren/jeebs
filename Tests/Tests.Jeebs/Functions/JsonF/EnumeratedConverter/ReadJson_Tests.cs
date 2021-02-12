@@ -4,12 +4,12 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F.JsonF_Tests
+namespace F.JsonF_Tests.EnumeratedConverter_Tests
 {
 	public class ReadJson_Tests
 	{
 		[Fact]
-		public void Deserialise_Enumerated_Returns_Object_With_Value()
+		public void Deserialise_Returns_Object_With_Value()
 		{
 			// Arrange
 			var value = Rnd.Str;
@@ -24,7 +24,7 @@ namespace F.JsonF_Tests
 		}
 
 		[Fact]
-		public void Deserialise_Null_Enumerated_Returns_Object_With_Empty_Value()
+		public void Deserialise_Null_Returns_Object_With_Empty_Value()
 		{
 			// Arrange
 			const string? json = JsonF.Empty;
@@ -46,10 +46,10 @@ namespace F.JsonF_Tests
 			var json = $"{{ \"id\": {id}, \"enumeratedValue\": \"{value}\" }}";
 
 			// Act
-			var result = JsonF.Deserialise<WrapperTest0>(json);
+			var result = JsonF.Deserialise<EnumeratedWrapperTest0>(json);
 
 			// Assert
-			var wrapper = Assert.IsType<Some<WrapperTest0>>(result).Value;
+			var wrapper = Assert.IsType<Some<EnumeratedWrapperTest0>>(result).Value;
 			Assert.Equal(id, wrapper.Id);
 			Assert.Equal(value, wrapper.EnumeratedValue.ToString());
 		}
@@ -64,10 +64,10 @@ namespace F.JsonF_Tests
 			var json = $"{{ \"enumeratedValue\": {input} }}";
 
 			// Act
-			var result = JsonF.Deserialise<WrapperTest1>(json);
+			var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json);
 
 			// Assert
-			var none = Assert.IsType<None<WrapperTest1>>(result);
+			var none = Assert.IsType<None<EnumeratedWrapperTest1>>(result);
 			Assert.IsType<Jm.Functions.JsonF.DeserialiseExceptionMsg>(none.Reason);
 		}
 
@@ -76,7 +76,7 @@ namespace F.JsonF_Tests
 			public EnumeratedTest0(string name) : base(name) { }
 		}
 
-		public class WrapperTest0
+		public class EnumeratedWrapperTest0
 		{
 			public int Id { get; set; }
 
@@ -88,7 +88,7 @@ namespace F.JsonF_Tests
 			public EnumeratedTest1(string name) : base(name, false) { }
 		}
 
-		public class WrapperTest1
+		public class EnumeratedWrapperTest1
 		{
 			public EnumeratedTest1? EnumeratedValue { get; set; }
 		}

@@ -26,8 +26,8 @@ namespace Jeebs.WordPress
 			/// Create object
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal Builder(IWpDb db) : base(db.Adapter, db.Post)
-				=> this.db = db;
+			internal Builder(IWpDb db) : base(db.Adapter, db.Post) =>
+				this.db = db;
 
 			/// <inheritdoc/>
 			public override IQueryParts Build(Options opt)
@@ -43,10 +43,14 @@ namespace Jeebs.WordPress
 				var status = opt.Status;
 				AddWhere($"{__(db.Post, p => p.Status)} = @{nameof(status)}", new { status });
 
-				// WHERE Id
+				// WHERE Id / Ids
 				if (opt.Id is long postId)
 				{
 					AddWhere($"{__(db.Post, p => p.PostId)} = @{nameof(postId)}", new { postId });
+				}
+				else if (opt.Ids is long[] ids && ids.Length > 0)
+				{
+					AddWhere($"{__(db.Post, p => p.PostId)} IN ({string.Join(',', ids)})");
 				}
 
 				// WHERE search
@@ -108,7 +112,7 @@ namespace Jeebs.WordPress
 					comparison = "LIKE";
 
 					// If % has not already been added to the search string, add it
-					if (search.IndexOf("%") == -1)
+					if (!search.Contains("%", StringComparison.CurrentCulture))
 					{
 						search = $"%{search}%";
 					}
@@ -255,16 +259,23 @@ namespace Jeebs.WordPress
 						customFieldWhere += " AND ";
 					}
 
+					// Ensure there is a search value
+					var customFieldSearch = value.ToString();
+					if (customFieldSearch == null)
+					{
+						continue;
+					}
+
 					// Set comparison operators and modify search string accordingly
 					var customFieldComparison = "=";
-					var customFieldSearch = value.ToString();
+
 					if (op == SearchOperators.Like)
 					{
 						// Change the comparison
 						customFieldComparison = "LIKE";
 
 						// If % has not already been added to the search string, add it
-						if (customFieldSearch.IndexOf("%") == -1)
+						if (!customFieldSearch.Contains("%", StringComparison.CurrentCulture))
 						{
 							customFieldSearch = $"%{customFieldSearch}%";
 						}

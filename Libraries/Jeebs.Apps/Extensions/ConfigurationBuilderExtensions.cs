@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Text;
+using Azure.Identity;
 using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +25,14 @@ namespace Jeebs.Apps
 			ConfigValidator.Validate(path);
 
 			// Add Jeebs config - keeps Jeebs config away from app settings
-			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false);
-			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true);
-			@this.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: false);
+			@this
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false)
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: false);
+
+			// Add environment-specific Jeebs config
+			@this
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true)
+				.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.{env.EnvironmentName}.json", optional: true);
 
 			// Add Environment Variables
 			@this.AddEnvironmentVariables();
@@ -37,12 +41,11 @@ namespace Jeebs.Apps
 			var jeebs = @this.Build().GetSection<JeebsConfig>(JeebsConfig.Key, false);
 
 			// If the config is valid, add Azure Key Vault to IConfigurationBuilder
-			if (jeebs.AzureKeyVault.IsValid)
+			if (jeebs.AzureKeyVault is var vault && vault.IsValid)
 			{
 				@this.AddAzureKeyVault(
-					$"https://{jeebs.AzureKeyVault.Name}.vault.azure.net/",
-					jeebs.AzureKeyVault.ClientId,
-					jeebs.AzureKeyVault.ClientSecret
+					new Uri($"https://{vault.Name}.vault.azure.net/"),
+					new ClientSecretCredential(vault.TenantId, vault.ClientId, vault.ClientSecret)
 				);
 			}
 

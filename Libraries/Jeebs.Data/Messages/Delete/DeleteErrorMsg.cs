@@ -20,7 +20,7 @@ namespace Jm.Data
 		/// <summary>
 		/// Output error message
 		/// </summary>
-		public override string ToString()
-			=> $"Unable to Delete '{type}' with ID '{id}'.";
+		public override string ToString() =>
+			$"Unable to Delete '{type}' with ID '{id}'.";
 	}
 }

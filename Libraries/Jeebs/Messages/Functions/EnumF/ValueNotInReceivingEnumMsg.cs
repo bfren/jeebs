@@ -10,8 +10,8 @@ namespace Jm.Functions.EnumF
 	/// <typeparam name="TFrom">From Enum</typeparam>
 	/// <typeparam name="TTo">To Enum</typeparam>
 	public sealed class ValueNotInReceivingEnumMsg<TFrom, TTo> : WithValueMsg<TFrom>
-		where TFrom : struct, System.Enum
-		where TTo : struct, System.Enum
+		where TFrom : struct, Enum
+		where TTo : struct, Enum
 	{
 		/// <summary>
 		///  Set value
@@ -22,7 +22,7 @@ namespace Jm.Functions.EnumF
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"'{Value}' is not a valid {typeof(TTo)}.";
+		public override string ToString() =>
+			$"'{Value}' is not a valid {typeof(TTo)}.";
 	}
 }

@@ -23,8 +23,8 @@ namespace Jeebs.Config
 		/// Get JeebsConfig object from IConfiguration
 		/// </summary>
 		/// <param name="config">IConfiguration</param>
-		public static JeebsConfig GetJeebsConfig(this IConfiguration config)
-			=> GetSection<JeebsConfig>(config, JeebsConfig.Key);
+		public static JeebsConfig GetJeebsConfig(this IConfiguration config) =>
+			GetSection<JeebsConfig>(config, JeebsConfig.Key);
 
 		/// <summary>
 		/// Return a configuration section as type T
@@ -38,12 +38,15 @@ namespace Jeebs.Config
 		{
 			return useCache switch
 			{
-				true => cache.GetOrCreate(typeof(T).FullName, _ => getSection(config, sectionKey)),
-				false => getSection(config, sectionKey)
+				true =>
+					cache.GetOrCreate(typeof(T).FullName, _ => getSection(config, sectionKey)),
+
+				false =>
+					getSection(config, sectionKey)
 			};
 
-			static T getSection(IConfiguration config, string sectionKey)
-				=> config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T();
+			static T getSection(IConfiguration config, string sectionKey) =>
+				config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>() ?? new T();
 		}
 	}
 }

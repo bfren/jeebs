@@ -3,7 +3,7 @@
 	
 	<!-- Standard Configuration -->
 	<PropertyGroup Label="Framework and Language">
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
@@ -23,7 +23,7 @@
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
 		<Copyright>Copyright © bcg 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
-		<Version>4.1.1</Version>
+		<Version>5.1.0</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>

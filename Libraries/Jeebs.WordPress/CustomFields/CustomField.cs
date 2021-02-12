@@ -43,7 +43,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)
 		/// </summary>
-		public override string ToString()
-			=> ValueObj?.ToString() ?? (ValueStr ?? Key);
+		public override string ToString() =>
+			ValueObj?.ToString() ?? (ValueStr ?? Key);
 	}
 }

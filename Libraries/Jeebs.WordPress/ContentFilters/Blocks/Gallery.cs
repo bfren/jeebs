@@ -56,7 +56,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			/// <summary>
 			/// Image IDs
 			/// </summary>
-			public int[] Ids { get; set; } = new int[] { };
+			public int[] Ids { get; set; } = Array.Empty<int>();
 
 			/// <summary>
 			/// Number of columns

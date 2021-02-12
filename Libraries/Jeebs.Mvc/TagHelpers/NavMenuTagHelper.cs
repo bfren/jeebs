@@ -90,7 +90,8 @@ namespace Jeebs.Mvc.TagHelpers
 			var urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
 
 			// Build the menu
-			BuildMenu(Menu.Items,
+			BuildMenu(
+				Menu.Items,
 				mi => mi.Controller.ToLower() == currentController,
 				mi => mi.Controller,
 				el => output.Content.AppendHtml(el)
@@ -153,7 +154,8 @@ namespace Jeebs.Mvc.TagHelpers
 						childMenu.AddCssClass(ChildMenuWrapperClass);
 
 						// Build child menu
-						BuildMenu(menuItem.Children,
+						BuildMenu(
+							menuItem.Children,
 							mi => mi.Action.ToLower() == currentAction,
 							mi => mi.Action,
 							el => childMenu.InnerHtml.AppendHtml(el)

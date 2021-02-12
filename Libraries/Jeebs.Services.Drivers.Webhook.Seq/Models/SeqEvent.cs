@@ -37,7 +37,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		{
 			Timestamp = DateTime.Now.ToString("O");
 			Message = message;
-			Level = Enum.GetName(typeof(NotificationLevel), level);
+			Level = Enum.GetName(typeof(NotificationLevel), level) ?? nameof(NotificationLevel.Information);
 		}
 	}
 }

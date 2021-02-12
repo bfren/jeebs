@@ -13,6 +13,6 @@ namespace AppConsoleWordPress.Bcg
 		/// <summary>
 		/// This is a required field
 		/// </summary>
-		public FirstPreachedCustomField() : base("first_preached") { }
+		public FirstPreachedCustomField() : base("first_preached", true) { }
 	}
 }

@@ -16,7 +16,7 @@ namespace Jeebs
 		/// <typeparam name="TResult">Result type</typeparam>
 		/// <param name="this">Result</param>
 		public static TResult Await<TResult>(this Task<TResult> @this)
-			where TResult : IR
-			=> @this.GetAwaiter().GetResult();
+			where TResult : IR =>
+			@this.GetAwaiter().GetResult();
 	}
 }

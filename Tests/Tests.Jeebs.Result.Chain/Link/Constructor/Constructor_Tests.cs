@@ -24,7 +24,7 @@ namespace Jeebs.Link_Tests
 
 			// Assert
 			var error = Assert.IsAssignableFrom<IError>(link);
-			Assert.Contains(link.Messages, m => m == msg);
+			Assert.Contains(link.Messages.GetEnumerable(), m => m == msg);
 		}
 	}
 }

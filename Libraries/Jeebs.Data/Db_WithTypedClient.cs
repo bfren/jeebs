@@ -13,7 +13,8 @@ namespace Jeebs.Data
 		/// <summary>
 		/// <typeparamref name="TDbClient"/>
 		/// </summary>
-		new protected TDbClient Client { get => (TDbClient)base.Client; }
+		new protected TDbClient Client =>
+			(TDbClient)base.Client;
 
 		/// <inheritdoc cref="Db(IDbClient, ILog)"/>
 		protected Db(ILog log) : base(new TDbClient(), log) { }

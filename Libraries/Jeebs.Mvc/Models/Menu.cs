@@ -27,12 +27,15 @@ namespace Jeebs.Mvc.Models
 		{
 			foreach (var item in Items)
 			{
-				yield return new MenuItemSimple
+				if (GetUri(url, item) is string uri)
 				{
-					Guid = Guid.NewGuid(),
-					Text = item.Text ?? item.Controller,
-					Url = GetUri(url, item)
-				};
+					yield return new MenuItemSimple
+					{
+						Guid = Guid.NewGuid(),
+						Text = item.Text ?? item.Controller,
+						Url = uri
+					};
+				}
 			}
 		}
 
@@ -42,7 +45,7 @@ namespace Jeebs.Mvc.Models
 		/// <param name="url">UrlHelper object</param>
 		/// <param name="item">Current menu item</param>
 		/// <returns>Menu Item URL</returns>
-		private string GetUri(IUrlHelper url, MenuItem item)
+		private static string? GetUri(IUrlHelper url, MenuItem item)
 		{
 			UrlActionContext actionContext = new UrlActionContext
 			{
@@ -67,7 +70,8 @@ namespace Jeebs.Mvc.Models
 		{
 			// Write to StringBuilder
 			var result = new StringBuilder();
-			void Write(string content) => result.Append(content);
+			void Write(string content) =>
+				result.Append(content);
 
 			// Load a URI
 			var client = http.CreateClient();
@@ -95,21 +99,23 @@ namespace Jeebs.Mvc.Models
 			foreach (var item in list ?? Items)
 			{
 				// Build the URI to load and output it
-				string uri = GetUri(url, item);
-				Write($"Loading {uri} .. ");
-
-				// Attempt to load the URL
-				await Load(uri);
-
-				// Put the next URL on a new line
-				Write("<br/>");
-
-				// Load any children
-				if (item.Children is List<MenuItem> children)
+				if (GetUri(url, item) is string uri)
 				{
-					Write("Loading children..<br/>");
-					await LoadItemsAsync(http, url, children).ConfigureAwait(false);
-					Write(".. done<br/>");
+					Write($"Loading {uri} .. ");
+
+					// Attempt to load the URL
+					await Load(uri);
+
+					// Put the next URL on a new line
+					Write("<br/>");
+
+					// Load any children
+					if (item.Children is List<MenuItem> children)
+					{
+						Write("Loading children..<br/>");
+						await LoadItemsAsync(http, url, children).ConfigureAwait(false);
+						Write(".. done<br/>");
+					}
 				}
 			}
 

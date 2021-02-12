@@ -17,13 +17,13 @@ namespace Jm.WordPress.Query.Wrapper.Posts
 		/// Save taxonomy
 		/// </summary>
 		/// <param name="taxonomy">Taxonomy</param>
-		public TaxonomyNotRegisteredMsg(Jeebs.WordPress.Enums.Taxonomy taxonomy)
-			=> this.taxonomy = taxonomy;
+		public TaxonomyNotRegisteredMsg(Jeebs.WordPress.Enums.Taxonomy taxonomy) =>
+			this.taxonomy = taxonomy;
 
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"Taxonomy '{taxonomy}' must be registered in {nameof(IWp.RegisterCustomTaxonomies)}.";
+		public override string ToString() =>
+			$"Taxonomy '{taxonomy}' must be registered in {nameof(IWp.RegisterCustomTaxonomies)}.";
 	}
 }

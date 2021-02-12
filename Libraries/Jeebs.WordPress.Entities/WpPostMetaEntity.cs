@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// PostMeta entity
 	/// </summary>
-	public abstract class WpPostMetaEntity : IEntity
+	public abstract record WpPostMetaEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => PostMetaId;
-			set => PostMetaId = value;
+			get =>
+				PostMetaId;
+
+			set =>
+				PostMetaId = value;
 		}
 
 		/// <summary>

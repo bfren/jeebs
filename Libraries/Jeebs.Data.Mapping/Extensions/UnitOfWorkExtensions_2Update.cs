@@ -31,8 +31,11 @@ namespace Jeebs.Data.Mapping
 					// Perform the update
 					var result = r.Value switch
 					{
-						IEntityWithVersion e => UpdateWithVersion(@this, r.OkV(e)),
-						_ => UpdateWithoutVersion(@this, r)
+						IEntityWithVersion e =>
+							UpdateWithVersion(@this, r.OkV(e)),
+
+						_ =>
+							UpdateWithoutVersion(@this, r)
 					};
 
 					// Add update messages

@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Option entity
 	/// </summary>
-	public abstract class WpOptionEntity : IEntity
+	public abstract record WpOptionEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => OptionId;
-			set => OptionId = value;
+			get =>
+				OptionId;
+
+			set =>
+				OptionId = value;
 		}
 
 		/// <summary>

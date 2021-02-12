@@ -16,14 +16,14 @@ namespace Jm.Functions.EnumF
 		/// </summary>
 		/// <param name="type">Enum type</param>
 		/// <param name="value">Value</param>
-		public NotAValidEnumValueMsg(Type type, string value) : base(value)
-			=> this.type = type;
+		public NotAValidEnumValueMsg(Type type, string value) : base(value) =>
+			this.type = type;
 
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"'{Value}' is not a valid value of {type.GetType()}.";
+		public override string ToString() =>
+			$"'{Value}' is not a valid value of {type.GetType()}.";
 	}
 
 	/// <summary>
@@ -31,7 +31,7 @@ namespace Jm.Functions.EnumF
 	/// </summary>
 	/// <typeparam name="TEnum">Enum type</typeparam>
 	public sealed class NotAValidEnumValueMsg<TEnum> : WithValueMsg<string>
-		where TEnum : System.Enum
+		where TEnum : Enum
 	{
 		/// <summary>
 		///  Set value
@@ -42,7 +42,7 @@ namespace Jm.Functions.EnumF
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"'{Value}' is not a valid value of {typeof(TEnum)}.";
+		public override string ToString() =>
+			$"'{Value}' is not a valid value of {typeof(TEnum)}.";
 	}
 }

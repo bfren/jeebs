@@ -51,32 +51,52 @@ namespace F
 		/// </summary>
 		/// <param name="obj">Object</param>
 		/// <returns>Serialised object</returns>
-		public static string Serialise<T>(T obj)
-			=> Serialise(obj, new StringBuilder()).ToString();
+		public static string Serialise<T>(T obj) =>
+			Serialise(obj, new StringBuilder()).ToString();
 
 		private static StringBuilder Serialise<T>(T obj, StringBuilder sb)
 		{
 			return obj switch
 			{
-				string x => appendString(x),
-				bool x => append(Boolean, x ? "1" : "0"),
-				int x => append(Integer, x),
-				long x => append(Integer, x),
-				float x => append(Double, x),
-				double x => append(Double, x),
-				IList x => appendList(x),
-				IDictionary x => appendDictionary(x),
-				{ } x => sb,
-				_ => sb.Append(Null).Append(";")
+				string x =>
+					appendString(x),
+
+				bool x =>
+					append(Boolean, x ? "1" : "0"),
+
+				int x =>
+					append(Integer, x),
+
+				long x =>
+					append(Integer, x),
+
+
+				float x =>
+					append(Double, x),
+
+				double x =>
+					append(Double, x),
+
+				IList x =>
+					appendList(x),
+
+				IDictionary x =>
+					appendDictionary(x),
+
+				{ } x =>
+					sb,
+
+				_ =>
+					sb.Append(Null).Append(";")
 			};
 
 			// Append a value to the StringBuilder
-			StringBuilder append<U>(char type, U value)
-				=> sb.Append($"{type}:{value};");
+			StringBuilder append<U>(char type, U value) =>
+				sb.Append($"{type}:{value};");
 
 			// Append a string to the StringBuilder
-			StringBuilder appendString(string str)
-				=> sb.Append($"{String}:{enc.GetByteCount(str)}:\"{str}\";");
+			StringBuilder appendString(string str) =>
+				sb.Append($"{String}:{enc.GetByteCount(str)}:\"{str}\";");
 
 			// Append a Hashtable to the StringBuilder
 			// Enables arrays of different key / value pairs
@@ -104,8 +124,8 @@ namespace F
 			}
 
 			// Append a Dictionary to the StringBuilder
-			StringBuilder appendDictionary(IDictionary d)
-				=> appendHashtable(new Hashtable(d));
+			StringBuilder appendDictionary(IDictionary d) =>
+				appendHashtable(new Hashtable(d));
 		}
 
 		private static int pointer;
@@ -130,13 +150,26 @@ namespace F
 
 			return str[pointer] switch
 			{
-				Array => getArray(),
-				Boolean => getBoolean(),
-				Double => getNumber(double.Parse, 0d),
-				Integer => getNumber(long.Parse, 0L),
-				String => getString(),
-				Null => getNull(),
-				_ => string.Empty
+				Array =>
+					getArray(),
+
+				Boolean =>
+					getBoolean(),
+
+				Double =>
+					getNumber(double.Parse, 0d),
+
+				Integer =>
+					getNumber(long.Parse, 0L),
+
+				String =>
+					getString(),
+
+				Null =>
+					getNull(),
+
+				_ =>
+					string.Empty
 			};
 
 			// Get null object

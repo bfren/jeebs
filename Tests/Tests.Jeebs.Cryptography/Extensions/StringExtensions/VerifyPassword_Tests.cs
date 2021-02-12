@@ -19,10 +19,10 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var password = this.password;
 
 			// Act
-			Action result = () => input.VerifyPassword(password);
+			var result = input.VerifyPassword(password);
 
 			// Assert
-			Assert.Throws<ArgumentNullException>(result);
+			Assert.False(result);
 		}
 
 		[Fact]

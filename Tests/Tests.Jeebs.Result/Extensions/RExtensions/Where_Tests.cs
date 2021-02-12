@@ -68,7 +68,7 @@ namespace Jeebs.RExtensions_Tests
 
 			// Assert
 			var error = Assert.IsAssignableFrom<IError<int>>(next);
-			Assert.Contains(error.Messages, m => m is InvalidIntegerMsg);
+			Assert.Contains(error.Messages.GetEnumerable(), m => m is InvalidIntegerMsg);
 		}
 
 		public class InvalidIntegerMsg : IMsg { }

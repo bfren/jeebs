@@ -10,7 +10,7 @@ namespace Jeebs.Log_Tests
 	public class Message_Tests
 	{
 		[Fact]
-		public void Msg_Runs_Debug()
+		public void Msg_Runs_Information()
 		{
 			// Arrange
 			var msg = Substitute.For<IMsg>();
@@ -20,7 +20,7 @@ namespace Jeebs.Log_Tests
 			log.Message(msg);
 
 			// Assert
-			log.Received().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+			log.Received().Information(Arg.Any<string>(), Arg.Any<object[]>());
 		}
 
 		[Fact]

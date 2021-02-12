@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public abstract class WpLinkEntity : IEntity
+	public abstract record WpLinkEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => LinkId;
-			set => LinkId = value;
+			get =>
+				LinkId;
+
+			set =>
+				LinkId = value;
 		}
 
 		/// <summary>

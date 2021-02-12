@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// CommentMeta entity
 	/// </summary>
-	public abstract class WpCommentMetaEntity : IEntity
+	public abstract record WpCommentMetaEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => CommentMetaId;
-			set => CommentMetaId = value;
+			get =>
+				CommentMetaId;
+
+			set =>
+				CommentMetaId = value;
 		}
 
 		/// <summary>

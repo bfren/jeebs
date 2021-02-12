@@ -18,76 +18,79 @@ namespace AppConsoleWordPress
 {
 	internal sealed class Program : Jeebs.Apps.Program
 	{
-		internal static async Task Main(string[] args)
-			=> await Main<App>(args, async (provider, _) =>
-			{
-				// Begin
-				Console.WriteLine("= WordPress Console Test =");
+		internal static async Task Main(string[] args) =>
+			await Main<App>(
+				args,
+				async (provider, _) =>
+				{
+					// Begin
+					Console.WriteLine("= WordPress Console Test =");
 
-				// Get services
-				var log = provider.GetService<ILog<Program>>();
-				var bcg = provider.GetService<WpBcg>();
-				var usa = provider.GetService<WpUsa>();
+					// Get services
+					var log = provider.GetService<ILog<Program>>() ?? throw new Exception();
+					var bcg = provider.GetService<WpBcg>() ?? throw new Exception();
+					var usa = provider.GetService<WpUsa>() ?? throw new Exception();
 
-				// Run test methods
-				TermsAsync(Result.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);
-				(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
+					// Run test methods
+					TermsAsync(Result.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);
+					(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
 
-				Chain.Create()
-					.UseLog(log)
-					.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
-					.Audit(AuditOption);
+					Chain.Create()
+						.UseLog(log)
+						.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
+						.Audit(AuditOption);
 
-				Chain.Create(bcg.Db)
-					.UseLog(log)
-					.Link().MapAsync(r => SearchSermonsAsync(r, "holiness", opt =>
-					{
-						opt.SearchText = "holiness";
-						opt.SearchOperator = SearchOperators.Like;
-						opt.Type = WpBcg.PostTypes.Sermon;
-						opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
-						opt.Limit = 4;
-					})).Await()
-					.Audit(AuditSermons);
+					Chain.Create(bcg.Db)
+						.UseLog(log)
+						.Link().MapAsync(r => SearchSermonsAsync(r, "holiness", opt =>
+						{
+							opt.SearchText = "holiness";
+							opt.SearchOperator = SearchOperators.Like;
+							opt.Type = WpBcg.PostTypes.Sermon;
+							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+							opt.Limit = 4;
+						})).Await()
+						.Audit(AuditSermons);
 
-				Chain.Create(bcg.Db)
-					.UseLog(log)
-					.Link().MapAsync(r => SearchSermonsAsync(r, "jesus", opt =>
-					{
-						opt.Type = WpBcg.PostTypes.Sermon;
-						opt.SearchText = "jesus";
-						opt.SearchFields = SearchPostFields.Title;
-						opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
-						opt.Limit = 5;
-					})).Await()
-					.Audit(AuditSermons);
+					Chain.Create(bcg.Db)
+						.UseLog(log)
+						.Link().MapAsync(r => SearchSermonsAsync(r, "jesus", opt =>
+						{
+							opt.Type = WpBcg.PostTypes.Sermon;
+							opt.SearchText = "jesus";
+							opt.SearchFields = SearchPostFields.Title;
+							opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
+							opt.Limit = 5;
+						})).Await()
+						.Audit(AuditSermons);
 
-				Chain.Create(bcg.Db)
-					.UseLog(log)
-					.Link().MapAsync(FetchMeta).Await()
-					.Audit(AuditMeta)
-					.Link().MapAsync(FetchCustomFields).Await()
-					.Audit(AuditCustomFields);
+					Chain.Create(bcg.Db)
+						.UseLog(log)
+						.Link().MapAsync(FetchMeta).Await()
+						.Audit(AuditMeta)
+						.Link().MapAsync(FetchCustomFields).Await()
+						.Audit(AuditCustomFields);
 
-				Chain.Create()
-					.UseLog(log)
-					.Link().Map<int>(_ => throw new Exception("Test"));
+					Chain.Create()
+						.UseLog(log)
+						.Link().Map<int>(_ => throw new Exception("Test"));
 
-				Chain.Create(bcg.Db)
-					.UseLog(log)
-					.Link().MapAsync(FetchTaxonomies).Await()
-					.Audit(AuditTaxonomies);
+					Chain.Create(bcg.Db)
+						.UseLog(log)
+						.Link().MapAsync(FetchTaxonomies).Await()
+						.Audit(AuditTaxonomies);
 
-				Chain.Create(bcg.Db)
-					.UseLog(log)
-					.Link().MapAsync(ApplyContentFilters).Await()
-					.Audit(AuditApplyContentFilters);
+					Chain.Create(bcg.Db)
+						.UseLog(log)
+						.Link().MapAsync(ApplyContentFilters).Await()
+						.Audit(AuditApplyContentFilters);
 
-				// End
-				Console.WriteLine();
-				Console.WriteLine("Complete.");
-				Console.Read();
-			}).ConfigureAwait(false);
+					// End
+					Console.WriteLine();
+					Console.WriteLine("Complete.");
+					Console.Read();
+				}
+			).ConfigureAwait(false);
 
 		internal static async Task<IR<int>> TermsAsync(IOk r, string section, IWpDb db)
 		{
@@ -194,8 +197,9 @@ namespace AppConsoleWordPress
 			return await r.Link().MapAsync(ok => q.QueryPostsAsync<SermonModelWithCustomFields>(ok, modify: opt =>
 			{
 				opt.Type = WpBcg.PostTypes.Sermon;
-				opt.SortRandom = true;
-				opt.Limit = 10;
+				//opt.SortRandom = true;
+				//opt.Limit = 10;
+				opt.Ids = new[] { 924L, 2336L };
 			}));
 		}
 
@@ -214,9 +218,10 @@ namespace AppConsoleWordPress
 				{
 					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
 					Console.WriteLine("  - Passage: {0}", sermon.Passage);
-					Console.WriteLine("  - PDF: {0}", sermon.Pdf);
-					Console.WriteLine("  - Audio: {0}", sermon.Audio);
+					Console.WriteLine("  - PDF: {0}", sermon.Pdf?.ToString() ?? "null");
+					Console.WriteLine("  - Audio: {0}", sermon.Audio?.ToString() ?? "null");
 					Console.WriteLine("  - First Preached: {0}", sermon.FirstPreached);
+					Console.WriteLine("  - Feed Image: {0}", sermon.Image?.ValueObj.UrlPath ?? "null");
 				}
 			}
 		}
@@ -239,7 +244,7 @@ namespace AppConsoleWordPress
 		{
 			if (r is IError)
 			{
-				r.Logger.Messages(r.Messages);
+				r.Logger.Messages(r.Messages.GetEnumerable());
 			}
 
 			if (r is IOkV<List<SermonModelWithTaxonomies>> ok)
@@ -280,7 +285,7 @@ namespace AppConsoleWordPress
 		{
 			if (r is IError)
 			{
-				r.Logger.Messages(r.Messages);
+				r.Logger.Messages(r.Messages.GetEnumerable());
 			}
 
 			if (r is IOkV<List<PostModelWithContent>> ok)
@@ -335,11 +340,13 @@ namespace AppConsoleWordPress
 
 		public PassageCustomField Passage { get; set; } = new PassageCustomField();
 
-		public PdfCustomField Pdf { get; set; } = new PdfCustomField();
+		public PdfCustomField? Pdf { get; set; }
 
-		public AudioRecordingCustomField Audio { get; set; } = new AudioRecordingCustomField();
+		public AudioRecordingCustomField? Audio { get; set; }
 
 		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+
+		public FeedImageCustomField? Image { get; set; }
 	}
 
 	internal class SermonModelWithTaxonomies : SermonModel

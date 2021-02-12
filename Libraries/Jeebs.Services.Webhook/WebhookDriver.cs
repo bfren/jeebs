@@ -20,9 +20,10 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="services">IServiceCollection</param>
 #pragma warning disable RCS1158 // Static member in generic type should use a type parameter.
-		public static void AddRequiredServices(IServiceCollection services)
+		public static void AddRequiredServices(IServiceCollection services) =>
 #pragma warning restore RCS1158 // Static member in generic type should use a type parameter.
-			=> services.AddHttpClient();
+
+			services.AddHttpClient();
 
 		/// <summary>
 		/// IHttpClientFactory
@@ -34,14 +35,14 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="name">Service name</param>
 		/// <param name="args">WebhookServiceArgs</param>
-		protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args)
-			=> factory = args.Factory;
+		protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args) =>
+			factory = args.Factory;
 
 		#region Convert to Jeebs.Services.Webhook.Models.Message and Send
 
 		/// <inheritdoc/>
-		public void Send(string message, NotificationLevel level = NotificationLevel.Information)
-			=> Send(new Message { Content = message, Level = level });
+		public void Send(string message, NotificationLevel level = NotificationLevel.Information) =>
+			Send(new Message { Content = message, Level = level });
 
 		/// <inheritdoc/>
 		public virtual void Send(IMsg msg)
@@ -52,25 +53,30 @@ namespace Jeebs.Services.Webhook
 			// Convert to notification Message
 			var message = msg switch
 			{
-				IExceptionMsg x => new Message
-				{
-					Content = content,
-					Level = x.Level.ToNotificationLevel(),
-					Fields = new Dictionary<string, object>()
+				IExceptionMsg x =>
+					new Message
 					{
-						{ "Exception", x.Exception }
+						Content = content,
+						Level = x.Level.ToNotificationLevel(),
+						Fields = new Dictionary<string, object>()
+						{
+							{ "Exception", x.Exception }
+						}
+					},
+
+				ILoggableMsg x =>
+					new Message
+					{
+						Content = content,
+						Level = x.Level.ToNotificationLevel()
+					},
+
+				_ =>
+					new Message
+					{
+						Content = content,
+						Level = NotificationLevel.Information
 					}
-				},
-				ILoggableMsg x => new Message
-				{
-					Content = content,
-					Level = x.Level.ToNotificationLevel()
-				},
-				_ => new Message
-				{
-					Content = content,
-					Level = NotificationLevel.Information
-				}
 			};
 
 			// Send message
@@ -105,8 +111,8 @@ namespace Jeebs.Services.Webhook
 		/// Use <see cref="factory"/> to send the message
 		/// </summary>
 		/// <param name="request"></param>
-		protected void Send(HttpRequestMessage request)
-			=> FireAndForget(async () =>
+		protected void Send(HttpRequestMessage request) =>
+			FireAndForget(async () =>
 			{
 				try
 				{

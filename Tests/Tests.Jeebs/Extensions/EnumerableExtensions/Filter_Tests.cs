@@ -13,7 +13,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Empty_Returns_Empty()
 		{
 			// Arrange
-			var empty = new object[] { };
+			var empty = Array.Empty<object>();
 
 			// Act
 			var result = empty.Filter();

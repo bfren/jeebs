@@ -11,13 +11,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// <summary>
 	/// Google Site Verification
 	/// </summary>
-	public sealed class SiteVerificationMiddleware
+	public sealed class SiteVerificationMiddleware : IMiddleware
 	{
-		/// <summary>
-		/// The next request in the pipeline
-		/// </summary>
-		private readonly RequestDelegate next;
-
 		private readonly VerificationConfig config;
 
 		private readonly ILogger logger = Serilog.Log.ForContext<SiteVerificationMiddleware>();
@@ -25,17 +20,16 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Set Site Verification configuration
 		/// </summary>
-		/// <param name="next"></param>
 		/// <param name="config">Verification code</param>
-		public SiteVerificationMiddleware(RequestDelegate next, VerificationConfig config)
-			=> (this.next, this.config) = (next, config);
+		public SiteVerificationMiddleware(VerificationConfig config) =>
+			this.config = config;
 
 		/// <summary>
 		/// Invoke Middleware
 		/// </summary>
 		/// <param name="context">HttpContext</param>
-		/// <returns>Next delegate</returns>
-		public async Task Invoke(HttpContext context)
+		/// <param name="next">Next Middleware</param>
+		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			var path = context.Request.Path.ToString().TrimStart('/');
 
@@ -55,7 +49,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 			await next(context);
 		}
 
-		private async Task WriteAsync(HttpContext context, string contentType, string content)
+		private static async Task WriteAsync(HttpContext context, string contentType, string content)
 		{
 			context.Response.Clear();
 			context.Response.ContentType = contentType;

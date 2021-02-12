@@ -7,7 +7,6 @@ namespace Jx.Services
 	/// <summary>
 	/// Unknown Driver
 	/// </summary>
-	[Serializable]
 	public class UnknownDriverException : Exception
 	{
 		/// <summary>
@@ -32,15 +31,6 @@ namespace Jx.Services
 		/// Create exception
 		/// </summary>
 		/// <param name="t"></param>
-		public UnknownDriverException(Type t) : this(t.FullName) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected UnknownDriverException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+		public UnknownDriverException(Type t) : this(t.ToString()) { }
 	}
 }

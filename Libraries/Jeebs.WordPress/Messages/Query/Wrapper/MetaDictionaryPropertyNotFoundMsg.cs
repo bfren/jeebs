@@ -15,7 +15,7 @@ namespace Jm.WordPress.Query.Wrapper
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"{typeof(MetaDictionary)} property cannot be found (model: {typeof(TModel)}).";
+		public override string ToString() =>
+			$"{typeof(MetaDictionary)} property cannot be found (model: {typeof(TModel)}).";
 	}
 }

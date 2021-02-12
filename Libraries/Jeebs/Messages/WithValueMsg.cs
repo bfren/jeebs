@@ -20,13 +20,13 @@ namespace Jm
 		/// Create object
 		/// </summary>
 		/// <param name="value">Value</param>
-		protected WithValueMsg(TValue value)
-			=> Value = value;
+		protected WithValueMsg(TValue value) =>
+			Value = value;
 
 		/// <summary>
-		/// Return <see cref="Value"/>.ToString() or (if null) base.ToString();
+		/// Return <see cref="Value"/>.ToString() or (if null) GetType().ToString();
 		/// </summary>
-		public override string ToString()
-			=> Value?.ToString() ?? base.ToString();
+		public override string ToString() =>
+			Value?.ToString() ?? GetType().ToString();
 	}
 }

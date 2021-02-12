@@ -42,8 +42,8 @@ namespace Jeebs
 		/// <param name="isOk">[Optional] Action to run if the current result is <see cref="IOk{TValue}"/></param>
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="IOkV{TValue}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue}"/></param>
-		public static Task<IR<TValue>> AuditSwitchAsync<TValue>(this IR<TValue> @this, Func<IOk<TValue>, Task>? isOk = null, Func<IOkV<TValue>, Task>? isOkV = null, Func<IError<TValue>, Task>? isError = null)
-			=> PrivateAuditSwitchAsync(@this, isOk, isOkV, isError);
+		public static Task<IR<TValue>> AuditSwitchAsync<TValue>(this IR<TValue> @this, Func<IOk<TValue>, Task>? isOk = null, Func<IOkV<TValue>, Task>? isOkV = null, Func<IError<TValue>, Task>? isError = null) =>
+			PrivateAuditSwitchAsync(@this, isOk, isOkV, isError);
 
 		/// <summary>
 		/// Audit the current result state and return unmodified
@@ -55,8 +55,8 @@ namespace Jeebs
 		/// <param name="isOk">[Optional] Action to run if the current result is <see cref="IOk{TValue, TState}"/></param>
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="IOkV{TValue, TState}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue, TState}"/></param>
-		public static Task<IR<TValue, TState>> AuditSwitchAsync<TValue, TState>(this IR<TValue, TState> @this, Func<IOk<TValue, TState>, Task>? isOk = null, Func<IOkV<TValue, TState>, Task>? isOkV = null, Func<IError<TValue, TState>, Task>? isError = null)
-			=> PrivateAuditSwitchAsync(@this, isOk, isOkV, isError);
+		public static Task<IR<TValue, TState>> AuditSwitchAsync<TValue, TState>(this IR<TValue, TState> @this, Func<IOk<TValue, TState>, Task>? isOk = null, Func<IOkV<TValue, TState>, Task>? isOkV = null, Func<IError<TValue, TState>, Task>? isError = null) =>
+			PrivateAuditSwitchAsync(@this, isOk, isOkV, isError);
 
 		private static async Task<TResult> PrivateAuditSwitchAsync<TResult, TOk, TOkV, TError>(TResult result, Func<TOk, Task>? isOk, Func<TOkV, Task>? isOkV, Func<TError, Task>? isError)
 			where TResult : IR
@@ -68,10 +68,17 @@ namespace Jeebs
 
 			Func<Task> audit = result switch
 			{
-				TOkV okV => () => isOkV?.Invoke(okV) ?? Task.CompletedTask,
-				TOk ok => () => isOk?.Invoke(ok) ?? Task.CompletedTask,
-				TError error => () => isError?.Invoke(error) ?? Task.CompletedTask,
-				_ => () => throw new Jx.Result.UnknownImplementationException()
+				TOkV okV =>
+					() => isOkV?.Invoke(okV) ?? Task.CompletedTask,
+
+				TOk ok =>
+					() => isOk?.Invoke(ok) ?? Task.CompletedTask,
+
+				TError error =>
+					() => isError?.Invoke(error) ?? Task.CompletedTask,
+
+				_ =>
+					() => throw new Jx.Result.UnknownImplementationException()
 			};
 
 			try

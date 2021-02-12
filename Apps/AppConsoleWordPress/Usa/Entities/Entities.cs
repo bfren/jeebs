@@ -5,16 +5,16 @@ using Jeebs.WordPress.Entities;
 
 namespace AppConsoleWordPress.Usa.Entities
 {
-	public sealed class Comment : WpCommentEntity { }
-	public sealed class CommentMeta : WpCommentMetaEntity { }
-	public sealed class Link : WpLinkEntity { }
-	public sealed class Option : WpOptionEntity { }
-	public sealed class Post : WpPostEntity { }
-	public sealed class PostMeta : WpPostMetaEntity { }
-	public sealed class Term : WpTermEntity { }
-	public sealed class TermMeta : WpTermMetaEntity { }
-	public sealed class TermRelationship : WpTermRelationshipEntity { }
-	public sealed class TermTaxonomy : WpTermTaxonomyEntity { }
-	public sealed class User : WpUserEntity { }
-	public sealed class UserMeta : WpUserMetaEntity { }
+	public sealed record Comment : WpCommentEntity { }
+	public sealed record CommentMeta : WpCommentMetaEntity { }
+	public sealed record Link : WpLinkEntity { }
+	public sealed record Option : WpOptionEntity { }
+	public sealed record Post : WpPostEntity { }
+	public sealed record PostMeta : WpPostMetaEntity { }
+	public sealed record Term : WpTermEntity { }
+	public sealed record TermMeta : WpTermMetaEntity { }
+	public sealed record TermRelationship : WpTermRelationshipEntity { }
+	public sealed record TermTaxonomy : WpTermTaxonomyEntity { }
+	public sealed record User : WpUserEntity { }
+	public sealed record UserMeta : WpUserMetaEntity { }
 }

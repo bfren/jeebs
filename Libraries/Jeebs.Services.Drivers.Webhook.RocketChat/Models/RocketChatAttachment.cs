@@ -42,16 +42,23 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// </summary>
 		/// <param name="text">Attachment text</param>
 		/// <param name="level">Message level</param>
-		public RocketChatAttachment(string text, NotificationLevel level)
-			=> (Text, Colour) = (text, GetColour(level));
+		public RocketChatAttachment(string text, NotificationLevel level) =>
+			(Text, Colour) = (text, GetColour(level));
 
-		private string GetColour(NotificationLevel level)
-			=> level switch
+		private static string GetColour(NotificationLevel level) =>
+			level switch
 			{
-				NotificationLevel.Information => "#2cbe4e", // green
-				NotificationLevel.Warning => "#ffc107", // amber
-				NotificationLevel.Error => "#cb2431", // red
-				_ => throw new Jx.Services.Webhook.UnknownMessageLevelException()
+				NotificationLevel.Information =>
+					"#2cbe4e", // green
+
+				NotificationLevel.Warning =>
+					"#ffc107", // amber
+
+				NotificationLevel.Error =>
+					"#cb2431", // red
+
+				_ =>
+					throw new Jx.Services.Webhook.UnknownMessageLevelException()
 			};
 	}
 }

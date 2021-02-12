@@ -16,15 +16,15 @@ namespace F
 		/// </summary>
 		/// <param name="unixTimeStamp">Unix timestamp</param>
 		/// <returns>Returns DateTime object</returns>
-		public static DateTime FromUnix(double unixTimeStamp)
-			=> new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTimeStamp).ToLocalTime();
+		public static DateTime FromUnix(double unixTimeStamp) =>
+			new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTimeStamp).ToLocalTime();
 
 		/// <summary>
 		/// Returns a DateTime object representing the start of the Unix Epoch
 		/// </summary>
 		/// <returns>Start of the Unix Epoch</returns>
-		public static DateTime UnixEpoch()
-			=> new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+		public static DateTime UnixEpoch() =>
+			new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		/// <summary>
 		/// Create a DateTime object from a given format

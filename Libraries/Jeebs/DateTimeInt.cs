@@ -52,15 +52,15 @@ namespace Jeebs
 		/// <param name="day">Day</param>
 		/// <param name="hour">Hour</param>
 		/// <param name="minute">Minute</param>
-		public DateTimeInt(int year, int month, int day, int hour, int minute)
-			=> Init(year, month, day, hour, minute);
+		public DateTimeInt(int year, int month, int day, int hour, int minute) =>
+			Init(year, month, day, hour, minute);
 
 		/// <summary>
 		/// Construct object using a DateTime object
 		/// </summary>
 		/// <param name="dt">DateTime</param>
-		public DateTimeInt(DateTime dt)
-			=> Init(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute);
+		public DateTimeInt(DateTime dt) =>
+			Init(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute);
 
 		/// <summary>
 		/// Construct object using a nullable DateTime object
@@ -146,36 +146,45 @@ namespace Jeebs
 		/// <summary>
 		/// Get the current DateTime
 		/// </summary>
-		public Option<DateTime> ToDateTime()
-			=> IsValidDateTime() switch
+		public Option<DateTime> ToDateTime() =>
+			IsValidDateTime() switch
 			{
-				{ } x when x.valid => new DateTime(Year, Month, Day, Hour, Minute, 0),
-				{ } x => Option.None<DateTime>().AddReason(new InvalidDateTimeMsg(x.part, this))
+				{ } x when x.Valid =>
+					new DateTime(Year, Month, Day, Hour, Minute, 0),
+
+				{ } x =>
+					Option.None<DateTime>().AddReason(new InvalidDateTimeMsg(x.Part, this))
 			};
 
 		/// <summary>
 		/// Outputs object values as correctly formatted string
 		/// If the object is not valid, returns a string of zeroes
 		/// </summary>
-		public override string ToString()
-			=> IsValidDateTime().valid switch
+		public override string ToString() =>
+			IsValidDateTime().Valid switch
 			{
-				true => $"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
-				false => 0.ToString(format)
+				true =>
+					$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
+
+				false =>
+					0.ToString(format)
 			};
 
 		/// <summary>
 		/// Outputs object values as long
 		/// If the object is not valid, returns 0
 		/// </summary>
-		public long ToLong()
-			=> IsValidDateTime().valid switch
+		public long ToLong() =>
+			IsValidDateTime().Valid switch
 			{
-				true => long.Parse(ToString()),
-				false => 0
+				true =>
+					long.Parse(ToString()),
+
+				false =>
+					0
 			};
 
-		private (bool valid, string part) IsValidDateTime()
+		private (bool Valid, string Part) IsValidDateTime()
 		{
 			if (Year < 0 || Year > 9999)
 			{

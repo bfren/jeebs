@@ -26,8 +26,8 @@ namespace Jeebs.Apps
 		/// Create object
 		/// </summary>
 		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-		protected WebApp(bool useHsts)
-			=> this.useHsts = useHsts;
+		protected WebApp(bool useHsts) =>
+			this.useHsts = useHsts;
 
 		/// <inheritdoc/>
 		public override IHost CreateHost(string[] args)
@@ -69,6 +69,11 @@ namespace Jeebs.Apps
 		{
 			// Base
 			base.ConfigureServices(env, config, services);
+
+			// Register middleware
+			services.AddScoped<LoggerMiddleware>();
+			services.AddScoped<RedirectExactMiddleware>();
+			services.AddScoped<SiteVerificationMiddleware>();
 
 			// Specify HSTS options
 			if (!env.IsDevelopment() && useHsts)

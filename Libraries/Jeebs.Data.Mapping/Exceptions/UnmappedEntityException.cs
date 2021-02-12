@@ -9,7 +9,6 @@ namespace Jx.Data.Mapping
 	/// <summary>
 	/// See <see cref="MapService.GetTableMapFor{TEntity}"/>
 	/// </summary>
-	[Serializable]
 	public class UnmappedEntityException : Exception
 	{
 		/// <summary>
@@ -40,14 +39,5 @@ namespace Jx.Data.Mapping
 		/// <param name="message">Message</param>
 		/// <param name="inner">Exception</param>
 		public UnmappedEntityException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info">SerializationInfo</param>
-		/// <param name="context">StreamingContext</param>
-		protected UnmappedEntityException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

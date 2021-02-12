@@ -18,35 +18,29 @@ namespace Jeebs.Cryptography
 		/// <summary>
 		/// Encrypted contents
 		/// </summary>
-		public byte[]? EncryptedContents { get; set; }
+		public byte[]? EncryptedContents { get; init; }
 
 		/// <summary>
 		/// Salt
 		/// </summary>
-		public byte[] Salt { get; set; }
+		public byte[] Salt { get; init; }
 
 		/// <summary>
 		/// Nonce
 		/// </summary>
-		public byte[] Nonce { get; set; }
+		public byte[] Nonce { get; init; }
 
 		/// <summary>
 		/// Create new Locked box with random salt and nonce
 		/// </summary>
-		public Locked()
-			=> (Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
+		public Locked() =>
+			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
 
-		internal Locked(T contents, byte[] key) : this()
-			=> Fill(contents, key);
+		internal Locked(T contents, byte[] key) : this() =>
+			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
 
-		internal Locked(T contents, string key) : this()
-			=> Fill(contents, key);
-
-		internal void Fill(T contents, byte[] key)
-			=> EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
-
-		internal void Fill(T contents, string key)
-			=> EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, HashKey(key));
+		internal Locked(T contents, string key) : this() =>
+			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, HashKey(key));
 
 		/// <summary>
 		/// Unlock this LockedBox
@@ -87,28 +81,31 @@ namespace Jeebs.Cryptography
 
 			// Handle an exception
 			static Option<Lockable<T>> handle<TMsg>(Exception ex)
-				where TMsg : IExceptionMsg, new()
-				=> Option.None<Lockable<T>>().AddReason<TMsg>(ex);
+				where TMsg : IExceptionMsg, new() =>
+				Option.None<Lockable<T>>().AddReason<TMsg>(ex);
 		}
 
 		/// <summary>
 		/// Unlock this LockedBox
 		/// </summary>
 		/// <param name="key">Encryption Key</param>
-		public Option<Lockable<T>> Unlock(string key)
-			=> Unlock(HashKey(key));
+		public Option<Lockable<T>> Unlock(string key) =>
+			Unlock(HashKey(key));
 
 		/// <summary>
 		/// Serialise this LockedBox as JSON
 		/// </summary>
-		public string Serialise()
-			=> EncryptedContents?.Length switch
+		public string Serialise() =>
+			EncryptedContents?.Length switch
 			{
-				int x when x > 0 => F.JsonF.Serialise(this),
-				_ => F.JsonF.Empty
+				int x when x > 0 =>
+					F.JsonF.Serialise(this),
+
+				_ =>
+					F.JsonF.Empty
 			};
 
-		private byte[] HashKey(string key)
-			=> GenericHash.Hash(key, Salt, Lockable.KeyLength);
+		private byte[] HashKey(string key) =>
+			GenericHash.Hash(key, Salt, Lockable.KeyLength);
 	}
 }

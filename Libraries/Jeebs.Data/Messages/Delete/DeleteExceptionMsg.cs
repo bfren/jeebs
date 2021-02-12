@@ -18,13 +18,13 @@ namespace Jm.Data
 		/// <param name="ex">Exception</param>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public DeleteExceptionMsg(Exception ex, Type type, long id) : base(ex)
-			=> errorMessage = new DeleteErrorMsg(type, id).ToString();
+		public DeleteExceptionMsg(Exception ex, Type type, long id) : base(ex) =>
+			errorMessage = new DeleteErrorMsg(type, id).ToString();
 
 		/// <summary>
 		/// Output error message plus exception details
 		/// </summary>
-		public override string ToString()
-			=> $"{errorMessage} {base.ToString()} ";
+		public override string ToString() =>
+			$"{errorMessage} {base.ToString()} ";
 	}
 }

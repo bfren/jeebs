@@ -28,7 +28,7 @@ namespace Jeebs.Data.Adapter_Tests
 			var adapter = GetAdapter();
 
 			// Act
-			var result = adapter.EscapeAndJoin(new object?[] { });
+			var result = adapter.EscapeAndJoin(Array.Empty<object?>());
 
 			// Assert
 			Assert.Equal(string.Empty, result);

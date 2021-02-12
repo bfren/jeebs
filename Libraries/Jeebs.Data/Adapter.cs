@@ -68,20 +68,20 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public string Join(params object[] columns)
-			=> Join(from c in columns select c.ToString());
+		public string Join(params object[] columns) =>
+			Join(from c in columns select c.ToString());
 
 		/// <inheritdoc/>
-		public string Join(IEnumerable<string> columns)
-			=> string.Join($"{ColumnSeparator} ", from c in columns where !IsInvalidIdentifier(c) select c);
+		public string Join(IEnumerable<string> columns) =>
+			string.Join($"{ColumnSeparator} ", from c in columns where !IsInvalidIdentifier(c) select c);
 
 		/// <inheritdoc/>
 		public virtual bool IsInvalidIdentifier(string? name)
 		{
 			return isNullOrEmpty();
 
-			bool isNullOrEmpty()
-				=> string.IsNullOrWhiteSpace(name);
+			bool isNullOrEmpty() =>
+				string.IsNullOrWhiteSpace(name);
 		}
 
 		#region Escaping
@@ -126,8 +126,8 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public string EscapeTable<TTable>(TTable table)
-			where TTable : notnull
-			=> Escape(table.ToString());
+			where TTable : notnull =>
+			Escape(table.ToString() ?? string.Empty);
 
 		/// <inheritdoc/>
 		public string SplitAndEscape(string element)
@@ -190,8 +190,8 @@ namespace Jeebs.Data
 		public abstract string GetRandomSortOrder();
 
 		/// <inheritdoc/>
-		public virtual string GetSelectCount()
-			=> "COUNT(*)";
+		public virtual string GetSelectCount() =>
+			"COUNT(*)";
 
 		/// <inheritdoc/>
 		public abstract string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases);

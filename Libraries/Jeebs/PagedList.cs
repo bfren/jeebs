@@ -14,15 +14,15 @@ namespace Jeebs
 		/// <summary>
 		/// Create an empty PagedList
 		/// </summary>
-		public PagedList()
-			=> Values = new PagingValues();
+		public PagedList() =>
+			Values = new PagingValues();
 
 		/// <summary>
 		/// Create PagedList from a collection of items
 		/// </summary>
 		/// <param name="values">PagingValues</param>
 		/// <param name="collection">Collection</param>
-		public PagedList(IPagingValues values, IEnumerable<T> collection) : base(collection)
-			=> Values = values;
+		public PagedList(IPagingValues values, IEnumerable<T> collection) : base(collection) =>
+			Values = values;
 	}
 }

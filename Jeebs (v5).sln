@@ -100,6 +100,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		jeebs-v5.code-workspace = jeebs-v5.code-workspace
 		LICENSE = LICENSE
 		Local.pack.props = Local.pack.props
 		Local.push.props = Local.push.props
@@ -107,6 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\publish.yml = .github\workflows\publish.yml
 		README.md = README.md
 		Test.csproj = Test.csproj
+		.github\workflows\test.yml = .github\workflows\test.yml
 		Version = Version
 	EndProjectSection
 EndProject
@@ -143,6 +145,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.All", "Tests\Tests.Jeebs.Data.All\Tests.Jeebs.Data.All.csproj", "{51A7C00A-A195-4761-AD4A-AC034CF8B39A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Apps", "Tests\Tests.Jeebs.Data.Apps\Tests.Jeebs.Data.Apps.csproj", "{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drawing", "Libraries\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj", "{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Drawing.Common", "Libraries\Jeebs.Services.Drivers.Drawing.Common\Jeebs.Services.Drivers.Drawing.Common.csproj", "{0331C1AF-1DE0-4FCF-8862-6122CC028493}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -328,6 +334,14 @@ Global
 		{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -389,6 +403,8 @@ Global
 		{9ECD3B7F-7B18-4868-820F-5A177CAF7E7F} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 		{51A7C00A-A195-4761-AD4A-AC034CF8B39A} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 		{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
+		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
+		{0331C1AF-1DE0-4FCF-8862-6122CC028493} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

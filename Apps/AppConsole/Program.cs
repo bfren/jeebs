@@ -8,34 +8,44 @@ namespace AppConsole
 {
 	public sealed class Program : Jeebs.Apps.Program
 	{
-		private static async Task Main(string[] args) => await Main<App>(args, (provider, config) =>
-		{
-			using var log = provider.GetService<ILog<Program>>();
-			Serilog.Debugging.SelfLog.Enable(Console.Error);
+		private static async Task Main(string[] args) =>
+			await Main<App>(
+				args,
+				(provider, config) =>
+				{
+					using var log = provider.GetService<ILog<Program>>();
+					if (log == null)
+					{
+						return;
+					}
 
-			log.Debug("Services loaded");
-			log.Debug("Project {Name}", config.GetJeebsConfig().App.Name);
+					Serilog.Debugging.SelfLog.Enable(Console.Error);
+					var jeebs = config.GetJeebsConfig();
 
-			log.Debug("Version: {0}", Version<DateRange>.Full);
+					log.Debug("Services loaded");
+					log.Debug("Project {Name}", jeebs.App.Name);
 
-			log.Error("Test error");
-			log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
+					log.Debug("Version: {0}", Version<DateRange>.Full);
 
-			log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
+					log.Error("Test error");
+					log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
 
-			var seq = provider.GetService<Seq>();
-			seq.Send("test");
+					log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
-			var slack = provider.GetService<Slack>();
-			slack.Send("test");
+					var seq = provider.GetService<Seq>();
+					seq?.Send("test");
 
-			var notifier = provider.GetService<INotifier>();
-			notifier.Send("test notification");
+					var slack = provider.GetService<Slack>();
+					slack?.Send("test");
 
-			while (Console.ReadLine() is string output)
-			{
-				log.Information(output);
-			}
-		});
+					var notifier = provider.GetService<INotifier>();
+					notifier?.Send("test notification");
+
+					while (Console.ReadLine() is string output)
+					{
+						log.Information(output);
+					}
+				}
+			);
 	}
 }

@@ -15,14 +15,14 @@ namespace Jeebs.Mvc
 		/// Return the name of the current controller
 		/// </summary>
 		/// <param name="this">ViewContext object</param>
-		public static string ControllerName(this ViewContext @this)
-			=> @this.RouteData?.Values["controller"]?.ToString() ?? "## Unknown ##";
+		public static string ControllerName(this ViewContext @this) =>
+			@this.RouteData?.Values["controller"]?.ToString() ?? "## Unknown ##";
 
 		/// <summary>
 		/// Return the name of the current action
 		/// </summary>
 		/// <param name="this">ViewContext object</param>
-		public static string ActionName(this ViewContext @this)
-			=> ((ControllerActionDescriptor)@this.ActionDescriptor).ActionName ?? "## Unknown ##";
+		public static string ActionName(this ViewContext @this) =>
+			((ControllerActionDescriptor)@this.ActionDescriptor).ActionName ?? "## Unknown ##";
 	}
 }

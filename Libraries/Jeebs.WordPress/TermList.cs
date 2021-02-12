@@ -19,8 +19,8 @@ namespace Jeebs.WordPress
 		/// Create object
 		/// </summary>
 		/// <param name="taxonomy">Taxonomy of these terms</param>
-		public TermList(Taxonomy taxonomy)
-			=> Taxonomy = taxonomy;
+		public TermList(Taxonomy taxonomy) =>
+			Taxonomy = taxonomy;
 
 		/// <summary>
 		/// Term Model
@@ -50,7 +50,8 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Display title
 			/// </summary>
-			public override string ToString() => Title;
+			public override string ToString() =>
+				Title;
 		}
 	}
 }

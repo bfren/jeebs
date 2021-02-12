@@ -1,20 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
-
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.3" />
 	</ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Apps\Jeebs.Apps.csproj" />
     <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
   </ItemGroup>
-
 </Project>

@@ -31,7 +31,7 @@ namespace Jeebs.Services
 			ILog log,
 			IOptions<JeebsConfig> jeebsConfig,
 			Func<ServicesConfig, Dictionary<string, TConfig>> serviceConfigs
-		) : base(log, jeebsConfig, serviceConfigs)
-			=> Factory = factory;
+		) : base(log, jeebsConfig, serviceConfigs) =>
+			Factory = factory;
 	}
 }

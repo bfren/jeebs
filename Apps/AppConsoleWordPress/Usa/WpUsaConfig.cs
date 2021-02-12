@@ -5,7 +5,7 @@ using Jeebs.Config;
 
 namespace AppConsoleWordPress.Usa
 {
-	public sealed class WpUsaConfig : WpConfig
+	public sealed record WpUsaConfig : WpConfig
 	{
 	}
 }

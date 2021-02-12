@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Jeebs Configuration
 	/// </summary>
-	public class JeebsConfig
+	public record JeebsConfig
 	{
 		/// <summary>
 		/// Path to Jeebs settings configuration section
@@ -55,7 +55,7 @@ namespace Jeebs.Config
 		/// </summary>
 		/// <param name="key">Section key</param>
 		/// <returns>Full config key</returns>
-		public static string GetKey(string key)
-			=> key.StartsWith(":") ? Key + key : key;
+		public static string GetKey(string key) =>
+			key.StartsWith(":") ? Key + key : key;
 	}
 }

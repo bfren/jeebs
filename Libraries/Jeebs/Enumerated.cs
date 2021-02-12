@@ -36,8 +36,8 @@ namespace Jeebs
 		/// Return the name of this value
 		/// </summary>
 		/// <returns>Name of this value</returns>
-		public override string ToString()
-			=> name;
+		public override string ToString() =>
+			name;
 
 		#region Static Members
 
@@ -49,8 +49,8 @@ namespace Jeebs
 		/// <summary>
 		/// Create cache object
 		/// </summary>
-		static Enumerated()
-			=> cache = new ConcurrentDictionary<string, object>();
+		static Enumerated() =>
+			cache = new ConcurrentDictionary<string, object>();
 
 		/// <summary>
 		/// Check whether or not the specified name matches the given value
@@ -59,11 +59,14 @@ namespace Jeebs
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
 		private static Option<T> Check<T>(string name, T value)
-			where T : Enumerated
-			=> string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
+			where T : Enumerated =>
+			string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
 			{
-				true => value,
-				false => Option.None<T>()
+				true =>
+					value,
+
+				false =>
+					Option.None<T>()
 			};
 
 		/// <summary>
@@ -74,8 +77,8 @@ namespace Jeebs
 		/// <param name="values">Enum values to check name against</param>
 		/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
 		protected static Option<T> Parse<T>(string name, T[] values)
-			where T : Enumerated
-			=> (Option<T>)cache.GetOrAdd(
+			where T : Enumerated =>
+			(Option<T>)cache.GetOrAdd(
 				$"{typeof(T)}-{name}",
 				(_, args) =>
 				{
@@ -101,8 +104,8 @@ namespace Jeebs
 		/// <param name="name">Enum name</param>
 		/// <param name="values">Enum values to check name against</param>
 		protected static bool IsRegistered<T>(string name, T[] values)
-			where T : Enumerated
-			=> Parse(name, values) is Some<T>;
+			where T : Enumerated =>
+			Parse(name, values) is Some<T>;
 
 		/// <summary>
 		/// Parse Arguments
@@ -126,8 +129,8 @@ namespace Jeebs
 			/// </summary>
 			/// <param name="name">Enumerated name to parse</param>
 			/// <param name="values">Enumerated values to check <paramref name="name"/> against</param>
-			public ParseArgs(string name, T[] values)
-				=> (Name, Values) = (name, values);
+			public ParseArgs(string name, T[] values) =>
+				(Name, Values) = (name, values);
 		}
 
 		#endregion
@@ -138,8 +141,8 @@ namespace Jeebs
 		/// Allow implicit conversion to string
 		/// </summary>
 		/// <param name="e">Enumerated value</param>
-		public static implicit operator string(Enumerated e)
-			=> e.ToString();
+		public static implicit operator string(Enumerated e) =>
+			e.ToString();
 
 		/// <summary>
 		/// Compare an enumerated type with a value type
@@ -147,8 +150,8 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
-		public static bool operator ==(Enumerated l, string r)
-			=> l.Equals(r);
+		public static bool operator ==(Enumerated l, string r) =>
+			l.Equals(r);
 
 		/// <summary>
 		/// Compare an enumerated type with a value type
@@ -156,8 +159,8 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
-		public static bool operator ==(Enumerated l, Enumerated r)
-			=> l.Equals(r);
+		public static bool operator ==(Enumerated l, Enumerated r) =>
+			l.Equals(r);
 
 		/// <summary>
 		/// Compare an enumerated type with a value type
@@ -165,8 +168,8 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
-		public static bool operator !=(Enumerated l, string r)
-			=> !l.Equals(r);
+		public static bool operator !=(Enumerated l, string r) =>
+			!l.Equals(r);
 
 		/// <summary>
 		/// Compare an enumerated type with a value type
@@ -174,8 +177,8 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
-		public static bool operator !=(Enumerated l, Enumerated r)
-			=> !l.Equals(r);
+		public static bool operator !=(Enumerated l, Enumerated r) =>
+			!l.Equals(r);
 
 		#endregion
 
@@ -187,12 +190,17 @@ namespace Jeebs
 		/// <para>Otherwise this will return false</para>
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
-		public override bool Equals(object other)
-			=> other switch
+		public override bool Equals(object? other) =>
+			other switch
 			{
-				Enumerated x => Equals(x),
-				string x => name == x,
-				_ => false
+				Enumerated x =>
+					Equals(x),
+
+				string x =>
+					name == x,
+
+				_ =>
+					false
 			};
 
 		/// <summary>
@@ -200,18 +208,18 @@ namespace Jeebs
 		/// <para>Each <see cref="name"/> and type will be compared</para>
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
-		public bool Equals(Enumerated other)
-			=> (name == other.name) && (GetType().FullName == other.GetType().FullName);
+		public bool Equals(Enumerated other) =>
+			(name == other.name) && (GetType().FullName == other.GetType().FullName);
 
 		/// <summary>
 		/// Generate custom HashCode
 		/// </summary>
-		public override int GetHashCode()
-			=> GetType().GetHashCode() ^ name.GetHashCode();
+		public override int GetHashCode() =>
+			GetType().GetHashCode() ^ name.GetHashCode();
 
 		/// <inheritdoc cref="GetHashCode()"/>
-		public int GetHashCode(IEqualityComparer comparer)
-			=> GetType().GetHashCode() ^ comparer.GetHashCode(name);
+		public int GetHashCode(IEqualityComparer comparer) =>
+			GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
 		#endregion
 	}

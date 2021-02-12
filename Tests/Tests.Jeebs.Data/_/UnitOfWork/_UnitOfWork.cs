@@ -100,7 +100,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 				)
 			);
 
-			Assert.Collection(messages,
+			Assert.Collection(messages.GetEnumerable(),
 				x => Assert.Equal(
 					$"{method}() - Query [{commandType}]: {query} - Parameters: {{ {nameof(p0)} = {p0}, {nameof(p1)} = {p1} }}",
 					x.ToString()
@@ -183,7 +183,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 				Arg.Any<object[]>()
 			);
 
-			Assert.Collection(messages,
+			Assert.Collection(messages.GetEnumerable(),
 				x => Assert.Equal(
 					$"{method}() - Query [{commandType}]: {query} - Parameters: {{ {nameof(p0)} = {p0}, {nameof(p1)} = {p1} }}",
 					x.ToString()

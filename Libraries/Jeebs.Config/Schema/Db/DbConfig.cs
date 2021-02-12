@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Database configuration
 	/// </summary>
-	public class DbConfig
+	public record DbConfig
 	{
 		/// <summary>
 		/// Path to database settings configuration section
@@ -24,8 +24,11 @@ namespace Jeebs.Config
 		/// </summary>
 		public string Authentication
 		{
-			get => authenticationConnectionValue ?? Default;
-			set => authenticationConnectionValue = value;
+			get =>
+				authenticationConnectionValue ?? Default;
+
+			set =>
+				authenticationConnectionValue = value;
 		}
 
 		private string? authenticationConnectionValue;
@@ -70,7 +73,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Retrieve the authentication database connection settings
 		/// </summary>
-		public DbConnectionConfig GetAuthenticationConnection()
-			=> GetConnection(Authentication);
+		public DbConnectionConfig GetAuthenticationConnection() =>
+			GetConnection(Authentication);
 	}
 }

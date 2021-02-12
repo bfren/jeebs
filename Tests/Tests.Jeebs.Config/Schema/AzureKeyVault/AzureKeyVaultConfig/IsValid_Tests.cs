@@ -41,6 +41,7 @@ namespace Jeebs.Config.AzureKeyVault_Tests
 			var config = new AzureKeyVaultConfig
 			{
 				Name = F.Rnd.Str,
+				TenantId = F.Rnd.Str,
 				ClientId = F.Rnd.Str,
 				ClientSecret = F.Rnd.Str
 			};

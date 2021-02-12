@@ -13,32 +13,38 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public string TermTaxonomyId { get; } = "term_taxonomy_id";
+		public string TermTaxonomyId =>
+			"term_taxonomy_id";
 
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public string TermId { get; } = "term_id";
+		public string TermId =>
+			"term_id";
 
 		/// <summary>
 		/// Taxonomy
 		/// </summary>
-		public string Taxonomy { get; } = "taxonomy";
+		public string Taxonomy =>
+			"taxonomy";
 
 		/// <summary>
 		/// Description
 		/// </summary>
-		public string Description { get; } = "description";
+		public string Description =>
+			"description";
 
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public string ParentId { get; } = "parent";
+		public string ParentId =>
+			"parent";
 
 		/// <summary>
 		/// Count
 		/// </summary>
-		public string Count { get; } = "count";
+		public string Count =>
+			"count";
 
 		/// <summary>
 		/// Create object

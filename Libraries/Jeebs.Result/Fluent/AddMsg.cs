@@ -13,15 +13,15 @@ namespace Jeebs.Fluent
 	{
 		private readonly TResult result;
 
-		internal AddMsg(TResult result)
-			=> this.result = result;
+		internal AddMsg(TResult result) =>
+			this.result = result;
 
 		/// <summary>
 		/// Add a message of type <typeparamref name="TMessage"/> to the result chain and returns <typeparamref name="TResult"/> object
 		/// </summary>
 		/// <typeparam name="TMessage">Message type</typeparam>
 		public TResult OfType<TMessage>()
-			where TMessage : IMsg, new()
-			=> result.AddMsg(new TMessage());
+			where TMessage : IMsg, new() =>
+			result.AddMsg(new TMessage());
 	}
 }

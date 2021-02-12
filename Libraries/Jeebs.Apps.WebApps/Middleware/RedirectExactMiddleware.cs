@@ -11,13 +11,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// <summary>
 	/// Redirect Exact Middleware
 	/// </summary>
-	public sealed class RedirectExactMiddleware
+	public sealed class RedirectExactMiddleware : IMiddleware
 	{
-		/// <summary>
-		/// The next request in the pipeline
-		/// </summary>
-		private readonly RequestDelegate next;
-
 		/// <summary>
 		/// ILogger
 		/// </summary>
@@ -31,33 +26,40 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="next">RequestDelegate object</param>
 		/// <param name="redirections">Redirections</param>
-		public RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections)
-			=> (this.next, this.redirections) = (next, redirections);
+		public RedirectExactMiddleware(RedirectionsConfig redirections) =>
+			this.redirections = redirections;
 
 		/// <summary>
 		/// Invoke middleware and perform any redirections
 		/// </summary>
-		/// <param name="context">HttpContext object</param>
-		/// <returns>Task</returns>
-		public async Task Invoke(HttpContext context)
+		/// <param name="context">HttpContext</param>
+		/// <param name="next">Next Middleware</param>
+		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			// Get current path and query
 			var req = context.Request;
 			var current = req.Path.ToString();
 			var currentWithQuery = req.QueryString.HasValue switch
 			{
-				true => current + req.QueryString.Value,
-				false => current
+				true =>
+					current + req.QueryString.Value,
+
+				false =>
+					current
 			};
 
 			// Check for current path and current path with query
 			var redirect = (redirections.ContainsKey(current), redirections.ContainsKey(currentWithQuery)) switch
 			{
-				(true, _) => redirections[current],
-				(false, true) => redirections[currentWithQuery],
-				(false, false) => null
+				(true, _) =>
+					redirections[current],
+
+				(false, true) =>
+					redirections[currentWithQuery],
+
+				(false, false) =>
+					null
 			};
 
 			// If there is a match redirect to it
@@ -82,20 +84,18 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="next">RequestDelegate object</param>
 		/// <param name="redirections">Redirections</param>
 		/// <param name="logger">ILogger</param>
-		internal RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections, ILogger logger) : this(next, redirections)
-			=> this.logger = logger;
+		internal RedirectExactMiddleware(RedirectionsConfig redirections, ILogger logger) : this(redirections) =>
+			this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing
 		/// </summary>
-		/// <param name="next">RequestDelegate</param>
 		/// <param name="redirections">RedirectionsConfig</param>
 		/// <param name="logger">ILogger</param>
-		public static RedirectExactMiddleware CreateForTesting(RequestDelegate next, RedirectionsConfig redirections, ILogger logger)
-			=> new RedirectExactMiddleware(next, redirections, logger);
+		public static RedirectExactMiddleware CreateForTesting(RedirectionsConfig redirections, ILogger logger) =>
+			new RedirectExactMiddleware(redirections, logger);
 
 		#endregion
 	}

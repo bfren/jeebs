@@ -16,11 +16,14 @@ namespace Jeebs.Cryptography
 		/// <typeparam name="T">Type of object being encrypted</typeparam>
 		/// <param name="this">Value to encrypt</param>
 		/// <param name="key">Encryption Key (must be 32 bytes)</param>
-		public static string Encrypt<T>(this T @this, byte[] key)
-			=> @this switch
+		public static string Encrypt<T>(this T @this, byte[] key) =>
+			@this switch
 			{
-				T x => new Lockable<T>(x).Lock(key).Serialise(),
-				_ => JsonF.Empty
+				T x =>
+					new Lockable<T>(x).Lock(key).Serialise(),
+
+				_ =>
+					JsonF.Empty
 			};
 
 		/// <summary>
@@ -29,11 +32,14 @@ namespace Jeebs.Cryptography
 		/// <typeparam name="T">Type of object being encrypted</typeparam>
 		/// <param name="this">Value to encrypt</param>
 		/// <param name="key">Encryption key</param>
-		public static string Encrypt<T>(this T @this, string key)
-			=> @this switch
+		public static string Encrypt<T>(this T @this, string key) =>
+			@this switch
 			{
-				T x => new Lockable<T>(x).Lock(key).Serialise(),
-				_ => JsonF.Empty
+				T x =>
+					new Lockable<T>(x).Lock(key).Serialise(),
+
+				_ =>
+					JsonF.Empty
 			};
 	}
 }

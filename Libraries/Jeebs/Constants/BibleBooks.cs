@@ -13,397 +13,463 @@ namespace Jeebs.Constants
 		/// <summary>
 		///	Genesis
 		/// </summary>
-		public static string Genesis { get; } = "Genesis";
+		public static string Genesis =>
+			"Genesis";
 
 		/// <summary>
 		///	Exodus
 		/// </summary>
-		public static string Exodus { get; } = "Exodus";
+		public static string Exodus =>
+			"Exodus";
 
 		/// <summary>
 		///	Leviticus
 		/// </summary>
-		public static string Leviticus { get; } = "Leviticus";
+		public static string Leviticus =>
+			"Leviticus";
 
 		/// <summary>
 		///	Numbers
 		/// </summary>
-		public static string Numbers { get; } = "Numbers";
+		public static string Numbers =>
+			"Numbers";
 
 		/// <summary>
 		///	Deuteronomy
 		/// </summary>
-		public static string Deuteronomy { get; } = "Deuteronomy";
+		public static string Deuteronomy =>
+			"Deuteronomy";
 
 		/// <summary>
 		///	Joshua
 		/// </summary>
-		public static string Joshua { get; } = "Joshua";
+		public static string Joshua =>
+			"Joshua";
 
 		/// <summary>
 		///	Judges
 		/// </summary>
-		public static string Judges { get; } = "Judges";
+		public static string Judges =>
+			"Judges";
 
 		/// <summary>
 		///	Ruth
 		/// </summary>
-		public static string Ruth { get; } = "Ruth";
+		public static string Ruth =>
+			"Ruth";
 
 		/// <summary>
 		///	1 Samuel
 		/// </summary>
-		public static string FirstSamuel { get; } = "1 Samuel";
+		public static string FirstSamuel =>
+			"1 Samuel";
 
 		/// <summary>
 		///	2 Samuel
 		/// </summary>
-		public static string SecondSamuel { get; } = "2 Samuel";
+		public static string SecondSamuel =>
+			"2 Samuel";
 
 		/// <summary>
 		///	1 Kings
 		/// </summary>
-		public static string FirstKings { get; } = "1 Kings";
+		public static string FirstKings =>
+			"1 Kings";
 
 		/// <summary>
 		///	2 Kings
 		/// </summary>
-		public static string SecondKings { get; } = "2 Kings";
+		public static string SecondKings =>
+			"2 Kings";
 
 		/// <summary>
 		///	1 Chronicles
 		/// </summary>
-		public static string FirstChronicles { get; } = "1 Chronicles";
+		public static string FirstChronicles =>
+			"1 Chronicles";
 
 		/// <summary>
 		///	2 Chronicles
 		/// </summary>
-		public static string SecondChronicles { get; } = "2 Chronicles";
+		public static string SecondChronicles =>
+			"2 Chronicles";
 
 		/// <summary>
 		///	Ezra
 		/// </summary>
-		public static string Ezra { get; } = "Ezra";
+		public static string Ezra =>
+			"Ezra";
 
 		/// <summary>
 		///	Nehemiah
 		/// </summary>
-		public static string Nehemiah { get; } = "Nehemiah";
+		public static string Nehemiah =>
+			"Nehemiah";
 
 		/// <summary>
 		///	Esther
 		/// </summary>
-		public static string Esther { get; } = "Esther";
+		public static string Esther =>
+			"Esther";
 
 		/// <summary>
 		///	Job
 		/// </summary>
-		public static string Job { get; } = "Job";
+		public static string Job =>
+			"Job";
 
 		/// <summary>
 		///	Psalms
 		/// </summary>
-		public static string Psalms { get; } = "Psalms";
+		public static string Psalms =>
+			"Psalms";
 
 		/// <summary>
 		///	Proverbs
 		/// </summary>
-		public static string Proverbs { get; } = "Proverbs";
+		public static string Proverbs =>
+			"Proverbs";
 
 		/// <summary>
 		///	Ecclesiastes
 		/// </summary>
-		public static string Ecclesiastes { get; } = "Ecclesiastes";
+		public static string Ecclesiastes =>
+			"Ecclesiastes";
 
 		/// <summary>
 		///	SongOfSongs
 		/// </summary>
-		public static string SongOfSongs { get; } = "Song of Songs";
+		public static string SongOfSongs =>
+			"Song of Songs";
 
 		/// <summary>
 		///	Isaiah
 		/// </summary>
-		public static string Isaiah { get; } = "Isaiah";
+		public static string Isaiah =>
+			"Isaiah";
 
 		/// <summary>
 		///	Jeremiah
 		/// </summary>
-		public static string Jeremiah { get; } = "Jeremiah";
+		public static string Jeremiah =>
+			"Jeremiah";
 
 		/// <summary>
 		///	Lamentations
 		/// </summary>
-		public static string Lamentations { get; } = "Lamentations";
+		public static string Lamentations =>
+			"Lamentations";
 
 		/// <summary>
 		///	Ezekiel
 		/// </summary>
-		public static string Ezekiel { get; } = "Ezekiel";
+		public static string Ezekiel =>
+			"Ezekiel";
 
 		/// <summary>
 		///	Daniel
 		/// </summary>
-		public static string Daniel { get; } = "Daniel";
+		public static string Daniel =>
+			"Daniel";
 
 		/// <summary>
 		///	Hosea
 		/// </summary>
-		public static string Hosea { get; } = "Hosea";
+		public static string Hosea =>
+			"Hosea";
 
 		/// <summary>
 		///	Joel
 		/// </summary>
-		public static string Joel { get; } = "Joel";
+		public static string Joel =>
+			"Joel";
 
 		/// <summary>
 		///	Amos
 		/// </summary>
-		public static string Amos { get; } = "Amos";
+		public static string Amos =>
+			"Amos";
 
 		/// <summary>
 		///	Obadiah
 		/// </summary>
-		public static string Obadiah { get; } = "Obadiah";
+		public static string Obadiah =>
+			"Obadiah";
 
 		/// <summary>
 		///	Jonah
 		/// </summary>
-		public static string Jonah { get; } = "Jonah";
+		public static string Jonah =>
+			"Jonah";
 
 		/// <summary>
 		///	Micah
 		/// </summary>
-		public static string Micah { get; } = "Micah";
+		public static string Micah =>
+			"Micah";
 
 		/// <summary>
 		///	Nahum
 		/// </summary>
-		public static string Nahum { get; } = "Nahum";
+		public static string Nahum =>
+			"Nahum";
 
 		/// <summary>
 		///	Habakkuk
 		/// </summary>
-		public static string Habakkuk { get; } = "Habakkuk";
+		public static string Habakkuk =>
+			"Habakkuk";
 
 		/// <summary>
 		///	Zephaniah
 		/// </summary>
-		public static string Zephaniah { get; } = "Zephaniah";
+		public static string Zephaniah =>
+			"Zephaniah";
 
 		/// <summary>
 		///	Haggai
 		/// </summary>
-		public static string Haggai { get; } = "Haggai";
+		public static string Haggai =>
+			"Haggai";
 
 		/// <summary>
 		///	Zechariah
 		/// </summary>
-		public static string Zechariah { get; } = "Zechariah";
+		public static string Zechariah =>
+			"Zechariah";
 
 		/// <summary>
 		///	Malachi
 		/// </summary>
-		public static string Malachi { get; } = "Malachi";
+		public static string Malachi =>
+			"Malachi";
 
 		/// <summary>
 		///	Matthew
 		/// </summary>
-		public static string Matthew { get; } = "Matthew";
+		public static string Matthew =>
+			"Matthew";
 
 		/// <summary>
 		///	Mark
 		/// </summary>
-		public static string Mark { get; } = "Mark";
+		public static string Mark =>
+			"Mark";
 
 		/// <summary>
 		///	Luke
 		/// </summary>
-		public static string Luke { get; } = "Luke";
+		public static string Luke =>
+			"Luke";
 
 		/// <summary>
 		///	John
 		/// </summary>
-		public static string John { get; } = "John";
+		public static string John =>
+			"John";
 
 		/// <summary>
 		///	Acts
 		/// </summary>
-		public static string Acts { get; } = "Acts";
+		public static string Acts =>
+			"Acts";
 
 		/// <summary>
 		///	Romans
 		/// </summary>
-		public static string Romans { get; } = "Romans";
+		public static string Romans =>
+			"Romans";
 
 		/// <summary>
 		///	1 Corinthians
 		/// </summary>
-		public static string FirstCorinthians { get; } = "1 Corinthians";
+		public static string FirstCorinthians =>
+			"1 Corinthians";
 
 		/// <summary>
 		///	2 Corinthians
 		/// </summary>
-		public static string SecondCorinthians { get; } = "2 Corinthians";
+		public static string SecondCorinthians =>
+			"2 Corinthians";
 
 		/// <summary>
 		///	Galations
 		/// </summary>
-		public static string Galatians { get; } = "Galatians";
+		public static string Galatians =>
+			"Galatians";
 
 		/// <summary>
 		///	Ephesians
 		/// </summary>
-		public static string Ephesians { get; } = "Ephesians";
+		public static string Ephesians =>
+			"Ephesians";
 
 		/// <summary>
 		///	Philippians
 		/// </summary>
-		public static string Philippians { get; } = "Philippians";
+		public static string Philippians =>
+			"Philippians";
 
 		/// <summary>
 		///	Colossians
 		/// </summary>
-		public static string Colossians { get; } = "Colossians";
+		public static string Colossians =>
+			"Colossians";
 
 		/// <summary>
 		///	1 Thessalonians
 		/// </summary>
-		public static string FirstThessalonians { get; } = "1 Thessalonians";
+		public static string FirstThessalonians =>
+			"1 Thessalonians";
 
 		/// <summary>
 		///	2 Thessalonians
 		/// </summary>
-		public static string SecondThessalonians { get; } = "2 Thessalonians";
+		public static string SecondThessalonians =>
+			"2 Thessalonians";
 
 		/// <summary>
 		///	1 Timothy
 		/// </summary>
-		public static string FirstTimothy { get; } = "1 Timothy";
+		public static string FirstTimothy =>
+			"1 Timothy";
 
 		/// <summary>
 		///	2 Timothy
 		/// </summary>
-		public static string SecondTimothy { get; } = "2 Timothy";
+		public static string SecondTimothy =>
+			"2 Timothy";
 
 		/// <summary>
 		///	Titus
 		/// </summary>
-		public static string Titus { get; } = "Titus";
+		public static string Titus =>
+			"Titus";
 
 		/// <summary>
 		///	Philemon
 		/// </summary>
-		public static string Philemon { get; } = "Philemon";
+		public static string Philemon =>
+			"Philemon";
 
 		/// <summary>
 		///	Hebrews
 		/// </summary>
-		public static string Hebrews { get; } = "Hebrews";
+		public static string Hebrews =>
+			"Hebrews";
 
 		/// <summary>
 		///	James
 		/// </summary>
-		public static string James { get; } = "James";
+		public static string James =>
+			"James";
 
 		/// <summary>
 		///	1 Peter
 		/// </summary>
-		public static string FirstPeter { get; } = "1 Peter";
+		public static string FirstPeter =>
+			"1 Peter";
 
 		/// <summary>
 		///	2 Peter
 		/// </summary>
-		public static string SecondPeter { get; } = "2 Peter";
+		public static string SecondPeter =>
+			"2 Peter";
 
 		/// <summary>
 		///	1 John
 		/// </summary>
-		public static string FirstJohn { get; } = "1 John";
+		public static string FirstJohn =>
+			"1 John";
 
 		/// <summary>
 		///	2 John
 		/// </summary>
-		public static string SecondJohn { get; } = "2 John";
+		public static string SecondJohn =>
+			"2 John";
 
 		/// <summary>
 		///	3 John
 		/// </summary>
-		public static string ThirdJohn { get; } = "3 John";
+		public static string ThirdJohn =>
+			"3 John";
 
 		/// <summary>
 		///	Jude
 		/// </summary>
-		public static string Jude { get; } = "Jude";
+		public static string Jude =>
+			"Jude";
 
 		/// <summary>
 		///	Revelation
 		/// </summary>
-		public static string Revelation { get; } = "Revelation";
+		public static string Revelation =>
+			"Revelation";
 
 		/// <summary>
 		/// Books of the Law
 		/// </summary>
-		public static List<string> Law
-			=> new List<string>(new[] { Genesis, Exodus, Leviticus, Numbers, Deuteronomy });
+		public static List<string> Law =>
+			new List<string>(new[] { Genesis, Exodus, Leviticus, Numbers, Deuteronomy });
 
 		/// <summary>
 		/// History Books
 		/// </summary>
-		public static List<string> History
-			=> new List<string>(new[] { Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther });
+		public static List<string> History =>
+			new List<string>(new[] { Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther });
 
 		/// <summary>
 		/// Wisdom Literature
 		/// </summary>
-		public static List<string> Wisdom
-			=> new List<string>(new[] { Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs });
+		public static List<string> Wisdom =>
+			new List<string>(new[] { Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs });
 
 		/// <summary>
 		/// Major Prophets
 		/// </summary>
-		public static List<string> MajorProphets
-			=> new List<string>(new[] { Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel });
+		public static List<string> MajorProphets =>
+			new List<string>(new[] { Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel });
 
 		/// <summary>
 		/// Minor Prophets
 		/// </summary>
-		public static List<string> MinorProphets
-			=> new List<string>(new[] { Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi });
+		public static List<string> MinorProphets =>
+			new List<string>(new[] { Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi });
 
 		/// <summary>
 		/// Old Testament
 		/// </summary>
-		public static List<string> OldTestament
-			=> Law.Concat(History).Concat(Wisdom).Concat(MajorProphets).Concat(MinorProphets).ToList();
+		public static List<string> OldTestament =>
+			Law.Concat(History).Concat(Wisdom).Concat(MajorProphets).Concat(MinorProphets).ToList();
 
 		/// <summary>
 		/// Gospels
 		/// </summary>
-		public static List<string> Gospels
-			=> new List<string>(new[] { Matthew, Mark, Luke, John });
+		public static List<string> Gospels =>
+			new List<string>(new[] { Matthew, Mark, Luke, John });
 
 		/// <summary>
 		/// Pauline Letters
 		/// </summary>
-		public static List<string> PaulineLetters
-			=> new List<string>(new[] { Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon });
+		public static List<string> PaulineLetters =>
+			new List<string>(new[] { Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon });
 
 		/// <summary>
 		/// Epistles
 		/// </summary>
-		public static List<string> Epistles
-			=> new List<string>(new[] { Acts, Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon, Hebrews, James, FirstPeter, SecondPeter, FirstJohn, SecondJohn, ThirdJohn, Jude, Revelation });
+		public static List<string> Epistles =>
+			new List<string>(new[] { Acts, Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon, Hebrews, James, FirstPeter, SecondPeter, FirstJohn, SecondJohn, ThirdJohn, Jude, Revelation });
 
 		/// <summary>
 		/// New Testament
 		/// </summary>
-		public static List<string> NewTestament
-			=> Gospels.Concat(Epistles).ToList();
+		public static List<string> NewTestament =>
+			Gospels.Concat(Epistles).ToList();
 
 		/// <summary>
 		/// All Books
 		/// </summary>
-		public static List<string> All
-			=> OldTestament.Concat(NewTestament).ToList();
+		public static List<string> All =>
+			OldTestament.Concat(NewTestament).ToList();
 	}
 }

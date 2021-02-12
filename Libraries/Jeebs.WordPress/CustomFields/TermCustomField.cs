@@ -24,18 +24,18 @@ namespace Jeebs.WordPress
 			// First, get the Term ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
 			// Otherwise return success
-			if (meta.ContainsKey(Key))
+			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
 			{
-				ValueStr = meta[Key];
+				ValueStr = value;
 			}
 			else
 			{
 				if (IsRequired)
 				{
-					return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(Key));
+					return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(GetType(), Key));
 				}
 
-				return r.OkTrue();
+				return r.OkFalse();
 			}
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
@@ -57,7 +57,7 @@ namespace Jeebs.WordPress
 			{
 				if (!long.TryParse(ValueStr, out var termId))
 				{
-					return r.Error<long>().AddMsg(new ValueIsInvalidPostIdMsg(ValueStr));
+					return r.Error<long>().AddMsg(new ValueIsInvalidPostIdMsg(GetType(), ValueStr));
 				}
 
 				return r.OkV(termId);
@@ -72,13 +72,16 @@ namespace Jeebs.WordPress
 				using var w = db.GetQueryWrapper();
 
 				// Get matching terms
-				var terms = await w.QueryPostsAsync<Term>(r, modify: opt => opt.Id = r.Value);
+				var terms = await w.QueryTaxonomyAsync<Term>(r, modify: opt => opt.Id = r.Value);
 
 				// If there is more than one term, return an error
 				return terms switch
 				{
-					IOkV<List<Term>> x when x.Value.Count == 1 => x.OkV(x.Value.Single()),
-					{ } x => x.Error<Term>().AddMsg().OfType<MultipleTermsFoundMsg>()
+					IOkV<List<Term>> x when x.Value.Count == 1 =>
+						x.OkV(x.Value.Single()),
+
+					{ } x =>
+						x.Error<Term>().AddMsg().OfType<MultipleTermsFoundMsg>()
 				};
 			}
 
@@ -96,12 +99,12 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Return term Title
 		/// </summary>
-		public override string ToString()
-			=> ValueObj?.Title ?? base.ToString();
+		public override string ToString() =>
+			ValueObj?.Title ?? base.ToString();
 
 		/// <summary>
 		/// Term class
 		/// </summary>
-		public sealed class Term : WpTermEntity { }
+		public sealed record Term : WpTermEntity { }
 	}
 }

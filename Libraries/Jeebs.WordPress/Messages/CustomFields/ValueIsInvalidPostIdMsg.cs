@@ -9,12 +9,15 @@ namespace Jm.WordPress.CustomFields
 	/// </summary>
 	public class ValueIsInvalidPostIdMsg : WithValueMsg<string>
 	{
-		internal ValueIsInvalidPostIdMsg(string value) : base(value) { }
+		private Type CustomFieldType { get; }
+
+		internal ValueIsInvalidPostIdMsg(Type customFieldType, string value) : base(value) =>
+			CustomFieldType = customFieldType;
 
 		/// <summary>
 		/// Return error message
 		/// </summary>
-		public override string ToString()
-			=> $"'{Value}' is not a valid Post ID.";
+		public override string ToString() =>
+			$"'{Value}' is not a valid Post ID for Custom Field '{CustomFieldType}'.";
 	}
 }

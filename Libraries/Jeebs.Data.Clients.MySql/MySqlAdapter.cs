@@ -14,8 +14,8 @@ namespace Jeebs.Data.Clients.MySql
 		public MySqlAdapter() : base('.', ',', ',', '`', '`', "AS", '\'', '\'', "ASC", "DESC") { }
 
 		/// <inheritdoc/>
-		public override string GetRandomSortOrder()
-			=> "RAND()";
+		public override string GetRandomSortOrder() =>
+			"RAND()";
 
 		/// <inheritdoc/>
 		public override string CreateSingleAndReturnId(string table, List<string> columns, List<string> aliases)

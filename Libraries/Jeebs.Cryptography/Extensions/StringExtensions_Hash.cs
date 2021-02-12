@@ -23,7 +23,7 @@ namespace Jeebs.Cryptography
 		{
 			if (string.IsNullOrEmpty(@this))
 			{
-				throw new ArgumentNullException(nameof(@this));
+				return string.Empty;
 			}
 
 			var hash = GenericHash.Hash(Encoding.UTF8.GetBytes(@this), null, length);

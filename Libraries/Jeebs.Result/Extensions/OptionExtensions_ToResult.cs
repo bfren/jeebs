@@ -16,12 +16,17 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="TValue">Option / Result value type</typeparam>
 		/// <param name="this">Option</param>
-		public static IR<TValue> ToResult<TValue>(this Option<TValue> @this)
-			=> @this switch
+		public static IR<TValue> ToResult<TValue>(this Option<TValue> @this) =>
+			@this switch
 			{
-				Some<TValue> x => Result.OkV(x.Value),
-				None<TValue> x when x.Reason is IMsg r => Result.Error<TValue>().AddMsg(r),
-				_ => Result.Error<TValue>()
+				Some<TValue> x =>
+					Result.OkV(x.Value),
+
+				None<TValue> x when x.Reason is IMsg r =>
+					Result.Error<TValue>().AddMsg(r),
+
+				_ =>
+					Result.Error<TValue>()
 			};
 
 		/// <summary>
@@ -33,12 +38,17 @@ namespace Jeebs
 		/// <typeparam name="TState">Result state type</typeparam>
 		/// <param name="this">Option</param>
 		/// <param name="state">Result state</param>
-		public static IR<TValue, TState> ToResult<TValue, TState>(this Option<TValue> @this, TState state)
-			=> @this switch
+		public static IR<TValue, TState> ToResult<TValue, TState>(this Option<TValue> @this, TState state) =>
+			@this switch
 			{
-				Some<TValue> x => Result.OkV(x.Value, state),
-				None<TValue> x when x.Reason is IMsg r => Result.Error<TValue, TState>(state).AddMsg(r),
-				_ => Result.Error<TValue, TState>(state)
+				Some<TValue> x =>
+					Result.OkV(x.Value, state),
+
+				None<TValue> x when x.Reason is IMsg r =>
+					Result.Error<TValue, TState>(state).AddMsg(r),
+
+				_ =>
+					Result.Error<TValue, TState>(state)
 			};
 	}
 }

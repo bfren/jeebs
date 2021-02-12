@@ -16,8 +16,8 @@ namespace Jeebs.Fluent
 	{
 		private readonly ILink<TValue, TState> link;
 
-		internal Handle(ILink<TValue, TState> link)
-			=> this.link = link;
+		internal Handle(ILink<TValue, TState> link) =>
+			this.link = link;
 
 		/// <inheritdoc cref="Handle{TValue, TException}.With(Action{IR{TValue}, TException})"/>
 		public ILink<TValue, TState> With(Action<IR<TValue, TState>, TException> handler)
@@ -35,8 +35,8 @@ namespace Jeebs.Fluent
 
 		/// <inheritdoc cref="Handle{TValue, TException}.With{TExceptionMsg}"/>
 		public ILink<TValue, TState> With<TExceptionMsg>()
-			where TExceptionMsg : IExceptionMsg, new()
-			=> With((r, ex) =>
+			where TExceptionMsg : IExceptionMsg, new() =>
+			With((r, ex) =>
 			{
 				var msg = new TExceptionMsg();
 				msg.Set(ex);

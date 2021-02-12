@@ -2,16 +2,11 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Data.Enums;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Messages.Query.Wrapper;
-using Jeebs.WordPress.Tables;
 using Jm.WordPress.Query.Wrapper;
 
 namespace Jeebs.WordPress
@@ -28,7 +23,8 @@ namespace Jeebs.WordPress
 		/// Setup object
 		/// </summary>
 		/// <param name="db">IWpDb</param>
-		public QueryWrapper(IWpDb db) : base(db) => this.db = db;
+		public QueryWrapper(IWpDb db) : base(db) =>
+			this.db = db;
 
 		#region Caches
 

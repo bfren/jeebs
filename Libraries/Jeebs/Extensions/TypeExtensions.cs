@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Jeebs
@@ -17,8 +15,8 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">Implementation type</typeparam>
 		/// <param name="this">Base type</param>
-		public static bool Implements<T>(this Type @this)
-			=> @this.Implements(typeof(T));
+		public static bool Implements<T>(this Type @this) =>
+			@this.Implements(typeof(T));
 
 		/// <summary>
 		/// True if <paramref name="this"/> implements <paramref name="type"/>
@@ -56,8 +54,11 @@ namespace Jeebs
 			{
 				return type.IsInterface switch
 				{
-					true => @this.ImplementsGenericInterface(type),
-					false => @this.ImplementsGenericClass(type)
+					true =>
+						@this.ImplementsGenericInterface(type),
+
+					false =>
+						@this.ImplementsGenericClass(type)
 				};
 			}
 
@@ -69,18 +70,26 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Base type</param>
 		/// <param name="interface">Interface type</param>
-		internal static bool ImplementsGenericInterface(this Type @this, Type @interface)
-			=> @this.GetInterfaces().Any(x => x.ImplementsGeneric(@interface));
+		internal static bool ImplementsGenericInterface(this Type @this, Type @interface) =>
+			@this.GetInterfaces().Any(x => x.ImplementsGeneric(@interface));
 
 		/// <summary>
 		/// True if <paramref name="this"/> implements <paramref name="class"/>
 		/// </summary>
 		/// <param name="this">Base type</param>
 		/// <param name="class">Class type</param>
-		internal static bool ImplementsGenericClass(this Type @this, Type @class)
-			=> @this.BaseType.ImplementsGeneric(@class);
+		internal static bool ImplementsGenericClass(this Type @this, Type @class) =>
+			ImplementsGeneric(@this, @class) ||
+			@this.BaseType switch
+			{
+				Type t =>
+					ImplementsGenericClass(t, @class),
 
-		private static bool ImplementsGeneric(this Type @this, Type generic)
-			=> @this.IsGenericType && (@this.GetGenericTypeDefinition() == generic || @this == generic);
+				_ =>
+					false
+			};
+
+		private static bool ImplementsGeneric(this Type @this, Type generic) =>
+			@this.IsGenericType && (@this.GetGenericTypeDefinition() == generic || @this == generic);
 	}
 }

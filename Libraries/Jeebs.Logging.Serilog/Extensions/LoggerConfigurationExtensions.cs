@@ -29,8 +29,8 @@ namespace Jeebs.Logging
 				return;
 			}
 
-			LogEventLevel getMinimum(LogLevel? level = null)
-				=> (LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
+			LogEventLevel getMinimum(LogLevel? level = null) =>
+				(LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();
@@ -61,7 +61,7 @@ namespace Jeebs.Logging
 				if (serviceType == "seq")
 				{
 					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
-					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: providerMinimumLevel));
+					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
 				}
 				else if (serviceType == "slack")
 				{

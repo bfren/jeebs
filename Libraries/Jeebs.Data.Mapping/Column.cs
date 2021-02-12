@@ -22,7 +22,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="table">Table Name</param>
 		/// <param name="name">Column Name</param>
 		/// <param name="alias">Column Alias</param>
-		public Column(string table, string name, string alias)
-			=> (Table, Name, Alias) = (table, name, alias);
+		public Column(string table, string name, string alias) =>
+			(Table, Name, Alias) = (table, name, alias);
 	}
 }

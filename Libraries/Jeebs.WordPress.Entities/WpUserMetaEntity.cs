@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// UserMeta entity
 	/// </summary>
-	public abstract class WpUserMetaEntity : IEntity
+	public abstract record WpUserMetaEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => UserMetaId;
-			set => UserMetaId = value;
+			get =>
+				UserMetaId;
+
+			set =>
+				UserMetaId = value;
 		}
 
 		/// <summary>

@@ -52,30 +52,30 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Populate list of taxonomies
 		/// </summary>
-		static Taxonomy()
-			=> all = new HashSet<Taxonomy>(new[] { PostCategory, PostTag, LinkCategory, NavMenu });
+		static Taxonomy() =>
+			all = new HashSet<Taxonomy>(new[] { PostCategory, PostTag, LinkCategory, NavMenu });
 
 		/// <summary>
 		/// Add a custom taxonomy
 		/// </summary>
 		/// <param name="taxonomy">Taxonomy to add</param>
 		/// <returns>False if the taxonomy already exists</returns>
-		public static bool AddCustomTaxonomy(Taxonomy taxonomy)
-			=> all.Add(taxonomy);
+		public static bool AddCustomTaxonomy(Taxonomy taxonomy) =>
+			all.Add(taxonomy);
 
 		/// <summary>
 		/// Parse Taxonomy value name
 		/// </summary>
 		/// <param name="name">Value name</param>
 		/// <returns>Taxonomy object</returns>
-		public static Taxonomy Parse(string name)
-			=> Parse(name, all.ToArray()).Unwrap(() => Blank);
+		public static Taxonomy Parse(string name) =>
+			Parse(name, all.ToArray()).Unwrap(() => Blank);
 
 		/// <summary>
 		/// Returns whether or not the specified taxonomy has been registered
 		/// </summary>
 		/// <param name="taxonomy">Taxonomy to check</param>
-		public static bool IsRegistered(Taxonomy taxonomy)
-			=> IsRegistered(taxonomy.ToString(), all.ToArray());
+		public static bool IsRegistered(Taxonomy taxonomy) =>
+			IsRegistered(taxonomy.ToString(), all.ToArray());
 	}
 }

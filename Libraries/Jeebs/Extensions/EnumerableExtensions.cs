@@ -16,16 +16,16 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">List value type</typeparam>
 		/// <param name="this">List</param>
-		public static IEnumerable<T> Filter<T>(this IEnumerable<T> @this)
-			=> @this.Where(x => x is T);
+		public static IEnumerable<T> Filter<T>(this IEnumerable<T> @this) =>
+			@this.Where(x => x is T);
 
 		/// <summary>
 		/// Like <see cref="Filter{T}(IEnumerable{T})"/>, but removes values unless they are <see cref="Some{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="this">List</param>
-		public static IEnumerable<Option<T>> Filter<T>(this IEnumerable<Option<T>> @this)
-			=> @this.Where(x => x is Some<T>);
+		public static IEnumerable<Option<T>> Filter<T>(this IEnumerable<Option<T>> @this) =>
+			@this.Where(x => x is Some<T>);
 
 		/// <summary>
 		/// Filter out null items (and empty / whitespace strings) from a list

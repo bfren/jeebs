@@ -27,7 +27,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			IHttpClientFactory factory,
 			ILog log,
 			IOptions<JeebsConfig> jeebsConfig
-		) : base(log, jeebsConfig, c => c.Twitter)
-			=> Factory = factory;
+		) : base(log, jeebsConfig, c => c.Twitter) =>
+			Factory = factory;
 	}
 }

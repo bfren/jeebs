@@ -9,7 +9,7 @@
 **/bin
 **/obj
 
-**/jeebsconfig-secrets.json
+**/jeebsconfig-secrets*
 
 /Local.pack.props
 /Local.push.props

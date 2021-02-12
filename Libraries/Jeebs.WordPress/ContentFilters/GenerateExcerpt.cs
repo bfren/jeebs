@@ -17,15 +17,15 @@ namespace Jeebs.WordPress.ContentFilters
 		/// <summary>
 		/// Create filter with default max length
 		/// </summary>
-		public static ContentFilter Create()
-			=> Create(200);
+		public static ContentFilter Create() =>
+			Create(200);
 
 		/// <summary>
 		/// Create filter
 		/// </summary>
 		/// <param name="maxLength">Maximum length of excerpt - ignored if <!--more--> is present</param>
-		public static ContentFilter Create(int maxLength)
-			=> new GenerateExcerpt(content =>
+		public static ContentFilter Create(int maxLength) =>
+			new GenerateExcerpt(content =>
 			{
 				// If there's nothing there, return an empty string
 				if (string.IsNullOrEmpty(content))
@@ -45,15 +45,14 @@ namespace Jeebs.WordPress.ContentFilters
 				content = newLines.Replace(content, " ");
 
 				// Cut out everything after <!--more--> tag, or at a maximum length
-				var more = content.IndexOf("<!--more-->");
-				if (more > 0)
+				content = content.IndexOf("<!--more-->") switch
 				{
-					content = content.Substring(0, more).ReplaceHtmlTags(" ");
-				}
-				else
-				{
-					content = content.ReplaceHtmlTags(" ").NoLongerThan(maxLength);
-				}
+					int more when more > 0 =>
+						content.Substring(0, more).ReplaceHtmlTags(" "),
+
+					_ =>
+						content.ReplaceHtmlTags(" ").NoLongerThan(maxLength)
+				};
 
 				// Return filtered content
 				return content.Trim();

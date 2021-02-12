@@ -10,18 +10,15 @@ namespace Jeebs.Services
 	{
 		internal static IEnumerable<Type> GetLoadableTypes(this Assembly @this)
 		{
-			if (@this == null)
-			{
-				throw new ArgumentNullException(nameof(@this));
-			}
-
 			try
 			{
 				return @this.GetTypes();
 			}
 			catch (ReflectionTypeLoadException e)
 			{
-				return e.Types.Where(t => t != null);
+				return from t in e.Types
+					   where t != null
+					   select t;
 			}
 		}
 	}

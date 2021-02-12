@@ -29,7 +29,10 @@ namespace Jeebs
 
 			foreach (var item in list)
 			{
-				Add((T)Activator.CreateInstance(typeof(T), item));
+				if (Activator.CreateInstance(typeof(T), item) is T obj)
+				{
+					Add(obj);
+				}
 			}
 		}
 
@@ -43,8 +46,11 @@ namespace Jeebs
 
 			return (list.Count > 0) switch
 			{
-				true => F.JsonF.Serialise(list),
-				false => F.JsonF.Empty
+				true =>
+					F.JsonF.Serialise(list),
+
+				false =>
+					F.JsonF.Empty
 			};
 		}
 

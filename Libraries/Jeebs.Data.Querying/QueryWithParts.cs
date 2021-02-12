@@ -24,12 +24,12 @@ namespace Jeebs.Data.Querying
 			/// </summary>
 			/// <param name="unitOfWork">IUnitOfWork</param>
 			/// <param name="parts">TOptions</param>
-			internal QueryWithParts(IUnitOfWork unitOfWork, IQueryParts parts)
-				=> (UnitOfWork, Parts) = (unitOfWork, parts);
+			internal QueryWithParts(IUnitOfWork unitOfWork, IQueryParts parts) =>
+				(UnitOfWork, Parts) = (unitOfWork, parts);
 
 			/// <inheritdoc/>
-			public IQuery<TModel> GetQuery()
-				=> new Query<TModel>(UnitOfWork, Parts);
+			public IQuery<TModel> GetQuery() =>
+				new Query<TModel>(UnitOfWork, Parts);
 		}
 	}
 }

@@ -10,11 +10,11 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public TValue Value { get; }
 
-		internal ROkV(TValue value)
-			=> Value = value;
+		internal ROkV(TValue value) =>
+			Value = value;
 
 		/// <inheritdoc/>
-		new public IOkV<TValue, TState> WithState<TState>(TState state)
-			=> new ROkV<TValue, TState>(Value, state) { Messages = Messages, Logger = Logger };
+		new public IOkV<TValue, TState> WithState<TState>(TState state) =>
+			new ROkV<TValue, TState>(Value, state) { Messages = Messages, Logger = Logger };
 	}
 }

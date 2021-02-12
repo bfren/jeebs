@@ -154,12 +154,13 @@ namespace Jeebs.Apps
 		public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
 		{
 			// Get default options
-			var defaultOptions = F.JsonF.GetOptions();
+			var defaultOptions = F.JsonF.CopyOptions();
 
 			// Set options
 			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? defaultOptions).IgnoreNullValues;
 			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
 			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
+			opt.JsonSerializerOptions.NumberHandling = (jsonSerialiserOptions ?? defaultOptions).NumberHandling;
 
 			// Set converters
 			opt.JsonSerializerOptions.Converters.Clear();

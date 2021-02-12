@@ -23,7 +23,7 @@ namespace Jeebs.Apps
 		public virtual IHost CreateHost(string[] args)
 		{
 			// Create Default Host Builder
-			return Host.CreateDefaultBuilder(args)
+			var host = Host.CreateDefaultBuilder(args)
 
 				// Configure Host
 				.ConfigureHostConfiguration(ConfigureHost)
@@ -47,6 +47,12 @@ namespace Jeebs.Apps
 				.Build()
 
 			;
+
+			// Ready to go
+			Ready(host.Services);
+
+			// Return host
+			return host;
 		}
 
 		/// <summary>
@@ -94,6 +100,18 @@ namespace Jeebs.Apps
 			// Register Serilog Logger
 			services.AddTransient<ILog, SerilogLogger>();
 			services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
+		}
+
+		/// <summary>
+		/// Runs when host configuration is completed and it is ready to start
+		/// </summary>
+		/// <param name="services">IServiceProvider</param>
+		protected virtual void Ready(IServiceProvider services)
+		{
+			if (services.GetService<ILog>() is ILog log)
+			{
+				log.Information("Application ready.");
+			}
 		}
 	}
 }

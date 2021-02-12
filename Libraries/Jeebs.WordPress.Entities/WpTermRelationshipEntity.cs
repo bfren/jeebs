@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// TermRelationship entity
 	/// </summary>
-	public abstract class WpTermRelationshipEntity : IEntity
+	public abstract record WpTermRelationshipEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => PostId;
-			set => PostId = value;
+			get =>
+				PostId;
+
+			set =>
+				PostId = value;
 		}
 
 		/// <summary>

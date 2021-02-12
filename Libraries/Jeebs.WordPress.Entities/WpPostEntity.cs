@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Post entity
 	/// </summary>
-	public abstract class WpPostEntity : IEntity
+	public abstract record WpPostEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -18,8 +18,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => PostId;
-			set => PostId = value;
+			get =>
+				PostId;
+
+			set =>
+				PostId = value;
 		}
 
 		/// <summary>

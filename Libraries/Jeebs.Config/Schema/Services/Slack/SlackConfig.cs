@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Slack configuration
 	/// </summary>
-	public class SlackConfig : WebhookServiceConfig
+	public record SlackConfig : WebhookServiceConfig
 	{
 		/// <summary>
 		/// Whether or not to add attachments to a message (error type and timestamp)
@@ -15,7 +15,7 @@ namespace Jeebs.Config
 		public bool ShowAttachments { get; set; }
 
 		/// <inheritdoc/>
-		public override bool IsValid
-			=> F.UriF.IsHttp(Webhook);
+		public override bool IsValid =>
+			F.UriF.IsHttps(Webhook);
 	}
 }

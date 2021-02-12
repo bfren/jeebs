@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Term entity
 	/// </summary>
-	public abstract class WpTermEntity : IEntity
+	public abstract record WpTermEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -17,8 +17,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => TermId;
-			set => TermId = value;
+			get =>
+				TermId;
+
+			set =>
+				TermId = value;
 		}
 
 		/// <summary>

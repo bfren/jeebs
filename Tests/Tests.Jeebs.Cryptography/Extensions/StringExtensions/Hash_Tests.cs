@@ -10,15 +10,15 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		[Theory]
 		[InlineData(null)]
 		[InlineData("")]
-		public void Hash_String_NullOrEmpty_ThrowsArgumentNullException(string input)
+		public void Hash_String_NullOrEmpty_Returns_Empty(string input)
 		{
 			// Arrange
 
 			// Act
-			Action result = () => input.Hash();
+			var result = input.Hash();
 
 			// Assert
-			Assert.Throws<ArgumentNullException>(result);
+			Assert.Equal(string.Empty, result);
 		}
 
 		[Theory]

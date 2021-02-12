@@ -4,16 +4,16 @@ using System.Text;
 using Jeebs;
 using Xunit;
 
-namespace F.JsonF_Tests
+namespace F.JsonF_Tests.EnumeratedConverter_Tests
 {
 	public class WriteJson_Tests
 	{
 		[Fact]
-		public void Serialise_Enumerated_Returns_Json_Value()
+		public void Serialise_Returns_Json_Value()
 		{
 			// Arrange
 			var value = Rnd.Str;
-			var enumerated = new Test(value);
+			var enumerated = new EnumeratedTest(value);
 
 			// Act
 			var result = JsonF.Serialise(enumerated);
@@ -24,7 +24,7 @@ namespace F.JsonF_Tests
 
 		[Theory]
 		[InlineData(null)]
-		public void Serialise_Null_Enumerated_Returns_Empty_Json(Enumerated input)
+		public void Serialise_Null_Returns_Empty_Json(Enumerated input)
 		{
 			// Arrange
 
@@ -35,9 +35,9 @@ namespace F.JsonF_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public class Test : Enumerated
+		public class EnumeratedTest : Enumerated
 		{
-			public Test(string name) : base(name) { }
+			public EnumeratedTest(string name) : base(name) { }
 		}
 	}
 }

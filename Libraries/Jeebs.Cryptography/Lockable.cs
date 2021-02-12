@@ -30,25 +30,28 @@ namespace Jeebs.Cryptography
 		/// Create object
 		/// </summary>
 		/// <param name="contents">Contents</param>
-		public Lockable(T contents)
-			=> Contents = contents;
+		public Lockable(T contents) =>
+			Contents = contents;
 
 		/// <summary>
 		/// Lock object
 		/// </summary>
 		/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
-		public Locked<T> Lock(byte[] key)
-			=> key.Length switch
+		public Locked<T> Lock(byte[] key) =>
+			key.Length switch
 			{
-				Lockable.KeyLength => new Locked<T>(Contents, key),
-				_ => throw new Jx.Cryptography.InvalidKeyLengthException()
+				Lockable.KeyLength =>
+					new Locked<T>(Contents, key),
+
+				_ =>
+					throw new Jx.Cryptography.InvalidKeyLengthException()
 			};
 
 		/// <summary>
 		/// Lock object
 		/// </summary>
 		/// <param name="key">Encryption key</param>
-		public Locked<T> Lock(string key)
-			=> new Locked<T>(Contents, key);
+		public Locked<T> Lock(string key) =>
+			new Locked<T>(Contents, key);
 	}
 }

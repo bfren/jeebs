@@ -15,14 +15,14 @@ namespace Jeebs.Data.TypeHandlers
 		/// Convert to list of string values
 		/// </summary>
 		/// <param name="value">EnumeratedList</param>
-		protected override string Format(EnumeratedList<T> value)
-			=> value.Serialise();
+		protected override string Format(EnumeratedList<T> value) =>
+			value.Serialise();
 
 		/// <summary>
 		/// Parse from list of string values and convert
 		/// </summary>
 		/// <param name="json">JSON string</param>
-		protected override EnumeratedList<T> Parse(string json)
-			=> EnumeratedList<T>.Deserialise(json);
+		protected override EnumeratedList<T> Parse(string json) =>
+			EnumeratedList<T>.Deserialise(json);
 	}
 }

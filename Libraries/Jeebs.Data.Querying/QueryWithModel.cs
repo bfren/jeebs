@@ -18,13 +18,13 @@ namespace Jeebs.Data.Querying
 			/// Create object
 			/// </summary>
 			/// <param name="unitOfWork">IUnitOfWork</param>
-			internal QueryWithModel(IUnitOfWork unitOfWork)
-				=> UnitOfWork = unitOfWork;
+			internal QueryWithModel(IUnitOfWork unitOfWork) =>
+				UnitOfWork = unitOfWork;
 
 			/// <inheritdoc/>
 			public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(TOptions options)
-				where TOptions : QueryOptions
-				=> new QueryWithOptions<TOptions>(UnitOfWork, options);
+				where TOptions : QueryOptions =>
+				new QueryWithOptions<TOptions>(UnitOfWork, options);
 
 			/// <inheritdoc/>
 			public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)

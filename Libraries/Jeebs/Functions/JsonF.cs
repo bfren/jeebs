@@ -34,30 +34,33 @@ namespace F
 				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 				DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+				NumberHandling = JsonNumberHandling.AllowReadingFromString
 			};
 
 			options.Converters.Add(new EnumeratedConverterFactory());
 			options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+			options.Converters.Add(new StrongIdConverterFactory());
 		}
 
 		/// <summary>
 		/// Get a copy of the default serialiser options
 		/// </summary>
-		public static JsonSerializerOptions GetOptions()
+		public static JsonSerializerOptions CopyOptions()
 		{
-			var options = new JsonSerializerOptions
+			var copy = new JsonSerializerOptions
 			{
-				DefaultIgnoreCondition = JsonF.options.DefaultIgnoreCondition,
-				DictionaryKeyPolicy = JsonF.options.DictionaryKeyPolicy,
-				PropertyNamingPolicy = JsonF.options.PropertyNamingPolicy
+				DefaultIgnoreCondition = options.DefaultIgnoreCondition,
+				DictionaryKeyPolicy = options.DictionaryKeyPolicy,
+				PropertyNamingPolicy = options.PropertyNamingPolicy,
+				NumberHandling = options.NumberHandling
 			};
 
-			foreach (var item in JsonF.options.Converters)
+			foreach (var item in options.Converters)
 			{
-				options.Converters.Add(item);
+				copy.Converters.Add(item);
 			}
 
-			return options;
+			return copy;
 		}
 
 		/// <summary>
@@ -65,23 +68,30 @@ namespace F
 		/// </summary>
 		/// <typeparam name="T">Object Type to be serialised</typeparam>
 		/// <param name="obj">The object to serialise</param>
-		/// <param name="options">[Optional] JsonSerializerOptions</param>
+		/// <param name="options">JsonSerializerOptions</param>
 		/// <returns>Json String of serialised object</returns>
-		public static string Serialise<T>(T obj, JsonSerializerOptions? options = null)
-			=> obj switch
+		public static string Serialise<T>(T obj, JsonSerializerOptions options) =>
+			obj switch
 			{
-				T x => JsonSerializer.Serialize(x, options ?? JsonF.options),
-				_ => Empty
+				T x =>
+					JsonSerializer.Serialize(x, options),
+
+				_ =>
+					Empty
 			};
+
+		/// <inheritdoc cref="Serialise{T}(T, JsonSerializerOptions)"/>
+		public static string Serialise<T>(T obj) =>
+			Serialise(obj, options);
 
 		/// <summary>
 		/// Use JsonSerializer to deserialise a given string into a given object type
 		/// </summary>
 		/// <typeparam name="T">The type of the object to return</typeparam>
 		/// <param name="str">The string to deserialise</param>
-		/// <param name="options">[Optional] JsonSerializerOptions</param>
+		/// <param name="options">JsonSerializerOptions</param>
 		/// <returns>Deserialised object of given type</returns>
-		public static Option<T> Deserialise<T>(string str, JsonSerializerOptions? options = null)
+		public static Option<T> Deserialise<T>(string str, JsonSerializerOptions options)
 		{
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
@@ -92,10 +102,13 @@ namespace F
 			// Attempt to deserialise JSON
 			try
 			{
-				return JsonSerializer.Deserialize<T>(str, options ?? JsonF.options) switch
+				return JsonSerializer.Deserialize<T>(str, options) switch
 				{
-					T x => x,
-					_ => Option.None<T>().AddReason<DeserialisingReturnedNullMsg>() // should never get here
+					T x =>
+						x,
+
+					_ =>
+						Option.None<T>().AddReason<DeserialisingReturnedNullMsg>() // should never get here
 				};
 			}
 			catch (Exception ex)
@@ -104,15 +117,8 @@ namespace F
 			}
 		}
 
-		/// <summary>
-		/// Clone an object using JSON
-		/// </summary>
-		/// <typeparam name="T">Object type</typeparam>
-		/// <param name="obj">Object to clone</param>
-		public static T Clone<T>(this T obj)
-		{
-			var json = Serialise(obj);
-			return Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to clone object."));
-		}
+		/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
+		public static Option<T> Deserialise<T>(string str) =>
+			Deserialise<T>(str, options);
 	}
 }

@@ -21,8 +21,8 @@ namespace Jeebs
 		/// Create object
 		/// </summary>
 		/// <param name="info">PropertyInfo object</param>
-		public PropertyInfo(PropertyInfo info)
-			=> this.info = info;
+		public PropertyInfo(PropertyInfo info) =>
+			this.info = info;
 
 		/// <summary>
 		/// Create object

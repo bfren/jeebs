@@ -42,7 +42,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			// Arrange
 
 			// Act
-			var result = defaultInputStringEncryptedWithByteKey.Decrypt(new byte[0]);
+			var result = defaultInputStringEncryptedWithByteKey.Decrypt(Array.Empty<byte>());
 
 			// Assert
 			Assert.Equal(string.Empty, result);

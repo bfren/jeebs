@@ -18,8 +18,8 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="this">Option</param>
 		/// <param name="f">Return map function</param>
-		public static Option<U> Select<T, U>(this Option<T> @this, Func<T, U> f)
-			=> @this.Map(f);
+		public static Option<U> Select<T, U>(this Option<T> @this, Func<T, U> f) =>
+			@this.Map(f);
 
 		/// <summary>
 		/// Enables LINQ select many on Option objects, e.g.
@@ -33,8 +33,8 @@ namespace Jeebs
 		/// <param name="this">Option</param>
 		/// <param name="f">Interim bind function</param>
 		/// <param name="g">Return map function</param>
-		public static Option<V> SelectMany<T, U, V>(this Option<T> @this, Func<T, Option<U>> f, Func<T, U, V> g)
-			=> @this.Bind(x => f(x).Map(y => g(x, y)));
+		public static Option<V> SelectMany<T, U, V>(this Option<T> @this, Func<T, Option<U>> f, Func<T, U, V> g) =>
+			@this.Bind(x => f(x).Map(y => g(x, y)));
 
 		/// <summary>
 		/// Enables LINQ where on Option objects, e.g.
@@ -45,7 +45,14 @@ namespace Jeebs
 		/// <typeparam name="T">Option type</typeparam>
 		/// <param name="this">Option</param>
 		/// <param name="predicate">Select where predicate</param>
-		public static Option<T> Where<T>(this Option<T> @this, Func<T, bool> predicate)
-			=> @this.Bind(x => predicate(x) ? @this : Option.None<T>());
+		public static Option<T> Where<T>(this Option<T> @this, Func<T, bool> predicate) =>
+			@this.Bind(x => predicate(x) switch
+			{
+				true =>
+					@this,
+
+				false =>
+					Option.None<T>()
+			});
 	}
 }

@@ -20,8 +20,8 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static IR<IEnumerable<dynamic>> Query(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.Query(Result.Ok(), query, parameters, commandType);
+		public static IR<IEnumerable<dynamic>> Query(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.Query(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Perform a query, returning a dynamic object
@@ -30,8 +30,8 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static Task<IR<IEnumerable<dynamic>>> QueryAsync(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.QueryAsync(Result.Ok(), query, parameters, commandType);
+		public static Task<IR<IEnumerable<dynamic>>> QueryAsync(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.QueryAsync(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Run a query against the database
@@ -41,8 +41,8 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static IR<IEnumerable<T>> Query<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.Query<T>(Result.Ok(), query, parameters, commandType);
+		public static IR<IEnumerable<T>> Query<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.Query<T>(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Run a query against the database
@@ -52,8 +52,8 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static Task<IR<IEnumerable<T>>> QueryAsync<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.QueryAsync<T>(Result.Ok(), query, parameters, commandType);
+		public static Task<IR<IEnumerable<T>>> QueryAsync<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.QueryAsync<T>(Result.Ok(), query, parameters, commandType);
 
 		#endregion
 
@@ -66,8 +66,8 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static IR<T> Single<T>(this IUnitOfWork @this, string query, object parameters, CommandType commandType = CommandType.Text)
-			=> @this.Single<T>(Result.Ok(), query, parameters, commandType);
+		public static IR<T> Single<T>(this IUnitOfWork @this, string query, object parameters, CommandType commandType = CommandType.Text) =>
+			@this.Single<T>(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Return a single object by query, or default value if the object cannot be found
@@ -76,8 +76,8 @@ namespace Jeebs.Data
 		/// <param name="query">Query string</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static Task<IR<T>> SingleAsync<T>(this IUnitOfWork @this, string query, object parameters, CommandType commandType = CommandType.Text)
-			=> @this.SingleAsync<T>(Result.Ok(), query, parameters, commandType);
+		public static Task<IR<T>> SingleAsync<T>(this IUnitOfWork @this, string query, object parameters, CommandType commandType = CommandType.Text) =>
+			@this.SingleAsync<T>(Result.Ok(), query, parameters, commandType);
 
 		#endregion
 
@@ -91,8 +91,8 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		public static IR<int> Execute(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.Execute(Result.Ok(), query, parameters, commandType);
+		public static IR<int> Execute(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.Execute(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Execute a query on the database
@@ -102,8 +102,8 @@ namespace Jeebs.Data
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
 		/// <returns>Affected rows</returns>
-		public static Task<IR<int>> ExecuteAsync(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.ExecuteAsync(Result.Ok(), query, parameters, commandType);
+		public static Task<IR<int>> ExecuteAsync(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.ExecuteAsync(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
@@ -113,8 +113,8 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static IR<T> ExecuteScalar<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.ExecuteScalar<T>(Result.Ok(), query, parameters, commandType);
+		public static IR<T> ExecuteScalar<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.ExecuteScalar<T>(Result.Ok(), query, parameters, commandType);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
@@ -124,8 +124,8 @@ namespace Jeebs.Data
 		/// <param name="query">SQL qyery</param>
 		/// <param name="parameters">Parameters</param>
 		/// <param name="commandType">CommandType</param>
-		public static Task<IR<T>> ExecuteScalarAsync<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text)
-			=> @this.ExecuteScalarAsync<T>(Result.Ok(), query, parameters, commandType);
+		public static Task<IR<T>> ExecuteScalarAsync<T>(this IUnitOfWork @this, string query, object? parameters = null, CommandType commandType = CommandType.Text) =>
+			@this.ExecuteScalarAsync<T>(Result.Ok(), query, parameters, commandType);
 
 		#endregion
 	}

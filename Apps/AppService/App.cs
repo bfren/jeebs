@@ -25,12 +25,14 @@ namespace ServiceApp
 		{
 			log.Debug("Hello, world!");
 
-			var response = Console.ReadLine();
-			log.Debug("Response: {Response}", response);
+			if (Console.ReadLine() is string response)
+			{
+				log.Debug("Response: {Response}", response);
+			}
 
 			Console.Read();
 
-			return Task.Delay(2000);
+			return Task.Delay(2000, cancellationToken);
 		}
 
 		public Task StopAsync(CancellationToken cancellationToken)

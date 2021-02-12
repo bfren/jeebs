@@ -22,23 +22,23 @@ namespace Jm.Data
 		protected readonly long id;
 
 		/// <inheritdoc/>
-		public override string Format
-			=> "Retrieved '{Type}' with ID '{Id}'.";
+		public override string Format =>
+			"Retrieved '{Type}' with ID '{Id}'.";
 
 		/// <inheritdoc/>
-		public override object[] ParamArray
-			=> new object[] { type.FullName, id };
+		public override object[] ParamArray =>
+			new object[] { type.ToString(), id };
 
 		/// <inheritdoc/>
-		public override LogLevel Level
-			=> LogLevel.Trace;
+		public override LogLevel Level =>
+			LogLevel.Trace;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="type">POCO type</param>
 		/// <param name="id">POCO id</param>
-		public RetrieveMsg(Type type, long id)
-			=> (this.type, this.id) = (type, id);
+		public RetrieveMsg(Type type, long id) =>
+			(this.type, this.id) = (type, id);
 	}
 }

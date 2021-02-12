@@ -38,7 +38,7 @@ namespace Jeebs.Services
 			ILog log,
 			IOptions<JeebsConfig> jeebsConfig,
 			Func<ServicesConfig, Dictionary<string, TConfig>> serviceConfigs
-		)
-			=> (Log, JeebsConfig, ServiceConfigs) = (log, jeebsConfig, serviceConfigs);
+		) =>
+			(Log, JeebsConfig, ServiceConfigs) = (log, jeebsConfig, serviceConfigs);
 	}
 }

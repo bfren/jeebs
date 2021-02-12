@@ -15,7 +15,7 @@ namespace Jm.WordPress.Query.Wrapper
 		/// <summary>
 		/// Return message
 		/// </summary>
-		public override string ToString()
-			=> $"Only one {typeof(MetaDictionary)} property is supported (model: {typeof(TModel)}).";
+		public override string ToString() =>
+			$"Only one {typeof(MetaDictionary)} property is supported (model: {typeof(TModel)}).";
 	}
 }

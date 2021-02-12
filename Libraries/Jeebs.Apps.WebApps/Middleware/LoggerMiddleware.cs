@@ -13,13 +13,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// <summary>
 	/// Logger Middleware
 	/// </summary>
-	public sealed class LoggerMiddleware
+	public sealed class LoggerMiddleware : IMiddleware
 	{
-		/// <summary>
-		/// The next request in the pipeline
-		/// </summary>
-		private readonly RequestDelegate next;
-
 		/// <summary>
 		/// ILogger
 		/// </summary>
@@ -31,18 +26,11 @@ namespace Jeebs.Apps.WebApps.Middleware
 		private const string messageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
 
 		/// <summary>
-		/// Construct object
-		/// </summary>
-		/// <param name="next">RequestDelegate</param>
-		public LoggerMiddleware(RequestDelegate next)
-			=> this.next = next;
-
-		/// <summary>
 		/// Invoke Middleware
 		/// </summary>
 		/// <param name="context">HttpContext</param>
-		/// <returns>Next delegate</returns>
-		public async Task Invoke(HttpContext context)
+		/// <param name="next">Next Middleware</param>
+		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			// Start stopwatch
 			var stopwatch = Stopwatch.StartNew();
@@ -63,10 +51,17 @@ namespace Jeebs.Apps.WebApps.Middleware
 				// Get log level based on HTTP status - 500 or over is an HTTP error
 				var level = status switch
 				{
-					int x when x >= 100 && x <= 299 => LogEventLevel.Verbose,
-					int x when x >= 300 && x <= 399 => LogEventLevel.Debug,
-					int x when x >= 400 && x <= 499 => LogEventLevel.Information,
-					_ => LogEventLevel.Error,
+					int x when x >= 100 && x <= 299 =>
+						LogEventLevel.Verbose,
+
+					int x when x >= 300 && x <= 399 =>
+						LogEventLevel.Debug,
+
+					int x when x >= 400 && x <= 499 =>
+						LogEventLevel.Information,
+
+					_ =>
+						LogEventLevel.Error,
 				};
 
 				// Write event to log
@@ -83,26 +78,24 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Get Request Path
 		/// </summary>
 		/// <param name="context">HttpContext</param>
-		private static string GetPath(HttpContext context)
-			=> context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
+		private static string GetPath(HttpContext context) =>
+			context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
 
 		#region For Testing
 
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		internal LoggerMiddleware(RequestDelegate next, ILogger logger) : this(next)
-			=> this.logger = logger;
+		internal LoggerMiddleware(ILogger logger) =>
+			this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing
 		/// </summary>
-		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		public static LoggerMiddleware CreateForTesting(RequestDelegate next, ILogger logger)
-			=> new LoggerMiddleware(next, logger);
+		public static LoggerMiddleware CreateForTesting(ILogger logger) =>
+			new LoggerMiddleware(logger);
 
 		#endregion
 	}

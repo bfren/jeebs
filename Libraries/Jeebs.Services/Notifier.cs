@@ -13,8 +13,8 @@ namespace Jeebs
 		/// Create using the specified listeners
 		/// </summary>
 		/// <param name="listeners"></param>
-		public Notifier(IEnumerable<INotificationListener> listeners)
-			=> this.listeners = listeners;
+		public Notifier(IEnumerable<INotificationListener> listeners) =>
+			this.listeners = listeners;
 
 		/// <inheritdoc/>
 		public void Send(string message, NotificationLevel level = NotificationLevel.Information)

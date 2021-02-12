@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// TermTaxonomy entity
 	/// </summary>
-	public abstract class WpTermTaxonomyEntity : IEntity
+	public abstract record WpTermTaxonomyEntity : IEntity
 	{
 		/// <summary>
 		/// Id
@@ -18,8 +18,11 @@ namespace Jeebs.WordPress.Entities
 		[Ignore]
 		public long Id
 		{
-			get => TermTaxonomyId;
-			set => TermTaxonomyId = value;
+			get =>
+				TermTaxonomyId;
+
+			set =>
+				TermTaxonomyId = value;
 		}
 
 		/// <summary>

@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Site Veritifaction Configuration
 	/// </summary>
-	public class VerificationConfig
+	public record VerificationConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
@@ -19,8 +19,11 @@ namespace Jeebs.Config
 		/// </summary>
 		public string? Google
 		{
-			get => googleCode is null ? null : $"google{googleCode}.html";
-			set => googleCode = value;
+			get =>
+				googleCode is null ? null : $"google{googleCode}.html";
+
+			set =>
+				googleCode = value;
 		}
 
 		private string? googleCode;
