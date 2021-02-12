@@ -1,0 +1,58 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - v5
+    paths:
+      - '.github/workflows/test.yml'
+      - './Libraries/**'
+      - './Tests/**'
+
+jobs:
+  restore-build-test-pack-push:
+    runs-on: ubuntu-latest
+    steps:
+    - 
+      name: Prepare - Checkout Code
+      uses: actions/checkout@v2
+    -
+      name: Prepare - Read Version
+      uses: bencgreen/read-file-action@v1
+      with:
+        path: ./Version
+      id: version
+    - 
+      name: Prepare - Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+    - 
+      name: A - Restore
+      run: dotnet restore Test.csproj
+    - 
+      name: B - Build
+      run: dotnet build Test.csproj --no-restore -c Release
+    - 
+      name: C - Test
+      run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
+    - 
+      if: success()
+      name: Finish - Success
+      uses: bencgreen/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Jeebs (GitHub)
+        SLACK_MESSAGE: Test Succeeded
+        SLACK_COLOR: good
+        SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
+    - 
+      if: failure()
+      name: Finish - Failure
+      uses: bencgreen/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Jeebs (GitHub)
+        SLACK_MESSAGE: Test Failed
+        SLACK_COLOR: danger
+        SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
