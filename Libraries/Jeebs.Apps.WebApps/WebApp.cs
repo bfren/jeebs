@@ -70,6 +70,11 @@ namespace Jeebs.Apps
 			// Base
 			base.ConfigureServices(env, config, services);
 
+			// Register middleware
+			services.AddScoped<LoggerMiddleware>();
+			services.AddScoped<RedirectExactMiddleware>();
+			services.AddScoped<SiteVerificationMiddleware>();
+
 			// Specify HSTS options
 			if (!env.IsDevelopment() && useHsts)
 			{

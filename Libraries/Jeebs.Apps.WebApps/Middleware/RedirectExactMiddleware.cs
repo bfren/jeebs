@@ -11,13 +11,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// <summary>
 	/// Redirect Exact Middleware
 	/// </summary>
-	public sealed class RedirectExactMiddleware
+	public sealed class RedirectExactMiddleware : IMiddleware
 	{
-		/// <summary>
-		/// The next request in the pipeline
-		/// </summary>
-		private readonly RequestDelegate next;
-
 		/// <summary>
 		/// ILogger
 		/// </summary>
@@ -31,17 +26,16 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="next">RequestDelegate object</param>
 		/// <param name="redirections">Redirections</param>
-		public RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections) =>
-			(this.next, this.redirections) = (next, redirections);
+		public RedirectExactMiddleware(RedirectionsConfig redirections) =>
+			this.redirections = redirections;
 
 		/// <summary>
 		/// Invoke middleware and perform any redirections
 		/// </summary>
-		/// <param name="context">HttpContext object</param>
-		/// <returns>Task</returns>
-		public async Task Invoke(HttpContext context)
+		/// <param name="context">HttpContext</param>
+		/// <param name="next">Next Middleware</param>
+		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			// Get current path and query
 			var req = context.Request;

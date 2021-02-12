@@ -13,13 +13,8 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// <summary>
 	/// Logger Middleware
 	/// </summary>
-	public sealed class LoggerMiddleware
+	public sealed class LoggerMiddleware : IMiddleware
 	{
-		/// <summary>
-		/// The next request in the pipeline
-		/// </summary>
-		private readonly RequestDelegate next;
-
 		/// <summary>
 		/// ILogger
 		/// </summary>
@@ -31,18 +26,11 @@ namespace Jeebs.Apps.WebApps.Middleware
 		private const string messageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
 
 		/// <summary>
-		/// Construct object
-		/// </summary>
-		/// <param name="next">RequestDelegate</param>
-		public LoggerMiddleware(RequestDelegate next) =>
-			this.next = next;
-
-		/// <summary>
 		/// Invoke Middleware
 		/// </summary>
 		/// <param name="context">HttpContext</param>
-		/// <returns>Next delegate</returns>
-		public async Task Invoke(HttpContext context)
+		/// <param name="next">Next Middleware</param>
+		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			// Start stopwatch
 			var stopwatch = Stopwatch.StartNew();
