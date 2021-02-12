@@ -10,7 +10,7 @@ on:
       - './Tests/**'
 
 jobs:
-  restore-build-test-pack-push:
+  restore-build-test:
     runs-on: ubuntu-latest
     steps:
     - 

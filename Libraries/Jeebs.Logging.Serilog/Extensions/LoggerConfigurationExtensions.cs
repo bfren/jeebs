@@ -61,7 +61,7 @@ namespace Jeebs.Logging
 				if (serviceType == "seq")
 				{
 					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
-					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, compact: true, restrictedToMinimumLevel: providerMinimumLevel));
+					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
 				}
 				else if (serviceType == "slack")
 				{
