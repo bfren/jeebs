@@ -3,7 +3,9 @@ name: Publish
 on:
   push:
     branches:
-      - v5
+      - 'main'
+    tags-ignore:
+      - '**'
     paths:
       - '.github/workflows/publish.yml'
       - 'Version'

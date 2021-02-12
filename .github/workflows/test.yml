@@ -2,12 +2,14 @@ name: Test
 
 on:
   push:
-    branches:
-      - v5
+    branches-ignore:
+      - 'main'
+    tags-ignore:
+      - '**'
     paths:
       - '.github/workflows/test.yml'
-      - './Libraries/**'
-      - './Tests/**'
+      - 'Libraries/**'
+      - 'Tests/**'
 
 jobs:
   restore-build-test:
