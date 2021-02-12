@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Config;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace Jeebs.Apps.WebApps.Middleware
@@ -13,22 +14,16 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// </summary>
 	public sealed class RedirectExactMiddleware : IMiddleware
 	{
-		/// <summary>
-		/// ILogger
-		/// </summary>
-		private readonly ILogger logger = Serilog.Log.ForContext<RedirectExactMiddleware>();
+		private readonly JeebsConfig config;
 
-		/// <summary>
-		/// Registered redirections
-		/// </summary>
-		private readonly RedirectionsConfig redirections;
+		private readonly ILogger logger = Serilog.Log.ForContext<RedirectExactMiddleware>();
 
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="redirections">Redirections</param>
-		public RedirectExactMiddleware(RedirectionsConfig redirections) =>
-			this.redirections = redirections;
+		/// <param name="config">JeebsConfig</param>
+		public RedirectExactMiddleware(IOptions<JeebsConfig> config) =>
+			this.config = config.Value;
 
 		/// <summary>
 		/// Invoke middleware and perform any redirections
@@ -49,14 +44,17 @@ namespace Jeebs.Apps.WebApps.Middleware
 					current
 			};
 
+			// Get redirections configuration
+			var redirectionsConfig = config.Web.Redirections;
+
 			// Check for current path and current path with query
-			var redirect = (redirections.ContainsKey(current), redirections.ContainsKey(currentWithQuery)) switch
+			var redirect = (redirectionsConfig.ContainsKey(current), redirectionsConfig.ContainsKey(currentWithQuery)) switch
 			{
 				(true, _) =>
-					redirections[current],
+					redirectionsConfig[current],
 
 				(false, true) =>
-					redirections[currentWithQuery],
+					redirectionsConfig[currentWithQuery],
 
 				(false, false) =>
 					null
@@ -78,25 +76,5 @@ namespace Jeebs.Apps.WebApps.Middleware
 				await next(context);
 			}
 		}
-
-		#region For Testing
-
-		/// <summary>
-		/// Construct object
-		/// </summary>
-		/// <param name="redirections">Redirections</param>
-		/// <param name="logger">ILogger</param>
-		internal RedirectExactMiddleware(RedirectionsConfig redirections, ILogger logger) : this(redirections) =>
-			this.logger = logger;
-
-		/// <summary>
-		/// Construct an object for testing
-		/// </summary>
-		/// <param name="redirections">RedirectionsConfig</param>
-		/// <param name="logger">ILogger</param>
-		public static RedirectExactMiddleware CreateForTesting(RedirectionsConfig redirections, ILogger logger) =>
-			new RedirectExactMiddleware(redirections, logger);
-
-		#endregion
 	}
 }

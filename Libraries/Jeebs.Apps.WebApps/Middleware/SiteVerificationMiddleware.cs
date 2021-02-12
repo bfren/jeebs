@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Config;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace Jeebs.Apps.WebApps.Middleware
@@ -13,16 +14,16 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// </summary>
 	public sealed class SiteVerificationMiddleware : IMiddleware
 	{
-		private readonly VerificationConfig config;
+		private readonly JeebsConfig config;
 
 		private readonly ILogger logger = Serilog.Log.ForContext<SiteVerificationMiddleware>();
 
 		/// <summary>
 		/// Set Site Verification configuration
 		/// </summary>
-		/// <param name="config">Verification code</param>
-		public SiteVerificationMiddleware(VerificationConfig config) =>
-			this.config = config;
+		/// <param name="config">JeebsConfig</param>
+		public SiteVerificationMiddleware(IOptions<JeebsConfig> config) =>
+			this.config = config.Value;
 
 		/// <summary>
 		/// Invoke Middleware
@@ -32,10 +33,11 @@ namespace Jeebs.Apps.WebApps.Middleware
 		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			var path = context.Request.Path.ToString().TrimStart('/');
+			var verificationConfig = config.Web.Verification;
 
 			try
 			{
-				if (path == config.Google)
+				if (path == verificationConfig.Google)
 				{
 					await WriteAsync(context, "text/html", $"google-site-verification: {path}");
 					return;

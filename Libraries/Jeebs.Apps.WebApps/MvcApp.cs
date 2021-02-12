@@ -295,9 +295,9 @@ namespace Jeebs.Apps
 		/// <param name="app">IApplicationBuilder</param>
 		protected virtual void Configure_Redirections(IConfiguration config, IApplicationBuilder app)
 		{
-			if (config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig redirectRules)
+			if (config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig)
 			{
-				app.UseMiddleware<RedirectExactMiddleware>(redirectRules);
+				app.UseMiddleware<RedirectExactMiddleware>();
 			}
 		}
 
