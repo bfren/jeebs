@@ -84,20 +84,18 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="next">RequestDelegate object</param>
 		/// <param name="redirections">Redirections</param>
 		/// <param name="logger">ILogger</param>
-		internal RedirectExactMiddleware(RequestDelegate next, RedirectionsConfig redirections, ILogger logger) : this(next, redirections) =>
+		internal RedirectExactMiddleware(RedirectionsConfig redirections, ILogger logger) : this(redirections) =>
 			this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing
 		/// </summary>
-		/// <param name="next">RequestDelegate</param>
 		/// <param name="redirections">RedirectionsConfig</param>
 		/// <param name="logger">ILogger</param>
-		public static RedirectExactMiddleware CreateForTesting(RequestDelegate next, RedirectionsConfig redirections, ILogger logger) =>
-			new RedirectExactMiddleware(next, redirections, logger);
+		public static RedirectExactMiddleware CreateForTesting(RedirectionsConfig redirections, ILogger logger) =>
+			new RedirectExactMiddleware(redirections, logger);
 
 		#endregion
 	}

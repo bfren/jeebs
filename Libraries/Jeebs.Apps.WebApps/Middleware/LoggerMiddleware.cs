@@ -86,18 +86,16 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// <summary>
 		/// Construct object
 		/// </summary>
-		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		internal LoggerMiddleware(RequestDelegate next, ILogger logger) : this(next) =>
+		internal LoggerMiddleware(ILogger logger) =>
 			this.logger = logger;
 
 		/// <summary>
 		/// Construct an object for testing
 		/// </summary>
-		/// <param name="next">RequestDelegate</param>
 		/// <param name="logger">ILogger</param>
-		public static LoggerMiddleware CreateForTesting(RequestDelegate next, ILogger logger) =>
-			new LoggerMiddleware(next, logger);
+		public static LoggerMiddleware CreateForTesting(ILogger logger) =>
+			new LoggerMiddleware(logger);
 
 		#endregion
 	}
