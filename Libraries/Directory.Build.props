@@ -8,22 +8,39 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	
-	<!-- Import Licence and Version -->
+	<!-- Enable Internal Testing -->
+	<ItemGroup Label="Test Internals">
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Tests.$(AssemblyName)</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	
+	<!-- Import Licence file -->
 	<ItemGroup Label="Licence">
 		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
-	<Target Name="ReadVersion" BeforeTargets="BeforeResolveReferences">
-		<ReadLinesFromFile File="../../Version">
-			<Output TaskParameter="Lines" PropertyName="PackageVersion"/>
-		</ReadLinesFromFile>
-	</Target>
+	
+	<!-- Get paths to Version and Local.pack.props -->
+	<PropertyGroup>
+		<VersionFile>Version</VersionFile>
+		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)', '$(MSBuildThisFileDirectory)../'))</VersionPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<LocalPackFile>Local.pack.props</LocalPackFile>
+		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)', '$(MSBuildThisFileDirectory)../'))</LocalPackPath>
+	</PropertyGroup>
+	
+	<!-- Get Version -->
+	<PropertyGroup>
+		<JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)'))</JeebsVersion>
+	</PropertyGroup>
 	
 	<!-- Package Configuration -->
 	<PropertyGroup Label="Package">
 		<Authors>Ben Green</Authors>
 		<Company>bcg|design</Company>
 		<Copyright>Copyright © bcg 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
-		<Version>5.1.0</Version>
+		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
@@ -32,17 +49,6 @@
 	</PropertyGroup>
 	
 	<!-- [Optional] Create Local Packages -->
-	<PropertyGroup>
-		<LocalPackFile>Local.pack.props</LocalPackFile>
-		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)', '$(MSBuildThisFileDirectory)../'))</LocalPackPath>
-	</PropertyGroup>
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
-	
-	<!-- Enable Internal Testing -->
-	<ItemGroup Label="Test Internals">
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>Tests.$(AssemblyName)</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
 
 </Project>
