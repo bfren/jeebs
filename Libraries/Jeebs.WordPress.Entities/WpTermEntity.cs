@@ -9,19 +9,26 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Term entity
 	/// </summary>
-	public abstract record WpTermEntity : IEntity
+	public abstract record WpTermEntity : IEntity, IEntity<long>
 	{
 		/// <summary>
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id
+		long IEntity.Id =>
+			Id.Value;
+
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public IStrongId<long> Id
 		{
 			get =>
-				TermId;
+				new WpTermId(TermId);
 
-			set =>
-				TermId = value;
+			init =>
+				TermId = value.Value;
 		}
 
 		/// <summary>

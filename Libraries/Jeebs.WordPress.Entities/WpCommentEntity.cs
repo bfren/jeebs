@@ -10,19 +10,26 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Comment entity
 	/// </summary>
-	public abstract record WpCommentEntity : IEntity
+	public abstract record WpCommentEntity : IEntity, IEntity<long>
 	{
 		/// <summary>
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id
+		long IEntity.Id =>
+			Id.Value;
+
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public IStrongId<long> Id
 		{
 			get =>
-				CommentId;
+				new WpCommentId(CommentId);
 
-			set =>
-				CommentId = value;
+			init =>
+				CommentId = value.Value;
 		}
 
 		/// <summary>

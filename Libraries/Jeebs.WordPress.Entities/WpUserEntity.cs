@@ -9,19 +9,26 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// User entity
 	/// </summary>
-	public abstract record WpUserEntity : IEntity
+	public abstract record WpUserEntity : IEntity, IEntity<long>
 	{
 		/// <summary>
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id
+		long IEntity.Id =>
+			Id.Value;
+
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public IStrongId<long> Id
 		{
 			get =>
-				UserId;
+				new WpUserId(UserId);
 
-			set =>
-				UserId = value;
+			init =>
+				UserId = value.Value;
 		}
 
 		/// <summary>
