@@ -19,7 +19,6 @@ namespace Jeebs.Data
 	/// Database entity
 	/// </summary>
 	public interface IEntity<T>
-		where T : notnull
 	{
 		/// <summary>
 		/// Primary key
