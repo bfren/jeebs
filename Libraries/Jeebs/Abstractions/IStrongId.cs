@@ -25,7 +25,6 @@ namespace Jeebs
 	/// </summary>
 	/// <typeparam name="T">ID value type</typeparam>
 	public interface IStrongId<T> : IStrongId
-		where T : notnull
 	{
 		/// <summary>
 		/// ID Value
