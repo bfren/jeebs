@@ -30,20 +30,17 @@ jobs:
         dotnet-version: '5.0.x'
     - 
       name: A - Restore
-      run: dotnet restore Test.csproj
+      run: dotnet restore Pack.csproj
     - 
       name: B - Build
-      run: dotnet build Test.csproj --no-restore -c Release
-    - 
-      name: C - Test
-      run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
+      run: dotnet build Pack.csproj --no-restore -c Release
     - 
       if: success()
-      name: D - Pack
+      name: C - Pack
       run: dotnet pack Pack.csproj --no-build -c Release /p:PackageOutputPath=$HOME/.nupkgs -p:PackageVersion=${{ steps.version.outputs.content }}
     - 
       if: success()
-      name: E - Push
+      name: D - Push
       run: |
         dotnet nuget push "$HOME/.nupkgs/*.nupkg" --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
         dotnet nuget push "$HOME/.nupkgs/*.nupkg" --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/bencgreen/index.json
