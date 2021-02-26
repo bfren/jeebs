@@ -26,6 +26,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		/// <summary>
 		/// Format a parsed block
 		/// </summary>
+		/// <param name="id">Block ID</param>
 		/// <param name="block">EmbedParsed</param>
 		protected abstract string Format(string id, Parsed block);
 
