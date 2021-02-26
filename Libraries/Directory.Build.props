@@ -43,6 +43,7 @@
 		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/bencgreen/jeebs</RepositoryUrl>
 	</PropertyGroup>
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
