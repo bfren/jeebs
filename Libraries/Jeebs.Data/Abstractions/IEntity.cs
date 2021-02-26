@@ -14,4 +14,15 @@ namespace Jeebs.Data
 		/// </summary>
 		long Id { get; }
 	}
+
+	/// <summary>
+	/// Database entity
+	/// </summary>
+	public interface IEntity<T>
+	{
+		/// <summary>
+		/// Primary key
+		/// </summary>
+		IStrongId<T> Id { get; init; }
+	}
 }

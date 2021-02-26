@@ -9,19 +9,26 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// UserMeta entity
 	/// </summary>
-	public abstract record WpUserMetaEntity : IEntity
+	public abstract record WpUserMetaEntity : IEntity, IEntity<long>
 	{
 		/// <summary>
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id
+		long IEntity.Id =>
+			Id.Value;
+
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public IStrongId<long> Id
 		{
 			get =>
-				UserMetaId;
+				new WpUserMetaId(UserMetaId);
 
-			set =>
-				UserMetaId = value;
+			init =>
+				UserMetaId = value.Value;
 		}
 
 		/// <summary>

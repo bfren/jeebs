@@ -14,4 +14,12 @@ namespace Jeebs.Data
 		/// </summary>
 		long Version { get; set; }
 	}
+
+	/// <summary>
+	/// Database entity with version
+	/// </summary>
+	public interface IEntityWithVersion<T> : IEntityWithVersion, IEntity<T>
+	{
+
+	}
 }

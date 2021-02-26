@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jeebs.WordPress.Entities.Records
+namespace Jeebs.WordPress.Entities.Additional
 {
 	/// <summary>
 	/// Attached file

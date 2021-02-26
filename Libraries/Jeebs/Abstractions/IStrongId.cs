@@ -1,22 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// Represents a strong-typed ID
+	/// Represents a strongly-typed ID
+	/// </summary>
+	public interface IStrongId
+	{
+		/// <summary>
+		/// ID Value as string
+		/// </summary>
+		string ValueStr { get; }
+
+		/// <summary>
+		/// Returns true if the current value is the default (i.e. unset) value
+		/// </summary>
+		bool IsDefault { get; }
+	}
+
+	/// <summary>
+	/// Represents a strongly-typed ID
 	/// </summary>
 	/// <typeparam name="T">ID value type</typeparam>
-	public interface IStrongId<T>
-		where T : notnull
+	public interface IStrongId<T> : IStrongId
 	{
 		/// <summary>
 		/// ID Value
 		/// </summary>
-		T Value { get; }
+		T Value { get; init; }
 	}
 }

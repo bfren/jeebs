@@ -9,19 +9,26 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Option entity
 	/// </summary>
-	public abstract record WpOptionEntity : IEntity
+	public abstract record WpOptionEntity : IEntity, IEntity<long>
 	{
 		/// <summary>
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id
+		long IEntity.Id =>
+			Id.Value;
+
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public IStrongId<long> Id
 		{
 			get =>
-				OptionId;
+				new WpOptionId(OptionId);
 
-			set =>
-				OptionId = value;
+			init =>
+				OptionId = value.Value;
 		}
 
 		/// <summary>

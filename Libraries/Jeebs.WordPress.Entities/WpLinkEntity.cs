@@ -9,19 +9,26 @@ namespace Jeebs.WordPress.Entities
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public abstract record WpLinkEntity : IEntity
+	public abstract record WpLinkEntity : IEntity, IEntity<long>
 	{
 		/// <summary>
 		/// Id
 		/// </summary>
 		[Ignore]
-		public long Id
+		long IEntity.Id =>
+			Id.Value;
+
+		/// <summary>
+		/// Id
+		/// </summary>
+		[Ignore]
+		public IStrongId<long> Id
 		{
 			get =>
-				LinkId;
+				new WpLinkId(LinkId);
 
-			set =>
-				LinkId = value;
+			init =>
+				LinkId = value.Value;
 		}
 
 		/// <summary>
