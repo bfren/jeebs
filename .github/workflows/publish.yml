@@ -11,7 +11,7 @@ on:
       - 'Version'
 
 jobs:
-  restore-build-test-pack-push:
+  restore-build-pack-push:
     runs-on: ubuntu-latest
     steps:
     - 
