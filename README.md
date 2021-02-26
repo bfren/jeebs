@@ -22,7 +22,7 @@ The most recent changes - v5.1 - come from a) rewriting the entire codebase to m
 
 ## License
 
-> [MIT](https://bcg.mit-license.org/)
+> [MIT](https://bcg.mit-license.org/2013)
 
 ## Copyright
 
