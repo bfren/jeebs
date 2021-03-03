@@ -1,7 +1,8 @@
 {
 	"jeebs": {
 		"app": {
-			"name": "MVC App"
+			"name": "Web",
+			"suite": "Jeebs"
 		},
 		"logging": {
 			"minimumLevel": "Trace",

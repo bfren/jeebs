@@ -20,6 +20,11 @@ namespace Jeebs.Config
 		public string Name { get; set; } = string.Empty;
 
 		/// <summary>
+		/// The Application Suite property to add to log messages
+		/// </summary>
+		public string? Suite { get; set; }
+
+		/// <summary>
 		/// Application Version
 		/// </summary>
 		public Version Version { get; set; } = new Version(0, 1, 0, 0);

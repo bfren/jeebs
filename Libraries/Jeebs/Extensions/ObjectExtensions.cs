@@ -77,7 +77,7 @@ namespace Jeebs.Reflection
 					return Option.None<T>().AddReason(new UnexpectedPropertyTypeMsg(@this.GetType(), propertyName, typeof(T)));
 				}
 
-				return (T)info.GetValue(@this, null) switch
+				return info.GetValue(@this, null) switch
 				{
 					T val =>
 						val,

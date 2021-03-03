@@ -1,7 +1,8 @@
 {
 	"jeebs": {
 		"app": {
-			"name": "Razor App"
+			"name": "Razor",
+			"suite": "Jeebs"
 		},
 		"logging": {
 			"minimumLevel": "Trace",

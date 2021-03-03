@@ -1,7 +1,8 @@
 {
 	"jeebs": {
 		"app": {
-			"name": "WordPress App"
+			"name": "WordPress",
+			"suite": "Jeebs"
 		},
 		"db": {
 			"default": "server04",

@@ -16,6 +16,7 @@ namespace MvcApp.Controllers
 
 		public IActionResult Index()
 		{
+			Log.Information("Hello, world!");
 			return View();
 		}
 
