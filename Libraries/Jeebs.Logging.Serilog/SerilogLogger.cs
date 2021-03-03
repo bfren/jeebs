@@ -20,8 +20,6 @@ namespace Jeebs.Logging
 	{
 		private readonly ILogger logger;
 
-		private readonly string prefix = "{Suite}/{App} | ";
-
 		/// <summary>
 		/// Use global logger
 		/// </summary>
@@ -40,23 +38,23 @@ namespace Jeebs.Logging
 
 		/// <inheritdoc/>
 		public override void Trace(string message, params object[] args) =>
-			logger.Verbose(prefix + message, args);
+			logger.Verbose(message, args);
 
 		/// <inheritdoc/>
 		public override void Debug(string message, params object[] args) =>
-			logger.Debug(prefix + message, args);
+			logger.Debug(message, args);
 
 		/// <inheritdoc/>
 		public override void Information(string message, params object[] args) =>
-			logger.Information(prefix + message, args);
+			logger.Information(message, args);
 
 		/// <inheritdoc/>
 		public override void Warning(string message, params object[] args) =>
-			logger.Warning(prefix + message, args);
+			logger.Warning(message, args);
 
 		/// <inheritdoc/>
 		public override void Error(string message, params object[] args) =>
-			logger.Error(prefix + message, args);
+			logger.Error(message, args);
 
 		/// <inheritdoc/>
 		public override void Error(Exception ex, string message, params object[] args) =>
@@ -64,7 +62,7 @@ namespace Jeebs.Logging
 
 		/// <inheritdoc/>
 		public override void Critical(string message, params object[] args) =>
-			logger.Fatal(prefix + message, args);
+			logger.Fatal(message, args);
 
 		/// <inheritdoc/>
 		public override void Critical(Exception ex, string message, params object[] args) =>
