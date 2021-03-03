@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using Jeebs.Config;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;

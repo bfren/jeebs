@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using Jeebs.Config;
 using Jeebs.Services.Drivers.Webhook.Slack.Models;

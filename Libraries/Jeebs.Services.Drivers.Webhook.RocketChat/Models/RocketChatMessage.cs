@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Config;
-using Jeebs.Services.Webhook;
 
 namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 {
@@ -34,7 +33,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// <param name="level">MessageLevel</param>
 		public RocketChatMessage(JeebsConfig config, string text, NotificationLevel level)
 		{
-			Alias = config.App.Name;
+			Alias = config.App.FullName;
 			Attachments = new List<RocketChatAttachment>
 			{
 				{ new RocketChatAttachment(text, level) }

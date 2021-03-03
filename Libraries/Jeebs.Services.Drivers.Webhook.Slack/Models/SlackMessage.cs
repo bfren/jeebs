@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Config;
-using Jeebs.Services.Webhook;
 
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 {
