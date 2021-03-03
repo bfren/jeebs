@@ -1,7 +1,8 @@
 {
 	"jeebs": {
 		"app": {
-			"name": "Worker App"
+			"name": "WorkerService",
+			"suite": "Jeebs"
 		},
 		"logging": {
 			"minimumLevel": "Trace",

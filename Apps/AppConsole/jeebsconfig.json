@@ -1,7 +1,8 @@
 {
 	"jeebs": {
 		"app": {
-			"name": "Console App"
+			"name": "Console",
+			"suite": "Jeebs"
 		},
 		"logging": {
 			"minimumLevel": "Debug",
