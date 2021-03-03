@@ -2,7 +2,8 @@
 	"$schema": "schema.json#",
 	"jeebs": {
 		"app": {
-			"name": ""
+			"name": "",
+			"suite": ""
 		},
 		"db": {
 			"connections": {
@@ -15,10 +16,13 @@
 		"logging": {
 			"minimumLevel": "Error"
 		},
-		"notifier": {
-			"listeners": [
-				"seq.bcg-home"
-			]
+		"services": {
+			"seq": {
+				"home": {
+					"apiKey": "",
+					"server": ""
+				}
+			}
 		},
 		"web": {
 			"redirections": {

@@ -21,6 +21,10 @@
 							"type": "string",
 							"description": "Application name"
 						},
+						"suite": {
+							"type": "string",
+							"description": "[Optional] The name of the application suite",
+						},
 						"version": {
 							"type": "string",
 							"pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$",
@@ -85,7 +89,12 @@
 					"properties": {
 						"console": {
 							"type": "boolean",
-							"description": "[Optional] Whether or not to enable console output"
+							"description": "[Optional] Whether or not to enable console output",
+							"default": true
+						},
+						"consoleOutputTemplate": {
+							"type": "string",
+							"description": "[Optional] Override the default console output template"
 						},
 						"minimumLevel": {
 							"$ref": "#/definitions/logging/minimumLevel"

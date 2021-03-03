@@ -27,6 +27,11 @@ namespace Jeebs.Config
 		public bool Console { get; set; }
 
 		/// <summary>
+		/// Set to override default output template for console messages
+		/// </summary>
+		public string ConsoleOutputTemplate { get; set; } = "[{Timestamp:HH:mm:ss} {Level:u3}] {Suite}/{App} | {Message:lj} | {SourceContext}{NewLine}{Exception}";
+
+		/// <summary>
 		/// List of providers - dictionary key is a service name
 		/// </summary>
 		public Dictionary<string, LoggingProviderConfig> Providers { get; set; } = new Dictionary<string, LoggingProviderConfig>();
