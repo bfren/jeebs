@@ -98,7 +98,7 @@ namespace Jeebs.Apps
 			services.Bind<JeebsConfig>().To(JeebsConfig.Key).Using(config);
 
 			// Register Serilog Logger
-			services.AddTransient<ILog, SerilogLogger>();
+			services.AddSingleton<ILog, SerilogLogger>();
 			services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
 		}
 
