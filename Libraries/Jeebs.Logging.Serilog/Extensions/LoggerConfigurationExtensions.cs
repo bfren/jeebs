@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Jeebs.Config;
-using Jeebs.Config.Logging;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Slack;
+using Serilog.Sinks.Slack.Models;
 
 namespace Jeebs.Logging
 {
@@ -29,8 +28,9 @@ namespace Jeebs.Logging
 				return;
 			}
 
-			LogEventLevel getMinimum(LogLevel? level = null) =>
-				(LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
+			// Set the application suite value
+			@this.Enrich.WithProperty(nameof(jeebs.App), jeebs.App.Name);
+			@this.Enrich.WithProperty(nameof(jeebs.App.Suite), jeebs.App.Suite ?? JeebsConfig.Key);
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();
@@ -39,7 +39,10 @@ namespace Jeebs.Logging
 			// Check for console provider
 			if (jeebs.Logging.Console)
 			{
-				@this.WriteTo.Console(restrictedToMinimumLevel: overallMinimumLevel);
+				@this.WriteTo.Console(
+					restrictedToMinimumLevel: overallMinimumLevel,
+					outputTemplate: jeebs.Logging.ConsoleOutputTemplate
+				);
 			}
 
 			// Add providers
@@ -58,17 +61,23 @@ namespace Jeebs.Logging
 				var providerMinimumLevel = getMinimum(providerConfig.MinimumLevel);
 
 				// Get service config
-				if (serviceType == "seq")
+				switch (serviceType)
 				{
-					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
-					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
-				}
-				else if (serviceType == "slack")
-				{
-					var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
-					@this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
+					case "seq":
+						var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
+						@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
+						break;
+
+					case "slack":
+						var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
+						@this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
+						break;
 				}
 			}
+
+			// Returns minimum level from nullable value or from default
+			LogEventLevel getMinimum(LogLevel? level = null) =>
+				(LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
 		}
 	}
 }
