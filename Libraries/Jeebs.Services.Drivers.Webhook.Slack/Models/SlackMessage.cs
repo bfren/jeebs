@@ -29,7 +29,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 		/// <param name="level">MessageLevel</param>
 		public SlackMessage(JeebsConfig config, string text, NotificationLevel level)
 		{
-			Username = config.App.Name;
+			Username = config.App.FullName;
 			Attachments = new List<SlackAttachment>
 			{
 				{ new SlackAttachment(text, level) }
