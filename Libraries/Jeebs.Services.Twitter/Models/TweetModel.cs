@@ -7,26 +7,26 @@ namespace Jeebs.Services.Twitter.Models
 	/// <summary>
 	/// Twitter Tweet
 	/// </summary>
-	public sealed class TweetModel
+	public sealed record TweetModel
 	{
 		/// <summary>
 		/// Author
 		/// </summary>
-		public AuthorModel Author { get; set; } = new();
+		public AuthorModel Author { get; init; } = new();
 
 		/// <summary>
 		/// TweetedOn
 		/// </summary>
-		public DateTime TweetedOn { get; set; }
+		public DateTime TweetedOn { get; init; }
 
 		/// <summary>
 		/// Length
 		/// </summary>
-		public int Length { get; set; }
+		public int Length { get; init; }
 
 		/// <summary>
 		/// Text
 		/// </summary>
-		public string Text { get; set; } = string.Empty;
+		public string Text { get; init; } = string.Empty;
 	}
 }

@@ -7,21 +7,21 @@ namespace Jeebs.Services.Webhook.Models
 	/// <summary>
 	/// Message model
 	/// </summary>
-	public sealed class Message
+	public sealed record Message
 	{
 		/// <summary>
 		/// Message content
 		/// </summary>
-		public string Content { get; set; } = string.Empty;
+		public string Content { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Message level
 		/// </summary>
-		public NotificationLevel Level { get; set; }
+		public NotificationLevel Level { get; init; }
 
 		/// <summary>
 		/// Additional fields to send
 		/// </summary>
-		public Dictionary<string, object> Fields { get; set; } = new ();
+		public Dictionary<string, object> Fields { get; init; } = new();
 	}
 }
