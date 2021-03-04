@@ -24,7 +24,7 @@ namespace Jeebs.Functions.Internals
 		/// <param name="typeToConvert">GuidId type</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-			new T()
+			new()
 			{
 				Value = reader.TokenType switch
 				{

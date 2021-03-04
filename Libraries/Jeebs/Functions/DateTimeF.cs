@@ -24,7 +24,7 @@ namespace F
 		/// </summary>
 		/// <returns>Start of the Unix Epoch</returns>
 		public static DateTime UnixEpoch() =>
-			new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+			new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		/// <summary>
 		/// Create a DateTime object from a given format

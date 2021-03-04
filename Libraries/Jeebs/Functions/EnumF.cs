@@ -72,7 +72,7 @@ namespace F
 		/// <returns>Parsed value</returns>
 		public static FluentConvert<TFrom> Convert<TFrom>(TFrom value)
 			where TFrom : struct, Enum =>
-			new FluentConvert<TFrom>(value);
+			new(value);
 
 		/// <summary>
 		/// FluentConvert

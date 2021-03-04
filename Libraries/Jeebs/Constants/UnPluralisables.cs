@@ -15,7 +15,7 @@ namespace Jeebs.Constants
 		/// Return all unpluralisable words
 		/// </summary>
 		public static List<string> All =>
-			new List<string>
+			new()
 			{
 				"aircraft",
 				"deer",
