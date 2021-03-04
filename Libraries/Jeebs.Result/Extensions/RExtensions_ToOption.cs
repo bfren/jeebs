@@ -19,7 +19,7 @@ namespace Jeebs
 			@this switch
 			{
 				IOkV<TValue> ok =>
-					Option.Wrap(ok.Value),
+					ok.Value,
 
 				{ } e when e.HasMessages =>
 					Option.None<TValue>().AddReason(e.Messages.GetEnumerable().Last()),
