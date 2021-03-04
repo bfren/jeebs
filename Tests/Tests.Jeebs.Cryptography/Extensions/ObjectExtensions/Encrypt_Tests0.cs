@@ -11,7 +11,7 @@ namespace Jeebs.Cryptography.ObjectExtensions_Tests
 	public partial class Encrypt_Tests
 	{
 		private readonly string defaultInputString = "String to encrypt.";
-		private readonly Foo defaultInputObject = new Foo { Bar = "Test string." };
+		private readonly Foo defaultInputObject = new() { Bar = "Test string." };
 
 		[Theory]
 		[InlineData(null)]

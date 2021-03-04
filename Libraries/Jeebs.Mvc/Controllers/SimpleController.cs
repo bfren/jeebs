@@ -15,7 +15,7 @@ namespace Jeebs.Mvc
 		/// </summary>
 		[Route("favicon.ico")]
 		public EmptyResult Favicon() =>
-			new EmptyResult();
+			new();
 
 		/// <summary>
 		/// Keep alive page

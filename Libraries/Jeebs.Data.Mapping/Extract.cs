@@ -17,7 +17,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Cached maps of table classes to columns
 		/// </summary>
-		private static readonly ConcurrentDictionary<string, IColumnList> cache = new ConcurrentDictionary<string, IColumnList>();
+		private static readonly ConcurrentDictionary<string, IColumnList> cache = new();
 
 		/// <summary>
 		/// Properties of <typeparamref name="TModel"/> that have not been marked with <see cref="IgnoreAttribute"/>

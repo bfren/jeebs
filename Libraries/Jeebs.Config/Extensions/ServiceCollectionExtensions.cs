@@ -20,7 +20,7 @@ namespace Jeebs.Config
 		/// <returns>FluentBind object</returns>
 		public static FluentBind<T> Bind<T>(this IServiceCollection services)
 			where T : class =>
-			new FluentBind<T>(services);
+			new(services);
 
 		/// <summary>
 		/// Fluent Bind

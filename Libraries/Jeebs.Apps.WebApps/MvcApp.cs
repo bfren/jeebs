@@ -36,7 +36,7 @@ namespace Jeebs.Apps
 		/// <summary>
 		/// CookiePolicyOptions
 		/// </summary>
-		protected readonly CookiePolicyOptions cookiePolicyOptions = new CookiePolicyOptions();
+		protected readonly CookiePolicyOptions cookiePolicyOptions = new();
 
 		/// <summary>
 		/// [Optional] MVC Compatibility Version

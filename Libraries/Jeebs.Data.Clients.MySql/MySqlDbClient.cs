@@ -16,7 +16,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <summary>
 		/// MySqlAdapter
 		/// </summary>
-		public MySqlAdapter Adapter { get; } = new MySqlAdapter();
+		public MySqlAdapter Adapter { get; } = new();
 
 		/// <inheritdoc/>
 		public IDbConnection Connect(string connectionString, string? encryptionKey = null) =>

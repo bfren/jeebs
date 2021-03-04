@@ -13,7 +13,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Provides thread-safe locking
 		/// </summary>
-		private static readonly object _ = new object();
+		private static readonly object _ = new();
 
 		/// <summary>
 		/// Update an object

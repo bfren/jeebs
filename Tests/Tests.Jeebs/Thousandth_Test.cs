@@ -31,15 +31,15 @@ namespace Jeebs
 
 		public class Gk
 		{
-			public static Gk III => new Gk(3);
+			public static Gk III => new(3);
 
-			public static Gk Π => new Gk(5);
+			public static Gk Π => new(5);
 
-			public static Gk Δ => new Gk(10);
+			public static Gk Δ => new(10);
 
-			public static Gk ΠΔ => new Gk(50);
+			public static Gk ΠΔ => new(50);
 
-			public static Gk Christ => new Gk(1000);
+			public static Gk Christ => new(1000);
 
 			public static int operator -(Gk a, Gk b)
 				=> a.Value - b.Value;

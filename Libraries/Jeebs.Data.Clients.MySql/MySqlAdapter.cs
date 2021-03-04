@@ -51,7 +51,7 @@ namespace Jeebs.Data.Clients.MySql
 				select = parts.Select;
 			}
 
-			StringBuilder sql = new StringBuilder($"SELECT {select} FROM {parts.From}");
+			var sql = new StringBuilder($"SELECT {select} FROM {parts.From}");
 
 			// Add INNER JOIN
 			if (parts.InnerJoin is List<(string table, string on, string equals)> innerJoinValues)

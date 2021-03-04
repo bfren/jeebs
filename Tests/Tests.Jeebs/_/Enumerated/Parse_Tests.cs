@@ -39,8 +39,8 @@ namespace Jeebs.Enumerated_Tests
 	{
 		public EnumeratedTest(string name) : base(name) { }
 
-		public static readonly EnumeratedTest Test1 = new EnumeratedTest("test1");
-		public static readonly EnumeratedTest Test2 = new EnumeratedTest("test2");
+		public static readonly EnumeratedTest Test1 = new("test1");
+		public static readonly EnumeratedTest Test2 = new("test2");
 
 		public static Option<EnumeratedTest> Parse(string value)
 		{
