@@ -22,6 +22,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Additional settings required for configuring this database connection
 		/// </summary>
-		public Dictionary<string, string> AdditionalSettings { get; init; } = new Dictionary<string, string>();
+		public Dictionary<string, string> AdditionalSettings { get; init; } = new();
 	}
 }

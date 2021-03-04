@@ -17,11 +17,11 @@ namespace Jeebs.Config
 		/// <summary>
 		/// RedirectionsConfig
 		/// </summary>
-		public RedirectionsConfig Redirections { get; init; } = new RedirectionsConfig();
+		public RedirectionsConfig Redirections { get; init; } = new();
 
 		/// <summary>
 		/// SiteVerificationConfig
 		/// </summary>
-		public VerificationConfig Verification { get; init; } = new VerificationConfig();
+		public VerificationConfig Verification { get; init; } = new();
 	}
 }

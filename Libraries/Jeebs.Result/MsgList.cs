@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <summary>
 		/// The list of messages
 		/// </summary>
-		private readonly List<IMsg> messages = new List<IMsg>();
+		private readonly List<IMsg> messages = new();
 
 		/// <summary>
 		/// The number of messages

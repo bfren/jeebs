@@ -13,22 +13,22 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Rocket.Chat configurations
 		/// </summary>
-		public Dictionary<string, RocketChatConfig> RocketChat { get; init; } = new Dictionary<string, RocketChatConfig>();
+		public Dictionary<string, RocketChatConfig> RocketChat { get; init; } = new();
 
 		/// <summary>
 		/// Seq configurations
 		/// </summary>
-		public Dictionary<string, SeqConfig> Seq { get; init; } = new Dictionary<string, SeqConfig>();
+		public Dictionary<string, SeqConfig> Seq { get; init; } = new();
 
 		/// <summary>
 		/// Slack configurations
 		/// </summary>
-		public Dictionary<string, SlackConfig> Slack { get; init; } = new Dictionary<string, SlackConfig>();
+		public Dictionary<string, SlackConfig> Slack { get; init; } = new();
 
 		/// <summary>
 		/// Twitter configurations
 		/// </summary>
-		public Dictionary<string, TwitterConfig> Twitter { get; init; } = new Dictionary<string, TwitterConfig>();
+		public Dictionary<string, TwitterConfig> Twitter { get; init; } = new();
 
 		/// <summary>
 		/// Get a service configuration from the definition

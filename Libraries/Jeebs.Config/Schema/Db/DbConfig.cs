@@ -36,7 +36,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Dictionary of database connections
 		/// </summary>
-		public Dictionary<string, DbConnectionConfig> Connections { get; init; } = new Dictionary<string, DbConnectionConfig>();
+		public Dictionary<string, DbConnectionConfig> Connections { get; init; } = new();
 
 		/// <summary>
 		/// Retrieve default Connection, unless name is set

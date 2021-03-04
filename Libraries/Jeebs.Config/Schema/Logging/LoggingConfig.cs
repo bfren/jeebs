@@ -34,6 +34,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// List of providers - dictionary key is a service name
 		/// </summary>
-		public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new Dictionary<string, LoggingProviderConfig>();
+		public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();
 	}
 }
