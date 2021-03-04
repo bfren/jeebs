@@ -13,11 +13,7 @@ namespace AppConsole
 				args,
 				(provider, config) =>
 				{
-					using var log = provider.GetService<ILog<Program>>();
-					if (log == null)
-					{
-						return;
-					}
+					using var log = provider.GetRequiredService<ILog<Program>>();
 
 					Serilog.Debugging.SelfLog.Enable(Console.Error);
 					var jeebs = config.GetJeebsConfig();
@@ -32,14 +28,14 @@ namespace AppConsole
 
 					log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
-					var seq = provider.GetService<Seq>();
-					seq?.Send("test");
+					var seq = provider.GetRequiredService<Seq>();
+					seq.Send("test");
 
-					var slack = provider.GetService<Slack>();
-					slack?.Send("test");
+					var slack = provider.GetRequiredService<Slack>();
+					slack.Send("test");
 
-					var notifier = provider.GetService<INotifier>();
-					notifier?.Send("test notification");
+					var notifier = provider.GetRequiredService<INotifier>();
+					notifier.Send("test notification");
 
 					while (Console.ReadLine() is string output)
 					{
