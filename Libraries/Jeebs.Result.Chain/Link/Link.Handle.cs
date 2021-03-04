@@ -9,11 +9,11 @@ namespace Jeebs
 	{
 		/// <inheritdoc/>
 		public Handle<TValue, Exception> Handle() =>
-			new Handle<TValue, Exception>(this);
+			new(this);
 
 		/// <inheritdoc/>
 		public Handle<TValue, TException> Handle<TException>()
 			where TException : Exception =>
-			new Handle<TValue, TException>(this);
+			new(this);
 	}
 }

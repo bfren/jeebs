@@ -11,7 +11,7 @@ namespace Jeebs
 	{
 		private readonly IR<TValue> result;
 
-		private readonly LinkExceptionHandlers<IR<TValue>> handlers = new LinkExceptionHandlers<IR<TValue>>();
+		private readonly LinkExceptionHandlers<IR<TValue>> handlers = new();
 
 		internal Link(IR result, Func<Exception, IMsg>? exceptionMsg = null) : this(result.ChangeType().To<TValue>(), exceptionMsg) { }
 

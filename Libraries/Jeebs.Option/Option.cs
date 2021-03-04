@@ -16,7 +16,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		public static None<T> None<T>() =>
-			new None<T>();
+			new();
 
 		/// <summary>
 		/// Create a Some option, containing a value

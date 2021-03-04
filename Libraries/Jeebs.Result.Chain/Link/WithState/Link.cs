@@ -11,7 +11,7 @@ namespace Jeebs
 	{
 		private readonly IR<TValue, TState> result;
 
-		private readonly LinkExceptionHandlers<IR<TValue, TState>> handlers = new LinkExceptionHandlers<IR<TValue, TState>>();
+		private readonly LinkExceptionHandlers<IR<TValue, TState>> handlers = new();
 
 		internal Link(IR<TValue, TState> result, Func<Exception, IMsg>? exceptionMsg = null) : base(result)
 		{
