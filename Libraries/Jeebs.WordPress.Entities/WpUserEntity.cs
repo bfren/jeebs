@@ -35,51 +35,51 @@ namespace Jeebs.WordPress.Entities
 		/// UserId
 		/// </summary>
 		[Id]
-		public long UserId { get; set; }
+		public long UserId { get; init; }
 
 		/// <summary>
 		/// Username
 		/// </summary>
-		public string Username { get; set; } = string.Empty;
+		public string Username { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Password
 		/// </summary>
-		public string Password { get; set; } = string.Empty;
+		public string Password { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public string Slug { get; set; } = string.Empty;
+		public string Slug { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Email
 		/// </summary>
-		public string Email { get; set; } = string.Empty;
+		public string Email { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; set; } = string.Empty;
+		public string Url { get; init; } = string.Empty;
 
 		/// <summary>
 		/// RegisteredOn
 		/// </summary>
-		public DateTime RegisteredOn { get; set; }
+		public DateTime RegisteredOn { get; init; }
 
 		/// <summary>
 		/// ActivationKey
 		/// </summary>
-		public string ActivationKey { get; set; } = string.Empty;
+		public string ActivationKey { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Status
 		/// </summary>
-		public int Status { get; set; }
+		public int Status { get; init; }
 
 		/// <summary>
 		/// DisplayName
 		/// </summary>
-		public string DisplayName { get; set; } = string.Empty;
+		public string DisplayName { get; init; } = string.Empty;
 	}
 }

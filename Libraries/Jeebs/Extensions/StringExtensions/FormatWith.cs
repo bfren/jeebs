@@ -31,12 +31,12 @@ namespace Jeebs
 				}
 
 				// Thanks James Newton-King!
-				Regex r = new Regex(
+				var r = new Regex(
 					@"(?<start>\{)+(?<template>[\w\.\[\]@]+)(?<format>:[^}]+)?(?<end>\})+",
 					RegexOptions.CultureInvariant | RegexOptions.IgnoreCase
 				);
 
-				List<object> values = new List<object>();
+				var values = new List<object>();
 				int replaceIndex = 0; // keeps track of replace loop so we can match named template values with an array source
 				string rewrittenFormat = r.Replace(@this, (Match m) =>
 				{

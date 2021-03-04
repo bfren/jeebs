@@ -51,9 +51,9 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			public Foo(string name) : base(name) { }
 
-			public static Foo A = new Foo("A");
+			public static Foo A = new("A");
 
-			public static Foo B = new Foo("B");
+			public static Foo B = new("B");
 		}
 	}
 }

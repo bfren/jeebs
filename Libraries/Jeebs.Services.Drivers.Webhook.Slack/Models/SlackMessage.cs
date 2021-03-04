@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Config;
-using Jeebs.Services.Webhook;
 
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 {
 	/// <summary>
 	/// Slack Message
 	/// </summary>
-	public sealed class SlackMessage
+	public sealed record SlackMessage
 	{
 		/// <summary>
 		/// Username (filled with application name)
 		/// </summary>
-		public string Username { get; set; }
+		public string Username { get; private init; }
 
 		/// <summary>
 		/// Attachments (the actual text of the message)
 		/// </summary>
-		public List<SlackAttachment> Attachments { get; set; }
+		public List<SlackAttachment> Attachments { get; private init; }
 
 		/// <summary>
 		/// Create a message
@@ -29,10 +28,10 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 		/// <param name="level">MessageLevel</param>
 		public SlackMessage(JeebsConfig config, string text, NotificationLevel level)
 		{
-			Username = config.App.Name;
+			Username = config.App.FullName;
 			Attachments = new List<SlackAttachment>
 			{
-				{ new SlackAttachment(text, level) }
+				{ new (text, level) }
 			};
 		}
 	}

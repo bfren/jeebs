@@ -14,17 +14,17 @@ namespace Jeebs.WordPress.TypeHandlers
 		/// <summary>
 		/// Columns where value is 1 / 0
 		/// </summary>
-		private readonly List<string> oneZero = new List<string>(new[] { "comment_approved" });
+		private readonly List<string> oneZero = new(new[] { "comment_approved" });
 
 		/// <summary>
 		/// Columns where value is yes / no
 		/// </summary>
-		private readonly List<string> yesNo = new List<string>(new[] { "autoload" });
+		private readonly List<string> yesNo = new(new[] { "autoload" });
 
 		/// <summary>
 		/// Columns where value is Y / N
 		/// </summary>
-		private readonly List<string> yN = new List<string>(new[] { "comment_subscribe", "link_visible" });
+		private readonly List<string> yN = new(new[] { "comment_subscribe", "link_visible" });
 
 		/// <summary>
 		/// Parse the various options of boolean values in WordPress database

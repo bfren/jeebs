@@ -23,7 +23,7 @@ namespace Jeebs
 				}
 
 				// Now replace all HTML characters
-				Regex re = new Regex("<.*?>");
+				var re = new Regex("<.*?>");
 				return re.Replace(@this, replaceWith);
 			});
 

@@ -77,7 +77,7 @@ namespace Jeebs.Mvc
 		/// </summary>
 		/// <param name="code">HTTP Status Code</param>
 		protected static RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError) =>
-			new RedirectToActionResult(nameof(ErrorController.Handle), "Error", new { code });
+			new(nameof(ErrorController.Handle), "Error", new { code });
 
 		/// <summary>
 		/// Return a 403 Not Allowed result

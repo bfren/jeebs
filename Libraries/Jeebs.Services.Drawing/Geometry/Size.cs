@@ -9,6 +9,8 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// <summary>
 	/// Size
 	/// </summary>
+	/// <param name="Height">Rectangle height</param>
+	/// <param name="Width">Rectangle width</param>
 	public record Size(int Height, int Width)
 	{
 		/// <summary>
@@ -17,15 +19,4 @@ namespace Jeebs.Services.Drawing.Geometry
 		public double Ratio =>
 			(double)Width / Height;
 	}
-	//{
-	//	/// <summary>
-	//	/// Height
-	//	/// </summary>
-	//	public int Height { get; set; }
-
-	//	/// <summary>
-	//	/// Width
-	//	/// </summary>
-	//	public int Width { get; set; }
-	//}
 }

@@ -8,34 +8,34 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 	/// <summary>
 	/// RocketChat Attachment
 	/// </summary>
-	public sealed class RocketChatAttachment
+	public sealed record RocketChatAttachment
 	{
 		/// <summary>
 		/// Text
 		/// </summary>
-		public string Text { get; }
+		public string Text { get; private init; }
 
 		/// <summary>
 		/// Colour
 		/// </summary>
 		[JsonPropertyName("color")]
-		public string Colour { get; }
+		public string Colour { get; private init; }
 
 		/// <summary>
 		/// [Optional] Attachment title
 		/// </summary>
-		public string? Title { get; }
+		public string? Title { get; private init; }
 
 		/// <summary>
 		/// [Optional] Attachment link
 		/// </summary>
 		[JsonPropertyName("title_link")]
-		public string? TitleLink { get; }
+		public string? TitleLink { get; private init; }
 
 		/// <summary>
 		/// Fields
 		/// </summary>
-		public List<RocketChatAttachmentField> Fields { get; set; } = new List<RocketChatAttachmentField>();
+		public List<RocketChatAttachmentField> Fields { get; init; } = new();
 
 		/// <summary>
 		/// Create object

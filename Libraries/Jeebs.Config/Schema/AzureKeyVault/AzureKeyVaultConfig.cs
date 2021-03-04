@@ -18,22 +18,22 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Azure Key Vault Name
 		/// </summary>
-		public string Name { get; set; } = string.Empty;
+		public string Name { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Tenant (or Directory) ID
 		/// </summary>
-		public string TenantId { get; set; } = string.Empty;
+		public string TenantId { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Client ID
 		/// </summary>
-		public string ClientId { get; set; } = string.Empty;
+		public string ClientId { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Client Secret
 		/// </summary>
-		public string ClientSecret { get; set; } = string.Empty;
+		public string ClientSecret { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Only returns True if <see cref="Name"/>, <see cref="TenantId"/>, <see cref="ClientId"/> and <see cref="ClientSecret"/> are all not null or empty

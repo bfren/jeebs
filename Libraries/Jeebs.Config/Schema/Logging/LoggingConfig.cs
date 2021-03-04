@@ -19,21 +19,21 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Minimum LogLevel
 		/// </summary>
-		public LogLevel MinimumLevel { get; set; }
+		public LogLevel MinimumLevel { get; init; }
 
 		/// <summary>
 		/// If true, log to console
 		/// </summary>
-		public bool Console { get; set; }
+		public bool Console { get; init; }
 
 		/// <summary>
 		/// Set to override default output template for console messages
 		/// </summary>
-		public string ConsoleOutputTemplate { get; set; } = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}";
+		public string ConsoleOutputTemplate { get; init; } = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}";
 
 		/// <summary>
 		/// List of providers - dictionary key is a service name
 		/// </summary>
-		public Dictionary<string, LoggingProviderConfig> Providers { get; set; } = new Dictionary<string, LoggingProviderConfig>();
+		public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();
 	}
 }

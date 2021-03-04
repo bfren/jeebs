@@ -24,14 +24,14 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Lazily create a <see cref="MapService"/>
 		/// </summary>
-		private static readonly Lazy<IMapService> instance = new Lazy<IMapService>(() => new MapService(), true);
+		private static readonly Lazy<IMapService> instance = new(() => new MapService(), true);
 
 		#endregion
 
 		/// <summary>
 		/// Mapped entities
 		/// </summary>
-		private readonly ConcurrentDictionary<Type, TableMap> mappedEntities = new ConcurrentDictionary<Type, TableMap>();
+		private readonly ConcurrentDictionary<Type, TableMap> mappedEntities = new();
 
 		/// <summary>
 		/// Only allow internal creation

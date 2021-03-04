@@ -15,7 +15,7 @@ namespace Jeebs
 		/// <param name="this">DateTime object</param>
 		/// <returns>Start of the specified day</returns>
 		public static DateTime StartOfDay(this DateTime @this) =>
-			new DateTime(@this.Year, @this.Month, @this.Day, 0, 0, 0);
+			new(@this.Year, @this.Month, @this.Day, 0, 0, 0);
 
 		/// <summary>
 		/// Return one second to midnight on the specified day
@@ -23,7 +23,7 @@ namespace Jeebs
 		/// <param name="this">DateTime object</param>
 		/// <returns>End of the specified day</returns>
 		public static DateTime EndOfDay(this DateTime @this) =>
-			new DateTime(@this.Year, @this.Month, @this.Day, 23, 59, 59);
+			new(@this.Year, @this.Month, @this.Day, 23, 59, 59);
 
 		/// <summary>
 		/// Return midnight on the first day of the week for the specified date
@@ -55,7 +55,7 @@ namespace Jeebs
 		/// <param name="this">DateTime object</param>
 		/// <returns>First day of the month, at midnight</returns>
 		public static DateTime FirstDayOfMonth(this DateTime @this) =>
-			new DateTime(@this.Year, @this.Month, 1, 0, 0, 0);
+			new(@this.Year, @this.Month, 1, 0, 0, 0);
 
 		/// <summary>
 		/// Return one minute to midnight on the last day of the month for the specified date

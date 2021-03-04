@@ -36,81 +36,81 @@ namespace Jeebs.WordPress.Entities
 		/// PostId
 		/// </summary>
 		[Id]
-		public long PostId { get; set; }
+		public long PostId { get; init; }
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public long AuthorId { get; set; }
+		public long AuthorId { get; init; }
 
 		/// <summary>
 		/// PublishedOn
 		/// </summary>
-		public DateTime PublishedOn { get; set; }
+		public DateTime PublishedOn { get; init; }
 
 		/// <summary>
 		/// PublishedOnGmt
 		/// </summary>
-		public DateTime PublishedOnGmt { get; set; }
+		public DateTime PublishedOnGmt { get; init; }
 
 		/// <summary>
 		/// Content
 		/// </summary>
-		public string Content { get; set; } = string.Empty;
+		public string Content { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; set; } = string.Empty;
+		public string Title { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Excerpt
 		/// </summary>
-		public string Excerpt { get; set; } = string.Empty;
+		public string Excerpt { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Status
 		/// </summary>
-		public PostStatus Status { get; set; } = PostStatus.Draft;
+		public PostStatus Status { get; init; } = PostStatus.Draft;
 
 		/// <summary>
 		/// Slug
 		/// </summary>
-		public string Slug { get; set; } = string.Empty;
+		public string Slug { get; init; } = string.Empty;
 
 		/// <summary>
 		/// LastModifiedOn
 		/// </summary>
-		public DateTime LastModifiedOn { get; set; }
+		public DateTime LastModifiedOn { get; init; }
 
 		/// <summary>
 		/// LastModifiedOnGmt
 		/// </summary>
-		public DateTime LastModifiedOnGmt { get; set; }
+		public DateTime LastModifiedOnGmt { get; init; }
 
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public long ParentId { get; set; }
+		public long ParentId { get; init; }
 
 		/// <summary>
 		/// Url
 		/// </summary>
-		public string Url { get; set; } = string.Empty;
+		public string Url { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Type
 		/// </summary>
-		public PostType Type { get; set; } = PostType.Post;
+		public PostType Type { get; init; } = PostType.Post;
 
 		/// <summary>
 		/// MimeType
 		/// </summary>
-		public MimeType MimeType { get; set; } = MimeType.Blank;
+		public MimeType MimeType { get; init; } = MimeType.Blank;
 
 		/// <summary>
 		/// CommentsCount
 		/// </summary>
-		public long CommentsCount { get; set; }
+		public long CommentsCount { get; init; }
 	}
 }

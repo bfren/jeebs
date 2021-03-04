@@ -8,12 +8,12 @@ namespace Jeebs
 	/// 'None' option - used to replace null returns (see <seealso cref="Some{T}"/>)
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public sealed class None<T> : Option<T>
+	public sealed record None<T> : Option<T>
 	{
 		/// <summary>
 		/// Sometimes a reason for the 'None' value may be set
 		/// </summary>
-		public IMsg? Reason { get; private set; }
+		public IMsg? Reason { get; private init; }
 
 		internal None() { }
 
@@ -26,11 +26,8 @@ namespace Jeebs
 		/// <typeparam name="TMsg">Reason message type</typeparam>
 		/// <param name="reason">Reason message</param>
 		public None<T> AddReason<TMsg>(TMsg reason)
-			where TMsg : IMsg
-		{
-			Reason = reason;
-			return this;
-		}
+			where TMsg : IMsg =>
+			this with { Reason = reason };
 
 		/// <summary>
 		/// Add a reason why this option is returning <see cref="None{T}"/>

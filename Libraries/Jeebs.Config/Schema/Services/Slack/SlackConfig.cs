@@ -12,7 +12,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Whether or not to add attachments to a message (error type and timestamp)
 		/// </summary>
-		public bool ShowAttachments { get; set; }
+		public bool ShowAttachments { get; init; }
 
 		/// <inheritdoc/>
 		public override bool IsValid =>

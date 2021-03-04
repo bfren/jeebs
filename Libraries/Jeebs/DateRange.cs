@@ -63,7 +63,7 @@ namespace Jeebs
 		/// <param name="end">End date</param>
 		/// <returns>DateRange object</returns>
 		public static DateRange UpTo(DateTime end) =>
-			new DateRange(DateTime.MinValue, end);
+			new(DateTime.MinValue, end);
 
 		/// <summary>
 		/// Open-ended Date Range beginning at start date
@@ -71,7 +71,7 @@ namespace Jeebs
 		/// <param name="start">Start date</param>
 		/// <returns>DateRange object</returns>
 		public static DateRange From(DateTime start) =>
-			new DateRange(start, DateTime.MaxValue);
+			new(start, DateTime.MaxValue);
 
 		#endregion
 	}

@@ -47,7 +47,7 @@ namespace Jeebs.Mvc.Models
 		/// <returns>Menu Item URL</returns>
 		private static string? GetUri(IUrlHelper url, MenuItem item)
 		{
-			UrlActionContext actionContext = new UrlActionContext
+			UrlActionContext actionContext = new()
 			{
 				Protocol = url.ActionContext.HttpContext.Request.Scheme,
 				Host = url.ActionContext.HttpContext.Request.Host.ToString(),

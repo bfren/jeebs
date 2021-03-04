@@ -42,7 +42,7 @@ namespace Jeebs.Config
 			// Validate file using schema
 			if (!config.IsValid(schema, out IList<string> errors))
 			{
-				StringBuilder sb = new StringBuilder();
+				var sb = new StringBuilder();
 				sb.AppendLine($"Invalid Jeebs configuration file: {path}.");
 				foreach (var item in errors)
 				{

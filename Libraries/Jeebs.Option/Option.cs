@@ -16,7 +16,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		public static None<T> None<T>() =>
-			new None<T>();
+			new();
 
 		/// <summary>
 		/// Create a Some option, containing a value
@@ -56,7 +56,7 @@ namespace Jeebs
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract class Option<T> : IEquatable<Option<T>>, IStructuralEquatable
+	public abstract record Option<T> : IEquatable<Option<T>>, IStructuralEquatable
 	{
 		internal Option() { }
 
@@ -179,30 +179,13 @@ namespace Jeebs
 		#region Overrides
 
 		/// <summary>
-		/// Compare this <see cref="Option{T}"/> with another object
-		/// <para>If both are a <see cref="Some{T}"/> each <see cref="Some{T}.Value"/> will be compared</para>
-		/// <para>If both are a <see cref="None{T}"/> this will return true</para>
-		/// <para>Otherwise this will return false</para>
-		/// </summary>
-		/// <param name="other">Object to compare to this <see cref="Option{T}"/></param>
-		public override bool Equals(object? other) =>
-			other switch
-			{
-				Option<T> x =>
-					Equals(x),
-
-				_ =>
-					false
-			};
-
-		/// <summary>
 		/// Compare this <see cref="Option{T}"/> with another <see cref="Option{T}"/>
 		/// <para>If both are a <see cref="Some{T}"/> each <see cref="Some{T}.Value"/> will be compared</para>
 		/// <para>If both are a <see cref="None{T}"/> this will return true</para>
 		/// <para>Otherwise this will return false</para>
 		/// </summary>
 		/// <param name="other"><see cref="Option{T}"/> to compare to this <see cref="Option{T}"/></param>
-		public bool Equals(Option<T>? other) =>
+		public virtual bool Equals(Option<T>? other) =>
 			this switch
 			{
 				Some<T> x when other is Some<T> y =>

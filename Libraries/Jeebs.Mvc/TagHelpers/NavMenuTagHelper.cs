@@ -114,7 +114,7 @@ namespace Jeebs.Mvc.TagHelpers
 				foreach (var menuItem in items)
 				{
 					// Create item element
-					TagBuilder item = new TagBuilder(ItemElement);
+					var item = new TagBuilder(ItemElement);
 					item.AddCssClass(ItemClass);
 
 					// Create link element
@@ -150,7 +150,7 @@ namespace Jeebs.Mvc.TagHelpers
 					if (IncludeChildren && menuItem.Children.Count > 0)
 					{
 						// Create child menu wrapper
-						TagBuilder childMenu = new TagBuilder(WrapperElement);
+						var childMenu = new TagBuilder(WrapperElement);
 						childMenu.AddCssClass(ChildMenuWrapperClass);
 
 						// Build child menu

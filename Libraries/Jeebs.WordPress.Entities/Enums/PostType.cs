@@ -19,32 +19,32 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Post
 		/// </summary>
-		public static readonly PostType Post = new PostType("post");
+		public static readonly PostType Post = new("post");
 
 		/// <summary>
 		/// Page
 		/// </summary>
-		public static readonly PostType Page = new PostType("page");
+		public static readonly PostType Page = new("page");
 
 		/// <summary>
 		/// Revision
 		/// </summary>
-		public static readonly PostType Revision = new PostType("revision");
+		public static readonly PostType Revision = new("revision");
 
 		/// <summary>
 		/// Attachment
 		/// </summary>
-		public static readonly PostType Attachment = new PostType("attachment");
+		public static readonly PostType Attachment = new("attachment");
 
 		/// <summary>
 		/// Menu Item
 		/// </summary>
-		public static readonly PostType MenuItem = new PostType("nav_menu_item");
+		public static readonly PostType MenuItem = new("nav_menu_item");
 
 		/// <summary>
 		/// Advanced Custom Field
 		/// </summary>
-		public static readonly PostType AdvancedCustomField = new PostType("acf");
+		public static readonly PostType AdvancedCustomField = new("acf");
 
 		#endregion
 

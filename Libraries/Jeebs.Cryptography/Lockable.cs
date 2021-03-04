@@ -52,6 +52,6 @@ namespace Jeebs.Cryptography
 		/// </summary>
 		/// <param name="key">Encryption key</param>
 		public Locked<T> Lock(string key) =>
-			new Locked<T>(Contents, key);
+			new(Contents, key);
 	}
 }

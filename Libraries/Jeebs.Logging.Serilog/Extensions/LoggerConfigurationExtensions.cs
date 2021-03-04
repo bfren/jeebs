@@ -28,17 +28,8 @@ namespace Jeebs.Logging
 				return;
 			}
 
-			// Set the application suite and name properties
-			var appName = jeebs.App.Suite switch
-			{
-				string suite =>
-					$"{suite}/",
-
-				_ =>
-					string.Empty
-			} + jeebs.App.Name;
-
-			@this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), appName);
+			// Set the full application name
+			@this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), jeebs.App.FullName);
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();

@@ -13,11 +13,11 @@ namespace Jeebs.Config.Logging
 		/// <summary>
 		/// Whether or not this provider is enabled
 		/// </summary>
-		public bool Enabled { get; set; }
+		public bool Enabled { get; init; }
 
 		/// <summary>
 		/// This provider's minimum log level (overrides the default minimum level in main Logging section)
 		/// </summary>
-		public LogLevel? MinimumLevel { get; set; }
+		public LogLevel? MinimumLevel { get; init; }
 	}
 }

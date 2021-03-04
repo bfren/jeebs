@@ -62,10 +62,10 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		public static class CustomFields
 		{
-			public readonly static AudioRecordingCustomField Audio = new AudioRecordingCustomField();
-			public readonly static FirstPreachedCustomField FirstPreached = new FirstPreachedCustomField();
-			public readonly static PassageCustomField Passage = new PassageCustomField();
-			public readonly static PdfCustomField Pdf = new PdfCustomField();
+			public readonly static AudioRecordingCustomField Audio = new();
+			public readonly static FirstPreachedCustomField FirstPreached = new();
+			public readonly static PassageCustomField Passage = new();
+			public readonly static PdfCustomField Pdf = new();
 		}
 
 		/// <summary>
@@ -73,7 +73,7 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		public static class PostTypes
 		{
-			public readonly static PostType Sermon = new PostType("sermon");
+			public readonly static PostType Sermon = new("sermon");
 		}
 
 		/// <summary>
@@ -81,11 +81,11 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		public static class Taxonomies
 		{
-			public readonly static Taxonomy BibleBook = new Taxonomy("bible_book");
-			public readonly static Taxonomy PlacePreached = new Taxonomy("place_preached");
-			public readonly static Taxonomy Section = new Taxonomy("section");
-			public readonly static Taxonomy Series = new Taxonomy("series");
-			public readonly static Taxonomy Theme = new Taxonomy("theme");
+			public readonly static Taxonomy BibleBook = new("bible_book");
+			public readonly static Taxonomy PlacePreached = new("place_preached");
+			public readonly static Taxonomy Section = new("section");
+			public readonly static Taxonomy Series = new("series");
+			public readonly static Taxonomy Theme = new("theme");
 		}
 	}
 }

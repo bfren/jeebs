@@ -12,22 +12,22 @@ namespace Jeebs.Config
 		/// <summary>
 		/// UserAccessToken
 		/// </summary>
-		public string UserAccessToken { get; set; } = string.Empty;
+		public string UserAccessToken { get; init; } = string.Empty;
 
 		/// <summary>
 		/// UserAccessSecret
 		/// </summary>
-		public string UserAccessSecret { get; set; } = string.Empty;
+		public string UserAccessSecret { get; init; } = string.Empty;
 
 		/// <summary>
 		/// ConsumerKey
 		/// </summary>
-		public string ConsumerKey { get; set; } = string.Empty;
+		public string ConsumerKey { get; init; } = string.Empty;
 
 		/// <summary>
 		/// ConsumerSecret
 		/// </summary>
-		public string ConsumerSecret { get; set; } = string.Empty;
+		public string ConsumerSecret { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
 		public override bool IsValid =>

@@ -20,9 +20,9 @@ namespace Jeebs.Config
 		public string? Google
 		{
 			get =>
-				googleCode is null ? null : $"google{googleCode}.html";
+				F.StringF.Format("google{0}.html", googleCode);
 
-			set =>
+			init =>
 				googleCode = value;
 		}
 

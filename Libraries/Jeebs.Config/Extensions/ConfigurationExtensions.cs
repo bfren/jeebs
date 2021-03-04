@@ -17,7 +17,7 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Caches configuration section values
 		/// </summary>
-		private static readonly MemoryCache cache = new MemoryCache(new MemoryCacheOptions());
+		private static readonly MemoryCache cache = new(new MemoryCacheOptions());
 
 		/// <summary>
 		/// Return a configuration section as type T

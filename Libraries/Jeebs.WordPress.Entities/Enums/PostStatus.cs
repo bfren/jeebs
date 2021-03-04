@@ -21,27 +21,27 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Published post
 		/// </summary>
-		public static readonly PostStatus Publish = new PostStatus("publish");
+		public static readonly PostStatus Publish = new("publish");
 
 		/// <summary>
 		/// Inherit
 		/// </summary>
-		public static readonly PostStatus Inherit = new PostStatus("inherit");
+		public static readonly PostStatus Inherit = new("inherit");
 
 		/// <summary>
 		/// Pending
 		/// </summary>
-		public static readonly PostStatus Pending = new PostStatus("pending");
+		public static readonly PostStatus Pending = new("pending");
 
 		/// <summary>
 		/// Draft
 		/// </summary>
-		public static readonly PostStatus Draft = new PostStatus("draft");
+		public static readonly PostStatus Draft = new("draft");
 
 		/// <summary>
 		/// Auto Draft
 		/// </summary>
-		public static readonly PostStatus AutoDraft = new PostStatus("auto-draft");
+		public static readonly PostStatus AutoDraft = new("auto-draft");
 
 		#endregion
 

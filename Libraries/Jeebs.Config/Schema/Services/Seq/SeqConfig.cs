@@ -16,12 +16,12 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Seq Server URI
 		/// </summary>
-		public string Server { get; set; } = string.Empty;
+		public string Server { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Seq Server API Key
 		/// </summary>
-		public string ApiKey { get; set; } = string.Empty;
+		public string ApiKey { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
 		public override bool IsValid =>

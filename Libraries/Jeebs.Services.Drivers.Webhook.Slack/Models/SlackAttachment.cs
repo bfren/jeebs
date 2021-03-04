@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
-using Jeebs.Services.Webhook;
 
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 {
 	/// <summary>
 	/// Slack attachment
 	/// </summary>
-	public sealed class SlackAttachment
+	public sealed record SlackAttachment
 	{
 		/// <summary>
 		/// Attachment text
 		/// </summary>
-		public string Text { get; }
+		public string Text { get; private init; }
 
 		/// <summary>
 		/// Attachment colour
 		/// </summary>
 		[JsonPropertyName("color")]
-		public string Colour { get; }
+		public string Colour { get; private init; }
 
 		/// <summary>
 		/// Create object

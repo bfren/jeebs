@@ -17,10 +17,10 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="this">Result</param>
 		public static ChangeType ChangeType(this IR @this) =>
-			new ChangeType(@this);
+			new(@this);
 
 		/// <inheritdoc cref="ChangeType(IR)"/>
 		public static ChangeType<TValue, TState> ChangeType<TValue, TState>(this IR<TValue, TState> @this) =>
-			new ChangeType<TValue, TState>(@this);
+			new(@this);
 	}
 }
