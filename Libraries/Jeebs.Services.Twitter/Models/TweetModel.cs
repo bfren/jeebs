@@ -12,7 +12,7 @@ namespace Jeebs.Services.Twitter.Models
 		/// <summary>
 		/// Author
 		/// </summary>
-		public AuthorModel Author { get; set; } = new AuthorModel();
+		public AuthorModel Author { get; set; } = new();
 
 		/// <summary>
 		/// TweetedOn

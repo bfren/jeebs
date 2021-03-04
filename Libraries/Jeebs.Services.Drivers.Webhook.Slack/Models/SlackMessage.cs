@@ -31,7 +31,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 			Username = config.App.FullName;
 			Attachments = new List<SlackAttachment>
 			{
-				{ new SlackAttachment(text, level) }
+				{ new (text, level) }
 			};
 		}
 	}

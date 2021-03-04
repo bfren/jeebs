@@ -23,7 +23,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// <summary>
 		/// Attachments
 		/// </summary>
-		public List<RocketChatAttachment> Attachments { get; set; } = new List<RocketChatAttachment>();
+		public List<RocketChatAttachment> Attachments { get; set; } = new();
 
 		/// <summary>
 		/// Create a message

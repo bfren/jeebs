@@ -9,26 +9,9 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// <summary>
 	/// Rectangle
 	/// </summary>
+	/// <param name="X">X co-ordinate</param>
+	/// <param name="Y">Y co-ordinate</param>
+	/// <param name="Width">Rectangle width</param>
+	/// <param name="Height">Rectangle height</param>
 	public record Rectangle(int X, int Y, int Width, int Height);
-	//{
-	//	/// <summary>
-	//	/// X co-ordinate
-	//	/// </summary>
-	//	public int X { get; set; }
-
-	//	/// <summary>
-	//	/// Y co-ordinate
-	//	/// </summary>
-	//	public int Y { get; set; }
-
-	//	/// <summary>
-	//	/// Width
-	//	/// </summary>
-	//	public int Width { get; set; }
-
-	//	/// <summary>
-	//	/// Height
-	//	/// </summary>
-	//	public int Height { get; set; }
-	//}
 }

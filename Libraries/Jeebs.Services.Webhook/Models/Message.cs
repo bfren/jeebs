@@ -22,6 +22,6 @@ namespace Jeebs.Services.Webhook.Models
 		/// <summary>
 		/// Additional fields to send
 		/// </summary>
-		public Dictionary<string, object> Fields { get; set; } = new Dictionary<string, object>();
+		public Dictionary<string, object> Fields { get; set; } = new ();
 	}
 }

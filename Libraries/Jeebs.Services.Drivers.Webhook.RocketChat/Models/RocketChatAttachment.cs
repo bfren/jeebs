@@ -35,7 +35,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 		/// <summary>
 		/// Fields
 		/// </summary>
-		public List<RocketChatAttachmentField> Fields { get; set; } = new List<RocketChatAttachmentField>();
+		public List<RocketChatAttachmentField> Fields { get; set; } = new();
 
 		/// <summary>
 		/// Create object
