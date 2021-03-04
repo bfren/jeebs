@@ -147,6 +147,6 @@ namespace Jeebs.WordPress
 
 		/// <inheritdoc/>
 		public QueryWrapper GetQueryWrapper() =>
-			new QueryWrapper(this);
+			new(this);
 	}
 }

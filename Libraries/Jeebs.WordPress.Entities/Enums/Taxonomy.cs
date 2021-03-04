@@ -19,27 +19,27 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Blank
 		/// </summary>
-		public static readonly Taxonomy Blank = new Taxonomy("");
+		public static readonly Taxonomy Blank = new("");
 
 		/// <summary>
 		/// Category
 		/// </summary>
-		public static readonly Taxonomy PostCategory = new Taxonomy("category");
+		public static readonly Taxonomy PostCategory = new("category");
 
 		/// <summary>
 		/// Tag
 		/// </summary>
-		public static readonly Taxonomy PostTag = new Taxonomy("post_tag");
+		public static readonly Taxonomy PostTag = new("post_tag");
 
 		/// <summary>
 		/// Link
 		/// </summary>
-		public static readonly Taxonomy LinkCategory = new Taxonomy("link_category");
+		public static readonly Taxonomy LinkCategory = new("link_category");
 
 		/// <summary>
 		/// Menu Item
 		/// </summary>
-		public static readonly Taxonomy NavMenu = new Taxonomy("nav_menu");
+		public static readonly Taxonomy NavMenu = new("nav_menu");
 
 		#endregion
 

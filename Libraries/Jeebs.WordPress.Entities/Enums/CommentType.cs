@@ -21,12 +21,12 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Blank comment
 		/// </summary>
-		public static readonly CommentType Blank = new CommentType(string.Empty);
+		public static readonly CommentType Blank = new(string.Empty);
 
 		/// <summary>
 		/// Pingback comment
 		/// </summary>
-		public static readonly CommentType Pingback = new CommentType("pingback");
+		public static readonly CommentType Pingback = new("pingback");
 
 		#endregion
 
