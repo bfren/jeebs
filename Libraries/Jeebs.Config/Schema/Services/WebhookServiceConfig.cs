@@ -12,6 +12,6 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Webhook URI
 		/// </summary>
-		public virtual string Webhook { get; set; } = string.Empty;
+		public virtual string Webhook { get; init; } = string.Empty;
 	}
 }

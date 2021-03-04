@@ -18,37 +18,37 @@ namespace Jeebs.Config
 		/// <summary>
 		/// App congiguration
 		/// </summary>
-		public AppConfig App { get; set; } = new AppConfig();
+		public AppConfig App { get; init; } = new AppConfig();
 
 		/// <summary>
 		/// Azure KeyVault congiguration
 		/// </summary>
-		public AzureKeyVaultConfig AzureKeyVault { get; set; } = new AzureKeyVaultConfig();
+		public AzureKeyVaultConfig AzureKeyVault { get; init; } = new AzureKeyVaultConfig();
 
 		/// <summary>
 		/// Data configuration
 		/// </summary>
-		public DbConfig Db { get; set; } = new DbConfig();
+		public DbConfig Db { get; init; } = new DbConfig();
 
 		/// <summary>
 		/// Logging congiguration
 		/// </summary>
-		public LoggingConfig Logging { get; set; } = new LoggingConfig();
+		public LoggingConfig Logging { get; init; } = new LoggingConfig();
 
 		/// <summary>
 		/// Services configuration
 		/// </summary>
-		public ServicesConfig Services { get; set; } = new ServicesConfig();
+		public ServicesConfig Services { get; init; } = new ServicesConfig();
 
 		/// <summary>
 		/// Web congiguration
 		/// </summary>
-		public WebConfig Web { get; set; } = new WebConfig();
+		public WebConfig Web { get; init; } = new WebConfig();
 
 		/// <summary>
 		/// WordPress configurations
 		/// </summary>
-		public Dictionary<string, WpConfig> Wp { get; set; } = new Dictionary<string, WpConfig>();
+		public Dictionary<string, WpConfig> Wp { get; init; } = new Dictionary<string, WpConfig>();
 
 		/// <summary>
 		/// If key starts with ':', add Jeebs config prefix
