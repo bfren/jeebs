@@ -35,21 +35,21 @@ namespace Jeebs.WordPress.Entities
 		/// PostMetaId
 		/// </summary>
 		[Id]
-		public long PostMetaId { get; set; }
+		public long PostMetaId { get; init; }
 
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public long PostId { get; set; }
+		public long PostId { get; init; }
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key { get; set; } = string.Empty;
+		public string Key { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string Value { get; set; } = string.Empty;
+		public string Value { get; init; } = string.Empty;
 	}
 }

@@ -35,21 +35,21 @@ namespace Jeebs.WordPress.Entities
 		/// OptionId
 		/// </summary>
 		[Id]
-		public long OptionId { get; set; }
+		public long OptionId { get; init; }
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key { get; set; } = string.Empty;
+		public string Key { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string Value { get; set; } = string.Empty;
+		public string Value { get; init; } = string.Empty;
 
 		/// <summary>
 		/// IsAutoloaded
 		/// </summary>
-		public bool IsAutoloaded { get; set; }
+		public bool IsAutoloaded { get; init; }
 	}
 }

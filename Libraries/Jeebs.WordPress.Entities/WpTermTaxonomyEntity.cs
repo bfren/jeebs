@@ -36,31 +36,31 @@ namespace Jeebs.WordPress.Entities
 		/// TermTaxonomyId
 		/// </summary>
 		[Id]
-		public long TermTaxonomyId { get; set; }
+		public long TermTaxonomyId { get; init; }
 
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public long TermId { get; set; }
+		public long TermId { get; init; }
 
 		/// <summary>
 		/// Taxonomy
 		/// </summary>
-		public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
+		public Taxonomy Taxonomy { get; init; } = Taxonomy.Blank;
 
 		/// <summary>
 		/// Description
 		/// </summary>
-		public string Description { get; set; } = string.Empty;
+		public string Description { get; init; } = string.Empty;
 
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public long ParentId { get; set; }
+		public long ParentId { get; init; }
 
 		/// <summary>
 		/// Count
 		/// </summary>
-		public long Count { get; set; }
+		public long Count { get; init; }
 	}
 }

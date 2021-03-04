@@ -35,16 +35,16 @@ namespace Jeebs.WordPress.Entities
 		/// PostId
 		/// </summary>
 		[Id]
-		public long PostId { get; set; }
+		public long PostId { get; init; }
 
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public long TermTaxonomyId { get; set; }
+		public long TermTaxonomyId { get; init; }
 
 		/// <summary>
 		/// SortOrder
 		/// </summary>
-		public long SortOrder { get; set; }
+		public long SortOrder { get; init; }
 	}
 }

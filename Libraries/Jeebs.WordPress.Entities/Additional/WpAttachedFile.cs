@@ -14,16 +14,16 @@ namespace Jeebs.WordPress.Entities.Additional
 		/// <summary>
 		/// Title
 		/// </summary>
-		public string Title { get; set; } = string.Empty;
+		public string Title { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Description
 		/// </summary>
-		public string Description { get; set; } = string.Empty;
+		public string Description { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Image URL
 		/// </summary>
-		public string Url { get; set; } = string.Empty;
+		public string Url { get; init; } = string.Empty;
 	}
 }
