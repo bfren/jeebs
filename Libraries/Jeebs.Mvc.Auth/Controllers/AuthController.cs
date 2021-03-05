@@ -115,7 +115,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 			TempData.AddInfoAlert("Goodbye!");
 
 			// Build redirect URL and return SignOut view
-			var redirectTo = Url.Action(nameof(SignIn), new { ReturnUrl = Request.Query["ReturnUrl"] };
+			var redirectTo = Url.Action(nameof(SignIn), new { ReturnUrl = Request.Query["ReturnUrl"] });
 			return SignOut(new AuthenticationProperties { RedirectUri = redirectTo });
 		}
 	}
