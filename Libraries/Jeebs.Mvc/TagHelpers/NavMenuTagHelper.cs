@@ -119,7 +119,7 @@ namespace Jeebs.Mvc.TagHelpers
 					item.AddCssClass(ItemClass);
 
 					// Create link element
-					TagBuilder link = new TagBuilder("a");
+					var link = new TagBuilder("a");
 					link.AddCssClass(LinkClass);
 
 					// Add GUID
