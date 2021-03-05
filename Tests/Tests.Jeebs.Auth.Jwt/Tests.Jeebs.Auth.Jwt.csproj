@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Jeebs.Authentication.Jwt\Jeebs.Auth.Jwt.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Config\Jeebs.Config.csproj" />
   </ItemGroup>
 

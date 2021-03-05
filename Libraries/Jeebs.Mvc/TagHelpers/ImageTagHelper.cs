@@ -64,6 +64,7 @@ namespace Jeebs.Mvc.TagHelpers
 			// Check source
 			if (string.IsNullOrWhiteSpace(Src))
 			{
+				output.SuppressOutput();
 				return;
 			}
 

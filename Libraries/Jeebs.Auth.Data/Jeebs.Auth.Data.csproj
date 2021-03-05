@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Authentication.Entities\Jeebs.Auth.Data.Entities.csproj" />
+    <ProjectReference Include="..\Jeebs.Auth.Data.Entities\Jeebs.Auth.Data.Entities.csproj" />
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
   </ItemGroup>
 

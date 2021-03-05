@@ -81,6 +81,7 @@ namespace Jeebs.Mvc.TagHelpers
 			// Return if no menu or items to output
 			if (Menu == null || Menu.Items.Count == 0)
 			{
+				output.SuppressOutput();
 				return;
 			}
 

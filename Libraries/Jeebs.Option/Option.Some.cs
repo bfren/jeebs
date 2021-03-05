@@ -17,5 +17,11 @@ namespace Jeebs
 
 		internal Some(T value) =>
 			Value = value;
+
+		/// <summary>
+		/// Return <see cref="Value"/>.ToString()
+		/// </summary>
+		public override string ToString() =>
+			Value?.ToString() ?? base.ToString();
 	}
 }

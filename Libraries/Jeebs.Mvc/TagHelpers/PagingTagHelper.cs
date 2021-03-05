@@ -62,12 +62,14 @@ namespace Jeebs.Mvc.TagHelpers
 			// If there aren't any results, don't display anything
 			if (Values.Items == 0)
 			{
+				output.SuppressOutput();
 				return;
 			}
 
 			// Return nothing for one page
 			if (Values.Pages <= 1)
 			{
+				output.SuppressOutput();
 				return;
 			}
 

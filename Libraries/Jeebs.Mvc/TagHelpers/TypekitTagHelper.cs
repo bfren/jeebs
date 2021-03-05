@@ -26,6 +26,7 @@ namespace Jeebs.Mvc.TagHelpers
 			// Check library
 			if (string.IsNullOrWhiteSpace(Library))
 			{
+				output.SuppressOutput();
 				return;
 			}
 

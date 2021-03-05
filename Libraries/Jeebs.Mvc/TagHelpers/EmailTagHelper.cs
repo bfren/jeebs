@@ -45,6 +45,7 @@ namespace Jeebs.Mvc.TagHelpers
 			// Check To
 			if (string.IsNullOrWhiteSpace(To))
 			{
+				output.SuppressOutput();
 				return;
 			}
 
