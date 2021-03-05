@@ -5,7 +5,7 @@ using System.Text;
 namespace Jeebs.Config
 {
 	/// <summary>
-	/// Site Veritifaction Configuration
+	/// Site Verification Configuration
 	/// </summary>
 	public record VerificationConfig
 	{

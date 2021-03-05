@@ -200,6 +200,30 @@
 					"description": "Web Application configuration",
 					"additionalProperties": false,
 					"properties": {
+						"jwt": {
+							"type": "object",
+							"description": "JWT configuration",
+							"required": [ "signingKey", "issuer" ],
+							"additionalProperties": false,
+							"properties": {
+								"signingKey": {
+									"type": "string",
+									"description": "JWT Signing Key"
+								},
+								"encryptingKey": {
+									"type": "string",
+									"description": "[Optional] JWT Encrypting Key"
+								},
+								"issuer": {
+									"type": "string",
+									"description": "URL of application issuing this token"
+								},
+								"audience": {
+									"type": "string",
+									"description": "[Optional] URL of application using this token"
+								}
+							}
+						},
 						"redirections": {
 							"type": "object",
 							"description": "Redirections - key is URL to match, value is URL to redirect to (both MUST start with a slash)",
