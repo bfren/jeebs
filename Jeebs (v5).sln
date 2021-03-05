@@ -155,21 +155,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Option", "Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Mvc", ".Mvc", "{8687DA2A-88DE-4130-941B-62B80FA6D4A2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Authentication", ".Authentication", "{75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Auth", ".Auth", "{75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Clients", ".Clients", "{28F7202A-D487-41AC-BC70-E2E821267FA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Authentication", "Libraries\Jeebs.Authentication\Jeebs.Authentication.csproj", "{2E864550-F91A-435E-8E46-7B1AE5039685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Data", "Libraries\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj", "{2E864550-F91A-435E-8E46-7B1AE5039685}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Authentication.Clients.MySql", "Libraries\Jeebs.Authentication.Clients.MySql\Jeebs.Authentication.Clients.MySql.csproj", "{38B68CBF-662B-46DB-9BE1-703104270A64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Data.Clients.MySql", "Libraries\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj", "{38B68CBF-662B-46DB-9BE1-703104270A64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Authentication.Jwt", "Libraries\Jeebs.Authentication.Jwt\Jeebs.Authentication.Jwt.csproj", "{8FEB0EA7-8906-4227-B02B-AB663BA1C294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Jwt", "Libraries\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj", "{8FEB0EA7-8906-4227-B02B-AB663BA1C294}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Authentication.Entities", "Libraries\Jeebs.Authentication.Entities\Jeebs.Authentication.Entities.csproj", "{280A612B-2572-4C58-A99C-E67621E8B959}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Data.Entities", "Libraries\Jeebs.Auth.Data.Entities\Jeebs.Auth.Data.Entities.csproj", "{280A612B-2572-4C58-A99C-E67621E8B959}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Authentication", ".Authentication", "{904BAF5A-95DE-49B8-A3A9-A687988E39AA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Auth", ".Auth", "{904BAF5A-95DE-49B8-A3A9-A687988E39AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Authentication.Jwt", "Tests\Tests.Jeebs.Authentication.Jwt\Tests.Jeebs.Authentication.Jwt.csproj", "{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Auth.Jwt", "Tests\Tests.Jeebs.Auth.Jwt\Tests.Jeebs.Auth.Jwt.csproj", "{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Mvc.Auth", "Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj", "{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -391,6 +393,10 @@ Global
 		{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -465,6 +471,7 @@ Global
 		{280A612B-2572-4C58-A99C-E67621E8B959} = {75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}
 		{904BAF5A-95DE-49B8-A3A9-A687988E39AA} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{A5FBF7B7-A294-4164-8C32-6C3FB59BE641} = {904BAF5A-95DE-49B8-A3A9-A687988E39AA}
+		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
