@@ -17,22 +17,22 @@ namespace Jeebs.Config
 		public const string Key = WebConfig.Key + ":jwt";
 
 		/// <summary>
-		/// Signing key
+		/// Signing key (256-bit so must be at least 32 characters)
 		/// </summary>
 		public string SigningKey { get; init; } = string.Empty;
 
 		/// <summary>
-		/// Encrypting key
+		/// Encrypting key (512-bit so must be 64 characters)
 		/// </summary>
 		public string EncryptingKey { get; init; } = string.Empty;
 
 		/// <summary>
-		/// URI of application issuing this token
+		/// URL of application issuing this token
 		/// </summary>
 		public string Issuer { get; init; } = string.Empty;
 
 		/// <summary>
-		/// URI of application using this token
+		/// URL of application using this token
 		/// </summary>
 		public string Audience { get; init; } = string.Empty;
 
@@ -46,6 +46,7 @@ namespace Jeebs.Config
 		/// </summary>
 		public bool IsValid =>
 			!string.IsNullOrEmpty(SigningKey)
-			&& !string.IsNullOrEmpty(Issuer);
+			&& !string.IsNullOrEmpty(Issuer)
+			&& !string.IsNullOrEmpty(Audience);
 	}
 }

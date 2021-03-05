@@ -203,16 +203,16 @@
 						"jwt": {
 							"type": "object",
 							"description": "JWT configuration",
-							"required": [ "signingKey", "issuer" ],
+							"required": [ "signingKey", "issuer", "audience" ],
 							"additionalProperties": false,
 							"properties": {
 								"signingKey": {
 									"type": "string",
-									"description": "JWT Signing Key"
+									"description": "JWT Signing Key (must be at least 32 characters)"
 								},
 								"encryptingKey": {
 									"type": "string",
-									"description": "[Optional] JWT Encrypting Key"
+									"description": "[Optional] JWT Encrypting Key (must be at least  64 characters)"
 								},
 								"issuer": {
 									"type": "string",
@@ -220,7 +220,7 @@
 								},
 								"audience": {
 									"type": "string",
-									"description": "[Optional] URL of application using this token"
+									"description": "URL of application using this token"
 								}
 							}
 						},

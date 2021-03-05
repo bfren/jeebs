@@ -1,0 +1,137 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
+using Jeebs;
+using Jeebs.Config;
+using Jm.Functions.JwtF.CreateToken;
+using NSubstitute;
+using Xunit;
+
+namespace F.JwtF_Tests
+{
+	public class CreateToken_Tests
+	{
+
+		[Fact]
+		public void Identity_Null_Returns_None_With_NullIdentityMsg()
+		{
+			// Arrange
+			var config = new JwtConfig();
+			var principal = Substitute.For<IPrincipal>();
+			principal.Identity.Returns(_ => null);
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			var none = Assert.IsType<None<string>>(result);
+			Assert.IsType<NullIdentityMsg>(none.Reason);
+		}
+
+		[Fact]
+		public void Identity_Not_Authenticated_Returns_None_With_IdentityNotAuthenticatedMsg()
+		{
+			// Arrange
+			var config = new JwtConfig();
+			var principal = Substitute.For<IPrincipal>();
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			var none = Assert.IsType<None<string>>(result);
+			Assert.IsType<IdentityNotAuthenticatedMsg>(none.Reason);
+		}
+
+		[Fact]
+		public void Invalid_Config_Returns_None_With_JwtConfigInvalidMsg()
+		{
+			// Arrange
+			var config = new JwtConfig();
+			var identity = Substitute.For<IIdentity>();
+			identity.IsAuthenticated.Returns(true);
+			var principal = Substitute.For<IPrincipal>();
+			principal.Identity.Returns(identity);
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			var none = Assert.IsType<None<string>>(result);
+			Assert.IsType<JwtConfigInvalidMsg>(none.Reason);
+		}
+
+		[Fact]
+		public void SigningKey_Not_Long_Enough_Returns_None_With_SigningKeyNotLongEnoughMsg()
+		{
+			// Arrange
+			var config = new JwtConfig
+			{
+				SigningKey = Rnd.Str,
+				Issuer = Rnd.Str,
+				Audience = Rnd.Str
+			};
+			var identity = Substitute.For<IIdentity>();
+			identity.IsAuthenticated.Returns(true);
+			var principal = Substitute.For<IPrincipal>();
+			principal.Identity.Returns(identity);
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			var none = Assert.IsType<None<string>>(result);
+			Assert.IsType<SigningKeyNotLongEnoughMsg>(none.Reason);
+		}
+
+		[Fact]
+		public void EncryptingKey_Not_Long_Enough_Returns_None_With_EncryptingKeyNotLongEnoughMsg()
+		{
+			// Arrange
+			var config = new JwtConfig
+			{
+				SigningKey = StringF.Random(32),
+				EncryptingKey = Rnd.Str,
+				Issuer = Rnd.Str,
+				Audience = Rnd.Str
+			};
+			var identity = Substitute.For<IIdentity>();
+			identity.IsAuthenticated.Returns(true);
+			var principal = Substitute.For<IPrincipal>();
+			principal.Identity.Returns(identity);
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			var none = Assert.IsType<None<string>>(result);
+			Assert.IsType<EncryptingKeyNotLongEnoughMsg>(none.Reason);
+		}
+
+		[Fact]
+		public void Valid_Config_Returns_Token()
+		{
+			// Arrange
+			var config = new JwtConfig
+			{
+				SigningKey = StringF.Random(32),
+				EncryptingKey = StringF.Random(64),
+				Issuer = Rnd.Str,
+				Audience = Rnd.Str
+			};
+			var identity = Substitute.For<IIdentity>();
+			identity.IsAuthenticated.Returns(true);
+			var principal = Substitute.For<IPrincipal>();
+			principal.Identity.Returns(identity);
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			Assert.IsType<Some<string>>(result);
+		}
+	}
+}
