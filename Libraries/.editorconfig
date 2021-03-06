@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# Add file header to all files
+file_header_template = Copyright (c) bcg|design.\nLicensed under https://mit.bcgdesign.com/2013.
