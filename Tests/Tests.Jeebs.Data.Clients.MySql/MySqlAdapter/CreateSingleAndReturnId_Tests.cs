@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests

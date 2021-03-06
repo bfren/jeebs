@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs.Data.Enums;
-using NSubstitute;
+﻿using Jeebs.Data.Enums;
 using Xunit;
 using static Jeebs.Data.Adapter_Tests.Adapter;
 

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
+using System;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace Jeebs.WordPress.ContentFilters
 {

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Mvc\Jeebs.Mvc.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -11,5 +12,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://raw.githubusercontent.com/bencgreen/jeebs/main/Libraries/Jeebs.Config/schema.json" /></VisualStudio></ProjectExtensions>
 </Project>

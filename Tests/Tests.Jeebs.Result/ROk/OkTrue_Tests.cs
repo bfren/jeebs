@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Jeebs;
-using Xunit;
+﻿using Xunit;
 
 namespace Jeebs.ROk_Tests
 {

@@ -1,5 +1,5 @@
 ﻿// Copyright (c) bcg|design.
-// Licensed under https://bcg.mit-license.org/2013.
+// Licensed under https://mit.bcgdesign.com/2013.
 
 using System;
 using System.Threading.Tasks;
@@ -14,7 +14,6 @@ namespace Jeebs.Auth
 		public async Task<Option<TUserModel>> ValidateUserAsync<TUserModel>(string email, string password)
 			where TUserModel : IUserModel, new()
 		{
-
 
 
 			throw new NotImplementedException();

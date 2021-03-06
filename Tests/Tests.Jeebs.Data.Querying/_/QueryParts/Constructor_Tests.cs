@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
-using Xunit;
+﻿using Xunit;
 
 namespace Jeebs.Data.Querying.QueryParts_Tests
 {

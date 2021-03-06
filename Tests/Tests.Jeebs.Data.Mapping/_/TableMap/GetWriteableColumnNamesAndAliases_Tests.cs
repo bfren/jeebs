@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jx.Data.Mapping;
-using NSubstitute;
+﻿using Jx.Data.Mapping;
 using Xunit;
 
 namespace Jeebs.Data.Mapping.TableMap_Tests

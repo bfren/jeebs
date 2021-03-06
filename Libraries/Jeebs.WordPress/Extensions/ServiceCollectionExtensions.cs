@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs.Apps;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

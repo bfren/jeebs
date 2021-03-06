@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Jeebs;
 using Jeebs.Config;
 using Jm.Functions.JwtF.ValidateToken;
 using NSubstitute;
@@ -49,7 +44,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 		{
 			// Arrange
 			var (config, token, _) = GetToken(DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(1));
-			var provider = new JwtAuthenticationProvider(config);
+			var provider = new JwtAuthProvider(config);
 
 			// Act
 			var result = provider.ValidateToken(token);
@@ -65,7 +60,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 			// Arrange
 			var (config, token, _) = GetToken(DateTime.UtcNow, DateTime.UtcNow);
 			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-			var provider = new JwtAuthenticationProvider(config);
+			var provider = new JwtAuthProvider(config);
 
 			// Act
 			var result = provider.ValidateToken(token);
@@ -80,7 +75,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 		{
 			// Arrange
 			var (config, token, name) = GetToken(DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
-			var provider = new JwtAuthenticationProvider(config);
+			var provider = new JwtAuthProvider(config);
 
 			// Act
 			var result = provider.ValidateToken(token);

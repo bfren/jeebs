@@ -1,7 +1,6 @@
-using System;
 using System.Threading.Tasks;
 
-namespace MvcApp
+namespace AppMvc
 {
 	internal sealed class Program : Jeebs.Apps.Program
 	{

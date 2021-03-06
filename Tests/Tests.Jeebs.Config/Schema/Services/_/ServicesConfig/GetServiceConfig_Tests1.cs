@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jx.Config;
+﻿using Jx.Config;
 using Xunit;
 
 namespace Jeebs.Config.ServicesConfig_Tests

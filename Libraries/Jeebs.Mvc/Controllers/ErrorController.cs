@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using System.Threading.Tasks;
-using Jeebs.Apps.WebApps.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace Jeebs.Mvc
 {

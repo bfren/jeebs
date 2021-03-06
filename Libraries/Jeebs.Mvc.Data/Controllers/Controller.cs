@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using Jeebs.Data;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc
 {

@@ -1,4 +1,5 @@
-﻿namespace Jeebs.ROkV_Tests
+﻿
+namespace Jeebs.ROkV_Tests
 {
 	public interface IOkV_WithState
 	{

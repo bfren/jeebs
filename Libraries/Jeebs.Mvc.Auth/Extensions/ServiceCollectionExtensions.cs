@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.DependencyInjection;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
 
 namespace Jeebs.Mvc.Auth
 {
 	public static class ServiceCollectionExtensions
 	{
-
 	}
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Link_Tests.WithState

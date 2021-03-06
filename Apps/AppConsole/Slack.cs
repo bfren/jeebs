@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs;
+﻿using Jeebs;
 using Jeebs.Services.Drivers.Webhook.Slack;
 
 namespace AppConsole

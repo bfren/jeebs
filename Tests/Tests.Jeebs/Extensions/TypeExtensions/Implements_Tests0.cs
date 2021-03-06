@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.TypeExtensions_Tests

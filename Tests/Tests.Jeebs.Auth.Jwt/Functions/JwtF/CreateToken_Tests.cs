@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Principal;
 using Jeebs;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
@@ -14,7 +9,6 @@ namespace F.JwtF_Tests
 {
 	public class CreateToken_Tests
 	{
-
 		[Fact]
 		public void Identity_Null_Returns_None_With_NullIdentityMsg()
 		{

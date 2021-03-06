@@ -1,8 +1,5 @@
-﻿using NSubstitute;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
+using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Mapping.MappedColumn_Tests

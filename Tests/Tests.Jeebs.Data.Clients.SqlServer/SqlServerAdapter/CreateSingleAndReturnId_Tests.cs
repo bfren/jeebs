@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests

@@ -1,4 +1,5 @@
-﻿namespace Jeebs.R_Tests
+﻿
+namespace Jeebs.R_Tests
 {
 	public interface IR_False
 	{

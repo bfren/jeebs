@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
-using Org.BouncyCastle.Pkix;
 using Xunit;
 
 namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests

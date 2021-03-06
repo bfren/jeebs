@@ -1,12 +1,12 @@
-﻿using System;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using Jeebs.Auth.Entities;
+using Jeebs.Auth.Data;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -17,18 +17,18 @@ namespace Jeebs.Mvc.Auth.Controllers
 	/// <summary>
 	/// Implement this controller to add support for user authentication
 	/// </summary>
-	/// <typeparam name="TUser">User entity type</typeparam>
-	public abstract class AuthController<TUser> : Controller
-		where TUser : UserEntity
+	/// <typeparam name="TUserModel">User entity type</typeparam>
+	public abstract class AuthController<TUserModel> : Controller
+		where TUserModel : IUserModel, new()
 	{
-		protected IDataAuthenticationProvider Auth { get; init; }
+		protected IDataAuthProvider Auth { get; init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
 		/// </summary>
-		protected virtual Func<TUser, List<Claim>>? AddClaims { get; }
+		protected virtual Func<TUserModel, List<Claim>>? AddClaims { get; }
 
-		protected AuthController(IDataAuthenticationProvider auth, ILog log) : base(log) =>
+		protected AuthController(IDataAuthProvider auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <param name="model">SignInModel</param>
 		[HttpPost, AutoValidateAntiforgeryToken]
 		public virtual async Task<IActionResult> SignIn(SignInModel model) =>
-			(await Auth.ValidateUserAsync<TUser>(model.Email, model.Password)).Match(
+			(await Auth.ValidateUserAsync<TUserModel>(model.Email, model.Password)).Match(
 				some: user =>
 				{
 					// Get user principal
@@ -79,13 +79,13 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// Get principal for specified user with all necessary claims
 		/// </summary>
 		/// <param name="user">User entity</param>
-		private ClaimsPrincipal GetPrincipal(TUser user)
+		private ClaimsPrincipal GetPrincipal(TUserModel user)
 		{
 			// Create claims object
 			var claims = new List<Claim>
 			{
-				new (JwtClaimTypes.UserId, user.Id.ValueStr, ClaimValueTypes.Integer32),
-				new (ClaimTypes.GivenName, user.GivenName, ClaimValueTypes.String),
+				new (JwtClaimTypes.UserId, user.UserId.ValueStr, ClaimValueTypes.Integer32),
+				new (ClaimTypes.GivenName, user.FriendlyName, ClaimValueTypes.String),
 				new (ClaimTypes.Name, user.FullName, ClaimValueTypes.String),
 				new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 			};

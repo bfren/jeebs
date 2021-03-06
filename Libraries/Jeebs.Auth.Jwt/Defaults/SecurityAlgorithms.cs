@@ -1,5 +1,5 @@
 ﻿// Copyright (c) bcg|design.
-// Licensed under https://bcg.mit-license.org/2013.
+// Licensed under https://mit.bcgdesign.com/2013.
 
 using Microsoft.IdentityModel.Tokens;
 

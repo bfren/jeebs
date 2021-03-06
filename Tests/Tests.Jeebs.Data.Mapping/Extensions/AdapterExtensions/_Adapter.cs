@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
+﻿using NSubstitute;
 
 namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 {

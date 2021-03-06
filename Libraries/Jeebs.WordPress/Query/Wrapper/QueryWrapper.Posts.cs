@@ -1,7 +1,9 @@
-﻿using System;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs;
 using Xunit;
 
 namespace F.DateTimeF_Tests

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using NSubstitute;
 using Xunit;
 using static Jeebs.Data.Querying.QueryPartsBuilder_Tests.QueryPartsBuilder;

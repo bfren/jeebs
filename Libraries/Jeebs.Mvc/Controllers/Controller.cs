@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
+using System;
 using System.Threading.Tasks;
 using Jm.Mvc.Controllers.Controller;
 using Microsoft.AspNetCore.Http;

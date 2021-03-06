@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jm.Cryptography.Locked;
-using Sodium;
+﻿using Jm.Cryptography.Locked;
 using Xunit;
 
 namespace Jeebs.Cryptography.Locked_Tests

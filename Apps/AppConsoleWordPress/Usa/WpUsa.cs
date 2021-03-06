@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs;
+﻿using Jeebs;
 using Jeebs.Config;
 using Jeebs.WordPress;
-using Jeebs.WordPress.Entities;
 using Microsoft.Extensions.Options;
 
 namespace AppConsoleWordPress.Usa

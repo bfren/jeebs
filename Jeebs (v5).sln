@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".WordPress", ".WordPress", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}"
 	ProjectSection(SolutionItems) = preProject
+		Libraries\.editorconfig = Libraries\.editorconfig
 		Libraries\Directory.Build.props = Libraries\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -171,7 +172,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Auth", ".Auth", "{904BAF5A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Auth.Jwt", "Tests\Tests.Jeebs.Auth.Jwt\Tests.Jeebs.Auth.Jwt.csproj", "{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Mvc.Auth", "Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj", "{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Auth", "Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj", "{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

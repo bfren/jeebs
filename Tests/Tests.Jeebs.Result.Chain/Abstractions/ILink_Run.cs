@@ -1,4 +1,5 @@
-﻿namespace Jeebs.Link_Tests
+﻿
+namespace Jeebs.Link_Tests
 {
 	public interface ILink_Run
 	{

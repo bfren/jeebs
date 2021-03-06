@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Jeebs.Config;
-using Microsoft.Extensions.Caching.Memory;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using Microsoft.Extensions.Configuration;
 
 namespace Jeebs.Config

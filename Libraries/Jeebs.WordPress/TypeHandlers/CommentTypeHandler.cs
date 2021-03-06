@@ -1,9 +1,8 @@
-﻿using Jeebs.WordPress.Enums;
-using System;
-using System.Collections.Generic;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.TypeHandlers
 {

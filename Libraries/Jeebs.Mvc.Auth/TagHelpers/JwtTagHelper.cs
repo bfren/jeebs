@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using System.Threading.Tasks;
 using Jeebs.Auth;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,13 +21,13 @@ namespace Jeebs.Mvc.Auth
 		[ViewContext]
 		public ViewContext? ViewContext { get; set; }
 
-		private IJwtAuthenticationProvider Provider { get; init; }
+		private IJwtAuthProvider Provider { get; init; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="provider">IJwtAuthenticationProvider</param>
-		public JwtTagHelper(IJwtAuthenticationProvider provider) =>
+		public JwtTagHelper(IJwtAuthProvider provider) =>
 			Provider = provider;
 
 		/// <summary>

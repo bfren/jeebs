@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs;
+﻿using Jeebs;
 using Xunit;
 
 namespace F.JsonF_Tests.IntIdConverter_Tests

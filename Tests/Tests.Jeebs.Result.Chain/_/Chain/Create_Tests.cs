@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Jeebs.Chain_Tests

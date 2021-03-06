@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace Jeebs.Cryptography.Lockable_Tests
 {
@@ -18,7 +15,7 @@ namespace Jeebs.Cryptography.Lockable_Tests
 			void action() => box.Lock(key);
 
 			// Assert
-			var ex =Assert.Throws<Jx.Cryptography.InvalidKeyLengthException>(action);
+			var ex = Assert.Throws<Jx.Cryptography.InvalidKeyLengthException>(action);
 			Assert.Equal(string.Format(Jx.Cryptography.InvalidKeyLengthException.Format, Lockable.KeyLength), ex.Message);
 		}
 

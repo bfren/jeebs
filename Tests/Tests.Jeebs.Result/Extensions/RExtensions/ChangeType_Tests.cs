@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSubstitute;
 using Xunit;
 

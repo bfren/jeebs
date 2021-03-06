@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace Jeebs.Result_Tests
 {

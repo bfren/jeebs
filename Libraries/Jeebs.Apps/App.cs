@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
+using System;
 using System.IO;
-using System.Text;
 using Jeebs.Config;
 using Jeebs.Logging;
 using Microsoft.Extensions.Configuration;

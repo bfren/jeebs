@@ -1,4 +1,5 @@
-﻿namespace Jeebs.RExtensions_Tests
+﻿
+namespace Jeebs.RExtensions_Tests
 {
 	public interface IAudit_Audit
 	{

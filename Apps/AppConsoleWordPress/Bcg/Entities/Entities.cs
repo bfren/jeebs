@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs.WordPress.Entities;
+﻿using Jeebs.WordPress.Entities;
 
 namespace AppConsoleWordPress.Bcg.Entities
 {

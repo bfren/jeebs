@@ -1,4 +1,5 @@
-﻿namespace Jeebs.ROk_Tests
+﻿
+namespace Jeebs.ROk_Tests
 {
 	public interface IOk_Ok
 	{

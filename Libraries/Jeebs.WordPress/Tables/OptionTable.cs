@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using Jeebs.Data.Mapping;
 
 namespace Jeebs.WordPress.Tables
@@ -13,25 +13,25 @@ namespace Jeebs.WordPress.Tables
 		/// <summary>
 		/// OptionId
 		/// </summary>
-		public string OptionId  =>
+		public string OptionId =>
 			"option_id";
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key  =>
+		public string Key =>
 			"option_name";
 
 		/// <summary>
 		/// Value
 		/// </summary>
-		public string Value  =>
+		public string Value =>
 			"option_value";
 
 		/// <summary>
 		/// IsAutoloaded
 		/// </summary>
-		public string IsAutoloaded  =>
+		public string IsAutoloaded =>
 			"autoload";
 
 		/// <summary>

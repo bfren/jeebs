@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Reflection;
 
 namespace F
 {
@@ -69,7 +71,6 @@ namespace F
 
 				long x =>
 					append(Integer, x),
-
 
 				float x =>
 					append(Double, x),

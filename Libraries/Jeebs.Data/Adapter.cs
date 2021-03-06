@@ -1,8 +1,9 @@
-﻿using System;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://mit.bcgdesign.com/2013.
+
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using Jeebs.Data.Enums;
 
 namespace Jeebs.Data

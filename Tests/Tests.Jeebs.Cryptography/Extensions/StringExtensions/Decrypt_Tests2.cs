@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static F.CryptoF;
 using Xunit;
+using static F.CryptoF;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
 {

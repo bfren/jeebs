@@ -12,7 +12,6 @@ using Jeebs.WordPress;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.DependencyInjection;
-using Org.BouncyCastle.Crypto.Digests;
 
 namespace AppConsoleWordPress
 {

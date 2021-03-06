@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using Jeebs;
-using Defaults = Jeebs.Auth.Defaults.Algorithms;
 using Jeebs.Config;
 using Jm.Functions.JwtF.ValidateToken;
 using NSubstitute;
 using Xunit;
+using Defaults = Jeebs.Auth.Defaults.Algorithms;
 
 namespace F.JwtF_Tests
 {

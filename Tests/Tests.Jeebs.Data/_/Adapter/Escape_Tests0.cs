@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 using static Jeebs.Data.Adapter_Tests.Adapter;
 
 namespace Jeebs.Data.Adapter_Tests

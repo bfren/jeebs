@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
-using Xunit;
+﻿using Xunit;
 using static Jeebs.Data.QueryPartsBuilderExtended_Tests.QueryPartsBuilderExtended;
 
 namespace Jeebs.Data.QueryPartsBuilderExtended_Tests

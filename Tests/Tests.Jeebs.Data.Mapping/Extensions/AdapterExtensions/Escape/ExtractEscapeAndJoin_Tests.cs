@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
+﻿using NSubstitute;
 using Xunit;
 using static Jeebs.Data.Mapping.AdapterExtensions_Tests.Adapter;
 
