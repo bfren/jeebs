@@ -46,6 +46,8 @@
 		<RepositoryUrl>https://github.com/bencgreen/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
+	
+	<!-- Documentation -->
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
