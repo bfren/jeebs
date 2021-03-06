@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://bcg.mit-license.org/2013.
+
+using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Principal;
 using Jeebs;
 using Jeebs.Auth;
-using Defaults = Jeebs.Auth.Defaults;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Principal;
+using Defaults = Jeebs.Auth.Defaults;
 
 namespace F
 {

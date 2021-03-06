@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://bcg.mit-license.org/2013.
+
 using System.Text;
-using System.Threading.Tasks;
 using Jeebs.Config;
 using Jm.Authentication.JwtConfigExtensions;
 using Microsoft.IdentityModel.Tokens;

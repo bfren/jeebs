@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://bcg.mit-license.org/2013.
+
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using Jeebs.Config;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth
 {
-	/// <inheritdoc cref="IJwtAuthenticationProvider"/>
-	public class JwtAuthenticationProvider : IJwtAuthenticationProvider
+	/// <inheritdoc cref="IJwtAuthProvider"/>
+	public class JwtAuthProvider : IJwtAuthProvider
 	{
 		private readonly JwtConfig config;
 
@@ -18,9 +16,9 @@ namespace Jeebs.Auth
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="config">JeebsConfig</param>
-		public JwtAuthenticationProvider(IOptions<JeebsConfig> config) : this(config.Value.Web.Jwt) { }
+		public JwtAuthProvider(IOptions<JeebsConfig> config) : this(config.Value.Web.Jwt) { }
 
-		internal JwtAuthenticationProvider(JwtConfig config) =>
+		internal JwtAuthProvider(JwtConfig config) =>
 			this.config = config;
 
 		/// <inheritdoc/>

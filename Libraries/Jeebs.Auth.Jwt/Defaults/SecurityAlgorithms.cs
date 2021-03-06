@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://bcg.mit-license.org/2013.
+
 using Microsoft.IdentityModel.Tokens;
 
 namespace Jeebs.Auth.Defaults

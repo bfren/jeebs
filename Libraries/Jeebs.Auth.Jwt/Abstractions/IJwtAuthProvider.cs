@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://bcg.mit-license.org/2013.
+
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jeebs.Auth
 {
 	/// <summary>
 	/// JSON Web Tokens authentication provider interface
 	/// </summary>
-	public interface IJwtAuthenticationProvider
+	public interface IJwtAuthProvider
 	{
 		/// <summary>
 		/// Generate a new JSON Web Token for the specified user

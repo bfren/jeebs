@@ -1,90 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Jeebs.Data;
+﻿// Copyright (c) bcg|design.
+// Licensed under https://bcg.mit-license.org/2013.
 
-namespace Jeebs.Auth.Entities
+using System;
+
+namespace Jeebs.Auth.Data.Entities
 {
-	/// <summary>
-	/// User Entity
-	/// </summary>
-	public record UserEntity : IEntity<long>
+	/// <inheritdoc cref="IUser"/>
+	internal sealed record UserEntity : IUser
 	{
-		/// <summary>
-		/// Id
-		/// </summary>
+		/// <inheritdoc/>
 		public IStrongId<long> Id
 		{
 			get =>
 				UserId;
 
 			init =>
-				UserId = new UserEntityId(value.Value);
+				UserId = new UserId(value.Value);
 		}
 
-		/// <summary>
-		/// User ID
-		/// </summary>
-		public UserEntityId UserId { get; init; } = new UserEntityId();
+		/// <inheritdoc/>
+		public string IdStr =>
+			Id.ValueStr;
 
-		/// <summary>
-		/// The user's encrypted password
-		/// </summary>
+		/// <inheritdoc/>
+		public UserId UserId { get; init; } = new UserId();
+
+		/// <inheritdoc/>
+		public string EmailAddress { get; init; } = string.Empty;
+
+		/// <inheritdoc/>
 		public string PasswordHash { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Given (Christian / first) name
-		/// </summary>
+		/// <inheritdoc/>
+		public string FriendlyName { get; init; } = string.Empty;
+
+		/// <inheritdoc/>
 		public string GivenName { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Family name (surname)
-		/// </summary>
+		/// <inheritdoc/>
 		public string FamilyName { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Full name - normally GivenName + FamilyName
-		/// </summary>
+		/// <inheritdoc/>
 		public string FullName =>
 			GetFullName();
 
-		/// <summary>
-		/// Function to get the full name of the user
-		/// </summary>
+		/// <inheritdoc/>
 		private Func<string> GetFullName { get; init; }
 
-		/// <summary>
-		/// Email address
-		/// </summary>
-		public string EmailAddress { get; init; } = string.Empty;
-
-		/// <summary>
-		/// The last time the user signed in
-		/// </summary>
-		public DateTime? LastSignedIn { get; init; }
-
-		/// <summary>
-		/// Whether or not the user account is enabled
-		/// </summary>
+		/// <inheritdoc/>
 		public bool IsEnabled { get; init; }
 
-		/// <summary>
-		/// Whether or not the user account has super permissions
-		/// </summary>
+		/// <inheritdoc/>
 		public bool IsSuper { get; init; }
+
+		/// <inheritdoc/>
+		public DateTime? LastSignedIn { get; init; }
 
 		/// <summary>
 		/// Use the default method of getting the user's full name
 		/// </summary>
-		protected UserEntity() : this(getFullName: null) { }
+		internal UserEntity() : this(getFullName: null) { }
 
 		/// <summary>
 		/// Inject custom function to get the user's full name
 		/// </summary>
 		/// <param name="getFullName">[Optional] Function to return the user's full name</param>
-		protected UserEntity(Func<string>? getFullName) =>
+		internal UserEntity(Func<string>? getFullName) =>
 			GetFullName = getFullName switch
 			{
 				Func<string> get =>
