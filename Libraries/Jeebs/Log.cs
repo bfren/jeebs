@@ -12,8 +12,13 @@ namespace Jeebs
 	public abstract class Log : ILog
 	{
 		/// <inheritdoc/>
-		public void Message(IMsg msg)
+		public void Message(IMsg? msg)
 		{
+			if (msg is null)
+			{
+				return;
+			}
+
 			var (text, args) = msg.Prepare();
 
 			// Handle exception messages

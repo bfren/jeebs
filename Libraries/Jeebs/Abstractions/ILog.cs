@@ -29,7 +29,7 @@ namespace Jeebs
 		/// Log an <see cref="IMsg"/>
 		/// </summary>
 		/// <param name="message">Message to log</param>
-		void Message(IMsg message);
+		void Message(IMsg? message);
 
 		/// <summary>
 		/// Log a list of <see cref="IMsg"/>
