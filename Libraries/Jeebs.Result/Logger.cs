@@ -17,7 +17,7 @@ namespace Jeebs
 			log?.IsEnabled(level) ?? false;
 
 		/// <inheritdoc/>
-		public void Message(IMsg message) =>
+		public void Message(IMsg? message) =>
 			log?.Message(message);
 
 		/// <inheritdoc/>
