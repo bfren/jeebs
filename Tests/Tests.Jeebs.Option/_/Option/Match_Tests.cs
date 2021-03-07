@@ -29,7 +29,7 @@ namespace Jeebs.Option_Tests
 		public void If_None_Run_None()
 		{
 			// Arrange
-			const string value = "18";
+			var value = F.Rnd.Str;
 			var some = Substitute.For<Func<int, string>>();
 			var none = Option.None<int>();
 
@@ -48,7 +48,7 @@ namespace Jeebs.Option_Tests
 		public void If_None_Get_None()
 		{
 			// Arrange
-			const string value = "18";
+			var value = F.Rnd.Str;
 			var some = Substitute.For<Func<int, string>>();
 			var none = Option.None<int>();
 

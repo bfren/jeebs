@@ -81,6 +81,28 @@ namespace Jeebs
 			);
 
 		/// <summary>
+		/// Run an action depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
+		/// </summary>
+		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Action to run if <see cref="None{T}"/></param>
+		public void Switch(Action<T> some, Action none) =>
+			Switch(
+				some: some,
+				none: none
+			);
+
+		/// <summary>
+		/// Run an action depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
+		/// </summary>
+		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Action to run if <see cref="None{T}"/></param>
+		public void Switch(Action<T> some, Action<IMsg?> none) =>
+			Switch(
+				some: some,
+				none: none
+			);
+
+		/// <summary>
 		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
 		/// </summary>
 		/// <typeparam name="U">Return type</typeparam>
