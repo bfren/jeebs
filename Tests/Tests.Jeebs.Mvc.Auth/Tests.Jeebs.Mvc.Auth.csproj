@@ -13,6 +13,6 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
+		<ProjectReference Include="..\..\Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 	</ItemGroup>
 </Project>

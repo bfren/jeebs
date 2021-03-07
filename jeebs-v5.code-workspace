@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"editor.renderWhitespace": "none"
+		"editor.renderWhitespace": "none",
+		"FSharp.suggestGitignore": false
 	}
 }

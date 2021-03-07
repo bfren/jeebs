@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# Add file header
+file_header_template = Jeebs Test Applications\nCopyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
