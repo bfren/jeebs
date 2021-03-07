@@ -4,13 +4,13 @@
 namespace Jeebs.Config
 {
 	/// <summary>
-	/// Service configuration
+	/// Service configuration interface
 	/// </summary>
-	public abstract record ServiceConfig
+	public interface IServiceConfig
 	{
 		/// <summary>
 		/// Whether or not this service configuration is valid
 		/// </summary>
-		public abstract bool IsValid { get; }
+		bool IsValid { get; }
 	}
 }

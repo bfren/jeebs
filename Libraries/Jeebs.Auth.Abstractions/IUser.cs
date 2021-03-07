@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User interface
 	/// </summary>
-	internal interface IUser : IUserModel, IEntity<long>
+	public interface IUser : IUserModel, IEntity<long>
 	{
 		/// <summary>
 		/// The user's encrypted password

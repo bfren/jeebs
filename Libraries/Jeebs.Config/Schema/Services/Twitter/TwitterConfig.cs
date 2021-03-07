@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Twitter configuration
 	/// </summary>
-	public record TwitterConfig : ServiceConfig
+	public record TwitterConfig : IServiceConfig
 	{
 		/// <summary>
 		/// UserAccessToken
@@ -29,7 +29,7 @@ namespace Jeebs.Config
 		public string ConsumerSecret { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
-		public override bool IsValid =>
+		public bool IsValid =>
 			!string.IsNullOrWhiteSpace(UserAccessToken)
 			&& !string.IsNullOrWhiteSpace(UserAccessSecret)
 			&& !string.IsNullOrWhiteSpace(ConsumerKey)

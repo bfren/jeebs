@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
-  </ItemGroup>
-
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Jeebs.Auth.Abstractions\Jeebs.Auth.Abstractions.csproj" />
+		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+	</ItemGroup>
+	
 	<!-- Enable use of internal entities -->
 	<ItemGroup Label="Enable Entities">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">

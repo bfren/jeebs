@@ -37,7 +37,7 @@ namespace Jeebs.Config
 		/// </summary>
 		/// <exception cref="Jx.Config.UnsupportedServiceException"></exception>
 		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
-		public ServiceConfig GetServiceConfig(string definition) =>
+		public IServiceConfig GetServiceConfig(string definition) =>
 			SplitDefinition(definition) switch
 			{
 				("rocketChat", string name) =>
@@ -66,7 +66,7 @@ namespace Jeebs.Config
 		/// <param name="getCollection">The service collection to use</param>
 		/// <param name="name">The name of the service to get</param>
 		public TConfig GetServiceConfig<TConfig>(Func<ServicesConfig, Dictionary<string, TConfig>> getCollection, string name)
-			where TConfig : ServiceConfig
+			where TConfig : IServiceConfig
 		{
 			var services = getCollection(this);
 			if (!services.ContainsKey(name))

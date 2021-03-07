@@ -17,7 +17,5 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Database entity with version
 	/// </summary>
-	public interface IEntityWithVersion<T> : IEntityWithVersion, IEntity<T>
-	{
-	}
+	public interface IEntityWithVersion<T> : IEntityWithVersion, IEntity<T> { }
 }

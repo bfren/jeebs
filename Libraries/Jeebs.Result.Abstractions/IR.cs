@@ -13,7 +13,7 @@ namespace Jeebs
 		/// <summary>
 		/// List of messages persisted from result to result
 		/// </summary>
-		MsgList Messages { get; }
+		IMsgList Messages { get; }
 
 		/// <summary>
 		/// Returns true if this result contains messages

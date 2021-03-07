@@ -10,22 +10,18 @@ namespace Jeebs
 	/// <summary>
 	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
 	/// </summary>
-	public class MsgList : IDisposable
+	public class MsgList : IDisposable, IMsgList
 	{
 		/// <summary>
 		/// The list of messages
 		/// </summary>
 		private readonly List<IMsg> messages = new();
 
-		/// <summary>
-		/// The number of messages
-		/// </summary>
+		/// <inheritdoc/>
 		public int Count =>
 			messages.Count;
 
-		/// <summary>
-		/// Clear all messages
-		/// </summary>
+		/// <inheritdoc/>
 		public void Clear() =>
 			messages.Clear();
 
@@ -46,46 +42,26 @@ namespace Jeebs
 		private static bool Match<TMsg>(IMsg m) =>
 			typeof(TMsg).IsInstanceOfType(m);
 
-		/// <summary>
-		/// Add a single message of type <typeparamref name="TMsg"/>
-		/// </summary>
-		/// <typeparam name="TMsg">IMsg type</typeparam>
-		internal void Add<TMsg>() where TMsg : IMsg, new() =>
+		/// <inheritdoc/>
+		public void Add<TMsg>() where TMsg : IMsg, new() =>
 			messages.Add(new TMsg());
-
-		/// <summary>
-		/// Add a single message
-		/// </summary>
-		/// <typeparam name="TMsg">IMsg type</typeparam>
-		/// <param name="message">The message to add</param>
-		internal void Add<TMsg>(TMsg message) where TMsg : IMsg =>
+		/// <inheritdoc/>
+		public void Add<TMsg>(TMsg message) where TMsg : IMsg =>
 			messages.Add(message);
 
-		/// <summary>
-		/// Add a range of messages
-		/// </summary>
-		/// <param name="add">Array of messages</param>
-		internal void AddRange(params IMsg[] add) =>
+		/// <inheritdoc/>
+		public void AddRange(params IMsg[] add) =>
 			add.ToList().ForEach(m => messages.Add(m));
 
-		/// <summary>
-		/// Returns whether or not the message list contains at least one message of type <typeparamref name="TMsg"/>
-		/// </summary>
-		/// <typeparam name="TMsg">IMsg type</typeparam>
+		/// <inheritdoc/>
 		public bool Contains<TMsg>() where TMsg : IMsg =>
 			(from m in messages where Match<TMsg>(m) select 1).Any();
 
-		/// <summary>
-		/// Get matching messages
-		/// </summary>
-		/// <typeparam name="TMsg">IMsg type</typeparam>
+		/// <inheritdoc/>
 		public List<TMsg> Get<TMsg>() where TMsg : IMsg =>
 			(from m in messages where Match<TMsg>(m) select (TMsg)m).ToList();
 
-		/// <summary>
-		/// Get all message values
-		/// </summary>
-		/// <param name="withType">[Optional] If true, will include the message type as well</param>
+		/// <inheritdoc/>
 		public List<string> GetAll(bool withType = false) =>
 			withType switch
 			{
@@ -96,9 +72,7 @@ namespace Jeebs
 					(from m in messages select m.ToString()).ToList()
 			};
 
-		/// <summary>
-		/// Returns the messages list as an Enumerable
-		/// </summary>
+		/// <inheritdoc/>
 		public IEnumerable<IMsg> GetEnumerable()
 		{
 			foreach (var m in messages)
@@ -113,10 +87,7 @@ namespace Jeebs
 		public override string ToString() =>
 			ToString(false);
 
-		/// <summary>
-		/// Return all message values on new lines - or default <see cref="ToString(bool)"/> if there are no messages
-		/// </summary>
-		/// <param name="withType">If true, will include the message type as well</param>
+		/// <inheritdoc/>
 		public string ToString(bool withType) =>
 			messages.Count switch
 			{

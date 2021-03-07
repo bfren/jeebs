@@ -9,7 +9,7 @@ namespace Jeebs
 	public abstract class R<TValue> : IR<TValue>
 	{
 		/// <inheritdoc/>
-		public MsgList Messages { get; internal init; } = new();
+		public IMsgList Messages { get; internal init; } = new MsgList();
 
 		/// <inheritdoc/>
 		public ILogger Logger { get; internal init; } = new Logger();

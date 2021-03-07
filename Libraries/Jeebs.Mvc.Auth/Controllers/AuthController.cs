@@ -79,7 +79,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// Get principal for specified user with all necessary claims
 		/// </summary>
 		/// <param name="user">User entity</param>
-		private ClaimsPrincipal GetPrincipal(TUserModel user)
+		internal ClaimsPrincipal GetPrincipal(TUserModel user)
 		{
 			// Create claims object
 			var claims = new List<Claim>

@@ -6,11 +6,14 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Webhook Service configuration
 	/// </summary>
-	public abstract record WebhookServiceConfig : ServiceConfig
+	public abstract record WebhookServiceConfig : IServiceConfig
 	{
 		/// <summary>
 		/// Webhook URI
 		/// </summary>
 		public virtual string Webhook { get; init; } = string.Empty;
+
+		/// <inheritdoc/>
+		public abstract bool IsValid { get; }
 	}
 }
