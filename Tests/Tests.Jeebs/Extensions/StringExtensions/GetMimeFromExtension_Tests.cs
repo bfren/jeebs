@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System.Collections.Generic;
 using Xunit;
 
 namespace Jeebs.StringExtensions_Tests

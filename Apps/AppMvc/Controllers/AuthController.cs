@@ -1,4 +1,7 @@
-﻿using AppMvc.Models;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using AppMvc.Models;
 using Jeebs;
 using Jeebs.Auth;
 using Microsoft.AspNetCore.Mvc;

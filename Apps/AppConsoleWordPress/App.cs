@@ -1,4 +1,7 @@
-﻿using AppConsoleWordPress.Bcg;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using AppConsoleWordPress.Bcg;
 using AppConsoleWordPress.Usa;
 using Jeebs.Data;
 using Jeebs.WordPress;

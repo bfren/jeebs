@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;

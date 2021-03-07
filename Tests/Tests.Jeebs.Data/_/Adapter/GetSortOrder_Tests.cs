@@ -1,4 +1,7 @@
-﻿using Jeebs.Data.Enums;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Jeebs.Data.Enums;
 using Xunit;
 using static Jeebs.Data.Adapter_Tests.Adapter;
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Xunit;
 

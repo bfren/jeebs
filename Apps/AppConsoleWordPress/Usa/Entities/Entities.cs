@@ -1,4 +1,7 @@
-﻿using Jeebs.WordPress.Entities;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Jeebs.WordPress.Entities;
 
 namespace AppConsoleWordPress.Usa.Entities
 {

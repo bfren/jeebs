@@ -1,4 +1,7 @@
-﻿using System.Security.Claims;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System.Security.Claims;
 using System.Security.Principal;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;

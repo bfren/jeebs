@@ -1,4 +1,7 @@
-﻿using Xunit;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Xunit;
 using static Jeebs.Data.QueryPartsBuilderExtended_Tests.QueryPartsBuilderExtended;
 
 namespace Jeebs.Data.QueryPartsBuilderExtended_Tests

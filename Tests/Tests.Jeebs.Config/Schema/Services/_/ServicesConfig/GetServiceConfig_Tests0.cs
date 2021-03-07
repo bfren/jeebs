@@ -1,4 +1,7 @@
-﻿using Jx.Config;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Jx.Config;
 using Xunit;
 
 namespace Jeebs.Config.ServicesConfig_Tests

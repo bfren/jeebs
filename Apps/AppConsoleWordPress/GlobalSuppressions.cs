@@ -1,4 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>", Scope = "member", Target = "~M:AppConsoleWordPress.Program.ApplyContentFilters``1(Jeebs.IOk{``0,Jeebs.WordPress.IWpDb})~System.Threading.Tasks.Task{Jeebs.IR{System.Collections.Generic.List{AppConsoleWordPress.PostModelWithContent},Jeebs.WordPress.IWpDb}}")]
 [assembly: SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>", Scope = "member", Target = "~M:AppConsoleWordPress.Program.FetchCustomFields``1(Jeebs.IOk{``0,Jeebs.WordPress.IWpDb})~System.Threading.Tasks.Task{Jeebs.IR{System.Collections.Generic.List{AppConsoleWordPress.SermonModelWithCustomFields},Jeebs.WordPress.IWpDb}}")]

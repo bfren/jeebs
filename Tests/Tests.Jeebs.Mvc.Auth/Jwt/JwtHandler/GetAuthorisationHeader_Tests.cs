@@ -1,8 +1,9 @@
-﻿using System;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using Microsoft.Extensions.Primitives;
-using NSubstitute;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
+using Microsoft.Extensions.Primitives;
 using Xunit;
 
 namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
@@ -13,7 +14,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Missing_Header_Returns_None_With_MissingAuthorisationHeaderMsg()
 		{
 			// Arrange
-			var headers = new Dictionary<string,StringValues>();
+			var headers = new Dictionary<string, StringValues>();
 
 			// Act
 			var result = JwtHandler.GetAuthorisationHeader(headers);
@@ -22,19 +23,19 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 			var none = Assert.IsType<None<string>>(result);
 			Assert.IsType<MissingAuthorisationHeaderMsg>(none.Reason);
 		}
-		
+
 		[Fact]
 		public void Returns_Authorization_Header()
 		{
-            // Arrange
+			// Arrange
 			var value = F.Rnd.Str;
-            var headers = new Dictionary<string, StringValues>
-            {
-                { "Authorization", value }
-            };
+			var headers = new Dictionary<string, StringValues>
+			{
+				{ "Authorization", value }
+			};
 
-            // Act
-            var result = JwtHandler.GetAuthorisationHeader(headers);
+			// Act
+			var result = JwtHandler.GetAuthorisationHeader(headers);
 
 			// Assert
 			var some = Assert.IsType<Some<string>>(result);

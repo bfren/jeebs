@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Jeebs.RExtensions_Tests

@@ -1,5 +1,5 @@
-﻿// Copyright (c) bcg|design.
-// Licensed under https://mit.bcgdesign.com/2013.
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jm.Functions.JsonF
 {
