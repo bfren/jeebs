@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Security.Principal;
 using Jeebs;
 using Jeebs.Config;
@@ -11,7 +12,7 @@ namespace F.JwtF_Tests
 {
 	public class ValidateToken_Tests
 	{
-		private (JwtConfig config, string token, string user) GetToken(DateTime notBefore, DateTime expires)
+		private static (JwtConfig config, string token, string user) GetToken(DateTime notBefore, DateTime expires)
 		{
 			var config = new JwtConfig
 			{
@@ -24,7 +25,7 @@ namespace F.JwtF_Tests
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
 			identity.Name.Returns(name);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 
 			var token = JwtF.CreateToken(

@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System.Security.Claims;
+using System.Security.Principal;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
 using NSubstitute;
@@ -13,7 +14,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 		{
 			// Arrange
 			var config = new JwtConfig();
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(_ => null);
 			var provider = new JwtAuthProvider(config);
 
@@ -30,7 +31,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 		{
 			// Arrange
 			var config = new JwtConfig();
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			var provider = new JwtAuthProvider(config);
 
 			// Act
@@ -48,7 +49,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 			var config = new JwtConfig();
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 			var provider = new JwtAuthProvider(config);
 
@@ -72,7 +73,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 			};
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 			var provider = new JwtAuthProvider(config);
 
@@ -97,7 +98,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 			};
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 			var provider = new JwtAuthProvider(config);
 
@@ -122,7 +123,7 @@ namespace Jeebs.Auth.JwtAuthenticationProvider_Tests
 			};
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 			var provider = new JwtAuthProvider(config);
 

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) bcg|design.
 // Licensed under https://mit.bcgdesign.com/2013.
 
-using System.Security.Principal;
+using System.Security.Claims;
 using Jeebs.Config;
 using Microsoft.Extensions.Options;
 
@@ -22,11 +22,11 @@ namespace Jeebs.Auth
 			this.config = config;
 
 		/// <inheritdoc/>
-		public Option<string> CreateToken(IPrincipal principal) =>
+		public Option<string> CreateToken(ClaimsPrincipal principal) =>
 			F.JwtF.CreateToken(config, principal);
 
 		/// <inheritdoc/>
-		public Option<IPrincipal> ValidateToken(string token) =>
+		public Option<ClaimsPrincipal> ValidateToken(string token) =>
 			F.JwtF.ValidateToken(config, token);
 	}
 }

@@ -19,12 +19,12 @@ namespace F
 	/// </summary>
 	public static partial class JwtF
 	{
-		/// <inheritdoc cref="CreateToken(JwtConfig, IPrincipal, string, string)"/>
-		public static Option<string> CreateToken(JwtConfig config, IPrincipal principal) =>
+		/// <inheritdoc cref="CreateToken(JwtConfig, ClaimsPrincipal, string, string)"/>
+		public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
 			CreateToken(config, principal, Defaults.Algorithms.Signing, Defaults.Algorithms.Encrypting);
 
-		/// <inheritdoc cref="CreateToken(JwtConfig, IPrincipal, string, string)"/>
-		public static Option<string> CreateToken(JwtConfig config, IPrincipal principal, string signingAlgorithm) =>
+		/// <inheritdoc cref="CreateToken(JwtConfig, ClaimsPrincipal, string, string)"/>
+		public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal, string signingAlgorithm) =>
 			CreateToken(config, principal, signingAlgorithm, Defaults.Algorithms.Encrypting);
 
 		/// <summary>
@@ -32,10 +32,10 @@ namespace F
 		/// <para>See <see cref="Defaults.Algorithms"/> for default signing and encrypting algorithms</para>
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
-		/// <param name="principal">IPrincipal</param>
+		/// <param name="principal">ClaimsPrincipal</param>
 		/// <param name="signingAlgorithm">Signing algorithm</param>
 		/// <param name="encryptingAlgorithm">Encrypting algorithm</param>
-		public static Option<string> CreateToken(JwtConfig config, IPrincipal principal, string signingAlgorithm, string encryptingAlgorithm) =>
+		public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal, string signingAlgorithm, string encryptingAlgorithm) =>
 			CreateToken(
 				config,
 				principal,
@@ -50,12 +50,14 @@ namespace F
 		/// <para>See <see cref="Defaults.Algorithms"/> for default signing and encrypting algorithms</para>
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
-		/// <param name="principal">IPrincipal</param>
+		/// <param name="principal">ClaimsPrincipal</param>
 		/// <param name="signingAlgorithm">Signing algorithm</param>
 		/// <param name="encryptingAlgorithm">Encrypting algorithm</param>
+		/// <param name="notBefore">The earliest date / time from which this token is valid</param>
+		/// <param name="expires">The latest date / time before which this token is valid</param>
 		internal static Option<string> CreateToken(
 			JwtConfig config,
-			IPrincipal principal,
+			ClaimsPrincipal principal,
 			string signingAlgorithm,
 			string encryptingAlgorithm,
 			DateTime notBefore,

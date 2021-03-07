@@ -3,7 +3,7 @@
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Principal;
+using System.Security.Claims;
 using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Config;
@@ -19,7 +19,7 @@ namespace F
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
 		/// <param name="token">Token value</param>
-		public static Option<IPrincipal> ValidateToken(JwtConfig config, string token)
+		public static Option<ClaimsPrincipal> ValidateToken(JwtConfig config, string token)
 		{
 			try
 			{
@@ -44,7 +44,7 @@ namespace F
 				// Check date values
 				if (validatedToken.ValidTo < DateTime.Now)
 				{
-					return Option.None<IPrincipal>().AddReason<TokenHasExpiredMsg>();
+					return Option.None<ClaimsPrincipal>().AddReason<TokenHasExpiredMsg>();
 				}
 
 				// Return valid principal
@@ -52,11 +52,11 @@ namespace F
 			}
 			catch (SecurityTokenNotYetValidException)
 			{
-				return Option.None<IPrincipal>().AddReason<TokenIsNotValidYetMsg>();
+				return Option.None<ClaimsPrincipal>().AddReason<TokenIsNotValidYetMsg>();
 			}
 			catch (Exception e)
 			{
-				return Option.None<IPrincipal>().AddReason<ErrorValidatingTokenMsg>(e);
+				return Option.None<ClaimsPrincipal>().AddReason<ErrorValidatingTokenMsg>(e);
 			}
 		}
 	}

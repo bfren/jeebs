@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System.Security.Claims;
+using System.Security.Principal;
 using Jeebs;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
@@ -14,7 +15,7 @@ namespace F.JwtF_Tests
 		{
 			// Arrange
 			var config = new JwtConfig();
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(_ => null);
 
 			// Act
@@ -30,7 +31,7 @@ namespace F.JwtF_Tests
 		{
 			// Arrange
 			var config = new JwtConfig();
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 
 			// Act
 			var result = JwtF.CreateToken(config, principal);
@@ -47,7 +48,7 @@ namespace F.JwtF_Tests
 			var config = new JwtConfig();
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 
 			// Act
@@ -70,7 +71,7 @@ namespace F.JwtF_Tests
 			};
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 
 			// Act
@@ -94,7 +95,7 @@ namespace F.JwtF_Tests
 			};
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 
 			// Act
@@ -118,7 +119,7 @@ namespace F.JwtF_Tests
 			};
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
-			var principal = Substitute.For<IPrincipal>();
+			var principal = Substitute.For<ClaimsPrincipal>();
 			principal.Identity.Returns(identity);
 
 			// Act
