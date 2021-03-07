@@ -4,7 +4,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Principal;
 using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Config;

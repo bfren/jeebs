@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Jeebs.Mvc.Auth
+namespace Jeebs.Mvc.Auth.TagHelpers
 {
 	/// <summary>
 	/// JSON Web Token TagHelper
