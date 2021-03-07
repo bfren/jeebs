@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Entities", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
+		Tests\.editorconfig = Tests\.editorconfig
 		Tests\Directory.Build.props = Tests\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -26,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{A256449B-4234-43DD-B18F-741D69906712}"
 	ProjectSection(SolutionItems) = preProject
+		Apps\.editorconfig = Apps\.editorconfig
 		Apps\Directory.Build.props = Apps\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -173,6 +175,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Auth.Jwt", "Tests\Tests.Jeebs.Auth.Jwt\Tests.Jeebs.Auth.Jwt.csproj", "{A5FBF7B7-A294-4164-8C32-6C3FB59BE641}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Auth", "Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj", "{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Mvc", ".Mvc", "{DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Mvc.Auth", "Tests\Tests.Jeebs.Mvc.Auth\Tests.Jeebs.Mvc.Auth.csproj", "{0281729B-3390-4BB4-9B96-E64A75F345B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -398,6 +404,10 @@ Global
 		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0281729B-3390-4BB4-9B96-E64A75F345B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0281729B-3390-4BB4-9B96-E64A75F345B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0281729B-3390-4BB4-9B96-E64A75F345B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0281729B-3390-4BB4-9B96-E64A75F345B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -473,6 +483,8 @@ Global
 		{904BAF5A-95DE-49B8-A3A9-A687988E39AA} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{A5FBF7B7-A294-4164-8C32-6C3FB59BE641} = {904BAF5A-95DE-49B8-A3A9-A687988E39AA}
 		{6705657D-EDC5-4DD0-AC92-4618D8E23A6B} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
+		{DB1C9D5F-BD41-4BEE-8D12-543728ADB33E} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{0281729B-3390-4BB4-9B96-E64A75F345B4} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
