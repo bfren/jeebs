@@ -14,7 +14,7 @@ namespace Jeebs.Services
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration type</typeparam>
 	public abstract class WebhookDriverArgs<TConfig> : DriverArgs<TConfig>
-		where TConfig : ServiceConfig
+		where TConfig : IServiceConfig
 	{
 		/// <summary>
 		/// IHttpClientFactory

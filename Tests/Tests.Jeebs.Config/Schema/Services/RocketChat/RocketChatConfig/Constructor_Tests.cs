@@ -16,7 +16,7 @@ namespace Jeebs.Config.RocketChatConfig_Tests
 			// Act
 
 			// Assert
-			Assert.IsAssignableFrom<ServiceConfig>(config);
+			Assert.IsAssignableFrom<IServiceConfig>(config);
 		}
 
 		[Fact]

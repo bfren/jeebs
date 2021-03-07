@@ -12,7 +12,7 @@ namespace Jeebs.Services.Webhook
 	/// <typeparam name="TConfig">Service configuration</typeparam>
 	/// <typeparam name="TMessage">Message type</typeparam>
 	public interface IWebhookDriver<TConfig, TMessage>
-		where TConfig : ServiceConfig
+		where TConfig : IServiceConfig
 		where TMessage : notnull
 	{
 		/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>

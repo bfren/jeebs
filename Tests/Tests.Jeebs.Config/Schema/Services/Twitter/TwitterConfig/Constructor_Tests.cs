@@ -16,7 +16,7 @@ namespace Jeebs.Config.TwitterConfig_Tests
 			// Act
 
 			// Assert
-			Assert.IsAssignableFrom<ServiceConfig>(config);
+			Assert.IsAssignableFrom<IServiceConfig>(config);
 		}
 	}
 }
