@@ -16,7 +16,7 @@ namespace AppConsole
 				args,
 				(provider, config) =>
 				{
-					using var log = provider.GetRequiredService<ILog<Program>>();
+					var log = provider.GetRequiredService<ILog<Program>>();
 
 					Serilog.Debugging.SelfLog.Enable(Console.Error);
 					var jeebs = config.GetJeebsConfig();

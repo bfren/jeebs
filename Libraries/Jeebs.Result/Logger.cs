@@ -55,9 +55,5 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public void Critical(Exception ex, string message, params object[] args) =>
 			log?.Critical(ex, message, args);
-
-		/// <inheritdoc/>
-		public void Dispose() =>
-			log?.Dispose();
 	}
 }

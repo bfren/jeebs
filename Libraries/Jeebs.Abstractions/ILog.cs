@@ -16,7 +16,7 @@ namespace Jeebs
 	/// <summary>
 	/// Enables agnostic logging operations
 	/// </summary>
-	public interface ILog : IDisposable
+	public interface ILog
 	{
 		/// <summary>
 		/// Whether or not the log will write for the specified Level
