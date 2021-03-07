@@ -36,7 +36,7 @@ namespace Jeebs
 				return;
 			}
 
-			// Get the log level - default is Debug
+			// Get the log level
 			LogLevel level = Defaults.Log.Level;
 			if (msg is ILoggableMsg loggableMsg)
 			{
