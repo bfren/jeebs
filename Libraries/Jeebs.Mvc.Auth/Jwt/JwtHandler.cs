@@ -8,6 +8,7 @@ using Jeebs.Auth;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing.Tree;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 
@@ -69,10 +70,10 @@ namespace Jeebs.Mvc.Auth.Jwt
 		/// </summary>
 		/// <param name="headers">Dictionary of header values</param>
 		internal static Option<string> GetAuthorisationHeader(IDictionary<string, StringValues> headers) =>
-			headers["Authorization"].ToString() switch
+			headers.TryGetValue("Authorization", out var authorisationHeader) switch
 			{
-				string authorisationHeader when !string.IsNullOrEmpty(authorisationHeader) =>
-					authorisationHeader,
+				true when !string.IsNullOrEmpty(authorisationHeader) =>
+					authorisationHeader.ToString(),
 
 				_ =>
 					Option.None<string>().AddReason<MissingAuthorisationHeaderMsg>()
