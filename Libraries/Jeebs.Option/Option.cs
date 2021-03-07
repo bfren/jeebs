@@ -61,7 +61,29 @@ namespace Jeebs
 	{
 		internal Option() { }
 
-		private U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
+		private void SwitchAction(Action<T> some, Action<IMsg?> none)
+		{
+			if (this is Some<T> x)
+			{
+				some(x.Value);
+			}
+			else if (this is None<T> y)
+			{
+				none(y.Reason);
+			}
+			else
+			{
+				throw new Exception(); // as Option<T> is internal implementation only this should never happen...
+			}
+		}
+
+		private void SwitchAction(Action<T> some, Action none) =>
+			SwitchAction(
+				some: some,
+				none: _ => none()
+			);
+
+		private U SwitchFunc<U>(Func<T, U> some, Func<IMsg?, U> none) =>
 			this switch
 			{
 				Some<T> x =>
@@ -74,8 +96,8 @@ namespace Jeebs
 					throw new Exception() // as Option<T> is internal implementation only this should never happen...
 			};
 
-		private U Switch<U>(Func<T, U> some, Func<U> none) =>
-			Switch(
+		private U SwitchFunc<U>(Func<T, U> some, Func<U> none) =>
+			SwitchFunc(
 				some: some,
 				none: _ => none()
 			);
@@ -86,7 +108,7 @@ namespace Jeebs
 		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Action to run if <see cref="None{T}"/></param>
 		public void Switch(Action<T> some, Action none) =>
-			Switch(
+			SwitchAction(
 				some: some,
 				none: none
 			);
@@ -97,7 +119,7 @@ namespace Jeebs
 		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Action to run if <see cref="None{T}"/></param>
 		public void Switch(Action<T> some, Action<IMsg?> none) =>
-			Switch(
+			SwitchAction(
 				some: some,
 				none: none
 			);
@@ -109,7 +131,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public U Match<U>(Func<T, U> some, Func<U> none) =>
-			Switch(
+			SwitchFunc(
 				some: some,
 				none: none
 			);
@@ -121,7 +143,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Value to return if <see cref="None{T}"/></param>
 		public U Match<U>(Func<T, U> some, U none) =>
-			Switch(
+			SwitchFunc(
 				some: some,
 				none: () => none
 			);
@@ -132,9 +154,9 @@ namespace Jeebs
 		/// <typeparam name="U">Next Option value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		public Option<U> Bind<U>(Func<T, Option<U>> bind) =>
-			Switch(
+			SwitchFunc(
 				some: x =>
-					bind(x).Switch<Option<U>>(
+					bind(x).SwitchFunc<Option<U>>(
 						some: Option.Wrap,
 						none: r => new None<U>(r)
 					),
@@ -149,7 +171,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next Option value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		public Option<U> Map<U>(Func<T, U> map) =>
-			Switch(
+			SwitchFunc(
 				some: v => Option.Wrap(map(v)),
 				none: r => new None<U>(r)
 			);
@@ -159,7 +181,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
 		public T Unwrap(Func<T> ifNone) =>
-			Switch(
+			SwitchFunc(
 				some: x => x,
 				none: ifNone
 			);
@@ -180,7 +202,7 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator ==(Option<T> l, T r) =>
-			l.Switch(
+			l.SwitchFunc(
 				some: x => Equals(x, r),
 				none: () => false
 			);
@@ -192,7 +214,7 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator !=(Option<T> l, T r) =>
-			l.Switch(
+			l.SwitchFunc(
 				some: x => !Equals(x, r),
 				none: () => true
 			);
