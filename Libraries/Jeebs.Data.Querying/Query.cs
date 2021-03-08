@@ -63,18 +63,18 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<PagedList<T>>> ExecuteQueryAsync(IOk r, long page)
+		public async Task<IR<IPagedList<T>>> ExecuteQueryAsync(IOk r, long page)
 		{
 			// Run chain
 			return r
 				.Link()
-					.Handle().With<GetCountExceptionMsg>()
+					.Catch().AllUnhandled().With<GetCountExceptionMsg>()
 					.MapAsync(GetCountAsync).Await()
 				.Link()
-					.Handle().With<GetPagingValuesExceptionMsg>()
+					.Catch().AllUnhandled().With<GetPagingValuesExceptionMsg>()
 					.Map(getPagingValues)
 				.Link()
-					.Handle().With<GetItemsExceptionMsg>()
+					.Catch().AllUnhandled().With<GetItemsExceptionMsg>()
 					.MapAsync(getItems).Await();
 
 			// Get paging values
@@ -82,7 +82,7 @@ namespace Jeebs.Data.Querying
 				r.OkV(new PagingValues(r.Value, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer));
 
 			// Get the items
-			async Task<IR<PagedList<T>>> getItems(IOkV<PagingValues> r)
+			async Task<IR<IPagedList<T>>> getItems(IOkV<PagingValues> r)
 			{
 				// Set the OFFSET and LIMIT values based on the calculated paging values
 				Parts.Offset = (r.Value.Page - 1) * r.Value.ItemsPer;
@@ -94,7 +94,7 @@ namespace Jeebs.Data.Querying
 				// Execute and return
 				var items = await UnitOfWork.QueryAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
 				return items.Switch(
-					x => x.OkV(new PagedList<T>(r.Value, x.Value))
+					x => x.OkV((IPagedList<T>)new PagedList<T>(r.Value, x.Value))
 				);
 			}
 		}

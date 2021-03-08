@@ -27,10 +27,10 @@ namespace Jeebs.WordPress
 			{
 				return r
 					.Link()
-						.Handle().With<GetMetaExceptionMsg>()
+						.Catch().AllUnhandled().With<GetMetaExceptionMsg>()
 						.MapAsync(getMetaAsync).Await()
 					.Link()
-						.Handle().With<SetMetaExceptionMsg>()
+						.Catch().AllUnhandled().With<SetMetaExceptionMsg>()
 						.Map(okV => setMeta(okV, s.Value));
 			}
 

@@ -20,7 +20,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 	/// <summary>
 	/// Tweetinvi Twitter Driver
 	/// </summary>
-	public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDriver
+	public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDriver<TweetModel>
 	{
 		/// <summary>
 		/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
@@ -54,7 +54,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			// Get user
 			return await r
 				.Link()
-					.Handle().With(getUserException)
+					.Catch().AllUnhandled().With(getUserException)
 					.MapAsync(getUser);
 
 			// Get user
@@ -79,10 +79,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				.Link()
 					.MapAsync(GetUser).Await()
 				.Link()
-					.Handle().With(getUrlException)
+					.Catch().AllUnhandled().With(getUrlException)
 					.MapAsync(getUrl).Await()
 				.Link()
-					.Handle().With(getStreamException)
+					.Catch().AllUnhandled().With(getStreamException)
 					.MapAsync(getStream).Await();
 
 			// Get profile image URL
@@ -123,10 +123,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				.Link()
 					.MapAsync(GetUser).Await()
 				.Link()
-					.Handle().With(getTimelineException)
+					.Catch().AllUnhandled().With(getTimelineException)
 					.MapAsync(getTimeline).Await()
 				.Link()
-					.Handle().With(convertTweetsException)
+					.Catch().AllUnhandled().With(convertTweetsException)
 					.MapAsync(convertTweets).Await();
 
 			// Get timeline

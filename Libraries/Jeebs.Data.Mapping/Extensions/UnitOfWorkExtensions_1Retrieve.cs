@@ -51,7 +51,7 @@ namespace Jeebs.Data.Mapping
 
 			return r
 				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.RetrieveExceptionMsg(ex, typeof(T), id)))
+					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.RetrieveExceptionMsg(ex, typeof(T), id)))
 					.MapAsync(retrievePoco).Await();
 
 			// Delete the poco

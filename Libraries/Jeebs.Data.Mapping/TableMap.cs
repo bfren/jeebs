@@ -10,7 +10,7 @@ namespace Jeebs.Data.Mapping
 	/// <summary>
 	/// Table Map
 	/// </summary>
-	public sealed class TableMap
+	public sealed class TableMap : ITableMap
 	{
 		/// <summary>
 		/// Table Name

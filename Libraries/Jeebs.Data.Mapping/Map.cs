@@ -13,7 +13,7 @@ namespace Jeebs.Data.Mapping
 		/// <summary>
 		/// Map entity to the specified table type
 		/// </summary>
-		public static TableMap To<TTable>()
+		public static ITableMap To<TTable>()
 			where TTable : Table, new() =>
 			To<TTable>(MapService.Instance);
 
@@ -21,7 +21,7 @@ namespace Jeebs.Data.Mapping
 		/// Map entity to the specified table type
 		/// </summary>
 		/// <param name="mapService">IMapServicee</param>
-		internal static TableMap To<TTable>(IMapService mapService)
+		internal static ITableMap To<TTable>(IMapService mapService)
 			where TTable : Table, new() =>
 			mapService.Map<TEntity>(new TTable());
 
@@ -29,7 +29,7 @@ namespace Jeebs.Data.Mapping
 		/// Map entity to the specified table
 		/// </summary>
 		/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
-		public static TableMap To<TTable>(TTable table)
+		public static ITableMap To<TTable>(TTable table)
 			where TTable : Table =>
 			To(table, MapService.Instance);
 
@@ -38,7 +38,7 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
 		/// <param name="mapService">IMapService</param>
-		internal static TableMap To<TTable>(TTable table, IMapService mapService)
+		internal static ITableMap To<TTable>(TTable table, IMapService mapService)
 			where TTable : Table =>
 			mapService.Map<TEntity>(table);
 	}

@@ -4,7 +4,6 @@
 using Jeebs.Config;
 using Jeebs.Services.Drivers.Webhook.RocketChat.Models;
 using Jeebs.Services.Webhook;
-using Jeebs.Services.Webhook.Models;
 
 namespace Jeebs.Services.Drivers.Webhook.RocketChat
 {
@@ -21,7 +20,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat
 		protected RocketChatWebhookDriver(string name, RocketChatWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message) =>
+		public override void Send(IWebhookMessage message) =>
 			Send(new RocketChatMessage(JeebsConfig, message.Content, message.Level));
 	}
 }

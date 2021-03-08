@@ -4,7 +4,6 @@
 using System.Net.Http;
 using Jeebs.Config;
 using Jeebs.Services.Webhook;
-using Jeebs.Services.Webhook.Models;
 
 namespace Jeebs.Services.Drivers.Webhook.Seq
 {
@@ -21,7 +20,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		protected SeqWebhookDriver(string name, SeqWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message) =>
+		public override void Send(IWebhookMessage message) =>
 			Send(new SeqEvent(message.Content, message.Level));
 
 		/// <inheritdoc/>

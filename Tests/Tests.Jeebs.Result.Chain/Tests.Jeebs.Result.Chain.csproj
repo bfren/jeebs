@@ -15,4 +15,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Link_WithState\Handle\" />
+	</ItemGroup>
 </Project>

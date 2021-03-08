@@ -30,7 +30,7 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <param name="this">Query</param>
 		/// <param name="page">Current page number</param>
-		public static Task<IR<PagedList<T>>> ExecuteQueryAsync<T>(this IQuery<T> @this, long page) =>
+		public static Task<IR<IPagedList<T>>> ExecuteQueryAsync<T>(this IQuery<T> @this, long page) =>
 			@this.ExecuteQueryAsync(Result.Ok(), page);
 	}
 }

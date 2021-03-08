@@ -31,7 +31,7 @@ namespace Jeebs.WordPress
 				.Link()
 					.Map(getQuery)
 				.Link()
-					.Handle().With<GetAttachedFilesExceptionMsg>()
+					.Catch().AllUnhandled().With<GetAttachedFilesExceptionMsg>()
 					.MapAsync(getAttachedFiles).Await();
 
 			// Build custom query

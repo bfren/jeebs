@@ -100,16 +100,16 @@ namespace Jeebs.WordPress
 			where TModel : IEntity =>
 			r
 				.Link()
-					.Handle().With<AddMetaExceptionMsg>()
+					.Catch().AllUnhandled().With<AddMetaExceptionMsg>()
 					.MapAsync(AddMetaAsync<TList, TModel>).Await()
 				.Link()
-					.Handle().With<AddCustomFieldsExceptionMsg>()
+					.Catch().AllUnhandled().With<AddCustomFieldsExceptionMsg>()
 					.MapAsync(AddCustomFieldsAsync<TList, TModel>).Await()
 				.Link()
-					.Handle().With<AddTaxonomiesExceptionMsg>()
+					.Catch().AllUnhandled().With<AddTaxonomiesExceptionMsg>()
 					.MapAsync(AddTaxonomiesAsync<TList, TModel>).Await()
 				.Link()
-					.Handle().With<ApplyContentFiltersExceptionMsg>()
+					.Catch().AllUnhandled().With<ApplyContentFiltersExceptionMsg>()
 					.Map(okV => ApplyContentFilters<TList, TModel>(okV, filters));
 
 		private static Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>() =>

@@ -5,29 +5,19 @@ using System;
 
 namespace Jeebs.Services.Twitter.Models
 {
-	/// <summary>
-	/// Twitter Tweet
-	/// </summary>
-	public sealed record TweetModel
+	/// <inheritdoc cref="ITwitterTweet"/>
+	public sealed record TweetModel : ITwitterTweet
 	{
-		/// <summary>
-		/// Author
-		/// </summary>
-		public AuthorModel Author { get; init; } = new();
+		/// <inheritdoc/>
+		public ITwitterAuthor Author { get; init; } = new AuthorModel();
 
-		/// <summary>
-		/// TweetedOn
-		/// </summary>
+		/// <inheritdoc/>
 		public DateTime TweetedOn { get; init; }
 
-		/// <summary>
-		/// Length
-		/// </summary>
+		/// <inheritdoc/>
 		public int Length { get; init; }
 
-		/// <summary>
-		/// Text
-		/// </summary>
+		/// <inheritdoc/>
 		public string Text { get; init; } = string.Empty;
 	}
 }

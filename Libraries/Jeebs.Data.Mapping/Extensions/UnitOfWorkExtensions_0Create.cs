@@ -24,13 +24,13 @@ namespace Jeebs.Data.Mapping
 			r
 				.WithState(@this)
 				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
+					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
 					.Map(InsertAndReturnId)
 				.Link()
-					.Handle().With<CheckIdExceptionMsg>()
+					.Catch().AllUnhandled().With<CheckIdExceptionMsg>()
 					.Map(CheckId<T>)
 				.Link()
-					.Handle().With<GetFreshPocoExceptionMsg>()
+					.Catch().AllUnhandled().With<GetFreshPocoExceptionMsg>()
 					.Map(GetFreshPoco<T>);
 
 		/// <summary>
@@ -45,13 +45,13 @@ namespace Jeebs.Data.Mapping
 			await r
 				.WithState(@this)
 				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
+					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
 					.MapAsync(InsertAndReturnIdAsync).Await()
 				.Link()
-					.Handle().With<CheckIdExceptionMsg>()
+					.Catch().AllUnhandled().With<CheckIdExceptionMsg>()
 					.Map(CheckId<T>)
 				.Link()
-					.Handle().With<GetFreshPocoExceptionMsg>()
+					.Catch().AllUnhandled().With<GetFreshPocoExceptionMsg>()
 					.MapAsync(GetFreshPocoAsync<T>);
 
 		/// <summary>

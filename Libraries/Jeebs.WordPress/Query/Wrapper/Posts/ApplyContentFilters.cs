@@ -32,7 +32,7 @@ namespace Jeebs.WordPress
 			{
 				Some<Content<TModel>> x when x.Value is var content =>
 					r.Link()
-						.Handle().With<ExecuteContentFiltersExceptionMsg>()
+						.Catch().AllUnhandled().With<ExecuteContentFiltersExceptionMsg>()
 						.Map(okV => execute(okV, content, filters)),
 
 				_ =>

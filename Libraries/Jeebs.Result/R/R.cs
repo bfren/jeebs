@@ -21,8 +21,8 @@ namespace Jeebs
 		/// </summary>
 		public virtual void Dispose()
 		{
+			GC.SuppressFinalize(this);
 			Messages.Dispose();
-			Logger.Dispose();
 		}
 
 		/// <inheritdoc/>

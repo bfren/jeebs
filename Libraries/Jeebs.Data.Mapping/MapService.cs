@@ -44,13 +44,13 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TTable">Table type</typeparam>
-		internal TableMap Map<TEntity, TTable>()
+		internal ITableMap Map<TEntity, TTable>()
 			where TEntity : IEntity
 			where TTable : Table, new() =>
 			Map<TEntity>(new TTable());
 
 		/// <inheritdoc/>
-		public TableMap Map<TEntity>(Table table)
+		public ITableMap Map<TEntity>(ITable table)
 			where TEntity : IEntity =>
 			mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 			{
@@ -92,7 +92,7 @@ namespace Jeebs.Data.Mapping
 			ValidateTable<TEntity>(new TTable());
 
 		/// <inheritdoc/>
-		public (bool valid, string errors) ValidateTable<TEntity>(Table table)
+		public (bool valid, string errors) ValidateTable<TEntity>(ITable table)
 			where TEntity : IEntity
 		{
 			// Get table type
@@ -153,7 +153,7 @@ namespace Jeebs.Data.Mapping
 			GetMappedColumns<TEntity>(new TTable());
 
 		/// <inheritdoc/>
-		public IMappedColumnList GetMappedColumns<TEntity>(Table table)
+		public IMappedColumnList GetMappedColumns<TEntity>(ITable table)
 			where TEntity : IEntity
 		{
 			// Get non-ignored columns
@@ -195,7 +195,7 @@ namespace Jeebs.Data.Mapping
 		}
 
 		/// <inheritdoc/>
-		public TableMap GetTableMapFor<TEntity>()
+		public ITableMap GetTableMapFor<TEntity>()
 			where TEntity : IEntity
 		{
 			if (mappedEntities.TryGetValue(typeof(TEntity), out var map))

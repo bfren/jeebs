@@ -89,7 +89,7 @@ namespace Jeebs.Services.Webhook
 		#region Convert to System.Net.Http.HttpRequestMessage and Send
 
 		/// <inheritdoc/>
-		public abstract void Send(Message message);
+		public abstract void Send(IWebhookMessage message);
 
 		/// <inheritdoc/>
 		public virtual void Send(TMessage message)

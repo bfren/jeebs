@@ -42,13 +42,13 @@ namespace Jeebs.WordPress
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 			return await r
 				.Link()
-					.Handle().With<ParsePostIdExceptionMsg>()
+					.Catch().AllUnhandled().With<ParsePostIdExceptionMsg>()
 					.Map(parseAttachmentPostId)
 				.Link()
-					.Handle().With<GetAttachmentExceptionMsg>()
+					.Catch().AllUnhandled().With<GetAttachmentExceptionMsg>()
 					.MapAsync(getAttachment).Await()
 				.Link()
-					.Handle().With<HydrateExceptionMsg>()
+					.Catch().AllUnhandled().With<HydrateExceptionMsg>()
 					.MapAsync(hydrate);
 
 			//

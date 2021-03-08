@@ -6,7 +6,7 @@ namespace Jeebs.Data.Mapping
 	/// <summary>
 	/// Table
 	/// </summary>
-	public abstract class Table
+	public abstract class Table : ITable
 	{
 		/// <summary>
 		/// Table name

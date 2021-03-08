@@ -49,7 +49,7 @@ namespace Jeebs.Data.Mapping
 			var pocoId = r.Value.Id;
 			return r
 				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.DeleteExceptionMsg(ex, typeof(T), pocoId)))
+					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.DeleteExceptionMsg(ex, typeof(T), pocoId)))
 					.MapAsync(deletePoco).Await();
 
 			// Delete the poco

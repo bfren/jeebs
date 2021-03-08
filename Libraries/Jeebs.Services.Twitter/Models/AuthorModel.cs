@@ -3,29 +3,19 @@
 
 namespace Jeebs.Services.Twitter.Models
 {
-	/// <summary>
-	/// Twitter Author
-	/// </summary>
-	public sealed record AuthorModel
+	/// <inheritdoc cref="ITwitterAuthor"/>
+	public sealed record AuthorModel : ITwitterAuthor
 	{
-		/// <summary>
-		/// ScreenName
-		/// </summary>
+		/// <inheritdoc/>
 		public string ScreenName { get; init; } = string.Empty;
 
-		/// <summary>
-		/// FullName
-		/// </summary>
+		/// <inheritdoc/>
 		public string FullName { get; init; } = string.Empty;
 
-		/// <summary>
-		/// ProfileUrl
-		/// </summary>
+		/// <inheritdoc/>
 		public string ProfileUrl { get; init; } = string.Empty;
 
-		/// <summary>
-		/// ProfileImageUrl
-		/// </summary>
+		/// <inheritdoc/>
 		public string ProfileImageUrl { get; init; } = string.Empty;
 	}
 }

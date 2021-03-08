@@ -25,10 +25,10 @@ namespace Jeebs.WordPress
 			// Execute query
 			return r
 				.Link()
-					.Handle().With<GetAttachedFileValueExceptionMsg>()
+					.Catch().AllUnhandled().With<GetAttachedFileValueExceptionMsg>()
 					.MapAsync(query.ExecuteQueryAsync).Await()
 				.Link()
-					.Handle().With<MultipleAttachedFilesFoundExceptionMsg>()
+					.Catch().AllUnhandled().With<MultipleAttachedFilesFoundExceptionMsg>()
 					.UnwrapSingle<AttachedFileMetaValue>()
 				.Link()
 					.Map(addUploadsPath);

@@ -32,10 +32,10 @@ namespace Jeebs.WordPress
 
 			return r
 				.Link()
-					.Handle().With<GetTermsExceptionMsg>()
+					.Catch().AllUnhandled().With<GetTermsExceptionMsg>()
 					.MapAsync(okV => getTermsAsync(okV, termLists)).Await()
 				.Link()
-					.Handle().With<SetTermsExceptionMsg>()
+					.Catch().AllUnhandled().With<SetTermsExceptionMsg>()
 					.Map(okV => addTerms(okV, termLists));
 
 			//

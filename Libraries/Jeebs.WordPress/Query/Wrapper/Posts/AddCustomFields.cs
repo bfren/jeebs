@@ -28,7 +28,7 @@ namespace Jeebs.WordPress
 			{
 				Some<Meta<TModel>> x when fields.Count > 0 =>
 					r.Link()
-						.Handle().With<HydrateCustomFieldExceptionMsg>()
+						.Catch().AllUnhandled().With<HydrateCustomFieldExceptionMsg>()
 						.MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
 				_ =>
 					r
