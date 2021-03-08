@@ -17,11 +17,11 @@ namespace AppMvc.Controllers
 		public IActionResult Index() =>
 			View();
 
-		[Authorize]
+		[Authorize(Roles = "One")]
 		public IActionResult Allow() =>
 			View();
 
-		[Authorize(Roles = "Deny")]
+		[Authorize(Roles = "Three")]
 		public IActionResult Deny() =>
 			View();
 	}
