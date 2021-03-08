@@ -6,7 +6,7 @@ using System.Reflection;
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
-	/// Holds information about a column mapped using <seealso cref="Map{TEntity}"/>
+	/// Holds information about a mapped column
 	/// </summary>
 	public interface IMappedColumn : IColumn
 	{

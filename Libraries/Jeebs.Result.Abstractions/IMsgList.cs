@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public interface IMsgList : IDisposable
+	/// <summary>
+	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
+	/// </summary>
+	public interface IMsgList
 	{
 		/// <summary>
 		/// The number of messages

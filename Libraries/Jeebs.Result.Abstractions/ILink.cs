@@ -25,7 +25,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Map to a new result with a new value type
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError{TValue}"/> will be returned</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next result type</typeparam>
 		/// <param name="f">Function which receives the current result (if it's an <see cref="IOk"/>) and returns the next result</param>
@@ -36,7 +36,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Map to a new result with a new value type
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError{TValue}"/> will be returned</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next result type</typeparam>
 		/// <param name="f">Function which receives the current result (if it's an <see cref="IOk{TValue}"/>) and returns the next result</param>
@@ -47,7 +47,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Map to a new result with a new value type
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError{TValue}"/> will be returned</para>
 		/// </summary>
 		/// <typeparam name="TNext">Next result type</typeparam>
 		/// <param name="f">Function which receives the current result (if it's an <see cref="IOkV{TValue}"/>) and returns the next result</param>
@@ -62,7 +62,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Run an action and return <see cref="IOk"/>
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError"/> will be returned</para>
 		/// </summary>
 		/// <param name="f">Action to run</param>
 		IR<TValue> Run(Action f);
@@ -73,7 +73,7 @@ namespace Jeebs
 		/// <summary>
 		/// Run an action and return <see cref="IOk"/>
 		/// <para>The action will receive the current result as an input - if it's an <see cref="IOk"/></para>
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError"/> will be returned</para>
 		/// </summary>
 		/// <param name="f">Action which receives the current result (if it's an <see cref="IOk"/>)</param>
 		IR<TValue> Run(Action<IOk> f);
@@ -84,7 +84,7 @@ namespace Jeebs
 		/// <summary>
 		/// Run an action and return <see cref="IR{TValue}"/>
 		/// <para>The action will receive the current result as an input - if it's an <see cref="IOk{TValue}"/></para>
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError{TValue}"/> will be returned</para>
 		/// </summary>
 		/// <param name="f">Action which receives the current result (if it's an <see cref="IOk{TValue}"/>)</param>
 		IR<TValue> Run(Action<IOk<TValue>> f);
@@ -95,7 +95,7 @@ namespace Jeebs
 		/// <summary>
 		/// Run an action and return <see cref="IR{TValue}"/>
 		/// <para>The action will receive the current result as an input - if it's an <see cref="IOkV{TValue}"/></para>
-		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> as a <see cref="Jm.Link.LinkExceptionMsg"/> - and an <see cref="IError{TValue}"/> will be returned</para>
+		/// <para>Any exceptions will be caught and added to <see cref="IR.Messages"/> - and an <see cref="IError{TValue}"/> will be returned</para>
 		/// </summary>
 		/// <param name="f">Action which receives the current result (if it's an <see cref="IOkV{TValue}"/>)</param>
 		IR<TValue> Run(Action<IOkV<TValue>> f);

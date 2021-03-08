@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Jeebs.Mvc
 {
+	/// <summary>
+	/// Extension methods for TempData to add / retrieve alert messages
+	/// </summary>
 	public static class TempDataDictionaryExtensions
 	{
 		private const string alertsKey = "JeebsAlerts";
@@ -14,7 +17,7 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// Returns whether or not the TempDataDictionary has any pending alerts
 		/// </summary>
-		/// <param name="tempData">ITempDataDictionary</param>
+		/// <param name="this">ITempDataDictionary</param>
 		/// <returns>True if the TempDataDictionary has any pending alerts</returns>
 		public static bool HasAlerts(this ITempDataDictionary @this) =>
 			@this.Peek(alertsKey) != null;

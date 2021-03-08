@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// General result, used mainly for extension methods
 	/// </summary>
-	public interface IR : IDisposable
+	public interface IR
 	{
 		/// <summary>
 		/// List of messages persisted from result to result
@@ -22,7 +22,7 @@ namespace Jeebs
 			Messages.Count > 0;
 
 		/// <summary>
-		/// Used to log events (e.g. exceptions) - requires <see cref="RExtensions_UseLog.UseLog{TResult}(TResult, ILog)"/> to be called to set an application-specific log
+		/// Used to log events (e.g. exceptions)
 		/// </summary>
 		ILogger Logger { get; }
 

@@ -6,7 +6,7 @@ using System;
 namespace Jeebs
 {
 	/// <inheritdoc cref="IR{TValue}"/>
-	public abstract class R<TValue> : IR<TValue>
+	public abstract class R<TValue> : IR<TValue>, IDisposable
 	{
 		/// <inheritdoc/>
 		public IMsgList Messages { get; internal init; } = new MsgList();
@@ -22,7 +22,7 @@ namespace Jeebs
 		public virtual void Dispose()
 		{
 			GC.SuppressFinalize(this);
-			Messages.Dispose();
+			Messages.Clear();
 		}
 
 		/// <inheritdoc/>

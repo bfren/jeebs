@@ -7,7 +7,7 @@ using Jeebs.Data.Mapping;
 namespace Jx.Data.Mapping
 {
 	/// <summary>
-	/// See <see cref="MapService.Map{TEntity}(Table)"/>
+	/// See <see cref="IMapService.Map{TEntity}(ITable)"/>
 	/// </summary>
 	public class InvalidTableMapException : Exception
 	{

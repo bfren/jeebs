@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
-	/// Provides services for <see cref="Map{TEntity}"/> to enable better testing - normal usage is via <see cref="Mapping.Map{TEntity}.To{TTable}()"/> and <see cref="Map{TEntity}.To{TTable}(TTable)"/>
+	/// Provides services for <see cref="Map{TEntity}"/> to enable better testing
 	/// </summary>
 	public interface IMapService : IDisposable
 	{

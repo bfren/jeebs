@@ -7,6 +7,9 @@ using Jm.Audit;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Extension methods for <see cref="ILink{TValue}"/> and <see cref="ILink{TValue, TState}"/>: Catch
+	/// </summary>
 	public static class LinkExtensions_Catch
 	{
 		/// <summary>

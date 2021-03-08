@@ -21,6 +21,9 @@ namespace Jeebs.Mvc.Auth.Controllers
 	public abstract class AuthController<TUserModel> : Controller
 		where TUserModel : IUserModel, new()
 	{
+		/// <summary>
+		/// IDataAuthProvider
+		/// </summary>
 		protected IDataAuthProvider Auth { get; init; }
 
 		/// <summary>
@@ -28,6 +31,11 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		protected virtual Func<TUserModel, List<Claim>>? AddClaims { get; }
 
+		/// <summary>
+		/// Inject dependencies
+		/// </summary>
+		/// <param name="auth">IDataAuthProvider</param>
+		/// <param name="log">ILog</param>
 		protected AuthController(IDataAuthProvider auth, ILog log) : base(log) =>
 			Auth = auth;
 

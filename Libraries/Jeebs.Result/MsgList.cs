@@ -7,10 +7,8 @@ using System.Linq;
 
 namespace Jeebs
 {
-	/// <summary>
-	/// Persists a list of messages (of type <see cref="IMsg"/>) in the result chain
-	/// </summary>
-	public class MsgList : IDisposable, IMsgList
+	/// <inheritdoc cref="IMsgList"/>
+	public class MsgList : IMsgList
 	{
 		/// <summary>
 		/// The list of messages
@@ -24,15 +22,6 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public void Clear() =>
 			messages.Clear();
-
-		/// <summary>
-		/// Dispose (<seealso cref="Clear"/>)
-		/// </summary>
-		public void Dispose()
-		{
-			Clear();
-			GC.SuppressFinalize(this);
-		}
 
 		/// <summary>
 		/// Returns true if <paramref name="m"/> is of type <typeparamref name="TMsg"/>

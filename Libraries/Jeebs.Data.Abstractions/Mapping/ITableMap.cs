@@ -43,7 +43,7 @@ namespace Jeebs.Data.Mapping
 
 		/// <summary>
 		/// Get all column names and aliases for writeable columns
-		/// (i.e. not marked with <see cref="IdAttribute"/>, <see cref="ComputedAttribute"/> or <see cref="ReadonlyAttribute"/>
+		/// (i.e. not marked as Id / Computed / Readonly)
 		/// </summary>
 		(List<string> names, List<string> aliases) GetWriteableColumnNamesAndAliases();
 

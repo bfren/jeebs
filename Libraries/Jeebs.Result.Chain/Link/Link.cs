@@ -50,7 +50,6 @@ namespace Jeebs
 		{
 			GC.SuppressFinalize(this);
 			handlers.Dispose();
-			result.Dispose();
 		}
 	}
 }

@@ -49,9 +49,8 @@ namespace Jeebs
 		/// <inheritdoc cref="Link{TValue}.Dispose"/>
 		new public void Dispose()
 		{
-			GC.SuppressFinalize(this);
 			handlers.Dispose();
-			result.Dispose();
+			base.Dispose();
 		}
 	}
 }
