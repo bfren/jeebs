@@ -6,5 +6,12 @@ namespace Jeebs
 	/// <summary>
 	/// Represents a framework message
 	/// </summary>
-	public interface IMsg { }
+	public interface IMsg
+	{
+		/// <summary>
+		/// Return the message type name
+		/// </summary>
+		string? ToString() =>
+			GetType().Name;
+	}
 }

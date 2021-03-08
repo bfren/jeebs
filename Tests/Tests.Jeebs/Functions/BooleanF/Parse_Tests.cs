@@ -64,7 +64,7 @@ namespace F.BooleanF_Tests
 			// Assert
 			var none = Assert.IsType<None<bool>>(result);
 			Assert.IsType<UnrecognisedValueMsg>(none.Reason);
-			Assert.Equal($"{typeof(UnrecognisedValueMsg)}: '{input}'.", none.Reason?.ToString());
+			Assert.Equal(string.Format(Jm.WithValueMsg.Format, nameof(UnrecognisedValueMsg), input), none.Reason?.ToString());
 		}
 	}
 }

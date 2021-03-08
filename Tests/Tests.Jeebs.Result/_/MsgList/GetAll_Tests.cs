@@ -28,7 +28,11 @@ namespace Jeebs.MsgList_Tests
 
 			var m0 = new StringMsg(F.Rnd.Str);
 			var m1 = new StringMsg(F.Rnd.Str);
-			var expected = new List<string>(new[] { m0.Value, m1.Value });
+			var expected = new List<string>(new[]
+			{
+				string.Format(Jm.WithValueMsg.Format, nameof(StringMsg), m0.Value),
+				string.Format(Jm.WithValueMsg.Format, nameof(StringMsg), m1.Value)
+			});
 
 			// Act
 			l.AddRange(m0, m1);
