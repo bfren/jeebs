@@ -6,10 +6,20 @@ using Jeebs;
 namespace Jm
 {
 	/// <summary>
+	/// Abstraction to hold message format
+	/// </summary>
+	public abstract class WithValueMsg
+	{
+		public const string Format = "{0}: '{1}'.";
+
+		internal WithValueMsg() { }
+	}
+
+	/// <summary>
 	/// Message with value - the value will be output as string when <see cref="ToString"/> is called
 	/// </summary>
 	/// <typeparam name="TValue">Value type</typeparam>
-	public abstract class WithValueMsg<TValue> : IMsg
+	public abstract class WithValueMsg<TValue> : WithValueMsg, IMsg
 	{
 		/// <summary>
 		/// Value
@@ -27,6 +37,6 @@ namespace Jm
 		/// Return <see cref="Value"/>.ToString() or (if null) GetType().ToString();
 		/// </summary>
 		public override string ToString() =>
-			GetType().ToString() + F.StringF.Format(": '{0}'.", Value);
+			string.Format(Format, GetType().Name, Value);
 	}
 }
