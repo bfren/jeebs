@@ -20,6 +20,18 @@
 					"apiKey": ""
 				}
 			}
+		},
+		"web": {
+			"auth": {
+				"enabled": true,
+				"scheme": "cookies",
+				"jwt": {
+					"issuer": "http://localhost:10021",
+					"audience": "http://localhost:10021",
+					"signingKey": "fRqBrFDQn9LG=RvUNh;VV#FBhl3I+@G3",
+					"encryptingKey": "dda^TTJI#=£s9s@1:s3xYXbfN2ucn`FBhnxl3iu`C:C^kD~X4ytI@GAD*5xbBq=b"
+				}
+			}
 		}
 	}
 }

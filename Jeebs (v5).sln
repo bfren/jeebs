@@ -194,6 +194,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Abstractions", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Result", ".Result", "{5E418AB8-36BE-49B2-9084-D60339F2279B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Mvc.Auth.Razor", "Libraries\Jeebs.Mvc.Auth.Razor\Jeebs.Mvc.Auth.Razor.csproj", "{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -442,6 +444,10 @@ Global
 		{6E553AE6-B2C9-41C1-AEE5-5B61B587FA37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E553AE6-B2C9-41C1-AEE5-5B61B587FA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E553AE6-B2C9-41C1-AEE5-5B61B587FA37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -526,6 +532,7 @@ Global
 		{0B88E8FD-A617-4825-8EC4-63C27883D49E} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
 		{6E553AE6-B2C9-41C1-AEE5-5B61B587FA37} = {75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}
 		{5E418AB8-36BE-49B2-9084-D60339F2279B} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

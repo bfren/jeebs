@@ -14,9 +14,9 @@ namespace Jeebs.Config
 		public const string Key = JeebsConfig.Key + ":web";
 
 		/// <summary>
-		/// JwtConfig
+		/// Authentication and Authorisation configuration
 		/// </summary>
-		public JwtConfig Jwt { get; init; } = new();
+		public AuthConfig Auth { get; init; } = new();
 
 		/// <summary>
 		/// RedirectionsConfig

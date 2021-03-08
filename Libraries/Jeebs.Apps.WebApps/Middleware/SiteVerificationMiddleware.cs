@@ -15,7 +15,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// </summary>
 	public sealed class SiteVerificationMiddleware : IMiddleware
 	{
-		private readonly JeebsConfig config;
+		private readonly VerificationConfig config;
 
 		private readonly ILogger logger = Serilog.Log.ForContext<SiteVerificationMiddleware>();
 
@@ -23,7 +23,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Set Site Verification configuration
 		/// </summary>
 		/// <param name="config">JeebsConfig</param>
-		public SiteVerificationMiddleware(IOptions<JeebsConfig> config) =>
+		public SiteVerificationMiddleware(IOptions<VerificationConfig> config) =>
 			this.config = config.Value;
 
 		/// <summary>
@@ -34,11 +34,10 @@ namespace Jeebs.Apps.WebApps.Middleware
 		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
 			var path = context.Request.Path.ToString().TrimStart('/');
-			var verificationConfig = config.Web.Verification;
 
 			try
 			{
-				if (path == verificationConfig.Google)
+				if (path == config.Google)
 				{
 					await WriteAsync(context, "text/html", $"google-site-verification: {path}");
 					return;

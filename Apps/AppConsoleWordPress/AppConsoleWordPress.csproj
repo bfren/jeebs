@@ -24,4 +24,5 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Services\Jeebs.Services.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.WordPress\Jeebs.WordPress.csproj" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="..\..\Libraries\Jeebs.Config\schema.json" /></VisualStudio></ProjectExtensions>
 </Project>

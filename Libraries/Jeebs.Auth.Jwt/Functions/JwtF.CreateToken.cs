@@ -9,56 +9,35 @@ using Jeebs.Auth;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
 using Microsoft.IdentityModel.Tokens;
-using Defaults = Jeebs.Auth.Defaults;
+using Jeebs.Auth.Constants;
 
 namespace F
 {
 	/// <summary>
-	/// JSON Web Tokens function
+	/// JSON Web Tokens functions
 	/// </summary>
 	public static partial class JwtF
 	{
-		/// <inheritdoc cref="CreateToken(JwtConfig, ClaimsPrincipal, string, string)"/>
+		/// <summary>
+		/// <para>Generate a new JSON Web Token for the specified user</para>
+		/// <para>See <see cref="Constants.Algorithms"/> for default signing and encrypting algorithms</para>
+		/// </summary>
+		/// <param name="config">JwtConfig</param>
+		/// <param name="principal">ClaimsPrincipal</param>
 		public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
-			CreateToken(config, principal, Defaults.Algorithms.Signing, Defaults.Algorithms.Encrypting);
-
-		/// <inheritdoc cref="CreateToken(JwtConfig, ClaimsPrincipal, string, string)"/>
-		public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal, string signingAlgorithm) =>
-			CreateToken(config, principal, signingAlgorithm, Defaults.Algorithms.Encrypting);
+			CreateToken(config, principal, DateTime.UtcNow, DateTime.UtcNow.AddHours(config.ValidForHours));
 
 		/// <summary>
 		/// <para>Generate a new JSON Web Token for the specified user</para>
-		/// <para>See <see cref="Defaults.Algorithms"/> for default signing and encrypting algorithms</para>
+		/// <para>See <see cref="Constants.Algorithms"/> for default signing and encrypting algorithms</para>
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
 		/// <param name="principal">ClaimsPrincipal</param>
-		/// <param name="signingAlgorithm">Signing algorithm</param>
-		/// <param name="encryptingAlgorithm">Encrypting algorithm</param>
-		public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal, string signingAlgorithm, string encryptingAlgorithm) =>
-			CreateToken(
-				config,
-				principal,
-				signingAlgorithm,
-				encryptingAlgorithm,
-				DateTime.UtcNow,
-				DateTime.UtcNow.AddHours(config.ValidForHours)
-		);
-
-		/// <summary>
-		/// <para>Generate a new JSON Web Token for the specified user</para>
-		/// <para>See <see cref="Defaults.Algorithms"/> for default signing and encrypting algorithms</para>
-		/// </summary>
-		/// <param name="config">JwtConfig</param>
-		/// <param name="principal">ClaimsPrincipal</param>
-		/// <param name="signingAlgorithm">Signing algorithm</param>
-		/// <param name="encryptingAlgorithm">Encrypting algorithm</param>
 		/// <param name="notBefore">The earliest date / time from which this token is valid</param>
 		/// <param name="expires">The latest date / time before which this token is valid</param>
 		internal static Option<string> CreateToken(
 			JwtConfig config,
 			ClaimsPrincipal principal,
-			string signingAlgorithm,
-			string encryptingAlgorithm,
 			DateTime notBefore,
 			DateTime expires
 		)
@@ -69,9 +48,8 @@ namespace F
 				return Option.None<string>().AddReason<NullIdentityMsg>();
 			}
 
-			var identity = principal.Identity;
-
 			// Ensure the current user is authenticated
+			var identity = principal.Identity;
 			if (!identity.IsAuthenticated)
 			{
 				return Option.None<string>().AddReason<IdentityNotAuthenticatedMsg>();
@@ -81,6 +59,18 @@ namespace F
 			if (!config.IsValid)
 			{
 				return Option.None<string>().AddReason<JwtConfigInvalidMsg>();
+			}
+
+			// Ensure the signing key is a valid length
+			if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
+			{
+				return Option.None<string>().AddReason<SigningKeyNotLongEnoughMsg>();
+			}
+
+			// Ensure the encrypting key is a valid length
+			if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
+			{
+				return Option.None<string>().AddReason<EncryptingKeyNotLongEnoughMsg>();
 			}
 
 			try
@@ -94,15 +84,15 @@ namespace F
 					NotBefore = notBefore,
 					Expires = expires,
 					IssuedAt = DateTime.UtcNow,
-					SigningCredentials = new SigningCredentials(config.GetSigningKey(), signingAlgorithm)
+					SigningCredentials = new SigningCredentials(config.GetSigningKey(), JwtSecurity.SigningAlgorithm)
 				};
 
-				if (config.GetEncryptingKey() is Some<SecurityKey> encryptingKey)
+				if (config.GetEncryptingKey() is Some<SecurityKey> encryptingKey2)
 				{
 					descriptor.EncryptingCredentials = new EncryptingCredentials(
-						encryptingKey.Value,
-						JwtConstants.DirectKeyUseAlg,
-						encryptingAlgorithm
+						encryptingKey2.Value,
+						JwtSecurity.KeyWrapAlgorithm,
+						JwtSecurity.EncryptingAlgorithm
 					);
 				}
 
@@ -111,13 +101,9 @@ namespace F
 				var token = handler.CreateJwtSecurityToken(descriptor);
 				return handler.WriteToken(token);
 			}
-			catch (ArgumentException e) when (e.Message.Contains("IDX10703"))
-			{
-				return Option.None<string>().AddReason<SigningKeyNotLongEnoughMsg>();
-			}
 			catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 			{
-				return Option.None<string>().AddReason<EncryptingKeyNotLongEnoughMsg>();
+				return Option.None<string>().AddReason<KeyNotLongEnoughMsg>();
 			}
 			catch (Exception e)
 			{

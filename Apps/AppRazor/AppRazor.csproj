@@ -24,4 +24,5 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="..\..\Libraries\Jeebs.Config\schema.json" /></VisualStudio></ProjectExtensions>
 </Project>

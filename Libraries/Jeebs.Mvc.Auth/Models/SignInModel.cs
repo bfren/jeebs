@@ -16,6 +16,7 @@ namespace Jeebs.Mvc.Auth.Models
 		/// Create empty model
 		/// </summary>
 		/// <param name="returnUrl">[Optional] Return URL (after successful sign in)</param>
-		public SignInModel(string? returnUrl) : this(string.Empty, string.Empty, false, returnUrl) { }
+		public static SignInModel Empty(string? returnUrl) =>
+			new(string.Empty, string.Empty, false, returnUrl);
 	}
 }

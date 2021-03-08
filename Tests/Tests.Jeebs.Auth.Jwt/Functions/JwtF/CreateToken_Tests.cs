@@ -110,7 +110,29 @@ namespace F.JwtF_Tests
 		}
 
 		[Fact]
-		public void Valid_Config_Returns_Token()
+		public void Valid_Config_Without_Encryption_Returns_Token()
+		{
+			// Arrange
+			var config = new JwtConfig
+			{
+				SigningKey = StringF.Random(32),
+				Issuer = Rnd.Str,
+				Audience = Rnd.Str
+			};
+			var identity = Substitute.For<IIdentity>();
+			identity.IsAuthenticated.Returns(true);
+			var principal = Substitute.For<ClaimsPrincipal>();
+			principal.Identity.Returns(identity);
+
+			// Act
+			var result = JwtF.CreateToken(config, principal);
+
+			// Assert
+			Assert.IsType<Some<string>>(result);
+		}
+
+		[Fact]
+		public void Valid_Config_With_Encryption_Returns_Token()
 		{
 			// Arrange
 			var config = new JwtConfig

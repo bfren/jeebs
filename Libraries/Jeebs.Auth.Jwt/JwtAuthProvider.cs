@@ -15,8 +15,8 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="config">JeebsConfig</param>
-		public JwtAuthProvider(IOptions<JeebsConfig> config) : this(config.Value.Web.Jwt) { }
+		/// <param name="config">JwtConfig</param>
+		public JwtAuthProvider(IOptions<JwtConfig> config) : this(config.Value) { }
 
 		internal JwtAuthProvider(JwtConfig config) =>
 			this.config = config;

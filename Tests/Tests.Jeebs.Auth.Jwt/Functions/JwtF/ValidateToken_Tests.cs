@@ -9,21 +9,33 @@ using Jeebs.Config;
 using Jm.Functions.JwtF.ValidateToken;
 using NSubstitute;
 using Xunit;
-using Defaults = Jeebs.Auth.Defaults.Algorithms;
 
 namespace F.JwtF_Tests
 {
 	public class ValidateToken_Tests
 	{
-		private static (JwtConfig config, string token, string user) GetToken(DateTime notBefore, DateTime expires)
+		private static (JwtConfig config, string token, string user) GetToken(bool encrypt, DateTime notBefore, DateTime expires)
 		{
-			var config = new JwtConfig
+			var config = encrypt switch
 			{
-				SigningKey = StringF.Random(32),
-				EncryptingKey = StringF.Random(64),
-				Issuer = Rnd.Str,
-				Audience = Rnd.Str
+				true =>
+					new JwtConfig
+					{
+						SigningKey = StringF.Random(32),
+						EncryptingKey = StringF.Random(64),
+						Issuer = Rnd.Str,
+						Audience = Rnd.Str
+					},
+
+				false =>
+					new JwtConfig
+					{
+						SigningKey = StringF.Random(32),
+						Issuer = Rnd.Str,
+						Audience = Rnd.Str
+					}
 			};
+
 			var name = Rnd.Str;
 			var identity = Substitute.For<IIdentity>();
 			identity.IsAuthenticated.Returns(true);
@@ -34,8 +46,6 @@ namespace F.JwtF_Tests
 			var token = JwtF.CreateToken(
 				config,
 				principal,
-				Defaults.Signing,
-				Defaults.Encrypting,
 				notBefore,
 				expires
 			).Unwrap(
@@ -49,7 +59,7 @@ namespace F.JwtF_Tests
 		public void Not_Valid_Yet_Returns_None_With_TokenIsNotValidYetMsg()
 		{
 			// Arrange
-			var (config, token, _) = GetToken(DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(1));
+			var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(1));
 
 			// Act
 			var result = JwtF.ValidateToken(config, token);
@@ -63,7 +73,7 @@ namespace F.JwtF_Tests
 		public void Expired_Returns_None_With_TokenHasExpiredMsg()
 		{
 			// Arrange
-			var (config, token, _) = GetToken(DateTime.UtcNow, DateTime.UtcNow);
+			var (config, token, _) = GetToken(false, DateTime.UtcNow, DateTime.UtcNow);
 			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
 
 			// Act
@@ -75,10 +85,24 @@ namespace F.JwtF_Tests
 		}
 
 		[Fact]
-		public void Valid_Token_Returns_Principal()
+		public void Valid_Token_Without_Encryption_Returns_Principal()
 		{
 			// Arrange
-			var (config, token, name) = GetToken(DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
+			var (config, token, name) = GetToken(false, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
+
+			// Act
+			var result = JwtF.ValidateToken(config, token);
+
+			// Assert
+			var some = Assert.IsType<Some<ClaimsPrincipal>>(result);
+			Assert.Equal(name, some.Value.Identity?.Name);
+		}
+
+		[Fact]
+		public void Valid_Token_With_Encryption_Returns_Principal()
+		{
+			// Arrange
+			var (config, token, name) = GetToken(true, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
 
 			// Act
 			var result = JwtF.ValidateToken(config, token);

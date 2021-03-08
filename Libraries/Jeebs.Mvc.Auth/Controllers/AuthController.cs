@@ -44,7 +44,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="returnUrl">[Optional] Return URL</param>
 		public IActionResult SignIn(string? returnUrl) =>
-			View(new SignInModel(returnUrl));
+			View(SignInModel.Empty(returnUrl));
 
 		/// <summary>
 		/// Perform sign in
@@ -126,5 +126,15 @@ namespace Jeebs.Mvc.Auth.Controllers
 			var redirectTo = Url.Action(nameof(SignIn), new { ReturnUrl = Request.Query["ReturnUrl"] });
 			return SignOut(new AuthenticationProperties { RedirectUri = redirectTo });
 		}
+
+		/// <summary>
+		/// Generate new JWT keys
+		/// </summary>
+		public IActionResult JwtKeys() =>
+			Json(new
+			{
+				signingKey = F.JwtF.GenerateSigningKey(),
+				encryptingKey = F.JwtF.GenerateEncryptingKey()
+			});
 	}
 }

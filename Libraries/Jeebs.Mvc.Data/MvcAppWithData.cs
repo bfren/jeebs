@@ -28,7 +28,6 @@ namespace Jeebs.Apps
 			base.ConfigureServices(env, config, services);
 
 			// Add data
-			services.AddData().Using(config);
 			services.AddSingleton<TDb>();
 		}
 	}

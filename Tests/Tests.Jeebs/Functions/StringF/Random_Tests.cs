@@ -10,7 +10,7 @@ namespace F.StringF_Tests
 	public class Random_Tests
 	{
 		[Fact]
-		public void ValidLength_ReturnsString()
+		public void Valid_Length_Returns_String()
 		{
 			// Arrange
 			const int length = 10;
@@ -23,7 +23,7 @@ namespace F.StringF_Tests
 		}
 
 		[Fact]
-		public void InvalidLength_ThrowsInvalidOperationException()
+		public void Invalid_Length_Throws_InvalidOperationException()
 		{
 			// Arrange
 			const int length = 3;
@@ -36,7 +36,7 @@ namespace F.StringF_Tests
 		}
 
 		[Fact]
-		public void ReturnsOnlyLowercaseCharacters()
+		public void Returns_Only_Lowercase_Characters()
 		{
 			// Arrange
 
@@ -48,36 +48,36 @@ namespace F.StringF_Tests
 		}
 
 		[Fact]
-		public void ReturnsOnlyLowercaseAndUppercaseCharacters()
+		public void Returns_Only_Lowercase_And_Uppercase_Characters()
 		{
 			// Arrange
 
 			// Act
-			var result = StringF.Random(12, upper: true);
+			var result = StringF.Random(64, upper: true);
 
 			// Assert
 			Assert.True(result.All(c => StringF.LowercaseChars.Contains(c) || StringF.UppercaseChars.Contains(c)));
 		}
 
 		[Fact]
-		public void ReturnsOnlyLowercaseAndNumericCharacters()
+		public void Returns_Only_Lowercase_And_Numeric_Characters()
 		{
 			// Arrange
 
 			// Act
-			var result = StringF.Random(12, upper: false, numbers: true);
+			var result = StringF.Random(64, upper: false, numbers: true);
 
 			// Assert
 			Assert.True(result.All(c => StringF.LowercaseChars.Contains(c) || StringF.NumberChars.Contains(c)));
 		}
 
 		[Fact]
-		public void ReturnsOnlyLowercaseAndSpecialCharacters()
+		public void Returns_Only_Lowercase_And_Special_Characters()
 		{
 			// Arrange
 
 			// Act
-			var result = StringF.Random(12, upper: false, special: true);
+			var result = StringF.Random(64, upper: false, special: true);
 
 			// Assert
 			Assert.True(result.All(c => StringF.LowercaseChars.Contains(c) || StringF.SpecialChars.Contains(c)));
@@ -89,9 +89,13 @@ namespace F.StringF_Tests
 			// Arrange
 
 			// Act
-			var result = StringF.Random(12, upper: true, numbers: true, special: true);
+			var result = StringF.Random(64, upper: true, numbers: true, special: true);
 
 			// Assert
+			Assert.False(result.All(c => StringF.LowercaseChars.Contains(c)));
+			Assert.False(result.All(c => StringF.UppercaseChars.Contains(c)));
+			Assert.False(result.All(c => StringF.NumberChars.Contains(c)));
+			Assert.False(result.All(c => StringF.SpecialChars.Contains(c)));
 			Assert.True(result.All(c => StringF.AllChars.Contains(c)));
 		}
 	}

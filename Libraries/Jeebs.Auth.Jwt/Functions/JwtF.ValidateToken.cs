@@ -15,7 +15,7 @@ namespace F
 	public static partial class JwtF
 	{
 		/// <summary>
-		/// Validate token
+		/// Validate tokens
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
 		/// <param name="token">Token value</param>

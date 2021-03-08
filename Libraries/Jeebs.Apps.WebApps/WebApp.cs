@@ -116,6 +116,9 @@ namespace Jeebs.Apps
 				Configure_SecurityHeaders(app);
 			}
 
+			// Authentication
+			Configure_Authentication(app, config);
+
 			// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
 		}
 
@@ -150,6 +153,19 @@ namespace Jeebs.Apps
 			if (useHsts) // check for Development Environment happens in Configure()
 			{
 				app.UseHsts();
+			}
+		}
+
+		/// <summary>
+		/// Override to configure authentication
+		/// </summary>
+		/// <param name="app">IApplicationBuilder</param>
+		/// <param name="config">IConfiguration</param>
+		protected virtual void Configure_Authentication(IApplicationBuilder app, IConfiguration config)
+		{
+			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+			{
+				app.UseAuthentication();
 			}
 		}
 	}

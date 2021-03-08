@@ -14,7 +14,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 	/// </summary>
 	public sealed class RedirectExactMiddleware : IMiddleware
 	{
-		private readonly JeebsConfig config;
+		private readonly RedirectionsConfig config;
 
 		private readonly ILogger logger = Serilog.Log.ForContext<RedirectExactMiddleware>();
 
@@ -22,7 +22,7 @@ namespace Jeebs.Apps.WebApps.Middleware
 		/// Construct object
 		/// </summary>
 		/// <param name="config">JeebsConfig</param>
-		public RedirectExactMiddleware(IOptions<JeebsConfig> config) =>
+		public RedirectExactMiddleware(IOptions<RedirectionsConfig> config) =>
 			this.config = config.Value;
 
 		/// <summary>
@@ -44,17 +44,14 @@ namespace Jeebs.Apps.WebApps.Middleware
 					current
 			};
 
-			// Get redirections configuration
-			var redirectionsConfig = config.Web.Redirections;
-
 			// Check for current path and current path with query
-			var redirect = (redirectionsConfig.ContainsKey(current), redirectionsConfig.ContainsKey(currentWithQuery)) switch
+			var redirect = (config.ContainsKey(current), config.ContainsKey(currentWithQuery)) switch
 			{
 				(true, _) =>
-					redirectionsConfig[current],
+					config[current],
 
 				(false, true) =>
-					redirectionsConfig[currentWithQuery],
+					config[currentWithQuery],
 
 				(false, false) =>
 					null

@@ -8,7 +8,6 @@ namespace Jx.Config
 	/// <summary>
 	/// Unknown Service
 	/// </summary>
-	[Serializable]
 	public class UnknownServiceException : Exception
 	{
 		/// <summary>
@@ -40,14 +39,5 @@ namespace Jx.Config
 		/// <param name="name"></param>
 		/// <param name="type"></param>
 		public UnknownServiceException(string name, Type type) : this(string.Format(Format, name, type)) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected UnknownServiceException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

@@ -27,9 +27,6 @@ namespace AppConsoleWordPress
 			// Base
 			base.ConfigureServices(env, config, services);
 
-			// Add Data
-			services.AddData().Using(config);
-
 			// Add WordPress
 			services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(config);
 			services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(config);

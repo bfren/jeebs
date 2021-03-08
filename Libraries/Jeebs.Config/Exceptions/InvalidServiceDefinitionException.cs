@@ -8,7 +8,6 @@ namespace Jx.Config
 	/// <summary>
 	/// Invalid Service Definition
 	/// </summary>
-	[Serializable]
 	public class InvalidServiceDefinitionException : Exception
 	{
 		/// <summary>
@@ -33,14 +32,5 @@ namespace Jx.Config
 		/// <param name="message"></param>
 		/// <param name="inner"></param>
 		public InvalidServiceDefinitionException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected InvalidServiceDefinitionException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

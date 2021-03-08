@@ -8,7 +8,6 @@ namespace Jx.Config
 	/// <summary>
 	/// Invalid Service Configuration
 	/// </summary>
-	[Serializable]
 	public class InvalidServiceConfigurationException : Exception
 	{
 		/// <summary>
@@ -40,14 +39,5 @@ namespace Jx.Config
 		/// <param name="name"></param>
 		/// <param name="type"></param>
 		public InvalidServiceConfigurationException(string name, Type type) : this(string.Format(Format, name, type)) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected InvalidServiceConfigurationException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

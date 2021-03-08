@@ -18,7 +18,7 @@ namespace Jeebs.WordPress
 		/// <param name="this">IServiceCollection</param>
 		/// <param name="name">Name of the WordPress Instance</param>
 		public static FluentAddWordPress AddWordPressInstance(this IServiceCollection @this, string name) =>
-			new(ref @this, name);
+			new(@this, name);
 
 		/// <summary>
 		/// Fluently configure WordPress registration
@@ -40,7 +40,7 @@ namespace Jeebs.WordPress
 			/// </summary>
 			/// <param name="services">IServiceCollection</param>
 			/// <param name="name">Name of the WordPress Instance</param>
-			public FluentAddWordPress(ref IServiceCollection services, string name) =>
+			public FluentAddWordPress(IServiceCollection services, string name) =>
 				(Services, section) = (services, $"{WpConfig.Key}:{name}");
 
 			/// <summary>

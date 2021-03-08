@@ -200,27 +200,61 @@
 					"description": "Web Application configuration",
 					"additionalProperties": false,
 					"properties": {
-						"jwt": {
+						"auth": {
 							"type": "object",
-							"description": "JWT configuration",
-							"required": [ "signingKey", "issuer", "audience" ],
+							"description": "Authorisation configuration",
+							"required": [ "enabled", "scheme" ],
 							"additionalProperties": false,
 							"properties": {
-								"signingKey": {
-									"type": "string",
-									"description": "JWT Signing Key (must be at least 32 characters)"
+								"enabled": {
+									"type": "boolean",
+									"default": "Whether or not authentication and authorisation are enabled"
 								},
-								"encryptingKey": {
+								"scheme": {
 									"type": "string",
-									"description": "[Optional] JWT Encrypting Key (must be at least  64 characters)"
+									"description": "The authentication scheme to use",
+									"enum": [ "cookies" ]
 								},
-								"issuer": {
+								"loginPath": {
 									"type": "string",
-									"description": "URL of application issuing this token"
+									"description": "[Optional] Path to the login page",
+									"default": "/auth/signin"
 								},
-								"audience": {
+								"accessDeniedPath": {
 									"type": "string",
-									"description": "URL of application using this token"
+									"description": "[Optional] Path to the access denied page",
+									"default": "/auth/denied"
+								},
+								"jwt": {
+									"type": "object",
+									"description": "JWT configuration",
+									"required": [ "signingKey", "issuer", "audience" ],
+									"additionalProperties": false,
+									"properties": {
+										"signingKey": {
+											"type": "string",
+											"description": "JWT Signing Key",
+											"minLength": 32
+										},
+										"encryptingKey": {
+											"type": "string",
+											"description": "[Optional] JWT Encrypting Key",
+											"minLength": 64
+										},
+										"issuer": {
+											"type": "string",
+											"description": "URL of application issuing this token"
+										},
+										"audience": {
+											"type": "string",
+											"description": "URL of application using this token"
+										},
+										"validForHours": {
+											"type": "integer",
+											"description": "[Optional] The number of hours for which issued tokens will be valid",
+											"default": 1
+										}
+									}
 								}
 							}
 						},

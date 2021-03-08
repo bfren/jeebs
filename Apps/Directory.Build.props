@@ -5,9 +5,4 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties jeebsconfig_1json__JsonSchema="https://raw.githubusercontent.com/bencgreen/jeebs/v5.1.6/Libraries/Jeebs.Config/schema.json" />
-		</VisualStudio>
-	</ProjectExtensions>
 </Project>

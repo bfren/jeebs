@@ -8,7 +8,6 @@ namespace Jx.Config
 	/// <summary>
 	/// No DB Connections
 	/// </summary>
-	[Serializable]
 	public class NoDbConnectionsException : Exception
 	{
 		/// <summary>
@@ -28,14 +27,5 @@ namespace Jx.Config
 		/// <param name="message"></param>
 		/// <param name="inner"></param>
 		public NoDbConnectionsException(string message, Exception inner) : base(message, inner) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected NoDbConnectionsException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

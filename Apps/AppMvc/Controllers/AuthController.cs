@@ -4,6 +4,7 @@
 using AppMvc.Models;
 using Jeebs;
 using Jeebs.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppMvc.Controllers
@@ -12,6 +13,7 @@ namespace AppMvc.Controllers
 	{
 		public AuthController(IDataAuthProvider auth, ILog<AuthController> log) : base(auth, log) { }
 
+		[Authorize]
 		public IActionResult Index()
 		{
 			return View();

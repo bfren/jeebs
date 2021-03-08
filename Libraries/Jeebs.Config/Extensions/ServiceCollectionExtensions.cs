@@ -14,14 +14,36 @@ namespace Jeebs.Config
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
+		/// Bind Jeebs Config objects to IConfiguration
+		/// </summary>
+		/// <param name="this">IServiceCollection</param>
+		/// <param name="config">IConfiguration</param>
+		public static IServiceCollection AddJeebsConfig(this IServiceCollection @this, IConfiguration config)
+		{
+			@this.Bind<JeebsConfig>().To(JeebsConfig.Key).Using(config);
+			@this.Bind<AppConfig>().To(AppConfig.Key).Using(config);
+			@this.Bind<AzureKeyVaultConfig>().To(AzureKeyVaultConfig.Key).Using(config);
+			@this.Bind<DbConfig>().To(DbConfig.Key).Using(config);
+			@this.Bind<LoggingConfig>().To(LoggingConfig.Key).Using(config);
+			@this.Bind<ServicesConfig>().To(ServicesConfig.Key).Using(config);
+			@this.Bind<WebConfig>().To(WebConfig.Key).Using(config);
+			@this.Bind<AuthConfig>().To(AuthConfig.Key).Using(config);
+			@this.Bind<JwtConfig>().To(JwtConfig.Key).Using(config);
+			@this.Bind<RedirectionsConfig>().To(RedirectionsConfig.Key).Using(config);
+			@this.Bind<VerificationConfig>().To(VerificationConfig.Key).Using(config);
+
+			return @this;
+		}
+
+		/// <summary>
 		/// Begin Fluent Binding a Configuration Settings to an object
 		/// </summary>
 		/// <typeparam name="T">Settings object type</typeparam>
-		/// <param name="services">IServiceCollection object</param>
+		/// <param name="this">IServiceCollection object</param>
 		/// <returns>FluentBind object</returns>
-		public static FluentBind<T> Bind<T>(this IServiceCollection services)
+		public static FluentBind<T> Bind<T>(this IServiceCollection @this)
 			where T : class =>
-			new(services);
+			new(@this);
 
 		/// <summary>
 		/// Fluent Bind

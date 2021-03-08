@@ -1,0 +1,26 @@
+﻿@model Jeebs.Mvc.Auth.Models.SignInModel
+
+<form method="post" action="@Url.Action("SignIn", "Auth", new { returnUrl = Model.ReturnUrl })">
+
+	<!-- Sign In details -->
+	<div class="form-group">
+		<label for="@nameof(Model.Email)">Email address</label>
+		<input type="email" class="form-control" id="@nameof(Model.Email)" placeholder="Please enter your email address..." />
+	</div>
+	<div class="form-group">
+		<label for="@nameof(Model.Password)">Password</label>
+		<input type="password" class="form-control" id="@nameof(Model.Password)" placeholder="Please enter your password..." />
+	</div>
+	<div class="form-group">
+		<input type="checkbox" class="form-check-input" id="@nameof(Model.RememberMe)" />
+		<label for="@nameof(Model.RememberMe)">Keep me signed in</label>
+	</div>
+
+	<!-- Hidden values -->
+	<input type="hidden" name="@nameof(Model.ReturnUrl)" value="@Model.ReturnUrl" />
+	@Html.AntiForgeryToken()
+
+	<!-- Submit -->
+	<button type="submit" class="btn btn-primary">Sign In</button>
+
+</form>

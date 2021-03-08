@@ -12,6 +12,11 @@ namespace Jeebs.Config
 	public record ServicesConfig
 	{
 		/// <summary>
+		/// Path to this configuration section
+		/// </summary>
+		public const string Key = JeebsConfig.Key + ":services";
+
+		/// <summary>
 		/// Rocket.Chat configurations
 		/// </summary>
 		public Dictionary<string, RocketChatConfig> RocketChat { get; init; } = new();
