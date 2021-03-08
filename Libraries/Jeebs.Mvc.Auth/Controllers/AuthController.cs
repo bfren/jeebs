@@ -109,7 +109,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 				claims.AddRange(AddClaims(user));
 			}
 
-			// Create user objects
+			// Create and return identity and principal objects
 			var userIdentity = new ClaimsIdentity(claims, "SecureSignIn");
 			return new ClaimsPrincipal(userIdentity);
 		}
