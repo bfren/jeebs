@@ -27,6 +27,6 @@ namespace Jm
 		/// Return <see cref="Value"/>.ToString() or (if null) GetType().ToString();
 		/// </summary>
 		public override string ToString() =>
-			Value?.ToString() ?? GetType().ToString();
+			GetType().ToString() + F.StringF.Format(": '{0}'.", Value);
 	}
 }
