@@ -19,5 +19,16 @@ namespace Jeebs.Auth
 		/// <param name="password">Password</param>
 		Task<Option<TUserModel>> ValidateUserAsync<TUserModel>(string email, string password)
 			where TUserModel : IUserModel, new();
+
+		/// <summary>
+		/// Validate a username and password
+		/// </summary>
+		/// <typeparam name="TUserModel">User model type</typeparam>
+		/// <typeparam name="TRoleModel">Role model type</typeparam>
+		/// <param name="email">Email (username)</param>
+		/// <param name="password">Password</param>
+		Task<Option<TUserModel>> ValidateUserAsync<TUserModel, TRoleModel>(string email, string password)
+			where TUserModel : IUserModel<TRoleModel>, new()
+			where TRoleModel : IRoleModel, new();
 	}
 }

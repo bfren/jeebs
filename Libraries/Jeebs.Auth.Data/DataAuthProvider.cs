@@ -18,5 +18,12 @@ namespace Jeebs.Auth
 
 			throw new NotImplementedException();
 		}
+
+		public async Task<Option<TUserModel>> ValidateUserAsync<TUserModel, TRoleModel>(string email, string password)
+			where TUserModel : IUserModel<TRoleModel>, new()
+			where TRoleModel : IRoleModel, new()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

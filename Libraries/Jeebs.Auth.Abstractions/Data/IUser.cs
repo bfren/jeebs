@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Collections.Generic;
 using Jeebs.Data;
 
 namespace Jeebs.Auth.Data
@@ -40,5 +41,14 @@ namespace Jeebs.Auth.Data
 		/// The last time the user signed in
 		/// </summary>
 		DateTime? LastSignedIn { get; init; }
+	}
+
+	/// <summary>
+	/// User interface - supporting roles
+	/// </summary>
+	/// <typeparam name="TRole">Role type</typeparam>
+	public interface IUser<TRole> : IUser, IUserModel<TRole>
+		where TRole : IRole
+	{
 	}
 }

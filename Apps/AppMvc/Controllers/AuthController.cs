@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppMvc.Controllers
 {
-	public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController<UserModel>
+	public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController<UserModel, RoleModel>
 	{
 		public AuthController(IDataAuthProvider auth, ILog<AuthController> log) : base(auth, log) { }
 

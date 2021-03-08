@@ -17,7 +17,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 	/// <summary>
 	/// Implement this controller to add support for user authentication
 	/// </summary>
-	/// <typeparam name="TUserModel">User entity type</typeparam>
+	/// <typeparam name="TUserModel">User type</typeparam>
 	public abstract class AuthController<TUserModel> : Controller
 		where TUserModel : IUserModel, new()
 	{
@@ -54,7 +54,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		public virtual async Task<IActionResult> SignIn(SignInModel model)
 		{
 			// Validate user
-			var validate = await Auth.ValidateUserAsync<TUserModel>(model.Email, model.Password);
+			var validate = await ValidateUserAsync(model.Email, model.Password);
 			if (validate is Some<TUserModel> user)
 			{
 				// Get user principal
@@ -85,6 +85,14 @@ namespace Jeebs.Mvc.Auth.Controllers
 			// Return to sign in page
 			return SignIn(model.ReturnUrl);
 		}
+
+		/// <summary>
+		/// Validate user using <see cref="Auth"/>
+		/// </summary>
+		/// <param name="email">User email</param>
+		/// <param name="password">User password</param>
+		internal virtual async Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
+			await Auth.ValidateUserAsync<TUserModel>(email, password);
 
 		/// <summary>
 		/// Get principal for specified user with all necessary claims
@@ -147,6 +155,10 @@ namespace Jeebs.Mvc.Auth.Controllers
 				encryptingKey = F.JwtF.GenerateEncryptingKey()
 			});
 
+		/// <summary>
+		/// Return either <paramref name="returnUrl"/> or Index action
+		/// </summary>
+		/// <param name="returnUrl">Return URL</param>
 		private string GetReturnUrl(string? returnUrl) =>
 			returnUrl switch
 			{
