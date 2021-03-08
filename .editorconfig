@@ -1,5 +1,11 @@
 ﻿[*.cs]
 
+# Set line endings
+end_of_line = crlf
+
+# Always end files with a newline
+insert_final_newline = true
+
 # CS1998: Async method lacks 'await' operators and will run synchronously
 dotnet_diagnostic.CS1998.severity = silent
 
