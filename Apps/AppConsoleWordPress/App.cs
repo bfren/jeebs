@@ -3,7 +3,6 @@
 
 using AppConsoleWordPress.Bcg;
 using AppConsoleWordPress.Usa;
-using Jeebs.Data;
 using Jeebs.WordPress;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

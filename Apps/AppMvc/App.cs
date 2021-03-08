@@ -1,7 +1,6 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs.Auth;
 using Jeebs.Mvc.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
