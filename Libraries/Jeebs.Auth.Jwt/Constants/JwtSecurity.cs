@@ -14,7 +14,7 @@ namespace Jeebs.Auth.Constants
 		/// <summary>
 		/// Default signing algorithm (256-bits = 32 characters)
 		/// </summary>
-		public const string SigningAlgorithm = SecurityAlgorithms.HmacSha256;
+		public const string SigningAlgorithm = SecurityAlgorithms.HmacSha256Signature;
 
 		/// <summary>
 		/// Minimum length of signing key (in bytes)

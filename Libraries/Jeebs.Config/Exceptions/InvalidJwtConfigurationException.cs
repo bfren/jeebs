@@ -18,7 +18,7 @@ namespace Jx.Config
 		/// <summary>
 		/// Create exception
 		/// </summary>
-		/// <param name="type">Service type</param>
+		/// <param name="message"></param>
 		public InvalidJwtConfigurationException(string message) : base(message) { }
 
 		/// <summary>

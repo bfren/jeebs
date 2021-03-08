@@ -20,7 +20,7 @@ namespace F
 	{
 		/// <summary>
 		/// <para>Generate a new JSON Web Token for the specified user</para>
-		/// <para>See <see cref="Constants.Algorithms"/> for default signing and encrypting algorithms</para>
+		/// <para>See <see cref="JwtSecurity"/> for default signing and encrypting algorithms</para>
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
 		/// <param name="principal">ClaimsPrincipal</param>
@@ -29,7 +29,7 @@ namespace F
 
 		/// <summary>
 		/// <para>Generate a new JSON Web Token for the specified user</para>
-		/// <para>See <see cref="Constants.Algorithms"/> for default signing and encrypting algorithms</para>
+		/// <para>See <see cref="JwtSecurity"/> for default signing and encrypting algorithms</para>
 		/// </summary>
 		/// <param name="config">JwtConfig</param>
 		/// <param name="principal">ClaimsPrincipal</param>

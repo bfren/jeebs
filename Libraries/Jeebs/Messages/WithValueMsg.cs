@@ -10,6 +10,9 @@ namespace Jm
 	/// </summary>
 	public abstract class WithValueMsg
 	{
+		/// <summary>
+		/// ToString() message format
+		/// </summary>
 		public const string Format = "{0}: '{1}'.";
 
 		internal WithValueMsg() { }
