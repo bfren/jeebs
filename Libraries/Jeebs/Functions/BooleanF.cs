@@ -20,13 +20,12 @@ namespace F
 		/// <returns>True / false</returns>
 		public static Option<bool> Parse<T>(T value)
 		{
-			if (value is null)
+			// Convert to string
+			var val = value?.ToString()?.ToLower();
+			if (val is null)
 			{
 				return Option.None<bool>().AddReason<NullValueMsg>();
 			}
-
-			// String
-			var val = value.ToString()?.ToLower();
 
 			// Alternative boolean values
 			var trueValues = new[] { "true,false", "on", "yes", "1" };
@@ -46,7 +45,7 @@ namespace F
 				return result;
 			}
 
-			return Option.None<bool>();
+			return Option.None<bool>().AddReason(new UnrecognisedValueMsg(val));
 		}
 	}
 }

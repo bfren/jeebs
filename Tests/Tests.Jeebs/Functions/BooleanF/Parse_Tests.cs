@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs;
+using Jm.Functions.BooleanF;
 using Xunit;
 
 namespace F.BooleanF_Tests
@@ -53,7 +54,7 @@ namespace F.BooleanF_Tests
 		[Theory]
 		[InlineData("2")]
 		[InlineData("this is not a valid boolean")]
-		public void InvalidString_Returns_None(string input)
+		public void InvalidString_Returns_None_With_UnrecognisedValueMsg(string input)
 		{
 			// Arrange
 
@@ -61,7 +62,9 @@ namespace F.BooleanF_Tests
 			var result = BooleanF.Parse(input);
 
 			// Assert
-			Assert.IsType<None<bool>>(result);
+			var none = Assert.IsType<None<bool>>(result);
+			Assert.IsType<UnrecognisedValueMsg>(none.Reason);
+			Assert.Equal($"{typeof(UnrecognisedValueMsg)}: '{input}'.", none.Reason?.ToString());
 		}
 	}
 }
