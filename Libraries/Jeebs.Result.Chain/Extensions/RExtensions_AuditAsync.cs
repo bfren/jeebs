@@ -79,7 +79,7 @@ namespace Jeebs
 					() => isError?.Invoke(error) ?? Task.CompletedTask,
 
 				_ =>
-					() => throw new Jx.Result.UnknownImplementationException()
+					throw new Jx.Result.UnknownImplementationException()
 			};
 
 			try

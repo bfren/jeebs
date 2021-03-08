@@ -8,7 +8,7 @@ namespace Jeebs.Data.Mapping
 	/// <summary>
 	/// Provides services for <see cref="Map{TEntity}"/> to enable better testing
 	/// </summary>
-	public interface IMapService : IDisposable
+	public interface IMapService
 	{
 		/// <summary>
 		/// Map the specified <typeparamref name="TEntity"/> to the specified <paramref name="table"/>

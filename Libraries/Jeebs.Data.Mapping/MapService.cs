@@ -11,7 +11,7 @@ using Jx.Data.Mapping;
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc/>
-	public sealed class MapService : IMapService
+	public sealed class MapService : IMapService, IDisposable
 	{
 		#region Static
 

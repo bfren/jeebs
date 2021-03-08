@@ -42,7 +42,12 @@ namespace Jeebs
 		/// <param name="isOk">[Optional] Action to run if the current result is <see cref="IOk{TValue}"/></param>
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="IOkV{TValue}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue}"/></param>
-		public static IR<TValue> AuditSwitch<TValue>(this IR<TValue> @this, Action<IOk<TValue>>? isOk = null, Action<IOkV<TValue>>? isOkV = null, Action<IError<TValue>>? isError = null) =>
+		public static IR<TValue> AuditSwitch<TValue>(
+			this IR<TValue> @this,
+			Action<IOk<TValue>>? isOk = null,
+			Action<IOkV<TValue>>? isOkV = null,
+			Action<IError<TValue>>? isError = null
+		) =>
 			PrivateAuditSwitch(@this, isOk, isOkV, isError);
 
 		/// <summary>
@@ -55,10 +60,19 @@ namespace Jeebs
 		/// <param name="isOk">[Optional] Action to run if the current result is <see cref="IOk{TValue, TState}"/></param>
 		/// <param name="isOkV">[Optional] Action to run if the current result is <see cref="IOkV{TValue, TState}"/></param>
 		/// <param name="isError">[Optional] Action to run if the current result is <see cref="IError{TValue, TState}"/></param>
-		public static IR<TValue, TState> AuditSwitch<TValue, TState>(this IR<TValue, TState> @this, Action<IOk<TValue, TState>>? isOk = null, Action<IOkV<TValue, TState>>? isOkV = null, Action<IError<TValue, TState>>? isError = null) =>
+		public static IR<TValue, TState> AuditSwitch<TValue, TState>(
+			this IR<TValue, TState> @this,
+			Action<IOk<TValue, TState>>? isOk = null,
+			Action<IOkV<TValue, TState>>? isOkV = null,
+			Action<IError<TValue, TState>>? isError = null
+		) =>
 			PrivateAuditSwitch(@this, isOk, isOkV, isError);
 
-		private static TResult PrivateAuditSwitch<TResult, TOk, TOkV, TError>(TResult result, Action<TOk>? isOk, Action<TOkV>? isOkV, Action<TError>? isError)
+		private static TResult PrivateAuditSwitch<TResult, TOk, TOkV, TError>(TResult result,
+			Action<TOk>? isOk,
+			Action<TOkV>? isOkV,
+			Action<TError>? isError
+		)
 			where TResult : IR
 		{
 			if (isOk == null && isOkV == null && isError == null)
@@ -78,7 +92,7 @@ namespace Jeebs
 					() => isError?.Invoke(error),
 
 				_ =>
-					() => throw new Jx.Result.UnknownImplementationException()
+					throw new Jx.Result.UnknownImplementationException()
 			};
 
 			try
