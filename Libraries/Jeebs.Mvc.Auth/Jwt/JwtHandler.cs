@@ -8,7 +8,6 @@ using Jeebs.Auth;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Routing.Tree;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 
