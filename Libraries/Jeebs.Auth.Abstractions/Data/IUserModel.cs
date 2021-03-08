@@ -24,11 +24,6 @@ namespace Jeebs.Auth.Data
 		string FriendlyName { get; init; }
 
 		/// <summary>
-		/// Full name - normally GivenName + FamilyName
-		/// </summary>
-		string FullName { get; }
-
-		/// <summary>
 		/// Whether or not the user account has super permissions
 		/// </summary>
 		bool IsSuper { get; init; }

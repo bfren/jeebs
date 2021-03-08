@@ -44,44 +44,47 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="returnUrl">[Optional] Return URL</param>
 		public IActionResult SignIn(string? returnUrl) =>
-			View(SignInModel.Empty(returnUrl));
+			View(SignInModel.Empty(returnUrl ?? Url.Action("Index")));
 
 		/// <summary>
 		/// Perform sign in
 		/// </summary>
 		/// <param name="model">SignInModel</param>
 		[HttpPost, AutoValidateAntiforgeryToken]
-		public virtual async Task<IActionResult> SignIn(SignInModel model) =>
-			(await Auth.ValidateUserAsync<TUserModel>(model.Email, model.Password)).Match(
-				some: user =>
-				{
-					// Get user principal
-					Log.Trace("User signed in successfully.");
-					var principal = GetPrincipal(user);
+		public virtual async Task<IActionResult> SignIn(SignInModel model)
+		{
+			// Validate user
+			var validate = await Auth.ValidateUserAsync<TUserModel>(model.Email, model.Password);
+			if (validate is Some<TUserModel> user)
+			{
+				// Get user principal
+				Log.Debug("User validated.");
+				var principal = GetPrincipal(user.Value);
 
-					// Add SignIn to HttpContext using Cookie scheme
-					return SignIn(
-						principal,
-						new AuthenticationProperties
-						{
-							ExpiresUtc = DateTime.UtcNow.AddDays(28),
-							IsPersistent = model.RememberMe,
-							AllowRefresh = false,
-							RedirectUri = model.ReturnUrl
-						},
-						CookieAuthenticationDefaults.AuthenticationScheme
-					);
-				},
-				none: () =>
-				{
-					// Log error and add alert for user
-					Log.Trace("Unknown username or password: {Email}.", model.Email);
-					TempData.AddErrorAlert("Unknown username or password.");
+				// Add SignIn to HttpContext using Cookie scheme
+				await HttpContext.SignInAsync(
+					CookieAuthenticationDefaults.AuthenticationScheme,
+					principal,
+					new AuthenticationProperties
+					{
+						ExpiresUtc = DateTime.UtcNow.AddDays(28),
+						IsPersistent = model.RememberMe,
+						AllowRefresh = false,
+						RedirectUri = model.ReturnUrl
+					}
+				);
 
-					// Return to sign in page
-					return SignIn(model.ReturnUrl);
-				}
-			);
+				// Redirect to return url (or Auth/Index)
+				return Redirect(GetReturnUrl(model.ReturnUrl));
+			}
+
+			// Log error and add alert for user
+			Log.Debug("Unknown username or password: {Email}.", model.Email);
+			TempData.AddErrorAlert("Unknown username or password.");
+
+			// Return to sign in page
+			return SignIn(model.ReturnUrl);
+		}
 
 		/// <summary>
 		/// Get principal for specified user with all necessary claims
@@ -93,8 +96,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 			var claims = new List<Claim>
 			{
 				new (JwtClaimTypes.UserId, user.UserId.ValueStr, ClaimValueTypes.Integer32),
-				new (ClaimTypes.GivenName, user.FriendlyName, ClaimValueTypes.String),
-				new (ClaimTypes.Name, user.FullName, ClaimValueTypes.String),
+				new (ClaimTypes.Name, user.FriendlyName, ClaimValueTypes.String),
 				new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 			};
 
@@ -117,15 +119,23 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// Perform sign out
 		/// </summary>
-		public override SignOutResult SignOut()
+		new public async Task<IActionResult> SignOut()
 		{
+			// Sign out
+			await HttpContext.SignOutAsync();
+
 			// Show a friendly message to the user
 			TempData.AddInfoAlert("Goodbye!");
 
-			// Build redirect URL and return SignOut view
-			var redirectTo = Url.Action(nameof(SignIn), new { ReturnUrl = Request.Query["ReturnUrl"] });
-			return SignOut(new AuthenticationProperties { RedirectUri = redirectTo });
+			// Redirect to sign in page
+			return RedirectToAction(nameof(SignIn), new { ReturnUrl = GetReturnUrl(Request.Query["ReturnUrl"]) });
 		}
+
+		/// <summary>
+		/// Show access denied page
+		/// </summary>
+		public IActionResult Denied(string? returnUrl) =>
+			View(new DeniedModel(returnUrl));
 
 		/// <summary>
 		/// Generate new JWT keys
@@ -136,5 +146,15 @@ namespace Jeebs.Mvc.Auth.Controllers
 				signingKey = F.JwtF.GenerateSigningKey(),
 				encryptingKey = F.JwtF.GenerateEncryptingKey()
 			});
+
+		private string GetReturnUrl(string? returnUrl) =>
+			returnUrl switch
+			{
+				string url when Url.IsLocalUrl(url) =>
+					url,
+
+				_ =>
+					Url.Action("Index")
+			};
 	}
 }

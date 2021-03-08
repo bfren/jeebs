@@ -14,9 +14,15 @@ namespace AppMvc.Controllers
 		public AuthController(IDataAuthProvider auth, ILog<AuthController> log) : base(auth, log) { }
 
 		[Authorize]
-		public IActionResult Index()
-		{
-			return View();
-		}
+		public IActionResult Index() =>
+			View();
+
+		[Authorize]
+		public IActionResult Allow() =>
+			View();
+
+		[Authorize(Roles = "Deny")]
+		public IActionResult Deny() =>
+			View();
 	}
 }

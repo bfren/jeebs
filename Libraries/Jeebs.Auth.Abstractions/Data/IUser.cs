@@ -27,6 +27,11 @@ namespace Jeebs.Auth.Data
 		string FamilyName { get; init; }
 
 		/// <summary>
+		/// Full name - normally GivenName + FamilyName
+		/// </summary>
+		string FullName { get; }
+
+		/// <summary>
 		/// Whether or not the user account is enabled
 		/// </summary>
 		bool IsEnabled { get; init; }

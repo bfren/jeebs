@@ -2,22 +2,41 @@
 
 <form method="post" action="@Url.Action("SignIn", "Auth", new { returnUrl = Model.ReturnUrl })">
 
+	<!-- Alerts -->
+	<alerts />
+
 	<!-- Sign In details -->
 	<div class="form-group">
 		<label for="@nameof(Model.Email)">Email address</label>
-		<input type="email" class="form-control" id="@nameof(Model.Email)" placeholder="Please enter your email address..." />
+		<input type="email"
+			   class="form-control"
+			   id="@nameof(Model.Email)"
+			   name="@nameof(Model.Email)"
+			   placeholder="Please enter your email address..."
+			   required />
 	</div>
 	<div class="form-group">
 		<label for="@nameof(Model.Password)">Password</label>
-		<input type="password" class="form-control" id="@nameof(Model.Password)" placeholder="Please enter your password..." />
+		<input type="password"
+			   class="form-control"
+			   id="@nameof(Model.Password)"
+			   name="@nameof(Model.Password)"
+			   placeholder="Please enter your password..."
+			   required />
 	</div>
 	<div class="form-group">
-		<input type="checkbox" class="form-check-input" id="@nameof(Model.RememberMe)" />
+		<input type="checkbox"
+			   class="form-check-input"
+			   id="@nameof(Model.RememberMe)"
+			   name="@nameof(Model.RememberMe)" />
 		<label for="@nameof(Model.RememberMe)">Keep me signed in</label>
 	</div>
 
 	<!-- Hidden values -->
-	<input type="hidden" name="@nameof(Model.ReturnUrl)" value="@Model.ReturnUrl" />
+	<input type="hidden"
+		   id="@nameof(Model.ReturnUrl)"
+		   name="@nameof(Model.ReturnUrl)"
+		   value="@Model.ReturnUrl" />
 	@Html.AntiForgeryToken()
 
 	<!-- Submit -->

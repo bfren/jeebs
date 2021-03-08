@@ -41,8 +41,7 @@ namespace Jeebs.Mvc.TagHelpers
 				foreach (var alert in alerts)
 				{
 					var alertTag = new TagBuilder("div");
-					alertTag.MergeAttribute("class", "jeebs-alert");
-					alertTag.MergeAttribute("class", $"alert-{alert.Type}");
+					alertTag.MergeAttribute("class", $"jeebs-alert jeebs-alert-{alert.Type}");
 					alertTag.InnerHtml.Append(alert.Text);
 					output.Content.AppendHtml(alertTag);
 				}

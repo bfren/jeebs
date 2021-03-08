@@ -1,7 +1,15 @@
-﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<p>Welcome, @User.Identity?.Name (@User.GetUserId())</p>
 
-<p>Auth: @User.GetUserId()</p>
+<h3>Actions</h3>
+<p>
+	<a asp-action="SignOut">Sign Out</a> |
+	<a asp-action="Allow">Allow</a> |
+	<a asp-action="Deny">Deny</a>
+</p>
+
+<h4>Claims</h4>
+@foreach (var item in User.Claims)
+{
+	<p>@item.Subject - @item.Type - @item.Value</p>
+}
