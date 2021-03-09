@@ -52,6 +52,34 @@ namespace Jeebs.Mvc
 					this.ExecuteErrorAsync(reason)
 			);
 
+		/// <summary>
+		/// Do something, process the result and return errors if necessary, or perform the success function
+		/// </summary>
+		/// <typeparam name="T">Result type</typeparam>
+		/// <param name="option">Option value</param>
+		/// <param name="success">Function to run when the result is successful</param>
+		protected async Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, IActionResult> success) =>
+			await option.MatchAsync(
+				some: value =>
+					success(value),
+				none: reason =>
+					this.ExecuteErrorAsync(reason)
+			);
+
+		/// <summary>
+		/// Do something, process the result and return errors if necessary, or perform the success function
+		/// </summary>
+		/// <typeparam name="T">Result type</typeparam>
+		/// <param name="option">Option value</param>
+		/// <param name="success">Function to run when the result is successful</param>
+		protected async Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, Task<IActionResult>> success) =>
+			await option.MatchAsync(
+				some: value =>
+					success(value),
+				none: reason =>
+					this.ExecuteErrorAsync(reason)
+			);
+
 		/// <inheritdoc cref="ProcessOptionAsync{T}(Option{T}, Func{T, Task{IActionResult}})"/>
 		protected IActionResult ProcessOption<T>(Option<T> option, Func<T, IActionResult> success) =>
 			option.Match(
