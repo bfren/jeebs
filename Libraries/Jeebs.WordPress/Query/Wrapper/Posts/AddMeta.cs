@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
 using Jm.WordPress.Query.Wrapper.Posts;
 
@@ -17,79 +18,88 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="r">Result - value is list of posts</param>
-		private async Task<IR<TList>> AddMetaAsync<TList, TModel>(IOkV<TList> r)
+		/// <param name="posts">Posts</param>
+		private async Task<Option<TList>> AddMetaAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
 			// Only proceed if there is a meta property for this model
-			if (GetMetaDictionaryInfo<TModel>() is Some<Meta<TModel>> s)
+			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				return r
-					.Link()
-						.Catch().AllUnhandled().With<GetMetaExceptionMsg>()
-						.MapAsync(getMetaAsync).Await()
-					.Link()
-						.Catch().AllUnhandled().With<SetMetaExceptionMsg>()
-						.Map(okV => setMeta(okV, s.Value));
-			}
+				Some<Meta<TModel>> meta =>
+					await Option
+						.Wrap(posts)
+						.BindAsync(
+							getMetaAsync,
+							e => new AddMetaExceptionMsg(e)
+						)
+						.BindAsync(
+							x => setMeta(x, meta.Value),
+							e => new SetMetaExceptionMsg(e)
+						),
 
-			return r;
+				_ =>
+					posts
+			};
 
 			//
 			// Get Post Meta values
 			//
-			async Task<IR<(TList, List<PostMeta>)>> getMetaAsync(IOkV<TList> r)
+			async Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
 			{
-				// Create options
-				var options = new QueryPostsMeta.Options
-				{
-					PostIds = r.Value.Select(p => p.Id).ToList()
-				};
+				return await Option.True
+					.Map(getOptions)
+					.Map(getQuery)
+					.BindAsync(getMeta)
+					.BindAsync(createTuple);
+
+				// Get query options
+				QueryPostsMeta.Options getOptions() =>
+					new() { PostIds = posts.Select(p => p.Id).ToList() };
 
 				// Get query
-				var query = StartNewQuery()
-					.WithModel<PostMeta>()
-					.WithOptions(options)
-					.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
-					.GetQuery();
+				IQuery<PostMeta> getQuery(QueryPostsMeta.Options options) =>
+					StartNewQuery()
+						.WithModel<PostMeta>()
+						.WithOptions(options)
+						.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
+						.GetQuery();
 
-				// Get meta
-				return (await query.ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
-					x => x.OkV((r.Value, x.Value))
-				);
+				// Execute query to get meta
+				async Task<Option<List<PostMeta>>> getMeta(IQuery<PostMeta> query) =>
+					await query.ExecuteQueryAsync();
+
+				// Create tuple of posts and meta
+				Option<(TList, List<PostMeta>)> createTuple(List<PostMeta> meta) =>
+					(posts, meta);
 			}
 
 			//
 			// Set Meta for each Post
 			//
-			IR<TList> setMeta(IOkV<(TList, List<PostMeta>)> r, Meta<TModel> meta)
+			Option<TList> setMeta((TList, List<PostMeta>) lists, Meta<TModel> meta)
 			{
-				var (posts, postsMeta) = r.Value;
-
-				// If no meta, return success
-				if (postsMeta.Count == 0)
+				var (posts, postsMeta) = lists;
+				if (postsMeta.Count > 0)
 				{
-					return r.OkV(posts);
-				}
-
-				// Add meta to each post
-				foreach (var post in posts)
-				{
-					var postMeta = from m in postsMeta
-								   where m.PostId == post.Id
-								   select new KeyValuePair<string, string>(m.Key, m.Value);
-
-					if (!postMeta.Any())
+					// Add meta to each post
+					foreach (var post in posts)
 					{
-						continue;
-					}
+						var postMeta = from m in postsMeta
+									   where m.PostId == post.Id
+									   select new KeyValuePair<string, string>(m.Key, m.Value);
 
-					// Set the value of the meta property
-					meta.Set(post, new MetaDictionary(postMeta));
+						if (!postMeta.Any())
+						{
+							continue;
+						}
+
+						// Set the value of the meta property
+						meta.Set(post, new MetaDictionary(postMeta));
+					}
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 		}
 

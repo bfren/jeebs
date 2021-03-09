@@ -13,7 +13,7 @@ namespace Jeebs.None_Tests
 			// Arrange
 			var value = F.Rnd.Str;
 			var msg = new TestMsg(value);
-			var option = Option.None<int>().AddReason(msg);
+			var option = Option.None<int>(msg);
 
 			// Act
 			var result = option.ToString();
@@ -26,7 +26,7 @@ namespace Jeebs.None_Tests
 		public void Null_Reason_Returns_Type()
 		{
 			// Arrange
-			var option = Option.None<int>();
+			var option = Option.None<int>(true);
 
 			// Act
 			var result = option.ToString();

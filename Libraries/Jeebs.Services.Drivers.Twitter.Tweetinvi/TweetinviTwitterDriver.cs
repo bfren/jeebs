@@ -49,91 +49,71 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			);
 		}
 
-		private async Task<IR<IUser>> GetUser(IOkV<string> r)
-		{
-			// Get user
-			return await r
-				.Link()
-					.Catch().AllUnhandled().With(getUserException)
-					.MapAsync(getUser);
-
-			// Get user
-			async Task<IR<IUser>> getUser(IOkV<string> r)
+		private async Task<Option<IUser>> GetUser(string screenName) =>
+			await client.Users.GetUserAsync(screenName).ConfigureAwait(false) switch
 			{
-				var user = await client.Users.GetUserAsync(r.Value).ConfigureAwait(false);
-				return r.OkV(user);
-			}
+				IUser user =>
+					Option.Wrap(user),
 
-			// Handle get user exceptions
-			void getUserException(IR<string> r, System.Exception ex)
-			{
-				Log.Information("Unable to find user");
-				r.AddMsg(new ErrorGettingUserMsg(ex));
-			}
-		}
+				_ =>
+					Option.None<IUser>(new UserNotFoundMsg(screenName))
+			};
 
 		/// <inheritdoc/>
-		public async Task<IR<System.IO.Stream>> GetProfileImageStreamAsync(IOkV<string> r)
+		public async Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
-			return r
-				.Link()
-					.MapAsync(GetUser).Await()
-				.Link()
-					.Catch().AllUnhandled().With(getUrlException)
-					.MapAsync(getUrl).Await()
-				.Link()
-					.Catch().AllUnhandled().With(getStreamException)
-					.MapAsync(getStream).Await();
+			return await Option.Wrap(screenName)
+				.BindAsync(
+					GetUser,
+					e => new ErrorGettingUserMsg(e)
+				)
+				.BindAsync(
+					getUrl,
+					e => new ErrorGettingProfileImageUrlMsg(e)
+				)
+				.BindAsync(
+					getStream,
+					e => new ErrorGettingProfileImageStreamMsg(e)
+				);
 
 			// Get profile image URL
-			async Task<IR<string>> getUrl(IOkV<IUser> r)
+			async Task<Option<string>> getUrl(IUser user)
 			{
-				var url = r.Value.ProfileImageUrlFullSize.Replace("http://", "https://");
-				Log.Information("Twitter profile image: '{0}'", url);
-				return r.OkV(url);
-			}
-
-			// Handle get profile image URL exceptions
-			void getUrlException(IR<IUser> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error getting Twitter Profile image URL");
-				r.AddMsg(new ErrorGettingProfileImageUrlMsg(ex));
+				var url = user.ProfileImageUrlFullSize.Replace("http://", "https://");
+				Log.Debug("Twitter profile image: '{0}'", url);
+				return url;
 			}
 
 			// Get profile image stream
-			async Task<IR<System.IO.Stream>> getStream(IOkV<string> r)
+			async Task<Option<System.IO.Stream>> getStream(string uri)
 			{
 				using var client = factory.CreateClient();
-				var stream = await client.GetStreamAsync(r.Value).ConfigureAwait(false);
-				return r.OkV(stream);
-			}
-
-			// Handle get profile image stream exceptions
-			void getStreamException(IR<string> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error getting Twitter Profile image stream");
-				r.AddMsg(new ErrorGettingProfileImageStreamMsg(ex));
+				return await client.GetStreamAsync(uri).ConfigureAwait(false);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<List<TweetModel>>> GetTweetsAsync(IOkV<string> r, bool excludeReplies = true, int limit = 10)
+		public async Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
 		{
-			return r
-				.Link()
-					.MapAsync(GetUser).Await()
-				.Link()
-					.Catch().AllUnhandled().With(getTimelineException)
-					.MapAsync(getTimeline).Await()
-				.Link()
-					.Catch().AllUnhandled().With(convertTweetsException)
-					.MapAsync(convertTweets).Await();
+			return await Option.Wrap(screenName)
+				.BindAsync(
+					GetUser,
+					e => new ErrorGettingUserMsg(e)
+				)
+				.BindAsync(
+					getTimeline,
+					e => new ErrorGettingTimelineMsg(e)
+				)
+				.BindAsync(
+					convertTweets,
+					e => new ErrorConvertingTweetsMsg(e)
+				);
 
 			// Get timeline
-			async Task<IR<List<ITweet>>> getTimeline(IOkV<IUser> r)
+			async Task<Option<List<ITweet>>> getTimeline(IUser user)
 			{
 				// Set parameters
-				var param = new GetUserTimelineParameters(r.Value)
+				var param = new GetUserTimelineParameters(user)
 				{
 					PageSize = limit,
 					ExcludeReplies = excludeReplies
@@ -141,27 +121,20 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 
 				// Get tweets - return empty list if null or empty
 				var timeline = await client.Timelines.GetUserTimelineAsync(param).ConfigureAwait(false);
-				return r.OkV(timeline switch
+				return timeline switch
 				{
 					IEnumerable<ITweet> x =>
 						x.ToList(),
 
 					_ =>
 						new List<ITweet>()
-				});
-			}
-
-			// Handle get timeline exceptions
-			void getTimelineException(IR<IUser> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error getting Twitter timeline");
-				r.AddMsg(new ErrorGettingTimelineMsg(ex));
+				};
 			}
 
 			// Convert the tweets to TweetModel
-			static async Task<IR<List<TweetModel>>> convertTweets(IOkV<List<ITweet>> r)
+			static async Task<Option<List<TweetModel>>> convertTweets(List<ITweet> tweets)
 			{
-				var tweets = from t in r.Value
+				var models = from t in tweets
 							 select new TweetModel
 							 {
 								 Author = new AuthorModel
@@ -175,14 +148,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 								 Text = t.Text
 							 };
 
-				return r.OkV(tweets.ToList());
-			}
-
-			// Handle get timeline exceptions
-			void convertTweetsException(IR<List<ITweet>> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error converting tweets");
-				r.AddMsg(new ErrorConvertingTweetsMsg(ex));
+				return models.ToList();
 			}
 		}
 	}

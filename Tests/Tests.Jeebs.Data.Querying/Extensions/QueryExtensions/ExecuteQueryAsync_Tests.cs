@@ -7,20 +7,19 @@ using Xunit;
 
 namespace Jeebs.Data.Querying.QueryExtensions_Tests
 {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 	public class ExecuteQueryAsync_Tests
 	{
 		[Fact]
-		public async Task Calls_ExecuteQueryAsync_With_Result_Ok()
+		public async Task Calls_ExecuteQueryAsync()
 		{
 			// Arrange
 			var query = Substitute.For<IQuery<int>>();
 
 			// Act
-			query.ExecuteQueryAsync();
+			await query.ExecuteQueryAsync();
 
 			// Assert
-			query.Received().ExecuteQueryAsync(Arg.Any<IOk>());
+			await query.Received().ExecuteQueryAsync();
 		}
 
 		[Fact]
@@ -31,11 +30,10 @@ namespace Jeebs.Data.Querying.QueryExtensions_Tests
 			var page = F.Rnd.Lng;
 
 			// Act
-			query.ExecuteQueryAsync(page);
+			await query.ExecuteQueryAsync(page);
 
 			// Assert
-			query.Received().ExecuteQueryAsync(Arg.Any<IOk>(), page);
+			await query.Received().ExecuteQueryAsync(page);
 		}
 	}
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 }

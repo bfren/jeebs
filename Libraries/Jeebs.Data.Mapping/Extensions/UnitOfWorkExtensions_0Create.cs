@@ -17,141 +17,129 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to insert</param>
+		/// <param name="entity">New entity</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static IR<T> Create<T>(this IUnitOfWork @this, IOkV<T> r)
+		public static Option<T> Create<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			r
-				.WithState(@this)
-				.Link()
-					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
-					.Map(InsertAndReturnId)
-				.Link()
-					.Catch().AllUnhandled().With<CheckIdExceptionMsg>()
-					.Map(CheckId<T>)
-				.Link()
-					.Catch().AllUnhandled().With<GetFreshPocoExceptionMsg>()
-					.Map(GetFreshPoco<T>);
+			Option
+				.Wrap(entity)
+				.Bind(
+					x => InsertAndReturnId(@this, x),
+					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
+				)
+				.Bind(
+					x => CheckId<T>(x),
+					e => new CheckIdExceptionMsg(e)
+				)
+				.Bind(
+					x => GetFreshPoco<T>(@this, x),
+					e => new GetFreshPocoExceptionMsg(e)
+				);
 
 		/// <summary>
 		/// Create an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to insert</param>
+		/// <param name="entity">New entity</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static async Task<IR<T>> CreateAsync<T>(this IUnitOfWork @this, IOkV<T> r)
+		public static async Task<Option<T>> CreateAsync<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			await r
-				.WithState(@this)
-				.Link()
-					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
-					.MapAsync(InsertAndReturnIdAsync).Await()
-				.Link()
-					.Catch().AllUnhandled().With<CheckIdExceptionMsg>()
-					.Map(CheckId<T>)
-				.Link()
-					.Catch().AllUnhandled().With<GetFreshPocoExceptionMsg>()
-					.MapAsync(GetFreshPocoAsync<T>);
+			await Option
+				.Wrap(entity)
+				.BindAsync(
+					x => InsertAndReturnIdAsync(@this, x),
+					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
+				)
+				.BindAsync(
+					x => CheckId<T>(x),
+					e => new CheckIdExceptionMsg(e)
+				)
+				.BindAsync(
+					x => GetFreshPocoAsync<T>(@this, x),
+					e => new GetFreshPocoExceptionMsg(e)
+				);
 
 		/// <summary>
 		/// Perform an INSERT operation and return the ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static IR<long, IUnitOfWork> InsertAndReturnId<T>(IOkV<T, IUnitOfWork> r)
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="entity">Entity to insert</param>
+		private static Option<long> InsertAndReturnId<T>(IUnitOfWork w, T entity)
 			where T : IEntity
 		{
-			// Get values
-			var w = r.State;
-			var poco = r.Value;
-
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(InsertAndReturnId), query, poco));
+			w.Log.Message(new Jm.Data.QueryMsg(nameof(InsertAndReturnId), query, entity));
 
 			// Insert and capture new ID
-			var newId = w.Connection.ExecuteScalar<long>(query, param: poco, transaction: w.Transaction);
-
-			// Continue
-			return r.OkV(newId);
+			return w.Connection.ExecuteScalar<long>(query, param: entity, transaction: w.Transaction);
 		}
 
 		/// <summary>
 		/// Perform an INSERT operation and return the ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static async Task<IR<long, IUnitOfWork>> InsertAndReturnIdAsync<T>(IOkV<T, IUnitOfWork> r)
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="entity">Entity to insert</param>
+		private static async Task<Option<long>> InsertAndReturnIdAsync<T>(IUnitOfWork w, T entity)
 			where T : IEntity
 		{
-			// Get values
-			var w = r.State;
-			var poco = r.Value;
-
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(InsertAndReturnIdAsync), query, poco));
+			w.Log.Message(new Jm.Data.QueryMsg(nameof(InsertAndReturnIdAsync), query, entity));
 
 			// Insert and capture new ID
-			var newId = await w.Connection.ExecuteScalarAsync<long>(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);
-
-			// Continue
-			return r.OkV(newId);
+			return await w.Connection.ExecuteScalarAsync<long>(query, param: entity, transaction: w.Transaction).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Check if the New ID is 0, and if so rollback changes - something went wrong
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static IR<long, IUnitOfWork> CheckId<T>(IOkV<long, IUnitOfWork> r)
+		/// <param name="id">Entity ID</param>
+		private static Option<long> CheckId<T>(long id)
 		{
 			// Check ID and return error
-			if (r.Value == 0)
+			if (id == 0)
 			{
-				return r.Error().AddMsg(new Jm.Data.CreateErrorMsg(typeof(T)));
+				return Option.None<long>(new Jm.Data.CreateErrorMsg(typeof(T)));
 			}
 
 			// Continue
-			return r;
+			return id;
+		}
+
+		/// <summary>
+		/// Get a fresh POCO from the database using the new ID
+		/// </summary>
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="id">Entity ID</param>
+		private static Option<T> GetFreshPoco<T>(IUnitOfWork w, long id)
+			where T : class, IEntity
+		{
+			// Add create message
+			w.Log.Message(new Jm.Data.CreateMsg(typeof(T), id));
+
+			// Get fresh poco
+			return Single<T>(w, id);
 		}
 
 		/// <summary>
 		/// Get a fresh POCO from the database using the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static IR<T, IUnitOfWork> GetFreshPoco<T>(IOkV<long, IUnitOfWork> r)
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="id">Entity ID</param>
+		private static async Task<Option<T>> GetFreshPocoAsync<T>(IUnitOfWork w, long id)
 			where T : class, IEntity
 		{
-			// Get values
-			var w = r.State;
-
 			// Add create message
-			r.AddMsg(new Jm.Data.CreateMsg(typeof(T), r.Value));
+			w.Log.Message(new Jm.Data.CreateMsg(typeof(T), id));
 
 			// Get fresh poco
-			return (IR<T, IUnitOfWork>)Single<T>(w, r);
-		}
-
-		/// <summary>
-		/// Get a fresh POCO from the database using the new ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static async Task<IR<T, IUnitOfWork>> GetFreshPocoAsync<T>(IOkV<long, IUnitOfWork> r)
-			where T : class, IEntity
-		{
-			// Get values
-			var w = r.State;
-			var newId = r.Value;
-
-			// Add create message
-			r.AddMsg(new Jm.Data.CreateMsg(typeof(T), newId));
-
-			// Get fresh poco
-			return (IR<T, IUnitOfWork>)await w.SingleAsync<T>(r);
+			return await SingleAsync<T>(w, id);
 		}
 	}
 }

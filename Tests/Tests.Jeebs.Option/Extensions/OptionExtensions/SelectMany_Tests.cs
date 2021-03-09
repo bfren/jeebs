@@ -34,7 +34,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var v1 = F.Rnd.Int;
 			var o0 = Option.Wrap(v0);
 			var o1 = Option.Wrap(v1);
-			var o2 = Option.None<int>().AddReason<InvalidIntegerMsg>();
+			var o2 = Option.None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = from a in o0

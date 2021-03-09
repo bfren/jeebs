@@ -153,7 +153,7 @@ namespace Jeebs
 					new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 				{ } x =>
-					Option.None<DateTime>().AddReason(new InvalidDateTimeMsg(x.Part, this))
+					Option.None<DateTime>(new InvalidDateTimeMsg(x.Part, this))
 			};
 
 		/// <summary>

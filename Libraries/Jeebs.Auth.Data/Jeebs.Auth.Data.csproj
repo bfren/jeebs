@@ -4,7 +4,6 @@
     <ProjectReference Include="..\Jeebs.Auth.Abstractions\Jeebs.Auth.Abstractions.csproj" />
     <ProjectReference Include="..\Jeebs.Auth.Data.Entities\Jeebs.Auth.Data.Entities.csproj" />
     <ProjectReference Include="..\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
-    <ProjectReference Include="..\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
   </ItemGroup>
 
 </Project>

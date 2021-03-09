@@ -14,7 +14,7 @@ namespace Jeebs.Option_Static_Tests
 			// Arrange
 
 			// Act
-			var result = Option.None<int>();
+			var result = Option.None<int>(true);
 
 			// Assert
 			Assert.IsType<None<int>>(result);

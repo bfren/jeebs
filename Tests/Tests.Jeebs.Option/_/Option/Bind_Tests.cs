@@ -29,7 +29,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
-			static Option<string> bind(int _) => Option.None<string>();
+			static Option<string> bind(int _) => Option.None<string>(true);
 
 			// Act
 			var result = option.Bind(bind);
@@ -42,8 +42,8 @@ namespace Jeebs.Option_Tests
 		public void None_Returns_None_Keeps_Reason()
 		{
 			// Arrange
-			var option = Option.None<int>().AddReason<TestMsg>();
-			static Option<string> bind(int _) => Option.None<string>();
+			var option = Option.None<int>(new TestMsg());
+			static Option<string> bind(int _) => Option.None<string>(true);
 
 			// Act
 			var result = option.Bind(bind);

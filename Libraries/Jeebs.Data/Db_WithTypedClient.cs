@@ -16,16 +16,16 @@ namespace Jeebs.Data
 		new protected TDbClient Client =>
 			(TDbClient)base.Client;
 
-		/// <inheritdoc cref="Db(IDbClient, ILog)"/>
-		protected Db(ILog log) : base(new TDbClient(), log) { }
+		/// <inheritdoc cref="Db(IDbClient, ILog{Db}, ILog{UnitOfWork})"/>
+		protected Db(ILog<Db> dbLog, ILog<UnitOfWork> wLog) : base(new TDbClient(), dbLog, wLog) { }
 
-		/// <inheritdoc cref="Db(IDbClient, ILog, DbConfig)"/>
-		protected Db(ILog log, DbConfig config) : base(new TDbClient(), log, config) { }
+		/// <inheritdoc cref="Db(IDbClient, ILog{Db}, ILog{UnitOfWork}, DbConfig)"/>
+		protected Db(ILog<Db> dbLog, ILog<UnitOfWork> wLog, DbConfig config) : base(new TDbClient(), dbLog, wLog, config) { }
 
-		/// <inheritdoc cref="Db(IDbClient, ILog, DbConfig, string)"/>
-		protected Db(ILog log, DbConfig config, string connectionName) : base(new TDbClient(), log, config, connectionName) { }
+		/// <inheritdoc cref="Db(IDbClient, ILog{Db}, ILog{UnitOfWork}, DbConfig, string)"/>
+		protected Db(ILog<Db> dbLog, ILog<UnitOfWork> wLog, DbConfig config, string connectionName) : base(new TDbClient(), dbLog, wLog, config, connectionName) { }
 
-		/// <inheritdoc cref="Db(IDbClient, ILog, string)"/>
-		protected Db(ILog log, string connectionString) : base(new TDbClient(), log, connectionString) { }
+		/// <inheritdoc cref="Db(IDbClient, ILog{Db}, ILog{UnitOfWork}, string)"/>
+		protected Db(ILog<Db> dbLog, ILog<UnitOfWork> wLog, string connectionString) : base(new TDbClient(), dbLog, wLog, connectionString) { }
 	}
 }

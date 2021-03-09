@@ -17,14 +17,17 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TModel">Term type</typeparam>
 		/// <param name="r">Result</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		public async Task<IR<List<TModel>>> QueryPostsMetaAsync<TModel>(IOk r, Action<QueryPostsMeta.Options>? modify = null)
+		public async Task<Option<List<TModel>>> QueryPostsMetaAsync<TModel>(Action<QueryPostsMeta.Options>? modify = null)
 			where TModel : IEntity
 		{
-			// Get query
-			var query = GetPostsMetaQuery<TModel>(modify);
-
-			// Execute query
-			return await query.ExecuteQueryAsync(r).ConfigureAwait(false);
+			return await Option
+				.Wrap(modify)
+				.Map(
+					GetPostsMetaQuery<TModel>
+				)
+				.BindAsync(
+					x => x.ExecuteQueryAsync()
+				);
 		}
 
 		/// <summary>

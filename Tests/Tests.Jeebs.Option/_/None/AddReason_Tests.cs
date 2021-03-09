@@ -9,23 +9,10 @@ namespace Jeebs.None_Tests
 	public class AddReason_Tests
 	{
 		[Fact]
-		public void As_Object()
-		{
-			// Arrange
-			var none = Option.None<int>();
-
-			// Act
-			var result = none.AddReason(new TestMsg());
-
-			// Assert
-			Assert.True(result.Reason is TestMsg);
-		}
-
-		[Fact]
 		public void As_Type()
 		{
 			// Arrange
-			var none = Option.None<int>();
+			var none = Option.None<int>(true);
 
 			// Act
 			var result = none.AddReason<TestMsg>();
@@ -38,7 +25,7 @@ namespace Jeebs.None_Tests
 		public void For_Exception()
 		{
 			// Arrange
-			var none = Option.None<int>();
+			var none = Option.None<int>(true);
 			var exception = new Exception();
 
 			// Act

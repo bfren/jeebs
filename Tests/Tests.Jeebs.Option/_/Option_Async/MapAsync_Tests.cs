@@ -31,7 +31,7 @@ namespace Jeebs.Option_Async_Tests
 		{
 			// Arrange
 			var map = Substitute.For<Func<int, Task<string>>>();
-			var option = Option.None<int>();
+			var option = Option.None<int>(true);
 
 			// Act
 			var result = await option.MapAsync(map);

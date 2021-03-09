@@ -29,7 +29,7 @@ namespace Jeebs.Option_Tests
 		public void None_Returns_None_Keeps_Reason()
 		{
 			// Arrange
-			var option = Option.None<int>().AddReason<TestMsg>();
+			var option = Option.None<int>(new TestMsg());
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act

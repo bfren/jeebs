@@ -34,7 +34,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var value = F.Rnd.Str;
 			var some = Substitute.For<Func<int, string>>();
-			var none = Option.None<int>();
+			var none = Option.None<int>(true);
 
 			// Act
 			var result = none.Match(
@@ -53,7 +53,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var value = F.Rnd.Str;
 			var some = Substitute.For<Func<int, string>>();
-			var none = Option.None<int>();
+			var none = Option.None<int>(true);
 
 			// Act
 			var result = none.Match(

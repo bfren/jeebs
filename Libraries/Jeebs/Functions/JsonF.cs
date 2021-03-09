@@ -97,7 +97,7 @@ namespace F
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
 			{
-				return Option.None<T>().AddReason<DeserialisingNullOrEmptyStringMsg>();
+				return Option.None<T>(new DeserialisingNullOrEmptyStringMsg());
 			}
 
 			// Attempt to deserialise JSON
@@ -109,12 +109,12 @@ namespace F
 						x,
 
 					_ =>
-						Option.None<T>().AddReason<DeserialisingReturnedNullMsg>() // should never get here
+						Option.None<T>(new DeserialisingReturnedNullMsg()) // should never get here
 				};
 			}
 			catch (Exception ex)
 			{
-				return Option.None<T>().AddReason<DeserialiseExceptionMsg>(ex);
+				return Option.None<T>(new DeserialiseExceptionMsg(ex));
 			}
 		}
 

@@ -17,30 +17,38 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="r">Result - value is list of posts</param>
-		private async Task<IR<TList>> AddCustomFieldsAsync<TList, TModel>(IOkV<TList> r)
+		/// <param name="posts">Posts</param>
+		private async Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
 			// Only proceed if there are custom fields, and a meta property for this model
 			var fields = GetCustomFields<TModel>();
+			if (fields.Count == 0)
+			{
+				return posts;
+			}
+
+			// Meta dictionary is required
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 =>
-					r.Link()
-						.Catch().AllUnhandled().With<HydrateCustomFieldExceptionMsg>()
-						.MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
+				Some<Meta<TModel>> meta when fields.Count > 0 =>
+					await Option
+						.Wrap(posts)
+						.BindAsync(
+							x => hydrateAsync(x, meta.Value, fields),
+							e => new AddCustomFieldsExceptionMsg(e)
+						),
+
 				_ =>
-					r
+					Option.None<TList>(new MetaDictionaryNotFoundMsg())
 			};
 
 			//
 			// Hydrate each custom field
 			//
-			async Task<IR<TList>> hydrateAsync(IOkV<TList> r, Meta<TModel> meta, List<PropertyInfo> customFields)
+			async Task<Option<TList>> hydrateAsync(TList posts, Meta<TModel> meta, List<PropertyInfo> customFields)
 			{
-				var posts = r.Value;
-
 				// Hydrate all custom fields for all posts
 				foreach (var post in posts)
 				{
@@ -60,14 +68,15 @@ namespace Jeebs.WordPress
 						if (getCustomField(post, info) is ICustomField customField)
 						{
 							// Hydrate the field
-							var result = await customField.HydrateAsync(r, db, UnitOfWork, metaDictionary).ConfigureAwait(false);
-							if (result is IError && customField.IsRequired)
+							var result = await customField.HydrateAsync(db, UnitOfWork, metaDictionary).ConfigureAwait(false);
+
+							if (result is None<bool> && customField.IsRequired)
 							{
-								return result.Error<TList>().AddMsg(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
+								return Option.None<TList>(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
 							}
 
 							// Set the value
-							if (result is IOkV<bool> ok && ok.Value)
+							if (result is Some<bool> ok && ok.Value)
 							{
 								info.SetValue(post, customField);
 							}
@@ -75,7 +84,7 @@ namespace Jeebs.WordPress
 					}
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 
 			// Get a custom field - if it's null, create it

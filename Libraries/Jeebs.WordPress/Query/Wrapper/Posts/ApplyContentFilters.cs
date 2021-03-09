@@ -15,37 +15,38 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="r">Result</param>
+		/// <param name="posts">Posts</param>
 		/// <param name="filters">Content Filters</param>
-		private static IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
+		private static Option<TList> ApplyContentFilters<TList, TModel>(TList posts, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
 			// Only proceed if there are content filters
 			if (filters.Length == 0)
 			{
-				return r;
+				return posts;
 			}
 
 			// Post content field is required as we are expected to apply content filters
 			return GetPostContentInfo<TModel>() switch
 			{
 				Some<Content<TModel>> x when x.Value is var content =>
-					r.Link()
-						.Catch().AllUnhandled().With<ExecuteContentFiltersExceptionMsg>()
-						.Map(okV => execute(okV, content, filters)),
+					Option
+						.Wrap(posts)
+						.Map(
+							x => execute(x, content, filters),
+							e => new ApplyContentFiltersExceptionMsg(e)
+						),
 
 				_ =>
-					r.Error().AddMsg().OfType<RequiredContentPropertyNotFoundMsg<TModel>>()
+					Option.None<TList>(new RequiredContentPropertyNotFoundMsg<TModel>())
 			};
 
 			//
 			// Apply content filters to each post
 			//
-			static IR<TList> execute(IOkV<TList> r, Content<TModel> content, ContentFilter[] filters)
+			static TList execute(TList posts, Content<TModel> content, ContentFilter[] filters)
 			{
-				var posts = r.Value;
-
 				foreach (var post in posts)
 				{
 					// Get post content
@@ -61,7 +62,7 @@ namespace Jeebs.WordPress
 					content.Set(post, postContent);
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 		}
 

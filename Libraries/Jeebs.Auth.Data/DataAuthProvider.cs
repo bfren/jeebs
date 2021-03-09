@@ -35,13 +35,13 @@ namespace Jeebs.Auth
 			// Check email
 			if (string.IsNullOrEmpty(email))
 			{
-				return Option.None<TUserModel>().AddReason<InvalidEmailMsg>();
+				return Option.None<TUserModel>(new InvalidEmailMsg());
 			}
 
 			// Check password
 			if (string.IsNullOrEmpty(password))
 			{
-				return Option.None<TUserModel>().AddReason<InvalidPasswordMsg>();
+				return Option.None<TUserModel>(new InvalidPasswordMsg());
 			}
 
 			throw new NotImplementedException();

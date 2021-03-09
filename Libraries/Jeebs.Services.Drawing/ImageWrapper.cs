@@ -36,7 +36,7 @@ namespace Jeebs.Services.Drawing
 			// At least one of width and height should be greater than zero
 			if (width == 0 && height == 0)
 			{
-				return Option.None<IImageWrapper>().AddReason<MaskHeightOrWidthRequiredMsg>();
+				return Option.None<IImageWrapper>(new MaskHeightOrWidthRequiredMsg());
 			}
 
 			// Calculate the size of the new image
@@ -53,7 +53,7 @@ namespace Jeebs.Services.Drawing
 			}
 			catch (Exception e)
 			{
-				return Option.None<IImageWrapper>().AddReason(new ExceptionApplyingImageMaskMsg(e));
+				return Option.None<IImageWrapper>(new ExceptionApplyingImageMaskMsg(e));
 			}
 		}
 	}

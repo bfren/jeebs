@@ -32,7 +32,7 @@ namespace Jeebs.Option_Async_Tests
 			// Arrange
 			var some = Substitute.For<Func<int, int>>();
 			var none = Substitute.For<Func<Task<int>>>();
-			var option = Option.None<int>();
+			var option = Option.None<int>(true);
 
 			// Act
 			await option.MatchAsync(some, none);

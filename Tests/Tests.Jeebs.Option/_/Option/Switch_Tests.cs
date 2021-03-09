@@ -35,7 +35,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var value = F.Rnd.Int;
 			var some = Substitute.For<Action<int>>();
-			var none = Option.None<int>();
+			var none = Option.None<int>(true);
 
 			// Act
 			var result = 0;

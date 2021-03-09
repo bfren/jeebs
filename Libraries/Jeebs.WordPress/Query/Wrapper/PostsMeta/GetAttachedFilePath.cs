@@ -1,7 +1,10 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Jeebs.Data.Querying;
 using Jm.WordPress.Query.Wrapper.PostsMeta;
 
 namespace Jeebs.WordPress
@@ -13,29 +16,39 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="r">Result</param>
 		/// <param name="uploadsPath">Full path to wp-uploads directory on server</param>
-		public async Task<IR<string>> GetAttachedFilePathAsync(IOkV<long> r, string uploadsPath)
+		public async Task<Option<string>> GetAttachedFilePathAsync(long postId, string uploadsPath)
 		{
+			return await Option
+				.Wrap(postId)
+				.Map(
+					getQuery
+				)
+				.BindAsync(
+					getAttachedFiles<AttachedFileMetaValue>,
+					e => new GetAttachedFilesExceptionMsg(e)
+				)
+				.UnwrapAsync(
+					x => x.Single<AttachedFileMetaValue>(tooMany: () => new MultipleAttachedFilesFoundMsg())
+				)
+				.MapAsync(
+					addUploadsPath
+				);
+
 			// Get query
-			var query = GetPostsMetaQuery<AttachedFileMetaValue>(opt =>
-			{
-				opt.PostId = r.Value;
-				opt.Key = Constants.AttachedFile;
-			});
+			IQuery<AttachedFileMetaValue> getQuery(long postId) =>
+				GetPostsMetaQuery<AttachedFileMetaValue>(opt =>
+				{
+					opt.PostId = postId;
+					opt.Key = Constants.AttachedFile;
+				});
 
 			// Execute query
-			return r
-				.Link()
-					.Catch().AllUnhandled().With<GetAttachedFileValueExceptionMsg>()
-					.MapAsync(query.ExecuteQueryAsync).Await()
-				.Link()
-					.Catch().AllUnhandled().With<MultipleAttachedFilesFoundExceptionMsg>()
-					.UnwrapSingle<AttachedFileMetaValue>()
-				.Link()
-					.Map(addUploadsPath);
+			async Task<Option<List<T>>> getAttachedFiles<T>(IQuery<T> query) =>
+				await query.ExecuteQueryAsync();
 
 			// Add uploads path 
-			IR<string> addUploadsPath(IOkV<AttachedFileMetaValue> r) =>
-				r.OkV(uploadsPath.EndWith('/') + r.Value.Value);
+			string addUploadsPath(AttachedFileMetaValue attachedFile) =>
+				uploadsPath.EndWith('/') + attachedFile.Value;
 		}
 
 		private record AttachedFileMetaValue(string Value);

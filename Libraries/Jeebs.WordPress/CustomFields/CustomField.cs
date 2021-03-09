@@ -38,7 +38,7 @@ namespace Jeebs.WordPress
 		}
 
 		/// <inheritdoc/>
-		public abstract Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
+		public abstract Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)

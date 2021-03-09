@@ -6,7 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
-    <ProjectReference Include="..\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
     <ProjectReference Include="..\Jeebs.Services.Twitter\Jeebs.Services.Twitter.csproj" />
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
   </ItemGroup>

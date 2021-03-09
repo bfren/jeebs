@@ -23,15 +23,6 @@ namespace Jeebs
 		/// Add a reason why this option is returning <see cref="None{T}"/>
 		/// </summary>
 		/// <typeparam name="TMsg">Reason message type</typeparam>
-		/// <param name="reason">Reason message</param>
-		public None<T> AddReason<TMsg>(TMsg reason)
-			where TMsg : IMsg =>
-			this with { Reason = reason };
-
-		/// <summary>
-		/// Add a reason why this option is returning <see cref="None{T}"/>
-		/// </summary>
-		/// <typeparam name="TMsg">Reason message type</typeparam>
 		public None<T> AddReason<TMsg>()
 			where TMsg : IMsg, new() =>
 			this with { Reason = new TMsg() };

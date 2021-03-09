@@ -67,7 +67,7 @@ namespace Jeebs
 					value,
 
 				false =>
-					Option.None<T>()
+					Option.None<T>(new NotAValidEnumeratedValueMsg<T>(value))
 			};
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					return Option.None<T>().AddReason(new NotAValidEnumeratedValueMsg<T>(name));
+					return Option.None<T>(new NotAValidEnumeratedValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);

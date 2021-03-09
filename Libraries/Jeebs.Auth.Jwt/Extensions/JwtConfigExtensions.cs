@@ -29,7 +29,7 @@ namespace Jeebs.Auth
 					new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
 
 				_ =>
-					Option.None<SecurityKey>().AddReason<NullEncryptingKeyMsg>()
+					Option.None<SecurityKey>(new NullEncryptingKeyMsg())
 			};
 	}
 }

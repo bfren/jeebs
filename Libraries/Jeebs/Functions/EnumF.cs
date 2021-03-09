@@ -29,12 +29,12 @@ namespace F
 						x,
 
 					_ =>
-						None<T>().AddReason(new NotAValidEnumValueMsg<T>(value))
+						None<T>(new NotAValidEnumValueMsg<T>(value))
 				};
 			}
 			catch (Exception)
 			{
-				return None<T>().AddReason(new NotAValidEnumValueMsg<T>(value));
+				return None<T>(new NotAValidEnumValueMsg<T>(value));
 			}
 		}
 
@@ -48,8 +48,7 @@ namespace F
 		{
 			if (!t.IsEnum)
 			{
-				//throw new ArgumentException($"Type {t} is not an Enum", nameof(t));
-				return None<object>();
+				return None<object>(new NotAValidEnumMsg(t));
 			}
 
 			try
@@ -59,7 +58,7 @@ namespace F
 			}
 			catch (Exception)
 			{
-				return None<object>().AddReason(new NotAValidEnumValueMsg(t, value));
+				return None<object>(new NotAValidEnumValueMsg(t, value));
 			}
 		}
 
@@ -111,7 +110,7 @@ namespace F
 						x,
 
 					_ =>
-						None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+						None<TTo>(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 				};
 			}
 		}

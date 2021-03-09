@@ -24,11 +24,10 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Hydrate this Custom Field using a combination of <see cref="IWpDb"/>, <see cref="IUnitOfWork"/>, and <see cref="MetaDictionary"/>.
 		/// </summary>
-		/// <param name="r">Result</param>
 		/// <param name="db">IWpDb</param>
 		/// <param name="unitOfWork">IUnitOfWork</param>
 		/// <param name="meta">MetaDictionary</param>
-		Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
+		Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 	}
 
 	/// <inheritdoc/>

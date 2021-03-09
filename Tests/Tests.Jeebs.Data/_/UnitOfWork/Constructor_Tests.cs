@@ -24,7 +24,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			client.Adapter.Returns(adapter);
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var log = Substitute.For<ILog<Data.UnitOfWork>>();
 
 			// Act
 			var result = new Data.UnitOfWork(connection, adapter, log);

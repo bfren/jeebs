@@ -34,6 +34,11 @@ namespace Jeebs.Data
 		IQueryDriver Driver { get; }
 
 		/// <summary>
+		/// ILog
+		/// </summary>
+		ILog Log { get; }
+
+		/// <summary>
 		/// Shorthand for IAdapter.SplitAndEscape
 		/// </summary>
 		/// <param name="element">The element to split and escape</param>
@@ -64,40 +69,40 @@ namespace Jeebs.Data
 		/// <param name="sql">Query string</param>
 		/// <param name="parameters">Query parameters - should normally be an object with properties matching parameter names</param>
 		/// <param name="commandType">CommandType</param>
-		IR<IEnumerable<dynamic>> Query(IOk r, string sql, object? parameters, CommandType commandType);
+		Option<IEnumerable<dynamic>> Query(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<IEnumerable<dynamic>> Query(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<IEnumerable<dynamic>> Query(string sql, object? parameters);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<IEnumerable<dynamic>> Query(IOk r, string sql);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<IEnumerable<dynamic>> Query(string sql);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Task<Option<IEnumerable<dynamic>>> QueryAsync(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Task<Option<IEnumerable<dynamic>>> QueryAsync(string sql, object? parameters);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string sql);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Task<Option<IEnumerable<dynamic>>> QueryAsync(string sql);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<IEnumerable<T>> Query<T>(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<IEnumerable<T>> Query<T>(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<IEnumerable<T>> Query<T>(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<IEnumerable<T>> Query<T>(string sql, object? parameters);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<IEnumerable<T>> Query<T>(IOk r, string sql);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<IEnumerable<T>> Query<T>(string sql);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Task<Option<IEnumerable<T>>> QueryAsync<T>(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Task<Option<IEnumerable<T>>> QueryAsync<T>(string sql, object? parameters);
 
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string sql);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Task<Option<IEnumerable<T>>> QueryAsync<T>(string sql);
 
 		#endregion
 
@@ -106,23 +111,23 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Return a single object
 		/// </summary>
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<T> Single<T>(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<T> Single<T>(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
-		IR<T> Single<T>(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Single{T}(string, object?, CommandType)"/>
+		Option<T> Single<T>(string sql, object? parameters);
 
-		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
-		IR<T> Single<T>(IOk r, string sql);
+		/// <inheritdoc cref="Single{T}(string, object?, CommandType)"/>
+		Option<T> Single<T>(string sql);
 
-		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
-		Task<IR<T>> SingleAsync<T>(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Single{T}(string, object?, CommandType)"/>
+		Task<Option<T>> SingleAsync<T>(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
-		Task<IR<T>> SingleAsync<T>(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Single{T}(string, object?, CommandType)"/>
+		Task<Option<T>> SingleAsync<T>(string sql, object? parameters);
 
-		/// <inheritdoc cref="Single{T}(IOk, string, object?, CommandType)"/>
-		Task<IR<T>> SingleAsync<T>(IOk r, string sql);
+		/// <inheritdoc cref="Single{T}(string, object?, CommandType)"/>
+		Task<Option<T>> SingleAsync<T>(string sql);
 
 		#endregion
 
@@ -131,44 +136,44 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Execute a query on the database
 		/// </summary>
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<int> Execute(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<int> Execute(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
-		IR<int> Execute(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Execute(string, object?, CommandType)"/>
+		Option<int> Execute(string sql, object? parameters);
 
-		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
-		IR<int> Execute(IOk r, string sql);
+		/// <inheritdoc cref="Execute(string, object?, CommandType)"/>
+		Option<int> Execute(string sql);
 
-		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
-		Task<IR<int>> ExecuteAsync(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Execute(string, object?, CommandType)"/>
+		Task<Option<int>> ExecuteAsync(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
-		Task<IR<int>> ExecuteAsync(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="Execute(string, object?, CommandType)"/>
+		Task<Option<int>> ExecuteAsync(string sql, object? parameters);
 
-		/// <inheritdoc cref="Execute(IOk, string, object?, CommandType)"/>
-		Task<IR<int>> ExecuteAsync(IOk r, string sql);
+		/// <inheritdoc cref="Execute(string, object?, CommandType)"/>
+		Task<Option<int>> ExecuteAsync(string sql);
 
 		/// <summary>
 		/// Execute a query and return a scalar value
 		/// </summary>
-		/// <inheritdoc cref="Query(IOk, string, object?, CommandType)"/>
-		IR<T> ExecuteScalar<T>(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="Query(string, object?, CommandType)"/>
+		Option<T> ExecuteScalar<T>(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
-		IR<T> ExecuteScalar<T>(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="ExecuteScalar{T}(string, object?, CommandType)"/>
+		Option<T> ExecuteScalar<T>(string sql, object? parameters);
 
-		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
-		IR<T> ExecuteScalar<T>(IOk r, string sql);
+		/// <inheritdoc cref="ExecuteScalar{T}(string, object?, CommandType)"/>
+		Option<T> ExecuteScalar<T>(string sql);
 
-		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
-		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string sql, object? parameters, CommandType commandType);
+		/// <inheritdoc cref="ExecuteScalar{T}(string, object?, CommandType)"/>
+		Task<Option<T>> ExecuteScalarAsync<T>(string sql, object? parameters, CommandType commandType);
 
-		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
-		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string sql, object? parameters);
+		/// <inheritdoc cref="ExecuteScalar{T}(string, object?, CommandType)"/>
+		Task<Option<T>> ExecuteScalarAsync<T>(string sql, object? parameters);
 
-		/// <inheritdoc cref="ExecuteScalar{T}(IOk, string, object?, CommandType)"/>
-		Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string sql);
+		/// <inheritdoc cref="ExecuteScalar{T}(string, object?, CommandType)"/>
+		Task<Option<T>> ExecuteScalarAsync<T>(string sql);
 
 		#endregion
 	}

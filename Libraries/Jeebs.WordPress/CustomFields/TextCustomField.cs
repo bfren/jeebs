@@ -28,23 +28,23 @@ namespace Jeebs.WordPress
 		protected TextCustomField(string key, bool isRequired = false) : base(key, string.Empty, isRequired) { }
 
 		/// <inheritdoc/>
-		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// If meta contains the key and the value is not null / empty, return it
 			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
 			{
 				ValueObj = ValueStr = value;
-				return r.OkTrue();
+				return Option.True;
 			}
 
 			// Return error if the field is required
 			if (IsRequired)
 			{
-				return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(GetType(), Key));
+				return Option.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key));
 			}
 
 			// Return OK but not set
-			return r.OkFalse();
+			return Option.False;
 		}
 	}
 }

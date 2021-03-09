@@ -18,11 +18,11 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the entity ID</param>
-		public static IR<T> Single<T>(this IUnitOfWork @this, IOkV<long> r)
+		/// <param name="id">Entity ID</param>
+		public static Option<T> Single<T>(this IUnitOfWork @this, long id)
 			where T : class, IEntity =>
 			Single(
-				r,
+				id,
 				@this,
 				nameof(Single),
 				(q, p, t) => Task.FromResult(@this.Connection.QuerySingle<T>(q, p, t))
@@ -33,42 +33,37 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the entity ID</param>
-		private static async Task<IR<T>> SingleAsync<T>(this IUnitOfWork @this, IOkV<long> r)
+		/// <param name="id">Entity ID</param>
+		private static async Task<Option<T>> SingleAsync<T>(this IUnitOfWork @this, long id)
 			where T : class, IEntity =>
 			Single(
-				r,
+				id,
 				@this,
 				nameof(SingleAsync),
 				async (q, p, t) => await @this.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false)
 			);
 
-		private static IR<T> Single<T>(IOkV<long> r, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
+		private static Option<T> Single<T>(long id, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
 			where T : class, IEntity
 		{
-			// Get id
-			var id = r.Value;
-
-			return r
-				.Link()
-					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.RetrieveExceptionMsg(ex, typeof(T), id)))
-					.MapAsync(retrievePoco).Await();
+			return Option.Wrap(id)
+				.BindAsync(retrievePoco, e => new Jm.Data.RetrieveExceptionMsg(e, typeof(T), id)).Await();
 
 			// Delete the poco
-			async Task<IR<T>> retrievePoco(IOkV<long> r)
+			async Task<Option<T>> retrievePoco(long id)
 			{
 				// Build query
 				var query = w.Adapter.RetrieveSingleById<T>();
-				r.AddMsg(new Jm.Data.QueryMsg(method, query, new { id }));
+				w.Log.Message(new Jm.Data.QueryMsg(method, query, new { id }));
 
 				// Execute
 				var result = await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
 
 				// Add retrieve message
-				r.AddMsg(new Jm.Data.RetrieveMsg(typeof(T), id));
+				w.Log.Message(new Jm.Data.RetrieveMsg(typeof(T), id));
 
 				// Return
-				return r.OkV(result);
+				return result;
 			}
 		}
 	}

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
 using Jm.WordPress.Query.Wrapper.Posts;
 
@@ -18,8 +19,8 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="r">Result</param>
-		private async Task<IR<TList>> AddTaxonomiesAsync<TList, TModel>(IOkV<TList> r)
+		/// <param name="posts">Posts</param>
+		private async Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
@@ -27,64 +28,82 @@ namespace Jeebs.WordPress
 			var termLists = GetTermLists<TModel>();
 			if (termLists.Count == 0)
 			{
-				return r;
+				return posts;
 			}
 
-			return r
-				.Link()
-					.Catch().AllUnhandled().With<GetTermsExceptionMsg>()
-					.MapAsync(okV => getTermsAsync(okV, termLists)).Await()
-				.Link()
-					.Catch().AllUnhandled().With<SetTermsExceptionMsg>()
-					.Map(okV => addTerms(okV, termLists));
+			return await Option
+				.Wrap(posts)
+				.BindAsync(
+					x => getTermsAsync(x, termLists),
+					e => new GetTermsExceptionMsg(e)
+				)
+				.BindAsync(
+					x => addTerms(x, termLists),
+					e => new AddTaxonomiesExceptionMsg(e)
+				);
 
 			//
 			//	Get terms
 			//
-			async Task<IR<(TList, List<Term>)>> getTermsAsync(IOkV<TList> r, List<PropertyInfo> termLists)
+			async Task<Option<(TList, List<Term>)>> getTermsAsync(TList posts, List<PropertyInfo> termLists)
 			{
-				// Create options
-				var options = new QueryPostsTaxonomy.Options
-				{
-					PostIds = r.Value.Select(p => p.Id).ToList()
-				};
+				return await Option.True
+					.Map(getOptions)
+					.Bind(addTaxonomies)
+					.Map(getQuery)
+					.BindAsync(getTaxonomies)
+					.BindAsync(createTuple);
+
+				// Get query options
+				QueryPostsTaxonomy.Options getOptions() =>
+					new() { PostIds = posts.Select(p => p.Id).ToList() };
 
 				// Add each taxonomy to the query options
-				var firstPost = r.Value[0];
-				foreach (var info in termLists)
+				Option<QueryPostsTaxonomy.Options> addTaxonomies(QueryPostsTaxonomy.Options options)
 				{
-					// Get taxonomy
-					var taxonomy = new PropertyInfo<TModel, TermList>(info).Get(firstPost).Taxonomy;
-
-					// Make sure taxonomy has been registered
-					if (!Taxonomy.IsRegistered(taxonomy))
+					var firstPost = posts[0];
+					var taxonomies = new List<Taxonomy>();
+					foreach (var info in termLists)
 					{
-						return r.Error<(TList, List<Term>)>().AddMsg(new TaxonomyNotRegisteredMsg(taxonomy));
+						// Get taxonomy
+						var taxonomy = new PropertyInfo<TModel, TermList>(info).Get(firstPost).Taxonomy;
+
+						// Make sure taxonomy has been registered
+						if (!Taxonomy.IsRegistered(taxonomy))
+						{
+							return Option.None<QueryPostsTaxonomy.Options>(new TaxonomyNotRegisteredMsg(taxonomy));
+						}
+
+						// Add to query
+						options.Taxonomies.Add(taxonomy);
 					}
 
-					// Add to query
-					options.Taxonomies.Add(taxonomy);
+					return options;
 				}
 
 				// Build query
-				var query = StartNewQuery()
-					.WithModel<Term>()
-					.WithOptions(options)
-					.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
-					.GetQuery();
+				IQuery<Term> getQuery(QueryPostsTaxonomy.Options options) =>
+					StartNewQuery()
+						.WithModel<Term>()
+						.WithOptions(options)
+						.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
+						.GetQuery();
 
-				// Execute query
-				return (await query.ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
-					x => x.OkV((r.Value, x.Value))
-				);
+				// Execute query to get taxonomies
+				async Task<Option<List<Term>>> getTaxonomies(IQuery<Term> query) =>
+					await query.ExecuteQueryAsync();
+
+				// Create tuple of posts and taxonomies
+				Option<(TList, List<Term>)> createTuple(List<Term> meta) =>
+					(posts, meta);
 			}
 
 			//
 			//	Add terms
 			//
-			static IR<TList> addTerms(IOkV<(TList, List<Term>)> r, List<PropertyInfo> termLists)
+			static Option<TList> addTerms((TList, List<Term>) lists, List<PropertyInfo> termLists)
 			{
-				var (posts, terms) = r.Value;
+				var (posts, terms) = lists;
 
 				// Now add the terms to each post
 				foreach (var post in posts)
@@ -110,7 +129,7 @@ namespace Jeebs.WordPress
 					}
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 		}
 

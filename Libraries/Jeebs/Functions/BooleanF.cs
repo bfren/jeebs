@@ -24,7 +24,7 @@ namespace F
 			var val = value?.ToString()?.ToLower();
 			if (val is null)
 			{
-				return Option.None<bool>().AddReason<NullValueMsg>();
+				return Option.None<bool>(new NullValueMsg());
 			}
 
 			// Alternative boolean values
@@ -45,7 +45,7 @@ namespace F
 				return result;
 			}
 
-			return Option.None<bool>().AddReason(new UnrecognisedValueMsg(val));
+			return Option.None<bool>(new UnrecognisedValueMsg(val));
 		}
 	}
 }

@@ -24,10 +24,8 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public IQueryDriver Driver { get; }
 
-		/// <summary>
-		/// ILog
-		/// </summary>
-		private readonly ILog log;
+		/// <inheritdoc/>
+		public ILog Log { get; }
 
 		/// <summary>
 		/// Create object
@@ -36,8 +34,8 @@ namespace Jeebs.Data
 		/// <param name="adapter">IAdapter</param>
 		/// <param name="log">ILog</param>
 		/// <param name="driver">[Optional] IQueryDriver</param>
-		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog log, IQueryDriver? driver = null) =>
-			(Adapter, Transaction, this.log, Driver) = (adapter, connection.BeginTransaction(), log, driver ?? new DapperQueryDriver());
+		internal UnitOfWork(IDbConnection connection, IAdapter adapter, ILog<UnitOfWork> log, IQueryDriver? driver = null) =>
+			(Adapter, Transaction, Log, Driver) = (adapter, connection.BeginTransaction(), log, driver ?? new DapperQueryDriver());
 
 		/// <inheritdoc/>
 		public string Escape(object element) =>
@@ -56,7 +54,7 @@ namespace Jeebs.Data
 			}
 			catch (Exception ex)
 			{
-				log.Error(ex, "Error committing transaction.");
+				Log.Error(ex, "Error committing transaction.");
 			}
 		}
 
@@ -69,7 +67,7 @@ namespace Jeebs.Data
 			}
 			catch (Exception ex)
 			{
-				log.Error(ex, "Error rolling back transaction.");
+				Log.Error(ex, "Error rolling back transaction.");
 			}
 		}
 
@@ -84,17 +82,17 @@ namespace Jeebs.Data
 		#region Failure
 
 		/// <inheritdoc/>
-		private IError<T> Fail<T>(IOk r, Exception ex, string query, object? parameters)
+		private None<T> Fail<T>(Exception ex, string query, object? parameters)
 		{
 			// Rollback transaction
 			Rollback();
 
 			// Log error
 			var message = new Jm.Data.QueryExceptionMsg(ex, query, parameters);
-			log.Error(ex, message.Format, message.ParamArray);
+			Log.Error(ex, message.Format, message.ParamArray);
 
 			// Return error
-			return r.Error<T>().AddMsg(message);
+			return Option.None<T>(message);
 		}
 
 		#endregion
@@ -102,272 +100,266 @@ namespace Jeebs.Data
 		#region R: Query
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters, CommandType commandType)
+		public Option<IEnumerable<dynamic>> Query(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
 
 				// Execute and return
 				var result = Driver.Query(Connection, query, parameters, Transaction, commandType);
-				return r.OkV(result);
+				return Option.Wrap(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<dynamic>>(r, ex, query, parameters);
+				return Fail<IEnumerable<dynamic>>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk r, string query, object? parameters) =>
-			 Query(r, query, parameters, CommandType.Text);
+		public Option<IEnumerable<dynamic>> Query(string query, object? parameters) =>
+			 Query(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<dynamic>> Query(IOk r, string query) =>
-			 Query(r, query, null, CommandType.Text);
+		public Option<IEnumerable<dynamic>> Query(string query) =>
+			 Query(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters, CommandType commandType)
+		public async Task<Option<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
 
 				// Execute and return
 				var result = await Driver.QueryAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return r.OkV(result);
+				return Option.Wrap(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<dynamic>>(r, ex, query, parameters);
+				return Fail<IEnumerable<dynamic>>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query, object? parameters) =>
-			 QueryAsync(r, query, parameters, CommandType.Text);
+		public Task<Option<IEnumerable<dynamic>>> QueryAsync(string query, object? parameters) =>
+			 QueryAsync(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<dynamic>>> QueryAsync(IOk r, string query) =>
-			 QueryAsync(r, query, null, CommandType.Text);
+		public Task<Option<IEnumerable<dynamic>>> QueryAsync(string query) =>
+			 QueryAsync(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters, CommandType commandType)
+		public Option<IEnumerable<T>> Query<T>(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
 
 				// Execute and return
 				var result = Driver.Query<T>(Connection, query, parameters, Transaction, commandType);
-				return r.OkV(result);
+				return Option.Wrap(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<T>>(r, ex, query, parameters);
+				return Fail<IEnumerable<T>>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk r, string query, object? parameters) =>
-			 Query<T>(r, query, parameters, CommandType.Text);
+		public Option<IEnumerable<T>> Query<T>(string query, object? parameters) =>
+			 Query<T>(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<IEnumerable<T>> Query<T>(IOk r, string query) =>
-			 Query<T>(r, query, null, CommandType.Text);
+		public Option<IEnumerable<T>> Query<T>(string query) =>
+			 Query<T>(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public async Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
+		public async Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
 
 				// Execute and return
 				var result = await Driver.QueryAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return r.OkV(result);
+				return Option.Wrap(result);
 			}
 			catch (Exception ex)
 			{
-				return Fail<IEnumerable<T>>(r, ex, query, parameters);
+				return Fail<IEnumerable<T>>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query, object? parameters) =>
-			 QueryAsync<T>(r, query, parameters, CommandType.Text);
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters) =>
+			 QueryAsync<T>(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<IEnumerable<T>>> QueryAsync<T>(IOk r, string query) =>
-			 QueryAsync<T>(r, query, null, CommandType.Text);
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query) =>
+			 QueryAsync<T>(query, null, CommandType.Text);
 
 		#endregion
 
 		#region R: Single
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query, object? parameters, CommandType commandType)
+		public Option<T> Single<T>(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(Single), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(Single), query, parameters, commandType));
 
 				// Execute and return
-				var result = Driver.QuerySingle<T>(Connection, query, parameters, Transaction, commandType);
-				return r.OkV(result);
+				return Driver.QuerySingle<T>(Connection, query, parameters, Transaction, commandType);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(r, ex, query, parameters);
+				return Fail<T>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query, object? parameters) =>
-			 Single<T>(r, query, parameters, CommandType.Text);
+		public Option<T> Single<T>(string query, object? parameters) =>
+			 Single<T>(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<T> Single<T>(IOk r, string query) =>
-			 Single<T>(r, query, null, CommandType.Text);
+		public Option<T> Single<T>(string query) =>
+			 Single<T>(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
+		public async Task<Option<T>> SingleAsync<T>(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(SingleAsync), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(SingleAsync), query, parameters, commandType));
 
 				// Execute and return
-				var result = await Driver.QuerySingleAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return r.OkV(result);
+				return await Driver.QuerySingleAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(r, ex, query, parameters);
+				return Fail<T>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<T>> SingleAsync<T>(IOk r, string query, object? parameters) =>
-			 SingleAsync<T>(r, query, parameters, CommandType.Text);
+		public Task<Option<T>> SingleAsync<T>(string query, object? parameters) =>
+			 SingleAsync<T>(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<T>> SingleAsync<T>(IOk r, string query) =>
-			 SingleAsync<T>(r, query, null, CommandType.Text);
+		public Task<Option<T>> SingleAsync<T>(string query) =>
+			 SingleAsync<T>(query, null, CommandType.Text);
 
 		#endregion
 
 		#region Execute
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk r, string query, object? parameters, CommandType commandType)
+		public Option<int> Execute(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(Execute), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(Execute), query, parameters, commandType));
 
 				// Execute and return
-				var affectedRows = Driver.Execute(Connection, query, parameters, Transaction, commandType);
-				return r.OkV(affectedRows);
+				return Driver.Execute(Connection, query, parameters, Transaction, commandType);
 			}
 			catch (Exception ex)
 			{
-				return Fail<int>(r, ex, query, parameters);
+				return Fail<int>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk r, string query, object? parameters) =>
-			 Execute(r, query, parameters, CommandType.Text);
+		public Option<int> Execute(string query, object? parameters) =>
+			 Execute(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<int> Execute(IOk r, string query) =>
-			 Execute(r, query, null, CommandType.Text);
+		public Option<int> Execute(string query) =>
+			 Execute(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public async Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters, CommandType commandType)
+		public async Task<Option<int>> ExecuteAsync(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(ExecuteAsync), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(ExecuteAsync), query, parameters, commandType));
 
 				// Execute and return
-				var affectedRows = await Driver.ExecuteAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return r.OkV(affectedRows);
+				return await Driver.ExecuteAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 			}
 			catch (Exception ex)
 			{
-				return Fail<int>(r, ex, query, parameters);
+				return Fail<int>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<int>> ExecuteAsync(IOk r, string query, object? parameters) =>
-			 ExecuteAsync(r, query, parameters, CommandType.Text);
+		public Task<Option<int>> ExecuteAsync(string query, object? parameters) =>
+			 ExecuteAsync(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<int>> ExecuteAsync(IOk r, string query) =>
-			 ExecuteAsync(r, query, null, CommandType.Text);
+		public Task<Option<int>> ExecuteAsync(string query) =>
+			 ExecuteAsync(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters, CommandType commandType)
+		public Option<T> ExecuteScalar<T>(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(ExecuteScalar), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(ExecuteScalar), query, parameters, commandType));
 
 				// Execute and return
-				var result = Driver.ExecuteScalar<T>(Connection, query, parameters, Transaction, commandType);
-				return r.OkV(result);
+				return Driver.ExecuteScalar<T>(Connection, query, parameters, Transaction, commandType);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(r, ex, query, parameters);
+				return Fail<T>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk r, string query, object? parameters) =>
-			 ExecuteScalar<T>(r, query, parameters, CommandType.Text);
+		public Option<T> ExecuteScalar<T>(string query, object? parameters) =>
+			 ExecuteScalar<T>(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public IR<T> ExecuteScalar<T>(IOk r, string query) =>
-			 ExecuteScalar<T>(r, query, null, CommandType.Text);
+		public Option<T> ExecuteScalar<T>(string query) =>
+			 ExecuteScalar<T>(query, null, CommandType.Text);
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters, CommandType commandType)
+		public async Task<Option<T>> ExecuteScalarAsync<T>(string query, object? parameters, CommandType commandType)
 		{
 			try
 			{
 				// Log query
-				r.AddMsg(new Jm.Data.QueryMsg(nameof(ExecuteScalarAsync), query, parameters, commandType));
+				Log.Message(new Jm.Data.QueryMsg(nameof(ExecuteScalarAsync), query, parameters, commandType));
 
 				// Execute and return
-				var result = await Driver.ExecuteScalarAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return r.OkV(result);
+				return await Driver.ExecuteScalarAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
 			}
 			catch (Exception ex)
 			{
-				return Fail<T>(r, ex, query, parameters);
+				return Fail<T>(ex, query, parameters);
 			}
 		}
 
 		/// <inheritdoc/>
-		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query, object? parameters) =>
-			 ExecuteScalarAsync<T>(r, query, parameters, CommandType.Text);
+		public Task<Option<T>> ExecuteScalarAsync<T>(string query, object? parameters) =>
+			 ExecuteScalarAsync<T>(query, parameters, CommandType.Text);
 
 		/// <inheritdoc/>
-		public Task<IR<T>> ExecuteScalarAsync<T>(IOk r, string query) =>
-			 ExecuteScalarAsync<T>(r, query, null, CommandType.Text);
+		public Task<Option<T>> ExecuteScalarAsync<T>(string query) =>
+			 ExecuteScalarAsync<T>(query, null, CommandType.Text);
 
 		#endregion
 	}

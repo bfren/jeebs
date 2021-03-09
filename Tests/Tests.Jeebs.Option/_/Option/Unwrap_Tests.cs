@@ -29,7 +29,7 @@ namespace Jeebs.Option_Tests
 		public void None_Runs_IfNone()
 		{
 			// Arrange
-			var none = Option.None<int>();
+			var none = Option.None<int>(true);
 			var ifNone = Substitute.For<Func<int>>();
 
 			// Act

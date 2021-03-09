@@ -29,6 +29,10 @@ namespace Jeebs.Logging
 
 			// Set the full application name
 			@this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), jeebs.App.FullName);
+			if (jeebs.Logging.AddPrefixToConsoleMessages)
+			{
+				SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
+			}
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();

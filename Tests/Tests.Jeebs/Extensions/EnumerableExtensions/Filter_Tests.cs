@@ -48,7 +48,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 			// Arrange
 			var n0 = F.Rnd.Int;
 			var n1 = F.Rnd.Int;
-			var list = new[] { None<int>(), Wrap(n0), None<int>(), Wrap(n1), None<int>() };
+			var list = new[] { None<int>(true), Wrap(n0), None<int>(true), Wrap(n1), None<int>(true) };
 
 			// Act
 			var result = list.Filter();

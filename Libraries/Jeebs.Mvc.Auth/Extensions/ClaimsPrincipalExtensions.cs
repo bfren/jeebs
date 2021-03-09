@@ -25,7 +25,7 @@ namespace Jeebs.Mvc.Auth
 				return getId();
 			}
 
-			return Option.None<long>().AddReason<UserIsNotAuthenticatedMsg>();
+			return Option.None<long>(new UserIsNotAuthenticatedMsg());
 
 			// Find and parse ID from the list of claims
 			Option<long> getId() =>
@@ -38,11 +38,11 @@ namespace Jeebs.Mvc.Auth
 								userId,
 
 							false =>
-								Option.None<long>().AddReason<InvalidUserIdMsg>()
+								Option.None<long>(new InvalidUserIdMsg())
 						},
 
 					_ =>
-						Option.None<long>().AddReason<UnableToFindUserIdClaimMsg>()
+						Option.None<long>(new UnableToFindUserIdClaimMsg())
 				};
 		}
 

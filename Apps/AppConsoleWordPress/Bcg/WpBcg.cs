@@ -3,6 +3,7 @@
 
 using Jeebs;
 using Jeebs.Config;
+using Jeebs.Data;
 using Jeebs.WordPress;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Options;
@@ -33,8 +34,8 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpBcgConfig</param>
-		/// <param name="log">ILog</param>
-		public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog log) : base(dbConfig.Value, wpConfig.Value, log) { }
+		/// <param name="dbLog">ILog</param>
+		public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog<Db> dbLog, ILog<UnitOfWork> wLog) : base(dbConfig.Value, wpConfig.Value, dbLog, wLog) { }
 
 		/// <summary>
 		/// Register custom post types

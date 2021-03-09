@@ -16,7 +16,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return Option.None<TUserModel>();
+				return Option.None<TUserModel>(true);
 			}
 
 			return new TUserModel
@@ -34,7 +34,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return Option.None<TUserModel>();
+				return Option.None<TUserModel>(true);
 			}
 
 			return new TUserModel

@@ -21,8 +21,8 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result</param>
-		public static IR<bool> Update<T>(this IUnitOfWork @this, IOkV<T> r)
+		/// <param name="entity">Entity</param>
+		public static Option<bool> Update<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity
 		{
 			try
@@ -30,17 +30,17 @@ namespace Jeebs.Data.Mapping
 				lock (_)
 				{
 					// Perform the update
-					var result = r.Value switch
+					var result = entity switch
 					{
 						IEntityWithVersion e =>
-							UpdateWithVersion(@this, r.OkV(e)),
+							UpdateWithVersion(@this, e),
 
-						_ =>
-							UpdateWithoutVersion(@this, r)
+						{ } e =>
+							UpdateWithoutVersion(@this, e)
 					};
 
 					// Add update messages
-					result.AddMsg(new Jm.Data.UpdateMsg(typeof(T), r.Value.Id));
+					@this.Log.Message(new Jm.Data.UpdateMsg(typeof(T), entity.Id));
 
 					// Return result
 					return result;
@@ -48,7 +48,7 @@ namespace Jeebs.Data.Mapping
 			}
 			catch (Exception ex)
 			{
-				return r.Error<bool>().AddMsg(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), r.Value.Id));
+				return Option.None<bool>(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), entity.Id));
 			}
 			finally
 			{
@@ -61,25 +61,23 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result</param>
-		private static IR<bool> UpdateWithVersion<T>(IUnitOfWork w, IOkV<T> r)
+		/// <param name="entity">Entity to update</param>
+		private static Option<bool> UpdateWithVersion<T>(IUnitOfWork w, T entity)
 			where T : class, IEntityWithVersion
 		{
-			var poco = r.Value;
-
 			// Build query and increase the version number
 			var query = w.Adapter.UpdateSingle<T>();
-			poco.Version++;
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(UpdateWithVersion), query, poco));
+			entity.Version++;
+			w.Log.Message(new Jm.Data.QueryMsg(nameof(UpdateWithVersion), query, entity));
 
 			// Execute and return
-			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
+			var rowsAffected = w.Connection.Execute(query, param: entity, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return r.OkTrue();
+				return Option.True;
 			}
 
-			return r.Error<bool>().AddMsg(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
+			return Option.None<bool>(new Jm.Data.UpdateErrorMsg(typeof(T), entity.Id));
 		}
 
 		/// <summary>
@@ -87,24 +85,22 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result</param>
-		private static IR<bool> UpdateWithoutVersion<T>(IUnitOfWork w, IOkV<T> r)
+		/// <param name="entity">Entity to update</param>
+		private static Option<bool> UpdateWithoutVersion<T>(IUnitOfWork w, T entity)
 			where T : class, IEntity
 		{
-			var poco = r.Value;
-
 			// Build query
 			var query = w.Adapter.UpdateSingle<T>();
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(UpdateWithoutVersion), query, poco));
+			w.Log.Message(new Jm.Data.QueryMsg(nameof(UpdateWithoutVersion), query, entity));
 
 			// Execute and return
-			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
+			var rowsAffected = w.Connection.Execute(query, param: entity, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return r.OkTrue();
+				return Option.True;
 			}
 
-			return r.Error<bool>().AddMsg(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
+			return Option.None<bool>(new Jm.Data.UpdateErrorMsg(typeof(T), entity.Id));
 		}
 	}
 }

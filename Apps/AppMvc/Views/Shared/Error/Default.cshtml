@@ -1,13 +1,7 @@
-﻿@model Jeebs.IError
-
-<h2>Error</h2>
+﻿<h2>Error</h2>
 <p>Ooops, an error has occured.</p>
 
-@if (Model.HasMessages)
+@if (Model is Jeebs.IMsg)
 {
-	<h3>Messages</h3>
-	@foreach (var item in Model.Messages.GetEnumerable())
-	{
-		<p>@item</p>
-	}
+	<p>@Model</p>
 }

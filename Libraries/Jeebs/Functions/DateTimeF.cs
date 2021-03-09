@@ -40,7 +40,7 @@ namespace F
 				return dt;
 			}
 
-			return Option.None<DateTime>();
+			return Option.None<DateTime>(new Jm.Functions.DateTimeF.InvalidDateTimeMsg(format));
 		}
 	}
 }

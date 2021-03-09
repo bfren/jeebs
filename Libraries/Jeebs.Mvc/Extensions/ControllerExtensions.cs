@@ -15,39 +15,42 @@ namespace Jeebs.Mvc
 	public static class ControllerExtensions
 	{
 		/// <summary>
-		/// Execute an error result and return the View
+		/// Execute an Option.None result and return the View
 		/// </summary>
 		/// <param name="this">Controller</param>
-		/// <param name="error">IError</param>
+		/// <param name="reason">None</param>
 		/// <param name="code">[Optional] HTTP Status Code</param>
-		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IError error, int? code = null)
+		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg? reason, int? code = null)
 		{
 			// Check for 404
-			if (code == null)
+			var status = code switch
 			{
-				code = error.Messages.Contains<Jm.NotFoundMsg>() switch
+				int x =>
+					x,
+
+				_ => reason switch
 				{
-					true =>
+					Jm.NotFoundMsg =>
 						StatusCodes.Status404NotFound,
 
-					false =>
+					_ =>
 						StatusCodes.Status500InternalServerError
-				};
-			}
+				}
+			};
 
-			// Log errors
-			foreach (var item in error.Messages.GetEnumerable())
+			// Log error
+			if (reason is IMsg)
 			{
-				@this.Log.Message(item);
+				@this.Log.Message(reason);
 			}
 
 			// Look for a view
-			var viewName = $"Error{code}";
+			var viewName = $"Error{status}";
 			@this.Log.Trace("Search for View {ViewName}", viewName);
 			if ((findView(viewName) ?? findView("Default")) is string view)
 			{
 				@this.Log.Trace("Found view {view}", view);
-				return @this.View(view, error);
+				return @this.View(view, reason);
 			}
 
 			// If response has stared we can't do anything

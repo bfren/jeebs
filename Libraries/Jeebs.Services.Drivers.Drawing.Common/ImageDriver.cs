@@ -17,7 +17,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		{
 			if (!File.Exists(path))
 			{
-				return Option.None<IImageWrapper>().AddReason(new ImageFileNotFoundMsg(path));
+				return Option.None<IImageWrapper>(new ImageFileNotFoundMsg(path));
 			}
 
 			// Create and return image object

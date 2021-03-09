@@ -2,13 +2,14 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jm.Option;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// <see cref="Option{T}"/> Extensions
+	/// <see cref="Option{T}"/> Extensions: Linq Methods
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_Linq
 	{
 		/// <summary>
 		/// Enables LINQ select on Option objects, e.g.
@@ -53,7 +54,7 @@ namespace Jeebs
 					@this,
 
 				false =>
-					Option.None<T>()
+					Option.None<T>(new PredicateWasFalseMsg())
 			});
 	}
 }

@@ -7,6 +7,5 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
-	  <ProjectReference Include="..\Jeebs.Result.Chain\Jeebs.Result.Chain.csproj" />
 	</ItemGroup>
 </Project>

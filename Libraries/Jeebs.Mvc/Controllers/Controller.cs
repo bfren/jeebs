@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Jm.Mvc.Controllers.Controller;
 using Microsoft.AspNetCore.Http;
@@ -45,32 +46,22 @@ namespace Jeebs.Mvc
 		/// <typeparam name="T">Result type</typeparam>
 		/// <param name="r">The result of some action</param>
 		/// <param name="success">Function to run when the result is successful</param>
-		protected async Task<IActionResult> ProcessResultAsync<T>(IR<T> r, Func<T, Task<IActionResult>> success) =>
-			r switch
-			{
-				IOkV<T> okV =>
-					await success(okV.Value).ConfigureAwait(false),
-
-				IError<T> error =>
-					await this.ExecuteErrorAsync(error),
-
-				{ } other =>
-					await this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>())
-			};
+		protected async Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
+			await option.MatchAsync(
+				some: value =>
+					success(value),
+				none: reason =>
+					this.ExecuteErrorAsync(reason)
+			);
 
 		/// <inheritdoc cref="ProcessResultAsync{T}(IR{T}, Func{T, Task{IActionResult}})"/>
-		protected IActionResult ProcessResult<T>(IR<T> r, Func<T, IActionResult> success) =>
-			r switch
-			{
-				IOkV<T> okV =>
-					success(okV.Value),
-
-				IError<T> error =>
-					this.ExecuteErrorAsync(error).GetAwaiter().GetResult(),
-
-				{ } other =>
-					this.ExecuteErrorAsync(other.Error<UnknownResultTypeMsg>()).GetAwaiter().GetResult()
-			};
+		protected IActionResult ProcessOption<T>(Option<T> option, Func<T, IActionResult> success) =>
+			option.Match(
+				some: value =>
+					success(value),
+				none: reason =>
+					this.ExecuteErrorAsync(reason).GetAwaiter().GetResult()
+			);
 
 		/// <summary>
 		/// Redirect to error page

@@ -51,7 +51,7 @@ namespace Jeebs.Cryptography
 		{
 			if (EncryptedContents is null)
 			{
-				return Option.None<Lockable<T>>().AddReason<UnlockWhenEncryptedContentsIsNullMsg>();
+				return Option.None<Lockable<T>>(new UnlockWhenEncryptedContentsIsNullMsg());
 			}
 
 			try
@@ -83,7 +83,7 @@ namespace Jeebs.Cryptography
 			// Handle an exception
 			static Option<Lockable<T>> handle<TMsg>(Exception ex)
 				where TMsg : IExceptionMsg, new() =>
-				Option.None<Lockable<T>>().AddReason<TMsg>(ex);
+				Option.None<Lockable<T>>(new TMsg { Exception = ex });
 		}
 
 		/// <summary>

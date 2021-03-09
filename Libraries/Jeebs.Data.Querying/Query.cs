@@ -30,7 +30,7 @@ namespace Jeebs.Data.Querying
 			(UnitOfWork, Parts) = (unitOfWork, parts);
 
 		/// <inheritdoc/>
-		public async Task<IR<long>> GetCountAsync(IOk r)
+		public async Task<Option<long>> GetCountAsync()
 		{
 			// Store original SELECT
 			var originalSelect = Parts.Select;
@@ -42,7 +42,7 @@ namespace Jeebs.Data.Querying
 			var countQuery = UnitOfWork.Adapter.Retrieve(Parts);
 
 			// Execute
-			var count = await UnitOfWork.ExecuteScalarAsync<long>(r, countQuery, Parts.Parameters).ConfigureAwait(false);
+			var count = await UnitOfWork.ExecuteScalarAsync<long>(countQuery, Parts.Parameters).ConfigureAwait(false);
 
 			// Restore SELECT and return
 			Parts.Select = originalSelect;
@@ -50,63 +50,63 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<List<T>>> ExecuteQueryAsync(IOk r)
+		public async Task<Option<List<T>>> ExecuteQueryAsync()
 		{
-			// Get query
-			var query = UnitOfWork.Adapter.Retrieve(Parts);
+			return from items in await getQuery().BindAsync(getItems)
+				   select items.ToList();
 
-			// Execute and return
-			var items = await UnitOfWork.QueryAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
-			return items.Switch(
-				x => x.OkV(x.Value.ToList())
-			);
+			// Get query
+			Option<string> getQuery() =>
+				UnitOfWork.Adapter.Retrieve(Parts);
+
+			// Get items
+			async Task<Option<IEnumerable<T>>> getItems(string query) =>
+				await UnitOfWork.QueryAsync<T>(query, Parts.Parameters).ConfigureAwait(false);
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<IPagedList<T>>> ExecuteQueryAsync(IOk r, long page)
+		public async Task<Option<IPagedList<T>>> ExecuteQueryAsync(long page)
 		{
 			// Run chain
-			return r
-				.Link()
-					.Catch().AllUnhandled().With<GetCountExceptionMsg>()
-					.MapAsync(GetCountAsync).Await()
-				.Link()
-					.Catch().AllUnhandled().With<GetPagingValuesExceptionMsg>()
-					.Map(getPagingValues)
-				.Link()
-					.Catch().AllUnhandled().With<GetItemsExceptionMsg>()
-					.MapAsync(getItems).Await();
+			return await GetCountAsync()
+				.BindAsync(getPagingValues)
+				.BindAsync(getItems);
 
 			// Get paging values
-			IR<PagingValues> getPagingValues(IOkV<long> r) =>
-				r.OkV(new PagingValues(r.Value, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer));
+			Option<PagingValues> getPagingValues(long count) =>
+				new PagingValues(count, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer);
 
 			// Get the items
-			async Task<IR<IPagedList<T>>> getItems(IOkV<PagingValues> r)
+			async Task<Option<IPagedList<T>>> getItems(PagingValues paging)
 			{
 				// Set the OFFSET and LIMIT values based on the calculated paging values
-				Parts.Offset = (r.Value.Page - 1) * r.Value.ItemsPer;
-				Parts.Limit = r.Value.ItemsPer;
+				Parts.Offset = (paging.Page - 1) * paging.ItemsPer;
+				Parts.Limit = paging.ItemsPer;
 
 				// Get query
 				var query = UnitOfWork.Adapter.Retrieve(Parts);
 
 				// Execute and return
-				var items = await UnitOfWork.QueryAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
-				return items.Switch(
-					x => x.OkV((IPagedList<T>)new PagedList<T>(r.Value, x.Value))
+				var items = await UnitOfWork.QueryAsync<T>(query, Parts.Parameters).ConfigureAwait(false);
+				return items.Map(
+					x => (IPagedList<T>)new PagedList<T>(paging, x)
 				);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<T>> ExecuteScalarAsync(IOk r)
+		public async Task<Option<T>> ExecuteScalarAsync()
 		{
-			// Get query
-			var query = UnitOfWork.Adapter.Retrieve(Parts);
+			return await getQuery()
+				.BindAsync(getValue);
 
-			// Execute and return
-			return await UnitOfWork.ExecuteScalarAsync<T>(r, query, Parts.Parameters).ConfigureAwait(false);
+			// Get query
+			Option<string> getQuery() =>
+				UnitOfWork.Adapter.Retrieve(Parts);
+
+			// Execute query
+			async Task<Option<T>> getValue(string query) =>
+				await UnitOfWork.ExecuteScalarAsync<T>(query, Parts.Parameters).ConfigureAwait(false);
 		}
 	}
 }

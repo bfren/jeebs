@@ -3,6 +3,7 @@
 
 using Jeebs;
 using Jeebs.Config;
+using Jeebs.Data;
 using Jeebs.WordPress;
 using Microsoft.Extensions.Options;
 
@@ -33,7 +34,7 @@ namespace AppConsoleWordPress.Usa
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpUsaConfig</param>
 		/// <param name="log">ILog</param>
-		public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog log) : base(dbConfig.Value, wpConfig.Value, log) { }
+		public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog<Db> dbLog, ILog<UnitOfWork> wLog) : base(dbConfig.Value, wpConfig.Value, dbLog, wLog) { }
 
 		/// <summary>
 		/// Register custom post types

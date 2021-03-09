@@ -20,7 +20,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var c = Substitute.For<IDbConnection>();
 			var t = Substitute.For<IDbTransaction>();
 			var a = Substitute.For<IAdapter>();
-			var l = Substitute.For<ILog>();
+			var l = Substitute.For<ILog<Data.UnitOfWork>>();
 			var d = Substitute.For<IQueryDriver>();
 
 			t.Connection.Returns(c);
@@ -29,40 +29,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			return (new Data.UnitOfWork(c, a, l, d), c, t, a, l, d);
 		}
 
-		/// <summary>
-		/// Get a substituted OK Result
-		/// </summary>
-		public static (IOk, ILogger, MsgList) GetOkResult()
-		{
-			var l = Substitute.For<ILogger>();
-			var m = Substitute.For<MsgList>();
+		public delegate object UnitOfWorkMethod(string query, object? param, CommandType commandType);
 
-			var r = Substitute.For<IOk>();
-			r.Logger.Returns(l);
-			r.Messages.Returns(m);
-
-			return (r, l, m);
-		}
-
-		/// <summary>
-		/// Get a substituted Error Result
-		/// </summary>
-		/// <param name="messages">[Optional] Messages List - if not set a fresh substitute will be made</param>
-		public static IError<T> GetErrorResult<T>(MsgList? messages = null)
-		{
-			var l = Substitute.For<ILogger>();
-			var m = messages ?? Substitute.For<MsgList>();
-
-			var r = Substitute.For<IError<T>>();
-			r.Logger.Returns(l);
-			r.Messages.Returns(m);
-
-			return r;
-		}
-
-		public delegate object UnitOfWorkMethod(IOk r, string query, object? param, CommandType commandType);
-
-		public delegate IR<T> UnitOfWorkMethod<T>(IOk r, string query, object? param, CommandType commandType);
+		public delegate Option<T> UnitOfWorkMethod<T>(string query, object? param, CommandType commandType);
 
 		public delegate T QueryDriverMethod<T>(IDbConnection cnn, string query, object? param, IDbTransaction transaction, CommandType commandType);
 
@@ -74,8 +43,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		public static void LogsQuery(Func<IUnitOfWork, UnitOfWorkMethod> act, CommandType commandType)
 		{
 			// Arrange		
-			var (w, _, _, _, _, _) = GetUnitOfWork();
-			var (r, logger, messages) = GetOkResult();
+			var (w, _, _, _, l, _) = GetUnitOfWork();
 
 			var query = F.Rnd.Str;
 			var p0 = F.MathsF.RandomInt64(max: 1000);
@@ -86,22 +54,15 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var method = f.Method.Name;
 
 			// Act
-			f(r, query, parameters, commandType);
+			f(query, parameters, commandType);
 
 			// Assert
-			logger.Received().Message(
+			l.Received().Message(
 				Arg.Is<Jm.Data.QueryMsg>(x =>
 					x.Method == method
 					&& x.Sql == query
 					&& x.Parameters == parameters
 					&& x.CommandType == commandType
-				)
-			);
-
-			Assert.Collection(messages.GetEnumerable(),
-				x => Assert.Equal(
-					$"{method}() - Query [{commandType}]: {query} - Parameters: {{ {nameof(p0)} = {p0}, {nameof(p1)} = {p1} }}",
-					x.ToString()
 				)
 			);
 		}
@@ -120,8 +81,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 		)
 		{
 			// Arrange
-			var (w, connection, transaction, _, _, driver) = GetUnitOfWork();
-			var (r, _, _) = GetOkResult();
+			var (w, connection, transaction, _, log, driver) = GetUnitOfWork();
 
 			var query = F.Rnd.Str;
 			var p0 = F.MathsF.RandomInt64(max: 1000);
@@ -130,7 +90,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 
 			// Act
 			act(w)
-				.Invoke(r, query, parameters, commandType);
+				.Invoke(query, parameters, commandType);
 
 			// Assert
 #pragma warning disable NS5000 // Received check.
@@ -157,10 +117,6 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			driver.ReturnsForAll<TReturn>(_ => throw new Exception(ex));
 			driver.ReturnsForAll<Task<TReturn>>(_ => throw new Exception(ex));
 
-			var (r, _, messages) = GetOkResult();
-			var error = GetErrorResult<TReturn>(messages: messages);
-			r.Error<TReturn>().Returns(error);
-
 			var query = F.Rnd.Str;
 			var p0 = F.MathsF.RandomInt64(max: 1000);
 			var p1 = F.Rnd.Str;
@@ -170,7 +126,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var method = f.Method.Name;
 
 			// Act
-			f.Invoke(r, query, parameters, commandType);
+			f.Invoke(query, parameters, commandType);
 
 			// Assert
 			transaction.Received().Rollback();
@@ -179,17 +135,6 @@ namespace Jeebs.Data.UnitOfWork_Tests
 				Arg.Any<Exception>(),
 				"{ExceptionType}: {ExceptionText} | Query: {Sql} | Parameters: {Parameters}",
 				Arg.Any<object[]>()
-			);
-
-			Assert.Collection(messages.GetEnumerable(),
-				x => Assert.Equal(
-					$"{method}() - Query [{commandType}]: {query} - Parameters: {{ {nameof(p0)} = {p0}, {nameof(p1)} = {p1} }}",
-					x.ToString()
-				),
-				x => Assert.Equal(
-					$"{typeof(Exception)}: {ex} | Query: {query} | Parameters: {{ {nameof(p0)} = {p0}, {nameof(p1)} = {p1} }}",
-					x.ToString()
-				)
 			);
 		}
 	}

@@ -27,7 +27,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Linq_Select_With_None_Returns_None()
 		{
 			// Arrange
-			var option = Option.None<int>().AddReason<InvalidIntegerMsg>();
+			var option = Option.None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = from a in option

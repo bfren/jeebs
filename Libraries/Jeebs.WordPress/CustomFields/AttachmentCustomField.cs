@@ -20,7 +20,7 @@ namespace Jeebs.WordPress
 		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, new Attachment(), isRequired) { }
 
 		/// <inheritdoc/>
-		public override async Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override async Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// First, get the Attachment Post ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -33,71 +33,65 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return r.Error<bool>().AddMsg(new MetaKeyNotFoundMsg(GetType(), Key));
+					return Option.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key));
 				}
 
-				return r.OkFalse();
+				return Option.False;
 			}
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
-			return await r
-				.Link()
-					.Catch().AllUnhandled().With<ParsePostIdExceptionMsg>()
-					.Map(parseAttachmentPostId)
-				.Link()
-					.Catch().AllUnhandled().With<GetAttachmentExceptionMsg>()
-					.MapAsync(getAttachment).Await()
-				.Link()
-					.Catch().AllUnhandled().With<HydrateExceptionMsg>()
-					.MapAsync(hydrate);
+			return await Option
+				.Wrap(ValueStr)
+				.Bind(
+					parseAttachmentPostId
+				)
+				.BindAsync(
+					getAttachments
+				)
+				.UnwrapAsync(
+					x => x.Single<Attachment>(tooMany: () => new MultipleAttachmentsFoundMsg())
+				)
+				.BindAsync(
+					hydrate
+				);
 
 			//
 			// Parse the Attachment Post ID
 			//
-			IR<long> parseAttachmentPostId(IOk r)
+			Option<long> parseAttachmentPostId(string value)
 			{
-				if (!long.TryParse(ValueStr, out var attachmentPostId))
+				if (!long.TryParse(value, out var attachmentPostId))
 				{
-					return r.Error<long>().AddMsg(new ValueIsInvalidPostIdMsg(GetType(), ValueStr));
+					return Option.None<long>(new ValueIsInvalidPostIdMsg(GetType(), value));
 				}
 
-				return r.OkV(attachmentPostId);
+				return attachmentPostId;
 			}
 
 			//
 			// Get the Attachment by Post ID
 			//
-			async Task<IR<Attachment>> getAttachment(IOkV<long> r)
+			async Task<Option<List<Attachment>>> getAttachments(long attachmentPostId)
 			{
 				// Create new query
 				using var w = db.GetQueryWrapper();
 
 				// Get matching posts
-				var attachments = await w.QueryPostsAsync<Attachment>(r, modify: opt =>
+				return await w.QueryPostsAsync<Attachment>(modify: opt =>
 				{
-					opt.Id = r.Value;
+					opt.Id = attachmentPostId;
 					opt.Type = PostType.Attachment;
 					opt.Status = PostStatus.Inherit;
 					opt.Limit = 1;
 				});
-
-				// If there is more than one attachment, return an error
-				return attachments switch
-				{
-					IOkV<List<Attachment>> x when x.Value.Count == 1 =>
-						x.OkV(x.Value.Single()),
-
-					{ } x =>
-						x.Error<Attachment>().AddMsg().OfType<MultipleAttachmentsFoundMsg>()
-				};
 			}
 
 			//
 			// Hydrate the custom field using Attachment info
 			//
-			async Task<IR<bool>> hydrate(IOkV<Attachment> r)
+			async Task<Option<bool>> hydrate(Attachment attachment)
 			{
-				ValueObj = r.Value;
+				ValueObj = attachment;
 
 				if (ValueObj.Meta.TryGetValue(Constants.AttachedFile, out var urlPath))
 				{
@@ -109,7 +103,7 @@ namespace Jeebs.WordPress
 					ValueObj.Info = info;
 				}
 
-				return r.OkTrue();
+				return Option.True;
 			}
 		}
 

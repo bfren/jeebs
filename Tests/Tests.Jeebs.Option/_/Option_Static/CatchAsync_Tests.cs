@@ -45,7 +45,7 @@ namespace Jeebs.Option_Static_Tests
 			// Arrange
 			var message = F.Rnd.Str;
 			var exception = new Exception(message);
-			var handler = Substitute.For<Func<Exception, IExceptionMsg>>();
+			var handler = Substitute.For<Option.Handler>();
 
 			// Act
 			var result = await Option.CatchAsync<int>(async () => throw exception, handler);

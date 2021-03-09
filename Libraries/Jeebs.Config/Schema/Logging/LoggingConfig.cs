@@ -33,6 +33,11 @@ namespace Jeebs.Config
 		public string ConsoleOutputTemplate { get; init; } = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}";
 
 		/// <summary>
+		/// If true the application name will be added before all console messages
+		/// </summary>
+		public bool AddPrefixToConsoleMessages { get; init; } = true;
+
+		/// <summary>
 		/// List of providers - dictionary key is a service name
 		/// </summary>
 		public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();

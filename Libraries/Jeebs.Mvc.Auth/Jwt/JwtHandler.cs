@@ -75,7 +75,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 					authorisationHeader.ToString(),
 
 				_ =>
-					Option.None<string>().AddReason<MissingAuthorisationHeaderMsg>()
+					Option.None<string>(new MissingAuthorisationHeaderMsg())
 			};
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 					authorisationHeader["Bearer ".Length..].Trim(),
 
 				_ =>
-					Option.None<string>().AddReason<InvalidAuthorisationHeaderMsg>()
+					Option.None<string>(new InvalidAuthorisationHeaderMsg())
 			};
 
 		/// <summary>

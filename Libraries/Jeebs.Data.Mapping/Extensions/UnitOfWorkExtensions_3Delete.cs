@@ -18,11 +18,11 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to delete</param>
-		public static IR<bool> Delete<T>(this IUnitOfWork @this, IOkV<T> r)
+		/// <param name="entity">Entity to delete</param>
+		public static Option<bool> Delete<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
 			Delete(
-				r,
+				entity,
 				@this,
 				nameof(Delete),
 				(q, p, t) => Task.FromResult(@this.Connection.Execute(q, p, t))
@@ -33,47 +33,42 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to delete</param>
-		public static async Task<IR<bool>> DeleteAsync<T>(this IUnitOfWork @this, IOkV<T> r)
+		/// <param name="entity">Entity to delete</param>
+		public static async Task<Option<bool>> DeleteAsync<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
 			Delete(
-				r,
+				entity,
 				@this,
 				nameof(DeleteAsync),
 				async (q, p, t) => await @this.Connection.ExecuteAsync(q, p, t)
 			);
 
-		private static IR<bool> Delete<T>(IOkV<T> r, IUnitOfWork w, string method, Func<string, T, IDbTransaction, Task<int>> execute)
+		private static Option<bool> Delete<T>(T entity, IUnitOfWork w, string method, Func<string, T, IDbTransaction, Task<int>> execute)
 			where T : class, IEntity
 		{
-			var pocoId = r.Value.Id;
-			return r
-				.Link()
-					.Catch().AllUnhandled().With((r, ex) => r.AddMsg(new Jm.Data.DeleteExceptionMsg(ex, typeof(T), pocoId)))
-					.MapAsync(deletePoco).Await();
+			return Option
+				.Wrap(entity)
+				.BindAsync(deletePoco, e => new Jm.Data.DeleteExceptionMsg(e, typeof(T), entity.Id)).Await();
 
 			// Delete the poco
-			async Task<IR<bool>> deletePoco(IOkV<T> r)
+			async Task<Option<bool>> deletePoco(T poco)
 			{
-				// Get poco
-				var poco = r.Value;
-
 				// Build query
 				var query = w.Adapter.DeleteSingle<T>();
-				r.AddMsg(new Jm.Data.QueryMsg(method, query, poco));
+				w.Log.Message(new Jm.Data.QueryMsg(method, query, poco));
 
 				// Execute
 				var rowsAffected = await execute(query, poco, w.Transaction);
 				if (rowsAffected == 1)
 				{
 					// Add delete message
-					r.AddMsg(new Jm.Data.DeleteMsg(typeof(T), poco.Id));
+					w.Log.Message(new Jm.Data.DeleteMsg(typeof(T), poco.Id));
 
 					// Return
-					return r.OkTrue();
+					return Option.True;
 				}
 
-				return r.Error<bool>().AddMsg(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
+				return Option.None<bool>(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
 			}
 		}
 	}

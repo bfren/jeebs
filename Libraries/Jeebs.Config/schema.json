@@ -96,6 +96,11 @@
 							"type": "string",
 							"description": "[Optional] Override the default console output template"
 						},
+						"addPrefixToConsoleMessages": {
+							"type": "boolean",
+							"description": "[Optional] Whether or not to add a prefix to console messages (to help them stand out!)",
+							"default": true
+						},
 						"minimumLevel": {
 							"$ref": "#/definitions/logging/minimumLevel"
 						},

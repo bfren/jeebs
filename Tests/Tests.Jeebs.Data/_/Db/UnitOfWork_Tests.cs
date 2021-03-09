@@ -16,8 +16,9 @@ namespace Jeebs.Data.Db_Tests
 		{
 			// Arrange
 			var client = Substitute.For<IDbClient>();
-			var log = Substitute.For<ILog>();
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
 
 			// Act
 			IUnitOfWork action() => db.UnitOfWork;
@@ -31,9 +32,10 @@ namespace Jeebs.Data.Db_Tests
 		{
 			// Arrange
 			var client = Substitute.For<IDbClient>();
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var connectionString = F.Rnd.Str;
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -57,10 +59,11 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -79,10 +82,11 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -106,10 +110,11 @@ namespace Jeebs.Data.Db_Tests
 			client.Adapter.Returns(adapter);
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
 
 			// Act
 			var result = db.UnitOfWork;

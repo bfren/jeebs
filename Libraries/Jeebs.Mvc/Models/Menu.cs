@@ -69,7 +69,7 @@ namespace Jeebs.Mvc.Models
 		/// <param name="url">IUrlHelper</param>
 		/// <param name="list">[Optional] Menu Items</param>
 		/// <returns>Result to output as response</returns>
-		public async Task<IR<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
+		public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
 		{
 			// Write to StringBuilder
 			var result = new StringBuilder();
@@ -123,7 +123,7 @@ namespace Jeebs.Mvc.Models
 			}
 
 			// Return result
-			return Result.OkV(result.ToString());
+			return Option.Wrap(result.ToString());
 		}
 	}
 }

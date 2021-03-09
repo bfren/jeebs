@@ -45,32 +45,32 @@ namespace F
 			// Ensure there is a current user
 			if (principal.Identity == null)
 			{
-				return Option.None<string>().AddReason<NullIdentityMsg>();
+				return Option.None<string>(new NullIdentityMsg());
 			}
 
 			// Ensure the current user is authenticated
 			var identity = principal.Identity;
 			if (!identity.IsAuthenticated)
 			{
-				return Option.None<string>().AddReason<IdentityNotAuthenticatedMsg>();
+				return Option.None<string>(new IdentityNotAuthenticatedMsg());
 			}
 
 			// Ensure the JwtConfig is valid
 			if (!config.IsValid)
 			{
-				return Option.None<string>().AddReason<JwtConfigInvalidMsg>();
+				return Option.None<string>(new JwtConfigInvalidMsg());
 			}
 
 			// Ensure the signing key is a valid length
 			if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 			{
-				return Option.None<string>().AddReason<SigningKeyNotLongEnoughMsg>();
+				return Option.None<string>(new SigningKeyNotLongEnoughMsg());
 			}
 
 			// Ensure the encrypting key is a valid length
 			if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 			{
-				return Option.None<string>().AddReason<EncryptingKeyNotLongEnoughMsg>();
+				return Option.None<string>(new EncryptingKeyNotLongEnoughMsg());
 			}
 
 			try
@@ -103,11 +103,11 @@ namespace F
 			}
 			catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 			{
-				return Option.None<string>().AddReason<KeyNotLongEnoughMsg>();
+				return Option.None<string>(new KeyNotLongEnoughMsg());
 			}
 			catch (Exception e)
 			{
-				return Option.None<string>().AddReason<ErrorCreatingJwtSecurityTokenMsg>(e);
+				return Option.None<string>(new ErrorCreatingJwtSecurityTokenMsg(e));
 			}
 		}
 	}
