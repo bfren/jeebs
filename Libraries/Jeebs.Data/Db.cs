@@ -57,40 +57,36 @@ namespace Jeebs.Data
 		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="dbLog">ILog for Db</param>
-		/// <param name="wLog">ILog for UnitOfWork</param>
-		protected Db(IDbClient client, ILog<Db> dbLog, ILog<UnitOfWork> wLog) =>
-			(Client, Log, unitOfWorkLog) = (client, dbLog, wLog);
+		/// <param name="logs">DbLogs</param>
+		protected Db(IDbClient client, DbLogs logs) =>
+			(Client, Log, unitOfWorkLog) = (client, logs.DbLog, logs.UnitOfWorkLog);
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="dbLog">ILog for Db</param>
-		/// <param name="wLog">ILog for UnitOfWork</param>
+		/// <param name="logs">DbLogs</param>
 		/// <param name="config">DbConfig</param>
-		protected Db(IDbClient client, ILog<Db> dbLog, ILog<UnitOfWork> wLog, DbConfig config) : this(client, dbLog, wLog) =>
+		protected Db(IDbClient client, DbLogs logs, DbConfig config) : this(client, logs) =>
 			ConnectionString = config.GetConnection().ConnectionString;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="dbLog">ILog for Db</param>
-		/// <param name="wLog">ILog for UnitOfWork</param>
+		/// <param name="logs">DbLogs</param>
 		/// <param name="config">DbConfig</param>
 		/// <param name="connectionName">Connection name</param>
-		protected Db(IDbClient client, ILog<Db> dbLog, ILog<UnitOfWork> wLog, DbConfig config, string connectionName) : this(client, dbLog, wLog) =>
+		protected Db(IDbClient client, DbLogs logs, DbConfig config, string connectionName) : this(client, logs) =>
 			ConnectionString = config.GetConnection(connectionName).ConnectionString;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="dbLog">ILog for Db</param>
-		/// <param name="wLog">ILog for UnitOfWork</param>
+		/// <param name="logs">DbLogs</param>
 		/// <param name="connectionString">Connection String</param>
-		protected Db(IDbClient client, ILog<Db> dbLog, ILog<UnitOfWork> wLog, string connectionString) : this(client, dbLog, wLog) =>
+		protected Db(IDbClient client, DbLogs logs, string connectionString) : this(client, logs) =>
 			ConnectionString = connectionString;
 
 		#region Static

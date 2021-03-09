@@ -2,14 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using Jeebs.Cryptography;
-using Jeebs.Data;
-using Jeebs.Data.Querying;
 using Jm.Auth.Data.DataAuthProvider.ValidateUserAsync;
-using Microsoft.Win32.SafeHandles;
 
 namespace Jeebs.Auth
 {

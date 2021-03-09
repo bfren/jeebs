@@ -18,7 +18,8 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
-			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
+			var logs = new DbLogs(dbLog, wLog);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			IUnitOfWork action() => db.UnitOfWork;
@@ -34,8 +35,9 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
-			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -61,9 +63,10 @@ namespace Jeebs.Data.Db_Tests
 
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -84,9 +87,10 @@ namespace Jeebs.Data.Db_Tests
 
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -112,9 +116,10 @@ namespace Jeebs.Data.Db_Tests
 
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, dbLog, wLog, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			var result = db.UnitOfWork;

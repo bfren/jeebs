@@ -6,7 +6,6 @@ using System.Data;
 using System.Threading.Tasks;
 using NSubstitute;
 using NSubstitute.Extensions;
-using Xunit;
 
 namespace Jeebs.Data.UnitOfWork_Tests
 {

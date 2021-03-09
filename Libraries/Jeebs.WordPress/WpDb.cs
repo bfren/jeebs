@@ -91,16 +91,15 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
-		/// <param name="dbLog">ILog for Db</param>
-		/// <param name="wLog">ILog for UnitOfWork</param>
-		public WpDb(DbConfig dbConfig, WpConfig wpConfig, ILog<Db> dbLog, ILog<UnitOfWork> wLog) : base(dbLog, wLog)
+		/// <param name="logs">DbLogs</param>
+		public WpDb(DbConfig dbConfig, WpConfig wpConfig, DbLogs logs) : base(logs)
 		{
 			// Get connection from WordPress database configuration
 			var cfg = dbConfig.GetConnection(wpConfig.Db);
 			ConnectionString = cfg.ConnectionString;
 			var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
 
-			dbLog.Trace("WordPress Config: {@WpConfig}, {@DbConfig}", wpConfig, cfg);
+			logs.DbLog.Trace("WordPress Config: {@WpConfig}, {@DbConfig}", wpConfig, cfg);
 
 			// Create table definitions
 			Comment = new CommentTable(tablePrefix);

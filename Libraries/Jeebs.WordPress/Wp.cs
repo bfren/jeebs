@@ -52,15 +52,14 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
-		/// <param name="dbLog">ILog for Db</param>
-		/// <param name="wLog">ILog for UnitOfWork</param>
-		protected Wp(DbConfig dbConfig, TConfig wpConfig, ILog<Db> dbLog, ILog<UnitOfWork> wLog)
+		/// <param name="logs">DbLogs</param>
+		protected Wp(DbConfig dbConfig, TConfig wpConfig, DbLogs logs)
 		{
 			// Store config
 			Config = wpConfig;
 
 			// Create new database object using this instance's entity types
-			Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, dbLog, wLog);
+			Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, logs);
 
 			// Don't need to lock here - if two threads try to register custom types etc,
 			// it will simply return false

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
-using Microsoft.VisualBasic;
 using NSubstitute;
 using Xunit;
 

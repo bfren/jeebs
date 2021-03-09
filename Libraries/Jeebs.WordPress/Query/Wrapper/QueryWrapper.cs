@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jeebs.Data;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Messages.Query.Wrapper;
 using Jm.WordPress.Query.Wrapper;
