@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.OptionSome_Tests
+namespace Jeebs.Some_Tests
 {
 	public class ToString_Tests
 	{

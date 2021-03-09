@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace Jeebs.OptionNone_Tests
+namespace Jeebs.None_Tests
 {
 	public class AddReason_Tests
 	{

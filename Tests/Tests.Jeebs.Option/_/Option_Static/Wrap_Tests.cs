@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.OptionStatic_Tests
+namespace Jeebs.Option_Static_Tests
 {
 	public class Wrap_Tests
 	{
