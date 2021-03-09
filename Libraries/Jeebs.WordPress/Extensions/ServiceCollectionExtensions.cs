@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Config;
+using Jeebs.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -53,9 +54,10 @@ namespace Jeebs.WordPress
 				where TWp : class, IWp<TWpConfig>
 				where TWpConfig : WpConfig
 			{
-				Services.AddSingleton<TWp>();
 				Services.Bind<TWpConfig>().To(section).Using(config);
-				return Services;
+				return Services
+					.AddData()
+					.AddSingleton<TWp>();
 			}
 		}
 	}
