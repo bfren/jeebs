@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions
 	/// </summary>
-	public static class OptionExtensions
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Enables LINQ select on Option objects, e.g.

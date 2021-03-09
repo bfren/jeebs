@@ -18,9 +18,9 @@ namespace Jeebs
 			Value = value;
 
 		/// <summary>
-		/// Return <see cref="Value"/>.ToString()
+		/// Return <see cref="Value"/>.ToString(), or the name of <typeparamref name="T"/>
 		/// </summary>
 		public override string ToString() =>
-			Value?.ToString() ?? base.ToString();
+			Value?.ToString() ?? "Some: " + typeof(T).ToString();
 	}
 }

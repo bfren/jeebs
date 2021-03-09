@@ -37,11 +37,6 @@ namespace Jeebs.Fluent
 		/// <inheritdoc cref="CatchException{TValue, TException}.With{TExceptionMsg}"/>
 		public ILink<TValue, TState> With<TExceptionMsg>()
 			where TExceptionMsg : IExceptionMsg, new() =>
-			With((r, ex) =>
-			{
-				var msg = new TExceptionMsg();
-				msg.Set(ex);
-				r.AddMsg(msg);
-			});
+			With((r, ex) => r.AddMsg(new TExceptionMsg { Exception = ex }));
 	}
 }

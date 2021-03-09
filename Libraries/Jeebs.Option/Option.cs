@@ -3,104 +3,16 @@
 
 using System;
 using System.Collections;
-using Jm.Option;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// Create option types
-	/// </summary>
-	public static class Option
-	{
-		/// <summary>
-		/// Create a None option
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		public static None<T> None<T>() =>
-			new();
-
-		/// <summary>
-		/// Create a Some option, containing a value
-		/// <para>If <paramref name="value"/> is null, <see cref="Jeebs.None{T}"/> will be returned instead</para>
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="value">Some value</param>
-		public static Option<T> Wrap<T>(T value) =>
-			value switch
-			{
-				T x =>
-					new Some<T>(x),
-
-				_ =>
-					new None<T>().AddReason<SomeValueWasNullMsg>()
-			};
-
-		/// <summary>
-		/// Wrap <paramref name="value"/> in <see cref="Wrap{T}(T)"/> if <paramref name="predicate"/> is true
-		/// <para>Otherwise, will return <see cref="Jeebs.None{T}"/></para>
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="predicate">Predicate to evaluate</param>
-		/// <param name="value">Function to return value</param>
-		public static Option<T> WrapIf<T>(Func<bool> predicate, Func<T> value) =>
-			predicate() switch
-			{
-				true =>
-					Wrap(value()),
-
-				false =>
-					None<T>()
-			};
-	}
-
-	/// <summary>
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract record Option<T> : IEquatable<Option<T>>, IStructuralEquatable
+	public abstract partial record Option<T> : IEquatable<Option<T>>, IStructuralEquatable
 	{
 		internal Option() { }
-
-		private void SwitchAction(Action<T> some, Action<IMsg?> none)
-		{
-			if (this is Some<T> x)
-			{
-				some(x.Value);
-			}
-			else if (this is None<T> y)
-			{
-				none(y.Reason);
-			}
-			else
-			{
-				throw new Exception(); // as Option<T> is internal implementation only this should never happen...
-			}
-		}
-
-		private void SwitchAction(Action<T> some, Action none) =>
-			SwitchAction(
-				some: some,
-				none: _ => none()
-			);
-
-		private U SwitchFunc<U>(Func<T, U> some, Func<IMsg?, U> none) =>
-			this switch
-			{
-				Some<T> x =>
-					some(x.Value),
-
-				None<T> y =>
-					none(y.Reason),
-
-				_ =>
-					throw new Exception() // as Option<T> is internal implementation only this should never happen...
-			};
-
-		private U SwitchFunc<U>(Func<T, U> some, Func<U> none) =>
-			SwitchFunc(
-				some: some,
-				none: _ => none()
-			);
 
 		/// <summary>
 		/// Run an action depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
@@ -149,31 +61,28 @@ namespace Jeebs
 			);
 
 		/// <summary>
-		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Next Option value type</typeparam>
-		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		public Option<U> Bind<U>(Func<T, Option<U>> bind) =>
-			SwitchFunc(
-				some: x =>
-					bind(x).SwitchFunc<Option<U>>(
-						some: Option.Wrap,
-						none: r => new None<U>(r)
-					),
-
-				none: r =>
-					new None<U>(r)
-			);
-
-		/// <summary>
 		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
 		/// </summary>
-		/// <typeparam name="U">Next Option value type</typeparam>
+		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		public Option<U> Map<U>(Func<T, U> map) =>
 			SwitchFunc(
 				some: v => Option.Wrap(map(v)),
-				none: r => new None<U>(r)
+				none: r => Option.None<U>(r)
+			);
+
+		/// <summary>
+		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <typeparam name="U">Next value type</typeparam>
+		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		public Option<U> Bind<U>(Func<T, Option<U>> bind) =>
+			SwitchFunc(
+				some: x =>
+					bind(x),
+
+				none: r =>
+					Option.None<U>(r)
 			);
 
 		/// <summary>
@@ -185,6 +94,51 @@ namespace Jeebs
 				some: x => x,
 				none: ifNone
 			);
+
+		#region Helpers
+
+		private void SwitchAction(Action<T> some, Action<IMsg?> none)
+		{
+			if (this is Some<T> x)
+			{
+				some(x.Value);
+			}
+			else if (this is None<T> y)
+			{
+				none(y.Reason);
+			}
+			else
+			{
+				throw new Jx.Option.UnknownOptionException(); // as Option<T> is internal implementation only this should never happen...
+			}
+		}
+
+		private void SwitchAction(Action<T> some, Action none) =>
+			SwitchAction(
+				some: some,
+				none: _ => none()
+			);
+
+		private U SwitchFunc<U>(Func<T, U> some, Func<IMsg?, U> none) =>
+			this switch
+			{
+				Some<T> x =>
+					some(x.Value),
+
+				None<T> y =>
+					none.Invoke(y.Reason),
+
+				_ =>
+					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+			};
+
+		private U SwitchFunc<U>(Func<T, U> some, Func<U> none) =>
+			SwitchFunc(
+				some: some,
+				none: _ => none()
+			);
+
+		#endregion
 
 		#region Operators
 
@@ -280,7 +234,7 @@ namespace Jeebs
 					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
 				_ =>
-					throw new Exception() // as Option<T> is internal implementation only this should never happen...
+					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		/// <inheritdoc cref="GetHashCode()"/>
@@ -297,7 +251,7 @@ namespace Jeebs
 					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
 				_ =>
-					throw new Exception() // as Option<T> is internal implementation only this should never happen...
+					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		#endregion

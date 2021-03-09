@@ -45,11 +45,6 @@ namespace Jeebs.Fluent
 		/// <typeparam name="TExceptionMsg">Exception message type</typeparam>
 		public ILink<TValue> With<TExceptionMsg>()
 			where TExceptionMsg : IExceptionMsg, new() =>
-			With((r, ex) =>
-			{
-				var msg = new TExceptionMsg();
-				msg.Set(ex);
-				r.AddMsg(msg);
-			});
+			With((r, ex) => r.AddMsg(new TExceptionMsg { Exception = ex }));
 	}
 }

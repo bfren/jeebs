@@ -13,7 +13,7 @@ namespace Jeebs
 		/// <summary>
 		/// The exception that occurred
 		/// </summary>
-		public Exception Exception { get; }
+		Exception Exception { get; init; }
 
 		/// <summary>
 		/// The full name of the Exception type
@@ -24,11 +24,5 @@ namespace Jeebs
 		/// Exception text
 		/// </summary>
 		string ExceptionText { get; }
-
-		/// <summary>
-		/// Set properties from exception
-		/// </summary>
-		/// <param name="ex">Exception</param>
-		void Set(Exception ex);
 	}
 }

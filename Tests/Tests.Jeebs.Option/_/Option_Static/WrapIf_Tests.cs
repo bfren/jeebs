@@ -5,7 +5,7 @@ using System;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.OptionStatic_Tests
 {
 	public class WrapIf_Tests
 	{

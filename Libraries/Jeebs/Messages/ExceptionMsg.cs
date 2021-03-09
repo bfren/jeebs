@@ -11,7 +11,7 @@ namespace Jm
 	public abstract class ExceptionMsg : IExceptionMsg
 	{
 		/// <inheritdoc/>
-		public Exception Exception { get; private set; }
+		public Exception Exception { get; init; } = new Exception("Unknown.");
 
 		/// <inheritdoc/>
 		public string ExceptionType =>
@@ -36,20 +36,15 @@ namespace Jm
 			Jeebs.Defaults.Log.ExceptionLevel;
 
 		/// <summary>
-		/// Properties must then be set using <see cref="Set(Exception)"/>
+		/// Create blank object
 		/// </summary>
-		protected ExceptionMsg() =>
-			Exception = new Exception("Unknown.");
+		protected ExceptionMsg() { }
 
 		/// <summary>
 		/// Create object from exception
 		/// </summary>
 		/// <param name="ex">Exception</param>
 		protected ExceptionMsg(Exception ex) =>
-			Exception = ex;
-
-		/// <inheritdoc/>
-		public void Set(Exception ex) =>
 			Exception = ex;
 
 		/// <summary>

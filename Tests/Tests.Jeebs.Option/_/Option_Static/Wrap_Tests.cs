@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.OptionStatic_Tests
 {
 	public class Wrap_Tests
 	{
@@ -22,18 +22,32 @@ namespace Jeebs.Option_Tests
 			Assert.Equal(input, some.Value);
 		}
 
-		[Theory]
-		[InlineData(null)]
-		public void Null_Input_Returns_None(object input)
+		[Fact]
+		public void Null_Input_Returns_None()
 		{
 			// Arrange
+			int? value = null;
 
 			// Act
-			var result = Option.Wrap(input);
+			var result = Option.Wrap(value);
 
 			// Assert
-			var none = Assert.IsType<None<object>>(result);
+			var none = Assert.IsType<None<int?>>(result);
 			Assert.True(none.Reason is Jm.Option.SomeValueWasNullMsg);
+		}
+
+		[Fact]
+		public void Null_Input_Allow_Nulls_Returns_Some_With_Null_Value()
+		{
+			// Arrange
+			int? value = null;
+
+			// Act
+			var result = Option.Wrap(value, true);
+
+			// Assert
+			var some = Assert.IsType<Some<int?>>(result);
+			Assert.Null(some.Value);
 		}
 	}
 }
