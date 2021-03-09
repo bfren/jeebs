@@ -34,8 +34,8 @@ namespace AppConsoleWordPress.Bcg
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpBcgConfig</param>
-		/// <param name="dbLog">ILog</param>
-		public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog<Db> dbLog, ILog<UnitOfWork> wLog) : base(dbConfig.Value, wpConfig.Value, dbLog, wLog) { }
+		/// <param name="logs">DbLogs</param>
+		public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, DbLogs logs) : base(dbConfig.Value, wpConfig.Value, logs) { }
 
 		/// <summary>
 		/// Register custom post types
