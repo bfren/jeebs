@@ -48,17 +48,14 @@ namespace Jeebs
 		/// <typeparam name="T">Option type</typeparam>
 		/// <param name="this">Option</param>
 		/// <param name="predicate">Select where predicate</param>
-		public static async Task<Option<T>> Where<T>(this Task<Option<T>> @this, Func<T, bool> predicate)
-		{
-			var awaited = await @this;
-			return awaited.Bind(x => predicate(x) switch
+		public static Task<Option<T>> Where<T>(this Task<Option<T>> @this, Func<T, bool> predicate) =>
+			@this.BindAsync(x => predicate(x) switch
 			{
 				true =>
-					awaited,
+					@this,
 
 				false =>
-					Option.None<T>(new PredicateWasFalseMsg())
+					Task.FromResult((Option<T>)Option.None<T>(new PredicateWasFalseMsg()))
 			});
-		}
 	}
 }

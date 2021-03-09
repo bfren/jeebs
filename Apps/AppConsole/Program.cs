@@ -14,7 +14,7 @@ namespace AppConsole
 		private static async Task Main(string[] args) =>
 			await Main<App>(
 				args,
-				(provider, config) =>
+				async (provider, config) =>
 				{
 					var log = provider.GetRequiredService<ILog<Program>>();
 
@@ -39,6 +39,26 @@ namespace AppConsole
 
 					var notifier = provider.GetRequiredService<INotifier>();
 					notifier.Send("test notification");
+
+					async Task<Option<int>> one(int input) =>
+						await Task.FromResult(input + 1);
+
+					async Task<Option<string>> two(int input) =>
+						await Task.FromResult(input.ToString());
+
+					async Task<Option<bool>> three(string input) =>
+						await Task.FromResult(input == "3");
+
+					var result = from r0 in one(2)
+								 from r1 in two(r0)
+								 from r2 in three(r1)
+								 select r2;
+
+					(await result).AuditSwitch(
+						some: x => log.Information("Result: {0}", x),
+						none: _ => log.Information("No result")
+					);
+
 
 					while (Console.ReadLine() is string output)
 					{

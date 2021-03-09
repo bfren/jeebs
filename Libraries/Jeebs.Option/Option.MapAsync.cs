@@ -14,8 +14,8 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		public async Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
-			await Option.CatchAsync(async () =>
+		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
+			Option.CatchAsync(async () =>
 				this switch
 				{
 					Some<T> x =>

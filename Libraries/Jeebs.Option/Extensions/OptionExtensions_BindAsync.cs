@@ -33,6 +33,6 @@ namespace Jeebs
 			Func<T, Task<Option<U>>> bind,
 			Option.Handler? handler = null
 		) =>
-			await (await @this).BindAsync(bind, handler);
+			await (await @this).BindAsync(value => bind(value), handler);
 	}
 }
