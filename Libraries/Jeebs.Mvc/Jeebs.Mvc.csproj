@@ -8,4 +8,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Messages\" />
+	</ItemGroup>
 </Project>

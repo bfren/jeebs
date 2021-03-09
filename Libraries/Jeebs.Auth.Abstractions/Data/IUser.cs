@@ -9,13 +9,8 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User interface
 	/// </summary>
-	public interface IUser : IUserModel, IEntity<long>
+	public interface IUser : IUserAuth, IUserModel
 	{
-		/// <summary>
-		/// The user's encrypted password
-		/// </summary>
-		string PasswordHash { get; init; }
-
 		/// <summary>
 		/// Given (Christian / first) name
 		/// </summary>
@@ -30,16 +25,6 @@ namespace Jeebs.Auth.Data
 		/// Full name - normally GivenName + FamilyName
 		/// </summary>
 		string FullName { get; }
-
-		/// <summary>
-		/// Whether or not the user account is enabled
-		/// </summary>
-		bool IsEnabled { get; init; }
-
-		/// <summary>
-		/// The last time the user signed in
-		/// </summary>
-		DateTime? LastSignedIn { get; init; }
 	}
 
 	/// <summary>

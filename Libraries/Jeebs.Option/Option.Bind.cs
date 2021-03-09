@@ -12,10 +12,14 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		/// <param name="handler">[Optional] Exception handler</param>
 		public Option<U> Bind<U>(Func<T, Option<U>> bind, Option.Handler? handler = null) =>
-			Option.Catch(() => SwitchFunc(
-				some: x => bind(x),
-				none: r => Option.None<U>(r)
-			), handler);
+			Option.Catch(() =>
+				SwitchFunc(
+					some: x => bind(x),
+					none: r => Option.None<U>(r)
+				),
+				handler
+			);
 	}
 }

@@ -7,7 +7,7 @@ using Jeebs.WordPress;
 namespace Jm.WordPress.Query.Wrapper.Posts
 {
 	/// <summary>
-	/// See <see cref="QueryWrapper.AddTaxonomiesAsync{TList, TModel}(IOkV{TList})"/>
+	/// See <see cref="QueryWrapper.AddTaxonomiesAsync{TList, TModel}(TList)"/>
 	/// </summary>
 	public sealed class TaxonomyNotRegisteredMsg : IMsg
 	{

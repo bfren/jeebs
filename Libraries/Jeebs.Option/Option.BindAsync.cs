@@ -14,6 +14,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		/// <param name="handler">[Optional] Exception handler</param>
 		public async Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
 			await Option.CatchAsync(async () =>
 				this switch

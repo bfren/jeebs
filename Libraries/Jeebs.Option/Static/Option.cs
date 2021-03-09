@@ -17,13 +17,13 @@ namespace Jeebs
 		public delegate IExceptionMsg Handler(Exception e);
 
 		/// <summary>
-		/// Special case for boolean - returns Some<bool>(true)
+		/// Special case for boolean - returns Some{bool}(true)
 		/// </summary>
 		public static Option<bool> True =>
 			Wrap(true);
 
 		/// <summary>
-		/// Special case for boolean - returns Some<bool>(false)
+		/// Special case for boolean - returns Some{bool}(false)
 		/// </summary>
 		public static Option<bool> False =>
 			Wrap(false);

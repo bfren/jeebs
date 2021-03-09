@@ -15,7 +15,6 @@ namespace Jeebs.WordPress
 		/// Query Posts Meta
 		/// </summary>
 		/// <typeparam name="TModel">Term type</typeparam>
-		/// <param name="r">Result</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		public async Task<Option<List<TModel>>> QueryPostsMetaAsync<TModel>(Action<QueryPostsMeta.Options>? modify = null)
 			where TModel : IEntity

@@ -34,7 +34,7 @@ namespace Jeebs
 			};
 
 		/// <summary>
-		/// Wrap <paramref name="value"/> in <see cref="Wrap{T}(T)"/> if <paramref name="predicate"/> is true
+		/// Wrap <paramref name="value"/> in <see cref="Wrap{T}(T, bool)"/> if <paramref name="predicate"/> is true
 		/// <para>Otherwise, will return <see cref="Jeebs.None{T}"/></para>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>

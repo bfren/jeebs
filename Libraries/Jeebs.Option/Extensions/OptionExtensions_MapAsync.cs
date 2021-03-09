@@ -18,13 +18,21 @@ namespace Jeebs
 		/// <typeparam name="T">Original value type</typeparam>
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="map">Map function - receives value of <paramref name="this"/> if it is <see cref="Some{T}"/></param>
-		public static async Task<Option<U>> MapAsync<T, U>(this Task<Option<T>> @this, Func<T, U> map) =>
-			await (await @this).MapAsync(async value => map(value));
+		/// <param name="handler">[Optional] Exception handler</param>
+		public static async Task<Option<U>> MapAsync<T, U>(
+			this Task<Option<T>> @this,
+			Func<T, U> map,
+			Option.Handler? handler = null
+		) =>
+			await (await @this).MapAsync(async value => map(value), handler);
 
-		/// <inheritdoc cref="MapAsync{T, U}(Task{Option{T}}, Func{T, Task{U}})"/>
-		public static async Task<Option<U>> MapAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> map) =>
-			await (await @this).MapAsync(map);
+		/// <inheritdoc cref="MapAsync{T, U}(Task{Option{T}}, Func{T, U}, Option.Handler?)"/>
+		public static async Task<Option<U>> MapAsync<T, U>(
+			this Task<Option<T>> @this,
+			Func<T, Task<U>> map,
+			Option.Handler? handler = null
+		) =>
+			await (await @this).MapAsync(map, handler);
 	}
 }

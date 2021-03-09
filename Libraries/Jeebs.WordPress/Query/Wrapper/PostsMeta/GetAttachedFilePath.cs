@@ -14,7 +14,7 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Get the full path to an attached file
 		/// </summary>
-		/// <param name="r">Result</param>
+		/// <param name="postId">Post ID</param>
 		/// <param name="uploadsPath">Full path to wp-uploads directory on server</param>
 		public async Task<Option<string>> GetAttachedFilePathAsync(long postId, string uploadsPath)
 		{

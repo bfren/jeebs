@@ -6,7 +6,7 @@ using Jeebs;
 namespace Jm.Option
 {
 	/// <summary>
-	/// See <see cref="Jeebs.Option.Wrap{T}(T)"/>
+	/// See <see cref="Jeebs.Option.Wrap{T}(T, bool)"/>
 	/// </summary>
 	public sealed class SomeValueWasNullMsg : IMsg { }
 }

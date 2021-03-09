@@ -25,6 +25,7 @@ namespace Jeebs
 		/// <summary>
 		/// Perform an asynchronous match, awaiting the current Option type first
 		/// </summary>
+		/// <typeparam name="T">Original value type</typeparam>
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
@@ -35,6 +36,7 @@ namespace Jeebs
 		/// <summary>
 		/// Perform an asynchronous match, awaiting the current Option type first
 		/// </summary>
+		/// <typeparam name="T">Original value type</typeparam>
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
@@ -45,6 +47,7 @@ namespace Jeebs
 		/// <summary>
 		/// Perform an asynchronous match, awaiting the current Option type first
 		/// </summary>
+		/// <typeparam name="T">Original value type</typeparam>
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
@@ -55,6 +58,7 @@ namespace Jeebs
 		/// <summary>
 		/// Perform an asynchronous match, awaiting the current Option type first
 		/// </summary>
+		/// <typeparam name="T">Original value type</typeparam>
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>

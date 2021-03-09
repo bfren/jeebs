@@ -16,7 +16,6 @@ namespace Jeebs.WordPress
 		/// Query Taxonomy
 		/// </summary>
 		/// <typeparam name="TModel">Term type</typeparam>
-		/// <param name="r">Result</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		public async Task<Option<List<TModel>>> QueryTaxonomyAsync<TModel>(Action<QueryTaxonomy.Options>? modify = null)
 		{

@@ -4,7 +4,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Jm.Mvc.Controllers.Controller;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +43,7 @@ namespace Jeebs.Mvc
 		/// Do something, process the result and return errors if necessary, or perform the success function
 		/// </summary>
 		/// <typeparam name="T">Result type</typeparam>
-		/// <param name="r">The result of some action</param>
+		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
 		protected async Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
 			await option.MatchAsync(
@@ -54,7 +53,7 @@ namespace Jeebs.Mvc
 					this.ExecuteErrorAsync(reason)
 			);
 
-		/// <inheritdoc cref="ProcessResultAsync{T}(IR{T}, Func{T, Task{IActionResult}})"/>
+		/// <inheritdoc cref="ProcessOptionAsync{T}(Option{T}, Func{T, Task{IActionResult}})"/>
 		protected IActionResult ProcessOption<T>(Option<T> option, Func<T, IActionResult> success) =>
 			option.Match(
 				some: value =>

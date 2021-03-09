@@ -6,7 +6,7 @@ using System;
 namespace Jm.Data.Mapping.Extensions.UnitOfWork
 {
 	/// <summary>
-	/// See <see cref="Jeebs.Data.Mapping.UnitOfWorkExtensions.Create{T}(Jeebs.Data.IUnitOfWork, Jeebs.IOkV{T})"/>
+	/// See <see cref="Jeebs.Data.Mapping.UnitOfWorkExtensions.Create{T}(Jeebs.Data.IUnitOfWork, T)"/>
 	/// </summary>
 	public sealed class GetFreshPocoExceptionMsg : ExceptionMsg
 	{

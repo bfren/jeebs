@@ -65,7 +65,6 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Run a query against the database
 		/// </summary>
-		/// <param name="r">Result</param>
 		/// <param name="sql">Query string</param>
 		/// <param name="parameters">Query parameters - should normally be an object with properties matching parameter names</param>
 		/// <param name="commandType">CommandType</param>
