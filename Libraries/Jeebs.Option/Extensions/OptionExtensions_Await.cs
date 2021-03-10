@@ -13,7 +13,7 @@ namespace Jeebs
 		/// <summary>
 		/// Forces the thread to await the current Option value
 		/// </summary>
-		/// <remarks>Use with EXTREME CAUTION - can cause locks</remarks>
+		/// <remarks>Use with EXTREME CAUTION - can cause locks - you should normall use async/await keywords</remarks>
 		/// <typeparam name="T">Value type</typeparam>
 		/// <param name="this">Option (awaitable)</param>
 		public static Option<T> Await<T>(this Task<Option<T>> @this) =>

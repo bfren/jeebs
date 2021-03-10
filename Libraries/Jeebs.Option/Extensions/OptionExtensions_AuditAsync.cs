@@ -18,22 +18,15 @@ namespace Jeebs
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="audit">Audit function</param>
-		public static async Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Option<T>> audit) =>
-			OptionExtensions_Audit.Audit(await @this, audit);
-
-		/// <summary>
-		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="audit">Audit function</param>
-		public static async Task<Option<T>> AuditAsync<T>(this Option<T> @this, Func<Option<T>, Task> audit)
+		public static async Task<Option<T>> AuditAsyncPrivate<T>(Task<Option<T>> @this, Func<Option<T>, Task> audit)
 		{
+			// Await option type
+			var awaited = await @this;
+
 			// Perform the audit
 			try
 			{
-				await audit(@this);
+				await audit(awaited);
 			}
 			catch (Exception e)
 			{
@@ -41,69 +34,15 @@ namespace Jeebs
 			}
 
 			// Return the original object
-			return @this;
+			return awaited;
 		}
 
-		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task})"/>
-		public static async Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<Option<T>, Task> audit) =>
-			await AuditAsync(await @this, audit);
+		/// <inheritdoc cref="AuditAsyncPrivate{T}(Task{Option{T}}, Func{Option{T}, Task})"/>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Option<T>> audit) =>
+			AuditAsyncPrivate(@this, x => { audit(x); return Task.CompletedTask; });
 
-		/// <summary>
-		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
-		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		public static async Task<Option<T>> AuditSwitch<T>(this Task<Option<T>> @this, Action<T>? some = null, Action<IMsg?>? none = null) =>
-			OptionExtensions_Audit.AuditSwitch(await @this, some, none);
-
-		/// <summary>
-		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
-		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		public static async Task<Option<T>> AuditSwitchAsync<T>(this Option<T> @this, Func<T, Task>? some = null, Func<IMsg?, Task>? none = null)
-		{
-			// Do nothing if the user gave us nothing to do!
-			if (some == null && none == null)
-			{
-				return @this;
-			}
-
-			// Work out which audit function to use
-			Func<Task> audit = @this switch
-			{
-				Some<T> x =>
-					() => some?.Invoke(x.Value) ?? Task.CompletedTask,
-
-				None<T> x =>
-					() => none?.Invoke(x.Reason) ?? Task.CompletedTask,
-
-				_ =>
-					() => throw new Jx.Option.UnknownOptionException()
-			};
-
-			// Perform the audit
-			try
-			{
-				await audit();
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Audit Error: {0}", e);
-			}
-
-			// Return the original object
-			return @this;
-		}
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
-		public static async Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<T, Task>? some = null, Func<IMsg?, Task>? none = null) =>
-			await AuditSwitchAsync(await @this, some, none);
+		/// <inheritdoc cref="AuditAsyncPrivate{T}(Task{Option{T}}, Func{Option{T}, Task})"/>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<Option<T>, Task> audit) =>
+			AuditAsyncPrivate(@this, audit);
 	}
 }

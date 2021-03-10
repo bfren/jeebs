@@ -14,20 +14,11 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<U> none) =>
-			MatchAsync(some, _ => none());
-
-		/// <summary>
-		/// Perform an asynchronous match
-		/// </summary>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public async Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, U> none) =>
+		private Task<U> MatchAsyncPrivate<U>(Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
 			this switch
 			{
 				Some<T> x =>
-					await some(x.Value),
+					some(x.Value),
 
 				None<T> y =>
 					none(y.Reason),
@@ -42,8 +33,11 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public Task<U> MatchAsync<U>(Func<T, U> some, Func<Task<U>> none) =>
-			MatchAsync(some, _ => none());
+		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<U> none) =>
+			MatchAsyncPrivate(
+				some: some,
+				none: _ => Task.FromResult(none())
+			);
 
 		/// <summary>
 		/// Perform an asynchronous match
@@ -51,18 +45,11 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public async Task<U> MatchAsync<U>(Func<T, U> some, Func<IMsg?, Task<U>> none) =>
-			this switch
-			{
-				Some<T> x =>
-					some(x.Value),
-
-				None<T> y =>
-					await none(y.Reason),
-
-				_ =>
-					throw new Jx.Option.UnknownOptionException()
-			};
+		public Task<U> MatchAsync<U>(Func<T, U> some, Func<Task<U>> none) =>
+			MatchAsyncPrivate(
+				some: x => Task.FromResult(some(x)),
+				none: _ => none()
+			);
 
 		/// <summary>
 		/// Perform an asynchronous match
@@ -71,7 +58,10 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<Task<U>> none) =>
-			MatchAsync(some, _ => none());
+			MatchAsyncPrivate(
+				some: some,
+				none: _ => none()
+			);
 
 		/// <summary>
 		/// Perform an asynchronous match
@@ -79,17 +69,34 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public async Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			this switch
-			{
-				Some<T> x =>
-					await some(x.Value),
+		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, U> none) =>
+			MatchAsyncPrivate(
+				some: some,
+				none: x => Task.FromResult(none(x))
+			);
 
-				None<T> y =>
-					await none(y.Reason),
+		/// <summary>
+		/// Perform an asynchronous match
+		/// </summary>
+		/// <typeparam name="U">Return type</typeparam>
+		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		public Task<U> MatchAsync<U>(Func<T, U> some, Func<IMsg?, Task<U>> none) =>
+			MatchAsyncPrivate(
+				some: x => Task.FromResult(some(x)),
+				none: none
+			);
 
-				_ =>
-					throw new Jx.Option.UnknownOptionException()
-			};
+		/// <summary>
+		/// Perform an asynchronous match
+		/// </summary>
+		/// <typeparam name="U">Return type</typeparam>
+		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
+			MatchAsyncPrivate(
+				some: some,
+				none: none
+			);
 	}
 }

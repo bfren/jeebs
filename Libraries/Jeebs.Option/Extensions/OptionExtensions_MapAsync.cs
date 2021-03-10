@@ -20,19 +20,40 @@ namespace Jeebs
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="map">Map function - receives value of <paramref name="this"/> if it is <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		public static async Task<Option<U>> MapAsync<T, U>(
+		public static Task<Option<U>> MapAsyncPrivate<T, U>(
+			Task<Option<T>> @this,
+			Func<T, Task<U>> map,
+			Option.Handler? handler = null
+		) =>
+			Option.CatchAsync(async () =>
+				await @this switch
+				{
+					Some<T> x =>
+						Option.Wrap(await map(x.Value)),
+
+					None<T> y =>
+						Option.None<U>(y.Reason),
+
+					_ =>
+						throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+				},
+				handler
+			);
+
+		/// <inheritdoc cref="MapAsyncPrivate{T, U}(Task{Option{T}}, Func{T, Task{U}}, Option.Handler?)"/>
+		public static Task<Option<U>> MapAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, U> map,
 			Option.Handler? handler = null
 		) =>
-			await (await @this).MapAsync(async value => map(value), handler);
+			MapAsyncPrivate(@this, x => Task.FromResult(map(x)), handler);
 
-		/// <inheritdoc cref="MapAsync{T, U}(Task{Option{T}}, Func{T, U}, Option.Handler?)"/>
-		public static async Task<Option<U>> MapAsync<T, U>(
+		/// <inheritdoc cref="MapAsyncPrivate{T, U}(Task{Option{T}}, Func{T, Task{U}}, Option.Handler?)"/>
+		public static Task<Option<U>> MapAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Task<U>> map,
 			Option.Handler? handler = null
 		) =>
-			await (await @this).MapAsync(map, handler);
+			MapAsyncPrivate(@this, map, handler);
 	}
 }

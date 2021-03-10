@@ -12,27 +12,47 @@ namespace Jeebs
 	public static class OptionExtensions_BindAsync
 	{
 		/// <summary>
-		/// Perform an asynchronous bind, awaiting the current Option type first -
-		/// if <paramref name="this"/> is <see cref="None{T}"/>, skips ahead to next type
+		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Original value type</typeparam>
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="bind">Bind function - receives value of <paramref name="this"/> if it is <see cref="Some{T}"/></param>
+		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		public static async Task<Option<U>> BindAsync<T, U>(
+		private static Task<Option<U>> BindAsyncPrivate<T, U>(
+			Task<Option<T>> @this,
+			Func<T, Task<Option<U>>> bind,
+			Option.Handler? handler = null
+		) =>
+			Option.CatchAsync(async () =>
+				await @this switch
+				{
+					Some<T> x =>
+						await bind(x.Value),
+
+					None<T> y =>
+						Option.None<U>(y.Reason),
+
+					_ =>
+						throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+				},
+				handler
+			);
+
+		/// <inheritdoc cref="BindAsyncPrivate{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Option.Handler?)"/>
+		public static Task<Option<U>> BindAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Option<U>> bind,
 			Option.Handler? handler = null
 		) =>
-			await (await @this).BindAsync(async value => bind(value), handler);
+			BindAsyncPrivate(@this, x => Task.FromResult(bind(x)), handler);
 
-		/// <inheritdoc cref="BindAsync{T, U}(Task{Option{T}}, Func{T, Option{U}}, Option.Handler?)"/>
-		public static async Task<Option<U>> BindAsync<T, U>(
+		/// <inheritdoc cref="BindAsyncPrivate{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Option.Handler?)"/>
+		public static Task<Option<U>> BindAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Task<Option<U>>> bind,
 			Option.Handler? handler = null
 		) =>
-			await (await @this).BindAsync(value => bind(value), handler);
+			BindAsyncPrivate(@this, bind, handler);
 	}
 }

@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
+		private Task<Option<U>> MapAsyncPrivate<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
 			Option.CatchAsync(async () =>
 				this switch
 				{
@@ -37,6 +37,15 @@ namespace Jeebs
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
 		public Task<Option<U>> MapAsync<U>(Func<Task<U>> map, Option.Handler? handler = null) =>
-			MapAsync(_ => map(), handler);
+			MapAsyncPrivate(_ => map(), handler);
+
+		/// <summary>
+		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <typeparam name="U">Next value type</typeparam>
+		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
+		/// <param name="handler">[Optional] Exception handler</param>
+		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
+			MapAsyncPrivate(map, handler);
 	}
 }

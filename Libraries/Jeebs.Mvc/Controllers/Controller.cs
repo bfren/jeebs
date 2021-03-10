@@ -45,7 +45,7 @@ namespace Jeebs.Mvc
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
 		protected async Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
-			await option.MatchAsync(
+			await option.MatchAsyncPrivate(
 				some: value =>
 					success(value),
 				none: reason =>

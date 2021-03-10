@@ -8,7 +8,6 @@ namespace Jeebs
 {
 	public abstract partial record Option<T>
 	{
-
 		/// <summary>
 		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
 		/// </summary>
