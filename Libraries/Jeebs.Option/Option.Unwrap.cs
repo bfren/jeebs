@@ -15,7 +15,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
 		public T Unwrap(Func<T> ifNone) =>
-			SwitchFunc(
+			Switch(
 				some: x => x,
 				none: ifNone
 			);
@@ -25,22 +25,24 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="U">Single value type</typeparam>
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			SwitchFunc(
-				some: x =>
-					x switch
-					{
-						IEnumerable<U> list when list.Count() == 1 =>
-							Option.Wrap(list.Single()),
+			Option.Catch(() =>
+				Switch(
+					some: x =>
+						x switch
+						{
+							IEnumerable<U> list when list.Count() == 1 =>
+								Option.Wrap(list.Single()),
 
-						IEnumerable<U> =>
-							Option.None<U>(tooMany?.Invoke() ?? new UnwrapSingleTooManyItemsErrorMsg()),
+							IEnumerable<U> =>
+								Option.None<U>(tooMany?.Invoke() ?? new UnwrapSingleTooManyItemsErrorMsg()),
 
-						_ =>
-							Option.None<U>(notAList?.Invoke() ?? new UnwrapSingleNotAListMsg())
-					},
+							_ =>
+								Option.None<U>(notAList?.Invoke() ?? new UnwrapSingleNotAListMsg())
+						},
 
-				none: r =>
-					Option.None<U>(r)
+					none: r =>
+						Option.None<U>(r)
+				)
 			);
 	}
 }

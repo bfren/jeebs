@@ -16,7 +16,7 @@ namespace Jeebs
 		/// <param name="handler">[Optional] Exception handler</param>
 		private Task<Option<U>> BindAsyncPrivate<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
-				SwitchFunc(
+				Switch(
 					some: x => bind(x),
 					none: async x => (Option<U>)Option.None<U>(x)
 				),

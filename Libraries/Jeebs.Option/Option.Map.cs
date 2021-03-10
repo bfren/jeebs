@@ -15,7 +15,7 @@ namespace Jeebs
 		/// <param name="handler">[Optional] Exception handler</param>
 		private Option<U> MapPrivate<U>(Func<T, U> map, Option.Handler? handler = null) =>
 			Option.Catch(() =>
-				SwitchFunc(
+				Switch(
 					some: v => Option.Wrap(map(v)),
 					none: r => Option.None<U>(r)
 				),

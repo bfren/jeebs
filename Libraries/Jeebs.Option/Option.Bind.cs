@@ -15,7 +15,7 @@ namespace Jeebs
 		/// <param name="handler">[Optional] Exception handler</param>
 		private Option<U> BindPrivate<U>(Func<T, Option<U>> bind, Option.Handler? handler = null) =>
 			Option.Catch(() =>
-				SwitchFunc(
+				Switch(
 					some: x => bind(x),
 					none: r => Option.None<U>(r)
 				),

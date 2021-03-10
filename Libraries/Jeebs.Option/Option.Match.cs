@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		private U MatchPrivate<U>(Func<T, U> some, Func<IMsg?, U> none) =>
-			SwitchFunc(
+			Switch(
 				some: some,
 				none: none
 			);

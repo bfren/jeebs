@@ -24,7 +24,7 @@ namespace Jeebs
 			}
 
 			// Work out which audit function to use
-			Func<Task> audit = SwitchFunc<Func<Task>>(
+			Func<Task> audit = Switch<Func<Task>>(
 				some: x => () => some?.Invoke(x) ?? Task.CompletedTask,
 				none: x => () => none?.Invoke(x) ?? Task.CompletedTask
 			);

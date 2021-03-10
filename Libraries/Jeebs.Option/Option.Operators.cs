@@ -19,7 +19,7 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator ==(Option<T> l, T r) =>
-			l.SwitchFunc(
+			l.Switch(
 				some: x => Equals(x, r),
 				none: () => false
 			);
@@ -31,7 +31,7 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator !=(Option<T> l, T r) =>
-			l.SwitchFunc(
+			l.Switch(
 				some: x => !Equals(x, r),
 				none: () => true
 			);

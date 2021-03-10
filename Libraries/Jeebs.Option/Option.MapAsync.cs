@@ -16,7 +16,7 @@ namespace Jeebs
 		/// <param name="handler">[Optional] Exception handler</param>
 		private Task<Option<U>> MapAsyncPrivate<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
-				SwitchFunc(
+				Switch(
 					some: async x => Option.Wrap(await map(x)),
 					none: async x => (Option<U>)Option.None<U>(x)
 				),
