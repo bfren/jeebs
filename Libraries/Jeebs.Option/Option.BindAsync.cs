@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Task<Option<U>> DoBindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
+		internal Task<Option<U>> DoBindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler) =>
 			Option.CatchAsync(() =>
 				Switch(
 					some: v => bind(v),

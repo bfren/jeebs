@@ -5,7 +5,7 @@ using System;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>

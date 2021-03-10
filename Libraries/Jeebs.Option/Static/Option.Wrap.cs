@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jm.Option;
 
 namespace Jeebs
 {
@@ -47,7 +46,7 @@ namespace Jeebs
 					Wrap(value()),
 
 				false =>
-					None<T>(new PredicateWasFalseMsg())
+					None<T>(new Jm.Option.PredicateWasFalseMsg())
 			};
 	}
 }

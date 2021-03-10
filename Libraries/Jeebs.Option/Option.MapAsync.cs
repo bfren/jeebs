@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Task<Option<U>> DoMapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
+		internal Task<Option<U>> DoMapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler) =>
 			Option.CatchAsync(() =>
 				Switch(
 					some: async v => Option.Wrap(await map(v)),

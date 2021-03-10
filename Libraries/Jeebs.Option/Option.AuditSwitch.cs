@@ -5,7 +5,7 @@ using System;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Audit the current Option state and return unmodified

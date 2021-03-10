@@ -17,6 +17,12 @@ namespace Jeebs
 		public delegate IExceptionMsg Handler(Exception e);
 
 		/// <summary>
+		/// Starts an Option chain, if using <see cref="Wrap{T}(T, bool)"/> is not appropriate
+		/// </summary>
+		public static Option<bool> Chain =>
+			True;
+
+		/// <summary>
 		/// Special case for boolean - returns Some{bool}(true)
 		/// </summary>
 		public static Option<bool> True =>

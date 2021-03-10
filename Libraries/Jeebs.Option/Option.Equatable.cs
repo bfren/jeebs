@@ -5,8 +5,25 @@ using System.Collections;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
+		/// <summary>
+		/// Compare this <see cref="Option{T}"/> with another object
+		/// <para>If both are a <see cref="Some{T}"/> each <see cref="Some{T}.Value"/> will be compared</para>
+		/// <para>If both are a <see cref="None{T}"/> this will return true</para>
+		/// <para>Otherwise this will return false</para>
+		/// </summary>
+		/// <param name="other">Object to compare to this <see cref="Option{T}"/></param>
+		public override bool Equals(object? other) =>
+			other switch
+			{
+				Option<T> x =>
+					Equals(x),
+
+				_ =>
+					false
+			};
+
 		/// <summary>
 		/// Compare this <see cref="Option{T}"/> with another <see cref="Option{T}"/>
 		/// <para>If both are a <see cref="Some{T}"/> each <see cref="Some{T}.Value"/> will be compared</para>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Perform an asynchronous match
@@ -18,6 +18,20 @@ namespace Jeebs
 			Switch(
 				some: v => some(v),
 				none: r => none(r)
+			);
+
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, U none) =>
+			DoMatchAsync(
+				some: some,
+				none: _ => Task.FromResult(none)
+			);
+
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Task<U> none) =>
+			DoMatchAsync(
+				some: some,
+				none: _ => none
 			);
 
 		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>

@@ -3,7 +3,7 @@
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Wrap a value in a <see cref="Some{T}"/>

@@ -10,7 +10,7 @@ namespace Jeebs
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract partial record Option<T> : IEquatable<Option<T>>, IStructuralEquatable
+	public abstract partial class Option<T> : IEquatable<Option<T>>, IStructuralEquatable
 	{
 		internal Option() { }
 

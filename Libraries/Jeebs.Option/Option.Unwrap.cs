@@ -8,7 +8,7 @@ using Jm.Option;
 
 namespace Jeebs
 {
-	public abstract partial record Option<T>
+	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
