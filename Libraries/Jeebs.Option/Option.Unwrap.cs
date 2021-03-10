@@ -14,10 +14,37 @@ namespace Jeebs
 		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
-		public T Unwrap(Func<T> ifNone) =>
+		private T UnwrapPrivate(Func<IMsg?, T> ifNone) =>
 			Switch(
 				some: x => x,
 				none: ifNone
+			);
+
+		/// <summary>
+		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
+		public T Unwrap(T ifNone) =>
+			UnwrapPrivate(
+				ifNone: _ => ifNone
+			);
+
+		/// <summary>
+		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
+		public T Unwrap(Func<T> ifNone) =>
+			UnwrapPrivate(
+				ifNone: _ => ifNone()
+			);
+
+		/// <summary>
+		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
+		/// </summary>
+		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
+		public T Unwrap(Func<IMsg?, T> ifNone) =>
+			UnwrapPrivate(
+				ifNone: ifNone
 			);
 
 		/// <summary>

@@ -35,18 +35,5 @@ namespace Jeebs
 		public None<T> AddReason<TMsg>(System.Exception ex)
 			where TMsg : IExceptionMsg, new() =>
 			this with { Reason = new TMsg { Exception = ex } };
-
-		/// <summary>
-		/// Return <see cref="Reason"/>.ToString(), or the name of <typeparamref name="T"/>
-		/// </summary>
-		public override string ToString() =>
-			Reason?.ToString() switch
-			{
-				string reason =>
-					reason,
-
-				_ =>
-					"None: " + typeof(T).ToString()
-			};
 	}
 }

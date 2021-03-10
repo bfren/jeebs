@@ -16,11 +16,5 @@ namespace Jeebs
 
 		internal Some(T value) =>
 			Value = value;
-
-		/// <summary>
-		/// Return <see cref="Value"/>.ToString(), or the name of <typeparamref name="T"/>
-		/// </summary>
-		public override string ToString() =>
-			Value?.ToString() ?? "Some: " + typeof(T).ToString();
 	}
 }

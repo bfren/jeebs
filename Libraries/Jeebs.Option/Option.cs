@@ -32,5 +32,33 @@ namespace Jeebs
 				some: some,
 				none: _ => none()
 			);
+
+		/// <summary>
+		/// Return:
+		///    Value (if this is <see cref="Some{T}"/> and Value is not null)
+		///    Reason (if this is <see cref="None{T}"/> and it has a reason)
+		/// </summary>
+		public override string ToString() =>
+			Switch(
+				some: x =>
+					x?.ToString() switch
+					{
+						string value =>
+							value,
+
+						_ =>
+							"Some: " + typeof(T).ToString()
+					},
+
+				none: x =>
+					x?.ToString() switch
+					{
+						string reason =>
+							reason,
+
+						_ =>
+							"None: " + typeof(T).ToString()
+					}
+			);
 	}
 }
