@@ -14,28 +14,6 @@ namespace Jeebs
 	{
 		internal Option() { }
 
-		private void SwitchAction(Action<T> some, Action<IMsg?> none)
-		{
-			if (this is Some<T> x)
-			{
-				some(x.Value);
-			}
-			else if (this is None<T> y)
-			{
-				none(y.Reason);
-			}
-			else
-			{
-				throw new Jx.Option.UnknownOptionException(); // as Option<T> is internal implementation only this should never happen...
-			}
-		}
-
-		private void SwitchAction(Action<T> some, Action none) =>
-			SwitchAction(
-				some: some,
-				none: _ => none()
-			);
-
 		private U SwitchFunc<U>(Func<T, U> some, Func<IMsg?, U> none) =>
 			this switch
 			{

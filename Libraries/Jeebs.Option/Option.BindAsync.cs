@@ -14,20 +14,17 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
+		private Task<Option<U>> BindAsyncPrivate<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
-				this switch
-				{
-					Some<T> x =>
-						bind(x.Value),
-
-					None<T> y =>
-						Task.FromResult((Option<U>)Option.None<U>(y.Reason)),
-
-					_ =>
-						throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
-				},
+				SwitchFunc(
+					some: x => bind(x),
+					none: async x => (Option<U>)Option.None<U>(x)
+				),
 				handler
 			);
+
+		/// <inheritdoc cref="BindAsyncPrivate{U}(Func{T, Task{Option{U}}}, Option.Handler?)"/>
+		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
+			BindAsyncPrivate(bind, handler);
 	}
 }

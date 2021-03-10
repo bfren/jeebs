@@ -15,36 +15,19 @@ namespace Jeebs
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
 		private Task<Option<U>> MapAsyncPrivate<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
-			Option.CatchAsync(async () =>
-				this switch
-				{
-					Some<T> x =>
-						Option.Wrap(await map(x.Value)),
-
-					None<T> y =>
-						Option.None<U>(y.Reason),
-
-					_ =>
-						throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
-				},
+			Option.CatchAsync(() =>
+				SwitchFunc(
+					some: async x => Option.Wrap(await map(x)),
+					none: async x => (Option<U>)Option.None<U>(x)
+				),
 				handler
 			);
 
-		/// <summary>
-		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="MapAsyncPrivate{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public Task<Option<U>> MapAsync<U>(Func<Task<U>> map, Option.Handler? handler = null) =>
 			MapAsyncPrivate(_ => map(), handler);
 
-		/// <summary>
-		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="MapAsyncPrivate{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
 			MapAsyncPrivate(map, handler);
 	}

@@ -24,17 +24,10 @@ namespace Jeebs
 			}
 
 			// Work out which audit function to use
-			Func<Task> audit = this switch
-			{
-				Some<T> x =>
-					() => some?.Invoke(x.Value) ?? Task.CompletedTask,
-
-				None<T> x =>
-					() => none?.Invoke(x.Reason) ?? Task.CompletedTask,
-
-				_ =>
-					() => throw new Jx.Option.UnknownOptionException()
-			};
+			Func<Task> audit = SwitchFunc<Func<Task>>(
+				some: x => () => some?.Invoke(x) ?? Task.CompletedTask,
+				none: x => () => none?.Invoke(x) ?? Task.CompletedTask
+			);
 
 			// Perform the audit
 			try
@@ -55,7 +48,7 @@ namespace Jeebs
 			AuditSwitchAsyncPrivate(
 				some: some,
 				none: x => { none?.Invoke(x); return Task.CompletedTask; }
-		);
+			);
 
 		/// <inheritdoc cref="AuditSwitchAsyncPrivate(Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Action<T>? some = null, Func<IMsg?, Task>? none = null) =>

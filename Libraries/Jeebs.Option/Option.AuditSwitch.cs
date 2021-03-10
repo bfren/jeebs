@@ -13,7 +13,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		public Option<T> AuditSwitch(Action<T>? some = null, Action<IMsg?>? none = null)
+		private Option<T> AuditSwitchPrivate(Action<T>? some = null, Action<IMsg?>? none = null)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)
@@ -22,17 +22,10 @@ namespace Jeebs
 			}
 
 			// Work out which audit function to use
-			Action audit = this switch
-			{
-				Some<T> x =>
-					() => some?.Invoke(x.Value),
-
-				None<T> x =>
-					() => none?.Invoke(x.Reason),
-
-				_ =>
-					() => throw new Jx.Option.UnknownOptionException()
-			};
+			Action audit = SwitchFunc<Action>(
+				some: x => () => some?.Invoke(x),
+				none: x => () => none?.Invoke(x)
+			);
 
 			// Perform the audit
 			try
@@ -47,5 +40,12 @@ namespace Jeebs
 			// Return the original object
 			return this;
 		}
+
+		/// <inheritdoc cref="AuditSwitchPrivate(Action{T}?, Action{IMsg?}?)"/>
+		public Option<T> AuditSwitch(Action<T>? some = null, Action<IMsg?>? none = null) =>
+			AuditSwitchPrivate(
+				some: some,
+				none: none
+			);
 	}
 }

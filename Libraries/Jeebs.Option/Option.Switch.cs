@@ -12,19 +12,32 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Action to run if <see cref="None{T}"/></param>
+		private void SwitchPrivate(Action<T> some, Action<IMsg?> none)
+		{
+			if (this is Some<T> x)
+			{
+				some(x.Value);
+			}
+			else if (this is None<T> y)
+			{
+				none(y.Reason);
+			}
+			else
+			{
+				throw new Jx.Option.UnknownOptionException(); // as Option<T> is internal implementation only this should never happen...
+			}
+		}
+
+		/// <inheritdoc cref="SwitchPrivate(Action{T}, Action{IMsg?})"/>
 		public void Switch(Action<T> some, Action none) =>
-			SwitchAction(
+			SwitchPrivate(
 				some: some,
-				none: none
+				none: _ => none()
 			);
 
-		/// <summary>
-		/// Run an action depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
-		/// </summary>
-		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Action to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="SwitchPrivate(Action{T}, Action{IMsg?})"/>
 		public void Switch(Action<T> some, Action<IMsg?> none) =>
-			SwitchAction(
+			SwitchPrivate(
 				some: some,
 				none: none
 			);
