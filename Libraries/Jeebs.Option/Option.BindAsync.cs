@@ -17,8 +17,8 @@ namespace Jeebs
 		private Task<Option<U>> BindAsyncPrivate<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
 				Switch(
-					some: x => bind(x),
-					none: async x => (Option<U>)Option.None<U>(x)
+					some: v => bind(v),
+					none: async r => (Option<U>)new None<U>(r)
 				),
 				handler
 			);

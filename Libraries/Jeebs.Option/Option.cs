@@ -14,20 +14,20 @@ namespace Jeebs
 	{
 		internal Option() { }
 
-		private U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
+		internal U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
 			this switch
 			{
 				Some<T> x =>
 					some(x.Value),
 
-				None<T> y =>
-					none.Invoke(y.Reason),
+				None<T> x =>
+					none.Invoke(x.Reason),
 
 				_ =>
 					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
-		private U Switch<U>(Func<T, U> some, Func<U> none) =>
+		internal U Switch<U>(Func<T, U> some, Func<U> none) =>
 			Switch(
 				some: some,
 				none: _ => none()
@@ -40,8 +40,8 @@ namespace Jeebs
 		/// </summary>
 		public override string ToString() =>
 			Switch(
-				some: x =>
-					x?.ToString() switch
+				some: v =>
+					v?.ToString() switch
 					{
 						string value =>
 							value,
@@ -50,8 +50,8 @@ namespace Jeebs
 							"Some: " + typeof(T).ToString()
 					},
 
-				none: x =>
-					x?.ToString() switch
+				none: r =>
+					r?.ToString() switch
 					{
 						string reason =>
 							reason,

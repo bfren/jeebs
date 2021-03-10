@@ -28,11 +28,11 @@ namespace Jeebs
 			Option.CatchAsync(async () =>
 				await @this switch
 				{
-					Some<T> x =>
-						Option.Wrap(await map(x.Value)),
+					Some<T> some =>
+						Option.Wrap(await map(some.Value)),
 
-					None<T> y =>
-						Option.None<U>(y.Reason),
+					None<T> none =>
+						new None<U>(none.Reason),
 
 					_ =>
 						throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...

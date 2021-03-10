@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Mvc
 {
@@ -71,17 +72,18 @@ namespace Jeebs.Mvc
 			string? findView(string viewName)
 			{
 				// Get View Engine
-				if (@this.HttpContext.RequestServices.GetService<ICompositeViewEngine>() is ICompositeViewEngine viewEngine)
+				var viewEngine = @this.HttpContext.RequestServices.GetService<ICompositeViewEngine>();
+				if (viewEngine == null)
 				{
-					// Find View
-					var viewPath = $"Error/{viewName}";
-					var result = viewEngine.FindView(@this.ControllerContext, viewPath, true);
-
-					// Return result
-					return result.Success ? viewPath : null;
+					return null;
 				}
 
-				return null;
+				// Find View
+				var viewPath = $"Error/{viewName}";
+				var result = viewEngine.FindView(@this.ControllerContext, viewPath, true);
+
+				// Return result
+				return result.Success ? viewPath : null;
 			}
 		}
 	}

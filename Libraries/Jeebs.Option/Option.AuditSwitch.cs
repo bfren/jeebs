@@ -23,8 +23,8 @@ namespace Jeebs
 
 			// Work out which audit function to use
 			Action audit = Switch<Action>(
-				some: x => () => some?.Invoke(x),
-				none: x => () => none?.Invoke(x)
+				some: v => () => some?.Invoke(v),
+				none: r => () => none?.Invoke(r)
 			);
 
 			// Perform the audit

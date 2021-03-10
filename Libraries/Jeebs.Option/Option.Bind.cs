@@ -16,8 +16,8 @@ namespace Jeebs
 		private Option<U> BindPrivate<U>(Func<T, Option<U>> bind, Option.Handler? handler = null) =>
 			Option.Catch(() =>
 				Switch(
-					some: x => bind(x),
-					none: r => Option.None<U>(r)
+					some: v => bind(v),
+					none: r => new None<U>(r)
 				),
 				handler
 			);

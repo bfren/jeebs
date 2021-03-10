@@ -20,7 +20,7 @@ namespace Jeebs
 		/// <param name="r">Value</param>
 		public static bool operator ==(Option<T> l, T r) =>
 			l.Switch(
-				some: x => Equals(x, r),
+				some: v => Equals(v, r),
 				none: () => false
 			);
 
@@ -32,7 +32,7 @@ namespace Jeebs
 		/// <param name="r">Value</param>
 		public static bool operator !=(Option<T> l, T r) =>
 			l.Switch(
-				some: x => !Equals(x, r),
+				some: v => !Equals(v, r),
 				none: () => true
 			);
 	}

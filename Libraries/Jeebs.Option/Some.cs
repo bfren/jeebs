@@ -16,5 +16,12 @@ namespace Jeebs
 
 		internal Some(T value) =>
 			Value = value;
+
+		/// <summary>
+		/// Return:
+		///    Value (if Value is not null)
+		/// </summary>
+		public override string ToString() =>
+			base.ToString();
 	}
 }

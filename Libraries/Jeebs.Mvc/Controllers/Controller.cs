@@ -44,8 +44,8 @@ namespace Jeebs.Mvc
 		/// <typeparam name="T">Result type</typeparam>
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
-		protected async Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
-			await option.MatchAsyncPrivate(
+		protected Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
+			option.MatchAsync(
 				some: value =>
 					success(value),
 				none: reason =>
@@ -58,8 +58,8 @@ namespace Jeebs.Mvc
 		/// <typeparam name="T">Result type</typeparam>
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
-		protected async Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, IActionResult> success) =>
-			await option.MatchAsync(
+		protected Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, IActionResult> success) =>
+			option.MatchAsync(
 				some: value =>
 					success(value),
 				none: reason =>
@@ -72,8 +72,8 @@ namespace Jeebs.Mvc
 		/// <typeparam name="T">Result type</typeparam>
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
-		protected async Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, Task<IActionResult>> success) =>
-			await option.MatchAsync(
+		protected Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, Task<IActionResult>> success) =>
+			option.MatchAsync(
 				some: value =>
 					success(value),
 				none: reason =>

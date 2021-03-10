@@ -16,7 +16,7 @@ namespace Jeebs
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
 		private T UnwrapPrivate(Func<IMsg?, T> ifNone) =>
 			Switch(
-				some: x => x,
+				some: v => v,
 				none: ifNone
 			);
 
@@ -54,8 +54,8 @@ namespace Jeebs
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
 			Option.Catch(() =>
 				Switch(
-					some: x =>
-						x switch
+					some: v =>
+						v switch
 						{
 							IEnumerable<U> list when list.Count() == 1 =>
 								Option.Wrap(list.Single()),
@@ -68,7 +68,7 @@ namespace Jeebs
 						},
 
 					none: r =>
-						Option.None<U>(r)
+						new None<U>(r)
 				)
 			);
 	}

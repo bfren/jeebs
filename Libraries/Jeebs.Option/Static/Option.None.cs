@@ -14,7 +14,7 @@ namespace Jeebs
 			areYouSure switch
 			{
 				true =>
-					new(),
+					new(null),
 
 				false =>
 					new(new Jm.Option.IfYouArentSureDontMakeItMsg())
@@ -25,7 +25,7 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="reason">Reason message</param>
-		public static None<T> None<T>(IMsg? reason) =>
+		public static None<T> None<T>(IMsg reason) =>
 			new(reason);
 	}
 }

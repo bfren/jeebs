@@ -25,8 +25,8 @@ namespace Jeebs
 				Some<T> x =>
 					some(x.Value),
 
-				None<T> y =>
-					none(y.Reason),
+				None<T> x =>
+					none(x.Reason),
 
 				_ =>
 					throw new Jx.Option.UnknownOptionException()

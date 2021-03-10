@@ -17,7 +17,7 @@ namespace Jeebs
 			Option.Catch(() =>
 				Switch(
 					some: v => Option.Wrap(map(v)),
-					none: r => Option.None<U>(r)
+					none: r => new None<U>(r)
 				),
 				handler
 			);

@@ -14,8 +14,6 @@ namespace Jeebs
 		/// </summary>
 		public IMsg? Reason { get; private init; }
 
-		internal None() { }
-
 		internal None(IMsg? reason) =>
 			Reason = reason;
 
@@ -35,5 +33,12 @@ namespace Jeebs
 		public None<T> AddReason<TMsg>(System.Exception ex)
 			where TMsg : IExceptionMsg, new() =>
 			this with { Reason = new TMsg { Exception = ex } };
+
+		/// <summary>
+		/// Return:
+		///    Reason (if one is set)
+		/// </summary>
+		public override string ToString() =>
+			base.ToString();
 	}
 }

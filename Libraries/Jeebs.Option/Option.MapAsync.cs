@@ -17,8 +17,8 @@ namespace Jeebs
 		private Task<Option<U>> MapAsyncPrivate<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
 				Switch(
-					some: async x => Option.Wrap(await map(x)),
-					none: async x => (Option<U>)Option.None<U>(x)
+					some: async v => Option.Wrap(await map(v)),
+					none: async r => (Option<U>)new None<U>(r)
 				),
 				handler
 			);
