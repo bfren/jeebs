@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		private Task<Option<U>> BindAsyncPrivate<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
+		internal Task<Option<U>> DoBindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
 				Switch(
 					some: v => bind(v),
@@ -23,8 +23,8 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="BindAsyncPrivate{U}(Func{T, Task{Option{U}}}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoBindAsync{U}(Func{T, Task{Option{U}}}, Option.Handler?)"/>
 		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Option.Handler? handler = null) =>
-			BindAsyncPrivate(bind, handler);
+			DoBindAsync(bind, handler);
 	}
 }

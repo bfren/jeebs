@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: AuditSwitchAsync
 	/// </summary>
-	public static class OptionExtensions_AuditSwitchAsync
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Audit the current Option state and return unmodified
@@ -19,7 +19,7 @@ namespace Jeebs
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		private static async Task<Option<T>> AuditSwitchAsyncPrivate<T>(
+		internal static async Task<Option<T>> DoAuditSwitchAsync<T>(
 			Task<Option<T>> @this,
 			Func<T, Task>? some = null,
 			Func<IMsg?, Task>? none = null
@@ -61,37 +61,37 @@ namespace Jeebs
 			return awaited;
 		}
 
-		/// <inheritdoc cref="AuditSwitchAsyncPrivate{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(
 			this Task<Option<T>> @this,
 			Func<T, Task>? some = null,
 			Action<IMsg?>? none = null
 		) =>
-			AuditSwitchAsyncPrivate(
+			DoAuditSwitchAsync(
 				@this,
 				some: some,
 				none: x => { none?.Invoke(x); return Task.CompletedTask; }
 			);
 
-		/// <inheritdoc cref="AuditSwitchAsyncPrivate{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(
 			this Task<Option<T>> @this,
 			Action<T>? some = null,
 			Func<IMsg?, Task>? none = null
 		) =>
-			AuditSwitchAsyncPrivate(
+			DoAuditSwitchAsync(
 				@this,
 				some: x => { some?.Invoke(x); return Task.CompletedTask; },
 				none: none
 			);
 
-		/// <inheritdoc cref="AuditSwitchAsyncPrivate{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(
 			this Task<Option<T>> @this,
 			Func<T, Task>? some = null,
 			Func<IMsg?, Task>? none = null
 		) =>
-			AuditSwitchAsyncPrivate(
+			DoAuditSwitchAsync(
 				@this,
 				some: some,
 				none: none

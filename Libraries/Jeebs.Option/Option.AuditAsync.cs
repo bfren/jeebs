@@ -13,7 +13,7 @@ namespace Jeebs
 		/// Errors will not be returned as they affect the state of the object, but will be written to the console
 		/// </summary>
 		/// <param name="audit">Audit function</param>
-		private Task<Option<T>> AuditAsyncPrivate(Func<Option<T>, Task> audit)
+		internal Task<Option<T>> DoAuditAsync(Func<Option<T>, Task> audit)
 		{
 			// Perform the audit
 			try
@@ -29,8 +29,8 @@ namespace Jeebs
 			return Task.FromResult(this);
 		}
 
-		/// <inheritdoc cref="AuditAsyncPrivate(Func{Option{T}, Task})"/>
+		/// <inheritdoc cref="DoAuditAsync(Func{Option{T}, Task})"/>
 		public Task<Option<T>> AuditAsync(Func<Option<T>, Task> audit) =>
-			AuditAsyncPrivate(audit);
+			DoAuditAsync(audit);
 	}
 }

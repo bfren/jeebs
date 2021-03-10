@@ -49,11 +49,11 @@ namespace Jeebs.Logging
 			this.logger = logger;
 
 		/// <inheritdoc/>
-		public override bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level) =>
+		public override bool IsEnabled(LogLevel level) =>
 			logger.IsEnabled((LogEventLevel)level);
 
 		/// <inheritdoc/>
-		public override void Trace(string message, params object[] args) =>
+		public override void Verbose(string message, params object[] args) =>
 			logger.Verbose(Prefix(message), args);
 
 		/// <inheritdoc/>
@@ -77,11 +77,11 @@ namespace Jeebs.Logging
 			logger.Error(ex, Prefix(message), args);
 
 		/// <inheritdoc/>
-		public override void Critical(string message, params object[] args) =>
+		public override void Fatal(string message, params object[] args) =>
 			logger.Fatal(Prefix(message), args);
 
 		/// <inheritdoc/>
-		public override void Critical(Exception ex, string message, params object[] args) =>
+		public override void Fatal(Exception ex, string message, params object[] args) =>
 			logger.Fatal(ex, Prefix(message), args);
 
 		/// <inheritdoc/>

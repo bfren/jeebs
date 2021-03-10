@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jeebs
 {
@@ -26,6 +26,13 @@ namespace Jeebs
 		bool IsEnabled(LogLevel level);
 
 		/// <summary>
+		/// Whether or not the log will write for the specified Level
+		/// </summary>
+		/// <param name="level">LogLevel</param>
+		/// <returns>True if the log will write at this level</returns>
+		bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
+
+		/// <summary>
 		/// Log an <see cref="IMsg"/>
 		/// </summary>
 		/// <param name="message">Message to log</param>
@@ -37,62 +44,46 @@ namespace Jeebs
 		/// <param name="messages">Messages to log</param>
 		void Messages(IEnumerable<IMsg> messages);
 
-		/// <summary>
-		/// Trace log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Verbose"/>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Trace(string message, params object[] args);
+		void Verbose(string message, params object[] args);
 
-		/// <summary>
-		/// Debug log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Debug"/>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
 		void Debug(string message, params object[] args);
 
-		/// <summary>
-		/// Information log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Information"/>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
 		void Information(string message, params object[] args);
 
-		/// <summary>
-		/// Warning log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Warning"/>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
 		void Warning(string message, params object[] args);
 
-		/// <summary>
-		/// Error log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Error"/>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
 		void Error(string message, params object[] args);
 
-		/// <summary>
-		/// Error log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Error"/>
 		/// <param name="ex">Exception</param>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
 		void Error(Exception ex, string message, params object[] args);
 
-		/// <summary>
-		/// Critical log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Fatal"/>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Critical(string message, params object[] args);
+		void Fatal(string message, params object[] args);
 
-		/// <summary>
-		/// Critical log message
-		/// </summary>
+		/// <inheritdoc cref="LogLevel.Fatal"/>
 		/// <param name="ex">Exception</param>
 		/// <param name="message">Message</param>
 		/// <param name="args">Arguments (if message supports string.Format())</param>
-		void Critical(Exception ex, string message, params object[] args);
+		void Fatal(Exception ex, string message, params object[] args);
 	}
 }

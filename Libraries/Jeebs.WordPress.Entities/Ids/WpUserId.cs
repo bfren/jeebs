@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Entities
 	/// WordPress User ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpUserId(long Value) : LongId(Value)
+	public sealed record WpUserId(long Value) : Id.LongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

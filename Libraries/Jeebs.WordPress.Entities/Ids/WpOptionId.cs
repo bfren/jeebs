@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Entities
 	/// WordPress Option ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpOptionId(long Value) : LongId(Value)
+	public sealed record WpOptionId(long Value) : Id.LongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

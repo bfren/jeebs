@@ -14,50 +14,50 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		private Task<U> MatchAsyncPrivate<U>(Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
+		internal Task<U> DoMatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
 			Switch(
 				some: v => some(v),
 				none: r => none(r)
 			);
 
-		/// <inheritdoc cref="MatchAsyncPrivate{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<U> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				some: some,
 				none: _ => Task.FromResult(none())
 			);
 
-		/// <inheritdoc cref="MatchAsyncPrivate{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public Task<U> MatchAsync<U>(Func<T, U> some, Func<Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				some: v => Task.FromResult(some(v)),
 				none: _ => none()
 			);
 
-		/// <inheritdoc cref="MatchAsyncPrivate{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				some: some,
 				none: _ => none()
 			);
 
-		/// <inheritdoc cref="MatchAsyncPrivate{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, U> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				some: some,
 				none: r => Task.FromResult(none(r))
 			);
 
-		/// <inheritdoc cref="MatchAsyncPrivate{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public Task<U> MatchAsync<U>(Func<T, U> some, Func<IMsg?, Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				some: v => Task.FromResult(some(v)),
 				none: none
 			);
 
-		/// <inheritdoc cref="MatchAsyncPrivate{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				some: some,
 				none: none
 			);

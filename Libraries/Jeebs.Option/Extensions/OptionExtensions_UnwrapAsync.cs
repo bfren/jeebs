@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: UnwrapAsync
 	/// </summary>
-	public static class OptionExtensions_UnwrapAsync
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Unwrap the single value of this option - if this is a <see cref="Some{T}"/>

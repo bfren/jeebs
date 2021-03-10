@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: MatchAsync
 	/// </summary>
-	public static class OptionExtensions_MatchAsync
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Perform an asynchronous match
@@ -19,7 +19,7 @@ namespace Jeebs
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		private static Task<U> MatchAsyncPrivate<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
+		internal static Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
 			@this switch
 			{
 				Some<T> x =>
@@ -41,7 +41,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Value to return if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, U none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: x => Task.FromResult(some(x)),
 				none: _ => Task.FromResult(none)
@@ -56,7 +56,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<U> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: x => Task.FromResult(some(x)),
 				none: _ => Task.FromResult(none())
@@ -71,7 +71,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, U> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: x => Task.FromResult(some(x)),
 				none: x => Task.FromResult(none(x))
@@ -86,7 +86,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<U> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: some,
 				none: _ => Task.FromResult(none())
@@ -101,7 +101,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, U> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: some,
 				none: x => Task.FromResult(none(x))
@@ -116,7 +116,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: x => Task.FromResult(some(x)),
 				none: _ => none()
@@ -131,7 +131,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: x => Task.FromResult(some(x)),
 				none: x => none(x)
@@ -146,7 +146,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: some,
 				none: _ => none()
@@ -161,7 +161,7 @@ namespace Jeebs
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			MatchAsyncPrivate(
+			DoMatchAsync(
 				@this,
 				some: some,
 				none: none

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
+using Jeebs.Logging;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
 using static F.ThreadF;

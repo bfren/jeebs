@@ -4,8 +4,10 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs;
+using Jeebs.Id;
 
-namespace Jeebs.Functions.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// StrongId Converter Factory

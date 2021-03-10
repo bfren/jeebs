@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		private Task<Option<U>> MapAsyncPrivate<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
+		internal Task<Option<U>> DoMapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
 			Option.CatchAsync(() =>
 				Switch(
 					some: async v => Option.Wrap(await map(v)),
@@ -23,12 +23,12 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="MapAsyncPrivate{U}(Func{T, Task{U}}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public Task<Option<U>> MapAsync<U>(Func<Task<U>> map, Option.Handler? handler = null) =>
-			MapAsyncPrivate(_ => map(), handler);
+			DoMapAsync(_ => map(), handler);
 
-		/// <inheritdoc cref="MapAsyncPrivate{U}(Func{T, Task{U}}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
-			MapAsyncPrivate(map, handler);
+			DoMapAsync(map, handler);
 	}
 }

@@ -5,14 +5,14 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// Converter for Enumerated types
 	/// </summary>
 	/// <typeparam name="T">Enumerated type</typeparam>
 	internal class EnumeratedConverter<T> : JsonConverter<T>
-		where T : Enumerated
+		where T : Jeebs.Enumerated
 	{
 		/// <summary>
 		/// Read an Enumerated type value - which requires the 'name' (value) to be passed in the constructor

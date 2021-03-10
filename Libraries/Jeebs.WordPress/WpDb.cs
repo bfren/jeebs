@@ -99,7 +99,7 @@ namespace Jeebs.WordPress
 			ConnectionString = cfg.ConnectionString;
 			var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
 
-			logs.DbLog.Trace("WordPress Config: {@WpConfig}, {@DbConfig}", wpConfig, cfg);
+			logs.DbLog.Verbose("WordPress Config: {@WpConfig}, {@DbConfig}", wpConfig, cfg);
 
 			// Create table definitions
 			Comment = new CommentTable(tablePrefix);

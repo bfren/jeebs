@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Jeebs.Mvc
 {
@@ -47,10 +46,10 @@ namespace Jeebs.Mvc
 
 			// Look for a view
 			var viewName = $"Error{status}";
-			@this.Log.Trace("Search for View {ViewName}", viewName);
+			@this.Log.Verbose("Search for View {ViewName}", viewName);
 			if ((findView(viewName) ?? findView("Default")) is string view)
 			{
-				@this.Log.Trace("Found view {view}", view);
+				@this.Log.Verbose("Found view {view}", view);
 				return @this.View(view, reason);
 			}
 

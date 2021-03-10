@@ -1,7 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jeebs.Services
 {
@@ -23,7 +23,7 @@ namespace Jeebs.Services
 				LogLevel.Error =>
 					NotificationLevel.Error,
 
-				LogLevel.Critical =>
+				LogLevel.Fatal =>
 					NotificationLevel.Error,
 
 				_ =>

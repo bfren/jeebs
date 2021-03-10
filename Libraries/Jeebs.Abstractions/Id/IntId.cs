@@ -1,7 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-namespace Jeebs
+namespace Jeebs.Id
 {
 	/// <summary>
 	/// 32-bit Integer ID

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using Jeebs.Logging;
 
 namespace Jeebs
 {

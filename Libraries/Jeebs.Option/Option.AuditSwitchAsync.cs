@@ -14,7 +14,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		private Task<Option<T>> AuditSwitchAsyncPrivate(Func<T, Task>? some = null, Func<IMsg?, Task>? none = null)
+		internal Task<Option<T>> DoAuditSwitchAsync(Func<T, Task>? some = null, Func<IMsg?, Task>? none = null)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)
@@ -42,23 +42,23 @@ namespace Jeebs
 			return Task.FromResult(this);
 		}
 
-		/// <inheritdoc cref="AuditSwitchAsyncPrivate(Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Func<T, Task>? some = null, Action<IMsg?>? none = null) =>
-			AuditSwitchAsyncPrivate(
+			DoAuditSwitchAsync(
 				some: some,
 				none: r => { none?.Invoke(r); return Task.CompletedTask; }
 			);
 
-		/// <inheritdoc cref="AuditSwitchAsyncPrivate(Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Action<T>? some = null, Func<IMsg?, Task>? none = null) =>
-			AuditSwitchAsyncPrivate(
+			DoAuditSwitchAsync(
 				some: v => { some?.Invoke(v); return Task.CompletedTask; },
 				none: none
 			);
 
-		/// <inheritdoc cref="AuditSwitchAsyncPrivate(Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Func<T, Task>? some = null, Func<IMsg?, Task>? none = null) =>
-			AuditSwitchAsyncPrivate(
+			DoAuditSwitchAsync(
 				some: some,
 				none: none
 			);

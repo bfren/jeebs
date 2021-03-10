@@ -3,7 +3,7 @@
 
 using System.Data;
 using Jeebs;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jm.Data
 {
@@ -42,7 +42,7 @@ namespace Jm.Data
 
 		/// <inheritdoc/>
 		public override LogLevel Level =>
-			LogLevel.Trace;
+			LogLevel.Verbose;
 
 		/// <summary>
 		/// Create object

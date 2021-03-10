@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Jeebs.Config.Logging;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jeebs.Config
 {

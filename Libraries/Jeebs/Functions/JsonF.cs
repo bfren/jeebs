@@ -5,7 +5,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
-using Jeebs.Functions.Internals;
 using Jm.Functions.JsonF;
 
 namespace F
@@ -38,9 +37,9 @@ namespace F
 				NumberHandling = JsonNumberHandling.AllowReadingFromString
 			};
 
-			options.Converters.Add(new EnumeratedConverterFactory());
 			options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-			options.Converters.Add(new StrongIdConverterFactory());
+			options.Converters.Add(new Internals.EnumeratedConverterFactory());
+			options.Converters.Add(new Internals.StrongIdConverterFactory());
 		}
 
 		/// <summary>

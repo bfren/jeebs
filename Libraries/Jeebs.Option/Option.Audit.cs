@@ -12,7 +12,7 @@ namespace Jeebs
 		/// Errors will not be returned as they affect the state of the object, but will be written to the console
 		/// </summary>
 		/// <param name="audit">Audit function</param>
-		private Option<T> AuditPrivate(Action<Option<T>> audit)
+		internal Option<T> DoAudit(Action<Option<T>> audit)
 		{
 			// Perform the audit
 			try
@@ -28,8 +28,8 @@ namespace Jeebs
 			return this;
 		}
 
-		/// <inheritdoc cref="AuditPrivate(Action{Option{T}})"/>
+		/// <inheritdoc cref="DoAudit(Action{Option{T}})"/>
 		public Option<T> Audit(Action<Option<T>> audit) =>
-			AuditPrivate(audit);
+			DoAudit(audit);
 	}
 }

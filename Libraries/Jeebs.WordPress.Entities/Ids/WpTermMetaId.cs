@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Entities
 	/// WordPress Term Meta ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpTermMetaId(long Value) : LongId(Value)
+	public sealed record WpTermMetaId(long Value) : Id.LongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Await
 	/// </summary>
-	public static class OptionExtensions_Await
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Forces the thread to await the current Option value

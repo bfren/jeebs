@@ -12,7 +12,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Action to run if <see cref="None{T}"/></param>
-		private void SwitchPrivate(Action<T> some, Action<IMsg?> none)
+		internal void DoSwitch(Action<T> some, Action<IMsg?> none)
 		{
 			if (this is Some<T> x)
 			{
@@ -28,16 +28,16 @@ namespace Jeebs
 			}
 		}
 
-		/// <inheritdoc cref="SwitchPrivate(Action{T}, Action{IMsg?})"/>
+		/// <inheritdoc cref="DoSwitch(Action{T}, Action{IMsg?})"/>
 		public void Switch(Action<T> some, Action none) =>
-			SwitchPrivate(
+			DoSwitch(
 				some: some,
 				none: _ => none()
 			);
 
-		/// <inheritdoc cref="SwitchPrivate(Action{T}, Action{IMsg?})"/>
+		/// <inheritdoc cref="DoSwitch(Action{T}, Action{IMsg?})"/>
 		public void Switch(Action<T> some, Action<IMsg?> none) =>
-			SwitchPrivate(
+			DoSwitch(
 				some: some,
 				none: none
 			);

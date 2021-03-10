@@ -3,8 +3,9 @@
 
 using System;
 using System.Text.Json;
+using Jeebs.Id;
 
-namespace Jeebs.Functions.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// Converter for <see cref="IntId"/> types

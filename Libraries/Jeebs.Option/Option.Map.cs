@@ -13,7 +13,7 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		private Option<U> MapPrivate<U>(Func<T, U> map, Option.Handler? handler = null) =>
+		internal Option<U> DoMap<U>(Func<T, U> map, Option.Handler? handler = null) =>
 			Option.Catch(() =>
 				Switch(
 					some: v => Option.Wrap(map(v)),
@@ -22,12 +22,12 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="MapPrivate{U}(Func{T, U}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoMap{U}(Func{T, U}, Option.Handler?)"/>
 		public Option<U> Map<U>(Func<U> map, Option.Handler? handler = null) =>
-			MapPrivate(_ => map(), handler);
+			DoMap(_ => map(), handler);
 
-		/// <inheritdoc cref="MapPrivate{U}(Func{T, U}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoMap{U}(Func{T, U}, Option.Handler?)"/>
 		public Option<U> Map<U>(Func<T, U> map, Option.Handler? handler = null) =>
-			MapPrivate(map, handler);
+			DoMap(map, handler);
 	}
 }

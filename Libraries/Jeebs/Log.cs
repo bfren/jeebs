@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jeebs
 {
@@ -24,9 +24,9 @@ namespace Jeebs
 			// Handle exception messages
 			if (msg is IExceptionMsg exceptionMsg)
 			{
-				if (exceptionMsg.Level == LogLevel.Critical)
+				if (exceptionMsg.Level == LogLevel.Fatal)
 				{
-					Critical(exceptionMsg.Exception, text, args);
+					Fatal(exceptionMsg.Exception, text, args);
 				}
 				else
 				{
@@ -46,8 +46,8 @@ namespace Jeebs
 			// Switch different levels
 			switch (level)
 			{
-				case LogLevel.Trace:
-					Trace(text, args);
+				case LogLevel.Verbose:
+					Verbose(text, args);
 					break;
 				case LogLevel.Debug:
 					Debug(text, args);
@@ -61,8 +61,8 @@ namespace Jeebs
 				case LogLevel.Error:
 					Error(text, args);
 					break;
-				case LogLevel.Critical:
-					Critical(text, args);
+				case LogLevel.Fatal:
+					Fatal(text, args);
 					break;
 			}
 		}
@@ -85,7 +85,11 @@ namespace Jeebs
 		public abstract bool IsEnabled(LogLevel level);
 
 		/// <inheritdoc/>
-		public abstract void Trace(string message, params object[] args);
+		public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level) =>
+			IsEnabled((LogLevel)level);
+
+		/// <inheritdoc/>
+		public abstract void Verbose(string message, params object[] args);
 
 		/// <inheritdoc/>
 		public abstract void Debug(string message, params object[] args);
@@ -103,10 +107,10 @@ namespace Jeebs
 		public abstract void Error(Exception ex, string message, params object[] args);
 
 		/// <inheritdoc/>
-		public abstract void Critical(string message, params object[] args);
+		public abstract void Fatal(string message, params object[] args);
 
 		/// <inheritdoc/>
-		public abstract void Critical(Exception ex, string message, params object[] args);
+		public abstract void Fatal(Exception ex, string message, params object[] args);
 
 		/// <inheritdoc/>
 		public abstract void Dispose();

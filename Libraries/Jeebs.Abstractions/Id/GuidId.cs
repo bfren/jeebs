@@ -1,18 +1,21 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-namespace Jeebs
+using System;
+
+namespace Jeebs.Id
 {
 	/// <summary>
-	/// 64-bit Integer ID
+	/// Guid ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public abstract record LongId(long Value) : StrongId<long>(Value)
+	public abstract record GuidId(Guid Value) : StrongId<Guid>(Value)
 	{
 		/// <summary>
 		/// Default value
 		/// </summary>
-		public const int Default = 0;
+		public static Guid Default =>
+			Guid.Empty;
 
 		/// <inheritdoc cref="IStrongId.IsDefault"/>
 		public override bool IsDefault =>
@@ -21,6 +24,6 @@ namespace Jeebs
 		/// <summary>
 		/// Create with default value
 		/// </summary>
-		public LongId() : this(Default) { }
+		public GuidId() : this(Default) { }
 	}
 }

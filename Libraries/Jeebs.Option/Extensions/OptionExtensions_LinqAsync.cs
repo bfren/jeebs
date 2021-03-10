@@ -10,7 +10,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Linq Async Methods
 	/// </summary>
-	public static class OptionExtensions_LinqAsync
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Enables LINQ select on Option objects, e.g.

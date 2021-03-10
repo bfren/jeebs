@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// Enumerated Converter Factory
@@ -17,7 +17,7 @@ namespace Jeebs.Functions.Internals
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert) =>
-			typeToConvert.IsSubclassOf(typeof(Enumerated));
+			typeToConvert.IsSubclassOf(typeof(Jeebs.Enumerated));
 
 		/// <summary>
 		/// Creates JsonConverter using Enum type as generic argument

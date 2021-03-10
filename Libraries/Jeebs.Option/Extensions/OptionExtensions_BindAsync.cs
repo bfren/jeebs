@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: BindAsync
 	/// </summary>
-	public static class OptionExtensions_BindAsync
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
@@ -19,7 +19,7 @@ namespace Jeebs
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		private static Task<Option<U>> BindAsyncPrivate<T, U>(
+		internal static Task<Option<U>> DoBindAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<Option<U>>> bind,
 			Option.Handler? handler = null
@@ -39,20 +39,20 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="BindAsyncPrivate{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoBindAsync{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Option.Handler?)"/>
 		public static Task<Option<U>> BindAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Option<U>> bind,
 			Option.Handler? handler = null
 		) =>
-			BindAsyncPrivate(@this, x => Task.FromResult(bind(x)), handler);
+			DoBindAsync(@this, x => Task.FromResult(bind(x)), handler);
 
-		/// <inheritdoc cref="BindAsyncPrivate{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Option.Handler?)"/>
+		/// <inheritdoc cref="DoBindAsync{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Option.Handler?)"/>
 		public static Task<Option<U>> BindAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Task<Option<U>>> bind,
 			Option.Handler? handler = null
 		) =>
-			BindAsyncPrivate(@this, bind, handler);
+			DoBindAsync(@this, bind, handler);
 	}
 }

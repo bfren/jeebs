@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Linq Methods
 	/// </summary>
-	public static class OptionExtensions_Linq
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Enables LINQ select on Option objects, e.g.

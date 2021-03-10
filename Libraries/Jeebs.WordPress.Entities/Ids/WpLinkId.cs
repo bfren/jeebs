@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Entities
 	/// WordPress Link ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpLinkId(long Value) : LongId(Value)
+	public sealed record WpLinkId(long Value) : Id.LongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

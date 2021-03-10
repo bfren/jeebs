@@ -13,7 +13,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		private Option<T> AuditSwitchPrivate(Action<T>? some = null, Action<IMsg?>? none = null)
+		internal Option<T> DoAuditSwitch(Action<T>? some = null, Action<IMsg?>? none = null)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)
@@ -41,9 +41,9 @@ namespace Jeebs
 			return this;
 		}
 
-		/// <inheritdoc cref="AuditSwitchPrivate(Action{T}?, Action{IMsg?}?)"/>
+		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
 		public Option<T> AuditSwitch(Action<T>? some = null, Action<IMsg?>? none = null) =>
-			AuditSwitchPrivate(
+			DoAuditSwitch(
 				some: some,
 				none: none
 			);

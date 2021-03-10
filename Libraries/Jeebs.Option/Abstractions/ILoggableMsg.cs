@@ -1,9 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Microsoft.Extensions.Logging;
-
-namespace Jeebs
+namespace Jeebs.Logging
 {
 	/// <summary>
 	/// Represents a framework message supporting logging

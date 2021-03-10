@@ -14,7 +14,7 @@ namespace Jeebs
 	{
 		internal Option() { }
 
-		internal U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
+		private U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
 			this switch
 			{
 				Some<T> x =>
@@ -27,7 +27,7 @@ namespace Jeebs
 					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
-		internal U Switch<U>(Func<T, U> some, Func<U> none) =>
+		private U Switch<U>(Func<T, U> some, Func<U> none) =>
 			Switch(
 				some: some,
 				none: _ => none()

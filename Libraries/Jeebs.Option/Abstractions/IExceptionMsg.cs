@@ -8,7 +8,7 @@ namespace Jeebs
 	/// <summary>
 	/// Represents a framework message for handling exceptions
 	/// </summary>
-	public interface IExceptionMsg : ILoggableMsg
+	public interface IExceptionMsg : Logging.ILoggableMsg
 	{
 		/// <summary>
 		/// The exception that occurred

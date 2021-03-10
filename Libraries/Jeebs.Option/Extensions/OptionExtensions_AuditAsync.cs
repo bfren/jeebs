@@ -9,7 +9,7 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: AuditAsync
 	/// </summary>
-	public static class OptionExtensions_AuditAsync
+	public static partial class OptionExtensions
 	{
 		/// <summary>
 		/// Audit the current Option state and return unmodified
@@ -18,7 +18,7 @@ namespace Jeebs
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="audit">Audit function</param>
-		public static async Task<Option<T>> AuditAsyncPrivate<T>(Task<Option<T>> @this, Func<Option<T>, Task> audit)
+		internal static async Task<Option<T>> DoAuditAsync<T>(Task<Option<T>> @this, Func<Option<T>, Task> audit)
 		{
 			// Await option type
 			var awaited = await @this;
@@ -37,12 +37,12 @@ namespace Jeebs
 			return awaited;
 		}
 
-		/// <inheritdoc cref="AuditAsyncPrivate{T}(Task{Option{T}}, Func{Option{T}, Task})"/>
+		/// <inheritdoc cref="DoAuditAsync{T}(Task{Option{T}}, Func{Option{T}, Task})"/>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Option<T>> audit) =>
-			AuditAsyncPrivate(@this, x => { audit(x); return Task.CompletedTask; });
+			DoAuditAsync(@this, x => { audit(x); return Task.CompletedTask; });
 
-		/// <inheritdoc cref="AuditAsyncPrivate{T}(Task{Option{T}}, Func{Option{T}, Task})"/>
+		/// <inheritdoc cref="DoAuditAsync{T}(Task{Option{T}}, Func{Option{T}, Task})"/>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<Option<T>, Task> audit) =>
-			AuditAsyncPrivate(@this, audit);
+			DoAuditAsync(@this, audit);
 	}
 }

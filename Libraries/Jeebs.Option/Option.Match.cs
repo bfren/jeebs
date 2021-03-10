@@ -13,29 +13,29 @@ namespace Jeebs
 		/// <typeparam name="U">Return type</typeparam>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		private U MatchPrivate<U>(Func<T, U> some, Func<IMsg?, U> none) =>
+		internal U DoMatch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
 			Switch(
 				some: some,
 				none: none
 			);
 
-		/// <inheritdoc cref="MatchPrivate{U}(Func{T, U}, Func{IMsg?, U})"/>
+		/// <inheritdoc cref="DoMatch{U}(Func{T, U}, Func{IMsg?, U})"/>
 		public U Match<U>(Func<T, U> some, U none) =>
-			MatchPrivate(
+			DoMatch(
 				some: some,
 				none: _ => none
 			);
 
-		/// <inheritdoc cref="MatchPrivate{U}(Func{T, U}, Func{IMsg?, U})"/>
+		/// <inheritdoc cref="DoMatch{U}(Func{T, U}, Func{IMsg?, U})"/>
 		public U Match<U>(Func<T, U> some, Func<U> none) =>
-			MatchPrivate(
+			DoMatch(
 				some: some,
 				none: _ => none()
 			);
 
-		/// <inheritdoc cref="MatchPrivate{U}(Func{T, U}, Func{IMsg?, U})"/>
+		/// <inheritdoc cref="DoMatch{U}(Func{T, U}, Func{IMsg?, U})"/>
 		public U Match<U>(Func<T, U> some, Func<IMsg?, U> none) =>
-			MatchPrivate(
+			DoMatch(
 				some: some,
 				none: none
 			);
