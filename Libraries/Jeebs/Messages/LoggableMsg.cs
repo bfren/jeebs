@@ -16,7 +16,7 @@ namespace Jeebs
 
 		/// <inheritdoc/>
 		public virtual LogLevel Level =>
-			Defaults.Log.Level;
+			Defaults.Logging.Level;
 
 		/// <summary>
 		/// Use <see cref="Format"/> and <see cref="ParamArray"/>

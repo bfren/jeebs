@@ -8,7 +8,7 @@ namespace Jeebs.Defaults
 	/// <summary>
 	/// Defaults for Logging
 	/// </summary>
-	public static class Log
+	public static class Logging
 	{
 		/// <summary>
 		/// Default log level is <see cref="LogLevel.Information"/>

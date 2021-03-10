@@ -80,7 +80,7 @@ namespace F.JsonF_Tests.GuidIdConverter_Tests
 			Assert.Equal(Guid.Empty, wrapper.GuidId.Value);
 		}
 
-		public record GuidIdTest0 : GuidId;
+		public record GuidIdTest0 : Jeebs.Id.GuidId;
 
 		public class GuidIdWrapperTest0
 		{

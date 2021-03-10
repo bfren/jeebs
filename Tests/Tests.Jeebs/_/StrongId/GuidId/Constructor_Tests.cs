@@ -20,6 +20,6 @@ namespace Jeebs.StrongId_Tests.GuidId_Tests
 			Assert.Equal(Guid.Empty, id.Value);
 		}
 
-		public record GuidId : Jeebs.GuidId;
+		public record GuidId : Id.GuidId;
 	}
 }
