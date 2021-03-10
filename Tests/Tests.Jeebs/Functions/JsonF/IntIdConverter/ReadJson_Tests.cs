@@ -83,7 +83,7 @@ namespace F.JsonF_Tests.IntIdConverter_Tests
 			Assert.Equal(0, wrapper.IntId.Value);
 		}
 
-		public record IntIdTest0 : IntId;
+		public record IntIdTest0 : Jeebs.Id.IntId;
 
 		public class IntIdWrapperTest0
 		{

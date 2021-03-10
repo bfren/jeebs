@@ -19,6 +19,6 @@ namespace Jeebs.StrongId_Tests.IntId_Tests
 			Assert.Equal(0, id.Value);
 		}
 
-		public record IntId : Jeebs.IntId;
+		public record IntId : Id.IntId;
 	}
 }

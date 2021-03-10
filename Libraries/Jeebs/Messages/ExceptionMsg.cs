@@ -30,10 +30,10 @@ namespace Jm
 			new object[] { ExceptionType, ExceptionText };
 
 		/// <summary>
-		/// Log level - default is <see cref="Jeebs.Defaults.Log.ExceptionLevel"/>
+		/// Log level - default is <see cref="Jeebs.Defaults.Logging.ExceptionLevel"/>
 		/// </summary>
 		public virtual LogLevel Level =>
-			Jeebs.Defaults.Log.ExceptionLevel;
+			Jeebs.Defaults.Logging.ExceptionLevel;
 
 		/// <summary>
 		/// Create blank object

@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -29,14 +29,14 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(LogLevel.Trace);
+			msg.Level.Returns(LogLevel.Verbose);
 			var log = Substitute.For<Log>();
 
 			// Act
 			log.Message(msg);
 
 			// Assert
-			log.Received().Trace(Arg.Any<string>(), Arg.Any<object[]>());
+			log.Received().Verbose(Arg.Any<string>(), Arg.Any<object[]>());
 		}
 
 		[Fact]
@@ -104,14 +104,14 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<ILoggableMsg>();
-			msg.Level.Returns(LogLevel.Critical);
+			msg.Level.Returns(LogLevel.Fatal);
 			var log = Substitute.For<Log>();
 
 			// Act
 			log.Message(msg);
 
 			// Assert
-			log.Received().Critical(Arg.Any<string>(), Arg.Any<object[]>());
+			log.Received().Fatal(Arg.Any<string>(), Arg.Any<object[]>());
 		}
 
 		[Fact]
@@ -133,14 +133,14 @@ namespace Jeebs.Log_Tests
 		{
 			// Arrange
 			var msg = Substitute.For<IExceptionMsg>();
-			msg.Level.Returns(LogLevel.Critical);
+			msg.Level.Returns(LogLevel.Fatal);
 			var log = Substitute.For<Log>();
 
 			// Act
 			log.Message(msg);
 
 			// Assert
-			log.Received().Critical(Arg.Any<Exception>(), Arg.Any<string>(), Arg.Any<object[]>());
+			log.Received().Fatal(Arg.Any<Exception>(), Arg.Any<string>(), Arg.Any<object[]>());
 		}
 	}
 }

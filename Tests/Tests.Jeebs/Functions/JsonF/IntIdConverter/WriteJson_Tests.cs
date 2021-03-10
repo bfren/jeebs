@@ -35,6 +35,6 @@ namespace F.JsonF_Tests.IntIdConverter_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public record TestIntId : IntId { }
+		public record TestIntId : Jeebs.Id.IntId { }
 	}
 }

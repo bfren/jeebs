@@ -35,6 +35,6 @@ namespace F.JsonF_Tests.LongIdConverter_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public record TestLongId : LongId { }
+		public record TestLongId : Jeebs.Id.LongId { }
 	}
 }

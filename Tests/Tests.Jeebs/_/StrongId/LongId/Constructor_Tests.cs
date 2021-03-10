@@ -19,6 +19,6 @@ namespace Jeebs.StrongId_Tests.LongId_Tests
 			Assert.Equal(0L, id.Value);
 		}
 
-		public record LongId : Jeebs.LongId;
+		public record LongId : Id.LongId;
 	}
 }
