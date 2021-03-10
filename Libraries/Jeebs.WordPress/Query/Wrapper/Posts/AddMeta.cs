@@ -47,7 +47,7 @@ namespace Jeebs.WordPress
 			//
 			async Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
 			{
-				return await Option.True
+				return await Option.Chain
 					.Map(getOptions)
 					.Map(getQuery)
 					.BindAsync(getMeta)

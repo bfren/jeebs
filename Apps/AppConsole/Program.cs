@@ -29,7 +29,7 @@ namespace AppConsole
 					log.Error("Test error");
 					log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
 
-					log.Critical(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
+					log.Fatal(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
 					var seq = provider.GetRequiredService<Seq>();
 					seq.Send("test");

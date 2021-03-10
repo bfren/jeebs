@@ -18,7 +18,7 @@ namespace Jeebs.WordPress
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		public async Task<Option<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(long postId, Action<QueryPosts.Options>? modify = null)
 		{
-			return await Option.True
+			return await Option.Chain
 				.Map(
 					getQuery,
 					e => new GetPostsQueryExceptionMsg(e)

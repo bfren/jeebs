@@ -3,21 +3,23 @@
 
 using Xunit;
 
-namespace Jeebs.Some_Tests
+namespace Jeebs.None_Tests
 {
 	public class Constructor_Tests
 	{
 		[Fact]
-		public void Sets_Value()
+		public void Sets_Reason()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
+			var reason = new TestMsg();
 
 			// Act
-			var result = new Some<string>(value);
+			var result = new None<string>(reason);
 
 			// Assert
-			Assert.Equal(value, result.Value);
+			Assert.Equal(reason, result.Reason);
 		}
 	}
+
+	public record TestMsg : IMsg { }
 }

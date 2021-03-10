@@ -76,7 +76,7 @@ namespace AppConsoleWordPress
 						)
 						.AuditAsync(AuditCustomFields);
 
-					Option.True
+					Option.Chain
 						.Map<int>(_ => throw new Exception("Test"));
 
 					await Option
