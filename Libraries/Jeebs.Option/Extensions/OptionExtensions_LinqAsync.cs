@@ -8,7 +8,7 @@ using Jm.Option;
 namespace Jeebs
 {
 	/// <summary>
-	/// <see cref="Option{T}"/> Extensions: Linq Methods
+	/// <see cref="Option{T}"/> Extensions: Linq Async Methods
 	/// </summary>
 	public static class OptionExtensions_LinqAsync
 	{
