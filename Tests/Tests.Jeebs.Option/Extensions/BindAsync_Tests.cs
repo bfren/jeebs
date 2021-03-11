@@ -61,11 +61,13 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Act
 			var r0 = await OptionExtensions.DoBindAsync(task, bind, null);
-			var r1 = await task.BindAsync(bind);
+			var r1 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
+			var r2 = await task.BindAsync(bind);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
 			Assert.IsType<None<string>>(r1);
+			Assert.IsType<None<string>>(r2);
 		}
 
 		[Fact]
@@ -79,13 +81,16 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Act
 			var r0 = await OptionExtensions.DoBindAsync(task, bind, null);
-			var r1 = await task.BindAsync(bind);
+			var r1 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
+			var r2 = await task.BindAsync(bind);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
 			Assert.Same(msg, n0.Reason);
 			var n1 = Assert.IsType<None<string>>(r1);
 			Assert.Same(msg, n1.Reason);
+			var n2 = Assert.IsType<None<string>>(r2);
+			Assert.Same(msg, n2.Reason);
 		}
 
 		[Fact]
@@ -99,10 +104,11 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Act
 			await OptionExtensions.DoBindAsync(task, bind, null);
+			await task.BindAsync(v => bind(v).GetAwaiter().GetResult(), null);
 			await task.BindAsync(bind, null);
 
 			// Assert
-			await bind.Received(2).Invoke(value);
+			await bind.Received(3).Invoke(value);
 		}
 
 		public class FakeOption : Option<int>

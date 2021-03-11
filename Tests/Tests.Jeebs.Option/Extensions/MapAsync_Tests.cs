@@ -61,11 +61,13 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Act
 			var r0 = await OptionExtensions.DoMapAsync(task, map, null);
-			var r1 = await task.MapAsync(map, null);
+			var r1 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
+			var r2 = await task.MapAsync(map, null);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
 			Assert.IsType<None<string>>(r1);
+			Assert.IsType<None<string>>(r2);
 		}
 
 		[Fact]
@@ -78,14 +80,17 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoMapAsync(task,map, null);
-			var r1 = await task.MapAsync(map, null);
+			var r0 = await OptionExtensions.DoMapAsync(task, map, null);
+			var r1 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
+			var r2 = await task.MapAsync(map, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
 			Assert.Same(msg, n0.Reason);
 			var n1 = Assert.IsType<None<string>>(r1);
 			Assert.Same(msg, n1.Reason);
+			var n2 = Assert.IsType<None<string>>(r2);
+			Assert.Same(msg, n2.Reason);
 		}
 
 		[Fact]
@@ -98,11 +103,12 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await OptionExtensions.DoMapAsync(task,map, null);
+			await OptionExtensions.DoMapAsync(task, map, null);
+			await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
 			await task.MapAsync(map, null);
 
 			// Assert
-			await map.Received(2).Invoke(value);
+			await map.Received(3).Invoke(value);
 		}
 
 		public class FakeOption : Option<int>
