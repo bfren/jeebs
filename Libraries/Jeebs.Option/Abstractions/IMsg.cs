@@ -12,6 +12,6 @@ namespace Jeebs
 		/// Return the message type name
 		/// </summary>
 		string? ToString() =>
-			GetType().Name;
+			GetType().FullName;
 	}
 }
