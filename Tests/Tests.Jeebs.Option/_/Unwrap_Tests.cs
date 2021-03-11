@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoUnwrap_Tests
+	public class Unwrap_Tests
 	{
 		[Fact]
 		public void Some_Returns_Value()

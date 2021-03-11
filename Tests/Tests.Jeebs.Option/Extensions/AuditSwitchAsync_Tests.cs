@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
-	public class DoAuditSwitchAsync_Tests
+	public class AuditSwitchAsync_Tests
 	{
 		[Fact]
 		public async Task Null_Args_Returns_Original_Option()
 		{
 			// Arrange
-			var option = new FakeOption();
+			var option = Option.Wrap(F.Rnd.Int);
+			var task = Task.FromResult(option);
 
 			// Act
-			var result = await option.DoAuditSwitchAsync();
+			var result = await OptionExtensions.DoAuditSwitchAsync(task, null, null);
 
 			// Assert
 			Assert.Same(option, result);
@@ -28,11 +29,12 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = new FakeOption();
+			var task = Task.FromResult(option.AsOption);
 			var some = Substitute.For<Func<int, Task>>();
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
-			Task result() => option.DoAuditSwitchAsync(some, none);
+			Task result() => OptionExtensions.DoAuditSwitchAsync(task, some, none);
 
 			// Assert
 			await Assert.ThrowsAsync<Jx.Option.UnknownOptionException>(result);
@@ -44,14 +46,15 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
+			var task = Task.FromResult(option);
 			var some = Substitute.For<Func<int, Task>>();
 
 			// Act
-			var r0 = await option.DoAuditSwitchAsync(some: some);
-			var r1 = await option.AuditSwitchAsync(some: _ => { some(value); });
-			var r2 = await option.AuditSwitchAsync(some: some);
-			var r3 = await option.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg?>>());
-			var r4 = await option.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg?, Task>>());
+			var r0 = await OptionExtensions.DoAuditSwitchAsync(task, some, null);
+			var r1 = await task.AuditSwitchAsync(some: _ => { some(value); });
+			var r2 = await task.AuditSwitchAsync(some: some);
+			var r3 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg?>>());
+			var r4 = await task.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg?, Task>>());
 
 			// Assert
 			await some.Received(5).Invoke(value);
@@ -68,14 +71,15 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = Option.None<int>(msg);
+			var task = Task.FromResult(option.AsOption);
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
-			var r0 = await option.DoAuditSwitchAsync(none: none);
-			var r1 = await option.AuditSwitchAsync(none: _ => { none(msg); });
-			var r2 = await option.AuditSwitchAsync(none: none);
-			var r3 = await option.AuditSwitchAsync(some: Substitute.For<Action<int>>(), none: _ => none(msg));
-			var r4 = await option.AuditSwitchAsync(some: Substitute.For<Func<int, Task>>(), none: none);
+			var r0 = await OptionExtensions.DoAuditSwitchAsync(task, null, none);
+			var r1 = await task.AuditSwitchAsync(none: _ => { none(msg); });
+			var r2 = await task.AuditSwitchAsync(none: none);
+			var r3 = await task.AuditSwitchAsync(some: Substitute.For<Action<int>>(), none: _ => none(msg));
+			var r4 = await task.AuditSwitchAsync(some: Substitute.For<Func<int, Task>>(), none: none);
 
 			// Assert
 			await none.Received(5).Invoke(msg);
@@ -87,11 +91,13 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public async Task Handles_Exception_And_Returns_Original_Option()
+		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
 			var o0 = Option.Wrap(F.Rnd.Int);
 			var o1 = Option.None<int>(true);
+			var t0 = Task.FromResult(o0);
+			var t1 = Task.FromResult(o1.AsOption);
 			var exception = new Exception();
 
 			void someActionThrow(int _) => throw exception!;
@@ -100,15 +106,15 @@ namespace Jeebs.Option_Tests
 			Task noneFuncThrow(IMsg? _) => throw exception!;
 
 			// Act
-			var r0 = await o0.DoAuditSwitchAsync(some: someFuncThrow);
-			var r1 = await o0.AuditSwitchAsync(some: someActionThrow);
-			var r2 = await o0.AuditSwitchAsync(some: someFuncThrow);
-			var r3 = await o1.DoAuditSwitchAsync(none: noneFuncThrow);
-			var r4 = await o1.AuditSwitchAsync(none: noneActionThrow);
-			var r5 = await o1.AuditSwitchAsync(none: noneFuncThrow);
-			var r6 = await o0.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
-			var r7 = await o0.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
-			var r8 = await o1.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
+			var r0 = await OptionExtensions.DoAuditSwitchAsync(t0, someFuncThrow, null);
+			var r1 = await t0.AuditSwitchAsync(some: someActionThrow);
+			var r2 = await t0.AuditSwitchAsync(some: someFuncThrow);
+			var r3 = await OptionExtensions.DoAuditSwitchAsync(t1, null, noneFuncThrow);
+			var r4 = await t1.AuditSwitchAsync(none: noneActionThrow);
+			var r5 = await t1.AuditSwitchAsync(none: noneFuncThrow);
+			var r6 = await t0.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
+			var r7 = await t0.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
+			var r8 = await t1.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
 			var r9 = await o1.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
 
 			// Assert
@@ -124,7 +130,10 @@ namespace Jeebs.Option_Tests
 			Assert.Same(o1, r9);
 		}
 
-		public class FakeOption : Option<int> { }
+		public class FakeOption : Option<int>
+		{
+			public Option<int> AsOption => this;
+		}
 
 		public class TestMsg : IMsg { }
 	}

@@ -8,17 +8,17 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoBindAsync_Tests
+	public class BindAsync_Tests
 	{
 		[Fact]
 		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
-			var some = Substitute.For<Func<int, Task<Option<string>>>>();
+			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var result = await option.DoBindAsync(some, null);
+			var result = await option.DoBindAsync(bind, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);

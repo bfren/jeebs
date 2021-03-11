@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoAuditAsync_Tests
+	public class AuditAsync_Tests
 	{
 		[Fact]
 		public async Task Runs_Audit_And_Returns_Original_Option()
@@ -28,7 +28,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public async Task Handles_Exception_And_Returns_Original_Option()
+		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
 			var option = Option.Wrap(F.Rnd.Int);

@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.OptionStatic_Tests

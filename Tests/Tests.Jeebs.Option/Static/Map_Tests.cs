@@ -5,7 +5,7 @@ using System;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Static
+namespace Jeebs.OptionStatic_Tests
 {
 	public class Map_Tests
 	{

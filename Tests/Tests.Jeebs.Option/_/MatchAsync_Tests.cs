@@ -8,10 +8,10 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoMatchAsync_Tests
+	public class MatchAsync_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Throws_UnknownOptionException()
+		public async Task If_Unknown_Option_Throws_UnknownOptionException()
 		{
 			// Arrange
 			var option = new FakeOption();
@@ -19,10 +19,10 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<IMsg?, Task<string>>>();
 
 			// Act
-			Action action = () => option.DoMatchAsync(some, none);
+			Task action() => option.DoMatchAsync(some, none);
 
 			// Assert
-			Assert.Throws<Jx.Option.UnknownOptionException>(action);
+			await Assert.ThrowsAsync<Jx.Option.UnknownOptionException>(action);
 		}
 
 		[Fact]
@@ -42,6 +42,11 @@ namespace Jeebs.Option_Tests
 			await option.MatchAsync(
 				some: some,
 				none: F.Rnd.Str
+			);
+
+			await option.MatchAsync(
+				some: v => some(v).GetAwaiter().GetResult(),
+				none: Task.FromResult(F.Rnd.Str)
 			);
 
 			await option.MatchAsync(
@@ -65,13 +70,13 @@ namespace Jeebs.Option_Tests
 			);
 
 			await option.MatchAsync(
-				some: some,
-				none: Substitute.For<Func<IMsg?, string>>()
+				some: v => some(v).GetAwaiter().GetResult(),
+				none: Substitute.For<Func<IMsg?, Task<string>>>()
 			);
 
 			await option.MatchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<IMsg?, Task<string>>>()
+				some: some,
+				none: Substitute.For<Func<IMsg?, string>>()
 			);
 
 			await option.MatchAsync(
@@ -80,7 +85,7 @@ namespace Jeebs.Option_Tests
 			);
 
 			// Assert
-			await some.Received(9).Invoke(value);
+			await some.Received(10).Invoke(value);
 		}
 
 		[Fact]
@@ -97,6 +102,11 @@ namespace Jeebs.Option_Tests
 			);
 
 			var r1 = await option.MatchAsync(
+				some: Substitute.For<Func<int, string>>(),
+				none: Task.FromResult(value)
+			);
+
+			var r2 = await option.MatchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: Task.FromResult(value)
 			);
@@ -104,6 +114,7 @@ namespace Jeebs.Option_Tests
 			// Assert
 			Assert.Equal(value, r0);
 			Assert.Equal(value, r1);
+			Assert.Equal(value, r2);
 		}
 
 		[Fact]
@@ -114,6 +125,11 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<string>>();
 
 			// Act
+			await option.DoMatchAsync(
+				some: Substitute.For<Func<int, Task<string>>>(),
+				none: _ => Task.FromResult(none())
+			);
+
 			await option.MatchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: none
@@ -130,13 +146,13 @@ namespace Jeebs.Option_Tests
 			);
 
 			await option.MatchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: _ => none()
+				some: Substitute.For<Func<int, string>>(),
+				none: _ => Task.FromResult(none())
 			);
 
 			await option.MatchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: _ => Task.FromResult(none())
+				some: Substitute.For<Func<int, Task<string>>>(),
+				none: _ => none()
 			);
 
 			await option.MatchAsync(
@@ -145,7 +161,7 @@ namespace Jeebs.Option_Tests
 			);
 
 			// Assert
-			none.Received(6).Invoke();
+			none.Received(7).Invoke();
 		}
 
 		public class FakeOption : Option<int> { }

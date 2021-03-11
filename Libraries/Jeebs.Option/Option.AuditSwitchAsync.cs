@@ -15,7 +15,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="some">[Optional] Will run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Will run if the current Option is <see cref="None{T}"/></param>
-		internal Task<Option<T>> DoAuditSwitchAsync(Func<T, Task>? some = null, Func<IMsg?, Task>? none = null)
+		internal Task<Option<T>> DoAuditSwitchAsync(Func<T, Task>? some, Func<IMsg?, Task>? none)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)

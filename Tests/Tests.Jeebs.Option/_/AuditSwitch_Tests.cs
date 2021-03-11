@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoAuditSwitch_Tests
+	public class AuditSwitch_Tests
 	{
 		[Fact]
 		public void Null_Args_Returns_Original_Option()
@@ -79,7 +79,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void Handles_Exception_And_Returns_Original_Option()
+		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
 			var o0 = Option.Wrap(F.Rnd.Int);

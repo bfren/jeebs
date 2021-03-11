@@ -11,15 +11,7 @@ namespace Jeebs
 	/// </summary>
 	public static partial class OptionExtensions
 	{
-		/// <summary>
-		/// Perform an asynchronous map, awaiting the current Option type first -
-		/// if <paramref name="this"/> is <see cref="None{T}"/>, skips ahead to next type
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="map">Map function - receives value of <paramref name="this"/> if it is <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public static Task<Option<U>> DoMapAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<U>> map,
@@ -40,7 +32,7 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="DoMapAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Option.Handler?)"/>
+		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public static Task<Option<U>> MapAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, U> map,
@@ -48,7 +40,7 @@ namespace Jeebs
 		) =>
 			DoMapAsync(@this, x => Task.FromResult(map(x)), handler);
 
-		/// <inheritdoc cref="DoMapAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Option.Handler?)"/>
+		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public static Task<Option<U>> MapAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Task<U>> map,

@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Jeebs.None_Tests
+namespace Jeebs.OptionNone_Tests
 {
 	public class AsOption_Tests
 	{

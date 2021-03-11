@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoAudit_Tests
+	public class Audit_Tests
 	{
 		[Fact]
 		public void Runs_Audit_And_Returns_Original_Option()
@@ -27,7 +27,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void Handles_Exception_And_Returns_Original_Option()
+		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
 			var option = Option.Wrap(F.Rnd.Int);

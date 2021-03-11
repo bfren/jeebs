@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoMatch_Tests
+	public class Match_Tests
 	{
 		[Fact]
 		public void If_Unknown_Option_Throws_UnknownOptionException()
@@ -18,7 +18,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<IMsg?, string>>();
 
 			// Act
-			Action action = () => option.DoMatch(some, none);
+			void action() => option.DoMatch(some, none);
 
 			// Assert
 			Assert.Throws<Jx.Option.UnknownOptionException>(action);

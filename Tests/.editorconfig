@@ -5,3 +5,6 @@ file_header_template = Jeebs Unit Tests\nCopyright (c) bcg|design - licensed und
 
 # RCS1090: Add call to 'ConfigureAwait' (or vice versa).
 dotnet_diagnostic.RCS1090.severity = none
+
+# RCS1032: Remove redundant parentheses.
+dotnet_diagnostic.RCS1032.severity = none

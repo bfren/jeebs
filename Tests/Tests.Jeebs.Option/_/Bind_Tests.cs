@@ -7,17 +7,17 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoMap_Tests
+	public class Bind_Tests
 	{
 		[Fact]
 		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
-			var some = Substitute.For<Func<int, string>>();
+			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = option.DoMap(some, null);
+			var result = option.DoBind(bind, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -34,7 +34,7 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			// Act
-			var result = option.DoMap<int>(_ => throw exception, handler);
+			var result = option.DoBind<int>(_ => throw exception, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -46,11 +46,11 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = Option.None<int>(true);
-			var map = Substitute.For<Func<int, string>>();
+			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var r0 = option.DoMap(map, null);
-			var r1 = option.Map(map, null);
+			var r0 = option.DoBind(bind, null);
+			var r1 = option.Bind(bind, null);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
@@ -63,11 +63,11 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = Option.None<int>(msg);
-			var map = Substitute.For<Func<int, string>>();
+			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var r0 = option.DoMap(map, null);
-			var r1 = option.Map(map, null);
+			var r0 = option.DoBind(bind, null);
+			var r1 = option.Bind(bind, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
@@ -77,19 +77,19 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Runs_Map_Function()
+		public void If_Some_Runs_Bind_Function()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
-			var map = Substitute.For<Func<int, string>>();
+			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			option.DoMap(map, null);
-			option.Map(map, null);
+			option.DoBind(bind, null);
+			option.Bind(bind, null);
 
 			// Assert
-			map.Received(2).Invoke(value);
+			bind.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

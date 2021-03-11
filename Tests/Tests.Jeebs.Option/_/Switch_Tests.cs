@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoSwitch_Tests
+	public class Switch_Tests
 	{
 		[Fact]
 		public void If_Unknown_Option_Throws_UnknownOptionException()

@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
-	public class DoMapAsync_Tests
+	public class MapAsync_Tests
 	{
 		[Fact]
 		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
-			var some = Substitute.For<Func<int, Task<string>>>();
+			var task = Task.FromResult(option.AsOption);
+			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var result = await option.DoMapAsync(some, null);
+			var result = await OptionExtensions.DoMapAsync(task, map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -30,16 +31,24 @@ namespace Jeebs.Option_Tests
 		public async Task Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = Option.Wrap(F.Rnd.Str);
+			var option = Option.Wrap(F.Rnd.Int);
+			var task = Task.FromResult(option);
 			var handler = Substitute.For<Option.Handler>();
 			var exception = new Exception();
 
+			string syncThrow(int _) => throw exception;
+			Task<string> asyncThrow(int _) => throw exception;
+
 			// Act
-			var result = await option.DoMapAsync<int>(_ => throw exception, handler);
+			var r0 = await OptionExtensions.DoMapAsync(task, asyncThrow, handler);
+			var r1 = await task.MapAsync(syncThrow, handler);
+			var r2 = await task.MapAsync(asyncThrow, handler);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
-			handler.Received().Invoke(exception);
+			Assert.IsType<None<string>>(r0);
+			Assert.IsType<None<string>>(r1);
+			Assert.IsType<None<string>>(r2);
+			handler.Received(3).Invoke(exception);
 		}
 
 		[Fact]
@@ -47,11 +56,12 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = Option.None<int>(true);
+			var task = Task.FromResult(option.AsOption);
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.DoMapAsync(map, null);
-			var r1 = await option.MapAsync(map, null);
+			var r0 = await OptionExtensions.DoMapAsync(task, map, null);
+			var r1 = await task.MapAsync(map, null);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
@@ -64,11 +74,12 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = Option.None<int>(msg);
+			var task = Task.FromResult(option.AsOption);
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.DoMapAsync(map, null);
-			var r1 = await option.MapAsync(map, null);
+			var r0 = await OptionExtensions.DoMapAsync(task,map, null);
+			var r1 = await task.MapAsync(map, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
@@ -83,17 +94,21 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
+			var task = Task.FromResult(option);
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await option.DoMapAsync(map, null);
-			await option.MapAsync(map, null);
+			await OptionExtensions.DoMapAsync(task,map, null);
+			await task.MapAsync(map, null);
 
 			// Assert
 			await map.Received(2).Invoke(value);
 		}
 
-		public class FakeOption : Option<int> { }
+		public class FakeOption : Option<int>
+		{
+			public Option<int> AsOption => this;
+		}
 
 		public record TestMsg : IMsg { }
 	}

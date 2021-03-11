@@ -323,7 +323,7 @@
 			"minimumLevel": {
 				"type": "string",
 				"description": "Microsoft compatible logging levels",
-				"enum": [ "Trace", "Debug", "Information", "Warning", "Error", "Critical" ]
+				"enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
 			},
 			"provider": {
 				"type": "object",

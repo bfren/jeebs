@@ -2,22 +2,23 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoBind_Tests
+	public class MapAsync_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
-			var some = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var result = option.DoBind(some, null);
+			var result = await option.DoMapAsync(map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -26,7 +27,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void Exception_Thrown_Calls_Handler()
+		public async Task Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
 			var option = Option.Wrap(F.Rnd.Str);
@@ -34,7 +35,7 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			// Act
-			var result = option.DoBind<int>(_ => throw exception, handler);
+			var result = await option.DoMapAsync<int>(_ => throw exception, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -42,15 +43,15 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_None_Gets_None()
+		public async Task If_None_Gets_None()
 		{
 			// Arrange
 			var option = Option.None<int>(true);
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = option.DoBind(bind, null);
-			var r1 = option.Bind(bind, null);
+			var r0 = await option.DoMapAsync(map, null);
+			var r1 = await option.MapAsync(map, null);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
@@ -58,16 +59,16 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_None_With_Reason_Gets_None_With_Same_Reason()
+		public async Task If_None_With_Reason_Gets_None_With_Same_Reason()
 		{
 			// Arrange
 			var msg = new TestMsg();
 			var option = Option.None<int>(msg);
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = option.DoBind(bind, null);
-			var r1 = option.Bind(bind, null);
+			var r0 = await option.DoMapAsync(map, null);
+			var r1 = await option.MapAsync(map, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
@@ -77,19 +78,19 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Runs_Bind_Function()
+		public async Task If_Some_Runs_Map_Function()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			option.DoBind(bind, null);
-			option.Bind(bind, null);
+			await option.DoMapAsync(map, null);
+			await option.MapAsync(map, null);
 
 			// Assert
-			bind.Received(2).Invoke(value);
+			await map.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

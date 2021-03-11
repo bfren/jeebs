@@ -11,14 +11,7 @@ namespace Jeebs
 	/// </summary>
 	public static partial class OptionExtensions
 	{
-		/// <summary>
-		/// Perform an asynchronous match
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		internal static async Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
 			await @this switch
 			{
@@ -32,59 +25,47 @@ namespace Jeebs
 					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Value to return if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.MatchAsync{U}(Func{T, Task{U}}, U)"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, U none) =>
 			DoMatchAsync(
 				@this,
-				some: x => Task.FromResult(some(x)),
+				some: v => Task.FromResult(some(v)),
 				none: _ => Task.FromResult(none)
 			);
 
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.MatchAsync{U}(Func{T, Task{U}}, U)"/>
+		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, U none) =>
+			DoMatchAsync(
+				@this,
+				some: some,
+				none: _ => Task.FromResult(none)
+			);
+
+		/// <inheritdoc cref="Option{T}.MatchAsync{U}(Func{T, Task{U}}, U)"/>
+		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Task<U> none) =>
+			DoMatchAsync(
+				@this,
+				some: v => Task.FromResult(some(v)),
+				none: _ => none
+			);
+
+		/// <inheritdoc cref="Option{T}.MatchAsync{U}(Func{T, Task{U}}, U)"/>
+		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Task<U> none) =>
+			DoMatchAsync(
+				@this,
+				some: some,
+				none: _ => none
+			);
+
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<U> none) =>
 			DoMatchAsync(
 				@this,
-				some: x => Task.FromResult(some(x)),
+				some: v => Task.FromResult(some(v)),
 				none: _ => Task.FromResult(none())
 			);
 
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, U> none) =>
-			DoMatchAsync(
-				@this,
-				some: x => Task.FromResult(some(x)),
-				none: x => Task.FromResult(none(x))
-			);
-
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<U> none) =>
 			DoMatchAsync(
 				@this,
@@ -92,59 +73,15 @@ namespace Jeebs
 				none: _ => Task.FromResult(none())
 			);
 
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, U> none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: x => Task.FromResult(none(x))
-			);
-
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<Task<U>> none) =>
 			DoMatchAsync(
 				@this,
-				some: x => Task.FromResult(some(x)),
+				some: v => Task.FromResult(some(v)),
 				none: _ => none()
 			);
 
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, Task<U>> none) =>
-			DoMatchAsync(
-				@this,
-				some: x => Task.FromResult(some(x)),
-				none: x => none(x)
-			);
-
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<Task<U>> none) =>
 			DoMatchAsync(
 				@this,
@@ -152,14 +89,31 @@ namespace Jeebs
 				none: _ => none()
 			);
 
-		/// <summary>
-		/// Perform an asynchronous match, awaiting the current Option type first
-		/// </summary>
-		/// <typeparam name="T">Original value type</typeparam>
-		/// <typeparam name="U">Return type</typeparam>
-		/// <param name="this">Option value (awaitable)</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="None{T}"/></param>
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, U> none) =>
+			DoMatchAsync(
+				@this,
+				some: v => Task.FromResult(some(v)),
+				none: r => Task.FromResult(none(r))
+			);
+
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, U> none) =>
+			DoMatchAsync(
+				@this,
+				some: some,
+				none: r => Task.FromResult(none(r))
+			);
+
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, Task<U>> none) =>
+			DoMatchAsync(
+				@this,
+				some: v => Task.FromResult(some(v)),
+				none: none
+			);
+
+		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
 			DoMatchAsync(
 				@this,
