@@ -47,7 +47,7 @@ namespace Jeebs.WordPress
 			//
 			async Task<Option<(TList, List<Term>)>> getTermsAsync(TList posts, List<PropertyInfo> termLists)
 			{
-				return await Option.Chain
+				return await Option
 					.Map(getOptions)
 					.Bind(addTaxonomies)
 					.Map(getQuery)

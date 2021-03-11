@@ -24,10 +24,6 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
-		public Task<Option<U>> MapAsync<U>(Func<Task<U>> map, Option.Handler? handler = null) =>
-			DoMapAsync(_ => map(), handler);
-
-		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
 		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
 			DoMapAsync(map, handler);
 	}

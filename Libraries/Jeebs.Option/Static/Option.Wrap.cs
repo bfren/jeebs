@@ -8,7 +8,7 @@ namespace Jeebs
 	public static partial class Option
 	{
 		/// <summary>
-		/// Create a Some option, containing a value
+		/// Create a <see cref="Some{T}"/> Option, containing a value
 		/// <para>If <paramref name="value"/> is null, <see cref="Jeebs.None{T}"/> will be returned instead</para>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
@@ -33,7 +33,7 @@ namespace Jeebs
 			};
 
 		/// <summary>
-		/// Wrap <paramref name="value"/> in <see cref="Wrap{T}(T, bool)"/> if <paramref name="predicate"/> is true
+		/// Create <see cref="Some{T}"/> with <paramref name="value"/> if <paramref name="predicate"/> is true
 		/// <para>Otherwise, will return <see cref="Jeebs.None{T}"/></para>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
@@ -48,5 +48,9 @@ namespace Jeebs
 				false =>
 					None<T>(new Jm.Option.PredicateWasFalseMsg())
 			};
+
+		/// <inheritdoc cref="WrapIf{T}(Func{bool}, Func{T})"/>
+		public static Option<T> WrapIf<T>(Func<bool> predicate, T value) =>
+			WrapIf(predicate, () => value);
 	}
 }

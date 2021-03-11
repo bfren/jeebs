@@ -51,8 +51,8 @@ namespace Jeebs.Option_Tests
 
 			// Act
 			option.DoMap(map, null);
-			option.Map(() => map(value), null);
 			option.Map(map, null);
+			Option.Map(() => map(value), null);
 
 			// Assert
 			map.Received(3).Invoke(value);
