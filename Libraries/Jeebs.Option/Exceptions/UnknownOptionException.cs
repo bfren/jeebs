@@ -7,7 +7,8 @@ using Jeebs;
 namespace Jx.Option
 {
 	/// <summary>
-	/// Thrown when an unknown <see cref="Option{T}"/> type is matched (should only ever be <see cref="Some{T}"/> or <see cref="None{T}"/>)
+	/// Thrown when an unknown <see cref="Option{T}"/> type is matched -
+	/// as <see cref="Option{T}"/> only allows internal implementation this should never happen...
 	/// </summary>
 	public class UnknownOptionException : Exception
 	{

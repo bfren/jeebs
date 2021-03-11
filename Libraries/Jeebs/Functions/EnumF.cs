@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jm.Functions.EnumF;
 using static Jeebs.Option;
 
 namespace F
@@ -29,12 +28,12 @@ namespace F
 						x,
 
 					_ =>
-						None<T>(new NotAValidEnumValueMsg<T>(value))
+						None<T>(new Jm.Functions.EnumF.NotAValidEnumValueMsg<T>(value))
 				};
 			}
 			catch (Exception)
 			{
-				return None<T>(new NotAValidEnumValueMsg<T>(value));
+				return None<T>(new Jm.Functions.EnumF.NotAValidEnumValueMsg<T>(value));
 			}
 		}
 
@@ -48,7 +47,7 @@ namespace F
 		{
 			if (!t.IsEnum)
 			{
-				return None<object>(new NotAValidEnumMsg(t));
+				return None<object>(new Jm.Functions.EnumF.NotAValidEnumMsg(t));
 			}
 
 			try
@@ -58,7 +57,7 @@ namespace F
 			}
 			catch (Exception)
 			{
-				return None<object>(new NotAValidEnumValueMsg(t, value));
+				return None<object>(new Jm.Functions.EnumF.NotAValidEnumValueMsg(t, value));
 			}
 		}
 
@@ -110,7 +109,7 @@ namespace F
 						x,
 
 					_ =>
-						None<TTo>(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+						None<TTo>(new Jm.Functions.EnumF.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 				};
 			}
 		}

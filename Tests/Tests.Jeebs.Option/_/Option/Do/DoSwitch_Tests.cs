@@ -10,7 +10,7 @@ namespace Jeebs.Option_Tests
 	public class DoSwitch_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Throw_UnknownOptionException()
+		public void If_Unknown_Option_Throws_UnknownOptionException()
 		{
 			// Arrange
 			var option = new FakeOption();
@@ -25,7 +25,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Run_Some()
+		public void If_Some_Runs_Some()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
@@ -55,7 +55,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_None_Without_Reason_Run_None()
+		public void If_None_Without_Reason_Runs_None()
 		{
 			// Arrange
 			var option = Option.None<int>(true);
@@ -79,7 +79,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_None_With_Reason_Run_None_Pass_Reason()
+		public void If_None_With_Reason_Runs_None_With_Reason()
 		{
 			// Arrange
 			var reason = new TestMsg();

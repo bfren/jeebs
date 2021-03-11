@@ -5,7 +5,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
-using Jm.Functions.JsonF;
 
 namespace F
 {
@@ -96,7 +95,7 @@ namespace F
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
 			{
-				return Option.None<T>(new DeserialisingNullOrEmptyStringMsg());
+				return Option.None<T>(new Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg());
 			}
 
 			// Attempt to deserialise JSON
@@ -108,12 +107,12 @@ namespace F
 						x,
 
 					_ =>
-						Option.None<T>(new DeserialisingReturnedNullMsg()) // should never get here
+						Option.None<T>(new Jm.Functions.JsonF.DeserialisingReturnedNullMsg()) // should never get here
 				};
 			}
 			catch (Exception ex)
 			{
-				return Option.None<T>(new DeserialiseExceptionMsg(ex));
+				return Option.None<T>(new Jm.Functions.JsonF.DeserialiseExceptionMsg(ex));
 			}
 		}
 

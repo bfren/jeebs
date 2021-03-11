@@ -19,17 +19,17 @@ namespace Jeebs
 		/// <param name="this">Option value (awaitable)</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="None{T}"/></param>
-		internal static Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			@this switch
+		internal static async Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
+			await @this switch
 			{
 				Some<T> x =>
-					some(x.Value),
+					await some(x.Value),
 
 				None<T> x =>
-					none(x.Reason),
+					await none(x.Reason),
 
 				_ =>
-					throw new Jx.Option.UnknownOptionException()
+					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		/// <summary>

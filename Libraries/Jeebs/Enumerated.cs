@@ -4,7 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using Jm.Enumerated;
 
 namespace Jeebs
 {
@@ -67,7 +66,7 @@ namespace Jeebs
 					value,
 
 				false =>
-					Option.None<T>(new NotAValidEnumeratedValueMsg<T>(value))
+					Option.None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(value))
 			};
 
 		/// <summary>
@@ -93,7 +92,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					return Option.None<T>(new NotAValidEnumeratedValueMsg<T>(name));
+					return Option.None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);

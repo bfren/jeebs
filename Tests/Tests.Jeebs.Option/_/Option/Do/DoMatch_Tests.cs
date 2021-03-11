@@ -11,7 +11,7 @@ namespace Jeebs.Option_Tests
 	public class DoMatch_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Throw_UnknownOptionException()
+		public void If_Unknown_Option_Throws_UnknownOptionException()
 		{
 			// Arrange
 			var option = new FakeOption();
@@ -26,7 +26,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Run_Some()
+		public void If_Some_Runs_Some()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
@@ -59,7 +59,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_None_Get_None()
+		public void If_None_Gets_None()
 		{
 			// Arrange
 			var option = Option.None<int>(true);
@@ -76,7 +76,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public async Task If_None_Run_None()
+		public void If_None_Runs_None()
 		{
 			// Arrange
 			var option = Option.None<int>(true);

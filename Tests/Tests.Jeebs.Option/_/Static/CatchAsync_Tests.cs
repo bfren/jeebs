@@ -17,7 +17,7 @@ namespace Jeebs.Option_Static_Tests
 			var value = F.Rnd.Int;
 
 			// Act
-			var result = await Option.CatchAsync(async () => Option.Wrap(value));
+			var result = await Option.CatchAsync(() => Task.FromResult(Option.Wrap(value)));
 
 			// Assert
 			var some = Assert.IsType<Some<int>>(result);
@@ -31,7 +31,7 @@ namespace Jeebs.Option_Static_Tests
 			var message = F.Rnd.Str;
 
 			// Act
-			var result = await Option.CatchAsync<int>(async () => throw new Exception(message));
+			var result = await Option.CatchAsync<int>(() => throw new Exception(message));
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
@@ -48,7 +48,7 @@ namespace Jeebs.Option_Static_Tests
 			var handler = Substitute.For<Option.Handler>();
 
 			// Act
-			var result = await Option.CatchAsync<int>(async () => throw exception, handler);
+			var result = await Option.CatchAsync<int>(() => throw exception, handler);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);

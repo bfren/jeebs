@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Jm.Option;
 
 namespace Jeebs
 {
@@ -14,7 +13,7 @@ namespace Jeebs
 		/// Unwrap the value of this option - if this is a <see cref="Some{T}"/>
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
-		private T UnwrapPrivate(Func<IMsg?, T> ifNone) =>
+		internal T DoUnwrap(Func<IMsg?, T> ifNone) =>
 			Switch(
 				some: v => v,
 				none: ifNone
@@ -25,7 +24,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
 		public T Unwrap(T ifNone) =>
-			UnwrapPrivate(
+			DoUnwrap(
 				ifNone: _ => ifNone
 			);
 
@@ -34,7 +33,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
 		public T Unwrap(Func<T> ifNone) =>
-			UnwrapPrivate(
+			DoUnwrap(
 				ifNone: _ => ifNone()
 			);
 
@@ -43,33 +42,8 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="ifNone">Function to return <typeparamref name="T"/> if this is a <see cref="None{T}"/></param>
 		public T Unwrap(Func<IMsg?, T> ifNone) =>
-			UnwrapPrivate(
+			DoUnwrap(
 				ifNone: ifNone
-			);
-
-		/// <summary>
-		/// Unwrap the single value of this option - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Single value type</typeparam>
-		public Option<U> UnwrapSingle<U>(Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			Option.Catch(() =>
-				Switch(
-					some: v =>
-						v switch
-						{
-							IEnumerable<U> list when list.Count() == 1 =>
-								Option.Wrap(list.Single()),
-
-							IEnumerable<U> =>
-								Option.None<U>(tooMany?.Invoke() ?? new UnwrapSingleTooManyItemsErrorMsg()),
-
-							_ =>
-								Option.None<U>(notAList?.Invoke() ?? new UnwrapSingleNotAListMsg())
-						},
-
-					none: r =>
-						new None<U>(r)
-				)
 			);
 	}
 }

@@ -33,18 +33,21 @@ namespace Jeebs
 			internal FluentUnwrapAsync(Option<T> option) =>
 				this.option = option;
 
-			/// <summary>
-			/// Unwrap value
-			/// </summary>
+			/// <inheritdoc cref="Option{T}.Unwrap(T)"/>
+			public Option<T> Value(T ifNone) =>
+				option.Unwrap(ifNone);
+
+			/// <inheritdoc cref="Option{T}.Unwrap(Func{T})"/>
 			public Option<T> Value(Func<T> ifNone) =>
 				option.Unwrap(ifNone);
 
-			/// <summary>
-			/// Unwrap single value (only works if <typeparamref name="T"/> implements IEnumerable
-			/// </summary>
-			/// <typeparam name="U">Next option type</typeparam>
-			public Option<U> Single<U>(Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-				option.UnwrapSingle<U>(tooMany, notAList);
+			/// <inheritdoc cref="Option{T}.Unwrap(Func{IMsg?, T})"/>
+			public Option<T> Value(Func<IMsg?, T> ifNone) =>
+				option.Unwrap(ifNone);
+
+			/// <inheritdoc cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+			public Option<U> Single<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
+				option.DoUnwrapSingle<U>(noItems, tooMany, notAList);
 		}
 	}
 }

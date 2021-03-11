@@ -10,7 +10,7 @@ namespace Jeebs.Option_Tests
 	public class DoMap_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Return_None_With_UnhandledExceptionMsg()
+		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
@@ -42,7 +42,42 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Run_Map()
+		public void If_None_Gets_None()
+		{
+			// Arrange
+			var option = Option.None<int>(true);
+			var map = Substitute.For<Func<int, string>>();
+
+			// Act
+			var r0 = option.DoMap(map, null);
+			var r1 = option.Map(map, null);
+
+			// Assert
+			Assert.IsType<None<string>>(r0);
+			Assert.IsType<None<string>>(r1);
+		}
+
+		[Fact]
+		public void If_None_With_Reason_Gets_None_With_Same_Reason()
+		{
+			// Arrange
+			var msg = new TestMsg();
+			var option = Option.None<int>(msg);
+			var map = Substitute.For<Func<int, string>>();
+
+			// Act
+			var r0 = option.DoMap(map, null);
+			var r1 = option.Map(map, null);
+
+			// Assert
+			var n0 = Assert.IsType<None<string>>(r0);
+			Assert.Same(msg, n0.Reason);
+			var n1 = Assert.IsType<None<string>>(r1);
+			Assert.Same(msg, n1.Reason);
+		}
+
+		[Fact]
+		public void If_Some_Runs_Map_Function()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
@@ -59,5 +94,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		public class FakeOption : Option<int> { }
+
+		public record TestMsg : IMsg { }
 	}
 }

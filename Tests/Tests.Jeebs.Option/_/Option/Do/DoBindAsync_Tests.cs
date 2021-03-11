@@ -8,17 +8,17 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoMapAsync_Tests
+	public class DoBindAsync_Tests
 	{
 		[Fact]
 		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
-			var some = Substitute.For<Func<int, Task<string>>>();
+			var some = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var result = await option.DoMapAsync(some, null);
+			var result = await option.DoBindAsync(some, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -35,7 +35,7 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			// Act
-			var result = await option.DoMapAsync<int>(_ => throw exception, handler);
+			var result = await option.DoBindAsync<int>(_ => throw exception, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -47,11 +47,11 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = Option.None<int>(true);
-			var map = Substitute.For<Func<int, Task<string>>>();
+			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await option.DoMapAsync(map, null);
-			var r1 = await option.MapAsync(map, null);
+			var r0 = await option.DoBindAsync(bind, null);
+			var r1 = await option.BindAsync(bind, null);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
@@ -64,11 +64,11 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = Option.None<int>(msg);
-			var map = Substitute.For<Func<int, Task<string>>>();
+			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await option.DoMapAsync(map, null);
-			var r1 = await option.MapAsync(map, null);
+			var r0 = await option.DoBindAsync(bind, null);
+			var r1 = await option.BindAsync(bind, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
@@ -78,21 +78,21 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public async Task If_Some_Runs_Map_Function()
+		public async Task If_Some_Runs_Bind_Function()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Option.Wrap(value);
-			var map = Substitute.For<Func<int, Task<string>>>();
+			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			await option.DoMapAsync(map, null);
-			await option.MapAsync(map, null);
-			await Option.MapAsync(() => map(value + 1), null);
+			await option.DoBindAsync(bind, null);
+			await option.BindAsync(bind, null);
+			await Option.BindAsync(() => bind(value + 1), null);
 
 			// Assert
-			await map.Received(2).Invoke(value);
-			await map.Received(1).Invoke(value + 1);
+			await bind.Received(2).Invoke(value);
+			await bind.Received(1).Invoke(value + 1);
 		}
 
 		public class FakeOption : Option<int> { }

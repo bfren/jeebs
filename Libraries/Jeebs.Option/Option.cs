@@ -21,7 +21,7 @@ namespace Jeebs
 					some(x.Value),
 
 				None<T> x =>
-					none.Invoke(x.Reason),
+					none(x.Reason),
 
 				_ =>
 					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...

@@ -44,7 +44,7 @@ namespace Jeebs
 					() => none?.Invoke(x.Reason) ?? Task.CompletedTask,
 
 				_ =>
-					() => throw new Jx.Option.UnknownOptionException()
+					() => throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 			// Perform the audit

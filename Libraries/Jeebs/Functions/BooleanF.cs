@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using Jeebs;
-using Jm.Functions.BooleanF;
 
 namespace F
 {
@@ -24,7 +23,7 @@ namespace F
 			var val = value?.ToString()?.ToLower();
 			if (val is null)
 			{
-				return Option.None<bool>(new NullValueMsg());
+				return Option.None<bool>(new Jm.Functions.BooleanF.NullValueMsg());
 			}
 
 			// Alternative boolean values
@@ -45,7 +44,7 @@ namespace F
 				return result;
 			}
 
-			return Option.None<bool>(new UnrecognisedValueMsg(val));
+			return Option.None<bool>(new Jm.Functions.BooleanF.UnrecognisedValueMsg(val));
 		}
 	}
 }

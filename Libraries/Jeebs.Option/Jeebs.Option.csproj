@@ -2,4 +2,22 @@
   <PropertyGroup>
     <RootNamespace>Jeebs</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Q:\src\jeebs\v5\Libraries\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Q:\src\jeebs\v5\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Q:\src\jeebs\v5\Libraries\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Q:\src\jeebs\v5\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Q:\src\jeebs\v5\Libraries\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Q:\src\jeebs\v5\.editorconfig" />
+  </ItemGroup>
 </Project>
