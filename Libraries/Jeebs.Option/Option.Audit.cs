@@ -21,7 +21,7 @@ namespace Jeebs
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Audit Error: {0}", e);
+				Option.HandleAuditException(e);
 			}
 
 			// Return the original object

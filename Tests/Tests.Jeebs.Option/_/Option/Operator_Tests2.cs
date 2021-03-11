@@ -25,8 +25,8 @@ namespace Jeebs.Option_Tests
 		public void DoesNotEqual_When_Not_Equal_Returns_True()
 		{
 			// Arrange
-			const int v0 = 18;
-			const int v1 = 7;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var some = Option.Wrap(v0);
 
 			// Act

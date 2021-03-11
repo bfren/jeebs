@@ -34,7 +34,7 @@ namespace Jeebs
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Audit Error: {0}", e);
+				Option.HandleAuditException(e);
 			}
 
 			// Return the original object
@@ -42,7 +42,21 @@ namespace Jeebs
 		}
 
 		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
-		public Option<T> AuditSwitch(Action<T>? some = null, Action<IMsg?>? none = null) =>
+		public Option<T> AuditSwitch(Action<T>? some) =>
+			DoAuditSwitch(
+				some: some,
+				none: null
+			);
+
+		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
+		public Option<T> AuditSwitch(Action<IMsg?>? none) =>
+			DoAuditSwitch(
+				some: null,
+				none: none
+			);
+
+		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
+		public Option<T> AuditSwitch(Action<T>? some, Action<IMsg?>? none) =>
 			DoAuditSwitch(
 				some: some,
 				none: none

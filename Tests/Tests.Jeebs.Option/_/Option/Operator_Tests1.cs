@@ -25,8 +25,8 @@ namespace Jeebs.Option_Tests
 		public void Equals_When_Not_Equal_Returns_False()
 		{
 			// Arrange
-			const int v0 = 18;
-			const int v1 = 7;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var some = Option.Wrap(v0);
 
 			// Act
@@ -35,5 +35,7 @@ namespace Jeebs.Option_Tests
 			// Assert
 			Assert.False(result);
 		}
+
+		public class TestMsg : IMsg { }
 	}
 }

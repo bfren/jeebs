@@ -9,11 +9,12 @@ namespace Jeebs
 	public abstract partial class Option<T>
 	{
 		/// <summary>
-		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console
+		/// Audits the current Option state and return unmodified
+		/// Errors will not be returned as they affect the state of the object, but will be written to the console,
+		/// or <see cref="Option.LogAuditExceptions"/> if set
 		/// </summary>
-		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
-		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
+		/// <param name="some">[Optional] Will run if the current Option is <see cref="Some{T}"/></param>
+		/// <param name="none">[Optional] Will run if the current Option is <see cref="None{T}"/></param>
 		internal Task<Option<T>> DoAuditSwitchAsync(Func<T, Task>? some = null, Func<IMsg?, Task>? none = null)
 		{
 			// Do nothing if the user gave us nothing to do!
@@ -35,7 +36,7 @@ namespace Jeebs
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Audit Error: {0}", e);
+				Option.HandleAuditException(e);
 			}
 
 			// Return the original object
@@ -43,21 +44,42 @@ namespace Jeebs
 		}
 
 		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<T, Task>? some = null, Action<IMsg?>? none = null) =>
+		public Task<Option<T>> AuditSwitchAsync(Action<T> some) =>
+			DoAuditSwitchAsync(
+				some: v => { some?.Invoke(v); return Task.CompletedTask; },
+				none: null
+			);
+
+		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some) =>
 			DoAuditSwitchAsync(
 				some: some,
+				none: null
+			);
+
+		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		public Task<Option<T>> AuditSwitchAsync(Action<IMsg?> none) =>
+			DoAuditSwitchAsync(
+				some: null,
 				none: r => { none?.Invoke(r); return Task.CompletedTask; }
 			);
 
 		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<T>? some = null, Func<IMsg?, Task>? none = null) =>
+		public Task<Option<T>> AuditSwitchAsync(Func<IMsg?, Task> none) =>
 			DoAuditSwitchAsync(
-				some: v => { some?.Invoke(v); return Task.CompletedTask; },
+				some: null,
 				none: none
 			);
 
 		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<T, Task>? some = null, Func<IMsg?, Task>? none = null) =>
+		public Task<Option<T>> AuditSwitchAsync(Action<T> some, Action<IMsg?> none) =>
+			DoAuditSwitchAsync(
+				some: v => { some?.Invoke(v); return Task.CompletedTask; },
+				none: r => { none?.Invoke(r); return Task.CompletedTask; }
+			);
+
+		/// <inheritdoc cref="DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
+		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some, Func<IMsg?, Task> none) =>
 			DoAuditSwitchAsync(
 				some: some,
 				none: none

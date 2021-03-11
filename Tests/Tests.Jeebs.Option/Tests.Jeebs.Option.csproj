@@ -19,7 +19,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\OptionAsyncExtensions\" />
-  </ItemGroup>
 </Project>

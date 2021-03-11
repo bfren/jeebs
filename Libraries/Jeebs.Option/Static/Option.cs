@@ -17,6 +17,11 @@ namespace Jeebs
 		public delegate IExceptionMsg Handler(Exception e);
 
 		/// <summary>
+		/// Set to log audit exceptions - otherwise they are sent to the Console
+		/// </summary>
+		public static Action<Exception>? LogAuditExceptions { get; set; }
+
+		/// <summary>
 		/// Special case for boolean - returns Some{bool}(true)
 		/// </summary>
 		public static Option<bool> True =>
@@ -27,5 +32,17 @@ namespace Jeebs
 		/// </summary>
 		public static Option<bool> False =>
 			Wrap(false);
+
+		internal static void HandleAuditException(Exception e)
+		{
+			if (LogAuditExceptions is not null)
+			{
+				LogAuditExceptions(e);
+			}
+			else
+			{
+				Console.WriteLine("Audit Error: {0}", e);
+			}
+		}
 	}
 }

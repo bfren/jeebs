@@ -111,9 +111,10 @@ namespace Jeebs.Apps
 		/// <param name="services">IServiceProvider</param>
 		protected virtual void Ready(IServiceProvider services)
 		{
-			// Output ready message
+			// Set Option Audit log and output ready message
 			if (services.GetService<ILog>() is ILog log)
 			{
+				Option.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
 				log.Information("Application ready.");
 			}
 		}
