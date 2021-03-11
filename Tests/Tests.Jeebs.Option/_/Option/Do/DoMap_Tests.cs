@@ -87,10 +87,9 @@ namespace Jeebs.Option_Tests
 			// Act
 			option.DoMap(map, null);
 			option.Map(map, null);
-			Option.Map(() => map(value), null);
 
 			// Assert
-			map.Received(3).Invoke(value);
+			map.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

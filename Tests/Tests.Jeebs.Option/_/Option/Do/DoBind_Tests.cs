@@ -87,10 +87,9 @@ namespace Jeebs.Option_Tests
 			// Act
 			option.DoBind(bind, null);
 			option.Bind(bind, null);
-			Option.Bind(() => bind(value), null);
 
 			// Assert
-			bind.Received(3).Invoke(value);
+			bind.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

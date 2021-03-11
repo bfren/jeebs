@@ -35,11 +35,13 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			// Act
-			var result = await option.DoBindAsync<int>(_ => throw exception, handler);
+			var r0 = await option.DoBindAsync<int>(_ => throw exception, handler);
+			var r1 = await option.BindAsync<int>(_ => throw exception, handler);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
-			handler.Received().Invoke(exception);
+			Assert.IsType<None<int>>(r0);
+			Assert.IsType<None<int>>(r1);
+			handler.Received(2).Invoke(exception);
 		}
 
 		[Fact]
@@ -51,7 +53,7 @@ namespace Jeebs.Option_Tests
 
 			// Act
 			var r0 = await option.DoBindAsync(bind, null);
-			var r1 = await option.BindAsync(bind, null);
+			var r1 = await option.BindAsync(bind);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
@@ -68,7 +70,7 @@ namespace Jeebs.Option_Tests
 
 			// Act
 			var r0 = await option.DoBindAsync(bind, null);
-			var r1 = await option.BindAsync(bind, null);
+			var r1 = await option.BindAsync(bind);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
@@ -88,11 +90,9 @@ namespace Jeebs.Option_Tests
 			// Act
 			await option.DoBindAsync(bind, null);
 			await option.BindAsync(bind, null);
-			await Option.BindAsync(() => bind(value + 1), null);
 
 			// Assert
 			await bind.Received(2).Invoke(value);
-			await bind.Received(1).Invoke(value + 1);
 		}
 
 		public class FakeOption : Option<int> { }

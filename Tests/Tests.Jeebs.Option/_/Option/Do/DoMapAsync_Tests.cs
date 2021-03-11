@@ -88,11 +88,9 @@ namespace Jeebs.Option_Tests
 			// Act
 			await option.DoMapAsync(map, null);
 			await option.MapAsync(map, null);
-			await Option.MapAsync(() => map(value + 1), null);
 
 			// Assert
 			await map.Received(2).Invoke(value);
-			await map.Received(1).Invoke(value + 1);
 		}
 
 		public class FakeOption : Option<int> { }

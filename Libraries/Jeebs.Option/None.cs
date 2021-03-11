@@ -15,7 +15,8 @@ namespace Jeebs
 		public IMsg? Reason { get; private init; }
 
 		/// <summary>
-		/// Return generic <see cref="Option{T}"/>
+		/// Return generic <see cref="Option{T}"/> - useful when wrapping in Task.FromResult() or similar,
+		/// when implicit casting doesn't work
 		/// </summary>
 		public Option<T> AsOption =>
 			this;
