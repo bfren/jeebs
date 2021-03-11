@@ -6,7 +6,7 @@ namespace Jeebs
 	public static partial class Option
 	{
 		/// <summary>
-		/// Create a <see cref="None{T}"/> Option with a Reason message
+		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="reason">Reason message</param>
@@ -14,7 +14,7 @@ namespace Jeebs
 			new(reason);
 
 		/// <summary>
-		/// Create a <see cref="None{T}"/> Option type
+		/// Create a <see cref="Jeebs.None{T}"/> Option type
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="areYouSure">You should normally create <see cref="Jeebs.None{T}"/> objects with a Reason</param>

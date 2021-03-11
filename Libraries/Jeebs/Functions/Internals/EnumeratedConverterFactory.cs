@@ -13,7 +13,7 @@ namespace F.Internals
 	public sealed class EnumeratedConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>
+		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Jeebs.Enumerated"/>
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert) =>
