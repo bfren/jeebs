@@ -77,7 +77,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Runs_Map_Function()
+		public void If_Some_Runs_Bind_Function()
 		{
 			// Arrange
 			var value = F.Rnd.Int;

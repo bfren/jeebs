@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoAudit_Tests : IDisposable
+	public class DoAudit_Tests
 	{
 		[Fact]
 		public void Runs_Audit_And_Returns_Original_Option()
@@ -32,23 +32,14 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var option = Option.Wrap(F.Rnd.Int);
 			var exception = new Exception();
-			var handler = Substitute.For<Action<Exception>>();
-			Option.LogAuditExceptions = handler;
 
 			// Act
 			var r0 = option.DoAudit(_ => throw exception);
 			var r1 = option.Audit(_ => throw exception);
 
 			// Assert
-			handler.Received(2).Invoke(exception);
 			Assert.Same(option, r0);
 			Assert.Same(option, r1);
-		}
-
-		public void Dispose()
-		{
-			GC.SuppressFinalize(this);
-			Option.LogAuditExceptions = null;
 		}
 
 		public class FakeOption : Option<int> { }

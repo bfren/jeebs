@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Option_Static_Tests
+namespace Jeebs.OptionStatic_Tests
 {
 	public class Wrap_Tests
 	{
@@ -34,6 +34,20 @@ namespace Jeebs.Option_Static_Tests
 			// Assert
 			var none = Assert.IsType<None<int?>>(result);
 			Assert.True(none.Reason is Jm.Option.SomeValueWasNullMsg);
+		}
+
+		[Fact]
+		public void Null_Input_Returns_Some_If_AllowNull_Is_True()
+		{
+			// Arrange
+			int? value = null;
+
+			// Act
+			var result = Option.Wrap(value, true);
+
+			// Assert
+			var some = Assert.IsType<Some<int?>>(result);
+			Assert.Null(some.Value);
 		}
 
 		[Fact]

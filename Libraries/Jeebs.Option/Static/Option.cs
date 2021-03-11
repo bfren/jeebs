@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.IO;
 
 namespace Jeebs
 {
@@ -17,11 +18,6 @@ namespace Jeebs
 		public delegate IExceptionMsg Handler(Exception e);
 
 		/// <summary>
-		/// Set to log audit exceptions - otherwise they are sent to the Console
-		/// </summary>
-		public static Action<Exception>? LogAuditExceptions { get; set; }
-
-		/// <summary>
 		/// Special case for boolean - returns Some{bool}(true)
 		/// </summary>
 		public static Option<bool> True =>
@@ -33,16 +29,24 @@ namespace Jeebs
 		public static Option<bool> False =>
 			Wrap(false);
 
-		internal static void HandleAuditException(Exception e)
+		/// <summary>
+		/// Set to log audit exceptions - otherwise they are sent to the Console
+		/// </summary>
+		public static Action<Exception>? LogAuditExceptions { get; set; }
+
+		internal static void HandleAuditException(Exception e, Action<Exception>? log, TextWriter writer)
 		{
-			if (LogAuditExceptions is not null)
+			if (log is not null)
 			{
-				LogAuditExceptions(e);
+				log(e);
 			}
 			else
 			{
-				Console.WriteLine("Audit Error: {0}", e);
+				writer.WriteLine("Audit Error: {0}", e);
 			}
 		}
+
+		internal static void HandleAuditException(Exception e) =>
+			HandleAuditException(e, LogAuditExceptions, Console.Out);
 	}
 }

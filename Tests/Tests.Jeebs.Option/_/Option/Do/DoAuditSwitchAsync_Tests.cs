@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Jeebs.Option_Tests
 {
-	public class DoAuditSwitchAsync_Tests : IDisposable
+	public class DoAuditSwitchAsync_Tests
 	{
 		[Fact]
 		public async Task Null_Args_Returns_Original_Option()
@@ -93,8 +93,6 @@ namespace Jeebs.Option_Tests
 			var o0 = Option.Wrap(F.Rnd.Int);
 			var o1 = Option.None<int>(true);
 			var exception = new Exception();
-			var handler = Substitute.For<Action<Exception>>();
-			Option.LogAuditExceptions = handler;
 
 			void someActionThrow(int _) => throw exception!;
 			Task someFuncThrow(int _) => throw exception!;
@@ -114,7 +112,6 @@ namespace Jeebs.Option_Tests
 			var r9 = await o1.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
 
 			// Assert
-			handler.Received(10).Invoke(exception);
 			Assert.Same(o0, r0);
 			Assert.Same(o0, r1);
 			Assert.Same(o0, r2);
@@ -125,12 +122,6 @@ namespace Jeebs.Option_Tests
 			Assert.Same(o0, r7);
 			Assert.Same(o1, r8);
 			Assert.Same(o1, r9);
-		}
-
-		public void Dispose()
-		{
-			GC.SuppressFinalize(this);
-			Option.LogAuditExceptions = null;
 		}
 
 		public class FakeOption : Option<int> { }

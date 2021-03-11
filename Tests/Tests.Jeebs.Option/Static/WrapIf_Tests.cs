@@ -5,7 +5,7 @@ using System;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Static_Tests
+namespace Jeebs.OptionStatic_Tests
 {
 	public class WrapIf_Tests
 	{
@@ -16,11 +16,14 @@ namespace Jeebs.Option_Static_Tests
 			var value = F.Rnd.Int;
 
 			// Act
-			var result = Option.WrapIf(() => true, () => value);
+			var r0 = Option.WrapIf(() => true, value);
+			var r1 = Option.WrapIf(() => true, () => value);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var s0 = Assert.IsType<Some<int>>(r0);
+			Assert.Equal(value, s0.Value);
+			var s1 = Assert.IsType<Some<int>>(r1);
+			Assert.Equal(value, s1.Value);
 		}
 
 		[Fact]
