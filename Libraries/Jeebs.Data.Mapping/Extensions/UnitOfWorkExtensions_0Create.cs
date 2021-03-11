@@ -43,9 +43,9 @@ namespace Jeebs.Data.Mapping
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="entity">New entity</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static async Task<Option<T>> CreateAsync<T>(this IUnitOfWork @this, T entity)
+		public static Task<Option<T>> CreateAsync<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			await Option
+			Option
 				.Wrap(entity)
 				.BindAsync(
 					x => InsertAndReturnIdAsync(@this, x),
@@ -139,7 +139,7 @@ namespace Jeebs.Data.Mapping
 			w.Log.Message(new Jm.Data.CreateMsg(typeof(T), id));
 
 			// Get fresh poco
-			return await SingleAsync<T>(w, id);
+			return await SingleAsync<T>(w, id).ConfigureAwait(false);
 		}
 	}
 }

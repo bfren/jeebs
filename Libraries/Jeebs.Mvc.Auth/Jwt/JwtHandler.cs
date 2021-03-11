@@ -32,7 +32,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 		/// </summary>
 		/// <param name="handlerContext">AuthorizationHandlerContext</param>
 		/// <param name="requirement">JwtRequirement</param>
-		protected override async Task HandleRequirementAsync(AuthorizationHandlerContext handlerContext, JwtRequirement requirement)
+		protected override Task HandleRequirementAsync(AuthorizationHandlerContext handlerContext, JwtRequirement requirement)
 		{
 			if (handlerContext.Resource is AuthorizationFilterContext filterContext)
 			{
@@ -49,6 +49,8 @@ namespace Jeebs.Mvc.Auth.Jwt
 					}
 				);
 			}
+
+			return Task.CompletedTask;
 		}
 
 		/// <summary>

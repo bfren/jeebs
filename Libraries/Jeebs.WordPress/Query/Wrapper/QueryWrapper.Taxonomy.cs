@@ -17,10 +17,12 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TModel">Term type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		public async Task<Option<List<TModel>>> QueryTaxonomyAsync<TModel>(Action<QueryTaxonomy.Options>? modify = null)
+		public Task<Option<List<TModel>>> QueryTaxonomyAsync<TModel>(Action<QueryTaxonomy.Options>? modify = null)
 		{
-			return await Option
-				.Wrap(modify)
+			return Option
+				.Wrap(
+					modify
+				)
 				.Map(
 					GetTaxonomyQuery<TModel>
 				)

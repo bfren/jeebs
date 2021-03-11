@@ -23,11 +23,13 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TModel">Entity type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
-		public async Task<Option<List<TModel>>> QueryPostsAsync<TModel>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
+		public Task<Option<List<TModel>>> QueryPostsAsync<TModel>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
 			where TModel : IEntity
 		{
-			return await Option
-				.Wrap(modify)
+			return Option
+				.Wrap(
+					modify
+				)
 				.Map(
 					GetPostsQuery<TModel>
 				)
@@ -57,11 +59,13 @@ namespace Jeebs.WordPress
 		/// <param name="page">Page number</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
-		public async Task<Option<PagedList<TModel>>> QueryPostsAsync<TModel>(long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
+		public Task<Option<PagedList<TModel>>> QueryPostsAsync<TModel>(long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
 			where TModel : IEntity
 		{
-			return await Option
-				.Wrap(modify)
+			return Option
+				.Wrap(
+					modify
+				)
 				.Map(
 					GetPostsQuery<TModel>
 				)
@@ -69,16 +73,20 @@ namespace Jeebs.WordPress
 					x => x.ExecuteQueryAsync(page)
 				)
 				.BindAsync(
-					async x => x switch
+					x => x switch
 					{
 						PagedList<TModel> list when list.Count > 0 =>
-							await Process<PagedList<TModel>, TModel>(list, filters),
+							Process<PagedList<TModel>, TModel>(list, filters),
 
 						PagedList<TModel> list =>
-							list,
+							Task.FromResult(
+								Option.Wrap(list)
+							),
 
 						_ =>
-							Option.None<PagedList<TModel>>(new UnrecognisedPagedListTypeMsg())
+							Task.FromResult(
+								Option.None<PagedList<TModel>>(new UnrecognisedPagedListTypeMsg()).AsOption
+							)
 					}
 				);
 		}
@@ -102,11 +110,13 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="filters">Content filters</param>
-		private async Task<Option<TList>> Process<TList, TModel>(TList posts, ContentFilter[] filters)
+		private Task<Option<TList>> Process<TList, TModel>(TList posts, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity =>
-			await Option
-				.Wrap(posts)
+			Option
+				.Wrap(
+					posts
+				)
 				.BindAsync(
 					AddMetaAsync<TList, TModel>
 				)

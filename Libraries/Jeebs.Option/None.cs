@@ -14,6 +14,12 @@ namespace Jeebs
 		/// </summary>
 		public IMsg? Reason { get; private init; }
 
+		/// <summary>
+		/// Return generic <see cref="Option{T}"/>
+		/// </summary>
+		public Option<T> AsOption =>
+			this;
+
 		internal None(IMsg? reason) =>
 			Reason = reason;
 

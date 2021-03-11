@@ -76,8 +76,8 @@ namespace AppConsoleWordPress
 						)
 						.AuditAsync(AuditCustomFields);
 
-					Option.Chain
-						.Map<int>(_ => throw new Exception("Test"));
+					Option
+						.Map<int>(() => throw new Exception("Test"));
 
 					await Option
 						.Wrap(bcg.Db)
@@ -230,7 +230,7 @@ namespace AppConsoleWordPress
 			});
 		}
 
-		internal static async void AuditTaxonomies(Option<List<SermonModelWithTaxonomies>> opt) =>
+		internal static void AuditTaxonomies(Option<List<SermonModelWithTaxonomies>> opt) =>
 			opt.Switch(
 				some: x =>
 				{
@@ -266,7 +266,7 @@ namespace AppConsoleWordPress
 			);
 		}
 
-		internal static async void AuditApplyContentFilters(Option<List<PostModelWithContent>> opt) =>
+		internal static void AuditApplyContentFilters(Option<List<PostModelWithContent>> opt) =>
 			opt.Switch(
 				some: x =>
 				{

@@ -35,7 +35,7 @@ namespace Jeebs.Mvc.Auth.TagHelpers
 		/// </summary>
 		/// <param name="context">TagHelperContext</param>
 		/// <param name="output">TagHelperOutput</param>
-		public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+		public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 		{
 			// ViewContext is required or we can't get the current user
 			if (ViewContext != null && Provider.CreateToken(ViewContext.HttpContext.User) is Some<string> token)
@@ -51,6 +51,8 @@ namespace Jeebs.Mvc.Auth.TagHelpers
 			{
 				output.SuppressOutput();
 			}
+
+			return Task.CompletedTask;
 		}
 	}
 }

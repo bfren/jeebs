@@ -55,7 +55,7 @@ namespace Jeebs
 					@this,
 
 				false =>
-					Task.FromResult((Option<T>)Option.None<T>(new PredicateWasFalseMsg()))
+					Task.FromResult(Option.None<T>(new PredicateWasFalseMsg()).AsOption)
 			});
 	}
 }

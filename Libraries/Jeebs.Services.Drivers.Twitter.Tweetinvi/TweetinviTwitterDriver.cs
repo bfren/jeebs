@@ -60,14 +60,17 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			};
 
 		/// <inheritdoc/>
-		public async Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
+		public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
-			return await Option.Wrap(screenName)
+			return Option
+				.Wrap(
+					screenName
+				)
 				.BindAsync(
 					GetUser,
 					e => new ErrorGettingUserMsg(e)
 				)
-				.BindAsync(
+				.MapAsync(
 					getUrl,
 					e => new ErrorGettingProfileImageUrlMsg(e)
 				)
@@ -77,7 +80,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				);
 
 			// Get profile image URL
-			async Task<Option<string>> getUrl(IUser user)
+			string getUrl(IUser user)
 			{
 				var url = user.ProfileImageUrlFullSize.Replace("http://", "https://");
 				Log.Debug("Twitter profile image: '{0}'", url);
@@ -93,9 +96,12 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		}
 
 		/// <inheritdoc/>
-		public async Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
+		public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
 		{
-			return await Option.Wrap(screenName)
+			return Option
+				.Wrap(
+					screenName
+				)
 				.BindAsync(
 					GetUser,
 					e => new ErrorGettingUserMsg(e)
@@ -104,7 +110,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 					getTimeline,
 					e => new ErrorGettingTimelineMsg(e)
 				)
-				.BindAsync(
+				.MapAsync(
 					convertTweets,
 					e => new ErrorConvertingTweetsMsg(e)
 				);
@@ -132,7 +138,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			}
 
 			// Convert the tweets to TweetModel
-			static async Task<Option<List<TweetModel>>> convertTweets(List<ITweet> tweets)
+			static List<TweetModel> convertTweets(List<ITweet> tweets)
 			{
 				var models = from t in tweets
 							 select new TweetModel

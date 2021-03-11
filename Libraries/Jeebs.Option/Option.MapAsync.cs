@@ -18,7 +18,7 @@ namespace Jeebs
 			Option.CatchAsync(() =>
 				Switch(
 					some: async v => Option.Wrap(await map(v)),
-					none: r => Task.FromResult((Option<U>)new None<U>(r))
+					none: r => Task.FromResult(new None<U>(r).AsOption)
 				),
 				handler
 			);

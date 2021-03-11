@@ -50,7 +50,7 @@ namespace Jeebs.WordPress
 				.UnwrapAsync(
 					x => x.Single<Term>(tooMany: () => new MultipleTermsFoundMsg())
 				)
-				.BindAsync(
+				.MapAsync(
 					hydrate
 				);
 
@@ -82,11 +82,11 @@ namespace Jeebs.WordPress
 			//
 			// Hydrate the custom field using Term info
 			//
-			async Task<Option<bool>> hydrate(Term term)
+			bool hydrate(Term term)
 			{
 				// Get term
 				ValueObj = term;
-				return Option.True;
+				return true;
 			}
 		}
 

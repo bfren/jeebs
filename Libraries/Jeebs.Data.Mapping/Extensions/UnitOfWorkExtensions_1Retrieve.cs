@@ -21,12 +21,12 @@ namespace Jeebs.Data.Mapping
 		/// <param name="id">Entity ID</param>
 		public static Option<T> Single<T>(this IUnitOfWork @this, long id)
 			where T : class, IEntity =>
-			Single(
+			SingleAsync(
 				id,
 				@this,
 				nameof(Single),
 				(q, p, t) => Task.FromResult(@this.Connection.QuerySingle<T>(q, p, t))
-			);
+			).Result;
 
 		/// <summary>
 		/// Get an entity from the database by ID
@@ -34,20 +34,26 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
 		/// <param name="id">Entity ID</param>
-		private static async Task<Option<T>> SingleAsync<T>(this IUnitOfWork @this, long id)
+		private static Task<Option<T>> SingleAsync<T>(this IUnitOfWork @this, long id)
 			where T : class, IEntity =>
-			Single(
+			SingleAsync(
 				id,
 				@this,
 				nameof(SingleAsync),
-				async (q, p, t) => await @this.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false)
+				(q, p, t) => @this.Connection.QuerySingleAsync<T>(q, p, t)
 			);
 
-		private static Option<T> Single<T>(long id, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
+		private static Task<Option<T>> SingleAsync<T>(long id, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
 			where T : class, IEntity
 		{
-			return Option.Wrap(id)
-				.BindAsync(retrievePoco, e => new Jm.Data.RetrieveExceptionMsg(e, typeof(T), id)).Await();
+			return Option
+				.Wrap(
+					id
+				)
+				.BindAsync(
+					retrievePoco,
+					e => new Jm.Data.RetrieveExceptionMsg(e, typeof(T), id)
+				);
 
 			// Delete the poco
 			async Task<Option<T>> retrievePoco(long id)

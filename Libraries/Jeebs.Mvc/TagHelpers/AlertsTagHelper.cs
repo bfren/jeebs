@@ -27,7 +27,7 @@ namespace Jeebs.Mvc.TagHelpers
 		/// </summary>
 		/// <param name="context">TagHelperContext</param>
 		/// <param name="output">TagHelperOutput</param>
-		public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+		public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 		{
 			// If there are alerts, display them
 			if (ViewContext?.TempData.GetAlerts() is List<Alert> alerts && alerts.Count > 0)
@@ -50,6 +50,8 @@ namespace Jeebs.Mvc.TagHelpers
 			{
 				output.SuppressOutput();
 			}
+
+			return Task.CompletedTask;
 		}
 	}
 }

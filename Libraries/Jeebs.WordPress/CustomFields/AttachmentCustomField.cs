@@ -50,7 +50,7 @@ namespace Jeebs.WordPress
 				.UnwrapAsync(
 					x => x.Single<Attachment>(tooMany: () => new MultipleAttachmentsFoundMsg())
 				)
-				.BindAsync(
+				.MapAsync(
 					hydrate
 				);
 
@@ -88,7 +88,7 @@ namespace Jeebs.WordPress
 			//
 			// Hydrate the custom field using Attachment info
 			//
-			async Task<Option<bool>> hydrate(Attachment attachment)
+			bool hydrate(Attachment attachment)
 			{
 				ValueObj = attachment;
 
@@ -102,7 +102,7 @@ namespace Jeebs.WordPress
 					ValueObj.Info = info;
 				}
 
-				return Option.True;
+				return true;
 			}
 		}
 
