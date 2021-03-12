@@ -17,7 +17,7 @@ namespace Jeebs.OptionAbstractions.IMsg_Tests
 			var result = message.ToString();
 
 			// Assert
-			Assert.Equal(typeof(TestMsg).Name, result);
+			Assert.Equal($"{typeof(TestMsg).Name} {{ }}", result);
 		}
 
 		public record TestMsg : IMsg { }
