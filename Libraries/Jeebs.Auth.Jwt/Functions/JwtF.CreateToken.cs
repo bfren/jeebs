@@ -8,9 +8,9 @@ using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Constants;
 using Jeebs.Config;
-using Jm.Functions.JwtF.CreateToken;
 using Microsoft.IdentityModel.Tokens;
 using static F.OptionF;
+using Msg = F.JwtFMsg;
 
 namespace F
 {
@@ -46,32 +46,32 @@ namespace F
 			// Ensure there is a current user
 			if (principal.Identity == null)
 			{
-				return None<string, NullIdentityMsg>();
+				return None<string, Msg.NullIdentityMsg>();
 			}
 
 			// Ensure the current user is authenticated
 			var identity = principal.Identity;
 			if (!identity.IsAuthenticated)
 			{
-				return None<string, IdentityNotAuthenticatedMsg>();
+				return None<string, Msg.IdentityNotAuthenticatedMsg>();
 			}
 
 			// Ensure the JwtConfig is valid
 			if (!config.IsValid)
 			{
-				return None<string, JwtConfigInvalidMsg>();
+				return None<string, Msg.ConfigInvalidMsg>();
 			}
 
 			// Ensure the signing key is a valid length
 			if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 			{
-				return None<string, SigningKeyNotLongEnoughMsg>();
+				return None<string, Msg.SigningKeyNotLongEnoughMsg>();
 			}
 
 			// Ensure the encrypting key is a valid length
 			if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 			{
-				return None<string, EncryptingKeyNotLongEnoughMsg>();
+				return None<string, Msg.EncryptingKeyNotLongEnoughMsg>();
 			}
 
 			try
@@ -104,12 +104,36 @@ namespace F
 			}
 			catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 			{
-				return None<string, KeyNotLongEnoughMsg>();
+				return None<string, Msg.KeyNotLongEnoughMsg>();
 			}
 			catch (Exception e)
 			{
-				return None<string>(new ErrorCreatingJwtSecurityTokenMsg(e));
+				return None<string>(new Msg.CreatingJwtSecurityTokenExceptionMsg(e));
 			}
 		}
+	}
+
+	namespace JwtFMsg
+	{
+		/// <summary>JwtConfig invalid</summary>
+		public sealed record ConfigInvalidMsg : IMsg { }
+
+		/// <summary>Exception when creating JwtSecurityToken</summary>
+		public sealed record CreatingJwtSecurityTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>The Encrypting Key is not long enough</summary>
+		public sealed record EncryptingKeyNotLongEnoughMsg : IMsg { }
+
+		/// <summary>The User's Identity is not authenticated</summary>
+		public sealed record IdentityNotAuthenticatedMsg : IMsg { }
+
+		/// <summary>One of the Signing / Encrypting keys is not long enough</summary>
+		public sealed record KeyNotLongEnoughMsg : IMsg { }
+
+		/// <summary>The Principal's Identity is null</summary>
+		public sealed record NullIdentityMsg : IMsg { }
+
+		/// <summary>The Signing Key is not long enough</summary>
+		public sealed record SigningKeyNotLongEnoughMsg : IMsg { }
 	}
 }

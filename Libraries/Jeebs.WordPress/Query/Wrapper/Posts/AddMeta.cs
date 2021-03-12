@@ -1,13 +1,14 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
-using Jm.WordPress.Query.Wrapper.Posts;
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 using static F.OptionF;
 
 namespace Jeebs.WordPress
@@ -31,11 +32,11 @@ namespace Jeebs.WordPress
 					await Return(posts)
 						.BindAsync(
 							getMetaAsync,
-							e => new AddMetaExceptionMsg(e)
+							e => new Msg.AddMetaExceptionMsg<TModel>(e)
 						)
 						.BindAsync(
 							x => setMeta(x, meta.Value),
-							e => new SetMetaExceptionMsg(e)
+							e => new Msg.SetMetaExceptionMsg<TModel>(e)
 						),
 
 				_ =>
@@ -112,5 +113,18 @@ namespace Jeebs.WordPress
 		}
 
 		private record PostMeta : WpPostMetaEntity { }
+	}
+
+	namespace QueryWrapperMsg
+	{
+		/// <summary>An exception occured while adding meta to posts</summary>
+		/// <typeparam name="T">Post Model type</typeparam>
+		/// <param name="Exception">Exception object</param>
+		public sealed record AddMetaExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>An exception occured while setting meta property on posts</summary>
+		/// <typeparam name="T">Post Model type</typeparam>
+		/// <param name="Exception">Exception object</param>
+		public sealed record SetMetaExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 	}
 }

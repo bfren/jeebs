@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jm.WordPress.Query.Wrapper.Posts;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -37,11 +37,11 @@ namespace Jeebs.WordPress
 					await Return(posts)
 						.BindAsync(
 							x => hydrateAsync(x, meta.Value, fields),
-							e => new AddCustomFieldsExceptionMsg(e)
+							e => new Msg.AddCustomFieldsExceptionMsg<TModel>(e)
 						),
 
 				_ =>
-					None<TList, MetaDictionaryNotFoundMsg>()
+					None<TList, Msg.MetaDictionaryNotFoundMsg<TModel>>()
 			};
 
 			//
@@ -72,7 +72,7 @@ namespace Jeebs.WordPress
 
 							if (result is None<bool> && customField.IsRequired)
 							{
-								return None<TList>(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
+								return None<TList>(new Msg.RequiredCustomFieldNotFoundMsg<TModel>(post.Id, info.Name, customField.Key));
 							}
 
 							// Set the value
@@ -105,5 +105,23 @@ namespace Jeebs.WordPress
 				};
 			}
 		}
+	}
+
+	namespace QueryWrapperMsg
+	{
+		/// <summary>An exception occured while adding custom fields to posts</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record AddCustomFieldsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Meta Dictionary property not found on model</summary>
+		/// <typeparam name="T">Post Model type</typeparam>
+		public sealed record MetaDictionaryNotFoundMsg<T> : IMsg { }
+
+		/// <summary>Required Custom Field property not found on model</summary>
+		/// <typeparam name="T">Post Model type</typeparam>
+		/// <param name="PostId">Post ID</param>
+		/// <param name="Property">Property name</param>
+		/// <param name="Key">Custom Field Key</param>
+		public sealed record RequiredCustomFieldNotFoundMsg<T>(long PostId, string Property, string Key) : IMsg { }
 	}
 }

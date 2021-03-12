@@ -1,13 +1,13 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Enums;
-using Jm.WordPress.CustomFields;
-using Jm.WordPress.CustomFields.Attachment;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.AttachmentCustomFieldMsg;
 
 namespace Jeebs.WordPress
 {
@@ -33,7 +33,7 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return None<bool>(new MetaKeyNotFoundMsg(GetType(), Key));
+					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key));
 				}
 
 				return False;
@@ -48,7 +48,7 @@ namespace Jeebs.WordPress
 					getAttachments
 				)
 				.UnwrapAsync(
-					x => x.Single<Attachment>(tooMany: () => new MultipleAttachmentsFoundMsg())
+					x => x.Single<Attachment>(tooMany: () => new Msg.MultipleAttachmentsFoundMsg(ValueStr))
 				)
 				.MapAsync(
 					hydrate
@@ -61,7 +61,7 @@ namespace Jeebs.WordPress
 			{
 				if (!long.TryParse(value, out var attachmentPostId))
 				{
-					return None<long>(new ValueIsInvalidPostIdMsg(GetType(), value));
+					return None<long>(new Msg.ValueIsInvalidPostIdMsg(GetType(), value));
 				}
 
 				return attachmentPostId;
@@ -116,5 +116,22 @@ namespace Jeebs.WordPress
 		/// Attachment class
 		/// </summary>
 		public sealed record Attachment : Entities.Attachment { }
+	}
+
+	namespace AttachmentCustomFieldMsg
+	{
+		/// <summary>Meta key not found in MetaDictionary</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+
+		/// <summary>Multiple matching attachments were found (should always be 1)</summary>
+		/// <param name="Value">Attachment (Post) ID</param>
+		public sealed record MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string> { }
+
+		/// <summary>The value in the meta dictionary is not a valid ID</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string> { }
 	}
 }

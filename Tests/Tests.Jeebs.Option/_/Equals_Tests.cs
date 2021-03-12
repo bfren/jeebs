@@ -81,8 +81,8 @@ namespace Jeebs.Option_Tests
 
 		public class FakeOption : Option<int> { }
 
-		public class TestMsg0 : IMsg { }
+		public record TestMsg0 : IMsg { }
 
-		public class TestMsg1 : IMsg { }
+		public record TestMsg1 : IMsg { }
 	}
 }

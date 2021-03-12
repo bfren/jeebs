@@ -32,13 +32,13 @@ namespace Jeebs.Auth
 			// Check email
 			if (string.IsNullOrEmpty(email))
 			{
-				return None<TUserModel, Jm.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidEmailMsg>();
+				return None<TUserModel, Jeebs.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidEmailMsg>();
 			}
 
 			// Check password
 			if (string.IsNullOrEmpty(password))
 			{
-				return None<TUserModel, Jm.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidPasswordMsg>();
+				return None<TUserModel, Jeebs.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidPasswordMsg>();
 			}
 
 			throw new NotImplementedException();

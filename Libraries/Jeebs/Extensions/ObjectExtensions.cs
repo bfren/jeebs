@@ -1,9 +1,10 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Linq;
 using System.Reflection;
-using Jm.Extensions.ObjectExtensions;
+using Msg = Jeebs.Reflection.ObjectExtensionsMsg;
 using static F.OptionF;
 
 namespace Jeebs.Reflection
@@ -43,7 +44,7 @@ namespace Jeebs.Reflection
 			TypeInfo type = @this.GetType().GetTypeInfo();
 			if (!HasProperty(@this, propertyName))
 			{
-				return None<object>(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
+				return None<object>(new Msg.TypeDoesNotContainPropertyMsg((@this.GetType(), propertyName)));
 			}
 
 			return type.GetProperty(propertyName)?.GetValue(@this, null) switch
@@ -52,7 +53,7 @@ namespace Jeebs.Reflection
 					val,
 
 				_ =>
-					None<object>(new NullPropertyOrValueMsg(@this.GetType(), propertyName))
+					None<object>(new Msg.NullPropertyOrValueMsg((@this.GetType(), propertyName)))
 			};
 		}
 
@@ -68,14 +69,14 @@ namespace Jeebs.Reflection
 			TypeInfo type = @this.GetType().GetTypeInfo();
 			if (!type.DeclaredProperties.Any(x => x.Name == propertyName))
 			{
-				return None<T>(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
+				return None<T>(new Msg.TypeDoesNotContainPropertyMsg((@this.GetType(), propertyName)));
 			}
 
 			if (type.GetProperty(propertyName) is PropertyInfo info)
 			{
 				if (typeof(T) != info.PropertyType)
 				{
-					return None<T>(new UnexpectedPropertyTypeMsg(@this.GetType(), propertyName, typeof(T)));
+					return None<T>(new Msg.UnexpectedPropertyTypeMsg<T>((@this.GetType(), propertyName)));
 				}
 
 				return info.GetValue(@this, null) switch
@@ -84,11 +85,42 @@ namespace Jeebs.Reflection
 						val,
 
 					_ =>
-						None<T>(new NullValueMsg(@this.GetType(), propertyName))
+						None<T>(new Msg.NullValueMsg<T>((@this.GetType(), propertyName)))
 				};
 			}
 
-			return None<T>(new NullPropertyMsg(@this.GetType(), propertyName));
+			return None<T>(new Msg.PropertyNotFoundMsg((@this.GetType(), propertyName)));
 		}
 	}
+}
+
+namespace Jeebs.Reflection.ObjectExtensionsMsg
+{
+	/// <summary>
+	/// See <see cref="ObjectExtensions.GetProperty{T}(object, string)"/>
+	/// and <see cref="ObjectExtensions.GetProperty(object, string)"/>
+	/// </summary>
+	/// <param name="Value">Object type and Property name</param>
+	public abstract record GetPropertyMsg((Type type, string property) Value) : WithValueMsg<(Type type, string property)>() { }
+
+	/// <summary>The property could not be found</summary>
+	/// <inheritdoc cref="GetPropertyMsg"/>
+	public sealed record PropertyNotFoundMsg((Type, string) Value) : GetPropertyMsg(Value) { }
+
+	/// <summary>The property or value is null</summary>
+	/// <inheritdoc cref="GetPropertyMsg"/>
+	public sealed record NullPropertyOrValueMsg((Type, string) Value) : GetPropertyMsg(Value) { }
+
+	/// <summary>The property value is null</summary>
+	/// <inheritdoc cref="GetPropertyMsg"/>
+	public sealed record NullValueMsg<T>((Type, string) Value) : GetPropertyMsg(Value) { }
+
+	/// <summary>The object does not contain the property</summary>
+	/// <inheritdoc cref="GetPropertyMsg"/>
+	public sealed record TypeDoesNotContainPropertyMsg((Type type, string property) Value) : GetPropertyMsg(Value) { }
+
+	/// <summary>The property type doesn't match the requested type</summary>
+	/// <typeparam name="T">Requested property value type</typeparam>
+	/// <inheritdoc cref="GetPropertyMsg"/>
+	public sealed record UnexpectedPropertyTypeMsg<T>((Type type, string property) Value) : GetPropertyMsg(Value) { }
 }

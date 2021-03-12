@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Querying;
-using Jm.WordPress.Query.Wrapper.Posts;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -22,14 +22,14 @@ namespace Jeebs.WordPress
 			return await
 				Map(
 					getQuery,
-					e => new GetPostsQueryExceptionMsg(e)
+					e => new Msg.GetPostsQueryExceptionMsg(postId, e)
 				)
 				.BindAsync(
 					getPosts // exceptions handled by query code
 				)
 				.BindAsync(
 					x => handle(postId, x.ConvertAll(x => x.PostId)),
-					e => new CalculatePreviousAndNextExceptionMsg(e)
+					e => new Msg.CalculatePreviousAndNextExceptionMsg(postId, e)
 				);
 
 			// Get query
@@ -82,5 +82,16 @@ namespace Jeebs.WordPress
 		{
 			public long PostId { get; init; }
 		}
+	}
+
+	namespace QueryWrapperMsg
+	{
+		/// <summary>An exception occured getting the posts</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GetPostsQueryExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>An exception occured while calculating the next and previous posts</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record CalculatePreviousAndNextExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
 	}
 }

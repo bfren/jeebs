@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
+using F.JsonFMsg;
 using Jeebs;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg);
+			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -37,7 +38,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialiseExceptionMsg);
+			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
 		}
 
 		[Fact]

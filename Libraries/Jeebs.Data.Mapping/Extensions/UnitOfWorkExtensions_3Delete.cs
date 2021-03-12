@@ -5,7 +5,9 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using Jeebs.Logging;
 using static F.OptionF;
+using Msg = Jeebs.Data.Mapping.UnitOfWorkExtensionsMsg;
 
 namespace Jeebs.Data.Mapping
 {
@@ -49,30 +51,45 @@ namespace Jeebs.Data.Mapping
 		{
 			return Return(entity)
 				.BindAsync(
-					deletePoco,
-					e => new Jm.Data.DeleteExceptionMsg(e, typeof(T), entity.Id)
+					async x =>
+					{
+						// Build query
+						var query = w.Adapter.DeleteSingle<T>();
+						w.Log.Message(new Msg.DeleteQueryMsg<T>(method, query, x));
+
+						// Execute
+						var rowsAffected = await execute(query, x, w.Transaction).ConfigureAwait(false);
+						if (rowsAffected == 1)
+						{
+							return True;
+						}
+
+						return None<bool>(new Msg.DeleteErrorMsg<T>(method, x.Id));
+					},
+					e => new Msg.DeleteExceptionMsg<T>(method, entity.Id, e)
 				);
-
-			// Delete the poco
-			async Task<Option<bool>> deletePoco(T poco)
-			{
-				// Build query
-				var query = w.Adapter.DeleteSingle<T>();
-				w.Log.Message(new Jm.Data.QueryMsg(method, query, poco));
-
-				// Execute
-				var rowsAffected = await execute(query, poco, w.Transaction).ConfigureAwait(false);
-				if (rowsAffected == 1)
-				{
-					// Add delete message
-					w.Log.Message(new Jm.Data.DeleteMsg(typeof(T), poco.Id));
-
-					// Return
-					return True;
-				}
-
-				return None<bool>(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
-			}
 		}
+	}
+
+	namespace UnitOfWorkExtensionsMsg
+	{
+		/// <summary>Something went wrong deleting the entity</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Id">Entity ID being requested</param>
+		public record DeleteErrorMsg<T>(string Method, long Id) : LogMsg(LogLevel.Warning) { }
+
+		/// <summary>Error deleting entity</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Id">Entity ID being requested</param>
+		/// <param name="Exception">Caught exception</param>
+		public record DeleteExceptionMsg<T>(string Method, long Id, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Query message</summary>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Query">Query text</param>
+		/// <param name="Parameters">Query parameters</param>
+		public record DeleteQueryMsg<T>(string Method, string Query, T Parameters) : LogMsg(LogLevel.Debug) { }
 	}
 }

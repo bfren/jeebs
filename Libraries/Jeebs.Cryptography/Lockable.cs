@@ -1,6 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using static F.OptionF;
+using Msg = Jeebs.Cryptography.LockableMsg;
+
 namespace Jeebs.Cryptography
 {
 	/// <summary>
@@ -23,7 +26,7 @@ namespace Jeebs.Cryptography
 		/// <summary>
 		/// Contents
 		/// </summary>
-		public T Contents { get; }
+		public T Contents { get; private init; }
 
 		/// <summary>
 		/// Create object
@@ -36,14 +39,14 @@ namespace Jeebs.Cryptography
 		/// Lock object
 		/// </summary>
 		/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
-		public Locked<T> Lock(byte[] key) =>
+		public Option<Locked<T>> Lock(byte[] key) =>
 			key.Length switch
 			{
 				Lockable.KeyLength =>
 					new Locked<T>(Contents, key),
 
 				_ =>
-					throw new Jx.Cryptography.InvalidKeyLengthException()
+					None<Locked<T>, Msg.InvalidKeyLengthMsg>()
 			};
 
 		/// <summary>
@@ -53,4 +56,12 @@ namespace Jeebs.Cryptography
 		public Locked<T> Lock(string key) =>
 			new(Contents, key);
 	}
+}
+
+namespace Jeebs.Cryptography.LockableMsg
+{
+	/// <summary>
+	/// Encryption key is not the correct length to lock the box
+	/// </summary>
+	public sealed record InvalidKeyLengthMsg : IMsg { }
 }

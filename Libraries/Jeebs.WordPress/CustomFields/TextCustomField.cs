@@ -1,10 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jm.WordPress.CustomFields;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.TextCustomFieldMsg;
 
 namespace Jeebs.WordPress
 {
@@ -41,11 +42,19 @@ namespace Jeebs.WordPress
 			// Return error if the field is required
 			if (IsRequired)
 			{
-				return None<bool>(new MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
 			// Return OK but not set
 			return False.AsTask;
 		}
+	}
+
+	namespace TextCustomFieldMsg
+	{
+		/// <summary>Meta key not found in MetaDictionary</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
 	}
 }

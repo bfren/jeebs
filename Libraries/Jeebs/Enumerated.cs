@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using Msg = Jeebs.EnumeratedMsg;
 using static F.OptionF;
 
 namespace Jeebs
@@ -67,7 +68,7 @@ namespace Jeebs
 					value,
 
 				false =>
-					None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(value))
+					None<T>(new Msg.NotAValidEnumeratedValueMsg<T>(value))
 			};
 
 		/// <summary>
@@ -93,7 +94,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					return None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(name));
+					return None<T>(new Msg.NotAValidEnumeratedValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);
@@ -223,5 +224,19 @@ namespace Jeebs
 			GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
 		#endregion
+	}
+}
+
+namespace Jeebs.EnumeratedMsg
+{
+	/// <summary>Value does not belong to the specified Enumerated type</summary>
+	/// <typeparam name="T">Enum type</typeparam>
+	/// <param name="Value">Value being parsed</param>
+	public sealed record NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
+		where T : Enumerated
+	{
+		/// <summary>Return message</summary>
+		public override string ToString() =>
+			$"'{Value}' is not a valid value of {typeof(T)}.";
 	}
 }

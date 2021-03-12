@@ -3,8 +3,8 @@
 
 using System.IO;
 using Jeebs.Services.Drawing;
-using Jm.Services.Drawing.ImageWrapper;
 using static F.OptionF;
+using Msg = Jeebs.Services.Drivers.Drawing.Common.ImageDriverMsg;
 
 namespace Jeebs.Services.Drivers.Drawing.Common
 {
@@ -18,7 +18,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		{
 			if (!File.Exists(path))
 			{
-				return None<IImageWrapper>(new ImageFileNotFoundMsg(path));
+				return None<IImageWrapper>(new Msg.ImageFileNotFoundMsg(path));
 			}
 
 			// Create and return image object
@@ -33,5 +33,11 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 			var image = System.Drawing.Image.FromStream(stream);
 			return new ImageWrapper(image);
 		}
+	}
+
+	namespace ImageDriverMsg
+	{
+		/// <summary>The image file was not found</summary>
+		public sealed record ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
 	}
 }

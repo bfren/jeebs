@@ -1,11 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Querying;
-using Jm.WordPress.Query.Wrapper.PostsMeta;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -24,10 +25,10 @@ namespace Jeebs.WordPress
 				)
 				.BindAsync(
 					getAttachedFiles<AttachedFileMetaValue>,
-					e => new GetAttachedFilesExceptionMsg(e)
+					e => new Msg.GetAttachedFilesExceptionMsg(e)
 				)
 				.UnwrapAsync(
-					x => x.Single<AttachedFileMetaValue>(tooMany: () => new MultipleAttachedFilesFoundMsg())
+					x => x.Single<AttachedFileMetaValue>(tooMany: () => new Msg.MultipleAttachedFilesFoundMsg(postId))
 				)
 				.MapAsync(
 					addUploadsPath
@@ -51,5 +52,16 @@ namespace Jeebs.WordPress
 		}
 
 		private record AttachedFileMetaValue(string Value);
+	}
+
+	namespace QueryWrapperMsg
+	{
+		/// <summary>An exception occured while getting attached files</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GetAttachedFilesExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Multiple attached files found</summary>
+		/// <param name="AttachedFileId">Attached File (Post) ID</param>
+		public sealed record MultipleAttachedFilesFoundMsg(long AttachedFileId) : IMsg { }
 	}
 }

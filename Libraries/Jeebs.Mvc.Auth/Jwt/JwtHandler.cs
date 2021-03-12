@@ -6,12 +6,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Linq;
-using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using static F.OptionF;
+using Msg = Jeebs.Mvc.Auth.Jwt.JwtHandlerMsg;
 
 namespace Jeebs.Mvc.Auth.Jwt
 {
@@ -79,7 +79,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 					authorisationHeader.ToString(),
 
 				_ =>
-					None<string, MissingAuthorisationHeaderMsg>()
+					None<string, Msg.MissingAuthorisationHeaderMsg>()
 			};
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 					authorisationHeader["Bearer ".Length..].Trim(),
 
 				_ =>
-					None<string, InvalidAuthorisationHeaderMsg>()
+					None<string, Msg.InvalidAuthorisationHeaderMsg>()
 			};
 
 		/// <summary>
@@ -103,5 +103,14 @@ namespace Jeebs.Mvc.Auth.Jwt
 		/// <param name="token">Token value</param>
 		internal static Option<ClaimsPrincipal> GetPrincipal(IJwtAuthProvider auth, string token) =>
 			auth.ValidateToken(token);
+	}
+
+	namespace JwtHandlerMsg
+	{
+		/// <summary>Unable to find Authorization header in headers dictionary</summary>
+		public sealed record MissingAuthorisationHeaderMsg : IMsg { }
+
+		/// <summary>The Authorization header was not a valid Bearer</summary>
+		public sealed record InvalidAuthorisationHeaderMsg : IMsg { }
 	}
 }

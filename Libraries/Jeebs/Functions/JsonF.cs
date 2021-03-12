@@ -5,6 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
+using Msg = F.JsonFMsg;
 using static F.OptionF;
 
 namespace F
@@ -96,7 +97,7 @@ namespace F
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
 			{
-				return None<T, Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg>();
+				return None<T, Msg.DeserialisingNullOrEmptyStringMsg>();
 			}
 
 			// Attempt to deserialise JSON
@@ -108,12 +109,12 @@ namespace F
 						x,
 
 					_ =>
-						None<T, Jm.Functions.JsonF.DeserialisingReturnedNullMsg>() // should never get here
+						None<T, Msg.DeserialisingReturnedNullMsg>() // should never get here
 				};
 			}
 			catch (Exception ex)
 			{
-				return None<T>(new Jm.Functions.JsonF.DeserialiseExceptionMsg(ex));
+				return None<T>(new Msg.DeserialiseExceptionMsg { Exception = ex });
 			}
 		}
 
@@ -121,4 +122,16 @@ namespace F
 		public static Option<T> Deserialise<T>(string str) =>
 			Deserialise<T>(str, options);
 	}
+}
+
+namespace F.JsonFMsg
+{
+	/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize"/></summary>
+	public sealed record DeserialiseExceptionMsg : ExceptionMsg { }
+
+	/// <summary>A null or empty string cannot be deserialised</summary>
+	public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
+
+	/// <summary>The object was deserialised but returned null</summary>
+	public sealed record DeserialisingReturnedNullMsg : IMsg { }
 }

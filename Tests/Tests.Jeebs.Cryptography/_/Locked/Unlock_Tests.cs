@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Cryptography.LockedMsg;
 using Xunit;
 
 namespace Jeebs.Cryptography.Locked_Tests
@@ -70,7 +71,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<IncorrectKeyOrNonceMsg>(none.Reason);
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -89,7 +90,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<IncorrectKeyOrNonceMsg>(none.Reason);
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
 		}
 
 		[Fact]

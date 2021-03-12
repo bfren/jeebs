@@ -54,6 +54,6 @@ namespace Jeebs.OptionExtensions_Tests
 
 		public class FakeOption : Option<int> { }
 
-		public class TestMsg : IMsg { }
+		public record TestMsg : IMsg { }
 	}
 }

@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Jeebs.Logging;
 using static F.OptionF;
+using Msg = Jeebs.Data.UnitOfWorkMsg;
 
 namespace Jeebs.Data
 {
@@ -88,12 +90,8 @@ namespace Jeebs.Data
 			// Rollback transaction
 			Rollback();
 
-			// Log error
-			var message = new Jm.Data.QueryExceptionMsg(ex, query, parameters);
-			Log.Error(ex, message.Format, message.ParamArray);
-
 			// Return error
-			return None<T>(message);
+			return None<T>(new Msg.QueryExceptionMsg(ex, query, parameters));
 		}
 
 		#endregion
@@ -106,7 +104,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(Query), query, parameters, commandType));
 
 				// Execute and return
 				var result = Driver.Query(Connection, query, parameters, Transaction, commandType);
@@ -132,7 +130,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
 
 				// Execute and return
 				var result = await Driver.QueryAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
@@ -158,7 +156,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(Query), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(Query), query, parameters, commandType));
 
 				// Execute and return
 				var result = Driver.Query<T>(Connection, query, parameters, Transaction, commandType);
@@ -184,7 +182,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(QueryAsync), query, parameters, commandType));
 
 				// Execute and return
 				var result = await Driver.QueryAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
@@ -214,7 +212,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(Single), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(Single), query, parameters, commandType));
 
 				// Execute and return
 				return Driver.QuerySingle<T>(Connection, query, parameters, Transaction, commandType);
@@ -239,7 +237,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(SingleAsync), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(SingleAsync), query, parameters, commandType));
 
 				// Execute and return
 				return await Driver.QuerySingleAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
@@ -268,7 +266,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(Execute), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(Execute), query, parameters, commandType));
 
 				// Execute and return
 				return Driver.Execute(Connection, query, parameters, Transaction, commandType);
@@ -293,7 +291,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(ExecuteAsync), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(ExecuteAsync), query, parameters, commandType));
 
 				// Execute and return
 				return await Driver.ExecuteAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
@@ -318,7 +316,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(ExecuteScalar), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(ExecuteScalar), query, parameters, commandType));
 
 				// Execute and return
 				return Driver.ExecuteScalar<T>(Connection, query, parameters, Transaction, commandType);
@@ -343,7 +341,7 @@ namespace Jeebs.Data
 			try
 			{
 				// Log query
-				Log.Message(new Jm.Data.QueryMsg(nameof(ExecuteScalarAsync), query, parameters, commandType));
+				Log.Message(new Msg.QueryMsg(nameof(ExecuteScalarAsync), query, parameters, commandType));
 
 				// Execute and return
 				return await Driver.ExecuteScalarAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
@@ -363,5 +361,21 @@ namespace Jeebs.Data
 			 ExecuteScalarAsync<T>(query, null, CommandType.Text);
 
 		#endregion
+	}
+
+	namespace UnitOfWorkMsg
+	{
+		/// <summary>Query message</summary>
+		/// <param name="Method">The name of the UnitOfWork method executing this query</param>
+		/// <param name="Query">Query text</param>
+		/// <param name="Parameters">Query parameters</param>
+		/// <param name="CommandType">Command Type</param>
+		public record QueryMsg(string Method, string Query, object? Parameters, CommandType CommandType) : LogMsg(LogLevel.Debug) { }
+
+		/// <summary>Query Exception message</summary>
+		/// <param name="Exception">The exception caught while the query was executing</param>
+		/// <param name="Query">Query text</param>
+		/// <param name="Parameters">Query parameters</param>
+		public record QueryExceptionMsg(Exception Exception, string Query, object? Parameters) : ExceptionMsg(Exception) { }
 	}
 }

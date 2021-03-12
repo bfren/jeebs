@@ -50,9 +50,9 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public async Task<Option<List<T>>> ExecuteQueryAsync()
+		public Task<Option<List<T>>> ExecuteQueryAsync()
 		{
-			return from items in await getQuery().BindAsync(getItems)
+			return from items in getQuery().BindAsync(getItems)
 				   select items.ToList();
 
 			// Get query
@@ -65,19 +65,23 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public async Task<Option<IPagedList<T>>> ExecuteQueryAsync(long page)
+		public Task<Option<IPagedList<T>>> ExecuteQueryAsync(long page)
 		{
 			// Run chain
-			return await GetCountAsync()
-				.BindAsync(getPagingValues)
-				.BindAsync(getItems);
+			return GetCountAsync()
+				.BindAsync(
+					getPagingValues
+				)
+				.BindAsync(
+					getItems
+				);
 
 			// Get paging values
 			Option<PagingValues> getPagingValues(long count) =>
 				new PagingValues(count, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer);
 
 			// Get the items
-			async Task<Option<IPagedList<T>>> getItems(PagingValues paging)
+			Task<Option<IPagedList<T>>> getItems(PagingValues paging)
 			{
 				// Set the OFFSET and LIMIT values based on the calculated paging values
 				Parts.Offset = (paging.Page - 1) * paging.ItemsPer;
@@ -87,26 +91,29 @@ namespace Jeebs.Data.Querying
 				var query = UnitOfWork.Adapter.Retrieve(Parts);
 
 				// Execute and return
-				var items = await UnitOfWork.QueryAsync<T>(query, Parts.Parameters).ConfigureAwait(false);
-				return items.Map(
-					x => (IPagedList<T>)new PagedList<T>(paging, x)
-				);
+				return UnitOfWork
+					.QueryAsync<T>(query, Parts.Parameters)
+					.MapAsync(
+						x => (IPagedList<T>)new PagedList<T>(paging, x)
+					);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<Option<T>> ExecuteScalarAsync()
+		public Task<Option<T>> ExecuteScalarAsync()
 		{
-			return await getQuery()
-				.BindAsync(getValue);
+			return getQuery()
+				.BindAsync(
+					getValue
+				);
 
 			// Get query
 			Option<string> getQuery() =>
 				UnitOfWork.Adapter.Retrieve(Parts);
 
 			// Execute query
-			async Task<Option<T>> getValue(string query) =>
-				await UnitOfWork.ExecuteScalarAsync<T>(query, Parts.Parameters).ConfigureAwait(false);
+			Task<Option<T>> getValue(string query) =>
+				UnitOfWork.ExecuteScalarAsync<T>(query, Parts.Parameters);
 		}
 	}
 }

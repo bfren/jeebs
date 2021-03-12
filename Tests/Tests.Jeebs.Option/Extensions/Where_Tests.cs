@@ -114,6 +114,6 @@ namespace Jeebs.OptionExtensions_Tests
 			Assert.True(none.Reason is InvalidIntegerMsg);
 		}
 
-		public class InvalidIntegerMsg : IMsg { }
+		public record InvalidIntegerMsg : IMsg { }
 	}
 }

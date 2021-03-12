@@ -31,7 +31,7 @@ namespace AppMvc.Controllers
 		public async Task<IActionResult> Return_Error404() =>
 			await this.ExecuteErrorAsync(new NotFoundMsg());
 
-		public class NotFoundMsg : Jm.NotFoundMsg { }
+		public class NotFoundMsg : INotFoundMsg { }
 	}
 
 	public record TestErroMsg : IMsg { }

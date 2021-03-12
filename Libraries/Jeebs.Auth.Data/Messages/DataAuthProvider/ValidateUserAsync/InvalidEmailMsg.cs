@@ -3,7 +3,7 @@
 
 using Jeebs;
 
-namespace Jm.Auth.Data.DataAuthProvider.ValidateUserAsync
+namespace Jeebs.Auth.Data.DataAuthProvider.ValidateUserAsync
 {
 	/// <summary>
 	/// See <see cref="Jeebs.Auth.DataAuthProvider.ValidateUserAsync{TUserModel}(string, string)"/>

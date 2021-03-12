@@ -1,10 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Threading.Tasks;
-using Dapper;
-using Jm.Data.Mapping.Extensions.UnitOfWork;
+using Jeebs.Logging;
 using static F.OptionF;
+using Msg = Jeebs.Data.Mapping.UnitOfWorkExtensionsMsg;
 
 namespace Jeebs.Data.Mapping
 {
@@ -26,15 +27,14 @@ namespace Jeebs.Data.Mapping
 			Return(entity)
 				.Bind(
 					x => InsertAndReturnId(@this, x),
-					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
+					e => new Msg.CreateExceptionMsg<T>(nameof(Create), e)
 				)
 				.Bind(
-					x => CheckId<T>(x),
-					e => new CheckIdExceptionMsg(e)
+					CheckId<T>
 				)
 				.Bind(
 					x => GetFreshPoco<T>(@this, x),
-					e => new GetFreshPocoExceptionMsg(e)
+					e => new Msg.RetrieveFreshExceptionMsg<T>(nameof(Create), e)
 				);
 
 		/// <summary>
@@ -50,15 +50,14 @@ namespace Jeebs.Data.Mapping
 			Return(entity)
 				.BindAsync(
 					x => InsertAndReturnIdAsync(@this, x),
-					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
+					e => new Msg.CreateExceptionMsg<T>(nameof(CreateAsync), e)
 				)
 				.BindAsync(
-					x => CheckId<T>(x),
-					e => new CheckIdExceptionMsg(e)
+					CheckId<T>
 				)
 				.BindAsync(
 					x => GetFreshPocoAsync<T>(@this, x),
-					e => new GetFreshPocoExceptionMsg(e)
+					e => new Msg.RetrieveFreshExceptionMsg<T>(nameof(Create), e)
 				);
 
 		/// <summary>
@@ -72,10 +71,10 @@ namespace Jeebs.Data.Mapping
 		{
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			w.Log.Message(new Jm.Data.QueryMsg(nameof(InsertAndReturnId), query, entity));
+			w.Log.Message(new Msg.CreateQueryMsg<T>(nameof(InsertAndReturnId), query, entity));
 
 			// Insert and capture new ID
-			return w.Connection.ExecuteScalar<long>(query, param: entity, transaction: w.Transaction);
+			return w.ExecuteScalar<long>(query, entity);
 		}
 
 		/// <summary>
@@ -84,15 +83,15 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="entity">Entity to insert</param>
-		private static async Task<Option<long>> InsertAndReturnIdAsync<T>(IUnitOfWork w, T entity)
+		private static Task<Option<long>> InsertAndReturnIdAsync<T>(IUnitOfWork w, T entity)
 			where T : IEntity
 		{
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			w.Log.Message(new Jm.Data.QueryMsg(nameof(InsertAndReturnIdAsync), query, entity));
+			w.Log.Message(new Msg.CreateQueryMsg<T>(nameof(InsertAndReturnIdAsync), query, entity));
 
 			// Insert and capture new ID
-			return await w.Connection.ExecuteScalarAsync<long>(query, param: entity, transaction: w.Transaction).ConfigureAwait(false);
+			return w.ExecuteScalarAsync<long>(query, entity);
 		}
 
 		/// <summary>
@@ -105,7 +104,7 @@ namespace Jeebs.Data.Mapping
 			// Check ID and return error
 			if (id == 0)
 			{
-				return None<long>(new Jm.Data.CreateErrorMsg(typeof(T)));
+				return None<long>(new Msg.CreateErrorMsg<T>());
 			}
 
 			// Continue
@@ -121,7 +120,7 @@ namespace Jeebs.Data.Mapping
 			where T : class, IEntity
 		{
 			// Add create message
-			w.Log.Message(new Jm.Data.CreateMsg(typeof(T), id));
+			w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPoco), id));
 
 			// Get fresh poco
 			return Single<T>(w, id);
@@ -133,14 +132,46 @@ namespace Jeebs.Data.Mapping
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="id">Entity ID</param>
-		private static async Task<Option<T>> GetFreshPocoAsync<T>(IUnitOfWork w, long id)
+		private static Task<Option<T>> GetFreshPocoAsync<T>(IUnitOfWork w, long id)
 			where T : class, IEntity
 		{
 			// Add create message
-			w.Log.Message(new Jm.Data.CreateMsg(typeof(T), id));
+			w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPocoAsync), id));
 
 			// Get fresh poco
-			return await SingleAsync<T>(w, id).ConfigureAwait(false);
+			return SingleAsync<T>(w, id);
 		}
+	}
+
+	namespace UnitOfWorkExtensionsMsg
+	{
+		/// <summary>Something went wrong inserting the entity and ID returned was 0</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		public record CreateErrorMsg<T>() : LogMsg(LogLevel.Warning) { }
+
+		/// <summary>Error inserting entity</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Exception">Caught exception</param>
+		public record CreateExceptionMsg<T>(string Method, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Query message</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Query">Query text</param>
+		/// <param name="Parameters">Query parameters</param>
+		public record CreateQueryMsg<T>(string Method, string Query, T Parameters) : LogMsg(LogLevel.Debug) { }
+
+		/// <summary>Error retrieving fresh entity</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Exception">Caught exception</param>
+		public record RetrieveFreshExceptionMsg<T>(string Method, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Query message</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Id">The ID of the entity being requested</param>
+		public record RetrieveFreshMsg<T>(string Method, long Id) : LogMsg(LogLevel.Debug) { }
 	}
 }

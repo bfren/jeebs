@@ -1,6 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using F.JsonFMsg;
+using Jeebs.Cryptography.LockedMsg;
 using Xunit;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
@@ -22,7 +24,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg);
+			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -37,7 +39,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialiseExceptionMsg);
+			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -50,7 +52,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Cryptography.Locked.IncorrectKeyOrNonceMsg);
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -64,7 +66,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<string>>(result);
-			Assert.True(none.Reason is Jm.Cryptography.Locked.IncorrectKeyOrNonceMsg);
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -79,7 +81,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.True(none.Reason is Jm.Cryptography.Locked.UnlockWhenEncryptedContentsIsNullMsg);
+			Assert.IsType<UnlockWhenEncryptedContentsIsNullMsg>(none.Reason);
 		}
 
 		[Fact]

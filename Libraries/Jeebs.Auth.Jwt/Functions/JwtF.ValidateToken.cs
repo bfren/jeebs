@@ -7,9 +7,9 @@ using System.Security.Claims;
 using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Config;
-using Jm.Functions.JwtF.ValidateToken;
 using Microsoft.IdentityModel.Tokens;
 using static F.OptionF;
+using Msg = F.JwtFMsg;
 
 namespace F
 {
@@ -45,7 +45,7 @@ namespace F
 				// Check date values
 				if (validatedToken.ValidTo < DateTime.Now)
 				{
-					return None<ClaimsPrincipal, TokenHasExpiredMsg>();
+					return None<ClaimsPrincipal, Msg.TokenHasExpiredMsg>();
 				}
 
 				// Return valid principal
@@ -53,12 +53,24 @@ namespace F
 			}
 			catch (SecurityTokenNotYetValidException)
 			{
-				return None<ClaimsPrincipal, TokenIsNotValidYetMsg>();
+				return None<ClaimsPrincipal, Msg.TokenIsNotValidYetMsg>();
 			}
 			catch (Exception e)
 			{
-				return None<ClaimsPrincipal>(new ErrorValidatingTokenMsg(e));
+				return None<ClaimsPrincipal>(new Msg.ValidatingTokenExceptionMsg(e));
 			}
 		}
+	}
+
+	namespace JwtFMsg
+	{
+		/// <summary>The token has expired</summary>
+		public sealed record TokenHasExpiredMsg : IMsg { }
+
+		/// <summary>The token is not valid yet</summary>
+		public sealed record TokenIsNotValidYetMsg : IMsg { }
+
+		/// <summary>Exception while validating token</summary>
+		public sealed record ValidatingTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 	}
 }

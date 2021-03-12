@@ -2,8 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs;
-using Jm.Functions.BooleanF;
+using static F.BooleanF;
 using Xunit;
+using F.BooleanFMsg;
 
 namespace F.BooleanF_Tests
 {
@@ -24,7 +25,7 @@ namespace F.BooleanF_Tests
 			// Arrange
 
 			// Act
-			var result = BooleanF.Parse(input);
+			var result = Parse(input);
 
 			// Assert
 			var some = Assert.IsType<Some<bool>>(result);
@@ -44,7 +45,7 @@ namespace F.BooleanF_Tests
 			// Arrange
 
 			// Act
-			var result = BooleanF.Parse(input);
+			var result = Parse(input);
 
 			// Assert
 			var some = Assert.IsType<Some<bool>>(result);
@@ -59,12 +60,11 @@ namespace F.BooleanF_Tests
 			// Arrange
 
 			// Act
-			var result = BooleanF.Parse(input);
+			var result = Parse(input);
 
 			// Assert
 			var none = Assert.IsType<None<bool>>(result);
 			Assert.IsType<UnrecognisedValueMsg>(none.Reason);
-			Assert.Equal(string.Format(Jm.WithValueMsg.Format, nameof(UnrecognisedValueMsg), input), none.Reason?.ToString());
 		}
 	}
 }

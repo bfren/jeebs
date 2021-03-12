@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using Msg = Jeebs.DateTimeIntMsg;
 using static F.OptionF;
 
 namespace Jeebs
@@ -153,7 +154,7 @@ namespace Jeebs
 					new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 				{ } x =>
-					None<DateTime>(new Jm.DateTimeInt.InvalidDateTimeMsg(x.Part, this))
+					None<DateTime>(new Msg.InvalidDateTimeMsg((x.Part, this)))
 			};
 
 		/// <summary>
@@ -211,7 +212,7 @@ namespace Jeebs
 			}
 			else // February is the only month left
 			{
-				if (IsLeapYear() && Day > 29)
+				if (IsLeapYear(Year) && Day > 29)
 				{
 					return (false, nameof(Day));
 				}
@@ -234,19 +235,32 @@ namespace Jeebs
 			return (true, string.Empty);
 		}
 
-		private bool IsLeapYear()
+		static internal bool IsLeapYear(int year)
 		{
-			if (Year % 400 == 0)
+			if (year % 400 == 0)
 			{
 				return true;
 			}
 
-			if (Year % 100 == 0)
+			if (year % 100 == 0)
 			{
 				return false;
 			}
 
-			return Year % 4 == 0;
+			return year % 4 == 0;
 		}
+	}
+}
+
+namespace Jeebs.DateTimeIntMsg
+{
+	/// <summary>Unable to parse DateTime integer</summary>
+	/// <param name="Value">Invalid part and DateTimeInt</param>
+	public sealed record InvalidDateTimeMsg((string part, DateTimeInt dt) Value) :
+		WithValueMsg<(string part, DateTimeInt dt)>()
+	{
+		/// <summary>Return message</summary>
+		public override string ToString() =>
+			$"Invalid {Value.part} - 'Y:{Value.dt.Year} M:{Value.dt.Minute} D:{Value.dt.Day} H:{Value.dt.Hour} m:{Value.dt.Minute}'.";
 	}
 }

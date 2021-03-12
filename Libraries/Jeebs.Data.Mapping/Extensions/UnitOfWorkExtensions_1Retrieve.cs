@@ -5,7 +5,9 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using Jeebs.Logging;
 using static F.OptionF;
+using Msg = Jeebs.Data.Mapping.UnitOfWorkExtensionsMsg;
 
 namespace Jeebs.Data.Mapping
 {
@@ -44,31 +46,40 @@ namespace Jeebs.Data.Mapping
 				(q, p, t) => @this.Connection.QuerySingleAsync<T>(q, p, t)
 			);
 
-		private static Task<Option<T>> SingleAsync<T>(long id, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
-			where T : class, IEntity
-		{
-			return Return(id)
-				.BindAsync(
-					retrievePoco,
-					e => new Jm.Data.RetrieveExceptionMsg(e, typeof(T), id)
+		private static Task<Option<T>> SingleAsync<T>(
+			long id, IUnitOfWork w,
+			string method,
+			Func<string, object, IDbTransaction, Task<T>> execute
+		)
+			where T : class, IEntity =>
+			Return(id)
+				.BindAsync<T>(
+					async id =>
+					{
+						// Build query
+						var query = w.Adapter.RetrieveSingleById<T>();
+						w.Log.Message(new Msg.RetrieveQueryMsg<T>(method, query, new { id }));
+
+						// Execute
+						return await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
+					},
+					e => new Msg.RetrieveExceptionMsg<T>(method, id, e)
 				);
+	}
 
-			// Delete the poco
-			async Task<Option<T>> retrievePoco(long id)
-			{
-				// Build query
-				var query = w.Adapter.RetrieveSingleById<T>();
-				w.Log.Message(new Jm.Data.QueryMsg(method, query, new { id }));
+	namespace UnitOfWorkExtensionsMsg
+	{
+		/// <summary>Error retrieving entity</summary>
+		/// <typeparam name="T">Entity type</typeparam>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Id">Entity ID being requested</param>
+		/// <param name="Exception">Caught exception</param>
+		public record RetrieveExceptionMsg<T>(string Method, long Id, Exception Exception) : ExceptionMsg(Exception) { }
 
-				// Execute
-				var result = await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
-
-				// Add retrieve message
-				w.Log.Message(new Jm.Data.RetrieveMsg(typeof(T), id));
-
-				// Return
-				return result;
-			}
-		}
+		/// <summary>Query message</summary>
+		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+		/// <param name="Query">Query text</param>
+		/// <param name="Parameters">Query parameters</param>
+		public record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) : LogMsg(LogLevel.Debug) { }
 	}
 }

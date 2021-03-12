@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -8,13 +9,12 @@ using System.Threading.Tasks;
 using Jeebs.Config;
 using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
-using Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync;
-using Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync;
 using Microsoft.Extensions.DependencyInjection;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using static F.OptionF;
+using Msg = Jeebs.Services.Drivers.Twitter.Tweetinvi.TweetinviTwitterDriverMsg;
 
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 {
@@ -57,7 +57,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 					Return(user),
 
 				_ =>
-					None<IUser>(new UserNotFoundMsg(screenName))
+					None<IUser>(new Msg.UserNotFoundMsg(screenName))
 			};
 
 		/// <inheritdoc/>
@@ -66,15 +66,15 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			return Return(screenName)
 				.BindAsync(
 					GetUser,
-					e => new ErrorGettingUserMsg(e)
+					e => new Msg.GettingUserExceptionMsg(screenName, e)
 				)
 				.MapAsync(
 					getUrl,
-					e => new ErrorGettingProfileImageUrlMsg(e)
+					e => new Msg.GettingProfileImageUrlExceptionMsg(screenName, e)
 				)
 				.BindAsync(
 					getStream,
-					e => new ErrorGettingProfileImageStreamMsg(e)
+					e => new Msg.GettingProfileImageStreamExceptionMsg(screenName, e)
 				);
 
 			// Get profile image URL
@@ -99,15 +99,15 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			return Return(screenName)
 				.BindAsync(
 					GetUser,
-					e => new ErrorGettingUserMsg(e)
+					e => new Msg.GettingUserExceptionMsg(screenName, e)
 				)
 				.BindAsync(
 					getTimeline,
-					e => new ErrorGettingTimelineMsg(e)
+					e => new Msg.GettingTimelineExceptionMsg(screenName, e)
 				)
 				.MapAsync(
 					convertTweets,
-					e => new ErrorConvertingTweetsMsg(e)
+					e => new Msg.ConvertingTweetsExceptionMsg(e)
 				);
 
 			// Get timeline
@@ -152,6 +152,37 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				return models.ToList();
 			}
 		}
+	}
+
+	namespace TweetinviTwitterDriverMsg
+	{
+		/// <summary>Exception converting tweets</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Exception getting profile image stream</summary>
+		/// <param name="ScreenName">Screen Name</param>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Exception getting profile image URL</summary>
+		/// <param name="ScreenName">Screen Name</param>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Exception getting user timeline</summary>
+		/// <param name="ScreenName">Screen Name</param>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>Exception getting user</summary>
+		/// <param name="ScreenName">Screen Name</param>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>User not found</summary>
+		/// <param name="Value">Screen Name</param>
+		public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
 	}
 }
 

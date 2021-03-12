@@ -128,6 +128,6 @@ namespace Jeebs.Option_Tests
 
 		public class FakeOption : Option<int> { }
 
-		public class TestMsg : IMsg { }
+		public record TestMsg : IMsg { }
 	}
 }

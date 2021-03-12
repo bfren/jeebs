@@ -5,8 +5,8 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
-using Jm.Mvc.Auth.ClaimsPrincipalExtensions;
 using static F.OptionF;
+using Msg = Jeebs.Mvc.Auth.ClaimsPrincipalExtensionsMsg;
 
 namespace Jeebs.Mvc.Auth
 {
@@ -23,14 +23,7 @@ namespace Jeebs.Mvc.Auth
 		{
 			if (@this.Identity?.IsAuthenticated == true)
 			{
-				return getId();
-			}
-
-			return None<long, UserIsNotAuthenticatedMsg>();
-
-			// Find and parse ID from the list of claims
-			Option<long> getId() =>
-				@this.Claims.SingleOrDefault(c => c.Type == JwtClaimTypes.UserId) switch
+				return @this.Claims.SingleOrDefault(c => c.Type == JwtClaimTypes.UserId) switch
 				{
 					Claim idClaim =>
 						long.TryParse(idClaim.Value, out long userId) switch
@@ -39,12 +32,15 @@ namespace Jeebs.Mvc.Auth
 								userId,
 
 							false =>
-								None<long, InvalidUserIdMsg>()
+								None<long, Msg.InvalidUserIdMsg>()
 						},
 
 					_ =>
-						None<long, UnableToFindUserIdClaimMsg>()
+						None<long, Msg.UnableToFindUserIdClaimMsg>()
 				};
+			}
+
+			return None<long, Msg.UserIsNotAuthenticatedMsg>();
 		}
 
 		/// <summary>
@@ -62,6 +58,18 @@ namespace Jeebs.Mvc.Auth
 		/// <param name="value">Claim</param>
 		public static bool HasClaim(this ClaimsPrincipal @this, string value) =>
 			@this.Identity?.IsAuthenticated == true
-			&& @this.Claims.Any(c => string.Equals(c.Value, value, StringComparison.InvariantCultureIgnoreCase));
+			&& @this.Claims.Any(c => string.Equals(c.Value, value, StringComparison.OrdinalIgnoreCase));
+	}
+
+	namespace ClaimsPrincipalExtensionsMsg
+	{
+		/// <summary>The User ID Claim was not a valid number</summary>
+		public sealed record InvalidUserIdMsg : IMsg { }
+
+		/// <summary>Unable to find the User ID Claim</summary>
+		public sealed record UnableToFindUserIdClaimMsg : IMsg { }
+
+		/// <summary>The current User is not correctly authenticated</summary>
+		public sealed record UserIsNotAuthenticatedMsg : IMsg { }
 	}
 }

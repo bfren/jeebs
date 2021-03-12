@@ -50,12 +50,12 @@ namespace Jeebs.Services.Webhook
 		public virtual void Send(IMsg msg)
 		{
 			// Get message content
-			var content = msg.Prepare().Format();
+			var content = msg.ToString() ?? msg.GetType().ToString();
 
 			// Convert to notification Message
 			var message = msg switch
 			{
-				ILoggableMsg x =>
+				ILogMsg x =>
 					new Message
 					{
 						Content = content,

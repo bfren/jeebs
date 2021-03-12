@@ -3,9 +3,9 @@
 
 using System.Security.Claims;
 using System.Security.Principal;
+using F.JwtFMsg;
 using Jeebs;
 using Jeebs.Config;
-using Jm.Functions.JwtF.CreateToken;
 using NSubstitute;
 using Xunit;
 
@@ -59,7 +59,7 @@ namespace F.JwtF_Tests
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<JwtConfigInvalidMsg>(none.Reason);
+			Assert.IsType<ConfigInvalidMsg>(none.Reason);
 		}
 
 		[Fact]

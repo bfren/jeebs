@@ -4,6 +4,7 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
+using Jeebs.Data.UnitOfWorkMsg;
 using NSubstitute;
 using NSubstitute.Extensions;
 
@@ -57,9 +58,9 @@ namespace Jeebs.Data.UnitOfWork_Tests
 
 			// Assert
 			l.Received().Message(
-				Arg.Is<Jm.Data.QueryMsg>(x =>
+				Arg.Is<QueryMsg>(x =>
 					x.Method == method
-					&& x.Sql == query
+					&& x.Query == query
 					&& x.Parameters == parameters
 					&& x.CommandType == commandType
 				)
@@ -129,12 +130,6 @@ namespace Jeebs.Data.UnitOfWork_Tests
 
 			// Assert
 			transaction.Received().Rollback();
-
-			log.Received().Error(
-				Arg.Any<Exception>(),
-				"{ExceptionType}: {ExceptionText} | Query: {Sql} | Parameters: {Parameters}",
-				Arg.Any<object[]>()
-			);
 		}
 	}
 }

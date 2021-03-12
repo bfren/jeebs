@@ -28,14 +28,15 @@ namespace Jeebs.Mvc
 				int x =>
 					x,
 
-				_ => reason switch
-				{
-					Jm.NotFoundMsg =>
-						StatusCodes.Status404NotFound,
+				_ =>
+					reason switch
+					{
+						INotFoundMsg =>
+							StatusCodes.Status404NotFound,
 
-					_ =>
-						StatusCodes.Status500InternalServerError
-				}
+						_ =>
+							StatusCodes.Status500InternalServerError
+					}
 			};
 
 			// Log error

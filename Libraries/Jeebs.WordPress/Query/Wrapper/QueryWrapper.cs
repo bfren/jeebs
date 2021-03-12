@@ -7,9 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Messages.Query.Wrapper;
-using Jm.WordPress.Query.Wrapper;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -78,13 +77,13 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return None<PropertyInfo, OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
+				return None<PropertyInfo, Msg.OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return None<PropertyInfo, MetaDictionaryPropertyNotFoundMsg<TModel>>();
+				return None<PropertyInfo, Msg.MetaDictionaryPropertyNotFoundMsg<TModel>>();
 			}
 
 			return metaDictionary.Single();
@@ -153,12 +152,27 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return None<PropertyInfo, ContentPropertyNotFoundMsg<TModel>>();
+				return None<PropertyInfo, Msg.ContentPropertyNotFoundMsg<TModel>>();
 			}
 
 			return content.Single();
 		}
 
 		#endregion
+	}
+
+	namespace QueryWrapperMsg
+	{
+		/// <summary>Content property not found on entity</summary>
+		/// <typeparam name="T">Post type</typeparam>
+		public sealed record ContentPropertyNotFoundMsg<T> : IMsg { }
+
+		/// <summary>MetaDictionary property not found on entity</summary>
+		/// <typeparam name="T">Post type</typeparam>
+		public sealed record MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
+
+		/// <summary>Multiple MetaDictionary properties found on entity</summary>
+		/// <typeparam name="T">Post type</typeparam>
+		public sealed record OnlyOneMetaDictionaryPropertySupportedMsg<T> : IMsg { }
 	}
 }

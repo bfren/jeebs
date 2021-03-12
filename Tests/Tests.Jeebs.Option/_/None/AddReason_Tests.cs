@@ -36,7 +36,7 @@ namespace Jeebs.Option.None_Tests
 			Assert.True(result.Reason is TestExceptionMsg);
 		}
 
-		public class TestMsg : IMsg { }
-		public class TestExceptionMsg : Jm.ExceptionMsg { }
+		public record TestMsg : IMsg { }
+		public record TestExceptionMsg : Jeebs.ExceptionMsg { }
 	}
 }

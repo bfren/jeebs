@@ -4,9 +4,9 @@
 using System;
 using System.Security.Claims;
 using System.Security.Principal;
+using F.JwtFMsg;
 using Jeebs;
 using Jeebs.Config;
-using Jm.Functions.JwtF.ValidateToken;
 using NSubstitute;
 using Xunit;
 

@@ -1,13 +1,13 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities;
-using Jm.WordPress.CustomFields;
-using Jm.WordPress.CustomFields.Term;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.TermCustomFieldMsg;
 
 namespace Jeebs.WordPress
 {
@@ -33,7 +33,7 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return None<bool>(new MetaKeyNotFoundMsg(GetType(), Key));
+					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key));
 				}
 
 				return False;
@@ -48,7 +48,7 @@ namespace Jeebs.WordPress
 					getTerms
 				)
 				.UnwrapAsync(
-					x => x.Single<Term>(tooMany: () => new MultipleTermsFoundMsg())
+					x => x.Single<Term>(tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr))
 				)
 				.MapAsync(
 					hydrate
@@ -61,7 +61,7 @@ namespace Jeebs.WordPress
 			{
 				if (!long.TryParse(value, out var termId))
 				{
-					return None<long>(new ValueIsInvalidPostIdMsg(GetType(), value));
+					return None<long>(new Msg.ValueIsInvalidTermIdMsg(GetType(), value));
 				}
 
 				return termId;
@@ -100,5 +100,22 @@ namespace Jeebs.WordPress
 		/// Term class
 		/// </summary>
 		public sealed record Term : WpTermEntity { }
+	}
+
+	namespace TermCustomFieldMsg
+	{
+		/// <summary>Meta key not found in MetaDictionary</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+
+		/// <summary>Multiple matching terms were found (should always be 1)</summary>
+		/// <param name="Value">Term ID</param>
+		public sealed record MultipleTermsFoundMsg(string Value) : WithValueMsg<string> { }
+
+		/// <summary>The value in the meta dictionary is not a valid ID</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string> { }
 	}
 }

@@ -27,7 +27,7 @@ namespace Jeebs.Log_Tests
 		public void LoggableMsg_Trace_Runs_Trace()
 		{
 			// Arrange
-			var msg = Substitute.For<ILoggableMsg>();
+			var msg = Substitute.For<ILogMsg>();
 			msg.Level.Returns(LogLevel.Verbose);
 			var log = Substitute.For<Log>();
 
@@ -42,7 +42,7 @@ namespace Jeebs.Log_Tests
 		public void LoggableMsg_Debug_Runs_Debug()
 		{
 			// Arrange
-			var msg = Substitute.For<ILoggableMsg>();
+			var msg = Substitute.For<ILogMsg>();
 			msg.Level.Returns(LogLevel.Debug);
 			var log = Substitute.For<Log>();
 
@@ -57,7 +57,7 @@ namespace Jeebs.Log_Tests
 		public void LoggableMsg_Information_Runs_Information()
 		{
 			// Arrange
-			var msg = Substitute.For<ILoggableMsg>();
+			var msg = Substitute.For<ILogMsg>();
 			msg.Level.Returns(LogLevel.Information);
 			var log = Substitute.For<Log>();
 
@@ -72,7 +72,7 @@ namespace Jeebs.Log_Tests
 		public void LoggableMsg_Warning_Runs_Warning()
 		{
 			// Arrange
-			var msg = Substitute.For<ILoggableMsg>();
+			var msg = Substitute.For<ILogMsg>();
 			msg.Level.Returns(LogLevel.Warning);
 			var log = Substitute.For<Log>();
 
@@ -87,7 +87,7 @@ namespace Jeebs.Log_Tests
 		public void LoggableMsg_Error_Runs_Error()
 		{
 			// Arrange
-			var msg = Substitute.For<ILoggableMsg>();
+			var msg = Substitute.For<ILogMsg>();
 			msg.Level.Returns(LogLevel.Error);
 			var log = Substitute.For<Log>();
 
@@ -102,7 +102,7 @@ namespace Jeebs.Log_Tests
 		public void LoggableMsg_Critical_Runs_Critical()
 		{
 			// Arrange
-			var msg = Substitute.For<ILoggableMsg>();
+			var msg = Substitute.For<ILogMsg>();
 			msg.Level.Returns(LogLevel.Fatal);
 			var log = Substitute.For<Log>();
 

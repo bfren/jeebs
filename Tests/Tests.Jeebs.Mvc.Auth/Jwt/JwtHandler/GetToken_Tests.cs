@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jm.Mvc.Auth.Jwt.JwtHandler;
+using Jeebs.Mvc.Auth.Jwt.JwtHandlerMsg;
 using Xunit;
 
 namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests

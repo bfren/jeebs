@@ -12,25 +12,26 @@ namespace Jeebs
 	public abstract class Log : ILog
 	{
 		/// <inheritdoc/>
-		public void Message(IMsg? msg)
+		public void Message<T>(T? msg)
+			where T : IMsg
 		{
 			if (msg is null)
 			{
 				return;
 			}
 
-			var (text, args) = msg.Prepare();
+			var text = msg.ToString() ?? typeof(T).ToString();
 
 			// Handle exception messages
-			if (msg is Jm.ExceptionMsg exceptionMsgAbstract)
+			if (msg is ExceptionMsg exceptionMsgAbstract)
 			{
 				if (exceptionMsgAbstract.Level == LogLevel.Fatal)
 				{
-					Fatal(exceptionMsgAbstract.Exception, text, args);
+					Fatal(exceptionMsgAbstract.Exception, text);
 				}
 				else
 				{
-					Error(exceptionMsgAbstract.Exception, text, args);
+					Error(exceptionMsgAbstract.Exception, text);
 				}
 
 				return;
@@ -38,13 +39,13 @@ namespace Jeebs
 
 			if (msg is IExceptionMsg exceptionMsgInterface)
 			{
-				Error(exceptionMsgInterface.Exception, text, args);
+				Error(exceptionMsgInterface.Exception, text);
 				return;
 			}
 
 			// Get the log level
-			LogLevel level = Defaults.Logging.Level;
-			if (msg is ILoggableMsg loggableMsg)
+			LogLevel level = LogLevel.Information;
+			if (msg is ILogMsg loggableMsg)
 			{
 				level = loggableMsg.Level;
 			}
@@ -53,22 +54,22 @@ namespace Jeebs
 			switch (level)
 			{
 				case LogLevel.Verbose:
-					Verbose(text, args);
+					Verbose(text);
 					break;
 				case LogLevel.Debug:
-					Debug(text, args);
+					Debug(text);
 					break;
 				case LogLevel.Information:
-					Information(text, args);
+					Information(text);
 					break;
 				case LogLevel.Warning:
-					Warning(text, args);
+					Warning(text);
 					break;
 				case LogLevel.Error:
-					Error(text, args);
+					Error(text);
 					break;
 				case LogLevel.Fatal:
-					Fatal(text, args);
+					Fatal(text);
 					break;
 			}
 		}

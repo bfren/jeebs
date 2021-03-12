@@ -3,8 +3,8 @@
 
 using System;
 using Jeebs.Services.Drawing.Geometry;
-using Jm.Services.Drawing.ImageWrapper;
 using static F.OptionF;
+using Msg = Jeebs.Services.Drawing.ImageWrapperMsg;
 
 namespace Jeebs.Services.Drawing
 {
@@ -37,7 +37,7 @@ namespace Jeebs.Services.Drawing
 			// At least one of width and height should be greater than zero
 			if (width == 0 && height == 0)
 			{
-				return None<IImageWrapper, MaskHeightOrWidthRequiredMsg>();
+				return None<IImageWrapper, Msg.MaskHeightOrWidthRequiredMsg>();
 			}
 
 			// Calculate the size of the new image
@@ -54,8 +54,17 @@ namespace Jeebs.Services.Drawing
 			}
 			catch (Exception e)
 			{
-				return None<IImageWrapper>(new ExceptionApplyingImageMaskMsg(e));
+				return None<IImageWrapper>(new Msg.ApplyingImageMaskExceptionMsg(e));
 			}
 		}
+	}
+
+	namespace ImageWrapperMsg
+	{
+		/// <summary>A height or width is required for creating a mask</summary>
+		public sealed record MaskHeightOrWidthRequiredMsg : IMsg { }
+
+		/// <summary>An exception occurred while applying the mask</summary>
+		public sealed record ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 	}
 }

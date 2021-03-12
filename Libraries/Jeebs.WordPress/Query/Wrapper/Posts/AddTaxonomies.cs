@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,8 +9,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
-using Jm.WordPress.Query.Wrapper.Posts;
-
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 using static F.OptionF;
 
 namespace Jeebs.WordPress
@@ -36,11 +36,11 @@ namespace Jeebs.WordPress
 			return await Return(posts)
 				.BindAsync(
 					x => getTermsAsync(x, termLists),
-					e => new GetTermsExceptionMsg(e)
+					e => new Msg.GetTermsExceptionMsg<TModel>(e)
 				)
 				.BindAsync(
 					x => addTerms(x, termLists),
-					e => new AddTaxonomiesExceptionMsg(e)
+					e => new Msg.AddTaxonomiesExceptionMsg<TModel>(e)
 				);
 
 			//
@@ -79,7 +79,7 @@ namespace Jeebs.WordPress
 						// Make sure taxonomy has been registered
 						if (!Taxonomy.IsRegistered(taxonomy))
 						{
-							return None<QueryPostsTaxonomy.Options>(new TaxonomyNotRegisteredMsg(taxonomy));
+							return None<QueryPostsTaxonomy.Options>(new Msg.TaxonomyNotRegisteredMsg(taxonomy));
 						}
 
 						// Add to query
@@ -153,5 +153,22 @@ namespace Jeebs.WordPress
 			/// </summary>
 			public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
 		}
+	}
+
+	namespace QueryWrapperMsg
+	{
+		/// <summary>An exception occured while adding Taxonomies to posts</summary>
+		/// <typeparam name="T">Post Model type</typeparam>
+		/// <param name="Exception">Exception object</param>
+		public sealed record AddTaxonomiesExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>An exception occured while getting terms for posts</summary>
+		/// <typeparam name="T">Post Model type</typeparam>
+		/// <param name="Exception">Exception object</param>
+		public sealed record GetTermsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+		/// <summary>The taxonomy being added has not been registered with <see cref="IWp{TConfig}"/></summary>
+		/// <param name="Value">Taxonomy</param>
+		public sealed record TaxonomyNotRegisteredMsg(Taxonomy Value) : WithValueMsg<Taxonomy> { }
 	}
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using Jeebs;
+using Msg = F.BooleanFMsg;
 using static F.OptionF;
 
 namespace F
@@ -24,7 +25,7 @@ namespace F
 			var val = value?.ToString()?.ToLower();
 			if (val is null)
 			{
-				return None<bool, Jm.Functions.BooleanF.NullValueMsg>();
+				return None<bool, Msg.NullValueMsg>();
 			}
 
 			// Alternative boolean values
@@ -45,7 +46,17 @@ namespace F
 				return result;
 			}
 
-			return None<bool>(new Jm.Functions.BooleanF.UnrecognisedValueMsg(val));
+			return None<bool>(new Msg.UnrecognisedValueMsg(val));
 		}
 	}
+}
+
+namespace F.BooleanFMsg
+{
+	/// <summary>Null Value</summary>
+	public sealed record NullValueMsg : IMsg { }
+
+	/// <summary>Unrecognised boolean value</summary>
+	/// <param name="Value">Unrecognised Value</param>
+	public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
 }

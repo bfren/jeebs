@@ -137,6 +137,6 @@ namespace Jeebs.OptionExtensions_Tests
 			public Option<int> AsOption => this;
 		}
 
-		public class TestMsg : IMsg { }
+		public record TestMsg : IMsg { }
 	}
 }

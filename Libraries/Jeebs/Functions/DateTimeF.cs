@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using Jeebs;
 using static F.OptionF;
+using Msg = F.DateTimeFMsg;
 
 namespace F
 {
@@ -41,7 +42,14 @@ namespace F
 				return dt;
 			}
 
-			return None<DateTime>(new Jm.Functions.DateTimeF.InvalidDateTimeMsg(format));
+			return None<DateTime>(new Msg.InvalidDateTimeMsg(s));
 		}
 	}
+}
+
+namespace F.DateTimeFMsg
+{
+	/// <summary>Unable to parse DateTime string</summary>
+	/// <param name="Value">DateTime string</param>
+	public sealed record InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
 }

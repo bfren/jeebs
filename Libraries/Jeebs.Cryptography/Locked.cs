@@ -7,6 +7,7 @@ using System.Text;
 using Sodium;
 using Sodium.Exceptions;
 using static F.OptionF;
+using Msg = Jeebs.Cryptography.LockedMsg;
 
 namespace Jeebs.Cryptography
 {
@@ -51,7 +52,7 @@ namespace Jeebs.Cryptography
 		{
 			if (EncryptedContents is null)
 			{
-				return None<Lockable<T>, LockedMsg.UnlockWhenEncryptedContentsIsNullMsg>();
+				return None<Lockable<T>, Msg.UnlockWhenEncryptedContentsIsNullMsg>();
 			}
 
 			try
@@ -65,19 +66,19 @@ namespace Jeebs.Cryptography
 			}
 			catch (KeyOutOfRangeException ex)
 			{
-				return handle(new LockedMsg.InvalidKeyExceptionMsg(ex));
+				return handle(new Msg.InvalidKeyExceptionMsg(ex));
 			}
 			catch (NonceOutOfRangeException ex)
 			{
-				return handle(new LockedMsg.InvalidNonceExceptionMsg(ex));
+				return handle(new Msg.InvalidNonceExceptionMsg(ex));
 			}
 			catch (CryptographicException ex)
 			{
-				return handle(new LockedMsg.IncorrectKeyOrNonceExceptionMsg(ex));
+				return handle(new Msg.IncorrectKeyOrNonceExceptionMsg(ex));
 			}
 			catch (Exception ex)
 			{
-				return handle(new LockedMsg.UnlockExceptionMsg(ex));
+				return handle(new Msg.UnlockExceptionMsg(ex));
 			}
 
 			// Handle an exception
