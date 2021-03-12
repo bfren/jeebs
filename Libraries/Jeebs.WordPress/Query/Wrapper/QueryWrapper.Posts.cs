@@ -28,10 +28,7 @@ namespace Jeebs.WordPress
 		public Task<Option<List<TModel>>> QueryPostsAsync<TModel>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
 			where TModel : IEntity
 		{
-			return OptionF
-				.Return(
-					modify
-				)
+			return Return(modify)
 				.Map(
 					GetPostsQuery<TModel>
 				)

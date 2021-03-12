@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using JeebsF;
 using Jm.WordPress.CustomFields;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -35,17 +36,17 @@ namespace Jeebs.WordPress
 			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
 			{
 				ValueObj = ValueStr = value;
-				return Task.FromResult(OptionF.True);
+				return True.AsTask;
 			}
 
 			// Return error if the field is required
 			if (IsRequired)
 			{
-				return OptionF.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return None<bool>(new MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
 			// Return OK but not set
-			return OptionF.False.AsTask;
+			return False.AsTask;
 		}
 	}
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -20,8 +21,7 @@ namespace Jeebs.WordPress
 		public Task<Option<List<TModel>>> QueryPostsMetaAsync<TModel>(Action<QueryPostsMeta.Options>? modify = null)
 			where TModel : IEntity
 		{
-			return OptionF
-				.Return(modify)
+			return Return(modify)
 				.Map(
 					GetPostsMetaQuery<TModel>
 				)

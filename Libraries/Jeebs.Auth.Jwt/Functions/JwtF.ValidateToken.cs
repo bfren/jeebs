@@ -9,6 +9,7 @@ using Jeebs.Auth;
 using Jeebs.Config;
 using Jm.Functions.JwtF.ValidateToken;
 using Microsoft.IdentityModel.Tokens;
+using static JeebsF.OptionF;
 
 namespace JeebsF
 {
@@ -44,7 +45,7 @@ namespace JeebsF
 				// Check date values
 				if (validatedToken.ValidTo < DateTime.Now)
 				{
-					return OptionF.None<ClaimsPrincipal>(new TokenHasExpiredMsg());
+					return None<ClaimsPrincipal>(new TokenHasExpiredMsg());
 				}
 
 				// Return valid principal
@@ -52,11 +53,11 @@ namespace JeebsF
 			}
 			catch (SecurityTokenNotYetValidException)
 			{
-				return OptionF.None<ClaimsPrincipal>(new TokenIsNotValidYetMsg());
+				return None<ClaimsPrincipal>(new TokenIsNotValidYetMsg());
 			}
 			catch (Exception e)
 			{
-				return OptionF.None<ClaimsPrincipal>(new ErrorValidatingTokenMsg(e));
+				return None<ClaimsPrincipal>(new ErrorValidatingTokenMsg(e));
 			}
 		}
 	}

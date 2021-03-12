@@ -7,6 +7,7 @@ using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using JeebsF;
+using static JeebsF.OptionF;
 
 namespace AppMvc.Fake
 {
@@ -19,7 +20,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return OptionF.None<TUserModel>(true);
+				return None<TUserModel>(true);
 			}
 
 			return new TUserModel
@@ -39,7 +40,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return OptionF.None<TUserModel>(true);
+				return None<TUserModel>(true);
 			}
 
 			return new TUserModel

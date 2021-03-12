@@ -48,10 +48,7 @@ namespace Jeebs.Data.Mapping
 		private static Task<Option<bool>> DeleteAsync<T>(T entity, IUnitOfWork w, string method, Func<string, T, IDbTransaction, Task<int>> execute)
 			where T : class, IEntity
 		{
-			return
-				Return(
-					entity
-				)
+			return Return(entity)
 				.BindAsync(
 					deletePoco,
 					e => new Jm.Data.DeleteExceptionMsg(e, typeof(T), entity.Id)

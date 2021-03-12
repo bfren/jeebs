@@ -53,8 +53,7 @@ namespace JeebsF
 
 			try
 			{
-				var parsed = Enum.Parse(t, value, true);
-				return Return(parsed);
+				return Enum.Parse(t, value, true);
 			}
 			catch (Exception)
 			{

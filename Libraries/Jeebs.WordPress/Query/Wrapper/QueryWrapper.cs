@@ -10,6 +10,7 @@ using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Messages.Query.Wrapper;
 using JeebsF;
 using Jm.WordPress.Query.Wrapper;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -78,13 +79,13 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return OptionF.None<PropertyInfo>(new OnlyOneMetaDictionaryPropertySupportedMsg<TModel>());
+				return None<PropertyInfo>(new OnlyOneMetaDictionaryPropertySupportedMsg<TModel>());
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return OptionF.None<PropertyInfo>(new MetaDictionaryPropertyNotFoundMsg<TModel>());
+				return None<PropertyInfo>(new MetaDictionaryPropertyNotFoundMsg<TModel>());
 			}
 
 			return metaDictionary.Single();
@@ -153,7 +154,7 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return OptionF.None<PropertyInfo>(new ContentPropertyNotFoundMsg<TModel>());
+				return None<PropertyInfo>(new ContentPropertyNotFoundMsg<TModel>());
 			}
 
 			return content.Single();

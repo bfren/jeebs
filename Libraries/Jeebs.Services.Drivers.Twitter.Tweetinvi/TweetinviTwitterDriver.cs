@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 {
@@ -54,19 +55,16 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			await client.Users.GetUserAsync(screenName).ConfigureAwait(false) switch
 			{
 				IUser user =>
-					OptionF.Return(user),
+					Return(user),
 
 				_ =>
-					OptionF.None<IUser>(new UserNotFoundMsg(screenName))
+					None<IUser>(new UserNotFoundMsg(screenName))
 			};
 
 		/// <inheritdoc/>
 		public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
-			return OptionF
-				.Return(
-					screenName
-				)
+			return Return(screenName)
 				.BindAsync(
 					GetUser,
 					e => new ErrorGettingUserMsg(e)
@@ -99,10 +97,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// <inheritdoc/>
 		public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
 		{
-			return OptionF
-				.Return(
-					screenName
-				)
+			return Return(screenName)
 				.BindAsync(
 					GetUser,
 					e => new ErrorGettingUserMsg(e)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Data
 {
@@ -93,7 +94,7 @@ namespace Jeebs.Data
 			Log.Error(ex, message.Format, message.ParamArray);
 
 			// Return error
-			return OptionF.None<T>(message);
+			return None<T>(message);
 		}
 
 		#endregion
@@ -110,7 +111,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Driver.Query(Connection, query, parameters, Transaction, commandType);
-				return OptionF.Return(result);
+				return Return(result);
 			}
 			catch (Exception ex)
 			{
@@ -136,7 +137,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Driver.QueryAsync(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return OptionF.Return(result);
+				return Return(result);
 			}
 			catch (Exception ex)
 			{
@@ -162,7 +163,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = Driver.Query<T>(Connection, query, parameters, Transaction, commandType);
-				return OptionF.Return(result);
+				return Return(result);
 			}
 			catch (Exception ex)
 			{
@@ -188,7 +189,7 @@ namespace Jeebs.Data
 
 				// Execute and return
 				var result = await Driver.QueryAsync<T>(Connection, query, parameters, Transaction, commandType).ConfigureAwait(false);
-				return OptionF.Return(result);
+				return Return(result);
 			}
 			catch (Exception ex)
 			{

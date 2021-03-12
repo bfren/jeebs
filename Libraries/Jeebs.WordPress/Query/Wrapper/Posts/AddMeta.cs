@@ -9,6 +9,7 @@ using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
 using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -28,8 +29,7 @@ namespace Jeebs.WordPress
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
 				Some<Meta<TModel>> meta =>
-					await OptionF
-						.Return(posts)
+					await Return(posts)
 						.BindAsync(
 							getMetaAsync,
 							e => new AddMetaExceptionMsg(e)
@@ -48,11 +48,19 @@ namespace Jeebs.WordPress
 			//
 			async Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
 			{
-				return await OptionF
-					.Map(getOptions)
-					.Map(getQuery)
-					.BindAsync(getMeta)
-					.BindAsync(createTuple);
+				return await
+					Map(
+						getOptions
+					)
+					.Map(
+						getQuery
+					)
+					.BindAsync(
+						getMeta
+					)
+					.BindAsync(
+						createTuple
+					);
 
 				// Get query options
 				QueryPostsMeta.Options getOptions() =>

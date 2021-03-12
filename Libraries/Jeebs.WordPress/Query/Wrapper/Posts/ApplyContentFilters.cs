@@ -6,6 +6,7 @@ using System.Reflection;
 using Jeebs.Data;
 using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -32,15 +33,14 @@ namespace Jeebs.WordPress
 			return GetPostContentInfo<TModel>() switch
 			{
 				Some<Content<TModel>> x when x.Value is var content =>
-					OptionF
-						.Return(posts)
+					Return(posts)
 						.Map(
 							x => execute(x, content, filters),
 							e => new ApplyContentFiltersExceptionMsg(e)
 						),
 
 				_ =>
-					OptionF.None<TList>(new RequiredContentPropertyNotFoundMsg<TModel>())
+					None<TList>(new RequiredContentPropertyNotFoundMsg<TModel>())
 			};
 
 			//

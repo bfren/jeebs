@@ -24,9 +24,7 @@ namespace Jeebs.Data.Mapping
 		public static Option<T> Create<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
 
-				Return(
-					entity
-				)
+			Return(entity)
 				.Bind(
 					x => InsertAndReturnId(@this, x),
 					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
@@ -50,9 +48,7 @@ namespace Jeebs.Data.Mapping
 		public static Task<Option<T>> CreateAsync<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
 
-				Return(
-					entity
-				)
+			Return(entity)
 				.BindAsync(
 					x => InsertAndReturnIdAsync(@this, x),
 					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))

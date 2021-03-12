@@ -6,6 +6,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -47,10 +48,7 @@ namespace Jeebs.Data.Mapping
 		private static Task<Option<T>> SingleAsync<T>(long id, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
 			where T : class, IEntity
 		{
-			return OptionF
-				.Return(
-					id
-				)
+			return Return(id)
 				.BindAsync(
 					retrievePoco,
 					e => new Jm.Data.RetrieveExceptionMsg(e, typeof(T), id)

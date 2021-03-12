@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -34,15 +35,14 @@ namespace Jeebs.WordPress
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
 				Some<Meta<TModel>> meta when fields.Count > 0 =>
-					await OptionF
-						.Return(posts)
+					await Return(posts)
 						.BindAsync(
 							x => hydrateAsync(x, meta.Value, fields),
 							e => new AddCustomFieldsExceptionMsg(e)
 						),
 
 				_ =>
-					OptionF.None<TList>(new MetaDictionaryNotFoundMsg())
+					None<TList>(new MetaDictionaryNotFoundMsg())
 			};
 
 			//
@@ -73,7 +73,7 @@ namespace Jeebs.WordPress
 
 							if (result is None<bool> && customField.IsRequired)
 							{
-								return OptionF.None<TList>(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
+								return None<TList>(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
 							}
 
 							// Set the value

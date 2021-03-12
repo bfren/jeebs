@@ -5,6 +5,7 @@ using System.IO;
 using Jeebs.Services.Drawing;
 using JeebsF;
 using Jm.Services.Drawing.ImageWrapper;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Services.Drivers.Drawing.Common
 {
@@ -18,7 +19,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		{
 			if (!File.Exists(path))
 			{
-				return OptionF.None<IImageWrapper>(new ImageFileNotFoundMsg(path));
+				return None<IImageWrapper>(new ImageFileNotFoundMsg(path));
 			}
 
 			// Create and return image object

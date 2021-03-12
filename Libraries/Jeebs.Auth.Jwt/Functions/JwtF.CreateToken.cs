@@ -10,6 +10,7 @@ using Jeebs.Auth.Constants;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
 using Microsoft.IdentityModel.Tokens;
+using static JeebsF.OptionF;
 
 namespace JeebsF
 {
@@ -45,32 +46,32 @@ namespace JeebsF
 			// Ensure there is a current user
 			if (principal.Identity == null)
 			{
-				return OptionF.None<string>(new NullIdentityMsg());
+				return None<string>(new NullIdentityMsg());
 			}
 
 			// Ensure the current user is authenticated
 			var identity = principal.Identity;
 			if (!identity.IsAuthenticated)
 			{
-				return OptionF.None<string>(new IdentityNotAuthenticatedMsg());
+				return None<string>(new IdentityNotAuthenticatedMsg());
 			}
 
 			// Ensure the JwtConfig is valid
 			if (!config.IsValid)
 			{
-				return OptionF.None<string>(new JwtConfigInvalidMsg());
+				return None<string>(new JwtConfigInvalidMsg());
 			}
 
 			// Ensure the signing key is a valid length
 			if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 			{
-				return OptionF.None<string>(new SigningKeyNotLongEnoughMsg());
+				return None<string>(new SigningKeyNotLongEnoughMsg());
 			}
 
 			// Ensure the encrypting key is a valid length
 			if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 			{
-				return OptionF.None<string>(new EncryptingKeyNotLongEnoughMsg());
+				return None<string>(new EncryptingKeyNotLongEnoughMsg());
 			}
 
 			try
@@ -103,11 +104,11 @@ namespace JeebsF
 			}
 			catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 			{
-				return OptionF.None<string>(new KeyNotLongEnoughMsg());
+				return None<string>(new KeyNotLongEnoughMsg());
 			}
 			catch (Exception e)
 			{
-				return OptionF.None<string>(new ErrorCreatingJwtSecurityTokenMsg(e));
+				return None<string>(new ErrorCreatingJwtSecurityTokenMsg(e));
 			}
 		}
 	}

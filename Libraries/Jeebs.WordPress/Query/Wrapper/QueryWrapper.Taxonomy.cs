@@ -8,6 +8,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
 using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -20,10 +21,7 @@ namespace Jeebs.WordPress
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		public Task<Option<List<TModel>>> QueryTaxonomyAsync<TModel>(Action<QueryTaxonomy.Options>? modify = null)
 		{
-			return OptionF
-				.Return(
-					modify
-				)
+			return Return(modify)
 				.Map(
 					GetTaxonomyQuery<TModel>
 				)
