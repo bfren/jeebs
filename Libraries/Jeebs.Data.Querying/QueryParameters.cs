@@ -59,6 +59,6 @@ namespace Jeebs.Data.Querying
 		/// Return parameters as JSON
 		/// </summary>
 		public override string ToString() =>
-			F.JsonF.Serialise(this);
+			JeebsF.JsonF.Serialise(this);
 	}
 }

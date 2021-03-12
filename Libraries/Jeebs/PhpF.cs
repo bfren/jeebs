@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// PHP Serialiser Class

@@ -14,7 +14,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 			const string? prophets = "[\"Isaiah\",\"Jeremiah\",\"Lamentations\",\"Ezekiel\",\"Daniel\"]";
 
 			// Act
-			var result = F.JsonF.Serialise(BibleBooks.MajorProphets);
+			var result = JeebsF.JsonF.Serialise(BibleBooks.MajorProphets);
 
 			// Assert
 			Assert.Equal(prophets, result);

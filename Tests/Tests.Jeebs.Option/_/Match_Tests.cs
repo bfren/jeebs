@@ -2,10 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class Match_Tests
 	{
@@ -21,15 +22,15 @@ namespace Jeebs.Option_Tests
 			void action() => option.DoMatch(some, none);
 
 			// Assert
-			Assert.Throws<Jx.Option.UnknownOptionException>(action);
+			Assert.Throws<Exceptions.UnknownOptionException>(action);
 		}
 
 		[Fact]
 		public void If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var some = Substitute.For<Func<int, string>>();
 
 			// Act
@@ -40,7 +41,7 @@ namespace Jeebs.Option_Tests
 
 			option.Match(
 				some: some,
-				none: F.Rnd.Str
+				none: JeebsF.Rnd.Str
 			);
 
 			option.Match(
@@ -61,8 +62,8 @@ namespace Jeebs.Option_Tests
 		public void If_None_Gets_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
-			var value = F.Rnd.Str;
+			var option = OptionF.None<int>(true);
+			var value = JeebsF.Rnd.Str;
 
 			// Act
 			var result = option.Match(
@@ -78,7 +79,7 @@ namespace Jeebs.Option_Tests
 		public void If_None_Runs_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var none = Substitute.For<Func<string>>();
 
 			// Act

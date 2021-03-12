@@ -3,9 +3,9 @@
 
 using System;
 using System.Linq;
-using Jeebs;
+using static JeebsF.OptionF;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// Boolean functions
@@ -23,7 +23,7 @@ namespace F
 			var val = value?.ToString()?.ToLower();
 			if (val is null)
 			{
-				return Option.None<bool>(new Jm.Functions.BooleanF.NullValueMsg());
+				return None<bool>(new Jm.Functions.BooleanF.NullValueMsg());
 			}
 
 			// Alternative boolean values
@@ -44,7 +44,7 @@ namespace F
 				return result;
 			}
 
-			return Option.None<bool>(new Jm.Functions.BooleanF.UnrecognisedValueMsg(val));
+			return None<bool>(new Jm.Functions.BooleanF.UnrecognisedValueMsg(val));
 		}
 	}
 }

@@ -32,10 +32,10 @@ namespace Jeebs.Config.ServiceCollectionExtensions_Tests.FluentBind_Tests
 			// Arrange
 			var services = Substitute.For<IServiceCollection>();
 			var bind = new ServiceCollectionExtensions.FluentBind<Foo>(services);
-			var key = F.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
 
-			var b0 = F.Rnd.Str;
-			var b1 = F.Rnd.Int;
+			var b0 = JeebsF.Rnd.Str;
+			var b1 = JeebsF.Rnd.Int;
 			var builder = new ConfigurationBuilder();
 			builder.AddInMemoryCollection(new Dictionary<string, string>
 			{

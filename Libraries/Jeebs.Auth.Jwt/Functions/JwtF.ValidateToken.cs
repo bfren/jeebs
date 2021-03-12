@@ -4,13 +4,12 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Config;
 using Jm.Functions.JwtF.ValidateToken;
 using Microsoft.IdentityModel.Tokens;
 
-namespace F
+namespace JeebsF
 {
 	public static partial class JwtF
 	{
@@ -44,7 +43,7 @@ namespace F
 				// Check date values
 				if (validatedToken.ValidTo < DateTime.Now)
 				{
-					return Option.None<ClaimsPrincipal>(new TokenHasExpiredMsg());
+					return OptionF.None<ClaimsPrincipal>(new TokenHasExpiredMsg());
 				}
 
 				// Return valid principal
@@ -52,11 +51,11 @@ namespace F
 			}
 			catch (SecurityTokenNotYetValidException)
 			{
-				return Option.None<ClaimsPrincipal>(new TokenIsNotValidYetMsg());
+				return OptionF.None<ClaimsPrincipal>(new TokenIsNotValidYetMsg());
 			}
 			catch (Exception e)
 			{
-				return Option.None<ClaimsPrincipal>(new ErrorValidatingTokenMsg(e));
+				return OptionF.None<ClaimsPrincipal>(new ErrorValidatingTokenMsg(e));
 			}
 		}
 	}

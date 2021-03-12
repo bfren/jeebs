@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace JeebsF.OptionExtensions_Tests
 {
 	public class AuditSwitchAsync_Tests
 	{
@@ -14,7 +15,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Null_Args_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Option.Wrap(F.Rnd.Int);
+			var option = OptionF.Return(JeebsF.Rnd.Int);
 			var task = Task.FromResult(option);
 
 			// Act
@@ -37,15 +38,15 @@ namespace Jeebs.OptionExtensions_Tests
 			Task result() => OptionExtensions.DoAuditSwitchAsync(task, some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Jx.Option.UnknownOptionException>(result);
+			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(result);
 		}
 
 		[Fact]
 		public async Task Some_Runs_Some_And_Returns_Original_Option()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var task = Task.FromResult(option);
 			var some = Substitute.For<Func<int, Task>>();
 
@@ -70,7 +71,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = Option.None<int>(msg);
+			var option = OptionF.None<int>(msg);
 			var task = Task.FromResult(option.AsOption);
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
@@ -94,8 +95,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var o0 = Option.Wrap(F.Rnd.Int);
-			var o1 = Option.None<int>(true);
+			var o0 = OptionF.Return(JeebsF.Rnd.Int);
+			var o1 = OptionF.None<int>(true);
 			var t0 = Task.FromResult(o0);
 			var t1 = Task.FromResult(o1.AsOption);
 			var exception = new Exception();

@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.OptionSome_Tests
+namespace JeebsF.OptionSome_Tests
 {
 	public class Constructor_Tests
 	{
@@ -11,7 +11,7 @@ namespace Jeebs.OptionSome_Tests
 		public void Sets_Value()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
 
 			// Act
 			var result = new Some<string>(value);

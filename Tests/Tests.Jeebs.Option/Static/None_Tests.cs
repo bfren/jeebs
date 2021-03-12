@@ -1,10 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionStatic_Tests
+namespace JeebsF.OptionStatic_Tests
 {
 	public class None_Tests
 	{
@@ -14,7 +15,7 @@ namespace Jeebs.OptionStatic_Tests
 			// Arrange
 
 			// Act
-			var result = Option.None<int>(true);
+			var result = OptionF.None<int>(true);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -27,7 +28,7 @@ namespace Jeebs.OptionStatic_Tests
 			var reason = Substitute.For<IMsg>();
 
 			// Act
-			var result = Option.None<int>(reason);
+			var result = OptionF.None<int>(reason);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);

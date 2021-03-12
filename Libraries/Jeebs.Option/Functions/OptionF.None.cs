@@ -1,9 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-namespace Jeebs
+using Jeebs;
+
+namespace JeebsF
 {
-	public static partial class Option
+	public static partial class OptionF
 	{
 		/// <summary>
 		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message
@@ -25,7 +27,13 @@ namespace Jeebs
 					new(null),
 
 				false =>
-					new(new Jm.Option.IfYouArentSureDontMakeItMsg())
+					new(new IfYouArentSureDontMakeItMsg())
 			};
+
+		#region Messages
+
+		public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
+
+		#endregion
 	}
 }

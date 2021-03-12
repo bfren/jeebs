@@ -4,7 +4,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// Maths shorthands

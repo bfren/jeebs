@@ -11,17 +11,17 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 	{
 		internal static (string name, MappedColumn column) Get()
 		{
-			var name = F.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			var prop = Substitute.For<PropertyInfo>();
-			prop.Name.Returns(F.Rnd.Str);
-			return (name, new MappedColumn(F.Rnd.Str, name, prop));
+			prop.Name.Returns(JeebsF.Rnd.Str);
+			return (name, new MappedColumn(JeebsF.Rnd.Str, name, prop));
 		}
 
 		[Fact]
 		public void No_Columns_Returns_Empty_List()
 		{
 			// Arrange
-			var map = new TableMap(F.Rnd.Str, new MappedColumnList(), Get().column);
+			var map = new TableMap(JeebsF.Rnd.Str, new MappedColumnList(), Get().column);
 
 			// Act
 			var result = map.GetColumnNames();
@@ -38,7 +38,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 			var (n1, c1) = Get();
 			var (n2, c2) = Get();
 			var (n3, c3) = Get();
-			var map = new TableMap(F.Rnd.Str, new MappedColumnList() { c0, c1, c2, c3 }, c0);
+			var map = new TableMap(JeebsF.Rnd.Str, new MappedColumnList() { c0, c1, c2, c3 }, c0);
 
 			// Act
 			var result = map.GetColumnNames();

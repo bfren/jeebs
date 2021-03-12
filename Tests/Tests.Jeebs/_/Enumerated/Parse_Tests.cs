@@ -1,6 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using JeebsF;
 using Xunit;
 
 namespace Jeebs.Enumerated_Tests
@@ -25,7 +26,7 @@ namespace Jeebs.Enumerated_Tests
 		public void InvalidString_Returns_None()
 		{
 			// Arrange
-			var input = F.Rnd.Str;
+			var input = JeebsF.Rnd.Str;
 
 			// Act
 			var result = EnumeratedTest.Parse(input);

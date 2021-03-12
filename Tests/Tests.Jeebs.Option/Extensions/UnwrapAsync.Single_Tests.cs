@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace JeebsF.OptionExtensions_Tests
 {
 	public class UnwrapSingleAsync_Tests
 	{
@@ -24,14 +25,14 @@ namespace Jeebs.OptionExtensions_Tests
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
 			var msg = Assert.IsType<Jm.Option.UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<Jx.Option.UnknownOptionException>(msg.Exception);
+			Assert.IsType<Exceptions.UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
 		public async Task None_Returns_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var task = Task.FromResult(option.AsOption);
 
 			// Act
@@ -46,7 +47,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			var reason = new TestMsg();
-			var option = Option.None<int>(reason);
+			var option = OptionF.None<int>(reason);
 			var task = Task.FromResult(option.AsOption);
 
 			// Act
@@ -62,7 +63,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			var empty = (IEnumerable<int>)Array.Empty<int>();
-			var option = Option.Wrap(empty);
+			var option = OptionF.Return(empty);
 			var task = Task.FromResult(option);
 
 			// Act
@@ -78,7 +79,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			var empty = (IEnumerable<int>)Array.Empty<int>();
-			var option = Option.Wrap(empty);
+			var option = OptionF.Return(empty);
 			var task = Task.FromResult(option);
 			var noItems = Substitute.For<Func<IMsg>>();
 
@@ -93,8 +94,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
-			var option = Option.Wrap(list);
+			var list = (IEnumerable<int>)new[] { JeebsF.Rnd.Int, JeebsF.Rnd.Int };
+			var option = OptionF.Return(list);
 			var task = Task.FromResult(option);
 
 			// Act
@@ -109,8 +110,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Too_Many_Items_Runs_TooMany()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
-			var option = Option.Wrap(list);
+			var list = (IEnumerable<int>)new[] { JeebsF.Rnd.Int, JeebsF.Rnd.Int };
+			var option = OptionF.Return(list);
 			var task = Task.FromResult(option);
 			var tooMany = Substitute.For<Func<IMsg>>();
 
@@ -125,8 +126,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var task = Task.FromResult(option);
 
 			// Act
@@ -141,8 +142,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Not_A_List_Runs_NotAList()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var task = Task.FromResult(option);
 			var notAList = Substitute.For<Func<IMsg>>();
 
@@ -157,9 +158,9 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task List_With_Single_Item_Returns_Single()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = JeebsF.Rnd.Int;
 			var list = (IEnumerable<int>)new[] { value };
-			var option = Option.Wrap(list);
+			var option = OptionF.Return(list);
 			var task = Task.FromResult(option);
 
 			// Act

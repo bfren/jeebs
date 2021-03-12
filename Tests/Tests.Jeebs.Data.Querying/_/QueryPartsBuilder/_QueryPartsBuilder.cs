@@ -16,7 +16,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		public static (Builder builder, IAdapter adapter) GetQueryPartsBuilder()
 		{
 			var adapter = Substitute.For<IAdapter>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 			var builder = new Builder(adapter, from);
 
 			return (builder, adapter);
@@ -29,9 +29,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			var table = F.Rnd.Str;
-			var on = F.Rnd.Str;
-			(string table, string column) equals = (F.Rnd.Str, F.Rnd.Str);
+			var table = JeebsF.Rnd.Str;
+			var on = JeebsF.Rnd.Str;
+			(string table, string column) equals = (JeebsF.Rnd.Str, JeebsF.Rnd.Str);
 
 			// Act
 			addJoin(builder, table, on, equals);
@@ -49,9 +49,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, adapter) = GetQueryPartsBuilder();
-			var table = F.Rnd.Str;
-			var on = F.Rnd.Str;
-			(string table, string column) equals = (F.Rnd.Str, F.Rnd.Str);
+			var table = JeebsF.Rnd.Str;
+			var on = JeebsF.Rnd.Str;
+			(string table, string column) equals = (JeebsF.Rnd.Str, JeebsF.Rnd.Str);
 
 			// Act
 			addJoin(builder, table, on, equals, true);
@@ -70,9 +70,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, adapter) = GetQueryPartsBuilder();
-			var table = F.Rnd.Str;
-			var on = F.Rnd.Str;
-			(string table, string column) equals = (F.Rnd.Str, F.Rnd.Str);
+			var table = JeebsF.Rnd.Str;
+			var on = JeebsF.Rnd.Str;
+			(string table, string column) equals = (JeebsF.Rnd.Str, JeebsF.Rnd.Str);
 
 			// Act
 			addJoin(builder, table, on, equals, false);

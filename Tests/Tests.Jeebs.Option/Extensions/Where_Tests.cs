@@ -2,9 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Threading.Tasks;
+using Jeebs;
+using JeebsF.Linq;
 using Xunit;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace JeebsF.OptionExtensions_Tests
 {
 	public class Where_Tests
 	{
@@ -12,8 +14,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Where_True_With_Some_Returns_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 
 			// Act
 			var result = from a in option
@@ -29,8 +31,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_Where_True_With_Some_Returns_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Task.FromResult(Option.Wrap(value));
+			var value = JeebsF.Rnd.Int;
+			var option = Task.FromResult(OptionF.Return(value));
 
 			// Act
 			var result = await (
@@ -48,8 +50,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Where_False_With_Some_Returns_None()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 
 			// Act
 			var result = from a in option
@@ -64,8 +66,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_Where_False_With_Some_Returns_None()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Task.FromResult(Option.Wrap(value));
+			var value = JeebsF.Rnd.Int;
+			var option = Task.FromResult(OptionF.Return(value));
 
 			// Act
 			var result = await (
@@ -82,7 +84,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Where_With_None_Returns_None()
 		{
 			// Arrange
-			var option = Option.None<int>(new InvalidIntegerMsg());
+			var option = OptionF.None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = from a in option
@@ -98,7 +100,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_Where_With_None_Returns_None()
 		{
 			// Arrange
-			var option = Task.FromResult(Option.None<int>(new InvalidIntegerMsg()).AsOption);
+			var option = Task.FromResult(OptionF.None<int>(new InvalidIntegerMsg()).AsOption);
 
 			// Act
 			var result = await (

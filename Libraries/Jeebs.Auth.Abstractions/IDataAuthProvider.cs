@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
+using JeebsF;
 
 namespace Jeebs.Auth
 {

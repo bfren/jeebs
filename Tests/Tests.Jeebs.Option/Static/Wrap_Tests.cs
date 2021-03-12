@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.OptionStatic_Tests
+namespace JeebsF.OptionStatic_Tests
 {
 	public class Wrap_Tests
 	{
@@ -15,7 +15,7 @@ namespace Jeebs.OptionStatic_Tests
 			// Arrange
 
 			// Act
-			var result = Option.Wrap(input);
+			var result = OptionF.Return(input);
 
 			// Assert
 			var some = Assert.IsType<Some<T>>(result);
@@ -29,7 +29,7 @@ namespace Jeebs.OptionStatic_Tests
 			int? value = null;
 
 			// Act
-			var result = Option.Wrap(value);
+			var result = OptionF.Return(value);
 
 			// Assert
 			var none = Assert.IsType<None<int?>>(result);
@@ -43,7 +43,7 @@ namespace Jeebs.OptionStatic_Tests
 			int? value = null;
 
 			// Act
-			var result = Option.Wrap(value, true);
+			var result = OptionF.Return(value, true);
 
 			// Assert
 			var some = Assert.IsType<Some<int?>>(result);
@@ -57,7 +57,7 @@ namespace Jeebs.OptionStatic_Tests
 			int? value = null;
 
 			// Act
-			var result = Option.Wrap(value, true);
+			var result = OptionF.Return(value, true);
 
 			// Assert
 			var some = Assert.IsType<Some<int?>>(result);

@@ -10,6 +10,6 @@ namespace Jeebs.Config
 	{
 		/// <inheritdoc/>
 		public override bool IsValid =>
-			F.UriF.IsHttps(Webhook);
+			JeebsF.UriF.IsHttps(Webhook);
 	}
 }

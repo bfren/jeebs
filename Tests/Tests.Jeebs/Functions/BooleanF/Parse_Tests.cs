@@ -1,11 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs;
 using Jm.Functions.BooleanF;
 using Xunit;
 
-namespace F.BooleanF_Tests
+namespace JeebsF.BooleanF_Tests
 {
 	public class Parse_Tests
 	{

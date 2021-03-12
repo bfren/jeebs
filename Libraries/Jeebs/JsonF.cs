@@ -4,9 +4,9 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs;
+using static JeebsF.OptionF;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// JSON shorthands
@@ -95,7 +95,7 @@ namespace F
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
 			{
-				return Option.None<T>(new Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg());
+				return None<T>(new Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg());
 			}
 
 			// Attempt to deserialise JSON
@@ -107,12 +107,12 @@ namespace F
 						x,
 
 					_ =>
-						Option.None<T>(new Jm.Functions.JsonF.DeserialisingReturnedNullMsg()) // should never get here
+						None<T>(new Jm.Functions.JsonF.DeserialisingReturnedNullMsg()) // should never get here
 				};
 			}
 			catch (Exception ex)
 			{
-				return Option.None<T>(new Jm.Functions.JsonF.DeserialiseExceptionMsg(ex));
+				return None<T>(new Jm.Functions.JsonF.DeserialiseExceptionMsg(ex));
 			}
 		}
 

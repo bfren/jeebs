@@ -26,7 +26,7 @@ namespace Jeebs.Config.DbConfig_Tests
 		public void No_Connections_Throws_NoDbConnectionsException()
 		{
 			// Arrange
-			var config = new DbConfig { Default = F.Rnd.Str };
+			var config = new DbConfig { Default = JeebsF.Rnd.Str };
 
 			// Act
 			void action() => config.GetConnection();
@@ -40,9 +40,9 @@ namespace Jeebs.Config.DbConfig_Tests
 		public void Connection_Not_Found_Throws_NamedDbConnectionNotFoundException()
 		{
 			// Arrange
-			var name = F.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			var config = new DbConfig { Default = name };
-			config.Connections.Add(F.Rnd.Str, new DbConnectionConfig());
+			config.Connections.Add(JeebsF.Rnd.Str, new DbConnectionConfig());
 
 			// Act
 			void action() => config.GetConnection();
@@ -56,7 +56,7 @@ namespace Jeebs.Config.DbConfig_Tests
 		public void Connection_Not_Specified_Returns_Default_Connection()
 		{
 			// Arrange
-			var name = F.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			var connection = new DbConnectionConfig();
 			var config = new DbConfig { Default = name };
 			config.Connections.Add(name, connection);
@@ -72,9 +72,9 @@ namespace Jeebs.Config.DbConfig_Tests
 		public void Returns_Named_Connection()
 		{
 			// Arrange
-			var name = F.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			var connection = new DbConnectionConfig();
-			var config = new DbConfig { Default = F.Rnd.Str };
+			var config = new DbConfig { Default = JeebsF.Rnd.Str };
 			config.Connections.Add(name, connection);
 
 			// Act

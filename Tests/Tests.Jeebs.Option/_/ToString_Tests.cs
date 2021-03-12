@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class ToString_Tests
 	{
@@ -11,8 +12,8 @@ namespace Jeebs.Option_Tests
 		public void Is_Some_With_Value_Returns_Value_ToString()
 		{
 			// Arrange
-			var value = F.Rnd.Lng;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Lng;
+			var option = OptionF.Return(value);
 
 			// Act
 			var result = option.ToString();
@@ -26,7 +27,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			int? value = null;
-			var option = Option.Wrap(value, true);
+			var option = OptionF.Return(value, true);
 
 			// Act
 			var result = option.ToString();
@@ -39,9 +40,9 @@ namespace Jeebs.Option_Tests
 		public void Is_None_With_Reason_Returns_Reason_ToString()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
 			var msg = new TestMsg(value);
-			var option = Option.None<int>(msg);
+			var option = OptionF.None<int>(msg);
 
 			// Act
 			var result = option.ToString();
@@ -54,7 +55,7 @@ namespace Jeebs.Option_Tests
 		public void Is_None_Without_Reason_Returns_Type()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 
 			// Act
 			var result = option.ToString();

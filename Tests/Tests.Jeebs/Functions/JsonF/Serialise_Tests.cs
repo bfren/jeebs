@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace F.JsonF_Tests
+namespace JeebsF.JsonF_Tests
 {
 	public partial class Serialise_Tests
 	{

@@ -2,10 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class Switch_Tests
 	{
@@ -21,15 +22,15 @@ namespace Jeebs.Option_Tests
 			Action action = () => option.DoSwitch(some, none);
 
 			// Assert
-			Assert.Throws<Jx.Option.UnknownOptionException>(action);
+			Assert.Throws<Exceptions.UnknownOptionException>(action);
 		}
 
 		[Fact]
 		public void If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var some = Substitute.For<Action<int>>();
 			var none = Substitute.For<Action>();
 
@@ -58,7 +59,7 @@ namespace Jeebs.Option_Tests
 		public void If_None_Without_Reason_Runs_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var some = Substitute.For<Action<int>>();
 			var none = Substitute.For<Action>();
 
@@ -83,7 +84,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var reason = new TestMsg();
-			var option = Option.None<int>(reason);
+			var option = OptionF.None<int>(reason);
 			var some = Substitute.For<Action<int>>();
 			var none = Substitute.For<Action<IMsg?>>();
 

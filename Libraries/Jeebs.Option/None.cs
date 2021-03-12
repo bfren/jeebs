@@ -1,7 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-namespace Jeebs
+using Jeebs;
+
+namespace JeebsF
 {
 	/// <summary>
 	/// 'None' option - used to replace null returns (see <seealso cref="Some{T}"/>)

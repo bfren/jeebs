@@ -5,39 +5,46 @@ using System;
 using System.Text.Json;
 using Jeebs.Id;
 
-namespace F.Internals
+namespace JeebsF.Internals
 {
 	/// <summary>
-	/// Converter for <see cref="GuidId"/> types
+	/// Converter for <see cref="LongId"/> types
 	/// </summary>
-	/// <typeparam name="T">GuidId type</typeparam>
-	internal class GuidIdConverter<T> : StrongIdConverter<GuidId, Guid>
-		where T : GuidId, new()
+	/// <typeparam name="T">LongId type</typeparam>
+	internal class LongIdConverter<T> : StrongIdConverter<LongId, long>
+		where T : LongId, new()
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public GuidIdConverter() : base(Guid.Empty) { }
+		public LongIdConverter() : base(0L) { }
 
 		/// <summary>
-		/// Read an GuidId type value
+		/// Read an LongId type value
 		/// </summary>
 		/// <param name="reader">Utf8JsonReader</param>
-		/// <param name="typeToConvert">GuidId type</param>
+		/// <param name="typeToConvert">LongId type</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 			new()
 			{
 				Value = reader.TokenType switch
 				{
-					// Handle strings
+					// Handle numbers
+					JsonTokenType.Number =>
+						reader.GetInt64(),
+
+					// Handle strings if strings are allowed
 					JsonTokenType.String =>
-						HandleString(ref reader, s => !string.IsNullOrEmpty(s), Guid.TryParse),
+						HandleString(
+							ref reader,
+							_ => AllowStringsAsNumbers(options),
+							long.TryParse
+						),
 
 					// Handle default
 					_ =>
 						HandleDefault(ref reader)
-
 				}
 			};
 	}

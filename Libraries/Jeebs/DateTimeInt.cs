@@ -3,6 +3,8 @@
 
 using System;
 using System.Linq;
+using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs
 {
@@ -152,7 +154,7 @@ namespace Jeebs
 					new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 				{ } x =>
-					Option.None<DateTime>(new Jm.DateTimeInt.InvalidDateTimeMsg(x.Part, this))
+					None<DateTime>(new Jm.DateTimeInt.InvalidDateTimeMsg(x.Part, this))
 			};
 
 		/// <summary>

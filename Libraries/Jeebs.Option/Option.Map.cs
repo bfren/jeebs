@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{
@@ -13,17 +13,17 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Option<U> DoMap<U>(Func<T, U> map, Option.Handler? handler = null) =>
-			Option.Catch(() =>
+		internal Option<U> DoMap<U>(Func<T, U> map, OptionF.Handler? handler = null) =>
+			OptionF.Catch(() =>
 				Switch(
-					some: v => Option.Wrap(map(v)),
+					some: v => OptionF.Return(map(v)),
 					none: r => new None<U>(r)
 				),
 				handler
 			);
 
-		/// <inheritdoc cref="DoMap{U}(Func{T, U}, Option.Handler?)"/>
-		public Option<U> Map<U>(Func<T, U> map, Option.Handler? handler = null) =>
+		/// <inheritdoc cref="DoMap{U}(Func{T, U}, OptionF.Handler?)"/>
+		public Option<U> Map<U>(Func<T, U> map, OptionF.Handler? handler = null) =>
 			DoMap(map, handler);
 	}
 }

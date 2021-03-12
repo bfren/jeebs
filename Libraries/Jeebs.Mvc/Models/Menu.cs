@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using JeebsF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 
@@ -123,7 +124,7 @@ namespace Jeebs.Mvc.Models
 			}
 
 			// Return result
-			return Option.Wrap(result.ToString());
+			return result.ToString();
 		}
 	}
 }

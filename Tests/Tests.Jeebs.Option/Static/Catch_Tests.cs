@@ -5,7 +5,7 @@ using System;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionStatic_Tests
+namespace JeebsF.OptionStatic_Tests
 {
 	public class Catch_Tests
 	{
@@ -13,10 +13,10 @@ namespace Jeebs.OptionStatic_Tests
 		public void Executes_Chain()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = JeebsF.Rnd.Int;
 
 			// Act
-			var result = Option.Catch(() => Option.Wrap(value));
+			var result = OptionF.Catch(() => OptionF.Return(value));
 
 			// Assert
 			var some = Assert.IsType<Some<int>>(result);
@@ -27,10 +27,10 @@ namespace Jeebs.OptionStatic_Tests
 		public void Catches_Exception_Without_Handler()
 		{
 			// Arrange
-			var message = F.Rnd.Str;
+			var message = JeebsF.Rnd.Str;
 
 			// Act
-			var result = Option.Catch<int>(() => throw new Exception(message));
+			var result = OptionF.Catch<int>(() => throw new Exception(message));
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
@@ -42,12 +42,12 @@ namespace Jeebs.OptionStatic_Tests
 		public void Catches_Exception_With_Handler()
 		{
 			// Arrange
-			var message = F.Rnd.Str;
+			var message = JeebsF.Rnd.Str;
 			var exception = new Exception(message);
-			var handler = Substitute.For<Option.Handler>();
+			var handler = Substitute.For<OptionF.Handler>();
 
 			// Act
-			var result = Option.Catch<int>(() => throw exception, handler);
+			var result = OptionF.Catch<int>(() => throw exception, handler);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);

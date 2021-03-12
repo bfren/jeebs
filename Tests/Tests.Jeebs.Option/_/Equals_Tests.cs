@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class Equals_Tests
 	{
@@ -28,11 +29,11 @@ namespace Jeebs.Option_Tests
 		public void Some_Compares_Values()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var o0 = Option.Wrap(v0);
-			var o1 = Option.Wrap(v0);
-			var o2 = Option.Wrap(v1);
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var o0 = OptionF.Return(v0);
+			var o1 = OptionF.Return(v0);
+			var o2 = OptionF.Return(v1);
 
 			// Act
 			var r0 = o0.Equals(o1);
@@ -49,9 +50,9 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var m0 = new TestMsg0();
 			var m1 = new TestMsg1();
-			var o0 = Option.None<int>(m0);
-			var o1 = Option.None<int>(m0);
-			var o2 = Option.None<int>(m1);
+			var o0 = OptionF.None<int>(m0);
+			var o1 = OptionF.None<int>(m0);
+			var o2 = OptionF.None<int>(m1);
 
 			// Act
 			var r0 = o0.Equals(o1);
@@ -66,8 +67,8 @@ namespace Jeebs.Option_Tests
 		public void Mixed_Returns_False()
 		{
 			// Arrange
-			var o0 = Option.Wrap(F.Rnd.Int);
-			var o1 = Option.None<int>(true);
+			var o0 = OptionF.Return(JeebsF.Rnd.Int);
+			var o1 = OptionF.None<int>(true);
 
 			// Act
 			var r0 = o0.Equals(o1);

@@ -7,7 +7,7 @@ using Jeebs;
 namespace Jm.Option
 {
 	/// <summary>
-	/// See <see cref="Jeebs.Option.Catch{T}(Func{Option{T}}, Jeebs.Option.Handler?)"/>
+	/// See <see cref="Jeebs.OptionF.Catch{T}(Func{Option{T}}, Jeebs.OptionF.Handler?)"/>
 	/// </summary>
 	public sealed record UnhandledExceptionMsg(Exception Exception) : IMsg
 	{

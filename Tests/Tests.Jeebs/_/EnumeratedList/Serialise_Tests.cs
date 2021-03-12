@@ -17,7 +17,7 @@ namespace Jeebs.EnumeratedList_Tests
 			var result = list.Serialise();
 
 			// Assert
-			Assert.Equal(F.JsonF.Empty, result);
+			Assert.Equal(JeebsF.JsonF.Empty, result);
 		}
 
 		[Fact]
@@ -38,9 +38,9 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			public Foo(string name) : base(name) { }
 
-			public static Foo A = new(F.Rnd.Str);
+			public static Foo A = new(JeebsF.Rnd.Str);
 
-			public static Foo B = new(F.Rnd.Str);
+			public static Foo B = new(JeebsF.Rnd.Str);
 		}
 	}
 }

@@ -11,9 +11,9 @@ namespace Jeebs.Data.Mapping.Column_Tests
 		public void Properties_Set()
 		{
 			// Arrange
-			var table = F.Rnd.Str;
-			var name = F.Rnd.Str;
-			var alias = F.Rnd.Str;
+			var table = JeebsF.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
+			var alias = JeebsF.Rnd.Str;
 			var column = new Column(table, name, alias);
 
 			// Act

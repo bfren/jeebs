@@ -15,11 +15,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			var adapter = Substitute.For<IAdapter>();
 
 			var column = Substitute.For<IColumn>();
-			var table = F.Rnd.Str;
+			var table = JeebsF.Rnd.Str;
 			column.Table.Returns(table);
-			var name = F.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			column.Name.Returns(name);
-			var alias = F.Rnd.Str;
+			var alias = JeebsF.Rnd.Str;
 			column.Alias.Returns(alias);
 
 			// Act
@@ -37,11 +37,11 @@ namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
 			var adapter = Substitute.For<IAdapter>();
 
 			var mapped = Substitute.For<IMappedColumn>();
-			var name = F.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			mapped.Name.Returns(name);
-			var alias = F.Rnd.Str;
+			var alias = JeebsF.Rnd.Str;
 			mapped.Alias.Returns(alias);
-			var table = F.Rnd.Str;
+			var table = JeebsF.Rnd.Str;
 			mapped.Table.Returns(table);
 
 			// Act

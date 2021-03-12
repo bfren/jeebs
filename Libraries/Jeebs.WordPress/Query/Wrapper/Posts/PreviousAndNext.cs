@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Querying;
+using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
 
 namespace Jeebs.WordPress
@@ -18,7 +19,7 @@ namespace Jeebs.WordPress
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		public async Task<Option<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(long postId, Action<QueryPosts.Options>? modify = null)
 		{
-			return await Option
+			return await OptionF
 				.Map(
 					getQuery,
 					e => new GetPostsQueryExceptionMsg(e)

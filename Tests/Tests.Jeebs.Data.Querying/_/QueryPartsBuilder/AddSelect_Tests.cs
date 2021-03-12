@@ -17,7 +17,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
 			builder.Parts.Select = input;
-			var select = F.Rnd.Str;
+			var select = JeebsF.Rnd.Str;
 
 			// Act
 			builder.AddSelect(select);
@@ -31,8 +31,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			builder.Parts.Select = F.Rnd.Str;
-			var select = F.Rnd.Str;
+			builder.Parts.Select = JeebsF.Rnd.Str;
+			var select = JeebsF.Rnd.Str;
 
 			// Act
 			builder.AddSelect(select, true);
@@ -46,8 +46,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			builder.Parts.Select = F.Rnd.Str;
-			var select = F.Rnd.Str;
+			builder.Parts.Select = JeebsF.Rnd.Str;
+			var select = JeebsF.Rnd.Str;
 
 			// Act
 			void action() => builder.AddSelect(select);

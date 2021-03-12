@@ -114,7 +114,7 @@ namespace Jeebs.Apps
 			// Set Option Audit log and output ready message
 			if (services.GetService<ILog>() is ILog log)
 			{
-				Option.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
+				JeebsF.OptionF.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
 				log.Information("Application ready.");
 			}
 		}

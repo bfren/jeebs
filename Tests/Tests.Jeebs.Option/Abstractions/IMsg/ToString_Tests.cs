@@ -1,14 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.OptionAbstractions.IMsg_Tests
+namespace JeebsF.OptionAbstractions.IMsg_Tests
 {
 	public class ToString_Tests
 	{

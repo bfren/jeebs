@@ -2,12 +2,12 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class MatchExtensionsAsync_Tests
 	{
@@ -24,15 +24,15 @@ namespace Jeebs.Option_Tests
 			Task action() => OptionExtensions.DoMatchAsync(task, some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Jx.Option.UnknownOptionException>(action);
+			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(action);
 		}
 
 		[Fact]
 		public async Task If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var task = Task.FromResult(option);
 			var some = Substitute.For<Func<int, Task<string>>>();
 
@@ -45,17 +45,17 @@ namespace Jeebs.Option_Tests
 
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: F.Rnd.Str
+				none: JeebsF.Rnd.Str
 			);
 
 			await task.MatchAsync(
 				some: some,
-				none: F.Rnd.Str
+				none: JeebsF.Rnd.Str
 			);
 
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: Task.FromResult(F.Rnd.Str)
+				none: Task.FromResult(JeebsF.Rnd.Str)
 			);
 
 			await task.MatchAsync(
@@ -106,9 +106,9 @@ namespace Jeebs.Option_Tests
 		public async Task If_None_Gets_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var task = Task.FromResult(option.AsOption);
-			var value = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
 
 			// Act
 			var r0 = await task.MatchAsync(
@@ -142,7 +142,7 @@ namespace Jeebs.Option_Tests
 		public async Task If_None_Runs_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var task = Task.FromResult(option.AsOption);
 			var none = Substitute.For<Func<string>>();
 

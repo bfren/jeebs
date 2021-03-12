@@ -113,34 +113,5 @@ namespace Jeebs.Log_Tests
 			// Assert
 			log.Received().Fatal(Arg.Any<string>(), Arg.Any<object[]>());
 		}
-
-		[Fact]
-		public void ExceptionMsg_Error_Runs_Error()
-		{
-			// Arrange
-			var msg = Substitute.For<IExceptionMsg>();
-			msg.Level.Returns(LogLevel.Error);
-			var log = Substitute.For<Log>();
-
-			// Act
-			log.Message(msg);
-
-			// Assert
-			log.Received().Error(Arg.Any<Exception>(), Arg.Any<string>(), Arg.Any<object[]>());
-		}
-		[Fact]
-		public void ExceptionMsg_Critical_Runs_Critical()
-		{
-			// Arrange
-			var msg = Substitute.For<IExceptionMsg>();
-			msg.Level.Returns(LogLevel.Fatal);
-			var log = Substitute.For<Log>();
-
-			// Act
-			log.Message(msg);
-
-			// Assert
-			log.Received().Fatal(Arg.Any<Exception>(), Arg.Any<string>(), Arg.Any<object[]>());
-		}
 	}
 }

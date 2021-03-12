@@ -3,7 +3,8 @@
 
 using System;
 using System.Text.RegularExpressions;
-using static F.JsonF;
+using JeebsF;
+using static JeebsF.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {
@@ -45,7 +46,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 					{
 						content = content.Replace(
 							match.Value,
-							string.Format(format, F.StringF.Random(10), videoId, uri)
+							string.Format(format, StringF.Random(10), videoId, uri)
 						);
 					}
 				}

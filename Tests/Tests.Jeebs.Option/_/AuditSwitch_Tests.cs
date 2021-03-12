@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class AuditSwitch_Tests
 	{
@@ -35,15 +36,15 @@ namespace Jeebs.Option_Tests
 			void result() => option.DoAuditSwitchAsync(some, none);
 
 			// Assert
-			Assert.Throws<Jx.Option.UnknownOptionException>(result);
+			Assert.Throws<Exceptions.UnknownOptionException>(result);
 		}
 
 		[Fact]
 		public void Some_Runs_Some_And_Returns_Original_Option()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var some = Substitute.For<Action<int>>();
 
 			// Act
@@ -63,7 +64,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = Option.None<int>(msg);
+			var option = OptionF.None<int>(msg);
 			var none = Substitute.For<Action<IMsg?>>();
 
 			// Act
@@ -82,8 +83,8 @@ namespace Jeebs.Option_Tests
 		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var o0 = Option.Wrap(F.Rnd.Int);
-			var o1 = Option.None<int>(true);
+			var o0 = OptionF.Return(JeebsF.Rnd.Int);
+			var o1 = OptionF.None<int>(true);
 			var exception = new Exception();
 
 			void someThrow(int _) => throw exception!;

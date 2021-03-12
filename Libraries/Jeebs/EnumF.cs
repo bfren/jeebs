@@ -2,9 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using static Jeebs.Option;
+using static JeebsF.OptionF;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// Enum functions
@@ -17,7 +17,7 @@ namespace F
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
-		public static Jeebs.Option<T> Parse<T>(string value)
+		public static Option<T> Parse<T>(string value)
 			where T : struct, Enum
 		{
 			try
@@ -43,7 +43,7 @@ namespace F
 		/// <param name="t">Enum type</param>
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
-		public static Jeebs.Option<object> Parse(Type t, string value)
+		public static Option<object> Parse(Type t, string value)
 		{
 			if (!t.IsEnum)
 			{
@@ -53,7 +53,7 @@ namespace F
 			try
 			{
 				var parsed = Enum.Parse(t, value, true);
-				return Wrap(parsed);
+				return Return(parsed);
 			}
 			catch (Exception)
 			{
@@ -94,7 +94,7 @@ namespace F
 			/// </summary>
 			/// <typeparam name="TTo">Convert To type</typeparam>
 			/// <returns>Converted object</returns>
-			public Jeebs.Option<TTo> To<TTo>()
+			public Option<TTo> To<TTo>()
 				where TTo : struct, Enum
 			{
 				// Convert to long so we can get the value of the receiving enum

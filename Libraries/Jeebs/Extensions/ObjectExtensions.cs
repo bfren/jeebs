@@ -3,7 +3,9 @@
 
 using System.Linq;
 using System.Reflection;
+using JeebsF;
 using Jm.Extensions.ObjectExtensions;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Reflection
 {
@@ -42,7 +44,7 @@ namespace Jeebs.Reflection
 			TypeInfo type = @this.GetType().GetTypeInfo();
 			if (!HasProperty(@this, propertyName))
 			{
-				return Option.None<object>(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
+				return None<object>(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
 			}
 
 			return type.GetProperty(propertyName)?.GetValue(@this, null) switch
@@ -51,7 +53,7 @@ namespace Jeebs.Reflection
 					val,
 
 				_ =>
-					Option.None<object>(new NullPropertyOrValueMsg(@this.GetType(), propertyName))
+					None<object>(new NullPropertyOrValueMsg(@this.GetType(), propertyName))
 			};
 		}
 
@@ -67,14 +69,14 @@ namespace Jeebs.Reflection
 			TypeInfo type = @this.GetType().GetTypeInfo();
 			if (!type.DeclaredProperties.Any(x => x.Name == propertyName))
 			{
-				return Option.None<T>(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
+				return None<T>(new TypeDoesNotContainPropertyMsg(@this.GetType(), propertyName));
 			}
 
 			if (type.GetProperty(propertyName) is PropertyInfo info)
 			{
 				if (typeof(T) != info.PropertyType)
 				{
-					return Option.None<T>(new UnexpectedPropertyTypeMsg(@this.GetType(), propertyName, typeof(T)));
+					return None<T>(new UnexpectedPropertyTypeMsg(@this.GetType(), propertyName, typeof(T)));
 				}
 
 				return info.GetValue(@this, null) switch
@@ -83,11 +85,11 @@ namespace Jeebs.Reflection
 						val,
 
 					_ =>
-						Option.None<T>(new NullValueMsg(@this.GetType(), propertyName))
+						None<T>(new NullValueMsg(@this.GetType(), propertyName))
 				};
 			}
 
-			return Option.None<T>(new NullPropertyMsg(@this.GetType(), propertyName));
+			return None<T>(new NullPropertyMsg(@this.GetType(), propertyName));
 		}
 	}
 }

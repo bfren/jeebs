@@ -3,7 +3,7 @@
 
 using System.Security.Cryptography;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// Byte functions

@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs;
 using Xunit;
 
-namespace F.JsonF_Tests.LongIdConverter_Tests
+namespace JeebsF.JsonF_Tests.LongIdConverter_Tests
 {
 	public class ReadJson_Tests
 	{

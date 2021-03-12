@@ -3,7 +3,7 @@
 
 using System.Linq;
 using Xunit;
-using static F.JsonF;
+using static JeebsF.JsonF;
 
 namespace Jeebs.ListExtensions_Tests
 {
@@ -29,7 +29,7 @@ namespace Jeebs.ListExtensions_Tests
 		public void ArrayDoesNotContainBibleBooks_ReturnsOriginalArray()
 		{
 			// Arrange
-			var array = new[] { F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str };
+			var array = new[] { JeebsF.Rnd.Str, JeebsF.Rnd.Str, JeebsF.Rnd.Str, JeebsF.Rnd.Str };
 
 			// Act
 			var shuffled = array.Shuffle().ToList();

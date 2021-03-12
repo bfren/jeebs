@@ -3,13 +3,12 @@
 
 using System.Security.Claims;
 using System.Security.Principal;
-using Jeebs;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
 using NSubstitute;
 using Xunit;
 
-namespace F.JwtF_Tests
+namespace JeebsF.JwtF_Tests
 {
 	public class CreateToken_Tests
 	{

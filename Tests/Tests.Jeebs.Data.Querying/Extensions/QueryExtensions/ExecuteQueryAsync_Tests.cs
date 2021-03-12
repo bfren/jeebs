@@ -27,7 +27,7 @@ namespace Jeebs.Data.Querying.QueryExtensions_Tests
 		{
 			// Arrange
 			var query = Substitute.For<IQuery<int>>();
-			var page = F.Rnd.Lng;
+			var page = JeebsF.Rnd.Lng;
 
 			// Act
 			await query.ExecuteQueryAsync(page);

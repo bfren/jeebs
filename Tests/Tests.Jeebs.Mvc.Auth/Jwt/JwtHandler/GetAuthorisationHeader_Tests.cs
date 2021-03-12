@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
+using JeebsF;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.Extensions.Primitives;
 using Xunit;
@@ -28,7 +29,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Returns_Authorization_Header()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
 			var headers = new Dictionary<string, StringValues>
 			{
 				{ "Authorization", value }

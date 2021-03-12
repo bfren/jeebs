@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace F.JsonF_Tests.LongIdConverter_Tests
+namespace JeebsF.JsonF_Tests.LongIdConverter_Tests
 {
 	public class WriteJson_Tests
 	{

@@ -4,7 +4,7 @@
 using System;
 using System.Text.Json;
 using Dapper;
-using static F.JsonF;
+using static JeebsF.JsonF;
 
 namespace Jeebs.Data.TypeHandlers
 {

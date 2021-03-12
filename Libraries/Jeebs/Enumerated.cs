@@ -4,6 +4,8 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs
 {
@@ -66,7 +68,7 @@ namespace Jeebs
 					value,
 
 				false =>
-					Option.None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(value))
+					None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(value))
 			};
 
 		/// <summary>
@@ -92,7 +94,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					return Option.None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(name));
+					return None<T>(new Jm.Enumerated.NotAValidEnumeratedValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);

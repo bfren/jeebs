@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public partial class Operator_Tests
 	{
@@ -11,8 +11,8 @@ namespace Jeebs.Option_Tests
 		public void DoesNotEqual_When_Equal_Returns_False()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var some = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var some = OptionF.Return(value);
 
 			// Act
 			var result = some != value;
@@ -25,9 +25,9 @@ namespace Jeebs.Option_Tests
 		public void DoesNotEqual_When_Not_Equal_Returns_True()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var some = Option.Wrap(v0);
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var some = OptionF.Return(v0);
 
 			// Act
 			var result = some != v1;

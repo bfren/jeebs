@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using JeebsF;
 using Jm.Cryptography.Locked;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var box = new Locked<int>();
-			var key = F.CryptoF.GenerateKey();
+			var key = JeebsF.CryptoF.GenerateKey();
 
 			// Act
 			var result = box.Unlock(key);
@@ -27,12 +28,12 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Invalid_Key_Returns_None_With_InvalidKeyExceptionMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var value = JeebsF.Rnd.Str;
+			var key = JeebsF.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(F.ByteF.Random(16));
+			var result = box.Unlock(JeebsF.ByteF.Random(16));
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
@@ -43,11 +44,11 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Invalid_Nonce_Returns_None_With_InvalidNonceExceptionMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var value = JeebsF.Rnd.Str;
+			var key = JeebsF.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = F.ByteF.Random(8)
+				Nonce = JeebsF.ByteF.Random(8)
 			};
 
 			// Act
@@ -62,12 +63,12 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Incorrect_Key_Returns_None_With_IncorrectKeyOrNonceMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var value = JeebsF.Rnd.Str;
+			var key = JeebsF.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(F.CryptoF.GenerateKey());
+			var result = box.Unlock(JeebsF.CryptoF.GenerateKey());
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
@@ -78,11 +79,11 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Incorrect_Nonce_Returns_None_With_IncorrectKeyOrNonceMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var value = JeebsF.Rnd.Str;
+			var key = JeebsF.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = F.CryptoF.GenerateNonce()
+				Nonce = JeebsF.CryptoF.GenerateNonce()
 			};
 
 			// Act
@@ -97,8 +98,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Byte_Key_Returns_Lockable()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var value = JeebsF.Rnd.Str;
+			var key = JeebsF.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 
 			// Act
@@ -113,8 +114,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void String_Key_Returns_Lockable()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var key = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
 			var box = new Locked<string>(value, key);
 
 			// Act

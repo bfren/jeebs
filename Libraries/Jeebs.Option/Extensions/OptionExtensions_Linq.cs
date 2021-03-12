@@ -2,9 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jm.Option;
 
-namespace Jeebs
+namespace JeebsF.Linq
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Linq Methods
@@ -54,7 +53,13 @@ namespace Jeebs
 					@this,
 
 				false =>
-					Option.None<T>(new PredicateWasFalseMsg())
+					OptionF.None<T>(new PredicateWasFalseMsg())
 			});
+
+		#region Messages
+
+		public sealed record PredicateWasFalseMsg : Jeebs.IMsg { }
+
+		#endregion
 	}
 }

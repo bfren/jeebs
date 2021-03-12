@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
+using JeebsF;
 
 namespace Jeebs.Auth
 {
@@ -31,13 +32,13 @@ namespace Jeebs.Auth
 			// Check email
 			if (string.IsNullOrEmpty(email))
 			{
-				return Option.None<TUserModel>(new Jm.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidEmailMsg());
+				return OptionF.None<TUserModel>(new Jm.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidEmailMsg());
 			}
 
 			// Check password
 			if (string.IsNullOrEmpty(password))
 			{
-				return Option.None<TUserModel>(new Jm.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidPasswordMsg());
+				return OptionF.None<TUserModel>(new Jm.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidPasswordMsg());
 			}
 
 			throw new NotImplementedException();

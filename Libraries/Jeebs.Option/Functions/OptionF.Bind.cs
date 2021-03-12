@@ -4,9 +4,9 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Jeebs
+namespace JeebsF
 {
-	public static partial class Option
+	public static partial class OptionF
 	{
 		/// <inheritdoc cref="Option{T}.DoBind{U}(Func{T, Option{U}}, Handler?)"/>
 		public static Option<T> Bind<T>(Func<Option<T>> bind, Handler? handler = null) =>

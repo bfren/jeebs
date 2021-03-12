@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{
@@ -22,7 +22,7 @@ namespace Jeebs
 			}
 			catch (Exception e)
 			{
-				Option.HandleAuditException(e);
+				OptionF.HandleAuditException(e);
 			}
 
 			// Return the original object

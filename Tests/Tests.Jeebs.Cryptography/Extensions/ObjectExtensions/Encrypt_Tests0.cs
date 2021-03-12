@@ -2,8 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static F.CryptoF;
-using static F.JsonF;
+using static JeebsF.CryptoF;
+using static JeebsF.JsonF;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests
 {

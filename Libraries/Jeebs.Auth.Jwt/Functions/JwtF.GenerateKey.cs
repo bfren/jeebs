@@ -3,7 +3,7 @@
 
 using Jeebs.Auth.Constants;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// JSON Web Tokens functions

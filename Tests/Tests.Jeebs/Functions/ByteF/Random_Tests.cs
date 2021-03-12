@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace F.ByteF_Tests
+namespace JeebsF.ByteF_Tests
 {
 	public class Random_Tests
 	{

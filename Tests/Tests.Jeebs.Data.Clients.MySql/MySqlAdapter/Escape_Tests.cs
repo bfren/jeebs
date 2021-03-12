@@ -27,7 +27,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = F.Rnd.Int;
+			var table = JeebsF.Rnd.Int;
 
 			// Act
 			var result = adapter.EscapeTable(table);

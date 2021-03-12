@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{
@@ -13,8 +13,8 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Option<U> DoBind<U>(Func<T, Option<U>> bind, Option.Handler? handler = null) =>
-			Option.Catch(() =>
+		internal Option<U> DoBind<U>(Func<T, Option<U>> bind, OptionF.Handler? handler = null) =>
+			OptionF.Catch(() =>
 				Switch(
 					some: v => bind(v),
 					none: r => new None<U>(r)
@@ -22,8 +22,8 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="DoBind{U}(Func{T, Option{U}}, Option.Handler?)"/>
-		public Option<U> Bind<U>(Func<T, Option<U>> bind, Option.Handler? handler = null) =>
+		/// <inheritdoc cref="DoBind{U}(Func{T, Option{U}}, OptionF.Handler?)"/>
+		public Option<U> Bind<U>(Func<T, Option<U>> bind, OptionF.Handler? handler = null) =>
 			DoBind(bind, handler);
 	}
 }

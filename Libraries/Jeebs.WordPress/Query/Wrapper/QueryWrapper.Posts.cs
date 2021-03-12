@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
+using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
 
 namespace Jeebs.WordPress
@@ -26,8 +27,8 @@ namespace Jeebs.WordPress
 		public Task<Option<List<TModel>>> QueryPostsAsync<TModel>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
 			where TModel : IEntity
 		{
-			return Option
-				.Wrap(
+			return OptionF
+				.Return(
 					modify
 				)
 				.Map(
@@ -62,8 +63,8 @@ namespace Jeebs.WordPress
 		public Task<Option<PagedList<TModel>>> QueryPostsAsync<TModel>(long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
 			where TModel : IEntity
 		{
-			return Option
-				.Wrap(
+			return OptionF
+				.Return(
 					modify
 				)
 				.Map(
@@ -80,12 +81,12 @@ namespace Jeebs.WordPress
 
 						PagedList<TModel> list =>
 							Task.FromResult(
-								Option.Wrap(list)
+								OptionF.Return(list)
 							),
 
 						_ =>
 							Task.FromResult(
-								Option.None<PagedList<TModel>>(new UnrecognisedPagedListTypeMsg()).AsOption
+								OptionF.None<PagedList<TModel>>(new UnrecognisedPagedListTypeMsg()).AsOption
 							)
 					}
 				);
@@ -113,8 +114,8 @@ namespace Jeebs.WordPress
 		private Task<Option<TList>> Process<TList, TModel>(TList posts, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity =>
-			Option
-				.Wrap(
+			OptionF
+				.Return(
 					posts
 				)
 				.BindAsync(

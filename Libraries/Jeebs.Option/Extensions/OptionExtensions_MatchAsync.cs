@@ -3,8 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 
-namespace Jeebs
+namespace JeebsF
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: MatchAsync
@@ -22,7 +23,7 @@ namespace Jeebs
 					await none(x.Reason),
 
 				_ =>
-					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+					throw new Exceptions.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		/// <inheritdoc cref="Option{T}.MatchAsync{U}(Func{T, Task{U}}, U)"/>

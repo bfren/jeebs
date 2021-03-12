@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
+using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
 
 namespace Jeebs.WordPress
@@ -31,8 +32,8 @@ namespace Jeebs.WordPress
 				return posts;
 			}
 
-			return await Option
-				.Wrap(posts)
+			return await OptionF
+				.Return(posts)
 				.BindAsync(
 					x => getTermsAsync(x, termLists),
 					e => new GetTermsExceptionMsg(e)
@@ -47,7 +48,7 @@ namespace Jeebs.WordPress
 			//
 			async Task<Option<(TList, List<Term>)>> getTermsAsync(TList posts, List<PropertyInfo> termLists)
 			{
-				return await Option
+				return await OptionF
 					.Map(getOptions)
 					.Bind(addTaxonomies)
 					.Map(getQuery)
@@ -71,7 +72,7 @@ namespace Jeebs.WordPress
 						// Make sure taxonomy has been registered
 						if (!Taxonomy.IsRegistered(taxonomy))
 						{
-							return Option.None<QueryPostsTaxonomy.Options>(new TaxonomyNotRegisteredMsg(taxonomy));
+							return OptionF.None<QueryPostsTaxonomy.Options>(new TaxonomyNotRegisteredMsg(taxonomy));
 						}
 
 						// Add to query

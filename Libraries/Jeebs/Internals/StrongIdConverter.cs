@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs.Id;
 
-namespace F.Internals
+namespace JeebsF.Internals
 {
 	/// <summary>
 	/// Converter for <see cref="StrongId{T}"/> types

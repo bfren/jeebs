@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace F.PhpF_Tests
+namespace JeebsF.PhpF_Tests
 {
 	public class Deserialise_Tests
 	{

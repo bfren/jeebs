@@ -30,7 +30,7 @@ namespace Jeebs.Config
 		/// otherwise simply <see cref="Name"/>
 		/// </summary>
 		public string FullName =>
-			F.StringF.Format("{0}/", Suite, string.Empty) + Name;
+			JeebsF.StringF.Format("{0}/", Suite, string.Empty) + Name;
 
 		/// <summary>
 		/// Application Version

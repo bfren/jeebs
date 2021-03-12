@@ -6,7 +6,7 @@ using Jeebs;
 namespace Jm.Functions.JwtF.CreateToken
 {
 	/// <summary>
-	/// See <see cref="F.JwtF.CreateToken(Jeebs.Config.JwtConfig, System.Security.Claims.ClaimsPrincipal, System.DateTime, System.DateTime)"/>
+	/// See <see cref="JeebsF.JwtF.CreateToken(Jeebs.Config.JwtConfig, System.Security.Claims.ClaimsPrincipal, System.DateTime, System.DateTime)"/>
 	/// </summary>
 	public sealed class NullIdentityMsg : IMsg { }
 }

@@ -3,6 +3,8 @@
 
 using System;
 using Dapper;
+using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -48,7 +50,7 @@ namespace Jeebs.Data.Mapping
 			}
 			catch (Exception ex)
 			{
-				return Option.None<bool>(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), entity.Id));
+				return None<bool>(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), entity.Id));
 			}
 			finally
 			{
@@ -74,10 +76,10 @@ namespace Jeebs.Data.Mapping
 			var rowsAffected = w.Connection.Execute(query, param: entity, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return Option.True;
+				return True;
 			}
 
-			return Option.None<bool>(new Jm.Data.UpdateErrorMsg(typeof(T), entity.Id));
+			return None<bool>(new Jm.Data.UpdateErrorMsg(typeof(T), entity.Id));
 		}
 
 		/// <summary>
@@ -97,10 +99,10 @@ namespace Jeebs.Data.Mapping
 			var rowsAffected = w.Connection.Execute(query, param: entity, transaction: w.Transaction);
 			if (rowsAffected == 1)
 			{
-				return Option.True;
+				return True;
 			}
 
-			return Option.None<bool>(new Jm.Data.UpdateErrorMsg(typeof(T), entity.Id));
+			return None<bool>(new Jm.Data.UpdateErrorMsg(typeof(T), entity.Id));
 		}
 	}
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JeebsF;
 using D = Jeebs.Defaults.PagingValues;
 
 namespace Jeebs

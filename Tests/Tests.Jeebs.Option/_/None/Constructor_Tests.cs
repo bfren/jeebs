@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.OptionNone_Tests
+namespace JeebsF.OptionNone_Tests
 {
 	public class Constructor_Tests
 	{

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Jeebs.Config;
 using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
+using JeebsF;
 using Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync;
 using Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,17 +54,17 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			await client.Users.GetUserAsync(screenName).ConfigureAwait(false) switch
 			{
 				IUser user =>
-					Option.Wrap(user),
+					OptionF.Return(user),
 
 				_ =>
-					Option.None<IUser>(new UserNotFoundMsg(screenName))
+					OptionF.None<IUser>(new UserNotFoundMsg(screenName))
 			};
 
 		/// <inheritdoc/>
 		public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
-			return Option
-				.Wrap(
+			return OptionF
+				.Return(
 					screenName
 				)
 				.BindAsync(
@@ -98,8 +99,8 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// <inheritdoc/>
 		public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
 		{
-			return Option
-				.Wrap(
+			return OptionF
+				.Return(
 					screenName
 				)
 				.BindAsync(

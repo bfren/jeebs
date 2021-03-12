@@ -14,7 +14,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 			const string? prophets = "[\"Hosea\",\"Joel\",\"Amos\",\"Obadiah\",\"Jonah\",\"Micah\",\"Nahum\",\"Habakkuk\",\"Zephaniah\",\"Haggai\",\"Zechariah\",\"Malachi\"]";
 
 			// Act
-			var result = F.JsonF.Serialise(BibleBooks.MinorProphets);
+			var result = JeebsF.JsonF.Serialise(BibleBooks.MinorProphets);
 
 			// Assert
 			Assert.Equal(prophets, result);

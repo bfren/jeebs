@@ -4,7 +4,7 @@
 namespace Jm.Functions.DateTimeF
 {
 	/// <summary>
-	/// See <see cref="F.DateTimeF.FromFormat(string, string)"/>
+	/// See <see cref="JeebsF.DateTimeF.FromFormat(string, string)"/>
 	/// </summary>
 	public sealed class InvalidDateTimeMsg : WithValueMsg<string>
 	{

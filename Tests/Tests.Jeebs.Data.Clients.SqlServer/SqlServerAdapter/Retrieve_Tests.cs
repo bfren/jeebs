@@ -35,7 +35,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 			parts.From.Returns(from);
 
 			// Act
@@ -53,7 +53,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 			parts.From.Returns(from);
 			parts.Select.Returns(input);
 
@@ -70,14 +70,14 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 
-			var ij0_table = F.Rnd.Str;
-			var ij0_on = F.Rnd.Str;
-			var ij0_equals = F.Rnd.Str;
-			var ij1_table = F.Rnd.Str;
-			var ij1_on = F.Rnd.Str;
-			var ij1_equals = F.Rnd.Str;
+			var ij0_table = JeebsF.Rnd.Str;
+			var ij0_on = JeebsF.Rnd.Str;
+			var ij0_equals = JeebsF.Rnd.Str;
+			var ij1_table = JeebsF.Rnd.Str;
+			var ij1_on = JeebsF.Rnd.Str;
+			var ij1_equals = JeebsF.Rnd.Str;
 
 			var innerJoin = new List<(string, string, string)>
 			{
@@ -103,14 +103,14 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 
-			var lj0_table = F.Rnd.Str;
-			var lj0_on = F.Rnd.Str;
-			var lj0_equals = F.Rnd.Str;
-			var lj1_table = F.Rnd.Str;
-			var lj1_on = F.Rnd.Str;
-			var lj1_equals = F.Rnd.Str;
+			var lj0_table = JeebsF.Rnd.Str;
+			var lj0_on = JeebsF.Rnd.Str;
+			var lj0_equals = JeebsF.Rnd.Str;
+			var lj1_table = JeebsF.Rnd.Str;
+			var lj1_on = JeebsF.Rnd.Str;
+			var lj1_equals = JeebsF.Rnd.Str;
 
 			var leftJoin = new List<(string, string, string)>
 			{
@@ -136,14 +136,14 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 
-			var rj0_table = F.Rnd.Str;
-			var rj0_on = F.Rnd.Str;
-			var rj0_equals = F.Rnd.Str;
-			var rj1_table = F.Rnd.Str;
-			var rj1_on = F.Rnd.Str;
-			var rj1_equals = F.Rnd.Str;
+			var rj0_table = JeebsF.Rnd.Str;
+			var rj0_on = JeebsF.Rnd.Str;
+			var rj0_equals = JeebsF.Rnd.Str;
+			var rj1_table = JeebsF.Rnd.Str;
+			var rj1_on = JeebsF.Rnd.Str;
+			var rj1_equals = JeebsF.Rnd.Str;
 
 			var leftJoin = new List<(string, string, string)>
 			{
@@ -169,9 +169,9 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
-			var w0 = F.Rnd.Str;
-			var w1 = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
+			var w0 = JeebsF.Rnd.Str;
+			var w1 = JeebsF.Rnd.Str;
 
 			parts.From.Returns(from);
 			parts.Where.Returns(new List<string> { w0, w1 });
@@ -189,9 +189,9 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
-			var ob0 = F.Rnd.Str;
-			var ob1 = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
+			var ob0 = JeebsF.Rnd.Str;
+			var ob1 = JeebsF.Rnd.Str;
 
 			parts.From.Returns(from);
 			parts.OrderBy.Returns(new List<string> { ob0, ob1 });
@@ -212,7 +212,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
+			var from = JeebsF.Rnd.Str;
 
 			parts.From.Returns(from);
 			parts.Limit.Returns(limit);
@@ -233,8 +233,8 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 			// Arrange
 			var adapter = new SqlServerAdapter();
 			var parts = Substitute.For<IQueryParts>();
-			var from = F.Rnd.Str;
-			var limit = F.Rnd.Int;
+			var from = JeebsF.Rnd.Str;
+			var limit = JeebsF.Rnd.Int;
 
 			parts.From.Returns(from);
 			parts.Limit.Returns(limit);

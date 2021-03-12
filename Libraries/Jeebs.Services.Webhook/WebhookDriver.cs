@@ -8,7 +8,7 @@ using Jeebs.Config;
 using Jeebs.Logging;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
-using static F.ThreadF;
+using static JeebsF.ThreadF;
 
 namespace Jeebs.Services.Webhook
 {
@@ -55,22 +55,22 @@ namespace Jeebs.Services.Webhook
 			// Convert to notification Message
 			var message = msg switch
 			{
-				IExceptionMsg x =>
-					new Message
-					{
-						Content = content,
-						Level = x.Level.ToNotificationLevel(),
-						Fields = new Dictionary<string, object>()
-						{
-							{ "Exception", x.Exception }
-						}
-					},
-
 				ILoggableMsg x =>
 					new Message
 					{
 						Content = content,
 						Level = x.Level.ToNotificationLevel()
+					},
+
+				IExceptionMsg x =>
+					new Message
+					{
+						Content = content,
+						Level = NotificationLevel.Error,
+						Fields = new Dictionary<string, object>()
+						{
+							{ "Exception", x.Exception }
+						}
 					},
 
 				_ =>

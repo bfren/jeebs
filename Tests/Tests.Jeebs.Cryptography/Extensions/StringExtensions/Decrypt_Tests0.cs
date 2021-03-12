@@ -2,8 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using JeebsF;
 using Xunit;
-using static F.CryptoF;
+using static JeebsF.CryptoF;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
 {
@@ -33,7 +34,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		{
 			// Arrange
 			var key = GenerateKey();
-			var json = F.Rnd.Str;
+			var json = JeebsF.Rnd.Str;
 
 			// Act
 			var result = json.Decrypt<int>(key);

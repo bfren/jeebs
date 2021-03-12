@@ -3,15 +3,16 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Audits the current Option state and return unmodified
 		/// Errors will not be returned as they affect the state of the object, but will be written to the console,
-		/// or <see cref="Option.LogAuditExceptions"/> if set
+		/// or <see cref="OptionF.LogAuditExceptions"/> if set
 		/// </summary>
 		/// <param name="some">[Optional] Will run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Will run if the current Option is <see cref="None{T}"/></param>
@@ -36,7 +37,7 @@ namespace Jeebs
 			}
 			catch (Exception e)
 			{
-				Option.HandleAuditException(e);
+				OptionF.HandleAuditException(e);
 			}
 
 			// Return the original object

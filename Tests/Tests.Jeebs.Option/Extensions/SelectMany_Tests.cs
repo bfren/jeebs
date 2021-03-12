@@ -2,9 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Threading.Tasks;
+using Jeebs;
+using JeebsF.Linq;
 using Xunit;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace JeebsF.OptionExtensions_Tests
 {
 	public class SelectMany_Tests
 	{
@@ -12,10 +14,10 @@ namespace Jeebs.OptionExtensions_Tests
 		public void SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var o0 = Option.Wrap(v0);
-			var o1 = Option.Wrap(v1);
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var o0 = OptionF.Return(v0);
+			var o1 = OptionF.Return(v1);
 
 			// Act
 			var result = from a in o0
@@ -31,10 +33,10 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var o0 = Task.FromResult(Option.Wrap(v0));
-			var o1 = Task.FromResult(Option.Wrap(v1));
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var o0 = Task.FromResult(OptionF.Return(v0));
+			var o1 = Task.FromResult(OptionF.Return(v1));
 
 			// Act
 			var result = await (
@@ -52,14 +54,14 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Mixed_SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var v2 = F.Rnd.Int;
-			var v3 = F.Rnd.Int;
-			var o0 = Task.FromResult(Option.Wrap(v0));
-			var o1 = Option.Wrap(v1);
-			var o2 = Task.FromResult(Option.Wrap(v2));
-			var o3 = Option.Wrap(v3);
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var v2 = JeebsF.Rnd.Int;
+			var v3 = JeebsF.Rnd.Int;
+			var o0 = Task.FromResult(OptionF.Return(v0));
+			var o1 = OptionF.Return(v1);
+			var o2 = Task.FromResult(OptionF.Return(v2));
+			var o3 = OptionF.Return(v3);
 
 			// Act
 			var result = await (
@@ -79,11 +81,11 @@ namespace Jeebs.OptionExtensions_Tests
 		public void SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var o0 = Option.Wrap(v0);
-			var o1 = Option.Wrap(v1);
-			var o2 = Option.None<int>(new InvalidIntegerMsg());
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var o0 = OptionF.Return(v0);
+			var o1 = OptionF.Return(v1);
+			var o2 = OptionF.None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = from a in o0
@@ -100,11 +102,11 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var o0 = Task.FromResult(Option.Wrap(v0));
-			var o1 = Task.FromResult(Option.Wrap(v1));
-			var o2 = Task.FromResult(Option.None<int>(new InvalidIntegerMsg()).AsOption);
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var o0 = Task.FromResult(OptionF.Return(v0));
+			var o1 = Task.FromResult(OptionF.Return(v1));
+			var o2 = Task.FromResult(OptionF.None<int>(new InvalidIntegerMsg()).AsOption);
 
 			// Act
 			var result = await (
@@ -123,11 +125,11 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Mixed_SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
-			var o0 = Task.FromResult(Option.Wrap(v0));
-			var o1 = Task.FromResult(Option.Wrap(v1));
-			var o2 = Option.None<int>(new InvalidIntegerMsg());
+			var v0 = JeebsF.Rnd.Int;
+			var v1 = JeebsF.Rnd.Int;
+			var o0 = Task.FromResult(OptionF.Return(v0));
+			var o1 = Task.FromResult(OptionF.Return(v1));
+			var o2 = OptionF.None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = await (

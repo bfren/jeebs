@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{
@@ -14,17 +14,17 @@ namespace Jeebs
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Task<Option<U>> DoMapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler) =>
-			Option.CatchAsync(() =>
+		internal Task<Option<U>> DoMapAsync<U>(Func<T, Task<U>> map, OptionF.Handler? handler) =>
+			OptionF.CatchAsync(() =>
 				Switch(
-					some: async v => Option.Wrap(await map(v)),
+					some: async v => OptionF.Return(await map(v)),
 					none: r => Task.FromResult(new None<U>(r).AsOption)
 				),
 				handler
 			);
 
-		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, Option.Handler?)"/>
-		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Option.Handler? handler = null) =>
+		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, OptionF.Handler?)"/>
+		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, OptionF.Handler? handler = null) =>
 			DoMapAsync(map, handler);
 	}
 }

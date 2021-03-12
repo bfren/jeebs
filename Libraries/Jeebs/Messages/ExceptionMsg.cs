@@ -8,7 +8,7 @@ using Jeebs.Logging;
 namespace Jm
 {
 	/// <inheritdoc cref="IExceptionMsg"/>
-	public abstract class ExceptionMsg : IExceptionMsg
+	public abstract class ExceptionMsg : IExceptionMsg, ILoggableMsg
 	{
 		/// <inheritdoc/>
 		public Exception Exception { get; init; } = new Exception("Unknown.");

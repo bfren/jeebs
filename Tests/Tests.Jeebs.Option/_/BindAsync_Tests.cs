@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class BindAsync_Tests
 	{
@@ -23,15 +24,15 @@ namespace Jeebs.Option_Tests
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
 			var msg = Assert.IsType<Jm.Option.UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<Jx.Option.UnknownOptionException>(msg.Exception);
+			Assert.IsType<Exceptions.UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
 		public async Task Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = Option.Wrap(F.Rnd.Str);
-			var handler = Substitute.For<Option.Handler>();
+			var option = OptionF.Return(JeebsF.Rnd.Str);
+			var handler = Substitute.For<OptionF.Handler>();
 			var exception = new Exception();
 
 			// Act
@@ -48,7 +49,7 @@ namespace Jeebs.Option_Tests
 		public async Task If_None_Gets_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
@@ -65,7 +66,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = Option.None<int>(msg);
+			var option = OptionF.None<int>(msg);
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
@@ -83,8 +84,8 @@ namespace Jeebs.Option_Tests
 		public async Task If_Some_Runs_Bind_Function()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act

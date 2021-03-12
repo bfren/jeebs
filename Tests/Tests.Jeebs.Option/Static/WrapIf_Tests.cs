@@ -5,7 +5,7 @@ using System;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionStatic_Tests
+namespace JeebsF.OptionStatic_Tests
 {
 	public class WrapIf_Tests
 	{
@@ -13,11 +13,11 @@ namespace Jeebs.OptionStatic_Tests
 		public void True_Returns_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = JeebsF.Rnd.Int;
 
 			// Act
-			var r0 = Option.WrapIf(() => true, value);
-			var r1 = Option.WrapIf(() => true, () => value);
+			var r0 = OptionF.ReturnIf(() => true, value);
+			var r1 = OptionF.ReturnIf(() => true, () => value);
 
 			// Assert
 			var s0 = Assert.IsType<Some<int>>(r0);
@@ -30,10 +30,10 @@ namespace Jeebs.OptionStatic_Tests
 		public void False_Returns_None()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = JeebsF.Rnd.Int;
 
 			// Act
-			var result = Option.WrapIf(() => false, () => value);
+			var result = OptionF.ReturnIf(() => false, () => value);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -46,7 +46,7 @@ namespace Jeebs.OptionStatic_Tests
 			var getValue = Substitute.For<Func<int>>();
 
 			// Act
-			var result = Option.WrapIf(() => false, getValue);
+			var result = OptionF.ReturnIf(() => false, getValue);
 
 			// Assert
 			Assert.IsType<None<int>>(result);

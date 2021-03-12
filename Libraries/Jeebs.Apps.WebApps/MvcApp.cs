@@ -155,7 +155,7 @@ namespace Jeebs.Apps
 		public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
 		{
 			// Get default options
-			var defaultOptions = F.JsonF.CopyOptions();
+			var defaultOptions = JeebsF.JsonF.CopyOptions();
 
 			// Set options
 			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? defaultOptions).IgnoreNullValues;

@@ -2,10 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class Audit_Tests
 	{
@@ -13,7 +14,7 @@ namespace Jeebs.Option_Tests
 		public void Runs_Audit_And_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Option.True;
+			var option = OptionF.True;
 			var audit = Substitute.For<Action<Option<bool>>>();
 
 			// Act
@@ -30,7 +31,7 @@ namespace Jeebs.Option_Tests
 		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Option.Wrap(F.Rnd.Int);
+			var option = OptionF.Return(JeebsF.Rnd.Int);
 			var exception = new Exception();
 
 			// Act

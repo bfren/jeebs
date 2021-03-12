@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
+using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
 
 namespace Jeebs.WordPress
@@ -27,8 +28,8 @@ namespace Jeebs.WordPress
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
 				Some<Meta<TModel>> meta =>
-					await Option
-						.Wrap(posts)
+					await OptionF
+						.Return(posts)
 						.BindAsync(
 							getMetaAsync,
 							e => new AddMetaExceptionMsg(e)
@@ -47,7 +48,7 @@ namespace Jeebs.WordPress
 			//
 			async Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
 			{
-				return await Option
+				return await OptionF
 					.Map(getOptions)
 					.Map(getQuery)
 					.BindAsync(getMeta)

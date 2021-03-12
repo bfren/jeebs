@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using Jeebs;
 using Jeebs.Id;
 
-namespace F.Internals
+namespace JeebsF.Internals
 {
 	/// <summary>
 	/// StrongId Converter Factory

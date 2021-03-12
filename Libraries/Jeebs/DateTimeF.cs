@@ -3,9 +3,9 @@
 
 using System;
 using System.Globalization;
-using Jeebs;
+using static JeebsF.OptionF;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// DateTime functions
@@ -40,7 +40,7 @@ namespace F
 				return dt;
 			}
 
-			return Option.None<DateTime>(new Jm.Functions.DateTimeF.InvalidDateTimeMsg(format));
+			return None<DateTime>(new Jm.Functions.DateTimeF.InvalidDateTimeMsg(format));
 		}
 	}
 }

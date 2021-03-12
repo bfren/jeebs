@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Jeebs.OptionNone_Tests
+namespace JeebsF.OptionNone_Tests
 {
 	public class AsOption_Tests
 	{
@@ -12,7 +12,7 @@ namespace Jeebs.OptionNone_Tests
 		public void Returns_None_As_Generic_Option()
 		{
 			// Arrange
-			var none = Option.None<int>(true);
+			var none = OptionF.None<int>(true);
 
 			// Act
 			var result = Task.FromResult(none.AsOption);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Messages.Query.Wrapper;
+using JeebsF;
 using Jm.WordPress.Query.Wrapper;
 
 namespace Jeebs.WordPress
@@ -77,13 +78,13 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return Option.None<PropertyInfo>(new OnlyOneMetaDictionaryPropertySupportedMsg<TModel>());
+				return OptionF.None<PropertyInfo>(new OnlyOneMetaDictionaryPropertySupportedMsg<TModel>());
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return Option.None<PropertyInfo>(new MetaDictionaryPropertyNotFoundMsg<TModel>());
+				return OptionF.None<PropertyInfo>(new MetaDictionaryPropertyNotFoundMsg<TModel>());
 			}
 
 			return metaDictionary.Single();
@@ -152,7 +153,7 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return Option.None<PropertyInfo>(new ContentPropertyNotFoundMsg<TModel>());
+				return OptionF.None<PropertyInfo>(new ContentPropertyNotFoundMsg<TModel>());
 			}
 
 			return content.Single();

@@ -2,9 +2,10 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.OptionNone_Tests
+namespace JeebsF.OptionNone_Tests
 {
 	public class AddReason_Tests
 	{
@@ -12,7 +13,7 @@ namespace Jeebs.OptionNone_Tests
 		public void As_Type()
 		{
 			// Arrange
-			var none = Option.None<int>(true);
+			var none = OptionF.None<int>(true);
 
 			// Act
 			var result = none.AddReason<TestMsg>();
@@ -25,7 +26,7 @@ namespace Jeebs.OptionNone_Tests
 		public void For_Exception()
 		{
 			// Arrange
-			var none = Option.None<int>(true);
+			var none = OptionF.None<int>(true);
 			var exception = new Exception();
 
 			// Act

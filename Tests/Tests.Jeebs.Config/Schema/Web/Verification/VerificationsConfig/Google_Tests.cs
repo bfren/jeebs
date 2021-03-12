@@ -24,7 +24,7 @@ namespace Jeebs.Config.VerificationsConfig_Tests
 		public void Returns_Google_Html()
 		{
 			// Arrange
-			var google = F.Rnd.Str;
+			var google = JeebsF.Rnd.Str;
 			var config = new VerificationConfig { Google = google };
 
 			// Act

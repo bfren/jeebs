@@ -2,10 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
 using Xunit;
 
-namespace F.DateTimeF_Tests
+namespace JeebsF.DateTimeF_Tests
 {
 	public partial class FromFormat_Tests
 	{

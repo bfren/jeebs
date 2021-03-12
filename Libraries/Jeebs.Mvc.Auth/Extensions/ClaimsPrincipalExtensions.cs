@@ -5,7 +5,9 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
+using JeebsF;
 using Jm.Mvc.Auth.ClaimsPrincipalExtensions;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Mvc.Auth
 {
@@ -25,7 +27,7 @@ namespace Jeebs.Mvc.Auth
 				return getId();
 			}
 
-			return Option.None<long>(new UserIsNotAuthenticatedMsg());
+			return None<long>(new UserIsNotAuthenticatedMsg());
 
 			// Find and parse ID from the list of claims
 			Option<long> getId() =>
@@ -38,11 +40,11 @@ namespace Jeebs.Mvc.Auth
 								userId,
 
 							false =>
-								Option.None<long>(new InvalidUserIdMsg())
+								None<long>(new InvalidUserIdMsg())
 						},
 
 					_ =>
-						Option.None<long>(new UnableToFindUserIdClaimMsg())
+						None<long>(new UnableToFindUserIdClaimMsg())
 				};
 		}
 

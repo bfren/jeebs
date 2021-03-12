@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace F.CryptoF_Tests
+namespace JeebsF.CryptoF_Tests
 {
 	public sealed class GenerateKey_Tests
 	{

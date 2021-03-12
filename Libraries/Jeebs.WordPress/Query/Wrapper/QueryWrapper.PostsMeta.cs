@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
+using JeebsF;
 
 namespace Jeebs.WordPress
 {
@@ -16,11 +17,11 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TModel">Term type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		public async Task<Option<List<TModel>>> QueryPostsMetaAsync<TModel>(Action<QueryPostsMeta.Options>? modify = null)
+		public Task<Option<List<TModel>>> QueryPostsMetaAsync<TModel>(Action<QueryPostsMeta.Options>? modify = null)
 			where TModel : IEntity
 		{
-			return await Option
-				.Wrap(modify)
+			return OptionF
+				.Return(modify)
 				.Map(
 					GetPostsMetaQuery<TModel>
 				)

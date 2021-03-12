@@ -3,8 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{

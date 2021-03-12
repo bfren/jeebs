@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class MatchAsync_Tests
 	{
@@ -22,15 +23,15 @@ namespace Jeebs.Option_Tests
 			Task action() => option.DoMatchAsync(some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Jx.Option.UnknownOptionException>(action);
+			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(action);
 		}
 
 		[Fact]
 		public async Task If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
@@ -41,17 +42,17 @@ namespace Jeebs.Option_Tests
 
 			await option.MatchAsync(
 				some: some,
-				none: F.Rnd.Str
+				none: JeebsF.Rnd.Str
 			);
 
 			await option.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: Task.FromResult(F.Rnd.Str)
+				none: Task.FromResult(JeebsF.Rnd.Str)
 			);
 
 			await option.MatchAsync(
 				some: some,
-				none: Task.FromResult(F.Rnd.Str)
+				none: Task.FromResult(JeebsF.Rnd.Str)
 			);
 
 			await option.MatchAsync(
@@ -92,8 +93,8 @@ namespace Jeebs.Option_Tests
 		public async Task If_None_Gets_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
-			var value = F.Rnd.Str;
+			var option = OptionF.None<int>(true);
+			var value = JeebsF.Rnd.Str;
 
 			// Act
 			var r0 = await option.MatchAsync(
@@ -121,7 +122,7 @@ namespace Jeebs.Option_Tests
 		public async Task If_None_Runs_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var none = Substitute.For<Func<string>>();
 
 			// Act

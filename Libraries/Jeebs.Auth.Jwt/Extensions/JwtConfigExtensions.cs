@@ -3,7 +3,9 @@
 
 using System.Text;
 using Jeebs.Config;
+using JeebsF;
 using Microsoft.IdentityModel.Tokens;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Auth
 {
@@ -28,7 +30,7 @@ namespace Jeebs.Auth
 					new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
 
 				_ =>
-					Option.None<SecurityKey>(new Jm.Authentication.JwtConfigExtensions.NullEncryptingKeyMsg())
+					None<SecurityKey>(new Jm.Authentication.JwtConfigExtensions.NullEncryptingKeyMsg())
 			};
 	}
 }

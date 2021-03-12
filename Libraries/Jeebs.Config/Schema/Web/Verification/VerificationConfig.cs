@@ -19,7 +19,7 @@ namespace Jeebs.Config
 		public string? Google
 		{
 			get =>
-				F.StringF.Format("google{0}.html", googleCode);
+				JeebsF.StringF.Format("google{0}.html", googleCode);
 
 			init =>
 				googleCode = value;

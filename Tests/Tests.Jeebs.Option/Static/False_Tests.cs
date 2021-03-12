@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.OptionStatic_Tests
+namespace JeebsF.OptionStatic_Tests
 {
 	public class False_Tests
 	{
@@ -13,7 +13,7 @@ namespace Jeebs.OptionStatic_Tests
 			// Arrange
 
 			// Act
-			var result = Option.False;
+			var result = OptionF.False;
 
 			// Assert
 			var some = Assert.IsType<Some<bool>>(result);

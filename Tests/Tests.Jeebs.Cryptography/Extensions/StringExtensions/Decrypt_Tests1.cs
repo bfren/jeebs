@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using JeebsF;
 using Xunit;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
@@ -15,7 +16,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Null_Input_String_Key_Returns_None(string input)
 		{
 			// Arrange
-			var key = F.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
 
 			// Act
 			var result = input.Decrypt<int>(key);
@@ -29,8 +30,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Invalid_Json_Input_String_Key_Returns_None()
 		{
 			// Arrange
-			var key = F.Rnd.Str;
-			var json = F.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
+			var json = JeebsF.Rnd.Str;
 
 			// Act
 			var result = json.Decrypt<int>(key);
@@ -57,7 +58,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Incorrect_String_Key_Returns_None()
 		{
 			// Arrange
-			var key = F.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
 
 			// Act
 			var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
@@ -71,7 +72,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Incorrect_Json_Input_String_Key_Returns_None()
 		{
 			// Arrange
-			var key = F.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
 			const string json = "{\"foo\":\"bar\"}";
 
 			// Act

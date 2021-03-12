@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.MathsF;
+using static JeebsF.MathsF;
 
-namespace F.MathsF_Tests
+namespace JeebsF.MathsF_Tests
 {
 	public class Random_Tests
 	{

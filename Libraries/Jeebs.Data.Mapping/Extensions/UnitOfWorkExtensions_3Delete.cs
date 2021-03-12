@@ -5,6 +5,8 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using JeebsF;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -46,8 +48,8 @@ namespace Jeebs.Data.Mapping
 		private static Task<Option<bool>> DeleteAsync<T>(T entity, IUnitOfWork w, string method, Func<string, T, IDbTransaction, Task<int>> execute)
 			where T : class, IEntity
 		{
-			return Option
-				.Wrap(
+			return
+				Return(
 					entity
 				)
 				.BindAsync(
@@ -70,10 +72,10 @@ namespace Jeebs.Data.Mapping
 					w.Log.Message(new Jm.Data.DeleteMsg(typeof(T), poco.Id));
 
 					// Return
-					return Option.True;
+					return True;
 				}
 
-				return Option.None<bool>(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
+				return None<bool>(new Jm.Data.DeleteErrorMsg(typeof(T), poco.Id));
 			}
 		}
 	}

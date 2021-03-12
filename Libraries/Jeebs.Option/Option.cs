@@ -2,8 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 
-namespace Jeebs
+namespace JeebsF
 {
 	/// <summary>
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
@@ -23,7 +24,7 @@ namespace Jeebs
 					none(x.Reason),
 
 				_ =>
-					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+					throw new Exceptions.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		internal U Switch<U>(Func<T, U> some, Func<U> none) =>
@@ -67,7 +68,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value) =>
-			Option.Wrap(value);
+			OptionF.Return(value);
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -133,7 +134,7 @@ namespace Jeebs
 					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
 				_ =>
-					throw new Jx.Option.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+					throw new Exceptions.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		#endregion

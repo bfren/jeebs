@@ -2,9 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
 
-namespace Jx.Option
+namespace JeebsF.Exceptions
 {
 	/// <summary>
 	/// Thrown when an unknown <see cref="Option{T}"/> type is matched -

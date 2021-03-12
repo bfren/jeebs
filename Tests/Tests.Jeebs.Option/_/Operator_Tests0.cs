@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public partial class Operator_Tests
 	{

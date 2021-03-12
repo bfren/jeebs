@@ -2,7 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Text.RegularExpressions;
-using static F.JsonF;
+using JeebsF;
+using static JeebsF.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {
@@ -59,7 +60,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 					// Replace content using child Format() method
 					content = content.Replace(
 						match.Value,
-						Format(F.StringF.Random(10), embed.Value)
+						Format(StringF.Random(10), embed.Value)
 					);
 				}
 			}

@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using Xunit;
 
-namespace Jeebs.OptionNone_Tests
+namespace JeebsF.OptionNone_Tests
 {
 	public class ToString_Tests
 	{
@@ -11,9 +12,9 @@ namespace Jeebs.OptionNone_Tests
 		public void With_Reason_Returns_Reason_ToString()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
 			var msg = new TestMsg(value);
-			var option = Option.None<int>(msg);
+			var option = OptionF.None<int>(msg);
 
 			// Act
 			var result = option.ToString();
@@ -26,7 +27,7 @@ namespace Jeebs.OptionNone_Tests
 		public void Without_Reason_Returns_Type()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 
 			// Act
 			var result = option.ToString();

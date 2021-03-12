@@ -45,7 +45,7 @@ namespace Jeebs
 
 			for (int i = shuffled.Length; i > 1; i--)
 			{
-				int j = F.MathsF.RandomInt32(max: i - 1, generator: rng);
+				int j = JeebsF.MathsF.RandomInt32(max: i - 1, generator: rng);
 				T tmp = shuffled[j];
 				shuffled[j] = shuffled[i - 1];
 				shuffled[i - 1] = tmp;

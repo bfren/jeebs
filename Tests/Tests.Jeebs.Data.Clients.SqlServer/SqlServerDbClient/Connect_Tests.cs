@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 		{
 			// Arrange
 			var client = new SqlServerDbClient();
-			var connectionString = F.Rnd.Str;
+			var connectionString = JeebsF.Rnd.Str;
 
 			// Act
 			void action() => client.Connect(connectionString);
@@ -29,10 +29,10 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 			var client = new SqlServerDbClient();
 			var connectionString = string.Format(
 				"server={0};database={1};user id={2};password={3}",
-				F.Rnd.Str,
-				F.Rnd.Str,
-				F.Rnd.Str,
-				F.Rnd.Str
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str
 			);
 
 			// Act
@@ -49,10 +49,10 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 			var client = new SqlServerDbClient();
 			var connectionString = string.Format(
 				"server={0};database={1};user id={2};password={3}",
-				F.Rnd.Str,
-				F.Rnd.Str,
-				F.Rnd.Str,
-				F.Rnd.Str
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str
 			);
 
 			// Act

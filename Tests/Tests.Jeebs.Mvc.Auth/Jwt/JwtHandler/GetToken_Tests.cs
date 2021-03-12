@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using JeebsF;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Invalid_Authorization_Header_Returns_None_With_InvalidAuthorisationHeaderMsg()
 		{
 			// Arrange
-			var header = F.Rnd.Str;
+			var header = JeebsF.Rnd.Str;
 
 			// Act
 			var result = JwtHandler.GetToken(header);
@@ -26,7 +27,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Returns_Token()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
+			var value = JeebsF.Rnd.Str;
 			var header = $"Bearer {value}";
 
 			// Act

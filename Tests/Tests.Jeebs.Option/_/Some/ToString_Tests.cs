@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.OptionSome_Tests
+namespace JeebsF.OptionSome_Tests
 {
 	public class ToString_Tests
 	{
@@ -11,8 +11,8 @@ namespace Jeebs.OptionSome_Tests
 		public void With_Value_Returns_Value_ToString()
 		{
 			// Arrange
-			var value = F.Rnd.Lng;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Lng;
+			var option = OptionF.Return(value);
 
 			// Act
 			var result = option.ToString();
@@ -26,7 +26,7 @@ namespace Jeebs.OptionSome_Tests
 		{
 			// Arrange
 			int? value = null;
-			var option = Option.Wrap(value, true);
+			var option = OptionF.Return(value, true);
 
 			// Act
 			var result = option.ToString();

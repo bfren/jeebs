@@ -12,8 +12,8 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 		{
 			// Arrange
 			var param = new QueryParameters();
-			var p0 = F.Rnd.Str;
-			var p1 = F.Rnd.Int;
+			var p0 = JeebsF.Rnd.Str;
+			var p1 = JeebsF.Rnd.Int;
 			param.TryAdd(new { p0, p1 });
 
 			// Act

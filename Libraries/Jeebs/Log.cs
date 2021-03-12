@@ -22,17 +22,23 @@ namespace Jeebs
 			var (text, args) = msg.Prepare();
 
 			// Handle exception messages
-			if (msg is IExceptionMsg exceptionMsg)
+			if (msg is Jm.ExceptionMsg exceptionMsgAbstract)
 			{
-				if (exceptionMsg.Level == LogLevel.Fatal)
+				if (exceptionMsgAbstract.Level == LogLevel.Fatal)
 				{
-					Fatal(exceptionMsg.Exception, text, args);
+					Fatal(exceptionMsgAbstract.Exception, text, args);
 				}
 				else
 				{
-					Error(exceptionMsg.Exception, text, args);
+					Error(exceptionMsgAbstract.Exception, text, args);
 				}
 
+				return;
+			}
+
+			if (msg is IExceptionMsg exceptionMsgInterface)
+			{
+				Error(exceptionMsgInterface.Exception, text, args);
 				return;
 			}
 

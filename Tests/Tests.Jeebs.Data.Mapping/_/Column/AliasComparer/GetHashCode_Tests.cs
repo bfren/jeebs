@@ -12,15 +12,15 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 		public void Returns_Alias_Hash()
 		{
 			// Arrange
-			var alias = F.Rnd.Str;
+			var alias = JeebsF.Rnd.Str;
 			var ha = alias.GetHashCode();
 
 			var c0 = Substitute.For<IColumn>();
-			c0.Name.Returns(F.Rnd.Str);
+			c0.Name.Returns(JeebsF.Rnd.Str);
 			c0.Alias.Returns(alias);
 
 			var c1 = Substitute.For<IColumn>();
-			c1.Name.Returns(F.Rnd.Str);
+			c1.Name.Returns(JeebsF.Rnd.Str);
 			c1.Alias.Returns(alias);
 
 			var comparer = new Column.AliasComparer();

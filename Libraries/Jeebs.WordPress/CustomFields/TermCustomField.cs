@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities;
+using JeebsF;
 using Jm.WordPress.CustomFields;
 using Jm.WordPress.CustomFields.Term;
 
@@ -32,15 +33,15 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return Option.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key));
+					return OptionF.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key));
 				}
 
-				return Option.False;
+				return OptionF.False;
 			}
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
-			return await Option
-				.Wrap(ValueStr)
+			return await OptionF
+				.Return(ValueStr)
 				.Bind(
 					parseTermId
 				)
@@ -61,7 +62,7 @@ namespace Jeebs.WordPress
 			{
 				if (!long.TryParse(value, out var termId))
 				{
-					return Option.None<long>(new ValueIsInvalidPostIdMsg(GetType(), value));
+					return OptionF.None<long>(new ValueIsInvalidPostIdMsg(GetType(), value));
 				}
 
 				return termId;

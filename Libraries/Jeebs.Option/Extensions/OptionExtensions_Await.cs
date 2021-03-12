@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace Jeebs
+namespace JeebsF
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Await

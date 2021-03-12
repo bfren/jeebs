@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using JeebsF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -46,8 +47,8 @@ namespace Jeebs.Data.Mapping
 		private static Task<Option<T>> SingleAsync<T>(long id, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
 			where T : class, IEntity
 		{
-			return Option
-				.Wrap(
+			return OptionF
+				.Return(
 					id
 				)
 				.BindAsync(

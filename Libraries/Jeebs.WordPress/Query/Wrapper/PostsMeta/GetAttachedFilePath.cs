@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Querying;
+using JeebsF;
 using Jm.WordPress.Query.Wrapper.PostsMeta;
 
 namespace Jeebs.WordPress
@@ -17,8 +18,8 @@ namespace Jeebs.WordPress
 		/// <param name="uploadsPath">Full path to wp-uploads directory on server</param>
 		public async Task<Option<string>> GetAttachedFilePathAsync(long postId, string uploadsPath)
 		{
-			return await Option
-				.Wrap(postId)
+			return await OptionF
+				.Return(postId)
 				.Map(
 					getQuery
 				)

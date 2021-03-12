@@ -24,7 +24,7 @@ namespace Jeebs.WordPress.Entities
 		public string Info
 		{
 			get =>
-				F.JsonF.Serialise(F.PhpF.Deserialise(info));
+				JeebsF.JsonF.Serialise(JeebsF.PhpF.Deserialise(info));
 
 			set =>
 				info = value;

@@ -28,7 +28,7 @@ namespace Jeebs.Data.QueryPartsBuilderExtended_Tests
 		{
 			// Arrange
 			var (builder, adapter, table) = GetQueryPartsBuilder();
-			var columnName = F.Rnd.Str;
+			var columnName = JeebsF.Rnd.Str;
 			var column = Substitute.For<Func<FooTable, string>>();
 			column(table)
 				.Returns(columnName);

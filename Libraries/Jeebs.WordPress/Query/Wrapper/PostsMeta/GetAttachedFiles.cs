@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.WordPress.Entities.Additional;
+using JeebsF;
 
 namespace Jeebs.WordPress
 {
@@ -22,12 +23,12 @@ namespace Jeebs.WordPress
 			// Check for empty list
 			if (fileIds.Count == 0)
 			{
-				return Option.Wrap(new List<T>());
+				return OptionF.Return(new List<T>());
 			}
 
 			// Run query
-			return await Option
-				.Wrap(fileIds)
+			return await OptionF
+				.Return(fileIds)
 				.Map(
 					getQuery
 				)

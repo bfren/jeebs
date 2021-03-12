@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Option_Tests
+namespace JeebsF.Option_Tests
 {
 	public class UnwrapSingle_Tests
 	{
@@ -22,14 +23,14 @@ namespace Jeebs.Option_Tests
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
 			var msg = Assert.IsType<Jm.Option.UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<Jx.Option.UnknownOptionException>(msg.Exception);
+			Assert.IsType<Exceptions.UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
 		public void None_Returns_None()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 
 			// Act
 			var r0 = option.DoUnwrapSingle<int>();
@@ -45,7 +46,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var reason = new TestMsg();
-			var option = Option.None<int>(reason);
+			var option = OptionF.None<int>(reason);
 
 			// Act
 			var r0 = option.DoUnwrapSingle<int>();
@@ -63,7 +64,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var empty = (IEnumerable<int>)Array.Empty<int>();
-			var option = Option.Wrap(empty);
+			var option = OptionF.Return(empty);
 
 			// Act
 			var r0 = option.DoUnwrapSingle<int>();
@@ -81,7 +82,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var empty = (IEnumerable<int>)Array.Empty<int>();
-			var option = Option.Wrap(empty);
+			var option = OptionF.Return(empty);
 			var noItems = Substitute.For<Func<IMsg>>();
 
 			// Act
@@ -96,8 +97,8 @@ namespace Jeebs.Option_Tests
 		public void Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
-			var option = Option.Wrap(list);
+			var list = (IEnumerable<int>)new[] { JeebsF.Rnd.Int, JeebsF.Rnd.Int };
+			var option = OptionF.Return(list);
 
 			// Act
 			var r0 = option.DoUnwrapSingle<int>();
@@ -114,8 +115,8 @@ namespace Jeebs.Option_Tests
 		public void Too_Many_Items_Runs_TooMany()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
-			var option = Option.Wrap(list);
+			var list = (IEnumerable<int>)new[] { JeebsF.Rnd.Int, JeebsF.Rnd.Int };
+			var option = OptionF.Return(list);
 			var tooMany = Substitute.For<Func<IMsg>>();
 
 			// Act
@@ -130,8 +131,8 @@ namespace Jeebs.Option_Tests
 		public void Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 
 			// Act
 			var r0 = option.DoUnwrapSingle<int>();
@@ -148,8 +149,8 @@ namespace Jeebs.Option_Tests
 		public void Not_A_List_Runs_NotAList()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var notAList = Substitute.For<Func<IMsg>>();
 
 			// Act
@@ -164,9 +165,9 @@ namespace Jeebs.Option_Tests
 		public void List_With_Single_Item_Returns_Single()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = JeebsF.Rnd.Int;
 			var list = (IEnumerable<int>)new[] { value };
-			var option = Option.Wrap(list);
+			var option = OptionF.Return(list);
 
 			// Act
 			var result = option.UnwrapSingle<int>();

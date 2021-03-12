@@ -4,9 +4,9 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Jeebs
+namespace JeebsF
 {
-	public static partial class Option
+	public static partial class OptionF
 	{
 		/// <summary>
 		/// Catch any unhandled exceptions in the chain

@@ -36,7 +36,7 @@ namespace Jeebs.Data.Db_Tests
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var logs = new DbLogs(dbLog, wLog);
-			var connectionString = F.Rnd.Str;
+			var connectionString = JeebsF.Rnd.Str;
 			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
@@ -64,7 +64,7 @@ namespace Jeebs.Data.Db_Tests
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var logs = new DbLogs(dbLog, wLog);
-			var connectionString = F.Rnd.Str;
+			var connectionString = JeebsF.Rnd.Str;
 
 			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
@@ -88,7 +88,7 @@ namespace Jeebs.Data.Db_Tests
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var logs = new DbLogs(dbLog, wLog);
-			var connectionString = F.Rnd.Str;
+			var connectionString = JeebsF.Rnd.Str;
 
 			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
@@ -117,7 +117,7 @@ namespace Jeebs.Data.Db_Tests
 			var dbLog = Substitute.For<ILog<Db>>();
 			var wLog = Substitute.For<ILog<UnitOfWork>>();
 			var logs = new DbLogs(dbLog, wLog);
-			var connectionString = F.Rnd.Str;
+			var connectionString = JeebsF.Rnd.Str;
 
 			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 

@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
+using JeebsF;
+using JeebsF.Linq;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Mvc.Auth.Jwt
 {
@@ -77,7 +80,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 					authorisationHeader.ToString(),
 
 				_ =>
-					Option.None<string>(new MissingAuthorisationHeaderMsg())
+					None<string>(new MissingAuthorisationHeaderMsg())
 			};
 
 		/// <summary>
@@ -91,7 +94,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 					authorisationHeader["Bearer ".Length..].Trim(),
 
 				_ =>
-					Option.None<string>(new InvalidAuthorisationHeaderMsg())
+					None<string>(new InvalidAuthorisationHeaderMsg())
 			};
 
 		/// <summary>

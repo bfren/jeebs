@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Jeebs;
 
-namespace Jeebs
+namespace JeebsF
 {
 	public abstract partial class Option<T>
 	{
@@ -18,22 +19,22 @@ namespace Jeebs
 		/// <param name="tooMany">[Optional] Function to run if the Option value is a list with more than one item</param>
 		/// <param name="notAList">[Optional] Function to run if the Option value is not a list</param>
 		internal Option<U> DoUnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			Option.Catch(() =>
+			OptionF.Catch(() =>
 				Switch(
 					some: v =>
 						v switch
 						{
 							IEnumerable<U> list when list.Count() == 1 =>
-								Option.Wrap(list.Single()),
+								OptionF.Return(list.Single()),
 
 							IEnumerable<U> list when !list.Any() =>
-								Option.None<U>(noItems?.Invoke() ?? new Jm.Option.UnwrapSingleNoItemsMsg()),
+								OptionF.None<U>(noItems?.Invoke() ?? new Jm.Option.UnwrapSingleNoItemsMsg()),
 
 							IEnumerable<U> =>
-								Option.None<U>(tooMany?.Invoke() ?? new Jm.Option.UnwrapSingleTooManyItemsErrorMsg()),
+								OptionF.None<U>(tooMany?.Invoke() ?? new Jm.Option.UnwrapSingleTooManyItemsErrorMsg()),
 
 							_ =>
-								Option.None<U>(notAList?.Invoke() ?? new Jm.Option.UnwrapSingleNotAListMsg())
+								OptionF.None<U>(notAList?.Invoke() ?? new Jm.Option.UnwrapSingleNotAListMsg())
 						},
 
 					none: r =>

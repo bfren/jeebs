@@ -13,7 +13,7 @@ namespace Jeebs.Config.SeqConfig_Tests
 			// Arrange
 			var config = new SeqConfig
 			{
-				Webhook = F.Rnd.Str
+				Webhook = JeebsF.Rnd.Str
 			};
 
 			// Act
@@ -27,7 +27,7 @@ namespace Jeebs.Config.SeqConfig_Tests
 		public void Returns_With_Server_Value()
 		{
 			// Arrange
-			var server = F.Rnd.Str;
+			var server = JeebsF.Rnd.Str;
 			var config = new SeqConfig { Server = server };
 
 			// Act

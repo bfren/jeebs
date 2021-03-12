@@ -4,9 +4,11 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using JeebsF;
 using Jm.Cryptography.Locked;
 using Sodium;
 using Sodium.Exceptions;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Cryptography
 {
@@ -35,13 +37,13 @@ namespace Jeebs.Cryptography
 		/// Create new Locked box with random salt and nonce
 		/// </summary>
 		public Locked() =>
-			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
+			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), CryptoF.GenerateNonce());
 
 		internal Locked(T contents, byte[] key) : this() =>
-			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
+			EncryptedContents = SecretBox.Create(JsonF.Serialise(contents), Nonce, key);
 
 		internal Locked(T contents, string key) : this() =>
-			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, HashKey(key));
+			EncryptedContents = SecretBox.Create(JsonF.Serialise(contents), Nonce, HashKey(key));
 
 		/// <summary>
 		/// Unlock this LockedBox
@@ -51,7 +53,7 @@ namespace Jeebs.Cryptography
 		{
 			if (EncryptedContents is null)
 			{
-				return Option.None<Lockable<T>>(new UnlockWhenEncryptedContentsIsNullMsg());
+				return None<Lockable<T>>(new UnlockWhenEncryptedContentsIsNullMsg());
 			}
 
 			try
@@ -61,7 +63,7 @@ namespace Jeebs.Cryptography
 
 				// Deserialise contents and return
 				var json = Encoding.UTF8.GetString(secret);
-				return F.JsonF.Deserialise<T>(json).Map(x => new Lockable<T>(x));
+				return JsonF.Deserialise<T>(json).Map(x => new Lockable<T>(x));
 			}
 			catch (KeyOutOfRangeException ex)
 			{
@@ -83,7 +85,7 @@ namespace Jeebs.Cryptography
 			// Handle an exception
 			static Option<Lockable<T>> handle<TMsg>(Exception ex)
 				where TMsg : IExceptionMsg, new() =>
-				Option.None<Lockable<T>>(new TMsg { Exception = ex });
+				None<Lockable<T>>(new TMsg { Exception = ex });
 		}
 
 		/// <summary>
@@ -100,10 +102,10 @@ namespace Jeebs.Cryptography
 			EncryptedContents?.Length switch
 			{
 				int x when x > 0 =>
-					F.JsonF.Serialise(this),
+					JsonF.Serialise(this),
 
 				_ =>
-					F.JsonF.Empty
+					JsonF.Empty
 			};
 
 		private byte[] HashKey(string key) =>

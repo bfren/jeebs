@@ -13,10 +13,10 @@ namespace Jeebs.Data.Mapping.MappedColumn_Tests
 		public void Returns_Name()
 		{
 			// Arrange
-			var table = F.Rnd.Str;
-			var name = F.Rnd.Str;
+			var table = JeebsF.Rnd.Str;
+			var name = JeebsF.Rnd.Str;
 			var prop = Substitute.For<PropertyInfo>();
-			prop.Name.Returns(F.Rnd.Str);
+			prop.Name.Returns(JeebsF.Rnd.Str);
 			var column = new MappedColumn(table, name, prop);
 
 			// Act

@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace JeebsF.OptionExtensions_Tests
 {
 	public class AuditAsync_Tests
 	{
@@ -14,7 +15,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Runs_Audit_And_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Option.True;
+			var option = OptionF.True;
 			var task = Task.FromResult(option);
 			var audit = Substitute.For<Func<Option<bool>, Task>>();
 
@@ -34,7 +35,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Option.Wrap(F.Rnd.Int);
+			var option = OptionF.Return(JeebsF.Rnd.Int);
 			var task = Task.FromResult(option);
 
 			void actionThrow(Option<int> _) => throw new Exception();

@@ -4,14 +4,13 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Constants;
 using Jeebs.Config;
 using Jm.Functions.JwtF.CreateToken;
 using Microsoft.IdentityModel.Tokens;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// JSON Web Tokens functions
@@ -45,32 +44,32 @@ namespace F
 			// Ensure there is a current user
 			if (principal.Identity == null)
 			{
-				return Option.None<string>(new NullIdentityMsg());
+				return OptionF.None<string>(new NullIdentityMsg());
 			}
 
 			// Ensure the current user is authenticated
 			var identity = principal.Identity;
 			if (!identity.IsAuthenticated)
 			{
-				return Option.None<string>(new IdentityNotAuthenticatedMsg());
+				return OptionF.None<string>(new IdentityNotAuthenticatedMsg());
 			}
 
 			// Ensure the JwtConfig is valid
 			if (!config.IsValid)
 			{
-				return Option.None<string>(new JwtConfigInvalidMsg());
+				return OptionF.None<string>(new JwtConfigInvalidMsg());
 			}
 
 			// Ensure the signing key is a valid length
 			if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 			{
-				return Option.None<string>(new SigningKeyNotLongEnoughMsg());
+				return OptionF.None<string>(new SigningKeyNotLongEnoughMsg());
 			}
 
 			// Ensure the encrypting key is a valid length
 			if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 			{
-				return Option.None<string>(new EncryptingKeyNotLongEnoughMsg());
+				return OptionF.None<string>(new EncryptingKeyNotLongEnoughMsg());
 			}
 
 			try
@@ -103,11 +102,11 @@ namespace F
 			}
 			catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 			{
-				return Option.None<string>(new KeyNotLongEnoughMsg());
+				return OptionF.None<string>(new KeyNotLongEnoughMsg());
 			}
 			catch (Exception e)
 			{
-				return Option.None<string>(new ErrorCreatingJwtSecurityTokenMsg(e));
+				return OptionF.None<string>(new ErrorCreatingJwtSecurityTokenMsg(e));
 			}
 		}
 	}

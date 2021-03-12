@@ -15,7 +15,7 @@ namespace Jeebs.Config.ConfigurationExtensions_Tests
 		{
 			// Arrange
 			var config = Substitute.For<IConfiguration>();
-			var key = F.Rnd.Str;
+			var key = JeebsF.Rnd.Str;
 
 			// Act
 			config.GetSection<object>(key, false);
@@ -29,7 +29,7 @@ namespace Jeebs.Config.ConfigurationExtensions_Tests
 		{
 			// Arrange
 			var config = Substitute.For<IConfiguration>();
-			var key = $":{F.Rnd.Str}";
+			var key = $":{JeebsF.Rnd.Str}";
 
 			// Act
 			config.GetSection<object>(key, false);
@@ -43,7 +43,7 @@ namespace Jeebs.Config.ConfigurationExtensions_Tests
 		{
 			// Arrange
 			var config = Substitute.For<IConfiguration>();
-			var key = $":{F.Rnd.Str}";
+			var key = $":{JeebsF.Rnd.Str}";
 
 			// Act
 			config.GetSection<object>(key);
@@ -58,9 +58,9 @@ namespace Jeebs.Config.ConfigurationExtensions_Tests
 		public void Binds_Configuration_Values_To_Object()
 		{
 			// Arrange		
-			var key = F.Rnd.Str;
-			var b0 = F.Rnd.Str;
-			var b1 = F.Rnd.Int;
+			var key = JeebsF.Rnd.Str;
+			var b0 = JeebsF.Rnd.Str;
+			var b1 = JeebsF.Rnd.Int;
 
 			var builder = new ConfigurationBuilder();
 			builder.AddInMemoryCollection(new Dictionary<string, string>

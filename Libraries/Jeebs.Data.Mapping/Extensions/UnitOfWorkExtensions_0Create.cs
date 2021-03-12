@@ -3,7 +3,9 @@
 
 using System.Threading.Tasks;
 using Dapper;
+using JeebsF;
 using Jm.Data.Mapping.Extensions.UnitOfWork;
+using static JeebsF.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -21,8 +23,10 @@ namespace Jeebs.Data.Mapping
 		/// <returns>Entity (complete with new ID)</returns>
 		public static Option<T> Create<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			Option
-				.Wrap(entity)
+
+				Return(
+					entity
+				)
 				.Bind(
 					x => InsertAndReturnId(@this, x),
 					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
@@ -45,8 +49,10 @@ namespace Jeebs.Data.Mapping
 		/// <returns>Entity (complete with new ID)</returns>
 		public static Task<Option<T>> CreateAsync<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			Option
-				.Wrap(entity)
+
+				Return(
+					entity
+				)
 				.BindAsync(
 					x => InsertAndReturnIdAsync(@this, x),
 					e => new Jm.Data.CreateExceptionMsg(e, typeof(T))
@@ -104,7 +110,7 @@ namespace Jeebs.Data.Mapping
 			// Check ID and return error
 			if (id == 0)
 			{
-				return Option.None<long>(new Jm.Data.CreateErrorMsg(typeof(T)));
+				return None<long>(new Jm.Data.CreateErrorMsg(typeof(T)));
 			}
 
 			// Continue

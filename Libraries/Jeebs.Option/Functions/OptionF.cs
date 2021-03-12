@@ -3,13 +3,14 @@
 
 using System;
 using System.IO;
+using Jeebs;
 
-namespace Jeebs
+namespace JeebsF
 {
 	/// <summary>
 	/// Create <see cref="Option{T}"/> types and begin chains
 	/// </summary>
-	public static partial class Option
+	public static partial class OptionF
 	{
 		/// <summary>
 		/// Exception handler delegate - takes exception and returns message of type <see cref="IExceptionMsg"/>
@@ -21,13 +22,13 @@ namespace Jeebs
 		/// Special case for boolean - returns Some{bool}(true)
 		/// </summary>
 		public static Option<bool> True =>
-			Wrap(true);
+			Return(true);
 
 		/// <summary>
 		/// Special case for boolean - returns Some{bool}(false)
 		/// </summary>
 		public static Option<bool> False =>
-			Wrap(false);
+			Return(false);
 
 		/// <summary>
 		/// Set to log audit exceptions - otherwise they are sent to the Console

@@ -3,9 +3,9 @@
 
 using System;
 
-namespace Jeebs
+namespace JeebsF
 {
-	public static partial class Option
+	public static partial class OptionF
 	{
 		/// <summary>
 		/// Create a <see cref="Some{T}"/> Option, containing a value
@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="value">Some value</param>
 		/// <param name="allowNull">If true, <see cref="Some{T}"/> will always be returned</param>
-		public static Option<T> Wrap<T>(T value, bool allowNull = false) =>
+		public static Option<T> Return<T>(T value, bool allowNull = false) =>
 			value switch
 			{
 				T x =>
@@ -27,7 +27,7 @@ namespace Jeebs
 							new Some<T>(value),
 
 						false =>
-							None<T>(new Jm.Option.SomeValueWasNullMsg())
+							None<T>(new SomeValueWasNullMsg())
 					}
 
 			};
@@ -39,18 +39,25 @@ namespace Jeebs
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="predicate">Predicate to evaluate</param>
 		/// <param name="value">Function to return value</param>
-		public static Option<T> WrapIf<T>(Func<bool> predicate, Func<T> value) =>
+		public static Option<T> ReturnIf<T>(Func<bool> predicate, Func<T> value) =>
 			predicate() switch
 			{
 				true =>
-					Wrap(value()),
+					Return(value()),
 
 				false =>
-					None<T>(new Jm.Option.PredicateWasFalseMsg())
+					None<T>(new PredicateWasFalseMsg())
 			};
 
-		/// <inheritdoc cref="WrapIf{T}(Func{bool}, Func{T})"/>
-		public static Option<T> WrapIf<T>(Func<bool> predicate, T value) =>
-			WrapIf(predicate, () => value);
+		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T})"/>
+		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
+			ReturnIf(predicate, () => value);
+
+		#region Messages
+
+		public sealed record PredicateWasFalseMsg : Jeebs.IMsg { }
+		public sealed record SomeValueWasNullMsg : Jeebs.IMsg { }
+
+		#endregion
 	}
 }

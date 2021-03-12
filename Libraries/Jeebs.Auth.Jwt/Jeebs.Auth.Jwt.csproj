@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Auth.Abstractions\Jeebs.Auth.Abstractions.csproj" />
     <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
-    <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
+    <ProjectReference Include="..\Jeebs.Option\JeebsF.Option.csproj" />
   </ItemGroup>
 
 </Project>

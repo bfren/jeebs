@@ -5,25 +5,25 @@ using System;
 using System.Text.Json;
 using Jeebs.Id;
 
-namespace F.Internals
+namespace JeebsF.Internals
 {
 	/// <summary>
-	/// Converter for <see cref="LongId"/> types
+	/// Converter for <see cref="IntId"/> types
 	/// </summary>
-	/// <typeparam name="T">LongId type</typeparam>
-	internal class LongIdConverter<T> : StrongIdConverter<LongId, long>
-		where T : LongId, new()
+	/// <typeparam name="T">IntId type</typeparam>
+	internal class IntIdConverter<T> : StrongIdConverter<IntId, int>
+		where T : IntId, new()
 	{
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public LongIdConverter() : base(0L) { }
+		public IntIdConverter() : base(0) { }
 
 		/// <summary>
-		/// Read an LongId type value
+		/// Read an IntId type value
 		/// </summary>
 		/// <param name="reader">Utf8JsonReader</param>
-		/// <param name="typeToConvert">LongId type</param>
+		/// <param name="typeToConvert">IntId type</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 			new()
@@ -32,14 +32,14 @@ namespace F.Internals
 				{
 					// Handle numbers
 					JsonTokenType.Number =>
-						reader.GetInt64(),
+						reader.GetInt32(),
 
-					// Handle strings if strings are allowed
+					// Handle strings
 					JsonTokenType.String =>
 						HandleString(
 							ref reader,
 							_ => AllowStringsAsNumbers(options),
-							long.TryParse
+							int.TryParse
 						),
 
 					// Handle default

@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Config;
+using JeebsF;
+using JeebsF.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AppConsole

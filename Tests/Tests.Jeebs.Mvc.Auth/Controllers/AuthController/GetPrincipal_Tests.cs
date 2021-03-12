@@ -21,7 +21,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			var auth = Substitute.For<IDataAuthProvider>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthController(auth, log);
-			var user = new UserModel(new(F.Rnd.Lng), F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, true);
+			var user = new UserModel(new(JeebsF.Rnd.Lng), JeebsF.Rnd.Str, JeebsF.Rnd.Str, JeebsF.Rnd.Str, true);
 
 			// Act
 			var result = controller.GetPrincipal(user);
@@ -58,13 +58,13 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			var auth = Substitute.For<IDataAuthProvider>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthControllerWithRoles(auth, log);
-			var role0 = new RoleModel(new(F.Rnd.Lng), F.Rnd.Str);
-			var role1 = new RoleModel(new(F.Rnd.Lng), F.Rnd.Str);
+			var role0 = new RoleModel(new(JeebsF.Rnd.Lng), JeebsF.Rnd.Str);
+			var role1 = new RoleModel(new(JeebsF.Rnd.Lng), JeebsF.Rnd.Str);
 			var user = new UserModelWithRoles(
-				new(F.Rnd.Lng),
-				F.Rnd.Str,
-				F.Rnd.Str,
-				F.Rnd.Str,
+				new(JeebsF.Rnd.Lng),
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str,
+				JeebsF.Rnd.Str,
 				true,
 				new List<RoleModel>(new[] { role0, role1 })
 			);
@@ -114,7 +114,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			var auth = Substitute.For<IDataAuthProvider>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthControllerWithClaims(auth, log);
-			var user = new UserModel(new(F.Rnd.Lng), F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
+			var user = new UserModel(new(JeebsF.Rnd.Lng), JeebsF.Rnd.Str, JeebsF.Rnd.Str, JeebsF.Rnd.Str, false);
 
 			// Act
 			var result = controller.GetPrincipal(user);

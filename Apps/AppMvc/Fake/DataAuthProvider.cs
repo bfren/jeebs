@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
+using JeebsF;
 
 namespace AppMvc.Fake
 {
@@ -18,7 +18,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return Option.None<TUserModel>(true);
+				return OptionF.None<TUserModel>(true);
 			}
 
 			return new TUserModel
@@ -38,7 +38,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return Option.None<TUserModel>(true);
+				return OptionF.None<TUserModel>(true);
 			}
 
 			return new TUserModel

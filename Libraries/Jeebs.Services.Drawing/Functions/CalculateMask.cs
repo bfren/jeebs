@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Services.Drawing.Geometry;
 
-namespace F
+namespace JeebsF
 {
 	/// <summary>
 	/// Image functions

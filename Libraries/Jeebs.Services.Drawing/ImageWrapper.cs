@@ -3,6 +3,7 @@
 
 using System;
 using Jeebs.Services.Drawing.Geometry;
+using JeebsF;
 using Jm.Services.Drawing.ImageWrapper;
 
 namespace Jeebs.Services.Drawing
@@ -36,24 +37,24 @@ namespace Jeebs.Services.Drawing
 			// At least one of width and height should be greater than zero
 			if (width == 0 && height == 0)
 			{
-				return Option.None<IImageWrapper>(new MaskHeightOrWidthRequiredMsg());
+				return OptionF.None<IImageWrapper>(new MaskHeightOrWidthRequiredMsg());
 			}
 
 			// Calculate the size of the new image
-			var size = F.ImageF.CalculateNewSize(Width, Height, width, height);
+			var size = JeebsF.ImageF.CalculateNewSize(Width, Height, width, height);
 
 			// Calculate the mask to apply to the original image
-			var mask = F.ImageF.CalculateMask(Width, Height, size.Width, size.Height);
+			var mask = JeebsF.ImageF.CalculateMask(Width, Height, size.Width, size.Height);
 
 			// Use implementation to return masked and resized image
 			try
 			{
 				var resized = apply(size, mask);
-				return Option.Wrap(resized);
+				return OptionF.Return(resized);
 			}
 			catch (Exception e)
 			{
-				return Option.None<IImageWrapper>(new ExceptionApplyingImageMaskMsg(e));
+				return OptionF.None<IImageWrapper>(new ExceptionApplyingImageMaskMsg(e));
 			}
 		}
 	}

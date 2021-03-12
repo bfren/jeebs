@@ -3,6 +3,7 @@
 
 using System.Security.Claims;
 using Jeebs.Config;
+using JeebsF;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth
@@ -23,10 +24,10 @@ namespace Jeebs.Auth
 
 		/// <inheritdoc/>
 		public Option<string> CreateToken(ClaimsPrincipal principal) =>
-			F.JwtF.CreateToken(config, principal);
+			JwtF.CreateToken(config, principal);
 
 		/// <inheritdoc/>
 		public Option<ClaimsPrincipal> ValidateToken(string token) =>
-			F.JwtF.ValidateToken(config, token);
+			JwtF.ValidateToken(config, token);
 	}
 }

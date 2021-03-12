@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace JeebsF.OptionExtensions_Tests
 {
 	public class UnwrapAsync_Tests
 	{
@@ -14,12 +15,12 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Some_Returns_Value()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.Return(value);
 			var task = Task.FromResult(option);
 
 			// Act
-			var r0 = await task.UnwrapAsync(x => x.Value(F.Rnd.Int));
+			var r0 = await task.UnwrapAsync(x => x.Value(JeebsF.Rnd.Int));
 			var r1 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<int>>()));
 			var r2 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<IMsg?, int>>()));
 
@@ -33,8 +34,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task None_Gets_IfNone()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.None<int>(true);
+			var value = JeebsF.Rnd.Int;
+			var option = OptionF.None<int>(true);
 			var task = Task.FromResult(option.AsOption);
 
 			// Act
@@ -48,7 +49,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task None_Runs_IfNone()
 		{
 			// Arrange
-			var option = Option.None<int>(true);
+			var option = OptionF.None<int>(true);
 			var task = Task.FromResult(option.AsOption);
 			var ifNone = Substitute.For<Func<IMsg?, int>>();
 
