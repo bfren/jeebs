@@ -3,9 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
 
-namespace JeebsF
+namespace Jeebs
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: AuditSwitchAsync

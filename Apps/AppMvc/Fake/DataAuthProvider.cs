@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using JeebsF;

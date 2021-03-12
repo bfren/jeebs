@@ -1,11 +1,14 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
+using JeebsF.OptionFMsg;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
-	public class Wrap_Tests
+	public class Return_Tests
 	{
 		[Theory]
 		[InlineData(18)]
@@ -15,7 +18,7 @@ namespace JeebsF.OptionStatic_Tests
 			// Arrange
 
 			// Act
-			var result = OptionF.Return(input);
+			var result = Return(input);
 
 			// Assert
 			var some = Assert.IsType<Some<T>>(result);
@@ -29,11 +32,11 @@ namespace JeebsF.OptionStatic_Tests
 			int? value = null;
 
 			// Act
-			var result = OptionF.Return(value);
+			var result = Return(value);
 
 			// Assert
 			var none = Assert.IsType<None<int?>>(result);
-			Assert.True(none.Reason is OptionF.SomeValueWasNullMsg);
+			Assert.True(none.Reason is SomeValueWasNullMsg);
 		}
 
 		[Fact]
@@ -43,7 +46,7 @@ namespace JeebsF.OptionStatic_Tests
 			int? value = null;
 
 			// Act
-			var result = OptionF.Return(value, true);
+			var result = Return(value, true);
 
 			// Assert
 			var some = Assert.IsType<Some<int?>>(result);
@@ -57,7 +60,7 @@ namespace JeebsF.OptionStatic_Tests
 			int? value = null;
 
 			// Act
-			var result = OptionF.Return(value, true);
+			var result = Return(value, true);
 
 			// Assert
 			var some = Assert.IsType<Some<int?>>(result);

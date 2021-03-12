@@ -2,11 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Threading.Tasks;
-using Jeebs;
-using JeebsF.Linq;
+using Jeebs.Linq;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionExtensions_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
 	public class SelectMany_Tests
 	{
@@ -16,8 +16,8 @@ namespace JeebsF.OptionExtensions_Tests
 			// Arrange
 			var v0 = JeebsF.Rnd.Int;
 			var v1 = JeebsF.Rnd.Int;
-			var o0 = OptionF.Return(v0);
-			var o1 = OptionF.Return(v1);
+			var o0 = Return(v0);
+			var o1 = Return(v1);
 
 			// Act
 			var result = from a in o0
@@ -35,8 +35,8 @@ namespace JeebsF.OptionExtensions_Tests
 			// Arrange
 			var v0 = JeebsF.Rnd.Int;
 			var v1 = JeebsF.Rnd.Int;
-			var o0 = Task.FromResult(OptionF.Return(v0));
-			var o1 = Task.FromResult(OptionF.Return(v1));
+			var o0 = Return(v0).AsTask;
+			var o1 = Return(v1).AsTask;
 
 			// Act
 			var result = await (
@@ -58,10 +58,10 @@ namespace JeebsF.OptionExtensions_Tests
 			var v1 = JeebsF.Rnd.Int;
 			var v2 = JeebsF.Rnd.Int;
 			var v3 = JeebsF.Rnd.Int;
-			var o0 = Task.FromResult(OptionF.Return(v0));
-			var o1 = OptionF.Return(v1);
-			var o2 = Task.FromResult(OptionF.Return(v2));
-			var o3 = OptionF.Return(v3);
+			var o0 = Return(v0).AsTask;
+			var o1 = Return(v1);
+			var o2 = Return(v2).AsTask;
+			var o3 = Return(v3);
 
 			// Act
 			var result = await (
@@ -83,9 +83,9 @@ namespace JeebsF.OptionExtensions_Tests
 			// Arrange
 			var v0 = JeebsF.Rnd.Int;
 			var v1 = JeebsF.Rnd.Int;
-			var o0 = OptionF.Return(v0);
-			var o1 = OptionF.Return(v1);
-			var o2 = OptionF.None<int>(new InvalidIntegerMsg());
+			var o0 = Return(v0);
+			var o1 = Return(v1);
+			var o2 = None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = from a in o0
@@ -95,7 +95,7 @@ namespace JeebsF.OptionExtensions_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			Assert.True(none.Reason is InvalidIntegerMsg);
+			Assert.IsType<InvalidIntegerMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -104,9 +104,9 @@ namespace JeebsF.OptionExtensions_Tests
 			// Arrange
 			var v0 = JeebsF.Rnd.Int;
 			var v1 = JeebsF.Rnd.Int;
-			var o0 = Task.FromResult(OptionF.Return(v0));
-			var o1 = Task.FromResult(OptionF.Return(v1));
-			var o2 = Task.FromResult(OptionF.None<int>(new InvalidIntegerMsg()).AsOption);
+			var o0 = Return(v0).AsTask;
+			var o1 = Return(v1).AsTask;
+			var o2 = None<int>(new InvalidIntegerMsg()).AsTask;
 
 			// Act
 			var result = await (
@@ -118,7 +118,7 @@ namespace JeebsF.OptionExtensions_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			Assert.True(none.Reason is InvalidIntegerMsg);
+			Assert.IsType<InvalidIntegerMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -127,9 +127,9 @@ namespace JeebsF.OptionExtensions_Tests
 			// Arrange
 			var v0 = JeebsF.Rnd.Int;
 			var v1 = JeebsF.Rnd.Int;
-			var o0 = Task.FromResult(OptionF.Return(v0));
-			var o1 = Task.FromResult(OptionF.Return(v1));
-			var o2 = OptionF.None<int>(new InvalidIntegerMsg());
+			var o0 = Return(v0).AsTask;
+			var o1 = Return(v1).AsTask;
+			var o2 = None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = await (
@@ -141,7 +141,7 @@ namespace JeebsF.OptionExtensions_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			Assert.True(none.Reason is InvalidIntegerMsg);
+			Assert.IsType<InvalidIntegerMsg>(none.Reason);
 		}
 
 		public class InvalidIntegerMsg : IMsg { }

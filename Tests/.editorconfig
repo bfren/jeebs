@@ -3,6 +3,9 @@
 # Add file header
 file_header_template = Jeebs Unit Tests\nCopyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+# RCS1021: Convert lambda expression body to expression-body.
+dotnet_diagnostic.RCS1021.severity = none
+
 # RCS1090: Add call to 'ConfigureAwait' (or vice versa).
 dotnet_diagnostic.RCS1090.severity = none
 

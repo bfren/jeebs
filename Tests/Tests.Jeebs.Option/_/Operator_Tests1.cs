@@ -1,10 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public partial class Operator_Tests
 	{
@@ -13,7 +13,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var some = OptionF.Return(value);
+			var some = Return(value);
 
 			// Act
 			var result = some == value;
@@ -28,7 +28,7 @@ namespace JeebsF.Option_Tests
 			// Arrange
 			var v0 = JeebsF.Rnd.Int;
 			var v1 = JeebsF.Rnd.Int;
-			var some = OptionF.Return(v0);
+			var some = Return(v0);
 
 			// Act
 			var result = some == v1;

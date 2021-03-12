@@ -3,11 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using Jeebs.Option.Exceptions;
+using JeebsF.OptionFMsg;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionExtensions_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
 	public class BindAsync_Tests
 	{
@@ -16,7 +18,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var option = new FakeOption();
-			var task = Task.FromResult(option.AsOption);
+			var task = option.AsTask;
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
@@ -24,17 +26,17 @@ namespace JeebsF.OptionExtensions_Tests
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<Jm.Option.UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<Exceptions.UnknownOptionException>(msg.Exception);
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
 		public async Task Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = OptionF.Return(JeebsF.Rnd.Int);
+			var option = Return(JeebsF.Rnd.Int);
 			var task = Task.FromResult(option);
-			var handler = Substitute.For<OptionF.Handler>();
+			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 
 			Option<string> syncThrow(int _) => throw exception;
@@ -56,8 +58,8 @@ namespace JeebsF.OptionExtensions_Tests
 		public async Task If_None_Gets_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(true);
-			var task = Task.FromResult(option.AsOption);
+			var option = None<int>(true);
+			var task = option.AsTask;
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
@@ -76,8 +78,8 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = OptionF.None<int>(msg);
-			var task = Task.FromResult(option.AsOption);
+			var option = None<int>(msg);
+			var task = option.AsTask;
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
@@ -99,7 +101,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 			var task = Task.FromResult(option);
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
@@ -112,10 +114,7 @@ namespace JeebsF.OptionExtensions_Tests
 			await bind.Received(3).Invoke(value);
 		}
 
-		public class FakeOption : Option<int>
-		{
-			public Option<int> AsOption => this;
-		}
+		public class FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

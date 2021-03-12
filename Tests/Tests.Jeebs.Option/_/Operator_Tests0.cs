@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using JeebsF.OptionFMsg;
 using Xunit;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public partial class Operator_Tests
 	{
@@ -33,7 +34,7 @@ namespace JeebsF.Option_Tests
 
 			// Assert
 			var none = Assert.IsType<None<object>>(result);
-			Assert.IsType<OptionF.SomeValueWasNullMsg>(none.Reason);
+			Assert.IsType<SomeValueWasNullMsg>(none.Reason);
 		}
 	}
 }

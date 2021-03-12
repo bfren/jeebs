@@ -3,10 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
+using JeebsF.OptionFMsg;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
 	public class CatchAsync_Tests
 	{
@@ -14,10 +17,10 @@ namespace JeebsF.OptionStatic_Tests
 		public async Task Executes_Chain()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = Rnd.Int;
 
 			// Act
-			var result = await OptionF.CatchAsync(() => Task.FromResult(OptionF.Return(value)));
+			var result = await CatchAsync(() => Return(value).AsTask);
 
 			// Assert
 			var some = Assert.IsType<Some<int>>(result);
@@ -28,14 +31,14 @@ namespace JeebsF.OptionStatic_Tests
 		public async Task Catches_Exception_Without_Handler()
 		{
 			// Arrange
-			var message = JeebsF.Rnd.Str;
+			var message = Rnd.Str;
 
 			// Act
-			var result = await OptionF.CatchAsync<int>(() => throw new Exception(message));
+			var result = await CatchAsync<int>(() => throw new Exception(message));
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			var ex = Assert.IsType<Jm.Option.UnhandledExceptionMsg>(none.Reason);
+			var ex = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
 			Assert.Contains(message, ex.ToString());
 		}
 
@@ -43,12 +46,12 @@ namespace JeebsF.OptionStatic_Tests
 		public async Task Catches_Exception_With_Handler()
 		{
 			// Arrange
-			var message = JeebsF.Rnd.Str;
+			var message = Rnd.Str;
 			var exception = new Exception(message);
-			var handler = Substitute.For<OptionF.Handler>();
+			var handler = Substitute.For<Handler>();
 
 			// Act
-			var result = await OptionF.CatchAsync<int>(() => throw exception, handler);
+			var result = await CatchAsync<int>(() => throw exception, handler);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);

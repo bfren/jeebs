@@ -2,22 +2,24 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
-	public class WrapIf_Tests
+	public class ReturnIf_Tests
 	{
 		[Fact]
 		public void True_Returns_Some()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = Rnd.Int;
 
 			// Act
-			var r0 = OptionF.ReturnIf(() => true, value);
-			var r1 = OptionF.ReturnIf(() => true, () => value);
+			var r0 = ReturnIf(() => true, value);
+			var r1 = ReturnIf(() => true, () => value);
 
 			// Assert
 			var s0 = Assert.IsType<Some<int>>(r0);
@@ -30,10 +32,10 @@ namespace JeebsF.OptionStatic_Tests
 		public void False_Returns_None()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = Rnd.Int;
 
 			// Act
-			var result = OptionF.ReturnIf(() => false, () => value);
+			var result = ReturnIf(() => false, () => value);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -46,7 +48,7 @@ namespace JeebsF.OptionStatic_Tests
 			var getValue = Substitute.For<Func<int>>();
 
 			// Act
-			var result = OptionF.ReturnIf(() => false, getValue);
+			var result = ReturnIf(() => false, getValue);
 
 			// Assert
 			Assert.IsType<None<int>>(result);

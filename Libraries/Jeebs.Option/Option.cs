@@ -2,9 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
+using System.Threading.Tasks;
+using Jeebs.Option.Exceptions;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	/// <summary>
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
@@ -12,6 +14,12 @@ namespace JeebsF
 	/// <typeparam name="T">Option value type</typeparam>
 	public abstract partial class Option<T>
 	{
+		/// <summary>
+		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>
+		/// </summary>
+		public Task<Option<T>> AsTask =>
+			Task.FromResult(this);
+
 		internal Option() { }
 
 		internal U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
@@ -24,7 +32,7 @@ namespace JeebsF
 					none(x.Reason),
 
 				_ =>
-					throw new Exceptions.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+					throw new UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		internal U Switch<U>(Func<T, U> some, Func<U> none) =>
@@ -68,7 +76,7 @@ namespace JeebsF
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value) =>
-			OptionF.Return(value);
+			Return(value);
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -134,7 +142,7 @@ namespace JeebsF
 					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
 				_ =>
-					throw new Exceptions.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+					throw new UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 			};
 
 		#endregion

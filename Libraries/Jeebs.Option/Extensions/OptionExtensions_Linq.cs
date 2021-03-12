@@ -2,8 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Linq
+namespace Jeebs.Linq
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Linq Methods
@@ -53,12 +54,12 @@ namespace JeebsF.Linq
 					@this,
 
 				false =>
-					OptionF.None<T>(new PredicateWasFalseMsg())
+					None<T>(new PredicateWasFalseMsg())
 			});
 
 		#region Messages
 
-		public sealed record PredicateWasFalseMsg : Jeebs.IMsg { }
+		public sealed record PredicateWasFalseMsg : IMsg { }
 
 		#endregion
 	}

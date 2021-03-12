@@ -3,11 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionExtensions_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
 	public class AuditSwitchAsync_Tests
 	{
@@ -15,8 +16,8 @@ namespace JeebsF.OptionExtensions_Tests
 		public async Task Null_Args_Returns_Original_Option()
 		{
 			// Arrange
-			var option = OptionF.Return(JeebsF.Rnd.Int);
-			var task = Task.FromResult(option);
+			var option = Return(JeebsF.Rnd.Int);
+			var task = option.AsTask;
 
 			// Act
 			var result = await OptionExtensions.DoAuditSwitchAsync(task, null, null);
@@ -30,7 +31,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var option = new FakeOption();
-			var task = Task.FromResult(option.AsOption);
+			var task = option.AsTask;
 			var some = Substitute.For<Func<int, Task>>();
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
@@ -38,7 +39,7 @@ namespace JeebsF.OptionExtensions_Tests
 			Task result() => OptionExtensions.DoAuditSwitchAsync(task, some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(result);
+			await Assert.ThrowsAsync<UnknownOptionException>(result);
 		}
 
 		[Fact]
@@ -46,7 +47,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 			var task = Task.FromResult(option);
 			var some = Substitute.For<Func<int, Task>>();
 
@@ -71,8 +72,8 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = OptionF.None<int>(msg);
-			var task = Task.FromResult(option.AsOption);
+			var option = None<int>(msg);
+			var task = option.AsTask;
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
@@ -95,10 +96,10 @@ namespace JeebsF.OptionExtensions_Tests
 		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var o0 = OptionF.Return(JeebsF.Rnd.Int);
-			var o1 = OptionF.None<int>(true);
-			var t0 = Task.FromResult(o0);
-			var t1 = Task.FromResult(o1.AsOption);
+			var o0 = Return(JeebsF.Rnd.Int);
+			var o1 = None<int>(true);
+			var t0 = o0.AsTask;
+			var t1 = o1.AsTask;
 			var exception = new Exception();
 
 			void someActionThrow(int _) => throw exception!;

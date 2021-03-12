@@ -5,21 +5,22 @@ using System;
 using Jeebs;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
-	public class Map_Tests
+	public class Bind_Tests
 	{
 		[Fact]
 		public void Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = OptionF.Return(JeebsF.Rnd.Str);
-			var handler = Substitute.For<OptionF.Handler>();
+			var option = Return(Rnd.Str);
+			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 
 			// Act
-			var result = OptionF.Map<int>(() => throw exception, handler);
+			var result = Bind<int>(() => throw exception, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -27,18 +28,18 @@ namespace JeebsF.OptionStatic_Tests
 		}
 
 		[Fact]
-		public void Runs_Map_Function()
+		public void Runs_Bind_Function()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
-			var map = Substitute.For<Func<string>>();
+			var value = Rnd.Int;
+			var option = Return(value);
+			var bind = Substitute.For<Func<Option<string>>>();
 
 			// Act
-			OptionF.Map(map, null);
+			Bind(bind, null);
 
 			// Assert
-			map.Received(1).Invoke();
+			bind.Received(1).Invoke();
 		}
 
 		public class FakeOption : Option<int> { }

@@ -41,13 +41,11 @@ namespace Jeebs.WordPress
 			// Return error if the field is required
 			if (IsRequired)
 			{
-				return Task.FromResult(
-					OptionF.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key)).AsOption
-				);
+				return OptionF.None<bool>(new MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
 			// Return OK but not set
-			return Task.FromResult(OptionF.False);
+			return OptionF.False.AsTask;
 		}
 	}
 }

@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Jeebs;
+using static JeebsF.OptionF;
+using Msg = Jeebs.OptionMsg;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
@@ -18,23 +19,23 @@ namespace JeebsF
 		/// <param name="noItems">[Optional] Function to run if the Option value is a list with no items</param>
 		/// <param name="tooMany">[Optional] Function to run if the Option value is a list with more than one item</param>
 		/// <param name="notAList">[Optional] Function to run if the Option value is not a list</param>
-		internal Option<U> DoUnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			OptionF.Catch(() =>
+		internal Option<U> DoUnwrapSingle<U>(Func<IMsg>? noItems, Func<IMsg>? tooMany, Func<IMsg>? notAList) =>
+			Catch(() =>
 				Switch(
 					some: v =>
 						v switch
 						{
 							IEnumerable<U> list when list.Count() == 1 =>
-								OptionF.Return(list.Single()),
+								Return(list.Single()),
 
 							IEnumerable<U> list when !list.Any() =>
-								OptionF.None<U>(noItems?.Invoke() ?? new Jm.Option.UnwrapSingleNoItemsMsg()),
+								None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
 
 							IEnumerable<U> =>
-								OptionF.None<U>(tooMany?.Invoke() ?? new Jm.Option.UnwrapSingleTooManyItemsErrorMsg()),
+								None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
 
 							_ =>
-								OptionF.None<U>(notAList?.Invoke() ?? new Jm.Option.UnwrapSingleNotAListMsg())
+								None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
 						},
 
 					none: r =>
@@ -46,4 +47,25 @@ namespace JeebsF
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
 			DoUnwrapSingle<U>(noItems, tooMany, notAList);
 	}
+}
+
+namespace Jeebs.OptionMsg
+{
+	/// <summary>
+	/// No items in the list<br/>
+	/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+	/// </summary>
+	public sealed record UnwrapSingleNoItemsMsg : IMsg { }
+
+	/// <summary>
+	/// Too many items in the list<br/>
+	/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+	/// </summary>
+	public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
+
+	/// <summary>
+	/// Not a list<br/>
+	/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+	/// </summary>
+	public sealed record UnwrapSingleNotAListMsg : IMsg { }
 }

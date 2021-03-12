@@ -3,48 +3,50 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs.Option.Exceptions;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: MapAsync
 	/// </summary>
 	public static partial class OptionExtensions
 	{
-		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, OptionF.Handler?)"/>
+		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Handler?)"/>
 		public static Task<Option<U>> DoMapAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<U>> map,
-			OptionF.Handler? handler = null
+			Handler? handler = null
 		) =>
-			OptionF.CatchAsync(async () =>
+			CatchAsync(async () =>
 				await @this switch
 				{
 					Some<T> some =>
-						OptionF.Return(await map(some.Value)),
+						Return(await map(some.Value)),
 
 					None<T> none =>
 						new None<U>(none.Reason),
 
 					_ =>
-						throw new Exceptions.UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
+						throw new UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
 				},
 				handler
 			);
 
-		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, OptionF.Handler?)"/>
+		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Handler?)"/>
 		public static Task<Option<U>> MapAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, U> map,
-			OptionF.Handler? handler = null
+			Handler? handler = null
 		) =>
 			DoMapAsync(@this, x => Task.FromResult(map(x)), handler);
 
-		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, OptionF.Handler?)"/>
+		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Handler?)"/>
 		public static Task<Option<U>> MapAsync<T, U>(
 			this Task<Option<T>> @this,
 			Func<T, Task<U>> map,
-			OptionF.Handler? handler = null
+			Handler? handler = null
 		) =>
 			DoMapAsync(@this, map, handler);
 	}

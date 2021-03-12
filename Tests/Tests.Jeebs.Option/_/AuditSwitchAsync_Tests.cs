@@ -3,11 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public class AuditSwitchAsync_Tests
 	{
@@ -36,7 +37,7 @@ namespace JeebsF.Option_Tests
 			Task result() => option.DoAuditSwitchAsync(some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(result);
+			await Assert.ThrowsAsync<UnknownOptionException>(result);
 		}
 
 		[Fact]
@@ -44,7 +45,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 			var some = Substitute.For<Func<int, Task>>();
 
 			// Act
@@ -68,7 +69,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = OptionF.None<int>(msg);
+			var option = None<int>(msg);
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
@@ -91,8 +92,8 @@ namespace JeebsF.Option_Tests
 		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var o0 = OptionF.Return(JeebsF.Rnd.Int);
-			var o1 = OptionF.None<int>(true);
+			var o0 = Return(JeebsF.Rnd.Int);
+			var o1 = None<int>(true);
 			var exception = new Exception();
 
 			void someActionThrow(int _) => throw exception!;

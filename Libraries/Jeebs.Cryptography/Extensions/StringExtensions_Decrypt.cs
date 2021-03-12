@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using JeebsF;
-using JeebsF.Linq;
+using Jeebs.Linq;
 
 namespace Jeebs.Cryptography
 {

@@ -2,11 +2,13 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
+using Jeebs.Option.Exceptions;
+using JeebsF.OptionFMsg;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public class Map_Tests
 	{
@@ -22,16 +24,16 @@ namespace JeebsF.Option_Tests
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<Jm.Option.UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<Exceptions.UnknownOptionException>(msg.Exception);
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
 		public void Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = OptionF.Return(JeebsF.Rnd.Str);
-			var handler = Substitute.For<OptionF.Handler>();
+			var option = Return(JeebsF.Rnd.Str);
+			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 
 			// Act
@@ -46,7 +48,7 @@ namespace JeebsF.Option_Tests
 		public void If_None_Gets_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(true);
+			var option = None<int>(true);
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
@@ -63,7 +65,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = OptionF.None<int>(msg);
+			var option = None<int>(msg);
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
@@ -82,7 +84,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act

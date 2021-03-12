@@ -2,19 +2,20 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
 		/// <summary>
 		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console
+		/// Errors will not be returned as they affect the state of the object, but will be written to the console,
+		/// or <see cref="LogAuditExceptions"/> if set
 		/// </summary>
 		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		internal Option<T> DoAuditSwitch(Action<T>? some = null, Action<IMsg?>? none = null)
+		internal Option<T> DoAuditSwitch(Action<T>? some, Action<IMsg?>? none)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)
@@ -35,7 +36,7 @@ namespace JeebsF
 			}
 			catch (Exception e)
 			{
-				OptionF.HandleAuditException(e);
+				HandleAuditException(e);
 			}
 
 			// Return the original object

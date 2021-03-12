@@ -2,9 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
+using Jeebs.Option.Exceptions;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
@@ -25,7 +25,7 @@ namespace JeebsF
 			}
 			else
 			{
-				throw new Exceptions.UnknownOptionException(); // as Option<T> is internal implementation only this should never happen...
+				throw new UnknownOptionException(); // as Option<T> is internal implementation only this should never happen...
 			}
 		}
 

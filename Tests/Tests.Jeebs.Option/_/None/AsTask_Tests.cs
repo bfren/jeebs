@@ -3,19 +3,20 @@
 
 using System.Threading.Tasks;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionNone_Tests
+namespace Jeebs.Option.None_Tests
 {
-	public class AsOption_Tests
+	public class AsTask_Tests
 	{
 		[Fact]
 		public void Returns_None_As_Generic_Option()
 		{
 			// Arrange
-			var none = OptionF.None<int>(true);
+			var none = None<int>(true);
 
 			// Act
-			var result = Task.FromResult(none.AsOption);
+			var result = none.AsTask;
 
 			// Assert
 			Assert.IsType<Task<Option<int>>>(result);

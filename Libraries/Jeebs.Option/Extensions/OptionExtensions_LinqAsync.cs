@@ -3,8 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Linq
+namespace Jeebs.Linq
 {
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: Linq Async Methods
@@ -39,7 +40,7 @@ namespace JeebsF.Linq
 					@this,
 
 				false =>
-					Task.FromResult(OptionF.None<T>(new PredicateWasFalseMsg()).AsOption)
+					None<T>(new PredicateWasFalseMsg()).AsTask
 			});
 	}
 }

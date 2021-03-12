@@ -3,11 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public class AuditSwitch_Tests
 	{
@@ -18,7 +19,7 @@ namespace JeebsF.Option_Tests
 			var option = new FakeOption();
 
 			// Act
-			var result = option.DoAuditSwitch();
+			var result = option.DoAuditSwitch(null, null);
 
 			// Assert
 			Assert.Same(option, result);
@@ -36,7 +37,7 @@ namespace JeebsF.Option_Tests
 			void result() => option.DoAuditSwitchAsync(some, none);
 
 			// Assert
-			Assert.Throws<Exceptions.UnknownOptionException>(result);
+			Assert.Throws<UnknownOptionException>(result);
 		}
 
 		[Fact]
@@ -44,11 +45,11 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 			var some = Substitute.For<Action<int>>();
 
 			// Act
-			var r0 = option.DoAuditSwitch(some: some);
+			var r0 = option.DoAuditSwitch(some: some, null);
 			var r1 = option.AuditSwitch(some: some);
 			var r2 = option.AuditSwitch(some: some, none: Substitute.For<Action<IMsg?>>());
 
@@ -64,11 +65,11 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var msg = new TestMsg();
-			var option = OptionF.None<int>(msg);
+			var option = None<int>(msg);
 			var none = Substitute.For<Action<IMsg?>>();
 
 			// Act
-			var r0 = option.DoAuditSwitch(none: none);
+			var r0 = option.DoAuditSwitch(null, none: none);
 			var r1 = option.AuditSwitch(none: none);
 			var r2 = option.AuditSwitch(some: Substitute.For<Action<int>>(), none: none);
 
@@ -83,17 +84,17 @@ namespace JeebsF.Option_Tests
 		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var o0 = OptionF.Return(JeebsF.Rnd.Int);
-			var o1 = OptionF.None<int>(true);
+			var o0 = Return(JeebsF.Rnd.Int);
+			var o1 = None<int>(true);
 			var exception = new Exception();
 
 			void someThrow(int _) => throw exception!;
 			void noneThrow(IMsg? _) => throw exception!;
 
 			// Act
-			var r0 = o0.DoAuditSwitch(some: someThrow);
+			var r0 = o0.DoAuditSwitch(some: someThrow, null);
 			var r1 = o0.AuditSwitch(some: someThrow);
-			var r2 = o1.DoAuditSwitch(none: noneThrow);
+			var r2 = o1.DoAuditSwitch(null, none: noneThrow);
 			var r3 = o1.AuditSwitch(none: noneThrow);
 			var r4 = o0.AuditSwitch(some: someThrow, none: noneThrow);
 			var r5 = o1.AuditSwitch(some: someThrow, none: noneThrow);

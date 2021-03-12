@@ -2,6 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
+using JeebsF.OptionFMsg;
 
 namespace JeebsF
 {
@@ -52,12 +54,20 @@ namespace JeebsF
 		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T})"/>
 		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
 			ReturnIf(predicate, () => value);
-
-		#region Messages
-
-		public sealed record PredicateWasFalseMsg : Jeebs.IMsg { }
-		public sealed record SomeValueWasNullMsg : Jeebs.IMsg { }
-
-		#endregion
 	}
+}
+
+namespace JeebsF.OptionFMsg
+{
+	/// <summary>
+	/// Predicate was false
+	/// See <see cref="OptionF.ReturnIf{T}(Func{bool}, Func{T})"/>
+	/// </summary>
+	public sealed record PredicateWasFalseMsg : IMsg { }
+
+	/// <summary>
+	/// Value was null
+	/// See <see cref="OptionF.Return{T}(T, bool)"/>
+	/// </summary>
+	public sealed record SomeValueWasNullMsg : IMsg { }
 }

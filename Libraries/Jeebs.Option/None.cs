@@ -1,9 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs;
-
-namespace JeebsF
+namespace Jeebs
 {
 	/// <summary>
 	/// 'None' option - used to replace null returns (see <seealso cref="Some{T}"/>)
@@ -15,13 +13,6 @@ namespace JeebsF
 		/// Sometimes a reason for the 'None' value may be set
 		/// </summary>
 		public IMsg? Reason { get; private init; }
-
-		/// <summary>
-		/// Return generic <see cref="Option{T}"/> - useful when wrapping in Task.FromResult() or similar,
-		/// when implicit casting doesn't work
-		/// </summary>
-		public Option<T> AsOption =>
-			this;
 
 		internal None(IMsg? reason) =>
 			Reason = reason;

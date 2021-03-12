@@ -3,11 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public class MatchExtensionsAsync_Tests
 	{
@@ -16,7 +17,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var option = new FakeOption();
-			var task = Task.FromResult(option.AsOption);
+			var task = option.AsTask;
 			var some = Substitute.For<Func<int, Task<string>>>();
 			var none = Substitute.For<Func<IMsg?, Task<string>>>();
 
@@ -24,7 +25,7 @@ namespace JeebsF.Option_Tests
 			Task action() => OptionExtensions.DoMatchAsync(task, some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(action);
+			await Assert.ThrowsAsync<UnknownOptionException>(action);
 		}
 
 		[Fact]
@@ -32,8 +33,8 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
-			var task = Task.FromResult(option);
+			var option = Return(value);
+			var task = option.AsTask;
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
@@ -106,8 +107,8 @@ namespace JeebsF.Option_Tests
 		public async Task If_None_Gets_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(true);
-			var task = Task.FromResult(option.AsOption);
+			var option = None<int>(true);
+			var task = option.AsTask;
 			var value = JeebsF.Rnd.Str;
 
 			// Act
@@ -142,8 +143,8 @@ namespace JeebsF.Option_Tests
 		public async Task If_None_Runs_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(true);
-			var task = Task.FromResult(option.AsOption);
+			var option = None<int>(true);
+			var task = option.AsTask;
 			var none = Substitute.For<Func<string>>();
 
 			// Act
@@ -217,9 +218,6 @@ namespace JeebsF.Option_Tests
 			none.Received(13).Invoke();
 		}
 
-		public class FakeOption : Option<int>
-		{
-			public Option<int> AsOption => this;
-		}
+		public class FakeOption : Option<int> { }
 	}
 }

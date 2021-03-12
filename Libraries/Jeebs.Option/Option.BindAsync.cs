@@ -3,8 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
@@ -14,17 +15,17 @@ namespace JeebsF
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Task<Option<U>> DoBindAsync<U>(Func<T, Task<Option<U>>> bind, OptionF.Handler? handler) =>
-			OptionF.CatchAsync(() =>
+		internal Task<Option<U>> DoBindAsync<U>(Func<T, Task<Option<U>>> bind, Handler? handler) =>
+			CatchAsync(() =>
 				Switch(
 					some: v => bind(v),
-					none: r => Task.FromResult(new None<U>(r).AsOption)
+					none: r => new None<U>(r).AsTask
 				),
 				handler
 			);
 
 		/// <inheritdoc cref="DoBindAsync{U}(Func{T, Task{Option{U}}}, OptionF.Handler?)"/>
-		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, OptionF.Handler? handler = null) =>
+		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Handler? handler = null) =>
 			DoBindAsync(bind, handler);
 	}
 }

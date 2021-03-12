@@ -2,11 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public class Unwrap_Tests
 	{
@@ -15,7 +15,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var some = OptionF.Return(value);
+			var some = Return(value);
 
 			// Act
 			var r0 = some.Unwrap(JeebsF.Rnd.Int);
@@ -33,7 +33,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var none = OptionF.None<int>(true);
+			var none = None<int>(true);
 
 			// Act
 			var result = none.Unwrap(value);
@@ -46,7 +46,7 @@ namespace JeebsF.Option_Tests
 		public void None_Runs_IfNone()
 		{
 			// Arrange
-			var none = OptionF.None<int>(true);
+			var none = None<int>(true);
 			var ifNone = Substitute.For<Func<IMsg?, int>>();
 
 			// Act

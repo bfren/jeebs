@@ -2,8 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionSome_Tests
+namespace Jeebs.Option.Some_Tests
 {
 	public class ToString_Tests
 	{
@@ -12,7 +13,7 @@ namespace JeebsF.OptionSome_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Lng;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 
 			// Act
 			var result = option.ToString();
@@ -26,7 +27,7 @@ namespace JeebsF.OptionSome_Tests
 		{
 			// Arrange
 			int? value = null;
-			var option = OptionF.Return(value, true);
+			var option = Return(value, true);
 
 			// Act
 			var result = option.ToString();

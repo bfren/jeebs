@@ -5,8 +5,9 @@ using System;
 using System.IO;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
 	public class HandleAuditException_Tests
 	{
@@ -18,7 +19,7 @@ namespace JeebsF.OptionStatic_Tests
 			var exception = new Exception();
 
 			// Act
-			OptionF.HandleAuditException(exception, log, Console.Out);
+			HandleAuditException(exception, log, Console.Out);
 
 			// Assert
 			log.Received().Invoke(exception);
@@ -28,12 +29,12 @@ namespace JeebsF.OptionStatic_Tests
 		public void If_LogAuditExceptions_Is_Null_Writes_To_Console()
 		{
 			// Arrange
-			var message = JeebsF.Rnd.Str;
+			var message = Rnd.Str;
 			var exception = new Exception(message);
 			var writer = Substitute.For<TextWriter>();
 
 			// Act
-			OptionF.HandleAuditException(exception, null, writer);
+			HandleAuditException(exception, null, writer);
 
 			// Assert
 			writer.Received().WriteLine("Audit Error: {0}", exception);

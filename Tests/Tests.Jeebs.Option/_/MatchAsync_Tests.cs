@@ -3,11 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.Option_Tests
+namespace Jeebs.Option_Tests
 {
 	public class MatchAsync_Tests
 	{
@@ -23,7 +24,7 @@ namespace JeebsF.Option_Tests
 			Task action() => option.DoMatchAsync(some, none);
 
 			// Assert
-			await Assert.ThrowsAsync<Exceptions.UnknownOptionException>(action);
+			await Assert.ThrowsAsync<UnknownOptionException>(action);
 		}
 
 		[Fact]
@@ -31,7 +32,7 @@ namespace JeebsF.Option_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
@@ -93,7 +94,7 @@ namespace JeebsF.Option_Tests
 		public async Task If_None_Gets_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(true);
+			var option = None<int>(true);
 			var value = JeebsF.Rnd.Str;
 
 			// Act
@@ -122,7 +123,7 @@ namespace JeebsF.Option_Tests
 		public async Task If_None_Runs_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(true);
+			var option = None<int>(true);
 			var none = Substitute.For<Func<string>>();
 
 			// Act

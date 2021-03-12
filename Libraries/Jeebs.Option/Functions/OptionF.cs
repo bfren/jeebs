@@ -22,13 +22,13 @@ namespace JeebsF
 		/// Special case for boolean - returns Some{bool}(true)
 		/// </summary>
 		public static Option<bool> True =>
-			Return(true);
+			true;
 
 		/// <summary>
 		/// Special case for boolean - returns Some{bool}(false)
 		/// </summary>
 		public static Option<bool> False =>
-			Return(false);
+			false;
 
 		/// <summary>
 		/// Set to log audit exceptions - otherwise they are sent to the Console

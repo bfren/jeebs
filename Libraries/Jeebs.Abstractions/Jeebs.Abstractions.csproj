@@ -3,6 +3,6 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Jeebs.Option\JeebsF.Option.csproj" />
+	  <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
 	</ItemGroup>
 </Project>

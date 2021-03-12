@@ -1,9 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
 	public class False_Tests
 	{
@@ -13,7 +15,7 @@ namespace JeebsF.OptionStatic_Tests
 			// Arrange
 
 			// Act
-			var result = OptionF.False;
+			var result = False;
 
 			// Assert
 			var some = Assert.IsType<Some<bool>>(result);

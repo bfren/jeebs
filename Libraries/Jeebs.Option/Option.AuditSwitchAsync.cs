@@ -3,19 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Audits the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console,
-		/// or <see cref="OptionF.LogAuditExceptions"/> if set
-		/// </summary>
-		/// <param name="some">[Optional] Will run if the current Option is <see cref="Some{T}"/></param>
-		/// <param name="none">[Optional] Will run if the current Option is <see cref="None{T}"/></param>
+		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
 		internal Task<Option<T>> DoAuditSwitchAsync(Func<T, Task>? some, Func<IMsg?, Task>? none)
 		{
 			// Do nothing if the user gave us nothing to do!
@@ -37,7 +31,7 @@ namespace JeebsF
 			}
 			catch (Exception e)
 			{
-				OptionF.HandleAuditException(e);
+				HandleAuditException(e);
 			}
 
 			// Return the original object

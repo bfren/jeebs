@@ -5,6 +5,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Abstractions\Jeebs.Abstractions.csproj" />
-    <ProjectReference Include="..\Jeebs.Option\JeebsF.Option.csproj" />
+    <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
   </ItemGroup>
 </Project>

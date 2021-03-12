@@ -4,8 +4,9 @@
 using Jeebs;
 using NSubstitute;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionStatic_Tests
+namespace JeebsF.OptionF_Tests
 {
 	public class None_Tests
 	{
@@ -15,7 +16,7 @@ namespace JeebsF.OptionStatic_Tests
 			// Arrange
 
 			// Act
-			var result = OptionF.None<int>(true);
+			var result = None<int>(true);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -28,7 +29,7 @@ namespace JeebsF.OptionStatic_Tests
 			var reason = Substitute.For<IMsg>();
 
 			// Act
-			var result = OptionF.None<int>(reason);
+			var result = None<int>(reason);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);

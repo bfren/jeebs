@@ -2,9 +2,10 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs.Option.Exceptions;
 using Xunit;
 
-namespace JeebsF.OptionExceptions.UnknownOption_Tests
+namespace Jeebs.OptionExceptions.UnknownOption_Tests
 {
 	public class Constructor_Tests
 	{
@@ -14,10 +15,10 @@ namespace JeebsF.OptionExceptions.UnknownOption_Tests
 			// Arrange
 
 			// Act
-			var result = new Exceptions.UnknownOptionException();
+			var result = new UnknownOptionException();
 
 			// Assert
-			Assert.Equal($"Exception of type '{typeof(Exceptions.UnknownOptionException)}' was thrown.", result.Message);
+			Assert.Equal($"Exception of type '{typeof(UnknownOptionException)}' was thrown.", result.Message);
 			Assert.Null(result.InnerException);
 		}
 
@@ -28,7 +29,7 @@ namespace JeebsF.OptionExceptions.UnknownOption_Tests
 			var message = JeebsF.Rnd.Str;
 
 			// Act
-			var result = new Exceptions.UnknownOptionException(message);
+			var result = new UnknownOptionException(message);
 
 			// Assert
 			Assert.Equal(message, result.Message);
@@ -42,7 +43,7 @@ namespace JeebsF.OptionExceptions.UnknownOption_Tests
 			var inner = new Exception(JeebsF.Rnd.Str);
 
 			// Act
-			var result = new Exceptions.UnknownOptionException(JeebsF.Rnd.Str, inner);
+			var result = new UnknownOptionException(JeebsF.Rnd.Str, inner);
 
 			// Assert
 			Assert.Same(inner, result.InnerException);

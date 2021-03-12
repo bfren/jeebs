@@ -3,16 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console
-		/// </summary>
-		/// <param name="audit">Audit function</param>
+		/// <inheritdoc cref="DoAudit(Action{Option{T}})"/>
 		internal Task<Option<T>> DoAuditAsync(Func<Option<T>, Task> audit)
 		{
 			// Perform the audit
@@ -22,7 +19,7 @@ namespace JeebsF
 			}
 			catch (Exception e)
 			{
-				OptionF.HandleAuditException(e);
+				HandleAuditException(e);
 			}
 
 			// Return the original object

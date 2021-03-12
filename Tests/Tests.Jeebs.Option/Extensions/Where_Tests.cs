@@ -2,11 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Threading.Tasks;
-using Jeebs;
-using JeebsF.Linq;
+using Jeebs.Linq;
 using Xunit;
+using static JeebsF.OptionF;
 
-namespace JeebsF.OptionExtensions_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
 	public class Where_Tests
 	{
@@ -15,7 +15,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 
 			// Act
 			var result = from a in option
@@ -32,7 +32,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = Task.FromResult(OptionF.Return(value));
+			var option = Task.FromResult(Return(value));
 
 			// Act
 			var result = await (
@@ -51,7 +51,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = OptionF.Return(value);
+			var option = Return(value);
 
 			// Act
 			var result = from a in option
@@ -67,7 +67,7 @@ namespace JeebsF.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = JeebsF.Rnd.Int;
-			var option = Task.FromResult(OptionF.Return(value));
+			var option = Task.FromResult(Return(value));
 
 			// Act
 			var result = await (
@@ -84,7 +84,7 @@ namespace JeebsF.OptionExtensions_Tests
 		public void Where_With_None_Returns_None()
 		{
 			// Arrange
-			var option = OptionF.None<int>(new InvalidIntegerMsg());
+			var option = None<int>(new InvalidIntegerMsg());
 
 			// Act
 			var result = from a in option
@@ -100,7 +100,7 @@ namespace JeebsF.OptionExtensions_Tests
 		public async Task Async_Where_With_None_Returns_None()
 		{
 			// Arrange
-			var option = Task.FromResult(OptionF.None<int>(new InvalidIntegerMsg()).AsOption);
+			var option = None<int>(new InvalidIntegerMsg()).AsTask;
 
 			// Act
 			var result = await (

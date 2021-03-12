@@ -2,8 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using static JeebsF.OptionF;
 
-namespace JeebsF
+namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
@@ -13,17 +14,17 @@ namespace JeebsF
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Option<U> DoMap<U>(Func<T, U> map, OptionF.Handler? handler = null) =>
-			OptionF.Catch(() =>
+		internal Option<U> DoMap<U>(Func<T, U> map, Handler? handler = null) =>
+			Catch(() =>
 				Switch(
-					some: v => OptionF.Return(map(v)),
+					some: v => Return(map(v)),
 					none: r => new None<U>(r)
 				),
 				handler
 			);
 
 		/// <inheritdoc cref="DoMap{U}(Func{T, U}, OptionF.Handler?)"/>
-		public Option<U> Map<U>(Func<T, U> map, OptionF.Handler? handler = null) =>
+		public Option<U> Map<U>(Func<T, U> map, Handler? handler = null) =>
 			DoMap(map, handler);
 	}
 }
