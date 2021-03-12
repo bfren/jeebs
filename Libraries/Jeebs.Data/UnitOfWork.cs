@@ -370,12 +370,12 @@ namespace Jeebs.Data
 		/// <param name="Query">Query text</param>
 		/// <param name="Parameters">Query parameters</param>
 		/// <param name="CommandType">Command Type</param>
-		public record QueryMsg(string Method, string Query, object? Parameters, CommandType CommandType) : LogMsg(LogLevel.Debug) { }
+		public sealed record QueryMsg(string Method, string Query, object? Parameters, CommandType CommandType) : LogMsg(LogLevel.Debug) { }
 
 		/// <summary>Query Exception message</summary>
 		/// <param name="Exception">The exception caught while the query was executing</param>
 		/// <param name="Query">Query text</param>
 		/// <param name="Parameters">Query parameters</param>
-		public record QueryExceptionMsg(Exception Exception, string Query, object? Parameters) : ExceptionMsg(Exception) { }
+		public sealed record QueryExceptionMsg(Exception Exception, string Query, object? Parameters) : ExceptionMsg(Exception) { }
 	}
 }

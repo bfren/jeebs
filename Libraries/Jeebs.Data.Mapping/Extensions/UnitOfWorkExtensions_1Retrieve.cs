@@ -74,12 +74,12 @@ namespace Jeebs.Data.Mapping
 		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
 		/// <param name="Id">Entity ID being requested</param>
 		/// <param name="Exception">Caught exception</param>
-		public record RetrieveExceptionMsg<T>(string Method, long Id, Exception Exception) : ExceptionMsg(Exception) { }
+		public sealed record RetrieveExceptionMsg<T>(string Method, long Id, Exception Exception) : ExceptionMsg(Exception) { }
 
 		/// <summary>Query message</summary>
 		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
 		/// <param name="Query">Query text</param>
 		/// <param name="Parameters">Query parameters</param>
-		public record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) : LogMsg(LogLevel.Debug) { }
+		public sealed record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) : LogMsg(LogLevel.Debug) { }
 	}
 }

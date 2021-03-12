@@ -114,7 +114,7 @@ namespace F
 			}
 			catch (Exception ex)
 			{
-				return None<T>(new Msg.DeserialiseExceptionMsg { Exception = ex });
+				return None<T>(new Msg.DeserialiseExceptionMsg(ex));
 			}
 		}
 
@@ -126,8 +126,8 @@ namespace F
 
 namespace F.JsonFMsg
 {
-	/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize"/></summary>
-	public sealed record DeserialiseExceptionMsg : ExceptionMsg { }
+	/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
+	public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 	/// <summary>A null or empty string cannot be deserialised</summary>
 	public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }

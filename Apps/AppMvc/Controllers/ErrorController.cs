@@ -17,7 +17,7 @@ namespace AppMvc.Controllers
 			throw new Exception("Something");
 
 		public async Task<IActionResult> Return_Error() =>
-			await this.ExecuteErrorAsync(new TestErroMsg());
+			await this.ExecuteErrorAsync(new TestErrorMsg());
 
 		public IActionResult Return_NotFound() =>
 			NotFound();
@@ -34,5 +34,5 @@ namespace AppMvc.Controllers
 		public class NotFoundMsg : INotFoundMsg { }
 	}
 
-	public record TestErroMsg : IMsg { }
+	public record TestErrorMsg : IMsg { }
 }

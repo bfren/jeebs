@@ -87,10 +87,12 @@ namespace Jeebs.WordPress
 	namespace QueryWrapperMsg
 	{
 		/// <summary>An exception occured getting the posts</summary>
+		/// <param name="PostId">Post ID</param>
 		/// <param name="Exception">Exception object</param>
 		public sealed record GetPostsQueryExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
 
 		/// <summary>An exception occured while calculating the next and previous posts</summary>
+		/// <param name="PostId">Post ID</param>
 		/// <param name="Exception">Exception object</param>
 		public sealed record CalculatePreviousAndNextExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
 	}
