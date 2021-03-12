@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using F.OptionFMsg;
 using Jeebs.Option.Exceptions;
 using Jeebs.OptionMsg;
-using F.OptionFMsg;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;

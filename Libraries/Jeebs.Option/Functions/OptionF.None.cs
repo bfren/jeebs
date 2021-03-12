@@ -16,6 +16,15 @@ namespace F
 			new(reason);
 
 		/// <summary>
+		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <typeparam name="TMsg">Message type</typeparam>
+		public static None<T> None<T, TMsg>()
+			where TMsg : IMsg, new() =>
+			new(new TMsg());
+
+		/// <summary>
 		/// Create a <see cref="Jeebs.None{T}"/> Option type
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
@@ -27,13 +36,15 @@ namespace F
 					new(null),
 
 				false =>
-					new(new IfYouArentSureDontMakeItMsg())
+					new(new OptionFMsg.IfYouArentSureDontMakeItMsg())
 			};
-
-		#region Messages
-
-		public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
-
-		#endregion
 	}
+}
+
+namespace F.OptionFMsg
+{
+	/// <summary>
+	/// If you aren't sure you want to make a <see cref="None{T}"/> without a reason, don't do it!
+	/// </summary>
+	public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
 }

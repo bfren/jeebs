@@ -96,7 +96,7 @@ namespace F
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
 			{
-				return None<T>(new Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg());
+				return None<T, Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg>();
 			}
 
 			// Attempt to deserialise JSON
@@ -108,7 +108,7 @@ namespace F
 						x,
 
 					_ =>
-						None<T>(new Jm.Functions.JsonF.DeserialisingReturnedNullMsg()) // should never get here
+						None<T, Jm.Functions.JsonF.DeserialisingReturnedNullMsg>() // should never get here
 				};
 			}
 			catch (Exception ex)

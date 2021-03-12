@@ -3,7 +3,6 @@
 
 using System;
 using Jeebs;
-using F.OptionFMsg;
 
 namespace F
 {
@@ -29,7 +28,7 @@ namespace F
 							new Some<T>(value),
 
 						false =>
-							None<T>(new SomeValueWasNullMsg())
+							None<T, OptionFMsg.SomeValueWasNullMsg>()
 					}
 
 			};
@@ -48,7 +47,7 @@ namespace F
 					Return(value()),
 
 				false =>
-					None<T>(new PredicateWasFalseMsg())
+					None<T, OptionFMsg.PredicateWasFalseMsg>()
 			};
 
 		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T})"/>

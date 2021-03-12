@@ -24,7 +24,7 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="DoBindAsync{U}(Func{T, Task{Option{U}}}, OptionF.Handler?)"/>
+		/// <inheritdoc cref="DoBindAsync{U}(Func{T, Task{Option{U}}}, Handler?)"/>
 		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Handler? handler = null) =>
 			DoBindAsync(bind, handler);
 	}

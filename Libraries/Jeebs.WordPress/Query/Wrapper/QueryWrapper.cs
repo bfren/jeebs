@@ -78,13 +78,13 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return None<PropertyInfo>(new OnlyOneMetaDictionaryPropertySupportedMsg<TModel>());
+				return None<PropertyInfo, OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return None<PropertyInfo>(new MetaDictionaryPropertyNotFoundMsg<TModel>());
+				return None<PropertyInfo, MetaDictionaryPropertyNotFoundMsg<TModel>>();
 			}
 
 			return metaDictionary.Single();
@@ -153,7 +153,7 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return None<PropertyInfo>(new ContentPropertyNotFoundMsg<TModel>());
+				return None<PropertyInfo, ContentPropertyNotFoundMsg<TModel>>();
 			}
 
 			return content.Single();

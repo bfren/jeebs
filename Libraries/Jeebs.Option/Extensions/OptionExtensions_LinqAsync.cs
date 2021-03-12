@@ -40,7 +40,7 @@ namespace Jeebs.Linq
 					@this,
 
 				false =>
-					None<T>(new PredicateWasFalseMsg()).AsTask
+					None<T, OptionExtensionsMsg.PredicateWasFalseMsg>().AsTask
 			});
 	}
 }

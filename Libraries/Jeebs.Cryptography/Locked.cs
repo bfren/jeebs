@@ -4,7 +4,6 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using Jm.Cryptography.Locked;
 using Sodium;
 using Sodium.Exceptions;
 using static F.OptionF;
@@ -52,7 +51,7 @@ namespace Jeebs.Cryptography
 		{
 			if (EncryptedContents is null)
 			{
-				return None<Lockable<T>>(new UnlockWhenEncryptedContentsIsNullMsg());
+				return None<Lockable<T>, LockedMsg.UnlockWhenEncryptedContentsIsNullMsg>();
 			}
 
 			try
@@ -66,25 +65,25 @@ namespace Jeebs.Cryptography
 			}
 			catch (KeyOutOfRangeException ex)
 			{
-				return handle<InvalidKeyExceptionMsg>(ex);
+				return handle(new LockedMsg.InvalidKeyExceptionMsg(ex));
 			}
 			catch (NonceOutOfRangeException ex)
 			{
-				return handle<InvalidNonceExceptionMsg>(ex);
+				return handle(new LockedMsg.InvalidNonceExceptionMsg(ex));
 			}
 			catch (CryptographicException ex)
 			{
-				return handle<IncorrectKeyOrNonceMsg>(ex);
+				return handle(new LockedMsg.IncorrectKeyOrNonceExceptionMsg(ex));
 			}
 			catch (Exception ex)
 			{
-				return handle<UnlockExceptionMsg>(ex);
+				return handle(new LockedMsg.UnlockExceptionMsg(ex));
 			}
 
 			// Handle an exception
-			static Option<Lockable<T>> handle<TMsg>(Exception ex)
-				where TMsg : IExceptionMsg, new() =>
-				None<Lockable<T>>(new TMsg { Exception = ex });
+			static Option<Lockable<T>> handle<TMsg>(TMsg ex)
+				where TMsg : IExceptionMsg =>
+				None<Lockable<T>>(ex);
 		}
 
 		/// <summary>
@@ -110,4 +109,36 @@ namespace Jeebs.Cryptography
 		private byte[] HashKey(string key) =>
 			GenericHash.Hash(key, Salt, Lockable.KeyLength);
 	}
+}
+
+namespace Jeebs.Cryptography.LockedMsg
+{
+	/// <summary>
+	/// Incorrect key or nonce
+	/// </summary>
+	/// <param name="Exception">Exception</param>
+	public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+	/// <summary>
+	/// Invalid key
+	/// </summary>
+	/// <param name="Exception">Exception</param>
+	public sealed record InvalidKeyExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+	/// <summary>
+	/// Invalid nonce
+	/// </summary>
+	/// <param name="Exception">Exception</param>
+	public sealed record InvalidNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+	/// <summary>
+	/// Unlock exception
+	/// </summary>
+	/// <param name="Exception">Exception</param>
+	public sealed record UnlockExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+	/// <summary>
+	/// Trying to unlock a box without any content
+	/// </summary>
+	public sealed record UnlockWhenEncryptedContentsIsNullMsg : IMsg { }
 }

@@ -46,32 +46,32 @@ namespace F
 			// Ensure there is a current user
 			if (principal.Identity == null)
 			{
-				return None<string>(new NullIdentityMsg());
+				return None<string, NullIdentityMsg>();
 			}
 
 			// Ensure the current user is authenticated
 			var identity = principal.Identity;
 			if (!identity.IsAuthenticated)
 			{
-				return None<string>(new IdentityNotAuthenticatedMsg());
+				return None<string, IdentityNotAuthenticatedMsg>();
 			}
 
 			// Ensure the JwtConfig is valid
 			if (!config.IsValid)
 			{
-				return None<string>(new JwtConfigInvalidMsg());
+				return None<string, JwtConfigInvalidMsg>();
 			}
 
 			// Ensure the signing key is a valid length
 			if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 			{
-				return None<string>(new SigningKeyNotLongEnoughMsg());
+				return None<string, SigningKeyNotLongEnoughMsg>();
 			}
 
 			// Ensure the encrypting key is a valid length
 			if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 			{
-				return None<string>(new EncryptingKeyNotLongEnoughMsg());
+				return None<string, EncryptingKeyNotLongEnoughMsg>();
 			}
 
 			try
@@ -104,7 +104,7 @@ namespace F
 			}
 			catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 			{
-				return None<string>(new KeyNotLongEnoughMsg());
+				return None<string, KeyNotLongEnoughMsg>();
 			}
 			catch (Exception e)
 			{

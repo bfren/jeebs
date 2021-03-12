@@ -37,7 +37,7 @@ namespace Jeebs.Services.Drawing
 			// At least one of width and height should be greater than zero
 			if (width == 0 && height == 0)
 			{
-				return None<IImageWrapper>(new MaskHeightOrWidthRequiredMsg());
+				return None<IImageWrapper, MaskHeightOrWidthRequiredMsg>();
 			}
 
 			// Calculate the size of the new image

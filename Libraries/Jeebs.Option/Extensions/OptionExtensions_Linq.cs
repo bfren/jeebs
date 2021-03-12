@@ -54,13 +54,15 @@ namespace Jeebs.Linq
 					@this,
 
 				false =>
-					None<T>(new PredicateWasFalseMsg())
+					None<T, OptionExtensionsMsg.PredicateWasFalseMsg>()
 			});
-
-		#region Messages
-
-		public sealed record PredicateWasFalseMsg : IMsg { }
-
-		#endregion
 	}
+}
+
+namespace Jeebs.Linq.OptionExtensionsMsg
+{
+	/// <summary>
+	/// None has been returned because the predicate was false
+	/// </summary>
+	public sealed record PredicateWasFalseMsg : IMsg { }
 }

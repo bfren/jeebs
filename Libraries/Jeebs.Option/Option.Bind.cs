@@ -23,7 +23,7 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="DoBind{U}(Func{T, Option{U}}, OptionF.Handler?)"/>
+		/// <inheritdoc cref="DoBind{U}(Func{T, Option{U}}, Handler?)"/>
 		public Option<U> Bind<U>(Func<T, Option<U>> bind, Handler? handler = null) =>
 			DoBind(bind, handler);
 	}

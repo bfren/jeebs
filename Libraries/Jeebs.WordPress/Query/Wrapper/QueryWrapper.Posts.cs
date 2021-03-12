@@ -77,7 +77,7 @@ namespace Jeebs.WordPress
 							Return(list).AsTask,
 
 						_ =>
-							None<PagedList<TModel>>(new UnrecognisedPagedListTypeMsg()).AsTask
+							None<PagedList<TModel>, UnrecognisedPagedListTypeMsg>().AsTask
 					}
 				);
 		}

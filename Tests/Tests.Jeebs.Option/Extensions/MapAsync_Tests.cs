@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.Option.Exceptions;
 using F.OptionFMsg;
+using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;

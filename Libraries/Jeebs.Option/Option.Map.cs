@@ -23,7 +23,7 @@ namespace Jeebs
 				handler
 			);
 
-		/// <inheritdoc cref="DoMap{U}(Func{T, U}, OptionF.Handler?)"/>
+		/// <inheritdoc cref="DoMap{U}(Func{T, U}, Handler?)"/>
 		public Option<U> Map<U>(Func<T, U> map, Handler? handler = null) =>
 			DoMap(map, handler);
 	}

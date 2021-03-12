@@ -24,7 +24,7 @@ namespace F
 			var val = value?.ToString()?.ToLower();
 			if (val is null)
 			{
-				return None<bool>(new Jm.Functions.BooleanF.NullValueMsg());
+				return None<bool, Jm.Functions.BooleanF.NullValueMsg>();
 			}
 
 			// Alternative boolean values

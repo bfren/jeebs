@@ -41,7 +41,7 @@ namespace Jeebs.WordPress
 						),
 
 				_ =>
-					None<TList>(new MetaDictionaryNotFoundMsg())
+					None<TList, MetaDictionaryNotFoundMsg>()
 			};
 
 			//

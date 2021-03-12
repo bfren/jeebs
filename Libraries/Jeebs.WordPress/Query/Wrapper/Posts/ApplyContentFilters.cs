@@ -39,7 +39,7 @@ namespace Jeebs.WordPress
 						),
 
 				_ =>
-					None<TList>(new RequiredContentPropertyNotFoundMsg<TModel>())
+					None<TList, RequiredContentPropertyNotFoundMsg<TModel>>()
 			};
 
 			//

@@ -45,7 +45,7 @@ namespace F
 				// Check date values
 				if (validatedToken.ValidTo < DateTime.Now)
 				{
-					return None<ClaimsPrincipal>(new TokenHasExpiredMsg());
+					return None<ClaimsPrincipal, TokenHasExpiredMsg>();
 				}
 
 				// Return valid principal
@@ -53,7 +53,7 @@ namespace F
 			}
 			catch (SecurityTokenNotYetValidException)
 			{
-				return None<ClaimsPrincipal>(new TokenIsNotValidYetMsg());
+				return None<ClaimsPrincipal, TokenIsNotValidYetMsg>();
 			}
 			catch (Exception e)
 			{

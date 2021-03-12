@@ -13,8 +13,8 @@ using Jeebs.Data.Mapping;
 using Jeebs.WordPress;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
-using static F.OptionF;
 using Microsoft.Extensions.DependencyInjection;
+using static F.OptionF;
 
 namespace AppConsoleWordPress
 {
