@@ -33,7 +33,7 @@ namespace JeebsF.OptionStatic_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int?>>(result);
-			Assert.True(none.Reason is Jm.Option.SomeValueWasNullMsg);
+			Assert.True(none.Reason is OptionF.SomeValueWasNullMsg);
 		}
 
 		[Fact]

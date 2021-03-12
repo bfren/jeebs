@@ -33,7 +33,7 @@ namespace JeebsF.Option_Tests
 
 			// Assert
 			var none = Assert.IsType<None<object>>(result);
-			Assert.IsType<Jm.Option.SomeValueWasNullMsg>(none.Reason);
+			Assert.IsType<OptionF.SomeValueWasNullMsg>(none.Reason);
 		}
 	}
 }
