@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
-using JeebsF;
 using static JeebsF.OptionF;
 
 namespace Jeebs.Data.Mapping

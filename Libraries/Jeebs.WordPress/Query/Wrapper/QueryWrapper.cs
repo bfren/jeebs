@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Messages.Query.Wrapper;
-using JeebsF;
 using Jm.WordPress.Query.Wrapper;
 using static JeebsF.OptionF;
 

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using JeebsF;
 using Jeebs.Linq;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.AspNetCore.Authorization;

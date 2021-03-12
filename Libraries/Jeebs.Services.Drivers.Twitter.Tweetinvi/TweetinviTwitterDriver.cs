@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Jeebs.Config;
 using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
-using JeebsF;
 using Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync;
 using Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync;
 using Microsoft.Extensions.DependencyInjection;

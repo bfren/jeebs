@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using JeebsF;
 using static JeebsF.OptionF;
 
 namespace Jeebs

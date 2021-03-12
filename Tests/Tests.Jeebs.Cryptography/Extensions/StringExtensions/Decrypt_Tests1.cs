@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using JeebsF;
 using Xunit;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests

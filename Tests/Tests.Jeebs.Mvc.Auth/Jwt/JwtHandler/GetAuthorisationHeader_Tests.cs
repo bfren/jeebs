@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
-using JeebsF;
 using Jm.Mvc.Auth.Jwt.JwtHandler;
 using Microsoft.Extensions.Primitives;
 using Xunit;

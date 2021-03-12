@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
-using JeebsF;
 using Jm.WordPress.Query.Wrapper.Posts;
 using static JeebsF.OptionF;
 

@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using JeebsF;
 using static JeebsF.OptionF;
 
 namespace Jeebs.Auth

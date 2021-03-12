@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Dapper;
-using JeebsF;
 using Jm.Data.Mapping.Extensions.UnitOfWork;
 using static JeebsF.OptionF;
 

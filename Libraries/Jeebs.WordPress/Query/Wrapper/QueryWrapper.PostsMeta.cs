@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
-using JeebsF;
 using static JeebsF.OptionF;
 
 namespace Jeebs.WordPress

@@ -3,7 +3,6 @@
 
 using System.IO;
 using Jeebs.Services.Drawing;
-using JeebsF;
 using Jm.Services.Drawing.ImageWrapper;
 using static JeebsF.OptionF;
 
