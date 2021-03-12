@@ -3,12 +3,12 @@
 
 using System;
 using Jeebs;
-using JeebsF.OptionFMsg;
+using F.OptionFMsg;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
-namespace JeebsF.OptionF_Tests
+namespace F.OptionF_Tests
 {
 	public class Catch_Tests
 	{

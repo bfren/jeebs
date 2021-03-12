@@ -3,10 +3,10 @@
 
 using System;
 using Jeebs.Option.Exceptions;
-using JeebsF.OptionFMsg;
+using F.OptionFMsg;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -32,7 +32,7 @@ namespace Jeebs.Option_Tests
 		public void Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = Return(JeebsF.Rnd.Str);
+			var option = Return(F.Rnd.Str);
 			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 
@@ -83,7 +83,7 @@ namespace Jeebs.Option_Tests
 		public void If_Some_Runs_Bind_Function()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 			var bind = Substitute.For<Func<int, Option<string>>>();
 

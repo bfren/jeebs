@@ -6,7 +6,7 @@ using Jeebs;
 namespace Jm.Functions.BooleanF
 {
 	/// <summary>
-	/// See <see cref="JeebsF.BooleanF.Parse{T}(T)"/>
+	/// See <see cref="F.BooleanF.Parse{T}(T)"/>
 	/// </summary>
 	public sealed class NullValueMsg : IMsg { }
 }

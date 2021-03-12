@@ -14,7 +14,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 			const string? wisdom = "[\"Job\",\"Psalms\",\"Proverbs\",\"Ecclesiastes\",\"Song of Songs\"]";
 
 			// Act
-			var result = JeebsF.JsonF.Serialise(BibleBooks.Wisdom);
+			var result = F.JsonF.Serialise(BibleBooks.Wisdom);
 
 			// Assert
 			Assert.Equal(wisdom, result);

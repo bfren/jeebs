@@ -17,7 +17,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 			// Act
 			Assert.Null(builder.Parts.RightJoin);
-			builder.AddRightJoin(JeebsF.Rnd.Str, JeebsF.Rnd.Str, (JeebsF.Rnd.Str, JeebsF.Rnd.Str), false);
+			builder.AddRightJoin(F.Rnd.Str, F.Rnd.Str, (F.Rnd.Str, F.Rnd.Str), false);
 
 			// Assert
 			var join = Assert.IsType<List<(string, string, string)>>(builder.Parts.RightJoin);

@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Linq
 {

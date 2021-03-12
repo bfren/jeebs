@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace JeebsF.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// Converter for Enumerated types

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.WordPress.Entities.Additional;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {

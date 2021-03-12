@@ -16,7 +16,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Set(obj, JeebsF.Rnd.Str);
+			Action result = () => info.Set(obj, F.Rnd.Str);
 
 			// Assert
 			Assert.Throws<ArgumentNullException>(result);
@@ -41,8 +41,8 @@ namespace Jeebs.PropertyInfo_Tests
 		public void Set_WithEverythingValid_ChangesValue()
 		{
 			// Arrange
-			var foo = new Foo { Bar = JeebsF.Rnd.Str };
-			var newValue = JeebsF.Rnd.Str;
+			var foo = new Foo { Bar = F.Rnd.Str };
+			var newValue = F.Rnd.Str;
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act

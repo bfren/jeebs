@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Jeebs.Linq;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
@@ -14,8 +14,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Return(v0);
 			var o1 = Return(v1);
 
@@ -33,8 +33,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Return(v0).AsTask;
 			var o1 = Return(v1).AsTask;
 
@@ -54,10 +54,10 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Mixed_SelectMany_With_Some_Returns_Some()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
-			var v2 = JeebsF.Rnd.Int;
-			var v3 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
+			var v2 = F.Rnd.Int;
+			var v3 = F.Rnd.Int;
 			var o0 = Return(v0).AsTask;
 			var o1 = Return(v1);
 			var o2 = Return(v2).AsTask;
@@ -81,8 +81,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public void SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Return(v0);
 			var o1 = Return(v1);
 			var o2 = None<int>(new InvalidIntegerMsg());
@@ -102,8 +102,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Return(v0).AsTask;
 			var o1 = Return(v1).AsTask;
 			var o2 = None<int>(new InvalidIntegerMsg()).AsTask;
@@ -125,8 +125,8 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Mixed_SelectMany_With_None_Returns_None()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var o0 = Return(v0).AsTask;
 			var o1 = Return(v1).AsTask;
 			var o2 = None<int>(new InvalidIntegerMsg());

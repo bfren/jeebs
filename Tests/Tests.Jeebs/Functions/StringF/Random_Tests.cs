@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace JeebsF.StringF_Tests
+namespace F.StringF_Tests
 {
 	public class Random_Tests
 	{

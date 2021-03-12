@@ -10,7 +10,7 @@ using Jm.Functions.JwtF.ValidateToken;
 using NSubstitute;
 using Xunit;
 
-namespace JeebsF.JwtF_Tests
+namespace F.JwtF_Tests
 {
 	public class ValidateToken_Tests
 	{

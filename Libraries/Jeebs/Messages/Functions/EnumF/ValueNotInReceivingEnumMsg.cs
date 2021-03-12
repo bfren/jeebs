@@ -6,7 +6,7 @@ using System;
 namespace Jm.Functions.EnumF
 {
 	/// <summary>
-	/// See <see cref="JeebsF.EnumF.Parse(Type, string)"/>
+	/// See <see cref="F.EnumF.Parse(Type, string)"/>
 	/// </summary>
 	/// <typeparam name="TFrom">From Enum</typeparam>
 	/// <typeparam name="TTo">To Enum</typeparam>

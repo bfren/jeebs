@@ -16,7 +16,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			builder.Parts.Limit = JeebsF.Rnd.Int;
+			builder.Parts.Limit = F.Rnd.Int;
 			var options = new Options { Limit = input };
 
 			// Act
@@ -34,7 +34,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, _) = GetQueryPartsBuilder();
-			builder.Parts.Limit = JeebsF.Rnd.Int;
+			builder.Parts.Limit = F.Rnd.Int;
 			var options = new Options { Offset = input };
 
 			// Act

@@ -11,7 +11,7 @@ namespace Jeebs.Enumerated_Tests
 		public void DoesNotEqual_When_Equal_Returns_False()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 			var foo = new Foo(value);
 
 			// Act
@@ -25,7 +25,7 @@ namespace Jeebs.Enumerated_Tests
 		public void DoesNotEqual_When_Not_Equal_Returns_True()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 			var foo = new Foo(value);
 			var bar = new Bar(value);
 

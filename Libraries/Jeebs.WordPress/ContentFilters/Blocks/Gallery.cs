@@ -3,7 +3,7 @@
 
 using System;
 using System.Text.RegularExpressions;
-using static JeebsF.JsonF;
+using static F.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {

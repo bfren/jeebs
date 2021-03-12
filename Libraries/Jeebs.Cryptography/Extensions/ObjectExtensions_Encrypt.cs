@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using JeebsF;
-
 namespace Jeebs.Cryptography
 {
 	/// <summary>
@@ -23,7 +21,7 @@ namespace Jeebs.Cryptography
 					new Lockable<T>(x).Lock(key).Serialise(),
 
 				_ =>
-					JsonF.Empty
+					F.JsonF.Empty
 			};
 
 		/// <summary>
@@ -39,7 +37,7 @@ namespace Jeebs.Cryptography
 					new Lockable<T>(x).Lock(key).Serialise(),
 
 				_ =>
-					JsonF.Empty
+					F.JsonF.Empty
 			};
 	}
 }

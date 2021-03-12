@@ -14,7 +14,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 			const string? gospels = "[\"Matthew\",\"Mark\",\"Luke\",\"John\"]";
 
 			// Act
-			var result = JeebsF.JsonF.Serialise(BibleBooks.Gospels);
+			var result = F.JsonF.Serialise(BibleBooks.Gospels);
 
 			// Assert
 			Assert.Equal(gospels, result);

@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Option.Exceptions;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs
 {

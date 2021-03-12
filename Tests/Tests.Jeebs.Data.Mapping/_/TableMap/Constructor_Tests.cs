@@ -13,11 +13,11 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 		public void Properties_Set()
 		{
 			// Arrange
-			var name = JeebsF.Rnd.Str;
+			var name = F.Rnd.Str;
 			var columns = Substitute.For<IMappedColumnList>();
 
 			var prop = Substitute.For<PropertyInfo>();
-			prop.Name.Returns(JeebsF.Rnd.Str);
+			prop.Name.Returns(F.Rnd.Str);
 			var idColumn = Substitute.For<IMappedColumn>();
 			idColumn.Property.Returns(prop);
 

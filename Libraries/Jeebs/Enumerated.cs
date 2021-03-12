@@ -4,7 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs
 {

@@ -6,7 +6,7 @@ using System;
 namespace Jm.Functions.EnumF
 {
 	/// <summary>
-	/// See <see cref="JeebsF.EnumF.Parse(Type, string)"/>
+	/// See <see cref="F.EnumF.Parse(Type, string)"/>
 	/// </summary>
 	public sealed class NotAValidEnumValueMsg : WithValueMsg<string>
 	{
@@ -28,7 +28,7 @@ namespace Jm.Functions.EnumF
 	}
 
 	/// <summary>
-	/// See <see cref="JeebsF.EnumF.Parse{T}(string)"/>
+	/// See <see cref="F.EnumF.Parse{T}(string)"/>
 	/// </summary>
 	/// <typeparam name="TEnum">Enum type</typeparam>
 	public sealed class NotAValidEnumValueMsg<TEnum> : WithValueMsg<string>

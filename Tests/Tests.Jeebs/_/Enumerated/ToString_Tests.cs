@@ -11,7 +11,7 @@ namespace Jeebs.Enumerated_Tests
 		public void ReturnsName()
 		{
 			// Arrange
-			var input = JeebsF.Rnd.Str;
+			var input = F.Rnd.Str;
 			var test = new Foo(input);
 
 			// Act

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Mvc.Auth.Jwt
 {

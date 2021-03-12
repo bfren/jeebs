@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Jeebs;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// String functions

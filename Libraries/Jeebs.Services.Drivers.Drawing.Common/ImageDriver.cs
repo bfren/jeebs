@@ -4,7 +4,7 @@
 using System.IO;
 using Jeebs.Services.Drawing;
 using Jm.Services.Drawing.ImageWrapper;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Services.Drivers.Drawing.Common
 {

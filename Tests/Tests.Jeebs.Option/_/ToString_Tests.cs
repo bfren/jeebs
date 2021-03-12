@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void Is_Some_With_Value_Returns_Value_ToString()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Lng;
+			var value = F.Rnd.Lng;
 			var option = Return(value);
 
 			// Act
@@ -40,7 +40,7 @@ namespace Jeebs.Option_Tests
 		public void Is_None_With_Reason_Returns_Reason_ToString()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 			var msg = new TestMsg(value);
 			var option = None<int>(msg);
 

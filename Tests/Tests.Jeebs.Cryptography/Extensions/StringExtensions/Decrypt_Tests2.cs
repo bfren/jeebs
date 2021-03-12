@@ -3,7 +3,7 @@
 
 using System;
 using Xunit;
-using static JeebsF.CryptoF;
+using static F.CryptoF;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
 {
@@ -28,7 +28,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		{
 			// Arrange
 			var key = GenerateKey();
-			var json = JeebsF.Rnd.Str;
+			var json = F.Rnd.Str;
 
 			// Act
 			var result = json.Decrypt(key);

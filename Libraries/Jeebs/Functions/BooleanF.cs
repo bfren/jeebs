@@ -4,9 +4,9 @@
 using System;
 using System.Linq;
 using Jeebs;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// Boolean functions

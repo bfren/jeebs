@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Jeebs;
 
-namespace JeebsF
+namespace F
 {
 	public static partial class OptionF
 	{

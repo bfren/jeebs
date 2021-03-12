@@ -9,7 +9,7 @@ using System.Reflection;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Messages.Query.Wrapper;
 using Jm.WordPress.Query.Wrapper;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {

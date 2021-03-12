@@ -14,7 +14,7 @@ namespace Jeebs.Constants.BibleBooks_Tests
 			const string? law = "[\"Genesis\",\"Exodus\",\"Leviticus\",\"Numbers\",\"Deuteronomy\"]";
 
 			// Act
-			var result = JeebsF.JsonF.Serialise(BibleBooks.Law);
+			var result = F.JsonF.Serialise(BibleBooks.Law);
 
 			// Assert
 			Assert.Equal(law, result);

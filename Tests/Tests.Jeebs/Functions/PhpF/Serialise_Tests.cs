@@ -4,7 +4,7 @@
 using System.Collections;
 using Xunit;
 
-namespace JeebsF.PhpF_Tests
+namespace F.PhpF_Tests
 {
 	public class Serialise_Tests
 	{

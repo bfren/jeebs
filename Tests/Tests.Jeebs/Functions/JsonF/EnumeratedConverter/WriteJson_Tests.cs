@@ -4,7 +4,7 @@
 using Jeebs;
 using Xunit;
 
-namespace JeebsF.JsonF_Tests.EnumeratedConverter_Tests
+namespace F.JsonF_Tests.EnumeratedConverter_Tests
 {
 	public class WriteJson_Tests
 	{

@@ -11,7 +11,7 @@ namespace Jeebs.Option.Some_Tests
 		public void Sets_Value()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 
 			// Act
 			var result = new Some<string>(value);

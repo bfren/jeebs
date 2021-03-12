@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {

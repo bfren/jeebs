@@ -18,15 +18,15 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var result = box.Serialise();
 
 			// Assert
-			Assert.Equal(JeebsF.JsonF.Empty, result);
+			Assert.Equal(F.JsonF.Empty, result);
 		}
 
 		[Fact]
 		public void Returns_Json()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 			var json = string.Format("{{\"encryptedContents\":\"{0}\",\"salt\":\"{1}\",\"nonce\":\"{2}\"}}",
 				Convert.ToBase64String(box.EncryptedContents!),

@@ -3,7 +3,7 @@
 
 using System;
 using Dapper;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Data.Mapping
 {

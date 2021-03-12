@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Linq;
-using JeebsF;
+using static F.JsonF;
 
 namespace Jeebs.Cryptography
 {
@@ -18,7 +18,7 @@ namespace Jeebs.Cryptography
 		/// <param name="this">JSON-serialised Box</param>
 		/// <param name="key">Encryption Key (must be 32 bytes)</param>
 		public static Option<T> Decrypt<T>(this string @this, byte[] key) =>
-			from l in JsonF.Deserialise<Locked<T>>(@this)
+			from l in Deserialise<Locked<T>>(@this)
 			from c in l.Unlock(key)
 			select c.Contents;
 
@@ -29,7 +29,7 @@ namespace Jeebs.Cryptography
 		/// <param name="this">JSON-serialised Box</param>
 		/// <param name="key">Encryption Key</param>
 		public static Option<T> Decrypt<T>(this string @this, string key) =>
-			from l in JsonF.Deserialise<Locked<T>>(@this)
+			from l in Deserialise<Locked<T>>(@this)
 			from c in l.Unlock(key)
 			select c.Contents;
 

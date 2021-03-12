@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Dapper;
 using Jm.Data.Mapping.Extensions.UnitOfWork;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Data.Mapping
 {

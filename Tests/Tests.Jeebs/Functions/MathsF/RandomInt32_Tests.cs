@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static JeebsF.MathsF;
+using static F.MathsF;
 
-namespace JeebsF.MathsF_Tests
+namespace F.MathsF_Tests
 {
 	public class RandomInt32_Tests
 	{

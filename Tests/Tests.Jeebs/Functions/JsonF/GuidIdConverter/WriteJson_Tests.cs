@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace JeebsF.JsonF_Tests.GuidIdConverter_Tests
+namespace F.JsonF_Tests.GuidIdConverter_Tests
 {
 	public class WriteJson_Tests
 	{

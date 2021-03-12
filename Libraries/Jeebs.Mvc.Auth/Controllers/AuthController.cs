@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Mvc.Auth.Models;
-using JeebsF;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -152,8 +151,8 @@ namespace Jeebs.Mvc.Auth.Controllers
 		public IActionResult JwtKeys() =>
 			Json(new
 			{
-				signingKey = JwtF.GenerateSigningKey(),
-				encryptingKey = JwtF.GenerateEncryptingKey()
+				signingKey = F.JwtF.GenerateSigningKey(),
+				encryptingKey = F.JwtF.GenerateEncryptingKey()
 			});
 
 		/// <summary>

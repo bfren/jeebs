@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
@@ -35,7 +35,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Return(JeebsF.Rnd.Int);
+			var option = Return(F.Rnd.Int);
 			var task = option.AsTask;
 
 			void actionThrow(Option<int> _) => throw new Exception();

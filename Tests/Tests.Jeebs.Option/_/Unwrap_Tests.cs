@@ -4,7 +4,7 @@
 using System;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -14,11 +14,11 @@ namespace Jeebs.Option_Tests
 		public void Some_Returns_Value()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var some = Return(value);
 
 			// Act
-			var r0 = some.Unwrap(JeebsF.Rnd.Int);
+			var r0 = some.Unwrap(F.Rnd.Int);
 			var r1 = some.Unwrap(Substitute.For<Func<int>>());
 			var r2 = some.Unwrap(Substitute.For<Func<IMsg?, int>>());
 
@@ -32,7 +32,7 @@ namespace Jeebs.Option_Tests
 		public void None_Gets_IfNone()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var none = None<int>(true);
 
 			// Act

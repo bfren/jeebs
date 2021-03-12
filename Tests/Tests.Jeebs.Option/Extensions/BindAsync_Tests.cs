@@ -4,10 +4,10 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Option.Exceptions;
-using JeebsF.OptionFMsg;
+using F.OptionFMsg;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
@@ -34,7 +34,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
-			var option = Return(JeebsF.Rnd.Int);
+			var option = Return(F.Rnd.Int);
 			var task = Task.FromResult(option);
 			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
@@ -100,7 +100,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task If_Some_Runs_Bind_Function()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 			var task = Task.FromResult(option);
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();

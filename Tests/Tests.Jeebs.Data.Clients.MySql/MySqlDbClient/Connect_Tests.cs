@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 		{
 			// Arrange
 			var client = new MySqlDbClient();
-			var connectionString = JeebsF.Rnd.Str;
+			var connectionString = F.Rnd.Str;
 
 			// Act
 			void action() => client.Connect(connectionString);
@@ -29,10 +29,10 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var client = new MySqlDbClient();
 			var connectionString = string.Format(
 				"server={0};database={1};user id={2};password={3}",
-				JeebsF.Rnd.Str,
-				JeebsF.Rnd.Str,
-				JeebsF.Rnd.Str,
-				JeebsF.Rnd.Str
+				F.Rnd.Str,
+				F.Rnd.Str,
+				F.Rnd.Str,
+				F.Rnd.Str
 			);
 
 			// Act
@@ -49,10 +49,10 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var client = new MySqlDbClient();
 			var connectionString = string.Format(
 				"server={0};database={1};user id={2};password={3}",
-				JeebsF.Rnd.Str,
-				JeebsF.Rnd.Str,
-				JeebsF.Rnd.Str,
-				JeebsF.Rnd.Str
+				F.Rnd.Str,
+				F.Rnd.Str,
+				F.Rnd.Str,
+				F.Rnd.Str
 			);
 
 			// Act

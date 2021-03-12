@@ -7,7 +7,7 @@ using Jeebs.Data;
 using Jeebs.WordPress.Entities;
 using Jm.WordPress.CustomFields;
 using Jm.WordPress.CustomFields.Term;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {

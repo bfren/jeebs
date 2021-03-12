@@ -3,9 +3,8 @@
 
 using System;
 using Jeebs.Services.Drawing.Geometry;
-using JeebsF;
 using Jm.Services.Drawing.ImageWrapper;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Services.Drawing
 {
@@ -42,10 +41,10 @@ namespace Jeebs.Services.Drawing
 			}
 
 			// Calculate the size of the new image
-			var size = ImageF.CalculateNewSize(Width, Height, width, height);
+			var size = F.ImageF.CalculateNewSize(Width, Height, width, height);
 
 			// Calculate the mask to apply to the original image
-			var mask = ImageF.CalculateMask(Width, Height, size.Width, size.Height);
+			var mask = F.ImageF.CalculateMask(Width, Height, size.Width, size.Height);
 
 			// Use implementation to return masked and resized image
 			try

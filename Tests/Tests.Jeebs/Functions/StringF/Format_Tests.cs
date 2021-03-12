@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace JeebsF.StringF_Tests
+namespace F.StringF_Tests
 {
 	public class Format_Tests
 	{

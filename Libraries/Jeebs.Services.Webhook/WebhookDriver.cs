@@ -8,7 +8,7 @@ using Jeebs.Config;
 using Jeebs.Logging;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
-using static JeebsF.ThreadF;
+using static F.ThreadF;
 
 namespace Jeebs.Services.Webhook
 {

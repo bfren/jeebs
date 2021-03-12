@@ -6,7 +6,7 @@ using System;
 namespace Jm.Functions.JsonF
 {
 	/// <summary>
-	/// See <see cref="JeebsF.JsonF.Deserialise{T}(string, System.Text.Json.JsonSerializerOptions?)"/>
+	/// See <see cref="F.JsonF.Deserialise{T}(string, System.Text.Json.JsonSerializerOptions?)"/>
 	/// </summary>
 	public sealed class DeserialiseExceptionMsg : ExceptionMsg
 	{

@@ -13,7 +13,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var box = new Locked<int>();
-			var key = JeebsF.CryptoF.GenerateKey();
+			var key = F.CryptoF.GenerateKey();
 
 			// Act
 			var result = box.Unlock(key);
@@ -27,12 +27,12 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Invalid_Key_Returns_None_With_InvalidKeyExceptionMsg()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(JeebsF.ByteF.Random(16));
+			var result = box.Unlock(F.ByteF.Random(16));
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
@@ -43,11 +43,11 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Invalid_Nonce_Returns_None_With_InvalidNonceExceptionMsg()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = JeebsF.ByteF.Random(8)
+				Nonce = F.ByteF.Random(8)
 			};
 
 			// Act
@@ -62,12 +62,12 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Incorrect_Key_Returns_None_With_IncorrectKeyOrNonceMsg()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(JeebsF.CryptoF.GenerateKey());
+			var result = box.Unlock(F.CryptoF.GenerateKey());
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
@@ -78,11 +78,11 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Incorrect_Nonce_Returns_None_With_IncorrectKeyOrNonceMsg()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = JeebsF.CryptoF.GenerateNonce()
+				Nonce = F.CryptoF.GenerateNonce()
 			};
 
 			// Act
@@ -97,8 +97,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Byte_Key_Returns_Lockable()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key);
 
 			// Act
@@ -113,8 +113,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void String_Key_Returns_Lockable()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
+			var key = F.Rnd.Str;
 			var box = new Locked<string>(value, key);
 
 			// Act

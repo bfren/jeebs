@@ -4,7 +4,7 @@
 using System.Text;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Auth
 {

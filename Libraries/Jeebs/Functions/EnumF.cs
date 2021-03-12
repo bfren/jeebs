@@ -3,9 +3,9 @@
 
 using System;
 using Jeebs;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// Enum functions

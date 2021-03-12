@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 {

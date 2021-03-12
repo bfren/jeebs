@@ -14,7 +14,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		{
 			// Arrange
 			var auth = Substitute.For<IJwtAuthProvider>();
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 
 			// Act
 			JwtHandler.GetPrincipal(auth, value);

@@ -5,7 +5,7 @@ using System;
 using Jeebs;
 using Xunit;
 
-namespace JeebsF.DateTimeF_Tests
+namespace F.DateTimeF_Tests
 {
 	public partial class FromFormat_Tests
 	{

@@ -3,7 +3,7 @@
 
 using Jeebs;
 
-namespace JeebsF
+namespace F
 {
 	public static partial class OptionF
 	{

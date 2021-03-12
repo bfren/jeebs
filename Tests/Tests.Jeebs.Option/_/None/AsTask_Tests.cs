@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option.None_Tests
 {

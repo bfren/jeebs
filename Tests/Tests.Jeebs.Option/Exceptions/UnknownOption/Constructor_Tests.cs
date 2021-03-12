@@ -26,7 +26,7 @@ namespace Jeebs.OptionExceptions.UnknownOption_Tests
 		public void With_Message_Sets_Message()
 		{
 			// Arrange
-			var message = JeebsF.Rnd.Str;
+			var message = F.Rnd.Str;
 
 			// Act
 			var result = new UnknownOptionException(message);
@@ -40,10 +40,10 @@ namespace Jeebs.OptionExceptions.UnknownOption_Tests
 		public void With_Inner_Exception_Sets_InnerException()
 		{
 			// Arrange
-			var inner = new Exception(JeebsF.Rnd.Str);
+			var inner = new Exception(F.Rnd.Str);
 
 			// Act
-			var result = new UnknownOptionException(JeebsF.Rnd.Str, inner);
+			var result = new UnknownOptionException(F.Rnd.Str, inner);
 
 			// Assert
 			Assert.Same(inner, result.InnerException);

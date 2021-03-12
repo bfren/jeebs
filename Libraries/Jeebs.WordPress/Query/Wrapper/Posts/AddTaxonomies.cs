@@ -10,7 +10,7 @@ using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
 using Jm.WordPress.Query.Wrapper.Posts;
 
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {

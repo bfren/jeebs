@@ -5,7 +5,7 @@ using Jeebs;
 using Jm.Functions.BooleanF;
 using Xunit;
 
-namespace JeebsF.BooleanF_Tests
+namespace F.BooleanF_Tests
 {
 	public class Parse_Tests
 	{

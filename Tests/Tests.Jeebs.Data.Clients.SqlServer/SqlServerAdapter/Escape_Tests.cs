@@ -27,7 +27,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerAdapter_Tests
 		{
 			// Arrange
 			var adapter = new SqlServerAdapter();
-			var table = JeebsF.Rnd.Int;
+			var table = F.Rnd.Int;
 
 			// Act
 			var result = adapter.EscapeTable(table);

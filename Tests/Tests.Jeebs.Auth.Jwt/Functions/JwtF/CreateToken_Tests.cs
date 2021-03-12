@@ -9,7 +9,7 @@ using Jm.Functions.JwtF.CreateToken;
 using NSubstitute;
 using Xunit;
 
-namespace JeebsF.JwtF_Tests
+namespace F.JwtF_Tests
 {
 	public class CreateToken_Tests
 	{

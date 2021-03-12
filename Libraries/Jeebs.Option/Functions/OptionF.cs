@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using Jeebs;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// Create <see cref="Option{T}"/> types and begin chains

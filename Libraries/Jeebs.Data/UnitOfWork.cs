@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Data
 {

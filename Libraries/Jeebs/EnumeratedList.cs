@@ -49,10 +49,10 @@ namespace Jeebs
 			return (list.Count > 0) switch
 			{
 				true =>
-					JeebsF.JsonF.Serialise(list),
+					F.JsonF.Serialise(list),
 
 				false =>
-					JeebsF.JsonF.Empty
+					F.JsonF.Empty
 			};
 		}
 
@@ -62,7 +62,7 @@ namespace Jeebs
 		/// <param name="json">JSON serialised list</param>
 		public static EnumeratedList<T> Deserialise(string json)
 		{
-			var strings = JeebsF.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
+			var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
 			return new EnumeratedList<T>(strings);
 		}
 	}

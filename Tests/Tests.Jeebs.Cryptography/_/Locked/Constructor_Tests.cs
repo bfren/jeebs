@@ -24,8 +24,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void Byte_Key_Fills_With_Encrypted_Contents()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.CryptoF.GenerateKey();
+			var value = F.Rnd.Str;
+			var key = F.CryptoF.GenerateKey();
 
 			// Act
 			var result = new Locked<string>(value, key);
@@ -40,8 +40,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 		public void String_Key_Fills_With_Encrypted_Contents()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
-			var key = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
+			var key = F.Rnd.Str;
 
 			// Act
 			var result = new Locked<string>(value, key);

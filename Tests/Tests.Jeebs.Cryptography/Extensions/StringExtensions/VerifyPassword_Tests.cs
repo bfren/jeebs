@@ -29,7 +29,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void VerifyPassword_IncorrectPassword_ReturnsFalse()
 		{
 			// Arrange
-			var password = JeebsF.StringF.Random(10);
+			var password = F.StringF.Random(10);
 			var passwordHash = this.passwordHash;
 
 			// Act

@@ -4,7 +4,7 @@
 using Jeebs;
 using Xunit;
 
-namespace JeebsF.JsonF_Tests.IntIdConverter_Tests
+namespace F.JsonF_Tests.IntIdConverter_Tests
 {
 	public class ReadJson_Tests
 	{

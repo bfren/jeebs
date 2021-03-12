@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace JeebsF.UriF_Tests
+namespace F.UriF_Tests
 {
 	public class IsHttps_Tests
 	{

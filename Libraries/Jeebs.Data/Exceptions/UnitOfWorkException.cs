@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using static JeebsF.JsonF;
+using static F.JsonF;
 
 namespace Jx.Data
 {

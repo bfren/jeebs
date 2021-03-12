@@ -4,11 +4,10 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using JeebsF;
 using Jm.Cryptography.Locked;
 using Sodium;
 using Sodium.Exceptions;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Cryptography
 {
@@ -37,13 +36,13 @@ namespace Jeebs.Cryptography
 		/// Create new Locked box with random salt and nonce
 		/// </summary>
 		public Locked() =>
-			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), CryptoF.GenerateNonce());
+			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
 
 		internal Locked(T contents, byte[] key) : this() =>
-			EncryptedContents = SecretBox.Create(JsonF.Serialise(contents), Nonce, key);
+			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
 
 		internal Locked(T contents, string key) : this() =>
-			EncryptedContents = SecretBox.Create(JsonF.Serialise(contents), Nonce, HashKey(key));
+			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, HashKey(key));
 
 		/// <summary>
 		/// Unlock this LockedBox
@@ -63,7 +62,7 @@ namespace Jeebs.Cryptography
 
 				// Deserialise contents and return
 				var json = Encoding.UTF8.GetString(secret);
-				return JsonF.Deserialise<T>(json).Map(x => new Lockable<T>(x));
+				return F.JsonF.Deserialise<T>(json).Map(x => new Lockable<T>(x));
 			}
 			catch (KeyOutOfRangeException ex)
 			{
@@ -102,10 +101,10 @@ namespace Jeebs.Cryptography
 			EncryptedContents?.Length switch
 			{
 				int x when x > 0 =>
-					JsonF.Serialise(this),
+					F.JsonF.Serialise(this),
 
 				_ =>
-					JsonF.Empty
+					F.JsonF.Empty
 			};
 
 		private byte[] HashKey(string key) =>

@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Jeebs.Linq;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
@@ -14,7 +14,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Where_True_With_Some_Returns_Some()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 
 			// Act
@@ -31,7 +31,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_Where_True_With_Some_Returns_Some()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Task.FromResult(Return(value));
 
 			// Act
@@ -50,7 +50,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public void Where_False_With_Some_Returns_None()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 
 			// Act
@@ -66,7 +66,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Async_Where_False_With_Some_Returns_None()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Task.FromResult(Return(value));
 
 			// Act

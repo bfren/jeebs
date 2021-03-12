@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace JeebsF.JsonF_Tests.IntIdConverter_Tests
+namespace F.JsonF_Tests.IntIdConverter_Tests
 {
 	public class WriteJson_Tests
 	{

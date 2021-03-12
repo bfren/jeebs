@@ -5,7 +5,7 @@ using System.Linq;
 using Jeebs.Auth.Constants;
 using Xunit;
 
-namespace JeebsF.JwtF_Tests
+namespace F.JwtF_Tests
 {
 	public class GenerateKey_Tests
 	{

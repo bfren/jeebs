@@ -31,7 +31,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = JeebsF.Rnd.Str;
+			var table = F.Rnd.Str;
 			var columns = new List<string>();
 
 			// Act
@@ -47,8 +47,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = JeebsF.Rnd.Str;
-			var columns = new List<string> { JeebsF.Rnd.Str };
+			var table = F.Rnd.Str;
+			var columns = new List<string> { F.Rnd.Str };
 			var aliases = new List<string>();
 
 			// Act
@@ -64,9 +64,9 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = JeebsF.Rnd.Str;
-			var columns = new List<string> { JeebsF.Rnd.Str };
-			var aliases = new List<string> { JeebsF.Rnd.Str, JeebsF.Rnd.Str };
+			var table = F.Rnd.Str;
+			var columns = new List<string> { F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
 			void action() => adapter.UpdateSingle(table, columns, aliases, string.Empty, string.Empty);
@@ -84,11 +84,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { JeebsF.Rnd.Str, JeebsF.Rnd.Str };
-			var aliases = new List<string> { JeebsF.Rnd.Str, JeebsF.Rnd.Str };
+			var columns = new List<string> { F.Rnd.Str, F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
-			void action() => adapter.UpdateSingle(JeebsF.Rnd.Str, columns, aliases, input, string.Empty);
+			void action() => adapter.UpdateSingle(F.Rnd.Str, columns, aliases, input, string.Empty);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -103,11 +103,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var columns = new List<string> { JeebsF.Rnd.Str, JeebsF.Rnd.Str };
-			var aliases = new List<string> { JeebsF.Rnd.Str, JeebsF.Rnd.Str };
+			var columns = new List<string> { F.Rnd.Str, F.Rnd.Str };
+			var aliases = new List<string> { F.Rnd.Str, F.Rnd.Str };
 
 			// Act
-			void action() => adapter.UpdateSingle(JeebsF.Rnd.Str, columns, aliases, JeebsF.Rnd.Str, input);
+			void action() => adapter.UpdateSingle(F.Rnd.Str, columns, aliases, F.Rnd.Str, input);
 
 			// Assert
 			var ex = Assert.Throws<InvalidOperationException>(action);
@@ -119,18 +119,18 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = JeebsF.Rnd.Str;
+			var table = F.Rnd.Str;
 
-			var c0 = JeebsF.Rnd.Str;
-			var c1 = JeebsF.Rnd.Str;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 			var columns = new List<string> { c0, c1 };
 
-			var a0 = JeebsF.Rnd.Str;
-			var a1 = JeebsF.Rnd.Str;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
 			var aliases = new List<string> { a0, a1 };
 
-			var idColumn = JeebsF.Rnd.Str;
-			var idAlias = JeebsF.Rnd.Str;
+			var idColumn = F.Rnd.Str;
+			var idAlias = F.Rnd.Str;
 
 			// Act
 			var result = adapter.UpdateSingle(table, columns, aliases, idColumn, idAlias);
@@ -144,21 +144,21 @@ namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
 		{
 			// Arrange
 			var adapter = new MySqlAdapter();
-			var table = JeebsF.Rnd.Str;
+			var table = F.Rnd.Str;
 
-			var c0 = JeebsF.Rnd.Str;
-			var c1 = JeebsF.Rnd.Str;
+			var c0 = F.Rnd.Str;
+			var c1 = F.Rnd.Str;
 			var columns = new List<string> { c0, c1 };
 
-			var a0 = JeebsF.Rnd.Str;
-			var a1 = JeebsF.Rnd.Str;
+			var a0 = F.Rnd.Str;
+			var a1 = F.Rnd.Str;
 			var aliases = new List<string> { a0, a1 };
 
-			var idColumn = JeebsF.Rnd.Str;
-			var idAlias = JeebsF.Rnd.Str;
+			var idColumn = F.Rnd.Str;
+			var idAlias = F.Rnd.Str;
 
-			var versionColumn = JeebsF.Rnd.Str;
-			var versionAlias = JeebsF.Rnd.Str;
+			var versionColumn = F.Rnd.Str;
+			var versionAlias = F.Rnd.Str;
 
 			// Act
 			var result = adapter.UpdateSingle(table, columns, aliases, idColumn, idAlias, versionColumn, versionAlias);

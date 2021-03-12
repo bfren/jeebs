@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.EnumerableExtensions_Tests
 {
@@ -27,8 +27,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Removes_Empty_Items()
 		{
 			// Arrange
-			var one = JeebsF.Rnd.Int;
-			var two = JeebsF.Rnd.Str;
+			var one = F.Rnd.Int;
+			var two = F.Rnd.Str;
 			var list = new object?[] { null, one, null, two, null };
 
 			// Act
@@ -46,8 +46,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Removes_None()
 		{
 			// Arrange
-			var n0 = JeebsF.Rnd.Int;
-			var n1 = JeebsF.Rnd.Int;
+			var n0 = F.Rnd.Int;
+			var n1 = F.Rnd.Int;
 			var list = new[] { None<int>(true), Return(n0), None<int>(true), Return(n1), None<int>(true) };
 
 			// Act
@@ -64,8 +64,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Maps_Class_And_Removes_Empty_Items()
 		{
 			// Arrange
-			var n0 = JeebsF.Rnd.Int;
-			var n1 = JeebsF.Rnd.Int;
+			var n0 = F.Rnd.Int;
+			var n1 = F.Rnd.Int;
 			var list = new object?[] { null, n0.ToString(), null, n1.ToString(), null };
 			static int? parse(object? x)
 			{
@@ -92,8 +92,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 		public void Maps_Struct_And_Removes_Empty_Items()
 		{
 			// Arrange
-			var n0 = JeebsF.Rnd.Int;
-			var n1 = JeebsF.Rnd.Int;
+			var n0 = F.Rnd.Int;
+			var n1 = F.Rnd.Int;
 			var list = new int?[] { null, n0, null, n1, null };
 			static string? parse(int? x) => x?.ToString();
 

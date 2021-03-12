@@ -4,7 +4,7 @@
 using System.Linq;
 using System.Reflection;
 using Jm.Extensions.ObjectExtensions;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Reflection
 {

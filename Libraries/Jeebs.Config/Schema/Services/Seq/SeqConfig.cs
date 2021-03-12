@@ -26,6 +26,6 @@ namespace Jeebs.Config
 		public override bool IsValid =>
 			!string.IsNullOrEmpty(Server)
 			&& !string.IsNullOrEmpty(ApiKey)
-			&& JeebsF.UriF.IsHttps(Webhook);
+			&& F.UriF.IsHttps(Webhook);
 	}
 }

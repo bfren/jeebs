@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -44,7 +44,7 @@ namespace Jeebs.Option_Tests
 		public void Some_Runs_Some_And_Returns_Original_Option()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Action<int>>();
 
@@ -84,7 +84,7 @@ namespace Jeebs.Option_Tests
 		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var o0 = Return(JeebsF.Rnd.Int);
+			var o0 = Return(F.Rnd.Int);
 			var o1 = None<int>(true);
 			var exception = new Exception();
 

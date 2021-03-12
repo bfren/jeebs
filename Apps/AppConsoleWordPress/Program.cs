@@ -13,7 +13,7 @@ using Jeebs.Data.Mapping;
 using Jeebs.WordPress;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
-using JeebsF;
+using static F.OptionF;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AppConsoleWordPress
@@ -39,13 +39,11 @@ namespace AppConsoleWordPress
 					await TermsAsync("BCG", bcg.Db).AuditAsync(AuditTerms);
 					await TermsAsync("USA", usa.Db).AuditAsync(AuditTerms);
 
-					await OptionF
-						.Return(bcg.Db)
+					await Return(bcg.Db)
 						.BindAsync(InsertOptionAsync)
 						.AuditAsync(AuditOption);
 
-					await OptionF
-						.Return(bcg.Db)
+					await Return(bcg.Db)
 						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
@@ -56,8 +54,7 @@ namespace AppConsoleWordPress
 						}))
 						.AuditAsync(AuditSermons);
 
-					await OptionF
-						.Return(bcg.Db)
+					await Return(bcg.Db)
 						.BindAsync(x => SearchSermonsAsync(x, "jesus", opt =>
 						{
 							opt.Type = WpBcg.PostTypes.Sermon;
@@ -68,8 +65,7 @@ namespace AppConsoleWordPress
 						}))
 						.AuditAsync(AuditSermons);
 
-					await OptionF
-						.Return(bcg.Db)
+					await Return(bcg.Db)
 						.BindAsync(FetchMeta)
 						.AuditAsync(AuditMeta)
 						.BindAsync(
@@ -77,16 +73,13 @@ namespace AppConsoleWordPress
 						)
 						.AuditAsync(AuditCustomFields);
 
-					OptionF
-						.Map<int>(() => throw new Exception("Test"));
+					Map<int>(() => throw new Exception("Test"));
 
-					await OptionF
-						.Return(bcg.Db)
+					await Return(bcg.Db)
 						.BindAsync(FetchTaxonomies)
 						.AuditAsync(AuditTaxonomies);
 
-					await OptionF
-						.Return(bcg.Db)
+					await Return(bcg.Db)
 						.BindAsync(ApplyContentFilters)
 						.AuditAsync(AuditApplyContentFilters);
 

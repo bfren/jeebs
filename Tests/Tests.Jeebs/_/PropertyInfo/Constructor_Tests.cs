@@ -14,7 +14,7 @@ namespace Jeebs.PropertyInfo_Tests
 			// Arrange
 
 			// Act
-			Action result = () => new PropertyInfo<Foo, object>(JeebsF.Rnd.Str);
+			Action result = () => new PropertyInfo<Foo, object>(F.Rnd.Str);
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(result);

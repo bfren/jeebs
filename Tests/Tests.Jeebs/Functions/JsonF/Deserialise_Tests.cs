@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Jeebs;
 using Xunit;
 
-namespace JeebsF.JsonF_Tests
+namespace F.JsonF_Tests
 {
 	public partial class Deserialise_Tests
 	{

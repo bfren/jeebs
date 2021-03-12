@@ -9,9 +9,9 @@ using Jeebs.Auth;
 using Jeebs.Config;
 using Jm.Functions.JwtF.ValidateToken;
 using Microsoft.IdentityModel.Tokens;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
-namespace JeebsF
+namespace F
 {
 	public static partial class JwtF
 	{

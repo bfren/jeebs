@@ -5,7 +5,7 @@ using System;
 using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -30,7 +30,7 @@ namespace Jeebs.Option_Tests
 		public void If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Action<int>>();
 			var none = Substitute.For<Action>();

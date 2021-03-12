@@ -13,10 +13,10 @@ namespace Jeebs.Config.ServicesConfig_Tests
 		{
 			// Arrange
 			var config = new ServicesConfig();
-			var type = JeebsF.Rnd.Str;
+			var type = F.Rnd.Str;
 
 			// Act
-			void action() => config.GetServiceConfig($"{type}.{JeebsF.Rnd.Str}");
+			void action() => config.GetServiceConfig($"{type}.{F.Rnd.Str}");
 
 			// Assert
 			var ex = Assert.Throws<UnsupportedServiceException>(action);
@@ -28,11 +28,11 @@ namespace Jeebs.Config.ServicesConfig_Tests
 		{
 			// Arrange
 			var config = new ServicesConfig();
-			var name = JeebsF.Rnd.Str;
+			var name = F.Rnd.Str;
 			var service = new SeqConfig
 			{
 				Server = "https://www.contoso.com",
-				ApiKey = JeebsF.Rnd.Str
+				ApiKey = F.Rnd.Str
 			};
 
 			config.Seq.Add(name, service);

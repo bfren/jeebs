@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void DoesNotEqual_When_Equal_Returns_False()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var some = Return(value);
 
 			// Act
@@ -26,8 +26,8 @@ namespace Jeebs.Option_Tests
 		public void DoesNotEqual_When_Not_Equal_Returns_True()
 		{
 			// Arrange
-			var v0 = JeebsF.Rnd.Int;
-			var v1 = JeebsF.Rnd.Int;
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
 			var some = Return(v0);
 
 			// Act

@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using Jeebs.Id;
 
-namespace JeebsF.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// Converter for <see cref="IntId"/> types

@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Sodium;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// Cryptography functions

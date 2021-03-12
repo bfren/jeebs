@@ -3,7 +3,7 @@
 
 using System;
 using System.Linq;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs
 {

@@ -12,7 +12,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Invalid_Authorization_Header_Returns_None_With_InvalidAuthorisationHeaderMsg()
 		{
 			// Arrange
-			var header = JeebsF.Rnd.Str;
+			var header = F.Rnd.Str;
 
 			// Act
 			var result = JwtHandler.GetToken(header);
@@ -26,7 +26,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Returns_Token()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 			var header = $"Bearer {value}";
 
 			// Act

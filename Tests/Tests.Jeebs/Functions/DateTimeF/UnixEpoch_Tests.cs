@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace JeebsF.DateTimeF_Tests
+namespace F.DateTimeF_Tests
 {
 	public partial class UnixEpoch_Tests
 	{

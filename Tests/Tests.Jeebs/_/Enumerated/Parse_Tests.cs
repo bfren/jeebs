@@ -25,7 +25,7 @@ namespace Jeebs.Enumerated_Tests
 		public void InvalidString_Returns_None()
 		{
 			// Arrange
-			var input = JeebsF.Rnd.Str;
+			var input = F.Rnd.Str;
 
 			// Act
 			var result = EnumeratedTest.Parse(input);

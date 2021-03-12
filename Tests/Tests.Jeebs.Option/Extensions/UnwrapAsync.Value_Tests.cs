@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
@@ -15,12 +15,12 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task Some_Returns_Value()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 			var task = option.AsTask;
 
 			// Act
-			var r0 = await task.UnwrapAsync(x => x.Value(JeebsF.Rnd.Int));
+			var r0 = await task.UnwrapAsync(x => x.Value(F.Rnd.Int));
 			var r1 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<int>>()));
 			var r2 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<IMsg?, int>>()));
 
@@ -34,7 +34,7 @@ namespace Jeebs.OptionExtensions_Tests
 		public async Task None_Gets_IfNone()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = None<int>(true);
 			var task = option.AsTask;
 

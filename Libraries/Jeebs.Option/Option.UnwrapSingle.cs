@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static JeebsF.OptionF;
+using static F.OptionF;
 using Msg = Jeebs.OptionMsg;
 
 namespace Jeebs

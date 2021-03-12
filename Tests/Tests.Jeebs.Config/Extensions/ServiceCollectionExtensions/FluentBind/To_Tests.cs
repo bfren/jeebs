@@ -17,7 +17,7 @@ namespace Jeebs.Config.ServiceCollectionExtensions_Tests.FluentBind_Tests
 			// Arrange
 			var services = Substitute.For<IServiceCollection>();
 			var fluent = new ServiceCollectionExtensions.FluentBind<Foo>(services);
-			var key = JeebsF.Rnd.Str;
+			var key = F.Rnd.Str;
 
 			// Act
 			var result = fluent.To(key);
@@ -32,7 +32,7 @@ namespace Jeebs.Config.ServiceCollectionExtensions_Tests.FluentBind_Tests
 			// Arrange
 			var services = Substitute.For<IServiceCollection>();
 			var fluent = new ServiceCollectionExtensions.FluentBind<Foo>(services);
-			var key = $":{JeebsF.Rnd.Str}";
+			var key = $":{F.Rnd.Str}";
 
 			// Act
 			var result = fluent.To(key);
@@ -47,10 +47,10 @@ namespace Jeebs.Config.ServiceCollectionExtensions_Tests.FluentBind_Tests
 			// Arrange
 			var services = Substitute.For<IServiceCollection>();
 			var bind = new ServiceCollectionExtensions.FluentBind<Foo>(services);
-			var key = JeebsF.Rnd.Str;
+			var key = F.Rnd.Str;
 
-			var b0 = JeebsF.Rnd.Str;
-			var b1 = JeebsF.Rnd.Int;
+			var b0 = F.Rnd.Str;
+			var b1 = F.Rnd.Int;
 			var builder = new ConfigurationBuilder();
 			builder.AddInMemoryCollection(new Dictionary<string, string>
 			{

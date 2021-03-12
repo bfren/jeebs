@@ -17,7 +17,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, _) = GetQueryPartsBuilder();
 
 			// Act
-			var result = builder.AddJoin(null, JeebsF.Rnd.Str, JeebsF.Rnd.Str, (JeebsF.Rnd.Str, JeebsF.Rnd.Str), false);
+			var result = builder.AddJoin(null, F.Rnd.Str, F.Rnd.Str, (F.Rnd.Str, F.Rnd.Str), false);
 
 			// Assert
 			Assert.NotNull(result);
@@ -33,7 +33,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var list = Substitute.For<IList<(string table, string on, string equals)>>();
 
 			// Act
-			builder.AddJoin(list, JeebsF.Rnd.Str, JeebsF.Rnd.Str, (JeebsF.Rnd.Str, JeebsF.Rnd.Str), escape);
+			builder.AddJoin(list, F.Rnd.Str, F.Rnd.Str, (F.Rnd.Str, F.Rnd.Str), escape);
 
 			// Assert
 			list.Received().Add(Arg.Any<(string, string, string)>());

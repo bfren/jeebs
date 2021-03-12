@@ -28,7 +28,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void Returns_Authorization_Header()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 			var headers = new Dictionary<string, StringValues>
 			{
 				{ "Authorization", value }

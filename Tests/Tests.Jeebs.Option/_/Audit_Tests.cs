@@ -4,7 +4,7 @@
 using System;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -31,7 +31,7 @@ namespace Jeebs.Option_Tests
 		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var option = Return(JeebsF.Rnd.Int);
+			var option = Return(F.Rnd.Int);
 			var exception = new Exception();
 
 			// Act

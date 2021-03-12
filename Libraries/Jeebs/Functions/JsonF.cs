@@ -5,9 +5,9 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// JSON shorthands

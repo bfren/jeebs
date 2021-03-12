@@ -3,7 +3,7 @@
 
 using System;
 
-namespace JeebsF
+namespace F
 {
 	/// <summary>
 	/// URI function

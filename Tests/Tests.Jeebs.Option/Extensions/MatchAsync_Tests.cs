@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Option.Exceptions;
 using NSubstitute;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -32,7 +32,7 @@ namespace Jeebs.Option_Tests
 		public async Task If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Int;
+			var value = F.Rnd.Int;
 			var option = Return(value);
 			var task = option.AsTask;
 			var some = Substitute.For<Func<int, Task<string>>>();
@@ -46,17 +46,17 @@ namespace Jeebs.Option_Tests
 
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: JeebsF.Rnd.Str
+				none: F.Rnd.Str
 			);
 
 			await task.MatchAsync(
 				some: some,
-				none: JeebsF.Rnd.Str
+				none: F.Rnd.Str
 			);
 
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: Task.FromResult(JeebsF.Rnd.Str)
+				none: Task.FromResult(F.Rnd.Str)
 			);
 
 			await task.MatchAsync(
@@ -109,7 +109,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var option = None<int>(true);
 			var task = option.AsTask;
-			var value = JeebsF.Rnd.Str;
+			var value = F.Rnd.Str;
 
 			// Act
 			var r0 = await task.MatchAsync(

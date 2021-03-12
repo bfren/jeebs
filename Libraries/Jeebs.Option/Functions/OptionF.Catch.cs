@@ -4,9 +4,9 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs;
-using Msg = JeebsF.OptionFMsg;
+using Msg = F.OptionFMsg;
 
-namespace JeebsF
+namespace F
 {
 	public static partial class OptionF
 	{
@@ -56,7 +56,7 @@ namespace JeebsF
 	}
 }
 
-namespace JeebsF.OptionFMsg
+namespace F.OptionFMsg
 {
 	/// <summary>
 	/// Unhandled exception

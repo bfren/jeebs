@@ -4,7 +4,7 @@
 using Jeebs;
 using Xunit;
 
-namespace JeebsF.EnumF_Tests
+namespace F.EnumF_Tests
 {
 	public partial class Parse_Tests
 	{

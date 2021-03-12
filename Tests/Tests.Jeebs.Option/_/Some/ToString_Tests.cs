@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
 namespace Jeebs.Option.Some_Tests
 {
@@ -12,7 +12,7 @@ namespace Jeebs.Option.Some_Tests
 		public void With_Value_Returns_Value_ToString()
 		{
 			// Arrange
-			var value = JeebsF.Rnd.Lng;
+			var value = F.Rnd.Lng;
 			var option = Return(value);
 
 			// Act

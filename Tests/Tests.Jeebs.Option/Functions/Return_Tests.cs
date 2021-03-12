@@ -2,11 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs;
-using JeebsF.OptionFMsg;
+using F.OptionFMsg;
 using Xunit;
-using static JeebsF.OptionF;
+using static F.OptionF;
 
-namespace JeebsF.OptionF_Tests
+namespace F.OptionF_Tests
 {
 	public class Return_Tests
 	{
