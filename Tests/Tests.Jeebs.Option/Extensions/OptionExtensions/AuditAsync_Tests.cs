@@ -24,7 +24,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.AuditAsync(audit);
 
 			// Assert
-			await audit.Received(3).Invoke(option);
+			await audit.Received(2).Invoke(option);
 			Assert.Same(option, r0);
 			Assert.Same(option, r1);
 		}

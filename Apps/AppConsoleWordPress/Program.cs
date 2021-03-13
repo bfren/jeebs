@@ -73,7 +73,7 @@ namespace AppConsoleWordPress
 						)
 						.AuditAsync(AuditCustomFields);
 
-					Map<int>(() => throw new Exception("Test"), null);
+					Map<int>(() => throw new Exception("Test"));
 
 					await Return(bcg.Db)
 						.BindAsync(FetchTaxonomies)

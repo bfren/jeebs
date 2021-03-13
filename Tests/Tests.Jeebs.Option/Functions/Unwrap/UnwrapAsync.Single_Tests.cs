@@ -92,7 +92,7 @@ namespace F.OptionF_Tests
 		public async Task Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
+			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
 			var option = Return(list).AsTask;
 
 			// Act
@@ -107,7 +107,7 @@ namespace F.OptionF_Tests
 		public async Task Too_Many_Items_Runs_TooMany()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
+			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
 			var option = Return(list).AsTask;
 			var tooMany = Substitute.For<Func<IMsg>>();
 
@@ -122,7 +122,7 @@ namespace F.OptionF_Tests
 		public async Task Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value).AsTask;
 
 			// Act
@@ -137,7 +137,7 @@ namespace F.OptionF_Tests
 		public async Task Not_A_List_Runs_NotAList()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value).AsTask;
 			var notAList = Substitute.For<Func<IMsg>>();
 
@@ -152,7 +152,7 @@ namespace F.OptionF_Tests
 		public async Task List_With_Single_Item_Returns_Single()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var list = (IEnumerable<int>)new[] { value };
 			var option = Return(list).AsTask;
 

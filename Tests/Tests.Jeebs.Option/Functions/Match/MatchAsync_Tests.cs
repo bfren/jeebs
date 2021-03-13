@@ -34,7 +34,7 @@ namespace F.OptionF_Tests
 		public async Task If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Func<int, Task<string>>>();
 			var none = Substitute.For<Func<IMsg?, Task<string>>>();

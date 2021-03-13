@@ -8,55 +8,28 @@ namespace Jeebs
 {
 	public static class EnumerableExtensions_Filter
 	{
-		/// <summary>
-		/// Filter elements to return only the values of those that are <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="this">Option</param>
-		/// <param name="predicate">[Optional] Predicate to use with filter</param>
-		internal static IEnumerable<T> DoFilter<T>(IEnumerable<Option<T>> @this, Func<T, bool>? predicate)
-		{
-			foreach (var option in @this)
-			{
-				foreach (var some in option)
-				{
-					if (predicate is null || predicate(some))
-					{
-						yield return some;
-					}
-				}
-			}
-		}
-
-		/// <inheritdoc cref="DoFilter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
 		public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this) =>
-			DoFilter(@this, null);
+			F.OptionF.Filter(@this, null);
 
-		/// <inheritdoc cref="DoFilter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
 		public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this, Func<T, bool> predicate) =>
-			DoFilter(@this, predicate);
+			F.OptionF.Filter(@this, predicate);
 
-		/// <summary>
-		/// Filter elements to return only <see cref="Some{T}"/> and transform using <paramref name="map"/>
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="this">Option list</param>
-		/// <param name="map">Mapping function</param>
-		internal static IEnumerable<U> DoFilter<T, U>(IEnumerable<Option<T>> @this, Func<T, U> map)
-		{
-			foreach (var some in DoFilter(@this, null))
-			{
-				yield return map(some);
-			}
-		}
-
-		/// <inheritdoc cref="DoFilter{T, U}(IEnumerable{Option{T}}, Func{T, U})"/>
+		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
 		public static IEnumerable<U> Filter<T, U>(this IEnumerable<Option<T>> @this, Func<T, U> map) =>
-			DoFilter(@this, map);
+			F.OptionF.Filter(@this, map, null);
 
-		/// <inheritdoc cref="DoFilter{T, U}(IEnumerable{Option{T}}, Func{T, U})"/>
+		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
+		public static IEnumerable<U> Filter<T, U>(this IEnumerable<Option<T>> @this, Func<T, U> map, Func<T, bool> predicate) =>
+			F.OptionF.Filter(@this, map, predicate);
+
+		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
 		public static IEnumerable<Option<U>> Filter<T, U>(this IEnumerable<Option<T>> @this, Func<T, Option<U>> map) =>
-			DoFilter(@this, map);
+			F.OptionF.Filter(@this, map, null);
+
+		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
+		public static IEnumerable<Option<U>> Filter<T, U>(this IEnumerable<Option<T>> @this, Func<T, Option<U>> map, Func<T, bool> predicate) =>
+			F.OptionF.Filter(@this, map, predicate);
 	}
 }

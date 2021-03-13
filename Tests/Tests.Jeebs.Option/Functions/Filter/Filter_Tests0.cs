@@ -11,7 +11,7 @@ using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class Filter_Tests
+	public partial class Filter_Tests
 	{
 		[Fact]
 		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()

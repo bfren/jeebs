@@ -3,42 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using static F.OptionF;
 
 namespace Jeebs
 {
 	public static class EnumerableExtensions_SingleOrNone
 	{
-		/// <summary>
-		/// Return the single element or <see cref="None{T}"/>
-		/// </summary>
-		/// <typeparam name="T">Value type</typeparam>
-		/// <param name="this">List of items</param>
-		/// <param name="predicate">[Optional] Predicate to filter items</param>
-		internal static Option<T> DoSingleOrNone<T>(IEnumerable<T> @this, Func<T, bool>? predicate) =>
-			@this.SingleOrDefault(x => predicate is null || predicate(x)) switch
-			{
-				T x =>
-					x,
-
-				_ =>
-					None<T, Msg.NullOrMultipleItemsMsg>()
-			};
-
-		/// <inheritdoc cref="DoSingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this) =>
-			DoSingleOrNone(@this, null);
+			F.OptionF.SingleOrNone(@this, null);
 
-		/// <inheritdoc cref="DoSingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this, Func<T, bool> predicate) =>
-			DoSingleOrNone(@this, predicate);
-
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>Null or multiple items found when doing SingleOrDefault()</summary>
-			public sealed record NullOrMultipleItemsMsg : IMsg { }
-		}
+			F.OptionF.SingleOrNone(@this, predicate);
 	}
 }

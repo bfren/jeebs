@@ -4,16 +4,16 @@
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.EnumerableExtensions_Tests
+namespace F.OptionF_Tests
 {
-	public class Filter_Tests
+	public partial class Filter_Tests
 	{
 		[Fact]
-		public void Returns_Only_Some()
+		public void Maps_And_Returns_Only_Some_From_List()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
+			var v0 = Rnd.Int;
+			var v1 = Rnd.Int;
 			var o0 = Return(v0);
 			var o1 = Return(v1);
 			var o2 = None<int>(true);
@@ -21,7 +21,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var list = new[] { o0, o1, o2, o3 };
 
 			// Act
-			var result = EnumerableExtensions_Filter.DoFilter(list, null);
+			var result = Filter(list, null);
 
 			// Assert
 			Assert.Collection(result,
@@ -31,11 +31,11 @@ namespace Jeebs.EnumerableExtensions_Tests
 		}
 
 		[Fact]
-		public void Returns_Matching_Some()
+		public void Maps_And_Returns_Matching_Some_From_List()
 		{
 			// Arrange
-			var v0 = F.Rnd.Int;
-			var v1 = F.Rnd.Int;
+			var v0 = Rnd.Int;
+			var v1 = Rnd.Int;
 			var o0 = Return(v0);
 			var o1 = Return(v1);
 			var o2 = None<int>(true);
@@ -43,7 +43,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var list = new[] { o0, o1, o2, o3 };
 
 			// Act
-			var result = list.Filter(x => x == v1);
+			var result = Filter(list, x => x == v1);
 
 			// Assert
 			Assert.Collection(result,

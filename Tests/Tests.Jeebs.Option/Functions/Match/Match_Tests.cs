@@ -31,7 +31,7 @@ namespace F.OptionF_Tests
 		public void If_Some_Runs_Some()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Func<int, string>>();
 			var none = Substitute.For<Func<IMsg?, string>>();
