@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using static F.OptionF;
 
 namespace Jeebs.Linq
 {
@@ -48,21 +47,6 @@ namespace Jeebs.Linq
 		/// <param name="this">Option</param>
 		/// <param name="predicate">Select where predicate</param>
 		public static Option<T> Where<T>(this Option<T> @this, Func<T, bool> predicate) =>
-			@this.Bind(x => predicate(x) switch
-			{
-				true =>
-					@this,
-
-				false =>
-					None<T, OptionExtensionsMsg.PredicateWasFalseMsg>()
-			});
+			@this.Filter(predicate);
 	}
-}
-
-namespace Jeebs.Linq.OptionExtensionsMsg
-{
-	/// <summary>
-	/// None has been returned because the predicate was false
-	/// </summary>
-	public sealed record PredicateWasFalseMsg : IMsg { }
 }

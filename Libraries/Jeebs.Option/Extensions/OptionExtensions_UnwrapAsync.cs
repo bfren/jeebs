@@ -14,7 +14,7 @@ namespace Jeebs
 		/// <summary>
 		/// Unwrap the single value of this option - if this is a <see cref="Some{T}"/>
 		/// </summary>
-		/// <param name="this">Option value (awaitable)</param>
+		/// <param name="this">Option (awaitable)</param>
 		/// <param name="unwrap">Fluent unwrap function</param>
 		public static async Task<Option<U>> UnwrapAsync<T, U>(
 			this Task<Option<T>> @this,

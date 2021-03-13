@@ -54,19 +54,13 @@ namespace F
 		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
 			ReturnIf(predicate, () => value);
 	}
-}
 
-namespace F.OptionFMsg
-{
-	/// <summary>
-	/// Predicate was false
-	/// See <see cref="OptionF.ReturnIf{T}(Func{bool}, Func{T})"/>
-	/// </summary>
-	public sealed record PredicateWasFalseMsg : IMsg { }
+	namespace OptionFMsg
+	{
+		/// <summary>Predicate was false</summary>
+		public sealed record PredicateWasFalseMsg : IMsg { }
 
-	/// <summary>
-	/// Value was null
-	/// See <see cref="OptionF.Return{T}(T, bool)"/>
-	/// </summary>
-	public sealed record SomeValueWasNullMsg : IMsg { }
+		/// <summary>Value was null when trying to wrap using Return</summary>
+		public sealed record SomeValueWasNullMsg : IMsg { }
+	}
 }
