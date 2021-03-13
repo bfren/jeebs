@@ -13,7 +13,6 @@ namespace Jeebs
 	public static partial class OptionExtensions
 	{
 		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Handler?)"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static async Task<Option<U>> DoMapAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<U>> map,

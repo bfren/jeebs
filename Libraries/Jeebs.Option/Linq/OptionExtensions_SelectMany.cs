@@ -27,17 +27,14 @@ namespace Jeebs.Linq
 			@this.Bind(x => f(x).Map(y => g(x, y)));
 
 		/// <inheritdoc cref="SelectMany{T, U, V}(Option{T}, Func{T, Option{U}}, Func{T, U, V})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<V>> SelectMany<T, U, V>(this Option<T> @this, Func<T, Task<Option<U>>> f, Func<T, U, V> g) =>
 			@this.BindAsync(x => f(x).MapAsync(y => g(x, y)));
 
 		/// <inheritdoc cref="SelectMany{T, U, V}(Option{T}, Func{T, Option{U}}, Func{T, U, V})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<V>> SelectMany<T, U, V>(this Task<Option<T>> @this, Func<T, Option<U>> f, Func<T, U, V> g) =>
 			@this.BindAsync(x => f(x).Map(y => g(x, y)));
 
 		/// <inheritdoc cref="SelectMany{T, U, V}(Option{T}, Func{T, Option{U}}, Func{T, U, V})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<V>> SelectMany<T, U, V>(this Task<Option<T>> @this, Func<T, Task<Option<U>>> f, Func<T, U, V> g) =>
 			@this.BindAsync(x => f(x).MapAsync(y => g(x, y)));
 	}

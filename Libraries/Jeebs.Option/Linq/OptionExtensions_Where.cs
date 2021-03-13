@@ -24,7 +24,6 @@ namespace Jeebs.Linq
 			@this.Filter(predicate);
 
 		/// <inheritdoc cref="Where{T}(Option{T}, Func{T, bool})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> Where<T>(this Task<Option<T>> @this, Func<T, bool> predicate) =>
 			@this.FilterAsync(predicate);
 	}

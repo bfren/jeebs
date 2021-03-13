@@ -12,7 +12,6 @@ namespace Jeebs
 	public static partial class OptionExtensions
 	{
 		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
-		/// <param name="this">Option (awaitable)</param>
 		internal static async Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
 			await (await @this).DoMatchAsync(some, none);
 

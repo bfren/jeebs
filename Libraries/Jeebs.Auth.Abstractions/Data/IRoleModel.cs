@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data
 	public interface IRoleModel
 	{
 		/// <summary>
-		/// Rple ID
+		/// Role ID
 		/// </summary>
 		public RoleId RoleId { get; init; }
 

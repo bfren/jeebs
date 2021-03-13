@@ -27,11 +27,11 @@ namespace Jeebs
 					None<T, Msg.NullOrMultipleItemsMsg>()
 			};
 
-		/// <inheritdoc cref="DoSingleOrNone{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="DoSingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this) =>
 			DoSingleOrNone(@this, null);
 
-		/// <inheritdoc cref="DoSingleOrNone{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="DoSingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this, Func<T, bool> predicate) =>
 			DoSingleOrNone(@this, predicate);
 	}

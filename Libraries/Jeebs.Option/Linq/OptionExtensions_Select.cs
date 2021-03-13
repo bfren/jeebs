@@ -24,12 +24,10 @@ namespace Jeebs.Linq
 			@this.Map(f);
 
 		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<U>> Select<T, U>(this Task<Option<T>> @this, Func<T, U> f) =>
 			@this.MapAsync(f);
 
 		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<U>> Select<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> f) =>
 			@this.MapAsync(f);
 	}

@@ -12,7 +12,6 @@ namespace Jeebs
 	public static partial class OptionExtensions
 	{
 		/// <inheritdoc cref="Option{T}.DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
-		/// <param name="this">Option (awaitable)</param>
 		internal static async Task<Option<T>> DoAuditSwitchAsync<T>(
 			Task<Option<T>> @this,
 			Func<T, Task>? some,

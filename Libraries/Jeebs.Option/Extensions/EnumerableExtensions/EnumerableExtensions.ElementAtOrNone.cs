@@ -8,6 +8,9 @@ using Msg = Jeebs.EnumerableExtensionsMsg;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Enumerable Extensions
+	/// </summary>
 	public static partial class EnumerableExtensions
 	{
 		/// <summary>

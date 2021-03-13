@@ -13,7 +13,6 @@ namespace Jeebs
 	public static partial class OptionExtensions
 	{
 		/// <inheritdoc cref="Option{T}.DoBindAsync{U}(Func{T, Task{Option{U}}}, Handler?)"/>
-		/// <param name="this">Option (awaitable)</param>
 		internal static async Task<Option<U>> DoBindAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<Option<U>>> bind,

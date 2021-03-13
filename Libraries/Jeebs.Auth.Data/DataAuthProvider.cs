@@ -14,8 +14,14 @@ namespace Jeebs.Auth
 	public abstract class DataAuthProvider<TUser> : IDataAuthProvider<TUser>
 		where TUser : IAuthUser, IUserModel
 	{
+		/// <summary>
+		/// IAuthDb
+		/// </summary>
 		protected IAuthDb Db { get; private init; }
 
+		/// <summary>
+		/// ILog
+		/// </summary>
 		protected ILog Log { get; private init; }
 
 		/// <summary>

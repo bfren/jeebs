@@ -13,7 +13,6 @@ namespace Jeebs
 	public static partial class OptionExtensions
 	{
 		/// <inheritdoc cref="Option{T}.DoFilterAsync(Func{T, Task{bool}}, Handler?)"/>
-		/// <param name="this">Option (awaitable)</param>
 		internal static async Task<Option<T>> DoFilterAsync<T>(Task<Option<T>> @this, Func<T, Task<bool>> predicate, Handler? handler) =>
 			await (await @this).DoFilterAsync(predicate, handler);
 
