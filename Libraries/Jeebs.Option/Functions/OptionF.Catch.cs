@@ -54,14 +54,14 @@ namespace F
 			}
 		}
 	}
-}
 
-namespace F.OptionFMsg
-{
-	/// <summary>
-	/// Unhandled exception
-	/// See <see cref="OptionF.Catch{T}(Func{Option{T}}, OptionF.Handler?)"/> and
-	/// <see cref="OptionF.CatchAsync{T}(Func{Task{Option{T}}}, OptionF.Handler?)"/>
-	/// </summary>
-	public sealed record UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
+	namespace OptionFMsg
+	{
+		/// <summary>
+		/// Unhandled exception
+		/// See <see cref="OptionF.Catch{T}(Func{Option{T}}, OptionF.Handler?)"/> and
+		/// <see cref="OptionF.CatchAsync{T}(Func{Task{Option{T}}}, OptionF.Handler?)"/>
+		/// </summary>
+		public sealed record UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
+	}
 }

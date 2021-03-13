@@ -39,12 +39,12 @@ namespace F
 					new(new OptionFMsg.IfYouArentSureDontMakeItMsg())
 			};
 	}
-}
 
-namespace F.OptionFMsg
-{
-	/// <summary>
-	/// If you aren't sure you want to make a <see cref="None{T}"/> without a reason, don't do it!
-	/// </summary>
-	public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
+	namespace OptionFMsg
+	{
+		/// <summary>
+		/// If you aren't sure you want to make a <see cref="None{T}"/> without a reason, don't do it!
+		/// </summary>
+		public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
+	}
 }

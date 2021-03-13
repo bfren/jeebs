@@ -56,12 +56,12 @@ namespace Jeebs.Cryptography
 		public Locked<T> Lock(string key) =>
 			new(Contents, key);
 	}
-}
 
-namespace Jeebs.Cryptography.LockableMsg
-{
-	/// <summary>
-	/// Encryption key is not the correct length to lock the box
-	/// </summary>
-	public sealed record InvalidKeyLengthMsg : IMsg { }
+	namespace LockableMsg
+	{
+		/// <summary>
+		/// Encryption key is not the correct length to lock the box
+		/// </summary>
+		public sealed record InvalidKeyLengthMsg : IMsg { }
+	}
 }

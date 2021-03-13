@@ -92,35 +92,35 @@ namespace Jeebs.Reflection
 			return None<T>(new Msg.PropertyNotFoundMsg((@this.GetType(), propertyName)));
 		}
 	}
-}
 
-namespace Jeebs.Reflection.ObjectExtensionsMsg
-{
-	/// <summary>
-	/// See <see cref="ObjectExtensions.GetProperty{T}(object, string)"/>
-	/// and <see cref="ObjectExtensions.GetProperty(object, string)"/>
-	/// </summary>
-	/// <param name="Value">Object type and Property name</param>
-	public abstract record GetPropertyMsg((Type type, string property) Value) : WithValueMsg<(Type type, string property)>() { }
+	namespace ObjectExtensionsMsg
+	{
+		/// <summary>
+		/// See <see cref="ObjectExtensions.GetProperty{T}(object, string)"/>
+		/// and <see cref="ObjectExtensions.GetProperty(object, string)"/>
+		/// </summary>
+		/// <param name="Value">Object type and Property name</param>
+		public abstract record GetPropertyMsg((Type type, string property) Value) : WithValueMsg<(Type type, string property)>() { }
 
-	/// <summary>The property could not be found</summary>
-	/// <inheritdoc cref="GetPropertyMsg"/>
-	public sealed record PropertyNotFoundMsg((Type, string) Value) : GetPropertyMsg(Value) { }
+		/// <summary>The property could not be found</summary>
+		/// <inheritdoc cref="GetPropertyMsg"/>
+		public sealed record PropertyNotFoundMsg((Type, string) Value) : GetPropertyMsg(Value) { }
 
-	/// <summary>The property or value is null</summary>
-	/// <inheritdoc cref="GetPropertyMsg"/>
-	public sealed record NullPropertyOrValueMsg((Type, string) Value) : GetPropertyMsg(Value) { }
+		/// <summary>The property or value is null</summary>
+		/// <inheritdoc cref="GetPropertyMsg"/>
+		public sealed record NullPropertyOrValueMsg((Type, string) Value) : GetPropertyMsg(Value) { }
 
-	/// <summary>The property value is null</summary>
-	/// <inheritdoc cref="GetPropertyMsg"/>
-	public sealed record NullValueMsg<T>((Type, string) Value) : GetPropertyMsg(Value) { }
+		/// <summary>The property value is null</summary>
+		/// <inheritdoc cref="GetPropertyMsg"/>
+		public sealed record NullValueMsg<T>((Type, string) Value) : GetPropertyMsg(Value) { }
 
-	/// <summary>The object does not contain the property</summary>
-	/// <inheritdoc cref="GetPropertyMsg"/>
-	public sealed record TypeDoesNotContainPropertyMsg((Type type, string property) Value) : GetPropertyMsg(Value) { }
+		/// <summary>The object does not contain the property</summary>
+		/// <inheritdoc cref="GetPropertyMsg"/>
+		public sealed record TypeDoesNotContainPropertyMsg((Type type, string property) Value) : GetPropertyMsg(Value) { }
 
-	/// <summary>The property type doesn't match the requested type</summary>
-	/// <typeparam name="T">Requested property value type</typeparam>
-	/// <inheritdoc cref="GetPropertyMsg"/>
-	public sealed record UnexpectedPropertyTypeMsg<T>((Type type, string property) Value) : GetPropertyMsg(Value) { }
+		/// <summary>The property type doesn't match the requested type</summary>
+		/// <typeparam name="T">Requested property value type</typeparam>
+		/// <inheritdoc cref="GetPropertyMsg"/>
+		public sealed record UnexpectedPropertyTypeMsg<T>((Type type, string property) Value) : GetPropertyMsg(Value) { }
+	}
 }

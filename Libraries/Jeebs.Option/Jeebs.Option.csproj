@@ -2,7 +2,4 @@
   <PropertyGroup>
     <RootNamespace>Jeebs</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Collections\" />
-  </ItemGroup>
 </Project>

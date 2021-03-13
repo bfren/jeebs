@@ -110,36 +110,36 @@ namespace Jeebs.Cryptography
 		private byte[] HashKey(string key) =>
 			GenericHash.Hash(key, Salt, Lockable.KeyLength);
 	}
-}
 
-namespace Jeebs.Cryptography.LockedMsg
-{
-	/// <summary>
-	/// Incorrect key or nonce
-	/// </summary>
-	/// <param name="Exception">Exception</param>
-	public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+	namespace LockedMsg
+	{
+		/// <summary>
+		/// Incorrect key or nonce
+		/// </summary>
+		/// <param name="Exception">Exception</param>
+		public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
 
-	/// <summary>
-	/// Invalid key
-	/// </summary>
-	/// <param name="Exception">Exception</param>
-	public sealed record InvalidKeyExceptionMsg(Exception Exception) : IExceptionMsg { }
+		/// <summary>
+		/// Invalid key
+		/// </summary>
+		/// <param name="Exception">Exception</param>
+		public sealed record InvalidKeyExceptionMsg(Exception Exception) : IExceptionMsg { }
 
-	/// <summary>
-	/// Invalid nonce
-	/// </summary>
-	/// <param name="Exception">Exception</param>
-	public sealed record InvalidNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+		/// <summary>
+		/// Invalid nonce
+		/// </summary>
+		/// <param name="Exception">Exception</param>
+		public sealed record InvalidNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
 
-	/// <summary>
-	/// Unlock exception
-	/// </summary>
-	/// <param name="Exception">Exception</param>
-	public sealed record UnlockExceptionMsg(Exception Exception) : IExceptionMsg { }
+		/// <summary>
+		/// Unlock exception
+		/// </summary>
+		/// <param name="Exception">Exception</param>
+		public sealed record UnlockExceptionMsg(Exception Exception) : IExceptionMsg { }
 
-	/// <summary>
-	/// Trying to unlock a box without any content
-	/// </summary>
-	public sealed record UnlockWhenEncryptedContentsIsNullMsg : IMsg { }
+		/// <summary>
+		/// Trying to unlock a box without any content
+		/// </summary>
+		public sealed record UnlockWhenEncryptedContentsIsNullMsg : IMsg { }
+	}
 }

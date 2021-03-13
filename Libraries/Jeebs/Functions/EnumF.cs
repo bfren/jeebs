@@ -115,45 +115,45 @@ namespace F
 			}
 		}
 	}
-}
 
-namespace F.EnumFMsg
-{
-	/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
-	/// <param name="Value">Enum type</param>
-	public sealed record NotAValidEnumMsg(Type Value) : WithValueMsg<Type> { }
-
-	/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
-	/// <typeparam name="T">Enum type</typeparam>
-	/// <param name="Value">Enum value</param>
-	public sealed record NotAValidEnumValueMsg<T>(string Value) : WithValueMsg<string>
-		where T : struct, Enum
+	namespace EnumFMsg
 	{
-		/// <summary>Return message</summary>
-		public override string ToString() =>
-			$"'{Value}' is not a valid value of {typeof(T)}.";
-	}
+		/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
+		/// <param name="Value">Enum type</param>
+		public sealed record NotAValidEnumMsg(Type Value) : WithValueMsg<Type> { }
 
-	/// <summary><paramref name="Value"/> is not a valid value of <paramref name="Type"/></summary>
-	/// <param name="Type">Enum type</param>
-	/// <param name="Value">Enum value</param>
-	public sealed record NotAValidEnumValueMsg(Type Type, string Value) : WithValueMsg<string>
-	{
-		/// <summary>Return message</summary>
-		public override string ToString() =>
-			$"'{Value}' is not a valid value of {Type}.";
-	}
+		/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
+		/// <typeparam name="T">Enum type</typeparam>
+		/// <param name="Value">Enum value</param>
+		public sealed record NotAValidEnumValueMsg<T>(string Value) : WithValueMsg<string>
+			where T : struct, Enum
+		{
+			/// <summary>Return message</summary>
+			public override string ToString() =>
+				$"'{Value}' is not a valid value of {typeof(T)}.";
+		}
 
-	/// <summary><paramref name="Value"/> is not in <typeparamref name="TTo"/></summary>
-	/// <typeparam name="TFrom">From Enum</typeparam>
-	/// <typeparam name="TTo">To Enum</typeparam>
-	/// <param name="Value">From Enum value</param>
-	public sealed record ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : WithValueMsg<TFrom>
-		where TFrom : struct, Enum
-		where TTo : struct, Enum
-	{
-		/// <summary>Return message</summary>
-		public override string ToString() =>
-			$"'{Value}' is not a valid {typeof(TTo)}.";
+		/// <summary><paramref name="Value"/> is not a valid value of <paramref name="Type"/></summary>
+		/// <param name="Type">Enum type</param>
+		/// <param name="Value">Enum value</param>
+		public sealed record NotAValidEnumValueMsg(Type Type, string Value) : WithValueMsg<string>
+		{
+			/// <summary>Return message</summary>
+			public override string ToString() =>
+				$"'{Value}' is not a valid value of {Type}.";
+		}
+
+		/// <summary><paramref name="Value"/> is not in <typeparamref name="TTo"/></summary>
+		/// <typeparam name="TFrom">From Enum</typeparam>
+		/// <typeparam name="TTo">To Enum</typeparam>
+		/// <param name="Value">From Enum value</param>
+		public sealed record ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : WithValueMsg<TFrom>
+			where TFrom : struct, Enum
+			where TTo : struct, Enum
+		{
+			/// <summary>Return message</summary>
+			public override string ToString() =>
+				$"'{Value}' is not a valid {typeof(TTo)}.";
+		}
 	}
 }

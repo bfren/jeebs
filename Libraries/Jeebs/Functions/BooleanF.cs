@@ -49,14 +49,14 @@ namespace F
 			return None<bool>(new Msg.UnrecognisedValueMsg(val));
 		}
 	}
-}
 
-namespace F.BooleanFMsg
-{
-	/// <summary>Null Value</summary>
-	public sealed record NullValueMsg : IMsg { }
+	namespace BooleanFMsg
+	{
+		/// <summary>Null Value</summary>
+		public sealed record NullValueMsg : IMsg { }
 
-	/// <summary>Unrecognised boolean value</summary>
-	/// <param name="Value">Unrecognised Value</param>
-	public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
+		/// <summary>Unrecognised boolean value</summary>
+		/// <param name="Value">Unrecognised Value</param>
+		public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
+	}
 }

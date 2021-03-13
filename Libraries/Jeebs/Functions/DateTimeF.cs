@@ -45,11 +45,11 @@ namespace F
 			return None<DateTime>(new Msg.InvalidDateTimeMsg(s));
 		}
 	}
-}
 
-namespace F.DateTimeFMsg
-{
-	/// <summary>Unable to parse DateTime string</summary>
-	/// <param name="Value">DateTime string</param>
-	public sealed record InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
+	namespace DateTimeFMsg
+	{
+		/// <summary>Unable to parse DateTime string</summary>
+		/// <param name="Value">DateTime string</param>
+		public sealed record InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
+	}
 }

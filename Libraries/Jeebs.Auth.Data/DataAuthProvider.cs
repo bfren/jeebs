@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using static F.OptionF;
+using Msg = Jeebs.Auth.DataAuthProviderMsg;
 
 namespace Jeebs.Auth
 {
@@ -30,13 +31,13 @@ namespace Jeebs.Auth
 			// Check email
 			if (string.IsNullOrEmpty(email))
 			{
-				return None<TUserModel, Jeebs.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidEmailMsg>();
+				return None<TUserModel, Msg.InvalidEmailMsg>();
 			}
 
 			// Check password
 			if (string.IsNullOrEmpty(password))
 			{
-				return None<TUserModel, Jeebs.Auth.Data.DataAuthProvider.ValidateUserAsync.InvalidPasswordMsg>();
+				return None<TUserModel, Msg.InvalidPasswordMsg>();
 			}
 
 			throw new NotImplementedException();
@@ -49,5 +50,14 @@ namespace Jeebs.Auth
 		{
 			throw new NotImplementedException();
 		}
+	}
+
+	namespace DataAuthProviderMsg
+	{
+		/// <summary>Null or empty email address</summary>
+		public sealed record InvalidEmailMsg : IMsg { }
+
+		/// <summary>Null or empty password</summary>
+		public sealed record InvalidPasswordMsg : IMsg { }
 	}
 }

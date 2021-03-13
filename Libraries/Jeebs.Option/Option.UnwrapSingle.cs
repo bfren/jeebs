@@ -47,25 +47,25 @@ namespace Jeebs
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
 			DoUnwrapSingle<U>(noItems, tooMany, notAList);
 	}
-}
 
-namespace Jeebs.OptionMsg
-{
-	/// <summary>
-	/// No items in the list<br/>
-	/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-	/// </summary>
-	public sealed record UnwrapSingleNoItemsMsg : IMsg { }
+	namespace OptionMsg
+	{
+		/// <summary>
+		/// No items in the list<br/>
+		/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+		/// </summary>
+		public sealed record UnwrapSingleNoItemsMsg : IMsg { }
 
-	/// <summary>
-	/// Too many items in the list<br/>
-	/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-	/// </summary>
-	public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
+		/// <summary>
+		/// Too many items in the list<br/>
+		/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+		/// </summary>
+		public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
 
-	/// <summary>
-	/// Not a list<br/>
-	/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-	/// </summary>
-	public sealed record UnwrapSingleNotAListMsg : IMsg { }
+		/// <summary>
+		/// Not a list<br/>
+		/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+		/// </summary>
+		public sealed record UnwrapSingleNotAListMsg : IMsg { }
+	}
 }

@@ -122,16 +122,17 @@ namespace F
 		public static Option<T> Deserialise<T>(string str) =>
 			Deserialise<T>(str, options);
 	}
-}
 
-namespace F.JsonFMsg
-{
-	/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
-	public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+	namespace JsonFMsg
+	{
+		/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-	/// <summary>A null or empty string cannot be deserialised</summary>
-	public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
+		/// <summary>A null or empty string cannot be deserialised</summary>
+		public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
 
-	/// <summary>The object was deserialised but returned null</summary>
-	public sealed record DeserialisingReturnedNullMsg : IMsg { }
+		/// <summary>The object was deserialised but returned null</summary>
+		public sealed record DeserialisingReturnedNullMsg : IMsg { }
+	}
 }
