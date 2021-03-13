@@ -33,7 +33,8 @@ namespace Jeebs.Apps
 		/// <inheritdoc/>
 		public override IHost CreateHost(string[] args)
 		{
-			return Host.CreateDefaultBuilder(args)
+			// Create Default Host Builder
+			var host = Host.CreateDefaultBuilder(args)
 
 				// Use Web Host Defaults
 				.ConfigureWebHostDefaults(builder => builder
@@ -63,6 +64,12 @@ namespace Jeebs.Apps
 				)
 
 			.Build();
+
+			// Ready to go
+			Ready(host.Services);
+
+			// Return host
+			return host;
 		}
 
 		/// <inheritdoc/>

@@ -17,17 +17,17 @@ namespace Jeebs.WordPress
 		/// <typeparam name="T"></typeparam>
 		/// <param name="fileIds">Result - value is list of attached file IDs</param>
 		/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param>
-		public async Task<Option<List<T>>> GetAttachedFiles<T>(List<long> fileIds, string virtualUploadsUrl)
+		public Task<Option<List<T>>> GetAttachedFilesAsync<T>(List<long> fileIds, string virtualUploadsUrl)
 			where T : WpAttachedFile
 		{
 			// Check for empty list
 			if (fileIds.Count == 0)
 			{
-				return new List<T>();
+				return Return(new List<T>()).AsTask;
 			}
 
 			// Run query
-			return await Return(fileIds)
+			return Return(fileIds)
 				.Map(
 					getQuery
 				)
@@ -51,13 +51,13 @@ namespace Jeebs.WordPress
 				;
 
 			// Get the files
-			async Task<Option<IEnumerable<T>>> getAttachedFiles(string query)
+			Task<Option<IEnumerable<T>>> getAttachedFiles(string query)
 			{
 				// Start unit of work
 				using var w = db.UnitOfWork;
 
 				// Execute query
-				return await w.QueryAsync<T>(query);
+				return w.QueryAsync<T>(query);
 			}
 		}
 	}
