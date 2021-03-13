@@ -9,7 +9,7 @@ namespace F
 	public static partial class OptionF
 	{
 		/// <summary>
-		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="None{T}"/>
+		/// Run a function depending on whether this is a <see cref="Some{T}"/> or <see cref="Jeebs.None{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="U">Return value type</typeparam>

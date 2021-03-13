@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Enumerable Extensions: Filter
+	/// </summary>
 	public static class EnumerableExtensions_Filter
 	{
 		/// <inheritdoc cref="F.OptionF.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>

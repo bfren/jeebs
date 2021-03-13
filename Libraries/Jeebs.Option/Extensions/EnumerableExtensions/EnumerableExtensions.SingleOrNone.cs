@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Enumerable Extensions: SingleOrNone
+	/// </summary>
 	public static class EnumerableExtensions_SingleOrNone
 	{
 		/// <inheritdoc cref="F.OptionF.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>

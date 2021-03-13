@@ -42,7 +42,7 @@ namespace F
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>If you aren't sure you want to make a <see cref="None{T}"/> without a reason, don't do it!</summary>
+			/// <summary>If you aren't sure you want to make a <see cref="Jeebs.None{T}"/> without a reason, don't do it!</summary>
 			public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
 		}
 	}

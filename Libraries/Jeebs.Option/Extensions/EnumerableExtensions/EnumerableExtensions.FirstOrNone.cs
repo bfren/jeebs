@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Enumerable Extensions: FirstOrNone
+	/// </summary>
 	public static class EnumerableExtensions_FirstOrNone
 	{
 		/// <inheritdoc cref="F.OptionF.FirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>

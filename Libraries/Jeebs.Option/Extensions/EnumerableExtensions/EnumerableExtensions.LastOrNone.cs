@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Jeebs
 {
+	/// <summary>
+	/// Enumerable Extensions: LastOrNone
+	/// </summary>
 	public static class EnumerableExtensions_LastOrNone
 	{
 		/// <inheritdoc cref="F.OptionF.LastOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
