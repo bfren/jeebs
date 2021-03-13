@@ -4,10 +4,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using static F.Rnd.ByteF;
 
 namespace F.ByteF_Tests
 {
-	public class Random_Tests
+	public class Get_Tests
 	{
 		[Theory]
 		[InlineData(2)]
@@ -21,7 +22,7 @@ namespace F.ByteF_Tests
 			// Arrange
 
 			// Act
-			var result = ByteF.Random(length);
+			var result = Get(length);
 
 			// Assert
 			Assert.Equal(length, result.Length);
@@ -37,7 +38,7 @@ namespace F.ByteF_Tests
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(ByteF.Random(4));
+				numbers.Add(Get(4));
 			}
 
 			var unique = numbers.Distinct();

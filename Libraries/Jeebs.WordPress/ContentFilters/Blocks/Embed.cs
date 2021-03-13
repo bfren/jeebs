@@ -58,7 +58,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 					// Replace content using child Format() method
 					content = content.Replace(
 						match.Value,
-						Format(F.StringF.Random(10), embed.Value)
+						Format(F.Rnd.StringF.Get(10), embed.Value)
 					);
 				}
 			}

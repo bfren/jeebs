@@ -13,7 +13,7 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		{
 			// Arrange
 			var box = new Lockable<string>(F.Rnd.Str);
-			var key = F.ByteF.Random(20);
+			var key = F.Rnd.ByteF.Get(20);
 
 			// Act
 			var result = box.Lock(key);
@@ -28,7 +28,7 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		{
 			// Arrange
 			var box = new Lockable<string>(F.Rnd.Str);
-			var key = F.ByteF.Random(32);
+			var key = F.Rnd.ByteF.Get(32);
 
 			// Act
 			var result = box.Lock(key);

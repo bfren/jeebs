@@ -88,7 +88,7 @@ namespace F
 					sb,
 
 				_ =>
-					sb.Append(Null).Append(";")
+					sb.Append(Null).Append(';')
 			};
 
 			// Append a value to the StringBuilder
@@ -109,7 +109,7 @@ namespace F
 					Serialise(item.Key, sb);
 					Serialise(item.Value, sb);
 				}
-				return sb.Append("}");
+				return sb.Append('}');
 			}
 
 			// Append a List to the StringBuilder

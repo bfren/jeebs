@@ -6,5 +6,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Abstractions\Jeebs.Abstractions.csproj" />
     <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
+    <ProjectReference Include="..\Jeebs.Random\Jeebs.Random.csproj" />
   </ItemGroup>
 </Project>

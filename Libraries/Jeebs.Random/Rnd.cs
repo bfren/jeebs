@@ -6,24 +6,24 @@ namespace F
 	/// <summary>
 	/// Random generator functions - very useful for testing
 	/// </summary>
-	public static class Rnd
+	public static partial class Rnd
 	{
 		/// <summary>
 		/// Generate a random string 6 characters long, containing uppercase and lowercase letters but no numbers or special characters
 		/// </summary>
 		public static string Str =>
-			StringF.Random(6);
+			StringF.Get(6);
 
 		/// <summary>
 		/// Generate a random 32-bit integer between 0 and 1000
 		/// </summary>
 		public static int Int =>
-			MathsF.RandomInt32(max: 1000);
+			NumberF.GetInt32(max: 1000);
 
 		/// <summary>
 		/// Generate a random 64-bit integer between 0 and 1000
 		/// </summary>
 		public static long Lng =>
-			MathsF.RandomInt64(max: 1000L);
+			NumberF.GetInt64(max: 1000L);
 	}
 }

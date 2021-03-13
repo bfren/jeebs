@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using Xunit;
+using Jeebs.Linq;
 
 namespace Jeebs.LinqExtensions_Tests
 {

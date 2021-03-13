@@ -23,11 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 	ProjectSection(SolutionItems) = preProject
 		Libraries\.editorconfig = Libraries\.editorconfig
 		Libraries\Directory.Build.props = Libraries\Directory.Build.props
+		Libraries.ruleset = Libraries.ruleset
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{A256449B-4234-43DD-B18F-741D69906712}"
 	ProjectSection(SolutionItems) = preProject
 		Apps\.editorconfig = Apps\.editorconfig
+		Apps.ruleset = Apps.ruleset
 		Apps\Directory.Build.props = Apps\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -181,7 +183,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Abstractions", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Auth.Razor", "Libraries\Jeebs.Mvc.Auth.Razor\Jeebs.Mvc.Auth.Razor.csproj", "{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Abstractions", "Tests\Tests.Jeebs.Abstractions\Tests.Jeebs.Abstractions.csproj", "{2AE4591B-A372-410A-98A4-B8EB7E2FB0CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Abstractions", "Tests\Tests.Jeebs.Abstractions\Tests.Jeebs.Abstractions.csproj", "{2AE4591B-A372-410A-98A4-B8EB7E2FB0CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Random", "Libraries\Jeebs.Random\Jeebs.Random.csproj", "{D8DA2A1C-8755-46BE-992A-E8712EDD62AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Random", "Tests\Tests.Jeebs.Random\Tests.Jeebs.Random.csproj", "{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -419,6 +425,14 @@ Global
 		{2AE4591B-A372-410A-98A4-B8EB7E2FB0CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AE4591B-A372-410A-98A4-B8EB7E2FB0CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AE4591B-A372-410A-98A4-B8EB7E2FB0CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8DA2A1C-8755-46BE-992A-E8712EDD62AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8DA2A1C-8755-46BE-992A-E8712EDD62AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8DA2A1C-8755-46BE-992A-E8712EDD62AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8DA2A1C-8755-46BE-992A-E8712EDD62AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -498,6 +512,8 @@ Global
 		{6E553AE6-B2C9-41C1-AEE5-5B61B587FA37} = {75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}
 		{686DCA90-0550-45E7-9B65-BF4BBE9BBDB6} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
 		{2AE4591B-A372-410A-98A4-B8EB7E2FB0CD} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{D8DA2A1C-8755-46BE-992A-E8712EDD62AF} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

@@ -5,7 +5,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Jeebs
+namespace Jeebs.Linq
 {
 	/// <summary>
 	/// LinqExpression Extensions

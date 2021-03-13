@@ -30,11 +30,11 @@ namespace F.JwtF_Tests
 			var result = JwtF.GenerateSigningKey();
 
 			// Assert
-			Assert.False(result.All(c => StringF.LowercaseChars.Contains(c)));
-			Assert.False(result.All(c => StringF.UppercaseChars.Contains(c)));
-			Assert.False(result.All(c => StringF.NumberChars.Contains(c)));
-			Assert.False(result.All(c => StringF.SpecialChars.Contains(c)));
-			Assert.True(result.All(c => StringF.AllChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.LowercaseChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.UppercaseChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.NumberChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.SpecialChars.Contains(c)));
+			Assert.True(result.All(c => Rnd.StringF.AllChars.Contains(c)));
 		}
 
 		[Fact]
@@ -58,11 +58,11 @@ namespace F.JwtF_Tests
 			var result = JwtF.GenerateEncryptingKey();
 
 			// Assert
-			Assert.False(result.All(c => StringF.LowercaseChars.Contains(c)));
-			Assert.False(result.All(c => StringF.UppercaseChars.Contains(c)));
-			Assert.False(result.All(c => StringF.NumberChars.Contains(c)));
-			Assert.False(result.All(c => StringF.SpecialChars.Contains(c)));
-			Assert.True(result.All(c => StringF.AllChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.LowercaseChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.UppercaseChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.NumberChars.Contains(c)));
+			Assert.False(result.All(c => Rnd.StringF.SpecialChars.Contains(c)));
+			Assert.True(result.All(c => Rnd.StringF.AllChars.Contains(c)));
 		}
 	}
 }

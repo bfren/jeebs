@@ -30,7 +30,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Get(foo);
+			void result() => info.Get(foo);
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(result);
@@ -44,7 +44,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Get(obj);
+			void result() => info.Get(obj);
 
 			// Assert
 			Assert.Throws<ArgumentNullException>(result);

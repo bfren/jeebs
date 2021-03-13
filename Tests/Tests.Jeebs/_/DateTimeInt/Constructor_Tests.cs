@@ -57,7 +57,7 @@ namespace Jeebs.DateTimeInt_Tests
 			// Arrange
 
 			// Act
-			Action result = () => new DateTimeInt(input);
+			DateTimeInt result() => new(input);
 
 			// Assert
 			Assert.Throws<ArgumentException>(result);
@@ -98,7 +98,7 @@ namespace Jeebs.DateTimeInt_Tests
 			// Arrange
 
 			// Act
-			Action result = () => new DateTimeInt(input);
+			DateTimeInt result() => new(input);
 
 			// Assert
 			Assert.Throws<ArgumentException>(result);

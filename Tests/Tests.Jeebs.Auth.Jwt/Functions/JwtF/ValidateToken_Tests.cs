@@ -21,8 +21,8 @@ namespace F.JwtF_Tests
 				true =>
 					new JwtConfig
 					{
-						SigningKey = StringF.Random(32),
-						EncryptingKey = StringF.Random(64),
+						SigningKey = Rnd.StringF.Get(32),
+						EncryptingKey = Rnd.StringF.Get(64),
 						Issuer = Rnd.Str,
 						Audience = Rnd.Str
 					},
@@ -30,7 +30,7 @@ namespace F.JwtF_Tests
 				false =>
 					new JwtConfig
 					{
-						SigningKey = StringF.Random(32),
+						SigningKey = Rnd.StringF.Get(32),
 						Issuer = Rnd.Str,
 						Audience = Rnd.Str
 					}

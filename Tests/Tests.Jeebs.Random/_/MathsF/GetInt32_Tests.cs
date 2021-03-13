@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.MathsF;
+using static F.Rnd.NumberF;
 
 namespace F.MathsF_Tests
 {
-	public class RandomInt32_Tests
+	public class GetInt32_Tests
 	{
 		[Fact]
 		public void Min_GreaterThan_Max_Throws_ArgumentOutOfRangeException()
@@ -19,7 +19,7 @@ namespace F.MathsF_Tests
 			const int max = 2;
 
 			// Act
-			static void action() => RandomInt64(min, max);
+			static void action() => GetInt64(min, max);
 
 			// Assert
 			var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
@@ -33,7 +33,7 @@ namespace F.MathsF_Tests
 			const int min = int.MinValue;
 
 			// Act
-			static void action() => RandomInt32(min: min);
+			static void action() => GetInt32(min: min);
 
 			// Assert
 			var ex = Assert.Throws<ArgumentException>(action);
@@ -52,7 +52,7 @@ namespace F.MathsF_Tests
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(RandomInt32(min, max));
+				numbers.Add(GetInt32(min, max));
 			}
 
 			// Assert
@@ -70,7 +70,7 @@ namespace F.MathsF_Tests
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(RandomInt32());
+				numbers.Add(GetInt32());
 			}
 
 			var unique = numbers.Distinct();

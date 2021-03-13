@@ -46,7 +46,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var (w, _, _, _, l, _) = GetUnitOfWork();
 
 			var query = F.Rnd.Str;
-			var p0 = F.MathsF.RandomInt64(max: 1000);
+			var p0 = F.Rnd.Lng;
 			var p1 = F.Rnd.Str;
 			var parameters = new { p0, p1 };
 
@@ -84,7 +84,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			var (w, connection, transaction, _, log, driver) = GetUnitOfWork();
 
 			var query = F.Rnd.Str;
-			var p0 = F.MathsF.RandomInt64(max: 1000);
+			var p0 = F.Rnd.Lng;
 			var p1 = F.Rnd.Str;
 			var parameters = new { p0, p1 };
 
@@ -118,7 +118,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			driver.ReturnsForAll<Task<TReturn>>(_ => throw new Exception(ex));
 
 			var query = F.Rnd.Str;
-			var p0 = F.MathsF.RandomInt64(max: 1000);
+			var p0 = F.Rnd.NumberF.GetInt64(max: 1000);
 			var p1 = F.Rnd.Str;
 			var parameters = new { p0, p1 };
 

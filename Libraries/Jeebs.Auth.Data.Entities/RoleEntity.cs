@@ -3,7 +3,7 @@
 
 namespace Jeebs.Auth.Data.Entities
 {
-	class RoleEntity
+	public class RoleEntity
 	{
 	}
 }

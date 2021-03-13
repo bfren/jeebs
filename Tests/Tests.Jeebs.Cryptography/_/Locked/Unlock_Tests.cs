@@ -32,7 +32,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(F.ByteF.Random(16));
+			var result = box.Unlock(F.Rnd.ByteF.Get(16));
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
@@ -47,7 +47,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = F.ByteF.Random(8)
+				Nonce = F.Rnd.ByteF.Get(8)
 			};
 
 			// Act

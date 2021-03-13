@@ -16,7 +16,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Set(obj, F.Rnd.Str);
+			void result() => info.Set(obj, F.Rnd.Str);
 
 			// Assert
 			Assert.Throws<ArgumentNullException>(result);
@@ -31,7 +31,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Set(foo, value);
+			void result() => info.Set(foo, value);
 
 			// Assert
 			Assert.Throws<ArgumentNullException>(result);

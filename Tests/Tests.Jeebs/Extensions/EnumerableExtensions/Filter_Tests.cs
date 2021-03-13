@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.EnumerableExtensions_Tests
 {
@@ -39,24 +38,6 @@ namespace Jeebs.EnumerableExtensions_Tests
 			Assert.Collection(result,
 				x => Assert.Equal(one, x),
 				x => Assert.Equal(two, x)
-			);
-		}
-
-		[Fact]
-		public void Removes_None()
-		{
-			// Arrange
-			var n0 = F.Rnd.Int;
-			var n1 = F.Rnd.Int;
-			var list = new[] { None<int>(true), Return(n0), None<int>(true), Return(n1), None<int>(true) };
-
-			// Act
-			var result = list.Filter();
-
-			// Assert
-			Assert.Collection(result,
-				x => Assert.Equal(n0, Assert.IsType<Some<int>>(x).Value),
-				x => Assert.Equal(n1, Assert.IsType<Some<int>>(x).Value)
 			);
 		}
 

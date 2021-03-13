@@ -44,7 +44,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 					{
 						content = content.Replace(
 							match.Value,
-							string.Format(format, F.StringF.Random(10), videoId, uri)
+							string.Format(format, F.Rnd.StringF.Get(10), videoId, uri)
 						);
 					}
 				}
@@ -59,7 +59,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 		/// Regex comes from https://stackoverflow.com/a/27728417/8199362
 		/// </summary>
 		/// <param name="uri">URI</param>
-		private string? GetVideoId(Uri uri)
+		private static string? GetVideoId(Uri uri)
 		{
 			var regex = new Regex(@"^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*");
 			var m = regex.Match(uri.AbsoluteUri);

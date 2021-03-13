@@ -30,8 +30,8 @@ namespace Jeebs.DateRange_Tests
 			var date2 = new DateTime(2000, 1, 2);
 
 			// Act
-			Func<DateRange> correct = () => new DateRange(date1, date2);
-			Action incorrect = () => new DateRange(date2, date1);
+			DateRange correct() => new(date1, date2);
+			DateRange incorrect() => new(date2, date1);
 
 			// Assert
 			Assert.IsType<DateRange>(correct());

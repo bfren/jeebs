@@ -1,7 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
-	</PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
     <ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />

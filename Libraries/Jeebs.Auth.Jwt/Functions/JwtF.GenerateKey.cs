@@ -11,7 +11,7 @@ namespace F
 	public static partial class JwtF
 	{
 		private static string GenerateKey(int bytes) =>
-			StringF.Random(bytes, numbers: true, special: true);
+			Rnd.StringF.Get(bytes, numbers: true, special: true);
 
 		/// <summary>
 		/// Generate a signing key of length <see cref="JwtSecurity.SigningKeyBytes"/>

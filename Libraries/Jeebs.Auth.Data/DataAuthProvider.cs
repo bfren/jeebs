@@ -24,9 +24,7 @@ namespace Jeebs.Auth
 			(this.db, this.log) = (db, log);
 
 		/// <inheritdoc/>
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 		public async Task<Option<TUserModel>> ValidateUserAsync<TUserModel>(string email, string password)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 			where TUserModel : IUserModel, new()
 		{
 			// Check email
@@ -45,9 +43,7 @@ namespace Jeebs.Auth
 		}
 
 		/// <inheritdoc/>
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 		public async Task<Option<TUserModel>> ValidateUserAsync<TUserModel, TRoleModel>(string email, string password)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 			where TUserModel : IUserModel<TRoleModel>, new()
 			where TRoleModel : IRoleModel, new()
 		{

@@ -4,11 +4,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.MathsF;
+using static F.Rnd.NumberF;
 
 namespace F.MathsF_Tests
 {
-	public class Random_Tests
+	public class Get_Tests
 	{
 		[Fact]
 		public void Never_Returns_Number_Out_Of_Bounds()
@@ -20,7 +20,7 @@ namespace F.MathsF_Tests
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(Random());
+				numbers.Add(Get());
 			}
 
 			// Assert
@@ -38,7 +38,7 @@ namespace F.MathsF_Tests
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(Random());
+				numbers.Add(Get());
 			}
 
 			var unique = numbers.Distinct();

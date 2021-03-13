@@ -5,4 +5,11 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<PropertyGroup>
+		<RulesetFile>Apps.ruleset</RulesetFile>
+		<RulesetPath>$([MSBuild]::GetPathOfFileAbove('$(RulesetFile)', '$(MSBuildThisFileDirectory)../'))</RulesetPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<CodeAnalysisAdditionalOptions>$(RulesetPath)</CodeAnalysisAdditionalOptions>
+	</PropertyGroup>
 </Project>

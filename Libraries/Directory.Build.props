@@ -15,12 +15,16 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 	
-	<!-- Import Licence file -->
+	<!-- Import Licence -->
 	<ItemGroup Label="Licence">
 		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
 	
-	<!-- Get paths to Version and Local.pack.props -->
+	<!-- Get Paths to Files -->
+	<PropertyGroup>
+		<RulesetFile>Libraries.ruleset</RulesetFile>
+		<RulesetPath>$([MSBuild]::GetPathOfFileAbove('$(RulesetFile)', '$(MSBuildThisFileDirectory)../'))</RulesetPath>
+	</PropertyGroup>
 	<PropertyGroup>
 		<VersionFile>Version</VersionFile>
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)', '$(MSBuildThisFileDirectory)../'))</VersionPath>
@@ -50,6 +54,11 @@
 	<!-- Documentation -->
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	
+	<!-- Analysers -->
+	<PropertyGroup>
+		<CodeAnalysisAdditionalOptions>$(RulesetPath)</CodeAnalysisAdditionalOptions>
 	</PropertyGroup>
 	
 	<!-- [Optional] Create Local Packages -->

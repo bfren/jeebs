@@ -30,7 +30,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		protected AuthController(IDataAuthProvider auth, ILog log) : base(auth, log) { }
 
 		/// <inheritdoc/>
-		internal override async Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
-			await Auth.ValidateUserAsync<TUserModel, TRoleModel>(email, password);
+		internal override Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
+			Auth.ValidateUserAsync<TUserModel, TRoleModel>(email, password);
 	}
 }

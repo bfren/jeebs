@@ -91,8 +91,8 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="email">User email</param>
 		/// <param name="password">User password</param>
-		internal virtual async Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
-			await Auth.ValidateUserAsync<TUserModel>(email, password);
+		internal virtual Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
+			Auth.ValidateUserAsync<TUserModel>(email, password);
 
 		/// <summary>
 		/// Get principal for specified user with all necessary claims

@@ -108,7 +108,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Append semi-colon
-			sql.Append(";");
+			sql.Append(';');
 
 			// Return query string
 			return sql.ToString();
