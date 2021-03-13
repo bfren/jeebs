@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static F.OptionF;
-using Msg = Jeebs.EnumerableExtensionsMsg;
 
 namespace Jeebs
 {
@@ -34,11 +33,12 @@ namespace Jeebs
 		/// <inheritdoc cref="DoFirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> FirstOrNone<T>(this IEnumerable<T> @this, Func<T, bool> predicate) =>
 			DoFirstOrNone(@this, predicate);
-	}
 
-	namespace EnumerableExtensionsMsg
-	{
-		/// <summary>Null item found when doing FirstOrDefault()</summary>
-		public sealed record FirstItemIsNullMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Null item found when doing FirstOrDefault()</summary>
+			public sealed record FirstItemIsNullMsg : IMsg { }
+		}
 	}
 }

@@ -2,8 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs.DateTimeIntMsg;
 using Xunit;
+using static F.DateTimeF.Msg;
 
 namespace Jeebs.DateTimeInt_Tests
 {

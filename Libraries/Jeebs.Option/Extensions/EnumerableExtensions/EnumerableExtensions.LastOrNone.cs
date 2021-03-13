@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static F.OptionF;
-using Msg = Jeebs.EnumerableExtensionsMsg;
 
 namespace Jeebs
 {
@@ -34,11 +33,12 @@ namespace Jeebs
 		/// <inheritdoc cref="DoLastOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> LastOrNone<T>(this IEnumerable<T> @this, Func<T, bool> predicate) =>
 			DoLastOrNone(@this, predicate);
-	}
 
-	namespace EnumerableExtensionsMsg
-	{
-		/// <summary>Null item found when doing LastOrDefault()</summary>
-		public sealed record LastItemIsNullMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Null item found when doing LastOrDefault()</summary>
+			public sealed record LastItemIsNullMsg : IMsg { }
+		}
 	}
 }

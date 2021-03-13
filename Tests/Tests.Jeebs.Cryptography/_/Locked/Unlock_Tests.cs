@@ -1,8 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs.Cryptography.LockedMsg;
 using Xunit;
+using static Jeebs.Cryptography.Locked.Msg;
 
 namespace Jeebs.Cryptography.Locked_Tests
 {

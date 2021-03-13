@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using static F.OptionF;
-using Msg = Jeebs.EnumerableExtensionsMsg;
 
 namespace Jeebs
 {
@@ -32,11 +31,12 @@ namespace Jeebs
 		/// <inheritdoc cref="DoElementAtOrNone{T}(IEnumerable{T}, int)"/>
 		public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> @this, int index) =>
 			DoElementAtOrNone(@this, index);
-	}
 
-	namespace EnumerableExtensionsMsg
-	{
-		/// <summary>Null item found when doing ElementAtOrDefault()</summary>
-		public sealed record ElementAtIsNullMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Null item found when doing ElementAtOrDefault()</summary>
+			public sealed record ElementAtIsNullMsg : IMsg { }
+		}
 	}
 }

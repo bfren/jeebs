@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.OptionMsg;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
+using static F.OptionF.Msg;
 
 namespace Jeebs.OptionExtensions_Tests
 {

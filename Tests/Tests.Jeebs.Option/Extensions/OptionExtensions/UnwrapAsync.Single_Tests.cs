@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using F.OptionFMsg;
-using Jeebs.Option.Exceptions;
-using Jeebs.OptionMsg;
+using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
+using static F.OptionF.Msg;
+using static Jeebs.Option.Msg;
 
 namespace Jeebs.OptionExtensions_Tests
 {

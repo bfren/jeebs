@@ -3,7 +3,6 @@
 
 using System;
 using static F.OptionF;
-using Msg = Jeebs.OptionMsg;
 
 namespace Jeebs
 {
@@ -33,9 +32,13 @@ namespace Jeebs
 			DoFilter(predicate, handler);
 	}
 
-	namespace OptionMsg
+	public abstract partial class Option
 	{
-		/// <summary>Predicate was false</summary>
-		public sealed record PredicateWasFalseMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Predicate was false</summary>
+			public sealed record PredicateWasFalseMsg : IMsg { }
+		}
 	}
 }

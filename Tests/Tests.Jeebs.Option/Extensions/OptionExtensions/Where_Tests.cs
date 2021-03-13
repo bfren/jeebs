@@ -93,7 +93,7 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			Assert.True(none.Reason is InvalidIntegerMsg);
+			Assert.IsType<InvalidIntegerMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -111,7 +111,7 @@ namespace Jeebs.OptionExtensions_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			Assert.True(none.Reason is InvalidIntegerMsg);
+			Assert.IsType<InvalidIntegerMsg>(none.Reason);
 		}
 
 		public record InvalidIntegerMsg : IMsg { }

@@ -2,26 +2,14 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using static F.OptionF;
-using Msg = Jeebs.Cryptography.LockableMsg;
 
 namespace Jeebs.Cryptography
 {
 	/// <summary>
-	/// Constants relating to <see cref="Lockable{T}"/> and <see cref="Locked{T}"/>
-	/// </summary>
-	public static class Lockable
-	{
-		/// <summary>
-		/// Length of encryption key (if it's a byte array)
-		/// </summary>
-		public const int KeyLength = 32;
-	}
-
-	/// <summary>
 	/// Contains contents that can been encrypted
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
-	public sealed class Lockable<T>
+	public sealed class Lockable<T> : Lockable
 	{
 		/// <summary>
 		/// Contents
@@ -57,11 +45,23 @@ namespace Jeebs.Cryptography
 			new(Contents, key);
 	}
 
-	namespace LockableMsg
+	/// <summary>
+	/// Holds constants and Messages for <see cref="Lockable{T}"/>
+	/// </summary>
+	public abstract class Lockable
 	{
 		/// <summary>
-		/// Encryption key is not the correct length to lock the box
+		/// Length of encryption key (if it's a byte array)
 		/// </summary>
-		public sealed record InvalidKeyLengthMsg : IMsg { }
+		public const int KeyLength = 32;
+
+		internal Lockable() { }
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Encryption key is not the correct length to lock the box</summary>
+			public sealed record InvalidKeyLengthMsg : IMsg { }
+		}
 	}
 }

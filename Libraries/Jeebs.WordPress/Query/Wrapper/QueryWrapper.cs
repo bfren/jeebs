@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.WordPress.Entities;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -159,20 +158,21 @@ namespace Jeebs.WordPress
 		}
 
 		#endregion
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>Content property not found on entity</summary>
-		/// <typeparam name="T">Post type</typeparam>
-		public sealed record ContentPropertyNotFoundMsg<T> : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Content property not found on entity</summary>
+			/// <typeparam name="T">Post type</typeparam>
+			public sealed record ContentPropertyNotFoundMsg<T> : IMsg { }
 
-		/// <summary>MetaDictionary property not found on entity</summary>
-		/// <typeparam name="T">Post type</typeparam>
-		public sealed record MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
+			/// <summary>MetaDictionary property not found on entity</summary>
+			/// <typeparam name="T">Post type</typeparam>
+			public sealed record MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
 
-		/// <summary>Multiple MetaDictionary properties found on entity</summary>
-		/// <typeparam name="T">Post type</typeparam>
-		public sealed record OnlyOneMetaDictionaryPropertySupportedMsg<T> : IMsg { }
+			/// <summary>Multiple MetaDictionary properties found on entity</summary>
+			/// <typeparam name="T">Post type</typeparam>
+			public sealed record OnlyOneMetaDictionaryPropertySupportedMsg<T> : IMsg { }
+		}
 	}
 }

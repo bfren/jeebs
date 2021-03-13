@@ -5,7 +5,6 @@ using System.Text;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
 using static F.OptionF;
-using Msg = Jeebs.Auth.JwtConfigExtensionsMsg;
 
 namespace Jeebs.Auth
 {
@@ -32,11 +31,12 @@ namespace Jeebs.Auth
 				_ =>
 					None<SecurityKey, Msg.NullEncryptingKeyMsg>()
 			};
-	}
 
-	namespace JwtConfigExtensionsMsg
-	{
-		/// <summary>The Encrypting Key is null</summary>
-		public sealed record NullEncryptingKeyMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>The Encrypting Key is null</summary>
+			public sealed record NullEncryptingKeyMsg : IMsg { }
+		}
 	}
 }

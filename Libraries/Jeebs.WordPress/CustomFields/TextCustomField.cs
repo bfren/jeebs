@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.TextCustomFieldMsg;
 
 namespace Jeebs.WordPress
 {
@@ -48,13 +47,14 @@ namespace Jeebs.WordPress
 			// Return OK but not set
 			return False.AsTask;
 		}
-	}
 
-	namespace TextCustomFieldMsg
-	{
-		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
-		public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Meta key not found in MetaDictionary</summary>
+			/// <param name="Type">Custom Field type</param>
+			/// <param name="Value">Meta Key</param>
+			public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+		}
 	}
 }

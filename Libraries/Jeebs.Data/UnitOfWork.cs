@@ -7,7 +7,6 @@ using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Logging;
 using static F.OptionF;
-using Msg = Jeebs.Data.UnitOfWorkMsg;
 
 namespace Jeebs.Data
 {
@@ -361,33 +360,34 @@ namespace Jeebs.Data
 			 ExecuteScalarAsync<T>(query, null, CommandType.Text);
 
 		#endregion
-	}
 
-	namespace UnitOfWorkMsg
-	{
-		/// <summary>Query message</summary>
-		/// <param name="Method">The name of the UnitOfWork method executing this query</param>
-		/// <param name="Query">Query text</param>
-		/// <param name="Parameters">Query parameters</param>
-		/// <param name="CommandType">Command Type</param>
-		public sealed record QueryMsg(string Method, string Query, object? Parameters, CommandType CommandType) :
-			LogMsg(LogLevel.Debug, "{Method}: {CommandType} {Query} ({@Parameters})")
+		/// <summary>Messages</summary>
+		public static class Msg
 		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method, CommandType, Query, Parameters ?? new object() };
-		}
+			/// <summary>Query message</summary>
+			/// <param name="Method">The name of the UnitOfWork method executing this query</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			/// <param name="CommandType">Command Type</param>
+			public sealed record QueryMsg(string Method, string Query, object? Parameters, CommandType CommandType) :
+				LogMsg(LogLevel.Debug, "{Method}: {CommandType} {Query} ({@Parameters})")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, CommandType, Query, Parameters ?? new object() };
+			}
 
-		/// <summary>Query Exception message</summary>
-		/// <param name="Exception">The exception caught while the query was executing</param>
-		/// <param name="Query">Query text</param>
-		/// <param name="Parameters">Query parameters</param>
-		public sealed record QueryExceptionMsg(Exception Exception, string Query, object? Parameters) :
-			ExceptionMsg(Exception, "{Query} ({@Parameters}")
-		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Query, Parameters ?? new object() };
+			/// <summary>Query Exception message</summary>
+			/// <param name="Exception">The exception caught while the query was executing</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			public sealed record QueryExceptionMsg(Exception Exception, string Query, object? Parameters) :
+				ExceptionMsg(Exception, "{Query} ({@Parameters}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Query, Parameters ?? new object() };
+			}
 		}
 	}
 }

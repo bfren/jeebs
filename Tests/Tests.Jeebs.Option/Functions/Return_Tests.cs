@@ -1,10 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using F.OptionFMsg;
 using Jeebs;
 using Xunit;
 using static F.OptionF;
+using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
@@ -36,7 +36,7 @@ namespace F.OptionF_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int?>>(result);
-			Assert.True(none.Reason is SomeValueWasNullMsg);
+			Assert.IsType<SomeValueWasNullMsg>(none.Reason);
 		}
 
 		[Fact]

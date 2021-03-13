@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using F.JsonFMsg;
-using Jeebs.Cryptography.LockedMsg;
 using Xunit;
+using static F.JsonF.Msg;
+using static Jeebs.Cryptography.Locked.Msg;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
 {

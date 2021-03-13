@@ -9,7 +9,6 @@ using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Entities;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -113,18 +112,19 @@ namespace Jeebs.WordPress
 		}
 
 		private record PostMeta : WpPostMetaEntity { }
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>An exception occured while adding meta to posts</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record AddMetaExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while adding meta to posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record AddMetaExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>An exception occured while setting meta property on posts</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record SetMetaExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>An exception occured while setting meta property on posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record SetMetaExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+		}
 	}
 }

@@ -28,7 +28,7 @@ namespace F
 							new Some<T>(value),
 
 						false =>
-							None<T, OptionFMsg.SomeValueWasNullMsg>()
+							None<T, Msg.SomeValueWasNullMsg>()
 					}
 
 			};
@@ -47,20 +47,21 @@ namespace F
 					Return(value()),
 
 				false =>
-					None<T, OptionFMsg.PredicateWasFalseMsg>()
+					None<T, Msg.PredicateWasFalseMsg>()
 			};
 
 		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T})"/>
 		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
 			ReturnIf(predicate, () => value);
-	}
 
-	namespace OptionFMsg
-	{
-		/// <summary>Predicate was false</summary>
-		public sealed record PredicateWasFalseMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Predicate was false</summary>
+			public sealed record PredicateWasFalseMsg : IMsg { }
 
-		/// <summary>Value was null when trying to wrap using Return</summary>
-		public sealed record SomeValueWasNullMsg : IMsg { }
+			/// <summary>Value was null when trying to wrap using Return</summary>
+			public sealed record SomeValueWasNullMsg : IMsg { }
+		}
 	}
 }

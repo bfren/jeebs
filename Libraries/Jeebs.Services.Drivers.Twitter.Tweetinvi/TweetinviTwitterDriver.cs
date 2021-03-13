@@ -14,7 +14,6 @@ using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using static F.OptionF;
-using Msg = Jeebs.Services.Drivers.Twitter.Tweetinvi.TweetinviTwitterDriverMsg;
 
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 {
@@ -152,37 +151,38 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				return models.ToList();
 			}
 		}
-	}
 
-	namespace TweetinviTwitterDriverMsg
-	{
-		/// <summary>Exception converting tweets</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Exception converting tweets</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Exception getting profile image stream</summary>
-		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>Exception getting profile image stream</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Exception getting profile image URL</summary>
-		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>Exception getting profile image URL</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Exception getting user timeline</summary>
-		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>Exception getting user timeline</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Exception getting user</summary>
-		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>Exception getting user</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>User not found</summary>
-		/// <param name="Value">Screen Name</param>
-		public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
+			/// <summary>User not found</summary>
+			/// <param name="Value">Screen Name</param>
+			public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
+		}
 	}
 }
 

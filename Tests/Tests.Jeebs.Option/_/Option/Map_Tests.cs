@@ -2,25 +2,25 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using F.OptionFMsg;
-using Jeebs.Option.Exceptions;
+using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
+using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {
-	public class Bind_Tests
+	public class Map_Tests
 	{
 		[Fact]
 		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = new FakeOption();
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.DoBind(bind, null);
+			var result = option.DoMap(map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -37,7 +37,7 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			// Act
-			var result = option.DoBind<int>(_ => throw exception, handler);
+			var result = option.DoMap<int>(_ => throw exception, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -49,11 +49,11 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = None<int>(true);
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var r0 = option.DoBind(bind, null);
-			var r1 = option.Bind(bind, null);
+			var r0 = option.DoMap(map, null);
+			var r1 = option.Map(map, null);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
@@ -66,11 +66,11 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = None<int>(msg);
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var r0 = option.DoBind(bind, null);
-			var r1 = option.Bind(bind, null);
+			var r0 = option.DoMap(map, null);
+			var r1 = option.Map(map, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
@@ -80,19 +80,19 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void If_Some_Runs_Bind_Function()
+		public void If_Some_Runs_Map_Function()
 		{
 			// Arrange
 			var value = F.Rnd.Int;
 			var option = Return(value);
-			var bind = Substitute.For<Func<int, Option<string>>>();
+			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			option.DoBind(bind, null);
-			option.Bind(bind, null);
+			option.DoMap(map, null);
+			option.Map(map, null);
 
 			// Assert
-			bind.Received(2).Invoke(value);
+			map.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

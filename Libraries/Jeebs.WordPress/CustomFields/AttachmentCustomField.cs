@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Enums;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.AttachmentCustomFieldMsg;
 
 namespace Jeebs.WordPress
 {
@@ -116,22 +115,23 @@ namespace Jeebs.WordPress
 		/// Attachment class
 		/// </summary>
 		public sealed record Attachment : Entities.Attachment { }
-	}
 
-	namespace AttachmentCustomFieldMsg
-	{
-		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
-		public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Meta key not found in MetaDictionary</summary>
+			/// <param name="Type">Custom Field type</param>
+			/// <param name="Value">Meta Key</param>
+			public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
 
-		/// <summary>Multiple matching attachments were found (should always be 1)</summary>
-		/// <param name="Value">Attachment (Post) ID</param>
-		public sealed record MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string> { }
+			/// <summary>Multiple matching attachments were found (should always be 1)</summary>
+			/// <param name="Value">Attachment (Post) ID</param>
+			public sealed record MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string> { }
 
-		/// <summary>The value in the meta dictionary is not a valid ID</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
-		public sealed record ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string> { }
+			/// <summary>The value in the meta dictionary is not a valid ID</summary>
+			/// <param name="Type">Custom Field type</param>
+			/// <param name="Value">Meta Key</param>
+			public sealed record ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string> { }
+		}
 	}
 }

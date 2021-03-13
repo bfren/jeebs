@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static F.OptionF;
-using Msg = Jeebs.OptionMsg;
 
 namespace Jeebs
 {
@@ -48,24 +47,19 @@ namespace Jeebs
 			DoUnwrapSingle<U>(noItems, tooMany, notAList);
 	}
 
-	namespace OptionMsg
+	public abstract partial class Option
 	{
-		/// <summary>
-		/// No items in the list<br/>
-		/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-		/// </summary>
-		public sealed record UnwrapSingleNoItemsMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>No items in the list/// </summary>
+			public sealed record UnwrapSingleNoItemsMsg : IMsg { }
 
-		/// <summary>
-		/// Too many items in the list<br/>
-		/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-		/// </summary>
-		public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
+			/// <summary>Too many items in the list</summary>
+			public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
 
-		/// <summary>
-		/// Not a list<br/>
-		/// See <see cref="Option{T}.DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-		/// </summary>
-		public sealed record UnwrapSingleNotAListMsg : IMsg { }
+			/// <summary>Not a list</summary>
+			public sealed record UnwrapSingleNotAListMsg : IMsg { }
+		}
 	}
 }

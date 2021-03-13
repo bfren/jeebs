@@ -10,7 +10,6 @@ using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -153,22 +152,23 @@ namespace Jeebs.WordPress
 			/// </summary>
 			public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
 		}
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>An exception occured while adding Taxonomies to posts</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record AddTaxonomiesExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while adding Taxonomies to posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record AddTaxonomiesExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>An exception occured while getting terms for posts</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record GetTermsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>An exception occured while getting terms for posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetTermsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>The taxonomy being added has not been registered with <see cref="IWp{TConfig}"/></summary>
-		/// <param name="Value">Taxonomy</param>
-		public sealed record TaxonomyNotRegisteredMsg(Taxonomy Value) : WithValueMsg<Taxonomy> { }
+			/// <summary>The taxonomy being added has not been registered with <see cref="IWp{TConfig}"/></summary>
+			/// <param name="Value">Taxonomy</param>
+			public sealed record TaxonomyNotRegisteredMsg(Taxonomy Value) : WithValueMsg<Taxonomy> { }
+		}
 	}
 }

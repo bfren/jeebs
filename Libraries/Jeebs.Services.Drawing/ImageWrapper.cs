@@ -4,7 +4,6 @@
 using System;
 using Jeebs.Services.Drawing.Geometry;
 using static F.OptionF;
-using Msg = Jeebs.Services.Drawing.ImageWrapperMsg;
 
 namespace Jeebs.Services.Drawing
 {
@@ -57,14 +56,15 @@ namespace Jeebs.Services.Drawing
 				return None<IImageWrapper>(new Msg.ApplyingImageMaskExceptionMsg(e));
 			}
 		}
-	}
 
-	namespace ImageWrapperMsg
-	{
-		/// <summary>A height or width is required for creating a mask</summary>
-		public sealed record MaskHeightOrWidthRequiredMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>A height or width is required for creating a mask</summary>
+			public sealed record MaskHeightOrWidthRequiredMsg : IMsg { }
 
-		/// <summary>An exception occurred while applying the mask</summary>
-		public sealed record ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>An exception occurred while applying the mask</summary>
+			public sealed record ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		}
 	}
 }

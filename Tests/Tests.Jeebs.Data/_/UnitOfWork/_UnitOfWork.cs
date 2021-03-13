@@ -4,9 +4,9 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.UnitOfWorkMsg;
 using NSubstitute;
 using NSubstitute.Extensions;
+using static Jeebs.Data.UnitOfWork.Msg;
 
 namespace Jeebs.Data.UnitOfWork_Tests
 {

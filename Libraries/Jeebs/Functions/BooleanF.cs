@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using Jeebs;
 using static F.OptionF;
-using Msg = F.BooleanFMsg;
 
 namespace F
 {
@@ -48,15 +47,16 @@ namespace F
 
 			return None<bool>(new Msg.UnrecognisedValueMsg(val));
 		}
-	}
 
-	namespace BooleanFMsg
-	{
-		/// <summary>Null Value</summary>
-		public sealed record NullValueMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Null Value</summary>
+			public sealed record NullValueMsg : IMsg { }
 
-		/// <summary>Unrecognised boolean value</summary>
-		/// <param name="Value">Unrecognised Value</param>
-		public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
+			/// <summary>Unrecognised boolean value</summary>
+			/// <param name="Value">Unrecognised Value</param>
+			public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
+		}
 	}
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Jeebs.Data;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -74,17 +73,18 @@ namespace Jeebs.WordPress
 		{
 			public Content(PropertyInfo info) : base(info) { }
 		}
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>An exception occured while applying content filters to posts</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while applying content filters to posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Required Content property not found</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		public sealed record RequiredContentPropertyNotFoundMsg<T> : IMsg { }
+			/// <summary>Required Content property not found</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			public sealed record RequiredContentPropertyNotFoundMsg<T> : IMsg { }
+		}
 	}
 }

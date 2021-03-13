@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Logging;
 using static F.OptionF;
-using Msg = Jeebs.Data.Mapping.UnitOfWorkExtensionsMsg;
 
 namespace Jeebs.Data.Mapping
 {
@@ -65,33 +64,34 @@ namespace Jeebs.Data.Mapping
 					},
 					e => new Msg.RetrieveExceptionMsg<T>(method, id, e)
 				);
-	}
 
-	namespace UnitOfWorkExtensionsMsg
-	{
-		/// <summary>Error retrieving entity</summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
-		/// <param name="Id">Entity ID being requested</param>
-		/// <param name="Exception">Caught exception</param>
-		public sealed record RetrieveExceptionMsg<T>(string Method, long Id, Exception Exception) :
-			ExceptionMsg(Exception, "{Method} {Id}")
+		/// <summary>Messages</summary>
+		public static partial class Msg
 		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method, Id };
-		}
+			/// <summary>Error retrieving entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">Entity ID being requested</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record RetrieveExceptionMsg<T>(string Method, long Id, Exception Exception) :
+				ExceptionMsg(Exception, "{Method} {Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
 
-		/// <summary>Query message</summary>
-		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
-		/// <param name="Query">Query text</param>
-		/// <param name="Parameters">Query parameters</param>
-		public sealed record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) :
-			LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
-		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method, Query, Parameters ?? new object() };
+			/// <summary>Query message</summary>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			public sealed record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) :
+				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Query, Parameters ?? new object() };
+			}
 		}
 	}
 }

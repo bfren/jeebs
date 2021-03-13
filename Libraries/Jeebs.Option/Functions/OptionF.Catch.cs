@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs;
-using Msg = F.OptionFMsg;
 
 namespace F
 {
@@ -53,15 +52,12 @@ namespace F
 				return None<T>(new Msg.UnhandledExceptionMsg(e));
 			}
 		}
-	}
 
-	namespace OptionFMsg
-	{
-		/// <summary>
-		/// Unhandled exception
-		/// See <see cref="OptionF.Catch{T}(Func{Option{T}}, OptionF.Handler?)"/> and
-		/// <see cref="OptionF.CatchAsync{T}(Func{Task{Option{T}}}, OptionF.Handler?)"/>
-		/// </summary>
-		public sealed record UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Unhandled exception</summary>
+			public sealed record UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
+		}
 	}
 }

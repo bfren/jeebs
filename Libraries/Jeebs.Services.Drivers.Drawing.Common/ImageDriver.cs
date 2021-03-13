@@ -4,7 +4,6 @@
 using System.IO;
 using Jeebs.Services.Drawing;
 using static F.OptionF;
-using Msg = Jeebs.Services.Drivers.Drawing.Common.ImageDriverMsg;
 
 namespace Jeebs.Services.Drivers.Drawing.Common
 {
@@ -33,11 +32,12 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 			var image = System.Drawing.Image.FromStream(stream);
 			return new ImageWrapper(image);
 		}
-	}
 
-	namespace ImageDriverMsg
-	{
-		/// <summary>The image file was not found</summary>
-		public sealed record ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>The image file was not found</summary>
+			public sealed record ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
+		}
 	}
 }

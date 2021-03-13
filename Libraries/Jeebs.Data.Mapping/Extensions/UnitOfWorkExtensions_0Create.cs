@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Jeebs.Logging;
 using static F.OptionF;
-using Msg = Jeebs.Data.Mapping.UnitOfWorkExtensionsMsg;
 
 namespace Jeebs.Data.Mapping
 {
@@ -141,61 +140,62 @@ namespace Jeebs.Data.Mapping
 			// Get fresh poco
 			return SingleAsync<T>(w, id);
 		}
-	}
 
-	namespace UnitOfWorkExtensionsMsg
-	{
-		/// <summary>Something went wrong inserting the entity and ID returned was 0</summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		public sealed record CreateErrorMsg<T>() : IMsg { }
-
-		/// <summary>Error inserting entity</summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
-		/// <param name="Exception">Caught exception</param>
-		public sealed record CreateExceptionMsg<T>(string Method, Exception Exception) :
-			ExceptionMsg(Exception, "{Method}")
+		/// <summary>Messages</summary>
+		public static partial class Msg
 		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method };
-		}
+			/// <summary>Something went wrong inserting the entity and ID returned was 0</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			public sealed record CreateErrorMsg<T>() : IMsg { }
 
-		/// <summary>Query message</summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
-		/// <param name="Query">Query text</param>
-		/// <param name="Parameters">Query parameters</param>
-		public sealed record CreateQueryMsg<T>(string Method, string Query, T Parameters) :
-			LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
-		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method, Query, Parameters ?? new object() };
-		}
+			/// <summary>Error inserting entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record CreateExceptionMsg<T>(string Method, Exception Exception) :
+				ExceptionMsg(Exception, "{Method}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method };
+			}
 
-		/// <summary>Error retrieving fresh entity</summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
-		/// <param name="Exception">Caught exception</param>
-		public sealed record RetrieveFreshExceptionMsg<T>(string Method, Exception Exception) :
-			ExceptionMsg(Exception, "{Method}")
-		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method };
-		}
+			/// <summary>Query message</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			public sealed record CreateQueryMsg<T>(string Method, string Query, T Parameters) :
+				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Query, Parameters ?? new object() };
+			}
 
-		/// <summary>Query message</summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
-		/// <param name="Id">The ID of the entity being requested</param>
-		public sealed record RetrieveFreshMsg<T>(string Method, long Id) :
-			LogMsg(LogLevel.Debug, "{Method} {Id}")
-		{
-			/// <inheritdoc/>
-			public override Func<object[]> Args =>
-				() => new object[] { Method, Id };
+			/// <summary>Error retrieving fresh entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record RetrieveFreshExceptionMsg<T>(string Method, Exception Exception) :
+				ExceptionMsg(Exception, "{Method}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method };
+			}
+
+			/// <summary>Query message</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">The ID of the entity being requested</param>
+			public sealed record RetrieveFreshMsg<T>(string Method, long Id) :
+				LogMsg(LogLevel.Debug, "{Method} {Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
 		}
 	}
 }

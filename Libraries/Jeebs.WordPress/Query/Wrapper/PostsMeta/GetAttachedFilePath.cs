@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Querying;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -52,16 +51,17 @@ namespace Jeebs.WordPress
 		}
 
 		private record AttachedFileMetaValue(string Value);
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>An exception occured while getting attached files</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record GetAttachedFilesExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while getting attached files</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetAttachedFilesExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Multiple attached files found</summary>
-		/// <param name="AttachedFileId">Attached File (Post) ID</param>
-		public sealed record MultipleAttachedFilesFoundMsg(long AttachedFileId) : IMsg { }
+			/// <summary>Multiple attached files found</summary>
+			/// <param name="AttachedFileId">Attached File (Post) ID</param>
+			public sealed record MultipleAttachedFilesFoundMsg(long AttachedFileId) : IMsg { }
+		}
 	}
 }

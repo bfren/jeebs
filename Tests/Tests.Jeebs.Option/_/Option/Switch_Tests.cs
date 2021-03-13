@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs.Option.Exceptions;
+using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;

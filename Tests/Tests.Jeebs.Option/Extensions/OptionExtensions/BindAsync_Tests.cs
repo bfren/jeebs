@@ -3,11 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using F.OptionFMsg;
-using Jeebs.Option.Exceptions;
+using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
+using static F.OptionF.Msg;
 
 namespace Jeebs.OptionExtensions_Tests
 {

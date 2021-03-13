@@ -2,9 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
-using Jeebs.Mvc.Auth.Jwt.JwtHandlerMsg;
 using Microsoft.Extensions.Primitives;
 using Xunit;
+using static Jeebs.Mvc.Auth.Jwt.JwtHandler.Msg;
 
 namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 {

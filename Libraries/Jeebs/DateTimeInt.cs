@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using static F.OptionF;
-using Msg = Jeebs.DateTimeIntMsg;
 
 namespace Jeebs
 {
@@ -249,18 +248,19 @@ namespace Jeebs
 
 			return year % 4 == 0;
 		}
-	}
 
-	namespace DateTimeIntMsg
-	{
-		/// <summary>Unable to parse DateTime integer</summary>
-		/// <param name="Value">Invalid part and DateTimeInt</param>
-		public sealed record InvalidDateTimeMsg((string part, DateTimeInt dt) Value) :
-			WithValueMsg<(string part, DateTimeInt dt)>()
+		/// <summary>Messages</summary>
+		public static class Msg
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"Invalid {Value.part} - 'Y:{Value.dt.Year} M:{Value.dt.Minute} D:{Value.dt.Day} H:{Value.dt.Hour} m:{Value.dt.Minute}'.";
+			/// <summary>Unable to parse DateTime integer</summary>
+			/// <param name="Value">Invalid part and DateTimeInt</param>
+			public sealed record InvalidDateTimeMsg((string part, DateTimeInt dt) Value) :
+				WithValueMsg<(string part, DateTimeInt dt)>()
+			{
+				/// <summary>Return message</summary>
+				public override string ToString() =>
+					$"Invalid {Value.part} - 'Y:{Value.dt.Year} M:{Value.dt.Minute} D:{Value.dt.Day} H:{Value.dt.Hour} m:{Value.dt.Minute}'.";
+			}
 		}
 	}
 }

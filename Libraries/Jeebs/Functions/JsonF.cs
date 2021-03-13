@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
 using static F.OptionF;
-using Msg = F.JsonFMsg;
 
 namespace F
 {
@@ -121,18 +120,19 @@ namespace F
 		/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
 		public static Option<T> Deserialise<T>(string str) =>
 			Deserialise<T>(str, options);
-	}
 
-	namespace JsonFMsg
-	{
-		/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>A null or empty string cannot be deserialised</summary>
-		public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
+			/// <summary>A null or empty string cannot be deserialised</summary>
+			public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
 
-		/// <summary>The object was deserialised but returned null</summary>
-		public sealed record DeserialisingReturnedNullMsg : IMsg { }
+			/// <summary>The object was deserialised but returned null</summary>
+			public sealed record DeserialisingReturnedNullMsg : IMsg { }
+		}
 	}
 }

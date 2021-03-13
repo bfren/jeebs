@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Option.Some_Tests
+namespace Jeebs.Some_Tests
 {
 	public class Constructor_Tests
 	{

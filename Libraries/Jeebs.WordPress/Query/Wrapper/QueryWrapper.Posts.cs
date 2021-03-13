@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -125,11 +124,12 @@ namespace Jeebs.WordPress
 		{
 			public Meta(PropertyInfo info) : base(info) { }
 		}
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
-		public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
+			public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
+		}
 	}
 }

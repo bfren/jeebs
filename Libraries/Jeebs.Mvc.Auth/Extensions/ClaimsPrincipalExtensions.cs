@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
 using static F.OptionF;
-using Msg = Jeebs.Mvc.Auth.ClaimsPrincipalExtensionsMsg;
 
 namespace Jeebs.Mvc.Auth
 {
@@ -59,17 +58,18 @@ namespace Jeebs.Mvc.Auth
 		public static bool HasClaim(this ClaimsPrincipal @this, string value) =>
 			@this.Identity?.IsAuthenticated == true
 			&& @this.Claims.Any(c => string.Equals(c.Value, value, StringComparison.OrdinalIgnoreCase));
-	}
 
-	namespace ClaimsPrincipalExtensionsMsg
-	{
-		/// <summary>The User ID Claim was not a valid number</summary>
-		public sealed record InvalidUserIdMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>The User ID Claim was not a valid number</summary>
+			public sealed record InvalidUserIdMsg : IMsg { }
 
-		/// <summary>Unable to find the User ID Claim</summary>
-		public sealed record UnableToFindUserIdClaimMsg : IMsg { }
+			/// <summary>Unable to find the User ID Claim</summary>
+			public sealed record UnableToFindUserIdClaimMsg : IMsg { }
 
-		/// <summary>The current User is not correctly authenticated</summary>
-		public sealed record UserIsNotAuthenticatedMsg : IMsg { }
+			/// <summary>The current User is not correctly authenticated</summary>
+			public sealed record UserIsNotAuthenticatedMsg : IMsg { }
+		}
 	}
 }

@@ -4,11 +4,11 @@
 using System;
 using System.Security.Claims;
 using System.Security.Principal;
-using F.JwtFMsg;
 using Jeebs;
 using Jeebs.Config;
 using NSubstitute;
 using Xunit;
+using static F.JwtF.Msg;
 
 namespace F.JwtF_Tests
 {

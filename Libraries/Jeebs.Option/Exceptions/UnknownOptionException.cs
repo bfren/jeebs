@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Option.Exceptions
+namespace Jeebs.Exceptions
 {
 	/// <summary>
 	/// Thrown when an unknown <see cref="Option{T}"/> type is matched -

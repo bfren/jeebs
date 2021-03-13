@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using F.JsonFMsg;
 using Jeebs;
 using Xunit;
+using static F.JsonF.Msg;
 
 namespace F.JsonF_Tests.EnumeratedConverter_Tests
 {

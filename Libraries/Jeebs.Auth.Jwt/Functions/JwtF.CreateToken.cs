@@ -10,7 +10,6 @@ using Jeebs.Auth.Constants;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
 using static F.OptionF;
-using Msg = F.JwtFMsg;
 
 namespace F
 {
@@ -111,29 +110,30 @@ namespace F
 				return None<string>(new Msg.CreatingJwtSecurityTokenExceptionMsg(e));
 			}
 		}
-	}
 
-	namespace JwtFMsg
-	{
-		/// <summary>JwtConfig invalid</summary>
-		public sealed record ConfigInvalidMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>JwtConfig invalid</summary>
+			public sealed record ConfigInvalidMsg : IMsg { }
 
-		/// <summary>Exception when creating JwtSecurityToken</summary>
-		public sealed record CreatingJwtSecurityTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>Exception when creating JwtSecurityToken</summary>
+			public sealed record CreatingJwtSecurityTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>The Encrypting Key is not long enough</summary>
-		public sealed record EncryptingKeyNotLongEnoughMsg : IMsg { }
+			/// <summary>The Encrypting Key is not long enough</summary>
+			public sealed record EncryptingKeyNotLongEnoughMsg : IMsg { }
 
-		/// <summary>The User's Identity is not authenticated</summary>
-		public sealed record IdentityNotAuthenticatedMsg : IMsg { }
+			/// <summary>The User's Identity is not authenticated</summary>
+			public sealed record IdentityNotAuthenticatedMsg : IMsg { }
 
-		/// <summary>One of the Signing / Encrypting keys is not long enough</summary>
-		public sealed record KeyNotLongEnoughMsg : IMsg { }
+			/// <summary>One of the Signing / Encrypting keys is not long enough</summary>
+			public sealed record KeyNotLongEnoughMsg : IMsg { }
 
-		/// <summary>The Principal's Identity is null</summary>
-		public sealed record NullIdentityMsg : IMsg { }
+			/// <summary>The Principal's Identity is null</summary>
+			public sealed record NullIdentityMsg : IMsg { }
 
-		/// <summary>The Signing Key is not long enough</summary>
-		public sealed record SigningKeyNotLongEnoughMsg : IMsg { }
+			/// <summary>The Signing Key is not long enough</summary>
+			public sealed record SigningKeyNotLongEnoughMsg : IMsg { }
+		}
 	}
 }

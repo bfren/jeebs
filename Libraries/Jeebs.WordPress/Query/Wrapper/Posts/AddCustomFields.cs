@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using static F.OptionF;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {
@@ -105,23 +104,24 @@ namespace Jeebs.WordPress
 				};
 			}
 		}
-	}
 
-	namespace QueryWrapperMsg
-	{
-		/// <summary>An exception occured while adding custom fields to posts</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record AddCustomFieldsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while adding custom fields to posts</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record AddCustomFieldsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 
-		/// <summary>Meta Dictionary property not found on model</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		public sealed record MetaDictionaryNotFoundMsg<T> : IMsg { }
+			/// <summary>Meta Dictionary property not found on model</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			public sealed record MetaDictionaryNotFoundMsg<T> : IMsg { }
 
-		/// <summary>Required Custom Field property not found on model</summary>
-		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="PostId">Post ID</param>
-		/// <param name="Property">Property name</param>
-		/// <param name="Key">Custom Field Key</param>
-		public sealed record RequiredCustomFieldNotFoundMsg<T>(long PostId, string Property, string Key) : IMsg { }
+			/// <summary>Required Custom Field property not found on model</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="PostId">Post ID</param>
+			/// <param name="Property">Property name</param>
+			/// <param name="Key">Custom Field Key</param>
+			public sealed record RequiredCustomFieldNotFoundMsg<T>(long PostId, string Property, string Key) : IMsg { }
+		}
 	}
 }

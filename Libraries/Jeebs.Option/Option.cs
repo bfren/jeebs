@@ -3,16 +3,24 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.Option.Exceptions;
+using Jeebs.Exceptions;
 using static F.OptionF;
 
 namespace Jeebs
 {
 	/// <summary>
+	/// Holds Message classes for <see cref="Option{T}"/>
+	/// </summary>
+	public abstract partial class Option
+	{
+		internal Option() { }
+	}
+
+	/// <summary>
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract partial class Option<T>
+	public abstract partial class Option<T> : Option
 	{
 		/// <summary>
 		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>

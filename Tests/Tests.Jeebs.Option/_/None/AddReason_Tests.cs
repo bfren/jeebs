@@ -5,7 +5,7 @@ using System;
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.Option.None_Tests
+namespace Jeebs.None_Tests
 {
 	public class AddReason_Tests
 	{
@@ -19,7 +19,7 @@ namespace Jeebs.Option.None_Tests
 			var result = none.AddReason<TestMsg>();
 
 			// Assert
-			Assert.True(result.Reason is TestMsg);
+			Assert.IsType<TestMsg>(result.Reason);
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace Jeebs.Option.None_Tests
 			var result = none.AddReason<TestExceptionMsg>(exception);
 
 			// Assert
-			Assert.True(result.Reason is TestExceptionMsg);
+			Assert.IsType<TestExceptionMsg>(result.Reason);
 		}
 
 		public record TestMsg : IMsg { }

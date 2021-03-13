@@ -1,12 +1,10 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Cryptography;
 using static F.OptionF;
-using Msg = Jeebs.Auth.DataAuthProviderMsg;
 
 namespace Jeebs.Auth
 {
@@ -67,6 +65,22 @@ namespace Jeebs.Auth
 			// User not found
 			return None<TUser>(new Msg.UserNotFoundMsg(email));
 		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Invalid password</summary>
+			public sealed record InvalidPasswordMsg : IMsg { }
+
+			/// <summary>Null or empty email address</summary>
+			public sealed record NullOrEmptyEmailMsg : IMsg { }
+
+			/// <summary>Null or empty password</summary>
+			public sealed record NullOrEmptyPasswordMsg : IMsg { }
+
+			/// <summary>User not found</summary>
+			public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
+		}
 	}
 
 	/// <inheritdoc cref="IDataAuthProvider{TUser,TRole}"/>
@@ -84,20 +98,5 @@ namespace Jeebs.Auth
 		/// <inheritdoc/>
 		new public Task<Option<TUser>> ValidateUserAsync(string email, string password) =>
 			base.ValidateUserAsync(email, password);
-	}
-
-	namespace DataAuthProviderMsg
-	{
-		/// <summary>Invalid password</summary>
-		public sealed record InvalidPasswordMsg : IMsg { }
-
-		/// <summary>Null or empty email address</summary>
-		public sealed record NullOrEmptyEmailMsg : IMsg { }
-
-		/// <summary>Null or empty password</summary>
-		public sealed record NullOrEmptyPasswordMsg : IMsg { }
-
-		/// <summary>User not found</summary>
-		public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
 	}
 }

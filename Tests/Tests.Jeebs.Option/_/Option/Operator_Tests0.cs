@@ -1,8 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using F.OptionFMsg;
 using Xunit;
+using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {

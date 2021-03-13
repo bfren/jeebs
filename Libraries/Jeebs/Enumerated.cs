@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using static F.OptionF;
-using Msg = Jeebs.EnumeratedMsg;
 
 namespace Jeebs
 {
@@ -224,19 +223,20 @@ namespace Jeebs
 			GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
 		#endregion
-	}
 
-	namespace EnumeratedMsg
-	{
-		/// <summary>Value does not belong to the specified Enumerated type</summary>
-		/// <typeparam name="T">Enum type</typeparam>
-		/// <param name="Value">Value being parsed</param>
-		public sealed record NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
-			where T : Enumerated
+		/// <summary>Messages</summary>
+		public static class Msg
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"'{Value}' is not a valid value of {typeof(T)}.";
+			/// <summary>Value does not belong to the specified Enumerated type</summary>
+			/// <typeparam name="T">Enum type</typeparam>
+			/// <param name="Value">Value being parsed</param>
+			public sealed record NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
+				where T : Enumerated
+			{
+				/// <summary>Return message</summary>
+				public override string ToString() =>
+					$"'{Value}' is not a valid value of {typeof(T)}.";
+			}
 		}
 	}
 }

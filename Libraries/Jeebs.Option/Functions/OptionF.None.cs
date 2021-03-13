@@ -36,15 +36,14 @@ namespace F
 					new(null),
 
 				false =>
-					new(new OptionFMsg.IfYouArentSureDontMakeItMsg())
+					new(new Msg.IfYouArentSureDontMakeItMsg())
 			};
-	}
 
-	namespace OptionFMsg
-	{
-		/// <summary>
-		/// If you aren't sure you want to make a <see cref="None{T}"/> without a reason, don't do it!
-		/// </summary>
-		public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>If you aren't sure you want to make a <see cref="None{T}"/> without a reason, don't do it!</summary>
+			public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
+		}
 	}
 }

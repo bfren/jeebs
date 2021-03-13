@@ -9,7 +9,6 @@ using Jeebs.Auth;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
 using static F.OptionF;
-using Msg = F.JwtFMsg;
 
 namespace F
 {
@@ -60,17 +59,18 @@ namespace F
 				return None<ClaimsPrincipal>(new Msg.ValidatingTokenExceptionMsg(e));
 			}
 		}
-	}
 
-	namespace JwtFMsg
-	{
-		/// <summary>The token has expired</summary>
-		public sealed record TokenHasExpiredMsg : IMsg { }
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>The token has expired</summary>
+			public sealed record TokenHasExpiredMsg : IMsg { }
 
-		/// <summary>The token is not valid yet</summary>
-		public sealed record TokenIsNotValidYetMsg : IMsg { }
+			/// <summary>The token is not valid yet</summary>
+			public sealed record TokenIsNotValidYetMsg : IMsg { }
 
-		/// <summary>Exception while validating token</summary>
-		public sealed record ValidatingTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			/// <summary>Exception while validating token</summary>
+			public sealed record ValidatingTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		}
 	}
 }
