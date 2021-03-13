@@ -60,7 +60,6 @@ namespace AppConsole
 						none: _ => log.Information("No result")
 					);
 
-
 					while (Console.ReadLine() is string output)
 					{
 						log.Information(output);

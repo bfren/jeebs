@@ -52,9 +52,9 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			public Foo(string name) : base(name) { }
 
-			public static Foo A = new("A");
+			public static readonly Foo A = new("A");
 
-			public static Foo B = new("B");
+			public static readonly Foo B = new("B");
 		}
 	}
 }
