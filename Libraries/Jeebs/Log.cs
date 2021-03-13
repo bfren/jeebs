@@ -20,57 +20,62 @@ namespace Jeebs
 				return;
 			}
 
-			var text = msg.ToString() ?? typeof(T).ToString();
-
-			// Handle exception messages
-			if (msg is ExceptionMsg exceptionMsgAbstract)
+			// Get log info
+			var (level, text, args) = msg switch
 			{
-				if (exceptionMsgAbstract.Level == LogLevel.Fatal)
-				{
-					Fatal(exceptionMsgAbstract.Exception, text);
-				}
-				else
-				{
-					Error(exceptionMsgAbstract.Exception, text);
-				}
+				ILogMsg loggable =>
+					(
+						loggable.Level,
+						loggable.Format,
+						getArgs(loggable)
+					),
 
-				return;
-			}
-
-			if (msg is IExceptionMsg exceptionMsgInterface)
-			{
-				Error(exceptionMsgInterface.Exception, text);
-				return;
-			}
-
-			// Get the log level
-			LogLevel level = LogLevel.Information;
-			if (msg is ILogMsg loggableMsg)
-			{
-				level = loggableMsg.Level;
-			}
+				_ =>
+					(
+						LogLevel.Information,
+						msg.ToString() ?? typeof(T).ToString(),
+						Array.Empty<object>()
+					)
+			};
 
 			// Switch different levels
 			switch (level)
 			{
 				case LogLevel.Verbose:
-					Verbose(text);
+					Verbose(text, args);
 					break;
 				case LogLevel.Debug:
-					Debug(text);
+					Debug(text, args);
 					break;
 				case LogLevel.Information:
-					Information(text);
+					Information(text, args);
 					break;
 				case LogLevel.Warning:
-					Warning(text);
+					Warning(text, args);
 					break;
 				case LogLevel.Error:
-					Error(text);
+					Error(text, args);
 					break;
 				case LogLevel.Fatal:
-					Fatal(text);
+					Fatal(text, args);
 					break;
+			}
+
+			// Get arguments from a loggable message
+			static object[] getArgs(ILogMsg msg)
+			{
+				// Get args and add message to the start of the array
+				var list = msg.Args().ToList();
+				list.Insert(0, typeof(T));
+
+				// Add Exception to the end of the array
+				if (msg is IExceptionMsg exceptionMsg)
+				{
+					list.Add(exceptionMsg.Exception);
+				}
+
+				// Convert back to an array
+				return list.ToArray();
 			}
 		}
 

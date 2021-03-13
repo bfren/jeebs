@@ -12,9 +12,9 @@ namespace AppWeb
 	{
 		public App() : base(false) { }
 
-		protected override void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
+		protected override void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
 		{
-			base.Configure(env, config, app);
+			base.Configure(env, app, config);
 
 			app.Run(async ctx => await ctx.Response.WriteAsync("Hello, world!").ConfigureAwait(false));
 		}

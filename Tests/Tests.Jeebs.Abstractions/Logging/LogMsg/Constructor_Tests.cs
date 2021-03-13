@@ -2,60 +2,58 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs.Logging;
+using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Abstractions.Messages.LogMsg_Tests
+namespace Jeebs.Logging.LogMsg_Tests
 {
 	public class Constructor_Tests
 	{
 		[Fact]
-		public void Default_Level_Is_Error()
+		public void Without_Level_Uses_Default_Level_Information()
 		{
 			// Arrange
-			var msg = new TestMsg0();
 
 			// Act
-			var result = msg.Level;
+			var result = new TestMsg(F.Rnd.Str);
 
 			// Assert
-			Assert.Equal(LogLevel.Error, result);
+			Assert.Equal(LogLevel.Information, result.Level);
 		}
 
 		[Fact]
-		public void Parameterless_Creates_Unknown_Exception()
+		public void With_Level_Sets_Level()
 		{
 			// Arrange
-			var msg = new TestMsg0();
+			const LogLevel value = LogLevel.Fatal;
 
 			// Act
-			var result = msg.Exception.Message;
+			var result = new TestMsg(value, F.Rnd.Str);
 
 			// Assert
-			Assert.Equal("Unknown.", result);
+			Assert.Equal(value, result.Level);
 		}
 
 		[Fact]
-		public void With_Exception_Sets_Exception()
+		public void Prepends_MsgType_To_Format()
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var ex = new Exception(value);
-			var msg = new TestMsg1(ex);
 
 			// Act
-			var result = msg.Exception;
+			var result = new TestMsg(value);
 
 			// Assert
-			Assert.Same(ex, result);
-			Assert.Equal(value, result.Message);
+			Assert.Equal("{MsgType} " + value, result.Format);
 		}
 
-		public record TestMsg0 : ExceptionMsg { }
-
-		public record TestMsg1 : ExceptionMsg
+		public record TestMsg : LogMsg
 		{
-			public TestMsg1(Exception e) : base(e) { }
+			public override Func<object[]> Args =>
+				() => Array.Empty<object>();
+
+			public TestMsg(string format) : base(format) { }
+			public TestMsg(LogLevel level, string format) : base(level, format) { }
 		}
 	}
 }
