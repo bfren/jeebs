@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
 using Jeebs.Exceptions;
 using static F.OptionF;
@@ -30,32 +29,14 @@ namespace Jeebs
 
 		internal Option() { }
 
-		internal U Switch<U>(Func<T, U> some, Func<IMsg?, U> none) =>
-			this switch
-			{
-				Some<T> x =>
-					some(x.Value),
-
-				None<T> x =>
-					none(x.Reason),
-
-				_ =>
-					throw new UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
-			};
-
-		internal U Switch<U>(Func<T, U> some, Func<U> none) =>
-			Switch(
-				some: some,
-				none: _ => none()
-			);
-
 		/// <summary>
 		/// Return:
 		///    Value (if this is <see cref="Some{T}"/> and Value is not null)
 		///    Reason (if this is <see cref="None{T}"/> and it has a reason)
 		/// </summary>
 		public override string ToString() =>
-			Switch(
+			F.OptionF.Switch(
+				this,
 				some: v =>
 					v?.ToString() switch
 					{
@@ -93,7 +74,8 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator ==(Option<T> l, T r) =>
-			l.Switch(
+			F.OptionF.Switch(
+				l,
 				some: v => Equals(v, r),
 				none: _ => false
 			);
@@ -105,7 +87,8 @@ namespace Jeebs
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
 		public static bool operator !=(Option<T> l, T r) =>
-			l.Switch(
+			F.OptionF.Switch(
+				l,
 				some: v => !Equals(v, r),
 				none: _ => true
 			);

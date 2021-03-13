@@ -8,7 +8,7 @@ using static F.OptionF;
 
 namespace Jeebs
 {
-	public static partial class EnumerableExtensions
+	public static class EnumerableExtensions_SingleOrNone
 	{
 		/// <summary>
 		/// Return the single element or <see cref="None{T}"/>
@@ -35,7 +35,7 @@ namespace Jeebs
 			DoSingleOrNone(@this, predicate);
 
 		/// <summary>Messages</summary>
-		public static partial class Msg
+		public static class Msg
 		{
 			/// <summary>Null or multiple items found when doing SingleOrDefault()</summary>
 			public sealed record NullOrMultipleItemsMsg : IMsg { }

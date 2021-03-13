@@ -9,27 +9,12 @@ namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Return the current type if it is <see cref="Some{T}"/> and the predicate is true
-		/// </summary>
-		/// <param name="predicate">Predicate - if this is a <see cref="Some{T}"/> it receives the Value</param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}}, Handler?)"/>
 		internal Task<Option<T>> DoFilterAsync(Func<T, Task<bool>> predicate, Handler? handler) =>
-			BindAsync(
-				async x =>
-					await predicate(x) switch
-					{
-						true =>
-							Return(x),
+			F.OptionF.FilterAsync(this, predicate, handler);
 
-						false =>
-							None<T, Msg.PredicateWasFalseMsg>()
-					},
-				handler
-			);
-
-		/// <inheritdoc cref="DoFilterAsync(Func{T, Task{bool}}, Handler?)"/>
+		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}}, Handler?)"/>
 		public Task<Option<T>> FilterAsync(Func<T, Task<bool>> predicate, Handler? handler = null) =>
-			DoFilterAsync(predicate, handler);
+			F.OptionF.FilterAsync(this, predicate, handler);
 	}
 }

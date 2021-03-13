@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Jeebs
 {
 	/// <summary>
-	/// <see cref="Option{T}"/> Extensions: Await
+	/// <see cref="Option{T}"/> Extensions: GetAsyncEnumerator
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_GetAsyncEnumerator
 	{
 		/// <inheritdoc cref="Option{T}.GetEnumerator"/>
 		/// <param name="this">Option (awaitable)</param>

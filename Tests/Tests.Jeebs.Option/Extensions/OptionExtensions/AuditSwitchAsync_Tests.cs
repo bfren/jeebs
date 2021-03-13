@@ -20,7 +20,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var task = option.AsTask;
 
 			// Act
-			var result = await OptionExtensions.DoAuditSwitchAsync(task, null, null);
+			var result = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, null, null);
 
 			// Assert
 			Assert.Same(option, result);
@@ -36,7 +36,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
-			Task result() => OptionExtensions.DoAuditSwitchAsync(task, some, none);
+			Task result() => OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, some, none);
 
 			// Assert
 			await Assert.ThrowsAsync<UnknownOptionException>(result);
@@ -52,7 +52,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var some = Substitute.For<Func<int, Task>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoAuditSwitchAsync(task, some, null);
+			var r0 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, some, null);
 			var r1 = await task.AuditSwitchAsync(some: _ => { some(value); });
 			var r2 = await task.AuditSwitchAsync(some: some);
 			var r3 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg?>>());
@@ -77,7 +77,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoAuditSwitchAsync(task, null, none);
+			var r0 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, null, none);
 			var r1 = await task.AuditSwitchAsync(none: _ => { none(msg); });
 			var r2 = await task.AuditSwitchAsync(none: none);
 			var r3 = await task.AuditSwitchAsync(some: Substitute.For<Action<int>>(), none: _ => none(msg));
@@ -108,10 +108,10 @@ namespace Jeebs.OptionExtensions_Tests
 			Task noneFuncThrow(IMsg? _) => throw exception!;
 
 			// Act
-			var r0 = await OptionExtensions.DoAuditSwitchAsync(t0, someFuncThrow, null);
+			var r0 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(t0, someFuncThrow, null);
 			var r1 = await t0.AuditSwitchAsync(some: someActionThrow);
 			var r2 = await t0.AuditSwitchAsync(some: someFuncThrow);
-			var r3 = await OptionExtensions.DoAuditSwitchAsync(t1, null, noneFuncThrow);
+			var r3 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(t1, null, noneFuncThrow);
 			var r4 = await t1.AuditSwitchAsync(none: noneActionThrow);
 			var r5 = await t1.AuditSwitchAsync(none: noneFuncThrow);
 			var r6 = await t0.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);

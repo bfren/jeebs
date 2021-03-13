@@ -20,7 +20,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var audit = Substitute.For<Func<Option<bool>, Task>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoAuditAsync(task, audit);
+			var r0 = await OptionExtensions_AuditAsync.DoAuditAsync(task, audit);
 			var r1 = await task.AuditAsync(v => { audit(v); });
 			var r2 = await task.AuditAsync(audit);
 
@@ -42,7 +42,7 @@ namespace Jeebs.OptionExtensions_Tests
 			Task funcThrow(Option<int> _) => throw new Exception();
 
 			// Act
-			var r0 = await OptionExtensions.DoAuditAsync(task, _ => throw new Exception());
+			var r0 = await OptionExtensions_AuditAsync.DoAuditAsync(task, _ => throw new Exception());
 			var r1 = await task.AuditAsync(actionThrow);
 			var r2 = await task.AuditAsync(funcThrow);
 

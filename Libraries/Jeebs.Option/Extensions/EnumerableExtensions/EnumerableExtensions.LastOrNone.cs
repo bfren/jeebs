@@ -8,7 +8,7 @@ using static F.OptionF;
 
 namespace Jeebs
 {
-	public static partial class EnumerableExtensions
+	public static class EnumerableExtensions_LastOrNone
 	{
 		/// <summary>
 		/// Return the last element or <see cref="None{T}"/>
@@ -35,7 +35,7 @@ namespace Jeebs
 			DoLastOrNone(@this, predicate);
 
 		/// <summary>Messages</summary>
-		public static partial class Msg
+		public static class Msg
 		{
 			/// <summary>Null item found when doing LastOrDefault()</summary>
 			public sealed record LastItemIsNullMsg : IMsg { }

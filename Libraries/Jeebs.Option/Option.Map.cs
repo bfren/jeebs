@@ -8,23 +8,12 @@ namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
 		internal Option<U> DoMap<U>(Func<T, U> map, Handler? handler = null) =>
-			Catch(() =>
-				Switch(
-					some: v => Return(map(v)),
-					none: r => new None<U>(r)
-				),
-				handler
-			);
+			F.OptionF.Map(this, map, handler);
 
-		/// <inheritdoc cref="DoMap{U}(Func{T, U}, Handler?)"/>
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
 		public Option<U> Map<U>(Func<T, U> map, Handler? handler = null) =>
-			DoMap(map, handler);
+			F.OptionF.Map(this, map, handler);
 	}
 }

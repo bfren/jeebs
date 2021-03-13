@@ -2,64 +2,17 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using static F.OptionF;
 
 namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Unwrap the single value of this option - if this is a <see cref="Some{T}"/>
-		/// and <typeparamref name="T"/> implements <see cref="IEnumerable{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Single value type</typeparam>
-		/// <param name="noItems">[Optional] Function to run if the Option value is a list with no items</param>
-		/// <param name="tooMany">[Optional] Function to run if the Option value is a list with more than one item</param>
-		/// <param name="notAList">[Optional] Function to run if the Option value is not a list</param>
+		/// <inheritdoc cref="F.OptionF.UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
 		internal Option<U> DoUnwrapSingle<U>(Func<IMsg>? noItems, Func<IMsg>? tooMany, Func<IMsg>? notAList) =>
-			Catch(() =>
-				Switch(
-					some: v =>
-						v switch
-						{
-							IEnumerable<U> list when list.Count() == 1 =>
-								Return(list.Single()),
+			F.OptionF.UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
 
-							IEnumerable<U> list when !list.Any() =>
-								None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
-
-							IEnumerable<U> =>
-								None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
-
-							_ =>
-								None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
-						},
-
-					none: r =>
-						new None<U>(r)
-				)
-			);
-
-		/// <inheritdoc cref="DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
+		/// <inheritdoc cref="F.OptionF.UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			DoUnwrapSingle<U>(noItems, tooMany, notAList);
-	}
-
-	public abstract partial class Option
-	{
-		/// <summary>Messages</summary>
-		public static partial class Msg
-		{
-			/// <summary>No items in the list/// </summary>
-			public sealed record UnwrapSingleNoItemsMsg : IMsg { }
-
-			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
-
-			/// <summary>Not a list</summary>
-			public sealed record UnwrapSingleNotAListMsg : IMsg { }
-		}
+			F.OptionF.UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
 	}
 }

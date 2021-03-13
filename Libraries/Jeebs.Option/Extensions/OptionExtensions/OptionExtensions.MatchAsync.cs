@@ -9,106 +9,58 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: MatchAsync
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_MatchAsync
 	{
-		/// <inheritdoc cref="Option{T}.DoMatchAsync{U}(Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
-		internal static async Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			await (await @this).DoMatchAsync(some, none);
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		internal static Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
+			F.OptionF.MatchAsync(@this, some, none);
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, U none) =>
-			DoMatchAsync(
-				@this,
-				some: v => Task.FromResult(some(v)),
-				none: _ => Task.FromResult(none)
-			);
+			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => Task.FromResult(none));
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, U none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: _ => Task.FromResult(none)
-			);
+			F.OptionF.MatchAsync(@this, some: some, none: _ => Task.FromResult(none));
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Task<U> none) =>
-			DoMatchAsync(
-				@this,
-				some: v => Task.FromResult(some(v)),
-				none: _ => none
-			);
+			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => none);
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Task<U> none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: _ => none
-			);
+			F.OptionF.MatchAsync(@this, some: some, none: _ => none);
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<U> none) =>
-			DoMatchAsync(
-				@this,
-				some: v => Task.FromResult(some(v)),
-				none: _ => Task.FromResult(none())
-			);
+			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => Task.FromResult(none()));
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<U> none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: _ => Task.FromResult(none())
-			);
+			F.OptionF.MatchAsync(@this, some: some, none: _ => Task.FromResult(none()));
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<Task<U>> none) =>
-			DoMatchAsync(
-				@this,
-				some: v => Task.FromResult(some(v)),
-				none: _ => none()
-			);
+			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => none());
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<Task<U>> none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: _ => none()
-			);
+			F.OptionF.MatchAsync(@this, some: some, none: _ => none());
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, U> none) =>
-			DoMatchAsync(
-				@this,
-				some: v => Task.FromResult(some(v)),
-				none: r => Task.FromResult(none(r))
-			);
+			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: r => Task.FromResult(none(r)));
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, U> none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: r => Task.FromResult(none(r))
-			);
+			F.OptionF.MatchAsync(@this, some: some, none: r => Task.FromResult(none(r)));
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, Func<IMsg?, Task<U>> none) =>
-			DoMatchAsync(
-				@this,
-				some: v => Task.FromResult(some(v)),
-				none: none
-			);
+			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: none);
 
-		/// <inheritdoc cref="DoMatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
+		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			DoMatchAsync(
-				@this,
-				some: some,
-				none: none
-			);
+			F.OptionF.MatchAsync(@this, some: some, none: none);
 	}
 }

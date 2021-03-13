@@ -9,23 +9,12 @@ namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Use <paramref name="map"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
 		internal Task<Option<U>> DoMapAsync<U>(Func<T, Task<U>> map, Handler? handler) =>
-			CatchAsync(() =>
-				Switch(
-					some: async v => Return(await map(v)),
-					none: r => new None<U>(r).AsTask
-				),
-				handler
-			);
+			F.OptionF.MapAsync(this, map, handler);
 
-		/// <inheritdoc cref="DoMapAsync{U}(Func{T, Task{U}}, Handler?)"/>
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
 		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Handler? handler = null) =>
-			DoMapAsync(map, handler);
+			F.OptionF.MapAsync(this, map, handler);
 	}
 }

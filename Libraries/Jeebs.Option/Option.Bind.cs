@@ -8,23 +8,12 @@ namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Use <paramref name="bind"/> to convert the current Option to a new type - if this is a <see cref="Some{T}"/>
-		/// </summary>
-		/// <typeparam name="U">Next value type</typeparam>
-		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
 		internal Option<U> DoBind<U>(Func<T, Option<U>> bind, Handler? handler = null) =>
-			Catch(() =>
-				Switch(
-					some: v => bind(v),
-					none: r => new None<U>(r)
-				),
-				handler
-			);
+			F.OptionF.Bind(this, bind, handler);
 
-		/// <inheritdoc cref="DoBind{U}(Func{T, Option{U}}, Handler?)"/>
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
 		public Option<U> Bind<U>(Func<T, Option<U>> bind, Handler? handler = null) =>
-			DoBind(bind, handler);
+			F.OptionF.Bind(this, bind, handler);
 	}
 }

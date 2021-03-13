@@ -14,24 +14,11 @@ namespace Jeebs
 		/// or <see cref="LogAuditExceptions"/> if set
 		/// </summary>
 		/// <param name="audit">Audit function</param>
-		internal Option<T> DoAudit(Action<Option<T>> audit)
-		{
-			// Perform the audit
-			try
-			{
-				audit(this);
-			}
-			catch (Exception e)
-			{
-				HandleAuditException(e);
-			}
-
-			// Return the original object
-			return this;
-		}
+		internal Option<T> DoAudit(Action<Option<T>> audit) =>
+			F.OptionF.Audit(this, audit);
 
 		/// <inheritdoc cref="DoAudit(Action{Option{T}})"/>
 		public Option<T> Audit(Action<Option<T>> audit) =>
-			DoAudit(audit);
+			F.OptionF.Audit(this, audit);
 	}
 }

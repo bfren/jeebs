@@ -8,60 +8,20 @@ namespace Jeebs
 {
 	public abstract partial class Option<T>
 	{
-		/// <summary>
-		/// Audit the current Option state and return unmodified
-		/// Errors will not be returned as they affect the state of the object, but will be written to the console,
-		/// or <see cref="LogAuditExceptions"/> if set
-		/// </summary>
-		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
-		/// <param name="none">[Optional] Action to run if the current Option is <see cref="None{T}"/></param>
-		internal Option<T> DoAuditSwitch(Action<T>? some, Action<IMsg?>? none)
-		{
-			// Do nothing if the user gave us nothing to do!
-			if (some == null && none == null)
-			{
-				return this;
-			}
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
+		internal Option<T> DoAuditSwitch(Action<T>? some, Action<IMsg?>? none) =>
+			F.OptionF.AuditSwitch(this, some, none);
 
-			// Work out which audit function to use
-			Action audit = Switch<Action>(
-				some: v => () => some?.Invoke(v),
-				none: r => () => none?.Invoke(r)
-			);
-
-			// Perform the audit
-			try
-			{
-				audit();
-			}
-			catch (Exception e)
-			{
-				HandleAuditException(e);
-			}
-
-			// Return the original object
-			return this;
-		}
-
-		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
 		public Option<T> AuditSwitch(Action<T>? some) =>
-			DoAuditSwitch(
-				some: some,
-				none: null
-			);
+			F.OptionF.AuditSwitch(this, some, null);
 
-		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
 		public Option<T> AuditSwitch(Action<IMsg?>? none) =>
-			DoAuditSwitch(
-				some: null,
-				none: none
-			);
+			F.OptionF.AuditSwitch(this, null, none);
 
-		/// <inheritdoc cref="DoAuditSwitch(Action{T}?, Action{IMsg?}?)"/>
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
 		public Option<T> AuditSwitch(Action<T>? some, Action<IMsg?>? none) =>
-			DoAuditSwitch(
-				some: some,
-				none: none
-			);
+			F.OptionF.AuditSwitch(this, some, none);
 	}
 }
