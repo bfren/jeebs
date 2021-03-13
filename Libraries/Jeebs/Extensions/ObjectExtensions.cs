@@ -4,8 +4,8 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Msg = Jeebs.Reflection.ObjectExtensionsMsg;
 using static F.OptionF;
+using Msg = Jeebs.Reflection.ObjectExtensionsMsg;
 
 namespace Jeebs.Reflection
 {

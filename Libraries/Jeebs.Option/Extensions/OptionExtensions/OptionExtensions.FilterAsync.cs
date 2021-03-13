@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.Option.Exceptions;
 using static F.OptionF;
 
 namespace Jeebs

@@ -3,8 +3,8 @@
 
 using System;
 using System.Linq.Expressions;
-using Xunit;
 using Jeebs.Linq;
+using Xunit;
 
 namespace Jeebs.LinqExtensions_Tests
 {

@@ -14,7 +14,7 @@ namespace Jeebs.PropertyInfo_Tests
 			// Arrange
 
 			// Act
-			static void result() => new PropertyInfo<Foo, object>(F.Rnd.Str);
+			static PropertyInfo<Foo, object> result() => new(F.Rnd.Str);
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(result);
@@ -26,7 +26,7 @@ namespace Jeebs.PropertyInfo_Tests
 			// Arrange
 
 			// Act
-			static void result() => new PropertyInfo<Foo, int>(nameof(Foo.Bar));
+			static PropertyInfo<Foo, int> result() => new(nameof(Foo.Bar));
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(result);

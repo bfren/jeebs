@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
-using Msg = Jeebs.WordPress.QueryWrapperMsg;
 using static F.OptionF;
+using Msg = Jeebs.WordPress.QueryWrapperMsg;
 
 namespace Jeebs.WordPress
 {

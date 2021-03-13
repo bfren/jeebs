@@ -3,8 +3,8 @@
 
 using System;
 using System.Linq;
-using Msg = Jeebs.DateTimeIntMsg;
 using static F.OptionF;
+using Msg = Jeebs.DateTimeIntMsg;
 
 namespace Jeebs
 {

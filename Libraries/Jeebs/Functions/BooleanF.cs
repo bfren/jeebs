@@ -4,8 +4,8 @@
 using System;
 using System.Linq;
 using Jeebs;
-using Msg = F.BooleanFMsg;
 using static F.OptionF;
+using Msg = F.BooleanFMsg;
 
 namespace F
 {

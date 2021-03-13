@@ -5,8 +5,8 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
-using Msg = F.JsonFMsg;
 using static F.OptionF;
+using Msg = F.JsonFMsg;
 
 namespace F
 {

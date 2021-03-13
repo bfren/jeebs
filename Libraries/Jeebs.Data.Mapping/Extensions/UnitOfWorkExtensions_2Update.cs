@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Dapper;
 using Jeebs.Logging;
 using static F.OptionF;
 using Msg = Jeebs.Data.Mapping.UnitOfWorkExtensionsMsg;

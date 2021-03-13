@@ -4,8 +4,8 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using Msg = Jeebs.EnumeratedMsg;
 using static F.OptionF;
+using Msg = Jeebs.EnumeratedMsg;
 
 namespace Jeebs
 {
