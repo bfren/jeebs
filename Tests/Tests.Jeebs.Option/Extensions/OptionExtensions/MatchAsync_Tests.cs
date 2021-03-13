@@ -22,7 +22,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<IMsg?, Task<string>>>();
 
 			// Act
-			Task action() => OptionExtensions.DoMatchAsync(task, some, none);
+			Task action() => OptionExtensions_MatchAsync.DoMatchAsync(task, some, none);
 
 			// Assert
 			await Assert.ThrowsAsync<UnknownOptionException>(action);
@@ -38,7 +38,7 @@ namespace Jeebs.Option_Tests
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await OptionExtensions.DoMatchAsync(
+			await OptionExtensions_MatchAsync.DoMatchAsync(
 				task,
 				some: some,
 				none: Substitute.For<Func<IMsg?, Task<string>>>()
@@ -148,7 +148,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<string>>();
 
 			// Act
-			await OptionExtensions.DoMatchAsync(
+			await OptionExtensions_MatchAsync.DoMatchAsync(
 				task,
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: _ => Task.FromResult(none())

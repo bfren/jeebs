@@ -8,9 +8,9 @@ using static F.OptionF;
 namespace Jeebs
 {
 	/// <summary>
-	/// <see cref="Option{T}"/> Extensions: BindAsync
+	/// <see cref="Option{T}"/> Extensions: FilterAsync
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_FilterAsync
 	{
 		/// <inheritdoc cref="Option{T}.DoFilterAsync(Func{T, Task{bool}}, Handler?)"/>
 		internal static async Task<Option<T>> DoFilterAsync<T>(Task<Option<T>> @this, Func<T, Task<bool>> predicate, Handler? handler) =>

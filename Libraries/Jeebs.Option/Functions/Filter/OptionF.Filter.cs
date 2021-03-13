@@ -2,19 +2,22 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using static F.OptionF;
+using Jeebs;
 
-namespace Jeebs
+namespace F
 {
-	public abstract partial class Option<T>
+	public static partial class OptionF
 	{
 		/// <summary>
 		/// Return the current type if it is <see cref="Some{T}"/> and the predicate is true
 		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <param name="option">Input option</param>
 		/// <param name="predicate">Predicate - if this is a <see cref="Some{T}"/> it receives the Value</param>
 		/// <param name="handler">[Optional] Exception handler</param>
-		internal Option<T> DoFilter(Func<T, bool> predicate, Handler? handler) =>
+		public static Option<T> Filter<T>(Option<T> option, Func<T, bool> predicate, Handler? handler) =>
 			Bind(
+				option,
 				x =>
 					predicate(x) switch
 					{
@@ -22,23 +25,16 @@ namespace Jeebs
 							Return(x),
 
 						false =>
-							None<T, Msg.PredicateWasFalseMsg>()
+							None<T, Msg.FilterPredicateWasFalseMsg>()
 					},
 				handler
 			);
 
-		/// <inheritdoc cref="DoFilter(Func{T, bool}, Handler?)"/>
-		public Option<T> Filter(Func<T, bool> predicate, Handler? handler = null) =>
-			DoFilter(predicate, handler);
-	}
-
-	public abstract partial class Option
-	{
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
 			/// <summary>Predicate was false</summary>
-			public sealed record PredicateWasFalseMsg : IMsg { }
+			public sealed record FilterPredicateWasFalseMsg : IMsg { }
 		}
 	}
 }

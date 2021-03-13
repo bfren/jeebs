@@ -22,7 +22,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var result = await OptionExtensions.DoMapAsync(task, map, null);
+			var result = await OptionExtensions_MapAsync.DoMapAsync(task, map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -43,7 +43,7 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<string> asyncThrow(int _) => throw exception;
 
 			// Act
-			var r0 = await OptionExtensions.DoMapAsync(task, asyncThrow, handler);
+			var r0 = await OptionExtensions_MapAsync.DoMapAsync(task, asyncThrow, handler);
 			var r1 = await task.MapAsync(syncThrow, handler);
 			var r2 = await task.MapAsync(asyncThrow, handler);
 
@@ -63,7 +63,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoMapAsync(task, map, null);
+			var r0 = await OptionExtensions_MapAsync.DoMapAsync(task, map, null);
 			var r1 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
 			var r2 = await task.MapAsync(map, null);
 
@@ -83,7 +83,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoMapAsync(task, map, null);
+			var r0 = await OptionExtensions_MapAsync.DoMapAsync(task, map, null);
 			var r1 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
 			var r2 = await task.MapAsync(map, null);
 
@@ -106,7 +106,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await OptionExtensions.DoMapAsync(task, map, null);
+			await OptionExtensions_MapAsync.DoMapAsync(task, map, null);
 			await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
 			await task.MapAsync(map, null);
 

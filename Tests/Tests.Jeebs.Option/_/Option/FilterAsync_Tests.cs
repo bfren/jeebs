@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static Jeebs.Option.Msg;
+using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {
@@ -41,7 +41,7 @@ namespace Jeebs.Option_Tests
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<PredicateWasFalseMsg>(none.Reason);
+			Assert.IsType<FilterPredicateWasFalseMsg>(none.Reason);
 		}
 
 		[Fact]

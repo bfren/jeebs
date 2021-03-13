@@ -22,7 +22,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var result = await OptionExtensions.DoBindAsync(task, bind, null);
+			var result = await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -43,7 +43,7 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<Option<string>> asyncThrow(int _) => throw exception;
 
 			// Act
-			var r0 = await OptionExtensions.DoBindAsync(task, asyncThrow, handler);
+			var r0 = await OptionExtensions_BindAsync.DoBindAsync(task, asyncThrow, handler);
 			var r1 = await task.BindAsync(syncThrow, handler);
 			var r2 = await task.BindAsync(asyncThrow, handler);
 
@@ -63,7 +63,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoBindAsync(task, bind, null);
+			var r0 = await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
 			var r1 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
 			var r2 = await task.BindAsync(bind);
 
@@ -83,7 +83,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoBindAsync(task, bind, null);
+			var r0 = await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
 			var r1 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
 			var r2 = await task.BindAsync(bind);
 
@@ -106,7 +106,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			await OptionExtensions.DoBindAsync(task, bind, null);
+			await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
 			await task.BindAsync(v => bind(v).GetAwaiter().GetResult(), null);
 			await task.BindAsync(bind, null);
 

@@ -10,7 +10,7 @@ namespace Jeebs
 	/// <summary>
 	/// Enumerable Extensions
 	/// </summary>
-	public static partial class EnumerableExtensions
+	public static class EnumerableExtensions_ElementAtOrNone
 	{
 		/// <summary>
 		/// Return the element at <paramref name="index"/> or <see cref="None{T}"/>
@@ -33,7 +33,7 @@ namespace Jeebs
 			DoElementAtOrNone(@this, index);
 
 		/// <summary>Messages</summary>
-		public static partial class Msg
+		public static class Msg
 		{
 			/// <summary>Null item found when doing ElementAtOrDefault()</summary>
 			public sealed record ElementAtIsNullMsg : IMsg { }

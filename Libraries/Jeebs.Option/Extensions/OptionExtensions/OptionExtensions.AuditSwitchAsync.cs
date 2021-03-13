@@ -9,19 +9,19 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: AuditSwitchAsync
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_AuditSwitchAsync
 	{
 		/// <inheritdoc cref="Option{T}.DoAuditSwitchAsync(Func{T, Task}?, Func{IMsg?, Task}?)"/>
-		internal static async Task<Option<T>> DoAuditSwitchAsync<T>(
+		internal static Task<Option<T>> DoAuditSwitchAsync<T>(
 			Task<Option<T>> @this,
 			Func<T, Task>? some,
 			Func<IMsg?, Task>? none
 		) =>
-			await (await @this).DoAuditSwitchAsync(some, none);
+			F.OptionF.AuditSwitchAsync(@this, some, none);
 
 		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Action<T> some) =>
-			DoAuditSwitchAsync(
+			F.OptionF.AuditSwitchAsync(
 				@this,
 				some: v => { some?.Invoke(v); return Task.CompletedTask; },
 				none: null
@@ -29,7 +29,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<T, Task> some) =>
-			DoAuditSwitchAsync(
+			F.OptionF.AuditSwitchAsync(
 				@this,
 				some: some,
 				none: null
@@ -37,7 +37,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Action<IMsg?> none) =>
-			DoAuditSwitchAsync(
+			F.OptionF.AuditSwitchAsync(
 				@this,
 				some: null,
 				none: r => { none?.Invoke(r); return Task.CompletedTask; }
@@ -45,7 +45,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<IMsg?, Task> none) =>
-			DoAuditSwitchAsync(
+			F.OptionF.AuditSwitchAsync(
 				@this,
 				some: null,
 				none: none
@@ -53,7 +53,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Action<T> some, Action<IMsg?> none) =>
-			DoAuditSwitchAsync(
+			F.OptionF.AuditSwitchAsync(
 				@this,
 				some: v => { some?.Invoke(v); return Task.CompletedTask; },
 				none: r => { none?.Invoke(r); return Task.CompletedTask; }
@@ -61,7 +61,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="DoAuditSwitchAsync{T}(Task{Option{T}}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
 		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<T, Task> some, Func<IMsg?, Task> none) =>
-			DoAuditSwitchAsync(
+			F.OptionF.AuditSwitchAsync(
 				@this,
 				some: some,
 				none: none

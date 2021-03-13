@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static Jeebs.Option.Msg;
+using static F.OptionF.Msg;
 
 namespace Jeebs.OptionExtensions_Tests
 {
@@ -22,7 +22,7 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<bool> asyncPredicate(int x) => Task.FromResult(x == value);
 
 			// Act
-			var r0 = await OptionExtensions.DoFilterAsync(task, asyncPredicate, null);
+			var r0 = await OptionExtensions_FilterAsync.DoFilterAsync(task, asyncPredicate, null);
 			var r1 = await task.FilterAsync(syncPredicate);
 			var r2 = await task.FilterAsync(asyncPredicate);
 
@@ -45,17 +45,17 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<bool> asyncPredicate(int x) => Task.FromResult(x != value);
 
 			// Act
-			var r0 = await OptionExtensions.DoFilterAsync(task, asyncPredicate, null);
+			var r0 = await OptionExtensions_FilterAsync.DoFilterAsync(task, asyncPredicate, null);
 			var r1 = await task.FilterAsync(syncPredicate);
 			var r2 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
 			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<PredicateWasFalseMsg>(n0.Reason);
+			Assert.IsType<FilterPredicateWasFalseMsg>(n0.Reason);
 			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<PredicateWasFalseMsg>(n1.Reason);
+			Assert.IsType<FilterPredicateWasFalseMsg>(n1.Reason);
 			var n2 = Assert.IsType<None<int>>(r2);
-			Assert.IsType<PredicateWasFalseMsg>(n2.Reason);
+			Assert.IsType<FilterPredicateWasFalseMsg>(n2.Reason);
 		}
 
 		[Fact]
@@ -68,7 +68,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var asyncPredicate = Substitute.For<Func<int, Task<bool>>>();
 
 			// Act
-			var r0 = await OptionExtensions.DoFilterAsync(task, asyncPredicate, null);
+			var r0 = await OptionExtensions_FilterAsync.DoFilterAsync(task, asyncPredicate, null);
 			var r1 = await task.FilterAsync(syncPredicate);
 			var r2 = await task.FilterAsync(asyncPredicate);
 

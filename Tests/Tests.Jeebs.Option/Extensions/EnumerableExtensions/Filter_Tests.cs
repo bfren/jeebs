@@ -21,7 +21,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var list = new[] { o0, o1, o2, o3 };
 
 			// Act
-			var result = list.Filter();
+			var result = EnumerableExtensions_Filter.DoFilter(list, null);
 
 			// Assert
 			Assert.Collection(result,

@@ -4,23 +4,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static F.OptionF;
+using Jeebs;
 
-namespace Jeebs
+namespace F
 {
-	public abstract partial class Option<T>
+	public static partial class OptionF
 	{
 		/// <summary>
-		/// Unwrap the single value of this option - if this is a <see cref="Some{T}"/>
+		/// Unwrap the value of <paramref name="option"/> - if it is <see cref="Some{T}"/>
 		/// and <typeparamref name="T"/> implements <see cref="IEnumerable{T}"/>
 		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="U">Single value type</typeparam>
+		/// <param name="option">Input option</param>
 		/// <param name="noItems">[Optional] Function to run if the Option value is a list with no items</param>
 		/// <param name="tooMany">[Optional] Function to run if the Option value is a list with more than one item</param>
 		/// <param name="notAList">[Optional] Function to run if the Option value is not a list</param>
-		internal Option<U> DoUnwrapSingle<U>(Func<IMsg>? noItems, Func<IMsg>? tooMany, Func<IMsg>? notAList) =>
+		public static Option<U> UnwrapSingle<T, U>(Option<T> option, Func<IMsg>? noItems, Func<IMsg>? tooMany, Func<IMsg>? notAList) =>
 			Catch(() =>
 				Switch(
+					option,
 					some: v =>
 						v switch
 						{
@@ -42,13 +45,6 @@ namespace Jeebs
 				)
 			);
 
-		/// <inheritdoc cref="DoUnwrapSingle{U}(Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-		public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			DoUnwrapSingle<U>(noItems, tooMany, notAList);
-	}
-
-	public abstract partial class Option
-	{
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{

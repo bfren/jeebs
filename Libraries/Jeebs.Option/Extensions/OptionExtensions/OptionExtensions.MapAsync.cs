@@ -10,15 +10,15 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: MapAsync
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_MapAsync
 	{
 		/// <inheritdoc cref="Option{T}.DoMapAsync{U}(Func{T, Task{U}}, Handler?)"/>
-		public static async Task<Option<U>> DoMapAsync<T, U>(
+		public static Task<Option<U>> DoMapAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<U>> map,
 			Handler? handler
 		) =>
-			await (await @this).DoMapAsync(map, handler);
+			F.OptionF.MapAsync(@this, map, handler);
 
 		/// <inheritdoc cref="DoMapAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Handler?)"/>
 		public static Task<Option<U>> MapAsync<T, U>(
@@ -26,7 +26,7 @@ namespace Jeebs
 			Func<T, U> map,
 			Handler? handler = null
 		) =>
-			DoMapAsync(@this, x => Task.FromResult(map(x)), handler);
+			F.OptionF.MapAsync(@this, x => Task.FromResult(map(x)), handler);
 
 		/// <inheritdoc cref="DoMapAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Handler?)"/>
 		public static Task<Option<U>> MapAsync<T, U>(
@@ -34,6 +34,6 @@ namespace Jeebs
 			Func<T, Task<U>> map,
 			Handler? handler = null
 		) =>
-			DoMapAsync(@this, map, handler);
+			F.OptionF.MapAsync(@this, map, handler);
 	}
 }

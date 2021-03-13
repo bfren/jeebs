@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Jeebs
 {
-	public static partial class EnumerableExtensions
+	public static class EnumerableExtensions_Filter
 	{
 		/// <summary>
 		/// Filter elements to return only the values of those that are <see cref="Some{T}"/>
@@ -28,6 +28,14 @@ namespace Jeebs
 			}
 		}
 
+		/// <inheritdoc cref="DoFilter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
+		public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this) =>
+			DoFilter(@this, null);
+
+		/// <inheritdoc cref="DoFilter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
+		public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this, Func<T, bool> predicate) =>
+			DoFilter(@this, predicate);
+
 		/// <summary>
 		/// Filter elements to return only <see cref="Some{T}"/> and transform using <paramref name="map"/>
 		/// </summary>
@@ -42,14 +50,6 @@ namespace Jeebs
 				yield return map(some);
 			}
 		}
-
-		/// <inheritdoc cref="DoFilter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
-		public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this) =>
-			DoFilter(@this, null);
-
-		/// <inheritdoc cref="DoFilter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
-		public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this, Func<T, bool> predicate) =>
-			DoFilter(@this, predicate);
 
 		/// <inheritdoc cref="DoFilter{T, U}(IEnumerable{Option{T}}, Func{T, U})"/>
 		public static IEnumerable<U> Filter<T, U>(this IEnumerable<Option<T>> @this, Func<T, U> map) =>

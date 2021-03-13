@@ -30,11 +30,11 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = new FakeOption();
-			var some = Substitute.For<Func<int, Task>>();
-			var none = Substitute.For<Func<IMsg?, Task>>();
+			var some = Substitute.For<Action<int>>();
+			var none = Substitute.For<Action<IMsg?>>();
 
 			// Act
-			void result() => option.DoAuditSwitchAsync(some, none);
+			void result() => option.DoAuditSwitch(some, none);
 
 			// Assert
 			Assert.Throws<UnknownOptionException>(result);

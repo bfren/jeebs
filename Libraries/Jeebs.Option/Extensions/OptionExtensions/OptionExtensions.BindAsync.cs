@@ -10,15 +10,15 @@ namespace Jeebs
 	/// <summary>
 	/// <see cref="Option{T}"/> Extensions: BindAsync
 	/// </summary>
-	public static partial class OptionExtensions
+	public static class OptionExtensions_BindAsync
 	{
 		/// <inheritdoc cref="Option{T}.DoBindAsync{U}(Func{T, Task{Option{U}}}, Handler?)"/>
-		internal static async Task<Option<U>> DoBindAsync<T, U>(
+		internal static Task<Option<U>> DoBindAsync<T, U>(
 			Task<Option<T>> @this,
 			Func<T, Task<Option<U>>> bind,
 			Handler? handler
 		) =>
-			await (await @this).DoBindAsync(bind, handler);
+			F.OptionF.BindAsync(@this, bind, handler);
 
 		/// <inheritdoc cref="DoBindAsync{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Handler?)"/>
 		public static Task<Option<U>> BindAsync<T, U>(
@@ -26,7 +26,7 @@ namespace Jeebs
 			Func<T, Option<U>> bind,
 			Handler? handler = null
 		) =>
-			DoBindAsync(@this, x => Task.FromResult(bind(x)), handler);
+			F.OptionF.BindAsync(@this, x => Task.FromResult(bind(x)), handler);
 
 		/// <inheritdoc cref="DoBindAsync{T, U}(Task{Option{T}}, Func{T, Task{Option{U}}}, Handler?)"/>
 		public static Task<Option<U>> BindAsync<T, U>(
@@ -34,6 +34,6 @@ namespace Jeebs
 			Func<T, Task<Option<U>>> bind,
 			Handler? handler = null
 		) =>
-			DoBindAsync(@this, bind, handler);
+			F.OptionF.BindAsync(@this, bind, handler);
 	}
 }
