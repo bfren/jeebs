@@ -9,7 +9,7 @@ using static F.OptionF;
 
 namespace F.OptionF_Tests
 {
-	public class HandleAuditException_Tests
+	public class Handler_Tests
 	{
 		[Fact]
 		public void If_LogAuditExceptions_Is_Not_Null_Calls_With_Exception()
@@ -38,6 +38,24 @@ namespace F.OptionF_Tests
 
 			// Assert
 			writer.Received().WriteLine("Audit Error: {0}", exception);
+		}
+
+		[Fact]
+		public void Writes_To_LogAuditExceptions()
+		{
+			// Arrange
+			var handler = Substitute.For<Action<Exception>>();
+			LogAuditExceptions = handler;
+			var exception = new Exception();
+
+			// Act
+			HandleAuditException(exception);
+
+			// Assert
+			handler.Received().Invoke(exception);
+
+			// Reset
+			LogAuditExceptions = null;
 		}
 	}
 }

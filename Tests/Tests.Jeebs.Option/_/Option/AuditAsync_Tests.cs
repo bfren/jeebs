@@ -19,13 +19,11 @@ namespace Jeebs.Option_Tests
 			var audit = Substitute.For<Func<Option<bool>, Task>>();
 
 			// Act
-			var r0 = await option.DoAuditAsync(audit);
-			var r1 = await option.AuditAsync(audit);
+			var result = await option.AuditAsync(audit);
 
 			// Assert
-			await audit.Received(2).Invoke(option);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			await audit.Received().Invoke(option);
+			Assert.Same(option, result);
 		}
 
 		[Fact]
@@ -35,12 +33,10 @@ namespace Jeebs.Option_Tests
 			var option = Return(F.Rnd.Int);
 
 			// Act
-			var r0 = await option.DoAuditAsync(_ => throw new Exception());
-			var r1 = await option.AuditAsync(_ => throw new Exception());
+			var result = await option.AuditAsync(_ => throw new Exception());
 
 			// Assert
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			Assert.Same(option, result);
 		}
 
 		public class FakeOption : Option<int> { }

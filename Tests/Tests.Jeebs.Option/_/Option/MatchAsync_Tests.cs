@@ -21,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<IMsg?, Task<string>>>();
 
 			// Act
-			Task action() => option.DoMatchAsync(some, none);
+			Task action() => option.MatchAsync(some, none);
 
 			// Assert
 			await Assert.ThrowsAsync<UnknownOptionException>(action);
@@ -36,7 +36,7 @@ namespace Jeebs.Option_Tests
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await option.DoMatchAsync(
+			await option.MatchAsync(
 				some: some,
 				none: Substitute.For<Func<IMsg?, Task<string>>>()
 			);
@@ -127,7 +127,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<string>>();
 
 			// Act
-			await option.DoMatchAsync(
+			await option.MatchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: _ => Task.FromResult(none())
 			);

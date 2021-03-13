@@ -3,15 +3,29 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.Option_Tests
+namespace F.OptionF_Tests
 {
 	public class AuditSwitch_Tests
 	{
+		[Fact]
+		public void Null_Args_Returns_Original_Option()
+		{
+			// Arrange
+			var option = new FakeOption();
+
+			// Act
+			var result = AuditSwitch(option, null, null);
+
+			// Assert
+			Assert.Same(option, result);
+		}
+
 		[Fact]
 		public void If_Unknown_Option_Throws_UnknownOptionException()
 		{
@@ -21,32 +35,28 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Action<IMsg?>>();
 
 			// Act
-			void r0() => option.AuditSwitch(some);
-			void r1() => option.AuditSwitch(none);
-			void r2() => option.AuditSwitch(some, none);
+			void r0() => AuditSwitch(option, some, null);
+			void r1() => AuditSwitch(option, null, none);
 
 			// Assert
 			Assert.Throws<UnknownOptionException>(r0);
 			Assert.Throws<UnknownOptionException>(r1);
-			Assert.Throws<UnknownOptionException>(r2);
 		}
 
 		[Fact]
 		public void Some_Runs_Some_And_Returns_Original_Option()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Action<int>>();
 
 			// Act
-			var r0 = option.AuditSwitch(some);
-			var r1 = option.AuditSwitch(some: some, none: Substitute.For<Action<IMsg?>>());
+			var result = AuditSwitch(option, some, null);
 
 			// Assert
-			some.Received(2).Invoke(value);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			some.Received().Invoke(value);
+			Assert.Same(option, result);
 		}
 
 		[Fact]
@@ -58,20 +68,18 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Action<IMsg?>>();
 
 			// Act
-			var r0 = option.AuditSwitch(none);
-			var r1 = option.AuditSwitch(Substitute.For<Action<int>>(), none);
+			var result = AuditSwitch(option, null, none);
 
 			// Assert
-			none.Received(2).Invoke(msg);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			none.Received().Invoke(msg);
+			Assert.Same(option, result);
 		}
 
 		[Fact]
 		public void Catches_Exception_And_Returns_Original_Option()
 		{
 			// Arrange
-			var some = Return(F.Rnd.Int);
+			var some = Return(Rnd.Int);
 			var none = None<int>(true);
 			var exception = new Exception();
 
@@ -79,16 +87,12 @@ namespace Jeebs.Option_Tests
 			void noneThrow(IMsg? _) => throw exception!;
 
 			// Act
-			var r0 = some.AuditSwitch(someThrow);
-			var r1 = none.AuditSwitch(noneThrow);
-			var r2 = some.AuditSwitch(someThrow, noneThrow);
-			var r3 = none.AuditSwitch(someThrow, noneThrow);
+			var r0 = AuditSwitch(some, someThrow, null);
+			var r1 = AuditSwitch(none, null, noneThrow);
 
 			// Assert
 			Assert.Same(some, r0);
 			Assert.Same(none, r1);
-			Assert.Same(some, r2);
-			Assert.Same(none, r3);
 		}
 
 		public class FakeOption : Option<int> { }

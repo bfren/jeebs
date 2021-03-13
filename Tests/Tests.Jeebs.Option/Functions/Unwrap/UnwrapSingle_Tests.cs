@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
 using static F.OptionF.Msg;
 
-namespace Jeebs.Option_Tests
+namespace F.OptionF_Tests
 {
 	public class UnwrapSingle_Tests
 	{
@@ -20,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var option = new FakeOption();
 
 			// Act
-			var result = option.UnwrapSingle<int>(null, null, null);
+			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);
@@ -35,12 +36,10 @@ namespace Jeebs.Option_Tests
 			var option = None<int>(true);
 
 			// Act
-			var r0 = option.UnwrapSingle<int>(null, null, null);
-			var r1 = option.UnwrapSingle<int>();
+			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			Assert.IsType<None<int>>(r0);
-			Assert.IsType<None<int>>(r1);
+			Assert.IsType<None<int>>(result);
 		}
 
 		[Fact]
@@ -51,14 +50,11 @@ namespace Jeebs.Option_Tests
 			var option = None<int>(reason);
 
 			// Act
-			var r0 = option.UnwrapSingle<int>(null, null, null);
-			var r1 = option.UnwrapSingle<int>();
+			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.Same(reason, n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.Same(reason, n1.Reason);
+			var none = Assert.IsType<None<int>>(result);
+			Assert.Same(reason, none.Reason);
 		}
 
 		[Fact]
@@ -69,14 +65,11 @@ namespace Jeebs.Option_Tests
 			var option = Return(empty);
 
 			// Act
-			var r0 = option.UnwrapSingle<int>(null, null, null);
-			var r1 = option.UnwrapSingle<int>();
+			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnwrapSingleNoItemsMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnwrapSingleNoItemsMsg>(n1.Reason);
+			var none = Assert.IsType<None<int>>(result);
+			Assert.IsType<UnwrapSingleNoItemsMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -88,29 +81,25 @@ namespace Jeebs.Option_Tests
 			var noItems = Substitute.For<Func<IMsg>>();
 
 			// Act
-			option.UnwrapSingle<int>(noItems: noItems, null, null);
-			option.UnwrapSingle<int>(noItems: noItems);
+			UnwrapSingle<IEnumerable<int>, int>(option, noItems: noItems, null, null);
 
 			// Assert
-			noItems.Received(2).Invoke();
+			noItems.Received().Invoke();
 		}
 
 		[Fact]
 		public void Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { F.Rnd.Int, F.Rnd.Int };
+			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
 			var option = Return(list);
 
 			// Act
-			var r0 = option.UnwrapSingle<int>(null, null, null);
-			var r1 = option.UnwrapSingle<int>();
+			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(n1.Reason);
+			var none = Assert.IsType<None<int>>(result);
+			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -122,29 +111,25 @@ namespace Jeebs.Option_Tests
 			var tooMany = Substitute.For<Func<IMsg>>();
 
 			// Act
-			option.UnwrapSingle<int>(null, tooMany: tooMany, null);
-			option.UnwrapSingle<int>(tooMany: tooMany);
+			UnwrapSingle<IEnumerable<int>, int>(option, null, tooMany: tooMany, null);
 
 			// Assert
-			tooMany.Received(2).Invoke();
+			tooMany.Received().Invoke();
 		}
 
 		[Fact]
 		public void Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value);
 
 			// Act
-			var r0 = option.UnwrapSingle<int>(null, null, null);
-			var r1 = option.UnwrapSingle<int>();
+			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnwrapSingleNotAListMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnwrapSingleNotAListMsg>(n1.Reason);
+			var none = Assert.IsType<None<int>>(result);
+			Assert.IsType<UnwrapSingleNotAListMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -156,11 +141,10 @@ namespace Jeebs.Option_Tests
 			var notAList = Substitute.For<Func<IMsg>>();
 
 			// Act
-			option.UnwrapSingle<int>(null, null, notAList: notAList);
-			option.UnwrapSingle<int>(notAList: notAList);
+			var result = UnwrapSingle<int, int>(option, null, null, notAList: notAList);
 
 			// Assert
-			notAList.Received(2).Invoke();
+			notAList.Received().Invoke();
 		}
 
 		[Fact]
@@ -172,7 +156,7 @@ namespace Jeebs.Option_Tests
 			var option = Return(list);
 
 			// Act
-			var result = option.UnwrapSingle<int>(null, null, null);
+			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
 
 			// Assert
 			Assert.Equal(value, result);

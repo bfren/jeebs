@@ -32,7 +32,7 @@ namespace F
 			Bind(True, _ => bind(), null);
 
 		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
-		public static Option<T> Bind<T>(Func<Option<T>> bind, Handler? handler) =>
+		public static Option<T> Bind<T>(Func<Option<T>> bind, Handler handler) =>
 			Bind(True, _ => bind(), handler);
 	}
 }

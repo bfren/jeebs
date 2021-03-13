@@ -2,12 +2,13 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.Option_Tests
+namespace F.OptionF_Tests
 {
 	public class Match_Tests
 	{
@@ -20,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<IMsg?, string>>();
 
 			// Act
-			void action() => option.Match(some, none);
+			void action() => Match(option, some, none);
 
 			// Assert
 			Assert.Throws<UnknownOptionException>(action);
@@ -33,30 +34,13 @@ namespace Jeebs.Option_Tests
 			var value = F.Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Func<int, string>>();
+			var none = Substitute.For<Func<IMsg?, string>>();
 
 			// Act
-			option.Match(
-				some: some,
-				none: Substitute.For<Func<IMsg?, string>>()
-			);
-
-			option.Match(
-				some: some,
-				none: F.Rnd.Str
-			);
-
-			option.Match(
-				some: some,
-				none: Substitute.For<Func<string>>()
-			);
-
-			option.Match(
-				some: some,
-				none: Substitute.For<Func<IMsg?, string>>()
-			);
+			Match(option, some, none);
 
 			// Assert
-			some.Received(4).Invoke(value);
+			some.Received().Invoke(value);
 		}
 
 		[Fact]
@@ -64,13 +48,11 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = None<int>(true);
-			var value = F.Rnd.Str;
+			var value = Rnd.Str;
+			var some = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Match(
-				some: Substitute.For<Func<int, string>>(),
-				none: value
-			);
+			var result = Match(option, some, _ => value);
 
 			// Assert
 			Assert.Equal(value, result);
@@ -81,23 +63,34 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var option = None<int>(true);
-			var none = Substitute.For<Func<string>>();
+			var some = Substitute.For<Func<int, string>>();
+			var none = Substitute.For<Func<IMsg?, string>>();
 
 			// Act
-			option.Match(
-				some: Substitute.For<Func<int, string>>(),
-				none: none
-			);
-
-			option.Match(
-				some: Substitute.For<Func<int, string>>(),
-				none: _ => none()
-			);
+			Match(option, some, none);
 
 			// Assert
-			none.Received(2).Invoke();
+			none.Received().Invoke(Arg.Any<IMsg?>());
+		}
+
+		[Fact]
+		public void If_None_With_Reason_Runs_None_Passes_Reason()
+		{
+			// Arrange
+			var msg = new TestMsg();
+			var option = None<int>(msg);
+			var some = Substitute.For<Func<int, string>>();
+			var none = Substitute.For<Func<IMsg?, string>>();
+
+			// Act
+			Match(option, some, none);
+
+			// Assert
+			none.Received().Invoke(msg);
 		}
 
 		public class FakeOption : Option<int> { }
+
+		public class TestMsg : IMsg { }
 	}
 }

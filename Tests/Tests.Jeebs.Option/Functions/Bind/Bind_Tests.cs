@@ -2,13 +2,14 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
 using static F.OptionF.Msg;
 
-namespace Jeebs.Option_Tests
+namespace F.OptionF_Tests
 {
 	public class Bind_Tests
 	{
@@ -20,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = option.Bind(bind, null);
+			var result = Bind(option, bind, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -29,19 +30,41 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void Exception_Thrown_With_Handler_Calls_Handler()
+		public void Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
-			var option = Return(F.Rnd.Str);
-			var handler = Substitute.For<Handler>();
+			var option = Return(Rnd.Str);
 			var exception = new Exception();
+			Option<int> throwFunc() => throw exception;
 
 			// Act
-			var result = option.Bind<int>(_ => throw exception, handler);
+			var r0 = Bind(option, _ => throwFunc(), null);
+			var r1 = Bind(throwFunc);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
-			handler.Received().Invoke(exception);
+			var n0 = Assert.IsType<None<int>>(r0);
+			Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
+			var n1 = Assert.IsType<None<int>>(r1);
+			Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
+		}
+
+		[Fact]
+		public void Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+		{
+			// Arrange
+			var option = Return(Rnd.Int);
+			var handler = Substitute.For<Handler>();
+			var exception = new Exception();
+			Option<string> throwFunc(int _) => throw exception;
+
+			// Act
+			var r0 = Bind(option, throwFunc, handler);
+			var r1 = Bind(() => throwFunc(Rnd.Int), handler);
+
+			// Assert
+			Assert.IsType<None<string>>(r0);
+			Assert.IsType<None<string>>(r1);
+			handler.Received(2).Invoke(exception);
 		}
 
 		[Fact]
@@ -52,10 +75,10 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var r0 = option.Bind(bind, null);
+			var result = Bind(option, bind, null);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
+			Assert.IsType<None<string>>(result);
 		}
 
 		[Fact]
@@ -67,26 +90,28 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var r0 = option.Bind(bind, null);
+			var result = Bind(option, bind, null);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
+			var none = Assert.IsType<None<string>>(result);
+			Assert.Same(msg, none.Reason);
 		}
 
 		[Fact]
 		public void If_Some_Runs_Bind_Function()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value);
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			option.Bind(bind, null);
+			Bind(option, bind, null);
+			Bind(() => bind(value));
+			Bind(() => bind(value), Substitute.For<Handler>());
 
 			// Assert
-			bind.Received(1).Invoke(value);
+			bind.Received(3).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

@@ -21,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var result = await option.DoMapAsync(map, null);
+			var result = await option.MapAsync(map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -36,9 +36,10 @@ namespace Jeebs.Option_Tests
 			var option = Return(F.Rnd.Str);
 			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
+			Task<int> throwFunc(string _) => throw exception;
 
 			// Act
-			var result = await option.DoMapAsync<int>(_ => throw exception, handler);
+			var result = await option.MapAsync(throwFunc, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(result);
@@ -53,12 +54,10 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.DoMapAsync(map, null);
-			var r1 = await option.MapAsync(map, null);
+			var result = await option.MapAsync(map, null);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			Assert.IsType<None<string>>(result);
 		}
 
 		[Fact]
@@ -70,14 +69,11 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.DoMapAsync(map, null);
-			var r1 = await option.MapAsync(map, null);
+			var result = await option.MapAsync(map, null);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
+			var none = Assert.IsType<None<string>>(result);
+			Assert.Same(msg, none.Reason);
 		}
 
 		[Fact]
@@ -89,11 +85,10 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await option.DoMapAsync(map, null);
 			await option.MapAsync(map, null);
 
 			// Assert
-			await map.Received(2).Invoke(value);
+			await map.Received().Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

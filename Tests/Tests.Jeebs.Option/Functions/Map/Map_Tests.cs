@@ -2,13 +2,14 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
 using static F.OptionF.Msg;
 
-namespace Jeebs.Option_Tests
+namespace F.OptionF_Tests
 {
 	public class Map_Tests
 	{
@@ -20,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Map(map, null);
+			var result = Map(option, map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -29,19 +30,41 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public void Exception_Thrown_With_Handler_Calls_Handler()
+		public void Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
-			var option = Return(F.Rnd.Str);
-			var handler = Substitute.For<Handler>();
+			var option = Return(Rnd.Str);
 			var exception = new Exception();
+			int throwFunc() => throw exception;
 
 			// Act
-			var result = option.Map<int>(_ => throw exception, handler);
+			var r0 = Map(option, _ => throwFunc(), null);
+			var r1 = Map(throwFunc);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
-			handler.Received().Invoke(exception);
+			var n0 = Assert.IsType<None<int>>(r0);
+			Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
+			var n1 = Assert.IsType<None<int>>(r1);
+			Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
+		}
+
+		[Fact]
+		public void Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+		{
+			// Arrange
+			var option = Return(Rnd.Str);
+			var handler = Substitute.For<Handler>();
+			var exception = new Exception();
+			int throwFunc() => throw exception;
+
+			// Act
+			var r0 = Map(option, _ => throwFunc(), handler);
+			var r1 = Map(throwFunc, handler);
+
+			// Assert
+			Assert.IsType<None<int>>(r0);
+			Assert.IsType<None<int>>(r1);
+			handler.Received(2).Invoke(exception);
 		}
 
 		[Fact]
@@ -52,7 +75,7 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Map(map, null);
+			var result = Map(option, map, null);
 
 			// Assert
 			Assert.IsType<None<string>>(result);
@@ -67,7 +90,7 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Map(map, null);
+			var result = Map(option, map, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -78,15 +101,17 @@ namespace Jeebs.Option_Tests
 		public void If_Some_Runs_Map_Function()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
+			var value = Rnd.Int;
 			var option = Return(value);
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			option.Map(map, null);
+			Map(option, map, Substitute.For<Handler>());
+			Map(() => map(value));
+			Map(() => map(value), Substitute.For<Handler>());
 
 			// Assert
-			map.Received().Invoke(value);
+			map.Received(3).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

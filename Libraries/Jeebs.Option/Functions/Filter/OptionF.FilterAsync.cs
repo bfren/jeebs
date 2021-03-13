@@ -24,5 +24,9 @@ namespace F
 					},
 				handler
 			);
+
+		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool}, Handler?)"/>
+		public static async Task<Option<T>> FilterAsync<T>(Task<Option<T>> option, Func<T, Task<bool>> predicate, Handler? handler) =>
+			await FilterAsync(await option, predicate, handler);
 	}
 }

@@ -21,7 +21,7 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var result = await option.DoBindAsync(bind, null);
+			var result = await option.BindAsync(bind, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
@@ -30,7 +30,7 @@ namespace Jeebs.Option_Tests
 		}
 
 		[Fact]
-		public async Task Exception_Thrown_Calls_Handler()
+		public async Task Exception_Thrown_With_Handler_Calls_Handler()
 		{
 			// Arrange
 			var option = Return(F.Rnd.Str);
@@ -38,13 +38,11 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			// Act
-			var r0 = await option.DoBindAsync<int>(_ => throw exception, handler);
-			var r1 = await option.BindAsync<int>(_ => throw exception, handler);
+			var r0 = await option.BindAsync<int>(_ => throw exception, handler);
 
 			// Assert
 			Assert.IsType<None<int>>(r0);
-			Assert.IsType<None<int>>(r1);
-			handler.Received(2).Invoke(exception);
+			handler.Received(1).Invoke(exception);
 		}
 
 		[Fact]
@@ -55,12 +53,10 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await option.DoBindAsync(bind, null);
-			var r1 = await option.BindAsync(bind);
+			var r0 = await option.BindAsync(bind);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
 		}
 
 		[Fact]
@@ -72,14 +68,11 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await option.DoBindAsync(bind, null);
-			var r1 = await option.BindAsync(bind);
+			var r0 = await option.BindAsync(bind, null);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
 			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
 		}
 
 		[Fact]
@@ -91,11 +84,10 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			await option.DoBindAsync(bind, null);
 			await option.BindAsync(bind, null);
 
 			// Assert
-			await bind.Received(2).Invoke(value);
+			await bind.Received(1).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

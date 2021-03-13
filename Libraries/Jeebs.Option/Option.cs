@@ -154,15 +154,15 @@ namespace Jeebs
 			F.OptionF.AuditAsync(this, audit);
 
 		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
-		public Option<T> AuditSwitch(Action<T>? some) =>
+		public Option<T> AuditSwitch(Action<T> some) =>
 			F.OptionF.AuditSwitch(this, some, null);
 
 		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
-		public Option<T> AuditSwitch(Action<IMsg?>? none) =>
+		public Option<T> AuditSwitch(Action<IMsg?> none) =>
 			F.OptionF.AuditSwitch(this, null, none);
 
 		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
-		public Option<T> AuditSwitch(Action<T>? some, Action<IMsg?>? none) =>
+		public Option<T> AuditSwitch(Action<T> some, Action<IMsg?> none) =>
 			F.OptionF.AuditSwitch(this, some, none);
 
 		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg?, Task}?)"/>
@@ -218,11 +218,19 @@ namespace Jeebs
 		#region Map
 
 		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
-		public Option<U> Map<U>(Func<T, U> map, Handler? handler = null) =>
+		public Option<U> Map<U>(Func<T, U> map) =>
+			F.OptionF.Map(this, map, null);
+
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
+		public Option<U> Map<U>(Func<T, U> map, Handler? handler) =>
 			F.OptionF.Map(this, map, handler);
 
 		/// <inheritdoc cref="MapAsync{T, U}(Option{T}, Func{T, Task{U}}, Handler?)"/>
-		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Handler? handler = null) =>
+		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map) =>
+			F.OptionF.MapAsync(this, map, null);
+
+		/// <inheritdoc cref="MapAsync{T, U}(Option{T}, Func{T, Task{U}}, Handler?)"/>
+		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Handler? handler) =>
 			F.OptionF.MapAsync(this, map, handler);
 
 		#endregion

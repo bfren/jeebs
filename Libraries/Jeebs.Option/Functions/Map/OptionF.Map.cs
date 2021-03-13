@@ -32,7 +32,7 @@ namespace F
 			Map(True, _ => map(), null);
 
 		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
-		public static Option<T> Map<T>(Func<T> map, Handler? handler) =>
+		public static Option<T> Map<T>(Func<T> map, Handler handler) =>
 			Map(True, _ => map(), handler);
 	}
 }
