@@ -21,10 +21,18 @@ namespace Jeebs.Linq
 		/// <param name="this">Option</param>
 		/// <param name="predicate">Select where predicate</param>
 		public static Option<T> Where<T>(this Option<T> @this, Func<T, bool> predicate) =>
-			@this.Filter(predicate);
+			F.OptionF.Filter(@this, predicate, null);
+
+		/// <inheritdoc cref="Where{T}(Option{T}, Func{T, bool})"/>
+		public static Task<Option<T>> Where<T>(this Option<T> @this, Func<T, Task<bool>> predicate) =>
+			F.OptionF.FilterAsync(@this, predicate, null);
 
 		/// <inheritdoc cref="Where{T}(Option{T}, Func{T, bool})"/>
 		public static Task<Option<T>> Where<T>(this Task<Option<T>> @this, Func<T, bool> predicate) =>
-			@this.FilterAsync(predicate);
+			F.OptionF.FilterAsync(@this, x => Task.FromResult(predicate(x)), null);
+
+		/// <inheritdoc cref="Where{T}(Option{T}, Func{T, bool})"/>
+		public static Task<Option<T>> Where<T>(this Task<Option<T>> @this, Func<T, Task<bool>> predicate) =>
+			F.OptionF.FilterAsync(@this, predicate, null);
 	}
 }

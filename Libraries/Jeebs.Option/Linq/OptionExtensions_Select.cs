@@ -21,14 +21,18 @@ namespace Jeebs.Linq
 		/// <param name="this">Option</param>
 		/// <param name="f">Return map function</param>
 		public static Option<U> Select<T, U>(this Option<T> @this, Func<T, U> f) =>
-			@this.Map(f);
+			F.OptionF.Map(@this, f, null);
+
+		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
+		public static Task<Option<U>> Select<T, U>(this Option<T> @this, Func<T, Task<U>> f) =>
+			F.OptionF.MapAsync(@this, f, null);
 
 		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
 		public static Task<Option<U>> Select<T, U>(this Task<Option<T>> @this, Func<T, U> f) =>
-			@this.MapAsync(f);
+			F.OptionF.MapAsync(@this, x => Task.FromResult(f(x)), null);
 
 		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
 		public static Task<Option<U>> Select<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> f) =>
-			@this.MapAsync(f);
+			F.OptionF.MapAsync(@this, f, null);
 	}
 }

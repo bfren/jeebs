@@ -22,17 +22,14 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<bool> asyncPredicate(int x) => Task.FromResult(x == value);
 
 			// Act
-			var r0 = await OptionExtensions_FilterAsync.DoFilterAsync(task, asyncPredicate, null);
-			var r1 = await task.FilterAsync(syncPredicate);
-			var r2 = await task.FilterAsync(asyncPredicate);
+			var r0 = await task.FilterAsync(syncPredicate);
+			var r1 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
 			var s0 = Assert.IsType<Some<int>>(r0);
 			Assert.Equal(value, s0.Value);
 			var s1 = Assert.IsType<Some<int>>(r1);
 			Assert.Equal(value, s1.Value);
-			var s2 = Assert.IsType<Some<int>>(r2);
-			Assert.Equal(value, s2.Value);
 		}
 
 		[Fact]
@@ -45,17 +42,14 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<bool> asyncPredicate(int x) => Task.FromResult(x != value);
 
 			// Act
-			var r0 = await OptionExtensions_FilterAsync.DoFilterAsync(task, asyncPredicate, null);
-			var r1 = await task.FilterAsync(syncPredicate);
-			var r2 = await task.FilterAsync(asyncPredicate);
+			var r0 = await task.FilterAsync(syncPredicate);
+			var r1 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
 			var n0 = Assert.IsType<None<int>>(r0);
 			Assert.IsType<FilterPredicateWasFalseMsg>(n0.Reason);
 			var n1 = Assert.IsType<None<int>>(r1);
 			Assert.IsType<FilterPredicateWasFalseMsg>(n1.Reason);
-			var n2 = Assert.IsType<None<int>>(r2);
-			Assert.IsType<FilterPredicateWasFalseMsg>(n2.Reason);
 		}
 
 		[Fact]
@@ -68,17 +62,14 @@ namespace Jeebs.OptionExtensions_Tests
 			var asyncPredicate = Substitute.For<Func<int, Task<bool>>>();
 
 			// Act
-			var r0 = await OptionExtensions_FilterAsync.DoFilterAsync(task, asyncPredicate, null);
-			var r1 = await task.FilterAsync(syncPredicate);
-			var r2 = await task.FilterAsync(asyncPredicate);
+			var r0 = await task.FilterAsync(syncPredicate);
+			var r1 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
 			var n0 = Assert.IsType<None<int>>(r0);
 			Assert.Same(reason, n0.Reason);
 			var n1 = Assert.IsType<None<int>>(r1);
 			Assert.Same(reason, n1.Reason);
-			var n2 = Assert.IsType<None<int>>(r2);
-			Assert.Same(reason, n2.Reason);
 		}
 
 		public record TestMsg : IMsg { }

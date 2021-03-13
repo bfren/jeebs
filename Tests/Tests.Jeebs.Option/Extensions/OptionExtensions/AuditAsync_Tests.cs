@@ -20,15 +20,13 @@ namespace Jeebs.OptionExtensions_Tests
 			var audit = Substitute.For<Func<Option<bool>, Task>>();
 
 			// Act
-			var r0 = await OptionExtensions_AuditAsync.DoAuditAsync(task, audit);
-			var r1 = await task.AuditAsync(v => { audit(v); });
-			var r2 = await task.AuditAsync(audit);
+			var r0 = await task.AuditAsync(v => { audit(v); });
+			var r1 = await task.AuditAsync(audit);
 
 			// Assert
 			await audit.Received(3).Invoke(option);
 			Assert.Same(option, r0);
 			Assert.Same(option, r1);
-			Assert.Same(option, r2);
 		}
 
 		[Fact]
@@ -42,14 +40,12 @@ namespace Jeebs.OptionExtensions_Tests
 			Task funcThrow(Option<int> _) => throw new Exception();
 
 			// Act
-			var r0 = await OptionExtensions_AuditAsync.DoAuditAsync(task, _ => throw new Exception());
-			var r1 = await task.AuditAsync(actionThrow);
-			var r2 = await task.AuditAsync(funcThrow);
+			var r0 = await task.AuditAsync(actionThrow);
+			var r1 = await task.AuditAsync(funcThrow);
 
 			// Assert
 			Assert.Same(option, r0);
 			Assert.Same(option, r1);
-			Assert.Same(option, r2);
 		}
 
 		public class FakeOption : Option<int> { }

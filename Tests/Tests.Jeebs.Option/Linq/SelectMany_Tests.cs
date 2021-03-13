@@ -6,7 +6,7 @@ using Jeebs.Linq;
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.OptionExtensions_Tests
+namespace Jeebs.Linq_Tests
 {
 	public class SelectMany_Tests
 	{

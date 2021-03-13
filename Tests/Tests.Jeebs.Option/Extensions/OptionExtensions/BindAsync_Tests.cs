@@ -14,23 +14,6 @@ namespace Jeebs.OptionExtensions_Tests
 	public class BindAsync_Tests
 	{
 		[Fact]
-		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
-		{
-			// Arrange
-			var option = new FakeOption();
-			var task = option.AsTask;
-			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
-
-			// Act
-			var result = await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
-
-			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<UnknownOptionException>(msg.Exception);
-		}
-
-		[Fact]
 		public async Task Exception_Thrown_Calls_Handler()
 		{
 			// Arrange
@@ -43,15 +26,13 @@ namespace Jeebs.OptionExtensions_Tests
 			Task<Option<string>> asyncThrow(int _) => throw exception;
 
 			// Act
-			var r0 = await OptionExtensions_BindAsync.DoBindAsync(task, asyncThrow, handler);
-			var r1 = await task.BindAsync(syncThrow, handler);
-			var r2 = await task.BindAsync(asyncThrow, handler);
+			var r0 = await task.BindAsync(syncThrow, handler);
+			var r1 = await task.BindAsync(asyncThrow, handler);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
 			Assert.IsType<None<string>>(r1);
-			Assert.IsType<None<string>>(r2);
-			handler.Received(3).Invoke(exception);
+			handler.Received(2).Invoke(exception);
 		}
 
 		[Fact]
@@ -63,14 +44,12 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
-			var r1 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
-			var r2 = await task.BindAsync(bind);
+			var r0 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
+			var r1 = await task.BindAsync(bind);
 
 			// Assert
 			Assert.IsType<None<string>>(r0);
 			Assert.IsType<None<string>>(r1);
-			Assert.IsType<None<string>>(r2);
 		}
 
 		[Fact]
@@ -83,17 +62,14 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
-			var r1 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
-			var r2 = await task.BindAsync(bind);
+			var r0 = await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
+			var r1 = await task.BindAsync(bind);
 
 			// Assert
 			var n0 = Assert.IsType<None<string>>(r0);
 			Assert.Same(msg, n0.Reason);
 			var n1 = Assert.IsType<None<string>>(r1);
 			Assert.Same(msg, n1.Reason);
-			var n2 = Assert.IsType<None<string>>(r2);
-			Assert.Same(msg, n2.Reason);
 		}
 
 		[Fact]
@@ -106,12 +82,11 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			await OptionExtensions_BindAsync.DoBindAsync(task, bind, null);
 			await task.BindAsync(v => bind(v).GetAwaiter().GetResult(), null);
 			await task.BindAsync(bind, null);
 
 			// Assert
-			await bind.Received(3).Invoke(value);
+			await bind.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

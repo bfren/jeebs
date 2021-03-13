@@ -12,10 +12,6 @@ namespace Jeebs
 	public static class OptionExtensions_MatchAsync
 	{
 		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
-		internal static Task<U> DoMatchAsync<T, U>(Task<Option<T>> @this, Func<T, Task<U>> some, Func<IMsg?, Task<U>> none) =>
-			F.OptionF.MatchAsync(@this, some, none);
-
-		/// <inheritdoc cref="F.OptionF.MatchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{IMsg?, Task{U}})"/>
 		public static Task<U> MatchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, U none) =>
 			F.OptionF.MatchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => Task.FromResult(none));
 

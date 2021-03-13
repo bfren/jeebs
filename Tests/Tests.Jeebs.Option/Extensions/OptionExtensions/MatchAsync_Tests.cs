@@ -13,22 +13,6 @@ namespace Jeebs.Option_Tests
 	public class MatchExtensionsAsync_Tests
 	{
 		[Fact]
-		public async Task If_Unknown_Option_Throws_UnknownOptionException()
-		{
-			// Arrange
-			var option = new FakeOption();
-			var task = option.AsTask;
-			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg?, Task<string>>>();
-
-			// Act
-			Task action() => OptionExtensions_MatchAsync.DoMatchAsync(task, some, none);
-
-			// Assert
-			await Assert.ThrowsAsync<UnknownOptionException>(action);
-		}
-
-		[Fact]
 		public async Task If_Some_Runs_Some()
 		{
 			// Arrange
@@ -38,12 +22,6 @@ namespace Jeebs.Option_Tests
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await OptionExtensions_MatchAsync.DoMatchAsync(
-				task,
-				some: some,
-				none: Substitute.For<Func<IMsg?, Task<string>>>()
-			);
-
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: F.Rnd.Str
@@ -100,7 +78,7 @@ namespace Jeebs.Option_Tests
 			);
 
 			// Assert
-			await some.Received(12).Invoke(value);
+			await some.Received(11).Invoke(value);
 		}
 
 		[Fact]
@@ -148,12 +126,6 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<string>>();
 
 			// Act
-			await OptionExtensions_MatchAsync.DoMatchAsync(
-				task,
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: _ => Task.FromResult(none())
-			);
-
 			await task.MatchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: none()
@@ -215,7 +187,7 @@ namespace Jeebs.Option_Tests
 			);
 
 			// Assert
-			none.Received(13).Invoke();
+			none.Received(12).Invoke();
 		}
 
 		public class FakeOption : Option<int> { }

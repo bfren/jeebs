@@ -13,36 +13,6 @@ namespace Jeebs.OptionExtensions_Tests
 	public class AuditSwitchAsync_Tests
 	{
 		[Fact]
-		public async Task Null_Args_Returns_Original_Option()
-		{
-			// Arrange
-			var option = Return(F.Rnd.Int);
-			var task = option.AsTask;
-
-			// Act
-			var result = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, null, null);
-
-			// Assert
-			Assert.Same(option, result);
-		}
-
-		[Fact]
-		public async Task If_Unknown_Option_Throws_UnknownOptionException()
-		{
-			// Arrange
-			var option = new FakeOption();
-			var task = option.AsTask;
-			var some = Substitute.For<Func<int, Task>>();
-			var none = Substitute.For<Func<IMsg?, Task>>();
-
-			// Act
-			Task result() => OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, some, none);
-
-			// Assert
-			await Assert.ThrowsAsync<UnknownOptionException>(result);
-		}
-
-		[Fact]
 		public async Task Some_Runs_Some_And_Returns_Original_Option()
 		{
 			// Arrange
@@ -52,19 +22,17 @@ namespace Jeebs.OptionExtensions_Tests
 			var some = Substitute.For<Func<int, Task>>();
 
 			// Act
-			var r0 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, some, null);
-			var r1 = await task.AuditSwitchAsync(some: _ => { some(value); });
-			var r2 = await task.AuditSwitchAsync(some: some);
-			var r3 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg?>>());
-			var r4 = await task.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg?, Task>>());
+			var r0 = await task.AuditSwitchAsync(some: _ => { some(value); });
+			var r1 = await task.AuditSwitchAsync(some: some);
+			var r2 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg?>>());
+			var r3 = await task.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg?, Task>>());
 
 			// Assert
-			await some.Received(5).Invoke(value);
+			await some.Received(4).Invoke(value);
 			Assert.Same(option, r0);
 			Assert.Same(option, r1);
 			Assert.Same(option, r2);
 			Assert.Same(option, r3);
-			Assert.Same(option, r4);
 		}
 
 		[Fact]
@@ -77,19 +45,17 @@ namespace Jeebs.OptionExtensions_Tests
 			var none = Substitute.For<Func<IMsg?, Task>>();
 
 			// Act
-			var r0 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(task, null, none);
-			var r1 = await task.AuditSwitchAsync(none: _ => { none(msg); });
-			var r2 = await task.AuditSwitchAsync(none: none);
-			var r3 = await task.AuditSwitchAsync(some: Substitute.For<Action<int>>(), none: _ => none(msg));
-			var r4 = await task.AuditSwitchAsync(some: Substitute.For<Func<int, Task>>(), none: none);
+			var r0 = await task.AuditSwitchAsync(none: _ => { none(msg); });
+			var r1 = await task.AuditSwitchAsync(none: none);
+			var r2 = await task.AuditSwitchAsync(some: Substitute.For<Action<int>>(), none: _ => none(msg));
+			var r3 = await task.AuditSwitchAsync(some: Substitute.For<Func<int, Task>>(), none: none);
 
 			// Assert
-			await none.Received(5).Invoke(msg);
+			await none.Received(4).Invoke(msg);
 			Assert.Same(option, r0);
 			Assert.Same(option, r1);
 			Assert.Same(option, r2);
 			Assert.Same(option, r3);
-			Assert.Same(option, r4);
 		}
 
 		[Fact]
@@ -108,28 +74,24 @@ namespace Jeebs.OptionExtensions_Tests
 			Task noneFuncThrow(IMsg? _) => throw exception!;
 
 			// Act
-			var r0 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(t0, someFuncThrow, null);
 			var r1 = await t0.AuditSwitchAsync(some: someActionThrow);
 			var r2 = await t0.AuditSwitchAsync(some: someFuncThrow);
-			var r3 = await OptionExtensions_AuditSwitchAsync.DoAuditSwitchAsync(t1, null, noneFuncThrow);
-			var r4 = await t1.AuditSwitchAsync(none: noneActionThrow);
-			var r5 = await t1.AuditSwitchAsync(none: noneFuncThrow);
-			var r6 = await t0.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
-			var r7 = await t0.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
-			var r8 = await t1.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
-			var r9 = await o1.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
+			var r3 = await t1.AuditSwitchAsync(none: noneActionThrow);
+			var r4 = await t1.AuditSwitchAsync(none: noneFuncThrow);
+			var r5 = await t0.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
+			var r6 = await t0.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
+			var r7 = await t1.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
+			var r8 = await o1.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
 
 			// Assert
-			Assert.Same(o0, r0);
 			Assert.Same(o0, r1);
 			Assert.Same(o0, r2);
 			Assert.Same(o1, r3);
 			Assert.Same(o1, r4);
-			Assert.Same(o1, r5);
+			Assert.Same(o0, r5);
 			Assert.Same(o0, r6);
-			Assert.Same(o0, r7);
+			Assert.Same(o1, r7);
 			Assert.Same(o1, r8);
-			Assert.Same(o1, r9);
 		}
 
 		public class FakeOption : Option<int>
