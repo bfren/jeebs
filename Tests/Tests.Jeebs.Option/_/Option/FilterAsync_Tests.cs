@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static Jeebs.Option.Msg;
 
 namespace Jeebs.Option_Tests
 {
