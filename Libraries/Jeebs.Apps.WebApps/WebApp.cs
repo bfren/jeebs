@@ -55,7 +55,7 @@ namespace Jeebs.Apps
 
 					// Configure
 					.Configure(
-						(host, app) => Configure(host.HostingEnvironment, host.Configuration, app)
+						(host, app) => Configure(host.HostingEnvironment, app, host.Configuration)
 					)
 
 					// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
@@ -92,9 +92,9 @@ namespace Jeebs.Apps
 		/// Configure Application
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
+		/// <param name="config">IConfiguration</param>
+		protected virtual void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
 		{
 			// Logging
 			app.UseMiddleware<LoggerMiddleware>();
@@ -116,8 +116,8 @@ namespace Jeebs.Apps
 				Configure_SecurityHeaders(app);
 			}
 
-			// Authentication
-			Configure_Authentication(app, config);
+			// Authorisation
+			Configure_Auth(app, config);
 
 			// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
 		}
@@ -157,15 +157,15 @@ namespace Jeebs.Apps
 		}
 
 		/// <summary>
-		/// Override to configure authentication
+		/// Override to configure authentication and authorisation
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
 		/// <param name="config">IConfiguration</param>
-		protected virtual void Configure_Authentication(IApplicationBuilder app, IConfiguration config)
+		protected virtual void Configure_Auth(IApplicationBuilder app, IConfiguration config)
 		{
 			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
 			{
-				app.UseAuthentication();
+				app.UseAuthorization();
 			}
 		}
 	}

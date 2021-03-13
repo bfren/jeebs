@@ -10,7 +10,7 @@ namespace MvcApp.Controllers
 {
 	public class HomeController : Jeebs.Mvc.Controller
 	{
-		public HomeController(ILog log) : base(log) { }
+		public HomeController(ILog<HomeController> log) : base(log) { }
 
 		public IActionResult Index()
 		{

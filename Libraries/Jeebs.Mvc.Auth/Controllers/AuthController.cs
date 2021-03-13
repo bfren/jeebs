@@ -17,26 +17,26 @@ namespace Jeebs.Mvc.Auth.Controllers
 	/// <summary>
 	/// Implement this controller to add support for user authentication
 	/// </summary>
-	/// <typeparam name="TUserModel">User type</typeparam>
-	public abstract class AuthController<TUserModel> : Controller
-		where TUserModel : IUserModel, new()
+	/// <typeparam name="TUser">User type</typeparam>
+	public abstract class AuthController<TUser> : Controller
+		where TUser : IUserModel, IAuthUser
 	{
 		/// <summary>
 		/// IDataAuthProvider
 		/// </summary>
-		protected IDataAuthProvider Auth { get; init; }
+		protected IDataAuthProvider<TUser> Auth { get; init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
 		/// </summary>
-		protected virtual Func<TUserModel, List<Claim>>? AddClaims { get; }
+		protected virtual Func<TUser, List<Claim>>? AddClaims { get; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="auth">IDataAuthProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthController(IDataAuthProvider auth, ILog log) : base(log) =>
+		protected AuthController(IDataAuthProvider<TUser> auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		{
 			// Validate user
 			var validate = await ValidateUserAsync(model.Email, model.Password);
-			if (validate is Some<TUserModel> user)
+			if (validate is Some<TUser> user)
 			{
 				// Get user principal
 				Log.Debug("User validated.");
@@ -91,14 +91,14 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="email">User email</param>
 		/// <param name="password">User password</param>
-		internal virtual Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
-			Auth.ValidateUserAsync<TUserModel>(email, password);
+		internal Task<Option<TUser>> ValidateUserAsync(string email, string password) =>
+			Auth.ValidateUserAsync(email, password);
 
 		/// <summary>
 		/// Get principal for specified user with all necessary claims
 		/// </summary>
 		/// <param name="user">User entity</param>
-		internal ClaimsPrincipal GetPrincipal(TUserModel user)
+		internal ClaimsPrincipal GetPrincipal(TUser user)
 		{
 			// Create claims object
 			var claims = new List<Claim>

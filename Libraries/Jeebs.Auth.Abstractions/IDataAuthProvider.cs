@@ -7,28 +7,34 @@ using Jeebs.Auth.Data;
 namespace Jeebs.Auth
 {
 	/// <summary>
-	/// User authentication provider
+	/// Data context User authentication provider
 	/// </summary>
-	public interface IDataAuthProvider
+	/// <typeparam name="TUser">User model type</typeparam>
+	public interface IDataAuthProvider<TUser>
+		where TUser : IAuthUser, IUserModel
 	{
 		/// <summary>
 		/// Validate a username and password
 		/// </summary>
-		/// <typeparam name="TUserModel">User model type</typeparam>
 		/// <param name="email">Email (username)</param>
 		/// <param name="password">Password</param>
-		Task<Option<TUserModel>> ValidateUserAsync<TUserModel>(string email, string password)
-			where TUserModel : IUserModel, new();
+		Task<Option<TUser>> ValidateUserAsync(string email, string password);
+	}
 
+	/// <summary>
+	/// Data context User authentication provider with Role support
+	/// </summary>
+	/// <typeparam name="TUser">User model type</typeparam>
+	/// <typeparam name="TRole">Role model type</typeparam>
+	public interface IDataAuthProvider<TUser, TRole> : IDataAuthProvider<TUser>
+		where TUser : IAuthUser, IUserModel<TRole>
+		where TRole : IRoleModel
+	{
 		/// <summary>
 		/// Validate a username and password
 		/// </summary>
-		/// <typeparam name="TUserModel">User model type</typeparam>
-		/// <typeparam name="TRoleModel">Role model type</typeparam>
 		/// <param name="email">Email (username)</param>
 		/// <param name="password">Password</param>
-		Task<Option<TUserModel>> ValidateUserAsync<TUserModel, TRoleModel>(string email, string password)
-			where TUserModel : IUserModel<TRoleModel>, new()
-			where TRoleModel : IRoleModel, new();
+		new Task<Option<TUser>> ValidateUserAsync(string email, string password);
 	}
 }

@@ -2,8 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Config;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,30 +19,10 @@ namespace Jeebs.Mvc.Auth
 		/// <param name="config">IConfiguration</param>
 		public static AuthBuilder AddAuth(this IServiceCollection @this, IConfiguration config)
 		{
+			// Start fluent configuration
 			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
 			{
-				// Set default authentication scheme
-				var builder = @this.AddAuthentication(auth.Scheme switch
-				{
-					AuthScheme.Cookies =>
-						CookieAuthenticationDefaults.AuthenticationScheme,
-
-					_ =>
-						throw new Jx.Config.UnsupportedAuthenticationSchemeException(auth.Scheme?.ToString() ?? "unknown")
-				});
-
-				// Add cookie info
-				if (auth.Scheme == AuthScheme.Cookies)
-				{
-					builder.AddCookie(opt =>
-					{
-						opt.LoginPath = new PathString(auth.LoginPath ?? "/auth/signin");
-						opt.AccessDeniedPath = new PathString(auth.AccessDeniedPath ?? "/auth/denied");
-					});
-				}
-
-				// Start fluent configuration
-				return new(@this, builder, auth);
+				return new(@this, auth);
 			}
 
 			// Auth must be enable in configuration settings

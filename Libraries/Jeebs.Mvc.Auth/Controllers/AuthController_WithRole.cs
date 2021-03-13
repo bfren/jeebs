@@ -11,26 +11,22 @@ using Jeebs.Auth.Data;
 namespace Jeebs.Mvc.Auth.Controllers
 {
 	/// <summary>
-	/// Implement this controller to add support for user authentication
+	/// Implement this controller to add support for user authentication with roles
 	/// </summary>
-	/// <typeparam name="TUserModel">User type</typeparam>
-	/// <typeparam name="TRoleModel">Role type</typeparam>
-	public abstract class AuthController<TUserModel, TRoleModel> : AuthController<TUserModel>
-		where TUserModel : IUserModel<TRoleModel>, new()
-		where TRoleModel : IRoleModel, new()
+	/// <typeparam name="TUser">User model type</typeparam>
+	/// <typeparam name="TRole">Role model type</typeparam>
+	public abstract class AuthController<TUser, TRole> : AuthController<TUser>
+		where TUser : IUserModel<TRole>, IAuthUser
+		where TRole : IRoleModel
 	{
 		/// <summary>
 		/// Add Role-based claims
 		/// </summary>
-		protected override Func<TUserModel, List<Claim>>? AddClaims =>
+		protected override Func<TUser, List<Claim>>? AddClaims =>
 			user =>
 				user.Roles.ConvertAll(r => new Claim(ClaimTypes.Role, r.Name));
 
 		/// <inheritdoc cref="AuthController{TUserModel}.AuthController(IDataAuthProvider, ILog)"/>
-		protected AuthController(IDataAuthProvider auth, ILog log) : base(auth, log) { }
-
-		/// <inheritdoc/>
-		internal override Task<Option<TUserModel>> ValidateUserAsync(string email, string password) =>
-			Auth.ValidateUserAsync<TUserModel, TRoleModel>(email, password);
+		protected AuthController(IDataAuthProvider<TUser> auth, ILog log) : base(auth, log) { }
 	}
 }

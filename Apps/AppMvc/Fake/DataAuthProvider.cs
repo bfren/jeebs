@@ -10,48 +10,27 @@ using static F.OptionF;
 
 namespace AppMvc.Fake
 {
-	public class DataAuthProvider : IDataAuthProvider
+	public class DataAuthProviderWithRole : IDataAuthProvider<Models.UserModel, Models.RoleModel>
 	{
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-		public async Task<Option<TUserModel>> ValidateUserAsync<TUserModel>(string email, string password)
+		public async Task<Option<Models.UserModel>> ValidateUserAsync(string email, string password)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-			where TUserModel : IUserModel, new()
 		{
 			if (password == "fail")
 			{
-				return None<TUserModel>(true);
+				return None<Models.UserModel>(true);
 			}
 
-			return new TUserModel
-			{
-				UserId = new(1),
-				EmailAddress = "ben@bcgdesign.com",
-				FriendlyName = "Ben",
-				IsSuper = true
-			};
-		}
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-		public async Task<Option<TUserModel>> ValidateUserAsync<TUserModel, TRoleModel>(string email, string password)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-			where TUserModel : IUserModel<TRoleModel>, new()
-			where TRoleModel : IRoleModel, new()
-		{
-			if (password == "fail")
-			{
-				return None<TUserModel>(true);
-			}
-
-			return new TUserModel
+			return new Models.UserModel
 			{
 				UserId = new(1),
 				EmailAddress = "ben@bcgdesign.com",
 				FriendlyName = "Ben",
 				IsSuper = true,
-				Roles = new List<TRoleModel>(new[]
+				Roles = new List<Models.RoleModel>(new[]
 				{
-					new TRoleModel { Name = "One" },
-					new TRoleModel { Name = "Two" },
+					new Models.RoleModel { Name = "One" },
+					new Models.RoleModel { Name = "Two" },
 				})
 			};
 		}

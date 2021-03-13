@@ -15,7 +15,7 @@ namespace Jeebs.Auth.Data
 		/// </summary>
 		/// <param name="email">User email address</param>
 		Task<Option<TUser>> GetAuthUserAsync<TUser>(string email)
-			where TUser : IUserAuth;
+			where TUser : IAuthUser;
 
 		/// <summary>
 		/// Update the user's last sign in

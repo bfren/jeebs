@@ -54,7 +54,7 @@ namespace Jeebs.Auth.Data.Entities
 		public bool IsSuper { get; init; }
 
 		/// <inheritdoc/>
-		public DateTime? LastSignedIn { get; init; }
+		public DateTimeOffset? LastSignedIn { get; init; }
 
 		/// <summary>
 		/// Use the default method of getting the user's full name

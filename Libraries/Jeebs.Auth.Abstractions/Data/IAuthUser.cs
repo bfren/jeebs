@@ -9,18 +9,8 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User properties used during authentication
 	/// </summary>
-	public interface IUserAuth : IEntity<long>
+	public interface IAuthUser : IEntity<long>, IUserWithUserId
 	{
-		/// <summary>
-		/// User ID
-		/// </summary>
-		UserId UserId { get; init; }
-
-		/// <summary>
-		/// Email address
-		/// </summary>
-		string EmailAddress { get; init; }
-
 		/// <summary>
 		/// The user's encrypted password
 		/// </summary>
@@ -34,6 +24,6 @@ namespace Jeebs.Auth.Data
 		/// <summary>
 		/// The last time the user signed in
 		/// </summary>
-		DateTime? LastSignedIn { get; init; }
+		DateTimeOffset? LastSignedIn { get; init; }
 	}
 }

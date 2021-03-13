@@ -189,10 +189,10 @@ namespace Jeebs.Apps
 		#region Configure
 
 		/// <inheritdoc/>
-		protected override void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
+		protected override void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
 		{
 			// Base
-			base.Configure(env, config, app);
+			base.Configure(env, app, config);
 
 			// Compression
 			Configure_ResponseCompression(app);
@@ -207,13 +207,13 @@ namespace Jeebs.Apps
 			Configure_ResponseCaching(app);
 
 			// Redirections
-			Configure_Redirections(config, app);
+			Configure_Redirections(app, config);
 
 			// Routing
 			Configure_Routing(app);
 
-			// Authorisation
-			Configure_Authorisation(app);
+			// Authentication and Authorisation
+			Configure_Auth(app, config);
 
 			// Endpoint Routing
 			Configure_Endpoints(app);
@@ -292,9 +292,9 @@ namespace Jeebs.Apps
 		/// <summary>
 		/// Override to configure redirections
 		/// </summary>
-		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Redirections(IConfiguration config, IApplicationBuilder app)
+		/// <param name="config">IConfiguration</param>
+		protected virtual void Configure_Redirections(IApplicationBuilder app, IConfiguration config)
 		{
 			if (config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig)
 			{
@@ -312,12 +312,17 @@ namespace Jeebs.Apps
 		}
 
 		/// <summary>
-		/// Override to configure authorisation
+		/// Override to configure authentication and authorisation
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure_Authorisation(IApplicationBuilder app)
+		/// <param name="config">IConfiguration</param>
+		protected override void Configure_Auth(IApplicationBuilder app, IConfiguration config)
 		{
-			app.UseAuthorization();
+			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+			{
+				app.UseAuthentication();
+				app.UseAuthorization();
+			}
 		}
 
 		/// <summary>

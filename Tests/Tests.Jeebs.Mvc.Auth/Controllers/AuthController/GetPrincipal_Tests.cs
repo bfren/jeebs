@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
+using Jeebs.Data;
 using NSubstitute;
 using Xunit;
 
@@ -18,10 +19,10 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Returns_ClaimsPrincipal_With_User_Info_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IDataAuthProvider>();
+			var auth = Substitute.For<IDataAuthProvider<UserModel>>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthController(auth, log);
-			var user = new UserModel(new(F.Rnd.Lng), F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, true);
+			var user = new UserModel();
 
 			// Act
 			var result = controller.GetPrincipal(user);
@@ -55,19 +56,12 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Returns_ClaimsPrincipal_With_Role_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IDataAuthProvider>();
+			var auth = Substitute.For<IDataAuthProvider<UserModelWithRoles, RoleModel>>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthControllerWithRoles(auth, log);
 			var role0 = new RoleModel(new(F.Rnd.Lng), F.Rnd.Str);
 			var role1 = new RoleModel(new(F.Rnd.Lng), F.Rnd.Str);
-			var user = new UserModelWithRoles(
-				new(F.Rnd.Lng),
-				F.Rnd.Str,
-				F.Rnd.Str,
-				F.Rnd.Str,
-				true,
-				new List<RoleModel>(new[] { role0, role1 })
-			);
+			var user = new UserModelWithRoles(new List<RoleModel>(new[] { role0, role1 }));
 
 			// Act
 			var result = controller.GetPrincipal(user);
@@ -111,27 +105,27 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Adds_Custom_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IDataAuthProvider>();
+			var auth = Substitute.For<IDataAuthProvider<UserModel>>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthControllerWithClaims(auth, log);
-			var user = new UserModel(new(F.Rnd.Lng), F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
+			var user = new UserModel();
 
 			// Act
 			var result = controller.GetPrincipal(user);
 
 			// Assert
-			Assert.Equal(4, result.Claims.Count());
+			Assert.Equal(5, result.Claims.Count());
 			Assert.Contains(result.Claims, c => c.Type == nameof(AuthControllerWithClaims) && c.Value == $"{user.UserId}+{user.FriendlyName}");
 		}
 
 		public class AuthController : AuthController<UserModel>
 		{
-			public AuthController(IDataAuthProvider auth, ILog log) : base(auth, log) { }
+			public AuthController(IDataAuthProvider<UserModel> auth, ILog log) : base(auth, log) { }
 		}
 
 		public class AuthControllerWithRoles : AuthController<UserModelWithRoles, RoleModel>
 		{
-			public AuthControllerWithRoles(IDataAuthProvider auth, ILog log) : base(auth, log) { }
+			public AuthControllerWithRoles(IDataAuthProvider<UserModelWithRoles, RoleModel> auth, ILog log) : base(auth, log) { }
 		}
 
 		public class AuthControllerWithClaims : AuthController<UserModel>
@@ -140,17 +134,17 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 				user =>
 					new() { new(nameof(AuthControllerWithClaims), $"{user.UserId}+{user.FriendlyName}") };
 
-			public AuthControllerWithClaims(IDataAuthProvider auth, ILog log) : base(auth, log) { }
+			public AuthControllerWithClaims(IDataAuthProvider<UserModel> auth, ILog log) : base(auth, log) { }
 		}
 
-		public record UserModel(UserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper) : IUserModel
+		public record UserModel(UserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper, string PasswordHash, bool IsEnabled, DateTimeOffset? LastSignedIn, IStrongId<long> Id) : IUserModel, IAuthUser
 		{
-			public UserModel() : this(new(), string.Empty, string.Empty, string.Empty, false) { }
+			public UserModel() : this(new(), string.Empty, string.Empty, string.Empty, true, string.Empty, false, DateTimeOffset.Now, new UserId()) { }
 		}
 
-		public record UserModelWithRoles(UserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper, List<RoleModel> Roles) : IUserModel<RoleModel>
+		public record UserModelWithRoles(List<RoleModel> Roles) : UserModel, IUserModel<RoleModel>
 		{
-			public UserModelWithRoles() : this(new(), string.Empty, string.Empty, string.Empty, false, new()) { }
+			public UserModelWithRoles() : this(new List<RoleModel>()) { }
 		}
 
 		public record RoleModel(RoleId RoleId, string Name) : IRoleModel

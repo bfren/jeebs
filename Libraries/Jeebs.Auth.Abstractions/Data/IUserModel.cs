@@ -8,13 +8,8 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User model - allows consistent interaction in user interface
 	/// </summary>
-	public interface IUserModel
+	public interface IUserModel : IUserWithUserId
 	{
-		/// <summary>
-		/// User ID
-		/// </summary>
-		public UserId UserId { get; init; }
-
 		/// <summary>
 		/// Email address
 		/// </summary>

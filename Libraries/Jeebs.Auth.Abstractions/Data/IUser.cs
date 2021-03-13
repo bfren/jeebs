@@ -6,7 +6,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User interface
 	/// </summary>
-	public interface IUser : IUserAuth, IUserModel
+	public interface IUser : IAuthUser, IUserModel
 	{
 		/// <summary>
 		/// Given (Christian / first) name

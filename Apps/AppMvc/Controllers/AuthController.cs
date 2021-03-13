@@ -11,7 +11,7 @@ namespace AppMvc.Controllers
 {
 	public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController<UserModel, RoleModel>
 	{
-		public AuthController(IDataAuthProvider auth, ILog<AuthController> log) : base(auth, log) { }
+		public AuthController(IDataAuthProvider<UserModel, RoleModel> auth, ILog<AuthController> log) : base(auth, log) { }
 
 		[Authorize]
 		public IActionResult Index() =>
