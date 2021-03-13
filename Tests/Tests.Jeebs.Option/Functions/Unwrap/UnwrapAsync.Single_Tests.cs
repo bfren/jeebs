@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using Jeebs;
 using static F.OptionF;
 using static F.OptionF.Msg;
 

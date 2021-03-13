@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs;
 using NSubstitute;
 using Xunit;
-using Jeebs;
 using static F.OptionF;
 
 namespace F.OptionF_Tests
