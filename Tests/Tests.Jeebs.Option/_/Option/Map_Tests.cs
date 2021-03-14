@@ -20,12 +20,16 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Map(map, null);
+			var r0 = option.Map(map);
+			var r1 = option.Map(map, null);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
-			Assert.IsType<UnknownOptionException>(msg.Exception);
+			var n0 = Assert.IsType<None<string>>(r0);
+			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
+			Assert.IsType<UnknownOptionException>(m0.Exception);
+			var n1 = Assert.IsType<None<string>>(r1);
+			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
+			Assert.IsType<UnknownOptionException>(m1.Exception);
 		}
 
 		[Fact]
@@ -52,10 +56,12 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Map(map, null);
+			var r0 = option.Map(map);
+			var r1 = option.Map(map, null);
 
 			// Assert
-			Assert.IsType<None<string>>(result);
+			Assert.IsType<None<string>>(r0);
+			Assert.IsType<None<string>>(r1);
 		}
 
 		[Fact]
@@ -67,11 +73,14 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = option.Map(map, null);
+			var r0 = option.Map(map);
+			var r1 = option.Map(map, null);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.Same(msg, none.Reason);
+			var n0 = Assert.IsType<None<string>>(r0);
+			Assert.Same(msg, n0.Reason);
+			var n1 = Assert.IsType<None<string>>(r1);
+			Assert.Same(msg, n1.Reason);
 		}
 
 		[Fact]
@@ -83,10 +92,11 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
+			option.Map(map);
 			option.Map(map, null);
 
 			// Assert
-			map.Received().Invoke(value);
+			map.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }
