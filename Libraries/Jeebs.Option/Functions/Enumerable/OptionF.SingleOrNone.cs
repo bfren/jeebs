@@ -17,20 +17,43 @@ namespace F
 		/// <param name="list">List of values</param>
 		/// <param name="predicate">[Optional] Predicate to filter items</param>
 		public static Option<T> SingleOrNone<T>(IEnumerable<T> list, Func<T, bool>? predicate) =>
-			list.SingleOrDefault(x => predicate is null || predicate(x)) switch
+			list.Any() switch
 			{
-				T x =>
-					x,
+				true =>
+					list.Where(x => predicate is null || predicate(x)) switch
+					{
+						{ } filtered when filtered.Count() == 1 =>
+							filtered.SingleOrDefault() switch
+							{
+								T x =>
+									x,
 
-				_ =>
-					None<T, Msg.NullOrMultipleItemsMsg>()
+								_ =>
+									None<T, Msg.NullItemMsg>()
+							},
+
+						{ } filtered when !filtered.Any() =>
+							None<T, Msg.NoMatchingItemsMsg>(),
+
+						_ =>
+							None<T, Msg.MultipleItemsMsg>()
+					},
+
+				false =>
+					None<T, Msg.ListIsEmptyMsg>()
 			};
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>Null or multiple items found when doing SingleOrDefault()</summary>
-			public sealed record NullOrMultipleItemsMsg : IMsg { }
+			/// <summary>Multiple items found when doing SingleOrDefault()</summary>
+			public sealed record MultipleItemsMsg : IMsg { }
+
+			/// <summary>No items found matching the predicate</summary>
+			public sealed record NoMatchingItemsMsg : IMsg { }
+
+			/// <summary>Null item found when doing SingleOrDefault()</summary>
+			public sealed record NullItemMsg : IMsg { }
 		}
 	}
 }

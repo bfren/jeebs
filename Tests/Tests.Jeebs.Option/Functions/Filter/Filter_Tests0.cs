@@ -67,9 +67,11 @@ namespace F.OptionF_Tests
 			// Arrange
 			var value = Rnd.Int;
 			var option = Return(value);
+			var predicate = Substitute.For<Func<int, bool>>();
+			predicate.Invoke(Arg.Any<int>()).Returns(true);
 
 			// Act
-			var result = Filter(option, x => x == value, null);
+			var result = Filter(option, predicate, null);
 
 			// Assert
 			var some = Assert.IsType<Some<int>>(result);
@@ -82,9 +84,11 @@ namespace F.OptionF_Tests
 			// Arrange
 			var value = Rnd.Int;
 			var option = Return(value);
+			var predicate = Substitute.For<Func<int, bool>>();
+			predicate.Invoke(Arg.Any<int>()).Returns(false);
 
 			// Act
-			var result = Filter(option, x => x != value, null);
+			var result = Filter(option, predicate, null);
 
 			// Assert
 			var none = Assert.IsType<None<int>>(result);

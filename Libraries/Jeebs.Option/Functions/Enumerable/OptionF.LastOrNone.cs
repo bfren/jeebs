@@ -17,13 +17,20 @@ namespace F
 		/// <param name="list">List of values</param>
 		/// <param name="predicate">[Optional] Predicate to filter items</param>
 		public static Option<T> LastOrNone<T>(IEnumerable<T> list, Func<T, bool>? predicate) =>
-			list.FirstOrDefault(x => predicate is null || predicate(x)) switch
+			list.Any() switch
 			{
-				T x =>
-					x,
+				true =>
+					list.LastOrDefault(x => predicate is null || predicate(x)) switch
+					{
+						T x =>
+							x,
 
-				_ =>
-					None<T, Msg.LastItemIsNullMsg>()
+						_ =>
+							None<T, Msg.LastItemIsNullMsg>()
+					},
+
+				false =>
+					None<T, Msg.ListIsEmptyMsg>()
 			};
 
 		/// <summary>Messages</summary>

@@ -1,6 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
@@ -41,9 +43,11 @@ namespace F.OptionF_Tests
 			var o2 = None<int>(true);
 			var o3 = None<int>(true);
 			var list = new[] { o0, o1, o2, o3 };
+			var predicate = Substitute.For<Func<int, bool>>();
+			predicate.Invoke(v1).Returns(true);
 
 			// Act
-			var result = Filter(list, x => x == v1);
+			var result = Filter(list, predicate);
 
 			// Assert
 			Assert.Collection(result,

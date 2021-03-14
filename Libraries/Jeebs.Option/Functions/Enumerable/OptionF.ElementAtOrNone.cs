@@ -16,20 +16,30 @@ namespace F
 		/// <param name="list">List of values</param>
 		/// <param name="index">Index</param>
 		public static Option<T> ElementAtOrNone<T>(IEnumerable<T> list, int index) =>
-			list.ElementAtOrDefault(index) switch
+			list.Any() switch
 			{
-				T x =>
-					x,
+				true =>
+					list.ElementAtOrDefault(index) switch
+					{
+						T x =>
+							x,
 
-				_ =>
-					None<T, Msg.ElementAtIsNullMsg>()
+						_ =>
+							None<T, Msg.ElementAtIsNullMsg>()
+					},
+
+				false =>
+					None<T, Msg.ListIsEmptyMsg>()
 			};
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>Null item found when doing ElementAtOrDefault()</summary>
+			/// <summary>Null or no item found when doing ElementAtOrDefault()</summary>
 			public sealed record ElementAtIsNullMsg : IMsg { }
+
+			/// <summary>The list is empty</summary>
+			public sealed record ListIsEmptyMsg : IMsg { }
 		}
 	}
 }
