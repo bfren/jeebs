@@ -46,6 +46,7 @@ namespace F
 
 				};
 
+			/// <summary>Messages</summary>
 			public static class Msg
 			{
 				/// <summary>The dictionary is empty</summary>

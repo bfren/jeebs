@@ -15,7 +15,7 @@ namespace Jeebs.Linq
 		public static IEnumerable<U> FilterMap<T, U>(this IEnumerable<Option<T>> @this, Func<T, U> map) =>
 			F.OptionF.Enumerable.FilterMap(@this, map, null);
 
-		/// <inheritdoc cref="F.OptionF.Enumerable.Filter{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Enumerable.FilterMap{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
 		public static IEnumerable<U> FilterMap<T, U>(this IEnumerable<Option<T>> @this, Func<T, U> map, Func<T, bool> predicate) =>
 			F.OptionF.Enumerable.FilterMap(@this, map, predicate);
 
