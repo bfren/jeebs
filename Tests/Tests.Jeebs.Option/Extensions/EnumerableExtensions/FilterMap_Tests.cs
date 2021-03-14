@@ -22,15 +22,29 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var o2 = None<int>(true);
 			var o3 = None<int>(true);
 			var list = new[] { o0, o1, o2, o3 };
-			static string map(int x) => x.ToString();
+			static string m0(int x) => x.ToString();
+			static Option<string> m1(int x) => x.ToString();
 
 			// Act
-			var result = list.FilterMap(map);
+			var r0 = list.FilterMap(m0);
+			var r1 = list.FilterMap(m1);
 
 			// Assert
-			Assert.Collection(result,
+			Assert.Collection(r0,
 				x => Assert.Equal(v0.ToString(), x),
 				x => Assert.Equal(v1.ToString(), x)
+			);
+			Assert.Collection(r1,
+				x =>
+				{
+					var s0 = Assert.IsType<Some<string>>(x);
+					Assert.Equal(v0.ToString(), s0.Value);
+				},
+				x =>
+				{
+					var s1 = Assert.IsType<Some<string>>(x);
+					Assert.Equal(v1.ToString(), s1.Value);
+				}
 			);
 		}
 
@@ -45,16 +59,25 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var o2 = None<int>(true);
 			var o3 = None<int>(true);
 			var list = new[] { o0, o1, o2, o3 };
-			static string map(int x) => x.ToString();
+			static string m0(int x) => x.ToString();
+			static Option<string> m1(int x) => x.ToString();
 			var predicate = Substitute.For<Func<int, bool>>();
 			predicate.Invoke(v1).Returns(true);
 
 			// Act
-			var result = list.FilterMap(map, predicate);
+			var r0 = list.FilterMap(m0, predicate);
+			var r1 = list.FilterMap(m1, predicate);
 
 			// Assert
-			Assert.Collection(result,
+			Assert.Collection(r0,
 				x => Assert.Equal(v1.ToString(), x)
+			);
+			Assert.Collection(r1,
+				x =>
+				{
+					var some = Assert.IsType<Some<string>>(x);
+					Assert.Equal(v1.ToString(), some.Value);
+				}
 			);
 		}
 	}

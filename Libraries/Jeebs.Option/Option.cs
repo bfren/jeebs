@@ -13,7 +13,7 @@ namespace Jeebs
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract partial class Option<T>
+	public abstract class Option<T>
 	{
 		/// <summary>
 		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>
