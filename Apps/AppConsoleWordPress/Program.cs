@@ -23,7 +23,7 @@ namespace AppConsoleWordPress
 		private static ILog log = new Jeebs.Logging.SerilogLogger();
 
 		internal static async Task Main(string[] args) =>
-			await Main<App>(
+			await MainAsync<App>(
 				args,
 				async (provider, _) =>
 				{

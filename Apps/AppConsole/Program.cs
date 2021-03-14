@@ -13,7 +13,7 @@ namespace AppConsole
 	public sealed class Program : Jeebs.Apps.Program
 	{
 		private static async Task Main(string[] args) =>
-			await Main<App>(
+			await MainAsync<App>(
 				args,
 				async (provider, config) =>
 				{
