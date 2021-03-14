@@ -4,10 +4,10 @@
 using System;
 using Jeebs;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.Enumerable;
+using static F.OptionF.Enumerable.Msg;
 
-namespace F.OptionF_Tests
+namespace F.OptionFEnumerable_Tests
 {
 	public class ElementAtOrNone_Tests
 	{
