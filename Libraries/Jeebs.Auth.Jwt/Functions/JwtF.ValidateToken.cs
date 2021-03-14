@@ -39,20 +39,17 @@ namespace F
 
 				// Create handler to validate token
 				var handler = new JwtSecurityTokenHandler();
-				var principal = handler.ValidateToken(token, parameters, out var validatedToken);
 
-				// Check date values
-				if (validatedToken.ValidTo < DateTime.Now)
-				{
-					return None<ClaimsPrincipal, Msg.TokenHasExpiredMsg>();
-				}
-
-				// Return valid principal
-				return principal;
+				// Validate token and return principal
+				return handler.ValidateToken(token, parameters, out var validatedToken);
 			}
 			catch (SecurityTokenNotYetValidException)
 			{
 				return None<ClaimsPrincipal, Msg.TokenIsNotValidYetMsg>();
+			}
+			catch (Exception e) when (e.Message.Contains("IDX10223"))
+			{
+				return None<ClaimsPrincipal, Msg.TokenHasExpiredMsg>();
 			}
 			catch (Exception e)
 			{

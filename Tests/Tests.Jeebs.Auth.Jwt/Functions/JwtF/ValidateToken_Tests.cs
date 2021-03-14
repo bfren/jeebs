@@ -2,8 +2,10 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Formats.Asn1;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Config;
 using NSubstitute;
@@ -73,8 +75,7 @@ namespace F.JwtF_Tests
 		public void Expired_Returns_None_With_TokenHasExpiredMsg()
 		{
 			// Arrange
-			var (config, token, _) = GetToken(false, DateTime.UtcNow, DateTime.UtcNow);
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+			var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(-1), DateTime.UtcNow.AddMinutes(-30));
 
 			// Act
 			var result = JwtF.ValidateToken(config, token);
