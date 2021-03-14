@@ -11,12 +11,12 @@ namespace Jeebs
 	/// </summary>
 	public static class EnumerableExtensions_SingleOrNone
 	{
-		/// <inheritdoc cref="F.OptionF.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Enumerable.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this) =>
-			F.OptionF.SingleOrNone(@this, null);
+			F.OptionF.Enumerable.SingleOrNone(@this, null);
 
-		/// <inheritdoc cref="F.OptionF.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Enumerable.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this, Func<T, bool> predicate) =>
-			F.OptionF.SingleOrNone(@this, predicate);
+			F.OptionF.Enumerable.SingleOrNone(@this, predicate);
 	}
 }

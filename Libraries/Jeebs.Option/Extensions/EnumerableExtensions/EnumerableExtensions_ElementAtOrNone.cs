@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace Jeebs
 {
 	/// <summary>
-	/// Enumerable Extensions
+	/// Enumerable Extensions: ElementAtOrNone
 	/// </summary>
 	public static class EnumerableExtensions_ElementAtOrNone
 	{
-		/// <inheritdoc cref="F.OptionF.ElementAtOrNone{T}(IEnumerable{T}, int)"/>
+		/// <inheritdoc cref="F.OptionF.Enumerable.ElementAtOrNone{T}(IEnumerable{T}, int)"/>
 		public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> @this, int index) =>
-			F.OptionF.ElementAtOrNone(@this, index);
+			F.OptionF.Enumerable.ElementAtOrNone(@this, index);
 	}
 }

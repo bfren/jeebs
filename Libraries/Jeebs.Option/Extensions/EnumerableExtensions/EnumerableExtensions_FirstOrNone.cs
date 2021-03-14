@@ -11,12 +11,12 @@ namespace Jeebs
 	/// </summary>
 	public static class EnumerableExtensions_FirstOrNone
 	{
-		/// <inheritdoc cref="F.OptionF.FirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Enumerable.FirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> FirstOrNone<T>(this IEnumerable<T> @this) =>
-			F.OptionF.FirstOrNone(@this, null);
+			F.OptionF.Enumerable.FirstOrNone(@this, null);
 
-		/// <inheritdoc cref="F.OptionF.FirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
+		/// <inheritdoc cref="F.OptionF.Enumerable.FirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 		public static Option<T> FirstOrNone<T>(this IEnumerable<T> @this, Func<T, bool> predicate) =>
-			F.OptionF.FirstOrNone(@this, predicate);
+			F.OptionF.Enumerable.FirstOrNone(@this, predicate);
 	}
 }
