@@ -16,14 +16,17 @@ namespace F
 		/// <param name="predicate">Predicate to evaluate</param>
 		/// <param name="value">Function to return value</param>
 		public static Option<T> ReturnIf<T>(Func<bool> predicate, Func<T> value) =>
-			predicate() switch
-			{
-				true =>
-					Return(value()),
+			Catch(() =>
+				predicate() switch
+				{
+					true =>
+						Return(value()),
 
-				false =>
-					None<T, Msg.PredicateWasFalseMsg>()
-			};
+					false =>
+						None<T, Msg.PredicateWasFalseMsg>()
+				}
+			);
+
 
 		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T})"/>
 		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
