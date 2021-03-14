@@ -33,11 +33,11 @@ jobs:
       run: dotnet restore Pack.csproj
     - 
       name: B - Build
-      run: dotnet build Pack.csproj --no-restore -c Release
+      run: dotnet build Pack.csproj --no-restore --configuration Release
     - 
       if: success()
       name: C - Pack
-      run: dotnet pack Pack.csproj --no-build -c Release /p:PackageOutputPath=$HOME/.nupkgs -p:PackageVersion=${{ steps.version.outputs.content }}
+      run: dotnet pack Pack.csproj --no-build --configuration Release /p:PackageOutputPath=$HOME/.nupkgs -p:PackageVersion=${{ steps.version.outputs.content }}
     - 
       if: success()
       name: D - Push
