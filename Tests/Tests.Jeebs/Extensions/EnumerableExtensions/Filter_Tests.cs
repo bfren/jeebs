@@ -10,38 +10,6 @@ namespace Jeebs.EnumerableExtensions_Tests
 	public class Filter_Tests
 	{
 		[Fact]
-		public void Empty_Returns_Empty()
-		{
-			// Arrange
-			var empty = Array.Empty<object>();
-
-			// Act
-			var result = empty.Filter();
-
-			// Assert
-			Assert.Empty(result);
-		}
-
-		[Fact]
-		public void Removes_Empty_Items()
-		{
-			// Arrange
-			var one = F.Rnd.Int;
-			var two = F.Rnd.Str;
-			var list = new object?[] { null, one, null, two, null };
-
-			// Act
-			var result = list.Filter();
-
-			// Assert
-			Assert.Equal(2, result.Count());
-			Assert.Collection(result,
-				x => Assert.Equal(one, x),
-				x => Assert.Equal(two, x)
-			);
-		}
-
-		[Fact]
 		public void Maps_Class_And_Removes_Empty_Items()
 		{
 			// Arrange

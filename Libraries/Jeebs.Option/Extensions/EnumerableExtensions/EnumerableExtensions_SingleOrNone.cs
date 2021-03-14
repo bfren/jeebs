@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Jeebs
+namespace Jeebs.Linq
 {
 	/// <summary>
 	/// Enumerable Extensions: SingleOrNone

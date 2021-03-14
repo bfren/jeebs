@@ -8,8 +8,8 @@ namespace F
 	public static partial class OptionF
 	{
 		/// <summary>
-		/// Create a <see cref="Some{T}"/> Option, containing a value
-		/// <para>If <paramref name="value"/> is null, <see cref="Jeebs.None{T}"/> will be returned instead</para>
+		/// Create a <see cref="Some{T}"/> Option, containing <paramref name="value"/><br/>
+		/// If <paramref name="value"/> is null, <see cref="Jeebs.None{T}"/> will be returned instead
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="value">Some value</param>

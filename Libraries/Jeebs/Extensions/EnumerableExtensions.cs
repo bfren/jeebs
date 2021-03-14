@@ -9,18 +9,10 @@ using D = Jeebs.Defaults.PagingValues;
 namespace Jeebs
 {
 	/// <summary>
-	/// IEnumerable Extensions - ToPagedList
+	/// IEnumerable Extensions - Filter
 	/// </summary>
 	public static class EnumerableExtensions
 	{
-		/// <summary>
-		/// Filter out null items from a list
-		/// </summary>
-		/// <typeparam name="T">List value type</typeparam>
-		/// <param name="this">List</param>
-		public static IEnumerable<T> Filter<T>(this IEnumerable<T> @this) =>
-			@this.Where(x => x is T);
-
 		/// <summary>
 		/// Filter out null items (and empty / whitespace strings) from a list
 		/// </summary>

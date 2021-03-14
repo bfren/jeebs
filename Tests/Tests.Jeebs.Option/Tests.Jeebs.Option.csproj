@@ -20,7 +20,4 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Option\Jeebs.Option.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\EnumerableExtensions\" />
-  </ItemGroup>
 </Project>
