@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals
+namespace F.Internals
 {
 	/// <summary>
 	/// Enumerated Converter Factory
@@ -12,11 +13,11 @@ namespace Jeebs.Functions.Internals
 	public sealed class EnumeratedConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>
+		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Jeebs.Enumerated"/>
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert) =>
-			typeToConvert.IsSubclassOf(typeof(Enumerated));
+			typeToConvert.IsSubclassOf(typeof(Jeebs.Enumerated));
 
 		/// <summary>
 		/// Creates JsonConverter using Enum type as generic argument

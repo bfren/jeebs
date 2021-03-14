@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Jeebs.Services.Drawing;
-using Jm.Services.Drawing.ImageWrapper;
+using static F.OptionF;
 
 namespace Jeebs.Services.Drivers.Drawing.Common
 {
@@ -19,7 +17,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		{
 			if (!File.Exists(path))
 			{
-				return Option.None<IImageWrapper>().AddReason(new ImageFileNotFoundMsg(path));
+				return None<IImageWrapper>(new Msg.ImageFileNotFoundMsg(path));
 			}
 
 			// Create and return image object
@@ -33,6 +31,13 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 			// Create and return image object
 			var image = System.Drawing.Image.FromStream(stream);
 			return new ImageWrapper(image);
+		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>The image file was not found</summary>
+			public sealed record ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
 		}
 	}
 }

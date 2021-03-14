@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 
 namespace Jeebs.Services.Twitter.Models
 {
-	/// <summary>
-	/// Twitter Tweet
-	/// </summary>
-	public sealed record TweetModel
+	/// <inheritdoc cref="ITwitterTweet"/>
+	public sealed record TweetModel : ITwitterTweet
 	{
-		/// <summary>
-		/// Author
-		/// </summary>
-		public AuthorModel Author { get; init; } = new();
+		/// <inheritdoc/>
+		public ITwitterAuthor Author { get; init; } = new AuthorModel();
 
-		/// <summary>
-		/// TweetedOn
-		/// </summary>
+		/// <inheritdoc/>
 		public DateTime TweetedOn { get; init; }
 
-		/// <summary>
-		/// Length
-		/// </summary>
+		/// <inheritdoc/>
 		public int Length { get; init; }
 
-		/// <summary>
-		/// Text
-		/// </summary>
+		/// <inheritdoc/>
 		public string Text { get; init; } = string.Empty;
 	}
 }

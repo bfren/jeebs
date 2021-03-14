@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.Services.Drawing.Geometry
 {
@@ -13,5 +10,5 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// <param name="Y">Y co-ordinate</param>
 	/// <param name="Width">Rectangle width</param>
 	/// <param name="Height">Rectangle height</param>
-	public record Rectangle(int X, int Y, int Width, int Height);
+	public sealed record Rectangle(int X, int Y, int Width, int Height);
 }

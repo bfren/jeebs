@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Dapper;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
+using Jeebs.Logging;
+using static F.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -11,74 +13,51 @@ namespace Jeebs.Data.Mapping
 	public static partial class UnitOfWorkExtensions
 	{
 		/// <summary>
-		/// Provides thread-safe locking
-		/// </summary>
-		private static readonly object _ = new();
-
-		/// <summary>
 		/// Update an object
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result</param>
-		public static IR<bool> Update<T>(this IUnitOfWork @this, IOkV<T> r)
-			where T : class, IEntity
-		{
-			try
-			{
-				lock (_)
+		/// <param name="entity">Entity</param>
+		public static Option<bool> Update<T>(this IUnitOfWork @this, T entity)
+			where T : class, IEntity =>
+			Catch(() =>
+				entity switch
 				{
-					// Perform the update
-					var result = r.Value switch
-					{
-						IEntityWithVersion e =>
-							UpdateWithVersion(@this, r.OkV(e)),
+					IEntityWithVersion e =>
+						UpdateWithVersion(@this, e),
 
-						_ =>
-							UpdateWithoutVersion(@this, r)
-					};
-
-					// Add update messages
-					result.AddMsg(new Jm.Data.UpdateMsg(typeof(T), r.Value.Id));
-
-					// Return result
-					return result;
+					{ } e =>
+						UpdateWithoutVersion(@this, e)
+				},
+				e =>
+				{
+					@this.Rollback();
+					return new Msg.UpdateExceptionMsg<T>(entity.Id, e);
 				}
-			}
-			catch (Exception ex)
-			{
-				return r.Error<bool>().AddMsg(new Jm.Data.UpdateExceptionMsg(ex, typeof(T), r.Value.Id));
-			}
-			finally
-			{
-				@this.Rollback();
-			}
-		}
+			);
 
 		/// <summary>
 		/// Update using versioning
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result</param>
-		private static IR<bool> UpdateWithVersion<T>(IUnitOfWork w, IOkV<T> r)
+		/// <param name="entity">Entity to update</param>
+		private static Option<bool> UpdateWithVersion<T>(IUnitOfWork w, T entity)
 			where T : class, IEntityWithVersion
 		{
-			var poco = r.Value;
-
 			// Build query and increase the version number
 			var query = w.Adapter.UpdateSingle<T>();
-			poco.Version++;
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(UpdateWithVersion), query, poco));
+			entity.Version++;
+			w.Log.Message(new Msg.UpdateQueryMsg<T>(nameof(UpdateWithVersion), query, entity));
 
 			// Execute and return
-			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
+			var rowsAffected = w.Execute(query, entity);
 			if (rowsAffected == 1)
 			{
-				return r.OkTrue();
+				return True;
 			}
 
-			return r.Error<bool>().AddMsg(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
+			return None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateWithVersion), entity.Id));
 		}
 
 		/// <summary>
@@ -86,24 +65,62 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="w">IUnitOfWork</param>
-		/// <param name="r">Result</param>
-		private static IR<bool> UpdateWithoutVersion<T>(IUnitOfWork w, IOkV<T> r)
+		/// <param name="entity">Entity to update</param>
+		private static Option<bool> UpdateWithoutVersion<T>(IUnitOfWork w, T entity)
 			where T : class, IEntity
 		{
-			var poco = r.Value;
-
 			// Build query
 			var query = w.Adapter.UpdateSingle<T>();
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(UpdateWithoutVersion), query, poco));
+			w.Log.Message(new Msg.UpdateQueryMsg<T>(nameof(UpdateWithoutVersion), query, entity));
 
 			// Execute and return
-			var rowsAffected = w.Connection.Execute(query, param: poco, transaction: w.Transaction);
+			var rowsAffected = w.Execute(query, entity);
 			if (rowsAffected == 1)
 			{
-				return r.OkTrue();
+				return True;
 			}
 
-			return r.Error<bool>().AddMsg(new Jm.Data.UpdateErrorMsg(typeof(T), poco.Id));
+			return None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateWithoutVersion), entity.Id));
+		}
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Something went wrong updating the entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">Entity ID being updated</param>
+			public sealed record UpdateErrorMsg<T>(string Method, long Id) :
+				LogMsg(LogLevel.Warning, "{Method} {Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
+
+			/// <summary>Error updating entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Id">Entity ID being updated</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record UpdateExceptionMsg<T>(long Id, Exception Exception) :
+				ExceptionMsg(Exception, "{Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Id };
+			}
+
+			/// <summary>Query message</summary>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			public sealed record UpdateQueryMsg<T>(string Method, string Query, T Parameters) :
+				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Query, Parameters ?? new object() };
+			}
 		}
 	}
 }

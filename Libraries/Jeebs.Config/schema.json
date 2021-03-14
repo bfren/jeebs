@@ -96,6 +96,11 @@
 							"type": "string",
 							"description": "[Optional] Override the default console output template"
 						},
+						"addPrefixToConsoleMessages": {
+							"type": "boolean",
+							"description": "[Optional] Whether or not to add a prefix to console messages (to help them stand out!)",
+							"default": true
+						},
 						"minimumLevel": {
 							"$ref": "#/definitions/logging/minimumLevel"
 						},
@@ -200,6 +205,64 @@
 					"description": "Web Application configuration",
 					"additionalProperties": false,
 					"properties": {
+						"auth": {
+							"type": "object",
+							"description": "Authorisation configuration",
+							"required": [ "enabled", "scheme" ],
+							"additionalProperties": false,
+							"properties": {
+								"enabled": {
+									"type": "boolean",
+									"default": "Whether or not authentication and authorisation are enabled"
+								},
+								"scheme": {
+									"type": "string",
+									"description": "The authentication scheme to use",
+									"enum": [ "cookies" ]
+								},
+								"loginPath": {
+									"type": "string",
+									"description": "[Optional] Path to the login page",
+									"default": "/auth/signin"
+								},
+								"accessDeniedPath": {
+									"type": "string",
+									"description": "[Optional] Path to the access denied page",
+									"default": "/auth/denied"
+								},
+								"jwt": {
+									"type": "object",
+									"description": "JWT configuration",
+									"required": [ "signingKey", "issuer", "audience" ],
+									"additionalProperties": false,
+									"properties": {
+										"signingKey": {
+											"type": "string",
+											"description": "JWT Signing Key",
+											"minLength": 32
+										},
+										"encryptingKey": {
+											"type": "string",
+											"description": "[Optional] JWT Encrypting Key",
+											"minLength": 64
+										},
+										"issuer": {
+											"type": "string",
+											"description": "URL of application issuing this token"
+										},
+										"audience": {
+											"type": "string",
+											"description": "URL of application using this token"
+										},
+										"validForHours": {
+											"type": "integer",
+											"description": "[Optional] The number of hours for which issued tokens will be valid",
+											"default": 1
+										}
+									}
+								}
+							}
+						},
 						"redirections": {
 							"type": "object",
 							"description": "Redirections - key is URL to match, value is URL to redirect to (both MUST start with a slash)",
@@ -260,7 +323,7 @@
 			"minimumLevel": {
 				"type": "string",
 				"description": "Microsoft compatible logging levels",
-				"enum": [ "Trace", "Debug", "Information", "Warning", "Error", "Critical" ]
+				"enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
 			},
 			"provider": {
 				"type": "object",

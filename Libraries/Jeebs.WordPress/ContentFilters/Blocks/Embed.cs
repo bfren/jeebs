@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Text.RegularExpressions;
-using static F.JsonF;
 
 namespace Jeebs.WordPress.ContentFilters.Blocks
 {
@@ -48,7 +47,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 			{
 				// Info is encoded as JSON
 				var json = match.Groups[1].Value;
-				if (Deserialise<Parsed>(json) is Some<Parsed> embed)
+				if (F.JsonF.Deserialise<Parsed>(json) is Some<Parsed> embed)
 				{
 					// If the embed type and provider do not match, continue
 					if (embed.Value.Type != type || embed.Value.ProviderNameSlug != provider)
@@ -59,7 +58,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks
 					// Replace content using child Format() method
 					content = content.Replace(
 						match.Value,
-						Format(F.StringF.Random(10), embed.Value)
+						Format(F.Rnd.StringF.Get(10), embed.Value)
 					);
 				}
 			}

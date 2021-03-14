@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Net.Http;
-using System.Text;
 using Jeebs.Config;
 using Jeebs.Services.Webhook;
-using Jeebs.Services.Webhook.Models;
 
 namespace Jeebs.Services.Drivers.Webhook.Seq
 {
@@ -21,7 +20,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 		protected SeqWebhookDriver(string name, SeqWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message) =>
+		public override void Send(IWebhookMessage message) =>
 			Send(new SeqEvent(message.Content, message.Level));
 
 		/// <inheritdoc/>

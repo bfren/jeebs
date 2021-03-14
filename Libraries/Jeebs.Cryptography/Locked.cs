@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using Jm.Cryptography.Locked;
 using Sodium;
 using Sodium.Exceptions;
+using static F.OptionF;
 
 namespace Jeebs.Cryptography
 {
@@ -13,7 +14,7 @@ namespace Jeebs.Cryptography
 	/// Contains contents that have been encrypted - see <see cref="Locked{T}.EncryptedContents"/>
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
-	public sealed class Locked<T>
+	public sealed class Locked<T> : Locked
 	{
 		/// <summary>
 		/// Encrypted contents
@@ -50,7 +51,7 @@ namespace Jeebs.Cryptography
 		{
 			if (EncryptedContents is null)
 			{
-				return Option.None<Lockable<T>>().AddReason<UnlockWhenEncryptedContentsIsNullMsg>();
+				return None<Lockable<T>, Msg.UnlockWhenEncryptedContentsIsNullMsg>();
 			}
 
 			try
@@ -64,25 +65,25 @@ namespace Jeebs.Cryptography
 			}
 			catch (KeyOutOfRangeException ex)
 			{
-				return handle<InvalidKeyExceptionMsg>(ex);
+				return handle(new Msg.InvalidKeyExceptionMsg(ex));
 			}
 			catch (NonceOutOfRangeException ex)
 			{
-				return handle<InvalidNonceExceptionMsg>(ex);
+				return handle(new Msg.InvalidNonceExceptionMsg(ex));
 			}
 			catch (CryptographicException ex)
 			{
-				return handle<IncorrectKeyOrNonceMsg>(ex);
+				return handle(new Msg.IncorrectKeyOrNonceExceptionMsg(ex));
 			}
 			catch (Exception ex)
 			{
-				return handle<UnlockExceptionMsg>(ex);
+				return handle(new Msg.UnlockExceptionMsg(ex));
 			}
 
 			// Handle an exception
-			static Option<Lockable<T>> handle<TMsg>(Exception ex)
-				where TMsg : IExceptionMsg, new() =>
-				Option.None<Lockable<T>>().AddReason<TMsg>(ex);
+			static Option<Lockable<T>> handle<TMsg>(TMsg ex)
+				where TMsg : IExceptionMsg =>
+				None<Lockable<T>>(ex);
 		}
 
 		/// <summary>
@@ -107,5 +108,36 @@ namespace Jeebs.Cryptography
 
 		private byte[] HashKey(string key) =>
 			GenericHash.Hash(key, Salt, Lockable.KeyLength);
+	}
+
+	/// <summary>
+	/// Holds Messages for <see cref="Locked{T}"/>
+	/// </summary>
+	public abstract class Locked
+	{
+		internal Locked() { }
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Incorrect key or nonce</summary>
+			/// <param name="Exception">Exception</param>
+			public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+			/// <summary>Invalid key</summary>
+			/// <param name="Exception">Exception</param>
+			public sealed record InvalidKeyExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+			/// <summary>Invalid nonce</summary>
+			/// <param name="Exception">Exception</param>
+			public sealed record InvalidNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+			/// <summary>Unlock exception</summary>
+			/// <param name="Exception">Exception</param>
+			public sealed record UnlockExceptionMsg(Exception Exception) : IExceptionMsg { }
+
+			/// <summary>Trying to unlock a box without any content</summary>
+			public sealed record UnlockWhenEncryptedContentsIsNullMsg : IMsg { }
+		}
 	}
 }

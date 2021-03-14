@@ -1,8 +1,9 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using System.Text;
 using Jeebs.Config.Logging;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jeebs.Config
 {
@@ -30,6 +31,11 @@ namespace Jeebs.Config
 		/// Set to override default output template for console messages
 		/// </summary>
 		public string ConsoleOutputTemplate { get; init; } = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}";
+
+		/// <summary>
+		/// If true the application name will be added before all console messages
+		/// </summary>
+		public bool AddPrefixToConsoleMessages { get; init; } = true;
 
 		/// <summary>
 		/// List of providers - dictionary key is a service name

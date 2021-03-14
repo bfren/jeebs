@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Xunit;
 
 namespace Jeebs.DateRange_Tests
@@ -29,8 +30,8 @@ namespace Jeebs.DateRange_Tests
 			var date2 = new DateTime(2000, 1, 2);
 
 			// Act
-			Func<DateRange> correct = () => new DateRange(date1, date2);
-			Action incorrect = () => new DateRange(date2, date1);
+			DateRange correct() => new(date1, date2);
+			DateRange incorrect() => new(date2, date1);
 
 			// Assert
 			Assert.IsType<DateRange>(correct());

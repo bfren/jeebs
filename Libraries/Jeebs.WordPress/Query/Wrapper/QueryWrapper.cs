@@ -1,13 +1,13 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Jeebs.Data;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Messages.Query.Wrapper;
-using Jm.WordPress.Query.Wrapper;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -76,13 +76,13 @@ namespace Jeebs.WordPress
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return Option.None<PropertyInfo>().AddReason<OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
+				return None<PropertyInfo, Msg.OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
 			}
 
 			// If MetaDictionary is not defined return null
 			if (!metaDictionary.Any())
 			{
-				return Option.None<PropertyInfo>().AddReason<MetaDictionaryPropertyNotFoundMsg<TModel>>();
+				return None<PropertyInfo, Msg.MetaDictionaryPropertyNotFoundMsg<TModel>>();
 			}
 
 			return metaDictionary.Single();
@@ -151,12 +151,28 @@ namespace Jeebs.WordPress
 			// If content is not defined return null
 			if (!content.Any())
 			{
-				return Option.None<PropertyInfo>().AddReason<ContentPropertyNotFoundMsg<TModel>>();
+				return None<PropertyInfo, Msg.ContentPropertyNotFoundMsg<TModel>>();
 			}
 
 			return content.Single();
 		}
 
 		#endregion
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Content property not found on entity</summary>
+			/// <typeparam name="T">Post type</typeparam>
+			public sealed record ContentPropertyNotFoundMsg<T> : IMsg { }
+
+			/// <summary>MetaDictionary property not found on entity</summary>
+			/// <typeparam name="T">Post type</typeparam>
+			public sealed record MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
+
+			/// <summary>Multiple MetaDictionary properties found on entity</summary>
+			/// <typeparam name="T">Post type</typeparam>
+			public sealed record OnlyOneMetaDictionaryPropertySupportedMsg<T> : IMsg { }
+		}
 	}
 }

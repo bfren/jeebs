@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Threading.Tasks;
 using Jeebs.Data;
 
@@ -38,7 +38,7 @@ namespace Jeebs.WordPress
 		}
 
 		/// <inheritdoc/>
-		public abstract Task<IR<bool>> HydrateAsync(IOk r, IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
+		public abstract Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta);
 
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)

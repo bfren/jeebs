@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Globalization;
-using System.Text;
 using Jeebs;
+using static F.OptionF;
 
 namespace F
 {
@@ -36,10 +38,18 @@ namespace F
 		{
 			if (DateTime.TryParseExact(s, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
 			{
-				return Option.Wrap(dt);
+				return dt;
 			}
 
-			return Option.None<DateTime>();
+			return None<DateTime>(new Msg.InvalidDateTimeMsg(s));
+		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Unable to parse DateTime string</summary>
+			/// <param name="Value">DateTime string</param>
+			public sealed record InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

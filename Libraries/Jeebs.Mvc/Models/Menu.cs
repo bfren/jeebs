@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -66,7 +69,7 @@ namespace Jeebs.Mvc.Models
 		/// <param name="url">IUrlHelper</param>
 		/// <param name="list">[Optional] Menu Items</param>
 		/// <returns>Result to output as response</returns>
-		public async Task<IR<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
+		public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
 		{
 			// Write to StringBuilder
 			var result = new StringBuilder();
@@ -120,7 +123,7 @@ namespace Jeebs.Mvc.Models
 			}
 
 			// Return result
-			return Result.OkV(result.ToString());
+			return result.ToString();
 		}
 	}
 }

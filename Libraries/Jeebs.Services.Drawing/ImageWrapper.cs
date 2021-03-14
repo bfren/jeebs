@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Jeebs.Services.Drawing.Geometry;
-using Jm.Services.Drawing.ImageWrapper;
+using static F.OptionF;
 
 namespace Jeebs.Services.Drawing
 {
@@ -37,7 +36,7 @@ namespace Jeebs.Services.Drawing
 			// At least one of width and height should be greater than zero
 			if (width == 0 && height == 0)
 			{
-				return Option.None<IImageWrapper>().AddReason<MaskHeightOrWidthRequiredMsg>();
+				return None<IImageWrapper, Msg.MaskHeightOrWidthRequiredMsg>();
 			}
 
 			// Calculate the size of the new image
@@ -50,12 +49,22 @@ namespace Jeebs.Services.Drawing
 			try
 			{
 				var resized = apply(size, mask);
-				return Option.Wrap(resized);
+				return Return(resized);
 			}
 			catch (Exception e)
 			{
-				return Option.None<IImageWrapper>().AddReason(new ExceptionApplyingImageMaskMsg(e));
+				return None<IImageWrapper>(new Msg.ApplyingImageMaskExceptionMsg(e));
 			}
+		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>A height or width is required for creating a mask</summary>
+			public sealed record MaskHeightOrWidthRequiredMsg : IMsg { }
+
+			/// <summary>An exception occurred while applying the mask</summary>
+			public sealed record ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

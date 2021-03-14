@@ -26,5 +26,5 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Services.Drivers.Webhook.Seq\Jeebs.Services.Drivers.Webhook.Seq.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://raw.githubusercontent.com/bencgreen/jeebs/main/Libraries/Jeebs.Config/schema.json" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="..\..\Libraries\Jeebs.Config\schema.json" /></VisualStudio></ProjectExtensions>
 </Project>

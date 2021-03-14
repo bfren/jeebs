@@ -15,20 +15,24 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 	
-	<!-- Import Licence file -->
-	<ItemGroup Label="Licence">
-		<None Include="../../LICENSE" Pack="true" PackagePath=""/>
-	</ItemGroup>
-	
-	<!-- Get paths to Version and Local.pack.props -->
+	<!-- Get Paths to Files -->
 	<PropertyGroup>
-		<VersionFile>Version</VersionFile>
-		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)', '$(MSBuildThisFileDirectory)../'))</VersionPath>
+		<LicenceFile>LICENSE</LicenceFile>
+		<LicencePath>$([MSBuild]::GetPathOfFileAbove('$(LicenceFile)'))</LicencePath>
 	</PropertyGroup>
 	<PropertyGroup>
 		<LocalPackFile>Local.pack.props</LocalPackFile>
-		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)', '$(MSBuildThisFileDirectory)../'))</LocalPackPath>
+		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)'))</LocalPackPath>
 	</PropertyGroup>
+	<PropertyGroup>
+		<VersionFile>Version</VersionFile>
+		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
+	</PropertyGroup>
+	
+	<!-- Import Licence -->
+	<ItemGroup Label="Licence">
+		<None Include="$(LicencePath)" Pack="true" PackagePath=""/>
+	</ItemGroup>
 	
 	<!-- Get Version -->
 	<PropertyGroup>
@@ -46,6 +50,8 @@
 		<RepositoryUrl>https://github.com/bencgreen/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
+	
+	<!-- Documentation -->
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>

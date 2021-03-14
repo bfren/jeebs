@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Data;
-using System.Text;
 using NSubstitute;
 using Xunit;
 
@@ -24,7 +24,7 @@ namespace Jeebs.Data.UnitOfWork_Tests
 			client.Adapter.Returns(adapter);
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var log = Substitute.For<ILog<Data.UnitOfWork>>();
 
 			// Act
 			var result = new Data.UnitOfWork(connection, adapter, log);

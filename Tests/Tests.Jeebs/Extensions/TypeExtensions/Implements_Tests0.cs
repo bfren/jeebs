@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
+using Jeebs.Logging;
 using Xunit;
 
 namespace Jeebs.TypeExtensions_Tests

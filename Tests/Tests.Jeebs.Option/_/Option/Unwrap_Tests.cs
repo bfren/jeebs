@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using NSubstitute;
 using Xunit;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -13,29 +15,46 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var some = Option.Wrap(value);
-			var ifNone = Substitute.For<Func<int>>();
+			var some = Return(value);
 
 			// Act
-			var result = some.Unwrap(ifNone);
+			var r0 = some.Unwrap(F.Rnd.Int);
+			var r1 = some.Unwrap(Substitute.For<Func<int>>());
+			var r2 = some.Unwrap(Substitute.For<Func<IMsg?, int>>());
+
+			// Assert
+			Assert.Equal(value, r0);
+			Assert.Equal(value, r1);
+			Assert.Equal(value, r2);
+		}
+
+		[Fact]
+		public void None_Gets_IfNone()
+		{
+			// Arrange
+			var value = F.Rnd.Int;
+			var none = None<int>(true);
+
+			// Act
+			var result = none.Unwrap(value);
 
 			// Assert
 			Assert.Equal(value, result);
-			ifNone.DidNotReceive().Invoke();
 		}
 
 		[Fact]
 		public void None_Runs_IfNone()
 		{
 			// Arrange
-			var none = Option.None<int>();
-			var ifNone = Substitute.For<Func<int>>();
+			var none = None<int>(true);
+			var ifNone = Substitute.For<Func<IMsg?, int>>();
 
 			// Act
-			var result = none.Unwrap(ifNone);
+			none.Unwrap(() => ifNone(null));
+			none.Unwrap(ifNone);
 
 			// Assert
-			ifNone.Received().Invoke();
+			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg?>());
 		}
 	}
 }

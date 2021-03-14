@@ -1,11 +1,10 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Encodings.Web;
 using Jeebs.Mvc.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -81,6 +80,7 @@ namespace Jeebs.Mvc.TagHelpers
 			// Return if no menu or items to output
 			if (Menu == null || Menu.Items.Count == 0)
 			{
+				output.SuppressOutput();
 				return;
 			}
 
@@ -118,7 +118,7 @@ namespace Jeebs.Mvc.TagHelpers
 					item.AddCssClass(ItemClass);
 
 					// Create link element
-					TagBuilder link = new TagBuilder("a");
+					var link = new TagBuilder("a");
 					link.AddCssClass(LinkClass);
 
 					// Add GUID

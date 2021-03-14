@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs.Apps;
-using Jeebs.Config;
-using Microsoft.Extensions.Configuration;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Data
@@ -14,45 +11,16 @@ namespace Jeebs.Data
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		/// Register data configuration
+		/// Configure data
 		/// </summary>
 		/// <param name="this">IServiceCollection</param>
-		/// <param name="section">[Optional] Section Key for retrieving database configuration</param>
-		public static FluentData AddData(this IServiceCollection @this, string section = DbConfig.Key) =>
-			new(@this, section);
-
-		/// <summary>
-		/// Fluently configure data registration
-		/// </summary>
-		public sealed class FluentData
+		public static IServiceCollection AddData(this IServiceCollection @this)
 		{
-			/// <summary>
-			/// IServiceCollection
-			/// </summary>
-			internal IServiceCollection Services { get; }
+			// Add DbLogs as Singleton so Db instance can be persisted
+			@this.AddSingleton<DbLogs>();
 
-			/// <summary>
-			/// Configuration Section Key
-			/// </summary>
-			internal string Section { get; }
-
-			/// <summary>
-			/// Start configuring data
-			/// </summary>
-			/// <param name="services">IServiceCollection</param>
-			/// <param name="section">Configuration Section Key</param>
-			public FluentData(IServiceCollection services, string section) =>
-				(Services, Section) = (services, section);
-
-			/// <summary>
-			/// Register data configuration
-			/// </summary>
-			/// <param name="config">IConfiguration</param>
-			public IServiceCollection Using(IConfiguration config)
-			{
-				Services.Bind<DbConfig>().To(Section).Using(config);
-				return Services;
-			}
+			// Return
+			return @this;
 		}
 	}
 }

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Xunit;
 
 namespace Jeebs.StrongId_Tests.GuidId_Tests
@@ -21,6 +20,6 @@ namespace Jeebs.StrongId_Tests.GuidId_Tests
 			Assert.Equal(Guid.Empty, id.Value);
 		}
 
-		public record GuidId : Jeebs.GuidId;
+		public record GuidId : Id.GuidId;
 	}
 }

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Xunit;
 
 namespace Jeebs.PropertyInfo_Tests
@@ -29,7 +30,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Get(foo);
+			void result() => info.Get(foo);
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(result);
@@ -43,7 +44,7 @@ namespace Jeebs.PropertyInfo_Tests
 			var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 			// Act
-			Action result = () => info.Get(obj);
+			void result() => info.Get(obj);
 
 			// Assert
 			Assert.Throws<ArgumentNullException>(result);

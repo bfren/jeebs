@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs;
 using Xunit;
+using static F.JsonF.Msg;
 
 namespace F.JsonF_Tests.EnumeratedConverter_Tests
 {
@@ -68,7 +69,7 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 
 			// Assert
 			var none = Assert.IsType<None<EnumeratedWrapperTest1>>(result);
-			Assert.IsType<Jm.Functions.JsonF.DeserialiseExceptionMsg>(none.Reason);
+			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
 		}
 
 		public class EnumeratedTest0 : Enumerated

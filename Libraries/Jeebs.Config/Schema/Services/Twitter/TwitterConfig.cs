@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.Config
 {
 	/// <summary>
 	/// Twitter configuration
 	/// </summary>
-	public record TwitterConfig : ServiceConfig
+	public record TwitterConfig : IServiceConfig
 	{
 		/// <summary>
 		/// UserAccessToken
@@ -30,7 +29,7 @@ namespace Jeebs.Config
 		public string ConsumerSecret { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
-		public override bool IsValid =>
+		public bool IsValid =>
 			!string.IsNullOrWhiteSpace(UserAccessToken)
 			&& !string.IsNullOrWhiteSpace(UserAccessSecret)
 			&& !string.IsNullOrWhiteSpace(ConsumerKey)

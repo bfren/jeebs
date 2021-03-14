@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jm.Cryptography.Locked;
-using Sodium;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
+using static Jeebs.Cryptography.Locked.Msg;
 
 namespace Jeebs.Cryptography.Locked_Tests
 {
@@ -33,7 +32,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(F.ByteF.Random(16));
+			var result = box.Unlock(F.Rnd.ByteF.Get(16));
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
@@ -48,7 +47,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var key = F.CryptoF.GenerateKey();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = F.ByteF.Random(8)
+				Nonce = F.Rnd.ByteF.Get(8)
 			};
 
 			// Act
@@ -72,7 +71,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<IncorrectKeyOrNonceMsg>(none.Reason);
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -91,7 +90,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 
 			// Assert
 			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<IncorrectKeyOrNonceMsg>(none.Reason);
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
 		}
 
 		[Fact]

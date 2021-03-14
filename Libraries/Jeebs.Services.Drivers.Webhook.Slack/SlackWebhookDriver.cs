@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Config;
 using Jeebs.Services.Drivers.Webhook.Slack.Models;
 using Jeebs.Services.Webhook;
-using Jeebs.Services.Webhook.Models;
 
 namespace Jeebs.Services.Drivers.Webhook.Slack
 {
@@ -21,7 +20,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack
 		protected SlackWebhookDriver(string name, SlackWebhookDriverArgs args) : base(name, args) { }
 
 		/// <inheritdoc/>
-		public override void Send(Message message) =>
+		public override void Send(IWebhookMessage message) =>
 			Send(new SlackMessage(JeebsConfig, message.Content, message.Level));
 	}
 }

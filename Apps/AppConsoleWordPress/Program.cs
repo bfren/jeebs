@@ -1,6 +1,8 @@
-﻿using System;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AppConsoleWordPress.Bcg;
 using AppConsoleWordPress.Usa;
@@ -12,109 +14,104 @@ using Jeebs.WordPress;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.DependencyInjection;
-using Org.BouncyCastle.Crypto.Digests;
+using static F.OptionF;
 
 namespace AppConsoleWordPress
 {
 	internal sealed class Program : Jeebs.Apps.Program
 	{
+		private static ILog log = new Jeebs.Logging.SerilogLogger();
+
 		internal static async Task Main(string[] args) =>
-			await Main<App>(
+			await MainAsync<App>(
 				args,
 				async (provider, _) =>
 				{
 					// Begin
-					Console.WriteLine("= WordPress Console Test =");
+					log.Debug("= WordPress Console Test =");
 
 					// Get services
-					var log = provider.GetRequiredService<ILog<Program>>();
+					log = provider.GetRequiredService<ILog<Program>>();
 					var bcg = provider.GetRequiredService<WpBcg>();
 					var usa = provider.GetRequiredService<WpUsa>();
 
 					// Run test methods
-					TermsAsync(Result.Ok(), "BCG", bcg.Db).Await().Audit(AuditTerms);
-					(await TermsAsync(Result.Ok(), "USA", usa.Db)).Audit(AuditTerms);
+					await TermsAsync("BCG", bcg.Db).AuditAsync(AuditTerms);
+					await TermsAsync("USA", usa.Db).AuditAsync(AuditTerms);
 
-					Chain.Create()
-						.UseLog(log)
-						.Link().MapAsync(r => InsertOptionAsync(r, bcg.Db)).Await()
-						.Audit(AuditOption);
+					await Return(bcg.Db)
+						.BindAsync(InsertOptionAsync)
+						.AuditAsync(AuditOption);
 
-					Chain.Create(bcg.Db)
-						.UseLog(log)
-						.Link().MapAsync(r => SearchSermonsAsync(r, "holiness", opt =>
+					await Return(bcg.Db)
+						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
 							opt.SearchOperator = SearchOperators.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
 							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 							opt.Limit = 4;
-						})).Await()
-						.Audit(AuditSermons);
+						}))
+						.AuditAsync(AuditSermons);
 
-					Chain.Create(bcg.Db)
-						.UseLog(log)
-						.Link().MapAsync(r => SearchSermonsAsync(r, "jesus", opt =>
+					await Return(bcg.Db)
+						.BindAsync(x => SearchSermonsAsync(x, "jesus", opt =>
 						{
 							opt.Type = WpBcg.PostTypes.Sermon;
 							opt.SearchText = "jesus";
 							opt.SearchFields = SearchPostFields.Title;
 							opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
 							opt.Limit = 5;
-						})).Await()
-						.Audit(AuditSermons);
+						}))
+						.AuditAsync(AuditSermons);
 
-					Chain.Create(bcg.Db)
-						.UseLog(log)
-						.Link().MapAsync(FetchMeta).Await()
-						.Audit(AuditMeta)
-						.Link().MapAsync(FetchCustomFields).Await()
-						.Audit(AuditCustomFields);
+					await Return(bcg.Db)
+						.BindAsync(FetchMeta)
+						.AuditAsync(AuditMeta)
+						.BindAsync(
+							_ => FetchCustomFields(bcg.Db)
+						)
+						.AuditAsync(AuditCustomFields);
 
-					Chain.Create()
-						.UseLog(log)
-						.Link().Map<int>(_ => throw new Exception("Test"));
+					Map<int>(() => throw new Exception("Test"));
 
-					Chain.Create(bcg.Db)
-						.UseLog(log)
-						.Link().MapAsync(FetchTaxonomies).Await()
-						.Audit(AuditTaxonomies);
+					await Return(bcg.Db)
+						.BindAsync(FetchTaxonomies)
+						.AuditAsync(AuditTaxonomies);
 
-					Chain.Create(bcg.Db)
-						.UseLog(log)
-						.Link().MapAsync(ApplyContentFilters).Await()
-						.Audit(AuditApplyContentFilters);
+					await Return(bcg.Db)
+						.BindAsync(ApplyContentFilters)
+						.AuditAsync(AuditApplyContentFilters);
 
 					// End
 					Console.WriteLine();
-					Console.WriteLine("Complete.");
+					log.Debug("Complete.");
 					Console.Read();
 				}
 			).ConfigureAwait(false);
 
-		internal static async Task<IR<int>> TermsAsync(IOk r, string section, IWpDb db)
+		internal static async Task<Option<int>> TermsAsync(string section, IWpDb db)
 		{
 			Console.WriteLine();
-			Console.WriteLine($"== {section} Terms ==");
+			log.Debug($"== {section} Terms ==");
 
 			using var w = db.UnitOfWork;
-			return await w.ExecuteScalarAsync<int>(r,
+			return await w.ExecuteScalarAsync<int>(
 				$"SELECT COUNT(*) FROM {db.Term} WHERE {db.Term.Slug} LIKE @a;",
 				new { a = "%a%" }
 			);
 		}
 
-		internal static void AuditTerms(IR<int> r)
-			=> Console.Write(r switch
-			{
-				IOkV<int> x => $"There are {x.Value} terms",
-				{ } e => $"{e.Messages}"
-			});
+		internal static void AuditTerms(Option<int> opt) =>
+			opt.Switch(
+				some: x => log.Debug("There are {0} terms", x),
+				none: r => log.Error($"No terms found: {r}")
+			);
 
-		internal static async Task<IR<Bcg.Entities.Option>> InsertOptionAsync(IOk r, IWpDb bcg)
+		internal static async Task<Option<Bcg.Entities.Option>> InsertOptionAsync(IWpDb db)
 		{
 			Console.WriteLine();
-			Console.WriteLine("== Option Insert ==");
+			log.Debug("== Option Insert ==");
 
 			var opt = new Bcg.Entities.Option
 			{
@@ -122,182 +119,160 @@ namespace AppConsoleWordPress
 				Value = DateTime.Now.ToLongTimeString()
 			};
 
-			using var w = bcg.UnitOfWork;
-			return await w.CreateAsync(r.OkV(opt));
+			using var w = db.UnitOfWork;
+			return await w.CreateAsync(opt);
 		}
 
-		internal static void AuditOption(IR<Bcg.Entities.Option> r)
-			=> Console.Write(r switch
-			{
-				IOkV<Bcg.Entities.Option> x => $"Test option '{x.Value.Key}' = '{x.Value.Value}'.",
-				{ } e => $"{e.Messages}"
-			});
+		internal static void AuditOption(Option<Bcg.Entities.Option> opt) =>
+			opt.Switch(
+				some: x => log.Debug("Test option '{Key}' = '{Value}'", x.Key, x.Value),
+				none: r => log.Error($"No option found: {r}")
+			);
 
-		internal static async Task<IR<List<SermonModel>, IWpDb>> SearchSermonsAsync(IOk<bool, IWpDb> r, string search, Action<QueryPosts.Options> opt)
+		internal static async Task<Option<List<SermonModel>>> SearchSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
 		{
 			Console.WriteLine();
-			Console.WriteLine($"== Sermons: {search} ==");
+			log.Debug($"== Sermons: {search} ==");
 
-			using var q = r.State.GetQueryWrapper();
-			return await r.Link().MapAsync(ok => q.QueryPostsAsync<SermonModel>(ok, modify: opt));
+			using var q = db.GetQueryWrapper();
+			return await q.QueryPostsAsync<SermonModel>(modify: opt);
 		}
 
-		internal static void AuditSermons(IR<List<SermonModel>, IWpDb> r)
-		{
-			if (r is IError)
-			{
-				Console.WriteLine($"{r.Messages}");
-			}
-
-			if (r is IOkV<List<SermonModel>> ok)
-			{
-				Console.WriteLine($"There are {ok.Value.Count} matching sermons.");
-				foreach (var item in ok.Value)
+		internal static void AuditSermons(Option<List<SermonModel>> opt) =>
+			opt.Switch(
+				some: x =>
 				{
-					Console.WriteLine("{0:0000}: {1}", item.PostId, item.Title);
-				}
-			}
-		}
-
-		internal static async Task<IR<List<PostModel>, IWpDb>> FetchMeta<TIgnore>(IOk<TIgnore, IWpDb> r)
-		{
-			Console.WriteLine();
-			Console.WriteLine("== Meta ==");
-
-			using var w = r.State.GetQueryWrapper();
-			return await r.Link().MapAsync(ok => w.QueryPostsAsync<PostModel>(ok, modify: opt => opt.Limit = 3));
-		}
-
-		internal static void AuditMeta(IR<List<PostModel>> r)
-		{
-			if (r is IError)
-			{
-				Console.WriteLine($"{r.Messages}");
-			}
-
-			if (r is IOkV<List<PostModel>> ok)
-			{
-				foreach (var post in ok.Value)
-				{
-					Console.WriteLine("Post {0}", post.PostId);
-					foreach (var item in post.Meta)
+					log.Debug("There are {Count} matching sermons", x.Count);
+					foreach (var item in x)
 					{
-						Console.WriteLine("{0}: {1}", item.Key, item.Value);
+						log.Debug("{PostId:0000}: {Title}", item.PostId, item.Title);
 					}
-				}
-			}
-		}
+				},
+				none: r => log.Error($"No sermons found: {r}")
+			);
 
-		internal static async Task<IR<List<SermonModelWithCustomFields>, IWpDb>> FetchCustomFields<TIgnore>(IOk<TIgnore, IWpDb> r)
+		internal static async Task<Option<List<PostModel>>> FetchMeta(IWpDb db)
 		{
 			Console.WriteLine();
-			Console.WriteLine("== Custom Fields ==");
+			log.Debug("== Meta ==");
 
-			using var q = r.State.GetQueryWrapper();
-			return await r.Link().MapAsync(ok => q.QueryPostsAsync<SermonModelWithCustomFields>(ok, modify: opt =>
+			using var w = db.GetQueryWrapper();
+			return await w.QueryPostsAsync<PostModel>(modify: opt => opt.Limit = 3);
+		}
+
+		internal static void AuditMeta(Option<List<PostModel>> opt) =>
+			opt.Switch(
+				some: x =>
+				{
+					foreach (var post in x)
+					{
+						log.Debug("Post {PostId}", post.PostId);
+						foreach (var item in post.Meta)
+						{
+							log.Debug(" - {Key}: {Value}", item.Key, item.Value);
+						}
+					}
+				},
+				none: r => log.Error($"No posts found: {r}")
+			);
+
+		internal static async Task<Option<List<SermonModelWithCustomFields>>> FetchCustomFields(IWpDb db)
+		{
+			Console.WriteLine();
+			log.Debug("== Custom Fields ==");
+
+			using var q = db.GetQueryWrapper();
+			return await q.QueryPostsAsync<SermonModelWithCustomFields>(modify: opt =>
 			{
 				opt.Type = WpBcg.PostTypes.Sermon;
 				//opt.SortRandom = true;
 				//opt.Limit = 10;
 				opt.Ids = new[] { 924L, 2336L };
-			}));
+			});
 		}
 
-		internal static void AuditCustomFields(IR<List<SermonModelWithCustomFields>> r)
-		{
-			if (r is IError)
-			{
-				Console.WriteLine($"{r.Messages}");
-			}
-
-			if (r is IOkV<List<SermonModelWithCustomFields>> ok)
-			{
-				Console.WriteLine($"{ok.Value.Count} sermons found");
-
-				foreach (var sermon in ok.Value.ToList())
+		internal static void AuditCustomFields(Option<List<SermonModelWithCustomFields>> opt) =>
+			opt.Switch(
+				some: x =>
 				{
-					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
-					Console.WriteLine("  - Passage: {0}", sermon.Passage);
-					Console.WriteLine("  - PDF: {0}", sermon.Pdf?.ToString() ?? "null");
-					Console.WriteLine("  - Audio: {0}", sermon.Audio?.ToString() ?? "null");
-					Console.WriteLine("  - First Preached: {0}", sermon.FirstPreached);
-					Console.WriteLine("  - Feed Image: {0}", sermon.Image?.ValueObj.UrlPath ?? "null");
-				}
-			}
-		}
+					log.Debug("{Count} sermons found", x.Count);
 
-		internal static async Task<IR<List<SermonModelWithTaxonomies>, IWpDb>> FetchTaxonomies<TIgnore>(IOk<TIgnore, IWpDb> r)
+					foreach (var sermon in x)
+					{
+						log.Debug("{SermonId:0000} '{Title}'", sermon.PostId, sermon.Title);
+						log.Debug("  - Passage: {Passage}", sermon.Passage);
+						log.Debug("  - PDF: {Pdf}", sermon.Pdf?.ToString() ?? "null");
+						log.Debug("  - Audio: {Audio}", sermon.Audio?.ToString() ?? "null");
+						log.Debug("  - First Preached: {FirstPreached}", sermon.FirstPreached);
+						log.Debug("  - Feed Image: {FeedImageUrl}", sermon.Image?.ValueObj.UrlPath ?? "null");
+					}
+				},
+				none: r => log.Error($"No sermons found: {r}")
+			);
+
+		internal static async Task<Option<List<SermonModelWithTaxonomies>>> FetchTaxonomies(IWpDb db)
 		{
 			Console.WriteLine();
-			Console.WriteLine("== Taxonomies ==");
+			log.Debug("== Taxonomies ==");
 
-			using var w = r.State.GetQueryWrapper();
-			return await r.Link().MapAsync(ok => w.QueryPostsAsync<SermonModelWithTaxonomies>(ok, modify: opt =>
+			using var w = db.GetQueryWrapper();
+			return await w.QueryPostsAsync<SermonModelWithTaxonomies>(modify: opt =>
 			{
 				opt.Type = WpBcg.PostTypes.Sermon;
 				opt.SortRandom = true;
 				opt.Limit = 10;
-			}));
+			});
 		}
 
-		internal static async void AuditTaxonomies(IR<List<SermonModelWithTaxonomies>> r)
-		{
-			if (r is IError)
-			{
-				r.Logger.Messages(r.Messages.GetEnumerable());
-			}
-
-			if (r is IOkV<List<SermonModelWithTaxonomies>> ok)
-			{
-				Console.WriteLine($"{ok.Value.Count} sermons found");
-
-				foreach (var sermon in ok.Value)
+		internal static void AuditTaxonomies(Option<List<SermonModelWithTaxonomies>> opt) =>
+			opt.Switch(
+				some: x =>
 				{
-					Console.WriteLine("{0:0000} '{1}'", sermon.PostId, sermon.Title);
+					log.Debug("{Count} sermons found", x.Count);
 
-					foreach (var book in sermon.BibleBooks)
+					foreach (var sermon in x)
 					{
-						Console.WriteLine("  - Bible Book: {0}", book);
-					}
+						log.Debug("{PostId:0000} '{Title}'", sermon.PostId, sermon.Title);
 
-					foreach (var series in sermon.Series)
-					{
-						Console.WriteLine("  - Series: {0}", series);
-					}
-				}
-			}
-		}
+						foreach (var book in sermon.BibleBooks)
+						{
+							log.Debug("  - Bible Book: {Book}", book);
+						}
 
-		internal static async Task<IR<List<PostModelWithContent>, IWpDb>> ApplyContentFilters<TIgnore>(IOk<TIgnore, IWpDb> r)
+						foreach (var series in sermon.Series)
+						{
+							log.Debug("  - Series: {Series}", series);
+						}
+					}
+				},
+				none: r => log.Error($"No sermons found: {r}")
+			);
+
+		internal static async Task<Option<List<PostModelWithContent>>> ApplyContentFilters(IWpDb db)
 		{
 			Console.WriteLine();
-			Console.WriteLine("== Apply Content Filters ==");
+			log.Debug("== Apply Content Filters ==");
 
-			using var w = r.State.GetQueryWrapper();
-			return await r.Link().MapAsync(ok => w.QueryPostsAsync<PostModelWithContent>(
-				ok,
+			using var w = db.GetQueryWrapper();
+			return await w.QueryPostsAsync<PostModelWithContent>(
 				modify: opt => opt.Limit = 3,
 				filters: GenerateExcerpt.Create()
-			));
+			);
 		}
 
-		internal static async void AuditApplyContentFilters(IR<List<PostModelWithContent>> r)
-		{
-			if (r is IError)
-			{
-				r.Logger.Messages(r.Messages.GetEnumerable());
-			}
-
-			if (r is IOkV<List<PostModelWithContent>> ok)
-			{
-				Console.WriteLine($"{ok.Value.Count} posts found");
-
-				foreach (var post in ok.Value)
+		internal static void AuditApplyContentFilters(Option<List<PostModelWithContent>> opt) =>
+			opt.Switch(
+				some: x =>
 				{
-					Console.WriteLine("{0:0000} {1}", post.PostId, post.Content);
-				}
-			}
-		}
+					log.Debug("{Count} posts found", x.Count);
+
+					foreach (var post in x)
+					{
+						log.Debug("{PostId:0000} {Content}", post.PostId, post.Content);
+					}
+				},
+				none: r => log.Error($"No posts found: {r}")
+			);
 	}
 
 	internal class TermModel

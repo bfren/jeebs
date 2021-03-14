@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Config;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +33,8 @@ namespace Jeebs.Apps
 		/// <inheritdoc/>
 		public override IHost CreateHost(string[] args)
 		{
-			return Host.CreateDefaultBuilder(args)
+			// Create Default Host Builder
+			var host = Host.CreateDefaultBuilder(args)
 
 				// Use Web Host Defaults
 				.ConfigureWebHostDefaults(builder => builder
@@ -54,7 +56,7 @@ namespace Jeebs.Apps
 
 					// Configure
 					.Configure(
-						(host, app) => Configure(host.HostingEnvironment, host.Configuration, app)
+						(host, app) => Configure(host.HostingEnvironment, app, host.Configuration)
 					)
 
 					// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
@@ -62,6 +64,12 @@ namespace Jeebs.Apps
 				)
 
 			.Build();
+
+			// Ready to go
+			Ready(host.Services);
+
+			// Return host
+			return host;
 		}
 
 		/// <inheritdoc/>
@@ -91,9 +99,9 @@ namespace Jeebs.Apps
 		/// Configure Application
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
-		/// <param name="config">IConfiguration</param>
 		/// <param name="app">IApplicationBuilder</param>
-		protected virtual void Configure(IHostEnvironment env, IConfiguration config, IApplicationBuilder app)
+		/// <param name="config">IConfiguration</param>
+		protected virtual void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
 		{
 			// Logging
 			app.UseMiddleware<LoggerMiddleware>();
@@ -114,6 +122,9 @@ namespace Jeebs.Apps
 				// Add security headers
 				Configure_SecurityHeaders(app);
 			}
+
+			// Authorisation
+			Configure_Auth(app, config);
 
 			// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
 		}
@@ -149,6 +160,19 @@ namespace Jeebs.Apps
 			if (useHsts) // check for Development Environment happens in Configure()
 			{
 				app.UseHsts();
+			}
+		}
+
+		/// <summary>
+		/// Override to configure authentication and authorisation
+		/// </summary>
+		/// <param name="app">IApplicationBuilder</param>
+		/// <param name="config">IConfiguration</param>
+		protected virtual void Configure_Auth(IApplicationBuilder app, IConfiguration config)
+		{
+			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+			{
+				app.UseAuthorization();
 			}
 		}
 	}

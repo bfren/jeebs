@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 
 namespace Jeebs.Data.Querying
 {
@@ -23,12 +24,12 @@ namespace Jeebs.Data.Querying
 
 			/// <inheritdoc/>
 			public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(TOptions options)
-				where TOptions : QueryOptions =>
+				where TOptions : IQueryOptions =>
 				new QueryWithOptions<TOptions>(UnitOfWork, options);
 
 			/// <inheritdoc/>
 			public IQueryWithOptions<TModel, TOptions> WithOptions<TOptions>(Action<TOptions>? modify = null)
-				where TOptions : QueryOptions, new()
+				where TOptions : IQueryOptions, new()
 			{
 				// Create options
 				var options = new TOptions();

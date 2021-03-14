@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Services.Drivers.Webhook.Seq;
 
 namespace AppConsole

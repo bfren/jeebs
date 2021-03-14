@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Linq;
-using System.Text;
 using Jeebs;
-using Jm.Functions.BooleanF;
+using static F.OptionF;
 
 namespace F
 {
@@ -19,13 +20,12 @@ namespace F
 		/// <returns>True / false</returns>
 		public static Option<bool> Parse<T>(T value)
 		{
-			if (value is null)
+			// Convert to string
+			var val = value?.ToString()?.ToLower();
+			if (val is null)
 			{
-				return Option.None<bool>().AddReason<NullValueMsg>();
+				return None<bool, Msg.NullValueMsg>();
 			}
-
-			// String
-			var val = value.ToString()?.ToLower();
 
 			// Alternative boolean values
 			var trueValues = new[] { "true,false", "on", "yes", "1" };
@@ -34,18 +34,29 @@ namespace F
 			// Match checkbox binding from MVC form
 			if (trueValues.Contains(val))
 			{
-				return Option.Wrap(true);
+				return true;
 			}
 			else if (falseValues.Contains(val))
 			{
-				return Option.Wrap(false);
+				return false;
 			}
 			else if (bool.TryParse(val, out bool result))
 			{
-				return Option.Wrap(result);
+				return result;
 			}
 
-			return Option.None<bool>();
+			return None<bool>(new Msg.UnrecognisedValueMsg(val));
+		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Null Value</summary>
+			public sealed record NullValueMsg : IMsg { }
+
+			/// <summary>Unrecognised boolean value</summary>
+			/// <param name="Value">Unrecognised Value</param>
+			public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
 		}
 	}
 }

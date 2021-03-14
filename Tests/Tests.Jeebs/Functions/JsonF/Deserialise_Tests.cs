@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using System.Text;
 using Jeebs;
 using Xunit;
+using static F.JsonF.Msg;
 
 namespace F.JsonF_Tests
 {
@@ -22,7 +24,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialisingNullOrEmptyStringMsg);
+			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -36,7 +38,7 @@ namespace F.JsonF_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.True(none.Reason is Jm.Functions.JsonF.DeserialiseExceptionMsg);
+			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
 		}
 
 		[Fact]

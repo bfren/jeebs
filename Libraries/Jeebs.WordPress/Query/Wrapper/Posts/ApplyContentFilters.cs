@@ -1,9 +1,11 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Jeebs.Data;
-using Jm.WordPress.Query.Wrapper.Posts;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -14,37 +16,37 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="r">Result</param>
+		/// <param name="posts">Posts</param>
 		/// <param name="filters">Content Filters</param>
-		private static IR<TList> ApplyContentFilters<TList, TModel>(IOkV<TList> r, ContentFilter[] filters)
+		private static Option<TList> ApplyContentFilters<TList, TModel>(TList posts, ContentFilter[] filters)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
 			// Only proceed if there are content filters
 			if (filters.Length == 0)
 			{
-				return r;
+				return posts;
 			}
 
 			// Post content field is required as we are expected to apply content filters
 			return GetPostContentInfo<TModel>() switch
 			{
 				Some<Content<TModel>> x when x.Value is var content =>
-					r.Link()
-						.Handle().With<ExecuteContentFiltersExceptionMsg>()
-						.Map(okV => execute(okV, content, filters)),
+					Return(posts)
+						.Map(
+							x => execute(x, content, filters),
+							e => new Msg.ApplyContentFiltersExceptionMsg<TModel>(e)
+						),
 
 				_ =>
-					r.Error().AddMsg().OfType<RequiredContentPropertyNotFoundMsg<TModel>>()
+					None<TList, Msg.RequiredContentPropertyNotFoundMsg<TModel>>()
 			};
 
 			//
 			// Apply content filters to each post
 			//
-			static IR<TList> execute(IOkV<TList> r, Content<TModel> content, ContentFilter[] filters)
+			static TList execute(TList posts, Content<TModel> content, ContentFilter[] filters)
 			{
-				var posts = r.Value;
-
 				foreach (var post in posts)
 				{
 					// Get post content
@@ -60,7 +62,7 @@ namespace Jeebs.WordPress
 					content.Set(post, postContent);
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 		}
 
@@ -70,6 +72,19 @@ namespace Jeebs.WordPress
 		private class Content<TModel> : PropertyInfo<TModel, string>
 		{
 			public Content(PropertyInfo info) : base(info) { }
+		}
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while applying content filters to posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Required Content property not found</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			public sealed record RequiredContentPropertyNotFoundMsg<T> : IMsg { }
 		}
 	}
 }

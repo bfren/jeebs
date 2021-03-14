@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Jeebs;
 using Xunit;
 
@@ -80,7 +80,7 @@ namespace F.JsonF_Tests.GuidIdConverter_Tests
 			Assert.Equal(Guid.Empty, wrapper.GuidId.Value);
 		}
 
-		public record GuidIdTest0 : GuidId;
+		public record GuidIdTest0 : Jeebs.Id.GuidId;
 
 		public class GuidIdWrapperTest0
 		{

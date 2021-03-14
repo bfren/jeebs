@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-namespace Jeebs.Functions.Internals
+using System;
+using System.Text.Json;
+using Jeebs.Id;
+
+namespace F.Internals
 {
 	/// <summary>
 	/// Converter for <see cref="GuidId"/> types

@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
+using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {
@@ -33,7 +34,7 @@ namespace Jeebs.Option_Tests
 
 			// Assert
 			var none = Assert.IsType<None<object>>(result);
-			Assert.True(none.Reason is Jm.Option.SomeValueWasNullMsg);
+			Assert.IsType<SomeValueWasNullMsg>(none.Reason);
 		}
 	}
 }

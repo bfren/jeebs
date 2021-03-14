@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +28,6 @@ namespace Jeebs.Apps
 			base.ConfigureServices(env, config, services);
 
 			// Add data
-			services.AddData().Using(config);
 			services.AddSingleton<TDb>();
 		}
 	}

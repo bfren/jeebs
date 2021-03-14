@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Threading.Tasks;
-using Dapper;
-using Jm.Data.Mapping.Extensions.UnitOfWork;
+using Jeebs.Logging;
+using static F.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -18,141 +18,184 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to insert</param>
+		/// <param name="entity">New entity</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static IR<T> Create<T>(this IUnitOfWork @this, IOkV<T> r)
+		public static Option<T> Create<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			r
-				.WithState(@this)
-				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
-					.Map(InsertAndReturnId)
-				.Link()
-					.Handle().With<CheckIdExceptionMsg>()
-					.Map(CheckId<T>)
-				.Link()
-					.Handle().With<GetFreshPocoExceptionMsg>()
-					.Map(GetFreshPoco<T>);
+
+			Return(entity)
+				.Bind(
+					x => InsertAndReturnId(@this, x),
+					e => new Msg.CreateExceptionMsg<T>(nameof(Create), e)
+				)
+				.Bind(
+					CheckId<T>
+				)
+				.Bind(
+					x => GetFreshPoco<T>(@this, x),
+					e => new Msg.RetrieveFreshExceptionMsg<T>(nameof(Create), e)
+				);
 
 		/// <summary>
 		/// Create an entity
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the poco to insert</param>
+		/// <param name="entity">New entity</param>
 		/// <returns>Entity (complete with new ID)</returns>
-		public static async Task<IR<T>> CreateAsync<T>(this IUnitOfWork @this, IOkV<T> r)
+		public static Task<Option<T>> CreateAsync<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			await r
-				.WithState(@this)
-				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.CreateExceptionMsg(ex, typeof(T))))
-					.MapAsync(InsertAndReturnIdAsync).Await()
-				.Link()
-					.Handle().With<CheckIdExceptionMsg>()
-					.Map(CheckId<T>)
-				.Link()
-					.Handle().With<GetFreshPocoExceptionMsg>()
-					.MapAsync(GetFreshPocoAsync<T>);
+
+			Return(entity)
+				.BindAsync(
+					x => InsertAndReturnIdAsync(@this, x),
+					e => new Msg.CreateExceptionMsg<T>(nameof(CreateAsync), e)
+				)
+				.BindAsync(
+					CheckId<T>
+				)
+				.BindAsync(
+					x => GetFreshPocoAsync<T>(@this, x),
+					e => new Msg.RetrieveFreshExceptionMsg<T>(nameof(Create), e)
+				);
 
 		/// <summary>
 		/// Perform an INSERT operation and return the ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static IR<long, IUnitOfWork> InsertAndReturnId<T>(IOkV<T, IUnitOfWork> r)
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="entity">Entity to insert</param>
+		private static Option<long> InsertAndReturnId<T>(IUnitOfWork w, T entity)
 			where T : IEntity
 		{
-			// Get values
-			var w = r.State;
-			var poco = r.Value;
-
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(InsertAndReturnId), query, poco));
+			w.Log.Message(new Msg.CreateQueryMsg<T>(nameof(InsertAndReturnId), query, entity));
 
 			// Insert and capture new ID
-			var newId = w.Connection.ExecuteScalar<long>(query, param: poco, transaction: w.Transaction);
-
-			// Continue
-			return r.OkV(newId);
+			return w.ExecuteScalar<long>(query, entity);
 		}
 
 		/// <summary>
 		/// Perform an INSERT operation and return the ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static async Task<IR<long, IUnitOfWork>> InsertAndReturnIdAsync<T>(IOkV<T, IUnitOfWork> r)
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="entity">Entity to insert</param>
+		private static Task<Option<long>> InsertAndReturnIdAsync<T>(IUnitOfWork w, T entity)
 			where T : IEntity
 		{
-			// Get values
-			var w = r.State;
-			var poco = r.Value;
-
 			// Build query
 			var query = w.Adapter.CreateSingleAndReturnId<T>();
-			r.AddMsg(new Jm.Data.QueryMsg(nameof(InsertAndReturnIdAsync), query, poco));
+			w.Log.Message(new Msg.CreateQueryMsg<T>(nameof(InsertAndReturnIdAsync), query, entity));
 
 			// Insert and capture new ID
-			var newId = await w.Connection.ExecuteScalarAsync<long>(query, param: poco, transaction: w.Transaction).ConfigureAwait(false);
-
-			// Continue
-			return r.OkV(newId);
+			return w.ExecuteScalarAsync<long>(query, entity);
 		}
 
 		/// <summary>
 		/// Check if the New ID is 0, and if so rollback changes - something went wrong
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static IR<long, IUnitOfWork> CheckId<T>(IOkV<long, IUnitOfWork> r)
+		/// <param name="id">Entity ID</param>
+		private static Option<long> CheckId<T>(long id)
 		{
 			// Check ID and return error
-			if (r.Value == 0)
+			if (id == 0)
 			{
-				return r.Error().AddMsg(new Jm.Data.CreateErrorMsg(typeof(T)));
+				return None<long>(new Msg.CreateErrorMsg<T>());
 			}
 
 			// Continue
-			return r;
+			return id;
+		}
+
+		/// <summary>
+		/// Get a fresh POCO from the database using the new ID
+		/// </summary>
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="id">Entity ID</param>
+		private static Option<T> GetFreshPoco<T>(IUnitOfWork w, long id)
+			where T : class, IEntity
+		{
+			// Add create message
+			w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPoco), id));
+
+			// Get fresh poco
+			return Single<T>(w, id);
 		}
 
 		/// <summary>
 		/// Get a fresh POCO from the database using the new ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static IR<T, IUnitOfWork> GetFreshPoco<T>(IOkV<long, IUnitOfWork> r)
+		/// <param name="w">IUnitOfWork</param>
+		/// <param name="id">Entity ID</param>
+		private static Task<Option<T>> GetFreshPocoAsync<T>(IUnitOfWork w, long id)
 			where T : class, IEntity
 		{
-			// Get values
-			var w = r.State;
-
 			// Add create message
-			r.AddMsg(new Jm.Data.CreateMsg(typeof(T), r.Value));
+			w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPocoAsync), id));
 
 			// Get fresh poco
-			return (IR<T, IUnitOfWork>)Single<T>(w, r);
+			return SingleAsync<T>(w, id);
 		}
 
-		/// <summary>
-		/// Get a fresh POCO from the database using the new ID
-		/// </summary>
-		/// <typeparam name="T">Entity type</typeparam>
-		/// <param name="r">Result object</param>
-		private static async Task<IR<T, IUnitOfWork>> GetFreshPocoAsync<T>(IOkV<long, IUnitOfWork> r)
-			where T : class, IEntity
+		/// <summary>Messages</summary>
+		public static partial class Msg
 		{
-			// Get values
-			var w = r.State;
-			var newId = r.Value;
+			/// <summary>Something went wrong inserting the entity and ID returned was 0</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			public sealed record CreateErrorMsg<T>() : IMsg { }
 
-			// Add create message
-			r.AddMsg(new Jm.Data.CreateMsg(typeof(T), newId));
+			/// <summary>Error inserting entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record CreateExceptionMsg<T>(string Method, Exception Exception) :
+				ExceptionMsg(Exception, "{Method}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method };
+			}
 
-			// Get fresh poco
-			return (IR<T, IUnitOfWork>)await w.SingleAsync<T>(r);
+			/// <summary>Query message</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			public sealed record CreateQueryMsg<T>(string Method, string Query, T Parameters) :
+				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Query, Parameters ?? new object() };
+			}
+
+			/// <summary>Error retrieving fresh entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record RetrieveFreshExceptionMsg<T>(string Method, Exception Exception) :
+				ExceptionMsg(Exception, "{Method}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method };
+			}
+
+			/// <summary>Query message</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">The ID of the entity being requested</param>
+			public sealed record RetrieveFreshMsg<T>(string Method, long Id) :
+				LogMsg(LogLevel.Debug, "{Method} {Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
 		}
 	}
 }

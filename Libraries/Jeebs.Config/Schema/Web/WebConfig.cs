@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.Config
 {
@@ -13,6 +12,11 @@ namespace Jeebs.Config
 		/// Path to this configuration section
 		/// </summary>
 		public const string Key = JeebsConfig.Key + ":web";
+
+		/// <summary>
+		/// Authentication and Authorisation configuration
+		/// </summary>
+		public AuthConfig Auth { get; init; } = new();
 
 		/// <summary>
 		/// RedirectionsConfig

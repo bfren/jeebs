@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
 
 namespace Jeebs.Config.SlackConfig_Tests
@@ -16,7 +16,7 @@ namespace Jeebs.Config.SlackConfig_Tests
 			// Act
 
 			// Assert
-			Assert.IsAssignableFrom<ServiceConfig>(config);
+			Assert.IsAssignableFrom<IServiceConfig>(config);
 		}
 
 		[Fact]

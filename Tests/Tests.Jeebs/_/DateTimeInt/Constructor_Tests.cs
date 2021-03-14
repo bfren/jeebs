@@ -1,7 +1,7 @@
-﻿using Jeebs;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Jeebs.DateTimeInt_Tests
@@ -57,7 +57,7 @@ namespace Jeebs.DateTimeInt_Tests
 			// Arrange
 
 			// Act
-			Action result = () => new DateTimeInt(input);
+			DateTimeInt result() => new(input);
 
 			// Assert
 			Assert.Throws<ArgumentException>(result);
@@ -98,7 +98,7 @@ namespace Jeebs.DateTimeInt_Tests
 			// Arrange
 
 			// Act
-			Action result = () => new DateTimeInt(input);
+			DateTimeInt result() => new(input);
 
 			// Assert
 			Assert.Throws<ArgumentException>(result);

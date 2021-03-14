@@ -1,8 +1,9 @@
-﻿using Jeebs;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
+using static Jeebs.DateTimeInt.Msg;
 
 namespace Jeebs.DateTimeInt_Tests
 {
@@ -61,7 +62,7 @@ namespace Jeebs.DateTimeInt_Tests
 
 			// Assert
 			var none = Assert.IsType<None<DateTime>>(result);
-			Assert.True(none.Reason is Jm.DateTimeInt.InvalidDateTimeMsg);
+			Assert.IsType<InvalidDateTimeMsg>(none.Reason);
 		}
 	}
 }

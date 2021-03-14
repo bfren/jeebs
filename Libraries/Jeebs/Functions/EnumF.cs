@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static Jeebs.Option;
-using Jm.Functions.EnumF;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
+using Jeebs;
+using static F.OptionF;
 
 namespace F
 {
@@ -17,7 +18,7 @@ namespace F
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
-		public static Jeebs.Option<T> Parse<T>(string value)
+		public static Option<T> Parse<T>(string value)
 			where T : struct, Enum
 		{
 			try
@@ -28,12 +29,12 @@ namespace F
 						x,
 
 					_ =>
-						None<T>().AddReason(new NotAValidEnumValueMsg<T>(value))
+						None<T>(new Msg.NotAValidEnumValueMsg<T>(value))
 				};
 			}
 			catch (Exception)
 			{
-				return None<T>().AddReason(new NotAValidEnumValueMsg<T>(value));
+				return None<T>(new Msg.NotAValidEnumValueMsg<T>(value));
 			}
 		}
 
@@ -43,22 +44,20 @@ namespace F
 		/// <param name="t">Enum type</param>
 		/// <param name="value">The value to parse</param>
 		/// <returns>Parsed value</returns>
-		public static Jeebs.Option<object> Parse(Type t, string value)
+		public static Option<object> Parse(Type t, string value)
 		{
 			if (!t.IsEnum)
 			{
-				//throw new ArgumentException($"Type {t} is not an Enum", nameof(t));
-				return None<object>();
+				return None<object>(new Msg.NotAValidEnumMsg(t));
 			}
 
 			try
 			{
-				var parsed = Enum.Parse(t, value, true);
-				return Wrap(parsed);
+				return Enum.Parse(t, value, true);
 			}
 			catch (Exception)
 			{
-				return None<object>().AddReason(new NotAValidEnumValueMsg(t, value));
+				return None<object>(new Msg.NotAValidEnumValueMsg(t, value));
 			}
 		}
 
@@ -95,7 +94,7 @@ namespace F
 			/// </summary>
 			/// <typeparam name="TTo">Convert To type</typeparam>
 			/// <returns>Converted object</returns>
-			public Jeebs.Option<TTo> To<TTo>()
+			public Option<TTo> To<TTo>()
 				where TTo : struct, Enum
 			{
 				// Convert to long so we can get the value of the receiving enum
@@ -110,8 +109,50 @@ namespace F
 						x,
 
 					_ =>
-						None<TTo>().AddReason(new ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+						None<TTo>(new Msg.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 				};
+			}
+		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
+			/// <param name="Value">Enum type</param>
+			public sealed record NotAValidEnumMsg(Type Value) : WithValueMsg<Type> { }
+
+			/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
+			/// <typeparam name="T">Enum type</typeparam>
+			/// <param name="Value">Enum value</param>
+			public sealed record NotAValidEnumValueMsg<T>(string Value) : WithValueMsg<string>
+				where T : struct, Enum
+			{
+				/// <summary>Return message</summary>
+				public override string ToString() =>
+					$"'{Value}' is not a valid value of {typeof(T)}.";
+			}
+
+			/// <summary><paramref name="Value"/> is not a valid value of <paramref name="Type"/></summary>
+			/// <param name="Type">Enum type</param>
+			/// <param name="Value">Enum value</param>
+			public sealed record NotAValidEnumValueMsg(Type Type, string Value) : WithValueMsg<string>
+			{
+				/// <summary>Return message</summary>
+				public override string ToString() =>
+					$"'{Value}' is not a valid value of {Type}.";
+			}
+
+			/// <summary><paramref name="Value"/> is not in <typeparamref name="TTo"/></summary>
+			/// <typeparam name="TFrom">From Enum</typeparam>
+			/// <typeparam name="TTo">To Enum</typeparam>
+			/// <param name="Value">From Enum value</param>
+			public sealed record ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : WithValueMsg<TFrom>
+				where TFrom : struct, Enum
+				where TTo : struct, Enum
+			{
+				/// <summary>Return message</summary>
+				public override string ToString() =>
+					$"'{Value}' is not a valid {typeof(TTo)}.";
 			}
 		}
 	}

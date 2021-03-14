@@ -1,6 +1,8 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
-using System.Text;
 using Jeebs.Config;
 using Microsoft.Extensions.Options;
 
@@ -11,7 +13,7 @@ namespace Jeebs.Services
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration type</typeparam>
 	public abstract class DriverArgs<TConfig> : IDriverArgs<TConfig>
-		where TConfig : ServiceConfig
+		where TConfig : IServiceConfig
 	{
 		/// <summary>
 		/// ILog

@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Jeebs.Config;
 using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
-using Jm.Services.Twitter.TweetinviTwitterDriver.GetProfileImageAsync;
-using Jm.Services.Twitter.TweetinviTwitterDriver.GetTweetsAsync;
 using Microsoft.Extensions.DependencyInjection;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
+using static F.OptionF;
 
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 {
 	/// <summary>
 	/// Tweetinvi Twitter Driver
 	/// </summary>
-	public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDriver
+	public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDriver<TweetModel>
 	{
 		/// <summary>
 		/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
@@ -46,91 +49,71 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			);
 		}
 
-		private async Task<IR<IUser>> GetUser(IOkV<string> r)
-		{
-			// Get user
-			return await r
-				.Link()
-					.Handle().With(getUserException)
-					.MapAsync(getUser);
-
-			// Get user
-			async Task<IR<IUser>> getUser(IOkV<string> r)
+		private async Task<Option<IUser>> GetUser(string screenName) =>
+			await client.Users.GetUserAsync(screenName).ConfigureAwait(false) switch
 			{
-				var user = await client.Users.GetUserAsync(r.Value).ConfigureAwait(false);
-				return r.OkV(user);
-			}
+				IUser user =>
+					Return(user),
 
-			// Handle get user exceptions
-			void getUserException(IR<string> r, System.Exception ex)
-			{
-				Log.Information("Unable to find user");
-				r.AddMsg(new ErrorGettingUserMsg(ex));
-			}
-		}
+				_ =>
+					None<IUser>(new Msg.UserNotFoundMsg(screenName))
+			};
 
 		/// <inheritdoc/>
-		public async Task<IR<System.IO.Stream>> GetProfileImageStreamAsync(IOkV<string> r)
+		public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
-			return r
-				.Link()
-					.MapAsync(GetUser).Await()
-				.Link()
-					.Handle().With(getUrlException)
-					.MapAsync(getUrl).Await()
-				.Link()
-					.Handle().With(getStreamException)
-					.MapAsync(getStream).Await();
+			return Return(screenName)
+				.BindAsync(
+					GetUser,
+					e => new Msg.GettingUserExceptionMsg(screenName, e)
+				)
+				.MapAsync(
+					getUrl,
+					e => new Msg.GettingProfileImageUrlExceptionMsg(screenName, e)
+				)
+				.BindAsync(
+					getStream,
+					e => new Msg.GettingProfileImageStreamExceptionMsg(screenName, e)
+				);
 
 			// Get profile image URL
-			async Task<IR<string>> getUrl(IOkV<IUser> r)
+			string getUrl(IUser user)
 			{
-				var url = r.Value.ProfileImageUrlFullSize.Replace("http://", "https://");
-				Log.Information("Twitter profile image: '{0}'", url);
-				return r.OkV(url);
-			}
-
-			// Handle get profile image URL exceptions
-			void getUrlException(IR<IUser> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error getting Twitter Profile image URL");
-				r.AddMsg(new ErrorGettingProfileImageUrlMsg(ex));
+				var url = user.ProfileImageUrlFullSize.Replace("http://", "https://");
+				Log.Debug("Twitter profile image: '{0}'", url);
+				return url;
 			}
 
 			// Get profile image stream
-			async Task<IR<System.IO.Stream>> getStream(IOkV<string> r)
+			async Task<Option<System.IO.Stream>> getStream(string uri)
 			{
 				using var client = factory.CreateClient();
-				var stream = await client.GetStreamAsync(r.Value).ConfigureAwait(false);
-				return r.OkV(stream);
-			}
-
-			// Handle get profile image stream exceptions
-			void getStreamException(IR<string> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error getting Twitter Profile image stream");
-				r.AddMsg(new ErrorGettingProfileImageStreamMsg(ex));
+				return await client.GetStreamAsync(uri).ConfigureAwait(false);
 			}
 		}
 
 		/// <inheritdoc/>
-		public async Task<IR<List<TweetModel>>> GetTweetsAsync(IOkV<string> r, bool excludeReplies = true, int limit = 10)
+		public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
 		{
-			return r
-				.Link()
-					.MapAsync(GetUser).Await()
-				.Link()
-					.Handle().With(getTimelineException)
-					.MapAsync(getTimeline).Await()
-				.Link()
-					.Handle().With(convertTweetsException)
-					.MapAsync(convertTweets).Await();
+			return Return(screenName)
+				.BindAsync(
+					GetUser,
+					e => new Msg.GettingUserExceptionMsg(screenName, e)
+				)
+				.BindAsync(
+					getTimeline,
+					e => new Msg.GettingTimelineExceptionMsg(screenName, e)
+				)
+				.MapAsync(
+					convertTweets,
+					e => new Msg.ConvertingTweetsExceptionMsg(e)
+				);
 
 			// Get timeline
-			async Task<IR<List<ITweet>>> getTimeline(IOkV<IUser> r)
+			async Task<Option<List<ITweet>>> getTimeline(IUser user)
 			{
 				// Set parameters
-				var param = new GetUserTimelineParameters(r.Value)
+				var param = new GetUserTimelineParameters(user)
 				{
 					PageSize = limit,
 					ExcludeReplies = excludeReplies
@@ -138,27 +121,20 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 
 				// Get tweets - return empty list if null or empty
 				var timeline = await client.Timelines.GetUserTimelineAsync(param).ConfigureAwait(false);
-				return r.OkV(timeline switch
+				return timeline switch
 				{
 					IEnumerable<ITweet> x =>
 						x.ToList(),
 
 					_ =>
 						new List<ITweet>()
-				});
-			}
-
-			// Handle get timeline exceptions
-			void getTimelineException(IR<IUser> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error getting Twitter timeline");
-				r.AddMsg(new ErrorGettingTimelineMsg(ex));
+				};
 			}
 
 			// Convert the tweets to TweetModel
-			static async Task<IR<List<TweetModel>>> convertTweets(IOkV<List<ITweet>> r)
+			static List<TweetModel> convertTweets(List<ITweet> tweets)
 			{
-				var tweets = from t in r.Value
+				var models = from t in tweets
 							 select new TweetModel
 							 {
 								 Author = new AuthorModel
@@ -172,15 +148,40 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 								 Text = t.Text
 							 };
 
-				return r.OkV(tweets.ToList());
+				return models.ToList();
 			}
+		}
 
-			// Handle get timeline exceptions
-			void convertTweetsException(IR<List<ITweet>> r, System.Exception ex)
-			{
-				Log.Error(ex, "Error converting tweets");
-				r.AddMsg(new ErrorConvertingTweetsMsg(ex));
-			}
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Exception converting tweets</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Exception getting profile image stream</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Exception getting profile image URL</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Exception getting user timeline</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Exception getting user</summary>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>User not found</summary>
+			/// <param name="Value">Screen Name</param>
+			public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

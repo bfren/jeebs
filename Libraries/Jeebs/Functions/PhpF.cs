@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Jeebs.Reflection;
 
 namespace F
 {
@@ -70,7 +72,6 @@ namespace F
 				long x =>
 					append(Integer, x),
 
-
 				float x =>
 					append(Double, x),
 
@@ -87,7 +88,7 @@ namespace F
 					sb,
 
 				_ =>
-					sb.Append(Null).Append(";")
+					sb.Append(Null).Append(';')
 			};
 
 			// Append a value to the StringBuilder
@@ -108,7 +109,7 @@ namespace F
 					Serialise(item.Key, sb);
 					Serialise(item.Value, sb);
 				}
-				return sb.Append("}");
+				return sb.Append('}');
 			}
 
 			// Append a List to the StringBuilder

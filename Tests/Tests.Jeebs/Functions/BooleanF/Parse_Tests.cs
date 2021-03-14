@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs;
 using Xunit;
+using static F.BooleanF;
+using static F.BooleanF.Msg;
 
 namespace F.BooleanF_Tests
 {
@@ -23,7 +25,7 @@ namespace F.BooleanF_Tests
 			// Arrange
 
 			// Act
-			var result = BooleanF.Parse(input);
+			var result = Parse(input);
 
 			// Assert
 			var some = Assert.IsType<Some<bool>>(result);
@@ -43,7 +45,7 @@ namespace F.BooleanF_Tests
 			// Arrange
 
 			// Act
-			var result = BooleanF.Parse(input);
+			var result = Parse(input);
 
 			// Assert
 			var some = Assert.IsType<Some<bool>>(result);
@@ -53,15 +55,16 @@ namespace F.BooleanF_Tests
 		[Theory]
 		[InlineData("2")]
 		[InlineData("this is not a valid boolean")]
-		public void InvalidString_Returns_None(string input)
+		public void InvalidString_Returns_None_With_UnrecognisedValueMsg(string input)
 		{
 			// Arrange
 
 			// Act
-			var result = BooleanF.Parse(input);
+			var result = Parse(input);
 
 			// Assert
-			Assert.IsType<None<bool>>(result);
+			var none = Assert.IsType<None<bool>>(result);
+			Assert.IsType<UnrecognisedValueMsg>(none.Reason);
 		}
 	}
 }

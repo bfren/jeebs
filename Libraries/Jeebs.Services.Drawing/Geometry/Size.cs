@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.Services.Drawing.Geometry
 {
@@ -11,7 +8,7 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// </summary>
 	/// <param name="Height">Rectangle height</param>
 	/// <param name="Width">Rectangle width</param>
-	public record Size(int Height, int Width)
+	public sealed record Size(int Height, int Width)
 	{
 		/// <summary>
 		/// Ratio of Width / Height

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.Config
 {
 	/// <summary>
-	/// Site Veritifaction Configuration
+	/// Site Verification Configuration
 	/// </summary>
 	public record VerificationConfig
 	{

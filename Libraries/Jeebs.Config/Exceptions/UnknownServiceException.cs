@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 
 namespace Jx.Config
 {
 	/// <summary>
 	/// Unknown Service
 	/// </summary>
-	[Serializable]
 	public class UnknownServiceException : Exception
 	{
 		/// <summary>
@@ -40,14 +39,5 @@ namespace Jx.Config
 		/// <param name="name"></param>
 		/// <param name="type"></param>
 		public UnknownServiceException(string name, Type type) : this(string.Format(Format, name, type)) { }
-
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected UnknownServiceException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }

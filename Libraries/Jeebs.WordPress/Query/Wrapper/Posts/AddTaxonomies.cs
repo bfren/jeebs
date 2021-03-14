@@ -1,12 +1,15 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.Data.Querying;
 using Jeebs.WordPress.Enums;
-using Jm.WordPress.Query.Wrapper.Posts;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -17,8 +20,8 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="r">Result</param>
-		private async Task<IR<TList>> AddTaxonomiesAsync<TList, TModel>(IOkV<TList> r)
+		/// <param name="posts">Posts</param>
+		private async Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
@@ -26,64 +29,88 @@ namespace Jeebs.WordPress
 			var termLists = GetTermLists<TModel>();
 			if (termLists.Count == 0)
 			{
-				return r;
+				return posts;
 			}
 
-			return r
-				.Link()
-					.Handle().With<GetTermsExceptionMsg>()
-					.MapAsync(okV => getTermsAsync(okV, termLists)).Await()
-				.Link()
-					.Handle().With<SetTermsExceptionMsg>()
-					.Map(okV => addTerms(okV, termLists));
+			return await Return(posts)
+				.BindAsync(
+					x => getTermsAsync(x, termLists),
+					e => new Msg.GetTermsExceptionMsg<TModel>(e)
+				)
+				.BindAsync(
+					x => addTerms(x, termLists),
+					e => new Msg.AddTaxonomiesExceptionMsg<TModel>(e)
+				);
 
 			//
 			//	Get terms
 			//
-			async Task<IR<(TList, List<Term>)>> getTermsAsync(IOkV<TList> r, List<PropertyInfo> termLists)
+			Task<Option<(TList, List<Term>)>> getTermsAsync(TList posts, List<PropertyInfo> termLists)
 			{
-				// Create options
-				var options = new QueryPostsTaxonomy.Options
-				{
-					PostIds = r.Value.Select(p => p.Id).ToList()
-				};
+				return Map(getOptions)
+					.Bind(
+						addTaxonomies
+					)
+					.Map(
+						getQuery
+					)
+					.BindAsync(
+						getTaxonomies
+					)
+					.BindAsync(
+						createTuple
+					);
+
+				// Get query options
+				QueryPostsTaxonomy.Options getOptions() =>
+					new() { PostIds = posts.Select(p => p.Id).ToList() };
 
 				// Add each taxonomy to the query options
-				var firstPost = r.Value[0];
-				foreach (var info in termLists)
+				Option<QueryPostsTaxonomy.Options> addTaxonomies(QueryPostsTaxonomy.Options options)
 				{
-					// Get taxonomy
-					var taxonomy = new PropertyInfo<TModel, TermList>(info).Get(firstPost).Taxonomy;
-
-					// Make sure taxonomy has been registered
-					if (!Taxonomy.IsRegistered(taxonomy))
+					var firstPost = posts[0];
+					var taxonomies = new List<Taxonomy>();
+					foreach (var info in termLists)
 					{
-						return r.Error<(TList, List<Term>)>().AddMsg(new TaxonomyNotRegisteredMsg(taxonomy));
+						// Get taxonomy
+						var taxonomy = new PropertyInfo<TModel, TermList>(info).Get(firstPost).Taxonomy;
+
+						// Make sure taxonomy has been registered
+						if (!Taxonomy.IsRegistered(taxonomy))
+						{
+							return None<QueryPostsTaxonomy.Options>(new Msg.TaxonomyNotRegisteredMsg(taxonomy));
+						}
+
+						// Add to query
+						options.Taxonomies.Add(taxonomy);
 					}
 
-					// Add to query
-					options.Taxonomies.Add(taxonomy);
+					return options;
 				}
 
 				// Build query
-				var query = StartNewQuery()
-					.WithModel<Term>()
-					.WithOptions(options)
-					.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
-					.GetQuery();
+				IQuery<Term> getQuery(QueryPostsTaxonomy.Options options) =>
+					StartNewQuery()
+						.WithModel<Term>()
+						.WithOptions(options)
+						.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
+						.GetQuery();
 
-				// Execute query
-				return (await query.ExecuteQueryAsync(r).ConfigureAwait(false)).Switch(
-					x => x.OkV((r.Value, x.Value))
-				);
+				// Execute query to get taxonomies
+				async Task<Option<List<Term>>> getTaxonomies(IQuery<Term> query) =>
+					await query.ExecuteQueryAsync();
+
+				// Create tuple of posts and taxonomies
+				Option<(TList, List<Term>)> createTuple(List<Term> meta) =>
+					(posts, meta);
 			}
 
 			//
 			//	Add terms
 			//
-			static IR<TList> addTerms(IOkV<(TList, List<Term>)> r, List<PropertyInfo> termLists)
+			static Option<TList> addTerms((TList, List<Term>) lists, List<PropertyInfo> termLists)
 			{
-				var (posts, terms) = r.Value;
+				var (posts, terms) = lists;
 
 				// Now add the terms to each post
 				foreach (var post in posts)
@@ -109,7 +136,7 @@ namespace Jeebs.WordPress
 					}
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 		}
 
@@ -124,6 +151,24 @@ namespace Jeebs.WordPress
 			/// Enables query for multiple posts and multiple taxonomies
 			/// </summary>
 			public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
+		}
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while adding Taxonomies to posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record AddTaxonomiesExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>An exception occured while getting terms for posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetTermsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>The taxonomy being added has not been registered with <see cref="IWp{TConfig}"/></summary>
+			/// <param name="Value">Taxonomy</param>
+			public sealed record TaxonomyNotRegisteredMsg(Taxonomy Value) : WithValueMsg<Taxonomy> { }
 		}
 	}
 }

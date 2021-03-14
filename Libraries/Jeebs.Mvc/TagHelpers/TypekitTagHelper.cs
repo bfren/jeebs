@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Jeebs.Mvc.TagHelpers
@@ -26,6 +26,7 @@ namespace Jeebs.Mvc.TagHelpers
 			// Check library
 			if (string.IsNullOrWhiteSpace(Library))
 			{
+				output.SuppressOutput();
 				return;
 			}
 

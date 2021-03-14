@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.Extensions.Logging;
+using Jeebs.Logging;
 
 namespace Jeebs
 {
@@ -10,37 +12,37 @@ namespace Jeebs
 	public abstract class Log : ILog
 	{
 		/// <inheritdoc/>
-		public void Message(IMsg msg)
+		public void Message<T>(T? msg)
+			where T : IMsg
 		{
-			var (text, args) = msg.Prepare();
-
-			// Handle exception messages
-			if (msg is IExceptionMsg exceptionMsg)
+			if (msg is null)
 			{
-				if (exceptionMsg.Level == LogLevel.Critical)
-				{
-					Critical(exceptionMsg.Exception, text, args);
-				}
-				else
-				{
-					Error(exceptionMsg.Exception, text, args);
-				}
-
 				return;
 			}
 
-			// Get the log level - default is Debug
-			LogLevel level = Defaults.Log.Level;
-			if (msg is ILoggableMsg loggableMsg)
+			// Get log info
+			var (level, text, args) = msg switch
 			{
-				level = loggableMsg.Level;
-			}
+				ILogMsg loggable =>
+					(
+						loggable.Level,
+						loggable.Format,
+						getArgs(loggable)
+					),
+
+				_ =>
+					(
+						LogLevel.Information,
+						msg.ToString() ?? typeof(T).ToString(),
+						Array.Empty<object>()
+					)
+			};
 
 			// Switch different levels
 			switch (level)
 			{
-				case LogLevel.Trace:
-					Trace(text, args);
+				case LogLevel.Verbose:
+					Verbose(text, args);
 					break;
 				case LogLevel.Debug:
 					Debug(text, args);
@@ -54,9 +56,26 @@ namespace Jeebs
 				case LogLevel.Error:
 					Error(text, args);
 					break;
-				case LogLevel.Critical:
-					Critical(text, args);
+				case LogLevel.Fatal:
+					Fatal(text, args);
 					break;
+			}
+
+			// Get arguments from a loggable message
+			static object[] getArgs(ILogMsg msg)
+			{
+				// Get args and add message to the start of the array
+				var list = msg.Args().ToList();
+				list.Insert(0, typeof(T));
+
+				// Add Exception to the end of the array
+				if (msg is IExceptionMsg exceptionMsg)
+				{
+					list.Add(exceptionMsg.Exception);
+				}
+
+				// Convert back to an array
+				return list.ToArray();
 			}
 		}
 
@@ -78,7 +97,11 @@ namespace Jeebs
 		public abstract bool IsEnabled(LogLevel level);
 
 		/// <inheritdoc/>
-		public abstract void Trace(string message, params object[] args);
+		public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level) =>
+			IsEnabled((LogLevel)level);
+
+		/// <inheritdoc/>
+		public abstract void Verbose(string message, params object[] args);
 
 		/// <inheritdoc/>
 		public abstract void Debug(string message, params object[] args);
@@ -96,10 +119,10 @@ namespace Jeebs
 		public abstract void Error(Exception ex, string message, params object[] args);
 
 		/// <inheritdoc/>
-		public abstract void Critical(string message, params object[] args);
+		public abstract void Fatal(string message, params object[] args);
 
 		/// <inheritdoc/>
-		public abstract void Critical(Exception ex, string message, params object[] args);
+		public abstract void Fatal(Exception ex, string message, params object[] args);
 
 		/// <inheritdoc/>
 		public abstract void Dispose();

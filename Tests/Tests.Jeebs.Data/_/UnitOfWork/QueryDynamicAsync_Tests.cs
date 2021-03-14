@@ -1,7 +1,8 @@
-﻿using System;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using static Jeebs.Data.UnitOfWork_Tests.UnitOfWork;

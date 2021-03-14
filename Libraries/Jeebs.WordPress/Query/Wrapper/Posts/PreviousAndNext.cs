@@ -1,7 +1,11 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Jeebs.Data.Querying;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -10,23 +14,41 @@ namespace Jeebs.WordPress
 		/// <summary>
 		/// Find the IDs of the previous and next posts given the current search query
 		/// </summary>
-		/// <param name="r">Result - value should be the current ID</param>
+		/// <param name="postId">Post ID</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		public async Task<IR<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(IOkV<long> r, Action<QueryPosts.Options>? modify = null)
+		public async Task<Option<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(long postId, Action<QueryPosts.Options>? modify = null)
 		{
+			return await
+				Map(
+					getQuery,
+					e => new Msg.GetPostsQueryExceptionMsg(postId, e)
+				)
+				.BindAsync(
+					getPosts // exceptions handled by query code
+				)
+				.BindAsync(
+					x => handle(postId, x.ConvertAll(x => x.PostId)),
+					e => new Msg.CalculatePreviousAndNextExceptionMsg(postId, e)
+				);
+
 			// Get query
-			var query = GetPostsQuery<PostWithId>(opt =>
-			{
-				modify?.Invoke(opt);
-				opt.Limit = null;
-			});
+			IQuery<PostWithId> getQuery() =>
+				GetPostsQuery<PostWithId>(opt =>
+				{
+					modify?.Invoke(opt);
+					opt.Limit = null;
+				});
+
+			// Get posts
+			async Task<Option<List<PostWithId>>> getPosts(IQuery<PostWithId> query) =>
+				await query.ExecuteQueryAsync();
 
 			// Shorthand for returning result
-			IR<(long? prev, long? next)> val(long? prev, long? next) =>
-				r.OkV((prev, next));
+			Option<(long? prev, long? next)> val(long? prev, long? next) =>
+				(prev, next);
 
 			// Handle scenarios
-			IR<(long? prev, long? next)> handle(long currentId, List<long> ids)
+			Option<(long? prev, long? next)> handle(long currentId, List<long> ids)
 			{
 				// If there are no posts, or only one post, or the current post is not in the list, return null
 				if (ids.Count <= 1 || !ids.Contains(currentId))
@@ -53,21 +75,25 @@ namespace Jeebs.WordPress
 					return val(ids[index - 1], ids[index + 1]);
 				}
 			}
-
-			// Execute query
-			return await query.ExecuteQueryAsync(r).ConfigureAwait(false) switch
-			{
-				IOkV<List<PostWithId>> ids =>
-					handle(r.Value, ids.Value.ConvertAll(x => x.PostId)),
-
-				{ } x =>
-					x.Error<(long?, long?)>()
-			};
 		}
 
 		private record PostWithId()
 		{
 			public long PostId { get; init; }
+		}
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured getting the posts</summary>
+			/// <param name="PostId">Post ID</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetPostsQueryExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>An exception occured while calculating the next and previous posts</summary>
+			/// <param name="PostId">Post ID</param>
+			/// <param name="Exception">Exception object</param>
+			public sealed record CalculatePreviousAndNextExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

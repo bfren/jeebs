@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Config;
 
 namespace Jeebs.Services
@@ -10,7 +10,7 @@ namespace Jeebs.Services
 	/// </summary>
 	/// <typeparam name="TConfig">Service configuration type</typeparam>
 	public abstract class Driver<TConfig> : IDriver<TConfig>
-		where TConfig : ServiceConfig
+		where TConfig : IServiceConfig
 	{
 		/// <summary>
 		/// Driver name

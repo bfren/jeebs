@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Jx.Data.Mapping;
 
 namespace Jeebs.Data.Mapping
 {

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Mvc;
@@ -16,7 +17,7 @@ namespace AppMvc.Controllers
 			throw new Exception("Something");
 
 		public async Task<IActionResult> Return_Error() =>
-			await this.ExecuteErrorAsync(Result.Error().AddMsg().OfType<Jm.Mvc.Controllers.Controller.UnknownResultTypeMsg>());
+			await this.ExecuteErrorAsync(new TestErrorMsg());
 
 		public IActionResult Return_NotFound() =>
 			NotFound();
@@ -28,8 +29,10 @@ namespace AppMvc.Controllers
 			NotAllowed();
 
 		public async Task<IActionResult> Return_Error404() =>
-			await this.ExecuteErrorAsync(Result.Error().AddMsg().OfType<NotFoundMsg>());
+			await this.ExecuteErrorAsync(new NotFoundMsg());
 
-		public class NotFoundMsg : Jm.NotFoundMsg { }
+		public class NotFoundMsg : INotFoundMsg { }
 	}
+
+	public record TestErrorMsg : IMsg { }
 }

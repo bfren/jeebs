@@ -1,59 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
+using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
+using static F.OptionF;
+using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {
 	public class Bind_Tests
 	{
 		[Fact]
-		public void Some_Runs_Bind_Returns_Some_Returns_Some()
+		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
-			static Option<string> bind(int x) => x.ToString();
+			var option = new FakeOption();
+			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = option.Bind(bind);
-
-			// Assert
-			var some = Assert.IsType<Some<string>>(result);
-			Assert.Equal(value.ToString(), some.Value);
-		}
-
-		[Fact]
-		public void Some_Runs_Bind_Returns_None_Returns_None()
-		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Option.Wrap(value);
-			static Option<string> bind(int _) => Option.None<string>();
-
-			// Act
-			var result = option.Bind(bind);
-
-			// Assert
-			Assert.IsType<None<string>>(result);
-		}
-
-		[Fact]
-		public void None_Returns_None_Keeps_Reason()
-		{
-			// Arrange
-			var option = Option.None<int>().AddReason<TestMsg>();
-			static Option<string> bind(int _) => Option.None<string>();
-
-			// Act
-			var result = option.Bind(bind);
+			var result = option.Bind(bind, null);
 
 			// Assert
 			var none = Assert.IsType<None<string>>(result);
-			Assert.True(none.Reason is TestMsg);
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
-		public class TestMsg : IMsg { }
+		[Fact]
+		public void Exception_Thrown_With_Handler_Calls_Handler()
+		{
+			// Arrange
+			var option = Return(F.Rnd.Str);
+			var handler = Substitute.For<Handler>();
+			var exception = new Exception();
+
+			// Act
+			var result = option.Bind<int>(_ => throw exception, handler);
+
+			// Assert
+			Assert.IsType<None<int>>(result);
+			handler.Received().Invoke(exception);
+		}
+
+		[Fact]
+		public void If_None_Gets_None()
+		{
+			// Arrange
+			var option = None<int>(true);
+			var bind = Substitute.For<Func<int, Option<string>>>();
+
+			// Act
+			var r0 = option.Bind(bind, null);
+
+			// Assert
+			Assert.IsType<None<string>>(r0);
+		}
+
+		[Fact]
+		public void If_None_With_Reason_Gets_None_With_Same_Reason()
+		{
+			// Arrange
+			var msg = new TestMsg();
+			var option = None<int>(msg);
+			var bind = Substitute.For<Func<int, Option<string>>>();
+
+			// Act
+			var r0 = option.Bind(bind, null);
+
+			// Assert
+			var n0 = Assert.IsType<None<string>>(r0);
+			Assert.Same(msg, n0.Reason);
+		}
+
+		[Fact]
+		public void If_Some_Runs_Bind_Function()
+		{
+			// Arrange
+			var value = F.Rnd.Int;
+			var option = Return(value);
+			var bind = Substitute.For<Func<int, Option<string>>>();
+
+			// Act
+			option.Bind(bind, null);
+
+			// Assert
+			bind.Received(1).Invoke(value);
+		}
+
+		public class FakeOption : Option<int> { }
+
+		public record TestMsg : IMsg { }
 	}
 }

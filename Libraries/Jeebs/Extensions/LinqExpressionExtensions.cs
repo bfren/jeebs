@@ -1,8 +1,11 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Jeebs
+namespace Jeebs.Linq
 {
 	/// <summary>
 	/// LinqExpression Extensions

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests
@@ -29,7 +29,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void VerifyPassword_IncorrectPassword_ReturnsFalse()
 		{
 			// Arrange
-			var password = F.StringF.Random(10);
+			var password = F.Rnd.StringF.Get(10);
 			var passwordHash = this.passwordHash;
 
 			// Act

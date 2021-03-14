@@ -1,9 +1,12 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Data.Querying;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -13,16 +16,17 @@ namespace Jeebs.WordPress
 		/// Query Posts Meta
 		/// </summary>
 		/// <typeparam name="TModel">Term type</typeparam>
-		/// <param name="r">Result</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		public async Task<IR<List<TModel>>> QueryPostsMetaAsync<TModel>(IOk r, Action<QueryPostsMeta.Options>? modify = null)
+		public Task<Option<List<TModel>>> QueryPostsMetaAsync<TModel>(Action<QueryPostsMeta.Options>? modify = null)
 			where TModel : IEntity
 		{
-			// Get query
-			var query = GetPostsMetaQuery<TModel>(modify);
-
-			// Execute query
-			return await query.ExecuteQueryAsync(r).ConfigureAwait(false);
+			return Return(modify)
+				.Map(
+					GetPostsMetaQuery<TModel>
+				)
+				.BindAsync(
+					x => x.ExecuteQueryAsync()
+				);
 		}
 
 		/// <summary>

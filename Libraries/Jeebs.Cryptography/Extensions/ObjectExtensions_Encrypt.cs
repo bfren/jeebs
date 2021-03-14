@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using F;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Jeebs.Linq;
 
 namespace Jeebs.Cryptography
 {
@@ -16,14 +16,15 @@ namespace Jeebs.Cryptography
 		/// <typeparam name="T">Type of object being encrypted</typeparam>
 		/// <param name="this">Value to encrypt</param>
 		/// <param name="key">Encryption Key (must be 32 bytes)</param>
-		public static string Encrypt<T>(this T @this, byte[] key) =>
+		public static Option<string> Encrypt<T>(this T @this, byte[] key) =>
 			@this switch
 			{
 				T x =>
-					new Lockable<T>(x).Lock(key).Serialise(),
+					from l in new Lockable<T>(x).Lock(key)
+					select l.Serialise(),
 
 				_ =>
-					JsonF.Empty
+					F.JsonF.Empty
 			};
 
 		/// <summary>
@@ -39,7 +40,7 @@ namespace Jeebs.Cryptography
 					new Lockable<T>(x).Lock(key).Serialise(),
 
 				_ =>
-					JsonF.Empty
+					F.JsonF.Empty
 			};
 	}
 }

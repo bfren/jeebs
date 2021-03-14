@@ -1,7 +1,8 @@
-using System;
+// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Jeebs.EnumeratedList_Tests
@@ -51,9 +52,9 @@ namespace Jeebs.EnumeratedList_Tests
 		{
 			public Foo(string name) : base(name) { }
 
-			public static Foo A = new("A");
+			public static readonly Foo A = new("A");
 
-			public static Foo B = new("B");
+			public static readonly Foo B = new("B");
 		}
 	}
 }

@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
+using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
@@ -12,7 +13,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var some = Option.Wrap(value);
+			var some = Return(value);
 
 			// Act
 			var result = some == value;
@@ -25,9 +26,9 @@ namespace Jeebs.Option_Tests
 		public void Equals_When_Not_Equal_Returns_False()
 		{
 			// Arrange
-			const int v0 = 18;
-			const int v1 = 7;
-			var some = Option.Wrap(v0);
+			var v0 = F.Rnd.Int;
+			var v1 = F.Rnd.Int;
+			var some = Return(v0);
 
 			// Act
 			var result = some == v1;
@@ -35,5 +36,7 @@ namespace Jeebs.Option_Tests
 			// Assert
 			Assert.False(result);
 		}
+
+		public record TestMsg : IMsg { }
 	}
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.WordPress.Entities
 {
@@ -10,7 +7,7 @@ namespace Jeebs.WordPress.Entities
 	/// WordPress User Meta ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpUserMetaId(long Value) : LongId(Value)
+	public sealed record WpUserMetaId(long Value) : Id.LongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

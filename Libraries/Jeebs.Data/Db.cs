@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Data;
-using System.Text;
 using Jeebs.Config;
 using Jeebs.Data.TypeHandlers;
 
@@ -25,6 +25,11 @@ namespace Jeebs.Data
 		/// </summary>
 		protected string ConnectionString { get; set; } = string.Empty;
 
+		/// <summary>
+		/// Log for Unit of Work
+		/// </summary>
+		private readonly ILog<UnitOfWork> unitOfWorkLog;
+
 		/// <inheritdoc/>
 		public virtual IUnitOfWork UnitOfWork
 		{
@@ -44,7 +49,7 @@ namespace Jeebs.Data
 				}
 
 				// Create Unit of Work
-				return new UnitOfWork(connection, Client.Adapter, Log);
+				return new UnitOfWork(connection, Client.Adapter, unitOfWorkLog);
 			}
 		}
 
@@ -52,36 +57,36 @@ namespace Jeebs.Data
 		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="log">ILog</param>
-		protected Db(IDbClient client, ILog log) =>
-			(Client, Log) = (client, log);
+		/// <param name="logs">DbLogs</param>
+		protected Db(IDbClient client, DbLogs logs) =>
+			(Client, Log, unitOfWorkLog) = (client, logs.DbLog, logs.UnitOfWorkLog);
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="log">ILog</param>
+		/// <param name="logs">DbLogs</param>
 		/// <param name="config">DbConfig</param>
-		protected Db(IDbClient client, ILog log, DbConfig config) : this(client, log) =>
+		protected Db(IDbClient client, DbLogs logs, DbConfig config) : this(client, logs) =>
 			ConnectionString = config.GetConnection().ConnectionString;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="log">ILog</param>
+		/// <param name="logs">DbLogs</param>
 		/// <param name="config">DbConfig</param>
 		/// <param name="connectionName">Connection name</param>
-		protected Db(IDbClient client, ILog log, DbConfig config, string connectionName) : this(client, log) =>
+		protected Db(IDbClient client, DbLogs logs, DbConfig config, string connectionName) : this(client, logs) =>
 			ConnectionString = config.GetConnection(connectionName).ConnectionString;
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="log">ILog</param>
+		/// <param name="logs">DbLogs</param>
 		/// <param name="connectionString">Connection String</param>
-		protected Db(IDbClient client, ILog log, string connectionString) : this(client, log) =>
+		protected Db(IDbClient client, DbLogs logs, string connectionString) : this(client, logs) =>
 			ConnectionString = connectionString;
 
 		#region Static

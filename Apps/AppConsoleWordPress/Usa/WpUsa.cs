@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Jeebs;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Config;
+using Jeebs.Data;
 using Jeebs.WordPress;
-using Jeebs.WordPress.Entities;
 using Microsoft.Extensions.Options;
 
 namespace AppConsoleWordPress.Usa
@@ -33,8 +32,8 @@ namespace AppConsoleWordPress.Usa
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpUsaConfig</param>
-		/// <param name="log">ILog</param>
-		public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog log) : base(dbConfig.Value, wpConfig.Value, log) { }
+		/// <param name="logs">DbLogs</param>
+		public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, DbLogs logs) : base(dbConfig.Value, wpConfig.Value, logs) { }
 
 		/// <summary>
 		/// Register custom post types

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
@@ -91,15 +91,15 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
-		/// <param name="log">ILog</param>
-		public WpDb(DbConfig dbConfig, WpConfig wpConfig, ILog log) : base(log)
+		/// <param name="logs">DbLogs</param>
+		public WpDb(DbConfig dbConfig, WpConfig wpConfig, DbLogs logs) : base(logs)
 		{
 			// Get connection from WordPress database configuration
 			var cfg = dbConfig.GetConnection(wpConfig.Db);
 			ConnectionString = cfg.ConnectionString;
 			var tablePrefix = wpConfig.TablePrefix ?? cfg.TablePrefix;
 
-			log.Trace("WordPress Config: {@WpConfig}, {@DbConfig}", wpConfig, cfg);
+			logs.DbLog.Verbose("WordPress Config: {@WpConfig}, {@DbConfig}", wpConfig, cfg);
 
 			// Create table definitions
 			Comment = new CommentTable(tablePrefix);

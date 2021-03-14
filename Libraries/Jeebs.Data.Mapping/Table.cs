@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// Table
 	/// </summary>
-	public abstract class Table
+	public abstract class Table : ITable
 	{
 		/// <summary>
 		/// Table name

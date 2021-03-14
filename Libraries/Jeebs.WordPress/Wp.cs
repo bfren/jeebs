@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Config;
+using Jeebs.Data;
 using Jeebs.WordPress.Entities;
 
 namespace Jeebs.WordPress
@@ -51,14 +52,14 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
-		/// <param name="log">ILog</param>
-		protected Wp(DbConfig dbConfig, TConfig wpConfig, ILog log)
+		/// <param name="logs">DbLogs</param>
+		protected Wp(DbConfig dbConfig, TConfig wpConfig, DbLogs logs)
 		{
 			// Store config
 			Config = wpConfig;
 
 			// Create new database object using this instance's entity types
-			Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, log);
+			Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, logs);
 
 			// Don't need to lock here - if two threads try to register custom types etc,
 			// it will simply return false

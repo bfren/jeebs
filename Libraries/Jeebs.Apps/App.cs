@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.IO;
-using System.Text;
 using Jeebs.Config;
 using Jeebs.Logging;
 using Microsoft.Extensions.Configuration;
@@ -61,6 +62,7 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfigurationBuilder</param>
 		protected virtual void ConfigureHost(IConfigurationBuilder config)
 		{
+			// Set base path to be directory of running assembly
 			config.SetBasePath(Directory.GetCurrentDirectory());
 		}
 
@@ -71,6 +73,7 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfigurationBuilder</param>
 		protected virtual void ConfigureApp(IHostEnvironment env, IConfigurationBuilder config)
 		{
+			// Add Jeebs config files
 			config.AddJeebsConfig(env);
 		}
 
@@ -94,8 +97,8 @@ namespace Jeebs.Apps
 		/// <param name="services">IServiceCollection</param>
 		protected virtual void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 		{
-			// Bind JeebsConfig
-			services.Bind<JeebsConfig>().To(JeebsConfig.Key).Using(config);
+			// Bind Jeebs config classes
+			services.AddJeebsConfig(config);
 
 			// Register Serilog Logger
 			services.AddSingleton<ILog, SerilogLogger>();
@@ -108,8 +111,10 @@ namespace Jeebs.Apps
 		/// <param name="services">IServiceProvider</param>
 		protected virtual void Ready(IServiceProvider services)
 		{
+			// Set Option Audit log and output ready message
 			if (services.GetService<ILog>() is ILog log)
 			{
+				F.OptionF.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
 				log.Information("Application ready.");
 			}
 		}

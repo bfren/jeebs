@@ -1,10 +1,11 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Jeebs.WordPress.Entities.Additional;
-using Jm.WordPress.Query.Wrapper.PostsMeta;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -14,52 +15,49 @@ namespace Jeebs.WordPress
 		/// Get attached files
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="r">Result - value is list of attached file IDs</param>
+		/// <param name="fileIds">Result - value is list of attached file IDs</param>
 		/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param>
-		public async Task<IR<List<T>>> GetAttachedFiles<T>(IOkV<List<long>> r, string virtualUploadsUrl)
+		public Task<Option<List<T>>> GetAttachedFilesAsync<T>(List<long> fileIds, string virtualUploadsUrl)
 			where T : WpAttachedFile
 		{
 			// Check for empty list
-			if (r.Value.Count == 0)
+			if (fileIds.Count == 0)
 			{
-				return r.OkV(new List<T>());
+				return Return(new List<T>()).AsTask;
 			}
 
 			// Run query
-			return r
-				.Link()
-					.Map(getQuery)
-				.Link()
-					.Handle().With<GetAttachedFilesExceptionMsg>()
-					.MapAsync(getAttachedFiles).Await();
-
-			// Build custom query
-			IR<string> getQuery(IOkV<List<long>> r) =>
-				r.OkV("SELECT " +
-						$"`p`.`{db.Post.Title}` AS '{nameof(WpAttachedFile.Title)}', " +
-						$"`p`.`{db.Post.Excerpt}` AS '{nameof(WpAttachedFile.Description)}', " +
-						$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{db.PostMeta.Value}`) AS '{nameof(WpAttachedFile.Url)}' " +
-					$"FROM `{db.Post}` AS `p` " +
-						$"LEFT JOIN `{db.PostMeta}` AS `pm` ON `p`.`{db.Post.PostId}` = `pm`.`{db.PostMeta.PostId}` " +
-					$"WHERE `p`.`{db.Post.PostId}` IN ({string.Join(',', r.Value)}) " +
-						$"AND `pm`.`{db.PostMeta.Key}` = '{Constants.AttachedFile}';"
+			return Return(fileIds)
+				.Map(
+					getQuery
+				)
+				.BindAsync(
+					getAttachedFiles
+				)
+				.MapAsync(
+					x => x.ToList()
 				);
 
+			// Build custom query
+			string getQuery(List<long> fileIds) =>
+				"SELECT " +
+					$"`p`.`{db.Post.Title}` AS '{nameof(WpAttachedFile.Title)}', " +
+					$"`p`.`{db.Post.Excerpt}` AS '{nameof(WpAttachedFile.Description)}', " +
+					$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{db.PostMeta.Value}`) AS '{nameof(WpAttachedFile.Url)}' " +
+				$"FROM `{db.Post}` AS `p` " +
+					$"LEFT JOIN `{db.PostMeta}` AS `pm` ON `p`.`{db.Post.PostId}` = `pm`.`{db.PostMeta.PostId}` " +
+				$"WHERE `p`.`{db.Post.PostId}` IN ({string.Join(',', fileIds)}) " +
+					$"AND `pm`.`{db.PostMeta.Key}` = '{Constants.AttachedFile}';"
+				;
+
 			// Get the files
-			async Task<IR<List<T>>> getAttachedFiles(IOkV<string> r)
+			Task<Option<IEnumerable<T>>> getAttachedFiles(string query)
 			{
 				// Start unit of work
 				using var w = db.UnitOfWork;
 
 				// Execute query
-				return await w.QueryAsync<T>(r, r.Value).ConfigureAwait(false) switch
-				{
-					IOkV<IEnumerable<T>> x =>
-						r.OkV(x.Value.ToList()),
-
-					{ } e =>
-						e.Error<List<T>>()
-				};
+				return w.QueryAsync<T>(query);
 			}
 		}
 	}

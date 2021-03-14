@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
 
 namespace Jeebs.StrongId_Tests.LongId_Tests
@@ -21,6 +19,6 @@ namespace Jeebs.StrongId_Tests.LongId_Tests
 			Assert.Equal(0L, id.Value);
 		}
 
-		public record LongId : Jeebs.LongId;
+		public record LongId : Id.LongId;
 	}
 }

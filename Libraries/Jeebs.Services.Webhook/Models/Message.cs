@@ -1,27 +1,22 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using System.Text;
 
 namespace Jeebs.Services.Webhook.Models
 {
 	/// <summary>
 	/// Message model
 	/// </summary>
-	public sealed record Message
+	public sealed record Message : IWebhookMessage
 	{
-		/// <summary>
-		/// Message content
-		/// </summary>
+		/// <inheritdoc/>
 		public string Content { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Message level
-		/// </summary>
+		/// <inheritdoc/>
 		public NotificationLevel Level { get; init; }
 
-		/// <summary>
-		/// Additional fields to send
-		/// </summary>
+		/// <inheritdoc/>
 		public Dictionary<string, object> Fields { get; init; } = new();
 	}
 }

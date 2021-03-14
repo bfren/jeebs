@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Data;
-using System.Text;
 using NSubstitute;
 using Xunit;
 
@@ -16,8 +16,10 @@ namespace Jeebs.Data.Db_Tests
 		{
 			// Arrange
 			var client = Substitute.For<IDbClient>();
-			var log = Substitute.For<ILog>();
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			IUnitOfWork action() => db.UnitOfWork;
@@ -31,9 +33,11 @@ namespace Jeebs.Data.Db_Tests
 		{
 			// Arrange
 			var client = Substitute.For<IDbClient>();
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -57,10 +61,12 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -79,10 +85,12 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			_ = db.UnitOfWork;
@@ -106,10 +114,12 @@ namespace Jeebs.Data.Db_Tests
 			client.Adapter.Returns(adapter);
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var log = Substitute.For<ILog>();
+			var dbLog = Substitute.For<ILog<Db>>();
+			var wLog = Substitute.For<ILog<UnitOfWork>>();
+			var logs = new DbLogs(dbLog, wLog);
 			var connectionString = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(client, log, connectionString);
+			var db = Substitute.ForPartsOf<Db>(client, logs, connectionString);
 
 			// Act
 			var result = db.UnitOfWork;

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 
 namespace Jeebs.Data.Querying
 {
@@ -24,7 +25,10 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Dispose <see cref="IUnitOfWork"/>
 		/// </summary>
-		public void Dispose() =>
+		public void Dispose()
+		{
+			GC.SuppressFinalize(this);
 			UnitOfWork.Dispose();
+		}
 	}
 }

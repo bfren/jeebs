@@ -1,17 +1,17 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Jx.Data.Mapping;
 
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc/>
-	public sealed class MapService : IMapService
+	public sealed class MapService : IMapService, IDisposable
 	{
 		#region Static
 
@@ -44,13 +44,13 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TTable">Table type</typeparam>
-		internal TableMap Map<TEntity, TTable>()
+		internal ITableMap Map<TEntity, TTable>()
 			where TEntity : IEntity
 			where TTable : Table, new() =>
 			Map<TEntity>(new TTable());
 
 		/// <inheritdoc/>
-		public TableMap Map<TEntity>(Table table)
+		public ITableMap Map<TEntity>(ITable table)
 			where TEntity : IEntity =>
 			mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 			{
@@ -92,7 +92,7 @@ namespace Jeebs.Data.Mapping
 			ValidateTable<TEntity>(new TTable());
 
 		/// <inheritdoc/>
-		public (bool valid, string errors) ValidateTable<TEntity>(Table table)
+		public (bool valid, string errors) ValidateTable<TEntity>(ITable table)
 			where TEntity : IEntity
 		{
 			// Get table type
@@ -153,7 +153,7 @@ namespace Jeebs.Data.Mapping
 			GetMappedColumns<TEntity>(new TTable());
 
 		/// <inheritdoc/>
-		public IMappedColumnList GetMappedColumns<TEntity>(Table table)
+		public IMappedColumnList GetMappedColumns<TEntity>(ITable table)
 			where TEntity : IEntity
 		{
 			// Get non-ignored columns
@@ -195,7 +195,7 @@ namespace Jeebs.Data.Mapping
 		}
 
 		/// <inheritdoc/>
-		public TableMap GetTableMapFor<TEntity>()
+		public ITableMap GetTableMapFor<TEntity>()
 			where TEntity : IEntity
 		{
 			if (mappedEntities.TryGetValue(typeof(TEntity), out var map))

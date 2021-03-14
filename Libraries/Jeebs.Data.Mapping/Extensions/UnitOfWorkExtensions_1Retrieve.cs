@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Jeebs.Logging;
+using static F.OptionF;
 
 namespace Jeebs.Data.Mapping
 {
@@ -17,57 +20,77 @@ namespace Jeebs.Data.Mapping
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the entity ID</param>
-		public static IR<T> Single<T>(this IUnitOfWork @this, IOkV<long> r)
+		/// <param name="id">Entity ID</param>
+		public static Option<T> Single<T>(this IUnitOfWork @this, long id)
 			where T : class, IEntity =>
-			Single(
-				r,
+			SingleAsync(
+				id,
 				@this,
 				nameof(Single),
 				(q, p, t) => Task.FromResult(@this.Connection.QuerySingle<T>(q, p, t))
-			);
+			).Result;
 
 		/// <summary>
 		/// Get an entity from the database by ID
 		/// </summary>
 		/// <typeparam name="T">Entity type</typeparam>
 		/// <param name="this">IUnitOfWork</param>
-		/// <param name="r">Result object - the value should be the entity ID</param>
-		private static async Task<IR<T>> SingleAsync<T>(this IUnitOfWork @this, IOkV<long> r)
+		/// <param name="id">Entity ID</param>
+		private static Task<Option<T>> SingleAsync<T>(this IUnitOfWork @this, long id)
 			where T : class, IEntity =>
-			Single(
-				r,
+			SingleAsync(
+				id,
 				@this,
 				nameof(SingleAsync),
-				async (q, p, t) => await @this.Connection.QuerySingleAsync<T>(q, p, t).ConfigureAwait(false)
+				(q, p, t) => @this.Connection.QuerySingleAsync<T>(q, p, t)
 			);
 
-		private static IR<T> Single<T>(IOkV<long> r, IUnitOfWork w, string method, Func<string, object, IDbTransaction, Task<T>> execute)
-			where T : class, IEntity
+		private static Task<Option<T>> SingleAsync<T>(
+			long id, IUnitOfWork w,
+			string method,
+			Func<string, object, IDbTransaction, Task<T>> execute
+		)
+			where T : class, IEntity =>
+			Return(id)
+				.BindAsync<T>(
+					async id =>
+					{
+						// Build query
+						var query = w.Adapter.RetrieveSingleById<T>();
+						w.Log.Message(new Msg.RetrieveQueryMsg<T>(method, query, new { id }));
+
+						// Execute
+						return await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
+					},
+					e => new Msg.RetrieveExceptionMsg<T>(method, id, e)
+				);
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
 		{
-			// Get id
-			var id = r.Value;
-
-			return r
-				.Link()
-					.Handle().With((r, ex) => r.AddMsg(new Jm.Data.RetrieveExceptionMsg(ex, typeof(T), id)))
-					.MapAsync(retrievePoco).Await();
-
-			// Delete the poco
-			async Task<IR<T>> retrievePoco(IOkV<long> r)
+			/// <summary>Error retrieving entity</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">Entity ID being requested</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record RetrieveExceptionMsg<T>(string Method, long Id, Exception Exception) :
+				ExceptionMsg(Exception, "{Method} {Id}")
 			{
-				// Build query
-				var query = w.Adapter.RetrieveSingleById<T>();
-				r.AddMsg(new Jm.Data.QueryMsg(method, query, new { id }));
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
 
-				// Execute
-				var result = await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
-
-				// Add retrieve message
-				r.AddMsg(new Jm.Data.RetrieveMsg(typeof(T), id));
-
-				// Return
-				return r.OkV(result);
+			/// <summary>Query message</summary>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Query">Query text</param>
+			/// <param name="Parameters">Query parameters</param>
+			public sealed record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) :
+				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Query, Parameters ?? new object() };
 			}
 		}
 	}

@@ -1,6 +1,7 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using System.Text;
 
 namespace Jeebs.WordPress
 {

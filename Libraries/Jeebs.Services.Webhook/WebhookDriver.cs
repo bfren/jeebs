@@ -1,8 +1,11 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using Jeebs.Config;
+using Jeebs.Logging;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
 using static F.ThreadF;
@@ -47,27 +50,27 @@ namespace Jeebs.Services.Webhook
 		public virtual void Send(IMsg msg)
 		{
 			// Get message content
-			var content = msg.Prepare().Format();
+			var content = msg.ToString() ?? msg.GetType().ToString();
 
 			// Convert to notification Message
 			var message = msg switch
 			{
-				IExceptionMsg x =>
-					new Message
-					{
-						Content = content,
-						Level = x.Level.ToNotificationLevel(),
-						Fields = new Dictionary<string, object>()
-						{
-							{ "Exception", x.Exception }
-						}
-					},
-
-				ILoggableMsg x =>
+				ILogMsg x =>
 					new Message
 					{
 						Content = content,
 						Level = x.Level.ToNotificationLevel()
+					},
+
+				IExceptionMsg x =>
+					new Message
+					{
+						Content = content,
+						Level = NotificationLevel.Error,
+						Fields = new Dictionary<string, object>()
+						{
+							{ "Exception", x.Exception }
+						}
 					},
 
 				_ =>
@@ -87,7 +90,7 @@ namespace Jeebs.Services.Webhook
 		#region Convert to System.Net.Http.HttpRequestMessage and Send
 
 		/// <inheritdoc/>
-		public abstract void Send(Message message);
+		public abstract void Send(IWebhookMessage message);
 
 		/// <inheritdoc/>
 		public virtual void Send(TMessage message)

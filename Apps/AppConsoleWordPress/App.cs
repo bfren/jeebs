@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using AppConsoleWordPress.Bcg;
 using AppConsoleWordPress.Usa;
-using Jeebs.Data;
-using Jeebs.Services;
 using Jeebs.WordPress;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,9 +25,6 @@ namespace AppConsoleWordPress
 		{
 			// Base
 			base.ConfigureServices(env, config, services);
-
-			// Add Data
-			services.AddData().Using(config);
 
 			// Add WordPress
 			services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(config);

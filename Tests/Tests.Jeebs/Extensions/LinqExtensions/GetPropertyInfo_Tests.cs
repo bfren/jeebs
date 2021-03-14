@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Linq.Expressions;
-using System.Text;
+using Jeebs.Linq;
 using Xunit;
 
 namespace Jeebs.LinqExtensions_Tests

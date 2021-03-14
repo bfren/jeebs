@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using static F.OptionF;
 
 namespace Jeebs.Cryptography
 {
 	/// <summary>
-	/// Constants relating to <see cref="Lockable{T}"/> and <see cref="Locked{T}"/>
-	/// </summary>
-	public static class Lockable
-	{
-		/// <summary>
-		/// Length of encryption key (if it's a byte array)
-		/// </summary>
-		public const int KeyLength = 32;
-	}
-
-	/// <summary>
 	/// Contains contents that can been encrypted
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
-	public sealed class Lockable<T>
+	public sealed class Lockable<T> : Lockable
 	{
 		/// <summary>
 		/// Contents
 		/// </summary>
-		public T Contents { get; }
+		public T Contents { get; private init; }
 
 		/// <summary>
 		/// Create object
@@ -37,14 +27,14 @@ namespace Jeebs.Cryptography
 		/// Lock object
 		/// </summary>
 		/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
-		public Locked<T> Lock(byte[] key) =>
+		public Option<Locked<T>> Lock(byte[] key) =>
 			key.Length switch
 			{
 				Lockable.KeyLength =>
 					new Locked<T>(Contents, key),
 
 				_ =>
-					throw new Jx.Cryptography.InvalidKeyLengthException()
+					None<Locked<T>, Msg.InvalidKeyLengthMsg>()
 			};
 
 		/// <summary>
@@ -53,5 +43,25 @@ namespace Jeebs.Cryptography
 		/// <param name="key">Encryption key</param>
 		public Locked<T> Lock(string key) =>
 			new(Contents, key);
+	}
+
+	/// <summary>
+	/// Holds constants and Messages for <see cref="Lockable{T}"/>
+	/// </summary>
+	public abstract class Lockable
+	{
+		/// <summary>
+		/// Length of encryption key (if it's a byte array)
+		/// </summary>
+		public const int KeyLength = 32;
+
+		internal Lockable() { }
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Encryption key is not the correct length to lock the box</summary>
+			public sealed record InvalidKeyLengthMsg : IMsg { }
+		}
 	}
 }

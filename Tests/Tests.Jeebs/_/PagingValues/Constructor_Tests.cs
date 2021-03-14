@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using Xunit;
 
 namespace Jeebs.PagingValues_Tests
@@ -14,7 +15,7 @@ namespace Jeebs.PagingValues_Tests
 			const int invalidPage = -1;
 
 			// Act
-			Action createPagingValuesWithInvalidPage = () => new PagingValues(items: 0, page: invalidPage);
+			static PagingValues createPagingValuesWithInvalidPage() => new(items: 0, page: invalidPage);
 
 			// Assert
 			Assert.Throws<InvalidOperationException>(createPagingValuesWithInvalidPage);

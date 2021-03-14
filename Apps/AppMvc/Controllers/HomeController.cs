@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Test Applications
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Jeebs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MvcApp.Models;
 
 namespace MvcApp.Controllers
 {
 	public class HomeController : Jeebs.Mvc.Controller
 	{
-		public HomeController(ILog log) : base(log) { }
+		public HomeController(ILog<HomeController> log) : base(log) { }
 
 		public IActionResult Index()
 		{

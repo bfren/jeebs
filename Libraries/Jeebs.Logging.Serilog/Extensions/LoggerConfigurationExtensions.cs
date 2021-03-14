@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Jeebs.Config;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Slack;
-using Serilog.Sinks.Slack.Models;
 
 namespace Jeebs.Logging
 {
@@ -30,6 +28,10 @@ namespace Jeebs.Logging
 
 			// Set the full application name
 			@this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), jeebs.App.FullName);
+			if (jeebs.Logging.AddPrefixToConsoleMessages)
+			{
+				SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
+			}
 
 			// Set the minimum log level
 			var overallMinimumLevel = getMinimum();

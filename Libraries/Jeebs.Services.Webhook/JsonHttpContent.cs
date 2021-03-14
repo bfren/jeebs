@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Net.Http;
 using System.Text;
 using static F.JsonF;

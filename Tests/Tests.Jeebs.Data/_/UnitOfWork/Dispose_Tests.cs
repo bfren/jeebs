@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using NSubstitute;
 using Xunit;
 using static Jeebs.Data.UnitOfWork_Tests.UnitOfWork;

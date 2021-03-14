@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Jeebs.Mvc.TagHelpers
@@ -62,12 +61,14 @@ namespace Jeebs.Mvc.TagHelpers
 			// If there aren't any results, don't display anything
 			if (Values.Items == 0)
 			{
+				output.SuppressOutput();
 				return;
 			}
 
 			// Return nothing for one page
 			if (Values.Pages <= 1)
 			{
+				output.SuppressOutput();
 				return;
 			}
 

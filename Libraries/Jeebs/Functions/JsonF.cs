@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
-using Jeebs.Functions.Internals;
-using Jm.Functions.JsonF;
+using static F.OptionF;
 
 namespace F
 {
@@ -37,9 +37,9 @@ namespace F
 				NumberHandling = JsonNumberHandling.AllowReadingFromString
 			};
 
-			options.Converters.Add(new EnumeratedConverterFactory());
 			options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-			options.Converters.Add(new StrongIdConverterFactory());
+			options.Converters.Add(new Internals.EnumeratedConverterFactory());
+			options.Converters.Add(new Internals.StrongIdConverterFactory());
 		}
 
 		/// <summary>
@@ -96,7 +96,7 @@ namespace F
 			// Check for null string
 			if (str is null || string.IsNullOrWhiteSpace(str))
 			{
-				return Option.None<T>().AddReason<DeserialisingNullOrEmptyStringMsg>();
+				return None<T, Msg.DeserialisingNullOrEmptyStringMsg>();
 			}
 
 			// Attempt to deserialise JSON
@@ -108,17 +108,31 @@ namespace F
 						x,
 
 					_ =>
-						Option.None<T>().AddReason<DeserialisingReturnedNullMsg>() // should never get here
+						None<T, Msg.DeserialisingReturnedNullMsg>() // should never get here
 				};
 			}
 			catch (Exception ex)
 			{
-				return Option.None<T>().AddReason<DeserialiseExceptionMsg>(ex);
+				return None<T>(new Msg.DeserialiseExceptionMsg(ex));
 			}
 		}
 
 		/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
 		public static Option<T> Deserialise<T>(string str) =>
 			Deserialise<T>(str, options);
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>A null or empty string cannot be deserialised</summary>
+			public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
+
+			/// <summary>The object was deserialised but returned null</summary>
+			public sealed record DeserialisingReturnedNullMsg : IMsg { }
+		}
 	}
 }

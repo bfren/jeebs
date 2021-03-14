@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,39 +15,43 @@ namespace Jeebs.Mvc
 	public static class ControllerExtensions
 	{
 		/// <summary>
-		/// Execute an error result and return the View
+		/// Execute an Option.None result and return the View
 		/// </summary>
 		/// <param name="this">Controller</param>
-		/// <param name="error">IError</param>
+		/// <param name="reason">None</param>
 		/// <param name="code">[Optional] HTTP Status Code</param>
-		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IError error, int? code = null)
+		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg? reason, int? code = null)
 		{
 			// Check for 404
-			if (code == null)
+			var status = code switch
 			{
-				code = error.Messages.Contains<Jm.NotFoundMsg>() switch
-				{
-					true =>
-						StatusCodes.Status404NotFound,
+				int x =>
+					x,
 
-					false =>
-						StatusCodes.Status500InternalServerError
-				};
-			}
+				_ =>
+					reason switch
+					{
+						INotFoundMsg =>
+							StatusCodes.Status404NotFound,
 
-			// Log errors
-			foreach (var item in error.Messages.GetEnumerable())
+						_ =>
+							StatusCodes.Status500InternalServerError
+					}
+			};
+
+			// Log error
+			if (reason is IMsg)
 			{
-				@this.Log.Message(item);
+				@this.Log.Message(reason);
 			}
 
 			// Look for a view
-			var viewName = $"Error{code}";
-			@this.Log.Trace("Search for View {ViewName}", viewName);
+			var viewName = $"Error{status}";
+			@this.Log.Verbose("Search for View {ViewName}", viewName);
 			if ((findView(viewName) ?? findView("Default")) is string view)
 			{
-				@this.Log.Trace("Found view {view}", view);
-				return @this.View(view, error);
+				@this.Log.Verbose("Found view {view}", view);
+				return @this.View(view, reason);
 			}
 
 			// If response has stared we can't do anything
@@ -68,17 +72,18 @@ namespace Jeebs.Mvc
 			string? findView(string viewName)
 			{
 				// Get View Engine
-				if (@this.HttpContext.RequestServices.GetService<ICompositeViewEngine>() is ICompositeViewEngine viewEngine)
+				var viewEngine = @this.HttpContext.RequestServices.GetService<ICompositeViewEngine>();
+				if (viewEngine == null)
 				{
-					// Find View
-					var viewPath = $"Error/{viewName}";
-					var result = viewEngine.FindView(@this.ControllerContext, viewPath, true);
-
-					// Return result
-					return result.Success ? viewPath : null;
+					return null;
 				}
 
-				return null;
+				// Find View
+				var viewPath = $"Error/{viewName}";
+				var result = viewEngine.FindView(@this.ControllerContext, viewPath, true);
+
+				// Return result
+				return result.Success ? viewPath : null;
 			}
 		}
 	}

@@ -1,10 +1,12 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jm.WordPress.Query.Wrapper.Posts;
+using static F.OptionF;
 
 namespace Jeebs.WordPress
 {
@@ -15,30 +17,37 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="r">Result - value is list of posts</param>
-		private async Task<IR<TList>> AddCustomFieldsAsync<TList, TModel>(IOkV<TList> r)
+		/// <param name="posts">Posts</param>
+		private async Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
 			// Only proceed if there are custom fields, and a meta property for this model
 			var fields = GetCustomFields<TModel>();
+			if (fields.Count == 0)
+			{
+				return posts;
+			}
+
+			// Meta dictionary is required
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
-				Some<Meta<TModel>> x when fields.Count > 0 =>
-					r.Link()
-						.Handle().With<HydrateCustomFieldExceptionMsg>()
-						.MapAsync(okV => hydrateAsync(okV, x.Value, fields)).Await(),
+				Some<Meta<TModel>> meta when fields.Count > 0 =>
+					await Return(posts)
+						.BindAsync(
+							x => hydrateAsync(x, meta.Value, fields),
+							e => new Msg.AddCustomFieldsExceptionMsg<TModel>(e)
+						),
+
 				_ =>
-					r
+					None<TList, Msg.MetaDictionaryNotFoundMsg<TModel>>()
 			};
 
 			//
 			// Hydrate each custom field
 			//
-			async Task<IR<TList>> hydrateAsync(IOkV<TList> r, Meta<TModel> meta, List<PropertyInfo> customFields)
+			async Task<Option<TList>> hydrateAsync(TList posts, Meta<TModel> meta, List<PropertyInfo> customFields)
 			{
-				var posts = r.Value;
-
 				// Hydrate all custom fields for all posts
 				foreach (var post in posts)
 				{
@@ -58,14 +67,15 @@ namespace Jeebs.WordPress
 						if (getCustomField(post, info) is ICustomField customField)
 						{
 							// Hydrate the field
-							var result = await customField.HydrateAsync(r, db, UnitOfWork, metaDictionary).ConfigureAwait(false);
-							if (result is IError && customField.IsRequired)
+							var result = await customField.HydrateAsync(db, UnitOfWork, metaDictionary).ConfigureAwait(false);
+
+							if (result is None<bool> && customField.IsRequired)
 							{
-								return result.Error<TList>().AddMsg(new RequiredCustomFieldNotFoundMsg(post.Id, info.Name, customField.Key));
+								return None<TList>(new Msg.RequiredCustomFieldNotFoundMsg<TModel>(post.Id, info.Name, customField.Key));
 							}
 
 							// Set the value
-							if (result is IOkV<bool> ok && ok.Value)
+							if (result is Some<bool> ok && ok.Value)
 							{
 								info.SetValue(post, customField);
 							}
@@ -73,7 +83,7 @@ namespace Jeebs.WordPress
 					}
 				}
 
-				return r.OkV(posts);
+				return posts;
 			}
 
 			// Get a custom field - if it's null, create it
@@ -93,6 +103,25 @@ namespace Jeebs.WordPress
 						null
 				};
 			}
+		}
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>An exception occured while adding custom fields to posts</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record AddCustomFieldsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Meta Dictionary property not found on model</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			public sealed record MetaDictionaryNotFoundMsg<T> : IMsg { }
+
+			/// <summary>Required Custom Field property not found on model</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="PostId">Post ID</param>
+			/// <param name="Property">Property name</param>
+			/// <param name="Key">Custom Field Key</param>
+			public sealed record RequiredCustomFieldNotFoundMsg<T>(long PostId, string Property, string Key) : IMsg { }
 		}
 	}
 }

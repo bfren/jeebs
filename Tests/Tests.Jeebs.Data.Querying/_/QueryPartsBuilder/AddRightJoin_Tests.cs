@@ -1,7 +1,7 @@
-﻿using System;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using System.Collections.Generic;
-using System.Text;
-using NSubstitute;
 using Xunit;
 using static Jeebs.Data.Querying.QueryPartsBuilder_Tests.QueryPartsBuilder;
 

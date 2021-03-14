@@ -1,9 +1,10 @@
-﻿using System;
+﻿// Jeebs Rapid Application Development
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
-using Jm.Enumerated;
+using static F.OptionF;
 
 namespace Jeebs
 {
@@ -66,7 +67,7 @@ namespace Jeebs
 					value,
 
 				false =>
-					Option.None<T>()
+					None<T>(new Msg.NotAValidEnumeratedValueMsg<T>(value))
 			};
 
 		/// <summary>
@@ -92,7 +93,7 @@ namespace Jeebs
 					}
 
 					// If we get here the name was never matched
-					return Option.None<T>().AddReason(new NotAValidEnumeratedValueMsg<T>(name));
+					return None<T>(new Msg.NotAValidEnumeratedValueMsg<T>(name));
 				},
 				new ParseArgs<T>(name, values)
 			);
@@ -222,5 +223,20 @@ namespace Jeebs
 			GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
 		#endregion
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Value does not belong to the specified Enumerated type</summary>
+			/// <typeparam name="T">Enum type</typeparam>
+			/// <param name="Value">Value being parsed</param>
+			public sealed record NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
+				where T : Enumerated
+			{
+				/// <summary>Return message</summary>
+				public override string ToString() =>
+					$"'{Value}' is not a valid value of {typeof(T)}.";
+			}
+		}
 	}
 }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
-using static F.JsonF;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
+using static F.JsonF;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests
 {

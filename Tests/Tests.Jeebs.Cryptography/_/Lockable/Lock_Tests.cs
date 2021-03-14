@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
 using Xunit;
+using static Jeebs.Cryptography.Lockable.Msg;
 
 namespace Jeebs.Cryptography.Lockable_Tests
 {
 	public class Lock_Tests
 	{
 		[Fact]
-		public void Incorrect_Key_Length_Throws_InvalidKeyLengthException()
+		public void Incorrect_Key_Length_Returns_None_With_InvalidKeyLengthMsg()
 		{
 			// Arrange
 			var box = new Lockable<string>(F.Rnd.Str);
-			var key = F.ByteF.Random(20);
+			var key = F.Rnd.ByteF.Get(20);
 
 			// Act
-			void action() => box.Lock(key);
+			var result = box.Lock(key);
 
 			// Assert
-			var ex =Assert.Throws<Jx.Cryptography.InvalidKeyLengthException>(action);
-			Assert.Equal(string.Format(Jx.Cryptography.InvalidKeyLengthException.Format, Lockable.KeyLength), ex.Message);
+			var none = Assert.IsType<None<Locked<string>>>(result);
+			Assert.IsType<InvalidKeyLengthMsg>(none.Reason);
 		}
 
 		[Fact]
@@ -27,13 +28,14 @@ namespace Jeebs.Cryptography.Lockable_Tests
 		{
 			// Arrange
 			var box = new Lockable<string>(F.Rnd.Str);
-			var key = F.ByteF.Random(32);
+			var key = F.Rnd.ByteF.Get(32);
 
 			// Act
 			var result = box.Lock(key);
 
 			// Assert
-			Assert.NotNull(result.EncryptedContents);
+			var some = Assert.IsType<Some<Locked<string>>>(result);
+			Assert.NotNull(some.Value.EncryptedContents);
 		}
 
 		[Fact]
