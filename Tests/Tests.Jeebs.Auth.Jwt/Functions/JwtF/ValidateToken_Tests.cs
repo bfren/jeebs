@@ -74,7 +74,7 @@ namespace F.JwtF_Tests
 		{
 			// Arrange
 			var (config, token, _) = GetToken(false, DateTime.UtcNow, DateTime.UtcNow);
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
 
 			// Act
 			var result = JwtF.ValidateToken(config, token);
