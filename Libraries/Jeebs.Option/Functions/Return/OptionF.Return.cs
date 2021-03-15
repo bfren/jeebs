@@ -34,7 +34,6 @@ namespace F
 			}
 		}
 
-
 		/// <summary>
 		/// Create a <see cref="Some{T}"/> Option, containing <paramref name="value"/>
 		/// </summary>

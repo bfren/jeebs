@@ -166,7 +166,8 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			public sealed record GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>User not found</summary>
-			/// <param name="Value">Screen Name</param>
+			/// <param name="ScreenName">Screen Name</param>
+			/// <param name="Exception">Exception object</param>
 			public sealed record UserNotFoundExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
