@@ -70,13 +70,13 @@ namespace Jeebs.WordPress
 			//
 			// Get the Term by ID
 			//
-			Task<Option<List<Term>>> getTerms(long termId)
+			async Task<Option<List<Term>>> getTerms(long termId)
 			{
 				// Create new query
 				using var w = db.GetQueryWrapper();
 
 				// Get matching terms
-				return w.QueryTaxonomyAsync<Term>(modify: opt => opt.Id = termId);
+				return await w.QueryTaxonomyAsync<Term>(modify: opt => opt.Id = termId);
 			}
 
 			//

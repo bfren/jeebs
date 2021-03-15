@@ -5,6 +5,3 @@ file_header_template = Jeebs Rapid Application Development\nCopyright (c) bcg|de
 
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none
-
-# RCS1229: Use async/await when necessary.
-dotnet_diagnostic.RCS1229.severity = none

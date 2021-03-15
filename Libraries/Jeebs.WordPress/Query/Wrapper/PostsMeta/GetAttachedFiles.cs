@@ -54,13 +54,13 @@ namespace Jeebs.WordPress
 				;
 
 			// Get the files
-			Task<Option<IEnumerable<T>>> getAttachedFiles(string query)
+			async Task<Option<IEnumerable<T>>> getAttachedFiles(string query)
 			{
 				// Start unit of work
 				using var w = db.UnitOfWork;
 
 				// Execute query
-				return w.QueryAsync<T>(query);
+				return await w.QueryAsync<T>(query);
 			}
 		}
 

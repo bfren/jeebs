@@ -80,10 +80,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			}
 
 			// Get profile image stream
-			Task<System.IO.Stream> getStream(string uri)
+			async Task<System.IO.Stream> getStream(string uri)
 			{
 				using var client = factory.CreateClient();
-				return client.GetStreamAsync(uri);
+				return await client.GetStreamAsync(uri).ConfigureAwait(false);
 			}
 		}
 

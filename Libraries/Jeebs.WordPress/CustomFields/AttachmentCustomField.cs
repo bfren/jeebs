@@ -70,13 +70,13 @@ namespace Jeebs.WordPress
 			//
 			// Get the Attachment by Post ID
 			//
-			Task<Option<List<Attachment>>> getAttachments(long attachmentPostId)
+			async Task<Option<List<Attachment>>> getAttachments(long attachmentPostId)
 			{
 				// Create new query
 				using var w = db.GetQueryWrapper();
 
 				// Get matching posts
-				return w.QueryPostsAsync<Attachment>(modify: opt =>
+				return await w.QueryPostsAsync<Attachment>(modify: opt =>
 				{
 					opt.Id = attachmentPostId;
 					opt.Type = PostType.Attachment;
