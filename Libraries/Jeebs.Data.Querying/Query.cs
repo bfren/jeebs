@@ -38,7 +38,7 @@ namespace Jeebs.Data.Querying
 				e => new Msg.GetRetrieveCountQueryExceptionMsg(e)
 			)
 			.BindAsync(
-				x => UnitOfWork.ExecuteScalarAsync<long>(x)
+				x => UnitOfWork.ExecuteScalarAsync<long>(x, Parts.Parameters)
 			);
 
 		/// <inheritdoc/>

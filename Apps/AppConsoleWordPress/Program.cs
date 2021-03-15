@@ -44,6 +44,17 @@ namespace AppConsoleWordPress
 						.AuditAsync(AuditOption);
 
 					await Return(bcg.Db)
+						.BindAsync(x => GetPagedSermonsAsync(x, "holiness", opt =>
+						{
+							opt.SearchText = "holiness";
+							opt.SearchOperator = SearchOperators.Like;
+							opt.Type = WpBcg.PostTypes.Sermon;
+							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+							opt.Limit = 4;
+						}))
+						.AuditAsync(AuditPagedSermons);
+
+					await Return(bcg.Db)
 						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
@@ -130,6 +141,28 @@ namespace AppConsoleWordPress
 			opt.Switch(
 				some: x => log.Debug("Test option '{Key}' = '{Value}'", x.Key, x.Value),
 				none: r => log.Error($"No option found: {r}")
+			);
+
+		internal static async Task<Option<PagedList<SermonModel>>> GetPagedSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
+		{
+			Console.WriteLine();
+			log.Debug($"== Sermons: {search} ==");
+
+			using var q = db.GetQueryWrapper();
+			return await q.QueryPostsAsync<SermonModel>(1, modify: opt);
+		}
+
+		internal static void AuditPagedSermons(Option<PagedList<SermonModel>> opt) =>
+			opt.Switch(
+				some: x =>
+				{
+					log.Debug("There are {Count} matching sermons", x.Count);
+					foreach (var item in x)
+					{
+						log.Debug("{PostId:0000}: {Title}", item.PostId, item.Title);
+					}
+				},
+				none: r => log.Error($"No sermons found: {r}")
 			);
 
 		internal static async Task<Option<List<SermonModel>>> SearchSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
