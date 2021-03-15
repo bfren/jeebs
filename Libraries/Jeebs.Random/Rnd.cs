@@ -15,15 +15,15 @@ namespace F
 			StringF.Get(6);
 
 		/// <summary>
-		/// Generate a random 32-bit integer between 0 and 1000
+		/// Generate a random 32-bit integer between 0 and 10000
 		/// </summary>
 		public static int Int =>
-			NumberF.GetInt32(max: 1000);
+			NumberF.GetInt32(max: 10000);
 
 		/// <summary>
-		/// Generate a random 64-bit integer between 0 and 1000
+		/// Generate a random 64-bit integer between 0 and 10000
 		/// </summary>
 		public static long Lng =>
-			NumberF.GetInt64(max: 1000L);
+			NumberF.GetInt64(max: 10000L);
 	}
 }
