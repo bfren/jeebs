@@ -19,8 +19,8 @@ namespace Jeebs.Option_Tests
 			Option<T> result = input;
 
 			// Assert
-			var some = Assert.IsType<Some<T>>(result);
-			Assert.Equal(input, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(input, some);
 		}
 
 		[Theory]
@@ -33,8 +33,8 @@ namespace Jeebs.Option_Tests
 			Option<object> result = input;
 
 			// Assert
-			var none = Assert.IsType<None<object>>(result);
-			Assert.IsType<SomeValueWasNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<AllowNullWasFalseMsg>(none);
 		}
 	}
 }

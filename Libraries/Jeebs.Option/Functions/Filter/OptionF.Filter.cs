@@ -14,20 +14,21 @@ namespace F
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="option">Input option</param>
 		/// <param name="predicate">Predicate to use with filter</param>
-		/// <param name="handler">[Optional] Exception handler</param>
-		public static Option<T> Filter<T>(Option<T> option, Func<T, bool> predicate, Handler? handler) =>
-			Bind(
-				option,
-				x =>
-					predicate(x) switch
-					{
-						true =>
-							Return(x),
+		public static Option<T> Filter<T>(Option<T> option, Func<T, bool> predicate) =>
+			Catch(() =>
+				Bind(
+					option,
+					x =>
+						predicate(x) switch
+						{
+							true =>
+								Return(x),
 
-						false =>
-							None<T, Msg.FilterPredicateWasFalseMsg>()
-					},
-				handler
+							false =>
+								None<T, Msg.FilterPredicateWasFalseMsg>()
+						}
+				),
+				DefaultHandler
 			);
 
 		/// <summary>Messages</summary>

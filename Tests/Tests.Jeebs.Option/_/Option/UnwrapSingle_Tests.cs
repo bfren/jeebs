@@ -23,8 +23,8 @@ namespace Jeebs.Option_Tests
 			var result = option.UnwrapSingle<int>(null, null, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
@@ -39,8 +39,8 @@ namespace Jeebs.Option_Tests
 			var r1 = option.UnwrapSingle<int>();
 
 			// Assert
-			Assert.IsType<None<int>>(r0);
-			Assert.IsType<None<int>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 		}
 
 		[Fact]
@@ -55,10 +55,10 @@ namespace Jeebs.Option_Tests
 			var r1 = option.UnwrapSingle<int>();
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.Same(reason, n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.Same(reason, n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.Same(reason, n0);
+			var n1 = r1.AssertNone();
+			Assert.Same(reason, n1);
 		}
 
 		[Fact]
@@ -73,10 +73,10 @@ namespace Jeebs.Option_Tests
 			var r1 = option.UnwrapSingle<int>();
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnwrapSingleNoItemsMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnwrapSingleNoItemsMsg>(n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnwrapSingleNoItemsMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnwrapSingleNoItemsMsg>(n1);
 		}
 
 		[Fact]
@@ -107,10 +107,10 @@ namespace Jeebs.Option_Tests
 			var r1 = option.UnwrapSingle<int>();
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(n1);
 		}
 
 		[Fact]
@@ -141,10 +141,10 @@ namespace Jeebs.Option_Tests
 			var r1 = option.UnwrapSingle<int>();
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnwrapSingleNotAListMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnwrapSingleNotAListMsg>(n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnwrapSingleNotAListMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnwrapSingleNotAListMsg>(n1);
 		}
 
 		[Fact]

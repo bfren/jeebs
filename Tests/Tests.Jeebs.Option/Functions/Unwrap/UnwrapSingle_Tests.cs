@@ -24,8 +24,8 @@ namespace F.OptionF_Tests
 			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
@@ -39,7 +39,7 @@ namespace F.OptionF_Tests
 			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -53,8 +53,8 @@ namespace F.OptionF_Tests
 			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.Same(reason, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(reason, none);
 		}
 
 		[Fact]
@@ -68,8 +68,8 @@ namespace F.OptionF_Tests
 			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<UnwrapSingleNoItemsMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleNoItemsMsg>(none);
 		}
 
 		[Fact]
@@ -98,8 +98,8 @@ namespace F.OptionF_Tests
 			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none);
 		}
 
 		[Fact]
@@ -128,8 +128,8 @@ namespace F.OptionF_Tests
 			var result = UnwrapSingle<int, int>(option, null, null, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<UnwrapSingleNotAListMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleNotAListMsg>(none);
 		}
 
 		[Fact]

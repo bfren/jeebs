@@ -24,8 +24,8 @@ namespace Jeebs.Option_Tests
 			var result = await option.FilterAsync(predicate);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 
 		[Fact]
@@ -40,8 +40,8 @@ namespace Jeebs.Option_Tests
 			var result = await option.FilterAsync(predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<FilterPredicateWasFalseMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<FilterPredicateWasFalseMsg>(none);
 		}
 
 		[Fact]
@@ -56,8 +56,8 @@ namespace Jeebs.Option_Tests
 			var result = await option.FilterAsync(predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.Same(reason, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(reason, none);
 		}
 
 		public record TestMsg : IMsg { }

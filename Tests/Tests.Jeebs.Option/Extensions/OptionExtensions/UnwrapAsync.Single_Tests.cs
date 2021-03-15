@@ -25,8 +25,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var result = await task.UnwrapAsync(x => x.Single<int>());
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
@@ -41,7 +41,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var result = await task.UnwrapAsync(x => x.Single<int>());
 
 			// Assert
-			Assert.IsType<None<int>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -56,8 +56,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var result = await task.UnwrapAsync(x => x.Single<int>());
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.Same(reason, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(reason, none);
 		}
 
 		[Fact]
@@ -72,8 +72,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var result = await task.UnwrapAsync(x => x.Single<int>());
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<UnwrapSingleNoItemsMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleNoItemsMsg>(none);
 		}
 
 		[Fact]
@@ -104,8 +104,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var result = await task.UnwrapAsync(x => x.Single<int>());
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none);
 		}
 
 		[Fact]
@@ -136,8 +136,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var result = await task.UnwrapAsync(x => x.Single<int>());
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<UnwrapSingleNotAListMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleNotAListMsg>(none);
 		}
 
 		[Fact]

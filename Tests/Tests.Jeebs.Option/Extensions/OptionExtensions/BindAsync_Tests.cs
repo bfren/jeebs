@@ -6,31 +6,32 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
+using static F.OptionF.Msg;
 
 namespace Jeebs.OptionExtensions_Tests
 {
 	public class BindAsync_Tests
 	{
 		[Fact]
-		public async Task Exception_Thrown_Calls_Handler()
+		public async Task Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = Return(F.Rnd.Int);
 			var task = Task.FromResult(option);
-			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 
 			Option<string> syncThrow(int _) => throw exception;
 			Task<Option<string>> asyncThrow(int _) => throw exception;
 
 			// Act
-			var r0 = await task.BindAsync(syncThrow, handler);
-			var r1 = await task.BindAsync(asyncThrow, handler);
+			var r0 = await task.BindAsync(syncThrow);
+			var r1 = await task.BindAsync(asyncThrow);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
-			handler.Received(2).Invoke(exception);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n1);
 		}
 
 		[Fact]
@@ -46,8 +47,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.BindAsync(bind);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 		}
 
 		[Fact]
@@ -64,10 +65,10 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.BindAsync(bind);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.Same(msg, n0);
+			var n1 = r1.AssertNone();
+			Assert.Same(msg, n1);
 		}
 
 		[Fact]
@@ -80,8 +81,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			await task.BindAsync(v => bind(v).GetAwaiter().GetResult(), null);
-			await task.BindAsync(bind, null);
+			await task.BindAsync(v => bind(v).GetAwaiter().GetResult());
+			await task.BindAsync(bind);
 
 			// Assert
 			await bind.Received(2).Invoke(value);

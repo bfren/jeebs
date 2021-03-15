@@ -22,6 +22,7 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var o2 = None<int>(true);
 			var o3 = None<int>(true);
 			var list = new[] { o0, o1, o2, o3 };
+
 			static string m0(int x) => x.ToString();
 			static Option<string> m1(int x) => x.ToString();
 
@@ -37,13 +38,13 @@ namespace Jeebs.EnumerableExtensions_Tests
 			Assert.Collection(r1,
 				x =>
 				{
-					var s0 = Assert.IsType<Some<string>>(x);
-					Assert.Equal(v0.ToString(), s0.Value);
+					var s0 = x.AssertSome();
+					Assert.Equal(v0.ToString(), s0);
 				},
 				x =>
 				{
-					var s1 = Assert.IsType<Some<string>>(x);
-					Assert.Equal(v1.ToString(), s1.Value);
+					var s1 = x.AssertSome();
+					Assert.Equal(v1.ToString(), s1);
 				}
 			);
 		}
@@ -59,8 +60,10 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var o2 = None<int>(true);
 			var o3 = None<int>(true);
 			var list = new[] { o0, o1, o2, o3 };
+
 			static string m0(int x) => x.ToString();
 			static Option<string> m1(int x) => x.ToString();
+
 			var predicate = Substitute.For<Func<int, bool>>();
 			predicate.Invoke(v1).Returns(true);
 
@@ -75,8 +78,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			Assert.Collection(r1,
 				x =>
 				{
-					var some = Assert.IsType<Some<string>>(x);
-					Assert.Equal(v1.ToString(), some.Value);
+					var some = x.AssertSome();
+					Assert.Equal(v1.ToString(), some);
 				}
 			);
 		}

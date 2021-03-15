@@ -5,3 +5,6 @@ dotnet_diagnostic.RCS1090.severity = none
 
 # RCS1224: Make method an extension method.
 dotnet_diagnostic.RCS1224.severity = none
+
+# RCS1229: Use async/await when necessary.
+dotnet_diagnostic.RCS1229.severity = none

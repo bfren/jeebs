@@ -17,8 +17,8 @@ namespace Jeebs.ObjectExtensions_Tests
 			var r0 = value.ReturnIf(() => true);
 
 			// Assert
-			var s0 = Assert.IsType<Some<int>>(r0);
-			Assert.Equal(value, s0.Value);
+			var s0 = r0.AssertSome();
+			Assert.Equal(value, s0);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ namespace Jeebs.ObjectExtensions_Tests
 			var result = value.ReturnIf(() => false);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
+			result.AssertNone();
 		}
 	}
 }

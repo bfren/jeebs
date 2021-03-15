@@ -40,17 +40,31 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		public override string Retrieve(IQueryParts parts)
+		public override string Retrieve(IQueryParts parts) =>
+			Retrieve(parts, false);
+
+		/// <inheritdoc/>
+		public override string RetrieveCount(IQueryParts parts) =>
+			Retrieve(parts, true);
+
+		/// <inheritdoc/>
+		private string Retrieve(IQueryParts parts, bool count)
 		{
 			// Perform checks
 			RetrieveChecks(parts);
 
 			// Start query
-			var select = "*";
-			if (!string.IsNullOrWhiteSpace(parts.Select))
+			var select = count switch
 			{
-				select = parts.Select;
-			}
+				true =>
+					GetSelectCount(),
+
+				false when !string.IsNullOrEmpty(parts.Select) =>
+					parts.Select,
+
+				_ =>
+					"*"
+			};
 
 			var sql = new StringBuilder($"SELECT {select} FROM {parts.From}");
 

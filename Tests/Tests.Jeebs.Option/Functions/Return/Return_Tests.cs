@@ -21,8 +21,8 @@ namespace F.OptionF_Tests
 			var result = Return(input);
 
 			// Assert
-			var some = Assert.IsType<Some<T>>(result);
-			Assert.Equal(input, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(input, some);
 		}
 
 		[Fact]
@@ -35,8 +35,8 @@ namespace F.OptionF_Tests
 			var result = Return(value);
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<SomeValueWasNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<AllowNullWasFalseMsg>(none);
 		}
 
 		[Fact]
@@ -49,8 +49,8 @@ namespace F.OptionF_Tests
 			var result = Return(value, true);
 
 			// Assert
-			var some = Assert.IsType<Some<int?>>(result);
-			Assert.Null(some.Value);
+			var some = result.AssertSome();
+			Assert.Null(some);
 		}
 
 		[Fact]
@@ -63,8 +63,8 @@ namespace F.OptionF_Tests
 			var result = Return(value, true);
 
 			// Assert
-			var some = Assert.IsType<Some<int?>>(result);
-			Assert.Null(some.Value);
+			var some = result.AssertSome();
+			Assert.Null(some);
 		}
 	}
 }

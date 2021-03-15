@@ -20,21 +20,14 @@ namespace Jeebs.Data.Mapping
 		/// <param name="entity">Entity</param>
 		public static Option<bool> Update<T>(this IUnitOfWork @this, T entity)
 			where T : class, IEntity =>
-			Catch(() =>
-				entity switch
-				{
-					IEntityWithVersion e =>
-						UpdateWithVersion(@this, e),
+			entity switch
+			{
+				IEntityWithVersion e =>
+					UpdateWithVersion(@this, e),
 
-					{ } e =>
-						UpdateWithoutVersion(@this, e)
-				},
-				e =>
-				{
-					@this.Rollback();
-					return new Msg.UpdateExceptionMsg<T>(entity.Id, e);
-				}
-			);
+				{ } e =>
+					UpdateWithoutVersion(@this, e)
+			};
 
 		/// <summary>
 		/// Update using versioning
@@ -43,22 +36,31 @@ namespace Jeebs.Data.Mapping
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="entity">Entity to update</param>
 		private static Option<bool> UpdateWithVersion<T>(IUnitOfWork w, T entity)
-			where T : class, IEntityWithVersion
-		{
-			// Build query and increase the version number
-			var query = w.Adapter.UpdateSingle<T>();
-			entity.Version++;
-			w.Log.Message(new Msg.UpdateQueryMsg<T>(nameof(UpdateWithVersion), query, entity));
+			where T : class, IEntityWithVersion =>
+			Map(
+				() => w.Adapter.UpdateSingle<T>(),
+				e => new Msg.GetUpdateQueryExceptionMsg<T>(nameof(UpdateWithVersion), entity.Id, e)
+			)
+			.AuditSwitch(
+				some: x =>
+				{
+					entity.Version++;
+					w.Log.Message(new Msg.AuditUpdateQueryMsg<T>(nameof(UpdateWithVersion), x, entity));
+				}
+			)
+			.Bind(
+				x => w.Execute(x, entity)
+			)
+			.Bind(
+				x => x switch
+				{
+					1 =>
+						True,
 
-			// Execute and return
-			var rowsAffected = w.Execute(query, entity);
-			if (rowsAffected == 1)
-			{
-				return True;
-			}
-
-			return None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateWithVersion), entity.Id));
-		}
+					_ =>
+						None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateWithVersion), entity.Id))
+				}
+			);
 
 		/// <summary>
 		/// Update without using versioning
@@ -67,21 +69,27 @@ namespace Jeebs.Data.Mapping
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="entity">Entity to update</param>
 		private static Option<bool> UpdateWithoutVersion<T>(IUnitOfWork w, T entity)
-			where T : class, IEntity
-		{
-			// Build query
-			var query = w.Adapter.UpdateSingle<T>();
-			w.Log.Message(new Msg.UpdateQueryMsg<T>(nameof(UpdateWithoutVersion), query, entity));
+			where T : class, IEntity =>
+			Map(
+				() => w.Adapter.UpdateSingle<T>(),
+				e => new Msg.GetUpdateQueryExceptionMsg<T>(nameof(UpdateWithoutVersion), entity.Id, e)
+			)
+			.AuditSwitch(
+				some: x => w.Log.Message(new Msg.AuditUpdateQueryMsg<T>(nameof(UpdateWithoutVersion), x, entity))
+			)
+			.Bind(
+				x => w.Execute(x, entity)
+			)
+			.Bind(
+				x => x switch
+				{
+					1 =>
+						True,
 
-			// Execute and return
-			var rowsAffected = w.Execute(query, entity);
-			if (rowsAffected == 1)
-			{
-				return True;
-			}
-
-			return None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateWithoutVersion), entity.Id));
-		}
+					_ =>
+						None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateWithoutVersion), entity.Id))
+				}
+			);
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
@@ -98,23 +106,24 @@ namespace Jeebs.Data.Mapping
 					() => new object[] { Method, Id };
 			}
 
-			/// <summary>Error updating entity</summary>
+			/// <summary>Error getting update query</summary>
 			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
 			/// <param name="Id">Entity ID being updated</param>
 			/// <param name="Exception">Caught exception</param>
-			public sealed record UpdateExceptionMsg<T>(long Id, Exception Exception) :
-				ExceptionMsg(Exception, "{Id}")
+			public sealed record GetUpdateQueryExceptionMsg<T>(string Method, long Id, Exception Exception) :
+				ExceptionMsg(Exception, "{Method} {Id}")
 			{
 				/// <inheritdoc/>
 				public override Func<object[]> Args =>
-					() => new object[] { Id };
+					() => new object[] { Method, Id };
 			}
 
 			/// <summary>Query message</summary>
 			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
 			/// <param name="Query">Query text</param>
 			/// <param name="Parameters">Query parameters</param>
-			public sealed record UpdateQueryMsg<T>(string Method, string Query, T Parameters) :
+			public sealed record AuditUpdateQueryMsg<T>(string Method, string Query, T Parameters) :
 				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
 			{
 				/// <inheritdoc/>

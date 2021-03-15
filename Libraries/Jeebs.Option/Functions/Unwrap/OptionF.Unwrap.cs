@@ -14,6 +14,19 @@ namespace F
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="option">Input option</param>
 		/// <param name="ifNone">Value to return if <paramref name="option"/> is a <see cref="Jeebs.None{T}"/></param>
+		public static T Unwrap<T>(Option<T> option, Func<T> ifNone) =>
+			Switch(
+				option,
+				some: v => v,
+				none: _ => ifNone()
+			);
+
+		/// <summary>
+		/// Unwrap the value of <paramref name="option"/> - if it is <see cref="Some{T}"/>
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <param name="option">Input option</param>
+		/// <param name="ifNone">Value to return if <paramref name="option"/> is a <see cref="Jeebs.None{T}"/></param>
 		public static T Unwrap<T>(Option<T> option, Func<IMsg?, T> ifNone) =>
 			Switch(
 				option,

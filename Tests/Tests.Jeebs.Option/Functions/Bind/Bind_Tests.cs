@@ -21,16 +21,16 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = Bind(option, bind, null);
+			var result = Bind(option, bind);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
-		public void Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public void Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = Return(Rnd.Str);
@@ -38,33 +38,14 @@ namespace F.OptionF_Tests
 			Option<int> throwFunc() => throw exception;
 
 			// Act
-			var r0 = Bind(option, _ => throwFunc(), null);
+			var r0 = Bind(option, _ => throwFunc());
 			var r1 = Bind(throwFunc);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
-		}
-
-		[Fact]
-		public void Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
-		{
-			// Arrange
-			var option = Return(Rnd.Int);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			Option<string> throwFunc(int _) => throw exception;
-
-			// Act
-			var r0 = Bind(option, throwFunc, handler);
-			var r1 = Bind(() => throwFunc(Rnd.Int), handler);
-
-			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
-			handler.Received(2).Invoke(exception);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n1);
 		}
 
 		[Fact]
@@ -75,10 +56,10 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = Bind(option, bind, null);
+			var result = Bind(option, bind);
 
 			// Assert
-			Assert.IsType<None<string>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -90,11 +71,11 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = Bind(option, bind, null);
+			var result = Bind(option, bind);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.Same(msg, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(msg, none);
 		}
 
 		[Fact]
@@ -106,12 +87,11 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			Bind(option, bind, null);
+			Bind(option, bind);
 			Bind(() => bind(value));
-			Bind(() => bind(value), Substitute.For<Handler>());
 
 			// Assert
-			bind.Received(3).Invoke(value);
+			bind.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

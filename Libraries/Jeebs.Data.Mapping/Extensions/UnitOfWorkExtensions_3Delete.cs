@@ -45,29 +45,35 @@ namespace Jeebs.Data.Mapping
 				(q, p, t) => @this.Connection.ExecuteAsync(q, p, t)
 			);
 
-		private static Task<Option<bool>> DeleteAsync<T>(T entity, IUnitOfWork w, string method, Func<string, T, IDbTransaction, Task<int>> execute)
-			where T : class, IEntity
-		{
-			return Return(entity)
-				.BindAsync(
-					async x =>
+		private static Task<Option<bool>> DeleteAsync<T>(
+			T entity,
+			IUnitOfWork w,
+			string method,
+			Func<string, T, IDbTransaction, Task<int>> execute
+		)
+			where T : class, IEntity =>
+			Map(
+				() => w.Adapter.DeleteSingle<T>(),
+				e => new Msg.GetDeleteQueryExceptionMsg<T>(method, entity.Id, e)
+			)
+			.AuditSwitch(
+				some: x => w.Log.Message(new Msg.AuditDeleteQueryMsg<T>(method, x, entity))
+			)
+			.MapAsync(
+				x => execute(x, entity, w.Transaction),
+				e => new Msg.DeleteExceptionMsg<T>(method, entity.Id, e)
+			)
+			.BindAsync(
+				x =>
+				{
+					if (x == 1)
 					{
-						// Build query
-						var query = w.Adapter.DeleteSingle<T>();
-						w.Log.Message(new Msg.DeleteQueryMsg<T>(method, query, x));
+						return True;
+					}
 
-						// Execute
-						var rowsAffected = await execute(query, x, w.Transaction).ConfigureAwait(false);
-						if (rowsAffected == 1)
-						{
-							return True;
-						}
-
-						return None<bool>(new Msg.DeleteErrorMsg<T>(method, x.Id));
-					},
-					e => new Msg.DeleteExceptionMsg<T>(method, entity.Id, e)
-				);
-		}
+					return None<bool>(new Msg.DeleteErrorMsg<T>(method, entity.Id));
+				}
+			);
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
@@ -97,11 +103,24 @@ namespace Jeebs.Data.Mapping
 					() => new object[] { Method, Id };
 			}
 
+			/// <summary>Error getting delete query</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">Entity ID being deleted</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record GetDeleteQueryExceptionMsg<T>(string Method, long Id, Exception Exception) :
+				ExceptionMsg(Exception, "{Method} {Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
+
 			/// <summary>Query message</summary>
 			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
 			/// <param name="Query">Query text</param>
 			/// <param name="Parameters">Query parameters</param>
-			public sealed record DeleteQueryMsg<T>(string Method, string Query, T Parameters) :
+			public sealed record AuditDeleteQueryMsg<T>(string Method, string Query, T Parameters) :
 				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
 			{
 				/// <inheritdoc/>

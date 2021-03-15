@@ -18,21 +18,24 @@ namespace F
 			/// <param name="list">List of values</param>
 			/// <param name="index">Index</param>
 			public static Option<T> ElementAtOrNone<T>(IEnumerable<T> list, int index) =>
-				list.Any() switch
-				{
-					true =>
-						list.ElementAtOrDefault(index) switch
-						{
-							T x =>
-								x,
+				Catch<T>(() =>
+					list.Any() switch
+					{
+						true =>
+							list.ElementAtOrDefault(index) switch
+							{
+								T x =>
+									x,
 
-							_ =>
-								None<T, Msg.ElementAtIsNullMsg>()
-						},
+								_ =>
+									None<T, Msg.ElementAtIsNullMsg>()
+							},
 
-					false =>
-						None<T, Msg.ListIsEmptyMsg>()
-				};
+						false =>
+							None<T, Msg.ListIsEmptyMsg>()
+					},
+					DefaultHandler
+				);
 
 			/// <summary>Messages</summary>
 			public static partial class Msg

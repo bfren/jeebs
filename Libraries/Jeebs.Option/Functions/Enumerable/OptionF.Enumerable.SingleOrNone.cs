@@ -19,31 +19,34 @@ namespace F
 			/// <param name="list">List of values</param>
 			/// <param name="predicate">[Optional] Predicate to filter items</param>
 			public static Option<T> SingleOrNone<T>(IEnumerable<T> list, Func<T, bool>? predicate) =>
-				list.Any() switch
-				{
-					true =>
-						list.Where(x => predicate is null || predicate(x)) switch
-						{
-							{ } filtered when filtered.Count() == 1 =>
-								filtered.SingleOrDefault() switch
-								{
-									T x =>
-										x,
+				Catch<T>(() =>
+					list.Any() switch
+					{
+						true =>
+							list.Where(x => predicate is null || predicate(x)) switch
+							{
+								{ } filtered when filtered.Count() == 1 =>
+									filtered.SingleOrDefault() switch
+									{
+										T x =>
+											x,
 
-									_ =>
-										None<T, Msg.NullItemMsg>()
-								},
+										_ =>
+											None<T, Msg.NullItemMsg>()
+									},
 
-							{ } filtered when !filtered.Any() =>
-								None<T, Msg.NoMatchingItemsMsg>(),
+								{ } filtered when !filtered.Any() =>
+									None<T, Msg.NoMatchingItemsMsg>(),
 
-							_ =>
-								None<T, Msg.MultipleItemsMsg>()
-						},
+								_ =>
+									None<T, Msg.MultipleItemsMsg>()
+							},
 
-					false =>
-						None<T, Msg.ListIsEmptyMsg>()
-				};
+						false =>
+							None<T, Msg.ListIsEmptyMsg>()
+					},
+					DefaultHandler
+				);
 
 			/// <summary>Messages</summary>
 			public static partial class Msg

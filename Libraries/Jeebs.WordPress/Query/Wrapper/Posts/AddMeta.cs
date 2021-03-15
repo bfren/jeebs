@@ -20,7 +20,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="posts">Posts</param>
-		private async Task<Option<TList>> AddMetaAsync<TList, TModel>(TList posts)
+		private Task<Option<TList>> AddMetaAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
@@ -28,37 +28,37 @@ namespace Jeebs.WordPress
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
 				Some<Meta<TModel>> meta =>
-					await Return(posts)
+					Return(posts)
 						.BindAsync(
-							getMetaAsync,
-							e => new Msg.AddMetaExceptionMsg<TModel>(e)
+							getMetaAsync
 						)
 						.BindAsync(
-							x => setMeta(x, meta.Value),
-							e => new Msg.SetMetaExceptionMsg<TModel>(e)
+							x => setMeta(x, meta.Value)
 						),
 
 				_ =>
-					posts
+					Return(posts).AsTask
 			};
 
 			//
 			// Get Post Meta values
 			//
-			async Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
+			Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
 			{
-				return await
+				return
 					Map(
-						getOptions
+						getOptions,
+						DefaultHandler
 					)
-					.Map(
+					.Bind(
 						getQuery
 					)
 					.BindAsync(
 						getMeta
 					)
-					.BindAsync(
-						createTuple
+					.MapAsync(
+						createTuple,
+						DefaultHandler
 					);
 
 				// Get query options
@@ -66,19 +66,22 @@ namespace Jeebs.WordPress
 					new() { PostIds = posts.Select(p => p.Id).ToList() };
 
 				// Get query
-				IQuery<PostMeta> getQuery(QueryPostsMeta.Options options) =>
-					StartNewQuery()
-						.WithModel<PostMeta>()
-						.WithOptions(options)
-						.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
-						.GetQuery();
+				Option<IQuery<PostMeta>> getQuery(QueryPostsMeta.Options options) =>
+					Map(
+						() => StartNewQuery()
+							.WithModel<PostMeta>()
+							.WithOptions(options)
+							.WithParts(new QueryPostsMeta.Builder<PostMeta>(db))
+							.GetQuery(),
+						e => new Msg.GetPostsMetaQueryExceptionMsg(e)
+					);
 
 				// Execute query to get meta
-				async Task<Option<List<PostMeta>>> getMeta(IQuery<PostMeta> query) =>
-					await query.ExecuteQueryAsync();
+				Task<Option<List<PostMeta>>> getMeta(IQuery<PostMeta> query) =>
+					query.ExecuteQueryAsync();
 
 				// Create tuple of posts and meta
-				Option<(TList, List<PostMeta>)> createTuple(List<PostMeta> meta) =>
+				(TList, List<PostMeta>) createTuple(List<PostMeta> meta) =>
 					(posts, meta);
 			}
 

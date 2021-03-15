@@ -16,23 +16,22 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="postId">Post ID</param>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		public async Task<Option<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(long postId, Action<QueryPosts.Options>? modify = null)
+		public Task<Option<(long? prev, long? next)>> QueryPostsPreviousAndNextAsync(long postId, Action<QueryPosts.Options>? modify = null)
 		{
-			return await
-				Map(
-					getQuery,
-					e => new Msg.GetPostsQueryExceptionMsg(postId, e)
+			return
+				Bind(
+					getQuery
 				)
 				.BindAsync(
-					getPosts // exceptions handled by query code
+					getPosts
 				)
-				.BindAsync(
+				.MapAsync(
 					x => handle(postId, x.ConvertAll(x => x.PostId)),
 					e => new Msg.CalculatePreviousAndNextExceptionMsg(postId, e)
 				);
 
 			// Get query
-			IQuery<PostWithId> getQuery() =>
+			Option<IQuery<PostWithId>> getQuery() =>
 				GetPostsQuery<PostWithId>(opt =>
 				{
 					modify?.Invoke(opt);
@@ -40,15 +39,15 @@ namespace Jeebs.WordPress
 				});
 
 			// Get posts
-			async Task<Option<List<PostWithId>>> getPosts(IQuery<PostWithId> query) =>
-				await query.ExecuteQueryAsync();
+			Task<Option<List<PostWithId>>> getPosts(IQuery<PostWithId> query) =>
+				query.ExecuteQueryAsync();
 
 			// Shorthand for returning result
-			Option<(long? prev, long? next)> val(long? prev, long? next) =>
+			(long? prev, long? next) val(long? prev, long? next) =>
 				(prev, next);
 
 			// Handle scenarios
-			Option<(long? prev, long? next)> handle(long currentId, List<long> ids)
+			(long? prev, long? next) handle(long currentId, List<long> ids)
 			{
 				// If there are no posts, or only one post, or the current post is not in the list, return null
 				if (ids.Count <= 1 || !ids.Contains(currentId))
@@ -85,10 +84,10 @@ namespace Jeebs.WordPress
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>An exception occured getting the posts</summary>
+			/// <summary>An exception occured getting the query to get previous and next posts</summary>
 			/// <param name="PostId">Post ID</param>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GetPostsQueryExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record GetPostsPreviousAndNextQueryExceptionMsg(long PostId, Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>An exception occured while calculating the next and previous posts</summary>
 			/// <param name="PostId">Post ID</param>

@@ -20,7 +20,7 @@ namespace F.OptionF_Tests
 			var result = None<int>(true);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -32,8 +32,8 @@ namespace F.OptionF_Tests
 			var result = None<int>(false);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<IfYouArentSureDontMakeItMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IfYouArentSureDontMakeItMsg>(none);
 		}
 
 		[Fact]
@@ -46,8 +46,8 @@ namespace F.OptionF_Tests
 			var result = None<int>(reason);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.Same(reason, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(reason, none);
 		}
 
 		[Fact]
@@ -59,8 +59,8 @@ namespace F.OptionF_Tests
 			var result = None<int, TestMsg>();
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<TestMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<TestMsg>(none);
 		}
 
 		public record TestMsg : IMsg { }

@@ -42,7 +42,8 @@ namespace F
 
 					none: r =>
 						new None<U>(r)
-				)
+				),
+				DefaultHandler
 			);
 
 		/// <summary>Messages</summary>

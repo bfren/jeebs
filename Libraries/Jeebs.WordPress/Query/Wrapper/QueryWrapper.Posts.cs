@@ -24,26 +24,24 @@ namespace Jeebs.WordPress
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
 		public Task<Option<List<TModel>>> QueryPostsAsync<TModel>(Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
-			where TModel : IEntity
-		{
-			return Return(modify)
-				.Map(
+			where TModel : IEntity =>
+			Return(modify)
+				.Bind(
 					GetPostsQuery<TModel>
 				)
 				.BindAsync(
 					x => x.ExecuteQueryAsync()
 				)
 				.BindAsync(
-					async x => x.Count switch
+					x => x.Count switch
 					{
 						> 0 =>
-							await Process<List<TModel>, TModel>(x, filters),
+							Process<List<TModel>, TModel>(x, filters),
 
 						_ =>
-							x
+							Return(x).AsTask
 					}
 				);
-		}
 
 		/// <summary>
 		/// Query Posts
@@ -57,10 +55,9 @@ namespace Jeebs.WordPress
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
 		/// <param name="filters">[Optional] Content filters to apply to matching posts</param>
 		public Task<Option<PagedList<TModel>>> QueryPostsAsync<TModel>(long page, Action<QueryPosts.Options>? modify = null, params ContentFilter[] filters)
-			where TModel : IEntity
-		{
-			return Return(modify)
-				.Map(
+			where TModel : IEntity =>
+			Return(modify)
+				.Bind(
 					GetPostsQuery<TModel>
 				)
 				.BindAsync(
@@ -79,19 +76,21 @@ namespace Jeebs.WordPress
 							None<PagedList<TModel>, Msg.UnrecognisedPagedListTypeMsg>().AsTask
 					}
 				);
-		}
 
 		/// <summary>
 		/// Get query object
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="modify">[Optional] Action to modify the options for this query</param>
-		private IQuery<TModel> GetPostsQuery<TModel>(Action<QueryPosts.Options>? modify = null) =>
-			StartNewQuery()
-				.WithModel<TModel>()
-				.WithOptions(modify)
-				.WithParts(new QueryPosts.Builder<TModel>(db))
-				.GetQuery();
+		private Option<IQuery<TModel>> GetPostsQuery<TModel>(Action<QueryPosts.Options>? modify = null) =>
+			Map(
+				() => StartNewQuery()
+						.WithModel<TModel>()
+						.WithOptions(modify)
+						.WithParts(new QueryPosts.Builder<TModel>(db))
+						.GetQuery(),
+				e => new Msg.GetPostsQueryExceptionMsg(e)
+			);
 
 		/// <summary>
 		/// Process a list of posts
@@ -118,7 +117,7 @@ namespace Jeebs.WordPress
 				);
 
 		private static Option<Meta<TModel>> GetMetaDictionaryInfo<TModel>() =>
-			GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x));
+			GetMetaDictionary<TModel>().Map(x => new Meta<TModel>(x), DefaultHandler);
 
 		private class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>
 		{
@@ -128,6 +127,10 @@ namespace Jeebs.WordPress
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
+			/// <summary>Unable to get posts meta query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetPostsQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
 			/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
 			public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
 		}

@@ -20,28 +20,27 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var result = option.Bind(bind, null);
+			var result = option.Bind(bind);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
-		public void Exception_Thrown_With_Handler_Calls_Handler()
+		public void Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = Return(F.Rnd.Str);
-			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 
 			// Act
-			var result = option.Bind<int>(_ => throw exception, handler);
+			var result = option.Bind<int>(_ => throw exception);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
-			handler.Received().Invoke(exception);
+			var msg = result.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(msg);
 		}
 
 		[Fact]
@@ -52,10 +51,10 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var r0 = option.Bind(bind, null);
+			var result = option.Bind(bind);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -67,11 +66,11 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			var r0 = option.Bind(bind, null);
+			var result = option.Bind(bind);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
+			var none = result.AssertNone();
+			Assert.Same(msg, none);
 		}
 
 		[Fact]
@@ -83,10 +82,10 @@ namespace Jeebs.Option_Tests
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
-			option.Bind(bind, null);
+			option.Bind(bind);
 
 			// Assert
-			bind.Received(1).Invoke(value);
+			bind.Received().Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

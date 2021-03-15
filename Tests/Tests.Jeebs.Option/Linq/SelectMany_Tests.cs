@@ -25,8 +25,8 @@ namespace Jeebs.Linq_Tests
 						 select a + b;
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(v0 + v1, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(v0 + v1, some);
 		}
 
 		[Fact]
@@ -46,8 +46,8 @@ namespace Jeebs.Linq_Tests
 			);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(v0 + v1, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(v0 + v1, some);
 		}
 
 		[Fact]
@@ -73,8 +73,8 @@ namespace Jeebs.Linq_Tests
 			);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(v0 + v1 + v2 + v3, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(v0 + v1 + v2 + v3, some);
 		}
 
 		[Fact]
@@ -94,8 +94,8 @@ namespace Jeebs.Linq_Tests
 						 select a + b + c;
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<InvalidIntegerMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(none);
 		}
 
 		[Fact]
@@ -117,8 +117,8 @@ namespace Jeebs.Linq_Tests
 			);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<InvalidIntegerMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(none);
 		}
 
 		[Fact]
@@ -140,8 +140,8 @@ namespace Jeebs.Linq_Tests
 			);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<InvalidIntegerMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(none);
 		}
 
 		public record InvalidIntegerMsg : IMsg { }

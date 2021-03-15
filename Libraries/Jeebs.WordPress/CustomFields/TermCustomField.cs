@@ -19,7 +19,7 @@ namespace Jeebs.WordPress
 		protected TermCustomField(string key, bool isRequired = false) : base(key, new Term(), isRequired) { }
 
 		/// <inheritdoc/>
-		public override async Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta)
 		{
 			// First, get the Term ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -32,14 +32,14 @@ namespace Jeebs.WordPress
 			{
 				if (IsRequired)
 				{
-					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key));
+					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 				}
 
-				return False;
+				return False.AsTask;
 			}
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
-			return await Return(ValueStr)
+			return Return(ValueStr)
 				.Bind(
 					parseTermId
 				)
@@ -50,7 +50,8 @@ namespace Jeebs.WordPress
 					x => x.Single<Term>(tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr))
 				)
 				.MapAsync(
-					hydrate
+					hydrate,
+					DefaultHandler
 				);
 
 			//
@@ -69,13 +70,13 @@ namespace Jeebs.WordPress
 			//
 			// Get the Term by ID
 			//
-			async Task<Option<List<Term>>> getTerms(long termId)
+			Task<Option<List<Term>>> getTerms(long termId)
 			{
 				// Create new query
 				using var w = db.GetQueryWrapper();
 
 				// Get matching terms
-				return await w.QueryTaxonomyAsync<Term>(modify: opt => opt.Id = termId);
+				return w.QueryTaxonomyAsync<Term>(modify: opt => opt.Id = termId);
 			}
 
 			//

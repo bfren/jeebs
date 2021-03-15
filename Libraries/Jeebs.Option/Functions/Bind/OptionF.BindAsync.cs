@@ -9,23 +9,23 @@ namespace F
 {
 	public static partial class OptionF
 	{
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
-		public static Task<Option<U>> BindAsync<T, U>(Option<T> option, Func<T, Task<Option<U>>> bind, Handler? handler) =>
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
+		public static Task<Option<U>> BindAsync<T, U>(Option<T> option, Func<T, Task<Option<U>>> bind) =>
 			CatchAsync(() =>
 				Switch(
 					option,
 					some: v => bind(v),
 					none: r => new None<U>(r).AsTask
 				),
-				handler
+				DefaultHandler
 			);
 
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
-		public static async Task<Option<U>> BindAsync<T, U>(Task<Option<T>> option, Func<T, Task<Option<U>>> bind, Handler? handler) =>
-			await BindAsync(await option, bind, handler);
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
+		public static async Task<Option<U>> BindAsync<T, U>(Task<Option<T>> option, Func<T, Task<Option<U>>> bind) =>
+			await BindAsync(await option, bind);
 
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
-		public static Task<Option<T>> BindAsync<T>(Func<Task<Option<T>>> bind, Handler? handler) =>
-			BindAsync(True, _ => bind(), handler);
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
+		public static Task<Option<T>> BindAsync<T>(Func<Task<Option<T>>> bind) =>
+			BindAsync(True, _ => bind());
 	}
 }

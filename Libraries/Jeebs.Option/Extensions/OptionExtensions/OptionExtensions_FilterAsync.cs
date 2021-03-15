@@ -12,12 +12,12 @@ namespace Jeebs
 	/// </summary>
 	public static class OptionExtensions_FilterAsync
 	{
-		/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}}, Handler?)"/>
-		public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, bool> predicate, Handler? handler = null) =>
-			F.OptionF.FilterAsync(@this, x => Task.FromResult(predicate(x)), handler);
+		/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
+		public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, bool> predicate) =>
+			F.OptionF.FilterAsync(@this, x => Task.FromResult(predicate(x)));
 
-		/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}}, Handler?)"/>
-		public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, Task<bool>> predicate, Handler? handler = null) =>
-			F.OptionF.FilterAsync(@this, predicate, handler);
+		/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
+		public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, Task<bool>> predicate) =>
+			F.OptionF.FilterAsync(@this, predicate);
 	}
 }

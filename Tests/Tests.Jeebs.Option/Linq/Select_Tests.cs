@@ -23,10 +23,10 @@ namespace Jeebs.Linq_Tests
 					 select a ^ 2;
 
 			// Assert
-			var s0 = Assert.IsType<Some<int>>(r0);
-			Assert.Equal(value ^ 2, s0.Value);
-			var s1 = Assert.IsType<Some<int>>(r1);
-			Assert.Equal(value ^ 2, s1.Value);
+			var s0 = r0.AssertSome();
+			Assert.Equal(value ^ 2, s0);
+			var s1 = r1.AssertSome();
+			Assert.Equal(value ^ 2, s1);
 		}
 
 		[Fact]
@@ -54,18 +54,18 @@ namespace Jeebs.Linq_Tests
 			);
 
 			// Assert
-			var s0 = Assert.IsType<Some<int>>(r0);
-			Assert.Equal(value ^ 2, s0.Value);
-			var s1 = Assert.IsType<Some<int>>(r1);
-			Assert.Equal(value ^ 2, s1.Value);
-			var s2 = Assert.IsType<Some<int>>(r2);
-			Assert.Equal(value ^ 2, s2.Value);
-			var s3 = Assert.IsType<Some<int>>(r3);
-			Assert.Equal(value ^ 2, s3.Value);
-			var s4 = Assert.IsType<Some<int>>(r4);
-			Assert.Equal(value ^ 2, s4.Value);
-			var s5 = Assert.IsType<Some<int>>(r5);
-			Assert.Equal(value ^ 2, s5.Value);
+			var s0 = r0.AssertSome();
+			Assert.Equal(value ^ 2, s0);
+			var s1 = r1.AssertSome();
+			Assert.Equal(value ^ 2, s1);
+			var s2 = r2.AssertSome();
+			Assert.Equal(value ^ 2, s2);
+			var s3 = r3.AssertSome();
+			Assert.Equal(value ^ 2, s3);
+			var s4 = r4.AssertSome();
+			Assert.Equal(value ^ 2, s4);
+			var s5 = r5.AssertSome();
+			Assert.Equal(value ^ 2, s5);
 		}
 
 		[Fact]
@@ -80,10 +80,10 @@ namespace Jeebs.Linq_Tests
 					 select a ^ 2;
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<InvalidIntegerMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<InvalidIntegerMsg>(n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n1);
 		}
 
 		[Fact]
@@ -110,18 +110,18 @@ namespace Jeebs.Linq_Tests
 			);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<InvalidIntegerMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<InvalidIntegerMsg>(n1.Reason);
-			var n2 = Assert.IsType<None<int>>(r2);
-			Assert.IsType<InvalidIntegerMsg>(n2.Reason);
-			var n3 = Assert.IsType<None<int>>(r3);
-			Assert.IsType<InvalidIntegerMsg>(n3.Reason);
-			var n4 = Assert.IsType<None<int>>(r4);
-			Assert.IsType<InvalidIntegerMsg>(n4.Reason);
-			var n5 = Assert.IsType<None<int>>(r5);
-			Assert.IsType<InvalidIntegerMsg>(n5.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n1);
+			var n2 = r2.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n2);
+			var n3 = r3.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n3);
+			var n4 = r4.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n4);
+			var n5 = r5.AssertNone();
+			Assert.IsType<InvalidIntegerMsg>(n5);
 		}
 
 		public record InvalidIntegerMsg : IMsg { }

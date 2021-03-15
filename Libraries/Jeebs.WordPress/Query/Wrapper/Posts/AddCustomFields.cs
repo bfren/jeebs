@@ -18,7 +18,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="posts">Posts</param>
-		private async Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(TList posts)
+		private Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
@@ -26,21 +26,20 @@ namespace Jeebs.WordPress
 			var fields = GetCustomFields<TModel>();
 			if (fields.Count == 0)
 			{
-				return posts;
+				return Return(posts).AsTask;
 			}
 
 			// Meta dictionary is required
 			return GetMetaDictionaryInfo<TModel>() switch
 			{
 				Some<Meta<TModel>> meta when fields.Count > 0 =>
-					await Return(posts)
+					Return(posts)
 						.BindAsync(
-							x => hydrateAsync(x, meta.Value, fields),
-							e => new Msg.AddCustomFieldsExceptionMsg<TModel>(e)
+							x => hydrateAsync(x, meta.Value, fields)
 						),
 
 				_ =>
-					None<TList, Msg.MetaDictionaryNotFoundMsg<TModel>>()
+					None<TList, Msg.MetaDictionaryNotFoundMsg<TModel>>().AsTask
 			};
 
 			//

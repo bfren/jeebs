@@ -13,7 +13,7 @@ namespace Jeebs
 			F.OptionF.Return(@this);
 
 		/// <inheritdoc cref="F.OptionF.Return{T}(T, bool)"/>
-		public static Option<T> Return<T>(this T @this, bool allowNull) =>
+		public static Option<T?> Return<T>(this T @this, bool allowNull) =>
 			F.OptionF.Return(@this, allowNull);
 	}
 }

@@ -51,23 +51,34 @@ namespace Jeebs.Data.Mapping
 			Func<string, object, IDbTransaction, Task<T>> execute
 		)
 			where T : class, IEntity =>
-			Return(id)
-				.BindAsync<T>(
-					async id =>
-					{
-						// Build query
-						var query = w.Adapter.RetrieveSingleById<T>();
-						w.Log.Message(new Msg.RetrieveQueryMsg<T>(method, query, new { id }));
-
-						// Execute
-						return await execute(query, new { id }, w.Transaction).ConfigureAwait(false);
-					},
-					e => new Msg.RetrieveExceptionMsg<T>(method, id, e)
-				);
+			Map(
+				() => w.Adapter.RetrieveSingleById<T>(),
+				e => new Msg.GetRetrieveQueryExceptionMsg<T>(method, id, e)
+			)
+			.AuditSwitch(
+				some: x => w.Log.Message(new Msg.AuditRetrieveQueryMsg<T>(method, x, new { id }))
+			)
+			.MapAsync(
+				x => execute(x, new { id }, w.Transaction),
+				e => new Msg.RetrieveExceptionMsg<T>(method, id, e)
+			);
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
+			/// <summary>Error getting retrieve query</summary>
+			/// <typeparam name="T">Entity type</typeparam>
+			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
+			/// <param name="Id">Entity ID being retrieved</param>
+			/// <param name="Exception">Caught exception</param>
+			public sealed record GetRetrieveQueryExceptionMsg<T>(string Method, long Id, Exception Exception) :
+				ExceptionMsg(Exception, "{Method} {Id}")
+			{
+				/// <inheritdoc/>
+				public override Func<object[]> Args =>
+					() => new object[] { Method, Id };
+			}
+
 			/// <summary>Error retrieving entity</summary>
 			/// <typeparam name="T">Entity type</typeparam>
 			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
@@ -85,7 +96,7 @@ namespace Jeebs.Data.Mapping
 			/// <param name="Method">The name of the UnitOfWork extension method executing this query</param>
 			/// <param name="Query">Query text</param>
 			/// <param name="Parameters">Query parameters</param>
-			public sealed record RetrieveQueryMsg<T>(string Method, string Query, object? Parameters) :
+			public sealed record AuditRetrieveQueryMsg<T>(string Method, string Query, object? Parameters) :
 				LogMsg(LogLevel.Debug, "{Method} {Query} ({@Parameters})")
 			{
 				/// <inheritdoc/>

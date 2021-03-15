@@ -21,7 +21,7 @@ namespace Jeebs.WordPress
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
 		/// <param name="posts">Posts</param>
-		private async Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(TList posts)
+		private Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(TList posts)
 			where TList : List<TModel>
 			where TModel : IEntity
 		{
@@ -29,15 +29,14 @@ namespace Jeebs.WordPress
 			var termLists = GetTermLists<TModel>();
 			if (termLists.Count == 0)
 			{
-				return posts;
+				return Return(posts).AsTask;
 			}
 
-			return await Return(posts)
+			return Return(posts)
 				.BindAsync(
-					x => getTermsAsync(x, termLists),
-					e => new Msg.GetTermsExceptionMsg<TModel>(e)
+					x => getTermsAsync(x, termLists)
 				)
-				.BindAsync(
+				.MapAsync(
 					x => addTerms(x, termLists),
 					e => new Msg.AddTaxonomiesExceptionMsg<TModel>(e)
 				);
@@ -47,18 +46,23 @@ namespace Jeebs.WordPress
 			//
 			Task<Option<(TList, List<Term>)>> getTermsAsync(TList posts, List<PropertyInfo> termLists)
 			{
-				return Map(getOptions)
+				return
+					Map(
+						getOptions,
+						DefaultHandler
+					)
 					.Bind(
 						addTaxonomies
 					)
-					.Map(
+					.Bind(
 						getQuery
 					)
 					.BindAsync(
 						getTaxonomies
 					)
-					.BindAsync(
-						createTuple
+					.MapAsync(
+						createTuple,
+						DefaultHandler
 					);
 
 				// Get query options
@@ -89,26 +93,29 @@ namespace Jeebs.WordPress
 				}
 
 				// Build query
-				IQuery<Term> getQuery(QueryPostsTaxonomy.Options options) =>
-					StartNewQuery()
-						.WithModel<Term>()
-						.WithOptions(options)
-						.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
-						.GetQuery();
+				Option<IQuery<Term>> getQuery(QueryPostsTaxonomy.Options options) =>
+					Map(
+						() => StartNewQuery()
+								.WithModel<Term>()
+								.WithOptions(options)
+								.WithParts(new QueryPostsTaxonomy.Builder<Term>(db))
+								.GetQuery(),
+						e => new Msg.GetTaxonomyQueryExceptionMsg<TModel>(e)
+					);
 
 				// Execute query to get taxonomies
-				async Task<Option<List<Term>>> getTaxonomies(IQuery<Term> query) =>
-					await query.ExecuteQueryAsync();
+				Task<Option<List<Term>>> getTaxonomies(IQuery<Term> query) =>
+					query.ExecuteQueryAsync();
 
 				// Create tuple of posts and taxonomies
-				Option<(TList, List<Term>)> createTuple(List<Term> meta) =>
+				(TList, List<Term>) createTuple(List<Term> meta) =>
 					(posts, meta);
 			}
 
 			//
 			//	Add terms
 			//
-			static Option<TList> addTerms((TList, List<Term>) lists, List<PropertyInfo> termLists)
+			static TList addTerms((TList, List<Term>) lists, List<PropertyInfo> termLists)
 			{
 				var (posts, terms) = lists;
 
@@ -165,6 +172,11 @@ namespace Jeebs.WordPress
 			/// <typeparam name="T">Post Model type</typeparam>
 			/// <param name="Exception">Exception object</param>
 			public sealed record GetTermsExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>An exception occured while getting terms for posts</summary>
+			/// <typeparam name="T">Post Model type</typeparam>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetTaxonomyQueryExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>The taxonomy being added has not been registered with <see cref="IWp{TConfig}"/></summary>
 			/// <param name="Value">Taxonomy</param>

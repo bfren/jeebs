@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,13 +30,15 @@ namespace Jeebs.WordPress
 			// Run query
 			return Return(fileIds)
 				.Map(
-					getQuery
+					getQuery,
+					e => new Msg.GetAttachedFilesQueryExceptionMsg(e)
 				)
 				.BindAsync(
 					getAttachedFiles
 				)
 				.MapAsync(
-					x => x.ToList()
+					x => x.ToList(),
+					DefaultHandler
 				);
 
 			// Build custom query
@@ -59,6 +62,14 @@ namespace Jeebs.WordPress
 				// Execute query
 				return w.QueryAsync<T>(query);
 			}
+		}
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Unable to get attached files query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetAttachedFilesQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

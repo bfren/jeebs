@@ -1,10 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Linq;
+using static F.OptionF;
 
 namespace Jeebs.Data.Querying
 {
@@ -30,90 +32,91 @@ namespace Jeebs.Data.Querying
 			(UnitOfWork, Parts) = (unitOfWork, parts);
 
 		/// <inheritdoc/>
-		public async Task<Option<long>> GetCountAsync()
-		{
-			// Store original SELECT
-			var originalSelect = Parts.Select;
-
-			// Alter SELECT
-			Parts.Select = UnitOfWork.Adapter.GetSelectCount();
-
-			// Get count query
-			var countQuery = UnitOfWork.Adapter.Retrieve(Parts);
-
-			// Execute
-			var count = await UnitOfWork.ExecuteScalarAsync<long>(countQuery, Parts.Parameters).ConfigureAwait(false);
-
-			// Restore SELECT and return
-			Parts.Select = originalSelect;
-			return count;
-		}
+		public Task<Option<long>> GetCountAsync() =>
+			Map(
+				() => UnitOfWork.Adapter.RetrieveCount(Parts),
+				e => new Msg.GetRetrieveCountQueryExceptionMsg(e)
+			)
+			.BindAsync(
+				x => UnitOfWork.ExecuteScalarAsync<long>(x)
+			);
 
 		/// <inheritdoc/>
-		public Task<Option<List<T>>> ExecuteQueryAsync()
-		{
-			return from items in getQuery().BindAsync(getItems)
-				   select items.ToList();
-
-			// Get query
-			Option<string> getQuery() =>
-				UnitOfWork.Adapter.Retrieve(Parts);
-
-			// Get items
-			async Task<Option<IEnumerable<T>>> getItems(string query) =>
-				await UnitOfWork.QueryAsync<T>(query, Parts.Parameters).ConfigureAwait(false);
-		}
-
-		/// <inheritdoc/>
-		public Task<Option<IPagedList<T>>> ExecuteQueryAsync(long page)
-		{
-			// Run chain
-			return GetCountAsync()
-				.BindAsync(
-					getPagingValues
-				)
-				.BindAsync(
-					getItems
-				);
-
-			// Get paging values
-			Option<PagingValues> getPagingValues(long count) =>
-				new PagingValues(count, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer);
-
-			// Get the items
-			Task<Option<IPagedList<T>>> getItems(PagingValues paging)
-			{
-				// Set the OFFSET and LIMIT values based on the calculated paging values
-				Parts.Offset = (paging.Page - 1) * paging.ItemsPer;
-				Parts.Limit = paging.ItemsPer;
-
-				// Get query
-				var query = UnitOfWork.Adapter.Retrieve(Parts);
-
-				// Execute and return
-				return UnitOfWork
-					.QueryAsync<T>(query, Parts.Parameters)
-					.MapAsync(
-						x => (IPagedList<T>)new PagedList<T>(paging, x)
-					);
-			}
-		}
+		public Task<Option<List<T>>> ExecuteQueryAsync() =>
+			Map(
+				() => UnitOfWork.Adapter.Retrieve(Parts),
+				e => new Msg.GetRetrieveQueryExceptionMsg(e)
+			)
+			.BindAsync(
+				x => UnitOfWork.QueryAsync<T>(x, Parts.Parameters)
+			)
+			.MapAsync(
+				x => x.ToList(),
+				DefaultHandler
+			);
 
 		/// <inheritdoc/>
-		public Task<Option<T>> ExecuteScalarAsync()
+		public Task<Option<IPagedList<T>>> ExecuteQueryAsync(long page) =>
+			GetCountAsync()
+			.MapAsync(
+				x => new PagingValues(x, page, Parts.Limit ?? Defaults.PagingValues.ItemsPer),
+				e => new Msg.CreatePagingValuesExceptionMsg(e)
+			)
+			.BindAsync(
+				pagingValues =>
+				{
+					// Set the OFFSET and LIMIT values based on the calculated paging values
+					Parts.Offset = (pagingValues.Page - 1) * pagingValues.ItemsPer;
+					Parts.Limit = pagingValues.ItemsPer;
+
+					// Execute and return
+					return
+						Map(
+							() => UnitOfWork.Adapter.Retrieve(Parts),
+							e => new Msg.GetPagedRetrieveQueryExceptionMsg(e)
+						)
+						.BindAsync(
+							x => UnitOfWork.QueryAsync<T>(x, Parts.Parameters)
+						)
+						.MapAsync(
+							x => (IPagedList<T>)new PagedList<T>(pagingValues, x),
+							DefaultHandler
+						);
+				}
+			);
+
+		/// <inheritdoc/>
+		public Task<Option<T>> ExecuteScalarAsync() =>
+			Map(
+				() => UnitOfWork.Adapter.Retrieve(Parts),
+				e => new Msg.GetScalarQueryExceptionMsg(e)
+			)
+			.BindAsync(
+				x => UnitOfWork.ExecuteScalarAsync<T>(x, Parts.Parameters)
+			);
+
+		/// <summary>Messages</summary>
+		public static class Msg
 		{
-			return getQuery()
-				.BindAsync(
-					getValue
-				);
+			/// <summary>Unable to get count query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetRetrieveCountQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			// Get query
-			Option<string> getQuery() =>
-				UnitOfWork.Adapter.Retrieve(Parts);
+			/// <summary>Unable to get retrieve query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			// Execute query
-			Task<Option<T>> getValue(string query) =>
-				UnitOfWork.ExecuteScalarAsync<T>(query, Parts.Parameters);
+			/// <summary>Unable to get paged retrieve query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetPagedRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Unable to get scalar query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetScalarQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Unable to create PagingValues</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record CreatePagingValuesExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

@@ -201,6 +201,9 @@ namespace Jeebs.Data
 		public abstract string Retrieve(IQueryParts parts);
 
 		/// <inheritdoc/>
+		public abstract string RetrieveCount(IQueryParts parts);
+
+		/// <inheritdoc/>
 		public abstract string RetrieveSingleById(string table, List<string> columns, string idColumn, string idAlias = nameof(IEntity.Id));
 
 		/// <inheritdoc/>

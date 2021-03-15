@@ -193,44 +193,36 @@ namespace Jeebs
 
 		#region Bind
 
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
-		public Option<U> Bind<U>(Func<T, Option<U>> bind, Handler? handler = null) =>
-			F.OptionF.Bind(this, bind, handler);
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
+		public Option<U> Bind<U>(Func<T, Option<U>> bind) =>
+			F.OptionF.Bind(this, bind);
 
-		/// <inheritdoc cref="BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}}, Handler?)"/>
-		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind, Handler? handler = null) =>
-			F.OptionF.BindAsync(this, bind, handler);
+		/// <inheritdoc cref="BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}})"/>
+		public Task<Option<U>> BindAsync<U>(Func<T, Task<Option<U>>> bind) =>
+			F.OptionF.BindAsync(this, bind);
 
 		#endregion
 
 		#region Filter
 
-		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool}, Handler?)"/>
-		public Option<T> Filter(Func<T, bool> predicate, Handler? handler = null) =>
-			F.OptionF.Filter(this, predicate, handler);
+		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool})"/>
+		public Option<T> Filter(Func<T, bool> predicate) =>
+			F.OptionF.Filter(this, predicate);
 
-		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}}, Handler?)"/>
-		public Task<Option<T>> FilterAsync(Func<T, Task<bool>> predicate, Handler? handler = null) =>
-			F.OptionF.FilterAsync(this, predicate, handler);
+		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
+		public Task<Option<T>> FilterAsync(Func<T, Task<bool>> predicate) =>
+			F.OptionF.FilterAsync(this, predicate);
 
 		#endregion
 
 		#region Map
 
-		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
-		public Option<U> Map<U>(Func<T, U> map) =>
-			F.OptionF.Map(this, map, null);
-
-		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
-		public Option<U> Map<U>(Func<T, U> map, Handler? handler) =>
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler)"/>
+		public Option<U> Map<U>(Func<T, U> map, Handler handler) =>
 			F.OptionF.Map(this, map, handler);
 
-		/// <inheritdoc cref="MapAsync{T, U}(Option{T}, Func{T, Task{U}}, Handler?)"/>
-		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map) =>
-			F.OptionF.MapAsync(this, map, null);
-
-		/// <inheritdoc cref="MapAsync{T, U}(Option{T}, Func{T, Task{U}}, Handler?)"/>
-		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Handler? handler) =>
+		/// <inheritdoc cref="MapAsync{T, U}(Option{T}, Func{T, Task{U}}, Handler)"/>
+		public Task<Option<U>> MapAsync<U>(Func<T, Task<U>> map, Handler handler) =>
 			F.OptionF.MapAsync(this, map, handler);
 
 		#endregion

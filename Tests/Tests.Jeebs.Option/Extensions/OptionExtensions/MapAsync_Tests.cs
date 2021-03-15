@@ -28,8 +28,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.MapAsync(asyncThrow, handler);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 			handler.Received(2).Invoke(exception);
 		}
 
@@ -42,12 +42,12 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
-			var r1 = await task.MapAsync(map, null);
+			var r0 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), DefaultHandler);
+			var r1 = await task.MapAsync(map, DefaultHandler);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 		}
 
 		[Fact]
@@ -60,14 +60,14 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
-			var r1 = await task.MapAsync(map, null);
+			var r0 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), DefaultHandler);
+			var r1 = await task.MapAsync(map, DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.Same(msg, n0);
+			var n1 = r1.AssertNone();
+			Assert.Same(msg, n1);
 		}
 
 		[Fact]
@@ -80,8 +80,8 @@ namespace Jeebs.OptionExtensions_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await task.MapAsync(v => map(v).GetAwaiter().GetResult(), null);
-			await task.MapAsync(map, null);
+			await task.MapAsync(v => map(v).GetAwaiter().GetResult(), DefaultHandler);
+			await task.MapAsync(map, DefaultHandler);
 
 			// Assert
 			await map.Received(2).Invoke(value);

@@ -17,6 +17,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Option\Jeebs.Option.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
   </ItemGroup>

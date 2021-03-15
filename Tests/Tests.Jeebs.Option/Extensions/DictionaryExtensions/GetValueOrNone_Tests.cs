@@ -20,8 +20,8 @@ namespace Jeebs.DictionaryExtensions_Tests
 			var result = dictionary.GetValueOrNone(F.Rnd.Int);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<DictionaryIsEmptyMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DictionaryIsEmptyMsg>(none);
 		}
 
 		[Theory]
@@ -38,8 +38,8 @@ namespace Jeebs.DictionaryExtensions_Tests
 			var result = dictionary.GetValueOrNone(input);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<KeyCannotBeNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<KeyCannotBeNullMsg>(none);
 		}
 
 		[Fact]
@@ -56,8 +56,8 @@ namespace Jeebs.DictionaryExtensions_Tests
 			var result = dictionary.GetValueOrNone(key);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			var msg = Assert.IsType<KeyDoesNotExistMsg<string>>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<KeyDoesNotExistMsg<string>>(none);
 			Assert.Equal(key, msg.Key);
 		}
 
@@ -76,8 +76,8 @@ namespace Jeebs.DictionaryExtensions_Tests
 			var result = dictionary.GetValueOrNone(key);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<NullValueMsg<int>>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<NullValueMsg<int>>(none);
 			Assert.Equal(key, msg.Key);
 		}
 
@@ -96,8 +96,8 @@ namespace Jeebs.DictionaryExtensions_Tests
 			var result = dictionary.GetValueOrNone(key);
 
 			// Assert
-			var some = Assert.IsType<Some<string>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }

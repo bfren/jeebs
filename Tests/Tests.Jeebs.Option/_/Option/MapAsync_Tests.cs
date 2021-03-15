@@ -21,16 +21,12 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.MapAsync(map);
-			var r1 = await option.MapAsync(map, null);
+			var result = await option.MapAsync(map, DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
-			Assert.IsType<UnknownOptionException>(m0.Exception);
-			var n1 = Assert.IsType<None<string>>(r1);
-			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
-			Assert.IsType<UnknownOptionException>(m1.Exception);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
+			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
@@ -46,7 +42,7 @@ namespace Jeebs.Option_Tests
 			var result = await option.MapAsync(throwFunc, handler);
 
 			// Assert
-			Assert.IsType<None<int>>(result);
+			result.AssertNone();
 			handler.Received().Invoke(exception);
 		}
 
@@ -58,12 +54,10 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.MapAsync(map);
-			var r1 = await option.MapAsync(map, null);
+			var result = await option.MapAsync(map, DefaultHandler);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -75,14 +69,11 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await option.MapAsync(map);
-			var r1 = await option.MapAsync(map, null);
+			var result = await option.MapAsync(map, DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
+			var none = result.AssertNone();
+			Assert.Same(msg, none);
 		}
 
 		[Fact]
@@ -94,11 +85,10 @@ namespace Jeebs.Option_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await option.MapAsync(map);
-			await option.MapAsync(map, null);
+			await option.MapAsync(map, DefaultHandler);
 
 			// Assert
-			await map.Received(2).Invoke(value);
+			await map.Received().Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

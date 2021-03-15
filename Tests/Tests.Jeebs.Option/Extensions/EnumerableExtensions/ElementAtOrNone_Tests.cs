@@ -20,8 +20,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.ElementAtOrNone(0);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<ListIsEmptyMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ListIsEmptyMsg>(none);
 		}
 
 		[Fact]
@@ -34,8 +34,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.ElementAtOrNone(4);
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<ElementAtIsNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ElementAtIsNullMsg>(none);
 		}
 
 		[Fact]
@@ -49,8 +49,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.ElementAtOrNone(1);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }

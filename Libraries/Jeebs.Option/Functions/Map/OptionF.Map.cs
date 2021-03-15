@@ -16,8 +16,8 @@ namespace F
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="option">Input option</param>
 		/// <param name="map">Mapping function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
-		public static Option<U> Map<T, U>(Option<T> option, Func<T, U> map, Handler? handler) =>
+		/// <param name="handler">Exception handler</param>
+		public static Option<U> Map<T, U>(Option<T> option, Func<T, U> map, Handler handler) =>
 			Catch(() =>
 				Switch(
 					option,
@@ -27,11 +27,7 @@ namespace F
 				handler
 			);
 
-		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
-		public static Option<T> Map<T>(Func<T> map) =>
-			Map(True, _ => map(), null);
-
-		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler?)"/>
+		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler)"/>
 		public static Option<T> Map<T>(Func<T> map, Handler handler) =>
 			Map(True, _ => map(), handler);
 	}

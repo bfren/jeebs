@@ -18,8 +18,7 @@ namespace F.OptionF_Tests
 			var result = True;
 
 			// Assert
-			var some = Assert.IsType<Some<bool>>(result);
-			Assert.True(some.Value);
+			result.AssertTrue();
 		}
 	}
 }

@@ -21,15 +21,15 @@ namespace F.OptionF_Tests
 			var option = new FakeOption();
 
 			// Act
-			var r0 = await MapAsync(option, Substitute.For<Func<int, Task<string>>>(), null);
-			var r1 = await MapAsync(option.AsTask, Substitute.For<Func<int, Task<string>>>(), null);
+			var r0 = await MapAsync(option, Substitute.For<Func<int, Task<string>>>(), DefaultHandler);
+			var r1 = await MapAsync(option.AsTask, Substitute.For<Func<int, Task<string>>>(), DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
+			var n0 = r0.AssertNone();
+			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0);
 			Assert.IsType<UnknownOptionException>(m0.Exception);
-			var n1 = Assert.IsType<None<string>>(r1);
-			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
+			var n1 = r1.AssertNone();
+			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1);
 			Assert.IsType<UnknownOptionException>(m1.Exception);
 		}
 
@@ -42,13 +42,14 @@ namespace F.OptionF_Tests
 			Task<int> throwFunc(string _) => throw exception;
 
 			// Act
-			var r0 = await MapAsync(option, throwFunc, null);
-			var r1 = await MapAsync(() => throwFunc(Rnd.Str), null);
+			var r0 = await MapAsync(option, throwFunc, DefaultHandler);
+			var r1 = await MapAsync(() => throwFunc(Rnd.Str), DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n1);
 		}
 
 		[Fact]
@@ -66,9 +67,9 @@ namespace F.OptionF_Tests
 			var r2 = await MapAsync(() => throwFunc(Rnd.Str), handler);
 
 			// Assert
-			Assert.IsType<None<int>>(r0);
-			Assert.IsType<None<int>>(r1);
-			Assert.IsType<None<int>>(r2);
+			r0.AssertNone();
+			r1.AssertNone();
+			r2.AssertNone();
 			handler.Received(3).Invoke(exception);
 		}
 
@@ -80,12 +81,12 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await MapAsync(option, map, null);
-			var r1 = await MapAsync(option.AsTask, map, null);
+			var r0 = await MapAsync(option, map, DefaultHandler);
+			var r1 = await MapAsync(option.AsTask, map, DefaultHandler);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 		}
 
 		[Fact]
@@ -97,14 +98,14 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await MapAsync(option, map, Substitute.For<Handler>());
-			var r1 = await MapAsync(option.AsTask, map, null);
+			var r0 = await MapAsync(option, map, DefaultHandler);
+			var r1 = await MapAsync(option.AsTask, map, DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.Same(msg, n0);
+			var n1 = r1.AssertNone();
+			Assert.Same(msg, n1);
 		}
 
 		[Fact]
@@ -116,9 +117,9 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await MapAsync(option, map, null);
-			await MapAsync(option.AsTask, map, null);
-			await MapAsync(() => map(value), null);
+			await MapAsync(option, map, DefaultHandler);
+			await MapAsync(option.AsTask, map, DefaultHandler);
+			await MapAsync(() => map(value), DefaultHandler);
 
 			// Assert
 			await map.Received(3).Invoke(value);

@@ -12,29 +12,18 @@ namespace F
 		/// Catch any unhandled exceptions in the chain
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="chain">The chain to execute</param>
-		/// <param name="handler">[Optional] Unhandled exception handler</param>
-		public static Option<T> Catch<T>(Func<Option<T>> chain, Handler? handler = null)
+		/// <param name="f">The chain to execute</param>
+		/// <param name="handler">Caught exception handler</param>
+		internal static Option<T> Catch<T>(Func<Option<T>> f, Handler handler)
 		{
 			try
 			{
-				return chain();
-			}
-			catch (Exception e) when (handler != null)
-			{
-				return None<T>(handler(e));
+				return f();
 			}
 			catch (Exception e)
 			{
-				return None<T>(new Msg.UnhandledExceptionMsg(e));
+				return None<T>(handler(e));
 			}
-		}
-
-		/// <summary>Messages</summary>
-		public static partial class Msg
-		{
-			/// <summary>Unhandled exception</summary>
-			public sealed record UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
 		}
 	}
 }

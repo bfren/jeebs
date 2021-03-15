@@ -20,16 +20,16 @@ namespace F.OptionF_Tests
 			var option = new FakeOption();
 
 			// Act
-			var result = Filter(option, Substitute.For<Func<int, bool>>(), null);
+			var result = Filter(option, Substitute.For<Func<int, bool>>());
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
 		[Fact]
-		public void Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public void Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = Return(Rnd.Str);
@@ -37,28 +37,11 @@ namespace F.OptionF_Tests
 			bool throwFunc(string _) => throw exception;
 
 			// Act
-			var result = Filter(option, throwFunc, null);
+			var result = Filter(option, throwFunc);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<UnhandledExceptionMsg>(none.Reason);
-		}
-
-		[Fact]
-		public void Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
-		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			bool throwFunc(string _) => throw exception;
-
-			// Act
-			var result = Filter(option, throwFunc, handler);
-
-			// Assert
-			Assert.IsType<None<string>>(result);
-			handler.Received().Invoke(exception);
+			var none = result.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -71,11 +54,11 @@ namespace F.OptionF_Tests
 			predicate.Invoke(Arg.Any<int>()).Returns(true);
 
 			// Act
-			var result = Filter(option, predicate, null);
+			var result = Filter(option, predicate);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 
 		[Fact]
@@ -88,11 +71,11 @@ namespace F.OptionF_Tests
 			predicate.Invoke(Arg.Any<int>()).Returns(false);
 
 			// Act
-			var result = Filter(option, predicate, null);
+			var result = Filter(option, predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<FilterPredicateWasFalseMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<FilterPredicateWasFalseMsg>(none);
 		}
 
 		[Fact]
@@ -104,11 +87,11 @@ namespace F.OptionF_Tests
 			var predicate = Substitute.For<Func<int, bool>>();
 
 			// Act
-			var result = Filter(option, predicate, null);
+			var result = Filter(option, predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.Same(reason, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(reason, none);
 			predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
 		}
 

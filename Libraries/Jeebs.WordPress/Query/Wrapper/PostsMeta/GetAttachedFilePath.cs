@@ -16,25 +16,25 @@ namespace Jeebs.WordPress
 		/// </summary>
 		/// <param name="postId">Post ID</param>
 		/// <param name="uploadsPath">Full path to wp-uploads directory on server</param>
-		public async Task<Option<string>> GetAttachedFilePathAsync(long postId, string uploadsPath)
+		public Task<Option<string>> GetAttachedFilePathAsync(long postId, string uploadsPath)
 		{
-			return await Return(postId)
-				.Map(
+			return Return(postId)
+				.Bind(
 					getQuery
 				)
 				.BindAsync(
-					getAttachedFiles<AttachedFileMetaValue>,
-					e => new Msg.GetAttachedFilesExceptionMsg(e)
+					getAttachedFiles<AttachedFileMetaValue>
 				)
 				.UnwrapAsync(
 					x => x.Single<AttachedFileMetaValue>(tooMany: () => new Msg.MultipleAttachedFilesFoundMsg(postId))
 				)
 				.MapAsync(
-					addUploadsPath
+					addUploadsPath,
+					DefaultHandler
 				);
 
 			// Get query
-			IQuery<AttachedFileMetaValue> getQuery(long postId) =>
+			Option<IQuery<AttachedFileMetaValue>> getQuery(long postId) =>
 				GetPostsMetaQuery<AttachedFileMetaValue>(opt =>
 				{
 					opt.PostId = postId;
@@ -42,8 +42,8 @@ namespace Jeebs.WordPress
 				});
 
 			// Execute query
-			async Task<Option<List<T>>> getAttachedFiles<T>(IQuery<T> query) =>
-				await query.ExecuteQueryAsync();
+			Task<Option<List<T>>> getAttachedFiles<T>(IQuery<T> query) =>
+				query.ExecuteQueryAsync();
 
 			// Add uploads path 
 			string addUploadsPath(AttachedFileMetaValue attachedFile) =>
@@ -55,6 +55,10 @@ namespace Jeebs.WordPress
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
+			/// <summary>Unable to get attached file path query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record GetAttachedFilePathQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
 			/// <summary>An exception occured while getting attached files</summary>
 			/// <param name="Exception">Exception object</param>
 			public sealed record GetAttachedFilesExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }

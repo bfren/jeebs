@@ -26,10 +26,10 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
-			var s0 = Assert.IsType<Some<int>>(r0);
-			Assert.Equal(value, s0.Value);
-			var s1 = Assert.IsType<Some<int>>(r1);
-			Assert.Equal(value, s1.Value);
+			var s0 = r0.AssertSome();
+			Assert.Equal(value, s0);
+			var s1 = r1.AssertSome();
+			Assert.Equal(value, s1);
 		}
 
 		[Fact]
@@ -46,10 +46,10 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<FilterPredicateWasFalseMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<FilterPredicateWasFalseMsg>(n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<FilterPredicateWasFalseMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<FilterPredicateWasFalseMsg>(n1);
 		}
 
 		[Fact]
@@ -66,10 +66,10 @@ namespace Jeebs.OptionExtensions_Tests
 			var r1 = await task.FilterAsync(asyncPredicate);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.Same(reason, n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.Same(reason, n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.Same(reason, n0);
+			var n1 = r1.AssertNone();
+			Assert.Same(reason, n1);
 		}
 
 		public record TestMsg : IMsg { }

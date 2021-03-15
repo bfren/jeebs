@@ -61,7 +61,9 @@ namespace Jeebs.Cryptography
 
 				// Deserialise contents and return
 				var json = Encoding.UTF8.GetString(secret);
-				return F.JsonF.Deserialise<T>(json).Map(x => new Lockable<T>(x));
+				return F.JsonF
+					.Deserialise<T>(json)
+					.Map(x => new Lockable<T>(x), DefaultHandler);
 			}
 			catch (KeyOutOfRangeException ex)
 			{

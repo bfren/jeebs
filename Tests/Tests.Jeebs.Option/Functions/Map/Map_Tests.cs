@@ -21,11 +21,11 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = Map(option, map, null);
+			var result = Map(option, map, DefaultHandler);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
 			Assert.IsType<UnknownOptionException>(msg.Exception);
 		}
 
@@ -38,14 +38,14 @@ namespace F.OptionF_Tests
 			int throwFunc() => throw exception;
 
 			// Act
-			var r0 = Map(option, _ => throwFunc(), null);
-			var r1 = Map(throwFunc);
+			var r0 = Map(option, _ => throwFunc(), DefaultHandler);
+			var r1 = Map(throwFunc, DefaultHandler);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n1);
 		}
 
 		[Fact]
@@ -62,8 +62,8 @@ namespace F.OptionF_Tests
 			var r1 = Map(throwFunc, handler);
 
 			// Assert
-			Assert.IsType<None<int>>(r0);
-			Assert.IsType<None<int>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 			handler.Received(2).Invoke(exception);
 		}
 
@@ -75,10 +75,10 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = Map(option, map, null);
+			var result = Map(option, map, DefaultHandler);
 
 			// Assert
-			Assert.IsType<None<string>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -90,11 +90,11 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = Map(option, map, null);
+			var result = Map(option, map, DefaultHandler);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.Same(msg, none.Reason);
+			var none = result.AssertNone();
+			Assert.Same(msg, none);
 		}
 
 		[Fact]
@@ -106,12 +106,11 @@ namespace F.OptionF_Tests
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
-			Map(option, map, Substitute.For<Handler>());
-			Map(() => map(value));
-			Map(() => map(value), Substitute.For<Handler>());
+			Map(option, map, DefaultHandler);
+			Map(() => map(value), DefaultHandler);
 
 			// Assert
-			map.Received(3).Invoke(value);
+			map.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

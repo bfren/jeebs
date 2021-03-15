@@ -22,20 +22,20 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await BindAsync(option, bind, null);
-			var r1 = await BindAsync(option.AsTask, bind, null);
+			var r0 = await BindAsync(option, bind);
+			var r1 = await BindAsync(option.AsTask, bind);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
+			var n0 = r0.AssertNone();
+			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0);
 			Assert.IsType<UnknownOptionException>(m0.Exception);
-			var n1 = Assert.IsType<None<string>>(r1);
-			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
+			var n1 = r1.AssertNone();
+			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1);
 			Assert.IsType<UnknownOptionException>(m1.Exception);
 		}
 
 		[Fact]
-		public async Task Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public async Task Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
 			// Arrange
 			var option = Return(Rnd.Str);
@@ -43,35 +43,17 @@ namespace F.OptionF_Tests
 			Task<Option<int>> throwFunc() => throw exception;
 
 			// Act
-			var r0 = await BindAsync(option, _ => throwFunc(), null);
-			var r1 = await BindAsync(throwFunc, null);
+			var r0 = await BindAsync(option, _ => throwFunc());
+			var r1 = await BindAsync(option.AsTask, _ => throwFunc());
+			var r2 = await BindAsync(throwFunc);
 
 			// Assert
-			var n0 = Assert.IsType<None<int>>(r0);
-			Assert.IsType<UnhandledExceptionMsg>(n0.Reason);
-			var n1 = Assert.IsType<None<int>>(r1);
-			Assert.IsType<UnhandledExceptionMsg>(n1.Reason);
-		}
-
-		[Fact]
-		public async Task Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
-		{
-			// Arrange
-			var option = Return(Rnd.Int);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			Task<Option<string>> throwFunc(int _) => throw exception;
-
-			// Act
-			var r0 = await BindAsync(option, throwFunc, handler);
-			var r1 = await BindAsync(option.AsTask, throwFunc, handler);
-			var r2 = await BindAsync(() => throwFunc(Rnd.Int), handler);
-
-			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
-			Assert.IsType<None<string>>(r2);
-			handler.Received(3).Invoke(exception);
+			var n0 = r0.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n0);
+			var n1 = r1.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n1);
+			var n2 = r2.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(n2);
 		}
 
 		[Fact]
@@ -82,12 +64,12 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await BindAsync(option, bind, null);
-			var r1 = await BindAsync(option.AsTask, bind, null);
+			var r0 = await BindAsync(option, bind);
+			var r1 = await BindAsync(option.AsTask, bind);
 
 			// Assert
-			Assert.IsType<None<string>>(r0);
-			Assert.IsType<None<string>>(r1);
+			r0.AssertNone();
+			r1.AssertNone();
 		}
 
 		[Fact]
@@ -99,14 +81,14 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			var r0 = await BindAsync(option, bind, null);
-			var r1 = await BindAsync(option.AsTask, bind, null);
+			var r0 = await BindAsync(option, bind);
+			var r1 = await BindAsync(option.AsTask, bind);
 
 			// Assert
-			var n0 = Assert.IsType<None<string>>(r0);
-			Assert.Same(msg, n0.Reason);
-			var n1 = Assert.IsType<None<string>>(r1);
-			Assert.Same(msg, n1.Reason);
+			var n0 = r0.AssertNone();
+			Assert.Same(msg, n0);
+			var n1 = r1.AssertNone();
+			Assert.Same(msg, n1);
 		}
 
 		[Fact]
@@ -118,9 +100,9 @@ namespace F.OptionF_Tests
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
-			await BindAsync(option, bind, null);
-			await BindAsync(option.AsTask, bind, null);
-			await BindAsync(() => bind(value), null);
+			await BindAsync(option, bind);
+			await BindAsync(option.AsTask, bind);
+			await BindAsync(() => bind(value));
 
 			// Assert
 			await bind.Received(3).Invoke(value);

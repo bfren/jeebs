@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using Jeebs;
 
 namespace F
@@ -13,24 +14,59 @@ namespace F
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="value">Some value</param>
-		/// <param name="allowNull">If true, <see cref="Some{T}"/> will always be returned</param>
-		public static Option<T> Return<T>(T value, bool allowNull = false) =>
-			value switch
+		public static Option<T> Return<T>(T value)
+		{
+			try
 			{
-				T x =>
-					new Some<T>(x),
+				return value switch
+				{
+					T x =>
+						new Some<T>(x), // this is the only place Some<T> is created
 
-				_ =>
-					allowNull switch
-					{
-						true =>
-							new Some<T>(value),
+					_ =>
+						None<T, Msg.AllowNullWasFalseMsg>()
 
-						false =>
-							None<T, Msg.SomeValueWasNullMsg>()
-					}
+				};
+			}
+			catch (Exception e)
+			{
+				return None<T>(DefaultHandler(e));
+			}
+		}
 
-			};
+
+		/// <summary>
+		/// Create a <see cref="Some{T}"/> Option, containing <paramref name="value"/>
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <param name="value">Some value</param>
+		/// <param name="allowNull">If true, <see cref="Some{T}"/> will always be returned</param>
+		public static Option<T?> Return<T>(T? value, bool allowNull)
+		{
+			try
+			{
+				return value switch
+				{
+					T x =>
+						new Some<T?>(x), // this is the only place Some<T> is created
+
+					_ =>
+						allowNull switch
+						{
+							true =>
+								new Some<T?>(value), // this is the only place Some<T> is created
+
+							false =>
+								None<T?, Msg.AllowNullWasFalseMsg>()
+						}
+
+				};
+			}
+			catch (Exception e)
+			{
+				return None<T?>(DefaultHandler(e));
+			}
+		}
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
@@ -39,7 +75,10 @@ namespace F
 			public sealed record PredicateWasFalseMsg : IMsg { }
 
 			/// <summary>Value was null when trying to wrap using Return</summary>
-			public sealed record SomeValueWasNullMsg : IMsg { }
+			public sealed record NullValueMsg : IMsg { }
+
+			/// <summary>Allow null was set to false when trying to return null value</summary>
+			public sealed record AllowNullWasFalseMsg : IMsg { }
 		}
 	}
 }

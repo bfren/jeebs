@@ -156,6 +156,13 @@ namespace Jeebs.Data
 		string Retrieve(IQueryParts parts);
 
 		/// <summary>
+		/// Build a query to count the number of matching records
+		/// </summary>
+		/// <param name="parts">IQueryParts</param>
+		/// <returns>SELECT COUNT query</returns>
+		string RetrieveCount(IQueryParts parts);
+
+		/// <summary>
 		/// Query to retrieve a single row by ID
 		/// </summary>
 		/// <param name="table">Table name</param>

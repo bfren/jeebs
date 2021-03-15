@@ -10,8 +10,12 @@ namespace Jeebs
 	/// </summary>
 	public static class ObjectExtensions_ReturnIf
 	{
-		/// <inheritdoc cref="F.OptionF.ReturnIf{T}(Func{bool}, T)"/>
+		/// <inheritdoc cref="F.OptionF.ReturnIf{T}(Func{bool}, Func{T}, F.OptionF.Handler){T}(Func{bool}, T)"/>
 		public static Option<T> ReturnIf<T>(this T @this, Func<bool> predicate) =>
 			F.OptionF.ReturnIf(predicate, @this);
+
+		/// <inheritdoc cref="F.OptionF.ReturnIf{T}(Func{bool}, Func{T}, F.OptionF.Handler){T}(Func{bool}, T)"/>
+		public static Option<T> ReturnIf<T>(this T @this, Func<T, bool> predicate) =>
+			F.OptionF.ReturnIf(() => predicate(@this), @this);
 	}
 }

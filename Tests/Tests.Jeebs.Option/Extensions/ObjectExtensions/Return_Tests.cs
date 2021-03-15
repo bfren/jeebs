@@ -19,8 +19,8 @@ namespace Jeebs.ObjectExtensions_Tests
 			var result = input.Return();
 
 			// Assert
-			var some = Assert.IsType<Some<T>>(result);
-			Assert.Equal(input, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(input, some);
 		}
 
 		[Fact]
@@ -33,8 +33,8 @@ namespace Jeebs.ObjectExtensions_Tests
 			var result = value.Return();
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<SomeValueWasNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<AllowNullWasFalseMsg>(none);
 		}
 
 		[Fact]
@@ -47,8 +47,8 @@ namespace Jeebs.ObjectExtensions_Tests
 			var result = value.Return(true);
 
 			// Assert
-			var some = Assert.IsType<Some<int?>>(result);
-			Assert.Null(some.Value);
+			var some = result.AssertSome();
+			Assert.Null(some);
 		}
 
 		[Fact]
@@ -61,8 +61,8 @@ namespace Jeebs.ObjectExtensions_Tests
 			var result = value.Return(true);
 
 			// Assert
-			var some = Assert.IsType<Some<int?>>(result);
-			Assert.Null(some.Value);
+			var some = result.AssertSome();
+			Assert.Null(some);
 		}
 	}
 }

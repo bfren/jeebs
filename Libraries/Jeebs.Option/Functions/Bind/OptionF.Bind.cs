@@ -16,23 +16,18 @@ namespace F
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="option">Input option</param>
 		/// <param name="bind">Binding function - will receive <see cref="Some{T}.Value"/> if this is a <see cref="Some{T}"/></param>
-		/// <param name="handler">[Optional] Exception handler</param>
-		public static Option<U> Bind<T, U>(Option<T> option, Func<T, Option<U>> bind, Handler? handler) =>
+		public static Option<U> Bind<T, U>(Option<T> option, Func<T, Option<U>> bind) =>
 			Catch(() =>
 				Switch(
 					option,
 					some: v => bind(v),
 					none: r => new None<U>(r)
 				),
-				handler
+				DefaultHandler
 			);
 
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
+		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
 		public static Option<T> Bind<T>(Func<Option<T>> bind) =>
-			Bind(True, _ => bind(), null);
-
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}}, Handler?)"/>
-		public static Option<T> Bind<T>(Func<Option<T>> bind, Handler handler) =>
-			Bind(True, _ => bind(), handler);
+			Bind(True, _ => bind());
 	}
 }

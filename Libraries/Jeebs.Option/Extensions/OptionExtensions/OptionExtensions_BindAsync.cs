@@ -12,20 +12,18 @@ namespace Jeebs
 	/// </summary>
 	public static class OptionExtensions_BindAsync
 	{
-		/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}}, Handler?)"/>
+		/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}})"/>
 		public static Task<Option<U>> BindAsync<T, U>(
 			this Task<Option<T>> @this,
-			Func<T, Option<U>> bind,
-			Handler? handler = null
+			Func<T, Option<U>> bind
 		) =>
-			F.OptionF.BindAsync(@this, x => Task.FromResult(bind(x)), handler);
+			F.OptionF.BindAsync(@this, x => Task.FromResult(bind(x)));
 
-		/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}}, Handler?)"/>
+		/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}})"/>
 		public static Task<Option<U>> BindAsync<T, U>(
 			this Task<Option<T>> @this,
-			Func<T, Task<Option<U>>> bind,
-			Handler? handler = null
+			Func<T, Task<Option<U>>> bind
 		) =>
-			F.OptionF.BindAsync(@this, bind, handler);
+			F.OptionF.BindAsync(@this, bind);
 	}
 }

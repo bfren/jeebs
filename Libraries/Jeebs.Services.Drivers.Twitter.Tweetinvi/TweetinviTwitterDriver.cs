@@ -49,29 +49,24 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			);
 		}
 
-		private async Task<Option<IUser>> GetUser(string screenName) =>
-			await client.Users.GetUserAsync(screenName).ConfigureAwait(false) switch
-			{
-				IUser user =>
-					Return(user),
-
-				_ =>
-					None<IUser>(new Msg.UserNotFoundMsg(screenName))
-			};
+		private Task<Option<IUser>> GetUser(string screenName) =>
+			MapAsync(
+				() => client.Users.GetUserAsync(screenName),
+				e => new Msg.UserNotFoundExceptionMsg(screenName, e)
+			);
 
 		/// <inheritdoc/>
 		public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
 			return Return(screenName)
 				.BindAsync(
-					GetUser,
-					e => new Msg.GettingUserExceptionMsg(screenName, e)
+					GetUser
 				)
 				.MapAsync(
 					getUrl,
 					e => new Msg.GettingProfileImageUrlExceptionMsg(screenName, e)
 				)
-				.BindAsync(
+				.MapAsync(
 					getStream,
 					e => new Msg.GettingProfileImageStreamExceptionMsg(screenName, e)
 				);
@@ -85,10 +80,10 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 			}
 
 			// Get profile image stream
-			async Task<Option<System.IO.Stream>> getStream(string uri)
+			Task<System.IO.Stream> getStream(string uri)
 			{
 				using var client = factory.CreateClient();
-				return await client.GetStreamAsync(uri).ConfigureAwait(false);
+				return client.GetStreamAsync(uri);
 			}
 		}
 
@@ -97,10 +92,9 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		{
 			return Return(screenName)
 				.BindAsync(
-					GetUser,
-					e => new Msg.GettingUserExceptionMsg(screenName, e)
+					GetUser
 				)
-				.BindAsync(
+				.MapAsync(
 					getTimeline,
 					e => new Msg.GettingTimelineExceptionMsg(screenName, e)
 				)
@@ -110,7 +104,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				);
 
 			// Get timeline
-			async Task<Option<List<ITweet>>> getTimeline(IUser user)
+			Task<ITweet[]> getTimeline(IUser user)
 			{
 				// Set parameters
 				var param = new GetUserTimelineParameters(user)
@@ -120,19 +114,11 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 				};
 
 				// Get tweets - return empty list if null or empty
-				var timeline = await client.Timelines.GetUserTimelineAsync(param).ConfigureAwait(false);
-				return timeline switch
-				{
-					IEnumerable<ITweet> x =>
-						x.ToList(),
-
-					_ =>
-						new List<ITweet>()
-				};
+				return client.Timelines.GetUserTimelineAsync(param);
 			}
 
 			// Convert the tweets to TweetModel
-			static List<TweetModel> convertTweets(List<ITweet> tweets)
+			static List<TweetModel> convertTweets(ITweet[] tweets)
 			{
 				var models = from t in tweets
 							 select new TweetModel
@@ -181,7 +167,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 
 			/// <summary>User not found</summary>
 			/// <param name="Value">Screen Name</param>
-			public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
+			public sealed record UserNotFoundExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

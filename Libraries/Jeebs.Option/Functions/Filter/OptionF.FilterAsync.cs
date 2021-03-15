@@ -9,24 +9,26 @@ namespace F
 {
 	public static partial class OptionF
 	{
-		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool}, Handler?)"/>
-		public static Task<Option<T>> FilterAsync<T>(Option<T> option, Func<T, Task<bool>> predicate, Handler? handler) =>
-			BindAsync(
-				option,
-				async x =>
-					await predicate(x) switch
-					{
-						true =>
-							Return(x),
+		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool})"/>
+		public static Task<Option<T>> FilterAsync<T>(Option<T> option, Func<T, Task<bool>> predicate) =>
+			CatchAsync(() =>
+				BindAsync(
+					option,
+					async x =>
+						await predicate(x) switch
+						{
+							true =>
+								Return(x),
 
-						false =>
-							None<T, Msg.FilterPredicateWasFalseMsg>()
-					},
-				handler
+							false =>
+								None<T, Msg.FilterPredicateWasFalseMsg>()
+						}
+				),
+				DefaultHandler
 			);
 
-		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool}, Handler?)"/>
-		public static async Task<Option<T>> FilterAsync<T>(Task<Option<T>> option, Func<T, Task<bool>> predicate, Handler? handler) =>
-			await FilterAsync(await option, predicate, handler);
+		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool})"/>
+		public static async Task<Option<T>> FilterAsync<T>(Task<Option<T>> option, Func<T, Task<bool>> predicate) =>
+			await FilterAsync(await option, predicate);
 	}
 }

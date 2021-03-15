@@ -22,8 +22,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = FirstOrNone(list, null);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<ListIsEmptyMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ListIsEmptyMsg>(none);
 		}
 
 		[Fact]
@@ -38,8 +38,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = FirstOrNone(list, predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<FirstItemIsNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<FirstItemIsNullMsg>(none);
 		}
 
 		[Fact]
@@ -53,8 +53,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = FirstOrNone(list, null);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 
 		[Fact]
@@ -70,8 +70,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = FirstOrNone(list, predicate);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }

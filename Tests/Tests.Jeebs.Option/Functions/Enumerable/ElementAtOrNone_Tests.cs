@@ -21,8 +21,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = ElementAtOrNone(list, 0);
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<ListIsEmptyMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ListIsEmptyMsg>(none);
 		}
 
 		[Fact]
@@ -35,8 +35,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = ElementAtOrNone(list, 4);
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<ElementAtIsNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ElementAtIsNullMsg>(none);
 		}
 
 		[Fact]
@@ -50,8 +50,8 @@ namespace F.OptionFEnumerable_Tests
 			var result = ElementAtOrNone(list, 1);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }

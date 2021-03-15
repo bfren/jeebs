@@ -21,8 +21,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.SingleOrNone();
 
 			// Assert
-			var none = Assert.IsType<None<int>>(result);
-			Assert.IsType<ListIsEmptyMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ListIsEmptyMsg>(none);
 		}
 
 		[Fact]
@@ -30,14 +30,13 @@ namespace Jeebs.EnumerableExtensions_Tests
 		{
 			// Arrange
 			var list = new int?[] { F.Rnd.Int, F.Rnd.Int, F.Rnd.Int };
-			var predicate = Substitute.For<Func<int?, bool>>();
 
 			// Act
 			var result = list.SingleOrNone();
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<MultipleItemsMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<MultipleItemsMsg>(none);
 		}
 
 		[Fact]
@@ -52,8 +51,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.SingleOrNone(predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<NoMatchingItemsMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<NoMatchingItemsMsg>(none);
 		}
 
 		[Fact]
@@ -68,8 +67,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.SingleOrNone(predicate);
 
 			// Assert
-			var none = Assert.IsType<None<int?>>(result);
-			Assert.IsType<NullItemMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<NullItemMsg>(none);
 		}
 
 		[Fact]
@@ -83,8 +82,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.LastOrNone();
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 
 		[Fact]
@@ -100,8 +99,8 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var result = list.LastOrNone(predicate);
 
 			// Assert
-			var some = Assert.IsType<Some<int>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }
