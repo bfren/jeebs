@@ -44,7 +44,7 @@ namespace F
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="value">Some value</param>
-		/// <param name="allowNull">If true, <see cref="Some{T}"/> will always be returned</param>
+		/// <param name="allowNull">If true, <see cref="Some{T}"/> will always be returned whatever the value is</param>
 		/// <param name="handler">Exception handler</param>
 		public static Option<T?> Return<T>(Func<T?> value, bool allowNull, Handler handler)
 		{
@@ -75,7 +75,7 @@ namespace F
 			}
 		}
 
-		/// <inheritdoc cref="Return{T}(Func{T?}, bool, Handler)"/>
+		/// <inheritdoc cref="Return{T}(Func{T}, bool, Handler)"/>
 		public static Option<T?> Return<T>(T? value, bool allowNull) =>
 			Return(() => value, allowNull, DefaultHandler);
 
