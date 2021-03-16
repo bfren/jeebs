@@ -33,7 +33,7 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public Task<Option<long>> GetCountAsync() =>
-			Map(
+			Return(
 				() => UnitOfWork.Adapter.RetrieveCount(Parts),
 				e => new Msg.GetRetrieveCountQueryExceptionMsg(e)
 			)
@@ -43,7 +43,7 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public Task<Option<List<T>>> ExecuteQueryAsync() =>
-			Map(
+			Return(
 				() => UnitOfWork.Adapter.Retrieve(Parts),
 				e => new Msg.GetRetrieveQueryExceptionMsg(e)
 			)
@@ -71,7 +71,7 @@ namespace Jeebs.Data.Querying
 
 					// Execute and return
 					return
-						Map(
+						Return(
 							() => UnitOfWork.Adapter.Retrieve(Parts),
 							e => new Msg.GetPagedRetrieveQueryExceptionMsg(e)
 						)
@@ -87,7 +87,7 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public Task<Option<T>> ExecuteScalarAsync() =>
-			Map(
+			Return(
 				() => UnitOfWork.Adapter.Retrieve(Parts),
 				e => new Msg.GetScalarQueryExceptionMsg(e)
 			)

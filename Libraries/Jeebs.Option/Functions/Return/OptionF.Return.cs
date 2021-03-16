@@ -10,29 +10,34 @@ namespace F
 	{
 		/// <summary>
 		/// Create a <see cref="Some{T}"/> Option, containing <paramref name="value"/><br/>
-		/// If <paramref name="value"/> is null, <see cref="Jeebs.None{T}"/> will be returned instead
+		/// If <paramref name="value"/> returns null, <see cref="Jeebs.None{T}"/> will be returned instead
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="value">Some value</param>
-		public static Option<T> Return<T>(T value)
+		/// <param name="handler">Exception handler</param>
+		public static Option<T> Return<T>(Func<T> value, Handler handler)
 		{
 			try
 			{
-				return value switch
+				return value() switch
 				{
 					T x =>
-						new Some<T>(x), // this is the only place Some<T> is created
+						new Some<T>(x), // Some<T> is only created by Return() functions
 
 					_ =>
-						None<T, Msg.AllowNullWasFalseMsg>()
+						None<T, Msg.NullValueMsg>()
 
 				};
 			}
 			catch (Exception e)
 			{
-				return None<T>(DefaultHandler(e));
+				return None<T>(handler(e));
 			}
 		}
+
+		/// <inheritdoc cref="Return{T}(Func{T}, Handler)"/>
+		public static Option<T> Return<T>(T value) =>
+			Return(() => value, DefaultHandler);
 
 		/// <summary>
 		/// Create a <see cref="Some{T}"/> Option, containing <paramref name="value"/>
@@ -40,20 +45,23 @@ namespace F
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="value">Some value</param>
 		/// <param name="allowNull">If true, <see cref="Some{T}"/> will always be returned</param>
-		public static Option<T?> Return<T>(T? value, bool allowNull)
+		/// <param name="handler">Exception handler</param>
+		public static Option<T?> Return<T>(Func<T?> value, bool allowNull, Handler handler)
 		{
 			try
 			{
-				return value switch
+				var v = value();
+
+				return v switch
 				{
 					T x =>
-						new Some<T?>(x), // this is the only place Some<T> is created
+						new Some<T?>(x), // Some<T> is only created by Return() functions
 
 					_ =>
 						allowNull switch
 						{
 							true =>
-								new Some<T?>(value), // this is the only place Some<T> is created
+								new Some<T?>(v), // Some<T> is only created by Return() functions
 
 							false =>
 								None<T?, Msg.AllowNullWasFalseMsg>()
@@ -63,16 +71,17 @@ namespace F
 			}
 			catch (Exception e)
 			{
-				return None<T?>(DefaultHandler(e));
+				return None<T?>(handler(e));
 			}
 		}
+
+		/// <inheritdoc cref="Return{T}(Func{T?}, bool, Handler)"/>
+		public static Option<T?> Return<T>(T? value, bool allowNull) =>
+			Return(() => value, allowNull, DefaultHandler);
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>Predicate was false</summary>
-			public sealed record PredicateWasFalseMsg : IMsg { }
-
 			/// <summary>Value was null when trying to wrap using Return</summary>
 			public sealed record NullValueMsg : IMsg { }
 

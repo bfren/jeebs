@@ -34,7 +34,7 @@ namespace Jeebs.Option_Tests
 
 			// Assert
 			var none = result.AssertNone();
-			Assert.IsType<AllowNullWasFalseMsg>(none);
+			Assert.IsType<NullValueMsg>(none);
 		}
 	}
 }

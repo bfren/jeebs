@@ -43,13 +43,10 @@ namespace F.OptionF_Tests
 
 			// Act
 			var r0 = await MapAsync(option, throwFunc, DefaultHandler);
-			var r1 = await MapAsync(() => throwFunc(Rnd.Str), DefaultHandler);
 
 			// Assert
 			var n0 = r0.AssertNone();
 			Assert.IsType<UnhandledExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n1);
 		}
 
 		[Fact]
@@ -64,13 +61,11 @@ namespace F.OptionF_Tests
 			// Act
 			var r0 = await MapAsync(option, throwFunc, handler);
 			var r1 = await MapAsync(option.AsTask, throwFunc, handler);
-			var r2 = await MapAsync(() => throwFunc(Rnd.Str), handler);
 
 			// Assert
 			r0.AssertNone();
 			r1.AssertNone();
-			r2.AssertNone();
-			handler.Received(3).Invoke(exception);
+			handler.Received(2).Invoke(exception);
 		}
 
 		[Fact]
@@ -119,10 +114,9 @@ namespace F.OptionF_Tests
 			// Act
 			await MapAsync(option, map, DefaultHandler);
 			await MapAsync(option.AsTask, map, DefaultHandler);
-			await MapAsync(() => map(value), DefaultHandler);
 
 			// Assert
-			await map.Received(3).Invoke(value);
+			await map.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

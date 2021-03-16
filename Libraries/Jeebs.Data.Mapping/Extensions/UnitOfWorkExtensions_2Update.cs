@@ -37,7 +37,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="entity">Entity to update</param>
 		private static Option<bool> UpdateWithVersion<T>(IUnitOfWork w, T entity)
 			where T : class, IEntityWithVersion =>
-			Map(
+			Return(
 				() => w.Adapter.UpdateSingle<T>(),
 				e => new Msg.GetUpdateQueryExceptionMsg<T>(nameof(UpdateWithVersion), entity.Id, e)
 			)
@@ -70,7 +70,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="entity">Entity to update</param>
 		private static Option<bool> UpdateWithoutVersion<T>(IUnitOfWork w, T entity)
 			where T : class, IEntity =>
-			Map(
+			Return(
 				() => w.Adapter.UpdateSingle<T>(),
 				e => new Msg.GetUpdateQueryExceptionMsg<T>(nameof(UpdateWithoutVersion), entity.Id, e)
 			)

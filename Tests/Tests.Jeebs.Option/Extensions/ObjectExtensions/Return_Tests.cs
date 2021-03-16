@@ -34,6 +34,20 @@ namespace Jeebs.ObjectExtensions_Tests
 
 			// Assert
 			var none = result.AssertNone();
+			Assert.IsType<NullValueMsg>(none);
+		}
+
+		[Fact]
+		public void Null_Input_Returns_None_If_AllowNull_Is_False()
+		{
+			// Arrange
+			int? value = null;
+
+			// Act
+			var result = value.Return(false);
+
+			// Assert
+			var none = result.AssertNone();
 			Assert.IsType<AllowNullWasFalseMsg>(none);
 		}
 

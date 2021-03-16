@@ -47,7 +47,7 @@ namespace Jeebs.WordPress
 			Task<Option<(TList, List<Term>)>> getTermsAsync(TList posts, List<PropertyInfo> termLists)
 			{
 				return
-					Map(
+					Return(
 						getOptions,
 						DefaultHandler
 					)
@@ -94,7 +94,7 @@ namespace Jeebs.WordPress
 
 				// Build query
 				Option<IQuery<Term>> getQuery(QueryPostsTaxonomy.Options options) =>
-					Map(
+					Return(
 						() => StartNewQuery()
 								.WithModel<Term>()
 								.WithOptions(options)

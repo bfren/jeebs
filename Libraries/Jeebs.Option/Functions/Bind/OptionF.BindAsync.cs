@@ -23,9 +23,5 @@ namespace F
 		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
 		public static async Task<Option<U>> BindAsync<T, U>(Task<Option<T>> option, Func<T, Task<Option<U>>> bind) =>
 			await BindAsync(await option, bind);
-
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
-		public static Task<Option<T>> BindAsync<T>(Func<Task<Option<T>>> bind) =>
-			BindAsync(True, _ => bind());
 	}
 }

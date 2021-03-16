@@ -50,7 +50,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		}
 
 		private Task<Option<IUser>> GetUser(string screenName) =>
-			MapAsync(
+			ReturnAsync(
 				() => client.Users.GetUserAsync(screenName),
 				e => new Msg.UserNotFoundExceptionMsg(screenName, e)
 			);

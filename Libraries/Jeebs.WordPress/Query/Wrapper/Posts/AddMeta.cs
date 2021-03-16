@@ -46,7 +46,7 @@ namespace Jeebs.WordPress
 			Task<Option<(TList, List<PostMeta>)>> getMetaAsync(TList posts)
 			{
 				return
-					Map(
+					Return(
 						getOptions,
 						DefaultHandler
 					)
@@ -67,7 +67,7 @@ namespace Jeebs.WordPress
 
 				// Get query
 				Option<IQuery<PostMeta>> getQuery(QueryPostsMeta.Options options) =>
-					Map(
+					Return(
 						() => StartNewQuery()
 							.WithModel<PostMeta>()
 							.WithOptions(options)

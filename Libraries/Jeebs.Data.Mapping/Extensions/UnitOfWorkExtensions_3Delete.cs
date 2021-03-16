@@ -52,7 +52,7 @@ namespace Jeebs.Data.Mapping
 			Func<string, T, IDbTransaction, Task<int>> execute
 		)
 			where T : class, IEntity =>
-			Map(
+			Return(
 				() => w.Adapter.DeleteSingle<T>(),
 				e => new Msg.GetDeleteQueryExceptionMsg<T>(method, entity.Id, e)
 			)

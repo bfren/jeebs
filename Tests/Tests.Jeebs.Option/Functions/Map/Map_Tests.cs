@@ -38,14 +38,11 @@ namespace F.OptionF_Tests
 			int throwFunc() => throw exception;
 
 			// Act
-			var r0 = Map(option, _ => throwFunc(), DefaultHandler);
-			var r1 = Map(throwFunc, DefaultHandler);
+			var result = Map(option, _ => throwFunc(), DefaultHandler);
 
 			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n1);
+			var none = result.AssertNone();
+			Assert.IsType<UnhandledExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -58,13 +55,11 @@ namespace F.OptionF_Tests
 			int throwFunc() => throw exception;
 
 			// Act
-			var r0 = Map(option, _ => throwFunc(), handler);
-			var r1 = Map(throwFunc, handler);
+			var result = Map(option, _ => throwFunc(), handler);
 
 			// Assert
-			r0.AssertNone();
-			r1.AssertNone();
-			handler.Received(2).Invoke(exception);
+			result.AssertNone();
+			handler.Received().Invoke(exception);
 		}
 
 		[Fact]
@@ -107,10 +102,9 @@ namespace F.OptionF_Tests
 
 			// Act
 			Map(option, map, DefaultHandler);
-			Map(() => map(value), DefaultHandler);
 
 			// Assert
-			map.Received(2).Invoke(value);
+			map.Received().Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

@@ -45,15 +45,12 @@ namespace F.OptionF_Tests
 			// Act
 			var r0 = await BindAsync(option, _ => throwFunc());
 			var r1 = await BindAsync(option.AsTask, _ => throwFunc());
-			var r2 = await BindAsync(throwFunc);
 
 			// Assert
 			var n0 = r0.AssertNone();
 			Assert.IsType<UnhandledExceptionMsg>(n0);
 			var n1 = r1.AssertNone();
 			Assert.IsType<UnhandledExceptionMsg>(n1);
-			var n2 = r2.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n2);
 		}
 
 		[Fact]
@@ -102,10 +99,9 @@ namespace F.OptionF_Tests
 			// Act
 			await BindAsync(option, bind);
 			await BindAsync(option.AsTask, bind);
-			await BindAsync(() => bind(value));
 
 			// Assert
-			await bind.Received(3).Invoke(value);
+			await bind.Received(2).Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

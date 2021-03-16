@@ -14,7 +14,7 @@ namespace F
 			CatchAsync(() =>
 				Switch(
 					option,
-					some: async v => Return(await map(v)),
+					some: async v => { var x = await map(v); return Return(x); },
 					none: r => new None<U>(r).AsTask
 				),
 				handler
@@ -23,9 +23,5 @@ namespace F
 		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler)"/>
 		public static async Task<Option<U>> MapAsync<T, U>(Task<Option<T>> option, Func<T, Task<U>> map, Handler handler) =>
 			await MapAsync(await option, map, handler);
-
-		/// <inheritdoc cref="Map{T}(Func{T}, Handler?)"/>
-		public static Task<Option<T>> MapAsync<T>(Func<Task<T>> map, Handler handler) =>
-			MapAsync(True, _ => map(), handler);
 	}
 }

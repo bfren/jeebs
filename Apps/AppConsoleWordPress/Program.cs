@@ -84,7 +84,7 @@ namespace AppConsoleWordPress
 						)
 						.AuditAsync(AuditCustomFields);
 
-					Map<int>(
+					Return<int>(
 						() => throw new Exception("Test"),
 						DefaultHandler
 					);

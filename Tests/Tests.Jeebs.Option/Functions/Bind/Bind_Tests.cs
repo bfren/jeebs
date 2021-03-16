@@ -39,13 +39,10 @@ namespace F.OptionF_Tests
 
 			// Act
 			var r0 = Bind(option, _ => throwFunc());
-			var r1 = Bind(throwFunc);
 
 			// Assert
 			var n0 = r0.AssertNone();
 			Assert.IsType<UnhandledExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n1);
 		}
 
 		[Fact]
@@ -88,10 +85,9 @@ namespace F.OptionF_Tests
 
 			// Act
 			Bind(option, bind);
-			Bind(() => bind(value));
 
 			// Assert
-			bind.Received(2).Invoke(value);
+			bind.Received().Invoke(value);
 		}
 
 		public class FakeOption : Option<int> { }

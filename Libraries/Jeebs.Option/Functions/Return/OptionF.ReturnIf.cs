@@ -21,7 +21,7 @@ namespace F
 				predicate() switch
 				{
 					true =>
-						Map(value, handler),
+						Return(value, handler),
 
 					false =>
 						None<T, Msg.PredicateWasFalseMsg>()
@@ -32,5 +32,12 @@ namespace F
 		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T}, Handler)"/>
 		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
 			ReturnIf(predicate, () => value, DefaultHandler);
+
+		/// <summary>Messages</summary>
+		public static partial class Msg
+		{
+			/// <summary>Predicate was false</summary>
+			public sealed record PredicateWasFalseMsg : IMsg { }
+		}
 	}
 }

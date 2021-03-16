@@ -25,9 +25,5 @@ namespace F
 				),
 				DefaultHandler
 			);
-
-		/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
-		public static Option<T> Bind<T>(Func<Option<T>> bind) =>
-			Bind(True, _ => bind());
 	}
 }

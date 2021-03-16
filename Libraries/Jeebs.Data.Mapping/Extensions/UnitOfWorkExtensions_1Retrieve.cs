@@ -51,7 +51,7 @@ namespace Jeebs.Data.Mapping
 			Func<string, object, IDbTransaction, Task<T>> execute
 		)
 			where T : class, IEntity =>
-			Map(
+			Return(
 				() => w.Adapter.RetrieveSingleById<T>(),
 				e => new Msg.GetRetrieveQueryExceptionMsg<T>(method, id, e)
 			)

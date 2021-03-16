@@ -63,7 +63,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="entity">Entity to insert</param>
 		private static Option<long> InsertAndReturnId<T>(IUnitOfWork w, T entity)
 			where T : IEntity =>
-			Map(
+			Return(
 				() => w.Adapter.CreateSingleAndReturnId<T>(),
 				e => new Msg.GetInsertQueryExceptionMsg<T>(nameof(InsertAndReturnId), e)
 			)
@@ -82,7 +82,7 @@ namespace Jeebs.Data.Mapping
 		/// <param name="entity">Entity to insert</param>
 		private static Task<Option<long>> InsertAndReturnIdAsync<T>(IUnitOfWork w, T entity)
 			where T : IEntity =>
-			Map(
+			Return(
 				() => w.Adapter.CreateSingleAndReturnId<T>(),
 				e => new Msg.GetInsertQueryExceptionMsg<T>(nameof(InsertAndReturnIdAsync), e)
 			)
@@ -116,14 +116,11 @@ namespace Jeebs.Data.Mapping
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="id">Entity ID</param>
 		private static Option<T> GetFreshPoco<T>(IUnitOfWork w, long id)
-			where T : class, IEntity =>
-			Bind(
-				() =>
-				{
-					w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPoco), id));
-					return Single<T>(w, id);
-				}
-			);
+			where T : class, IEntity
+		{
+			w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPoco), id));
+			return Single<T>(w, id);
+		}
 
 		/// <summary>
 		/// Get a fresh POCO from the database using the new ID
@@ -132,14 +129,11 @@ namespace Jeebs.Data.Mapping
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="id">Entity ID</param>
 		private static Task<Option<T>> GetFreshPocoAsync<T>(IUnitOfWork w, long id)
-			where T : class, IEntity =>
-			BindAsync(
-				() =>
-				{
-					w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPocoAsync), id));
-					return SingleAsync<T>(w, id);
-				}
-			);
+			where T : class, IEntity
+		{
+			w.Log.Message(new Msg.RetrieveFreshMsg<T>(nameof(GetFreshPocoAsync), id));
+			return SingleAsync<T>(w, id);
+		}
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
