@@ -58,22 +58,22 @@ namespace Jeebs.Option_Tests
 
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<IMsg?, string>>()
+				none: Substitute.For<Func<IMsg, string>>()
 			);
 
 			await task.MatchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<IMsg?, Task<string>>>()
+				none: Substitute.For<Func<IMsg, Task<string>>>()
 			);
 
 			await task.MatchAsync(
 				some: some,
-				none: Substitute.For<Func<IMsg?, string>>()
+				none: Substitute.For<Func<IMsg, string>>()
 			);
 
 			await task.MatchAsync(
 				some: some,
-				none: Substitute.For<Func<IMsg?, Task<string>>>()
+				none: Substitute.For<Func<IMsg, Task<string>>>()
 			);
 
 			// Assert

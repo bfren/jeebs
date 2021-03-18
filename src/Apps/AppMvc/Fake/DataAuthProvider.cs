@@ -17,7 +17,7 @@ namespace AppMvc.Fake
 		{
 			if (password == "fail")
 			{
-				return None<Models.UserModel>(true);
+				return None<Models.UserModel, Msg.PasswordWasFailMsg>();
 			}
 
 			return new Models.UserModel
@@ -33,5 +33,10 @@ namespace AppMvc.Fake
 				})
 			};
 		}
+	}
+
+	public static class Msg
+	{
+		public sealed record PasswordWasFailMsg : IMsg { }
 	}
 }

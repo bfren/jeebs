@@ -23,8 +23,8 @@ namespace Jeebs.OptionExtensions_Tests
 			// Act
 			var r0 = await task.AuditSwitchAsync(some: _ => { some(value); });
 			var r1 = await task.AuditSwitchAsync(some: some);
-			var r2 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg?>>());
-			var r3 = await task.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg?, Task>>());
+			var r2 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg>>());
+			var r3 = await task.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg, Task>>());
 
 			// Assert
 			await some.Received(4).Invoke(value);
@@ -41,7 +41,7 @@ namespace Jeebs.OptionExtensions_Tests
 			var msg = new TestMsg();
 			var option = None<int>(msg);
 			var task = option.AsTask;
-			var none = Substitute.For<Func<IMsg?, Task>>();
+			var none = Substitute.For<Func<IMsg, Task>>();
 
 			// Act
 			var r0 = await task.AuditSwitchAsync(none: _ => { none(msg); });
@@ -69,8 +69,8 @@ namespace Jeebs.OptionExtensions_Tests
 
 			void someActionThrow(int _) => throw exception!;
 			Task someFuncThrow(int _) => throw exception!;
-			void noneActionThrow(IMsg? _) => throw exception!;
-			Task noneFuncThrow(IMsg? _) => throw exception!;
+			void noneActionThrow(IMsg _) => throw exception!;
+			Task noneFuncThrow(IMsg _) => throw exception!;
 
 			// Act
 			var r1 = await t0.AuditSwitchAsync(some: someActionThrow);

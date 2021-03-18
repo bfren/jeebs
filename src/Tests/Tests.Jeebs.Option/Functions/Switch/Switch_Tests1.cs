@@ -18,7 +18,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			void action() => Switch(option, some, none);
@@ -34,14 +34,14 @@ namespace F.OptionF_Tests
 			var value = Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			Switch(option, some, none);
 
 			// Assert
 			some.Received().Invoke(value);
-			none.DidNotReceiveWithAnyArgs().Invoke(null);
+			none.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<IMsg>());
 		}
 
 		[Fact]
@@ -50,14 +50,14 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = None<int>(true);
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			Switch(option, some, none);
 
 			// Assert
 			some.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
-			none.Received().Invoke(null);
+			none.ReceivedWithAnyArgs().Invoke(Arg.Any<IMsg>());
 		}
 
 		[Fact]
@@ -67,7 +67,7 @@ namespace F.OptionF_Tests
 			var reason = new TestMsg();
 			var option = None<int>(reason);
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			Switch(option, some, none);

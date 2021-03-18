@@ -31,7 +31,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Action<int>>();
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			void r0() => AuditSwitch(option, some, null);
@@ -64,7 +64,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = None<int>(msg);
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			var result = AuditSwitch(option, null, none);
@@ -83,7 +83,7 @@ namespace F.OptionF_Tests
 			var exception = new Exception();
 
 			void someThrow(int _) => throw exception!;
-			void noneThrow(IMsg? _) => throw exception!;
+			void noneThrow(IMsg _) => throw exception!;
 
 			// Act
 			var r0 = AuditSwitch(some, someThrow, null);

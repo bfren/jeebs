@@ -16,7 +16,7 @@ namespace F
 		/// <param name="option">Input option</param>
 		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 		/// <param name="none">Function to run if <see cref="Jeebs.None{T}"/></param>
-		public static U Match<T, U>(Option<T> option, Func<T, U> some, Func<IMsg?, U> none) =>
+		public static U Match<T, U>(Option<T> option, Func<T, U> some, Func<IMsg, U> none) =>
 			Switch(
 				option,
 				some: some,

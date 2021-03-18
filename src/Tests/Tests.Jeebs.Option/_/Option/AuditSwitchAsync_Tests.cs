@@ -18,7 +18,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Action<int>>();
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			Task r0() => option.AuditSwitchAsync(some);
@@ -48,10 +48,10 @@ namespace Jeebs.Option_Tests
 			// Act
 			var r0 = await option.AuditSwitchAsync(x => { some(x); });
 			var r1 = await option.AuditSwitchAsync(some);
-			var r2 = await option.AuditSwitchAsync(some, Substitute.For<Func<IMsg?, Task>>());
+			var r2 = await option.AuditSwitchAsync(some, Substitute.For<Func<IMsg, Task>>());
 			var r3 = await option.AsTask.AuditSwitchAsync(x => { some(x); });
 			var r4 = await option.AsTask.AuditSwitchAsync(some);
-			var r5 = await option.AsTask.AuditSwitchAsync(some, Substitute.For<Func<IMsg?, Task>>());
+			var r5 = await option.AsTask.AuditSwitchAsync(some, Substitute.For<Func<IMsg, Task>>());
 
 			// Assert
 			await some.Received(6).Invoke(value);
@@ -69,7 +69,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = None<int>(msg);
-			var none = Substitute.For<Func<IMsg?, Task>>();
+			var none = Substitute.For<Func<IMsg, Task>>();
 
 			// Act
 			var r0 = await option.AuditSwitchAsync(x => { none(x); });
@@ -98,7 +98,7 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			Task someThrow(int _) => throw exception!;
-			Task noneThrow(IMsg? _) => throw exception!;
+			Task noneThrow(IMsg _) => throw exception!;
 
 			// Act
 			var r0 = await some.AuditSwitchAsync(x => { someThrow(x); });

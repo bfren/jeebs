@@ -18,7 +18,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			void action() => Match(option, some, none);
@@ -34,7 +34,7 @@ namespace F.OptionF_Tests
 			var value = Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			Match(option, some, none);
@@ -64,13 +64,13 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = None<int>(true);
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			Match(option, some, none);
 
 			// Assert
-			none.Received().Invoke(Arg.Any<IMsg?>());
+			none.Received().Invoke(Arg.Any<IMsg>());
 		}
 
 		[Fact]
@@ -80,7 +80,7 @@ namespace F.OptionF_Tests
 			var msg = new TestMsg();
 			var option = None<int>(msg);
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			Match(option, some, none);

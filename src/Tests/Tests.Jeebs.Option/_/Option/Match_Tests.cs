@@ -17,7 +17,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Func<int, string>>();
-			var none = Substitute.For<Func<IMsg?, string>>();
+			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
 			void action() => option.Match(some, none);
@@ -37,7 +37,7 @@ namespace Jeebs.Option_Tests
 			// Act
 			option.Match(
 				some: some,
-				none: Substitute.For<Func<IMsg?, string>>()
+				none: Substitute.For<Func<IMsg, string>>()
 			);
 
 			option.Match(
@@ -52,7 +52,7 @@ namespace Jeebs.Option_Tests
 
 			option.Match(
 				some: some,
-				none: Substitute.For<Func<IMsg?, string>>()
+				none: Substitute.For<Func<IMsg, string>>()
 			);
 
 			// Assert

@@ -30,16 +30,16 @@ namespace F
 			internal FluentUnwrapAsync(Option<T> option) =>
 				this.option = option;
 
-			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg?, T})"/>
+			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
 			public Option<T> Value(T ifNone) =>
 				Unwrap(option, ifNone: _ => ifNone);
 
-			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg?, T})"/>
+			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
 			public Option<T> Value(Func<T> ifNone) =>
 				Unwrap(option, ifNone: _ => ifNone());
 
-			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg?, T})"/>
-			public Option<T> Value(Func<IMsg?, T> ifNone) =>
+			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
+			public Option<T> Value(Func<IMsg, T> ifNone) =>
 				Unwrap(option, ifNone);
 
 			/// <inheritdoc cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>

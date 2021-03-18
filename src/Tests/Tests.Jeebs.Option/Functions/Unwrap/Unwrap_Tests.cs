@@ -19,7 +19,7 @@ namespace F.OptionF_Tests
 			var some = Return(value);
 
 			// Act
-			var result = Unwrap(some, Substitute.For<Func<IMsg?, int>>());
+			var result = Unwrap(some, Substitute.For<Func<IMsg, int>>());
 
 			// Assert
 			Assert.Equal(value, result);
@@ -44,13 +44,13 @@ namespace F.OptionF_Tests
 		{
 			// Arrange
 			var none = None<int>(true);
-			var ifNone = Substitute.For<Func<IMsg?, int>>();
+			var ifNone = Substitute.For<Func<IMsg, int>>();
 
 			// Act
 			Unwrap(none, ifNone);
 
 			// Assert
-			ifNone.ReceivedWithAnyArgs().Invoke(Arg.Any<IMsg?>());
+			ifNone.ReceivedWithAnyArgs().Invoke(Arg.Any<IMsg>());
 		}
 
 		[Fact]
@@ -59,7 +59,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var msg = Substitute.For<IMsg>();
 			var none = None<int>(msg);
-			var ifNone = Substitute.For<Func<IMsg?, int>>();
+			var ifNone = Substitute.For<Func<IMsg, int>>();
 
 			// Act
 			Unwrap(none, ifNone);
