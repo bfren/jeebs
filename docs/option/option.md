@@ -68,10 +68,11 @@ In both situations there *cannot* be an unhandled exception, there *cannot* be a
 
 In the world of `Option<T>` the following key principles are followed:
 
-- the return type is always `Option<T>` (rather than `Some<T>` or `None<T>`)
-- if a function returns `Option<T>` it means all exceptions have been handled
-- when returning `None<T>` we must give a reason
-- everything that can go wrong in your system has an `IMsg` which describes it
+1. the return type is always `Option<T>` (rather than `Some<T>` or `None<T>`)
+2. if a function returns `Option<T>` it means all exceptions have been handled
+3. when returning `None<T>` we must give a reason
+4. everything that can go wrong in your system has an `IMsg` which describes it
+5. once in the async world, we must stay in the async world
 
 If you haven't done any functional programming I suggest you read through the following, but if you want to see what `Option<T>` can do, you can go straight to [Return](return).
 

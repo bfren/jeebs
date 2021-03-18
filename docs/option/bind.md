@@ -21,7 +21,7 @@ Like `Map`, the `Bind` functions receive the value of the input `Option<T>` if i
 However, there are two important differences:
 
 1. `Bind` functions return an `Option<T>` (`Map` functions return `T` which is wrapped by `Return`).
-2. Therefore they are expected to handle their own exceptions - one of our key principles is the contract that if a function returns `Option<T>` its exceptions have been handled.  (The method signature therefore does not have a `Handler` in it.)
+2. Therefore they are expected to handle their own exceptions - one of our key principles is the contract that **if a function returns `Option<T>` its exceptions have been handled**.  (The method signature therefore does not have a `Handler` in it.)
 
 That said, you can be naughty because your binding function is still wrapped in a `try..catch` block.  However *all* exceptions caught in that block will return `None<T>` with a `Msg.UnhandledExceptionMsg` as the Reason.
 
@@ -121,46 +121,49 @@ Return(customerId)
 In the next section we will actually make a simple test app with everything you need to play around with `Map` and `Bind`.  Before then here is one final snippet from `Jeebs.WordPress` to show a real example (simplified a bit and minus the huge SQL query) of what this looks like in practice:
 
 ```csharp
-internal async Task<Option<List<T>>> GetTaxonomyTermsAsync<T>(GetArgs args)
+internal async Task<Option<List<T>>> GetTaxonomyAsync<T>(Taxonomy taxonomy)
     where T : ITermWithRealCount
 {
     using var w = Db.UnitOfWork;
-    var taxonomy = args.Taxonomy;
 
     return await
         Return(
             (Db, w, taxonomy)
         )
         .Map(
-            getQuery,
+            GetQuery,
             e => new Msg.GetTaxonomyQueryExceptionMsg(e)
         )
         .BindAsync(
-            executeQuery
+            ExecuteQuery
         )
         .MapAsync(
             x => x.ToList(),
             DefaultHandler
         );
+}
 
-    // Build SQL query
-    static (IUnitOfWork, WP.Taxonomy, string) getQuery((IWpDb db, IUnitOfWork w, WP.Taxonomy taxonomy) input)
-    {
-        var (db, w, taxonomy) = input;
-        return (w, taxonomy,
-            $"SELECT ..... "
-        );
-    }
+internal static (IUnitOfWork, Taxonomy, string) GetQuery((IWpDb, IUnitOfWork, Taxonomy) input)
+{
+    var (db, w, taxonomy) = input;
+    return (w, taxonomy,
+        $"SELECT * FROM {db.TaxonomyTable}......"
+    );
+}
 
-    // Execute query and return matching taxonomy terms
-    static Task<Option<IEnumerable<T>>> executeQuery((IUnitOfWork w, WP.Taxonomy taxonomy, string sql) input)
-    {
-        var (w, taxonomy, sql) = input;
-        return w.QueryAsync<T>(sql, new { taxonomy });
-    }
+internal static Task<Option<IEnumerable<T>>> ExecuteQuery((IUnitOfWork, Taxonomy, string) input)
+{
+    var (w, taxonomy, sql) = input;
+    return w.QueryAsync<T>(sql, new { taxonomy });
 }
 ```
 
+Here we have two potentially problem-ridden methods - returning a complex SQL query from a given input and executing a database query - that are now **pure functions**: notice they are declared `static`.  This is best practice, think of it like Dependency Injection but *functional*.  The functions require no state, and interact with nothing else, so given the same input they will *always* return the same output.
+
+This means they can be tested easily, and once they work correctly they will *always* work in the same way so you can rely on them.
+
+You will also notice the use of the `-Async` variations of `Map` and `Bind` - we will come to these later, but for now note that although `x.ToList()` is not doing anything asynchronously, because the *input* is a `Task<Option<T>>` we must use the `-Async` variant.  This leads to another of our key principles: **once we are in the async world we stay in the async world**.
+
 ## Next
 
-Similar to Map we have [Bind](bind) ...
+Let's try a [Sample Application](sample-application) ...

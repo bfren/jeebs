@@ -56,7 +56,7 @@ But first, we need to explore how we return `None<T>`
 
 ## `None<T>(IMsg) -> Option<T>`
 
-Where `Some<T>` wraps a value, `None<T>` is a null-safe way of representing no value, with a helpful reason *why* there is no value: some input was invalid, an exception occurred, and so on.  Note that you *always* need to give a reason for a `None<T>` - another key principle in the world of `Option<T>`.
+Where `Some<T>` wraps a value, `None<T>` is a null-safe way of representing no value, with a helpful reason *why* there is no value: some input was invalid, an exception occurred, and so on.  Note that **we *always* need to give a reason for a `None<T>`** - another key principle in the world of `Option<T>`.
 
 Let's dive right in!
 
@@ -136,7 +136,7 @@ Now we've seen `IExceptionMsg` we can turn to the *other* Return function, which
 
 ## `Return<T>(Func<T>, Handler) -> Option<T>`
 
-A key principle of `Option<T>` is that we **always** handle our exceptions.  Therefore whenever we try to 'lift' a function instead of a value into the world of `Option<T>`, we need to catch things that go wrong.
+A key principle of `Option<T>` is that **we always handle our exceptions**.  Therefore whenever we try to 'lift' a function instead of a value into the world of `Option<T>`, we need to catch things that go wrong.
 
 This is where the delegate `F.OptionF.Handler` comes in, well, handy.  Here is the definition of `Handler`:
 
