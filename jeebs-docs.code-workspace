@@ -6,6 +6,10 @@
 	],
 	"settings": {
 		"files.trimTrailingWhitespace": true,
-		"editor.renderWhitespace": "all"
+		"editor.renderWhitespace": "all",
+		"workbench.colorTheme": "Default Light+",
+		"markdown.styles": [
+			"markdown-preview.css"
+		]
 	}
 }
