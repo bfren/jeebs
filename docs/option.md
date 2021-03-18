@@ -1,5 +1,8 @@
-
-
+---
+layout: default
+title: Option<T> Type
+nav_order: 1
+---
 
 ## The Option Type - Why?
 
