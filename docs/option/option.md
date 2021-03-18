@@ -70,4 +70,7 @@ F# developers like to talk about *monads*, which we have in C# too: `IEnumerable
 
 In keeping with the functional basis of `Option<T>`, **you cannot create an `Option<T>` - whether `Some<T>` or `None<T>` directly.**  Instead there are  functions to 'lift' values into the world of `Option<T>`.
 
+## Next
+{: .no_toc }
+
 So, let's begin with [Return](return)!

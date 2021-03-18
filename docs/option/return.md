@@ -219,3 +219,7 @@ In that last code snippet you may have `True`.  That isn't a typo - there are tw
 They are identical to writing `Return(true)` or `Return(false)` - but I like the shorthands.
 
 They exist because you don't want to return a `None<bool>` when something fails - you want to return a `Some<bool>` with a `false` value, so you can continue processing.  This is what `F.OptionF.False` is for (or simply `False` if you have `using static F.OptionF`).
+
+## Next
+
+Next, we will look at [Option Chains](chains) ...

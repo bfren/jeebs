@@ -2,7 +2,7 @@
 layout: default
 title: Map
 parent: Option<T> Type
-nav_order: 1
+nav_order: 2
 ---
 
 # Map
@@ -16,4 +16,6 @@ nav_order: 1
 
 ## `Map<T, U>(Option<T>, Func<T, U>, Handler) -> Option<U>`
 
-## Messages
+## Next
+
+Similar to Map we have [Bind](bind) ...
