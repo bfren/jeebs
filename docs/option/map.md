@@ -11,6 +11,9 @@ nav_order: 1
 ## Contents
 {: .no_toc }
 
+- TOC
+{:toc}
+
 ## Map
 
 ### `Map<T, U>(Option<T>, Func<T, U>, Handler) -> Option<U>`
