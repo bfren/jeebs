@@ -17,7 +17,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Action<int>>();
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			void r0() => option.AuditSwitch(some);
@@ -40,7 +40,7 @@ namespace Jeebs.Option_Tests
 
 			// Act
 			var r0 = option.AuditSwitch(some);
-			var r1 = option.AuditSwitch(some: some, none: Substitute.For<Action<IMsg?>>());
+			var r1 = option.AuditSwitch(some: some, none: Substitute.For<Action<IMsg>>());
 
 			// Assert
 			some.Received(2).Invoke(value);
@@ -54,7 +54,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = None<int>(msg);
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			var r0 = option.AuditSwitch(none);
@@ -75,7 +75,7 @@ namespace Jeebs.Option_Tests
 			var exception = new Exception();
 
 			void someThrow(int _) => throw exception!;
-			void noneThrow(IMsg? _) => throw exception!;
+			void noneThrow(IMsg _) => throw exception!;
 
 			// Act
 			var r0 = some.AuditSwitch(someThrow);

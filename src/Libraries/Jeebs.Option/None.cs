@@ -12,9 +12,9 @@ namespace Jeebs
 		/// <summary>
 		/// Sometimes a reason for the 'None' value may be set
 		/// </summary>
-		public IMsg? Reason { get; private init; }
+		public IMsg Reason { get; private init; }
 
-		internal None(IMsg? reason) =>
+		internal None(IMsg reason) =>
 			Reason = reason;
 
 		/// <summary>

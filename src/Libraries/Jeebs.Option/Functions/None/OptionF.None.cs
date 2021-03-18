@@ -16,24 +16,19 @@ namespace F
 			new(reason);
 
 		/// <summary>
-		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message
+		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message by type
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
-		/// <typeparam name="TMsg">Message type</typeparam>
+		/// <typeparam name="TMsg">Reason message type</typeparam>
 		public static None<T> None<T, TMsg>()
 			where TMsg : IMsg, new() =>
 			new(new TMsg());
 
-		/// <summary>
-		/// Create a <see cref="Jeebs.None{T}"/> Option type
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="areYouSure">You should normally create <see cref="Jeebs.None{T}"/> objects with a Reason</param>
-		public static None<T> None<T>(bool areYouSure) =>
+		internal static None<T> None<T>(bool areYouSure) =>
 			areYouSure switch
 			{
 				true =>
-					new(null),
+					new(new Msg.NoReasonGivenMsg()),
 
 				false =>
 					new(new Msg.IfYouArentSureDontMakeItMsg())
@@ -42,6 +37,9 @@ namespace F
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
+			/// <summary>No reason given</summary>
+			public sealed record NoReasonGivenMsg : IMsg { }
+
 			/// <summary>If you aren't sure you want to make a <see cref="Jeebs.None{T}"/> without a reason, don't do it!</summary>
 			public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
 		}

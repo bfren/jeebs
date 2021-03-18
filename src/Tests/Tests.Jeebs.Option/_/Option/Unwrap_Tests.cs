@@ -20,7 +20,7 @@ namespace Jeebs.Option_Tests
 			// Act
 			var r0 = some.Unwrap(F.Rnd.Int);
 			var r1 = some.Unwrap(Substitute.For<Func<int>>());
-			var r2 = some.Unwrap(Substitute.For<Func<IMsg?, int>>());
+			var r2 = some.Unwrap(Substitute.For<Func<IMsg, int>>());
 
 			// Assert
 			Assert.Equal(value, r0);
@@ -47,14 +47,14 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var none = None<int>(true);
-			var ifNone = Substitute.For<Func<IMsg?, int>>();
+			var ifNone = Substitute.For<Func<IMsg, int>>();
 
 			// Act
-			none.Unwrap(() => ifNone(null));
+			none.Unwrap(() => ifNone(Substitute.For<IMsg>()));
 			none.Unwrap(ifNone);
 
 			// Assert
-			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg?>());
+			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg>());
 		}
 	}
 }

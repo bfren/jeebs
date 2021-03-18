@@ -17,7 +17,7 @@ namespace F
 		/// <param name="option">Option being audited</param>
 		/// <param name="some">[Optional] Action to run if the current Option is <see cref="Some{T}"/></param>
 		/// <param name="none">[Optional] Action to run if the current Option is <see cref="Jeebs.None{T}"/></param>
-		public static Option<T> AuditSwitch<T>(Option<T> option, Action<T>? some, Action<IMsg?>? none)
+		public static Option<T> AuditSwitch<T>(Option<T> option, Action<T>? some, Action<IMsg>? none)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)

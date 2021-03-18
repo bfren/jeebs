@@ -34,7 +34,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Func<int, Task>>();
-			var none = Substitute.For<Func<IMsg?, Task>>();
+			var none = Substitute.For<Func<IMsg, Task>>();
 
 			// Act
 			Task r0() => AuditSwitchAsync(option, some, null);
@@ -73,7 +73,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var msg = new TestMsg();
 			var option = None<int>(msg);
-			var none = Substitute.For<Func<IMsg?, Task>>();
+			var none = Substitute.For<Func<IMsg, Task>>();
 
 			// Act
 			var r0 = await AuditSwitchAsync(option, null, none);
@@ -94,7 +94,7 @@ namespace F.OptionF_Tests
 			var exception = new Exception();
 
 			Task someThrow(int _) => throw exception!;
-			Task noneThrow(IMsg? _) => throw exception!;
+			Task noneThrow(IMsg _) => throw exception!;
 
 			// Act
 			var r0 = await AuditSwitchAsync(some, someThrow, null);

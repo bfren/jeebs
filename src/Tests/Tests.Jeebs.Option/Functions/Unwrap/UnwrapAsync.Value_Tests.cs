@@ -23,7 +23,7 @@ namespace F.OptionF_Tests
 			// Act
 			var r0 = await task.UnwrapAsync(x => x.Value(Rnd.Int));
 			var r1 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<int>>()));
-			var r2 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<IMsg?, int>>()));
+			var r2 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<IMsg, int>>()));
 
 			// Assert
 			Assert.Equal(value, r0);
@@ -52,14 +52,14 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = None<int>(true);
 			var task = option.AsTask;
-			var ifNone = Substitute.For<Func<IMsg?, int>>();
+			var ifNone = Substitute.For<Func<IMsg, int>>();
 
 			// Act
-			await task.UnwrapAsync(x => x.Value(() => ifNone(null)));
+			await task.UnwrapAsync(x => x.Value(() => ifNone(Substitute.For<IMsg>())));
 			await task.UnwrapAsync(x => x.Value(ifNone));
 
 			// Assert
-			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg?>());
+			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg>());
 		}
 	}
 }

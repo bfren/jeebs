@@ -22,7 +22,7 @@ namespace Jeebs.OptionExtensions_Tests
 			// Act
 			var r0 = await task.UnwrapAsync(x => x.Value(F.Rnd.Int));
 			var r1 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<int>>()));
-			var r2 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<IMsg?, int>>()));
+			var r2 = await task.UnwrapAsync(x => x.Value(Substitute.For<Func<IMsg, int>>()));
 
 			// Assert
 			Assert.Equal(value, r0);
@@ -51,14 +51,14 @@ namespace Jeebs.OptionExtensions_Tests
 			// Arrange
 			var option = None<int>(true);
 			var task = option.AsTask;
-			var ifNone = Substitute.For<Func<IMsg?, int>>();
+			var ifNone = Substitute.For<Func<IMsg, int>>();
 
 			// Act
-			await task.UnwrapAsync(x => x.Value(() => ifNone(null)));
+			await task.UnwrapAsync(x => x.Value(() => ifNone(Substitute.For<IMsg>())));
 			await task.UnwrapAsync(x => x.Value(ifNone));
 
 			// Assert
-			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg?>());
+			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg>());
 		}
 	}
 }

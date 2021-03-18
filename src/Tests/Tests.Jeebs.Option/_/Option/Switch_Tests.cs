@@ -17,7 +17,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Action<int>>();
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			void action() => option.Switch(some, none);
@@ -82,7 +82,7 @@ namespace Jeebs.Option_Tests
 			var reason = new TestMsg();
 			var option = None<int>(reason);
 			var some = Substitute.For<Action<int>>();
-			var none = Substitute.For<Action<IMsg?>>();
+			var none = Substitute.For<Action<IMsg>>();
 
 			// Act
 			option.Switch(

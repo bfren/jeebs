@@ -19,7 +19,7 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = new FakeOption();
 			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg?, Task<string>>>();
+			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
 			Task a0() => MatchAsync(option, some, none);
@@ -37,7 +37,7 @@ namespace F.OptionF_Tests
 			var value = Rnd.Int;
 			var option = Return(value);
 			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg?, Task<string>>>();
+			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
 			await MatchAsync(option, some, none);
@@ -70,14 +70,14 @@ namespace F.OptionF_Tests
 			// Arrange
 			var option = None<int>(true);
 			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg?, Task<string>>>();
+			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
 			await MatchAsync(option, some, none);
 			await MatchAsync(option.AsTask, some, none);
 
 			// Assert
-			await none.Received(2).Invoke(Arg.Any<IMsg?>());
+			await none.Received(2).Invoke(Arg.Any<IMsg>());
 		}
 
 		[Fact]
@@ -87,7 +87,7 @@ namespace F.OptionF_Tests
 			var msg = new TestMsg();
 			var option = None<int>(msg);
 			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg?, Task<string>>>();
+			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
 			await MatchAsync(option, some, none);

@@ -9,8 +9,8 @@ namespace F
 {
 	public static partial class OptionF
 	{
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
-		public static async Task<Option<T>> AuditSwitchAsync<T>(Option<T> option, Func<T, Task>? some, Func<IMsg?, Task>? none)
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
+		public static async Task<Option<T>> AuditSwitchAsync<T>(Option<T> option, Func<T, Task>? some, Func<IMsg, Task>? none)
 		{
 			// Do nothing if the user gave us nothing to do!
 			if (some == null && none == null)
@@ -39,8 +39,8 @@ namespace F
 			return option;
 		}
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg?}?)"/>
-		public static async Task<Option<T>> AuditSwitchAsync<T>(Task<Option<T>> option, Func<T, Task>? some, Func<IMsg?, Task>? none) =>
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
+		public static async Task<Option<T>> AuditSwitchAsync<T>(Task<Option<T>> option, Func<T, Task>? some, Func<IMsg, Task>? none) =>
 			await AuditSwitchAsync(await option, some, none);
 	}
 }
