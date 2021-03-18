@@ -55,4 +55,4 @@ F# developers like to talk about *monads*, which we have in C# too: `IEnumerable
 
 **You cannot create an `Option<T>` - whether `Some<T>` or `None<T>` directly.**  Instead there are wrapper functions that do the creating for you, and assist with exception handling.
 
-So, let's begin with them!
+So, let's begin with [Return](return)!
