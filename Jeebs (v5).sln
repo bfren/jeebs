@@ -102,7 +102,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{337B1DDD-1850-4F1A-8539-1854DD014FC0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		jeebs-v5.code-workspace = jeebs-v5.code-workspace
 		LICENSE = LICENSE
 		src\Local.pack.props = src\Local.pack.props
 		src\Pack.csproj = src\Pack.csproj
@@ -187,7 +186,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Random", "src\Librari
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Random", "src\Tests\Tests.Jeebs.Random\Tests.Jeebs.Random.csproj", "{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Option.Testing", "src\Libraries\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj", "{2E8EC447-8CE4-4B12-9F84-9F817C42A1BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Option.Testing", "src\Libraries\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj", "{2E8EC447-8CE4-4B12-9F84-9F817C42A1BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
