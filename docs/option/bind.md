@@ -129,7 +129,7 @@ internal async Task<Option<List<T>>> GetTaxonomyAsync<T>(Taxonomy taxonomy)
 
     return await
         Return(
-            (Db, w, taxonomy)
+            (Db, w, taxonomy) // lift a tuple
         )
         .Map(
             GetQuery,
@@ -139,12 +139,12 @@ internal async Task<Option<List<T>>> GetTaxonomyAsync<T>(Taxonomy taxonomy)
             ExecuteQuery
         )
         .MapAsync(
-            x => x.ToList(),
-            DefaultHandler
+            x => x.ToList(), // a simple lambda function is fine for this
+            DefaultHandler // no need for a custom error message here
         );
 }
 
-// this returns an ordinary tuple so needs lifting into the world of Option<T> by using Map()
+// returns an ordinary tuple so we lift it into the world of Option<T> by using Map()
 internal static (IUnitOfWork, Taxonomy, string) GetQuery((IWpDb, IUnitOfWork, Taxonomy) input)
 {
     var (db, w, taxonomy) = input;
@@ -153,7 +153,7 @@ internal static (IUnitOfWork, Taxonomy, string) GetQuery((IWpDb, IUnitOfWork, Ta
     );
 }
 
-// this returns an Option<T> so we need to use Bind() and assume it has handled its exceptions correctly
+// returns an Option<T> so we use Bind() and assume it has handled its exceptions
 internal static Task<Option<IEnumerable<T>>> ExecuteQuery((IUnitOfWork, Taxonomy, string) input)
 {
     var (w, taxonomy, sql) = input;
