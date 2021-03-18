@@ -53,7 +53,7 @@ So, let's begin with them!
 
 The following snippets all do the same thing, which is wrap a value in `Some<T>` (you should be able to run this code in C# interactive):
 
-```cs
+```c#
 int number = 42;
 
 # use a pure function to return a value as an Option<T>
