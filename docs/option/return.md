@@ -196,7 +196,7 @@ This message captures various important pieces of information:
 - `Method` is the name of the update method
 - `Id` is the ID of the entity being updated
 
-It extends the `LogMsg` abstract record from the `Jeebs` package to set the log level, and provide a custom log message using the update values.  Then in the `Update()` function I can do something like this:
+`UpdateErrorMsg<T>` extends the `LogMsg` abstract record from the `Jeebs` package to set the log level, and provide a custom log message using the update values.  Then in the `Update()` function I can do something like this:
 
 ```csharp
 return rowsAffected switch
@@ -207,7 +207,6 @@ return rowsAffected switch
     _ =>
         None<bool>(new Msg.UpdateErrorMsg<T>(nameof(UpdateAsync), entity.Id))
 }
-
 ```
 
 ## True and False
