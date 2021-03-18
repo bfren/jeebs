@@ -31,13 +31,13 @@ jobs:
         dotnet-version: '5.0.x'
     - 
       name: A - Restore
-      run: dotnet restore Test.csproj
+      run: dotnet restore src/Test.csproj
     - 
       name: B - Build
-      run: dotnet build Test.csproj --no-restore -c Release
+      run: dotnet build src/Test.csproj --no-restore -c Release
     - 
       name: C - Test
-      run: dotnet test Test.csproj --no-restore --no-build -c Release --verbosity normal
+      run: dotnet test src/Test.csproj --no-restore --no-build -c Release --verbosity normal
     - 
       if: success()
       name: Finish - Success
