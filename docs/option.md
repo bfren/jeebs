@@ -56,13 +56,13 @@ The following snippets all do the same thing, which is wrap a value in `Some<T>`
 ```csharp
 int number = 42;
 
-# use a pure function to return a value as an Option<T>
+// use a pure function to return a value as an Option<T>
 Option<int> option = F.OptionF.Return(number);
 
-# use implicit operator - which calls F.OptionF.Return
+// use implicit operator - which calls F.OptionF.Return
 Option<int> option = number;
 
-# use an extension method - which calls F.OptionF.Return
+// use an extension method - which calls F.OptionF.Return
 Option<int> option = number.Return();
 ```
 
@@ -74,7 +74,7 @@ if (option is Some<int> number)
     Console.Write("The answer to the question is '{0}'.", number.Value);
 }
 
-# The answer to the question is '42'.
+// The answer to the question is '42'.
 ```
 
 Although the function signature of `Return<T>(T)` is `Option<T>`, in reality it *always* returns `Some<T>` - except when it doesn't, which is if you try to wrap a null value in `Some<T>`.  You can do this if you really want (though I'm not sure why) by using `Return<T?>(T?, bool) -> Option<T>` - if you set the `allowNull` boolean to `true` there, you will get a `Some<T?>` where the Value is `null`.
@@ -111,7 +111,7 @@ if (option is None<T> failure)
     Console.Write("Failed when {0}.", failure.Reason);
 }
 
-# Failed when Msg.TriedToDivideByZero.
+// Failed when Msg.TriedToDivideByZero.
 ```
 
 ## Return `None<T>`
