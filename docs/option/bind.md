@@ -121,6 +121,7 @@ Return(customerId)
 In the next section we will actually make a simple test app with everything you need to play around with `Map` and `Bind`.  Before then here is one final snippet from `Jeebs.WordPress` to show a real example (simplified a bit and minus the huge SQL query) of what this looks like in practice:
 
 ```csharp
+// get the terms for a given taxonomy
 internal async Task<Option<List<T>>> GetTaxonomyAsync<T>(Taxonomy taxonomy)
     where T : ITermWithRealCount
 {
@@ -143,6 +144,7 @@ internal async Task<Option<List<T>>> GetTaxonomyAsync<T>(Taxonomy taxonomy)
         );
 }
 
+// this returns an ordinary tuple so needs lifting into the world of Option<T> by using Map()
 internal static (IUnitOfWork, Taxonomy, string) GetQuery((IWpDb, IUnitOfWork, Taxonomy) input)
 {
     var (db, w, taxonomy) = input;
@@ -151,6 +153,7 @@ internal static (IUnitOfWork, Taxonomy, string) GetQuery((IWpDb, IUnitOfWork, Ta
     );
 }
 
+// this returns an Option<T> so we need to use Bind() and assume it has handled its exceptions correctly
 internal static Task<Option<IEnumerable<T>>> ExecuteQuery((IUnitOfWork, Taxonomy, string) input)
 {
     var (w, taxonomy, sql) = input;

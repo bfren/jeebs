@@ -5,7 +5,7 @@ parent: Option<T> Type
 nav_order: 4
 ---
 
-# Bind
+# Sample Application (1)
 {: .no_toc }
 
 ## Contents
