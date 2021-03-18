@@ -66,9 +66,9 @@ Option<int> option = number;
 Option<int> option = number.Return();
 ```
 
-In each case the `option` variable is of type `Option<int>`, but specifically `Some<int>`, which means you can do the following:
+In each case the variable `option` is of type `Option<int>`, but specifically `Some<int>`, which means you can do the following:
 
-```csharp
+```cs
 if (option is Some<int> number)
 {
     Console.Write("The answer to the question is '{0}'.", number.Value);
