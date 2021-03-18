@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Option<T> Type
-nav_order: 0
+nav_order: 1
+has_children: true
 ---
 
 # The `Option<T>` Type

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Map
-nav_order: 2
+parent: Option<T> Type
+nav_order: 1
 ---
 
 # Map
