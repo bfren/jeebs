@@ -1,1 +1,7 @@
+title: "Jeebs"
+
 remote_theme: pmarsceill/just-the-docs
+
+aux_links:
+  "Jeebs on GitHub":
+    - "//github.com/bencgreen/jeebs"

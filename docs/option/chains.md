@@ -6,6 +6,7 @@ nav_order: 1
 ---
 
 # Option Chains
+{: .no_toc }
 
 ## Contents
 {: .no_toc }

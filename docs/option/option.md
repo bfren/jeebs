@@ -116,7 +116,20 @@ This is a critical part of the usefulness of `Option<T>`, and to be honest if yo
 
 As `Option<T>` is a mix of OO and functional programming styles I will be using the following notation across the documentation: `function signature -> return type`, for example `AddTwoNumbers(int, int) -> int`.  This is partly for brevity, and partly because it is similar to how function signatures are written in F#, which will become useful as the functions get more complex.
 
+## LINQPad settings
+
+All the code snippets are tested in LINQPad (v6.12, with .NET 5 support).  If you want to try them out for yourself:
+
+1. Add `Jeebs.Option` NuGet package (Ctrl+Shift+P)
+2. Add the following namespaces to the query (Ctrl+Shift+M):
+
+```plaintext
+Jeebs
+Jeebs.Linq
+static F.OptionF
+```
+
 ## Next
 {: .no_toc }
 
-So, let's begin with [Return](return)!
+So, let's begin with [Return](return)...
