@@ -8,8 +8,8 @@ on:
       - '**'
     paths:
       - '.github/workflows/test.yml'
-      - 'Libraries/**'
-      - 'Tests/**'
+      - 'src/Libraries/**'
+      - 'src/Tests/**'
 
 jobs:
   restore-build-test:

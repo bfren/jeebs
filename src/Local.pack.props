@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+	<Target Name="PackAndPushToLocalNuget" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
+		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build -c Release" />
+		<Exec Command="nuget init &quot;$(ProjectDir)bin\Release&quot; &quot;N:\v5&quot;" />		
+	</Target>
+</Project>
