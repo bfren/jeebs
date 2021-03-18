@@ -4,13 +4,16 @@ title: Option<T> Type
 nav_order: 1
 ---
     
+# The `Option<T>` Type
+{: .no_toc }
+    
 ## Contents
 {: .no_toc }
 
 - TOC
 {:toc}
 
-## The Option Type - Why?
+## Why?
 
 F# contains a built-in `Option` type, and I wanted to be able to code in that style but using C#.  Over a year or so I have designed `Option<T>` to mimic some of F#'s behaviour using C# way.  It works best when you chain pure (and small) functions together - and if you use it well your exception handler will have very little to do!
 
