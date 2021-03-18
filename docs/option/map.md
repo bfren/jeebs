@@ -14,8 +14,6 @@ nav_order: 1
 - TOC
 {:toc}
 
-## Map
-
-### `Map<T, U>(Option<T>, Func<T, U>, Handler) -> Option<U>`
+## `Map<T, U>(Option<T>, Func<T, U>, Handler) -> Option<U>`
 
 ## Messages
