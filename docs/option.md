@@ -81,12 +81,12 @@ Although the function signature of `Return<T>(T)` is `Option<T>`, in reality it 
 
 ### `Return<T>(Func<T>, Handler) -> Option<T>`
 
-Sometimes you may not have the value to hand, but you do have a function that returns a value, which you want to lift into the world of `Option<T>`.  You can do this by using `Return<T>(Func<T>, Handler)` - **but here be dragons**... The first one of these works fine, but the second one has a problem:
+Sometimes you may not have the value to hand, but you do have a function that returns a value, which you want to lift into the world of `Option<T>`.  You can do this by using `Return<T>(Func<T>, Handler)` - **but here be dragons**... The first one of these works fine, but the second one has a problem (apart from the fact that it's missing a required parameter):
 
 ```csharp
 var number = 42;
-var works = F.OptionF.Return(42); # returns Some<int>
-var fails = F.OptionF.Return(() => 42 / 0); # we have a problem!
+var works = F.OptionF.Return(42); // returns Some<int>
+var fails = F.OptionF.Return(() => 42 / 0); // we have a problem
 ```
 
 When the second is run, there would be an Exception - a `DivideByZeroException` to be precise.  But a key principle of `Option<T>` is that we **always** handle our exceptions.  This is where the delegate `F.OptionF.Handler` comes in, well, handy.
