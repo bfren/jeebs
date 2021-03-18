@@ -6,6 +6,10 @@ nav_order: 1
 ---
 
 # Map
+{: .no_toc }
+
+## Contents
+{: .no_toc }
 
 ## Map
 

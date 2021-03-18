@@ -6,6 +6,10 @@ nav_order: 0
 ---
 
 # Return
+{: .no_toc }
+
+## Contents
+{: .no_toc }
 
 ## `Return<T>(T) -> Option<T>`
 
