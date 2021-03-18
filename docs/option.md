@@ -53,7 +53,7 @@ So, let's begin with them!
 
 The following snippets all do the same thing, which is wrap a value in `Some<T>` (you should be able to run this code in C# interactive):
 
-```c#
+```csharp
 int number = 42;
 
 # use a pure function to return a value as an Option<T>
@@ -68,7 +68,7 @@ Option<int> option = number.Return();
 
 In each case the variable `option` is of type `Option<int>`, but specifically `Some<int>`, which means you can do the following:
 
-```cs
+```csharp
 if (option is Some<int> number)
 {
     Console.Write("The answer to the question is '{0}'.", number.Value);
