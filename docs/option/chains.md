@@ -7,6 +7,14 @@ nav_order: 1
 
 # Option Chains
 
+## Contents
+{: .no_toc }
+
+- TOC
+{:toc}
+
+## Isn't this an over-complicated mess?
+
 It's all very well creating a lovely `Option<T>` with `Return<T>(T) -> Option<T>`, but what do you do with it?  Do you really want to have code like this everywhere:
 
 ```csharp

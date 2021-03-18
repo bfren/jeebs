@@ -14,7 +14,57 @@ has_children: true
 - TOC
 {:toc}
 
-## Key Principles
+## The world of `Option<T>`
+
+What if you could get away from huge classes with monster methods?  What if you didn't have to worry about handling null values?
+
+What if you could wrap values in a consistent way, have helpful feedback when something goes wrong, and chain small reusable testable reliable functions to provide stable functionality?
+
+You can: in the world of `Option<T>`!
+
+## What can it do?
+
+To whet your appetite for what using `Option<T>` enables you to write, check out the following snippets - you'll notice that `Option<T>` supports mixing sync and async functions.
+
+The first is from my website's `BlogController`.  Each of the `GetXXX(query)` methods returns `Option<T>`, which are joined together via a Linq `SelectMany`, and used to build the model for the List view.
+
+```csharp
+ProcessOptionAsync(
+    from posts in GetPostsAsync(query)
+    from title in GetTitle(query)
+    from sidebar in GetSidebarAsync(query)
+    select new ListModel
+    {
+        Query = query,
+        Title = title,
+        Section = Section,
+        Page = Page,
+        Posts = posts,
+        Sidebar = sidebar
+    },
+    m => View("List", m)
+);
+```
+
+Or this, which builds a SQL query, executes it, and then processes the results:
+
+```csharp
+Return(modify)
+    .Map(
+        x => GetPostsQuery<TModel>(x),
+        e => new Msg.ErrorGettingPostsQueryExceptionMsg(e)
+    )
+    .BindAsync(
+        x => x.ExecuteQueryAsync()
+    )
+    .BindAsync(
+        x => Process<List<TModel>, TModel>(x, filters)
+    );
+```
+
+In both situations there *cannot* be an unhandled exception, there *cannot* be any `null` values, and if something does go wrong an object with a helpful error message is return.
+
+## Key principles
 
 In the world of `Option<T>` the following key principles are followed:
 
@@ -39,17 +89,13 @@ The following serves as an introduction to the concepts behind `Option<T>` which
 
 `Option<T>` and all its extension methods live in the `Jeebs` namespace (and some useful features in `Jeebs.Linq`).  However the actual 'pure' functions live in `F.OptionF` - I put all my functional-style code in the `F` namespace, and add an `F` suffix to the class type.  My preferred style is then to add `using static F.OptionF` so the functions can be accessed directly.
 
-### Function Signatures
-
-As `Option<T>` is a mix of OO and functional programming styles I will be using the following notation across the documentation: `function signature -> return type`, for example `AddTwoNumbers(int, int) -> int`.  This is partly for brevity, and partly because it is similar to how function signatures are written in F#, which will become useful as the functions get more complex.
-
-### Pure Functions
+### Pure functions
 
 'Pure' functions have no effect outside themselves.  In other words, they receive an input, act on it, and return an output.  They don't affect state, and they don't affect the input object.
 
 In the OO world of C#, I'll admit, this is odd.  There's not really any such thing as a 'function' - at least not one that exists outside a class definition.  However as far as I can, `Option<T>` is written as a series of pure functions, so even the methods in the `Option<T>` class and the extension methods are simply wrappers for the functions, which all live in the `F.OptionF` namespace.
 
-### Some and None
+### `Some<T>` and `None<T>`
 
 `Option<T>` is an abstract class with two implementations.  The return type for a function is *always* `Option<T>`, but the actual object will be one of these:
 
@@ -64,11 +110,11 @@ Within the Jeebs library - and I encourage you to follow the same discipline if 
 
 This is a critical part of the usefulness of `Option<T>`, and to be honest if you prefer having and handling exceptions I suggest you stop reading!  However, I do believe there is a better way...
 
-### The World of `Option<T>`
+  To enter the world we need to 'lift' values into it so we can benefit from all its features.
 
-F# developers like to talk about *monads*, which we have in C# too: `IEnumerable<T>` is effectively a monad, for example.  Monads are a way of wrapping other types and providing certain functions - if you want to know more, there are better teachers than me!
+## Function signatures
 
-In keeping with the functional basis of `Option<T>`, **you cannot create an `Option<T>` - whether `Some<T>` or `None<T>` directly.**  Instead there are  functions to 'lift' values into the world of `Option<T>`.
+As `Option<T>` is a mix of OO and functional programming styles I will be using the following notation across the documentation: `function signature -> return type`, for example `AddTwoNumbers(int, int) -> int`.  This is partly for brevity, and partly because it is similar to how function signatures are written in F#, which will become useful as the functions get more complex.
 
 ## Next
 {: .no_toc }
