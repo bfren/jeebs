@@ -1,12 +1,12 @@
 ---
 layout: default
 title: Option<T> Type
-nav_order: 1
+nav_order: 0
 ---
-    
+
 # The `Option<T>` Type
 {: .no_toc }
-    
+
 ## Contents
 {: .no_toc }
 
