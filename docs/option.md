@@ -94,8 +94,8 @@ Sometimes you may not have the value to hand, but you do have a function that re
 
 ```csharp
 var number = 42;
-var works = F.OptionF.Return(42); // returns Some<int>
-var fails = F.OptionF.Return(() => 42 / 0); // we have a problem
+var works = F.OptionF.Return(number); // returns Some<int>
+var fails = F.OptionF.Return(() => number / 0); // we have a problem
 ```
 
 When the second is run, there would be an Exception - a `DivideByZeroException` to be precise.  But a key principle of `Option<T>` is that we **always** handle our exceptions.  This is where the delegate `F.OptionF.Handler` comes in, well, handy.
