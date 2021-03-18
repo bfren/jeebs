@@ -3,6 +3,12 @@ layout: default
 title: Option<T> Type
 nav_order: 1
 ---
+    
+## Contents
+{: .no_toc }
+
+- TOC
+{:toc}
 
 ## The Option Type - Why?
 
