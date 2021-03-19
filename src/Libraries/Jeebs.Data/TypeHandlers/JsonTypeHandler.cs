@@ -20,7 +20,7 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="value">T value</param>
 		/// <returns>JSON</returns>
 		protected override string Format(T value) =>
-			Serialise(value);
+			Serialise(value).Unwrap(Empty);
 
 		/// <summary>
 		/// Deserialise JSON string

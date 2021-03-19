@@ -11,13 +11,6 @@ namespace Jeebs.Data.TypeHandlers
 		where T : Enumerated
 	{
 		/// <summary>
-		/// Convert to list of string values
-		/// </summary>
-		/// <param name="value">EnumeratedList</param>
-		protected override string Format(EnumeratedList<T> value) =>
-			value.Serialise();
-
-		/// <summary>
 		/// Parse from list of string values and convert
 		/// </summary>
 		/// <param name="json">JSON string</param>
