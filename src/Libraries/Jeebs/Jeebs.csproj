@@ -8,4 +8,7 @@
     <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
     <ProjectReference Include="..\Jeebs.Random\Jeebs.Random.csproj" />
   </ItemGroup>
+	<ItemGroup Label="Embed Version">
+		<EmbeddedResource Include="$(VersionPath)"/>
+	</ItemGroup>
 </Project>

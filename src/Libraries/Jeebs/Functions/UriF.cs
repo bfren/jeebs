@@ -6,7 +6,7 @@ using System;
 namespace F
 {
 	/// <summary>
-	/// URI function
+	/// URI functions
 	/// </summary>
 	public static class UriF
 	{

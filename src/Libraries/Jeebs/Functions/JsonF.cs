@@ -10,7 +10,7 @@ using static F.OptionF;
 namespace F
 {
 	/// <summary>
-	/// JSON shorthands
+	/// JSON functions
 	/// </summary>
 	public static class JsonF
 	{
