@@ -41,7 +41,7 @@ namespace Jeebs
 		/// <summary>
 		/// Serialise list as JSON
 		/// </summary>
-		public string Serialise()
+		public Option<string> Serialise()
 		{
 			var list = new List<string>();
 			ForEach(e => list.Add(e));

@@ -39,6 +39,7 @@ namespace F
 
 			options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 			options.Converters.Add(new Internals.EnumeratedConverterFactory());
+			options.Converters.Add(new Internals.OptionConverterFactory());
 			options.Converters.Add(new Internals.StrongIdConverterFactory());
 		}
 
@@ -70,18 +71,21 @@ namespace F
 		/// <param name="obj">The object to serialise</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		/// <returns>Json String of serialised object</returns>
-		public static string Serialise<T>(T obj, JsonSerializerOptions options) =>
+		public static Option<string> Serialise<T>(T obj, JsonSerializerOptions options) =>
 			obj switch
 			{
 				T x =>
-					JsonSerializer.Serialize(x, options),
+					Return(
+						() => JsonSerializer.Serialize(x, options),
+						e => new Msg.SerialiseExceptionMsg(e)
+					),
 
 				_ =>
 					Empty
 			};
 
 		/// <inheritdoc cref="Serialise{T}(T, JsonSerializerOptions)"/>
-		public static string Serialise<T>(T obj) =>
+		public static Option<string> Serialise<T>(T obj) =>
 			Serialise(obj, options);
 
 		/// <summary>
@@ -133,6 +137,10 @@ namespace F
 
 			/// <summary>The object was deserialised but returned null</summary>
 			public sealed record DeserialisingReturnedNullMsg : IMsg { }
+
+			/// <summary>Exception caught during <see cref="JsonSerializer.Serialize{TValue}(TValue, JsonSerializerOptions?)"/></summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record SerialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }
