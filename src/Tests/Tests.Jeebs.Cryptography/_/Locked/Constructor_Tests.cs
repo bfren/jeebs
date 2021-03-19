@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
+using static F.CryptoF;
 
 namespace Jeebs.Cryptography.Locked_Tests
 {
@@ -25,7 +26,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = new Locked<string>(value, key);
@@ -33,7 +34,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 			// Assert
 			Assert.NotEmpty(result.Salt);
 			Assert.NotEmpty(result.Nonce);
-			Assert.NotEmpty(result.EncryptedContents);
+			var some = result.EncryptedContents.AssertSome();
+			Assert.NotEmpty(some);
 		}
 
 		[Fact]
@@ -49,7 +51,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 			// Assert
 			Assert.NotEmpty(result.Salt);
 			Assert.NotEmpty(result.Nonce);
-			Assert.NotEmpty(result.EncryptedContents);
+			var some = result.EncryptedContents.AssertSome();
+			Assert.NotEmpty(some);
 		}
 	}
 }

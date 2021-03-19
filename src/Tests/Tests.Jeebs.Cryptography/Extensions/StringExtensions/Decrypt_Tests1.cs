@@ -81,7 +81,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 
 			// Assert
 			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<UnlockWhenEncryptedContentsIsNullMsg>(none.Reason);
+			Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none.Reason);
 		}
 
 		[Fact]

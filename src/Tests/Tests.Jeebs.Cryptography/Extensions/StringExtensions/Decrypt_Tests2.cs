@@ -14,7 +14,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Without_Type_Null_Input_Byte_Key_Returns_Empty(string input)
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = input.Decrypt(key);
@@ -27,7 +27,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Without_Type_Invalid_Json_Input_Byte_Key_Returns_Empty()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var json = F.Rnd.Str;
 
 			// Act
@@ -53,7 +53,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Without_Type_Incorrect_Byte_Key_Returns_Empty()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = defaultInputStringEncryptedWithByteKey.Decrypt(key);
@@ -66,7 +66,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Without_Type_Incorrect_Json_Input_Byte_Key_Returns_Empty()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			const string json = "{\"foo\":\"bar\"}";
 
 			// Act

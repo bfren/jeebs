@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Jeebs.Exceptions;
 using static F.OptionF;
@@ -18,6 +19,7 @@ namespace Jeebs
 		/// <summary>
 		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>
 		/// </summary>
+		[JsonIgnore]
 		public Task<Option<T>> AsTask =>
 			Task.FromResult(this);
 
