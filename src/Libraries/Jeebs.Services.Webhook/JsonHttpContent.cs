@@ -17,6 +17,8 @@ namespace Jeebs.Services.Webhook
 		/// </summary>
 		/// <param name="obj">Content to be encoded</param>
 		/// <param name="type">Content-type</param>
-		public JsonHttpContent(object obj, string type = "application/json") : base(Serialise(obj), Encoding.UTF8, type) { }
+		public JsonHttpContent(object obj, string type = "application/json") :
+			base(Serialise(obj).Unwrap(string.Empty), Encoding.UTF8, type)
+		{ }
 	}
 }

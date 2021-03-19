@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Reflection;
+using static F.JsonF;
 
 namespace Jeebs.Data.Querying
 {
@@ -59,6 +60,6 @@ namespace Jeebs.Data.Querying
 		/// Return parameters as JSON
 		/// </summary>
 		public override string ToString() =>
-			F.JsonF.Serialise(this);
+			Serialise(this).Unwrap(Empty);
 	}
 }
