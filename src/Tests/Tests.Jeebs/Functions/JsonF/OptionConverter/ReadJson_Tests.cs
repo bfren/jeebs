@@ -3,8 +3,6 @@
 
 using Jeebs;
 using Xunit;
-using static F.OptionF;
-using static F.Internals.OptionConverterMsg;
 using static F.JsonF.Msg;
 
 namespace F.JsonF_Tests.OptionConverter_Tests

@@ -31,6 +31,5 @@ namespace Jeebs.Cryptography
 				_ =>
 					string.Empty
 			};
-
 	}
 }

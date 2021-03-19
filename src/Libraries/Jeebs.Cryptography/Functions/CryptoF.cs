@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Security.Cryptography;
 using System.Text;
 using Jeebs;
 using Sodium;

@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using Sodium;
 using Sodium.Exceptions;
-using Jeebs.Linq;
 using static F.OptionF;
 
 namespace Jeebs.Cryptography
