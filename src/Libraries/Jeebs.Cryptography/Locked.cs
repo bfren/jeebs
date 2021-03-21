@@ -57,7 +57,7 @@ namespace Jeebs.Cryptography
 		/// <param name="key">Encryption Key</param>
 		public Option<Lockable<T>> Unlock(byte[] key)
 		{
-			return EncryptedContents.Match(
+			return EncryptedContents.Switch(
 				some: x =>
 				{
 					try
@@ -111,7 +111,7 @@ namespace Jeebs.Cryptography
 		/// Serialise this LockedBox as JSON
 		/// </summary>
 		public Option<string> Serialise() =>
-			EncryptedContents.Match(
+			EncryptedContents.Switch(
 				some: _ => F.JsonF.Serialise(this),
 				none: Return(F.JsonF.Empty)
 			);

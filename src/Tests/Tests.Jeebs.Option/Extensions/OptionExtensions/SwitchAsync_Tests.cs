@@ -9,7 +9,7 @@ using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
-	public class MatchExtensionsAsync_Tests
+	public class SwitchAsync_Tests
 	{
 		[Fact]
 		public async Task If_Some_Runs_Some()
@@ -21,57 +21,57 @@ namespace Jeebs.Option_Tests
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: F.Rnd.Str
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: some,
 				none: F.Rnd.Str
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: Task.FromResult(F.Rnd.Str)
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: Substitute.For<Func<string>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: some,
 				none: Substitute.For<Func<string>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: Substitute.For<Func<Task<string>>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: some,
 				none: Substitute.For<Func<Task<string>>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: Substitute.For<Func<IMsg, string>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: v => some(v).GetAwaiter().GetResult(),
 				none: Substitute.For<Func<IMsg, Task<string>>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: some,
 				none: Substitute.For<Func<IMsg, string>>()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: some,
 				none: Substitute.For<Func<IMsg, Task<string>>>()
 			);
@@ -89,22 +89,22 @@ namespace Jeebs.Option_Tests
 			var value = F.Rnd.Str;
 
 			// Act
-			var r0 = await task.MatchAsync(
+			var r0 = await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: value
 			);
 
-			var r1 = await task.MatchAsync(
+			var r1 = await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: value
 			);
 
-			var r2 = await task.MatchAsync(
+			var r2 = await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: Task.FromResult(value)
 			);
 
-			var r3 = await task.MatchAsync(
+			var r3 = await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: Task.FromResult(value)
 			);
@@ -125,62 +125,62 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<string>>();
 
 			// Act
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: none()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: none()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: Task.FromResult(none())
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: Task.FromResult(none())
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: none
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: none
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: () => Task.FromResult(none())
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: () => Task.FromResult(none())
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: _ => none()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: _ => none()
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, string>>(),
 				none: _ => Task.FromResult(none())
 			);
 
-			await task.MatchAsync(
+			await task.SwitchAsync(
 				some: Substitute.For<Func<int, Task<string>>>(),
 				none: _ => Task.FromResult(none())
 			);

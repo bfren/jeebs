@@ -49,7 +49,7 @@ namespace F
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>No items in the list/// </summary>
+			/// <summary>No items in the list</summary>
 			public sealed record UnwrapSingleNoItemsMsg : IMsg { }
 
 			/// <summary>Too many items in the list</summary>

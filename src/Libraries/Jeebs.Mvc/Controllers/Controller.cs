@@ -45,7 +45,7 @@ namespace Jeebs.Mvc
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
 		protected Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
-			option.MatchAsync(
+			option.SwitchAsync(
 				some: value =>
 					success(value),
 				none: reason =>
@@ -59,7 +59,7 @@ namespace Jeebs.Mvc
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
 		protected Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, IActionResult> success) =>
-			option.MatchAsync(
+			option.SwitchAsync(
 				some: value =>
 					success(value),
 				none: reason =>
@@ -73,7 +73,7 @@ namespace Jeebs.Mvc
 		/// <param name="option">Option value</param>
 		/// <param name="success">Function to run when the result is successful</param>
 		protected Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, Task<IActionResult>> success) =>
-			option.MatchAsync(
+			option.SwitchAsync(
 				some: value =>
 					success(value),
 				none: reason =>
@@ -82,7 +82,7 @@ namespace Jeebs.Mvc
 
 		/// <inheritdoc cref="ProcessOptionAsync{T}(Option{T}, Func{T, Task{IActionResult}})"/>
 		protected IActionResult ProcessOption<T>(Option<T> option, Func<T, IActionResult> success) =>
-			option.Match(
+			option.Switch(
 				some: value =>
 					success(value),
 				none: reason =>

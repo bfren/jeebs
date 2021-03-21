@@ -20,7 +20,7 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
-			void action() => option.Match(some, none);
+			void action() => option.Switch(some, none);
 
 			// Assert
 			Assert.Throws<UnknownOptionException>(action);
@@ -35,22 +35,22 @@ namespace Jeebs.Option_Tests
 			var some = Substitute.For<Func<int, string>>();
 
 			// Act
-			option.Match(
+			option.Switch(
 				some: some,
 				none: Substitute.For<Func<IMsg, string>>()
 			);
 
-			option.Match(
+			option.Switch(
 				some: some,
 				none: F.Rnd.Str
 			);
 
-			option.Match(
+			option.Switch(
 				some: some,
 				none: Substitute.For<Func<string>>()
 			);
 
-			option.Match(
+			option.Switch(
 				some: some,
 				none: Substitute.For<Func<IMsg, string>>()
 			);
@@ -67,7 +67,7 @@ namespace Jeebs.Option_Tests
 			var value = F.Rnd.Str;
 
 			// Act
-			var result = option.Match(
+			var result = option.Switch(
 				some: Substitute.For<Func<int, string>>(),
 				none: value
 			);
@@ -84,12 +84,12 @@ namespace Jeebs.Option_Tests
 			var none = Substitute.For<Func<string>>();
 
 			// Act
-			option.Match(
+			option.Switch(
 				some: Substitute.For<Func<int, string>>(),
 				none: none
 			);
 
-			option.Match(
+			option.Switch(
 				some: Substitute.For<Func<int, string>>(),
 				none: _ => none()
 			);

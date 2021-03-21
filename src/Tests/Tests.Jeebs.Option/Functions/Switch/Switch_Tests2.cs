@@ -10,7 +10,7 @@ using static F.OptionF;
 
 namespace F.OptionF_Tests
 {
-	public class Match_Tests
+	public partial class Switch_Tests
 	{
 		[Fact]
 		public void If_Unknown_Option_Throws_UnknownOptionException()
@@ -21,7 +21,7 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
-			void action() => Match(option, some, none);
+			void action() => Switch(option, some, none);
 
 			// Assert
 			Assert.Throws<UnknownOptionException>(action);
@@ -37,7 +37,7 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
-			Match(option, some, none);
+			Switch(option, some, none);
 
 			// Assert
 			some.Received().Invoke(value);
@@ -52,7 +52,7 @@ namespace F.OptionF_Tests
 			var some = Substitute.For<Func<int, string>>();
 
 			// Act
-			var result = Match(option, some, _ => value);
+			var result = Switch(option, some, _ => value);
 
 			// Assert
 			Assert.Equal(value, result);
@@ -67,7 +67,7 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
-			Match(option, some, none);
+			Switch(option, some, none);
 
 			// Assert
 			none.Received().Invoke(Arg.Any<IMsg>());
@@ -83,14 +83,10 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, string>>();
 
 			// Act
-			Match(option, some, none);
+			Switch(option, some, none);
 
 			// Assert
 			none.Received().Invoke(msg);
 		}
-
-		public class FakeOption : Option<int> { }
-
-		public class TestMsg : IMsg { }
 	}
 }

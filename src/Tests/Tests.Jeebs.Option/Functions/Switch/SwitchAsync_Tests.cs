@@ -11,7 +11,7 @@ using static F.OptionF;
 
 namespace F.OptionF_Tests
 {
-	public class MatchAsync_Tests
+	public class SwitchAsync_Tests
 	{
 		[Fact]
 		public async Task If_Unknown_Option_Throws_UnknownOptionException()
@@ -22,8 +22,8 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
-			Task a0() => MatchAsync(option, some, none);
-			Task a1() => MatchAsync(option.AsTask, some, none);
+			Task a0() => SwitchAsync(option, some, none);
+			Task a1() => SwitchAsync(option.AsTask, some, none);
 
 			// Assert
 			await Assert.ThrowsAsync<UnknownOptionException>(a0);
@@ -40,8 +40,8 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
-			await MatchAsync(option, some, none);
-			await MatchAsync(option.AsTask, some, none);
+			await SwitchAsync(option, some, none);
+			await SwitchAsync(option.AsTask, some, none);
 
 			// Assert
 			await some.Received(2).Invoke(value);
@@ -56,8 +56,8 @@ namespace F.OptionF_Tests
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
-			var r0 = await MatchAsync(option, some, _ => Task.FromResult(value));
-			var r1 = await MatchAsync(option.AsTask, some, _ => Task.FromResult(value));
+			var r0 = await SwitchAsync(option, some, _ => Task.FromResult(value));
+			var r1 = await SwitchAsync(option.AsTask, some, _ => Task.FromResult(value));
 
 			// Assert
 			Assert.Equal(value, r0);
@@ -73,8 +73,8 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
-			await MatchAsync(option, some, none);
-			await MatchAsync(option.AsTask, some, none);
+			await SwitchAsync(option, some, none);
+			await SwitchAsync(option.AsTask, some, none);
 
 			// Assert
 			await none.Received(2).Invoke(Arg.Any<IMsg>());
@@ -90,8 +90,8 @@ namespace F.OptionF_Tests
 			var none = Substitute.For<Func<IMsg, Task<string>>>();
 
 			// Act
-			await MatchAsync(option, some, none);
-			await MatchAsync(option.AsTask, some, none);
+			await SwitchAsync(option, some, none);
+			await SwitchAsync(option.AsTask, some, none);
 
 			// Assert
 			await none.Received(2).Invoke(msg);
