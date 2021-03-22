@@ -100,6 +100,32 @@ namespace Jeebs
 				none: _ => true
 			);
 
+		/// <summary>
+		/// Compare an option type with a value type
+		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Value</param>
+		/// <param name="r">Option</param>
+		public static bool operator ==(T l, Option<T> r) =>
+			F.OptionF.Switch(
+				r,
+				some: v => Equals(v, l),
+				none: _ => false
+			);
+
+		/// <summary>
+		/// Compare an option type with a value type
+		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Value</param>
+		/// <param name="r">Option</param>
+		public static bool operator !=(T l, Option<T> r) =>
+			F.OptionF.Switch(
+				r,
+				some: v => !Equals(v, l),
+				none: _ => true
+			);
+
 		#endregion
 
 		#region Equals
