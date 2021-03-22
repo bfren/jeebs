@@ -11,5 +11,11 @@ namespace Jeebs.Data
 	/// <param name="property">Entity property PropertyInfo</param>
 	public sealed record MappedColumn(string Table, string Name, PropertyInfo Property) :
 		Column(Table, Name, Property.Name), IMappedColumn
-	{ }
+	{
+		/// <summary>
+		/// Return table name
+		/// </summary>
+		public override string ToString() =>
+			Name;
+	}
 }

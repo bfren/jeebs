@@ -3,18 +3,23 @@
 
 using System;
 
-namespace Jeebs.Data.Exceptions
+namespace Jeebs.Data.Mapping.Exceptions
 {
 	/// <summary>
-	/// Unable to find Version column on specified entity
+	/// See <see cref="Mapper.Map{TEntity}(ITable)"/>
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	public sealed class UnableToFindVersionColumnException<TEntity> : Exception
+	public sealed class UnableToFindVersionColumnException : Exception
 	{
 		/// <summary>
 		/// Create exception
 		/// </summary>
 		public UnableToFindVersionColumnException() { }
+
+		/// <summary>
+		/// Create exception
+		/// </summary>
+		/// <param name="reason">Reason</param>
+		public UnableToFindVersionColumnException(IMsg reason) : base(reason.ToString() ?? string.Empty) { }
 
 		/// <summary>
 		/// Create exception

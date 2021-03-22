@@ -3,18 +3,23 @@
 
 using System;
 
-namespace Jeebs.Data.Exceptions
+namespace Jeebs.Data.Mapping.Exceptions
 {
 	/// <summary>
-	/// Unable to get mapped columns for specified entity
+	/// See <see cref="Mapper.Map{TEntity}(ITable)"/>
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	public sealed class UnableToGetMappedColumnsException<TEntity> : Exception
+	public sealed class UnableToGetMappedColumnsException : Exception
 	{
 		/// <summary>
 		/// Create exception
 		/// </summary>
 		public UnableToGetMappedColumnsException() { }
+
+		/// <summary>
+		/// Create exception
+		/// </summary>
+		/// <param name="reason">Reason</param>
+		public UnableToGetMappedColumnsException(IMsg reason) : base(reason.ToString() ?? string.Empty) { }
 
 		/// <summary>
 		/// Create exception

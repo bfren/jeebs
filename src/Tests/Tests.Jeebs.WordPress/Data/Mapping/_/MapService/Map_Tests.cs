@@ -4,7 +4,7 @@
 using Jx.Data.Mapping;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.MapService_Tests
+namespace Jeebs.Data.Mapping.Mapper_Tests
 {
 	public class Map_Tests
 	{

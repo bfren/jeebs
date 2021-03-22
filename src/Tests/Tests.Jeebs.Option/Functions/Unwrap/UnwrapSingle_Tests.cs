@@ -61,11 +61,11 @@ namespace F.OptionF_Tests
 		public void No_Items_Returns_None_With_UnwrapSingleNoItemsMsg()
 		{
 			// Arrange
-			var empty = (IEnumerable<int>)Array.Empty<int>();
+			var empty = Array.Empty<int>();
 			var option = Return(empty);
 
 			// Act
-			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
+			var result = UnwrapSingle<int[], int>(option, null, null, null);
 
 			// Assert
 			var none = result.AssertNone();
@@ -76,12 +76,12 @@ namespace F.OptionF_Tests
 		public void No_Items_Runs_NoItems()
 		{
 			// Arrange
-			var empty = (IEnumerable<int>)Array.Empty<int>();
+			var empty = Array.Empty<int>();
 			var option = Return(empty);
 			var noItems = Substitute.For<Func<IMsg>>();
 
 			// Act
-			UnwrapSingle<IEnumerable<int>, int>(option, noItems: noItems, null, null);
+			UnwrapSingle<int[], int>(option, noItems: noItems, null, null);
 
 			// Assert
 			noItems.Received().Invoke();
@@ -91,11 +91,11 @@ namespace F.OptionF_Tests
 		public void Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
+			var list = new[] { Rnd.Int, Rnd.Int };
 			var option = Return(list);
 
 			// Act
-			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
+			var result = UnwrapSingle<int[], int>(option, null, null, null);
 
 			// Assert
 			var none = result.AssertNone();
@@ -106,12 +106,12 @@ namespace F.OptionF_Tests
 		public void Too_Many_Items_Runs_TooMany()
 		{
 			// Arrange
-			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
+			var list = new[] { Rnd.Int, Rnd.Int };
 			var option = Return(list);
 			var tooMany = Substitute.For<Func<IMsg>>();
 
 			// Act
-			UnwrapSingle<IEnumerable<int>, int>(option, null, tooMany: tooMany, null);
+			UnwrapSingle<int[], int>(option, null, tooMany: tooMany, null);
 
 			// Assert
 			tooMany.Received().Invoke();
@@ -148,15 +148,31 @@ namespace F.OptionF_Tests
 		}
 
 		[Fact]
+		public void Incorrect_Type_Returns_None_With_UnwrapSingleIncorrectTypeErrorMsg()
+		{
+			// Arrange
+			var value = Rnd.Int;
+			var list = new[] { value };
+			var option = Return(list);
+
+			// Act
+			var result = UnwrapSingle<int[], string>(option, null, null, null);
+
+			// Assert
+			var none = result.AssertNone();
+			Assert.IsType<UnwrapSingleIncorrectTypeErrorMsg>(none);
+		}
+
+		[Fact]
 		public void List_With_Single_Item_Returns_Single()
 		{
 			// Arrange
 			var value = Rnd.Int;
-			var list = (IEnumerable<int>)new[] { value };
+			var list = new[] { value };
 			var option = Return(list);
 
 			// Act
-			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
+			var result = UnwrapSingle<int[], int>(option, null, null, null);
 
 			// Assert
 			Assert.Equal(value, result);

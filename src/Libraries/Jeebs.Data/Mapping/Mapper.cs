@@ -6,28 +6,26 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jeebs.Data.Exceptions;
 using Jeebs.Data.Mapping.Exceptions;
-using Jx.Data.Mapping;
 using static F.OptionF;
 
 namespace Jeebs.Data
 {
 	/// <inheritdoc/>
-	internal sealed class Mapper : IDisposable
+	internal sealed class Mapper : IMapper, IDisposable
 	{
 		#region Static
 
 		/// <summary>
 		/// Default (global) instance
 		/// </summary>
-		internal static Mapper Instance =>
+		internal static IMapper Instance =>
 			instance.Value;
 
 		/// <summary>
 		/// Lazily create a <see cref="Mapper"/>
 		/// </summary>
-		private static readonly Lazy<Mapper> instance = new(() => new Mapper(), true);
+		private static readonly Lazy<IMapper> instance = new(() => new Mapper(), true);
 
 		#endregion
 
@@ -41,19 +39,8 @@ namespace Jeebs.Data
 		/// </summary>
 		internal Mapper() { }
 
-		/// <summary>
-		/// FOR TESTING
-		/// Map the specified <typeparamref name="TEntity"/> to the specified <typeparamref name="TTable"/>
-		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		/// <typeparam name="TTable">Table type</typeparam>
-		internal ITableMap Map<TEntity, TTable>()
-			where TEntity : IEntity
-			where TTable : Table, new() =>
-			Map<TEntity>(new TTable());
-
 		/// <inheritdoc/>
-		internal ITableMap Map<TEntity>(ITable table)
+		public ITableMap Map<TEntity>(ITable table)
 			where TEntity : IEntity =>
 			mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 			{
@@ -66,12 +53,12 @@ namespace Jeebs.Data
 
 				// Get mapped columns
 				var columns = GetMappedColumns<TEntity>(table).Unwrap(
-					() => throw new UnableToGetMappedColumnsException<TEntity>()
+					reason => throw new UnableToGetMappedColumnsException(reason)
 				);
 
 				// Get ID property
 				var idProperty = GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
-					() => throw new UnableToFindIdColumnException<TEntity>()
+					reason => throw new UnableToFindIdColumnException(reason)
 				);
 
 				// Create Table Map
@@ -81,7 +68,7 @@ namespace Jeebs.Data
 				if (typeof(TEntity).Implements<IEntityWithVersion>())
 				{
 					map.VersionColumn = GetColumnWithAttribute<TEntity, VersionAttribute>(columns).Unwrap(
-						() => throw new UnableToFindVersionColumnException<TEntity>()
+						reason => throw new UnableToFindVersionColumnException(reason)
 					);
 				}
 
@@ -90,7 +77,7 @@ namespace Jeebs.Data
 			});
 
 		/// <inheritdoc/>
-		internal static (bool valid, string errors) ValidateTable<TEntity>(ITable table)
+		internal static (bool valid, List<string> errors) ValidateTable<TEntity>(ITable table)
 			where TEntity : IEntity
 		{
 			// Get types
@@ -133,11 +120,11 @@ namespace Jeebs.Data
 			// If there are any errors, return false and list errors on new lines
 			if (errors.Count > 0)
 			{
-				return (false, string.Join("\n", errors));
+				return (false, errors);
 			}
 
 			// Return valid with no errors
-			return (true, string.Empty);
+			return (true, new());
 		}
 
 		/// <inheritdoc/>
@@ -147,15 +134,15 @@ namespace Jeebs.Data
 				table
 			)
 			.Map(
-				x => from column in x.GetType().GetProperties()
-					 let columnName = column.GetValue(x)?.ToString()
-					 join property in typeof(TEntity).GetProperties() on column.Name equals property.Name
-					 where property.GetCustomAttribute<IgnoreAttribute>() == null
+				x => from tableProperty in x.GetType().GetProperties()
+					 let column = tableProperty.GetValue(x)?.ToString()
+					 join entityProperty in typeof(TEntity).GetProperties() on tableProperty.Name equals entityProperty.Name
+					 where entityProperty.GetCustomAttribute<IgnoreAttribute>() == null
 					 select new MappedColumn
 					 (
-						 Table: x.TableName,
-						 Name: columnName,
-						 Property: property
+						 Table: x.GetName(),
+						 Name: column,
+						 Property: entityProperty
 					 ),
 				e => new Msg.ErrorGettingMappedColumnsMsg<TEntity>(e)
 			)
@@ -165,23 +152,23 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		internal static Option<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
+		internal static Option<IMappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
 			where TEntity : IEntity
 			where TAttribute : Attribute =>
 			Return(
 				columns
 			)
 			.Map(
-				x => x.Where(p => p.Property.GetCustomAttribute(typeof(TAttribute)) != null),
+				x => x.Where(p => p.Property.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
 				e => new Msg.ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(e)
 			)
-			.UnwrapSingle<MappedColumn>(
+			.UnwrapSingle<IMappedColumn>(
 				noItems: () => new Msg.NoPropertyWithAttributeMsg<TEntity, TAttribute>(),
 				tooMany: () => new Msg.TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>()
 			);
 
 		/// <inheritdoc/>
-		internal Option<ITableMap> GetTableMapFor<TEntity>()
+		public Option<ITableMap> GetTableMapFor<TEntity>()
 			where TEntity : IEntity
 		{
 			if (mappedEntities.TryGetValue(typeof(TEntity), out var map))
@@ -224,12 +211,22 @@ namespace Jeebs.Data
 			/// <summary>No property with specified attribute found on entity</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <typeparam name="TAttribute">Attribute type</typeparam>
-			public sealed record NoPropertyWithAttributeMsg<TEntity, TAttribute>() : IMsg { }
+			public sealed record NoPropertyWithAttributeMsg<TEntity, TAttribute>() : IMsg
+			{
+				/// <summary>Return message with class type parameters</summary>
+				public override string ToString() =>
+					$"Required {typeof(TAttribute)} missing on entity {typeof(TEntity)}.";
+			}
 
 			/// <summary>Too many properties with specified attribute found on entity</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <typeparam name="TAttribute">Attribute type</typeparam>
-			public sealed record TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : IMsg { }
+			public sealed record TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : IMsg
+			{
+				/// <summary>Return message with class type parameters</summary>
+				public override string ToString() =>
+					$"More than one {typeof(TAttribute)} found on entity {typeof(TEntity)}.";
+			}
 
 			/// <summary>The entity being requested has not been mapped yet</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>

@@ -16,7 +16,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public string Name =>
-			Table.TableName;
+			Table.GetName();
 
 		/// <inheritdoc/>
 		public IMappedColumnList Columns { get; init; }

@@ -297,7 +297,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			F.OptionF.UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
+			UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
 
 		#endregion
 	}

@@ -4,13 +4,13 @@
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Table
+	/// Table interface
 	/// </summary>
 	public interface ITable
 	{
 		/// <summary>
-		/// The table name
+		/// Return the table name
 		/// </summary>
-		string TableName { get; init; }
+		string GetName();
 	}
 }

@@ -14,5 +14,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="_\" />
   </ItemGroup>
 </Project>

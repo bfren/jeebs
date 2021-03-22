@@ -2,12 +2,12 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs.Data.Mapping;
+using System.Collections.Generic;
 
-namespace Jx.Data.Mapping
+namespace Jeebs.Data.Mapping.Exceptions
 {
 	/// <summary>
-	/// See <see cref="IMapper.Map{TEntity}(ITable)"/>
+	/// See <see cref="Mapper.Map{TEntity}(ITable)"/>
 	/// </summary>
 	public sealed class InvalidTableMapException : Exception
 	{
@@ -15,6 +15,12 @@ namespace Jx.Data.Mapping
 		/// Create exception
 		/// </summary>
 		public InvalidTableMapException() { }
+
+		/// <summary>
+		/// Create exception
+		/// </summary>
+		/// <param name="errors">List of errors</param>
+		public InvalidTableMapException(List<string> errors) : base(string.Join("\n", errors)) { }
 
 		/// <summary>
 		/// Create exception

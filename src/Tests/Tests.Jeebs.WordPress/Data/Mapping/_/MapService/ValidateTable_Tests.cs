@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Data.Mapping.MapService_Tests
+namespace Jeebs.Data.Mapping.Mapper_Tests
 {
 	public class ValidateTable_Tests
 	{

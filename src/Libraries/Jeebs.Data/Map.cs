@@ -10,12 +10,18 @@ namespace Jeebs.Data
 	public static class Map<TEntity>
 		where TEntity : IEntity
 	{
+		/// <inheritdoc/>
+		public static ITableMap To<TTable>()
+			where TTable : Table, new() =>
+			To<TTable>(Mapper.Instance);
+
 		/// <summary>
 		/// Map entity to the specified table type
 		/// </summary>
-		public static ITableMap To<TTable>()
+		/// <param name="mapper">IMapper</param>
+		internal static ITableMap To<TTable>(IMapper mapper)
 			where TTable : Table, new() =>
-			Mapper.Instance.Map<TEntity>(new TTable());
+			mapper.Map<TEntity>(new TTable());
 
 		/// <summary>
 		/// Map entity to the specified table
@@ -23,6 +29,15 @@ namespace Jeebs.Data
 		/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
 		public static ITableMap To<TTable>(TTable table)
 			where TTable : Table =>
-			Mapper.Instance.Map<TEntity>(table);
+			To(table, Mapper.Instance);
+
+		/// <summary>
+		/// Map entity to the specified table
+		/// </summary>
+		/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
+		/// <param name="mapper">IMapper</param>
+		internal static ITableMap To<TTable>(TTable table, IMapper mapper)
+			where TTable : Table =>
+			mapper.Map<TEntity>(table);
 	}
 }

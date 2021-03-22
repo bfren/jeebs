@@ -3,17 +3,24 @@
 
 namespace Jeebs.Data
 {
-	/// <summary>
-	/// Table
-	/// </summary>
-	/// <param name="TableName">Table Name</param>
-	public abstract record Table(string TableName) : ITable
+	/// <inheritdoc/>
+	public abstract record Table : ITable
 	{
+		private readonly string name;
+
 		/// <summary>
-		/// Table name (unescaped)
+		/// Create with table name
 		/// </summary>
-		/// <returns>Table name</returns>
+		/// <param name="name">Table Name</param>
+		public Table(string name) =>
+			this.name = name;
+
+		/// <inheritdoc/>
+		public string GetName() =>
+			name;
+
+		/// <inheritdoc cref="GetName"/>
 		public override string ToString() =>
-			TableName;
+			GetName();
 	}
 }

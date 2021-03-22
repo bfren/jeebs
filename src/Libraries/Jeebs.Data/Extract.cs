@@ -6,8 +6,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using static F.OptionF;
+using Msg = Jeebs.Data.ExtractMsg;
 
 namespace Jeebs.Data
 {
@@ -103,20 +103,20 @@ namespace Jeebs.Data
 				// Return extracted columns
 				return extracted;
 			});
+	}
 
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>An error occurred extracting columns from a table</summary>
-			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorExtractingColumnsFromTableExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+	/// <summary>Messages</summary>
+	public static class ExtractMsg
+	{
+		/// <summary>An error occurred extracting columns from a table</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record ErrorExtractingColumnsFromTableExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			/// <summary>An error occurred getting distinct columns</summary>
-			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingDistinctColumnsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <summary>An error occurred getting distinct columns</summary>
+		/// <param name="Exception">Exception object</param>
+		public sealed record ErrorGettingDistinctColumnsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			/// <summary>No matching columns were extracted from the table</summary>
-			public sealed record NoColumnsExtractedFromTableMsg : IMsg { }
-		}
+		/// <summary>No matching columns were extracted from the table</summary>
+		public sealed record NoColumnsExtractedFromTableMsg : IMsg { }
 	}
 }

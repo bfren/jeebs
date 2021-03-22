@@ -16,7 +16,10 @@ namespace F
 		/// <typeparam name="U">Single value type</typeparam>
 		/// <param name="option">Input option</param>
 		/// <param name="unwrap">Fluent unwrap function</param>
-		public static async Task<Option<U>> UnwrapAsync<T, U>(Task<Option<T>> option, Func<FluentUnwrapAsync<T>, Option<U>> unwrap) =>
+		public static async Task<Option<U>> UnwrapAsync<T, U>(
+			Task<Option<T>> option,
+			Func<FluentUnwrapAsync<T>, Option<U>> unwrap
+		) =>
 			unwrap(new FluentUnwrapAsync<T>(await option));
 
 		/// <summary>

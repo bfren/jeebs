@@ -59,7 +59,7 @@ namespace Jeebs.Data.Clients.MySql
 			sql.Append(string.Join(", ", col));
 
 			// Add WHERE id
-			sql.Append($" WHERE `{idColumn.Name}` = @Id;");
+			sql.Append($" WHERE `{idColumn.Name}` = @{idColumn.Alias};");
 
 			// Return query
 			return sql.ToString();
@@ -88,19 +88,19 @@ namespace Jeebs.Data.Clients.MySql
 			// Add version column
 			if (versionColumn is not null)
 			{
-				col.Add($"`{versionColumn.Name}` = @Version + 1");
+				col.Add($"`{versionColumn.Name}` = @{versionColumn.Alias} + 1");
 			}
 
 			// Add update columns
 			sql.Append($"SET {string.Join(", ", col)} ");
 
 			// Add WHERE Id
-			sql.Append($"WHERE `{idColumn.Name}` = @Id");
+			sql.Append($"WHERE `{idColumn.Name}` = @{idColumn.Alias}");
 
 			// Add WHERE Version
 			if (versionColumn is not null)
 			{
-				sql.Append($" AND `{versionColumn.Name}` = @Version");
+				sql.Append($" AND `{versionColumn.Name}` = @{versionColumn.Alias}");
 			}
 
 			// Return query
@@ -118,7 +118,7 @@ namespace Jeebs.Data.Clients.MySql
 			sql.Append($"`{table}` ");
 
 			// Add WHERE id
-			sql.Append($"WHERE `{idColumn.Name}` = @Id;");
+			sql.Append($"WHERE `{idColumn.Name}` = @{idColumn.Alias};");
 
 			// Return query
 			return sql.ToString();
