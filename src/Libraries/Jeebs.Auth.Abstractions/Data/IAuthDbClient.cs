@@ -6,13 +6,13 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// Authentication Role
+	/// Adds additional Authentication functionality to the base <see cref="IDbClient"/>
 	/// </summary>
-	public interface IAuthRole : IAuthRoleModel, IEntity
+	public interface IAuthDbClient : IDbClient
 	{
 		/// <summary>
-		/// Role description
+		/// Migrate to the latest version of the Authentication database
 		/// </summary>
-		string Description { get; init; }
+		void MigrateToLatest();
 	}
 }

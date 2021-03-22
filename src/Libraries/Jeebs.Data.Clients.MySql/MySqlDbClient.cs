@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 namespace Jeebs.Data.Clients.MySql
 {
 	/// <inheritdoc cref="IDbClient"/>
-	public sealed class MySqlDbClient : DbClient
+	public class MySqlDbClient : DbClient
 	{
 		/// <inheritdoc/>
 		public override IDbConnection Connect(string connectionString) =>

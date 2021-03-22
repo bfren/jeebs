@@ -19,7 +19,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 	/// </summary>
 	/// <typeparam name="TUser">User type</typeparam>
 	public abstract class AuthController<TUser> : Controller
-		where TUser : IUserModel, IAuthUser
+		where TUser : IAuthUserModel, IAuthUser
 	{
 		/// <summary>
 		/// IDataAuthProvider

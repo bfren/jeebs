@@ -8,18 +8,18 @@ using Jeebs.Auth.Data;
 
 namespace AppMvc.Models
 {
-	public record UserModel : IUserModel<RoleModel>, IAuthUser
+	public record UserModel : IAuthUser<RoleModel>
 	{
-		public UserId UserId { get; init; } = new();
-		public string EmailAddress { get; init; } = string.Empty;
-		public string FriendlyName { get; init; } = string.Empty;
-		public string FullName { get; init; } = string.Empty;
-		public bool IsSuper { get; init; }
-		public List<RoleModel> Roles { get; init; } = new();
-		public string PasswordHash { get; init; } = string.Empty;
-		public bool IsEnabled { get; init; }
-		public DateTimeOffset? LastSignedIn { get; init; }
-		public long Version { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public string PasswordHash { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public bool IsEnabled { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public DateTimeOffset? LastSignedIn { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
 		public StrongId Id { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public List<RoleModel> Roles { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public AuthUserId UserId { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public string EmailAddress { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public string FriendlyName { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public string? GivenName { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public string? FamilyName { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public bool IsSuper { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
 	}
 }

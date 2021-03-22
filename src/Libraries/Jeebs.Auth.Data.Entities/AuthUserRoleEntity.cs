@@ -5,8 +5,10 @@ using Jeebs.Data;
 
 namespace Jeebs.Auth.Data.Entities
 {
-	/// <inheritdoc cref="IAuthRole"/>
-	internal sealed record UserRoleEntity : IEntity
+	/// <summary>
+	/// Authentication User Role
+	/// </summary>
+	public abstract record AuthUserRoleEntity : IEntity
 	{
 		/// <inheritdoc/>
 		[Ignore]
@@ -16,23 +18,23 @@ namespace Jeebs.Auth.Data.Entities
 				UserRoleId;
 
 			init =>
-				UserRoleId = new UserRoleId(value.Value);
+				UserRoleId = new AuthUserRoleId { Value = value.Value };
 		}
 
 		/// <summary>
 		/// User Role ID
 		/// </summary>
 		[Id]
-		public UserRoleId UserRoleId { get; init; } = new();
+		public AuthUserRoleId UserRoleId { get; init; } = new();
 
 		/// <summary>
 		/// User ID
 		/// </summary>
-		public UserId UserId { get; init; } = new();
+		public AuthUserId UserId { get; init; } = new();
 
 		/// <summary>
 		/// Role ID
 		/// </summary>
-		public RoleId RoleId { get; init; } = new();
+		public AuthRoleId RoleId { get; init; } = new();
 	}
 }

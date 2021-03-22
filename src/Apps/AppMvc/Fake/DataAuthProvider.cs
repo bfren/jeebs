@@ -22,7 +22,7 @@ namespace AppMvc.Fake
 
 			return new Models.UserModel
 			{
-				UserId = new(1),
+				UserId = new() { Value = 1 },
 				EmailAddress = "ben@bcgdesign.com",
 				FriendlyName = "Ben",
 				IsSuper = true,

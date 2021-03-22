@@ -65,7 +65,7 @@ namespace Jeebs.Mvc.Auth
 		/// <typeparam name="TUser">IAuthUser type</typeparam>
 		public AuthBuilder WithData<TProvider, TUser>()
 			where TProvider : class, IAuthDataProvider<TUser>
-			where TUser : IUserModel, IAuthUser
+			where TUser : IAuthUser
 		{
 			CheckProvider();
 
@@ -83,8 +83,8 @@ namespace Jeebs.Mvc.Auth
 		/// <typeparam name="TRole">IRoleModel type</typeparam>
 		public AuthBuilder WithData<TProvider, TUser, TRole>()
 			where TProvider : class, IDataAuthProvider<TUser, TRole>
-			where TUser : IUserModel<TRole>, IAuthUser
-			where TRole : IRoleModel
+			where TUser : IAuthUser<TRole>
+			where TRole : IAuthRole
 		{
 			CheckProvider();
 

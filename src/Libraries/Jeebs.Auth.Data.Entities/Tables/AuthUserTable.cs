@@ -7,54 +7,49 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data.Tables
 {
 	/// <summary>
-	/// User Table
+	/// Authentication User Table
 	/// </summary>
-	public sealed record UserTable : Table
+	public sealed record AuthUserTable() : Table("auth_user")
 	{
 		/// <summary>
 		/// Prefix added before all columns
 		/// </summary>
 		public const string Prefix = "User";
 
-		/// <inheritdoc cref="UserEntity.UserId"/>
+		/// <inheritdoc cref="AuthUserEntity.UserId"/>
 		public string UserId =>
 			nameof(UserId);
 
-		/// <inheritdoc cref="UserEntity.EmailAddress"/>
+		/// <inheritdoc cref="AuthUserEntity.EmailAddress"/>
 		public string EmailAddress =>
 			Prefix + nameof(EmailAddress);
 
-		/// <inheritdoc cref="UserEntity.PasswordHash"/>
+		/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
 		public string PasswordHash =>
 			Prefix + nameof(PasswordHash);
 
-		/// <inheritdoc cref="UserEntity.FriendlyName"/>
+		/// <inheritdoc cref="AuthUserEntity.FriendlyName"/>
 		public string FriendlyName =>
 			Prefix + nameof(FriendlyName);
 
-		/// <inheritdoc cref="UserEntity.GivenName"/>
+		/// <inheritdoc cref="AuthUserEntity.GivenName"/>
 		public string GivenName =>
 			Prefix + nameof(GivenName);
 
-		/// <inheritdoc cref="UserEntity.FriendlyName"/>
+		/// <inheritdoc cref="AuthUserEntity.FriendlyName"/>
 		public string FamilyName =>
 			Prefix + nameof(FamilyName);
 
-		/// <inheritdoc cref="UserEntity.IsEnabled"/>
+		/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
 		public string IsEnabled =>
 			Prefix + nameof(IsEnabled);
 
-		/// <inheritdoc cref="UserEntity.IsSuper"/>
+		/// <inheritdoc cref="AuthUserEntity.IsSuper"/>
 		public string IsSuper =>
 			Prefix + nameof(IsSuper);
 
-		/// <inheritdoc cref="UserEntity.LastSignedIn"/>
+		/// <inheritdoc cref="AuthUserEntity.LastSignedIn"/>
 		public string LastSignedIn =>
 			Prefix + nameof(LastSignedIn);
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public UserTable() : base("auth_user") { }
 	}
 }

@@ -7,25 +7,20 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data.Tables
 {
 	/// <summary>
-	/// User Role Table
+	/// Authentication User Role Table
 	/// </summary>
-	public sealed record UserRoleTable : Table
+	public sealed record AuthUserRoleTable() : Table("auth_user_role")
 	{
-		/// <inheritdoc cref="UserRoleEntity.UserRoleId"/>
+		/// <inheritdoc cref="AuthUserRoleEntity.UserRoleId"/>
 		public string UserRoleId =>
 			nameof(UserRoleId);
 
-		/// <inheritdoc cref="UserRoleEntity.UserId"/>
+		/// <inheritdoc cref="AuthUserRoleEntity.UserId"/>
 		public string UserId =>
 			nameof(UserId);
 
-		/// <inheritdoc cref="UserRoleEntity.RoleId"/>
+		/// <inheritdoc cref="AuthUserRoleEntity.RoleId"/>
 		public string RoleId =>
 			nameof(RoleId);
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public UserRoleTable() : base("auth_user_role") { }
 	}
 }

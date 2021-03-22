@@ -4,14 +4,18 @@
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// Role ID
+	/// Authentication Role model
 	/// </summary>
-	/// <param name="Value">Id Value</param>
-	public sealed record RoleId(long Value) : StrongId(Value)
+	public interface IAuthRoleModel
 	{
 		/// <summary>
-		/// Create with default value
+		/// Role ID
 		/// </summary>
-		public RoleId() : this(0) { }
+		public AuthRoleId RoleId { get; init; }
+
+		/// <summary>
+		/// Role name
+		/// </summary>
+		string Name { get; init; }
 	}
 }

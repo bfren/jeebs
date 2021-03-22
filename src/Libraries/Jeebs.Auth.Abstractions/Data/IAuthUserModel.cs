@@ -6,10 +6,15 @@ using System.Collections.Generic;
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// User model - allows consistent interaction in user interface
+	/// Authentication User model
 	/// </summary>
-	public interface IUserModel : IUserWithUserId
+	public interface IAuthUserModel
 	{
+		/// <summary>
+		/// User ID
+		/// </summary>
+		AuthUserId UserId { get; init; }
+
 		/// <summary>
 		/// Email address
 		/// </summary>
@@ -21,6 +26,16 @@ namespace Jeebs.Auth.Data
 		string FriendlyName { get; init; }
 
 		/// <summary>
+		/// Given (Christian / first) name
+		/// </summary>
+		string? GivenName { get; init; }
+
+		/// <summary>
+		/// Family name (surname)
+		/// </summary>
+		string? FamilyName { get; init; }
+
+		/// <summary>
 		/// Whether or not the user account has super permissions
 		/// </summary>
 		bool IsSuper { get; init; }
@@ -30,8 +45,8 @@ namespace Jeebs.Auth.Data
 	/// User interface - supporting roles
 	/// </summary>
 	/// <typeparam name="TRole">Role type</typeparam>
-	public interface IUserModel<TRole> : IUserModel
-		where TRole : IRoleModel
+	public interface IAuthUserModel<TRole> : IAuthUserModel
+		where TRole : IAuthRoleModel
 	{
 		/// <summary>
 		/// The roles this user is assigned to

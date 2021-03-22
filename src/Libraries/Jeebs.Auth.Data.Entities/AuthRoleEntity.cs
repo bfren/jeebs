@@ -6,7 +6,7 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data.Entities
 {
 	/// <inheritdoc cref="IAuthRole"/>
-	internal sealed record RoleEntity : IAuthRole
+	public abstract record AuthRoleEntity : IAuthRole
 	{
 		/// <inheritdoc/>
 		[Ignore]
@@ -16,12 +16,12 @@ namespace Jeebs.Auth.Data.Entities
 				RoleId;
 
 			init =>
-				RoleId = new RoleId(value.Value);
+				RoleId = new AuthRoleId { Value = value.Value };
 		}
 
 		/// <inheritdoc/>
 		[Id]
-		public RoleId RoleId { get; init; } = new RoleId();
+		public AuthRoleId RoleId { get; init; } = new AuthRoleId();
 
 		/// <inheritdoc/>
 		public string Name { get; init; } = string.Empty;

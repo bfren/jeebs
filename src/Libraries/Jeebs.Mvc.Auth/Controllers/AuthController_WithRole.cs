@@ -15,8 +15,8 @@ namespace Jeebs.Mvc.Auth.Controllers
 	/// <typeparam name="TUser">User model type</typeparam>
 	/// <typeparam name="TRole">Role model type</typeparam>
 	public abstract class AuthController<TUser, TRole> : AuthController<TUser>
-		where TUser : IUserModel<TRole>, IAuthUser
-		where TRole : IRoleModel
+		where TUser : IAuthUserModel<TRole>, IAuthUser
+		where TRole : IAuthRoleModel
 	{
 		/// <summary>
 		/// Add Role-based claims

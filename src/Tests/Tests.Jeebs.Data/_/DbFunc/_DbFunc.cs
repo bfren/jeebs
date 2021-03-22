@@ -3,11 +3,11 @@
 
 using NSubstitute;
 
-namespace Jeebs.Data.DbCrud_Tests
+namespace Jeebs.Data.DbFunc_Tests
 {
-	public static class DbCrud
+	public static class DbFunc
 	{
-		public static (IDbClient client, DbCrud<Foo, FooId> crud) Get()
+		public static (IDbClient client, DbFunc<Foo, FooId> crud) Get()
 		{
 			var client = Substitute.For<IDbClient>();
 			client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
@@ -20,7 +20,7 @@ namespace Jeebs.Data.DbCrud_Tests
 
 			var log = Substitute.For<ILog>();
 
-			var crud = Substitute.For<DbCrud<Foo, FooId>>(db, log);
+			var crud = Substitute.For<DbFunc<Foo, FooId>>(db, log);
 
 			return (client, crud);
 		}

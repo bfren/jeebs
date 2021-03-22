@@ -10,12 +10,12 @@ namespace Jeebs.Auth
 {
 	/// <inheritdoc cref="IAuthDataProvider{TUser}"/>
 	public abstract class AuthDataProvider<TUser> : IAuthDataProvider<TUser>
-		where TUser : IAuthUser, IUserModel
+		where TUser : IAuthUser
 	{
 		/// <summary>
 		/// IAuthDb
 		/// </summary>
-		protected IAuthDb Db { get; private init; }
+		protected IAuthUserFunc<TUser> User { get; private init; }
 
 		/// <summary>
 		/// ILog
@@ -25,10 +25,10 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="db">IAuthDb</param>
+		/// <param name="user">IAuthUserCrud</param>
 		/// <param name="log">ILog</param>
-		protected AuthDataProvider(IAuthDb db, ILog log) =>
-			(Db, Log) = (db, log);
+		protected AuthDataProvider(IAuthUserFunc<TUser> user, ILog log) =>
+			(User, Log) = (user, log);
 
 		/// <inheritdoc/>
 		public async Task<Option<TUser>> ValidateUserAsync(string email, string password)
@@ -46,16 +46,16 @@ namespace Jeebs.Auth
 			}
 
 			// Get user for authentication and verify password
-			foreach (var user in await Db.GetAuthUserAsync<TUser>(email).ConfigureAwait(false))
+			foreach (var user in await User.RetrieveAsync(email).ConfigureAwait(false))
 			{
 				if (user.PasswordHash.VerifyPassword(password))
 				{
 					// Update last sign in
-					var updated = await Db.UpdateUserLastSignIn(user.UserId).ConfigureAwait(false);
+					var updated = await User.UpdateLastSignInAsync(user.UserId).ConfigureAwait(false);
 					updated.AuditSwitch(none: r => Log.Message(r));
 
 					// Return user model
-					return await Db.GetUserAsync<TUser>(user.UserId).ConfigureAwait(false);
+					return await User.RetrieveAsync<TUser>(user.UserId).ConfigureAwait(false);
 				}
 
 				// Password not verified
@@ -85,15 +85,15 @@ namespace Jeebs.Auth
 
 	/// <inheritdoc cref="IDataAuthProvider{TUser,TRole}"/>
 	public abstract class DataAuthProvider<TUser, TRole> : AuthDataProvider<TUser>, IDataAuthProvider<TUser, TRole>
-		where TUser : IAuthUser, IUserModel<TRole>
-		where TRole : IRoleModel
+		where TUser : IAuthUser<TRole>
+		where TRole : IAuthRole
 	{
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="db">IAuthDb</param>
+		/// <param name="user">IAuthUserCrud</param>
 		/// <param name="log">ILog</param>
-		protected DataAuthProvider(IAuthDb db, ILog log) : base(db, log) { }
+		protected DataAuthProvider(IAuthUserFunc<TUser> user, ILog log) : base(user, log) { }
 
 		/// <inheritdoc/>
 		new public Task<Option<TUser>> ValidateUserAsync(string email, string password) =>

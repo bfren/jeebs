@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbCrud_Tests
+namespace Jeebs.Data.DbFunc_Tests
 {
 	public class DeleteAsync_Tests
 	{
@@ -13,13 +13,13 @@ namespace Jeebs.Data.DbCrud_Tests
 		public async Task Calls_Client_GetDeleteQuery()
 		{
 			// Arrange
-			var (client, crud) = DbCrud.Get();
+			var (client, crud) = DbFunc.Get();
 
 			// Act
-			await crud.DeleteAsync(new DbCrud.FooId(F.Rnd.Int));
+			await crud.DeleteAsync(new DbFunc.FooId(F.Rnd.Int));
 
 			// Assert
-			client.Received().GetDeleteQuery<DbCrud.Foo>();
+			client.Received().GetDeleteQuery<DbFunc.Foo>();
 		}
 	}
 }

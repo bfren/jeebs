@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbCrud_Tests
+namespace Jeebs.Data.DbFunc_Tests
 {
 	public class CreateAsync_Tests
 	{
@@ -13,14 +13,14 @@ namespace Jeebs.Data.DbCrud_Tests
 		public async Task Calls_Client_GetCreateQuery()
 		{
 			// Arrange
-			var (client, crud) = DbCrud.Get();
-			var entity = new DbCrud.Foo { FooId = new(F.Rnd.Int) };
+			var (client, crud) = DbFunc.Get();
+			var entity = new DbFunc.Foo { FooId = new(F.Rnd.Int) };
 
 			// Act
 			await crud.CreateAsync(entity);
 
 			// Assert
-			client.Received().GetCreateQuery<DbCrud.Foo>();
+			client.Received().GetCreateQuery<DbFunc.Foo>();
 		}
 	}
 }

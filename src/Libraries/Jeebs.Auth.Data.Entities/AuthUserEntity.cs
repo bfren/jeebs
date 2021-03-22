@@ -6,8 +6,8 @@ using Jeebs.Data;
 
 namespace Jeebs.Auth.Data.Entities
 {
-	/// <inheritdoc cref="IUser"/>
-	internal sealed record UserEntity : IUser
+	/// <inheritdoc cref="IAuthUser"/>
+	public abstract record AuthUserEntity : IAuthUser
 	{
 		/// <inheritdoc/>
 		[Ignore]
@@ -17,12 +17,12 @@ namespace Jeebs.Auth.Data.Entities
 				UserId;
 
 			init =>
-				UserId = new UserId(value.Value);
+				UserId = new AuthUserId { Value = value.Value };
 		}
 
 		/// <inheritdoc/>
 		[Id]
-		public UserId UserId { get; init; } = new UserId();
+		public AuthUserId UserId { get; init; } = new AuthUserId();
 
 		/// <inheritdoc/>
 		[Version]

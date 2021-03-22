@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Config;
@@ -14,35 +15,50 @@ namespace Jeebs.Auth
 	/// </summary>
 	public sealed class AuthDb : Db
 	{
+		/// <inheritdoc/>
+		new public IAuthDbClient Client { get; private init; }
+
 		/// <summary>
 		/// Role Table
 		/// </summary>
-		public RoleTable Role { get; } = new();
+		public AuthRoleTable Role { get; } = new();
 
 		/// <summary>
 		/// User Table
 		/// </summary>
-		public UserTable User { get; } = new();
+		public AuthUserTable User { get; } = new();
 
 		/// <summary>
 		/// User Role Table
 		/// </summary>
-		public UserRoleTable UserRole { get; } = new();
+		public AuthUserRoleTable UserRole { get; } = new();
 
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="client">IDbClient</param>
-		/// <param name="logs">DbLogs</param>
 		/// <param name="config">DbConfig</param>
-		/// <param name="connectionName">Authentication connection name</param>
-		public AuthDb(IOptions<DbConfig> config, ILog<AuthDb> log, IDbClient client, string connectionName) :
-			base(config, log, client, connectionName)
+		/// <param name="log">ILog</param>
+		/// <param name="client">IAuthDbClient</param>
+		public AuthDb(IOptions<DbConfig> config, ILog<AuthDb> log, IAuthDbClient client) :
+			base(config, log, client, config.Value.Authentication)
 		{
+			// Set Client
+			Client = client;
+
 			// Map entities to tables
-			Map<RoleEntity>.To(Role);
-			Map<UserEntity>.To(User);
-			Map<UserRoleEntity>.To(UserRole);
+			Map<AuthRoleEntity>.To(Role);
+			Map<AuthUserEntity>.To(User);
+			Map<AuthUserRoleEntity>.To(UserRole);
+		}
+
+		/// <summary>
+		/// Add type handlers
+		/// </summary>
+		static AuthDb()
+		{
+			AddStrongIdTypeHandler<AuthRoleId>();
+			AddStrongIdTypeHandler<AuthUserId>();
+			AddStrongIdTypeHandler<AuthUserRoleId>();
 		}
 	}
 }

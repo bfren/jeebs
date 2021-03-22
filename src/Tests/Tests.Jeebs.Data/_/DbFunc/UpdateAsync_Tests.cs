@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbCrud_Tests
+namespace Jeebs.Data.DbFunc_Tests
 {
 	public class UpdateAsync_Tests
 	{
@@ -13,14 +13,14 @@ namespace Jeebs.Data.DbCrud_Tests
 		public async Task Calls_Client_GetUpdateQuery()
 		{
 			// Arrange
-			var (client, crud) = DbCrud.Get();
-			var model = new DbCrud.FooModel { FooId = new(F.Rnd.Int) };
+			var (client, crud) = DbFunc.Get();
+			var model = new DbFunc.FooModel { FooId = new(F.Rnd.Int) };
 
 			// Act
 			await crud.UpdateAsync(model);
 
 			// Assert
-			client.Received().GetUpdateQuery<DbCrud.Foo, DbCrud.FooModel>();
+			client.Received().GetUpdateQuery<DbFunc.Foo, DbFunc.FooModel>();
 		}
 	}
 }

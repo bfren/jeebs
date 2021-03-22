@@ -7,9 +7,9 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// User properties used during authentication
+	/// Authentication User
 	/// </summary>
-	public interface IAuthUser : IEntityWithVersion, IUserWithUserId
+	public interface IAuthUser : IAuthUserModel, IEntity
 	{
 		/// <summary>
 		/// The user's encrypted password
@@ -26,4 +26,8 @@ namespace Jeebs.Auth.Data
 		/// </summary>
 		DateTimeOffset? LastSignedIn { get; init; }
 	}
+
+	public interface IAuthUser<TRole> : IAuthUser, IAuthUserModel<TRole>
+		where TRole : IAuthRole
+	{ }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Database CRUD operations for an entity type
+	/// Database CRUD functions for an entity type
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TId">Strong ID type</typeparam>
-	public interface IDbCrud<TEntity, TId>
+	public interface IDbFunc<TEntity, TId>
 		where TEntity : IEntity
 		where TId : StrongId
 	{

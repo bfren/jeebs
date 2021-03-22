@@ -58,8 +58,10 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			var auth = Substitute.For<IDataAuthProvider<UserModelWithRoles, RoleModel>>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthControllerWithRoles(auth, log);
-			var role0 = new RoleModel(new(F.Rnd.Lng), F.Rnd.Str);
-			var role1 = new RoleModel(new(F.Rnd.Lng), F.Rnd.Str);
+			var role0Id = new AuthRoleId { Value = F.Rnd.Lng };
+			var role1Id = new AuthRoleId { Value = F.Rnd.Lng };
+			var role0 = new RoleModel(role0Id, F.Rnd.Str, F.Rnd.Str, role0Id);
+			var role1 = new RoleModel(role1Id, F.Rnd.Str, F.Rnd.Str, role1Id);
 			var user = new UserModelWithRoles(new List<RoleModel>(new[] { role0, role1 }));
 
 			// Act
@@ -136,19 +138,19 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			public AuthControllerWithClaims(IAuthDataProvider<UserModel> auth, ILog log) : base(auth, log) { }
 		}
 
-		public record UserModel(UserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper, string PasswordHash, bool IsEnabled, DateTimeOffset? LastSignedIn, StrongId Id, long Version) : IUserModel, IAuthUser
+		public record UserModel(AuthUserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper, string PasswordHash, bool IsEnabled, DateTimeOffset? LastSignedIn, StrongId Id, long Version, string? GivenName, string? FamilyName) : IAuthUser
 		{
-			public UserModel() : this(new(), string.Empty, string.Empty, string.Empty, true, string.Empty, false, DateTimeOffset.Now, new UserId(), 0) { }
+			public UserModel() : this(new(), string.Empty, string.Empty, string.Empty, true, string.Empty, false, DateTimeOffset.Now, new AuthUserId(), 0, string.Empty, string.Empty) { }
 		}
 
-		public record UserModelWithRoles(List<RoleModel> Roles) : UserModel, IUserModel<RoleModel>
+		public record UserModelWithRoles(List<RoleModel> Roles) : UserModel, IAuthUser<RoleModel>
 		{
 			public UserModelWithRoles() : this(new List<RoleModel>()) { }
 		}
 
-		public record RoleModel(RoleId RoleId, string Name) : IRoleModel
+		public record RoleModel(AuthRoleId RoleId, string Name, string Description, StrongId Id) : IAuthRole
 		{
-			public RoleModel() : this(new(), string.Empty) { }
+			public RoleModel() : this(new(), string.Empty, string.Empty, new AuthUserRoleId()) { }
 		}
 	}
 }

@@ -4,13 +4,7 @@
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// User with a <see cref="Data.UserId"/> property
+	/// Role ID
 	/// </summary>
-	public interface IUserWithUserId
-	{
-		/// <summary>
-		/// User ID
-		/// </summary>
-		UserId UserId { get; init; }
-	}
+	public sealed record AuthRoleId : StrongId;
 }

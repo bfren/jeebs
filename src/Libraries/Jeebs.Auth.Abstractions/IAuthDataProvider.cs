@@ -11,7 +11,7 @@ namespace Jeebs.Auth
 	/// </summary>
 	/// <typeparam name="TUser">User model type</typeparam>
 	public interface IAuthDataProvider<TUser>
-		where TUser : IAuthUser, IUserModel
+		where TUser : IAuthUser
 	{
 		/// <summary>
 		/// Validate a username and password
@@ -27,8 +27,8 @@ namespace Jeebs.Auth
 	/// <typeparam name="TUser">User model type</typeparam>
 	/// <typeparam name="TRole">Role model type</typeparam>
 	public interface IDataAuthProvider<TUser, TRole> : IAuthDataProvider<TUser>
-		where TUser : IAuthUser, IUserModel<TRole>
-		where TRole : IRoleModel
+		where TUser : IAuthUser<TRole>
+		where TRole : IAuthRole
 	{
 		/// <summary>
 		/// Validate a username and password
