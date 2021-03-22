@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+
 namespace F
 {
 	/// <summary>
@@ -25,5 +27,11 @@ namespace F
 		/// </summary>
 		public static long Lng =>
 			NumberF.GetInt64(max: 10000L);
+
+		/// <summary>
+		/// Generate a random Guid
+		/// </summary>
+		public static Guid Guid =>
+			GuidF.Get();
 	}
 }
