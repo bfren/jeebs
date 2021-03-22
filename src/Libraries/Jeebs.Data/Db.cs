@@ -39,10 +39,21 @@ namespace Jeebs.Data
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
 		/// <param name="client">Database client</param>
 		/// <param name="name">Connection name</param>
-		protected Db(IOptions<DbConfig> config, ILog log, IDbClient client, string name)
+		protected Db(IOptions<DbConfig> config, ILog log, IDbClient client, string name) :
+			this(config.Value.GetConnection(name), log, client, name)
+		{ }
+
+		/// <summary>
+		/// Inject database connection and connect to client
+		/// </summary>
+		/// <param name="config">Database configuration</param>
+		/// <param name="log">ILog (should be given a context of the implementing class)</param>
+		/// <param name="client">Database client</param>
+		/// <param name="name">Connection name</param>
+		protected Db(DbConnectionConfig config, ILog log, IDbClient client, string name)
 		{
 			Client = client;
-			Config = config.Value.GetConnection(name);
+			Config = config;
 			Log = log;
 
 			try
@@ -65,37 +76,24 @@ namespace Jeebs.Data
 				),
 				e => new Msg.QueryExceptionMsg(e)
 			)
-			.BindAsync(
-				x => x.Count() switch
-				{
-					> 0 =>
-						Return(x),
-
-					_ =>
-						None<IEnumerable<TModel>, Msg.QueryNotFoundMsg>()
-				}
+			.SwitchIfAsync(
+				x => x.Any(),
+				_ => None<IEnumerable<TModel>, Msg.QueryNotFoundMsg>()
 			);
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> QuerySingleAsync<TModel>(string query, object? parameters, CommandType type) =>
-			ReturnAsync<TModel?>(() =>
-				Connection.QuerySingleOrDefaultAsync<TModel?>(
+			ReturnAsync(() =>
+				Connection.QuerySingleOrDefaultAsync<TModel>(
 					sql: query,
 					param: parameters ?? new object(),
 					commandType: type
 				),
-				true,
 				e => new Msg.QuerySingleExceptionMsg(e)
 			)
-			.BindAsync(
-				x => x switch
-				{
-					TModel model =>
-						Return(model),
-
-					_ =>
-						None<TModel, Msg.QuerySingleNotFoundMsg>()
-				}
+			.SwitchIfAsync(
+				x => x is not null,
+				_ => None<TModel, Msg.QuerySingleNotFoundMsg>()
 			);
 
 		/// <inheritdoc/>
