@@ -16,9 +16,6 @@ namespace Jeebs.Data
 		/// <param name="this">IServiceCollection</param>
 		public static IServiceCollection AddData(this IServiceCollection @this)
 		{
-			// Add DbLogs as Singleton so Db instance can be persisted
-			@this.AddSingleton<DbLogs>();
-
 			// Return
 			return @this;
 		}

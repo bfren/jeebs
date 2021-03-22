@@ -25,7 +25,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 			user =>
 				user.Roles.ConvertAll(r => new Claim(ClaimTypes.Role, r.Name));
 
-		/// <inheritdoc cref="AuthController{TUser}.AuthController(IDataAuthProvider{TUser}, ILog)"/>
-		protected AuthController(IDataAuthProvider<TUser> auth, ILog log) : base(auth, log) { }
+		/// <inheritdoc cref="AuthController{TUser}.AuthController(IAuthDataProvider{TUser}, ILog)"/>
+		protected AuthController(IAuthDataProvider<TUser> auth, ILog log) : base(auth, log) { }
 	}
 }

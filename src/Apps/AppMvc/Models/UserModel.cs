@@ -19,6 +19,7 @@ namespace AppMvc.Models
 		public string PasswordHash { get; init; } = string.Empty;
 		public bool IsEnabled { get; init; }
 		public DateTimeOffset? LastSignedIn { get; init; }
-		public IStrongId<long> Id { get => UserId; init => UserId = new(value.Value); }
+		public long Version { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+		public StrongId Id { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
 	}
 }

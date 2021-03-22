@@ -11,17 +11,12 @@ namespace Jeebs.Auth.Data
 		/// <summary>
 		/// Given (Christian / first) name
 		/// </summary>
-		string GivenName { get; init; }
+		string? GivenName { get; init; }
 
 		/// <summary>
 		/// Family name (surname)
 		/// </summary>
-		string FamilyName { get; init; }
-
-		/// <summary>
-		/// Full name - normally GivenName + FamilyName
-		/// </summary>
-		string FullName { get; }
+		string? FamilyName { get; init; }
 	}
 
 	/// <summary>
@@ -29,7 +24,7 @@ namespace Jeebs.Auth.Data
 	/// </summary>
 	/// <typeparam name="TRole">Role type</typeparam>
 	public interface IUser<TRole> : IUser, IUserModel<TRole>
-		where TRole : IRole
+		where TRole : IAuthRole
 	{
 	}
 }

@@ -1,13 +1,17 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data;
+using Jeebs.Data.Mapping;
+
 namespace Jeebs.Auth.Data.Entities
 {
-	/// <inheritdoc cref="IRole"/>
-	internal sealed record RoleEntity : IRole
+	/// <inheritdoc cref="IAuthRole"/>
+	internal sealed record RoleEntity : IAuthRole
 	{
 		/// <inheritdoc/>
-		public IStrongId<long> Id
+		[Ignore]
+		StrongId IEntity.Id
 		{
 			get =>
 				RoleId;
@@ -17,6 +21,7 @@ namespace Jeebs.Auth.Data.Entities
 		}
 
 		/// <inheritdoc/>
+		[Id]
 		public RoleId RoleId { get; init; } = new RoleId();
 
 		/// <inheritdoc/>

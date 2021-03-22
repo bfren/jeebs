@@ -13,7 +13,7 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 		public void GetPrincipal_Calls_Auth_ValidateToken()
 		{
 			// Arrange
-			var auth = Substitute.For<IJwtAuthProvider>();
+			var auth = Substitute.For<IAuthJwtProvider>();
 			var value = F.Rnd.Str;
 
 			// Act

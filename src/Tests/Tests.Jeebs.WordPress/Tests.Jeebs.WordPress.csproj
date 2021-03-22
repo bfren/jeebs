@@ -12,4 +12,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Jeebs.WordPress\Jeebs.WordPress.csproj" />
+  </ItemGroup>
 </Project>

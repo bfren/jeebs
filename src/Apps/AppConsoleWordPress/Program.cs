@@ -47,7 +47,7 @@ namespace AppConsoleWordPress
 						.BindAsync(x => GetPagedSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
-							opt.SearchOperator = SearchOperators.Like;
+							opt.SearchOperator = SearchOperator.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
 							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 							opt.Limit = 4;
@@ -58,7 +58,7 @@ namespace AppConsoleWordPress
 						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
-							opt.SearchOperator = SearchOperators.Like;
+							opt.SearchOperator = SearchOperator.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
 							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 							opt.Limit = 4;

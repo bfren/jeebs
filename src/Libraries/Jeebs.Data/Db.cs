@@ -1,93 +1,166 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
 using Jeebs.Config;
 using Jeebs.Data.TypeHandlers;
+using Microsoft.Extensions.Options;
+using static F.OptionF;
 
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IDb"/>
-	public abstract class Db : IDb
+	public abstract class Db : IDb, IDisposable
 	{
-		/// <summary>
-		/// ILog
-		/// </summary>
-		protected ILog Log { get; }
-
-		/// <summary>
-		/// IDbClient
-		/// </summary>
-		protected IDbClient Client { get; }
-
-		/// <summary>
-		/// Connection String
-		/// </summary>
-		protected string ConnectionString { get; set; } = string.Empty;
-
-		/// <summary>
-		/// Log for Unit of Work
-		/// </summary>
-		private readonly ILog<UnitOfWork> unitOfWorkLog;
-
 		/// <inheritdoc/>
-		public virtual IUnitOfWork UnitOfWork
+		public IDbClient Client { get; private init; }
+
+		/// <summary>
+		/// Configuration for this database connection
+		/// </summary>
+		public DbConnectionConfig Config { get; private init; }
+
+		private IDbConnection? Connection { get; init; }
+
+		/// <summary>
+		/// ILog (should be given a context of the implementing class)
+		/// </summary>
+		protected ILog Log { get; private init; }
+
+		/// <summary>
+		/// Inject database connection and connect to client
+		/// </summary>
+		/// <param name="config">Database configuration</param>
+		/// <param name="log">ILog (should be given a context of the implementing class)</param>
+		/// <param name="client">Database client</param>
+		/// <param name="name">Connection name</param>
+		protected Db(IOptions<DbConfig> config, ILog log, IDbClient client, string name)
 		{
-			get
+			Client = client;
+			Config = config.Value.GetConnection(name);
+			Log = log;
+
+			try
 			{
-				// Make sure the connection string has been defined
-				if (string.IsNullOrWhiteSpace(ConnectionString))
-				{
-					throw new Jx.Data.ConnectionException("You must define the connection string before creating a Unit of Work.");
-				}
-
-				// Connect to the database client
-				var connection = Client.Connect(ConnectionString);
-				if (connection.State != ConnectionState.Open)
-				{
-					connection.Open();
-				}
-
-				// Create Unit of Work
-				return new UnitOfWork(connection, Client.Adapter, unitOfWorkLog);
+				Connection = client.Connect(Config.ConnectionString);
+			}
+			catch (Exception e)
+			{
+				Log.Fatal(e, "Unable to connect to database {Name}", name);
 			}
 		}
 
-		/// <summary>
-		/// Create object - you MUST set the connection string manually before calling <see cref="UnitOfWork"/>
-		/// </summary>
-		/// <param name="client">IDbClient</param>
-		/// <param name="logs">DbLogs</param>
-		protected Db(IDbClient client, DbLogs logs) =>
-			(Client, Log, unitOfWorkLog) = (client, logs.DbLog, logs.UnitOfWorkLog);
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(string query, object? parameters, CommandType type) =>
+			ReturnAsync(() =>
+				Connection.QueryAsync<TModel>(
+					sql: query,
+					param: parameters ?? new object(),
+					commandType: type
+				),
+				e => new Msg.QueryExceptionMsg(e)
+			)
+			.BindAsync(
+				x => x.Count() switch
+				{
+					> 0 =>
+						Return(x),
+
+					_ =>
+						None<IEnumerable<TModel>, Msg.QueryNotFoundMsg>()
+				}
+			);
+
+		/// <inheritdoc/>
+		public Task<Option<TModel>> QuerySingleAsync<TModel>(string query, object? parameters, CommandType type) =>
+			ReturnAsync<TModel?>(() =>
+				Connection.QuerySingleOrDefaultAsync<TModel?>(
+					sql: query,
+					param: parameters ?? new object(),
+					commandType: type
+				),
+				true,
+				e => new Msg.QuerySingleExceptionMsg(e)
+			)
+			.BindAsync(
+				x => x switch
+				{
+					TModel model =>
+						Return(model),
+
+					_ =>
+						None<TModel, Msg.QuerySingleNotFoundMsg>()
+				}
+			);
+
+		/// <inheritdoc/>
+		public Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type) =>
+			ReturnAsync(() =>
+				Connection.ExecuteAsync(
+					sql: query,
+					param: parameters ?? new object(),
+					commandType: type
+				),
+				e => new Msg.ExecuteExceptionMsg(e)
+			)
+			.MapAsync(
+				x => x != 0,
+				DefaultHandler
+			);
+
+		/// <inheritdoc/>
+		public Task<Option<TReturn>> ExecuteAsync<TReturn>(string query, object? parameters, CommandType type) =>
+			ReturnAsync(() =>
+				Connection.ExecuteScalarAsync<TReturn>(
+					sql: query,
+					param: parameters ?? new object(),
+					commandType: type
+				),
+				e => new Msg.ExecuteScalarExceptionMsg(e)
+			);
+
+		#region Dispose
 
 		/// <summary>
-		/// Create object
+		/// Set to true if the object has been disposed
 		/// </summary>
-		/// <param name="client">IDbClient</param>
-		/// <param name="logs">DbLogs</param>
-		/// <param name="config">DbConfig</param>
-		protected Db(IDbClient client, DbLogs logs, DbConfig config) : this(client, logs) =>
-			ConnectionString = config.GetConnection().ConnectionString;
+		private bool disposed = false;
 
 		/// <summary>
-		/// Create object
+		/// Suppress garbage collection and call <see cref="Dispose(bool)"/>
+		/// https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
 		/// </summary>
-		/// <param name="client">IDbClient</param>
-		/// <param name="logs">DbLogs</param>
-		/// <param name="config">DbConfig</param>
-		/// <param name="connectionName">Connection name</param>
-		protected Db(IDbClient client, DbLogs logs, DbConfig config, string connectionName) : this(client, logs) =>
-			ConnectionString = config.GetConnection(connectionName).ConnectionString;
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
 		/// <summary>
-		/// Create object
+		/// Dispose managed resources
 		/// </summary>
-		/// <param name="client">IDbClient</param>
-		/// <param name="logs">DbLogs</param>
-		/// <param name="connectionString">Connection String</param>
-		protected Db(IDbClient client, DbLogs logs, string connectionString) : this(client, logs) =>
-			ConnectionString = connectionString;
+		/// <param name="disposing">True if disposing</param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposed)
+			{
+				return;
+			}
+
+			if (disposing)
+			{
+				Connection?.Dispose();
+			}
+
+			disposed = true;
+		}
+
+		#endregion
 
 		#region Static
 
@@ -95,7 +168,7 @@ namespace Jeebs.Data
 		/// Add default type handlers
 		/// </summary>
 		static Db() =>
-			Dapper.SqlMapper.AddTypeHandler(new GuidTypeHandler());
+			SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
 		/// <summary>
 		/// Persist an EnumList to the database by encoding it as JSON
@@ -103,15 +176,49 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Type to handle</typeparam>
 		protected static void AddEnumeratedListTypeHandler<T>()
 			where T : Enumerated =>
-			Dapper.SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
+			SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
 
 		/// <summary>
 		/// Persist a type to the database by encoding it as JSON
 		/// </summary>
 		/// <typeparam name="T">Type to handle</typeparam>
 		protected static void AddJsonTypeHandler<T>() =>
-			Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
+			SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
+
+		/// <summary>
+		/// Persist a StrongId to the database
+		/// </summary>
+		/// <typeparam name="T">StrongId itype</typeparam>
+		protected static void AddStrongIdTypeHandler<T>()
+			where T : StrongId, new() =>
+			SqlMapper.AddTypeHandler(new StrongIdTypeHandler<T>());
 
 		#endregion
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Error running QueryAsync</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record QueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>The query returned any empty list</summary>
+			public sealed record QueryNotFoundMsg : NotFoundMsg { }
+
+			/// <summary>Error running QuerySingleAsync</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record QuerySingleExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>The query returned no items, or more than one</summary>
+			public sealed record QuerySingleNotFoundMsg : NotFoundMsg { }
+
+			/// <summary>Error running ExecuteAsync</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ExecuteExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Error running ExecuteScalarAsync</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ExecuteScalarExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		}
 	}
 }

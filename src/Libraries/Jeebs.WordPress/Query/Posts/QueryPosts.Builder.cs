@@ -109,7 +109,7 @@ namespace Jeebs.WordPress
 
 				// Set comparison operator and modify search string accordingly
 				var comparison = "=";
-				if (opt.SearchOperator == SearchOperators.Like)
+				if (opt.SearchOperator == SearchOperator.Like)
 				{
 					// Change the comparison
 					comparison = "LIKE";
@@ -246,7 +246,7 @@ namespace Jeebs.WordPress
 			/// Add WHERE for custom fields search
 			/// </summary>
 			/// <param name="fields">List of custom fields to search</param>
-			private void AddWhereCustomFields(IList<(ICustomField field, SearchOperators op, object value)> fields)
+			private void AddWhereCustomFields(IList<(ICustomField field, SearchOperator op, object value)> fields)
 			{
 				// Setup variables
 				var customFieldWhere = string.Empty;
@@ -272,7 +272,7 @@ namespace Jeebs.WordPress
 					// Set comparison operators and modify search string accordingly
 					var customFieldComparison = "=";
 
-					if (op == SearchOperators.Like)
+					if (op == SearchOperator.Like)
 					{
 						// Change the comparison
 						customFieldComparison = "LIKE";

@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs.Data;
 
 namespace Jeebs.Auth.Data.Entities
 {
@@ -9,7 +10,8 @@ namespace Jeebs.Auth.Data.Entities
 	internal sealed record UserEntity : IUser
 	{
 		/// <inheritdoc/>
-		public IStrongId<long> Id
+		[Ignore]
+		StrongId IEntity.Id
 		{
 			get =>
 				UserId;
@@ -19,11 +21,12 @@ namespace Jeebs.Auth.Data.Entities
 		}
 
 		/// <inheritdoc/>
-		public string IdStr =>
-			Id.ValueStr;
+		[Id]
+		public UserId UserId { get; init; } = new UserId();
 
 		/// <inheritdoc/>
-		public UserId UserId { get; init; } = new UserId();
+		[Version]
+		public long Version { get; init; }
 
 		/// <inheritdoc/>
 		public string EmailAddress { get; init; } = string.Empty;
@@ -35,17 +38,10 @@ namespace Jeebs.Auth.Data.Entities
 		public string FriendlyName { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
-		public string GivenName { get; init; } = string.Empty;
+		public string? GivenName { get; init; }
 
 		/// <inheritdoc/>
-		public string FamilyName { get; init; } = string.Empty;
-
-		/// <inheritdoc/>
-		public string FullName =>
-			GetFullName();
-
-		/// <inheritdoc/>
-		private Func<string> GetFullName { get; init; }
+		public string? FamilyName { get; init; }
 
 		/// <inheritdoc/>
 		public bool IsEnabled { get; init; }
@@ -55,24 +51,5 @@ namespace Jeebs.Auth.Data.Entities
 
 		/// <inheritdoc/>
 		public DateTimeOffset? LastSignedIn { get; init; }
-
-		/// <summary>
-		/// Use the default method of getting the user's full name
-		/// </summary>
-		internal UserEntity() : this(getFullName: null) { }
-
-		/// <summary>
-		/// Inject custom function to get the user's full name
-		/// </summary>
-		/// <param name="getFullName">[Optional] Function to return the user's full name</param>
-		internal UserEntity(Func<string>? getFullName) =>
-			GetFullName = getFullName switch
-			{
-				Func<string> get =>
-					get,
-
-				_ =>
-					() => string.Format("{0} {1}", GivenName, FamilyName)
-			};
 	}
 }

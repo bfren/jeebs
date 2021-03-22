@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User properties used during authentication
 	/// </summary>
-	public interface IAuthUser : IEntity<long>, IUserWithUserId
+	public interface IAuthUser : IEntityWithVersion, IUserWithUserId
 	{
 		/// <summary>
 		/// The user's encrypted password

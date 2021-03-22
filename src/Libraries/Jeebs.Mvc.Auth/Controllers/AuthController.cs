@@ -24,7 +24,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// IDataAuthProvider
 		/// </summary>
-		protected IDataAuthProvider<TUser> Auth { get; init; }
+		protected IAuthDataProvider<TUser> Auth { get; init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
@@ -36,7 +36,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="auth">IDataAuthProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthController(IDataAuthProvider<TUser> auth, ILog log) : base(log) =>
+		protected AuthController(IAuthDataProvider<TUser> auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -103,7 +103,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 			// Create claims object
 			var claims = new List<Claim>
 			{
-				new (JwtClaimTypes.UserId, user.UserId.ValueStr, ClaimValueTypes.Integer32),
+				new (JwtClaimTypes.UserId, user.UserId.Value.ToString(), ClaimValueTypes.Integer32),
 				new (ClaimTypes.Name, user.FriendlyName, ClaimValueTypes.String),
 				new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 			};

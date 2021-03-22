@@ -11,16 +11,47 @@ namespace Jeebs.Data
 	public interface IDbClient
 	{
 		/// <summary>
-		/// IAdapter
-		/// </summary>
-		public IAdapter Adapter { get; }
-
-		/// <summary>
-		/// Create IDbConnection using the specified connection string
+		/// Return a new database connection
 		/// </summary>
 		/// <param name="connectionString">Database connection string</param>
-		/// <param name="encryptionKey">[Optional] Encryption key</param>
-		/// <returns>IDbConnection</returns>
-		IDbConnection Connect(string connectionString, string? encryptionKey = null);
+		IDbConnection Connect(string connectionString);
+
+		#region General Queries
+
+		#endregion
+
+		#region CRUD Queries
+
+		/// <summary>
+		/// Return a query to create an entity
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		Option<string> GetCreateQuery<TEntity>()
+			where TEntity : IEntity;
+
+		/// <summary>
+		/// Return a query to retrieve a single entity by ID
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <typeparam name="TModel">Return model type</typeparam>
+		Option<string> GetRetrieveQuery<TEntity, TModel>()
+			where TEntity : IEntity;
+
+		/// <summary>
+		/// Return a query to update a single entity
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <typeparam name="TModel">Return model type</typeparam>
+		Option<string> GetUpdateQuery<TEntity, TModel>()
+			where TEntity : IEntity;
+
+		/// <summary>
+		/// Return a query to delete a single entity by ID
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		Option<string> GetDeleteQuery<TEntity>()
+			where TEntity : IEntity;
+
+		#endregion
 	}
 }

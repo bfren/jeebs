@@ -7,11 +7,11 @@ namespace Jeebs.Auth.Data
 	/// User ID
 	/// </summary>
 	/// <param name="Value">Id Value</param>
-	public sealed record UserId(long Value) : Id.LongId(Value)
+	public sealed record UserId(long Value) : StrongId(Value)
 	{
 		/// <summary>
 		/// Create with default value
 		/// </summary>
-		public UserId() : this(Default) { }
+		public UserId() : this(0) { }
 	}
 }

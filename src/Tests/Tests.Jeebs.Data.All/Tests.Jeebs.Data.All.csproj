@@ -12,7 +12,4 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Jeebs.Data.All\Jeebs.Data.All.csproj" />
-  </ItemGroup>
 </Project>

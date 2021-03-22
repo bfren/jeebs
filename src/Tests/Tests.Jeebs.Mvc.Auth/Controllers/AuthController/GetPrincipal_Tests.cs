@@ -18,7 +18,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Returns_ClaimsPrincipal_With_User_Info_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IDataAuthProvider<UserModel>>();
+			var auth = Substitute.For<IAuthDataProvider<UserModel>>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthController(auth, log);
 			var user = new UserModel();
@@ -31,7 +31,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 				c =>
 				{
 					Assert.Equal(JwtClaimTypes.UserId, c.Type);
-					Assert.Equal(user.UserId.ValueStr, c.Value);
+					Assert.Equal(user.UserId.Value.ToString(), c.Value);
 				},
 				c =>
 				{
@@ -70,7 +70,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 				c =>
 				{
 					Assert.Equal(JwtClaimTypes.UserId, c.Type);
-					Assert.Equal(user.UserId.ValueStr, c.Value);
+					Assert.Equal(user.UserId.Value.ToString(), c.Value);
 				},
 				c =>
 				{
@@ -104,7 +104,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Adds_Custom_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IDataAuthProvider<UserModel>>();
+			var auth = Substitute.For<IAuthDataProvider<UserModel>>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthControllerWithClaims(auth, log);
 			var user = new UserModel();
@@ -119,7 +119,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 
 		public class AuthController : AuthController<UserModel>
 		{
-			public AuthController(IDataAuthProvider<UserModel> auth, ILog log) : base(auth, log) { }
+			public AuthController(IAuthDataProvider<UserModel> auth, ILog log) : base(auth, log) { }
 		}
 
 		public class AuthControllerWithRoles : AuthController<UserModelWithRoles, RoleModel>
@@ -133,12 +133,12 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 				user =>
 					new() { new(nameof(AuthControllerWithClaims), $"{user.UserId}+{user.FriendlyName}") };
 
-			public AuthControllerWithClaims(IDataAuthProvider<UserModel> auth, ILog log) : base(auth, log) { }
+			public AuthControllerWithClaims(IAuthDataProvider<UserModel> auth, ILog log) : base(auth, log) { }
 		}
 
-		public record UserModel(UserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper, string PasswordHash, bool IsEnabled, DateTimeOffset? LastSignedIn, IStrongId<long> Id) : IUserModel, IAuthUser
+		public record UserModel(UserId UserId, string EmailAddress, string FriendlyName, string FullName, bool IsSuper, string PasswordHash, bool IsEnabled, DateTimeOffset? LastSignedIn, StrongId Id, long Version) : IUserModel, IAuthUser
 		{
-			public UserModel() : this(new(), string.Empty, string.Empty, string.Empty, true, string.Empty, false, DateTimeOffset.Now, new UserId()) { }
+			public UserModel() : this(new(), string.Empty, string.Empty, string.Empty, true, string.Empty, false, DateTimeOffset.Now, new UserId(), 0) { }
 		}
 
 		public record UserModelWithRoles(List<RoleModel> Roles) : UserModel, IUserModel<RoleModel>

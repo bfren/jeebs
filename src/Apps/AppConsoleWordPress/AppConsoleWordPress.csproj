@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
-    <ProjectReference Include="..\..\Libraries\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Services\Jeebs.Services.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.WordPress\Jeebs.WordPress.csproj" />
   </ItemGroup>

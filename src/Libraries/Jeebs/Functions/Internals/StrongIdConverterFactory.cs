@@ -4,8 +4,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs;
-using Jeebs.Id;
 
 namespace F.Internals
 {
@@ -15,43 +13,27 @@ namespace F.Internals
 	public sealed class StrongIdConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="StrongId{T}"/>
+		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="StrongId"/>
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert) =>
-			typeToConvert.Implements(typeof(StrongId<>));
+			typeToConvert.IsSubclassOf(typeof(Jeebs.StrongId));
 
 		/// <summary>
-		/// Creates JsonConverter for StrongID
+		/// Creates JsonConverter using StrongId type as generic argument
 		/// </summary>
-		/// <param name="typeToConvert">StrongID type</param>
+		/// <param name="typeToConvert">StrongId type</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 		{
-			// Get converter type
-			var converterType = typeToConvert switch
-			{
-				Type t when t.Implements<GuidId>() =>
-					typeof(GuidIdConverter<>).MakeGenericType(typeToConvert),
-
-				Type t when t.Implements<IntId>() =>
-					typeof(IntIdConverter<>).MakeGenericType(typeToConvert),
-
-				Type t when t.Implements<LongId>() =>
-					typeof(LongIdConverter<>).MakeGenericType(typeToConvert),
-
-				_ =>
-					throw new JsonException($"Unknown StrongId<> type: {typeToConvert}.")
-			};
-
-			// Create converter
+			var converterType = typeof(StrongIdConverter<>).MakeGenericType(typeToConvert);
 			return Activator.CreateInstance(converterType) switch
 			{
 				JsonConverter x =>
 					x,
 
 				_ =>
-					throw new JsonException($"Unable to create {converterType} for type {typeToConvert}.")
+					throw new JsonException($"Unable to create {typeof(StrongIdConverter<>)} for type {typeToConvert}.")
 			};
 		}
 	}

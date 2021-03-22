@@ -64,13 +64,13 @@ namespace Jeebs.Mvc.Auth
 		/// <typeparam name="TProvider">IDataAuthProvider type</typeparam>
 		/// <typeparam name="TUser">IAuthUser type</typeparam>
 		public AuthBuilder WithData<TProvider, TUser>()
-			where TProvider : class, IDataAuthProvider<TUser>
+			where TProvider : class, IAuthDataProvider<TUser>
 			where TUser : IUserModel, IAuthUser
 		{
 			CheckProvider();
 
 			services.AddScoped<TProvider>();
-			services.AddScoped<IDataAuthProvider<TUser>>(s => s.GetRequiredService<TProvider>());
+			services.AddScoped<IAuthDataProvider<TUser>>(s => s.GetRequiredService<TProvider>());
 
 			return this;
 		}
@@ -116,7 +116,7 @@ namespace Jeebs.Mvc.Auth
 			}
 
 			// Add services
-			services.AddScoped<IJwtAuthProvider, JwtAuthProvider>();
+			services.AddScoped<IAuthJwtProvider, AuthJwtProvider>();
 			services.AddSingleton<IAuthorizationHandler, JwtHandler>();
 
 			// Add authorisation policy
