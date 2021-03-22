@@ -1,17 +1,10 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Config;
 using Jeebs.Data;
-using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth

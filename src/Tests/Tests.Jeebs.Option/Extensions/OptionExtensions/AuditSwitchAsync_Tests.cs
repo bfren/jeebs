@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {

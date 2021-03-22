@@ -3,10 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
