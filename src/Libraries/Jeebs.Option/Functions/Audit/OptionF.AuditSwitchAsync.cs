@@ -40,6 +40,13 @@ namespace F
 		}
 
 		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
+		public static async Task<Option<T>> AuditSwitchAsync<T>(Task<Option<T>> option, Action<T>? some, Action<IMsg>? none) =>
+			await AuditSwitchAsync(await option,
+				x => { some?.Invoke(x); return Task.CompletedTask; },
+				x => { none?.Invoke(x); return Task.CompletedTask; }
+			);
+
+		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
 		public static async Task<Option<T>> AuditSwitchAsync<T>(Task<Option<T>> option, Func<T, Task>? some, Func<IMsg, Task>? none) =>
 			await AuditSwitchAsync(await option, some, none);
 	}

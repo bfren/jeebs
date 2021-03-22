@@ -9,7 +9,7 @@ using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
-	public class Switch_Tests
+	public class Switch_Tests0
 	{
 		[Fact]
 		public void If_Unknown_Option_Throws_UnknownOptionException()

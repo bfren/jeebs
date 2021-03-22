@@ -9,89 +9,50 @@ using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
-	public class AuditSwitch_Tests
+	public class AuditSwitch_Tests : Jeebs_Tests.AuditSwitch_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Throws_UnknownOptionException()
+		public override void Test01_If_Unknown_Option_Throws_UnknownOptionException()
 		{
-			// Arrange
-			var option = new FakeOption();
-			var some = Substitute.For<Action<int>>();
-			var none = Substitute.For<Action<IMsg>>();
-
-			// Act
-			void r0() => option.AuditSwitch(some);
-			void r1() => option.AuditSwitch(none);
-			void r2() => option.AuditSwitch(some, none);
-
-			// Assert
-			Assert.Throws<UnknownOptionException>(r0);
-			Assert.Throws<UnknownOptionException>(r1);
-			Assert.Throws<UnknownOptionException>(r2);
+			Test01(opt => opt.AuditSwitch(Substitute.For<Action<int>>()));
+			Test01(opt => opt.AuditSwitch(Substitute.For<Action<IMsg>>()));
+			Test01(opt => opt.AuditSwitch(Substitute.For<Action<int>>(), Substitute.For<Action<IMsg>>()));
 		}
 
 		[Fact]
-		public void Some_Runs_Some_And_Returns_Original_Option()
+		public override void Test02_Some_Runs_Some_And_Returns_Original_Option()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-			var some = Substitute.For<Action<int>>();
-
-			// Act
-			var r0 = option.AuditSwitch(some);
-			var r1 = option.AuditSwitch(some: some, none: Substitute.For<Action<IMsg>>());
-
-			// Assert
-			some.Received(2).Invoke(value);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			Test02((opt, some) => opt.AuditSwitch(some));
+			Test02((opt, some) => opt.AuditSwitch(some, Substitute.For<Action<IMsg>>()));
 		}
 
 		[Fact]
-		public void None_Runs_None_And_Returns_Original_Option()
+
+		public override void Test03_None_Runs_None_And_Returns_Original_Option()
 		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var none = Substitute.For<Action<IMsg>>();
-
-			// Act
-			var r0 = option.AuditSwitch(none);
-			var r1 = option.AuditSwitch(Substitute.For<Action<int>>(), none);
-
-			// Assert
-			none.Received(2).Invoke(msg);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			Test03((opt, none) => opt.AuditSwitch(none));
+			Test03((opt, none) => opt.AuditSwitch(Substitute.For<Action<int>>(), none));
 		}
 
 		[Fact]
-		public void Catches_Exception_And_Returns_Original_Option()
+		public override void Test04_Some_Catches_Exception_And_Returns_Original_Option()
 		{
-			// Arrange
-			var some = Return(F.Rnd.Int);
-			var none = None<int>(true);
-			var exception = new Exception();
-
-			void someThrow(int _) => throw exception!;
-			void noneThrow(IMsg _) => throw exception!;
-
-			// Act
-			var r0 = some.AuditSwitch(someThrow);
-			var r1 = none.AuditSwitch(noneThrow);
-			var r2 = some.AuditSwitch(someThrow, noneThrow);
-			var r3 = none.AuditSwitch(someThrow, noneThrow);
-
-			// Assert
-			Assert.Same(some, r0);
-			Assert.Same(none, r1);
-			Assert.Same(some, r2);
-			Assert.Same(none, r3);
+			Test04((opt, some) => opt.AuditSwitch(some));
+			Test04((opt, some) => opt.AuditSwitch(some, Substitute.For<Action<IMsg>>()));
 		}
 
-		public class FakeOption : Option<int> { }
+		[Fact]
+		public override void Test05_None_Catches_Exception_And_Returns_Original_Option()
+		{
+			Test05((opt, none) => opt.AuditSwitch(none));
+			Test05((opt, none) => opt.AuditSwitch(Substitute.For<Action<int>>(), none));
+		}
 
-		public record TestMsg : IMsg { }
+		#region Unused
+
+		[Fact]
+		public override void Test00_Null_Args_Returns_Original_Option() { }
+
+		#endregion
 	}
 }

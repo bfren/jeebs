@@ -1,54 +1,35 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using Jeebs;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
 namespace F.OptionF_Tests
 {
-	public class Audit_Tests
+	public class Audit_Tests : Jeebs_Tests.Audit_Tests
 	{
 		[Fact]
-		public void Runs_Audit_And_Returns_Original_Option()
+		public override void Test00_Some_Runs_Audit_And_Returns_Original_Option()
 		{
-			// Arrange
-			var some = True;
-			var none = None<bool>(true);
-			var audit = Substitute.For<Action<Option<bool>>>();
-
-			// Act
-			var r0 = Audit(some, audit);
-			var r1 = Audit(none, audit);
-
-			// Assert
-			audit.Received().Invoke(some);
-			audit.Received().Invoke(none);
-			Assert.Same(some, r0);
-			Assert.Same(none, r1);
+			Test00((opt, audit) => Audit(opt, audit));
 		}
 
 		[Fact]
-		public void Catches_Exception_And_Returns_Original_Option()
+		public override void Test01_None_Runs_Audit_And_Returns_Original_Option()
 		{
-			// Arrange
-			var some = True;
-			var none = None<bool>(true);
-			static void throwException(Option<bool> _) => throw new Exception();
-
-			// Act
-			var r0 = Audit(some, throwException);
-			var r1 = Audit(none, throwException);
-
-			// Assert
-			Assert.Same(some, r0);
-			Assert.Same(none, r1);
+			Test01((opt, audit) => Audit(opt, audit));
 		}
 
-		public class FakeOption : Option<int> { }
+		[Fact]
+		public override void Test02_Some_Catches_Exception_And_Returns_Original_Option()
+		{
+			Test02((opt, audit) => Audit(opt, audit));
+		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override void Test03_None_Catches_Exception_And_Returns_Original_Option()
+		{
+			Test03((opt, audit) => Audit(opt, audit));
+		}
 	}
 }

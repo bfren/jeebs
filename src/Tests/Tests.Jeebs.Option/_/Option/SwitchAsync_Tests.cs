@@ -10,7 +10,7 @@ using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
-	public class MatchAsync_Tests
+	public class SwitchAsync_Tests
 	{
 		[Fact]
 		public async Task If_Unknown_Option_Throws_UnknownOptionException()

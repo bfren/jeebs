@@ -9,95 +9,101 @@ using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
-	public class AuditSwitchAsync_Tests
+	public class AuditSwitchAsync_Tests : Jeebs_Tests.AuditSwitchAsync_Tests
 	{
 		[Fact]
-		public async Task Some_Runs_Some_And_Returns_Original_Option()
+		public override async Task Test01_If_Unknown_Option_Throws_UnknownOptionException()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-			var task = Task.FromResult(option);
-			var some = Substitute.For<Func<int, Task>>();
+			var someA = Substitute.For<Action<int>>();
+			var someF = Substitute.For<Func<int, Task>>();
+			var noneA = Substitute.For<Action<IMsg>>();
+			var noneF = Substitute.For<Func<IMsg, Task>>();
 
-			// Act
-			var r0 = await task.AuditSwitchAsync(some: _ => { some(value); });
-			var r1 = await task.AuditSwitchAsync(some: some);
-			var r2 = await task.AuditSwitchAsync(some: _ => some(value), none: Substitute.For<Action<IMsg>>());
-			var r3 = await task.AuditSwitchAsync(some: some, none: Substitute.For<Func<IMsg, Task>>());
-
-			// Assert
-			await some.Received(4).Invoke(value);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
-			Assert.Same(option, r2);
-			Assert.Same(option, r3);
+			await Test01(opt => opt.AsTask.AuditSwitchAsync(someA));
+			await Test01(opt => opt.AsTask.AuditSwitchAsync(someF));
+			await Test01(opt => opt.AsTask.AuditSwitchAsync(noneA));
+			await Test01(opt => opt.AsTask.AuditSwitchAsync(noneF));
+			await Test01(opt => opt.AsTask.AuditSwitchAsync(someA, noneA));
+			await Test01(opt => opt.AsTask.AuditSwitchAsync(someF, noneF));
 		}
 
 		[Fact]
-		public async Task None_Runs_None_And_Returns_Original_Option()
+		public override async Task Test02_Some_Runs_Some_Action_And_Returns_Original_Option()
 		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var task = option.AsTask;
+			var none = Substitute.For<Action<IMsg>>();
+
+			await Test02((opt, some) => opt.AsTask.AuditSwitchAsync(some));
+			await Test02((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+		}
+
+		[Fact]
+		public override async Task Test03_Some_Runs_Some_Func_And_Returns_Original_Option()
+		{
 			var none = Substitute.For<Func<IMsg, Task>>();
 
-			// Act
-			var r0 = await task.AuditSwitchAsync(none: _ => { none(msg); });
-			var r1 = await task.AuditSwitchAsync(none: none);
-			var r2 = await task.AuditSwitchAsync(some: Substitute.For<Action<int>>(), none: _ => none(msg));
-			var r3 = await task.AuditSwitchAsync(some: Substitute.For<Func<int, Task>>(), none: none);
-
-			// Assert
-			await none.Received(4).Invoke(msg);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
-			Assert.Same(option, r2);
-			Assert.Same(option, r3);
+			await Test03((opt, some) => opt.AsTask.AuditSwitchAsync(some));
+			await Test03((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
 		}
 
 		[Fact]
-		public async Task Catches_Exception_And_Returns_Original_Option()
+		public override async Task Test04_None_Runs_None_Action_And_Returns_Original_Option()
 		{
-			// Arrange
-			var o0 = Return(F.Rnd.Int);
-			var o1 = None<int>(true);
-			var t0 = o0.AsTask;
-			var t1 = o1.AsTask;
-			var exception = new Exception();
+			var some = Substitute.For<Action<int>>();
 
-			void someActionThrow(int _) => throw exception!;
-			Task someFuncThrow(int _) => throw exception!;
-			void noneActionThrow(IMsg _) => throw exception!;
-			Task noneFuncThrow(IMsg _) => throw exception!;
-
-			// Act
-			var r1 = await t0.AuditSwitchAsync(some: someActionThrow);
-			var r2 = await t0.AuditSwitchAsync(some: someFuncThrow);
-			var r3 = await t1.AuditSwitchAsync(none: noneActionThrow);
-			var r4 = await t1.AuditSwitchAsync(none: noneFuncThrow);
-			var r5 = await t0.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
-			var r6 = await t0.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
-			var r7 = await t1.AuditSwitchAsync(some: someActionThrow, none: noneActionThrow);
-			var r8 = await o1.AuditSwitchAsync(some: someFuncThrow, none: noneFuncThrow);
-
-			// Assert
-			Assert.Same(o0, r1);
-			Assert.Same(o0, r2);
-			Assert.Same(o1, r3);
-			Assert.Same(o1, r4);
-			Assert.Same(o0, r5);
-			Assert.Same(o0, r6);
-			Assert.Same(o1, r7);
-			Assert.Same(o1, r8);
+			await Test04((opt, none) => opt.AsTask.AuditSwitchAsync(none));
+			await Test04((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
 		}
 
-		public class FakeOption : Option<int>
+		[Fact]
+		public override async Task Test05_None_Runs_None_Func_And_Returns_Original_Option()
 		{
-			public Option<int> AsOption => this;
+			var some = Substitute.For<Func<int, Task>>();
+
+			await Test05((opt, none) => opt.AsTask.AuditSwitchAsync(none));
+			await Test05((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
 		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override async Task Test06_Some_Runs_Some_Action_Catches_Exception_And_Returns_Original_Option()
+		{
+			var none = Substitute.For<Action<IMsg>>();
+
+			await Test06((opt, some) => opt.AsTask.AuditSwitchAsync(some));
+			await Test06((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+		}
+
+		[Fact]
+		public override async Task Test07_Some_Runs_Some_Func_Catches_Exception_And_Returns_Original_Option()
+		{
+			var none = Substitute.For<Func<IMsg, Task>>();
+
+			await Test07((opt, some) => opt.AsTask.AuditSwitchAsync(some));
+			await Test07((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+		}
+
+		[Fact]
+		public override async Task Test08_None_Runs_None_Action_Catches_Exception_And_Returns_Original_Option()
+		{
+			var some = Substitute.For<Action<int>>();
+
+			await Test08((opt, none) => opt.AsTask.AuditSwitchAsync(none));
+			await Test08((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
+		}
+
+		[Fact]
+		public override async Task Test09_None_Runs_None_Func_Catches_Exception_And_Returns_Original_Option()
+		{
+			var some = Substitute.For<Func<int, Task>>();
+
+			await Test09((opt, none) => opt.AsTask.AuditSwitchAsync(none));
+			await Test09((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
+		}
+
+		#region Unused
+
+		public override Task Test00_Null_Args_Returns_Original_Option() =>
+			Task.CompletedTask;
+
+		#endregion
 	}
 }

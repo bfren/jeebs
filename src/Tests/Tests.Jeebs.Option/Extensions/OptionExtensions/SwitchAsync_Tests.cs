@@ -7,7 +7,7 @@ using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.OptionExtensions_Tests
 {
 	public class SwitchAsync_Tests
 	{

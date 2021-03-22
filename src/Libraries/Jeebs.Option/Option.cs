@@ -168,24 +168,12 @@ namespace Jeebs
 			F.OptionF.AuditSwitch(this, some, none);
 
 		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<T> some) =>
-			F.OptionF.AuditSwitchAsync(this, some: v => { some?.Invoke(v); return Task.CompletedTask; }, none: null);
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some) =>
 			F.OptionF.AuditSwitchAsync(this, some: some, none: null);
 
 		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<IMsg> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: null, none: r => { none?.Invoke(r); return Task.CompletedTask; });
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Func<IMsg, Task> none) =>
 			F.OptionF.AuditSwitchAsync(this, some: null, none: none);
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<T> some, Action<IMsg> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: v => { some?.Invoke(v); return Task.CompletedTask; }, none: r => { none?.Invoke(r); return Task.CompletedTask; });
 
 		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
 		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some, Func<IMsg, Task> none) =>

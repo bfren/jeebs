@@ -1,46 +1,51 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
-using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
-	public class AuditAsync_Tests
+	public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		[Fact]
-		public async Task Runs_Audit_And_Returns_Original_Option()
+		public override async Task Test02_Some_Runs_Audit_Func_And_Returns_Original_Option()
 		{
-			// Arrange
-			var option = True;
-			var audit = Substitute.For<Func<Option<bool>, Task>>();
-
-			// Act
-			var result = await option.AuditAsync(audit);
-
-			// Assert
-			await audit.Received().Invoke(option);
-			Assert.Same(option, result);
+			await Test02((opt, audit) => opt.AuditAsync(audit));
 		}
 
 		[Fact]
-		public async Task Catches_Exception_And_Returns_Original_Option()
+		public override async Task Test03_None_Runs_Audit_Func_And_Returns_Original_Option()
 		{
-			// Arrange
-			var option = Return(F.Rnd.Int);
-
-			// Act
-			var result = await option.AuditAsync(_ => throw new Exception());
-
-			// Assert
-			Assert.Same(option, result);
+			await Test03((opt, audit) => opt.AuditAsync(audit));
 		}
 
-		public class FakeOption : Option<int> { }
+		[Fact]
+		public override async Task Test06_Some_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option()
+		{
+			await Test06((opt, audit) => opt.AuditAsync(audit));
+		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override async Task Test07_None_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option()
+		{
+			await Test07((opt, audit) => opt.AuditAsync(audit));
+		}
+
+		#region Unused
+
+		public override Task Test00_Some_Runs_Audit_Action_And_Returns_Original_Option() =>
+			Task.CompletedTask;
+
+		public override Task Test01_None_Runs_Audit_Action_And_Returns_Original_Option() =>
+			Task.CompletedTask;
+
+		public override Task Test04_Some_Runs_Audit_Action_Catches_Exception_And_Returns_Original_Option() =>
+			Task.CompletedTask;
+
+		public override Task Test05_None_Runs_Audit_Action_Catches_Exception_And_Returns_Original_Option() =>
+			Task.CompletedTask;
+
+		#endregion
 	}
 }

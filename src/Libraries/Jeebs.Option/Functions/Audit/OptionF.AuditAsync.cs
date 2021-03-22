@@ -27,6 +27,10 @@ namespace F
 		}
 
 		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}})"/>
+		public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Action<Option<T>> audit) =>
+			await AuditAsync(await option, x => { audit(x); return Task.CompletedTask; });
+
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}})"/>
 		public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Func<Option<T>, Task> audit) =>
 			await AuditAsync(await option, audit);
 	}

@@ -1,55 +1,59 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
-using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
-	public class AuditAsync_Tests
+	public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		[Fact]
-		public async Task Runs_Audit_And_Returns_Original_Option()
+		public override async Task Test00_Some_Runs_Audit_Action_And_Returns_Original_Option()
 		{
-			// Arrange
-			var option = True;
-			var task = option.AsTask;
-			var audit = Substitute.For<Func<Option<bool>, Task>>();
-
-			// Act
-			var r0 = await task.AuditAsync(v => { audit(v); });
-			var r1 = await task.AuditAsync(audit);
-
-			// Assert
-			await audit.Received(2).Invoke(option);
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			await Test00((some, audit) => some.AsTask.AuditAsync(audit));
 		}
 
 		[Fact]
-		public async Task Catches_Exception_And_Returns_Original_Option()
+		public override async Task Test01_None_Runs_Audit_Action_And_Returns_Original_Option()
 		{
-			// Arrange
-			var option = Return(F.Rnd.Int);
-			var task = option.AsTask;
-
-			void actionThrow(Option<int> _) => throw new Exception();
-			Task funcThrow(Option<int> _) => throw new Exception();
-
-			// Act
-			var r0 = await task.AuditAsync(actionThrow);
-			var r1 = await task.AuditAsync(funcThrow);
-
-			// Assert
-			Assert.Same(option, r0);
-			Assert.Same(option, r1);
+			await Test01((none, audit) => none.AsTask.AuditAsync(audit));
 		}
 
-		public class FakeOption : Option<int> { }
+		[Fact]
+		public override async Task Test02_Some_Runs_Audit_Func_And_Returns_Original_Option()
+		{
+			await Test02((some, audit) => some.AsTask.AuditAsync(audit));
+		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override async Task Test03_None_Runs_Audit_Func_And_Returns_Original_Option()
+		{
+			await Test03((none, audit) => none.AsTask.AuditAsync(audit));
+		}
+
+		[Fact]
+		public override async Task Test04_Some_Runs_Audit_Action_Catches_Exception_And_Returns_Original_Option()
+		{
+			await Test04((some, audit) => some.AsTask.AuditAsync(audit));
+		}
+
+		[Fact]
+		public override async Task Test05_None_Runs_Audit_Action_Catches_Exception_And_Returns_Original_Option()
+		{
+			await Test05((none, audit) => none.AsTask.AuditAsync(audit));
+		}
+
+		[Fact]
+		public override async Task Test06_Some_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option()
+		{
+			await Test06((some, audit) => some.AsTask.AuditAsync(audit));
+		}
+
+		[Fact]
+		public override async Task Test07_None_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option()
+		{
+			await Test07((none, audit) => none.AsTask.AuditAsync(audit));
+		}
 	}
 }
