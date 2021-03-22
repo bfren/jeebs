@@ -33,6 +33,6 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="parameter">IDbDataParameter</param>
 		/// <param name="value">Guid value</param>
 		public override void SetValue(IDbDataParameter parameter, Guid value) =>
-			parameter.Value = value.ToString();
+			parameter.Value = value;
 	}
 }
