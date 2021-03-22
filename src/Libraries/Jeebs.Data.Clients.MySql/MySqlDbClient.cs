@@ -19,10 +19,7 @@ namespace Jeebs.Data.Clients.MySql
 		protected override string GetCreateQuery(string table, IMappedColumnList columns)
 		{
 			// Begin query
-			var sql = new StringBuilder("INSERT INTO ");
-
-			// Add table
-			sql.Append($"`{table}` ");
+			var sql = new StringBuilder($"INSERT INTO `{table}` ");
 
 			// Get columns
 			var col = new List<string>();
@@ -34,7 +31,7 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Add columns and parameters
-			sql.Append($" ({string.Join(", ", col)}) VALUES ({string.Join(", ", par)}); ");
+			sql.Append($"({string.Join(", ", col)}) VALUES ({string.Join(", ", par)}); ");
 
 			// Select ID
 			sql.Append("SELECT LAST_INSERT_ID();");
@@ -46,23 +43,15 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		protected override string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn)
 		{
-			// Begin query
-			var sql = new StringBuilder("SELECT ");
-
-			// Add columns
+			// Get columns
 			var col = new List<string>();
 			foreach (var column in columns)
 			{
 				col.Add($"`{column.Name}` AS '{column.Alias}'");
 			}
 
-			sql.Append(string.Join(", ", col));
-
-			// Add WHERE id
-			sql.Append($" WHERE `{idColumn.Name}` = @{idColumn.Alias};");
-
 			// Return query
-			return sql.ToString();
+			return $"SELECT {string.Join(", ", col)} FROM `{table}` WHERE `{idColumn.Name}` = @{idColumn.Alias};";
 		}
 
 		/// <inheritdoc/>
@@ -72,12 +61,6 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, IMappedColumn? versionColumn)
 		{
-			// Begin query
-			var sql = new StringBuilder("UPDATE ");
-
-			// Add table
-			sql.Append($"`{table}` ");
-
 			// Get columns
 			var col = new List<string>();
 			foreach (var column in columns)
@@ -91,11 +74,8 @@ namespace Jeebs.Data.Clients.MySql
 				col.Add($"`{versionColumn.Name}` = @{versionColumn.Alias} + 1");
 			}
 
-			// Add update columns
-			sql.Append($"SET {string.Join(", ", col)} ");
-
 			// Add WHERE Id
-			sql.Append($"WHERE `{idColumn.Name}` = @{idColumn.Alias}");
+			var sql = new StringBuilder($"UPDATE `{table}` SET {string.Join(", ", col)} WHERE `{idColumn.Name}` = @{idColumn.Alias}");
 
 			// Add WHERE Version
 			if (versionColumn is not null)
@@ -109,7 +89,11 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		protected override string GetDeleteQuery(string table, IMappedColumn idColumn)
+		protected override string GetDeleteQuery(string table, IMappedColumn idColumn) =>
+			GetDeleteQuery(table, idColumn, null);
+
+		/// <inheritdoc/>
+		protected override string GetDeleteQuery(string table, IMappedColumn idColumn, IMappedColumn? versionColumn)
 		{
 			// Begin query
 			var sql = new StringBuilder("DELETE FROM ");
@@ -118,9 +102,16 @@ namespace Jeebs.Data.Clients.MySql
 			sql.Append($"`{table}` ");
 
 			// Add WHERE id
-			sql.Append($"WHERE `{idColumn.Name}` = @{idColumn.Alias};");
+			sql.Append($"WHERE `{idColumn.Name}` = @{idColumn.Alias}");
+
+			// Add WHERE Version
+			if (versionColumn is not null)
+			{
+				sql.Append($" AND `{versionColumn.Name}` = @{versionColumn.Alias}");
+			}
 
 			// Return query
+			sql.Append(';');
 			return sql.ToString();
 		}
 	}

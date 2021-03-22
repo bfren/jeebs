@@ -86,14 +86,48 @@ namespace Jeebs.Data
 		public Option<string> GetDeleteQuery<TEntity>()
 			where TEntity : IEntity =>
 			Mapper.Instance.GetTableMapFor<TEntity>().Map(
-				x => GetDeleteQuery(x.Name, x.IdColumn),
+				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
+				{
+					false =>
+						GetDeleteQuery(x.Name, x.IdColumn),
+
+					true =>
+						GetDeleteQuery(x.Name, x.IdColumn, x.VersionColumn),
+
+				},
 				e => new Msg.ErrorGettingDeleteQueryExceptionMsg(e)
 			);
+
+		/// <inheritdoc cref="GetDeleteQuery(string, IMappedColumn, IMappedColumn?)"/>
+		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn);
 
 		/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
 		/// <param name="table">Table name</param>
 		/// <param name="idColumn">ID column for predicate</param>
-		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn);
+		/// <param name="versionColumn">Version column for predicate</param>
+		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn, IMappedColumn? versionColumn);
+
+		#endregion
+
+		#region Testing
+
+		internal string GetCreateQueryTest(string table, IMappedColumnList columns) =>
+			GetCreateQuery(table, columns);
+
+		internal string GetRetrieveQueryTest(string table, ColumnList columns, IMappedColumn idColumn) =>
+			GetRetrieveQuery(table, columns, idColumn);
+
+		internal string GetUpdateQueryTest(string table, ColumnList columns, IMappedColumn idColumn) =>
+			GetUpdateQuery(table, columns, idColumn);
+
+		internal string GetUpdateQueryTest(string table, ColumnList columns, IMappedColumn idColumn, IMappedColumn? versionColumn) =>
+			GetUpdateQuery(table, columns, idColumn, versionColumn);
+
+		internal string GetDeleteQueryTest(string table, IMappedColumn idColumn) =>
+			GetDeleteQuery(table, idColumn);
+
+		internal string GetDeleteQueryTest(string table, IMappedColumn idColumn, IMappedColumn? versionColumn) =>
+			GetDeleteQuery(table, idColumn, versionColumn);
 
 		#endregion
 
