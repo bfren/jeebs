@@ -6,14 +6,13 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// Adds additional Authentication functionality to the base <see cref="IDbClient"/>
+	/// Adds additional Authentication functionality to the base <see cref="IDb"/>
 	/// </summary>
-	public interface IAuthDbClient : IDbClient
+	public interface IAuthDb : IDb
 	{
 		/// <summary>
 		/// Migrate to the latest version of the Authentication database
 		/// </summary>
-		/// <param name="connectionString">Connection string</param>
-		void MigrateToLatest(string connectionString);
+		void MigrateToLatest();
 	}
 }

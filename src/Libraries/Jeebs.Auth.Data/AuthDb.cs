@@ -10,10 +10,8 @@ using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth
 {
-	/// <summary>
-	/// Authentication Database wrapper
-	/// </summary>
-	public sealed class AuthDb : Db
+	/// <inheritdoc cref="IAuthDb"/>
+	public sealed class AuthDb : Db, IAuthDb
 	{
 		/// <inheritdoc/>
 		new public IAuthDbClient Client { get; private init; }
@@ -50,6 +48,10 @@ namespace Jeebs.Auth
 			Map<AuthUserEntity>.To(User);
 			Map<AuthUserRoleEntity>.To(UserRole);
 		}
+
+		/// <inheritdoc/>
+		public void MigrateToLatest() =>
+			Client.MigrateToLatest(Config.ConnectionString);
 
 		/// <summary>
 		/// Add type handlers

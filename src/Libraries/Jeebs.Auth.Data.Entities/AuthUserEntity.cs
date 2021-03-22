@@ -25,10 +25,6 @@ namespace Jeebs.Auth.Data.Entities
 		public AuthUserId UserId { get; init; } = new AuthUserId();
 
 		/// <inheritdoc/>
-		[Version]
-		public long Version { get; init; }
-
-		/// <inheritdoc/>
 		public string EmailAddress { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
