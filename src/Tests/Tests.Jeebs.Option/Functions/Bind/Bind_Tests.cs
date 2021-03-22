@@ -1,97 +1,41 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using Jeebs;
-using Jeebs.Exceptions;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class Bind_Tests
+	public class Bind_Tests : Jeebs_Tests.Bind_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = new FakeOption();
-			var bind = Substitute.For<Func<int, Option<string>>>();
-
-			// Act
-			var result = Bind(option, bind);
-
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-			Assert.IsType<UnknownOptionException>(msg.Exception);
+			Test00((opt, bind) => Bind(opt, bind));
 		}
 
 		[Fact]
-		public void Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var exception = new Exception();
-			Option<int> throwFunc() => throw exception;
-
-			// Act
-			var r0 = Bind(option, _ => throwFunc());
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n0);
+			Test01((opt, bind) => Bind(opt, bind));
 		}
 
 		[Fact]
-		public void If_None_Gets_None()
+		public override void Test02_If_None_Gets_None()
 		{
-			// Arrange
-			var option = None<int>(true);
-			var bind = Substitute.For<Func<int, Option<string>>>();
-
-			// Act
-			var result = Bind(option, bind);
-
-			// Assert
-			result.AssertNone();
+			Test02((opt, bind) => Bind(opt, bind));
 		}
 
 		[Fact]
-		public void If_None_With_Reason_Gets_None_With_Same_Reason()
+		public override void Test03_If_None_With_Reason_Gets_None_With_Same_Reason()
 		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var bind = Substitute.For<Func<int, Option<string>>>();
-
-			// Act
-			var result = Bind(option, bind);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.Same(msg, none);
+			Test03((opt, bind) => Bind(opt, bind));
 		}
 
 		[Fact]
-		public void If_Some_Runs_Bind_Function()
+		public override void Test04_If_Some_Runs_Bind_Function()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
-			var bind = Substitute.For<Func<int, Option<string>>>();
-
-			// Act
-			Bind(option, bind);
-
-			// Assert
-			bind.Received().Invoke(value);
+			Test04((opt, bind) => Bind(opt, bind));
 		}
-
-		public class FakeOption : Option<int> { }
-
-		public record TestMsg : IMsg { }
 	}
 }
