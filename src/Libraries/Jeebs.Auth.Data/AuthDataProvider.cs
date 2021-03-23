@@ -81,7 +81,7 @@ namespace Jeebs.Auth
 			public sealed record UserNotEnabledMsg(string Value) : WithValueMsg<string> { }
 
 			/// <summary>User not found</summary>
-			public sealed record UserNotFoundMsg(string Value) : WithValueMsg<string> { }
+			public sealed record UserNotFoundMsg(string EmailAddress) : NotFoundMsg { }
 		}
 	}
 }
