@@ -15,14 +15,7 @@ namespace AppMvc.Controllers
 {
 	public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 	{
-		private readonly AuthDb db;
-
-		public AuthController(
-			AuthDataProvider auth,
-			AuthDb db,
-			ILog<AuthController> log
-		) : base(auth, log) =>
-			(this.db) = (db);
+		public AuthController(AuthDataProvider auth, ILog<AuthController> log) : base(auth, log) { }
 
 		[Authorize]
 		public IActionResult Index() =>
@@ -36,21 +29,15 @@ namespace AppMvc.Controllers
 		public IActionResult Deny() =>
 			View();
 
-		public IActionResult Migrate()
-		{
-			db.MigrateToLatest();
-			return Content("Done");
-		}
-
 		public async Task<IActionResult> InsertTestData()
 		{
-			var id = await Auth.CreateUserAsync(new AuthCreateUserModel("ben@bcgdesign.com", "fred"));
+			var id = await Auth.User.CreateAsync(new AuthCreateUserModel("ben@bcgdesign.com", "fred"));
 			return Content(id.ToString());
 		}
 
 		public async Task<IActionResult> ShowUser(AuthUserId id) =>
 			await Auth
-				.RetrieveUserAsync<UpdateUserModel>(
+				.User.RetrieveAsync<UpdateUserModel>(
 					id
 				)
 				.MapAsync(
@@ -64,7 +51,7 @@ namespace AppMvc.Controllers
 		[HttpPost]
 		public async Task<IActionResult> UpdateUser(UpdateUserModel model) =>
 			await Auth
-				.UpdateUserAsync(
+				.User.UpdateAsync(
 					model
 				)
 				.MapAsync(
@@ -77,15 +64,15 @@ namespace AppMvc.Controllers
 
 		public async Task<IActionResult> UpdateUser() =>
 			await Auth
-				.RetrieveUserAsync<UpdateUserModel>(
-					new(1)
+				.User.RetrieveAsync<UpdateUserModel>(
+					new AuthUserId(1)
 				)
 				.SwitchAsync(
-					some: async x => await Auth.UpdateUserAsync(x with { FriendlyName = F.Rnd.Str }),
+					some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = F.Rnd.Str }),
 					none: r => None<bool>(r).AsTask
 				)
 				.BindAsync(
-					_ => Auth.RetrieveUserAsync<AuthUserModel>(new(1))
+					_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId(1))
 				)
 				.MapAsync(
 					x => Content(x.ToString()),
@@ -93,6 +80,19 @@ namespace AppMvc.Controllers
 				)
 				.UnwrapAsync(
 					x => x.Value(r => Content(r.ToString()))
+				);
+
+		public async Task<IActionResult> ShowUserByEmail(string email) =>
+			await Auth
+				.User.RetrieveAsync<UpdateUserModel>(
+					email
+				)
+				.MapAsync(
+					x => View("ShowUser", x),
+					DefaultHandler
+				)
+				.UnwrapAsync(
+					x => x.Value(() => View("Unknown"))
 				);
 
 		public sealed record UpdateUserModel : IWithId<AuthUserId>, IWithVersion

@@ -1,12 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Cryptography;
-using Jeebs.Data;
 using static F.OptionF;
 
 namespace Jeebs.Auth
@@ -17,12 +16,14 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// AuthUserFunc
 		/// </summary>
-		private AuthUserFunc User { get; init; }
+		public AuthUserFunc User { get; private init; }
 
 		/// <summary>
-		/// ILog
+		/// AuthUserFunc
 		/// </summary>
-		private ILog Log { get; init; }
+		public AuthRoleFunc Role { get; private init; }
+
+		private AuthDb Db { get; init; }
 
 		/// <summary>
 		/// Inject dependencies
@@ -30,7 +31,7 @@ namespace Jeebs.Auth
 		/// <param name="db">AuthDb</param>
 		/// <param name="log">ILog</param>
 		public AuthDataProvider(AuthDb db, ILog<AuthDataProvider> log) =>
-			(User, Log) = (new AuthUserFunc(db, log), log);
+			(User, Role, Db) = (new AuthUserFunc(db, log), new AuthRoleFunc(db, log), db);
 
 		/// <inheritdoc cref="ValidateUserAsync{TModel}(string, string)"/>
 		public Task<Option<AuthUserModel>> ValidateUserAsync(string email, string password) =>
@@ -67,10 +68,6 @@ namespace Jeebs.Auth
 					return None<TModel, Msg.InvalidPasswordMsg>();
 				}
 
-				// Update last sign in
-				var updated = await User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
-				updated.AuditSwitch(none: r => Log.Message(r));
-
 				// Get user model
 				return await User.RetrieveAsync<TModel>(user.Id).ConfigureAwait(false);
 			}
@@ -80,37 +77,8 @@ namespace Jeebs.Auth
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<AuthUserId>> CreateUserAsync<TModel>(TModel user)
-			where TModel : IAuthCreateUserModel
-		{
-			// Create entity from model
-			var entity = new AuthUserEntity
-			{
-				PasswordHash = user.Password.HashPassword(),
-				EmailAddress = user.EmailAddress,
-				IsEnabled = true
-			};
-
-			// Insert entity and return
-			return User.CreateAsync(entity);
-		}
-
-		/// <inheritdoc/>
-		public Task<Option<AuthUserModel>> RetrieveUserAsync(AuthUserId id) =>
-			RetrieveUserAsync<AuthUserModel>(id);
-
-		/// <inheritdoc/>
-		public Task<Option<TModel>> RetrieveUserAsync<TModel>(AuthUserId id) =>
-			User.RetrieveAsync<TModel>(id);
-
-		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateUserAsync(AuthUserModel user) =>
-			UpdateUserAsync<AuthUserModel>(user);
-
-		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateUserAsync<TModel>(TModel user)
-			where TModel : IWithId =>
-			User.UpdateAsync(user);
+		public Task<Option<bool>> UpdateUserLastSignInAsync(AuthUserId userId) =>
+			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
 
 		/// <summary>Messages</summary>
 		public static class Msg

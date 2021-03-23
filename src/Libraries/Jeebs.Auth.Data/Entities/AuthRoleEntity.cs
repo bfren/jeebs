@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data.Entities
 	/// <summary>
 	/// Authentication Role Entity
 	/// </summary>
-	internal sealed record AuthRoleEntity : AuthRoleModel, IEntity<AuthRoleId>
+	public sealed record AuthRoleEntity : AuthRoleModel, IEntity<AuthRoleId>
 	{
 		/// <summary>
 		/// Role Description

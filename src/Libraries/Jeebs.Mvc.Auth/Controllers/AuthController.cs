@@ -15,15 +15,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Auth.Controllers
 {
+	/// <inheritdoc cref="AuthController{TProvider}"/>
+	public abstract class AuthController : AuthControllerBase
+	{
+		/// <summary>
+		/// AuthDataProvider
+		/// </summary>
+		new protected AuthDataProvider Auth { get; private init; }
+
+		/// <summary>
+		/// Inject dependencies
+		/// </summary>
+		/// <param name="auth">AuthDataProvider</param>
+		/// <param name="log">ILog</param>
+		protected AuthController(AuthDataProvider auth, ILog log) : base(auth, log) =>
+			Auth = auth;
+	}
+
 	/// <summary>
 	/// Implement this controller to add support for user authentication
 	/// </summary>
-	public abstract class AuthController : Controller
+	public abstract class AuthControllerBase : Controller
 	{
 		/// <summary>
 		/// IAuthDataProvider
 		/// </summary>
-		protected IAuthDataProvider Auth { get; init; }
+		protected IAuthDataProvider Auth { get; private init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
@@ -33,9 +50,9 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="auth">DataAuthProvider</param>
+		/// <param name="auth">IAuthDataProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthController(IAuthDataProvider auth, ILog log) : base(log) =>
+		protected AuthControllerBase(IAuthDataProvider auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -54,11 +71,15 @@ namespace Jeebs.Mvc.Auth.Controllers
 		{
 			// Validate user
 			var validate = await Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password);
-			if (validate is Some<AuthUserModel> user)
+			foreach (var user in validate)
 			{
 				// Get user principal
 				Log.Debug("User validated.");
-				var principal = GetPrincipal(user.Value);
+				var principal = GetPrincipal(user);
+
+				// Update last sign in
+				var updated = await Auth.UpdateUserLastSignInAsync(user.Id).ConfigureAwait(false);
+				updated.AuditSwitch(none: r => Log.Message(r));
 
 				// Add SignIn to HttpContext using Cookie scheme
 				await HttpContext.SignInAsync(

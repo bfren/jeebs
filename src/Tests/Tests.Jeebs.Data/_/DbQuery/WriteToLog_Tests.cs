@@ -9,7 +9,7 @@ namespace Jeebs.Data.DbQuery_Tests
 	public class WriteToLog_Tests
 	{
 		[Fact]
-		public void Sends_Message_And_Args_To_Verbose_Log()
+		public void Sends_Message_And_Args_To_Debug_Log()
 		{
 			// Arrange
 			var db = Substitute.For<IDb>();
@@ -22,7 +22,7 @@ namespace Jeebs.Data.DbQuery_Tests
 			query.WriteToLogTest(message, args);
 
 			// Assert
-			log.Received().Verbose(message, args);
+			log.Received().Debug(message, args);
 		}
 	}
 }

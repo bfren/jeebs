@@ -20,7 +20,7 @@ namespace Jeebs.Data
 		/// <param name="connectionString">Database connection string</param>
 		IDbConnection Connect(string connectionString);
 
-		#region General Queries
+		#region Custom Queries
 
 		/// <summary>
 		/// Return a query to retrieve a list of entities that match all the specified parameters

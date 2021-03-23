@@ -142,7 +142,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			);
 		}
 
-		public class AuthTestController : AuthController
+		public class AuthTestController : AuthControllerBase
 		{
 			public AuthTestController(IAuthDataProvider auth, ILog log) : base(auth, log) { }
 		}

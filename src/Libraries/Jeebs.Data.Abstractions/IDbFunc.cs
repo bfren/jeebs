@@ -2,10 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 
@@ -20,12 +18,22 @@ namespace Jeebs.Data
 		where TEntity : IEntity
 		where TId : StrongId
 	{
-		#region General Queries
+		#region Custom Queries
 
+		/// <summary>
+		/// Retrieve a single item matching all <paramref name="predicates"/>
+		/// </summary>
+		/// <typeparam name="TModel">Model type</typeparam>
+		/// <param name="predicates">Predicates (matched using AND)</param>
 		Task<Option<TModel>> QuerySingleAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		);
 
+		/// <summary>
+		/// Retrieve items matching all <paramref name="predicates"/>
+		/// </summary>
+		/// <typeparam name="TModel">Model type</typeparam>
+		/// <param name="predicates">Predicates (matched using AND)</param>
 		Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		);

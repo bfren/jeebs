@@ -25,12 +25,12 @@ namespace Jeebs.Data
 			(Db, Log) = (db, log);
 
 		/// <summary>
-		/// Use Verbose log by default - override to send elsewhere (or to disable entirely)
+		/// Use Debug log by default - override to send elsewhere (or to disable entirely)
 		/// </summary>
 		/// <param name="message">Log message</param>
 		/// <param name="args">Log message arguments</param>
 		protected virtual void WriteToLog(string message, object[] args) =>
-			Log.Verbose(message, args);
+			Log.Debug(message, args);
 
 		#region Testing
 

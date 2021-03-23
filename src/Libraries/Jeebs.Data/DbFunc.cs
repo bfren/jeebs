@@ -10,7 +10,7 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
-	/// <inheritdoc cref="IDbCrud{TEntity}"/>
+	/// <inheritdoc cref="IDbFunc{TEntity, TId}"/>
 	public abstract class DbFunc<TEntity, TId> : DbQuery, IDbFunc<TEntity, TId>
 		where TEntity : IEntity
 		where TId : StrongId
@@ -52,7 +52,7 @@ namespace Jeebs.Data
 			}
 		}
 
-		#region General Queries
+		#region Custom Queries
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> QuerySingleAsync<TModel>(
