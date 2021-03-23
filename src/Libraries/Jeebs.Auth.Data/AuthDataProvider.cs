@@ -9,17 +9,13 @@ using static F.OptionF;
 
 namespace Jeebs.Auth
 {
-	/// <inheritdoc cref="IAuthDataProvider"/>
+	/// <inheritdoc cref="IAuthDataProvider{TUserEntity, TRoleEntity}"/>
 	public sealed class AuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity>
 	{
-		/// <summary>
-		/// AuthUserFunc
-		/// </summary>
+		/// <inheritdoc/>
 		public IAuthUserFunc<AuthUserEntity> User { get; private init; }
 
-		/// <summary>
-		/// AuthUserFunc
-		/// </summary>
+		/// <inheritdoc/>
 		public IAuthRoleFunc<AuthRoleEntity> Role { get; private init; }
 
 		/// <summary>

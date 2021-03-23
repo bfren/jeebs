@@ -10,15 +10,15 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Auth
 {
-	/// <inheritdoc cref="IAuthUserFunc"/>
+	/// <inheritdoc cref="IAuthUserFunc{TUserEntity}"/>
 	public sealed class AuthUserFunc : DbFunc<AuthUserEntity, AuthUserId>, IAuthUserFunc<AuthUserEntity>
 	{
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="db">AuthDb</param>
+		/// <param name="db">IAuthDb</param>
 		/// <param name="log">ILog</param>
-		public AuthUserFunc(AuthDb db, ILog<AuthUserFunc> log) : base(db, log) { }
+		public AuthUserFunc(IAuthDb db, ILog<AuthUserFunc> log) : base(db, log) { }
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> RetrieveAsync<TModel>(string email) =>

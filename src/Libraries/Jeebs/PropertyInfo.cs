@@ -18,6 +18,9 @@ namespace Jeebs
 		/// </summary>
 		private readonly PropertyInfo info;
 
+		/// <summary>
+		/// Return the property name
+		/// </summary>
 		public string Name =>
 			info.Name;
 

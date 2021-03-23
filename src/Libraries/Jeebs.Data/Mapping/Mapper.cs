@@ -11,7 +11,7 @@ using static F.OptionF;
 
 namespace Jeebs.Data
 {
-	/// <inheritdoc/>
+	/// <inheritdoc cref="IMapper"/>
 	internal sealed class Mapper : IMapper, IDisposable
 	{
 		#region Static
@@ -202,10 +202,10 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Set to true if the object has been disposed
 		/// </summary>
-		private bool disposed = false;
+		private bool disposed;
 
 		/// <summary>
-		/// Suppress garbage collection and call <see cref="Dispose(bool)"/>
+		/// Suppress garbage collection and clear mapped entities
 		/// https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
 		/// </summary>
 		public void Dispose()

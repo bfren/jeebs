@@ -10,7 +10,9 @@ namespace Jeebs.Id
 	/// <param name="Value">ID Value</param>
 	public abstract record StrongId<T>(T Value) : IStrongId<T>
 	{
-		/// <inheritdoc cref="IStrongId.ValueStr"/>
+		/// <summary>
+		/// Return the value as a string
+		/// </summary>
 		public string ValueStr =>
 			Value?.ToString() ?? "Unknown ID";
 

@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace F.Internals
 {
 	/// <summary>
-	/// Converter for <see cref="StrongId"/> types
+	/// Converter for <see cref="Jeebs.StrongId"/> types
 	/// </summary>
 	/// <typeparam name="T">StrongId type</typeparam>
 	public sealed class StrongIdConverter<T> : JsonConverter<T>

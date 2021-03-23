@@ -5,9 +5,15 @@ using SimpleMigrations;
 
 namespace Jeebs.Auth.Data.Clients.MySql.Migrations
 {
-	[Migration(4, "Add user role table")]
+	/// <summary>
+	/// Migration: Add update last sign in procedure
+	/// </summary>
+	[Migration(4, "Add update last user sign in procedure")]
 	public sealed class AddUpdateLastSignInProcedure : Migration
 	{
+		/// <summary>
+		/// Migrate up
+		/// </summary>
 		protected override void Up()
 		{
 			Execute(@"
@@ -27,6 +33,9 @@ namespace Jeebs.Auth.Data.Clients.MySql.Migrations
 			");
 		}
 
+		/// <summary>
+		/// Migrate down
+		/// </summary>
 		protected override void Down()
 		{
 			Execute("DROP PROCEDURE `UpdateUserLastSignIn`;");

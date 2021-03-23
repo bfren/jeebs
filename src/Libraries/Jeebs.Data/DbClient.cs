@@ -19,7 +19,9 @@ namespace Jeebs.Data
 
 		#region General Queries
 
-		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}((Expression{Func{TEntity, object}}, SearchOperator, object)[])"/>
+		/// <summary>
+		/// Return a query to retrieve a list of entities that match all the specified parameters
+		/// </summary>
 		/// <param name="table">Table name</param>
 		/// <param name="columns">List of columns to select</param>
 		/// <param name="predicates">Predicates (matched using AND)</param>
@@ -110,7 +112,7 @@ namespace Jeebs.Data
 				e => new Msg.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}"/>
+		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(long)"/>
 		/// <param name="table">Table name</param>
 		/// <param name="columns">List of columns to select</param>
 		/// <param name="idColumn">ID column for predicate</param>

@@ -3,6 +3,9 @@
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// Maps entities to tables
+	/// </summary>
 	public interface IMapper
 	{
 		/// <summary>

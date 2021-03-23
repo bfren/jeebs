@@ -8,6 +8,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// Provides Authentication functions for interacting with Roles
 	/// </summary>
+	/// <typeparam name="TRoleEntity">Role Entity type</typeparam>
 	public interface IAuthRoleFunc<TRoleEntity> : IDbFunc<TRoleEntity, AuthRoleId>
 		where TRoleEntity : IAuthRole, IEntity
 	{

@@ -6,9 +6,9 @@ using System.Reflection;
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IMappedColumn"/>
-	/// <param name="table">Table name</param>
-	/// <param name="name">Column Name</param>
-	/// <param name="property">Entity property PropertyInfo</param>
+	/// <param name="Table">Table name</param>
+	/// <param name="Name">Column Name</param>
+	/// <param name="Property">Entity property PropertyInfo</param>
 	public sealed record MappedColumn(string Table, string Name, PropertyInfo Property) :
 		Column(Table, Name, Property.Name), IMappedColumn
 	{

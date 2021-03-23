@@ -16,7 +16,7 @@ namespace Jeebs.Auth.Data.Tables
 		/// </summary>
 		public const string ColumnPrefix = "UserRole";
 
-		/// <inheritdoc cref="AuthUserRoleEntity.UserRoleId"/>
+		/// <inheritdoc cref="AuthUserRoleEntity.Id"/>
 		public string Id =>
 			ColumnPrefix + nameof(Id);
 

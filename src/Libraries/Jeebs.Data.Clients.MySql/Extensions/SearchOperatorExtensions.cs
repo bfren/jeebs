@@ -5,6 +5,9 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data.Clients.MySql
 {
+	/// <summary>
+	/// Extension methods for SearchOperator: ToOperator
+	/// </summary>
 	public static class SearchOperatorExtensions
 	{
 		/// <summary>

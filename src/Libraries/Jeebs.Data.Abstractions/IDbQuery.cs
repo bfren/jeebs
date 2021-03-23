@@ -3,6 +3,9 @@
 
 namespace Jeebs.Data
 {
+	/// <summary>
+	/// Database query functionality
+	/// </summary>
 	public interface IDbQuery
 	{
 	}

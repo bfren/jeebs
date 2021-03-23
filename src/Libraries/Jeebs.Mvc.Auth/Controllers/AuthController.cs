@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Auth.Controllers
 {
-	/// <inheritdoc cref="AuthController{TProvider}"/>
+	/// <inheritdoc cref="AuthControllerBase"/>
 	public abstract class AuthController : AuthControllerBase
 	{
 		/// <summary>

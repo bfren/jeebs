@@ -14,8 +14,14 @@ namespace Jeebs.Auth.Data
 		where TRoleEntity : IAuthRole, IEntity
 
 	{
+		/// <summary>
+		/// User functions
+		/// </summary>
 		IAuthUserFunc<TUserEntity> User { get; }
 
+		/// <summary>
+		/// Role functions
+		/// </summary>
 		IAuthRoleFunc<TRoleEntity> Role { get; }
 
 		#region Users

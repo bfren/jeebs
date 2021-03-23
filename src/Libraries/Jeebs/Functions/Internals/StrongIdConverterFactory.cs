@@ -13,7 +13,7 @@ namespace F.Internals
 	public sealed class StrongIdConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="StrongId"/>
+		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Jeebs.StrongId"/>
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert) =>

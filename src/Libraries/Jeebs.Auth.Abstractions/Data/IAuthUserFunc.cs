@@ -6,6 +6,10 @@ using Jeebs.Data;
 
 namespace Jeebs.Auth.Data
 {
+	/// <summary>
+	/// Provides Authentication functions for interacting with User
+	/// </summary>
+	/// <typeparam name="TUserEntity">User Entity type</typeparam>
 	public interface IAuthUserFunc<TUserEntity> : IDbFunc<TUserEntity, AuthUserId>
 		where TUserEntity : IAuthUser, IEntity
 	{

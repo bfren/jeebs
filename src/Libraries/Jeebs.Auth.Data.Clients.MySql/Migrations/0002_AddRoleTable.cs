@@ -5,9 +5,15 @@ using SimpleMigrations;
 
 namespace Jeebs.Auth.Data.Clients.MySql.Migrations
 {
+	/// <summary>
+	/// Migration: Add role table
+	/// </summary>
 	[Migration(2, "Add role table")]
 	public sealed class AddRoleTable : Migration
 	{
+		/// <summary>
+		/// Migrate up
+		/// </summary>
 		protected override void Up()
 		{
 			Execute(@"
@@ -22,6 +28,9 @@ namespace Jeebs.Auth.Data.Clients.MySql.Migrations
 			");
 		}
 
+		/// <summary>
+		/// Migrate down
+		/// </summary>
 		protected override void Down()
 		{
 			Execute("DROP TABLE `auth_role`;");
