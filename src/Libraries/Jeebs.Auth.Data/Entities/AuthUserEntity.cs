@@ -19,7 +19,7 @@ namespace Jeebs.Auth.Data.Entities
 		/// <summary>
 		/// The user's encrypted password
 		/// </summary>
-		public string PasswordHash { get; init; }
+		public string PasswordHash { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Whether or not the user account is enabled
@@ -30,12 +30,5 @@ namespace Jeebs.Auth.Data.Entities
 		/// The last time the user signed in
 		/// </summary>
 		public DateTimeOffset? LastSignedIn { get; init; }
-
-		/// <summary>
-		/// Create User with specified password hash
-		/// </summary>
-		/// <param name="passwordHash">Password hash</param>
-		internal AuthUserEntity(string passwordHash) =>
-			PasswordHash = passwordHash;
 	}
 }

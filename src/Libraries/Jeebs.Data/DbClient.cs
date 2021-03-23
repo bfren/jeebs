@@ -2,7 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Linq.Expressions;
+using Jeebs.Data.Enums;
 using Jeebs.Linq;
 
 namespace Jeebs.Data
@@ -15,6 +19,60 @@ namespace Jeebs.Data
 
 		#region General Queries
 
+		protected abstract (string query, Dictionary<string, object> param) GetRetrieveQuery(
+			string table,
+			ColumnList columns,
+			List<(string column, SearchOperator op, object value)> predicates
+		);
+
+		/// <inheritdoc/>
+		public Option<(string query, Dictionary<string, object> param)> GetRetrieveQuery<TEntity, TModel>(
+			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+		)
+			where TEntity : IEntity =>
+			(
+				from map in Mapper.Instance.GetTableMapFor<TEntity>()
+				from sel in Extract<TModel>.From(map.Table)
+				from whr in GetPredicates(map.Columns, predicates)
+				select (map, sel, whr)
+			)
+			.Map(
+				x => GetRetrieveQuery(x.map.Name, x.sel, x.whr),
+				e => new Msg.ErrorGettingGeneralRetrieveQueryExceptionMsg(e)
+			);
+
+		/// <summary>
+		/// Convert LINQ expression property selectors to column names
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <param name="columns">Mapped columns</param>
+		/// <param name="predicates">Predicates</param>
+		private static Option<List<(string column, SearchOperator op, object value)>> GetPredicates<TEntity>(
+			IMappedColumnList columns,
+			(Expression<Func<TEntity, object>> column, SearchOperator op, object value)[] predicates
+		)
+			where TEntity : IEntity
+		{
+			var list = new List<(string, SearchOperator, object)>();
+			foreach (var item in predicates)
+			{
+				// The property name is the column alias
+				var alias = item.column.GetPropertyInfo().Name;
+
+				// Retrieve column using alias
+				var column = columns.SingleOrDefault(c => c.Alias == alias);
+				if (column == null)
+				{
+					continue;
+				}
+
+				// Add to list of predicates using column name
+				list.Add((column.Name, item.op, item.value));
+			}
+
+			return list;
+		}
+
 		#endregion
 
 		#region CRUD Queries
@@ -24,13 +82,16 @@ namespace Jeebs.Data
 			where TEntity : IEntity =>
 			Mapper.Instance.GetTableMapFor<TEntity>().Map(
 				x => GetCreateQuery(x.Name, x.Columns),
-				e => new Msg.ErrorGettingCreateQueryExceptionMsg(e)
+				e => new Msg.ErrorGettingCrudCreateQueryExceptionMsg(e)
 			);
 
 		/// <inheritdoc cref="GetCreateQuery{TEntity}"/>
 		/// <param name="table">Table name</param>
 		/// <param name="columns">List of mapped columns</param>
-		protected abstract string GetCreateQuery(string table, IMappedColumnList columns);
+		protected abstract string GetCreateQuery(
+			string table,
+			IMappedColumnList columns
+		);
 
 		/// <inheritdoc/>
 		public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
@@ -42,7 +103,7 @@ namespace Jeebs.Data
 			)
 			.Map(
 				x => GetRetrieveQuery(x.map.Name, x.col, x.map.IdColumn, id),
-				e => new Msg.ErrorGettingRetrieveQueryExceptionMsg(e)
+				e => new Msg.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 			);
 
 		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}"/>
@@ -50,7 +111,12 @@ namespace Jeebs.Data
 		/// <param name="columns">List of columns to select</param>
 		/// <param name="idColumn">ID column for predicate</param>
 		/// <param name="id">Entity ID</param>
-		protected abstract string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn, long id);
+		protected abstract string GetRetrieveQuery(
+			string table,
+			ColumnList columns,
+			IMappedColumn idColumn,
+			long id
+		);
 
 		/// <inheritdoc/>
 		public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
@@ -70,11 +136,16 @@ namespace Jeebs.Data
 						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn, id, x.map.VersionColumn),
 
 				},
-				e => new Msg.ErrorGettingUpdateQueryExceptionMsg(e)
+				e => new Msg.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 			);
 
 		/// <inheritdoc cref="GetUpdateQuery(string, ColumnList, IMappedColumn, long, IMappedColumn)"/>
-		protected abstract string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id);
+		protected abstract string GetUpdateQuery(
+			string table,
+			ColumnList columns,
+			IMappedColumn idColumn,
+			long id
+		);
 
 		/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
 		/// <param name="table">Table name</param>
@@ -82,7 +153,13 @@ namespace Jeebs.Data
 		/// <param name="idColumn">ID column for predicate</param>
 		/// <param name="id">Entity ID</param>
 		/// <param name="versionColumn">Version column for predicate</param>
-		protected abstract string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id, IMappedColumn? versionColumn);
+		protected abstract string GetUpdateQuery(
+			string table,
+			ColumnList columns,
+			IMappedColumn idColumn,
+			long id,
+			IMappedColumn? versionColumn
+		);
 
 		/// <inheritdoc/>
 		public Option<string> GetDeleteQuery<TEntity>(long id)
@@ -97,18 +174,27 @@ namespace Jeebs.Data
 						GetDeleteQuery(x.Name, x.IdColumn, id, x.VersionColumn),
 
 				},
-				e => new Msg.ErrorGettingDeleteQueryExceptionMsg(e)
+				e => new Msg.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 			);
 
 		/// <inheritdoc cref="GetDeleteQuery(string, IMappedColumn, long, IMappedColumn?)"/>
-		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn, long id);
+		protected abstract string GetDeleteQuery(
+			string table,
+			IMappedColumn idColumn,
+			long id
+		);
 
 		/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
 		/// <param name="table">Table name</param>
 		/// <param name="idColumn">ID column for predicate</param>
 		/// <param name="id">Entity ID</param>
 		/// <param name="versionColumn">Version column for predicate</param>
-		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn, long id, IMappedColumn? versionColumn);
+		protected abstract string GetDeleteQuery(
+			string table,
+			IMappedColumn idColumn,
+			long id,
+			IMappedColumn? versionColumn
+		);
 
 		#endregion
 
@@ -137,21 +223,25 @@ namespace Jeebs.Data
 		/// <summary>Messages</summary>
 		public static class Msg
 		{
-			/// <summary>Error getting Create query</summary>
+			/// <summary>Error getting General Retrieve query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCreateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record ErrorGettingGeneralRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			/// <summary>Error getting Retrieve query</summary>
+			/// <summary>Error getting CRUD Create query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record ErrorGettingCrudCreateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			/// <summary>Error getting Update query</summary>
+			/// <summary>Error getting CRUD Retrieve query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingUpdateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record ErrorGettingCrudRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
-			/// <summary>Error getting Delete query</summary>
+			/// <summary>Error getting CRUD Update query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingDeleteQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record ErrorGettingCrudUpdateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Error getting CRUD Delete query</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ErrorGettingCrudDeleteQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

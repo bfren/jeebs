@@ -1,7 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
@@ -17,6 +21,17 @@ namespace Jeebs.Data
 		IDbConnection Connect(string connectionString);
 
 		#region General Queries
+
+		/// <summary>
+		/// Return a query to retrieve a list of entities that match all the specified parameters
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <typeparam name="TModel">Return model type</typeparam>
+		/// <param name="predicates">Predicates (matched using AND)</param>
+		Option<(string query, Dictionary<string, object> param)> GetRetrieveQuery<TEntity, TModel>(
+			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+		)
+			where TEntity : IEntity;
 
 		#endregion
 

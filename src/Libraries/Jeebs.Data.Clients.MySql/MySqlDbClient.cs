@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Jeebs.Data.Enums;
 using MySql.Data.MySqlClient;
 
 namespace Jeebs.Data.Clients.MySql
@@ -16,7 +17,10 @@ namespace Jeebs.Data.Clients.MySql
 			new MySqlConnection(connectionString);
 
 		/// <inheritdoc/>
-		protected override string GetCreateQuery(string table, IMappedColumnList columns)
+		protected override string GetCreateQuery(
+			string table,
+			IMappedColumnList columns
+		)
 		{
 			// Begin query
 			var sql = new StringBuilder($"INSERT INTO `{table}` ");
@@ -41,7 +45,12 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		protected override string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn, long id)
+		protected override string GetRetrieveQuery(
+			string table,
+			ColumnList columns,
+			IMappedColumn idColumn,
+			long id
+		)
 		{
 			// Get columns
 			var col = new List<string>();
@@ -55,11 +64,52 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id) =>
+		protected override (string query, Dictionary<string, object> param) GetRetrieveQuery(
+			string table,
+			ColumnList columns,
+			List<(string column, SearchOperator op, object value)> predicates
+		)
+		{
+			// Get columns
+			var col = new List<string>();
+			foreach (var column in columns)
+			{
+				col.Add($"`{column.Name}` AS '{column.Alias}'");
+			}
+
+			// Add each predicate to the where and parameter lists
+			var where = new List<string>();
+			var param = new Dictionary<string, object>();
+			var index = 0;
+			foreach (var (column, op, value) in predicates)
+			{
+				var parameter = $"P{index++}";
+
+				where.Add($"`{column}` {op.ToOperator()} @{parameter}");
+				param.Add(parameter, value);
+			}
+
+			// Return query and parameters
+			return ($"SELECT {string.Join(", ", col)} FROM `{table}` WHERE {string.Join(" AND ", where)};", param);
+		}
+
+		/// <inheritdoc/>
+		protected override string GetUpdateQuery(
+			string table,
+			ColumnList columns,
+			IMappedColumn idColumn,
+			long id
+		) =>
 			GetUpdateQuery(table, columns, idColumn, id, null);
 
 		/// <inheritdoc/>
-		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id, IMappedColumn? versionColumn)
+		protected override string GetUpdateQuery(
+			string table,
+			ColumnList columns,
+			IMappedColumn idColumn,
+			long id,
+			IMappedColumn? versionColumn
+		)
 		{
 			// Get columns
 			var col = new List<string>();
@@ -89,11 +139,20 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		protected override string GetDeleteQuery(string table, IMappedColumn idColumn, long id) =>
+		protected override string GetDeleteQuery(
+			string table,
+			IMappedColumn idColumn,
+			long id
+		) =>
 			GetDeleteQuery(table, idColumn, id, null);
 
 		/// <inheritdoc/>
-		protected override string GetDeleteQuery(string table, IMappedColumn idColumn, long id, IMappedColumn? versionColumn)
+		protected override string GetDeleteQuery(
+			string table,
+			IMappedColumn idColumn,
+			long id,
+			IMappedColumn? versionColumn
+		)
 		{
 			// Begin query
 			var sql = new StringBuilder("DELETE FROM ");

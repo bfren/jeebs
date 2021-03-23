@@ -84,8 +84,9 @@ namespace Jeebs.Auth
 			where TModel : IAuthCreateUserModel
 		{
 			// Create entity from model
-			var entity = new AuthUserEntity(user.Password.HashPassword())
+			var entity = new AuthUserEntity
 			{
+				PasswordHash = user.Password.HashPassword(),
 				EmailAddress = user.EmailAddress,
 				IsEnabled = true
 			};

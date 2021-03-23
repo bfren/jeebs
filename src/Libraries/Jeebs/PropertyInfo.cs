@@ -18,6 +18,9 @@ namespace Jeebs
 		/// </summary>
 		private readonly PropertyInfo info;
 
+		public string Name =>
+			info.Name;
+
 		/// <summary>
 		/// Create object
 		/// </summary>

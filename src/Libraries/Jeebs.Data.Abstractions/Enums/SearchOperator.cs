@@ -9,6 +9,11 @@ namespace Jeebs.Data.Enums
 	public enum SearchOperator
 	{
 		/// <summary>
+		/// None / Unknown
+		/// </summary>
+		None,
+
+		/// <summary>
 		/// Equal
 		/// </summary>
 		Equal,

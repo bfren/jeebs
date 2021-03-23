@@ -1,12 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
+using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
-using Jeebs.Auth.Data.Models;
 using Jeebs.Data;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.Auth
 {
@@ -25,16 +25,20 @@ namespace Jeebs.Auth
 		protected override void WriteToLog(string message, object[] args) =>
 			Log.Warning(message, args);
 
-		/// <inheritdoc/>
-		internal Task<Option<AuthUserEntity>> RetrieveAsync(string email)
-		{
-			throw new NotImplementedException();
-		}
+		/// <summary>
+		/// Retrieve a user by email address
+		/// </summary>
+		/// <param name="email">Email address</param>
+		internal Task<Option<AuthUserEntity>> RetrieveAsync(string email) =>
+			QuerySingleAsync<AuthUserEntity>(
+				(u => u.EmailAddress, SearchOperator.Equal, email)
+			);
 
-		/// <inheritdoc/>
-		internal Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId)
-		{
-			throw new NotImplementedException();
-		}
+		/// <summary>
+		/// Update the user's last sign in to now
+		/// </summary>
+		/// <param name="userId">User ID</param>
+		internal Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId) =>
+			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
 	}
 }

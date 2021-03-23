@@ -1,8 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
@@ -48,6 +52,35 @@ namespace Jeebs.Data
 			}
 		}
 
+		#region General Queries
+
+		/// <inheritdoc/>
+		public Task<Option<TModel>> QuerySingleAsync<TModel>(
+			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+		) =>
+			QueryAsync<TModel>(
+				predicates
+			)
+			.UnwrapAsync(
+				x => x.Single<TModel>()
+			);
+
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+		) =>
+			Db.Client.GetRetrieveQuery<TEntity, TModel>(predicates)
+			.AuditSwitch(
+				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text)
+			);
+
+		#endregion
+
+		#region CRUD Queries
+
 		/// <inheritdoc/>
 		public Task<Option<TId>> CreateAsync<TModel>(TModel model) =>
 			Db.Client.GetCreateQuery<TEntity>()
@@ -88,5 +121,7 @@ namespace Jeebs.Data
 			.BindAsync(
 				x => Db.ExecuteAsync(x, null, CommandType.Text)
 			);
+
+		#endregion
 	}
 }
