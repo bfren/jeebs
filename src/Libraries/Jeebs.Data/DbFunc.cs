@@ -28,7 +28,7 @@ namespace Jeebs.Data
 		/// <typeparam name="T">Parameter type (an entity or model)</typeparam>
 		/// <param name="operation">Operation (method) name</param>
 		/// <param name="query">Query text</param>
-		/// <param name="parameters">Query parameters</param>
+		/// <param name="parameters">[Optional] Query parameters</param>
 		protected void LogFunc<T>(string operation, string query, T? parameters)
 		{
 			// Always log operation, entity, and query

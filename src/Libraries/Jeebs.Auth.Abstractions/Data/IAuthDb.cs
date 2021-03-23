@@ -11,6 +11,11 @@ namespace Jeebs.Auth.Data
 	public interface IAuthDb : IDb
 	{
 		/// <summary>
+		/// Authentication Database Client
+		/// </summary>
+		new public IAuthDbClient Client { get; }
+
+		/// <summary>
 		/// Migrate to the latest version of the Authentication database
 		/// </summary>
 		void MigrateToLatest();

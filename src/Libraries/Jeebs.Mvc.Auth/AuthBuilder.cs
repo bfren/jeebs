@@ -3,6 +3,7 @@
 
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Entities;
 using Jeebs.Config;
 using Jeebs.Mvc.Auth.Exceptions;
 using Jeebs.Mvc.Auth.Jwt;
@@ -59,31 +60,28 @@ namespace Jeebs.Mvc.Auth
 		}
 
 		/// <summary>
-		/// Enable default data authentication and authorisation
-		/// </summary>
-		/// <typeparam name="TClient">IAuthDbClient type</typeparam>
-		public AuthBuilder WithData<TClient>()
-			where TClient : class, IAuthDbClient =>
-			WithData<AuthDataProvider, TClient>();
-
-		/// <summary>
 		/// Enable custom data authentication and authorisation
 		/// </summary>
-		/// <typeparam name="TProvider">IAuthDataProvider type</typeparam>
 		/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
-		public AuthBuilder WithData<TProvider, TDbClient>()
-			where TProvider : class, IAuthDataProvider
+		public AuthBuilder WithData<TDbClient>()
 			where TDbClient : class, IAuthDbClient
 		{
 			CheckProvider();
 
-			services.AddScoped<TProvider>();
-			services.AddScoped<IAuthDataProvider>(s => s.GetRequiredService<TProvider>());
-
-			services.AddScoped<TDbClient>();
-			services.AddScoped<IAuthDbClient>(s => s.GetRequiredService<TDbClient>());
-
+			// Add AuthDb
 			services.AddSingleton<AuthDb>();
+			services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
+			services.AddScoped<IAuthDbClient, TDbClient>();
+
+			// Add AuthFunc
+			services.AddScoped<AuthUserFunc>();
+			services.AddScoped<IAuthUserFunc<AuthUserEntity>>(s => s.GetRequiredService<AuthUserFunc>());
+			services.AddScoped<AuthRoleFunc>();
+			services.AddScoped<IAuthRoleFunc<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleFunc>());
+
+			// Add AuthProvider
+			services.AddScoped<AuthDataProvider>();
+			services.AddScoped<IAuthDataProvider<AuthUserEntity, AuthRoleEntity>>(x => x.GetRequiredService<AuthDataProvider>());
 
 			return this;
 		}

@@ -19,6 +19,10 @@ namespace Jeebs.Data
 
 		#region General Queries
 
+		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}((Expression{Func{TEntity, object}}, SearchOperator, object)[])"/>
+		/// <param name="table">Table name</param>
+		/// <param name="columns">List of columns to select</param>
+		/// <param name="predicates">Predicates (matched using AND)</param>
 		protected abstract (string query, Dictionary<string, object> param) GetRetrieveQuery(
 			string table,
 			ColumnList columns,
@@ -45,8 +49,8 @@ namespace Jeebs.Data
 		/// Convert LINQ expression property selectors to column names
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		/// <param name="columns">Mapped columns</param>
-		/// <param name="predicates">Predicates</param>
+		/// <param name="columns">Mapped entity columns</param>
+		/// <param name="predicates">Predicates (matched using AND)</param>
 		private static Option<List<(string column, SearchOperator op, object value)>> GetPredicates<TEntity>(
 			IMappedColumnList columns,
 			(Expression<Func<TEntity, object>> column, SearchOperator op, object value)[] predicates
@@ -199,6 +203,13 @@ namespace Jeebs.Data
 		#endregion
 
 		#region Testing
+
+		internal (string query, Dictionary<string, object> param) GetRetrieveQueryTest(
+			string table,
+			ColumnList columns,
+			List<(string column, SearchOperator op, object value)> predicates
+		) =>
+			GetRetrieveQuery(table, columns, predicates);
 
 		internal string GetCreateQueryTest(string table, IMappedColumnList columns) =>
 			GetCreateQuery(table, columns);

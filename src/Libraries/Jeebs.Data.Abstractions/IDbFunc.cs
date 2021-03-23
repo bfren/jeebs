@@ -10,7 +10,7 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Database CRUD functions for an entity type
+	/// Database functions for an entity type, including CRUD and custom queries
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TId">Strong ID type</typeparam>

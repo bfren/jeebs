@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data.Models
 	/// <summary>
 	/// Authentication User model
 	/// </summary>
-	public record AuthUserModel : IAuthUserModel
+	public record AuthUserModel : IAuthUser
 	{
 		/// <summary>
 		/// User ID
@@ -46,7 +46,7 @@ namespace Jeebs.Auth.Data.Models
 		/// The roles this user is assigned to
 		/// </summary>
 		[Ignore]
-		public List<IAuthRoleModel> Roles { get; init; } = new();
+		public List<IAuthRole> Roles { get; init; } = new();
 
 		/// <summary>
 		/// Create with default values

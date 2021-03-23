@@ -8,7 +8,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// Authentication Role Model
 	/// </summary>
-	public interface IAuthRoleModel : IWithId<AuthRoleId>
+	public interface IAuthRole : IWithId<AuthRoleId>
 	{
 		/// <summary>
 		/// Role Name (should be a normalised string)

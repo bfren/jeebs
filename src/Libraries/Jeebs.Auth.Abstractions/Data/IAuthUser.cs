@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// Authentication User model
 	/// </summary>
-	public interface IAuthUserModel : IWithId<AuthUserId>
+	public interface IAuthUser : IWithId<AuthUserId>
 	{
 		/// <summary>
 		/// Email address
@@ -39,6 +39,6 @@ namespace Jeebs.Auth.Data
 		/// <summary>
 		/// The roles this user is assigned to
 		/// </summary>
-		List<IAuthRoleModel> Roles { get; init; }
+		List<IAuthRole> Roles { get; init; }
 	}
 }

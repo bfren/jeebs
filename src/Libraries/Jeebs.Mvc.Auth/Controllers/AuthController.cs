@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -40,7 +41,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// IAuthDataProvider
 		/// </summary>
-		protected IAuthDataProvider Auth { get; private init; }
+		protected IAuthDataProvider<AuthUserEntity, AuthRoleEntity> Auth { get; private init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
@@ -52,7 +53,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="auth">IAuthDataProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthControllerBase(IAuthDataProvider auth, ILog log) : base(log) =>
+		protected AuthControllerBase(IAuthDataProvider<AuthUserEntity, AuthRoleEntity> auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -78,7 +79,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 				var principal = GetPrincipal(user);
 
 				// Update last sign in
-				var updated = await Auth.UpdateUserLastSignInAsync(user.Id).ConfigureAwait(false);
+				var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
 				updated.AuditSwitch(none: r => Log.Message(r));
 
 				// Add SignIn to HttpContext using Cookie scheme

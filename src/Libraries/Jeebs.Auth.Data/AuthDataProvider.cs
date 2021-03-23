@@ -1,45 +1,38 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Models;
+using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using static F.OptionF;
 
 namespace Jeebs.Auth
 {
 	/// <inheritdoc cref="IAuthDataProvider"/>
-	public sealed class AuthDataProvider : IAuthDataProvider
+	public sealed class AuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity>
 	{
 		/// <summary>
 		/// AuthUserFunc
 		/// </summary>
-		public AuthUserFunc User { get; private init; }
+		public IAuthUserFunc<AuthUserEntity> User { get; private init; }
 
 		/// <summary>
 		/// AuthUserFunc
 		/// </summary>
-		public AuthRoleFunc Role { get; private init; }
-
-		private AuthDb Db { get; init; }
+		public IAuthRoleFunc<AuthRoleEntity> Role { get; private init; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="db">AuthDb</param>
-		/// <param name="log">ILog</param>
-		public AuthDataProvider(AuthDb db, ILog<AuthDataProvider> log) =>
-			(User, Role, Db) = (new AuthUserFunc(db, log), new AuthRoleFunc(db, log), db);
-
-		/// <inheritdoc cref="ValidateUserAsync{TModel}(string, string)"/>
-		public Task<Option<AuthUserModel>> ValidateUserAsync(string email, string password) =>
-			ValidateUserAsync<AuthUserModel>(email, password);
+		/// <param name="user">IAuthUserFunc</param>
+		/// <param name="role">IAuthRoleFunc</param>
+		public AuthDataProvider(IAuthUserFunc<AuthUserEntity> user, IAuthRoleFunc<AuthRoleEntity> role) =>
+			(User, Role) = (user, role);
 
 		/// <inheritdoc/>
 		public async Task<Option<TModel>> ValidateUserAsync<TModel>(string email, string password)
-			where TModel : IAuthUserModel
+			where TModel : IAuthUser
 		{
 			// Check email
 			if (string.IsNullOrEmpty(email))
@@ -54,7 +47,7 @@ namespace Jeebs.Auth
 			}
 
 			// Get user for authentication
-			foreach (var user in await User.RetrieveAsync(email).ConfigureAwait(false))
+			foreach (var user in await User.RetrieveAsync<AuthUserEntity>(email).ConfigureAwait(false))
 			{
 				// Verify the user is enabled
 				if (!user.IsEnabled)
@@ -75,10 +68,6 @@ namespace Jeebs.Auth
 			// User not found
 			return None<TModel>(new Msg.UserNotFoundMsg(email));
 		}
-
-		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateUserLastSignInAsync(AuthUserId userId) =>
-			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
 
 		/// <summary>Messages</summary>
 		public static class Msg

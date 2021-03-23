@@ -7,16 +7,14 @@ using Jeebs.Data;
 
 namespace Jeebs.Auth
 {
-	/// <summary>
-	/// Provides Authentication functions for interacting with Roles
-	/// </summary>
-	public sealed class AuthRoleFunc : DbFunc<AuthRoleEntity, AuthRoleId>
+	/// <inheritdoc/>
+	public sealed class AuthRoleFunc : DbFunc<AuthRoleEntity, AuthRoleId>, IAuthRoleFunc<AuthRoleEntity>
 	{
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="db">AuthDb</param>
 		/// <param name="log">ILog</param>
-		internal AuthRoleFunc(AuthDb db, ILog log) : base(db, log) { }
+		internal AuthRoleFunc(AuthDb db, ILog<AuthRoleFunc> log) : base(db, log) { }
 	}
 }

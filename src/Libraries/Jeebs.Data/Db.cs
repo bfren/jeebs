@@ -78,7 +78,7 @@ namespace Jeebs.Data
 			)
 			.SwitchIfAsync(
 				x => x.Any(),
-				_ => None<IEnumerable<TModel>, Msg.QueryNotFoundMsg>()
+				_ => None<IEnumerable<TModel>, Msg.QueryItemsNotFoundMsg>()
 			);
 
 		/// <inheritdoc/>
@@ -93,7 +93,7 @@ namespace Jeebs.Data
 			)
 			.SwitchIfAsync(
 				x => x is not null,
-				_ => None<TModel, Msg.QuerySingleNotFoundMsg>()
+				_ => None<TModel, Msg.QuerySingleItemNotFoundMsg>()
 			);
 
 		/// <inheritdoc/>
@@ -201,14 +201,14 @@ namespace Jeebs.Data
 			public sealed record QueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>The query returned any empty list</summary>
-			public sealed record QueryNotFoundMsg : NotFoundMsg { }
+			public sealed record QueryItemsNotFoundMsg : NotFoundMsg { }
 
 			/// <summary>Error running QuerySingleAsync</summary>
 			/// <param name="Exception">Exception object</param>
 			public sealed record QuerySingleExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>The query returned no items, or more than one</summary>
-			public sealed record QuerySingleNotFoundMsg : NotFoundMsg { }
+			public sealed record QuerySingleItemNotFoundMsg : NotFoundMsg { }
 
 			/// <summary>Error running ExecuteAsync</summary>
 			/// <param name="Exception">Exception object</param>

@@ -15,8 +15,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Fake\" />
-  </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="..\..\Libraries\Jeebs.Config\schema.json" /></VisualStudio></ProjectExtensions>
 </Project>
