@@ -17,7 +17,7 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public abstract IDbConnection Connect(string connectionString);
 
-		#region General Queries
+		#region Custom Queries
 
 		/// <summary>
 		/// Return a query to retrieve a list of entities that match all the specified parameters

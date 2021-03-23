@@ -16,6 +16,42 @@ namespace Jeebs.Data.Clients.MySql
 		public override IDbConnection Connect(string connectionString) =>
 			new MySqlConnection(connectionString);
 
+		#region Custom Queries
+
+		/// <inheritdoc/>
+		protected override (string query, Dictionary<string, object> param) GetRetrieveQuery(
+			string table,
+			ColumnList columns,
+			List<(string column, SearchOperator op, object value)> predicates
+		)
+		{
+			// Get columns
+			var col = new List<string>();
+			foreach (var column in columns)
+			{
+				col.Add($"`{column.Name}` AS '{column.Alias}'");
+			}
+
+			// Add each predicate to the where and parameter lists
+			var where = new List<string>();
+			var param = new Dictionary<string, object>();
+			var index = 0;
+			foreach (var (column, op, value) in predicates)
+			{
+				var parameter = $"P{index++}";
+
+				where.Add($"`{column}` {op.ToOperator()} @{parameter}");
+				param.Add(parameter, value);
+			}
+
+			// Return query and parameters
+			return ($"SELECT {string.Join(", ", col)} FROM `{table}` WHERE {string.Join(" AND ", where)};", param);
+		}
+
+		#endregion
+
+		#region CRUD Queries
+
 		/// <inheritdoc/>
 		protected override string GetCreateQuery(
 			string table,
@@ -61,36 +97,6 @@ namespace Jeebs.Data.Clients.MySql
 
 			// Return query
 			return $"SELECT {string.Join(", ", col)} FROM `{table}` WHERE `{idColumn.Name}` = {id};";
-		}
-
-		/// <inheritdoc/>
-		protected override (string query, Dictionary<string, object> param) GetRetrieveQuery(
-			string table,
-			ColumnList columns,
-			List<(string column, SearchOperator op, object value)> predicates
-		)
-		{
-			// Get columns
-			var col = new List<string>();
-			foreach (var column in columns)
-			{
-				col.Add($"`{column.Name}` AS '{column.Alias}'");
-			}
-
-			// Add each predicate to the where and parameter lists
-			var where = new List<string>();
-			var param = new Dictionary<string, object>();
-			var index = 0;
-			foreach (var (column, op, value) in predicates)
-			{
-				var parameter = $"P{index++}";
-
-				where.Add($"`{column}` {op.ToOperator()} @{parameter}");
-				param.Add(parameter, value);
-			}
-
-			// Return query and parameters
-			return ($"SELECT {string.Join(", ", col)} FROM `{table}` WHERE {string.Join(" AND ", where)};", param);
 		}
 
 		/// <inheritdoc/>
@@ -173,5 +179,7 @@ namespace Jeebs.Data.Clients.MySql
 			sql.Append(';');
 			return sql.ToString();
 		}
+
+		#endregion
 	}
 }
