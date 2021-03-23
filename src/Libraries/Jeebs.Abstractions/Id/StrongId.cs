@@ -9,11 +9,6 @@ namespace Jeebs
 	/// <param name="Value">ID Value</param>
 	public abstract record StrongId(long Value) : IStrongId
 	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public StrongId() : this(0) { }
-
 		/// <inheritdoc cref="IStrongId.IsDefault"/>
 		public bool IsDefault =>
 			Value == 0;

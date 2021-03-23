@@ -23,10 +23,12 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			var client = new MySqlDbClient();
 
-			var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = @{c0Alias};";
+			var id = F.Rnd.Lng;
+
+			var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = {id};";
 
 			// Act
-			var result = client.GetDeleteQueryTest(table, c0);
+			var result = client.GetDeleteQueryTest(table, c0, id);
 
 			// Assert
 			Assert.Equal(expected, result);
@@ -52,10 +54,12 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			var client = new MySqlDbClient();
 
-			var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = @{c0Alias} AND `{c1Name}` = @{c1Alias};";
+			var id = F.Rnd.Lng;
+
+			var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = {id} AND `{c1Name}` = @{c1Alias};";
 
 			// Act
-			var result = client.GetDeleteQueryTest(table, c0, c1);
+			var result = client.GetDeleteQueryTest(table, c0, id, c1);
 
 			// Assert
 			Assert.Equal(expected, result);

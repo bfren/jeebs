@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.StrongId_Tests.LongId_Tests
+namespace Jeebs.StrongId_Tests
 {
 	public class Constructor_Tests
 	{
@@ -13,12 +13,12 @@ namespace Jeebs.StrongId_Tests.LongId_Tests
 			// Arrange
 
 			// Act
-			var id = new LongId();
+			var id = new TestId();
 
 			// Assert
 			Assert.Equal(0L, id.Value);
 		}
 
-		public record LongId : StrongId;
+		public record TestId() : StrongId(0);
 	}
 }

@@ -4,13 +4,13 @@
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Database entity
+	/// Object (Entity or Model) with Version property
 	/// </summary>
-	public interface IEntity
+	public interface IWithVersion
 	{
 		/// <summary>
-		/// Primary key
+		/// Version
 		/// </summary>
-		StrongId Id { get; init; }
+		long Version { get; }
 	}
 }

@@ -16,9 +16,9 @@ namespace F
 		/// <typeparam name="U">Single value type</typeparam>
 		/// <param name="option">Input option</param>
 		/// <param name="unwrap">Fluent unwrap function</param>
-		public static async Task<Option<U>> UnwrapAsync<T, U>(
+		public static async Task<U> UnwrapAsync<T, U>(
 			Task<Option<T>> option,
-			Func<FluentUnwrapAsync<T>, Option<U>> unwrap
+			Func<FluentUnwrapAsync<T>, U> unwrap
 		) =>
 			unwrap(new FluentUnwrapAsync<T>(await option));
 
@@ -34,15 +34,15 @@ namespace F
 				this.option = option;
 
 			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
-			public Option<T> Value(T ifNone) =>
+			public T Value(T ifNone) =>
 				Unwrap(option, ifNone: _ => ifNone);
 
 			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
-			public Option<T> Value(Func<T> ifNone) =>
+			public T Value(Func<T> ifNone) =>
 				Unwrap(option, ifNone: _ => ifNone());
 
 			/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
-			public Option<T> Value(Func<IMsg, T> ifNone) =>
+			public T Value(Func<IMsg, T> ifNone) =>
 				Unwrap(option, ifNone);
 
 			/// <inheritdoc cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>

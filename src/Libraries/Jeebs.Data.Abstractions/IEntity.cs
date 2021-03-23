@@ -4,13 +4,12 @@
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Database entity with version
+	/// Database entity
 	/// </summary>
-	public interface IEntityWithVersion : IEntity
-	{
-		/// <summary>
-		/// Entity version
-		/// </summary>
-		long Version { get; init; }
-	}
+	public interface IEntity : IWithId { }
+
+	/// <inheritdoc cref="IEntity"/>
+	public interface IEntity<T> : IEntity, IWithId<T>
+		where T : StrongId
+	{ }
 }

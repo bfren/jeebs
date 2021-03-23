@@ -33,7 +33,7 @@ namespace Jeebs.Data
 		protected abstract string GetCreateQuery(string table, IMappedColumnList columns);
 
 		/// <inheritdoc/>
-		public Option<string> GetRetrieveQuery<TEntity, TModel>()
+		public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
 			where TEntity : IEntity =>
 			(
 				from map in Mapper.Instance.GetTableMapFor<TEntity>()
@@ -41,7 +41,7 @@ namespace Jeebs.Data
 				select (map, col)
 			)
 			.Map(
-				x => GetRetrieveQuery(x.map.Name, x.col, x.map.IdColumn),
+				x => GetRetrieveQuery(x.map.Name, x.col, x.map.IdColumn, id),
 				e => new Msg.ErrorGettingRetrieveQueryExceptionMsg(e)
 			);
 
@@ -49,10 +49,11 @@ namespace Jeebs.Data
 		/// <param name="table">Table name</param>
 		/// <param name="columns">List of columns to select</param>
 		/// <param name="idColumn">ID column for predicate</param>
-		protected abstract string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn);
+		/// <param name="id">Entity ID</param>
+		protected abstract string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn, long id);
 
 		/// <inheritdoc/>
-		public Option<string> GetUpdateQuery<TEntity, TModel>()
+		public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
 			where TEntity : IEntity =>
 			(
 				from map in Mapper.Instance.GetTableMapFor<TEntity>()
@@ -63,49 +64,51 @@ namespace Jeebs.Data
 				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
 				{
 					false =>
-						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn),
+						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn, id),
 
 					true =>
-						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn, x.map.VersionColumn),
+						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn, id, x.map.VersionColumn),
 
 				},
 				e => new Msg.ErrorGettingUpdateQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetUpdateQuery(string, ColumnList, IMappedColumn, IMappedColumn)"/>
-		protected abstract string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn);
+		/// <inheritdoc cref="GetUpdateQuery(string, ColumnList, IMappedColumn, long, IMappedColumn)"/>
+		protected abstract string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id);
 
 		/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
 		/// <param name="table">Table name</param>
 		/// <param name="columns">List of columns to update</param>
 		/// <param name="idColumn">ID column for predicate</param>
+		/// <param name="id">Entity ID</param>
 		/// <param name="versionColumn">Version column for predicate</param>
-		protected abstract string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, IMappedColumn? versionColumn);
+		protected abstract string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id, IMappedColumn? versionColumn);
 
 		/// <inheritdoc/>
-		public Option<string> GetDeleteQuery<TEntity>()
+		public Option<string> GetDeleteQuery<TEntity>(long id)
 			where TEntity : IEntity =>
 			Mapper.Instance.GetTableMapFor<TEntity>().Map(
 				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
 				{
 					false =>
-						GetDeleteQuery(x.Name, x.IdColumn),
+						GetDeleteQuery(x.Name, x.IdColumn, id),
 
 					true =>
-						GetDeleteQuery(x.Name, x.IdColumn, x.VersionColumn),
+						GetDeleteQuery(x.Name, x.IdColumn, id, x.VersionColumn),
 
 				},
 				e => new Msg.ErrorGettingDeleteQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetDeleteQuery(string, IMappedColumn, IMappedColumn?)"/>
-		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn);
+		/// <inheritdoc cref="GetDeleteQuery(string, IMappedColumn, long, IMappedColumn?)"/>
+		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn, long id);
 
 		/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
 		/// <param name="table">Table name</param>
 		/// <param name="idColumn">ID column for predicate</param>
+		/// <param name="id">Entity ID</param>
 		/// <param name="versionColumn">Version column for predicate</param>
-		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn, IMappedColumn? versionColumn);
+		protected abstract string GetDeleteQuery(string table, IMappedColumn idColumn, long id, IMappedColumn? versionColumn);
 
 		#endregion
 
@@ -114,20 +117,20 @@ namespace Jeebs.Data
 		internal string GetCreateQueryTest(string table, IMappedColumnList columns) =>
 			GetCreateQuery(table, columns);
 
-		internal string GetRetrieveQueryTest(string table, ColumnList columns, IMappedColumn idColumn) =>
-			GetRetrieveQuery(table, columns, idColumn);
+		internal string GetRetrieveQueryTest(string table, ColumnList columns, IMappedColumn idColumn, long id) =>
+			GetRetrieveQuery(table, columns, idColumn, id);
 
-		internal string GetUpdateQueryTest(string table, ColumnList columns, IMappedColumn idColumn) =>
-			GetUpdateQuery(table, columns, idColumn);
+		internal string GetUpdateQueryTest(string table, ColumnList columns, IMappedColumn idColumn, long id) =>
+			GetUpdateQuery(table, columns, idColumn, id);
 
-		internal string GetUpdateQueryTest(string table, ColumnList columns, IMappedColumn idColumn, IMappedColumn? versionColumn) =>
-			GetUpdateQuery(table, columns, idColumn, versionColumn);
+		internal string GetUpdateQueryTest(string table, ColumnList columns, IMappedColumn idColumn, long id, IMappedColumn? versionColumn) =>
+			GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
-		internal string GetDeleteQueryTest(string table, IMappedColumn idColumn) =>
-			GetDeleteQuery(table, idColumn);
+		internal string GetDeleteQueryTest(string table, IMappedColumn idColumn, long id) =>
+			GetDeleteQuery(table, idColumn, id);
 
-		internal string GetDeleteQueryTest(string table, IMappedColumn idColumn, IMappedColumn? versionColumn) =>
-			GetDeleteQuery(table, idColumn, versionColumn);
+		internal string GetDeleteQueryTest(string table, IMappedColumn idColumn, long id, IMappedColumn? versionColumn) =>
+			GetDeleteQuery(table, idColumn, id, versionColumn);
 
 		#endregion
 

@@ -18,10 +18,10 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			var json = string.Format(format, value);
 
 			// Act
-			var result = JsonF.Deserialise<LongIdTest0>(json);
+			var result = JsonF.Deserialise<IdTest0>(json);
 
 			// Assert
-			var some = Assert.IsType<Some<LongIdTest0>>(result);
+			var some = Assert.IsType<Some<IdTest0>>(result);
 			Assert.Equal(value, some.Value.Value);
 		}
 
@@ -54,10 +54,10 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			// Arrange
 
 			// Act
-			var result = JsonF.Deserialise<LongIdTest0>(input);
+			var result = JsonF.Deserialise<IdTest0>(input);
 
 			// Assert
-			var some = Assert.IsType<Some<LongIdTest0>>(result);
+			var some = Assert.IsType<Some<IdTest0>>(result);
 			Assert.Equal(0, some.Value.Value);
 		}
 
@@ -83,13 +83,13 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			Assert.Equal(0, wrapper.LongId.Value);
 		}
 
-		public record LongIdTest0 : StrongId;
+		public record IdTest0() : StrongId(0);
 
 		public class LongIdWrapperTest0
 		{
 			public int Id { get; set; }
 
-			public LongIdTest0 LongId { get; set; } = new LongIdTest0();
+			public IdTest0 LongId { get; set; } = new IdTest0();
 		}
 	}
 }

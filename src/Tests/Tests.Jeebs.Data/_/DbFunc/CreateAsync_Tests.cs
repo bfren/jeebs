@@ -14,7 +14,7 @@ namespace Jeebs.Data.DbFunc_Tests
 		{
 			// Arrange
 			var (client, crud) = DbFunc.Get();
-			var entity = new DbFunc.Foo { FooId = new(F.Rnd.Int) };
+			var entity = new DbFunc.Foo { Id = new(F.Rnd.Int) };
 
 			// Act
 			await crud.CreateAsync(entity);

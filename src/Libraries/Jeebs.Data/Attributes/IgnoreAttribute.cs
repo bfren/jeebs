@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Mark property as to be ignored
+	/// Mark property as to be ignored when mapping entity properties to table columns
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
 	public sealed class IgnoreAttribute : Attribute { }

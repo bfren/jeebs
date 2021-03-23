@@ -19,17 +19,17 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// Role Table
 		/// </summary>
-		public AuthRoleTable Role { get; } = new();
+		internal AuthRoleTable Role { get; }
 
 		/// <summary>
 		/// User Table
 		/// </summary>
-		public AuthUserTable User { get; } = new();
+		internal AuthUserTable User { get; }
 
 		/// <summary>
 		/// User Role Table
 		/// </summary>
-		public AuthUserRoleTable UserRole { get; } = new();
+		internal AuthUserRoleTable UserRole { get; }
 
 		/// <summary>
 		/// Create object
@@ -42,6 +42,11 @@ namespace Jeebs.Auth
 		{
 			// Set Client
 			Client = client;
+
+			// Create tables
+			Role = new();
+			User = new();
+			UserRole = new();
 
 			// Map entities to tables
 			Map<AuthRoleEntity>.To(Role);

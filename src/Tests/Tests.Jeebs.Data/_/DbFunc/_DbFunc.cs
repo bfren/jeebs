@@ -11,9 +11,9 @@ namespace Jeebs.Data.DbFunc_Tests
 		{
 			var client = Substitute.For<IDbClient>();
 			client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
-			client.GetRetrieveQuery<Foo, FooModel>().Returns(F.Rnd.Str);
-			client.GetUpdateQuery<Foo, FooModel>().Returns(F.Rnd.Str);
-			client.GetDeleteQuery<Foo>().Returns(F.Rnd.Str);
+			client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
+			client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
+			client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(F.Rnd.Str);
 
 			var db = Substitute.For<IDb>();
 			db.Client.Returns(client);
@@ -25,20 +25,14 @@ namespace Jeebs.Data.DbFunc_Tests
 			return (client, crud);
 		}
 
-		public sealed record Foo : IEntity
+		public sealed record Foo : IEntity<FooId>
 		{
-			StrongId IEntity.Id
-			{
-				get => FooId;
-				init => FooId = new(value.Value);
-			}
-
-			public FooId FooId { get; init; } = new();
+			public FooId Id { get; init; } = new();
 		}
 
-		public sealed record FooModel
+		public sealed record FooModel : IWithId<FooId>
 		{
-			public FooId FooId { get; init; } = new();
+			public FooId Id { get; init; } = new();
 		}
 
 		public sealed record FooId(long Value) : StrongId(Value)

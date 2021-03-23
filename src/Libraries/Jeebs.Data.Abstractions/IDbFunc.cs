@@ -17,8 +17,8 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create an entity
 		/// </summary>
-		/// <param name="entity">Entity to create</param>
-		Task<Option<TId>> CreateAsync(TEntity entity);
+		/// <param name="model">Model with values to use when creating</param>
+		Task<Option<TId>> CreateAsync<TModel>(TModel model);
 
 		/// <summary>
 		/// Retrieve an entity
@@ -32,7 +32,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="model">Model with updated values</param>
-		Task<Option<bool>> UpdateAsync<TModel>(TModel model);
+		Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+			where TModel : IWithId;
 
 		/// <summary>
 		/// Delete an entity

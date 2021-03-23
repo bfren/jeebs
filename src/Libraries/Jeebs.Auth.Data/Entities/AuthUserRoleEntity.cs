@@ -8,24 +8,13 @@ namespace Jeebs.Auth.Data.Entities
 	/// <summary>
 	/// Authentication User Role
 	/// </summary>
-	public abstract record AuthUserRoleEntity : IEntity
+	internal sealed record AuthUserRoleEntity : IEntity<AuthUserRoleId>
 	{
-		/// <inheritdoc/>
-		[Ignore]
-		StrongId IEntity.Id
-		{
-			get =>
-				UserRoleId;
-
-			init =>
-				UserRoleId = new AuthUserRoleId { Value = value.Value };
-		}
-
 		/// <summary>
 		/// User Role ID
 		/// </summary>
 		[Id]
-		public AuthUserRoleId UserRoleId { get; init; } = new();
+		public AuthUserRoleId Id { get; init; } = new();
 
 		/// <summary>
 		/// User ID

@@ -32,11 +32,13 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 			var client = new MySqlDbClient();
 
+			var id = F.Rnd.Lng;
+
 			var expected = $"UPDATE `{table}` SET `{c0Name}` = @{c0Alias}, `{c1Name}` = @{c1Alias} " +
-				$"WHERE `{c2Name}` = @{c2Alias};";
+				$"WHERE `{c2Name}` = {id};";
 
 			// Act
-			var result = client.GetUpdateQueryTest(table, list, c2);
+			var result = client.GetUpdateQueryTest(table, list, c2, id);
 
 			// Assert
 			Assert.Equal(expected, result);
@@ -71,11 +73,13 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 			var client = new MySqlDbClient();
 
+			var id = F.Rnd.Lng;
+
 			var expected = $"UPDATE `{table}` SET `{c0Name}` = @{c0Alias}, `{c1Name}` = @{c1Alias}, `{c3Name}` = @{c3Alias} + 1 " +
-				$"WHERE `{c2Name}` = @{c2Alias} AND `{c3Name}` = @{c3Alias};";
+				$"WHERE `{c2Name}` = {id} AND `{c3Name}` = @{c3Alias};";
 
 			// Act
-			var result = client.GetUpdateQueryTest(table, list, c2, c3);
+			var result = client.GetUpdateQueryTest(table, list, c2, id, c3);
 
 			// Assert
 			Assert.Equal(expected, result);

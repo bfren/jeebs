@@ -13,7 +13,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 		{
 			// Arrange
 			var value = Rnd.Lng;
-			var id = new TestLongId { Value = value };
+			var id = new TestId { Value = value };
 
 			// Act
 			var result = JsonF.Serialise(id);
@@ -24,7 +24,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 
 		[Theory]
 		[InlineData(null)]
-		public void Serialise_Returns_Empty_Json(TestLongId input)
+		public void Serialise_Returns_Empty_Json(TestId input)
 		{
 			// Arrange
 
@@ -35,6 +35,6 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public record TestLongId : StrongId { }
+		public record TestId() : StrongId(0) { }
 	}
 }

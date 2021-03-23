@@ -41,7 +41,7 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		protected override string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn)
+		protected override string GetRetrieveQuery(string table, ColumnList columns, IMappedColumn idColumn, long id)
 		{
 			// Get columns
 			var col = new List<string>();
@@ -51,15 +51,15 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Return query
-			return $"SELECT {string.Join(", ", col)} FROM `{table}` WHERE `{idColumn.Name}` = @{idColumn.Alias};";
+			return $"SELECT {string.Join(", ", col)} FROM `{table}` WHERE `{idColumn.Name}` = {id};";
 		}
 
 		/// <inheritdoc/>
-		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn) =>
-			GetUpdateQuery(table, columns, idColumn, null);
+		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id) =>
+			GetUpdateQuery(table, columns, idColumn, id, null);
 
 		/// <inheritdoc/>
-		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, IMappedColumn? versionColumn)
+		protected override string GetUpdateQuery(string table, ColumnList columns, IMappedColumn idColumn, long id, IMappedColumn? versionColumn)
 		{
 			// Get columns
 			var col = new List<string>();
@@ -75,7 +75,7 @@ namespace Jeebs.Data.Clients.MySql
 			}
 
 			// Add WHERE Id
-			var sql = new StringBuilder($"UPDATE `{table}` SET {string.Join(", ", col)} WHERE `{idColumn.Name}` = @{idColumn.Alias}");
+			var sql = new StringBuilder($"UPDATE `{table}` SET {string.Join(", ", col)} WHERE `{idColumn.Name}` = {id}");
 
 			// Add WHERE Version
 			if (versionColumn is not null)
@@ -89,11 +89,11 @@ namespace Jeebs.Data.Clients.MySql
 		}
 
 		/// <inheritdoc/>
-		protected override string GetDeleteQuery(string table, IMappedColumn idColumn) =>
-			GetDeleteQuery(table, idColumn, null);
+		protected override string GetDeleteQuery(string table, IMappedColumn idColumn, long id) =>
+			GetDeleteQuery(table, idColumn, id, null);
 
 		/// <inheritdoc/>
-		protected override string GetDeleteQuery(string table, IMappedColumn idColumn, IMappedColumn? versionColumn)
+		protected override string GetDeleteQuery(string table, IMappedColumn idColumn, long id, IMappedColumn? versionColumn)
 		{
 			// Begin query
 			var sql = new StringBuilder("DELETE FROM ");
@@ -102,7 +102,7 @@ namespace Jeebs.Data.Clients.MySql
 			sql.Append($"`{table}` ");
 
 			// Add WHERE id
-			sql.Append($"WHERE `{idColumn.Name}` = @{idColumn.Alias}");
+			sql.Append($"WHERE `{idColumn.Name}` = {id}");
 
 			// Add WHERE Version
 			if (versionColumn is not null)

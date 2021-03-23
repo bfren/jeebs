@@ -14,12 +14,13 @@ namespace Jeebs.Data.DbFunc_Tests
 		{
 			// Arrange
 			var (client, crud) = DbFunc.Get();
+			var value = F.Rnd.Lng;
 
 			// Act
-			await crud.DeleteAsync(new DbFunc.FooId(F.Rnd.Int));
+			await crud.DeleteAsync(new DbFunc.FooId(value));
 
 			// Assert
-			client.Received().GetDeleteQuery<DbFunc.Foo>();
+			client.Received().GetDeleteQuery<DbFunc.Foo>(value);
 		}
 	}
 }

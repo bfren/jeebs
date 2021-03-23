@@ -59,7 +59,8 @@ namespace Jeebs.Data
 				// Get ID property
 				var idProperty = GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
 					reason => throw new UnableToFindIdColumnException(reason)
-				);
+				) with
+				{ Alias = nameof(IEntity.Id) };
 
 				// Create Table Map
 				var map = new TableMap(table, columns, idProperty);
@@ -77,6 +78,22 @@ namespace Jeebs.Data
 			});
 
 		/// <inheritdoc/>
+		public Option<ITableMap> GetTableMapFor<TEntity>()
+			where TEntity : IEntity
+		{
+			if (mappedEntities.TryGetValue(typeof(TEntity), out var map))
+			{
+				return map;
+			}
+
+			return None<ITableMap, Msg.TryingToGetUnmappedEntityMsg<TEntity>>();
+		}
+
+		/// <summary>
+		/// Validate that the properties on the entity and the columns on the table match
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <param name="table">Table object</param>
 		internal static (bool valid, List<string> errors) ValidateTable<TEntity>(ITable table)
 			where TEntity : IEntity
 		{
@@ -127,7 +144,11 @@ namespace Jeebs.Data
 			return (true, new());
 		}
 
-		/// <inheritdoc/>
+		/// <summary>
+		/// Get all columns as <see cref="MappedColumn"/> objects
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <param name="table">Table object</param>
 		internal static Option<MappedColumnList> GetMappedColumns<TEntity>(ITable table)
 			where TEntity : IEntity =>
 			Return(
@@ -151,8 +172,13 @@ namespace Jeebs.Data
 				DefaultHandler
 			);
 
-		/// <inheritdoc/>
-		internal static Option<IMappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
+		/// <summary>
+		/// Get the column with the specified attribute
+		/// </summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <typeparam name="TAttribute">Attribute type</typeparam>
+		/// <param name="columns">List of mapped columns</param>
+		internal static Option<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
 			where TEntity : IEntity
 			where TAttribute : Attribute =>
 			Return(
@@ -165,19 +191,11 @@ namespace Jeebs.Data
 			.UnwrapSingle<IMappedColumn>(
 				noItems: () => new Msg.NoPropertyWithAttributeMsg<TEntity, TAttribute>(),
 				tooMany: () => new Msg.TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>()
+			)
+			.Map(
+				x => new MappedColumn(x),
+				DefaultHandler
 			);
-
-		/// <inheritdoc/>
-		public Option<ITableMap> GetTableMapFor<TEntity>()
-			where TEntity : IEntity
-		{
-			if (mappedEntities.TryGetValue(typeof(TEntity), out var map))
-			{
-				return map;
-			}
-
-			return None<ITableMap, Msg.TryingToGetUnmappedEntityMsg<TEntity>>();
-		}
 
 		#region Dispose
 

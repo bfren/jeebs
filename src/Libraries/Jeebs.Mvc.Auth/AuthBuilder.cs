@@ -59,37 +59,31 @@ namespace Jeebs.Mvc.Auth
 		}
 
 		/// <summary>
-		/// Enable data authentication and authorisation
+		/// Enable default data authentication and authorisation
 		/// </summary>
-		/// <typeparam name="TProvider">IDataAuthProvider type</typeparam>
-		/// <typeparam name="TUser">IAuthUser type</typeparam>
-		public AuthBuilder WithData<TProvider, TUser>()
-			where TProvider : class, IAuthDataProvider<TUser>
-			where TUser : IAuthUser
-		{
-			CheckProvider();
-
-			services.AddScoped<TProvider>();
-			services.AddScoped<IAuthDataProvider<TUser>>(s => s.GetRequiredService<TProvider>());
-
-			return this;
-		}
+		/// <typeparam name="TClient">IAuthDbClient type</typeparam>
+		public AuthBuilder WithData<TClient>()
+			where TClient : class, IAuthDbClient =>
+			WithData<AuthDataProvider, TClient>();
 
 		/// <summary>
-		/// Enable data authentication and authorisation
+		/// Enable custom data authentication and authorisation
 		/// </summary>
-		/// <typeparam name="TProvider">IDataAuthProvider type</typeparam>
-		/// <typeparam name="TUser">IUserModel type</typeparam>
-		/// <typeparam name="TRole">IRoleModel type</typeparam>
-		public AuthBuilder WithData<TProvider, TUser, TRole>()
-			where TProvider : class, IDataAuthProvider<TUser, TRole>
-			where TUser : IAuthUser<TRole>
-			where TRole : IAuthRole
+		/// <typeparam name="TProvider">IAuthDataProvider type</typeparam>
+		/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
+		public AuthBuilder WithData<TProvider, TDbClient>()
+			where TProvider : class, IAuthDataProvider
+			where TDbClient : class, IAuthDbClient
 		{
 			CheckProvider();
 
 			services.AddScoped<TProvider>();
-			services.AddScoped<IDataAuthProvider<TUser, TRole>>(s => s.GetRequiredService<TProvider>());
+			services.AddScoped<IAuthDataProvider>(s => s.GetRequiredService<TProvider>());
+
+			services.AddScoped<TDbClient>();
+			services.AddScoped<IAuthDbClient>(s => s.GetRequiredService<TDbClient>());
+
+			services.AddSingleton<AuthDb>();
 
 			return this;
 		}

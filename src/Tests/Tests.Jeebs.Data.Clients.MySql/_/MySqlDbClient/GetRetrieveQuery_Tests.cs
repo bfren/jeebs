@@ -32,11 +32,13 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 			var client = new MySqlDbClient();
 
+			var id = F.Rnd.Lng;
+
 			var expected = $"SELECT `{c0Name}` AS '{c0Alias}', `{c1Name}` AS '{c1Alias}' " +
-				$"FROM `{table}` WHERE `{c2Name}` = @{c2Alias};";
+				$"FROM `{table}` WHERE `{c2Name}` = {id};";
 
 			// Act
-			var result = client.GetRetrieveQueryTest(table, list, c2);
+			var result = client.GetRetrieveQueryTest(table, list, c2, id);
 
 			// Assert
 			Assert.Equal(expected, result);

@@ -2,19 +2,15 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
+using Jeebs.Data;
 
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
 	/// Authentication User model
 	/// </summary>
-	public interface IAuthUserModel
+	public interface IAuthUserModel : IWithId<AuthUserId>
 	{
-		/// <summary>
-		/// User ID
-		/// </summary>
-		AuthUserId UserId { get; init; }
-
 		/// <summary>
 		/// Email address
 		/// </summary>
@@ -23,7 +19,7 @@ namespace Jeebs.Auth.Data
 		/// <summary>
 		/// Friendly name - option for user interface interaction
 		/// </summary>
-		string FriendlyName { get; init; }
+		string? FriendlyName { get; init; }
 
 		/// <summary>
 		/// Given (Christian / first) name
@@ -39,18 +35,10 @@ namespace Jeebs.Auth.Data
 		/// Whether or not the user account has super permissions
 		/// </summary>
 		bool IsSuper { get; init; }
-	}
 
-	/// <summary>
-	/// User interface - supporting roles
-	/// </summary>
-	/// <typeparam name="TRole">Role type</typeparam>
-	public interface IAuthUserModel<TRole> : IAuthUserModel
-		where TRole : IAuthRoleModel
-	{
 		/// <summary>
 		/// The roles this user is assigned to
 		/// </summary>
-		public List<TRole> Roles { get; init; }
+		List<IAuthRoleModel> Roles { get; init; }
 	}
 }

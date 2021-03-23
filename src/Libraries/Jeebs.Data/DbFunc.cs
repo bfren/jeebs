@@ -49,28 +49,29 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<TId>> CreateAsync(TEntity entity) =>
+		public Task<Option<TId>> CreateAsync<TModel>(TModel model) =>
 			Db.Client.GetCreateQuery<TEntity>()
 			.AuditSwitch(
-				some: x => LogFunc(nameof(CreateAsync), x, entity)
+				some: x => LogFunc(nameof(CreateAsync), x, model)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text)
+				x => Db.ExecuteAsync<TId>(x, model, CommandType.Text)
 			);
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> RetrieveAsync<TModel>(TId id) =>
-			Db.Client.GetRetrieveQuery<TEntity, TModel>()
+			Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 			.AuditSwitch(
-				some: x => LogFunc(nameof(RetrieveAsync), x, new { id })
+				some: x => LogFunc(nameof(RetrieveAsync), x, id)
 			)
 			.BindAsync(
-				x => Db.QuerySingleAsync<TModel>(x, new { id }, CommandType.Text)
+				x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text)
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateAsync<TModel>(TModel model) =>
-			Db.Client.GetUpdateQuery<TEntity, TModel>()
+		public Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+			where TModel : IWithId =>
+			Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 			.AuditSwitch(
 				some: x => LogFunc(nameof(UpdateAsync), x, model)
 			)
@@ -80,12 +81,12 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<bool>> DeleteAsync(TId id) =>
-			Db.Client.GetDeleteQuery<TEntity>()
+			Db.Client.GetDeleteQuery<TEntity>(id.Value)
 			.AuditSwitch(
-				some: x => LogFunc(nameof(DeleteAsync), x, new { id })
+				some: x => LogFunc(nameof(DeleteAsync), x, id)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync(x, new { id }, CommandType.Text)
+				x => Db.ExecuteAsync(x, null, CommandType.Text)
 			);
 	}
 }

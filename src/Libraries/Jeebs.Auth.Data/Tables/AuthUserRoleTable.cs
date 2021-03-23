@@ -9,11 +9,16 @@ namespace Jeebs.Auth.Data.Tables
 	/// <summary>
 	/// Authentication User Role Table
 	/// </summary>
-	public sealed record AuthUserRoleTable() : Table("auth_user_role")
+	internal sealed record AuthUserRoleTable() : Table("auth_user_role")
 	{
+		/// <summary>
+		/// Prefix added before all columns
+		/// </summary>
+		public const string ColumnPrefix = "UserRole";
+
 		/// <inheritdoc cref="AuthUserRoleEntity.UserRoleId"/>
-		public string UserRoleId =>
-			nameof(UserRoleId);
+		public string Id =>
+			ColumnPrefix + nameof(Id);
 
 		/// <inheritdoc cref="AuthUserRoleEntity.UserId"/>
 		public string UserId =>

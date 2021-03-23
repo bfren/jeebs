@@ -34,7 +34,8 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TModel">Return model type</typeparam>
-		Option<string> GetRetrieveQuery<TEntity, TModel>()
+		/// <param name="id">Entity ID</param>
+		Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
 			where TEntity : IEntity;
 
 		/// <summary>
@@ -42,14 +43,16 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TModel">Return model type</typeparam>
-		Option<string> GetUpdateQuery<TEntity, TModel>()
+		/// <param name="id">Entity ID</param>
+		Option<string> GetUpdateQuery<TEntity, TModel>(long id)
 			where TEntity : IEntity;
 
 		/// <summary>
 		/// Return a query to delete a single entity by ID
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		Option<string> GetDeleteQuery<TEntity>()
+		/// <param name="id">Entity ID</param>
+		Option<string> GetDeleteQuery<TEntity>(long id)
 			where TEntity : IEntity;
 
 		#endregion

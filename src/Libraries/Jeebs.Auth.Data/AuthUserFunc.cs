@@ -4,29 +4,35 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Entities;
+using Jeebs.Auth.Data.Models;
 using Jeebs.Data;
 
 namespace Jeebs.Auth
 {
-	/// <inheritdoc cref="IAuthUserFunc{TUser}"/>
-	public sealed class AuthUserFunc<TUser> : DbFunc<TUser, AuthUserId>, IAuthUserFunc<TUser>
-		where TUser : IAuthUser
+	/// <summary>
+	/// Provides Authentication functions for interacting with Users
+	/// </summary>
+	internal sealed class AuthUserFunc : DbFunc<AuthUserEntity, AuthUserId>
 	{
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="db">AuthDb</param>
 		/// <param name="log">ILog</param>
-		public AuthUserFunc(AuthDb db, ILog<AuthUserFunc<TUser>> log) : base(db, log) { }
+		internal AuthUserFunc(AuthDb db, ILog log) : base(db, log) { }
+
+		protected override void WriteToLog(string message, object[] args) =>
+			Log.Warning(message, args);
 
 		/// <inheritdoc/>
-		public Task<Option<TUser>> RetrieveAsync(string email)
+		internal Task<Option<AuthUserEntity>> RetrieveAsync(string email)
 		{
 			throw new NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId)
+		internal Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId)
 		{
 			throw new NotImplementedException();
 		}

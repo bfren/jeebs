@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Models;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -17,26 +18,24 @@ namespace Jeebs.Mvc.Auth.Controllers
 	/// <summary>
 	/// Implement this controller to add support for user authentication
 	/// </summary>
-	/// <typeparam name="TUser">User type</typeparam>
-	public abstract class AuthController<TUser> : Controller
-		where TUser : IAuthUserModel, IAuthUser
+	public abstract class AuthController : Controller
 	{
 		/// <summary>
-		/// IDataAuthProvider
+		/// IAuthDataProvider
 		/// </summary>
-		protected IAuthDataProvider<TUser> Auth { get; init; }
+		protected IAuthDataProvider Auth { get; init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
 		/// </summary>
-		protected virtual Func<TUser, List<Claim>>? AddClaims { get; }
+		protected virtual Func<AuthUserModel, List<Claim>>? AddClaims { get; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="auth">IDataAuthProvider</param>
+		/// <param name="auth">DataAuthProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthController(IAuthDataProvider<TUser> auth, ILog log) : base(log) =>
+		protected AuthController(IAuthDataProvider auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -54,8 +53,8 @@ namespace Jeebs.Mvc.Auth.Controllers
 		public virtual async Task<IActionResult> SignIn(SignInModel model)
 		{
 			// Validate user
-			var validate = await ValidateUserAsync(model.Email, model.Password);
-			if (validate is Some<TUser> user)
+			var validate = await Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password);
+			if (validate is Some<AuthUserModel> user)
 			{
 				// Get user principal
 				Log.Debug("User validated.");
@@ -87,30 +86,29 @@ namespace Jeebs.Mvc.Auth.Controllers
 		}
 
 		/// <summary>
-		/// Validate user using <see cref="Auth"/>
-		/// </summary>
-		/// <param name="email">User email</param>
-		/// <param name="password">User password</param>
-		internal Task<Option<TUser>> ValidateUserAsync(string email, string password) =>
-			Auth.ValidateUserAsync(email, password);
-
-		/// <summary>
 		/// Get principal for specified user with all necessary claims
 		/// </summary>
-		/// <param name="user">User entity</param>
-		internal ClaimsPrincipal GetPrincipal(TUser user)
+		/// <param name="user">User Model</param>
+		internal ClaimsPrincipal GetPrincipal(AuthUserModel user)
 		{
 			// Create claims object
 			var claims = new List<Claim>
 			{
-				new (JwtClaimTypes.UserId, user.UserId.Value.ToString(), ClaimValueTypes.Integer32),
-				new (ClaimTypes.Name, user.FriendlyName, ClaimValueTypes.String),
+				new (JwtClaimTypes.UserId, user.Id.Value.ToString(), ClaimValueTypes.Integer32),
+				new (ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
 				new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 			};
 
+			// Add super permission
 			if (user.IsSuper)
 			{
 				claims.Add(new(JwtClaimTypes.IsSuper, true.ToString(), ClaimValueTypes.Boolean));
+			}
+
+			// Add roles
+			foreach (var role in user.Roles)
+			{
+				claims.Add(new(ClaimTypes.Role, role.Name, ClaimValueTypes.String));
 			}
 
 			// Add custom Claims

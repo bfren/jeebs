@@ -4,6 +4,7 @@
     <ProjectReference Include="..\..\Libraries\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Mvc.Auth.Razor\Jeebs.Mvc.Auth.Razor.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
+    <ProjectReference Include="..\..\Libraries\Jeebs.Mvc.Data\Jeebs.Mvc.Data.csproj" />
     <ProjectReference Include="..\..\Libraries\Jeebs.Mvc\Jeebs.Mvc.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -13,6 +14,9 @@
     <Content Update="jeebsconfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fake\" />
   </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="..\..\Libraries\Jeebs.Config\schema.json" /></VisualStudio></ProjectExtensions>
 </Project>

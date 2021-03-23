@@ -14,13 +14,14 @@ namespace Jeebs.Data.DbFunc_Tests
 		{
 			// Arrange
 			var (client, crud) = DbFunc.Get();
-			var model = new DbFunc.FooModel { FooId = new(F.Rnd.Int) };
+			var value = F.Rnd.Lng;
+			var model = new DbFunc.FooModel { Id = new(value) };
 
 			// Act
 			await crud.UpdateAsync(model);
 
 			// Assert
-			client.Received().GetUpdateQuery<DbFunc.Foo, DbFunc.FooModel>();
+			client.Received().GetUpdateQuery<DbFunc.Foo, DbFunc.FooModel>(value);
 		}
 	}
 }
