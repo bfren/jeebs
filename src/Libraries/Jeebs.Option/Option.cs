@@ -226,6 +226,10 @@ namespace Jeebs
 			F.OptionF.Filter(this, predicate);
 
 		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
+		public Task<Option<T>> FilterAsync(Func<T, bool> predicate) =>
+			F.OptionF.FilterAsync(this, x => Task.FromResult(predicate(x)));
+
+		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
 		public Task<Option<T>> FilterAsync(Func<T, Task<bool>> predicate) =>
 			F.OptionF.FilterAsync(this, predicate);
 

@@ -1,94 +1,53 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
-using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
-	public class MapAsync_Tests
+	public class MapAsync_Tests : Jeebs_Tests.MapAsync_Tests
 	{
 		[Fact]
-		public async Task Exception_Thrown_Calls_Handler()
+		public override async Task Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = Return(F.Rnd.Int);
-			var task = option.AsTask;
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-
-			string syncThrow(int _) => throw exception;
-			Task<string> asyncThrow(int _) => throw exception;
-
-			// Act
-			var r0 = await task.MapAsync(syncThrow, handler);
-			var r1 = await task.MapAsync(asyncThrow, handler);
-
-			// Assert
-			r0.AssertNone();
-			r1.AssertNone();
-			handler.Received(2).Invoke(exception);
+			await Test00((opt, map, handler) => opt.AsTask.MapAsync(x => map(x).GetAwaiter().GetResult(), handler));
+			await Test00((opt, map, handler) => opt.AsTask.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task If_None_Gets_None()
+		public override async Task Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = None<int>(true);
-			var task = option.AsTask;
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			var r0 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), DefaultHandler);
-			var r1 = await task.MapAsync(map, DefaultHandler);
-
-			// Assert
-			r0.AssertNone();
-			r1.AssertNone();
+			await Test01((opt, map, handler) => opt.AsTask.MapAsync(x => map(x).GetAwaiter().GetResult(), handler));
+			await Test01((opt, map, handler) => opt.AsTask.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task If_None_With_Reason_Gets_None_With_Same_Reason()
+		public override async Task Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None()
 		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var task = option.AsTask;
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			var r0 = await task.MapAsync(v => map(v).GetAwaiter().GetResult(), DefaultHandler);
-			var r1 = await task.MapAsync(map, DefaultHandler);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.Same(msg, n0);
-			var n1 = r1.AssertNone();
-			Assert.Same(msg, n1);
+			await Test02((opt, map, handler) => opt.AsTask.MapAsync(x => map(x).GetAwaiter().GetResult(), handler));
+			await Test02((opt, map, handler) => opt.AsTask.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task If_Some_Runs_Map_Function()
+		public override async Task Test03_If_None_Returns_None()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-			var task = option.AsTask;
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			await task.MapAsync(v => map(v).GetAwaiter().GetResult(), DefaultHandler);
-			await task.MapAsync(map, DefaultHandler);
-
-			// Assert
-			await map.Received(2).Invoke(value);
+			await Test03((opt, map, handler) => opt.AsTask.MapAsync(x => map(x).GetAwaiter().GetResult(), handler));
+			await Test03((opt, map, handler) => opt.AsTask.MapAsync(map, handler));
 		}
 
-		public class FakeOption : Option<int> { }
+		[Fact]
+		public override async Task Test04_If_None_With_Reason_Returns_None_With_Same_Reason()
+		{
+			await Test04((opt, map, handler) => opt.AsTask.MapAsync(x => map(x).GetAwaiter().GetResult(), handler));
+			await Test04((opt, map, handler) => opt.AsTask.MapAsync(map, handler));
+		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override async Task Test05_If_Some_Runs_Map_Function()
+		{
+			await Test05((opt, map, handler) => opt.AsTask.MapAsync(x => map(x).GetAwaiter().GetResult(), handler));
+			await Test05((opt, map, handler) => opt.AsTask.MapAsync(map, handler));
+		}
 	}
 }

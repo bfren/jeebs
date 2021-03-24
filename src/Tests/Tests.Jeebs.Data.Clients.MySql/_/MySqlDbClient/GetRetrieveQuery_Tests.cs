@@ -78,8 +78,6 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			var client = new MySqlDbClient();
 
-			var id = F.Rnd.Lng;
-
 			var expected = $"SELECT `{c0Name}` AS '{c0Alias}', `{c1Name}` AS '{c1Alias}' " +
 				$"FROM `{table}` WHERE `{p0Column}` LIKE @P0 AND `{p1Column}` >= @P1;";
 

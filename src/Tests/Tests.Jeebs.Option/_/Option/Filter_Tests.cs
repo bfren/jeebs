@@ -4,58 +4,40 @@
 using System;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {
-	public class Filter_Tests
+	public class Filter_Tests : Jeebs_Tests.Filter_Tests
 	{
 		[Fact]
-		public void When_Some_And_Predicate_True_Returns_Value()
+		public override void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-
-			// Act
-			var result = option.Filter(x => x == value);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(value, some);
+			var predicate = Substitute.For<Func<int, bool>>();
+			Test00(opt => opt.Filter(predicate));
 		}
 
 		[Fact]
-		public void When_Some_And_Predicate_False_Returns_None_With_PredicateWasFalseMsg()
+		public override void Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-
-			// Act
-			var result = option.Filter(x => x != value);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<FilterPredicateWasFalseMsg>(none);
+			Test01((opt, predicate) => opt.Filter(predicate));
 		}
 
 		[Fact]
-		public void When_None_Returns_None_With_Original_Reason()
+		public override void Test02_When_Some_And_Predicate_True_Returns_Value()
 		{
-			// Arrange
-			var reason = new TestMsg();
-			var option = None<int>(reason);
-
-			// Act
-			var result = option.Filter(Substitute.For<Func<int, bool>>());
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.Same(reason, none);
+			Test02((opt, predicate) => opt.Filter(predicate));
 		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override void Test03_When_Some_And_Predicate_False_Returns_None_With_PredicateWasFalseMsg()
+		{
+			Test03((opt, predicate) => opt.Filter(predicate));
+		}
+
+		[Fact]
+		public override void Test04_When_None_Returns_None_With_Original_Reason()
+		{
+			Test04((opt, predicate) => opt.Filter(predicate));
+		}
 	}
 }

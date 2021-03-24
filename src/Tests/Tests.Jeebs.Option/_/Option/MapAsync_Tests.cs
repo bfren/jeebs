@@ -11,88 +11,42 @@ using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {
-	public class MapAsync_Tests
+	public class MapAsync_Tests : Jeebs_Tests.MapAsync_Tests
 	{
 		[Fact]
-		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+		public override async Task Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = new FakeOption();
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			var result = await option.MapAsync(map, DefaultHandler);
-
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-			Assert.IsType<UnknownOptionException>(msg.Exception);
+			await Test00((opt, map, handler) => opt.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task Exception_Thrown_Calls_Handler()
+		public override async Task Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = Return(F.Rnd.Str);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			Task<int> throwFunc(string _) => throw exception;
-
-			// Act
-			var result = await option.MapAsync(throwFunc, handler);
-
-			// Assert
-			result.AssertNone();
-			handler.Received().Invoke(exception);
+			await Test01((opt, map, handler) => opt.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task If_None_Gets_None()
+		public override async Task Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None()
 		{
-			// Arrange
-			var option = None<int>(true);
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			var result = await option.MapAsync(map, DefaultHandler);
-
-			// Assert
-			result.AssertNone();
+			await Test02((opt, map, handler) => opt.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task If_None_With_Reason_Gets_None_With_Same_Reason()
+		public override async Task Test03_If_None_Returns_None()
 		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			var result = await option.MapAsync(map, DefaultHandler);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.Same(msg, none);
+			await Test03((opt, map, handler) => opt.MapAsync(map, handler));
 		}
 
 		[Fact]
-		public async Task If_Some_Runs_Map_Function()
+		public override async Task Test04_If_None_With_Reason_Returns_None_With_Same_Reason()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-			var map = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			await option.MapAsync(map, DefaultHandler);
-
-			// Assert
-			await map.Received().Invoke(value);
+			await Test04((opt, map, handler) => opt.MapAsync(map, handler));
 		}
 
-		public class FakeOption : Option<int> { }
-
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override async Task Test05_If_Some_Runs_Map_Function()
+		{
+			await Test05((opt, map, handler) => opt.MapAsync(map, handler));
+		}
 	}
 }

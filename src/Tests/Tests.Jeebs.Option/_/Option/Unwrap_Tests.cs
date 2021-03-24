@@ -4,57 +4,28 @@
 using System;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.Option_Tests
 {
-	public class Unwrap_Tests
+	public class Unwrap_Tests : Jeebs_Tests.Unwrap_Tests
 	{
 		[Fact]
-		public void Some_Returns_Value()
+		public override void Test00_None_Runs_IfNone_Func_Returns_Value()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var some = Return(value);
-
-			// Act
-			var r0 = some.Unwrap(F.Rnd.Int);
-			var r1 = some.Unwrap(Substitute.For<Func<int>>());
-			var r2 = some.Unwrap(Substitute.For<Func<IMsg, int>>());
-
-			// Assert
-			Assert.Equal(value, r0);
-			Assert.Equal(value, r1);
-			Assert.Equal(value, r2);
+			Test00((opt, ifNone) => opt.Unwrap(ifNone));
 		}
 
 		[Fact]
-		public void None_Gets_IfNone()
+		public override void Test01_None_With_Reason_Runs_IfNone_Func_Passes_Reason_Returns_Value()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var none = None<int>(true);
-
-			// Act
-			var result = none.Unwrap(value);
-
-			// Assert
-			Assert.Equal(value, result);
+			Test01((opt, ifNone) => opt.Unwrap(ifNone));
 		}
 
 		[Fact]
-		public void None_Runs_IfNone()
+		public override void Test02_Some_Returns_Value()
 		{
-			// Arrange
-			var none = None<int>(true);
-			var ifNone = Substitute.For<Func<IMsg, int>>();
-
-			// Act
-			none.Unwrap(() => ifNone(Substitute.For<IMsg>()));
-			none.Unwrap(ifNone);
-
-			// Assert
-			ifNone.ReceivedWithAnyArgs(2).Invoke(Arg.Any<IMsg>());
+			Test02(opt => opt.Unwrap(Substitute.For<Func<int>>()));
+			Test02(opt => opt.Unwrap(Substitute.For<Func<IMsg, int>>()));
 		}
 	}
 }

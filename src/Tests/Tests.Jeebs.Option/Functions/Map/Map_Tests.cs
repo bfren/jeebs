@@ -1,114 +1,47 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using Jeebs;
-using Jeebs.Exceptions;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class Map_Tests
+	public class Map_Tests : Jeebs_Tests.Map_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = new FakeOption();
-			var map = Substitute.For<Func<int, string>>();
-
-			// Act
-			var result = Map(option, map, DefaultHandler);
-
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-			Assert.IsType<UnknownOptionException>(msg.Exception);
+			Test00((opt, map, handler) => Map(opt, map, handler));
 		}
 
 		[Fact]
-		public void Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var exception = new Exception();
-			int throwFunc() => throw exception;
-
-			// Act
-			var result = Map(option, _ => throwFunc(), DefaultHandler);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(none);
+			Test01((opt, map, handler) => Map(opt, map, handler));
 		}
 
 		[Fact]
-		public void Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+		public override void Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None()
 		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			int throwFunc() => throw exception;
-
-			// Act
-			var result = Map(option, _ => throwFunc(), handler);
-
-			// Assert
-			result.AssertNone();
-			handler.Received().Invoke(exception);
+			Test02((opt, map, handler) => Map(opt, map, handler));
 		}
 
 		[Fact]
-		public void If_None_Gets_None()
+		public override void Test03_If_None_Returns_None()
 		{
-			// Arrange
-			var option = None<int>(true);
-			var map = Substitute.For<Func<int, string>>();
-
-			// Act
-			var result = Map(option, map, DefaultHandler);
-
-			// Assert
-			result.AssertNone();
+			Test03((opt, map, handler) => Map(opt, map, handler));
 		}
 
 		[Fact]
-		public void If_None_With_Reason_Gets_None_With_Same_Reason()
+		public override void Test04_If_None_With_Reason_Returns_None_With_Same_Reason()
 		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var map = Substitute.For<Func<int, string>>();
-
-			// Act
-			var result = Map(option, map, DefaultHandler);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.Same(msg, none);
+			Test04((opt, map, handler) => Map(opt, map, handler));
 		}
 
 		[Fact]
-		public void If_Some_Runs_Map_Function()
+		public override void Test05_If_Some_Runs_Map_Function()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
-			var map = Substitute.For<Func<int, string>>();
-
-			// Act
-			Map(option, map, DefaultHandler);
-
-			// Assert
-			map.Received().Invoke(value);
+			Test05((opt, map, handler) => Map(opt, map, handler));
 		}
-
-		public class FakeOption : Option<int> { }
-
-		public record TestMsg : IMsg { }
 	}
 }

@@ -1,112 +1,59 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using Jeebs;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class ReturnIf_Tests
+	public class ReturnIf_Tests : Jeebs_Tests.ReturnIf_Tests
 	{
 		[Fact]
-		public void Exception_Thrown_By_Predicate_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test00_Exception_Thrown_By_Predicate_With_Value_Calls_Handler_Returns_None()
 		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			static bool throwFunc() => throw new Exception();
-
-			// Act
-			var result = ReturnIf(throwFunc, Rnd.Int);
-
-			// Assert
-			var msg = result.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(msg);
+			Test00((predicate, value, handler) => ReturnIf(predicate, value, handler));
 		}
 
 		[Fact]
-		public void Exception_Thrown_By_Predicate_With_Handler_Returns_None_Calls_Handler()
+		public override void Test01_Exception_Thrown_By_Predicate_With_Value_Func_Calls_Handler_Returns_None()
 		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			bool throwFunc() => throw exception;
-
-			// Act
-			var result = ReturnIf(throwFunc, () => Rnd.Int, handler);
-
-			// Assert
-			result.AssertNone();
-			handler.Received().Invoke(exception);
+			Test01((predicate, value, handler) => ReturnIf(predicate, value, handler));
 		}
 
 		[Fact]
-		public void Exception_Thrown_By_ValueFunc_With_Handler_Returns_None_Calls_Handler()
+		public override void Test02_Exception_Thrown_By_Value_Func_Calls_Handler_Returns_None()
 		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			int throwFunc() => throw exception;
-
-			// Act
-			var result = ReturnIf(() => true, throwFunc, handler);
-
-			// Assert
-			result.AssertNone();
-			handler.Received().Invoke(exception);
+			Test02((predicate, value, handler) => ReturnIf(predicate, value, handler));
 		}
 
 		[Fact]
-		public void True_Returns_Some()
+		public override void Test03_Predicate_True_With_Value_Returns_Some()
 		{
-			// Arrange
-			var value = Rnd.Int;
-
-			// Act
-			var r0 = ReturnIf(() => true, value);
-			var r1 = ReturnIf(() => true, () => value, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(value, s0);
-			var s1 = r1.AssertSome();
-			Assert.Equal(value, s1);
+			Test03((predicate, value, handler) => ReturnIf(predicate, value, handler));
 		}
 
 		[Fact]
-		public void False_Returns_None_With_PredicateWasFalseMsg()
+		public override void Test04_Predicate_True_With_Value_Func_Returns_Some()
 		{
-			// Arrange
-			var value = Rnd.Int;
-
-			// Act
-			var r0 = ReturnIf(() => false, value);
-			var r1 = ReturnIf(() => false, () => value, DefaultHandler);
-
-			// Assert
-			var m0 = r0.AssertNone();
-			Assert.IsType<PredicateWasFalseMsg>(m0);
-			var m1 = r1.AssertNone();
-			Assert.IsType<PredicateWasFalseMsg>(m1);
+			Test04((predicate, value, handler) => ReturnIf(predicate, value, handler));
 		}
 
 		[Fact]
-		public void False_Bypasses_Value_Func()
+		public override void Test05_Predicate_False_With_Value_Returns_None_With_PredicateWasFalseMsg()
 		{
-			// Arrange
-			var getValue = Substitute.For<Func<int>>();
+			Test05((predicate, value, handler) => ReturnIf(predicate, value, handler));
+		}
 
-			// Act
-			var result = ReturnIf(() => false, getValue);
+		[Fact]
+		public override void Test06_Predicate_False_With_Value_Func_Returns_None_With_PredicateWasFalseMsg()
+		{
+			Test06((predicate, value, handler) => ReturnIf(predicate, value, handler));
+		}
 
-			// Assert
-			result.AssertNone();
-			getValue.DidNotReceive().Invoke();
+		[Fact]
+		public override void Test07_Predicate_False_Bypasses_Value_Func()
+		{
+			Test07((predicate, value, handler) => ReturnIf(predicate, value, handler));
 		}
 	}
 }

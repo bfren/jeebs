@@ -4,101 +4,37 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs;
-using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
 namespace F.OptionF_Tests
 {
-	public class SwitchAsync_Tests
+	public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 	{
 		[Fact]
-		public async Task If_Unknown_Option_Throws_UnknownOptionException()
+		public override async Task Test00_If_Unknown_Option_Throws_UnknownOptionException()
 		{
-			// Arrange
-			var option = new FakeOption();
 			var some = Substitute.For<Func<int, Task<string>>>();
 			var none = Substitute.For<Func<IMsg, Task<string>>>();
-
-			// Act
-			Task a0() => SwitchAsync(option, some, none);
-			Task a1() => SwitchAsync(option.AsTask, some, none);
-
-			// Assert
-			await Assert.ThrowsAsync<UnknownOptionException>(a0);
-			await Assert.ThrowsAsync<UnknownOptionException>(a1);
+			await Test00(opt => SwitchAsync(opt, some, none));
+			await Test00(opt => SwitchAsync(opt.AsTask, some, none));
 		}
 
 		[Fact]
-		public async Task If_Some_Runs_Some()
+		public override async Task Test01_If_None_Runs_None_Func_With_Reason()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
 			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg, Task<string>>>();
-
-			// Act
-			await SwitchAsync(option, some, none);
-			await SwitchAsync(option.AsTask, some, none);
-
-			// Assert
-			await some.Received(2).Invoke(value);
+			await Test01((opt, none) => SwitchAsync(opt, some, none));
+			await Test01((opt, none) => SwitchAsync(opt.AsTask, some, none));
 		}
 
 		[Fact]
-		public async Task If_None_Gets_None()
+		public override async Task Test02_If_Some_Runs_Some_Func_With_Value()
 		{
-			// Arrange
-			var option = None<int>(true);
-			var value = Rnd.Str;
-			var some = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			var r0 = await SwitchAsync(option, some, _ => Task.FromResult(value));
-			var r1 = await SwitchAsync(option.AsTask, some, _ => Task.FromResult(value));
-
-			// Assert
-			Assert.Equal(value, r0);
-			Assert.Equal(value, r1);
-		}
-
-		[Fact]
-		public async Task If_None_Runs_None()
-		{
-			// Arrange
-			var option = None<int>(true);
-			var some = Substitute.For<Func<int, Task<string>>>();
 			var none = Substitute.For<Func<IMsg, Task<string>>>();
-
-			// Act
-			await SwitchAsync(option, some, none);
-			await SwitchAsync(option.AsTask, some, none);
-
-			// Assert
-			await none.Received(2).Invoke(Arg.Any<IMsg>());
+			await Test02((opt, some) => SwitchAsync(opt, some, none));
+			await Test02((opt, some) => SwitchAsync(opt.AsTask, some, none));
 		}
-
-		[Fact]
-		public async Task If_None_With_Reason_Runs_None_Passes_Reason()
-		{
-			// Arrange
-			var msg = new TestMsg();
-			var option = None<int>(msg);
-			var some = Substitute.For<Func<int, Task<string>>>();
-			var none = Substitute.For<Func<IMsg, Task<string>>>();
-
-			// Act
-			await SwitchAsync(option, some, none);
-			await SwitchAsync(option.AsTask, some, none);
-
-			// Assert
-			await none.Received(2).Invoke(msg);
-		}
-
-		public class FakeOption : Option<int> { }
-
-		public class TestMsg : IMsg { }
 	}
 }

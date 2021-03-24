@@ -30,10 +30,6 @@ namespace F
 			}
 		}
 
-		/// <inheritdoc cref="Return{T}(Func{T}, Handler?)"/>
-		public static Task<Option<T>> ReturnAsync<T>(Task<T> value) =>
-			ReturnAsync(() => value, DefaultHandler);
-
 		/// <inheritdoc cref="Return{T}(Func{T}, bool, Handler)"/>
 		public static async Task<Option<T?>> ReturnAsync<T>(Func<Task<T?>> value, bool allowNull, Handler handler)
 		{
@@ -63,9 +59,5 @@ namespace F
 				return None<T?>(handler(e));
 			}
 		}
-
-		/// <inheritdoc cref="Return{T}(Func{T}, bool, Handler)"/>
-		public static Task<Option<T?>> ReturnAsync<T>(Task<T?> value, bool allowNull) =>
-			ReturnAsync(() => value, allowNull, DefaultHandler);
 	}
 }

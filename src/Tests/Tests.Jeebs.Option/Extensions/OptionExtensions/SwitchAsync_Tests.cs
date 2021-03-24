@@ -5,190 +5,62 @@ using System;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
 
 namespace Jeebs.OptionExtensions_Tests
 {
-	public class SwitchAsync_Tests
+	public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 	{
 		[Fact]
-		public async Task If_Some_Runs_Some()
+		public override async Task Test00_If_Unknown_Option_Throws_UnknownOptionException()
 		{
-			// Arrange
-			var value = F.Rnd.Int;
-			var option = Return(value);
-			var task = option.AsTask;
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), F.Rnd.Str));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), F.Rnd.Str));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Task.FromResult(F.Rnd.Str)));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Task.FromResult(F.Rnd.Str)));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<string>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<string>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<Task<string>>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<Task<string>>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<IMsg, string>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<IMsg, string>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<IMsg, Task<string>>>()));
+			await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<IMsg, Task<string>>>()));
+		}
+
+		[Fact]
+		public override async Task Test01_If_None_Runs_None_Func_With_Reason()
+		{
 			var some = Substitute.For<Func<int, Task<string>>>();
-
-			// Act
-			await task.SwitchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: F.Rnd.Str
-			);
-
-			await task.SwitchAsync(
-				some: some,
-				none: F.Rnd.Str
-			);
-
-			await task.SwitchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: Task.FromResult(F.Rnd.Str)
-			);
-
-			await task.SwitchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<string>>()
-			);
-
-			await task.SwitchAsync(
-				some: some,
-				none: Substitute.For<Func<string>>()
-			);
-
-			await task.SwitchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<Task<string>>>()
-			);
-
-			await task.SwitchAsync(
-				some: some,
-				none: Substitute.For<Func<Task<string>>>()
-			);
-
-			await task.SwitchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<IMsg, string>>()
-			);
-
-			await task.SwitchAsync(
-				some: v => some(v).GetAwaiter().GetResult(),
-				none: Substitute.For<Func<IMsg, Task<string>>>()
-			);
-
-			await task.SwitchAsync(
-				some: some,
-				none: Substitute.For<Func<IMsg, string>>()
-			);
-
-			await task.SwitchAsync(
-				some: some,
-				none: Substitute.For<Func<IMsg, Task<string>>>()
-			);
-
-			// Assert
-			await some.Received(11).Invoke(value);
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), none(new TestMsg()).GetAwaiter().GetResult()));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), none(new TestMsg()).GetAwaiter().GetResult()));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), none(new TestMsg())));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), none(new TestMsg())));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), () => none(new TestMsg()).GetAwaiter().GetResult()));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), () => none(new TestMsg()).GetAwaiter().GetResult()));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), () => none(new TestMsg())));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), () => none(new TestMsg())));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), x => none(x).GetAwaiter().GetResult()));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), x => none(x).GetAwaiter().GetResult()));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), none));
+			await Test01((opt, none) => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), none));
 		}
 
 		[Fact]
-		public async Task If_None_Gets_None()
+		public override async Task Test02_If_Some_Runs_Some_Func_With_Value()
 		{
-			// Arrange
-			var option = None<int>(true);
-			var task = option.AsTask;
-			var value = F.Rnd.Str;
-
-			// Act
-			var r0 = await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: value
-			);
-
-			var r1 = await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: value
-			);
-
-			var r2 = await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: Task.FromResult(value)
-			);
-
-			var r3 = await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: Task.FromResult(value)
-			);
-
-			// Assert
-			Assert.Equal(value, r0);
-			Assert.Equal(value, r1);
-			Assert.Equal(value, r2);
-			Assert.Equal(value, r3);
+			var none = Substitute.For<Func<IMsg, Task<string>>>();
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), F.Rnd.Str));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(some, F.Rnd.Str));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Task.FromResult(F.Rnd.Str)));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Task.FromResult(F.Rnd.Str)));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<string>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<string>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<Task<string>>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<Task<string>>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<IMsg, string>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<IMsg, string>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<IMsg, Task<string>>>()));
+			await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<IMsg, Task<string>>>()));
 		}
-
-		[Fact]
-		public async Task If_None_Runs_None()
-		{
-			// Arrange
-			var option = None<int>(true);
-			var task = option.AsTask;
-			var none = Substitute.For<Func<string>>();
-
-			// Act
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: none()
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: none()
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: Task.FromResult(none())
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: Task.FromResult(none())
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: none
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: none
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: () => Task.FromResult(none())
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: () => Task.FromResult(none())
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: _ => none()
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: _ => none()
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, string>>(),
-				none: _ => Task.FromResult(none())
-			);
-
-			await task.SwitchAsync(
-				some: Substitute.For<Func<int, Task<string>>>(),
-				none: _ => Task.FromResult(none())
-			);
-
-			// Assert
-			none.Received(12).Invoke();
-		}
-
-		public class FakeOption : Option<int> { }
 	}
 }

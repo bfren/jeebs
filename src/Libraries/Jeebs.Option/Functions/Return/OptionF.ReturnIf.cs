@@ -30,8 +30,8 @@ namespace F
 			);
 
 		/// <inheritdoc cref="ReturnIf{T}(Func{bool}, Func{T}, Handler)"/>
-		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value) =>
-			ReturnIf(predicate, () => value, DefaultHandler);
+		public static Option<T> ReturnIf<T>(Func<bool> predicate, T value, Handler handler) =>
+			ReturnIf(predicate, () => value, handler);
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
