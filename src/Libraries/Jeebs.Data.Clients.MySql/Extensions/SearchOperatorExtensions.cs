@@ -36,6 +36,9 @@ namespace Jeebs.Data.Clients.MySql
 				SearchOperator.MoreThanOrEqual =>
 					">=",
 
+				SearchOperator.In =>
+					"IN",
+
 				_ =>
 					"="
 			};

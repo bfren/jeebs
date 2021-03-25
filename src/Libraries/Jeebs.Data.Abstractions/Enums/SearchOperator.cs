@@ -46,6 +46,11 @@ namespace Jeebs.Data.Enums
 		/// <summary>
 		/// More Than or Equal
 		/// </summary>
-		MoreThanOrEqual
+		MoreThanOrEqual,
+
+		/// <summary>
+		/// In
+		/// </summary>
+		In
 	}
 }

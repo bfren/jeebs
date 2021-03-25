@@ -35,10 +35,5 @@ namespace Jeebs.Auth.Data
 		/// Whether or not the user account has super permissions
 		/// </summary>
 		bool IsSuper { get; init; }
-
-		/// <summary>
-		/// The roles this user is assigned to
-		/// </summary>
-		List<IAuthRole> Roles { get; init; }
 	}
 }

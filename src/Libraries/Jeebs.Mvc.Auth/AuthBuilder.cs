@@ -78,10 +78,14 @@ namespace Jeebs.Mvc.Auth
 			services.AddScoped<IAuthUserFunc<AuthUserEntity>>(s => s.GetRequiredService<AuthUserFunc>());
 			services.AddScoped<AuthRoleFunc>();
 			services.AddScoped<IAuthRoleFunc<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleFunc>());
+			services.AddScoped<AuthUserRoleFunc>();
+			services.AddScoped<IAuthUserRoleFunc<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleFunc>());
 
 			// Add AuthProvider
 			services.AddScoped<AuthDataProvider>();
-			services.AddScoped<IAuthDataProvider<AuthUserEntity, AuthRoleEntity>>(x => x.GetRequiredService<AuthDataProvider>());
+			services.AddScoped<IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity>>(
+				x => x.GetRequiredService<AuthDataProvider>()
+			);
 
 			return this;
 		}

@@ -13,7 +13,7 @@ namespace Jeebs.Data
 	/// Database functions for an entity type, including CRUD and custom queries
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TId">Strong ID type</typeparam>
+	/// <typeparam name="TId">StrongId type</typeparam>
 	public interface IDbFunc<TEntity, TId>
 		where TEntity : IEntity
 		where TId : StrongId
@@ -45,8 +45,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create an entity
 		/// </summary>
-		/// <param name="model">Model with values to use when creating</param>
-		Task<Option<TId>> CreateAsync<TModel>(TModel model);
+		Task<Option<TId>> CreateAsync(TEntity entity);
 
 		/// <summary>
 		/// Retrieve an entity

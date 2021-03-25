@@ -5,6 +5,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
+using Jeebs.Cryptography;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 
@@ -19,6 +20,20 @@ namespace Jeebs.Auth
 		/// <param name="db">IAuthDb</param>
 		/// <param name="log">ILog</param>
 		public AuthUserFunc(IAuthDb db, ILog<AuthUserFunc> log) : base(db, log) { }
+
+		/// <inheritdoc/>
+		public Task<Option<AuthUserId>> CreateAsync(string email, string password, string? friendlyName)
+		{
+			var user = new AuthUserEntity
+			{
+				EmailAddress = email,
+				PasswordHash = password.HashPassword(),
+				FriendlyName = friendlyName,
+				IsEnabled = true
+			};
+
+			return CreateAsync(user);
+		}
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> RetrieveAsync<TModel>(string email) =>

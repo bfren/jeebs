@@ -1,21 +1,23 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data;
+
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// Used for creating an Authenticated user
+	/// Authentication User Role Model
 	/// </summary>
-	public interface IAuthCreateUserModel
+	public interface IAuthUserRole : IWithId<AuthUserRoleId>
 	{
 		/// <summary>
-		/// Email address
+		/// User ID
 		/// </summary>
-		string EmailAddress { get; init; }
+		AuthUserId UserId { get; init; }
 
 		/// <summary>
-		/// Password
+		/// Role ID
 		/// </summary>
-		string Password { get; init; }
+		AuthRoleId RoleId { get; init; }
 	}
 }

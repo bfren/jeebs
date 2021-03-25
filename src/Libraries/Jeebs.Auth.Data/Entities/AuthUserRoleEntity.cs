@@ -8,7 +8,7 @@ namespace Jeebs.Auth.Data.Entities
 	/// <summary>
 	/// Authentication User Role
 	/// </summary>
-	public sealed record AuthUserRoleEntity : IEntity<AuthUserRoleId>
+	public sealed record AuthUserRoleEntity : IEntity<AuthUserRoleId>, IAuthUserRole
 	{
 		/// <summary>
 		/// User Role ID
@@ -25,5 +25,7 @@ namespace Jeebs.Auth.Data.Entities
 		/// Role ID
 		/// </summary>
 		public AuthRoleId RoleId { get; init; } = new();
+
+		internal AuthUserRoleEntity() { }
 	}
 }

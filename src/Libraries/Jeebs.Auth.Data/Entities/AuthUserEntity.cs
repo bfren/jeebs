@@ -30,5 +30,10 @@ namespace Jeebs.Auth.Data.Entities
 		/// The last time the user signed in
 		/// </summary>
 		public DateTimeOffset? LastSignedIn { get; init; }
+
+		internal AuthUserEntity() { }
+
+		internal AuthUserEntity(AuthUserId id, string email, string passwordHash) : base(id, email) =>
+			PasswordHash = passwordHash;
 	}
 }

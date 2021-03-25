@@ -9,6 +9,7 @@ namespace Jeebs.Data
 	public interface IEntity : IWithId { }
 
 	/// <inheritdoc cref="IEntity"/>
+	/// <typeparam name="T">StrongId Type</typeparam>
 	public interface IEntity<T> : IEntity, IWithId<T>
 		where T : StrongId
 	{ }

@@ -41,7 +41,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// IAuthDataProvider
 		/// </summary>
-		protected IAuthDataProvider<AuthUserEntity, AuthRoleEntity> Auth { get; private init; }
+		protected IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity> Auth { get; private init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
@@ -53,7 +53,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="auth">IAuthDataProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthControllerBase(IAuthDataProvider<AuthUserEntity, AuthRoleEntity> auth, ILog log) : base(log) =>
+		protected AuthControllerBase(IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity> auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>

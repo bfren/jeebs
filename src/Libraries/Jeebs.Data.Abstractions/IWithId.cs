@@ -9,18 +9,18 @@ namespace Jeebs.Data
 	public interface IWithId
 	{
 		/// <summary>
-		/// ID
+		/// StrongId (wrapping a long value)
 		/// </summary>
 		StrongId Id { get; }
 	}
 
 	/// <inheritdoc cref="IWithId"/>
-	/// <typeparam name="T">StrongID Type</typeparam>
+	/// <typeparam name="T">StrongId Type</typeparam>
 	public interface IWithId<T> : IWithId
 		where T : StrongId
 	{
 		/// <summary>
-		/// Strongly-typed ID
+		/// Strongly-typed StrongId (wrapping a long value)
 		/// </summary>
 		new T Id { get; init; }
 

@@ -15,5 +15,7 @@ namespace Jeebs.Auth.Data.Entities
 		/// Role Description
 		/// </summary>
 		public string Description { get; init; } = string.Empty;
+
+		internal AuthRoleEntity() { }
 	}
 }

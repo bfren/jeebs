@@ -55,7 +55,7 @@ namespace Jeebs.Data
 		#region Custom Queries
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(
+		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		) =>
 			QueryAsync<TModel>(
@@ -66,7 +66,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		) =>
 			Db.Client.GetRetrieveQuery<TEntity, TModel>(predicates)
@@ -82,17 +82,17 @@ namespace Jeebs.Data
 		#region CRUD Queries
 
 		/// <inheritdoc/>
-		public Task<Option<TId>> CreateAsync<TModel>(TModel model) =>
+		public virtual Task<Option<TId>> CreateAsync(TEntity entity) =>
 			Db.Client.GetCreateQuery<TEntity>()
 			.AuditSwitch(
-				some: x => LogFunc(nameof(CreateAsync), x, model)
+				some: x => LogFunc(nameof(CreateAsync), x, entity)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync<TId>(x, model, CommandType.Text)
+				x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text)
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> RetrieveAsync<TModel>(TId id) =>
+		public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id) =>
 			Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 			.AuditSwitch(
 				some: x => LogFunc(nameof(RetrieveAsync), x, id)
@@ -102,7 +102,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+		public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model)
 			where TModel : IWithId =>
 			Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 			.AuditSwitch(
@@ -113,7 +113,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> DeleteAsync(TId id) =>
+		public virtual Task<Option<bool>> DeleteAsync(TId id) =>
 			Db.Client.GetDeleteQuery<TEntity>(id.Value)
 			.AuditSwitch(
 				some: x => LogFunc(nameof(DeleteAsync), x, id)

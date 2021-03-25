@@ -38,10 +38,17 @@ namespace Jeebs.Data.Clients.MySql
 			var index = 0;
 			foreach (var (column, op, value) in predicates)
 			{
-				var parameter = $"P{index++}";
+				if (op == SearchOperator.In)
+				{
+					where.Add($"`{column}` {op.ToOperator()} ({value})");
+				}
+				else
+				{
+					var parameter = $"P{index++}";
 
-				where.Add($"`{column}` {op.ToOperator()} @{parameter}");
-				param.Add(parameter, value);
+					param.Add(parameter, value);
+					where.Add($"`{column}` {op.ToOperator()} @{parameter}");
+				}
 			}
 
 			// Return query and parameters

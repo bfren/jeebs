@@ -7,6 +7,7 @@ using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Data;
+using Jeebs.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static F.OptionF;
@@ -31,8 +32,17 @@ namespace AppMvc.Controllers
 
 		public async Task<IActionResult> InsertTestData()
 		{
-			var id = await Auth.User.CreateAsync(new AuthCreateUserModel("ben@bcgdesign.com", "fred"));
-			return Content(id.ToString());
+			var userId = await (
+				from user in Auth.User.CreateAsync("ben@bcgdesign.com", "fred", "Ben")
+				from r1 in Auth.Role.CreateAsync("One")
+				from r2 in Auth.Role.CreateAsync("Two")
+				from r3 in Auth.Role.CreateAsync("Three")
+				from ur1 in Auth.UserRole.CreateAsync(user, r1)
+				from ur2 in Auth.UserRole.CreateAsync(user, r2)
+				select user
+			);
+
+			return Content(userId.ToString());
 		}
 
 		public async Task<IActionResult> ShowUser(AuthUserId id) =>

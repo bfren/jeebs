@@ -14,6 +14,14 @@ namespace Jeebs.Auth.Data
 		where TUserEntity : IAuthUser, IEntity
 	{
 		/// <summary>
+		/// Create a new User
+		/// </summary>
+		/// <param name="email">Email address</param>
+		/// <param name="password">Password (will be hashed)</param>
+		/// <param name="friendlyName">[Optional] Friendly name</param>
+		Task<Option<AuthUserId>> CreateAsync(string email, string password, string? friendlyName);
+
+		/// <summary>
 		/// Retrieve a user by email address
 		/// </summary>
 		/// <param name="email">Email address</param>
