@@ -1,13 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
-using Jeebs.Exceptions;
-using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace Jeebs.Option_Tests
 {

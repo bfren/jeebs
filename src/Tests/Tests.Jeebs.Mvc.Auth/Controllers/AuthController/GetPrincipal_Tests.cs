@@ -7,7 +7,6 @@ using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
 using NSubstitute;
 using Xunit;
@@ -20,7 +19,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Returns_ClaimsPrincipal_With_User_Info_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IAuthDataProvider<AuthUserEntity, AuthRoleEntity>>();
+			var auth = Substitute.For<IAuthDataProvider>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthTestController(auth, log);
 			var user = new AuthUserModel
@@ -63,7 +62,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Returns_ClaimsPrincipal_With_Role_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IAuthDataProvider<AuthUserEntity, AuthRoleEntity>>();
+			var auth = Substitute.For<IAuthDataProvider>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthTestController(auth, log);
 			var role0Id = new AuthRoleId { Value = F.Rnd.Lng };
@@ -121,7 +120,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		public void Adds_Custom_Claims()
 		{
 			// Arrange
-			var auth = Substitute.For<IAuthDataProvider<AuthUserEntity, AuthRoleEntity>>();
+			var auth = Substitute.For<IAuthDataProvider>();
 			var log = Substitute.For<ILog>();
 			var controller = new AuthTestControllerWithClaims(auth, log);
 			var user = new AuthUserModel
@@ -145,7 +144,9 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 
 		public class AuthTestController : AuthControllerBase
 		{
-			public AuthTestController(IAuthDataProvider<AuthUserEntity, AuthRoleEntity> auth, ILog log) : base(auth, log) { }
+			public AuthTestController(IAuthDataProvider auth, ILog log) :
+				base(auth, log)
+			{ }
 		}
 
 		public class AuthTestControllerWithClaims : AuthTestController
@@ -154,7 +155,9 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 				user =>
 					new() { new(nameof(AuthTestControllerWithClaims), $"{user.Id}+{user.FriendlyName}") };
 
-			public AuthTestControllerWithClaims(IAuthDataProvider<AuthUserEntity, AuthRoleEntity> auth, ILog log) : base(auth, log) { }
+			public AuthTestControllerWithClaims(IAuthDataProvider auth, ILog log) :
+				base(auth, log)
+			{ }
 		}
 	}
 }

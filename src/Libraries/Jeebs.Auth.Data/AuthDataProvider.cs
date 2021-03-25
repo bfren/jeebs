@@ -13,8 +13,12 @@ using static F.OptionF;
 
 namespace Jeebs.Auth
 {
+	public interface IAuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity>
+	{ }
+
+
 	/// <inheritdoc cref="IAuthDataProvider{TUserEntity, TRoleEntity, TUserRoleEntity}"/>
-	public sealed class AuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity>
+	public sealed class AuthDataProvider : IAuthDataProvider
 	{
 		/// <inheritdoc/>
 		public IAuthUserFunc<AuthUserEntity> User { get; private init; }
@@ -33,11 +37,7 @@ namespace Jeebs.Auth
 		/// <param name="user">IAuthUserFunc</param>
 		/// <param name="role">IAuthRoleFunc</param>
 		/// <param name="userRole">IAuthUserRoleFunc</param>
-		public AuthDataProvider(
-			IAuthUserFunc<AuthUserEntity> user,
-			IAuthRoleFunc<AuthRoleEntity> role,
-			IAuthUserRoleFunc<AuthUserRoleEntity> userRole
-		) =>
+		public AuthDataProvider(IAuthUserFunc user, IAuthRoleFunc role, IAuthUserRoleFunc userRole) =>
 			(User, Role, UserRole) = (user, role, userRole);
 
 		/// <inheritdoc/>

@@ -11,8 +11,12 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Auth
 {
+	/// <inheritdoc cref="IAuthUserFunc{TRoleEntity}"/>
+	public interface IAuthUserFunc : IAuthUserFunc<AuthUserEntity>
+	{ }
+
 	/// <inheritdoc cref="IAuthUserFunc{TUserEntity}"/>
-	public sealed class AuthUserFunc : DbFunc<AuthUserEntity, AuthUserId>, IAuthUserFunc<AuthUserEntity>
+	public sealed class AuthUserFunc : DbFunc<AuthUserEntity, AuthUserId>, IAuthUserFunc
 	{
 		/// <summary>
 		/// Inject dependencies

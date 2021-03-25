@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -41,7 +39,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// IAuthDataProvider
 		/// </summary>
-		protected IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity> Auth { get; private init; }
+		protected IAuthDataProvider Auth { get; private init; }
 
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
@@ -53,7 +51,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// </summary>
 		/// <param name="auth">IAuthDataProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthControllerBase(IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity> auth, ILog log) : base(log) =>
+		protected AuthControllerBase(IAuthDataProvider auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>

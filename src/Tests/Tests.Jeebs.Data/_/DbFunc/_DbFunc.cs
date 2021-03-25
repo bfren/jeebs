@@ -20,7 +20,7 @@ namespace Jeebs.Data.DbFunc_Tests
 
 			var log = Substitute.For<ILog>();
 
-			var crud = Substitute.For<DbFunc<Foo, FooId>>(db, log);
+			var crud = Substitute.ForPartsOf<DbFunc<Foo, FooId>>(db, log);
 
 			return (client, crud);
 		}

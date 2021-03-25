@@ -9,7 +9,11 @@ using Jeebs.Data;
 namespace Jeebs.Auth
 {
 	/// <inheritdoc cref="IAuthRoleFunc{TRoleEntity}"/>
-	public sealed class AuthRoleFunc : DbFunc<AuthRoleEntity, AuthRoleId>, IAuthRoleFunc<AuthRoleEntity>
+	public interface IAuthRoleFunc : IAuthRoleFunc<AuthRoleEntity>
+	{ }
+
+	/// <inheritdoc cref="IAuthRoleFunc{TRoleEntity}"/>
+	public sealed class AuthRoleFunc : DbFunc<AuthRoleEntity, AuthRoleId>, IAuthRoleFunc
 	{
 		/// <summary>
 		/// Inject dependencies
