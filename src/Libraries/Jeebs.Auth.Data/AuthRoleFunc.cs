@@ -15,6 +15,6 @@ namespace Jeebs.Auth
 		/// </summary>
 		/// <param name="db">IAuthDb</param>
 		/// <param name="log">ILog</param>
-		internal AuthRoleFunc(IAuthDb db, ILog<AuthRoleFunc> log) : base(db, log) { }
+		public AuthRoleFunc(IAuthDb db, ILog<AuthRoleFunc> log) : base(db, log) { }
 	}
 }
