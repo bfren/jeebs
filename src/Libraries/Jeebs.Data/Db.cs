@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config;
+using Jeebs.Data.Exceptions;
 using Jeebs.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
 using static F.OptionF;
@@ -20,12 +21,19 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public IDbClient Client { get; private init; }
 
+		/// <inheritdoc/>
+		public IDbTransaction StartTransaction =>
+			Connection.BeginTransaction();
+
 		/// <summary>
 		/// Configuration for this database connection
 		/// </summary>
 		public DbConnectionConfig Config { get; private init; }
 
-		private IDbConnection? Connection { get; init; }
+		/// <summary>
+		/// IDbConnection object
+		/// </summary>
+		private IDbConnection Connection { get; init; }
 
 		/// <summary>
 		/// ILog (should be given a context of the implementing class)
@@ -62,16 +70,22 @@ namespace Jeebs.Data
 			}
 			catch (Exception e)
 			{
-				Log.Fatal(e, "Unable to connect to database {Name}", name);
+				throw new UnableToConnectToDatabaseException($"Unable to connect to database {name}.", e);
 			}
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(string query, object? parameters, CommandType type) =>
+		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			string query,
+			object? parameters,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
 			ReturnAsync(() =>
 				Connection.QueryAsync<TModel>(
 					sql: query,
 					param: parameters ?? new object(),
+					transaction: transaction,
 					commandType: type
 				),
 				e => new Msg.QueryExceptionMsg(e)
@@ -82,11 +96,17 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(string query, object? parameters, CommandType type) =>
+		public Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? parameters,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
 			ReturnAsync(() =>
 				Connection.QuerySingleOrDefaultAsync<TModel>(
 					sql: query,
 					param: parameters ?? new object(),
+					transaction: transaction,
 					commandType: type
 				),
 				e => new Msg.QuerySingleExceptionMsg(e)
@@ -97,11 +117,17 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type) =>
+		public Task<Option<bool>> ExecuteAsync(
+			string query,
+			object? parameters,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
 			ReturnAsync(() =>
 				Connection.ExecuteAsync(
 					sql: query,
 					param: parameters ?? new object(),
+					transaction: transaction,
 					commandType: type
 				),
 				e => new Msg.ExecuteExceptionMsg(e)
@@ -112,11 +138,17 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<TReturn>> ExecuteAsync<TReturn>(string query, object? parameters, CommandType type) =>
+		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
+			string query,
+			object? parameters,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
 			ReturnAsync(() =>
 				Connection.ExecuteScalarAsync<TReturn>(
 					sql: query,
 					param: parameters ?? new object(),
+					transaction: transaction,
 					commandType: type
 				),
 				e => new Msg.ExecuteScalarExceptionMsg(e)

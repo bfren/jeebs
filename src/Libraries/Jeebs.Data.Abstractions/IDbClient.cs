@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
@@ -28,7 +27,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TModel">Return model type</typeparam>
 		/// <param name="predicates">Predicates (matched using AND)</param>
-		Option<(string query, Dictionary<string, object> param)> GetRetrieveQuery<TEntity, TModel>(
+		Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
 			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		)
 			where TEntity : IEntity;

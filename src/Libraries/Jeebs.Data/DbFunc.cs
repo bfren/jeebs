@@ -55,6 +55,18 @@ namespace Jeebs.Data
 		#region Custom Queries
 
 		/// <inheritdoc/>
+		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+		) =>
+			Db.Client.GetQuery<TEntity, TModel>(predicates)
+			.AuditSwitch(
+				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text)
+			);
+
+		/// <inheritdoc/>
 		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		) =>
@@ -65,61 +77,49 @@ namespace Jeebs.Data
 				x => x.Single<TModel>()
 			);
 
-		/// <inheritdoc/>
-		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
-		) =>
-			Db.Client.GetRetrieveQuery<TEntity, TModel>(predicates)
-			.AuditSwitch(
-				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
-			)
-			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text)
-			);
-
 		#endregion
 
 		#region CRUD Queries
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TId>> CreateAsync(TEntity entity) =>
+		public virtual Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction? transaction = null) =>
 			Db.Client.GetCreateQuery<TEntity>()
 			.AuditSwitch(
 				some: x => LogFunc(nameof(CreateAsync), x, entity)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text)
+				x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text, transaction)
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id) =>
+		public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction? transaction = null) =>
 			Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 			.AuditSwitch(
 				some: x => LogFunc(nameof(RetrieveAsync), x, id)
 			)
 			.BindAsync(
-				x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text)
+				x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text, transaction)
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+		public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction? transaction = null)
 			where TModel : IWithId =>
 			Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 			.AuditSwitch(
 				some: x => LogFunc(nameof(UpdateAsync), x, model)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync(x, model, CommandType.Text)
+				x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<bool>> DeleteAsync(TId id) =>
+		public virtual Task<Option<bool>> DeleteAsync(TId id, IDbTransaction? transaction = null) =>
 			Db.Client.GetDeleteQuery<TEntity>(id.Value)
 			.AuditSwitch(
 				some: x => LogFunc(nameof(DeleteAsync), x, id)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync(x, null, CommandType.Text)
+				x => Db.ExecuteAsync(x, null, CommandType.Text, transaction)
 			);
 
 		#endregion

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
@@ -21,20 +22,20 @@ namespace Jeebs.Data
 		#region Custom Queries
 
 		/// <summary>
-		/// Retrieve a single item matching all <paramref name="predicates"/>
-		/// </summary>
-		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="predicates">Predicates (matched using AND)</param>
-		Task<Option<TModel>> QuerySingleAsync<TModel>(
-			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
-		);
-
-		/// <summary>
 		/// Retrieve items matching all <paramref name="predicates"/>
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="predicates">Predicates (matched using AND)</param>
 		Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+		);
+
+		/// <summary>
+		/// Retrieve a single item matching all <paramref name="predicates"/>
+		/// </summary>
+		/// <typeparam name="TModel">Model type</typeparam>
+		/// <param name="predicates">Predicates (matched using AND)</param>
+		Task<Option<TModel>> QuerySingleAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		);
 
@@ -45,28 +46,33 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create an entity
 		/// </summary>
-		Task<Option<TId>> CreateAsync(TEntity entity);
+		/// <param name="entity">Entity to create</param>
+		/// <param name="transaction">[Optional] Database transaction</param>
+		Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction? transaction = null);
 
 		/// <summary>
 		/// Retrieve an entity
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="id">Entity ID</param>
-		Task<Option<TModel>> RetrieveAsync<TModel>(TId id);
+		/// <param name="transaction">[Optional] Database transaction</param>
+		Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction? transaction = null);
 
 		/// <summary>
 		/// Update an entity with the values in <paramref name="model"/>
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="model">Model with updated values</param>
-		Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+		/// <param name="transaction">[Optional] Database transaction</param>
+		Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction? transaction = null)
 			where TModel : IWithId;
 
 		/// <summary>
 		/// Delete an entity
 		/// </summary>
 		/// <param name="id">Entity ID</param>
-		Task<Option<bool>> DeleteAsync(TId id);
+		/// <param name="transaction">[Optional] Database transaction</param>
+		Task<Option<bool>> DeleteAsync(TId id, IDbTransaction? transaction = null);
 
 		#endregion
 	}

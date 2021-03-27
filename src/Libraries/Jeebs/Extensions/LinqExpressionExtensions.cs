@@ -18,10 +18,29 @@ namespace Jeebs.Linq
 		/// <typeparam name="TObject">Object type</typeparam>
 		/// <typeparam name="TProperty">Property type</typeparam>
 		/// <param name="this">Expression to get property</param>
-		public static PropertyInfo<TObject, TProperty> GetPropertyInfo<TObject, TProperty>(this Expression<Func<TObject, TProperty>> @this)
+		public static PropertyInfo<TObject, TProperty>? GetPropertyInfo<TObject, TProperty>(this Expression<Func<TObject, TProperty>> @this)
 		{
-			var body = (MemberExpression)@this.Body;
-			return new PropertyInfo<TObject, TProperty>((PropertyInfo)body.Member);
+			// Sometimes the body may be a UnaryExpression
+			var body = @this.Body switch
+			{
+				MemberExpression member =>
+					member,
+
+				UnaryExpression unary =>
+					(MemberExpression)unary.Operand,
+
+				_ =>
+					null
+			};
+
+			// Create if not null
+			if (body is not null)
+			{
+				var info = (PropertyInfo)body.Member;
+				return new PropertyInfo<TObject, TProperty>(info);
+			}
+
+			return null;
 		}
 	}
 }

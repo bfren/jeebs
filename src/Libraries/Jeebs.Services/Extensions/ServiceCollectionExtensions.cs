@@ -38,7 +38,7 @@ namespace Jeebs.Services
 				}
 
 				// Add as a listener
-				if (typeof(INotificationListener).IsAssignableFrom(t))
+				if (t.Implements<INotificationListener>())
 				{
 					@this.AddTransient(typeof(INotificationListener), t);
 					foundListeners = true;

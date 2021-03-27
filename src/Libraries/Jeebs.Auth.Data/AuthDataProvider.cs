@@ -16,7 +16,6 @@ namespace Jeebs.Auth
 	public interface IAuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity>
 	{ }
 
-
 	/// <inheritdoc cref="IAuthDataProvider{TUserEntity, TRoleEntity, TUserRoleEntity}"/>
 	public sealed class AuthDataProvider : IAuthDataProvider
 	{

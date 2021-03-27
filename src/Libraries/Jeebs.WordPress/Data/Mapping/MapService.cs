@@ -71,7 +71,7 @@ namespace Jeebs.Data.Mapping
 				var map = new TableMap(table.ToString(), columns, idProperty);
 
 				// Get Version property
-				if (typeof(IEntityWithVersion).IsAssignableFrom(typeof(TEntity)))
+				if (typeof(TEntity).Implements<IEntityWithVersion>())
 				{
 					map.VersionColumn = GetColumnWithAttribute<TEntity, VersionAttribute>(columns);
 				}

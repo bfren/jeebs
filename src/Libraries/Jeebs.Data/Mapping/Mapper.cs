@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jeebs.Data.Mapping.Exceptions;
+using Jeebs.Data.Exceptions;
 using static F.OptionF;
 
 namespace Jeebs.Data

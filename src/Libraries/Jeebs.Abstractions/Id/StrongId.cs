@@ -3,13 +3,11 @@
 
 namespace Jeebs
 {
-	/// <summary>
-	/// Strongly Typed ID record type
-	/// </summary>
+	/// <inheritdoc cref="IStrongId"/>
 	/// <param name="Value">ID Value</param>
 	public abstract record StrongId(long Value) : IStrongId
 	{
-		/// <inheritdoc cref="IStrongId.IsDefault"/>
+		/// <inheritdoc/>
 		public bool IsDefault =>
 			Value == 0;
 

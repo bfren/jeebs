@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Jeebs.Data.Mapping.Exceptions
+namespace Jeebs.Data.Exceptions
 {
 	/// <summary>
 	/// See <see cref="Mapper.Map{TEntity}(ITable)"/>
