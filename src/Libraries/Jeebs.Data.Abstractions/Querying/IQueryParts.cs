@@ -14,51 +14,51 @@ namespace Jeebs.Data
 		/// <summary>
 		/// From table
 		/// </summary>
-		ITable From { get; }
+		ITable From { get; init; }
 
 		/// <summary>
-		/// Select columns (if null will select all columns)
+		/// Select columns (if empty will select all columns)
 		/// </summary>
-		List<IColumn> Select { get; }
+		List<IColumn> Select { get; init; }
 
 		/// <summary>
 		/// Inner Joins
 		/// </summary>
-		List<(IColumn on, IColumn equals)> InnerJoin { get; }
+		List<(IColumn on, IColumn equals)> InnerJoin { get; init; }
 
 		/// <summary>
 		/// Left Joins
 		/// </summary>
-		List<(IColumn on, IColumn equals)> LeftJoin { get; }
+		List<(IColumn on, IColumn equals)> LeftJoin { get; init; }
 
 		/// <summary>
 		/// Right Joins
 		/// </summary>
-		List<(IColumn on, IColumn equals)> RightJoin { get; }
+		List<(IColumn on, IColumn equals)> RightJoin { get; init; }
 
 		/// <summary>
 		/// Where Predicates
 		/// </summary>
-		List<(IColumn column, SearchOperator op, object value)> Where { get; }
+		List<(IColumn column, SearchOperator op, object value)> Where { get; init; }
 
 		/// <summary>
 		/// Query Parameters
 		/// </summary>
-		IQueryParameters Parameters { get; }
+		IQueryParameters Parameters { get; init; }
 
 		/// <summary>
 		/// Order By columns
 		/// </summary>
-		List<(IColumn column, SortOrder order)> OrderBy { get; }
+		List<(IColumn column, SortOrder order)> OrderBy { get; init; }
 
 		/// <summary>
-		/// Maximum number of results to return
+		/// Maximum number of results to return (if null will select all rows)
 		/// </summary>
-		long Maximum { get; }
+		long? Maximum { get; init; }
 
 		/// <summary>
 		/// The number of results to skip
 		/// </summary>
-		long Skip { get; }
+		long Skip { get; init; }
 	}
 }

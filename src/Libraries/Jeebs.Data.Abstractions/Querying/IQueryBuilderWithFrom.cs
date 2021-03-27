@@ -23,9 +23,8 @@ namespace Jeebs.Data
 		/// <param name="equals">Join to this table and column</param>
 		IQueryBuilderWithFrom Join<TFrom, TTo>(
 			QueryJoin join,
-			TFrom table,
 			Expression<Func<TFrom, string>> on,
-			(TTo table, Expression<Func<TTo, string>> column) equals
+			Expression<Func<TTo, string>> equals
 		)
 			where TFrom : ITable, new()
 			where TTo : ITable, new();
@@ -67,11 +66,5 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="skip">The number of results to skip</param>
 		IQueryBuilderWithFrom Skip(long skip);
-
-		/// <summary>
-		/// Select columns matching the specified model from the tables added by From and Join
-		/// </summary>
-		/// <typeparam name="TModel">Model type</typeparam>
-		Option<IQueryBuilderWithSelect> Select<TModel>();
 	}
 }

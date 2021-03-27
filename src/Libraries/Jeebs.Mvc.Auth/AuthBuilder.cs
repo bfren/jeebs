@@ -71,7 +71,10 @@ namespace Jeebs.Mvc.Auth
 			// Add AuthDb
 			services.AddSingleton<AuthDb>();
 			services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
-			services.AddScoped<IAuthDbClient, TDbClient>();
+			services.AddSingleton<IAuthDbClient, TDbClient>();
+
+			services.AddScoped<AuthDbQuery>();
+			services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
 
 			// Add AuthFunc
 			services.AddScoped<AuthUserFunc>();

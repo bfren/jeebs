@@ -23,7 +23,7 @@ namespace Jeebs.Data
 		IDbTransaction StartTransaction { get; }
 
 		/// <summary>
-		/// Run a query and return multiple models
+		/// Run a query and return multiple items
 		/// </summary>
 		/// <typeparam name="TModel">Return value type</typeparam>
 		/// <param name="query">Query text</param>
@@ -38,7 +38,7 @@ namespace Jeebs.Data
 		);
 
 		/// <summary>
-		/// Run a query and return a single model
+		/// Run a query and return a single item
 		/// </summary>
 		/// <typeparam name="TModel">Return value type</typeparam>
 		/// <param name="query">Query text</param>

@@ -3,6 +3,7 @@
 
 using System;
 using Jeebs.Config;
+using Jeebs.Data.Exceptions;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
@@ -43,25 +44,6 @@ namespace Jeebs.Data.Db_Tests
 
 			// Assert
 			client.Received().Connect(value);
-		}
-
-		[Fact]
-		public void Logs_Failure_To_Connect_To_Database()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
-			var config = new DbConnectionConfig { ConnectionString = value };
-			var log = Substitute.For<ILog>();
-			var client = Substitute.For<IDbClient>();
-			var exception = new Exception(F.Rnd.Str);
-			client.Connect(value).Throws(exception);
-			var name = F.Rnd.Str;
-
-			// Act
-			Substitute.ForPartsOf<Db>(config, log, client, name);
-
-			// Assert
-			log.Received().Fatal(exception, "Unable to connect to database {Name}", name);
 		}
 	}
 }

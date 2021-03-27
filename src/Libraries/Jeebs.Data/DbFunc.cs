@@ -11,16 +11,35 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IDbFunc{TEntity, TId}"/>
-	public abstract class DbFunc<TEntity, TId> : DbQuery, IDbFunc<TEntity, TId>
+	public abstract class DbFunc<TEntity, TId> : IDbFunc<TEntity, TId>
 		where TEntity : IEntity
 		where TId : StrongId
 	{
+		/// <summary>
+		/// IDb
+		/// </summary>
+		protected IDb Db { get; private init; }
+
+		/// <summary>
+		/// ILog (should be given a context of the implementing class)
+		/// </summary>
+		protected ILog Log { get; private init; }
+
 		/// <summary>
 		/// Inject database and log objects
 		/// </summary>
 		/// <param name="db">IDb</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		protected DbFunc(IDb db, ILog log) : base(db, log) { }
+		protected DbFunc(IDb db, ILog log) =>
+			(Db, Log) = (db, log);
+
+		/// <summary>
+		/// Use Debug log by default - override to send elsewhere (or to disable entirely)
+		/// </summary>
+		/// <param name="message">Log message</param>
+		/// <param name="args">Log message arguments</param>
+		internal virtual void WriteToLog(string message, object[] args) =>
+			Log.Debug(message, args);
 
 		/// <summary>
 		/// Log the query for a function

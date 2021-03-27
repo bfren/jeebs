@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>Jeebs</RootNamespace>
   </PropertyGroup>
-	<!-- Enable Internal Testing -->
+	<!-- Make internals visible to all Test projects -->
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>Tests.*</_Parameter1>

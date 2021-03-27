@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Jeebs.Data.Querying;
 using static F.OptionF;
 
 namespace Jeebs.Data
@@ -14,12 +15,12 @@ namespace Jeebs.Data
 		/// <summary>
 		/// IDb
 		/// </summary>
-		protected IDb Db { get; }
+		private IDb Db { get; init; }
 
 		/// <summary>
 		/// ILog (should be given a context of the implementing class)
 		/// </summary>
-		protected ILog Log { get; }
+		private ILog Log { get; init; }
 
 		/// <summary>
 		/// Inject database and log objects
@@ -43,7 +44,6 @@ namespace Jeebs.Data
 		/// <param name="method">Method name</param>
 		/// <param name="query">Query text</param>
 		/// <param name="parameters">[Optional] Query parameters</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
 		protected void LogQuery(string method, string query, object? parameters)
 		{
 			// Always log operation, entity, and query
@@ -62,12 +62,23 @@ namespace Jeebs.Data
 			}
 		}
 
-		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(string query, object? param) =>
-			QueryAsync<TModel>(query, param, CommandType.Text);
+		#region Query - Text
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(string query, object? param, CommandType commandType) =>
+		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		) =>
+			QueryAsync<TModel>(query, param, CommandType.Text, transaction);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			string query,
+			object? param,
+			CommandType commandType,
+			IDbTransaction? transaction = null
+		) =>
 			Return(
 				(query, param)
 			)
@@ -75,15 +86,24 @@ namespace Jeebs.Data
 				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
 			)
 			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, commandType)
+				x => Db.QueryAsync<TModel>(x.query, x.param, commandType, transaction)
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(string query, object? param) =>
-			QuerySingleAsync<TModel>(query, param, CommandType.Text);
+		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		) =>
+			QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(string query, object? param, CommandType commandType) =>
+		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? param,
+			CommandType commandType,
+			IDbTransaction? transaction = null
+		) =>
 			Return(
 				(query, param)
 			)
@@ -91,8 +111,78 @@ namespace Jeebs.Data
 				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
 			)
 			.BindAsync(
-				x => Db.QuerySingleAsync<TModel>(x.query, x.param, commandType)
+				x => Db.QuerySingleAsync<TModel>(x.query, x.param, commandType, transaction)
 			);
+
+		#endregion
+
+		#region Query - Parts
+
+		/// <inheritdoc/>
+		public virtual Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
+			long page,
+			IQueryParts parts,
+			IDbTransaction? transaction = null
+		) =>
+			Db.Client.GetCountQuery(
+				parts
+			)
+			.BindAsync(
+				x => Db.ExecuteAsync<long>(x.query, x.param, CommandType.Text, transaction)
+			)
+			.MapAsync(
+				x => new PagingValues(x, page, parts.Maximum ?? Defaults.PagingValues.ItemsPer),
+				DefaultHandler
+			)
+			.BindAsync(
+				pagingValues => Db.Client
+					.GetQuery(
+						(QueryParts)parts with
+						{
+							Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
+							Maximum = pagingValues.ItemsPer
+						}
+					)
+					.BindAsync(
+						x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+					)
+					.MapAsync(
+						x => (IPagedList<TModel>)new PagedList<TModel>(pagingValues, x),
+						DefaultHandler
+					)
+			);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+			IQueryParts parts,
+			IDbTransaction? transaction = null
+		) =>
+			Db.Client.GetQuery(
+				parts
+			)
+			.AuditSwitch(
+				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+			);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+			IQueryParts parts,
+			IDbTransaction? transaction = null
+		) =>
+			Db.Client.GetQuery(
+				parts
+			)
+			.AuditSwitch(
+				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.QuerySingleAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+			);
+
+		#endregion
 
 		#region Testing
 

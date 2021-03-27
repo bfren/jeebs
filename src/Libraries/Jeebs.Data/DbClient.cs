@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Exceptions;
+using Jeebs.Data.Querying;
 using Jeebs.Linq;
 
 namespace Jeebs.Data
@@ -90,6 +92,13 @@ namespace Jeebs.Data
 				x => GetQuery(x.map.Name, x.sel, x.whr),
 				e => new Msg.ErrorGettingGeneralRetrieveQueryExceptionMsg(e)
 			);
+
+		/// <inheritdoc/>
+		public Option<(string query, IQueryParameters param)> GetCountQuery(IQueryParts parts) =>
+			GetQuery((QueryParts)parts with { Select = new() });
+
+		/// <inheritdoc/>
+		public abstract Option<(string query, IQueryParameters param)> GetQuery(IQueryParts parts);
 
 		/// <summary>
 		/// Convert LINQ expression property selectors to column names

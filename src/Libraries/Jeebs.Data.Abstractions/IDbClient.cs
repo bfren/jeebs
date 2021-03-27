@@ -32,6 +32,16 @@ namespace Jeebs.Data
 		)
 			where TEntity : IEntity;
 
+		/// <summary>
+		/// Return a query to retrieve how many entities match the specified query parts
+		/// </summary>
+		Option<(string query, IQueryParameters param)> GetCountQuery(IQueryParts parts);
+
+		/// <summary>
+		/// Return a query to retrieve a list of entities using the specified query parts
+		/// </summary>
+		Option<(string query, IQueryParameters param)> GetQuery(IQueryParts parts);
+
 		#endregion
 
 		#region CRUD Queries
