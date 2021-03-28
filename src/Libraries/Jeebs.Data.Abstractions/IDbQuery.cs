@@ -12,7 +12,7 @@ namespace Jeebs.Data
 	/// </summary>
 	public interface IDbQuery
 	{
-		#region Query - Text
+		#region QueryAsync
 
 		/// <inheritdoc cref="IDb.QueryAsync{TModel}(string, object?, CommandType, IDbTransaction?)"/>
 		Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
@@ -28,25 +28,6 @@ namespace Jeebs.Data
 			object? param,
 			IDbTransaction? transaction = null
 		);
-
-		/// <inheritdoc cref="IDb.QuerySingleAsync{TModel}(string, object?, CommandType, IDbTransaction?)"/>
-		Task<Option<TModel>> QuerySingleAsync<TModel>(
-			string query,
-			object? param,
-			CommandType type,
-			IDbTransaction? transaction = null
-		);
-
-		/// <inheritdoc cref="IDb.QuerySingleAsync{TModel}(string, object?, CommandType, IDbTransaction?)"/>
-		Task<Option<TModel>> QuerySingleAsync<TModel>(
-			string query,
-			object? param,
-			IDbTransaction? transaction = null
-		);
-
-		#endregion
-
-		#region Query - Parts
 
 		/// <summary>
 		/// Build a query from <see cref="IQueryParts"/> and return multiple items
@@ -67,14 +48,62 @@ namespace Jeebs.Data
 			IDbTransaction? transaction = null
 		);
 
-		/// <summary>
-		/// Build a query from <see cref="IQueryParts"/> and return a single item
-		/// </summary>
-		/// <typeparam name="TModel">Return value type</typeparam>
-		/// <param name="parts">Query parts</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
+		#endregion
+
+		#region QuerySingleAsync
+
+		/// <inheritdoc cref="IDb.QuerySingleAsync{TModel}(string, object?, CommandType, IDbTransaction?)"/>
+		Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? param,
+			CommandType type,
+			IDbTransaction? transaction = null
+		);
+
+		/// <inheritdoc cref="IDb.QuerySingleAsync{TModel}(string, object?, CommandType, IDbTransaction?)"/>
+		Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		);
+
+		/// <inheritdoc cref="QuerySingleAsync{TModel}(IQueryParts, CommandType, IDbTransaction?)"/>
 		Task<Option<TModel>> QuerySingleAsync<TModel>(
 			IQueryParts parts,
+			IDbTransaction? transaction = null
+		);
+
+		#endregion
+
+		#region ExecuteAsync
+
+		/// <inheritdoc cref="IDb.ExecuteAsync(string, object?, CommandType, IDbTransaction?)"/>
+		Task<Option<bool>> ExecuteAsync(
+			string query,
+			object? param,
+			CommandType type,
+			IDbTransaction? transaction = null
+		);
+
+		/// <inheritdoc cref="IDb.ExecuteAsync(string, object?, CommandType, IDbTransaction?)"/>
+		Task<Option<bool>> ExecuteAsync(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		);
+
+		/// <inheritdoc cref="IDb.ExecuteAsync{TReturn}(string, object?, CommandType, IDbTransaction?)"/>
+		Task<Option<TReturn>> ExecuteAsync<TReturn>(
+			string query,
+			object? param,
+			CommandType type,
+			IDbTransaction? transaction = null
+		);
+
+		/// <inheritdoc cref="IDb.ExecuteAsync{TReturn}(string, object?, CommandType, IDbTransaction?)"/>
+		Task<Option<TReturn>> ExecuteAsync<TReturn>(
+			string query,
+			object? param,
 			IDbTransaction? transaction = null
 		);
 

@@ -15,12 +15,18 @@ namespace Jeebs.Data
 		/// <summary>
 		/// IDb
 		/// </summary>
-		private IDb Db { get; init; }
+		protected IDb Db { get; private init; }
+
+		internal IDb DbTest =>
+			Db;
 
 		/// <summary>
 		/// ILog (should be given a context of the implementing class)
 		/// </summary>
-		private ILog Log { get; init; }
+		protected ILog Log { get; private init; }
+
+		internal ILog LogTest =>
+			Log;
 
 		/// <summary>
 		/// Inject database and log objects
@@ -29,6 +35,8 @@ namespace Jeebs.Data
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
 		protected DbQuery(IDb db, ILog log) =>
 			(Db, Log) = (db, log);
+
+		#region Logging
 
 		/// <summary>
 		/// Use Debug log by default - override to send elsewhere (or to disable entirely)
@@ -62,21 +70,15 @@ namespace Jeebs.Data
 			}
 		}
 
-		#region Query - Text
+		#endregion
+
+		#region QueryAsync
 
 		/// <inheritdoc/>
 		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			string query,
 			object? param,
-			IDbTransaction? transaction = null
-		) =>
-			QueryAsync<TModel>(query, param, CommandType.Text, transaction);
-
-		/// <inheritdoc/>
-		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			string query,
-			object? param,
-			CommandType commandType,
+			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
 			Return(
@@ -86,37 +88,16 @@ namespace Jeebs.Data
 				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
 			)
 			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, commandType, transaction)
+				x => Db.QueryAsync<TModel>(x.query, x.param, type, transaction)
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			string query,
 			object? param,
 			IDbTransaction? transaction = null
 		) =>
-			QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
-
-		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
-			string query,
-			object? param,
-			CommandType commandType,
-			IDbTransaction? transaction = null
-		) =>
-			Return(
-				(query, param)
-			)
-			.Audit(
-				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
-			)
-			.BindAsync(
-				x => Db.QuerySingleAsync<TModel>(x.query, x.param, commandType, transaction)
-			);
-
-		#endregion
-
-		#region Query - Parts
+			QueryAsync<TModel>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
 		public virtual Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
@@ -137,11 +118,14 @@ namespace Jeebs.Data
 			.BindAsync(
 				pagingValues => Db.Client
 					.GetQuery(
-						(QueryParts)parts with
+						new QueryParts(parts) with
 						{
 							Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
 							Maximum = pagingValues.ItemsPer
 						}
+					)
+					.Audit(
+						some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
 					)
 					.BindAsync(
 						x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
@@ -167,6 +151,35 @@ namespace Jeebs.Data
 				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
 			);
 
+		#endregion
+
+		#region QuerySingleAsync
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? param,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
+			Return(
+				(query, param)
+			)
+			.Audit(
+				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.QuerySingleAsync<TModel>(x.query, x.param, type, transaction)
+			);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		) =>
+			QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
+
 		/// <inheritdoc/>
 		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
 			IQueryParts parts,
@@ -176,11 +189,65 @@ namespace Jeebs.Data
 				parts
 			)
 			.Audit(
-				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
+				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
 			)
 			.BindAsync(
 				x => Db.QuerySingleAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
 			);
+
+		#endregion
+
+		#region ExecuteAsync
+
+		/// <inheritdoc/>
+		public virtual Task<Option<bool>> ExecuteAsync(
+			string query,
+			object? param,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
+			Return(
+				(query, param)
+			)
+			.Audit(
+				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.ExecuteAsync(x.query, x.param, type, transaction)
+			);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<bool>> ExecuteAsync(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		) =>
+			ExecuteAsync(query, param, CommandType.Text, transaction);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TReturn>> ExecuteAsync<TReturn>(
+			string query,
+			object? param,
+			CommandType type,
+			IDbTransaction? transaction = null
+		) =>
+			Return(
+				(query, param)
+			)
+			.Audit(
+				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
+			)
+			.BindAsync(
+				x => Db.ExecuteAsync<TReturn>(x.query, x.param, type, transaction)
+			);
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TReturn>> ExecuteAsync<TReturn>(
+			string query,
+			object? param,
+			IDbTransaction? transaction = null
+		) =>
+			ExecuteAsync<TReturn>(query, param, CommandType.Text, transaction);
 
 		#endregion
 

@@ -35,5 +35,22 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public long Skip { get; init; }
+
+		/// <summary>
+		/// Create from interface
+		/// </summary>
+		/// <param name="parts">IQueryParts</param>
+		public QueryParts(IQueryParts parts) : this(parts.From)
+		{
+			Select = parts.Select;
+			InnerJoin = parts.InnerJoin;
+			LeftJoin = parts.LeftJoin;
+			RightJoin = parts.RightJoin;
+			Where = parts.Where;
+			Parameters = parts.Parameters;
+			OrderBy = parts.OrderBy;
+			Maximum = parts.Maximum;
+			Skip = parts.Skip;
+		}
 	}
 }

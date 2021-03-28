@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbQuery_Tests
+namespace Jeebs.Data.DbFunc_Tests
 {
 	public class WriteToLog_Tests
 	{
@@ -12,12 +12,12 @@ namespace Jeebs.Data.DbQuery_Tests
 		public void Sends_Message_And_Args_To_Debug_Log()
 		{
 			// Arrange
-			var (_, _, log, query) = DbQuery_Setup.Get();
+			var (_, log, func) = DbFunc_Setup.Get();
 			var message = F.Rnd.Str;
 			var args = new object[] { F.Rnd.Int, F.Rnd.Int };
 
 			// Act
-			query.WriteToLogTest(message, args);
+			func.WriteToLogTest(message, args);
 
 			// Assert
 			log.Received().Debug(message, args);

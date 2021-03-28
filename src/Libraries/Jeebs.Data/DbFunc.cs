@@ -148,5 +148,12 @@ namespace Jeebs.Data
 			);
 
 		#endregion
+
+		#region Testing
+
+		internal void WriteToLogTest(string message, object[] args) =>
+			WriteToLog(message, args);
+
+		#endregion
 	}
 }
