@@ -67,7 +67,7 @@ namespace Jeebs.WordPress.Data.Mapping
 				() => w.Adapter.CreateSingleAndReturnId<T>(),
 				e => new Msg.GetInsertQueryExceptionMsg<T>(nameof(InsertAndReturnId), e)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => w.Log.Message(new Msg.AuditCreateQueryMsg<T>(nameof(InsertAndReturnId), x, entity))
 			)
 			.Bind(
@@ -86,7 +86,7 @@ namespace Jeebs.WordPress.Data.Mapping
 				() => w.Adapter.CreateSingleAndReturnId<T>(),
 				e => new Msg.GetInsertQueryExceptionMsg<T>(nameof(InsertAndReturnIdAsync), e)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => w.Log.Message(new Msg.AuditCreateQueryMsg<T>(nameof(InsertAndReturnIdAsync), x, entity))
 			)
 			.BindAsync(

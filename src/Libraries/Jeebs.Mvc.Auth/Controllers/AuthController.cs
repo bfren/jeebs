@@ -78,7 +78,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 
 				// Update last sign in
 				var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
-				updated.AuditSwitch(none: r => Log.Message(r));
+				updated.Audit(none: r => Log.Message(r));
 
 				// Add SignIn to HttpContext using Cookie scheme
 				await HttpContext.SignInAsync(

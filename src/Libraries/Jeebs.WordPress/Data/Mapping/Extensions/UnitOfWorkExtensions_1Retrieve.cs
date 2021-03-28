@@ -55,7 +55,7 @@ namespace Jeebs.WordPress.Data.Mapping
 				() => w.Adapter.RetrieveSingleById<T>(),
 				e => new Msg.GetRetrieveQueryExceptionMsg<T>(method, id, e)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => w.Log.Message(new Msg.AuditRetrieveQueryMsg<T>(method, x, new { id }))
 			)
 			.MapAsync(

@@ -173,37 +173,37 @@ namespace Jeebs
 
 		#region Audit
 
-		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}})"/>
-		public Option<T> Audit(Action<Option<T>> audit) =>
-			F.OptionF.Audit(this, audit);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<Option<T>> any) =>
+			F.OptionF.Audit(this, any, null, null);
 
-		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task})"/>
-		public Task<Option<T>> AuditAsync(Func<Option<T>, Task> audit) =>
-			F.OptionF.AuditAsync(this, audit);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<T> some) =>
+			F.OptionF.Audit(this, null, some, null);
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
-		public Option<T> AuditSwitch(Action<T> some) =>
-			F.OptionF.AuditSwitch(this, some, null);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<IMsg> none) =>
+			F.OptionF.Audit(this, null, null, none);
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
-		public Option<T> AuditSwitch(Action<IMsg> none) =>
-			F.OptionF.AuditSwitch(this, null, none);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<T> some, Action<IMsg> none) =>
+			F.OptionF.Audit(this, null, some, none);
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
-		public Option<T> AuditSwitch(Action<T> some, Action<IMsg> none) =>
-			F.OptionF.AuditSwitch(this, some, none);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<Option<T>, Task> any) =>
+			F.OptionF.AuditAsync(this, any, null, null);
 
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some) =>
-			F.OptionF.AuditSwitchAsync(this, some: some, none: null);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<T, Task> some) =>
+			F.OptionF.AuditAsync(this, null, some, null);
 
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<IMsg, Task> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: null, none: none);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<IMsg, Task> none) =>
+			F.OptionF.AuditAsync(this, null, null, none);
 
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some, Func<IMsg, Task> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: some, none: none);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<T, Task> some, Func<IMsg, Task> none) =>
+			F.OptionF.AuditAsync(this, null, some, none);
 
 		#endregion
 

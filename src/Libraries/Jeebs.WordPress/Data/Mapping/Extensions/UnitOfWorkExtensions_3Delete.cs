@@ -56,7 +56,7 @@ namespace Jeebs.WordPress.Data.Mapping
 				() => w.Adapter.DeleteSingle<T>(),
 				e => new Msg.GetDeleteQueryExceptionMsg<T>(method, entity.Id, e)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => w.Log.Message(new Msg.AuditDeleteQueryMsg<T>(method, x, entity))
 			)
 			.MapAsync(

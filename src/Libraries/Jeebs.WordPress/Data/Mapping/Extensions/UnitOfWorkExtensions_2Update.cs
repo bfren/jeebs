@@ -41,7 +41,7 @@ namespace Jeebs.WordPress.Data.Mapping
 				() => w.Adapter.UpdateSingle<T>(),
 				e => new Msg.GetUpdateQueryExceptionMsg<T>(nameof(UpdateWithVersion), entity.Id, e)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x =>
 				{
 					entity.Version++;
@@ -74,7 +74,7 @@ namespace Jeebs.WordPress.Data.Mapping
 				() => w.Adapter.UpdateSingle<T>(),
 				e => new Msg.GetUpdateQueryExceptionMsg<T>(nameof(UpdateWithoutVersion), entity.Id, e)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => w.Log.Message(new Msg.AuditUpdateQueryMsg<T>(nameof(UpdateWithoutVersion), x, entity))
 			)
 			.Bind(

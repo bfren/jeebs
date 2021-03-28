@@ -50,7 +50,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args,
 					 from r2 in three(r1)
 					 select r2;
 
-		(await result).AuditSwitch(
+		(await result).Audit(
 			some: x => log.Information("Result: {0}", x),
 			none: _ => log.Information("No result")
 		);
