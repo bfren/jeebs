@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO.Pipes;
 using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
@@ -17,6 +18,26 @@ namespace Jeebs.Data
 	/// <inheritdoc cref="IDbClient"/>
 	public abstract class DbClient : IDbClient
 	{
+		/// <summary>
+		/// IMapper
+		/// </summary>
+		protected IMapper Mapper { get; private init; }
+
+		internal IMapper MapperTest =>
+			Mapper;
+
+		/// <summary>
+		/// Create using default Mapper instance
+		/// </summary>
+		protected DbClient() : this(Data.Mapper.Instance) { }
+
+		/// <summary>
+		/// Inject a Mapper instance
+		/// </summary>
+		/// <param name="mapper">IMapper</param>
+		protected DbClient(IMapper mapper) =>
+			Mapper = mapper;
+
 		/// <inheritdoc/>
 		public abstract IDbConnection Connect(string connectionString);
 
@@ -54,6 +75,12 @@ namespace Jeebs.Data
 		protected abstract string GetOperator(SearchOperator op);
 
 		/// <summary>
+		/// Get a parameter reference - e.g. 'P2' becomes '@P2' for MySQL
+		/// </summary>
+		/// <param name="param">Param name</param>
+		protected abstract string GetParamRef(string paramName);
+
+		/// <summary>
 		/// Join a list of columns or parameters to be used in a query, e.g. to (@P0,@P1,@P2)
 		/// </summary>
 		/// <param name="objects">Objects to join</param>
@@ -82,7 +109,7 @@ namespace Jeebs.Data
 		)
 			where TEntity : IEntity =>
 			(
-				from map in Mapper.Instance.GetTableMapFor<TEntity>()
+				from map in Mapper.GetTableMapFor<TEntity>()
 				from sel in Extract<TModel>.From(map.Table)
 				from whr in GetPredicates(map.Columns, predicates)
 				select (map, sel, whr)
@@ -175,13 +202,13 @@ namespace Jeebs.Data
 					var paramName = $"P{index++}";
 					param.Add(paramName, value);
 
-					where.Add($"{escapedColumn} {GetOperator(op)} @{paramName}");
+					where.Add($"{escapedColumn} {GetOperator(op)} {GetParamRef(paramName)}");
 
 					continue;
 				}
 
 				// IN requires value to be a list of items
-				if (value is IList list)
+				if (value is IEnumerable list)
 				{
 					// Add a parameter for each value
 					var inParam = new List<string>();
@@ -190,7 +217,7 @@ namespace Jeebs.Data
 						var inParamName = $"P{index++}";
 
 						param.Add(inParamName, inValue);
-						inParam.Add(inParamName);
+						inParam.Add(GetParamRef(inParamName));
 					}
 
 					// If there are IN parameters, add to the query
@@ -212,7 +239,7 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public Option<string> GetCreateQuery<TEntity>()
 			where TEntity : IEntity =>
-			Mapper.Instance.GetTableMapFor<TEntity>().Map(
+			Mapper.GetTableMapFor<TEntity>().Map(
 				x => GetCreateQuery(x.Name, x.Columns),
 				e => new Msg.ErrorGettingCrudCreateQueryExceptionMsg(e)
 			);
@@ -229,12 +256,12 @@ namespace Jeebs.Data
 		public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
 			where TEntity : IEntity =>
 			(
-				from map in Mapper.Instance.GetTableMapFor<TEntity>()
-				from col in Extract<TModel>.From(map.Table)
-				select (map, col)
+				from map in Mapper.GetTableMapFor<TEntity>()
+				from columns in Extract<TModel>.From(map.Table)
+				select (map, columns)
 			)
 			.Map(
-				x => GetRetrieveQuery(x.map.Name, x.col, x.map.IdColumn, id),
+				x => GetRetrieveQuery(x.map.Name, x.columns, x.map.IdColumn, id),
 				e => new Msg.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 			);
 
@@ -254,18 +281,18 @@ namespace Jeebs.Data
 		public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
 			where TEntity : IEntity =>
 			(
-				from map in Mapper.Instance.GetTableMapFor<TEntity>()
-				from col in Extract<TModel>.From(map.Table)
-				select (map, col)
+				from map in Mapper.GetTableMapFor<TEntity>()
+				from columns in Extract<TModel>.From(map.Table)
+				select (map, columns)
 			)
 			.Map(
 				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
 				{
 					false =>
-						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn, id),
+						GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id),
 
 					true =>
-						GetUpdateQuery(x.map.Name, x.col, x.map.IdColumn, id, x.map.VersionColumn),
+						GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id, x.map.VersionColumn),
 
 				},
 				e => new Msg.ErrorGettingCrudUpdateQueryExceptionMsg(e)
@@ -296,7 +323,7 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public Option<string> GetDeleteQuery<TEntity>(long id)
 			where TEntity : IEntity =>
-			Mapper.Instance.GetTableMapFor<TEntity>().Map(
+			Mapper.GetTableMapFor<TEntity>().Map(
 				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
 				{
 					false =>
@@ -331,6 +358,12 @@ namespace Jeebs.Data
 		#endregion
 
 		#region Testing
+
+		internal (List<string> where, IQueryParameters param) GetWhereAndParametersTest(
+			List<(IColumn column, SearchOperator op, object value)> predicates,
+			bool includeTableName
+		) =>
+			GetWhereAndParameters(predicates, includeTableName);
 
 		internal (string query, IQueryParameters param) GetQueryTest(
 			string table,

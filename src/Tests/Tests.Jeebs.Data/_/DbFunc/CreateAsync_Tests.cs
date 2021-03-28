@@ -13,14 +13,28 @@ namespace Jeebs.Data.DbFunc_Tests
 		public async Task Calls_Client_GetCreateQuery()
 		{
 			// Arrange
-			var (client, crud) = DbFunc.Get();
-			var entity = new DbFunc.Foo { Id = new(F.Rnd.Int) };
+			var (client, _, func) = DbFunc_Setup.Get();
+			var entity = new DbFunc_Setup.Foo { Id = new(F.Rnd.Int) };
 
 			// Act
-			await crud.CreateAsync(entity);
+			await func.CreateAsync(entity);
 
 			// Assert
-			client.Received().GetCreateQuery<DbFunc.Foo>();
+			client.Received().GetCreateQuery<DbFunc_Setup.Foo>();
+		}
+
+		[Fact]
+		public async Task Logs_Query_To_Debug()
+		{
+			// Arrange
+			var (_, log, func) = DbFunc_Setup.Get();
+			var entity = new DbFunc_Setup.Foo { Id = new(F.Rnd.Int) };
+
+			// Act
+			await func.CreateAsync(entity);
+
+			// Assert
+			log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
 		}
 	}
 }

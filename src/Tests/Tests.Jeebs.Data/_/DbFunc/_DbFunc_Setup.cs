@@ -1,15 +1,21 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Linq.Expressions;
+using Jeebs.Data.Enums;
 using NSubstitute;
 
 namespace Jeebs.Data.DbFunc_Tests
 {
-	public static class DbFunc
+	public static class DbFunc_Setup
 	{
-		public static (IDbClient client, DbFunc<Foo, FooId> crud) Get()
+		public static (IDbClient client, ILog log, DbFunc<Foo, FooId> func) Get()
 		{
 			var client = Substitute.For<IDbClient>();
+			client
+				.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, SearchOperator, object)[]>())
+				.Returns((F.Rnd.Str, Substitute.For<IQueryParameters>()));
 			client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
 			client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
 			client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
@@ -20,9 +26,9 @@ namespace Jeebs.Data.DbFunc_Tests
 
 			var log = Substitute.For<ILog>();
 
-			var crud = Substitute.ForPartsOf<DbFunc<Foo, FooId>>(db, log);
+			var func = Substitute.ForPartsOf<DbFunc<Foo, FooId>>(db, log);
 
-			return (client, crud);
+			return (client, log, func);
 		}
 
 		public sealed record Foo : IEntity<FooId>

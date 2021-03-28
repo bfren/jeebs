@@ -13,15 +13,30 @@ namespace Jeebs.Data.DbFunc_Tests
 		public async Task Calls_Client_GetUpdateQuery()
 		{
 			// Arrange
-			var (client, crud) = DbFunc.Get();
+			var (client, _, func) = DbFunc_Setup.Get();
 			var value = F.Rnd.Lng;
-			var model = new DbFunc.FooModel { Id = new(value) };
+			var model = new DbFunc_Setup.FooModel { Id = new(value) };
 
 			// Act
-			await crud.UpdateAsync(model);
+			await func.UpdateAsync(model);
 
 			// Assert
-			client.Received().GetUpdateQuery<DbFunc.Foo, DbFunc.FooModel>(value);
+			client.Received().GetUpdateQuery<DbFunc_Setup.Foo, DbFunc_Setup.FooModel>(value);
+		}
+
+		[Fact]
+		public async Task Logs_Query_To_Debug()
+		{
+			// Arrange
+			var (_, log, func) = DbFunc_Setup.Get();
+			var value = F.Rnd.Lng;
+			var model = new DbFunc_Setup.FooModel { Id = new(value) };
+
+			// Act
+			await func.UpdateAsync(model);
+
+			// Assert
+			log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
 		}
 	}
 }

@@ -36,6 +36,10 @@ namespace Jeebs.Data.Clients.MySql
 			op.ToOperator();
 
 		/// <inheritdoc/>
+		protected override string GetParamRef(string paramName) =>
+			$"@{paramName}";
+
+		/// <inheritdoc/>
 		protected override string JoinList(List<string> objects, bool wrap)
 		{
 			var list = string.Join(", ", objects);

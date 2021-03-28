@@ -20,10 +20,16 @@ namespace Jeebs.Data
 		/// </summary>
 		protected IDb Db { get; private init; }
 
+		internal IDb DbTest =>
+			Db;
+
 		/// <summary>
 		/// ILog (should be given a context of the implementing class)
 		/// </summary>
 		protected ILog Log { get; private init; }
+
+		internal ILog LogTest =>
+			Log;
 
 		/// <summary>
 		/// Inject database and log objects
@@ -78,7 +84,7 @@ namespace Jeebs.Data
 			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		) =>
 			Db.Client.GetQuery<TEntity, TModel>(predicates)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
 			)
 			.BindAsync(
@@ -103,7 +109,7 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public virtual Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction? transaction = null) =>
 			Db.Client.GetCreateQuery<TEntity>()
-			.AuditSwitch(
+			.Audit(
 				some: x => LogFunc(nameof(CreateAsync), x, entity)
 			)
 			.BindAsync(
@@ -113,7 +119,7 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction? transaction = null) =>
 			Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogFunc(nameof(RetrieveAsync), x, id)
 			)
 			.BindAsync(
@@ -124,7 +130,7 @@ namespace Jeebs.Data
 		public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction? transaction = null)
 			where TModel : IWithId =>
 			Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogFunc(nameof(UpdateAsync), x, model)
 			)
 			.BindAsync(
@@ -134,7 +140,7 @@ namespace Jeebs.Data
 		/// <inheritdoc/>
 		public virtual Task<Option<bool>> DeleteAsync(TId id, IDbTransaction? transaction = null) =>
 			Db.Client.GetDeleteQuery<TEntity>(id.Value)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogFunc(nameof(DeleteAsync), x, id)
 			)
 			.BindAsync(

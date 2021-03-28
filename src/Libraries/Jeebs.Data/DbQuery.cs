@@ -82,7 +82,7 @@ namespace Jeebs.Data
 			Return(
 				(query, param)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
 			)
 			.BindAsync(
@@ -107,7 +107,7 @@ namespace Jeebs.Data
 			Return(
 				(query, param)
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
 			)
 			.BindAsync(
@@ -160,7 +160,7 @@ namespace Jeebs.Data
 			Db.Client.GetQuery(
 				parts
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
 			)
 			.BindAsync(
@@ -175,7 +175,7 @@ namespace Jeebs.Data
 			Db.Client.GetQuery(
 				parts
 			)
-			.AuditSwitch(
+			.Audit(
 				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
 			)
 			.BindAsync(

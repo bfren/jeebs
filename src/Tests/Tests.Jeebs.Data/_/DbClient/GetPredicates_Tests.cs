@@ -5,12 +5,13 @@ using System;
 using System.Collections;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Exceptions;
 using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.DbClient_Tests
 {
-	public class GetPredicate_Tests
+	public class GetPredicates_Tests
 	{
 		[Fact]
 		public void Ignores_Predicate_Property_Not_In_Column_List()
@@ -116,10 +117,22 @@ namespace Jeebs.Data.DbClient_Tests
 		public void If_SearchOperator_In_And_Value_Not_List_Throws_InvalidQueryPredicateException()
 		{
 			// Arrange
+			var table = F.Rnd.Str;
+			var columns = new MappedColumnList
+			{
+				{ new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!) }
+			};
+			var value = F.Rnd.Str;
+			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			{
+				(e => e.Foo, SearchOperator.In, value)
+			};
 
 			// Act
+			void action() => DbClient.GetPredicates(columns, predicates).UnsafeUnwrap();
 
 			// Assert
+			Assert.Throws<InvalidQueryPredicateException>(action);
 		}
 
 		public sealed record TestId(long Value) : StrongId(Value);

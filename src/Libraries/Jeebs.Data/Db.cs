@@ -74,6 +74,15 @@ namespace Jeebs.Data
 			}
 		}
 
+		/// <summary>
+		/// Write all queries to the Verbose log
+		/// </summary>
+		/// <param name="query">Query text</param>
+		/// <param name="parameters">Query parameters</param>
+		/// <param name="type">Query type</param>
+		private void LogVerbose(string query, object parameters, CommandType type) =>
+			Log.Verbose("{Query} ({Type}) {@Parameters}", query, type, parameters);
+
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			string query,
@@ -81,13 +90,14 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			ReturnAsync(() =>
-				Connection.QueryAsync<TModel>(
-					sql: query,
-					param: parameters ?? new object(),
-					transaction: transaction,
-					commandType: type
-				),
+			Return(
+				(query, parameters: parameters ?? new object(), type)
+			)
+			.Audit(
+				some: x => LogVerbose(x.query, x.parameters, x.type)
+			)
+			.MapAsync(
+				x => Connection.QueryAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.QueryExceptionMsg(e)
 			)
 			.SwitchIfAsync(
@@ -102,13 +112,14 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			ReturnAsync(() =>
-				Connection.QuerySingleOrDefaultAsync<TModel>(
-					sql: query,
-					param: parameters ?? new object(),
-					transaction: transaction,
-					commandType: type
-				),
+			Return(
+				(query, parameters: parameters ?? new object(), type)
+			)
+			.Audit(
+				some: x => LogVerbose(x.query, x.parameters, x.type)
+			)
+			.MapAsync(
+				x => Connection.QuerySingleOrDefaultAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.QuerySingleExceptionMsg(e)
 			)
 			.SwitchIfAsync(
@@ -123,17 +134,18 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			ReturnAsync(() =>
-				Connection.ExecuteAsync(
-					sql: query,
-					param: parameters ?? new object(),
-					transaction: transaction,
-					commandType: type
-				),
+			Return(
+				(query, parameters: parameters ?? new object(), type)
+			)
+			.Audit(
+				some: x => LogVerbose(x.query, x.parameters, x.type)
+			)
+			.MapAsync(
+				x => Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.ExecuteExceptionMsg(e)
 			)
 			.MapAsync(
-				x => x != 0,
+				x => x > 0,
 				DefaultHandler
 			);
 
@@ -144,13 +156,14 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			ReturnAsync(() =>
-				Connection.ExecuteScalarAsync<TReturn>(
-					sql: query,
-					param: parameters ?? new object(),
-					transaction: transaction,
-					commandType: type
-				),
+			Return(
+				(query, parameters: parameters ?? new object(), type)
+			)
+			.Audit(
+				some: x => LogVerbose(x.query, x.parameters, x.type)
+			)
+			.MapAsync(
+				x => Connection.ExecuteScalarAsync<TReturn>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.ExecuteScalarExceptionMsg(e)
 			);
 
