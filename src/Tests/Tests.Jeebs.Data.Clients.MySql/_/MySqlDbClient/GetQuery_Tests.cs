@@ -2,9 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
-using System.Reflection;
 using Jeebs.Data.Enums;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
