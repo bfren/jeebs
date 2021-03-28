@@ -19,11 +19,18 @@ namespace Jeebs.Auth.Data
 		List<TRole> Roles { get; init; }
 	}
 
+	/// <inheritdoc cref="IAuthUserWithRoles{TRole}"/>
 	public abstract record AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole>
 		where TRole : IAuthRole
 	{
+		/// <summary>
+		/// User ID
+		/// </summary>
 		public AuthUserId Id { get; init; } = new();
 
+		/// <summary>
+		/// List of Roles
+		/// </summary>
 		public List<TRole> Roles { get; init; } = new();
 	}
 }

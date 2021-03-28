@@ -309,7 +309,7 @@ namespace Jeebs.Data
 				e => new Msg.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetDeleteQuery(string, IColumn, long, IMappedColumn?)"/>
+		/// <inheritdoc cref="GetDeleteQuery(string, IColumn, long, IColumn?)"/>
 		protected abstract string GetDeleteQuery(
 			string table,
 			IColumn idColumn,

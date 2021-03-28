@@ -18,7 +18,6 @@ namespace Jeebs.Data
 		/// <typeparam name="TFrom">Join from table type</typeparam>
 		/// <typeparam name="TTo">Join to table type</typeparam>
 		/// <param name="join">Join type</param>
-		/// <param name="table">Join from this table</param>
 		/// <param name="on">Join from this column</param>
 		/// <param name="equals">Join to this table and column</param>
 		IQueryBuilderWithFrom Join<TFrom, TTo>(

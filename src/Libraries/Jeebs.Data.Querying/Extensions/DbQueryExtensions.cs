@@ -10,6 +10,9 @@ using static F.OptionF;
 
 namespace Jeebs.Data.Querying
 {
+	/// <summary>
+	/// IDbQuery extensions for using <see cref="IQueryBuilder"/>
+	/// </summary>
 	public static class DbQueryExtensions
 	{
 		/// <summary>
@@ -38,6 +41,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="this">IDbQuery</param>
 		/// <param name="page">Page number</param>
 		/// <param name="builder">Query builder</param>
+		/// <param name="transaction">[Optional] Database transaction</param>
 		public static Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
 			this IDbQuery @this,
 			long page,
@@ -51,7 +55,7 @@ namespace Jeebs.Data.Querying
 				x => @this.QueryAsync<TModel>(page, x, transaction)
 			);
 
-		/// <inheritdoc cref="QueryAsync{TModel}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom})"/>
+		/// <inheritdoc cref="QueryAsync{TModel}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction?)"/>
 		public static Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
@@ -64,7 +68,7 @@ namespace Jeebs.Data.Querying
 				x => @this.QueryAsync<TModel>(x, transaction)
 			);
 
-		/// <inheritdoc cref="QueryAsync{TModel}(IDbQuery, Func{IQueryBuilder, IQueryBuilderWithFrom})"/>
+		/// <inheritdoc cref="QueryAsync{TModel}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction?)"/>
 		public static Task<Option<TModel>> QuerySingleAsync<TModel>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,

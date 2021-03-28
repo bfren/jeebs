@@ -6,7 +6,7 @@ using System;
 namespace Jx.Data.Querying
 {
 	/// <summary>
-	/// See <see cref="Jeebs.Data.Querying.QueryPartsBuilder{TModel, TOptions}.AddSelect(string, bool)"/>
+	/// See <see cref="Jeebs.WordPress.Data.Querying.QueryPartsBuilder{TModel, TOptions}.AddSelect(string, bool)"/>
 	/// </summary>
 	public class SelectAlreadySetException : Exception
 	{

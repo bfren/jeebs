@@ -13,6 +13,7 @@ using static F.OptionF;
 
 namespace Jeebs.Auth
 {
+	/// <inheritdoc cref="IAuthDataProvider{TUserEntity, TRoleEntity, TUserRoleEntity}"/>
 	public interface IAuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity>
 	{ }
 
