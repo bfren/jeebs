@@ -16,7 +16,7 @@ namespace Jeebs.Data.Db_Tests
 			var (_, log, _, _, db) = Db_Setup.Get();
 			var query = F.Rnd.Str;
 			object parameters = F.Rnd.Guid;
-			var type = CommandType.TableDirect;
+			const CommandType type = CommandType.TableDirect;
 
 			// Act
 			var _ = db.QuerySingleAsync<int>(query, parameters, type);

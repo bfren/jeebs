@@ -54,7 +54,7 @@ namespace Jeebs.Data.DbQuery_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var (parts, param) = DbQuery_Setup.GetParts();
+			var (_, param) = DbQuery_Setup.GetParts();
 			var (_, _, log, query) = DbQuery_Setup.Get(value, param);
 			var transaction = Substitute.For<IDbTransaction>();
 

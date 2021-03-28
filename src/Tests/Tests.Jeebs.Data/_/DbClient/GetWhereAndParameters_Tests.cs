@@ -27,7 +27,6 @@ namespace Jeebs.Data.DbClient_Tests
 
 			var client = Substitute.ForPartsOf<TestClient>();
 
-
 			// Act
 			var (where, param) = client.GetWhereAndParametersTest(predicates, false);
 
@@ -53,7 +52,6 @@ namespace Jeebs.Data.DbClient_Tests
 			};
 
 			var client = Substitute.ForPartsOf<TestClient>();
-
 
 			// Act
 			var (where, param) = client.GetWhereAndParametersTest(predicates, true);

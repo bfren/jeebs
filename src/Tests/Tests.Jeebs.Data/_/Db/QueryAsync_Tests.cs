@@ -16,7 +16,7 @@ namespace Jeebs.Data.Db_Tests
 			var (_, log, _, _, db) = Db_Setup.Get();
 			var query = F.Rnd.Str;
 			object parameters = F.Rnd.Guid;
-			var type = CommandType.StoredProcedure;
+			const CommandType type = CommandType.StoredProcedure;
 
 			// Act
 			var _ = db.QueryAsync<int>(query, parameters, type);

@@ -16,7 +16,7 @@ namespace Jeebs.Data.Db_Tests
 			var (_, log, _, _, db) = Db_Setup.Get();
 			var query = F.Rnd.Str;
 			object parameters = F.Rnd.Guid;
-			var type = CommandType.Text;
+			const CommandType type = CommandType.Text;
 
 			// Act
 			var _ = db.ExecuteAsync(query, parameters, type);
@@ -32,7 +32,7 @@ namespace Jeebs.Data.Db_Tests
 			var (_, log, _, _, db) = Db_Setup.Get();
 			var query = F.Rnd.Str;
 			object parameters = F.Rnd.Guid;
-			var type = CommandType.Text;
+			const CommandType type = CommandType.Text;
 
 			// Act
 			var _ = db.ExecuteAsync<int>(query, parameters, type);
