@@ -3,7 +3,7 @@
 
 using NSubstitute;
 
-namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
+namespace Jeebs.WordPress.Data.Mapping.AdapterExtensions_Tests
 {
 	public static class Adapter
 	{

@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Querying.DbExtensions_Tests
+namespace Jeebs.WordPress.Data.Querying.DbExtensions_Tests
 {
 	public class GetQueryWrapper_Tests
 	{

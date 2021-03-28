@@ -4,7 +4,7 @@
 using Jx.Data.Mapping;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Mapper_Tests
+namespace Jeebs.WordPress.Data.Mapping.Mapper_Tests
 {
 	public class GetTableMapFor_Tests
 	{

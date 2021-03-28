@@ -7,7 +7,7 @@ using System.Reflection;
 using Jeebs.Reflection;
 using static F.JsonF;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryParameters"/>
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters

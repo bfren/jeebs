@@ -3,9 +3,9 @@
 
 using System.Linq;
 using Xunit;
-using static Jeebs.Data.Adapter_Tests.Adapter;
+using static Jeebs.WordPress.Data.Adapter_Tests.Adapter;
 
-namespace Jeebs.Data.Adapter_Tests
+namespace Jeebs.WordPress.Data.Adapter_Tests
 {
 	public class Join_Tests
 	{

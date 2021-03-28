@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryParts"/>
 	public class QueryParts : IQueryParts

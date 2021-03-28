@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <inheritdoc cref="IMappedColumnList"/>
 	public sealed class MappedColumnList : List<IMappedColumn>, IMappedColumnList

@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Jeebs.Data.Enums;
+using Jeebs.WordPress.Data.Enums;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress

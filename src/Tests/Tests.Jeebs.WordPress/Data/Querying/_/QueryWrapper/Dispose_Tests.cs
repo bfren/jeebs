@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryWrapper_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryWrapper_Tests
 {
 	public class Dispose_Tests
 	{

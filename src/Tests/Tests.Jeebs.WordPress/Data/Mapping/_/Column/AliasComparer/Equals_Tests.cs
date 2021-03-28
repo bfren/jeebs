@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
+namespace Jeebs.WordPress.Data.Mapping.Column_AliasComparer_Tests
 {
 	public class Equals_Tests
 	{

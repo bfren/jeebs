@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.WordPress.Data.Querying
 {
 	/// <summary>
 	/// Performs queries - returning either the total number of matching rows, the results, or the paged results

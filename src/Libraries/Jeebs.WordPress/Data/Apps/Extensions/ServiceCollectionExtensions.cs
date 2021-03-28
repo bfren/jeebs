@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// IServiceCollection extension methods

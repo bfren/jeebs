@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql.MySqlAdapter_Tests
+namespace Jeebs.WordPress.Data.Clients.MySql.MySqlAdapter_Tests
 {
 	public class DeleteSingle_Tests
 	{

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jx.Data.Mapping;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <inheritdoc/>
 	public sealed class MapService : IMapService, IDisposable

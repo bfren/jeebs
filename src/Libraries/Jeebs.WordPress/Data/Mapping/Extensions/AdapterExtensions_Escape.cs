@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <summary>
 	/// IAdapter extensions - columns

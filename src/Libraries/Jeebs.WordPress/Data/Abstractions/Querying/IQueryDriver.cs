@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// Provides test-friendly abstraction of Dapper query extension methods

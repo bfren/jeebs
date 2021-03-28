@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
+namespace Jeebs.WordPress.Data.Clients.MySql.MySqlDbClient_Tests
 {
 	public class Connect_Tests
 	{

@@ -5,7 +5,7 @@ using System;
 using System.Data;
 using Dapper;
 
-namespace Jeebs.Data.TypeHandlers
+namespace Jeebs.WordPress.Data.TypeHandlers
 {
 	/// <summary>
 	/// Guid TypeHandler

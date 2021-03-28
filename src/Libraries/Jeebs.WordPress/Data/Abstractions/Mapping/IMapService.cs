@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <summary>
 	/// Provides services for <see cref="Map{TEntity}"/> to enable better testing

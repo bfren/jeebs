@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Logging;
 using static F.OptionF;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <summary>
 	/// IUnitOfWork extensions - CREATE

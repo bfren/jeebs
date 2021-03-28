@@ -4,7 +4,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.WordPress.Data.Clients.MySql
 {
 	/// <inheritdoc cref="IDbClient"/>
 	public sealed class MySqlDbClient : IDbClient

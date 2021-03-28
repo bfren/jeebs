@@ -3,9 +3,9 @@
 
 using NSubstitute;
 using Xunit;
-using static Jeebs.Data.QueryPartsBuilderExtended_Tests.QueryPartsBuilderExtended;
+using static Jeebs.WordPress.Data.QueryPartsBuilderExtended_Tests.QueryPartsBuilderExtended;
 
-namespace Jeebs.Data.QueryPartsBuilderExtended_Tests
+namespace Jeebs.WordPress.Data.QueryPartsBuilderExtended_Tests
 {
 	public class AddSelect_Tests
 	{

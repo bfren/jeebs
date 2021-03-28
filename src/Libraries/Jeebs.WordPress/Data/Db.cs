@@ -3,9 +3,9 @@
 
 using System.Data;
 using Jeebs.Config;
-using Jeebs.Data.TypeHandlers;
+using Jeebs.WordPress.Data.TypeHandlers;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="IDb"/>
 	public abstract class Db : IDb

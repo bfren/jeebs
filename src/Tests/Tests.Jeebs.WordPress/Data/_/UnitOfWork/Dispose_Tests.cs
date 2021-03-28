@@ -3,9 +3,9 @@
 
 using NSubstitute;
 using Xunit;
-using static Jeebs.Data.UnitOfWork_Tests.UnitOfWork;
+using static Jeebs.WordPress.Data.UnitOfWork_Tests.UnitOfWork;
 
-namespace Jeebs.Data.UnitOfWork_Tests
+namespace Jeebs.WordPress.Data.UnitOfWork_Tests
 {
 	public class Dispose_Tests
 	{

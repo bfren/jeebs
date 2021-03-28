@@ -5,7 +5,7 @@ using System.Reflection;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.MappedColumn_Tests
+namespace Jeebs.WordPress.Data.Mapping.MappedColumn_Tests
 {
 	public class Constructor_Tests
 	{

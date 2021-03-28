@@ -4,7 +4,7 @@
 using Jx.Data.Mapping;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.TableMap_Tests
+namespace Jeebs.WordPress.Data.Mapping.TableMap_Tests
 {
 	public class GetWriteableColumnNamesAndAliases_Tests
 	{

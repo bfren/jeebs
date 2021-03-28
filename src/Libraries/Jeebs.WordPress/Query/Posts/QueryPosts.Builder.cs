@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Jeebs.Data;
-using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
+using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress

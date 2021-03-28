@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using Jeebs.Data.Mapping;
+using Jeebs.WordPress.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.QueryPartsBuilderExtended_Tests
+namespace Jeebs.WordPress.Data.QueryPartsBuilderExtended_Tests
 {
 	public static class QueryPartsBuilderExtended
 	{

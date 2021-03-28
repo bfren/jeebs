@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// Unit of Work for interacting with a database

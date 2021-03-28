@@ -5,7 +5,7 @@ using System.Data;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Db_Tests
+namespace Jeebs.WordPress.Data.Db_Tests
 {
 	public class UnitOfWork_Tests
 	{

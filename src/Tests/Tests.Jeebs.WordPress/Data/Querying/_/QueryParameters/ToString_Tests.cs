@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryParameters_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryParameters_Tests
 {
 	public class ToString_Tests
 	{

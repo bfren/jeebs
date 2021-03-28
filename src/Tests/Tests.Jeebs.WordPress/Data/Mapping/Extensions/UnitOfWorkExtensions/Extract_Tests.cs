@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.UnitOfWorkExtensions_Tests
+namespace Jeebs.WordPress.Data.Mapping.UnitOfWorkExtensions_Tests
 {
 	public class Extract_Tests
 	{

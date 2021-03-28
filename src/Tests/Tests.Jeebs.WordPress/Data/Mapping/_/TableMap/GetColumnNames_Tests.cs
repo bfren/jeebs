@@ -5,7 +5,7 @@ using System.Reflection;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.TableMap_Tests
+namespace Jeebs.WordPress.Data.Mapping.TableMap_Tests
 {
 	public class GetColumnNames_Tests
 	{

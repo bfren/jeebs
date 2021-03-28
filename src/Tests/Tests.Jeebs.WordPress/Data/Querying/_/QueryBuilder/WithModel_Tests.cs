@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryBuilder_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryBuilder_Tests
 {
 	public class WithModel_Tests
 	{

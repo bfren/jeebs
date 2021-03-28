@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// Database client

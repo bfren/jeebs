@@ -5,7 +5,7 @@ using System.Data;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.UnitOfWork_Tests
+namespace Jeebs.WordPress.Data.UnitOfWork_Tests
 {
 	public class Constructor_Tests
 	{

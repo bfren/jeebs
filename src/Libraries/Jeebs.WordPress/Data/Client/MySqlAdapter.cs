@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.WordPress.Data.Clients.MySql
 {
 	/// <inheritdoc/>
 	public sealed class MySqlAdapter : Adapter

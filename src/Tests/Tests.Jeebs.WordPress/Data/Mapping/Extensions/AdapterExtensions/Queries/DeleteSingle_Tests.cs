@@ -4,9 +4,9 @@
 using Jx.Data.Mapping;
 using NSubstitute;
 using Xunit;
-using static Jeebs.Data.Mapping.AdapterExtensions_Tests.Adapter;
+using static Jeebs.WordPress.Data.Mapping.AdapterExtensions_Tests.Adapter;
 
-namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
+namespace Jeebs.WordPress.Data.Mapping.AdapterExtensions_Tests
 {
 	public class DeleteSingle_Tests
 	{

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryExtensions_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryExtensions_Tests
 {
 	public class ExecuteQueryAsync_Tests
 	{

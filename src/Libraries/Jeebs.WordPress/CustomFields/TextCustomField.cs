@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.Data;
+using Jeebs.WordPress.Data;
 using static F.OptionF;
 
 namespace Jeebs.WordPress

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static F.OptionF;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQuery{T}"/>
 	public sealed class Query<T> : IQuery<T>

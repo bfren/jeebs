@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Jeebs.Data.Querying;
+using Jeebs.WordPress.Data.Querying;
 
 namespace Jeebs.WordPress
 {

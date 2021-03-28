@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using NSubstitute;
 using Xunit;
-using static Jeebs.Data.Querying.QueryPartsBuilder_Tests.QueryPartsBuilder;
+using static Jeebs.WordPress.Data.Querying.QueryPartsBuilder_Tests.QueryPartsBuilder;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class AddJoin_Tests
 	{

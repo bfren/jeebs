@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryParts_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryParts_Tests
 {
 	public class Constructor_Tests
 	{

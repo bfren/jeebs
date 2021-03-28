@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	public abstract partial class Adapter
 	{

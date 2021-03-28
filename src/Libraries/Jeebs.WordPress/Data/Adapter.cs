@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Jeebs.Data.Enums;
+using Jeebs.WordPress.Data.Enums;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="IAdapter"/>
 	public abstract partial class Adapter : IAdapter

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// The various parts required to build a query

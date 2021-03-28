@@ -2,9 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Config;
-using Jeebs.Data;
-using Jeebs.Data.Clients.MySql;
-using Jeebs.Data.Mapping;
+using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Clients.MySql;
+using Jeebs.WordPress.Data.Mapping;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Tables;
 using Jeebs.WordPress.TypeHandlers;

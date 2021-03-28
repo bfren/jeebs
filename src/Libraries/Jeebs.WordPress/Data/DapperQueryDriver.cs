@@ -6,7 +6,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// Wrapper for Dapper extension methods

@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.AdapterExtensions_Tests
+namespace Jeebs.WordPress.Data.Mapping.AdapterExtensions_Tests
 {
 	public partial class Escape_Tests
 	{

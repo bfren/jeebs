@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Map_Tests
+namespace Jeebs.WordPress.Data.Mapping.Map_Tests
 {
 	public class To_Tests
 	{

@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <inheritdoc cref="IMappedColumn"/>
 	public sealed class MappedColumn : Column, IMappedColumn

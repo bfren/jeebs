@@ -4,7 +4,7 @@
 using Jx.Data.Mapping;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Extract_Tests
+namespace Jeebs.WordPress.Data.Mapping.Extract_Tests
 {
 	public class From_Tests
 	{

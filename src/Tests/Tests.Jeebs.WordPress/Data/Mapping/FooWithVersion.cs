@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	public class FooWithVersion : Foo, IEntityWithVersion
 	{

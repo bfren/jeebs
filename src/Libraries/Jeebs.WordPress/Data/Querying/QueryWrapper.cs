@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryWrapper"/>
 	public class QueryWrapper : IQueryWrapper

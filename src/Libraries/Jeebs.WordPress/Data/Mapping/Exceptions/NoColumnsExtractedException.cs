@@ -3,7 +3,7 @@
 
 using System;
 using System.Linq;
-using Jeebs.Data.Mapping;
+using Jeebs.WordPress.Data.Mapping;
 
 namespace Jx.Data.Mapping
 {

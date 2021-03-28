@@ -6,7 +6,7 @@ using System.Text.Json;
 using Dapper;
 using static F.JsonF;
 
-namespace Jeebs.Data.TypeHandlers
+namespace Jeebs.WordPress.Data.TypeHandlers
 {
 	/// <summary>
 	/// JSON TypeHandler

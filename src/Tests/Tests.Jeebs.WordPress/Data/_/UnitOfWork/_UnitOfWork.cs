@@ -6,9 +6,9 @@ using System.Data;
 using System.Threading.Tasks;
 using NSubstitute;
 using NSubstitute.Extensions;
-using static Jeebs.Data.UnitOfWork.Msg;
+using static Jeebs.WordPress.Data.UnitOfWork.Msg;
 
-namespace Jeebs.Data.UnitOfWork_Tests
+namespace Jeebs.WordPress.Data.UnitOfWork_Tests
 {
 	public static class UnitOfWork
 	{

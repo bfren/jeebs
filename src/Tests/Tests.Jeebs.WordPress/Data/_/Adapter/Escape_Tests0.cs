@@ -2,9 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static Jeebs.Data.Adapter_Tests.Adapter;
+using static Jeebs.WordPress.Data.Adapter_Tests.Adapter;
 
-namespace Jeebs.Data.Adapter_Tests
+namespace Jeebs.WordPress.Data.Adapter_Tests
 {
 	public partial class Escape_Tests
 	{

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.WordPress.Data.Querying
 {
 	/// <summary>
 	/// Disposable Query Wrapper - implementations should start a new UnitOfWork as it is created, which can then be disposed

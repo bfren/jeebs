@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.WordPress.Data.Mapping
 {
 	/// <summary>
 	/// Holds information about a mapped column

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Jeebs.Logging;
 using static F.OptionF;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="IUnitOfWork"/>
 	public sealed class UnitOfWork : IUnitOfWork

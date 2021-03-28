@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Table_Tests
+namespace Jeebs.WordPress.Data.Mapping.Table_Tests
 {
 	public class ToString_Tests
 	{

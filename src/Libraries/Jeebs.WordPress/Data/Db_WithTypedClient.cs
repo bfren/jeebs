@@ -3,7 +3,7 @@
 
 using Jeebs.Config;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="Db"/>
 	/// <typeparam name="TDbClient">Database Client type</typeparam>

@@ -2,9 +2,9 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static Jeebs.Data.Querying.QueryPartsBuilder_Tests.QueryPartsBuilder;
+using static Jeebs.WordPress.Data.Querying.QueryPartsBuilder_Tests.QueryPartsBuilder;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class AddLimitAndOffset_Tests
 	{

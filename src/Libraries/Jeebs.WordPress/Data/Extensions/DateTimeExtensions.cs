@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// DateTime Extensions

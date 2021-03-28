@@ -2,8 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs.Data;
-using Jeebs.Data.Mapping;
+using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Mapping;
 
 namespace Jeebs.WordPress.Entities
 {
