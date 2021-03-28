@@ -2,8 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Config;
-using Jeebs.WordPress.Data;
 using Jeebs.WordPress;
+using Jeebs.WordPress.Data;
 using Microsoft.Extensions.Options;
 
 namespace AppConsoleWordPress.Usa
