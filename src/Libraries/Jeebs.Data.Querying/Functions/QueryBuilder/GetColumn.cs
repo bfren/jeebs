@@ -17,6 +17,6 @@ namespace F.DataF
 		/// <param name="column">Column expression</param>
 		public static IColumn GetColumn<TTable>(Expression<Func<TTable, string>> column)
 			where TTable : ITable, new() =>
-			QueryF.GetColumn(column).Unwrap(() => throw new UnableToGetColumnFromExpressionException<TTable>());
+			QueryF.GetColumnFromExpression(column).Unwrap(() => throw new UnableToGetColumnFromExpressionException<TTable>());
 	}
 }

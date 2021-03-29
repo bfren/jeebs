@@ -89,7 +89,7 @@ namespace Jeebs.Data
 			(
 				from map in Mapper.GetTableMapFor<TEntity>()
 				from sel in Extract<TModel>.From(map.Table)
-				from whr in GetPredicates(map.Columns, predicates)
+				from whr in ConvertPredicatesToColumns(map.Columns, predicates)
 				select (map, sel, whr)
 			)
 			.Map(

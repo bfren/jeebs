@@ -29,9 +29,7 @@ namespace Jeebs.Data.Querying
 				e => new Msg.QueryBuilderExceptionMsg(e)
 			)
 			.Bind(
-				x => from withSelect in x.Select<TModel>()
-					 from parts in withSelect.GetParts()
-					 select parts
+				x => x.Select<TModel>()
 			);
 
 		/// <summary>

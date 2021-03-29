@@ -3,7 +3,7 @@
 
 namespace Jeebs.Data
 {
-	/// <inheritdoc/>
+	/// <inheritdoc cref="ITable"/>
 	public abstract record Table : ITable
 	{
 		private readonly string name;
@@ -16,7 +16,7 @@ namespace Jeebs.Data
 			this.name = name;
 
 		/// <inheritdoc/>
-		public string GetName() =>
+		public virtual string GetName() =>
 			name;
 
 		/// <inheritdoc cref="GetName"/>

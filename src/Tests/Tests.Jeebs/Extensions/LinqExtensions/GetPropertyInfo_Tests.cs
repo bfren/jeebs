@@ -20,8 +20,8 @@ namespace Jeebs.LinqExtensions_Tests
 			var result = expr.GetPropertyInfo();
 
 			// Assert
-			Assert.NotNull(result);
-			Assert.IsType<PropertyInfo<Test, int>>(result);
+			var some = result.AssertSome();
+			Assert.IsType<PropertyInfo<Test, int>>(some);
 		}
 
 		public class Test

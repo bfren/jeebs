@@ -22,7 +22,7 @@ namespace F.DataF
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="columns">Mapped entity columns</param>
 		/// <param name="predicates">Predicates (matched using AND)</param>
-		public static Option<List<(IColumn column, SearchOperator op, object value)>> GetPredicates<TEntity>(
+		public static Option<List<(IColumn column, SearchOperator op, object value)>> ConvertPredicatesToColumns<TEntity>(
 			IMappedColumnList columns,
 			(Expression<Func<TEntity, object>> column, SearchOperator op, object value)[] predicates
 		)
@@ -32,7 +32,11 @@ namespace F.DataF
 			foreach (var item in predicates)
 			{
 				// The property name is the column alias
-				var alias = item.column.GetPropertyInfo()?.Name;
+				var alias = item.column.GetPropertyInfo().Switch<string?>(
+					some: x => x.Name,
+					none: () => null
+				);
+
 				if (alias is null)
 				{
 					continue;

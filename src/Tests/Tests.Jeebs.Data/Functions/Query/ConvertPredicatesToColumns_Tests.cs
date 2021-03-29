@@ -15,7 +15,7 @@ using static F.DataF.QueryF.Msg;
 
 namespace F.DataF.QueryF_Tests
 {
-	public class GetPredicates_Tests
+	public class ConvertPredicatesToColumns_Tests
 	{
 		[Fact]
 		public void Ignores_Predicate_Property_Not_In_Column_List()
@@ -34,7 +34,7 @@ namespace F.DataF.QueryF_Tests
 			};
 
 			// Act
-			var result = GetPredicates(columns, predicates).UnsafeUnwrap();
+			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 			// Assert
 			Assert.DoesNotContain(result, x => x.column.Name == nameof(TestEntity.Bar));
@@ -55,7 +55,7 @@ namespace F.DataF.QueryF_Tests
 			};
 
 			// Act
-			var result = GetPredicates(columns, predicates).UnsafeUnwrap();
+			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 			// Assert
 			Assert.Collection(result,
@@ -87,7 +87,7 @@ namespace F.DataF.QueryF_Tests
 			};
 
 			// Act
-			var result = GetPredicates(columns, predicates).UnsafeUnwrap();
+			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 			// Assert
 			Assert.Collection(result, x => Assert.Equal(input, x.op));
@@ -117,7 +117,7 @@ namespace F.DataF.QueryF_Tests
 			};
 
 			// Act
-			var result = GetPredicates(columns, predicates).UnsafeUnwrap();
+			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 			// Assert
 			Assert.Collection(result,
@@ -144,7 +144,7 @@ namespace F.DataF.QueryF_Tests
 			};
 
 			// Act
-			var result = GetPredicates(columns, predicates).UnsafeUnwrap();
+			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 			// Assert
 			Assert.Collection(result,
@@ -186,7 +186,7 @@ namespace F.DataF.QueryF_Tests
 			};
 
 			// Act
-			var result = GetPredicates(columns, predicates);
+			var result = ConvertPredicatesToColumns(columns, predicates);
 
 			// Assert
 			var none = result.AssertNone();

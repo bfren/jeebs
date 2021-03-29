@@ -12,7 +12,7 @@ using static F.DataF.QueryBuilderF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryBuilderWithFrom"/>
-	public sealed record QueryBuilderWithFrom : QueryBuilder, IQueryBuilderWithFrom
+	public sealed record QueryBuilderWithFrom : IQueryBuilderWithFrom
 	{
 		/// <summary>
 		/// Query Parts
@@ -38,9 +38,9 @@ namespace Jeebs.Data.Querying
 		/// Select matching columns based on the specified model
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
-		internal Option<QueryBuilderWithSelect> Select<TModel>() =>
+		internal Option<IQueryParts> Select<TModel>() =>
 			from columns in Extract<TModel>.From(Tables.ToArray())
-			select new QueryBuilderWithSelect(Parts with { Select = columns });
+			select (IQueryParts)(Parts with { Select = columns });
 
 		/// <summary>
 		/// Verify that a table has been added to the list of tables

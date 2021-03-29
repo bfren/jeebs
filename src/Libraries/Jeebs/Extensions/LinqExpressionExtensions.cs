@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using static F.OptionF;
 
 namespace Jeebs.Linq
 {
@@ -13,34 +14,28 @@ namespace Jeebs.Linq
 	public static class LinqExpressionExtensions
 	{
 		/// <summary>
-		/// Prepare a Linq Expression for use as property setter / getter
+		/// Prepare a Linq MemberExpression for use as property setter / getter
 		/// </summary>
 		/// <typeparam name="TObject">Object type</typeparam>
 		/// <typeparam name="TProperty">Property type</typeparam>
 		/// <param name="this">Expression to get property</param>
-		public static PropertyInfo<TObject, TProperty>? GetPropertyInfo<TObject, TProperty>(this Expression<Func<TObject, TProperty>> @this)
-		{
-			// Sometimes the body may be a UnaryExpression
-			var body = @this.Body switch
+		public static Option<PropertyInfo<TObject, TProperty>> GetPropertyInfo<TObject, TProperty>(
+			this Expression<Func<TObject, TProperty>> @this
+		) =>
+			@this.Body switch
 			{
-				MemberExpression member =>
-					member,
-
-				UnaryExpression unary =>
-					(MemberExpression)unary.Operand,
+				MemberExpression me =>
+					new PropertyInfo<TObject, TProperty>((PropertyInfo)me.Member),
 
 				_ =>
-					null
+					None<PropertyInfo<TObject, TProperty>, Msg.ExpressionIsNotAMemberExpressionMsg>()
 			};
 
-			// Create if not null
-			if (body is not null)
-			{
-				var info = (PropertyInfo)body.Member;
-				return new PropertyInfo<TObject, TProperty>(info);
-			}
-
-			return null;
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
+			public sealed record ExpressionIsNotAMemberExpressionMsg : IMsg { }
 		}
 	}
 }

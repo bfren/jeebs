@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryBuilder"/>
-	public record QueryBuilder : IQueryBuilder
+	public sealed record QueryBuilder : IQueryBuilder
 	{
 		/// <summary>
 		/// Internal creation only

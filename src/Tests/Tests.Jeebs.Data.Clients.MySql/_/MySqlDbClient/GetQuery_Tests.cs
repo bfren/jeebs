@@ -302,7 +302,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var (client, table) = MySqlDbClient_Setup.Get();
 			var skip = F.Rnd.Lng;
 			var max = F.Rnd.Lng;
-			var parts = new QueryParts(table) { Skip=skip, Maximum = max };
+			var parts = new QueryParts(table) { Skip = skip, Maximum = max };
 			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {skip}, {max};";
 
 			// Act

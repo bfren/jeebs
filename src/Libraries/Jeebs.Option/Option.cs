@@ -14,7 +14,7 @@ namespace Jeebs
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract class Option<T>
+	public abstract class Option<T> : IEquatable<Option<T>>
 	{
 		/// <summary>
 		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>
@@ -72,7 +72,14 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value) =>
-			Return(value);
+			value switch
+			{
+				T =>
+					new Some<T>(value), // Some<T> is only created by Return() functions and implicit operator
+
+				_ =>
+					None<T, Msg.NullValueMsg>()
+			};
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -138,6 +145,17 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Option{T}"/></param>
 		public override bool Equals(object? other) =>
+			other switch
+			{
+				Option<T> option =>
+					Equals(option),
+
+				_ =>
+					false
+			};
+
+		/// <inheritdoc cref="Equals(object?)"/>
+		public bool Equals(Option<T>? other) =>
 			this switch
 			{
 				Some<T> x when other is Some<T> y =>
