@@ -24,17 +24,17 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Inner Joins
 		/// </summary>
-		List<(IColumn on, IColumn equals)> InnerJoin { get; init; }
+		List<(IColumn from, IColumn to)> InnerJoin { get; init; }
 
 		/// <summary>
 		/// Left Joins
 		/// </summary>
-		List<(IColumn on, IColumn equals)> LeftJoin { get; init; }
+		List<(IColumn from, IColumn to)> LeftJoin { get; init; }
 
 		/// <summary>
 		/// Right Joins
 		/// </summary>
-		List<(IColumn on, IColumn equals)> RightJoin { get; init; }
+		List<(IColumn from, IColumn to)> RightJoin { get; init; }
 
 		/// <summary>
 		/// Where Predicates
@@ -47,9 +47,9 @@ namespace Jeebs.Data
 		IQueryParameters Parameters { get; init; }
 
 		/// <summary>
-		/// Order By columns
+		/// Sort columns
 		/// </summary>
-		List<(IColumn column, SortOrder order)> OrderBy { get; init; }
+		List<(IColumn column, SortOrder order)> Sort { get; init; }
 
 		/// <summary>
 		/// Maximum number of results to return (if null will select all rows)
@@ -57,7 +57,8 @@ namespace Jeebs.Data
 		long? Maximum { get; init; }
 
 		/// <summary>
-		/// The number of results to skip
+		/// The number of results to skip<br/>
+		/// Note: setting this will do nothing if <see cref="Maximum"/> is not also set
 		/// </summary>
 		long Skip { get; init; }
 	}

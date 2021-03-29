@@ -16,31 +16,49 @@ namespace Jeebs.Data.Clients.MySql
 			new MySqlConnection(connectionString);
 
 		/// <inheritdoc/>
-		protected override string Escape(IColumn column) =>
-			Escape(column.Name);
+		public override string Escape(IColumn column, bool withAlias = false) =>
+			withAlias switch
+			{
+				true =>
+					Escape(column.Name) + $" AS '{column.Alias}'",
+
+				false =>
+					Escape(column.Name)
+			};
 
 		/// <inheritdoc/>
-		protected override string Escape(ITable table) =>
+		public override string EscapeWithTable(IColumn column, bool withAlias = false) =>
+			withAlias switch
+			{
+				true =>
+					Escape(column.Name, column.Table) + $" AS '{column.Alias}'",
+
+				false =>
+					Escape(column.Name, column.Table)
+			};
+
+		/// <inheritdoc/>
+		public override string Escape(ITable table) =>
 			Escape(table.GetName());
 
 		/// <inheritdoc/>
-		protected override string Escape(string columnOrTable) =>
+		public override string Escape(string columnOrTable) =>
 			$"`{columnOrTable}`";
 
 		/// <inheritdoc/>
-		protected override string Escape(string column, string table) =>
+		public override string Escape(string column, string table) =>
 			Escape(table) + "." + Escape(column);
 
 		/// <inheritdoc/>
-		protected override string GetOperator(SearchOperator op) =>
+		public override string GetOperator(SearchOperator op) =>
 			op.ToOperator();
 
 		/// <inheritdoc/>
-		protected override string GetParamRef(string paramName) =>
+		public override string GetParamRef(string paramName) =>
 			$"@{paramName}";
 
 		/// <inheritdoc/>
-		protected override string JoinList(List<string> objects, bool wrap)
+		public override string JoinList(List<string> objects, bool wrap)
 		{
 			var list = string.Join(", ", objects);
 			return wrap switch

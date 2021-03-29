@@ -38,11 +38,11 @@ namespace Jeebs.WordPress.Data.Querying.QueryPartsBuilder_Tests
 				.Returns(x => $"{x.ArgAt<string>(0)}:{x.ArgAt<SortOrder>(1)}");
 
 			var c0 = F.Rnd.Str;
-			const SortOrder s0 = SortOrder.Ascending;
+			var s0 = SortOrder.Ascending;
 			var c1 = F.Rnd.Str;
-			const SortOrder s1 = SortOrder.Descending;
+			var s1 = SortOrder.Descending;
 			var c2 = F.Rnd.Str;
-			const SortOrder s2 = SortOrder.Descending;
+			var s2 = SortOrder.Descending;
 			var options = new Options { Sort = new[] { (c0, s0), (c1, s1) } };
 
 			// Act
@@ -67,9 +67,9 @@ namespace Jeebs.WordPress.Data.Querying.QueryPartsBuilder_Tests
 				.Returns(x => $"{x.ArgAt<string>(0)}:{x.ArgAt<SortOrder>(1)}");
 
 			var c0 = F.Rnd.Str;
-			const SortOrder s0 = SortOrder.Ascending;
+			var s0 = SortOrder.Ascending;
 			var c1 = F.Rnd.Str;
-			const SortOrder s1 = SortOrder.Descending;
+			var s1 = SortOrder.Descending;
 			var options = new Options();
 
 			// Act

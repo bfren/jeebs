@@ -93,8 +93,8 @@ namespace Jeebs.Data.Querying
 		/// <inheritdoc/>
 		public IQueryBuilderWithFrom Join<TFrom, TTo>(
 			QueryJoin join,
-			Expression<Func<TFrom, string>> on,
-			Expression<Func<TTo, string>> equals
+			Expression<Func<TFrom, string>> from,
+			Expression<Func<TTo, string>> to
 		)
 			where TFrom : ITable, new()
 			where TTo : ITable, new()
@@ -106,22 +106,22 @@ namespace Jeebs.Data.Querying
 			AddTable<TTo>();
 
 			// Get columns
-			var onColumn = GetColumn(on);
-			var equalsColumn = GetColumn(equals);
+			var fromColumn = GetColumn(from);
+			var toColumn = GetColumn(to);
 
 			// Add to query
 			switch (join)
 			{
 				case QueryJoin.Inner:
-					Parts.InnerJoin.Add((onColumn, equalsColumn));
+					Parts.InnerJoin.Add((fromColumn, toColumn));
 					break;
 
 				case QueryJoin.Left:
-					Parts.LeftJoin.Add((onColumn, equalsColumn));
+					Parts.LeftJoin.Add((fromColumn, toColumn));
 					break;
 
 				case QueryJoin.Right:
-					Parts.RightJoin.Add((onColumn, equalsColumn));
+					Parts.RightJoin.Add((fromColumn, toColumn));
 					break;
 			}
 
@@ -151,7 +151,7 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 			// Add sort column
-			Parts.OrderBy.Add((GetColumn(column), SortOrder.Ascending));
+			Parts.Sort.Add((GetColumn(column), SortOrder.Ascending));
 
 			// Return
 			return this;
@@ -165,7 +165,7 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 			// Add sort column
-			Parts.OrderBy.Add((GetColumn(column), SortOrder.Descending));
+			Parts.Sort.Add((GetColumn(column), SortOrder.Descending));
 
 			// Return
 			return this;

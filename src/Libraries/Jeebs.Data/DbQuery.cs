@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -105,8 +106,9 @@ namespace Jeebs.Data
 			IQueryParts parts,
 			IDbTransaction? transaction = null
 		) =>
-			Db.Client.GetCountQuery(
-				parts
+			Return(
+				() => Db.Client.GetCountQuery(parts),
+				e => new Msg.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 			)
 			.BindAsync(
 				x => Db.ExecuteAsync<long>(x.query, x.param, CommandType.Text, transaction)
@@ -116,13 +118,14 @@ namespace Jeebs.Data
 				DefaultHandler
 			)
 			.BindAsync(
-				pagingValues => Db.Client
-					.GetQuery(
-						new QueryParts(parts) with
+				pagingValues =>
+					Return(
+						() => Db.Client.GetQuery(new QueryParts(parts) with
 						{
 							Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
 							Maximum = pagingValues.ItemsPer
-						}
+						}),
+						e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 					)
 					.Audit(
 						some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
@@ -141,8 +144,9 @@ namespace Jeebs.Data
 			IQueryParts parts,
 			IDbTransaction? transaction = null
 		) =>
-			Db.Client.GetQuery(
-				parts
+			Return(
+				() => Db.Client.GetQuery(parts),
+				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
 			.Audit(
 				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
@@ -185,8 +189,9 @@ namespace Jeebs.Data
 			IQueryParts parts,
 			IDbTransaction? transaction = null
 		) =>
-			Db.Client.GetQuery(
-				parts
+			Return(
+				() => Db.Client.GetQuery(parts),
+				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
 			.Audit(
 				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
@@ -257,5 +262,17 @@ namespace Jeebs.Data
 			WriteToLog(message, args);
 
 		#endregion
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Error getting query from parts</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+
+			/// <summary>Error getting count query from parts</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+		}
 	}
 }

@@ -1,10 +1,13 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Data;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Xunit;
+using static Jeebs.Data.DbQuery.Msg;
 
 namespace Jeebs.Data.DbQuery_Tests
 {
@@ -43,6 +46,57 @@ namespace Jeebs.Data.DbQuery_Tests
 
 			// Assert
 			await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction);
+		}
+
+		[Fact]
+		public async Task WithParts_GetQuery_Exception_Returns_None_With_ErrorGettingQueryFromPartsExceptionMsg()
+		{
+			// Arrange
+			var (parts, _) = DbQuery_Setup.GetParts();
+			var (_, client, _, query) = DbQuery_Setup.Get();
+			var transaction = Substitute.For<IDbTransaction>();
+			client.GetQuery(parts).Throws<Exception>();
+
+			// Act
+			var result = await query.QueryAsync<int>(parts, transaction);
+
+			// Assert
+			var none = result.AssertNone();
+			Assert.IsType<ErrorGettingQueryFromPartsExceptionMsg>(none);
+		}
+
+		[Fact]
+		public async Task WithParts_And_Page_GetCountQuery_Exception_Returns_None_With_ErrorGettingQueryFromPartsExceptionMsg()
+		{
+			// Arrange
+			var (parts, _) = DbQuery_Setup.GetParts();
+			var (_, client, _, query) = DbQuery_Setup.Get();
+			var transaction = Substitute.For<IDbTransaction>();
+			client.GetCountQuery(parts).Throws<Exception>();
+
+			// Act
+			var result = await query.QueryAsync<int>(F.Rnd.Lng, parts, transaction);
+
+			// Assert
+			var none = result.AssertNone();
+			Assert.IsType<ErrorGettingCountQueryFromPartsExceptionMsg>(none);
+		}
+
+		[Fact]
+		public async Task WithParts_And_Page_GetQuery_Exception_Returns_None_With_ErrorGettingQueryFromPartsExceptionMsg()
+		{
+			// Arrange
+			var (parts, _) = DbQuery_Setup.GetParts();
+			var (_, client, _, query) = DbQuery_Setup.Get();
+			var transaction = Substitute.For<IDbTransaction>();
+			client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
+
+			// Act
+			var result = await query.QueryAsync<int>(F.Rnd.Lng, parts, transaction);
+
+			// Assert
+			var none = result.AssertNone();
+			Assert.IsType<ErrorGettingQueryFromPartsExceptionMsg>(none);
 		}
 
 		[Fact]

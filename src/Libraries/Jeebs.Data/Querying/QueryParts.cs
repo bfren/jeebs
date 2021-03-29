@@ -13,13 +13,13 @@ namespace Jeebs.Data.Querying
 		public List<IColumn> Select { get; init; } = new();
 
 		/// <inheritdoc/>
-		public List<(IColumn on, IColumn equals)> InnerJoin { get; init; } = new();
+		public List<(IColumn from, IColumn to)> InnerJoin { get; init; } = new();
 
 		/// <inheritdoc/>
-		public List<(IColumn on, IColumn equals)> LeftJoin { get; init; } = new();
+		public List<(IColumn from, IColumn to)> LeftJoin { get; init; } = new();
 
 		/// <inheritdoc/>
-		public List<(IColumn on, IColumn equals)> RightJoin { get; init; } = new();
+		public List<(IColumn from, IColumn to)> RightJoin { get; init; } = new();
 
 		/// <inheritdoc/>
 		public List<(IColumn column, SearchOperator op, object value)> Where { get; init; } = new();
@@ -28,7 +28,7 @@ namespace Jeebs.Data.Querying
 		public IQueryParameters Parameters { get; init; } = new QueryParameters();
 
 		/// <inheritdoc/>
-		public List<(IColumn column, SortOrder order)> OrderBy { get; init; } = new();
+		public List<(IColumn column, SortOrder order)> Sort { get; init; } = new();
 
 		/// <inheritdoc/>
 		public long? Maximum { get; init; }
@@ -48,7 +48,7 @@ namespace Jeebs.Data.Querying
 			RightJoin = parts.RightJoin;
 			Where = parts.Where;
 			Parameters = parts.Parameters;
-			OrderBy = parts.OrderBy;
+			Sort = parts.Sort;
 			Maximum = parts.Maximum;
 			Skip = parts.Skip;
 		}

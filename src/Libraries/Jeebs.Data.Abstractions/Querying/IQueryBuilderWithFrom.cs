@@ -18,12 +18,12 @@ namespace Jeebs.Data
 		/// <typeparam name="TFrom">Join from table type</typeparam>
 		/// <typeparam name="TTo">Join to table type</typeparam>
 		/// <param name="join">Join type</param>
-		/// <param name="on">Join from this column</param>
-		/// <param name="equals">Join to this table and column</param>
+		/// <param name="from">Join from this column</param>
+		/// <param name="to">Join to this table and column</param>
 		IQueryBuilderWithFrom Join<TFrom, TTo>(
 			QueryJoin join,
-			Expression<Func<TFrom, string>> on,
-			Expression<Func<TTo, string>> equals
+			Expression<Func<TFrom, string>> from,
+			Expression<Func<TTo, string>> to
 		)
 			where TFrom : ITable, new()
 			where TTo : ITable, new();

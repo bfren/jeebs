@@ -1,8 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Querying;
 using Xunit;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
@@ -61,6 +63,253 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 					Assert.Equal(p1Value, x.Value);
 				}
 			);
+		}
+
+		[Fact]
+		public void With_Parts_Escapes_From_Table()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+			var parts = new QueryParts(table);
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Contains(client.Escape(table.GetName()), query);
+		}
+
+		[Fact]
+		public void With_Parts_Select_Empty_Selects_All()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+			var parts = new QueryParts(table);
+			var expected = $"SELECT * FROM `{table.GetName()}`;";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
+		public void With_Parts_Select_List_Escapes_With_Alias_And_Joins_Columns()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+
+			var c0Name = F.Rnd.Str;
+			var c0Alias = F.Rnd.Str;
+			var c0 = new Column(table.GetName(), c0Name, c0Alias);
+			var c1Name = F.Rnd.Str;
+			var c1Alias = F.Rnd.Str;
+			var c1 = new Column(table.GetName(), c1Name, c1Alias);
+			var parts = new QueryParts(table)
+			{
+				Select = new() { c0, c1 }
+			};
+			var expected = "SELECT" +
+				$" `{table.GetName()}`.`{c0Name}` AS '{c0Alias}'," +
+				$" `{table.GetName()}`.`{c1Name}` AS '{c1Alias}'" +
+				$" FROM `{table.GetName()}`;";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		private static void Test_Joins(Func<QueryParts, List<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+		{
+			// Arrange
+			var (client, fromTable) = MySqlDbClient_Setup.Get();
+
+			var fromName = F.Rnd.Str;
+			var from = new Column(fromTable.GetName(), fromName, F.Rnd.Str);
+
+			var to0Table = F.Rnd.Str;
+			var to0Name = F.Rnd.Str;
+			var to0 = new Column(to0Table, to0Name, F.Rnd.Str);
+
+			var to1Table = F.Rnd.Str;
+			var to1Name = F.Rnd.Str;
+			var to1 = new Column(to1Table, to1Name, F.Rnd.Str);
+
+			var join = new List<(IColumn, IColumn)> { (from, to0), (to0, to1) };
+
+			var parts = setJoin(new(fromTable), join);
+
+			var expected = $"SELECT * FROM `{fromTable.GetName()}`" +
+				$" {joinType} JOIN `{to0Table}` ON `{fromTable.GetName()}`.`{fromName}` = `{to0Table}`.`{to0Name}`" +
+				$" {joinType} JOIN `{to1Table}` ON `{to0Table}`.`{to0Name}` = `{to1Table}`.`{to1Name}`;";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Inner_Joins()
+		{
+			Test_Joins((p, j) => p with { InnerJoin = j }, "INNER");
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Left_Joins()
+		{
+			Test_Joins((p, j) => p with { LeftJoin = j }, "LEFT");
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Right_Joins()
+		{
+			Test_Joins((p, j) => p with { RightJoin = j }, "RIGHT");
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Where_Columns_With_Table_Names()
+		{
+			// Arrange
+			var (client, fromTable) = MySqlDbClient_Setup.Get();
+
+			var c0Table = F.Rnd.Str;
+			var c0Name = F.Rnd.Str;
+			var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
+
+			var c1Table = F.Rnd.Str;
+			var c1Name = F.Rnd.Str;
+			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
+
+			var where = new List<(IColumn, SearchOperator, object)>
+			{
+				(c0, SearchOperator.Like, F.Rnd.Str),
+				(c1, SearchOperator.MoreThanOrEqual, F.Rnd.Int)
+			};
+
+			var parts = new QueryParts(fromTable) { Where = where };
+
+			var expected = $"SELECT * FROM `{fromTable.GetName()}`" +
+				$" WHERE `{c0Table}`.`{c0Name}` LIKE @P0 AND `{c1Table}`.`{c1Name}` >= @P1;";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
+		public void With_Parts_Sets_Parameters()
+		{
+			// Arrange
+			var (client, fromTable) = MySqlDbClient_Setup.Get();
+
+			var c0Table = F.Rnd.Str;
+			var c0Name = F.Rnd.Str;
+			var c0Value = F.Rnd.Str;
+			var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
+
+			var c1Table = F.Rnd.Str;
+			var c1Name = F.Rnd.Str;
+			var c1Value = F.Rnd.Int;
+			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
+
+			var where = new List<(IColumn, SearchOperator, object)>
+			{
+				(c0, SearchOperator.Like, c0Value),
+				(c1, SearchOperator.MoreThanOrEqual, c1Value)
+			};
+
+			var parts = new QueryParts(fromTable) { Where = where };
+
+			// Act
+			var (_, param) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Collection(param,
+				x =>
+				{
+					Assert.Equal("P0", x.Key);
+					Assert.Equal(c0Value, x.Value);
+				},
+				x =>
+				{
+					Assert.Equal("P1", x.Key);
+					Assert.Equal(c1Value, x.Value);
+				}
+			);
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Order_By_With_Table_Name()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+
+			var sort0Table = F.Rnd.Str;
+			var sort0Name = F.Rnd.Str;
+			var sort0 = new Column(sort0Table, sort0Name, F.Rnd.Str);
+
+			var sort1Table = F.Rnd.Str;
+			var sort1Name = F.Rnd.Str;
+			var sort1 = new Column(sort1Table, sort1Name, F.Rnd.Str);
+
+			var parts = new QueryParts(table)
+			{
+				Sort = new()
+				{
+					(sort0, SortOrder.Ascending),
+					(sort1, SortOrder.Descending)
+				}
+			};
+
+			var expected = $"SELECT * FROM `{table.GetName()}` ORDER BY" +
+				$" `{sort0Table}`.`{sort0Name}` ASC," +
+				$" `{sort1Table}`.`{sort1Name}` DESC;";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Limit()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+			var max = F.Rnd.Lng;
+			var parts = new QueryParts(table) { Maximum = max };
+			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {max};";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Limit_And_Offset()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+			var skip = F.Rnd.Lng;
+			var max = F.Rnd.Lng;
+			var parts = new QueryParts(table) { Skip=skip, Maximum = max };
+			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {skip}, {max};";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
 		}
 	}
 }

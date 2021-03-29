@@ -14,9 +14,6 @@ namespace Jeebs.Data.Clients.MySql
 			IMappedColumnList columns
 		)
 		{
-			// Begin query
-			var sql = new StringBuilder($"INSERT INTO {Escape(table)} ");
-
 			// Get columns
 			var col = new List<string>();
 			var par = new List<string>();
@@ -26,14 +23,12 @@ namespace Jeebs.Data.Clients.MySql
 				par.Add($"@{column.Alias}");
 			}
 
-			// Add columns and parameters
-			sql.Append($"{JoinList(col, true)} VALUES {JoinList(par, true)}; ");
-
-			// Select ID
-			sql.Append("SELECT LAST_INSERT_ID();");
-
-			// Return query
-			return sql.ToString();
+			// Build and return query
+			return
+				$"INSERT INTO {Escape(table)} {JoinList(col, true)} " +
+				$"VALUES {JoinList(par, true)};" +
+				" SELECT LAST_INSERT_ID();"
+			;
 		}
 
 		/// <inheritdoc/>
@@ -48,11 +43,15 @@ namespace Jeebs.Data.Clients.MySql
 			var col = new List<string>();
 			foreach (var column in columns)
 			{
-				col.Add($"{Escape(column)} AS '{column.Alias}'");
+				col.Add(Escape(column, true));
 			}
 
-			// Return query
-			return $"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {Escape(idColumn)} = {id};";
+			// Build and return query
+			return
+				$"SELECT {JoinList(col, false)} " +
+				$"FROM {Escape(table)} " +
+				$"WHERE {Escape(idColumn)} = {id};"
+			;
 		}
 
 		/// <inheritdoc/>
@@ -86,8 +85,12 @@ namespace Jeebs.Data.Clients.MySql
 				col.Add($"{Escape(versionColumn)} = @{versionColumn.Alias} + 1");
 			}
 
-			// Add WHERE Id
-			var sql = new StringBuilder($"UPDATE {Escape(table)} SET {JoinList(col, false)} WHERE {Escape(idColumn)} = {id}");
+			// Begin query
+			var sql = new StringBuilder(
+				$"UPDATE {Escape(table)} " +
+				$"SET {JoinList(col, false)} " +
+				$"WHERE {Escape(idColumn)} = {id}"
+			);
 
 			// Add WHERE Version
 			if (versionColumn is not null)
@@ -117,7 +120,10 @@ namespace Jeebs.Data.Clients.MySql
 		)
 		{
 			// Begin query
-			var sql = new StringBuilder($"DELETE FROM {Escape(table)} WHERE {Escape(idColumn)} = {id}");
+			var sql = new StringBuilder(
+				$"DELETE FROM {Escape(table)} " +
+				$"WHERE {Escape(idColumn)} = {id}"
+			);
 
 			// Add WHERE Version
 			if (versionColumn is not null)

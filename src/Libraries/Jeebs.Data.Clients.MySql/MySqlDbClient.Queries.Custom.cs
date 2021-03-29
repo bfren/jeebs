@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Data.Enums;
+using static F.DataF.QueryF;
 
 namespace Jeebs.Data.Clients.MySql
 {
@@ -20,18 +21,21 @@ namespace Jeebs.Data.Clients.MySql
 			var col = new List<string>();
 			foreach (var column in columns)
 			{
-				col.Add($"{Escape(column)} AS '{column.Alias}'");
+				col.Add(Escape(column, true));
 			}
 
 			// Add each predicate to the where and parameter lists
-			var (where, param) = GetWhereAndParameters(predicates, false);
+			var (where, param) = GetWhereAndParameters(this, predicates, false);
 
 			// Return query and parameters
-			return ($"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)};", param);
+			return (
+				$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)};",
+				param
+			);
 		}
 
 		/// <inheritdoc/>
-		public override Option<(string query, IQueryParameters param)> GetQuery(IQueryParts parts)
+		public override (string query, IQueryParameters param) GetQuery(IQueryParts parts)
 		{
 			// Convert select columns into joined list
 			string getSelect()
@@ -39,7 +43,7 @@ namespace Jeebs.Data.Clients.MySql
 				var select = new List<string>();
 				foreach (var column in parts.Select)
 				{
-					select.Add($"{Escape(column)} AS '{column.Alias}'");
+					select.Add(EscapeWithTable(column, true));
 				}
 
 				return JoinList(select, false);
@@ -58,38 +62,38 @@ namespace Jeebs.Data.Clients.MySql
 			var sql = new StringBuilder($"SELECT {select} FROM {Escape(parts.From)}");
 
 			// Add INNER JOIN
-			foreach (var (on, equals) in parts.InnerJoin)
+			foreach (var (from, to) in parts.InnerJoin)
 			{
-				sql.Append($" INNER JOIN {Escape(on.Table)} ON {Escape(on.Name, on.Table)} = {Escape(equals.Name, equals.Table)}");
+				sql.Append($" INNER JOIN {Escape(to.Table)} ON {Escape(from.Name, from.Table)} = {Escape(to.Name, to.Table)}");
 			}
 
 			// Add LEFT JOIN
-			foreach (var (on, equals) in parts.LeftJoin)
+			foreach (var (from, to) in parts.LeftJoin)
 			{
-				sql.Append($" LEFT JOIN {Escape(on.Table)} ON {Escape(on.Name, on.Table)} = {Escape(equals.Name, equals.Table)}");
+				sql.Append($" LEFT JOIN {Escape(to.Table)} ON {Escape(from.Name, from.Table)} = {Escape(to.Name, to.Table)}");
 			}
 
 			// Add RIGHT JOIN
-			foreach (var (on, equals) in parts.RightJoin)
+			foreach (var (from, to) in parts.RightJoin)
 			{
-				sql.Append($" RIGHT JOIN {Escape(on.Table)} ON {Escape(on.Name, on.Table)} = {Escape(equals.Name, equals.Table)}");
+				sql.Append($" RIGHT JOIN {Escape(to.Table)} ON {Escape(from.Name, from.Table)} = {Escape(to.Name, to.Table)}");
 			}
 
 			// Add WHERE
-			IQueryParameters param = new QueryParameters();
+			IQueryParameters parameters = new QueryParameters();
 			if (parts.Where.Count > 0)
 			{
-				var where = GetWhereAndParameters(parts.Where, true);
-				sql.Append($" WHERE {JoinList(where.where, false)}");
+				var (where, param) = GetWhereAndParameters(this, parts.Where, true);
+				sql.Append($" WHERE {string.Join(" AND ", where)}");
 
-				param = where.param;
+				parameters = param;
 			}
 
 			// Add ORDER BY
-			if (parts.OrderBy.Count > 0)
+			if (parts.Sort.Count > 0)
 			{
 				var orderBy = new List<string>();
-				foreach (var (column, order) in parts.OrderBy)
+				foreach (var (column, order) in parts.Sort)
 				{
 					orderBy.Add($"{Escape(column.Name, column.Table)} {order.ToOperator()}");
 				}
@@ -115,7 +119,10 @@ namespace Jeebs.Data.Clients.MySql
 			sql.Append(';');
 
 			// Return query string
-			return (sql.ToString(), param);
+			return (
+				sql.ToString(),
+				parameters
+			);
 		}
 	}
 }
