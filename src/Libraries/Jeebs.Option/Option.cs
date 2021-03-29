@@ -175,13 +175,13 @@ namespace Jeebs
 			this switch
 			{
 				Some<T> x when x.Value is T y =>
-					typeof(Some<>).GetHashCode() ^ y.GetHashCode(),
+					typeof(Some<>).GetHashCode() ^ typeof(T).GetHashCode() ^ y.GetHashCode(),
 
-				None<T> x when x.Reason is IMsg y =>
-					typeof(None<>).GetHashCode() ^ y.GetHashCode(),
+				Some<T> _ =>
+					typeof(Some<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
-				None<T> _ =>
-					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
+				None<T> x =>
+					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode() ^ x.Reason.GetHashCode(),
 
 				_ =>
 					throw new UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
