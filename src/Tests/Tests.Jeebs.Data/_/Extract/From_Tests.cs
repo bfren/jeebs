@@ -1,10 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Mapping;
 using Xunit;
 using static Jeebs.Data.ExtractMsg;
 
-namespace Jeebs.Data.Mapping.Extract_Tests
+namespace Jeebs.Data.Extract_Tests
 {
 	public class From_Tests
 	{
@@ -36,19 +37,20 @@ namespace Jeebs.Data.Mapping.Extract_Tests
 		}
 
 		[Fact]
-		public void Returns_Extracted_Columns()
+		public void Returns_Extracted_Columns_Without_Duplicates()
 		{
 			// Arrange
 			var t0 = new FooTable();
 			var t1 = new FooUnwriteableTable();
+			var t2 = new FooDuplicateTable();
 
 			// Act
-			var result = Extract<FooCombined>.From(t0, t1);
+			var result = Extract<FooCombined>.From(t0, t1, t2);
 
 			// Assert
 			var some = result.AssertSome();
 			Assert.Collection(some,
-				x => Assert.Equal((t0.ToString(), t0.FooId), (x.Table, x.Name)),
+				x => Assert.Equal((t0.GetName(), t0.FooId), (x.Table, x.Name)),
 				x => Assert.Equal(t0.Bar0, x.Name),
 				x => Assert.Equal(t1.Bar2, x.Name)
 			);
@@ -63,6 +65,8 @@ namespace Jeebs.Data.Mapping.Extract_Tests
 
 			public string Bar2 { get; set; } = string.Empty;
 		}
+
+		public record FooDuplicateTable : FooTable;
 
 		public class FooNone
 		{

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying.Exceptions;
@@ -51,10 +52,12 @@ namespace Jeebs.Data.Querying
 			where TTable : ITable, new()
 			where TException : QueryBuilderException<TTable>, new()
 		{
-			if (!Tables.Contains(new TTable()))
+			if (Tables.Any(t => t is TTable))
 			{
-				throw new TException();
+				return;
 			}
+
+			throw new TException();
 		}
 
 		/// <summary>
@@ -65,7 +68,7 @@ namespace Jeebs.Data.Querying
 			where TTable : ITable, new()
 		{
 			var table = new TTable();
-			if (!Tables.Contains(table))
+			if (!Tables.Any(t => t is TTable))
 			{
 				Tables.Add(table);
 			}
@@ -80,15 +83,15 @@ namespace Jeebs.Data.Querying
 			where TFrom : ITable, new()
 			where TTo : ITable, new()
 		{
-			// Check 'from' table
+			// Check 'from' table is already added
 			CheckTable<TFrom, JoinFromTableNotAddedException<TFrom>>();
 
 			// Add 'to' table to query
 			AddTable<TTo>();
 
 			// Get columns
-			var fromColumn = GetColumn(from);
-			var toColumn = GetColumn(to);
+			var fromColumn = GetColumnFromExpression(from);
+			var toColumn = GetColumnFromExpression(to);
 
 			// Add to query
 			switch (join)
@@ -118,7 +121,7 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, WhereTableNotAddedException<TTable>>();
 
 			// Add predicate
-			Parts.Where.Add((GetColumn(column), op, value));
+			Parts.Where.Add((GetColumnFromExpression(column), op, value));
 
 			// Return
 			return this;
@@ -132,7 +135,7 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 			// Add sort column
-			Parts.Sort.Add((GetColumn(column), SortOrder.Ascending));
+			Parts.Sort.Add((GetColumnFromExpression(column), SortOrder.Ascending));
 
 			// Return
 			return this;
@@ -146,7 +149,7 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 			// Add sort column
-			Parts.Sort.Add((GetColumn(column), SortOrder.Descending));
+			Parts.Sort.Add((GetColumnFromExpression(column), SortOrder.Descending));
 
 			// Return
 			return this;

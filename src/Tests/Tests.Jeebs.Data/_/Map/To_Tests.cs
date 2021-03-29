@@ -1,10 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Map_Tests
+namespace Jeebs.Data.Map_Tests
 {
 	public class To_Tests
 	{

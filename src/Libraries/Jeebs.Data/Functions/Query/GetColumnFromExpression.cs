@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.Linq;
-using static F.OptionF;
 
 namespace F.DataF
 {
@@ -29,7 +28,7 @@ namespace F.DataF
 		/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
 		public static Option<IColumn> GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)
 			where TTable : ITable, new() =>
-			GetColumnFromExpression(column);
+			GetColumnFromExpression(new TTable(), column);
 
 		public static partial class Msg
 		{

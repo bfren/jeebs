@@ -2,31 +2,27 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using Jeebs;
 using Jeebs.Data;
+using Jeebs.Data.Querying.Exceptions;
 using Xunit;
-using static F.DataF.QueryF;
-using static F.DataF.QueryF.Msg;
+using static F.DataF.QueryBuilderF;
 
-namespace F.DataF.QueryF_Tests
+namespace F.DataF.QueryBuilderF_Tests
 {
 	public class GetColumnFromExpression_Tests
 	{
 		[Fact]
-		public void Exception_While_Making_Column_Returns_None_With_UnableToGetColumnFromExpressionExceptionMsg()
+		public void Unable_To_Get_Column_Throws_UnableToGetColumnFromExpressionException()
 		{
 			// Arrange
-			var table = new BrokenTable();
 
 			// Act
-			var r0 = GetColumnFromExpression(table, t => t.Foo);
-			var r1 = GetColumnFromExpression<BrokenTable>(t => t.Foo);
+			static void a0() => GetColumnFromExpression<BrokenTable>(t => t.Foo);
+			static void a1() => GetColumnFromExpression(new BrokenTable(), t => t.Foo);
 
 			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<UnableToGetColumnFromExpressionExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnableToGetColumnFromExpressionExceptionMsg>(n1);
+			Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);
+			Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a1);
 		}
 
 		[Fact]
@@ -41,14 +37,12 @@ namespace F.DataF.QueryF_Tests
 			var r1 = GetColumnFromExpression<TestTable>(t => t.Foo);
 
 			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(tableName, s0.Table);
-			Assert.Equal(table.Foo, s0.Name);
-			Assert.Equal(nameof(table.Foo), s0.Alias);
-			var s1 = r1.AssertSome();
-			Assert.Equal("TestTable", s1.Table);
-			Assert.Equal(table.Foo, s1.Name);
-			Assert.Equal(nameof(table.Foo), s1.Alias);
+			Assert.Equal(tableName, r0.Table);
+			Assert.Equal(table.Foo, r0.Name);
+			Assert.Equal(nameof(table.Foo), r0.Alias);
+			Assert.Equal("TestTable", r1.Table);
+			Assert.Equal(table.Foo, r1.Name);
+			Assert.Equal(nameof(table.Foo), r1.Alias);
 		}
 
 		public record BrokenTable : TestTable

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Linq;
-using static F.OptionF;
+using static F.DataF.QueryBuilderF;
 
 namespace Jeebs.Data.Querying
 {
@@ -15,23 +15,6 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	public static class DbQueryExtensions
 	{
-		/// <summary>
-		/// Build a query and return query parts
-		/// </summary>
-		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="builder">Query builder</param>
-		private static Option<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
-			Return(
-				new QueryBuilder()
-			)
-			.Map(
-				x => (QueryBuilderWithFrom)builder(x),
-				e => new Msg.QueryBuilderExceptionMsg(e)
-			)
-			.Bind(
-				x => x.Select<TModel>()
-			);
-
 		/// <summary>
 		/// Use a fluent <see cref="IQueryBuilder"/> to create a query to run against the database
 		/// </summary>
@@ -78,13 +61,5 @@ namespace Jeebs.Data.Querying
 			.BindAsync(
 				x => @this.QuerySingleAsync<TModel>(x, transaction)
 			);
-
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>Error while building query</summary>
-			/// <param name="Exception">Exception object</param>
-			public sealed record QueryBuilderExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
-		}
 	}
 }
