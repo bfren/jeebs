@@ -10,6 +10,8 @@ namespace F.DataF
 {
 	public static partial class QueryF
 	{
+		private const bool enableColumnsCache = false;
+
 		/// <summary>
 		/// Cached maps of table classes to columns
 		/// </summary>
@@ -20,38 +22,46 @@ namespace F.DataF
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="table">Table</param>
-		public static ColumnList GetColumnsFromTable<TModel>(ITable table) =>
-			columnsCache.GetOrAdd(
-				(table.GetType(), typeof(TModel)),
-				x =>
+		public static ColumnList GetColumnsFromTable<TModel>(ITable table)
+		{
+			return enableColumnsCache switch
+			{
+				true =>
+					columnsCache.GetOrAdd((table.GetType(), typeof(TModel)), _ => get()),
+
+				false =>
+					get()
+			};
+
+			ColumnList get()
+			{
+				// Get the list of properties
+				var tableProperties = table.GetType().GetProperties();
+
+				// Holds the list of column names being extracted
+				var extracted = new ColumnList();
+				foreach (var property in GetModelProperties<TModel>())
 				{
-					// Get the list of properties
-					var tableProperties = x.table.GetProperties();
+					// Get the corresponding field
+					var field = tableProperties.SingleOrDefault(p => p.Name == property.Name);
 
-					// Holds the list of column names being extracted
-					var extracted = new ColumnList();
-					foreach (var property in GetModelProperties<TModel>())
+					// If the table field is not present in the model, continue
+					if (field is null)
 					{
-						// Get the corresponding field
-						var field = tableProperties.SingleOrDefault(p => p.Name == property.Name);
-
-						// If the table field is not present in the model, continue
-						if (field is null)
-						{
-							continue;
-						}
-
-						// Add the column to the extraction list
-						if (field.GetValue(table) is string column)
-						{
-							var alias = property.Name;
-							extracted.Add(new Column(table.GetName(), column, alias));
-						}
+						continue;
 					}
 
-					// Return extracted columns
-					return extracted;
+					// Add the column to the extraction list
+					if (field.GetValue(table) is string column)
+					{
+						var alias = property.Name;
+						extracted.Add(new Column(table.GetName(), column, alias));
+					}
 				}
-			);
+
+				// Return extracted columns
+				return extracted;
+			}
+		}
 	}
 }

@@ -30,7 +30,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Action<T> some) =>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some) =>
 			F.OptionF.AuditAsync(
 				@this,
 				any: null,
@@ -39,7 +39,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<T, Task> some) =>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some) =>
 			F.OptionF.AuditAsync(
 				@this,
 				any: null,
@@ -48,7 +48,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Action<IMsg> none) =>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<IMsg> none) =>
 			F.OptionF.AuditAsync(
 				@this,
 				any: null,
@@ -57,7 +57,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<IMsg, Task> none) =>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<IMsg, Task> none) =>
 			F.OptionF.AuditAsync(
 				@this,
 				any: null,
@@ -66,7 +66,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Action<T> some, Action<IMsg> none) =>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some, Action<IMsg> none) =>
 			F.OptionF.AuditAsync(
 				@this,
 				any: null,
@@ -75,7 +75,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-		public static Task<Option<T>> AuditSwitchAsync<T>(this Task<Option<T>> @this, Func<T, Task> some, Func<IMsg, Task> none) =>
+		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some, Func<IMsg, Task> none) =>
 			F.OptionF.AuditAsync(
 				@this,
 				any: null,

@@ -2,9 +2,11 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using AppMvc.EfCore;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Mvc.Auth;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +24,10 @@ namespace AppMvc
 			services.AddAuth(config)
 				.WithData<MySqlDbClient>()
 				.WithJwt();
+
+			services.AddDbContext<EfCoreContext>(
+				options => options.UseMySQL("server=192.168.1.104;port=18793;user id=ben;password=Broiler-Viability-Emergency8;database=test;convert zero datetime=True;sslmode=none")
+			);
 		}
 
 		protected override void Ready(IServiceProvider services)

@@ -36,45 +36,45 @@ namespace AppConsoleWordPress
 					var usa = provider.GetRequiredService<WpUsa>();
 
 					// Run test methods
-					await TermsAsync("BCG", bcg.Db).AuditAsync(AuditTerms);
-					await TermsAsync("USA", usa.Db).AuditAsync(AuditTerms);
+					await TermsAsync((string)"BCG", (IWpDb)bcg.Db).AuditAsync((Action<Option<int>>)AuditTerms);
+					await TermsAsync((string)"USA", (IWpDb)usa.Db).AuditAsync((Action<Option<int>>)AuditTerms);
 
-					await Return(bcg.Db)
-						.BindAsync(InsertOptionAsync)
-						.AuditAsync(AuditOption);
+					await Return((IWpDb)bcg.Db)
+						.BindAsync((Func<IWpDb, Task<Option<Bcg.Entities.Option>>>)InsertOptionAsync)
+						.AuditAsync((Action<Option<Bcg.Entities.Option>>)AuditOption);
 
-					await Return(bcg.Db)
-						.BindAsync(x => GetPagedSermonsAsync(x, "holiness", opt =>
+					await Return((IWpDb)bcg.Db)
+						.BindAsync((Func<IWpDb, Task<Option<PagedList<SermonModel>>>>)(x => (Task<Option<PagedList<SermonModel>>>)GetPagedSermonsAsync((IWpDb)x, (string)"holiness", (Action<QueryPosts.Options>)(opt =>
 						{
 							opt.SearchText = "holiness";
 							opt.SearchOperator = SearchOperator.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+							opt.Sort = new[] { (Title:(string)bcg.Db.Post.Title, Ascending:(SortOrder)SortOrder.Ascending) };
 							opt.Limit = 4;
-						}))
-						.AuditAsync(AuditPagedSermons);
+						}))))
+						.AuditAsync((Action<Option<PagedList<SermonModel>>>)AuditPagedSermons);
 
-					await Return(bcg.Db)
-						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
+					await Return((IWpDb)bcg.Db)
+						.BindAsync((Func<IWpDb, Task<Option<List<SermonModel>>>>)(x => (Task<Option<List<SermonModel>>>)SearchSermonsAsync((IWpDb)x, (string)"holiness", (Action<QueryPosts.Options>)(opt =>
 						{
 							opt.SearchText = "holiness";
 							opt.SearchOperator = SearchOperator.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+							opt.Sort = new[] { (Title:(string)bcg.Db.Post.Title, Ascending:(SortOrder)SortOrder.Ascending) };
 							opt.Limit = 4;
-						}))
-						.AuditAsync(AuditSermons);
+						}))))
+						.AuditAsync((Action<Option<List<SermonModel>>>)AuditSermons);
 
-					await Return(bcg.Db)
-						.BindAsync(x => SearchSermonsAsync(x, "jesus", opt =>
+					await Return((IWpDb)bcg.Db)
+						.BindAsync((Func<IWpDb, Task<Option<List<SermonModel>>>>)(x => (Task<Option<List<SermonModel>>>)SearchSermonsAsync((IWpDb)x, (string)"jesus", (Action<QueryPosts.Options>)(opt =>
 						{
 							opt.Type = WpBcg.PostTypes.Sermon;
 							opt.SearchText = "jesus";
 							opt.SearchFields = SearchPostFields.Title;
-							opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
+							opt.Taxonomies = new[] { (BibleBook:(Taxonomy)WpBcg.Taxonomies.BibleBook, (long)424L) };
 							opt.Limit = 5;
-						}))
-						.AuditAsync(AuditSermons);
+						}))))
+						.AuditAsync((Action<Option<List<SermonModel>>>)AuditSermons);
 
 					await Return(bcg.Db)
 						.BindAsync(FetchMeta)
@@ -89,13 +89,13 @@ namespace AppConsoleWordPress
 						DefaultHandler
 					);
 
-					await Return(bcg.Db)
-						.BindAsync(FetchTaxonomies)
-						.AuditAsync(AuditTaxonomies);
+					await Return((IWpDb)bcg.Db)
+						.BindAsync((Func<IWpDb, Task<Option<List<SermonModelWithTaxonomies>>>>)FetchTaxonomies)
+						.AuditAsync((Action<Option<List<SermonModelWithTaxonomies>>>)AuditTaxonomies);
 
-					await Return(bcg.Db)
-						.BindAsync(ApplyContentFilters)
-						.AuditAsync(AuditApplyContentFilters);
+					await Return((IWpDb)bcg.Db)
+						.BindAsync((Func<IWpDb, Task<Option<List<PostModelWithContent>>>>)ApplyContentFilters)
+						.AuditAsync((Action<Option<List<PostModelWithContent>>>)AuditApplyContentFilters);
 
 					// End
 					Console.WriteLine();

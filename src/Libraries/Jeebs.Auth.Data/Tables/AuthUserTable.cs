@@ -10,7 +10,7 @@ namespace Jeebs.Auth.Data.Tables
 	/// <summary>
 	/// Authentication User Table
 	/// </summary>
-	internal sealed record AuthUserTable() : Table("auth_user")
+	public sealed record AuthUserTable() : Table("auth_user")
 	{
 		/// <summary>
 		/// Prefix added before all columns

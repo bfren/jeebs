@@ -24,12 +24,12 @@ namespace Jeebs.OptionExtensions_Tests
 
 			await Test01(opt => opt.AsTask.AuditAsync(anyA));
 			await Test01(opt => opt.AsTask.AuditAsync(anyF));
-			await Test01(opt => opt.AsTask.AuditSwitchAsync(someA));
-			await Test01(opt => opt.AsTask.AuditSwitchAsync(someF));
-			await Test01(opt => opt.AsTask.AuditSwitchAsync(noneA));
-			await Test01(opt => opt.AsTask.AuditSwitchAsync(noneF));
-			await Test01(opt => opt.AsTask.AuditSwitchAsync(someA, noneA));
-			await Test01(opt => opt.AsTask.AuditSwitchAsync(someF, noneF));
+			await Test01(opt => opt.AsTask.AuditAsync(someA));
+			await Test01(opt => opt.AsTask.AuditAsync(someF));
+			await Test01(opt => opt.AsTask.AuditAsync(noneA));
+			await Test01(opt => opt.AsTask.AuditAsync(noneF));
+			await Test01(opt => opt.AsTask.AuditAsync(someA, noneA));
+			await Test01(opt => opt.AsTask.AuditAsync(someF, noneF));
 		}
 
 		#endregion
@@ -92,8 +92,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var none = Substitute.For<Action<IMsg>>();
 
-			await Test10((opt, some) => opt.AsTask.AuditSwitchAsync(some));
-			await Test10((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test10((opt, some) => opt.AsTask.AuditAsync(some));
+			await Test10((opt, some) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -101,8 +101,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var none = Substitute.For<Func<IMsg, Task>>();
 
-			await Test11((opt, some) => opt.AsTask.AuditSwitchAsync(some));
-			await Test11((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test11((opt, some) => opt.AsTask.AuditAsync(some));
+			await Test11((opt, some) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -110,8 +110,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var some = Substitute.For<Action<int>>();
 
-			await Test12((opt, none) => opt.AsTask.AuditSwitchAsync(none));
-			await Test12((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test12((opt, none) => opt.AsTask.AuditAsync(none));
+			await Test12((opt, none) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -119,8 +119,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var some = Substitute.For<Func<int, Task>>();
 
-			await Test13((opt, none) => opt.AsTask.AuditSwitchAsync(none));
-			await Test13((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test13((opt, none) => opt.AsTask.AuditAsync(none));
+			await Test13((opt, none) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -128,8 +128,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var none = Substitute.For<Action<IMsg>>();
 
-			await Test14((opt, some) => opt.AsTask.AuditSwitchAsync(some));
-			await Test14((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test14((opt, some) => opt.AsTask.AuditAsync(some));
+			await Test14((opt, some) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -137,8 +137,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var none = Substitute.For<Func<IMsg, Task>>();
 
-			await Test15((opt, some) => opt.AsTask.AuditSwitchAsync(some));
-			await Test15((opt, some) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test15((opt, some) => opt.AsTask.AuditAsync(some));
+			await Test15((opt, some) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -146,8 +146,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var some = Substitute.For<Action<int>>();
 
-			await Test16((opt, none) => opt.AsTask.AuditSwitchAsync(none));
-			await Test16((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test16((opt, none) => opt.AsTask.AuditAsync(none));
+			await Test16((opt, none) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		[Fact]
@@ -155,8 +155,8 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			var some = Substitute.For<Func<int, Task>>();
 
-			await Test17((opt, none) => opt.AsTask.AuditSwitchAsync(none));
-			await Test17((opt, none) => opt.AsTask.AuditSwitchAsync(some, none));
+			await Test17((opt, none) => opt.AsTask.AuditAsync(none));
+			await Test17((opt, none) => opt.AsTask.AuditAsync(some, none));
 		}
 
 		#endregion

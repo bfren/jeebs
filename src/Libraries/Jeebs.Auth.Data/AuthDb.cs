@@ -19,17 +19,17 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// Role Table
 		/// </summary>
-		internal AuthRoleTable Role { get; }
+		public AuthRoleTable Role { get; }
 
 		/// <summary>
 		/// User Table
 		/// </summary>
-		internal AuthUserTable User { get; }
+		public AuthUserTable User { get; }
 
 		/// <summary>
 		/// User Role Table
 		/// </summary>
-		internal AuthUserRoleTable UserRole { get; }
+		public AuthUserRoleTable UserRole { get; }
 
 		/// <summary>
 		/// Create object

@@ -12,6 +12,8 @@ namespace F.DataF
 {
 	public static partial class QueryF
 	{
+		private const bool enablePropertiesCache = false;
+
 		/// <summary>
 		/// Properties of models that have not been marked with <see cref="IgnoreAttribute"/>
 		/// </summary>
@@ -21,12 +23,21 @@ namespace F.DataF
 		/// Get all properties from a model not marked with <see cref="IgnoreAttribute"/>
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
-		public static IEnumerable<PropertyInfo> GetModelProperties<TModel>() =>
-			propertiesCache.GetOrAdd(
-				typeof(TModel),
-				type => from p in type.GetProperties()
-						where p.GetCustomAttribute<IgnoreAttribute>() == null
-						select p
-			);
+		public static IEnumerable<PropertyInfo> GetModelProperties<TModel>()
+		{
+			return enablePropertiesCache switch
+			{
+				true =>
+					propertiesCache.GetOrAdd(typeof(TModel), _ => get()),
+
+				false =>
+					get()
+			};
+
+			static IEnumerable<PropertyInfo> get() =>
+				from p in typeof(TModel).GetProperties()
+				where p.GetCustomAttribute<IgnoreAttribute>() == null
+				select p;
+		}
 	}
 }
