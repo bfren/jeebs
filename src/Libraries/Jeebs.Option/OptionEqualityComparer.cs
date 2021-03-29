@@ -17,7 +17,7 @@ namespace Jeebs
 		/// <para>Otherwise this will return false</para>
 		/// </summary>
 		/// <param name="x">First Option</param>
-		/// <param name="x">Second Option</param>
+		/// <param name="y">Second Option</param>
 		public bool Equals(Option<T>? x, Option<T>? y) =>
 			x switch
 			{

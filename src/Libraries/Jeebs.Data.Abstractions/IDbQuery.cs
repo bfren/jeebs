@@ -67,7 +67,7 @@ namespace Jeebs.Data
 			IDbTransaction? transaction = null
 		);
 
-		/// <inheritdoc cref="QuerySingleAsync{TModel}(IQueryParts, CommandType, IDbTransaction?)"/>
+		/// <inheritdoc cref="QueryAsync{TModel}(IQueryParts, IDbTransaction?)"/>
 		Task<Option<TModel>> QuerySingleAsync<TModel>(
 			IQueryParts parts,
 			IDbTransaction? transaction = null

@@ -13,6 +13,7 @@ namespace F.DataF
 		/// <summary>
 		/// Turn list of predicates into WHERE clauses with associated parameters
 		/// </summary>
+		/// <param name="client">IDbClient</param>
 		/// <param name="predicates">List of predicates</param>
 		/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
 		public static (List<string> where, IQueryParameters param) GetWhereAndParameters(

@@ -14,6 +14,7 @@ namespace F.DataF
 		/// Build a column object from a column selector expression
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="table">Table object</param>
 		/// <param name="column">Column expression</param>
 		public static IColumn GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 			where TTable : ITable =>
