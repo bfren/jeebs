@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying.Exceptions;
 using Jeebs.Linq;
+using static F.DataF.QueryBuilderF;
 
 namespace Jeebs.Data.Querying
 {
@@ -16,12 +17,12 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Query Parts
 		/// </summary>
-		private QueryParts Parts { get; init; }
+		internal QueryParts Parts { get; private init; }
 
 		/// <summary>
 		/// List of tables added to this query
 		/// </summary>
-		private List<ITable> Tables { get; init; }
+		internal List<ITable> Tables { get; private init; }
 
 		/// <summary>
 		/// Create using the specified table
@@ -46,7 +47,7 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <typeparam name="TException">Exception type to throw if the table has not been added</typeparam>
-		private void CheckTable<TTable, TException>()
+		internal void CheckTable<TTable, TException>()
 			where TTable : ITable, new()
 			where TException : QueryBuilderException<TTable>, new()
 		{
@@ -60,7 +61,7 @@ namespace Jeebs.Data.Querying
 		/// Add a table to the list of tables, if it has not already been added
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
-		private void AddTable<TTable>()
+		internal void AddTable<TTable>()
 			where TTable : ITable, new()
 		{
 			var table = new TTable();
@@ -68,26 +69,6 @@ namespace Jeebs.Data.Querying
 			{
 				Tables.Add(table);
 			}
-		}
-
-		/// <summary>
-		/// Build a column object from a column selector expression
-		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="column">Column expression</param>
-		private static IColumn GetColumn<TTable>(Expression<Func<TTable, string>> column)
-			where TTable : ITable, new()
-		{
-			// Get property info
-			var info = column.GetPropertyInfo();
-			if (info == null)
-			{
-				throw new UnableToGetColumnFromExpressionException<TTable>();
-			}
-
-			// Create column
-			var table = new TTable();
-			return new Column(table.GetName(), info.Get(table), info.Name);
 		}
 
 		/// <inheritdoc/>

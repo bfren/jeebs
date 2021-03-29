@@ -25,9 +25,6 @@ namespace Jeebs.Data.Querying
 		public List<(IColumn column, SearchOperator op, object value)> Where { get; init; } = new();
 
 		/// <inheritdoc/>
-		public IQueryParameters Parameters { get; init; } = new QueryParameters();
-
-		/// <inheritdoc/>
 		public List<(IColumn column, SortOrder order)> Sort { get; init; } = new();
 
 		/// <inheritdoc/>
@@ -37,7 +34,7 @@ namespace Jeebs.Data.Querying
 		public long Skip { get; init; }
 
 		/// <summary>
-		/// Create from interface
+		/// Create from another object by copying values
 		/// </summary>
 		/// <param name="parts">IQueryParts</param>
 		public QueryParts(IQueryParts parts) : this(parts.From)
@@ -47,7 +44,6 @@ namespace Jeebs.Data.Querying
 			LeftJoin = parts.LeftJoin;
 			RightJoin = parts.RightJoin;
 			Where = parts.Where;
-			Parameters = parts.Parameters;
 			Sort = parts.Sort;
 			Maximum = parts.Maximum;
 			Skip = parts.Skip;

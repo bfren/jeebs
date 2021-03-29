@@ -32,7 +32,6 @@ namespace Jeebs.Data.DbQuery_Tests
 		{
 			var param = Substitute.For<IQueryParameters>();
 			var parts = Substitute.For<IQueryParts>();
-			parts.Parameters.Returns(param);
 
 			return (parts, param);
 		}

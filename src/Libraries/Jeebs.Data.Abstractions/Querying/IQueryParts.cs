@@ -42,11 +42,6 @@ namespace Jeebs.Data
 		List<(IColumn column, SearchOperator op, object value)> Where { get; init; }
 
 		/// <summary>
-		/// Query Parameters
-		/// </summary>
-		IQueryParameters Parameters { get; init; }
-
-		/// <summary>
 		/// Sort columns
 		/// </summary>
 		List<(IColumn column, SortOrder order)> Sort { get; init; }

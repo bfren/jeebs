@@ -158,13 +158,11 @@ namespace F.DataF.QueryF_Tests
 			Test_In_With_Enumerable((v0, v1, v2) => new[] { v0, v1, v2 });
 		}
 
-
 		[Fact]
 		public void Operator_In_With_IEnumerable_Keeps_Original_Value()
 		{
 			Test_In_With_Enumerable((v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
 		}
-
 
 		[Fact]
 		public void Operator_In_With_List_Keeps_Original_Value()

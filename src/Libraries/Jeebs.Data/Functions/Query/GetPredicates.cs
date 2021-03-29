@@ -61,7 +61,7 @@ namespace F.DataF
 		}
 
 		/// <summary>Messages</summary>
-		public static class Msg
+		public static partial class Msg
 		{
 			/// <summary>IN predicate means value is 'in' an array of values so the value must be a list</summary>
 			public sealed record InOperatorRequiresValueToBeAListMsg : IMsg { }

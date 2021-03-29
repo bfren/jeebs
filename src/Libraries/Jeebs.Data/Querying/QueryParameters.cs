@@ -54,5 +54,11 @@ namespace Jeebs.Data
 				&& p.GetMethod?.GetParameters().Length == 0 // exclude index get accessors e.g. this[1]
 				select p;
 		}
+
+		/// <summary>
+		/// Return parameters as JSON
+		/// </summary>
+		public override string ToString() =>
+			F.JsonF.Serialise(this).Unwrap(GetType().ToString());
 	}
 }
