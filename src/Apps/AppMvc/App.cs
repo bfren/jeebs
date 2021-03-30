@@ -26,7 +26,7 @@ namespace AppMvc
 				.WithJwt();
 
 			services.AddDbContext<EfCoreContext>(
-				options => options.UseMySQL("server=192.168.1.104;port=18793;user id=ben;password=Broiler-Viability-Emergency8;database=test;convert zero datetime=True;sslmode=none")
+				options => options.UseMySQL("server=192.168.1.104;port=18793;user id=test;password=test;database=test;convert zero datetime=True;sslmode=none")
 			);
 		}
 

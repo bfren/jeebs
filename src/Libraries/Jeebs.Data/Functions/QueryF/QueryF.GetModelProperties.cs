@@ -12,7 +12,7 @@ namespace F.DataF
 {
 	public static partial class QueryF
 	{
-		private const bool enablePropertiesCache = false;
+		private const bool enablePropertiesCache = true;
 
 		/// <summary>
 		/// Properties of models that have not been marked with <see cref="IgnoreAttribute"/>

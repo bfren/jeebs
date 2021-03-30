@@ -2,12 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Entities;
-using Jeebs.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppMvc.EfCore
@@ -19,6 +13,8 @@ namespace AppMvc.EfCore
 
 		public DbSet<EfCoreAuthUserRoleEntity> UserRoles =>
 			Set<EfCoreAuthUserRoleEntity>();
+		public DbSet<EfCoreAuthUserEntity> Users =>
+			Set<EfCoreAuthUserEntity>();
 
 		public EfCoreContext(DbContextOptions<EfCoreContext> options) : base(options) { }
 
@@ -31,6 +27,18 @@ namespace AppMvc.EfCore
 
 			var userRole = modelBuilder.Entity<EfCoreAuthUserRoleEntity>().ToTable("auth_user_role");
 			userRole.Property(r => r.Id).HasColumnName("UserRoleId").HasComputedColumnSql().IsRequired();
+
+			var user = modelBuilder.Entity<EfCoreAuthUserEntity>().ToTable("auth_user");
+			user.Property(u => u.Id).HasColumnName("UserId").HasComputedColumnSql().IsRequired();
+			user.Property(u => u.EmailAddress).HasColumnName("UserEmailAddress");
+			user.Property(u => u.FriendlyName).HasColumnName("UserFriendlyName");
+			user.Property(u => u.GivenName).HasColumnName("UserGivenName");
+			user.Property(u => u.FamilyName).HasColumnName("UserFamilyName");
+			user.Property(u => u.IsSuper).HasColumnName("UserIsSuper");
+			user.Property(u => u.Version).HasColumnName("UserVersion");
+			user.Property(u => u.PasswordHash).HasColumnName("UserPasswordHash");
+			user.Property(u => u.IsEnabled).HasColumnName("UserIsEnabled");
+			user.Property(u => u.LastSignedIn).HasColumnName("UserLastSignedIn");
 		}
 
 		public sealed record EfCoreAuthRoleEntity
@@ -53,6 +61,31 @@ namespace AppMvc.EfCore
 			public long RoleId { get; init; }
 
 			internal EfCoreAuthUserRoleEntity() { }
+		}
+
+		public sealed record EfCoreAuthUserEntity
+		{
+			public long Id { get; init; }
+
+			public string EmailAddress { get; init; } = string.Empty;
+
+			public string? FriendlyName { get; init; }
+
+			public string? GivenName { get; init; }
+
+			public string? FamilyName { get; init; }
+
+			public bool IsSuper { get; init; }
+
+			public long Version { get; init; }
+
+			public string PasswordHash { get; init; } = string.Empty;
+
+			public bool IsEnabled { get; init; }
+
+			public DateTimeOffset? LastSignedIn { get; init; }
+
+			internal EfCoreAuthUserEntity() { }
 		}
 	}
 }

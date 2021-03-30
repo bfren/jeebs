@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Linq;
 using static F.DataF.QueryBuilderF;
 
 namespace Jeebs.Data.Querying

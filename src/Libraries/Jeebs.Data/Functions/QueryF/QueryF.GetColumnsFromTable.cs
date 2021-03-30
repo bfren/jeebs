@@ -10,7 +10,7 @@ namespace F.DataF
 {
 	public static partial class QueryF
 	{
-		private const bool enableColumnsCache = false;
+		private const bool enableColumnsCache = true;
 
 		/// <summary>
 		/// Cached maps of table classes to columns

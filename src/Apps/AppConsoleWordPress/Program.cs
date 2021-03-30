@@ -36,66 +36,66 @@ namespace AppConsoleWordPress
 					var usa = provider.GetRequiredService<WpUsa>();
 
 					// Run test methods
-					await TermsAsync((string)"BCG", (IWpDb)bcg.Db).AuditAsync((Action<Option<int>>)AuditTerms);
-					await TermsAsync((string)"USA", (IWpDb)usa.Db).AuditAsync((Action<Option<int>>)AuditTerms);
+					await TermsAsync("BCG", bcg.Db).AuditAsync((Action<Option<int>>)AuditTerms);
+					await TermsAsync("USA", usa.Db).AuditAsync((Action<Option<int>>)AuditTerms);
 
-					await Return((IWpDb)bcg.Db)
-						.BindAsync((Func<IWpDb, Task<Option<Bcg.Entities.Option>>>)InsertOptionAsync)
-						.AuditAsync((Action<Option<Bcg.Entities.Option>>)AuditOption);
+					await Return(bcg.Db)
+						.BindAsync(InsertOptionAsync)
+						.AuditAsync(any: AuditOption);
 
-					await Return((IWpDb)bcg.Db)
-						.BindAsync((Func<IWpDb, Task<Option<PagedList<SermonModel>>>>)(x => (Task<Option<PagedList<SermonModel>>>)GetPagedSermonsAsync((IWpDb)x, (string)"holiness", (Action<QueryPosts.Options>)(opt =>
+					await Return(bcg.Db)
+						.BindAsync(x => GetPagedSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
 							opt.SearchOperator = SearchOperator.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.Sort = new[] { (Title:(string)bcg.Db.Post.Title, Ascending:(SortOrder)SortOrder.Ascending) };
+							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 							opt.Limit = 4;
-						}))))
-						.AuditAsync((Action<Option<PagedList<SermonModel>>>)AuditPagedSermons);
+						}))
+						.AuditAsync(any: AuditPagedSermons);
 
-					await Return((IWpDb)bcg.Db)
-						.BindAsync((Func<IWpDb, Task<Option<List<SermonModel>>>>)(x => (Task<Option<List<SermonModel>>>)SearchSermonsAsync((IWpDb)x, (string)"holiness", (Action<QueryPosts.Options>)(opt =>
+					await Return(bcg.Db)
+						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
 						{
 							opt.SearchText = "holiness";
 							opt.SearchOperator = SearchOperator.Like;
 							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.Sort = new[] { (Title:(string)bcg.Db.Post.Title, Ascending:(SortOrder)SortOrder.Ascending) };
+							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
 							opt.Limit = 4;
-						}))))
-						.AuditAsync((Action<Option<List<SermonModel>>>)AuditSermons);
+						}))
+						.AuditAsync(any: AuditSermons);
 
-					await Return((IWpDb)bcg.Db)
-						.BindAsync((Func<IWpDb, Task<Option<List<SermonModel>>>>)(x => (Task<Option<List<SermonModel>>>)SearchSermonsAsync((IWpDb)x, (string)"jesus", (Action<QueryPosts.Options>)(opt =>
+					await Return(bcg.Db)
+						.BindAsync(x => SearchSermonsAsync(x, "jesus", opt =>
 						{
 							opt.Type = WpBcg.PostTypes.Sermon;
 							opt.SearchText = "jesus";
 							opt.SearchFields = SearchPostFields.Title;
-							opt.Taxonomies = new[] { (BibleBook:(Taxonomy)WpBcg.Taxonomies.BibleBook, (long)424L) };
+							opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
 							opt.Limit = 5;
-						}))))
-						.AuditAsync((Action<Option<List<SermonModel>>>)AuditSermons);
+						}))
+						.AuditAsync(any: AuditSermons);
 
 					await Return(bcg.Db)
 						.BindAsync(FetchMeta)
-						.AuditAsync(AuditMeta)
+						.AuditAsync(any: AuditMeta)
 						.BindAsync(
 							_ => FetchCustomFields(bcg.Db)
 						)
-						.AuditAsync(AuditCustomFields);
+						.AuditAsync(any: AuditCustomFields);
 
 					Return<int>(
 						() => throw new Exception("Test"),
 						DefaultHandler
 					);
 
-					await Return((IWpDb)bcg.Db)
-						.BindAsync((Func<IWpDb, Task<Option<List<SermonModelWithTaxonomies>>>>)FetchTaxonomies)
-						.AuditAsync((Action<Option<List<SermonModelWithTaxonomies>>>)AuditTaxonomies);
+					await Return(bcg.Db)
+						.BindAsync(FetchTaxonomies)
+						.AuditAsync(any: AuditTaxonomies);
 
-					await Return((IWpDb)bcg.Db)
-						.BindAsync((Func<IWpDb, Task<Option<List<PostModelWithContent>>>>)ApplyContentFilters)
-						.AuditAsync((Action<Option<List<PostModelWithContent>>>)AuditApplyContentFilters);
+					await Return(bcg.Db)
+						.BindAsync(ApplyContentFilters)
+						.AuditAsync(any: AuditApplyContentFilters);
 
 					// End
 					Console.WriteLine();
