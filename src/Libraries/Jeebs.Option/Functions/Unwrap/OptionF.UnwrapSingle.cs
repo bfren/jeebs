@@ -24,24 +24,21 @@ namespace F
 			Catch(() =>
 				Switch(
 					option,
-					some: v =>
-						v switch
-						{
-							IEnumerable<U> list when list.Count() == 1 =>
-								Return(list.Single()),
+					some: v => v switch
+					{
+						IEnumerable<U> list when list.Count() == 1 =>
+							Return(list.Single()),
 
-							IEnumerable<U> list when !list.Any() =>
-								None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
+						IEnumerable<U> list when !list.Any() =>
+							None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
 
-							IEnumerable<U> =>
-								None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
+						IEnumerable<U> =>
+							None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
 
-							_ =>
-								None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
-						},
-
-					none: r =>
-						new None<U>(r)
+						_ =>
+							None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
+					},
+					none: r => new None<U>(r)
 				),
 				DefaultHandler
 			);
