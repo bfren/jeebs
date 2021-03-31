@@ -11,6 +11,7 @@ using Jeebs.Config;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
+using static F.OptionF.Msg;
 using static F.OptionF;
 
 namespace Jeebs.Data
@@ -129,9 +130,8 @@ namespace Jeebs.Data
 				x => Connection.QuerySingleOrDefaultAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.QuerySingleExceptionMsg(e)
 			)
-			.SwitchIfAsync(
-				x => x is not null,
-				_ => None<TModel, Msg.QuerySingleItemNotFoundMsg>()
+			.IfNullAsync(
+				() => None<TModel, Msg.QuerySingleItemNotFoundMsg>()
 			);
 
 		/// <inheritdoc/>

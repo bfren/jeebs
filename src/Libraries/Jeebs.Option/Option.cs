@@ -253,6 +253,18 @@ namespace Jeebs
 
 		#endregion
 
+		#region IfNull
+
+		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
+		public Option<T> IfNull(Func<Option<T>> nullValue) =>
+			F.OptionF.IfNull(this, nullValue);
+
+		/// <inheritdoc cref="IfNullAsync{T}(Option{T}, Func{Task{Option{T}}})"/>
+		public Task<Option<T>> IfNullAsync(Func<Task<Option<T>>> nullValue) =>
+			F.OptionF.IfNullAsync(this, nullValue);
+
+		#endregion
+
 		#region Map
 
 		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler)"/>
