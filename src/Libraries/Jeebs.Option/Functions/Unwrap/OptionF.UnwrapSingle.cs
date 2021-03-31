@@ -59,7 +59,7 @@ namespace F
 			public sealed record UnwrapSingleTooManyItemsErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.TooManyItems) { }
 
 			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleIncorrectTypeErrorMsg : IMsg { }
+			public sealed record UnwrapSingleIncorrectTypeErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.IncorrectType) { }
 
 			/// <summary>Not a list</summary>
 			public sealed record UnwrapSingleNotAListMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
