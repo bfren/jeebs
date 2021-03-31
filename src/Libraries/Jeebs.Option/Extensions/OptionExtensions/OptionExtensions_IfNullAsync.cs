@@ -11,11 +11,11 @@ namespace Jeebs
 	/// </summary>
 	public static class OptionExtensions_IfNullAsync
 	{
-		/// <inheritdoc cref="F.OptionF.IfNullAsync{T}(Option{T}, Func{Task{Option{T}}}))"/>
+		/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
 		public static Task<Option<T>> IfNullAsync<T>(this Task<Option<T>> @this, Func<Option<T>> nullValue) =>
 			F.OptionF.IfNullAsync(@this, () => Task.FromResult(nullValue()));
 
-		/// <inheritdoc cref="F.OptionF.IfNullAsync{T}(Option{T}, Func{Task{Option{T}}}))"/>
+		/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
 		public static Task<Option<T>> IfNullAsync<T>(this Task<Option<T>> @this, Func<Task<Option<T>>> nullValue) =>
 			F.OptionF.IfNullAsync(@this, nullValue);
 	}

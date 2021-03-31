@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Jeebs;
@@ -13,7 +12,7 @@ namespace F
 	{
 		/// <summary>
 		/// Unwrap the value of <paramref name="option"/> - if it is <see cref="Some{T}"/>
-		/// and <typeparamref name="T"/> implements <see cref="IList{T}"/>
+		/// and <typeparamref name="T"/> implements <see cref="IEnumerable{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="U">Single value type</typeparam>
@@ -28,17 +27,14 @@ namespace F
 					some: v =>
 						v switch
 						{
-							IList<U> list when list.Count == 1 =>
+							IEnumerable<U> list when list.Count() == 1 =>
 								Return(list.Single()),
 
-							IList<U> list when list.Count == 0 =>
+							IEnumerable<U> list when !list.Any() =>
 								None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
 
-							IList<U> =>
+							IEnumerable<U> =>
 								None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
-
-							IList =>
-								None<U, Msg.UnwrapSingleIncorrectTypeErrorMsg>(),
 
 							_ =>
 								None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
@@ -54,16 +50,35 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>No items in the list</summary>
-			public sealed record UnwrapSingleNoItemsMsg : IMsg { }
+			public sealed record UnwrapSingleNoItemsMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
 
 			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
+			public sealed record UnwrapSingleTooManyItemsErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.TooManyItems) { }
 
 			/// <summary>Too many items in the list</summary>
 			public sealed record UnwrapSingleIncorrectTypeErrorMsg : IMsg { }
 
 			/// <summary>Not a list</summary>
-			public sealed record UnwrapSingleNotAListMsg : IMsg { }
+			public sealed record UnwrapSingleNotAListMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
+
+			/// <summary>
+			/// Possible reasons for
+			/// <see cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/> failing
+			/// </summary>
+			public enum UnwrapSingleError
+			{
+				/// <inheritdoc cref="UnwrapSingleNoItemsMsg"/>
+				NoItems,
+
+				/// <inheritdoc cref="UnwrapSingleTooManyItemsErrorMsg"/>
+				TooManyItems,
+
+				/// <inheritdoc cref="UnwrapSingleIncorrectTypeErrorMsg"/>
+				IncorrectType,
+
+				/// <inheritdoc cref="UnwrapSingleNotAListMsg"/>
+				NotAList
+			}
 		}
 	}
 }
