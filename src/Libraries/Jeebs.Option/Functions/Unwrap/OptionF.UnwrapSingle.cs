@@ -13,7 +13,7 @@ namespace F
 	{
 		/// <summary>
 		/// Unwrap the value of <paramref name="option"/> - if it is <see cref="Some{T}"/>
-		/// and <typeparamref name="T"/> implements <see cref="IList{T}"/>
+		/// and <typeparamref name="T"/> implements <see cref="IEnumerable{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="U">Single value type</typeparam>
@@ -25,27 +25,24 @@ namespace F
 			Catch(() =>
 				Switch(
 					option,
-					some: v =>
-						v switch
-						{
-							IList<U> list when list.Count == 1 =>
-								Return(list.Single()),
+					some: v => v switch
+					{
+						IList<U> list when list.Count == 1 =>
+							Return(list.Single()),
 
-							IList<U> list when list.Count == 0 =>
-								None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
+						IList<U> list when list.Count == 0 =>
+							None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
 
-							IList<U> =>
-								None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
+						IList<U> =>
+							None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
 
-							IList =>
-								None<U, Msg.UnwrapSingleIncorrectTypeErrorMsg>(),
+						IList =>
+							None<U, Msg.UnwrapSingleIncorrectTypeErrorMsg>(),
 
-							_ =>
-								None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
-						},
-
-					none: r =>
-						new None<U>(r)
+						_ =>
+							None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
+					},
+					none: r => new None<U>(r)
 				),
 				DefaultHandler
 			);
@@ -53,17 +50,39 @@ namespace F
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
+			/// <summary>Base UnwrapSingle error message</summary>
+			public abstract record UnwrapSingleErrorMsg(UnwrapSingleError Error) : IMsg { }
+
 			/// <summary>No items in the list</summary>
-			public sealed record UnwrapSingleNoItemsMsg : IMsg { }
+			public sealed record UnwrapSingleNoItemsMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
 
 			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleTooManyItemsErrorMsg : IMsg { }
+			public sealed record UnwrapSingleTooManyItemsErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.TooManyItems) { }
 
 			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleIncorrectTypeErrorMsg : IMsg { }
+			public sealed record UnwrapSingleIncorrectTypeErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.IncorrectType) { }
 
 			/// <summary>Not a list</summary>
-			public sealed record UnwrapSingleNotAListMsg : IMsg { }
+			public sealed record UnwrapSingleNotAListMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
+
+			/// <summary>
+			/// Possible reasons for
+			/// <see cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/> failing
+			/// </summary>
+			public enum UnwrapSingleError
+			{
+				/// <inheritdoc cref="UnwrapSingleNoItemsMsg"/>
+				NoItems,
+
+				/// <inheritdoc cref="UnwrapSingleTooManyItemsErrorMsg"/>
+				TooManyItems,
+
+				/// <inheritdoc cref="UnwrapSingleIncorrectTypeErrorMsg"/>
+				IncorrectType,
+
+				/// <inheritdoc cref="UnwrapSingleNotAListMsg"/>
+				NotAList
+			}
 		}
 	}
 }

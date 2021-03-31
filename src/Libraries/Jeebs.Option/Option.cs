@@ -259,7 +259,7 @@ namespace Jeebs
 		public Option<T> IfNull(Func<Option<T>> nullValue) =>
 			F.OptionF.IfNull(this, nullValue);
 
-		/// <inheritdoc cref="IfNullAsync{T}(Option{T}, Func{Task{Option{T}}})"/>
+		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
 		public Task<Option<T>> IfNullAsync(Func<Task<Option<T>>> nullValue) =>
 			F.OptionF.IfNullAsync(this, nullValue);
 
