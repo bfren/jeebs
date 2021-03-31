@@ -77,17 +77,17 @@ namespace Jeebs.Mvc.Auth
 			services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
 
 			// Add AuthFunc
-			services.AddScoped<AuthUserFunc>();
-			services.AddScoped<IAuthUserFunc>(s => s.GetRequiredService<AuthUserFunc>());
-			services.AddScoped<IAuthUserFunc<AuthUserEntity>>(s => s.GetRequiredService<AuthUserFunc>());
+			services.AddScoped<AuthUserRepository>();
+			services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
+			services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
 
-			services.AddScoped<AuthRoleFunc>();
-			services.AddScoped<IAuthRoleFunc>(s => s.GetRequiredService<AuthRoleFunc>());
-			services.AddScoped<IAuthRoleFunc<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleFunc>());
+			services.AddScoped<AuthRoleRepository>();
+			services.AddScoped<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
+			services.AddScoped<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
 
-			services.AddScoped<AuthUserRoleFunc>();
-			services.AddScoped<IAuthUserRoleFunc>(s => s.GetRequiredService<AuthUserRoleFunc>());
-			services.AddScoped<IAuthUserRoleFunc<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleFunc>());
+			services.AddScoped<AuthUserRoleRepository>();
+			services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
+			services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
 
 			// Add AuthProvider
 			services.AddScoped<AuthDataProvider>();

@@ -22,8 +22,14 @@ namespace Jeebs.Data
 		public IDbClient Client { get; private init; }
 
 		/// <inheritdoc/>
-		public IDbTransaction StartTransaction =>
-			Connection.BeginTransaction();
+		public IUnitOfWork UnitOfWork
+		{
+			get
+			{
+				Log.Debug("Starting new Unit of Work.");
+				return new UnitOfWork(Connection.BeginTransaction(), Log);
+			}
+		}
 
 		/// <summary>
 		/// Configuration for this database connection
@@ -67,6 +73,7 @@ namespace Jeebs.Data
 			try
 			{
 				Connection = client.Connect(Config.ConnectionString);
+				Connection.Open();
 			}
 			catch (Exception e)
 			{

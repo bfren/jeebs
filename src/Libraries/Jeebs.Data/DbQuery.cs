@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Querying;
+using static F.DataF.QueryF;
 using static F.OptionF;
 
 namespace Jeebs.Data
@@ -13,6 +15,10 @@ namespace Jeebs.Data
 	/// <inheritdoc cref="IDbQuery"/>
 	public abstract class DbQuery : IDbQuery
 	{
+		/// <inheritdoc/>
+		public IUnitOfWork UnitOfWork =>
+			Db.UnitOfWork;
+
 		/// <summary>
 		/// IDb
 		/// </summary>
@@ -36,6 +42,25 @@ namespace Jeebs.Data
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
 		protected DbQuery(IDb db, ILog log) =>
 			(Db, Log) = (db, log);
+
+		/// <summary>
+		/// Shorthand for escaping a column with its table name and alias
+		/// </summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		/// <param name="table">Table object</param>
+		/// <param name="column">Column selector</param>
+#pragma warning disable IDE1006 // Naming Styles
+		protected string __<TTable>(TTable table, Expression<Func<TTable, string>> column)
+#pragma warning restore IDE1006 // Naming Styles
+			where TTable : ITable =>
+			GetColumnFromExpression(table, column)
+			.Map(
+				x => Db.Client.Escape(x, true),
+				DefaultHandler
+			)
+			.Unwrap(
+				r => throw new Exception(r.ToString())
+			);
 
 		#region Logging
 
@@ -76,7 +101,7 @@ namespace Jeebs.Data
 		#region QueryAsync
 
 		/// <inheritdoc/>
-		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			string query,
 			object? param,
 			CommandType type,
@@ -93,7 +118,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			string query,
 			object? param,
 			IDbTransaction? transaction = null
@@ -101,7 +126,7 @@ namespace Jeebs.Data
 			QueryAsync<TModel>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
+		public Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
 			long page,
 			IQueryParts parts,
 			IDbTransaction? transaction = null
@@ -140,7 +165,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			IQueryParts parts,
 			IDbTransaction? transaction = null
 		) =>
@@ -160,7 +185,7 @@ namespace Jeebs.Data
 		#region QuerySingleAsync
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+		public Task<Option<TModel>> QuerySingleAsync<TModel>(
 			string query,
 			object? param,
 			CommandType type,
@@ -177,7 +202,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+		public Task<Option<TModel>> QuerySingleAsync<TModel>(
 			string query,
 			object? param,
 			IDbTransaction? transaction = null
@@ -185,7 +210,7 @@ namespace Jeebs.Data
 			QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+		public Task<Option<TModel>> QuerySingleAsync<TModel>(
 			IQueryParts parts,
 			IDbTransaction? transaction = null
 		) =>
@@ -205,7 +230,7 @@ namespace Jeebs.Data
 		#region ExecuteAsync
 
 		/// <inheritdoc/>
-		public virtual Task<Option<bool>> ExecuteAsync(
+		public Task<Option<bool>> ExecuteAsync(
 			string query,
 			object? param,
 			CommandType type,
@@ -222,7 +247,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<bool>> ExecuteAsync(
+		public Task<Option<bool>> ExecuteAsync(
 			string query,
 			object? param,
 			IDbTransaction? transaction = null
@@ -230,7 +255,7 @@ namespace Jeebs.Data
 			ExecuteAsync(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TReturn>> ExecuteAsync<TReturn>(
+		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
 			string query,
 			object? param,
 			CommandType type,
@@ -247,7 +272,7 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TReturn>> ExecuteAsync<TReturn>(
+		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
 			string query,
 			object? param,
 			IDbTransaction? transaction = null
@@ -260,6 +285,10 @@ namespace Jeebs.Data
 
 		internal void WriteToLogTest(string message, object[] args) =>
 			WriteToLog(message, args);
+
+		internal string EscapeTest<TTable>(TTable table, Expression<Func<TTable, string>> column)
+			where TTable : ITable =>
+			__(table, column);
 
 		#endregion
 

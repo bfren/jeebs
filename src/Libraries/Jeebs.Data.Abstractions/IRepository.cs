@@ -11,14 +11,17 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// Database functions for an entity type, including CRUD and custom queries
+	/// Repository for an entity type, including CRUD and custom queries
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TId">StrongId type</typeparam>
-	public interface IDbFunc<TEntity, TId>
+	public interface IRepository<TEntity, TId>
 		where TEntity : IEntity
 		where TId : StrongId
 	{
+		/// <inheritdoc cref="IDb.UnitOfWork"/>
+		IUnitOfWork UnitOfWork { get; }
+
 		#region Custom Queries
 
 		/// <summary>

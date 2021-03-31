@@ -18,9 +18,9 @@ namespace Jeebs.Data
 		IDbClient Client { get; }
 
 		/// <summary>
-		/// Start a new transaction
+		/// Start a new unit of work
 		/// </summary>
-		IDbTransaction StartTransaction { get; }
+		IUnitOfWork UnitOfWork { get; }
 
 		/// <summary>
 		/// Run a query and return multiple items

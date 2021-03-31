@@ -19,17 +19,17 @@ namespace Jeebs.Auth.Data
 		/// <summary>
 		/// User functions
 		/// </summary>
-		IAuthUserFunc<TUserEntity> User { get; }
+		IAuthUserRepository<TUserEntity> User { get; }
 
 		/// <summary>
 		/// Role functions
 		/// </summary>
-		IAuthRoleFunc<TRoleEntity> Role { get; }
+		IAuthRoleRepository<TRoleEntity> Role { get; }
 
 		/// <summary>
 		/// User Role functions
 		/// </summary>
-		IAuthUserRoleFunc<TUserRoleEntity> UserRole { get; }
+		IAuthUserRoleRepository<TUserRoleEntity> UserRole { get; }
 
 		#region Users
 

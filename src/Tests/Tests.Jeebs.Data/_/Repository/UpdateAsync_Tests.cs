@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbFunc_Tests
+namespace Jeebs.Data.Repository_Tests
 {
 	public class UpdateAsync_Tests
 	{
@@ -13,27 +13,27 @@ namespace Jeebs.Data.DbFunc_Tests
 		public async Task Calls_Client_GetUpdateQuery()
 		{
 			// Arrange
-			var (client, _, func) = DbFunc_Setup.Get();
+			var (client, _, repo) = Repository_Setup.Get();
 			var value = F.Rnd.Lng;
-			var model = new DbFunc_Setup.FooModel { Id = new(value) };
+			var model = new Repository_Setup.FooModel { Id = new(value) };
 
 			// Act
-			await func.UpdateAsync(model);
+			await repo.UpdateAsync(model);
 
 			// Assert
-			client.Received().GetUpdateQuery<DbFunc_Setup.Foo, DbFunc_Setup.FooModel>(value);
+			client.Received().GetUpdateQuery<Repository_Setup.Foo, Repository_Setup.FooModel>(value);
 		}
 
 		[Fact]
 		public async Task Logs_Query_To_Debug()
 		{
 			// Arrange
-			var (_, log, func) = DbFunc_Setup.Get();
+			var (_, log, repo) = Repository_Setup.Get();
 			var value = F.Rnd.Lng;
-			var model = new DbFunc_Setup.FooModel { Id = new(value) };
+			var model = new Repository_Setup.FooModel { Id = new(value) };
 
 			// Act
-			await func.UpdateAsync(model);
+			await repo.UpdateAsync(model);
 
 			// Assert
 			log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());

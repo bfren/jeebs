@@ -11,22 +11,27 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Auth
 {
-	/// <inheritdoc cref="IAuthUserFunc{TRoleEntity}"/>
-	public interface IAuthUserFunc : IAuthUserFunc<AuthUserEntity>
+	/// <inheritdoc cref="IAuthUserRepository{TRoleEntity}"/>
+	public interface IAuthUserRepository : IAuthUserRepository<AuthUserEntity>
 	{ }
 
-	/// <inheritdoc cref="IAuthUserFunc{TUserEntity}"/>
-	public sealed class AuthUserFunc : DbFunc<AuthUserEntity, AuthUserId>, IAuthUserFunc
+	/// <inheritdoc cref="IAuthUserRepository{TUserEntity}"/>
+	public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
 	{
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="db">IAuthDb</param>
 		/// <param name="log">ILog</param>
-		public AuthUserFunc(IAuthDb db, ILog<AuthUserFunc> log) : base(db, log) { }
+		public AuthUserRepository(IAuthDb db, ILog<AuthUserRepository> log) : base(db, log) { }
 
 		/// <inheritdoc/>
-		public Task<Option<AuthUserId>> CreateAsync(string email, string password, string? friendlyName)
+		public Task<Option<AuthUserId>> CreateAsync(
+			string email,
+			string password,
+			string? friendlyName,
+			IDbTransaction? transaction = null
+		)
 		{
 			var user = new AuthUserEntity
 			{
@@ -36,7 +41,7 @@ namespace Jeebs.Auth
 				IsEnabled = true
 			};
 
-			return CreateAsync(user);
+			return CreateAsync(user, transaction);
 		}
 
 		/// <inheritdoc/>
@@ -46,7 +51,7 @@ namespace Jeebs.Auth
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId) =>
-			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
+		public Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction? transaction = null) =>
+			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure, transaction);
 	}
 }

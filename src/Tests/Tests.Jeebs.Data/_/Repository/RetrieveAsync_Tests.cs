@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbFunc_Tests
+namespace Jeebs.Data.Repository_Tests
 {
 	public class RetrieveAsync_Tests
 	{
@@ -13,25 +13,25 @@ namespace Jeebs.Data.DbFunc_Tests
 		public async Task Calls_Client_GetRetrieveQuery()
 		{
 			// Arrange
-			var (client, _, func) = DbFunc_Setup.Get();
+			var (client, _, repo) = Repository_Setup.Get();
 			var value = F.Rnd.Lng;
 
 			// Act
-			await func.RetrieveAsync<DbFunc_Setup.FooModel>(new DbFunc_Setup.FooId(value));
+			await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value));
 
 			// Assert
-			client.Received().GetRetrieveQuery<DbFunc_Setup.Foo, DbFunc_Setup.FooModel>(value);
+			client.Received().GetRetrieveQuery<Repository_Setup.Foo, Repository_Setup.FooModel>(value);
 		}
 
 		[Fact]
 		public async Task Logs_Query_To_Debug()
 		{
 			// Arrange
-			var (_, log, func) = DbFunc_Setup.Get();
+			var (_, log, repo) = Repository_Setup.Get();
 			var value = F.Rnd.Lng;
 
 			// Act
-			await func.RetrieveAsync<DbFunc_Setup.FooModel>(new DbFunc_Setup.FooId(value));
+			await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value));
 
 			// Assert
 			log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());

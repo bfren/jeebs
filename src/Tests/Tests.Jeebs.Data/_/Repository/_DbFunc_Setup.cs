@@ -6,11 +6,11 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using NSubstitute;
 
-namespace Jeebs.Data.DbFunc_Tests
+namespace Jeebs.Data.Repository_Tests
 {
-	public static class DbFunc_Setup
+	public static class Repository_Setup
 	{
-		public static (IDbClient client, ILog log, DbFunc<Foo, FooId> func) Get()
+		public static (IDbClient client, ILog log, Repository<Foo, FooId> repo) Get()
 		{
 			var client = Substitute.For<IDbClient>();
 			client
@@ -26,9 +26,9 @@ namespace Jeebs.Data.DbFunc_Tests
 
 			var log = Substitute.For<ILog>();
 
-			var func = Substitute.ForPartsOf<DbFunc<Foo, FooId>>(db, log);
+			var repo = Substitute.ForPartsOf<Repository<Foo, FooId>>(db, log);
 
-			return (client, log, func);
+			return (client, log, repo);
 		}
 
 		public sealed record Foo : IEntity<FooId>

@@ -64,7 +64,6 @@ namespace F.DataF
 			return list;
 		}
 
-		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
 			/// <summary>IN predicate means value is 'in' an array of values so the value must be a list</summary>

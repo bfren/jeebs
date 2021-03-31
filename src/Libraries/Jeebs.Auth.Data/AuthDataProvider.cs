@@ -21,24 +21,24 @@ namespace Jeebs.Auth
 	public sealed class AuthDataProvider : IAuthDataProvider
 	{
 		/// <inheritdoc/>
-		public IAuthUserFunc<AuthUserEntity> User { get; private init; }
+		public IAuthUserRepository<AuthUserEntity> User { get; private init; }
 
 		/// <inheritdoc/>
-		public IAuthRoleFunc<AuthRoleEntity> Role { get; private init; }
+		public IAuthRoleRepository<AuthRoleEntity> Role { get; private init; }
 
 		/// <inheritdoc/>
-		public IAuthUserRoleFunc<AuthUserRoleEntity> UserRole { get; private init; }
-
-		#region Users
+		public IAuthUserRoleRepository<AuthUserRoleEntity> UserRole { get; private init; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="user">IAuthUserFunc</param>
-		/// <param name="role">IAuthRoleFunc</param>
-		/// <param name="userRole">IAuthUserRoleFunc</param>
-		public AuthDataProvider(IAuthUserFunc user, IAuthRoleFunc role, IAuthUserRoleFunc userRole) =>
+		/// <param name="user">IAuthUserRepository</param>
+		/// <param name="role">IAuthRoleRepository</param>
+		/// <param name="userRole">IAuthUserRoleRepository</param>
+		public AuthDataProvider(IAuthUserRepository user, IAuthRoleRepository role, IAuthUserRoleRepository userRole) =>
 			(User, Role, UserRole) = (user, role, userRole);
+
+		#region Users
 
 		/// <inheritdoc/>
 		public async Task<Option<TModel>> ValidateUserAsync<TModel>(string email, string password)

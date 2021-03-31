@@ -9,7 +9,7 @@ using static F.OptionF;
 namespace Jeebs.Linq
 {
 	/// <summary>
-	/// LinqExpression Extensions
+	/// LinqExpression Extensions: GetPropertyInfo
 	/// </summary>
 	public static class LinqExpressionExtensions
 	{
@@ -24,8 +24,8 @@ namespace Jeebs.Linq
 		) =>
 			@this.Body switch
 			{
-				MemberExpression me =>
-					new PropertyInfo<TObject, TProperty>((PropertyInfo)me.Member),
+				MemberExpression memberExpression =>
+					new PropertyInfo<TObject, TProperty>((PropertyInfo)memberExpression.Member),
 
 				_ =>
 					None<PropertyInfo<TObject, TProperty>, Msg.ExpressionIsNotAMemberExpressionMsg>()

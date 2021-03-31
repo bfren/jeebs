@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbFunc_Tests
+namespace Jeebs.Data.Repository_Tests
 {
 	public class Constructor_Tests
 	{
@@ -27,7 +27,7 @@ namespace Jeebs.Data.DbFunc_Tests
 
 		public sealed record TestEntity(TestId Id) : IEntity<TestId>;
 
-		public sealed class TestFunc : DbFunc<TestEntity, TestId>
+		public sealed class TestFunc : Repository<TestEntity, TestId>
 		{
 			public TestFunc(IDb db, ILog log) : base(db, log) { }
 		}

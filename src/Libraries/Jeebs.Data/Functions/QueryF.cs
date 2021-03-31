@@ -6,5 +6,9 @@ namespace F.DataF
 	/// <summary>
 	/// Query Functions
 	/// </summary>
-	public static partial class QueryF { }
+	public static partial class QueryF
+	{
+		/// <summary>Messages</summary>
+		public static partial class Msg { }
+	}
 }

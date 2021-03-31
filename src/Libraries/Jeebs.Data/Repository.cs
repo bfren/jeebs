@@ -10,11 +10,15 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
-	/// <inheritdoc cref="IDbFunc{TEntity, TId}"/>
-	public abstract class DbFunc<TEntity, TId> : IDbFunc<TEntity, TId>
+	/// <inheritdoc cref="IRepository{TEntity, TId}"/>
+	public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TEntity : IEntity
 		where TId : StrongId
 	{
+		/// <inheritdoc/>
+		public IUnitOfWork UnitOfWork =>
+			Db.UnitOfWork;
+
 		/// <summary>
 		/// IDb
 		/// </summary>
@@ -36,7 +40,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <param name="db">IDb</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		protected DbFunc(IDb db, ILog log) =>
+		protected Repository(IDb db, ILog log) =>
 			(Db, Log) = (db, log);
 
 		/// <summary>
