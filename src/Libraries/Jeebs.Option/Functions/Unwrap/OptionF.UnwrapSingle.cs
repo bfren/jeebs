@@ -49,6 +49,9 @@ namespace F
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
+			/// <summary>Base UnwrapSingle error message</summary>
+			public abstract record UnwrapSingleErrorMsg(UnwrapSingleError Error) : IMsg { }
+
 			/// <summary>No items in the list</summary>
 			public sealed record UnwrapSingleNoItemsMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
 
