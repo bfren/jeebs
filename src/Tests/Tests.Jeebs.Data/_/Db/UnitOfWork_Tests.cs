@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Jeebs.Data.Db_Tests
 {
-	public class StartTransaction_Tests
+	public class UnitOfWork_Tests
 	{
 		[Fact]
 		public void Calls_Connection_BeginTransaction()
@@ -15,7 +15,7 @@ namespace Jeebs.Data.Db_Tests
 			var (_, _, _, connection, db) = Db_Setup.Get();
 
 			// Act
-			var _ = db.StartTransaction;
+			var _ = db.UnitOfWork;
 
 			// Assert
 			connection.Received().BeginTransaction();
