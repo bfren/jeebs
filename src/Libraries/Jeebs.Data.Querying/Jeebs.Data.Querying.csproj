@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
   </ItemGroup>
-	<ItemGroup>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>Tests.Jeebs.Data.All</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
 </Project>

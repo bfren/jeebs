@@ -1,153 +1,95 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using Jeebs;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class Return_Tests
+	public class Return_Tests : Jeebs_Tests.Return_Tests
 	{
 		[Fact]
-		public void Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			int throwFunc() => throw new Exception();
-			int? throwFuncNullable() => throw new Exception();
-
-			// Act
-			var r0 = Return(throwFunc, DefaultHandler);
-			var r1 = Return(throwFuncNullable, DefaultHandler);
-			var r2 = Return(throwFuncNullable, true, DefaultHandler);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n1);
-			var n2 = r2.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n2);
+			Test00((val, handler) => Return(val, handler));
 		}
 
 		[Fact]
-		public void Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+		public override void Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			int throwFunc() => throw exception;
-			int? throwFuncNullable() => throw exception;
-
-			// Act
-			var r0 = Return(throwFunc, handler);
-			var r1 = Return(throwFuncNullable, handler);
-			var r2 = Return(throwFuncNullable, false, handler);
-
-			// Assert
-			r0.AssertNone();
-			r1.AssertNone();
-			r2.AssertNone();
-			handler.Received(3).Invoke(exception);
+			Test01((val, nullable, handler) => Return(val, nullable, handler));
 		}
 
 		[Fact]
-		public void Null_Input_Returns_None()
+		public override void Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
 		{
-			// Arrange
-			int? value = null;
-
-			// Act
-			var r0 = Return(value);
-			var r1 = Return(() => value, DefaultHandler);
-			var r2 = Return(value, false);
-			var r3 = Return(() => value, false, DefaultHandler);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<NullValueMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<NullValueMsg>(n1);
-			var n2 = r2.AssertNone();
-			Assert.IsType<AllowNullWasFalseMsg>(n2);
-			var n3 = r3.AssertNone();
-			Assert.IsType<AllowNullWasFalseMsg>(n2);
+			Test02((val, handler) => Return(val, handler));
 		}
 
 		[Fact]
-		public void Null_Input_Returns_Some_If_AllowNull_Is_True()
+		public override void Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
 		{
-			// Arrange
-			int? value = null;
-
-			// Act
-			var r0 = Return(value, true);
-			var r1 = Return(() => value, true, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Null(s0);
-			var s1 = r1.AssertSome();
-			Assert.Null(s1);
-		}
-
-		[Theory]
-		[InlineData(18)]
-		[InlineData("foo")]
-		public void Value_Input_Returns_Some<T>(T input)
-		{
-			// Arrange
-
-			// Act
-			var r0 = Return(input);
-			var r1 = Return(() => input, DefaultHandler);
-			var r2 = Return(() => input, false, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(input, s0);
-			var s1 = r1.AssertSome();
-			Assert.Equal(input, s1);
-			var s2 = r2.AssertSome();
-			Assert.Equal(input, s2);
-		}
-
-		[Theory]
-		[InlineData(18)]
-		[InlineData("foo")]
-		public void Value_Input_Returns_Some_Nullable<T>(T? input)
-		{
-			// Arrange
-
-			// Act
-			var r0 = Return(input, true);
-			var r1 = Return(() => input, true, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(input, s0);
-			var s1 = r1.AssertSome();
-			Assert.Equal(input, s1);
+			Test03((val, nullable, handler) => Return(val, nullable, handler));
 		}
 
 		[Fact]
-		public void Runs_Function_Returns_Some()
+		public override void Test04_Null_Input_Value_Returns_None()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var get = Substitute.For<Func<string>>();
-			string getNotNull() => get();
-			string? getNullable() => get();
+			Test04(val => Return(val));
+		}
 
-			// Act
-			Return(getNotNull, DefaultHandler);
-			Return(getNullable, false, DefaultHandler);
+		[Fact]
+		public override void Test05_Null_Input_Func_Returns_None()
+		{
+			Test05((val, handler) => Return(val, handler));
+		}
 
-			// Assert
-			get.Received(2).Invoke();
+		[Fact]
+		public override void Test06_Nullable_Allow_Null_False_Null_Input_Value_Returns_None_With_AllowNullWasFalseMsg()
+		{
+			Test06((val, nullable) => Return(val, nullable));
+		}
+
+		[Fact]
+		public override void Test07_Nullable_Allow_Null_False_Null_Input_Func_Returns_None_With_AllowNullWasFalseMsg()
+		{
+			Test07((val, nullable, handler) => Return(val, nullable, handler));
+		}
+
+		[Fact]
+		public override void Test08_Nullable_Allow_Null_True_Null_Input_Value_Returns_Some_With_Null_Value()
+		{
+			Test08((val, nullable) => Return(val, nullable));
+		}
+
+		[Fact]
+		public override void Test09_Nullable_Allow_Null_True_Null_Input_Func_Returns_Some_With_Null_Value()
+		{
+			Test09((val, nullable, handler) => Return(val, nullable, handler));
+		}
+
+		[Fact]
+		public override void Test10_Not_Null_Value_Returns_Some()
+		{
+			Test10(val => Return(val));
+		}
+
+		[Fact]
+		public override void Test11_Not_Null_Func_Returns_Some()
+		{
+			Test11((val, handler) => Return(val, handler));
+		}
+
+		[Fact]
+		public override void Test12_Nullable_Not_Null_Value_Returns_Some()
+		{
+			Test12((val, nullable) => Return(val, nullable));
+		}
+
+		[Fact]
+		public override void Test13_Nullable_Not_Null_Func_Returns_Some()
+		{
+			Test13((val, nullable, handler) => Return(val, nullable, handler));
 		}
 	}
 }

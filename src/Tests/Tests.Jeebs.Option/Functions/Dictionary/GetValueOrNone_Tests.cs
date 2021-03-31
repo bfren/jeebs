@@ -1,104 +1,42 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Collections.Generic;
-using Jeebs;
 using Xunit;
 using static F.OptionF.Dictionary;
-using static F.OptionF.Dictionary.Msg;
 
-namespace F.OptionFDictionary_Tests
+namespace F.OptionF_Tests.Dictionary
 {
-	public class GetValueOrNone_Tests
+	public class GetValueOrNone_Tests : Jeebs_Tests.Dictionary.GetValueOrNone_Tests
 	{
 		[Fact]
-		public void Empty_Dictionary_Returns_None_With_ListIsEmptyMsg()
+		public override void Test00_Empty_Dictionary_Returns_None_With_ListIsEmptyMsg()
 		{
-			// Arrange
-			var dictionary = new Dictionary<int, string>();
-
-			// Act
-			var result = GetValueOrNone(dictionary, Rnd.Int);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<DictionaryIsEmptyMsg>(none);
+			Test00((dict, key) => GetValueOrNone(dict, key));
 		}
 
 		[Theory]
 		[InlineData(null)]
-		public void Null_Key_Returns_None_With_KeyCannotBeNullMsg(string input)
+		public override void Test01_Null_Key_Returns_None_With_KeyCannotBeNullMsg(string input)
 		{
-			// Arrange
-			var dictionary = new Dictionary<string, int>
-			{
-				{ Rnd.Str, Rnd.Int }
-			};
-
-			// Act
-			var result = GetValueOrNone(dictionary, input);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<KeyCannotBeNullMsg>(none);
+			Test01(dict => GetValueOrNone(dict, input));
 		}
 
 		[Fact]
-		public void Key_Does_Not_Exists_Returns_None_With_KeyDoesNotExistMsg()
+		public override void Test02_Key_Does_Not_Exists_Returns_None_With_KeyDoesNotExistMsg()
 		{
-			// Arrange
-			var dictionary = new Dictionary<string, int>
-			{
-				{ Rnd.Str, Rnd.Int }
-			};
-			var key = Rnd.Str;
-
-			// Act
-			var result = GetValueOrNone(dictionary, key);
-
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<KeyDoesNotExistMsg<string>>(none);
-			Assert.Equal(key, msg.Key);
-		}
-
-		[Theory]
-		[InlineData(null)]
-		public void Null_Item_Returns_None_With_NullValueMsg(string input)
-		{
-			// Arrange
-			var key = Rnd.Int;
-			var dictionary = new Dictionary<int, string>
-			{
-				{ key, input }
-			};
-
-			// Act
-			var result = GetValueOrNone(dictionary, key);
-
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<NullValueMsg<int>>(none);
-			Assert.Equal(key, msg.Key);
+			Test02((dict, key) => GetValueOrNone(dict, key));
 		}
 
 		[Fact]
-		public void Returns_Single_Element()
+		public override void Test03_Key_Exists_Null_Item_Returns_None_With_NullValueMsg()
 		{
-			// Arrange
-			var key = Rnd.Int;
-			var value = Rnd.Str;
-			var dictionary = new Dictionary<int, string>
-			{
-				{ key, value }
-			};
+			Test03((dict, key) => GetValueOrNone(dict, key));
+		}
 
-			// Act
-			var result = GetValueOrNone(dictionary, key);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(value, some);
+		[Fact]
+		public override void Test04_Key_Exists_Valid_Item_Returns_Some_With_Value()
+		{
+			Test04((dict, key) => GetValueOrNone(dict, key));
 		}
 	}
 }

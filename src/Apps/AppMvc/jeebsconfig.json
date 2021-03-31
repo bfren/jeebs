@@ -4,6 +4,15 @@
 			"name": "MVC",
 			"suite": "Jeebs"
 		},
+		"db": {
+			"default": "test",
+			"authentication": "test",
+			"connections": {
+				"test": {
+					"connectionString": ""
+				}
+			}
+		},
 		"logging": {
 			"minimumLevel": "Debug",
 			"console": true,

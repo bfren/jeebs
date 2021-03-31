@@ -1,29 +1,38 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using Jeebs.Data;
 
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// User properties used during authentication
+	/// Authentication User model
 	/// </summary>
-	public interface IAuthUser : IEntity<long>, IUserWithUserId
+	public interface IAuthUser : IWithId<AuthUserId>
 	{
 		/// <summary>
-		/// The user's encrypted password
+		/// Email address
 		/// </summary>
-		string PasswordHash { get; init; }
+		string EmailAddress { get; init; }
 
 		/// <summary>
-		/// Whether or not the user account is enabled
+		/// Friendly name - option for user interface interaction
 		/// </summary>
-		bool IsEnabled { get; init; }
+		string? FriendlyName { get; init; }
 
 		/// <summary>
-		/// The last time the user signed in
+		/// Given (Christian / first) name
 		/// </summary>
-		DateTimeOffset? LastSignedIn { get; init; }
+		string? GivenName { get; init; }
+
+		/// <summary>
+		/// Family name (surname)
+		/// </summary>
+		string? FamilyName { get; init; }
+
+		/// <summary>
+		/// Whether or not the user account has super permissions
+		/// </summary>
+		bool IsSuper { get; init; }
 	}
 }

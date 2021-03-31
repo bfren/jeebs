@@ -19,7 +19,7 @@ namespace Jeebs.Cryptography
 		/// <summary>
 		/// Encrypted contents
 		/// </summary>
-		public byte[]? EncryptedContents { get; init; }
+		public Option<byte[]> EncryptedContents { get; init; } = None<byte[], Msg.EncryptedContentsNotCreatedYetMsg>();
 
 		/// <summary>
 		/// Salt
@@ -38,10 +38,18 @@ namespace Jeebs.Cryptography
 			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
 
 		internal Locked(T contents, byte[] key) : this() =>
-			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, key);
+			EncryptedContents = F.JsonF.Serialise(contents)
+				.Map(
+					x => SecretBox.Create(x, Nonce, key),
+					e => new Msg.CreatingSecretBoxExceptionMsg(e)
+				);
 
 		internal Locked(T contents, string key) : this() =>
-			EncryptedContents = SecretBox.Create(F.JsonF.Serialise(contents), Nonce, HashKey(key));
+			EncryptedContents = F.JsonF.Serialise(contents)
+				.Map(
+					x => SecretBox.Create(x, Nonce, HashKey(key)),
+					e => new Msg.CreatingSecretBoxExceptionMsg(e)
+				);
 
 		/// <summary>
 		/// Unlock this LockedBox
@@ -49,38 +57,42 @@ namespace Jeebs.Cryptography
 		/// <param name="key">Encryption Key</param>
 		public Option<Lockable<T>> Unlock(byte[] key)
 		{
-			if (EncryptedContents is null)
-			{
-				return None<Lockable<T>, Msg.UnlockWhenEncryptedContentsIsNullMsg>();
-			}
+			return EncryptedContents.Switch(
+				some: x =>
+				{
+					try
+					{
+						// Open encrypted contents
+						var secret = SecretBox.Open(x, Nonce, key);
 
-			try
-			{
-				// Open encrypted contents
-				var secret = SecretBox.Open(EncryptedContents, Nonce, key);
-
-				// Deserialise contents and return
-				var json = Encoding.UTF8.GetString(secret);
-				return F.JsonF
-					.Deserialise<T>(json)
-					.Map(x => new Lockable<T>(x), DefaultHandler);
-			}
-			catch (KeyOutOfRangeException ex)
-			{
-				return handle(new Msg.InvalidKeyExceptionMsg(ex));
-			}
-			catch (NonceOutOfRangeException ex)
-			{
-				return handle(new Msg.InvalidNonceExceptionMsg(ex));
-			}
-			catch (CryptographicException ex)
-			{
-				return handle(new Msg.IncorrectKeyOrNonceExceptionMsg(ex));
-			}
-			catch (Exception ex)
-			{
-				return handle(new Msg.UnlockExceptionMsg(ex));
-			}
+						// Deserialise contents and return
+						var json = Encoding.UTF8.GetString(secret);
+						return F.JsonF
+							.Deserialise<T>(json)
+							.Map(
+								x => new Lockable<T>(x),
+								DefaultHandler
+							);
+					}
+					catch (KeyOutOfRangeException ex)
+					{
+						return handle(new Msg.InvalidKeyExceptionMsg(ex));
+					}
+					catch (NonceOutOfRangeException ex)
+					{
+						return handle(new Msg.InvalidNonceExceptionMsg(ex));
+					}
+					catch (CryptographicException ex)
+					{
+						return handle(new Msg.IncorrectKeyOrNonceExceptionMsg(ex));
+					}
+					catch (Exception ex)
+					{
+						return handle(new Msg.UnlockExceptionMsg(ex));
+					}
+				},
+				none: None<Lockable<T>, Msg.UnlockWhenEncryptedContentsIsNoneMsg>()
+			);
 
 			// Handle an exception
 			static Option<Lockable<T>> handle<TMsg>(TMsg ex)
@@ -98,15 +110,11 @@ namespace Jeebs.Cryptography
 		/// <summary>
 		/// Serialise this LockedBox as JSON
 		/// </summary>
-		public string Serialise() =>
-			EncryptedContents?.Length switch
-			{
-				int x when x > 0 =>
-					F.JsonF.Serialise(this),
-
-				_ =>
-					F.JsonF.Empty
-			};
+		public Option<string> Serialise() =>
+			EncryptedContents.Switch(
+				some: _ => F.JsonF.Serialise(this),
+				none: Return(F.JsonF.Empty)
+			);
 
 		private byte[] HashKey(string key) =>
 			GenericHash.Hash(key, Salt, Lockable.KeyLength);
@@ -122,24 +130,31 @@ namespace Jeebs.Cryptography
 		/// <summary>Messages</summary>
 		public static class Msg
 		{
+			/// <summary>Error creating secret box</summary>
+			/// <param name="Exception">Exception</param>
+			public sealed record CreatingSecretBoxExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+
+			/// <summary>Encrypted contents not created yet</summary>
+			public sealed record EncryptedContentsNotCreatedYetMsg : IMsg { }
+
 			/// <summary>Incorrect key or nonce</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Invalid key</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record InvalidKeyExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record InvalidKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Invalid nonce</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record InvalidNonceExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record InvalidNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Unlock exception</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record UnlockExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record UnlockExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Trying to unlock a box without any content</summary>
-			public sealed record UnlockWhenEncryptedContentsIsNullMsg : IMsg { }
+			public sealed record UnlockWhenEncryptedContentsIsNoneMsg : IMsg { }
 		}
 	}
 }

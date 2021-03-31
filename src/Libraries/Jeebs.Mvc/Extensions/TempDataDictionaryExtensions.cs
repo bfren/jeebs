@@ -80,7 +80,7 @@ namespace Jeebs.Mvc
 			var alerts = GetAlerts(tempData);
 			alerts.Insert(0, new Alert(messageType, message));
 
-			tempData.Add(alertsKey, F.JsonF.Serialise(alerts));
+			tempData.Add(alertsKey, F.JsonF.Serialise(alerts).Unwrap(F.JsonF.Empty));
 		}
 	}
 }

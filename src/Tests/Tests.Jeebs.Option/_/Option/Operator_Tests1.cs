@@ -16,10 +16,12 @@ namespace Jeebs.Option_Tests
 			var some = Return(value);
 
 			// Act
-			var result = some == value;
+			var r0 = some == value;
+			var r1 = value == some;
 
 			// Assert
-			Assert.True(result);
+			Assert.True(r0);
+			Assert.True(r1);
 		}
 
 		[Fact]
@@ -31,10 +33,12 @@ namespace Jeebs.Option_Tests
 			var some = Return(v0);
 
 			// Act
-			var result = some == v1;
+			var r0 = some == v1;
+			var r1 = v1 == some;
 
 			// Assert
-			Assert.False(result);
+			Assert.False(r0);
+			Assert.False(r1);
 		}
 
 		public record TestMsg : IMsg { }

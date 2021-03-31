@@ -21,13 +21,13 @@ namespace Jeebs.Mvc.Auth.TagHelpers
 		[ViewContext]
 		public ViewContext? ViewContext { get; set; }
 
-		private IJwtAuthProvider Provider { get; init; }
+		private IAuthJwtProvider Provider { get; init; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="provider">IJwtAuthenticationProvider</param>
-		public JwtTagHelper(IJwtAuthProvider provider) =>
+		public JwtTagHelper(IAuthJwtProvider provider) =>
 			Provider = provider;
 
 		/// <summary>

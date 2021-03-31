@@ -6,22 +6,11 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Database entity
 	/// </summary>
-	public interface IEntity
-	{
-		/// <summary>
-		/// Primary key
-		/// </summary>
-		long Id { get; }
-	}
+	public interface IEntity : IWithId { }
 
-	/// <summary>
-	/// Database entity
-	/// </summary>
-	public interface IEntity<T>
-	{
-		/// <summary>
-		/// Primary key
-		/// </summary>
-		IStrongId<T> Id { get; init; }
-	}
+	/// <inheritdoc cref="IEntity"/>
+	/// <typeparam name="T">StrongId Type</typeparam>
+	public interface IEntity<T> : IEntity, IWithId<T>
+		where T : StrongId
+	{ }
 }

@@ -17,40 +17,43 @@ namespace Jeebs.Cryptography.ObjectExtensions_Tests
 		public void Null_Input_Byte_Key_Returns_Empty(string input)
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = input.Encrypt(key);
 
 			// Assert
-			Assert.Equal(Empty, result);
+			var some = result.AssertSome();
+			Assert.Equal(Empty, some);
 		}
 
 		[Fact]
 		public void String_Input_Byte_Key_Returns_Encrypted_Json()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = defaultInputString.Encrypt(key);
 
 			// Assert
-			Assert.NotEqual(defaultInputString, result);
+			var some = result.AssertSome();
+			Assert.NotEqual(defaultInputString, some);
 		}
 
 		[Fact]
 		public void Object_Input_Byte_Key_Returns_Encrypted_Json()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
+			var json = Serialise(defaultInputObject);
 
 			// Act
-			var json = Serialise(defaultInputObject);
 			var result = defaultInputObject.Encrypt(key);
 
 			// Assert
-			Assert.NotEqual(json, result);
+			var some = result.AssertSome();
+			Assert.NotEqual(json, some);
 		}
 
 		public class Foo

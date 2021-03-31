@@ -4,28 +4,20 @@
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryBuilder"/>
-	public sealed class QueryBuilder : IQueryBuilder
+	public sealed record QueryBuilder : IQueryBuilder
 	{
 		/// <summary>
-		/// IUnitOfWork
+		/// Internal creation only
 		/// </summary>
-		internal IUnitOfWork UnitOfWork { get; }
-
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="unitOfWork">IUnitOfWork</param>
-		internal QueryBuilder(IUnitOfWork unitOfWork) =>
-			UnitOfWork = unitOfWork;
+		internal QueryBuilder() { }
 
 		/// <inheritdoc/>
-		public IQueryWithModel<T> WithModel<T>() =>
-			new QueryBuilder<T>.QueryWithModel(UnitOfWork);
-	}
+		public IQueryBuilderWithFrom From(ITable table) =>
+			new QueryBuilderWithFrom(table);
 
-	/// <summary>
-	/// Query Builder
-	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	public sealed partial class QueryBuilder<TModel> { }
+		/// <inheritdoc/>
+		public IQueryBuilderWithFrom From<TTable>()
+			where TTable : ITable, new() =>
+			From(new TTable());
+	}
 }

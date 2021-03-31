@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Jeebs.Data;
-using Jeebs.Data.Querying;
+using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Entities;
 using static F.OptionF;
 

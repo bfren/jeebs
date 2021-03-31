@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
+using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Enums;
 using static F.OptionF;
 

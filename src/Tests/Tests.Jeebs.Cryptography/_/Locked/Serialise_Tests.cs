@@ -3,6 +3,7 @@
 
 using System;
 using Xunit;
+using static F.CryptoF;
 
 namespace Jeebs.Cryptography.Locked_Tests
 {
@@ -18,7 +19,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var result = box.Serialise();
 
 			// Assert
-			Assert.Equal(F.JsonF.Empty, result);
+			var some = result.AssertSome();
+			Assert.Equal(F.JsonF.Empty, some);
 		}
 
 		[Fact]
@@ -26,10 +28,10 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var box = new Locked<string>(value, key);
 			var json = string.Format("{{\"encryptedContents\":\"{0}\",\"salt\":\"{1}\",\"nonce\":\"{2}\"}}",
-				Convert.ToBase64String(box.EncryptedContents!),
+				Convert.ToBase64String(box.EncryptedContents.UnsafeUnwrap()),
 				Convert.ToBase64String(box.Salt),
 				Convert.ToBase64String(box.Nonce)
 			);
@@ -38,7 +40,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var result = box.Serialise();
 
 			// Assert
-			Assert.Equal(json, result);
+			var some = result.AssertSome();
+			Assert.Equal(json, some);
 		}
 	}
 }

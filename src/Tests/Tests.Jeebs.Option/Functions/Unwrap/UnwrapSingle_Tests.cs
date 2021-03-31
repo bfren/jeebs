@@ -1,169 +1,77 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Collections.Generic;
-using Jeebs;
-using Jeebs.Exceptions;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class UnwrapSingle_Tests
+	public class UnwrapSingle_Tests : Jeebs_Tests.UnwrapSingle_Tests
 	{
 		[Fact]
-		public void If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = new FakeOption();
-
-			// Act
-			var result = UnwrapSingle<int, int>(option, null, null, null);
-
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-			Assert.IsType<UnknownOptionException>(msg.Exception);
+			Test00(opt => UnwrapSingle<int, int>(opt, null, null, null));
 		}
 
 		[Fact]
-		public void None_Returns_None()
+		public override void Test01_None_Returns_None()
 		{
-			// Arrange
-			var option = None<int>(true);
-
-			// Act
-			var result = UnwrapSingle<int, int>(option, null, null, null);
-
-			// Assert
-			result.AssertNone();
+			Test01(opt => UnwrapSingle<int, int>(opt, null, null, null));
 		}
 
 		[Fact]
-		public void None_With_Reason_Returns_None_With_Reason()
+		public override void Test02_None_With_Reason_Returns_None_With_Reason()
 		{
-			// Arrange
-			var reason = new TestMsg();
-			var option = None<int>(reason);
-
-			// Act
-			var result = UnwrapSingle<int, int>(option, null, null, null);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.Same(reason, none);
+			Test02(opt => UnwrapSingle<int, int>(opt, null, null, null));
 		}
 
 		[Fact]
-		public void No_Items_Returns_None_With_UnwrapSingleNoItemsMsg()
+		public override void Test03_No_Items_Returns_None_With_UnwrapSingleNoItemsMsg()
 		{
-			// Arrange
-			var empty = (IEnumerable<int>)Array.Empty<int>();
-			var option = Return(empty);
-
-			// Act
-			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<UnwrapSingleNoItemsMsg>(none);
+			Test03(opt => UnwrapSingle<int[], int>(opt, null, null, null));
 		}
 
 		[Fact]
-		public void No_Items_Runs_NoItems()
+		public override void Test04_No_Items_Runs_NoItems()
 		{
-			// Arrange
-			var empty = (IEnumerable<int>)Array.Empty<int>();
-			var option = Return(empty);
-			var noItems = Substitute.For<Func<IMsg>>();
-
-			// Act
-			UnwrapSingle<IEnumerable<int>, int>(option, noItems: noItems, null, null);
-
-			// Assert
-			noItems.Received().Invoke();
+			Test04((opt, noItems) => UnwrapSingle<int[], int>(opt, noItems, null, null));
 		}
 
 		[Fact]
-		public void Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
+		public override void Test05_Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg()
 		{
-			// Arrange
-			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
-			var option = Return(list);
-
-			// Act
-			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none);
+			Test05(opt => UnwrapSingle<int[], int>(opt, null, null, null));
 		}
 
 		[Fact]
-		public void Too_Many_Items_Runs_TooMany()
+		public override void Test06_Too_Many_Items_Runs_TooMany()
 		{
-			// Arrange
-			var list = (IEnumerable<int>)new[] { Rnd.Int, Rnd.Int };
-			var option = Return(list);
-			var tooMany = Substitute.For<Func<IMsg>>();
-
-			// Act
-			UnwrapSingle<IEnumerable<int>, int>(option, null, tooMany: tooMany, null);
-
-			// Assert
-			tooMany.Received().Invoke();
+			Test06((opt, tooMany) => UnwrapSingle<int[], int>(opt, null, tooMany, null));
 		}
 
 		[Fact]
-		public void Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg()
+		public override void Test07_Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
-
-			// Act
-			var result = UnwrapSingle<int, int>(option, null, null, null);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<UnwrapSingleNotAListMsg>(none);
+			Test07(opt => UnwrapSingle<int, int>(opt, null, null, null));
 		}
 
 		[Fact]
-		public void Not_A_List_Runs_NotAList()
+		public override void Test08_Not_A_List_Runs_NotAList()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
-			var notAList = Substitute.For<Func<IMsg>>();
-
-			// Act
-			var result = UnwrapSingle<int, int>(option, null, null, notAList: notAList);
-
-			// Assert
-			notAList.Received().Invoke();
+			Test08((opt, notAList) => UnwrapSingle<int, int>(opt, null, null, notAList));
 		}
 
 		[Fact]
-		public void List_With_Single_Item_Returns_Single()
+		public override void Test09_Incorrect_Type_Returns_None_With_UnwrapSingleIncorrectTypeErrorMsg()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var list = (IEnumerable<int>)new[] { value };
-			var option = Return(list);
-
-			// Act
-			var result = UnwrapSingle<IEnumerable<int>, int>(option, null, null, null);
-
-			// Assert
-			Assert.Equal(value, result);
+			Test09(opt => UnwrapSingle<int[], string>(opt, null, null, null));
 		}
 
-		public class FakeOption : Option<int> { }
-
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override void Test10_List_With_Single_Item_Returns_Single()
+		{
+			Test10(opt => UnwrapSingle<int[], int>(opt, null, null, null));
+		}
 	}
 }

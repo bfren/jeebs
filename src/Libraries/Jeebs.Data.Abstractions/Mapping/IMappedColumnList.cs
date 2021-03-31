@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data
 {
 	/// <summary>
-	/// Holds and processes a list of <seealso cref="IMappedColumn"/> objects
+	/// List of <seealso cref="IMappedColumn"/> objects
 	/// </summary>
 	public interface IMappedColumnList : IList<IMappedColumn> { }
 }

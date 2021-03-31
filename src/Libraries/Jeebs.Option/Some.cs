@@ -14,6 +14,10 @@ namespace Jeebs
 		/// </summary>
 		public T Value { get; private init; }
 
+		/// <summary>
+		/// <see cref="Some{T}"/> is only created by Return() functions and implicit operator
+		/// </summary>
+		/// <param name="value"></param>
 		internal Some(T value) =>
 			Value = value;
 

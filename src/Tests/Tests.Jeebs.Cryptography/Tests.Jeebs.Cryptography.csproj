@@ -14,6 +14,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
 		<ProjectReference Include="..\..\Libraries\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

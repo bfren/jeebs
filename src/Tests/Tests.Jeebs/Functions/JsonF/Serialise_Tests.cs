@@ -5,7 +5,7 @@ using Xunit;
 
 namespace F.JsonF_Tests
 {
-	public partial class Serialise_Tests
+	public class Serialise_Tests
 	{
 		[Theory]
 		[InlineData(null)]

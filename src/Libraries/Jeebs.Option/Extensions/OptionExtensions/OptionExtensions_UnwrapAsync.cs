@@ -12,11 +12,8 @@ namespace Jeebs
 	/// </summary>
 	public static class OptionExtensions_UnwrapAsync
 	{
-		/// <inheritdoc cref="F.OptionF.UnwrapAsync{T, U}(Task{Option{T}}, Func{FluentUnwrapAsync{T}, Option{U}})"/>
-		public static Task<Option<U>> UnwrapAsync<T, U>(
-			this Task<Option<T>> @this,
-			Func<FluentUnwrapAsync<T>, Option<U>> unwrap
-		) =>
+		/// <inheritdoc cref="F.OptionF.UnwrapAsync{T, U}(Task{Option{T}}, Func{FluentUnwrapAsync{T}, U})"/>
+		public static Task<U> UnwrapAsync<T, U>(this Task<Option<T>> @this, Func<FluentUnwrapAsync<T>, U> unwrap) =>
 			F.OptionF.UnwrapAsync(@this, unwrap);
 	}
 }

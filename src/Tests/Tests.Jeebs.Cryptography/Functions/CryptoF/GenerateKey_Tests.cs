@@ -1,7 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs;
 using Xunit;
+using static F.CryptoF;
 
 namespace F.CryptoF_Tests
 {
@@ -13,11 +15,13 @@ namespace F.CryptoF_Tests
 			// Arrange
 
 			// Act
-			var key1 = CryptoF.GenerateKey();
-			var key2 = CryptoF.GenerateKey();
+			var r0 = GenerateKey();
+			var r1 = GenerateKey();
 
 			// Assert
-			Assert.NotEqual(key1, key2);
+			var s0 = r0.AssertSome();
+			var s1 = r1.AssertSome();
+			Assert.NotEqual(s0, s1);
 		}
 
 		[Fact]
@@ -26,10 +30,11 @@ namespace F.CryptoF_Tests
 			// Arrange
 
 			// Act
-			var key = CryptoF.GenerateKey();
+			var result = GenerateKey();
 
 			// Assert
-			Assert.Equal(32, key.Length);
+			var some = result.AssertSome();
+			Assert.Equal(32, some.Length);
 		}
 	}
 }

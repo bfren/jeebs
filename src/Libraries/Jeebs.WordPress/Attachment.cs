@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using static F.JsonF;
+
 namespace Jeebs.WordPress.Entities
 {
 	/// <summary>
@@ -24,7 +26,7 @@ namespace Jeebs.WordPress.Entities
 		public string Info
 		{
 			get =>
-				F.JsonF.Serialise(F.PhpF.Deserialise(info));
+				Serialise(F.PhpF.Deserialise(info)).Unwrap(Empty);
 
 			set =>
 				info = value;

@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Jeebs.Data.Enums;
+using Jeebs.WordPress.Data.Enums;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress
@@ -39,7 +39,7 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Search text operator (= or LIKE)
 			/// </summary>
-			public SearchOperators SearchOperator { get; set; } = SearchOperators.Like;
+			public SearchOperator SearchOperator { get; set; } = SearchOperator.Like;
 
 			/// <summary>
 			/// Search Post published from
@@ -64,7 +64,7 @@ namespace Jeebs.WordPress
 			/// <summary>
 			/// Search custom fields
 			/// </summary>
-			public IList<(ICustomField field, SearchOperators op, object value)> CustomFields { get; set; } = new List<(ICustomField, SearchOperators, object)>();
+			public IList<(ICustomField field, SearchOperator op, object value)> CustomFields { get; set; } = new List<(ICustomField, SearchOperator, object)>();
 		}
 	}
 }

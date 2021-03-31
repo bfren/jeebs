@@ -15,20 +15,17 @@ namespace F
 		/// <param name="option">Input option</param>
 		/// <param name="predicate">Predicate to use with filter</param>
 		public static Option<T> Filter<T>(Option<T> option, Func<T, bool> predicate) =>
-			Catch(() =>
-				Bind(
-					option,
-					x =>
-						predicate(x) switch
-						{
-							true =>
-								Return(x),
+			Bind(
+				option,
+				x =>
+					predicate(x) switch
+					{
+						true =>
+							Return(x),
 
-							false =>
-								None<T, Msg.FilterPredicateWasFalseMsg>()
-						}
-				),
-				DefaultHandler
+						false =>
+							None<T, Msg.FilterPredicateWasFalseMsg>()
+					}
 			);
 
 		/// <summary>Messages</summary>

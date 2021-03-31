@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
+using static F.CryptoF;
 using static Jeebs.Cryptography.Locked.Msg;
 
 namespace Jeebs.Cryptography.Locked_Tests
@@ -13,14 +14,14 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var box = new Locked<int>();
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = box.Unlock(key);
 
 			// Assert
-			var none = Assert.IsType<None<Lockable<int>>>(result);
-			Assert.IsType<UnlockWhenEncryptedContentsIsNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
 		}
 
 		[Fact]
@@ -28,15 +29,15 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var box = new Locked<string>(value, key);
 
 			// Act
 			var result = box.Unlock(F.Rnd.ByteF.Get(16));
 
 			// Assert
-			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<InvalidKeyExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidKeyExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -44,7 +45,7 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var box = new Locked<string>(value, key)
 			{
 				Nonce = F.Rnd.ByteF.Get(8)
@@ -54,8 +55,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var result = box.Unlock(key);
 
 			// Assert
-			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<InvalidNonceExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidNonceExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -63,15 +64,16 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
+			var incorrectKey = GenerateKey().UnsafeUnwrap();
 			var box = new Locked<string>(value, key);
 
 			// Act
-			var result = box.Unlock(F.CryptoF.GenerateKey());
+			var result = box.Unlock(incorrectKey);
 
 			// Assert
-			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -79,18 +81,18 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var box = new Locked<string>(value, key)
 			{
-				Nonce = F.CryptoF.GenerateNonce()
+				Nonce = GenerateNonce()
 			};
 
 			// Act
 			var result = box.Unlock(key);
 
 			// Assert
-			var none = Assert.IsType<None<Lockable<string>>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -98,15 +100,15 @@ namespace Jeebs.Cryptography.Locked_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var key = F.CryptoF.GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var box = new Locked<string>(value, key);
 
 			// Act
 			var result = box.Unlock(key);
 
 			// Assert
-			var some = Assert.IsType<Some<Lockable<string>>>(result);
-			Assert.Equal(value, some.Value.Contents);
+			var some = result.AssertSome();
+			Assert.Equal(value, some.Contents);
 		}
 
 		[Fact]
@@ -121,8 +123,8 @@ namespace Jeebs.Cryptography.Locked_Tests
 			var result = box.Unlock(key);
 
 			// Assert
-			var some = Assert.IsType<Some<Lockable<string>>>(result);
-			Assert.Equal(value, some.Value.Contents);
+			var some = result.AssertSome();
+			Assert.Equal(value, some.Contents);
 		}
 	}
 }

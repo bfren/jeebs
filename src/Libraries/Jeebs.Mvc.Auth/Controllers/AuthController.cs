@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Models;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,29 +14,44 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Auth.Controllers
 {
-	/// <summary>
-	/// Implement this controller to add support for user authentication
-	/// </summary>
-	/// <typeparam name="TUser">User type</typeparam>
-	public abstract class AuthController<TUser> : Controller
-		where TUser : IUserModel, IAuthUser
+	/// <inheritdoc cref="AuthControllerBase"/>
+	public abstract class AuthController : AuthControllerBase
 	{
 		/// <summary>
-		/// IDataAuthProvider
+		/// AuthDataProvider
 		/// </summary>
-		protected IDataAuthProvider<TUser> Auth { get; init; }
-
-		/// <summary>
-		/// Add application-specific claims to an authenticated user
-		/// </summary>
-		protected virtual Func<TUser, List<Claim>>? AddClaims { get; }
+		new protected AuthDataProvider Auth { get; private init; }
 
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="auth">IDataAuthProvider</param>
+		/// <param name="auth">AuthDataProvider</param>
 		/// <param name="log">ILog</param>
-		protected AuthController(IDataAuthProvider<TUser> auth, ILog log) : base(log) =>
+		protected AuthController(AuthDataProvider auth, ILog log) : base(auth, log) =>
+			Auth = auth;
+	}
+
+	/// <summary>
+	/// Implement this controller to add support for user authentication
+	/// </summary>
+	public abstract class AuthControllerBase : Controller
+	{
+		/// <summary>
+		/// IAuthDataProvider
+		/// </summary>
+		protected IAuthDataProvider Auth { get; private init; }
+
+		/// <summary>
+		/// Add application-specific claims to an authenticated user
+		/// </summary>
+		protected virtual Func<AuthUserModel, List<Claim>>? AddClaims { get; }
+
+		/// <summary>
+		/// Inject dependencies
+		/// </summary>
+		/// <param name="auth">IAuthDataProvider</param>
+		/// <param name="log">ILog</param>
+		protected AuthControllerBase(IAuthDataProvider auth, ILog log) : base(log) =>
 			Auth = auth;
 
 		/// <summary>
@@ -54,12 +69,16 @@ namespace Jeebs.Mvc.Auth.Controllers
 		public virtual async Task<IActionResult> SignIn(SignInModel model)
 		{
 			// Validate user
-			var validate = await ValidateUserAsync(model.Email, model.Password);
-			if (validate is Some<TUser> user)
+			var validate = await Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password);
+			foreach (var user in validate)
 			{
 				// Get user principal
 				Log.Debug("User validated.");
-				var principal = GetPrincipal(user.Value);
+				var principal = GetPrincipal(user);
+
+				// Update last sign in
+				var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
+				updated.Audit(none: r => Log.Message(r));
 
 				// Add SignIn to HttpContext using Cookie scheme
 				await HttpContext.SignInAsync(
@@ -87,30 +106,29 @@ namespace Jeebs.Mvc.Auth.Controllers
 		}
 
 		/// <summary>
-		/// Validate user using <see cref="Auth"/>
-		/// </summary>
-		/// <param name="email">User email</param>
-		/// <param name="password">User password</param>
-		internal Task<Option<TUser>> ValidateUserAsync(string email, string password) =>
-			Auth.ValidateUserAsync(email, password);
-
-		/// <summary>
 		/// Get principal for specified user with all necessary claims
 		/// </summary>
-		/// <param name="user">User entity</param>
-		internal ClaimsPrincipal GetPrincipal(TUser user)
+		/// <param name="user">User Model</param>
+		internal ClaimsPrincipal GetPrincipal(AuthUserModel user)
 		{
 			// Create claims object
 			var claims = new List<Claim>
 			{
-				new (JwtClaimTypes.UserId, user.UserId.ValueStr, ClaimValueTypes.Integer32),
-				new (ClaimTypes.Name, user.FriendlyName, ClaimValueTypes.String),
+				new (JwtClaimTypes.UserId, user.Id.Value.ToString(), ClaimValueTypes.Integer32),
+				new (ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
 				new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 			};
 
+			// Add super permission
 			if (user.IsSuper)
 			{
 				claims.Add(new(JwtClaimTypes.IsSuper, true.ToString(), ClaimValueTypes.Boolean));
+			}
+
+			// Add roles
+			foreach (var role in user.Roles)
+			{
+				claims.Add(new(ClaimTypes.Role, role.Name, ClaimValueTypes.String));
 			}
 
 			// Add custom Claims

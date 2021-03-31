@@ -17,7 +17,7 @@ namespace F
 				return await value() switch
 				{
 					T x =>
-						new Some<T>(x), // Some<T> is only created by Return() functions
+						new Some<T>(x), // Some<T> is only created by Return() functions and implicit operator
 
 					_ =>
 						None<T, Msg.NullValueMsg>()
@@ -30,10 +30,6 @@ namespace F
 			}
 		}
 
-		/// <inheritdoc cref="Return{T}(Func{T}, Handler?)"/>
-		public static Task<Option<T>> ReturnAsync<T>(Task<T> value) =>
-			ReturnAsync(() => value, DefaultHandler);
-
 		/// <inheritdoc cref="Return{T}(Func{T}, bool, Handler)"/>
 		public static async Task<Option<T?>> ReturnAsync<T>(Func<Task<T?>> value, bool allowNull, Handler handler)
 		{
@@ -44,13 +40,13 @@ namespace F
 				return v switch
 				{
 					T x =>
-						new Some<T?>(x), // Some<T> is only created by Return() functions
+						new Some<T?>(x), // Some<T> is only created by Return() functions and implicit operator
 
 					_ =>
 						allowNull switch
 						{
 							true =>
-								new Some<T?>(v), // Some<T> is only created by Return() functions
+								new Some<T?>(v), // Some<T> is only created by Return() functions and implicit operator
 
 							false =>
 								None<T?, Msg.AllowNullWasFalseMsg>()
@@ -63,9 +59,5 @@ namespace F
 				return None<T?>(handler(e));
 			}
 		}
-
-		/// <inheritdoc cref="Return{T}(Func{T}, bool, Handler)"/>
-		public static Task<Option<T?>> ReturnAsync<T>(Task<T?> value, bool allowNull) =>
-			ReturnAsync(() => value, allowNull, DefaultHandler);
 	}
 }

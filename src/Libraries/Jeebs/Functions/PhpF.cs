@@ -9,7 +9,7 @@ using System.Text;
 namespace F
 {
 	/// <summary>
-	/// PHP Serialiser Class
+	/// PHP functions
 	/// </summary>
 	public static class PhpF
 	{

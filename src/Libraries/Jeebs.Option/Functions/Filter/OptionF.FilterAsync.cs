@@ -11,20 +11,17 @@ namespace F
 	{
 		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool})"/>
 		public static Task<Option<T>> FilterAsync<T>(Option<T> option, Func<T, Task<bool>> predicate) =>
-			CatchAsync(() =>
-				BindAsync(
-					option,
-					async x =>
-						await predicate(x) switch
-						{
-							true =>
-								Return(x),
+			BindAsync(
+				option,
+				async x =>
+					await predicate(x) switch
+					{
+						true =>
+							Return(x),
 
-							false =>
-								None<T, Msg.FilterPredicateWasFalseMsg>()
-						}
-				),
-				DefaultHandler
+						false =>
+							None<T, Msg.FilterPredicateWasFalseMsg>()
+					}
 			);
 
 		/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool})"/>

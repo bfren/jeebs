@@ -20,29 +20,29 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 		public void Null_Input_Byte_Key_Returns_None(string input)
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = input.Decrypt<int>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
 		}
 
 		[Fact]
 		public void Invalid_Json_Input_Byte_Key_Returns_None()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			var json = F.Rnd.Str;
 
 			// Act
 			var result = json.Decrypt<int>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialiseExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -54,37 +54,37 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var result = defaultInputStringEncryptedWithByteKey.Decrypt<int>(Array.Empty<byte>());
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<InvalidKeyExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidKeyExceptionMsg>(none);
 		}
 
 		[Fact]
 		public void Incorrect_Byte_Key_Returns_None()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 
 			// Act
 			var result = defaultInputStringEncryptedWithByteKey.Decrypt<string>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<string>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 		}
 
 		[Fact]
 		public void Incorrect_Json_Input_Byte_Key_Returns_None()
 		{
 			// Arrange
-			var key = GenerateKey();
+			var key = GenerateKey().UnsafeUnwrap();
 			const string json = "{\"foo\":\"bar\"}";
 
 			// Act
 			var result = json.Decrypt<int>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<UnlockWhenEncryptedContentsIsNullMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
 		}
 
 		[Fact]

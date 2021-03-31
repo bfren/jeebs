@@ -1,34 +1,23 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Threading.Tasks;
+using Jeebs.Data;
 
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
-	/// Database methods for authentication
+	/// Adds additional Authentication functionality to the base <see cref="IDb"/>
 	/// </summary>
-	public interface IAuthDb
+	public interface IAuthDb : IDb
 	{
 		/// <summary>
-		/// Get the authentication user to validate password etc
+		/// Authentication Database Client
 		/// </summary>
-		/// <param name="email">User email address</param>
-		Task<Option<TUser>> GetAuthUserAsync<TUser>(string email)
-			where TUser : IAuthUser;
+		new public IAuthDbClient Client { get; }
 
 		/// <summary>
-		/// Update the user's last sign in
+		/// Migrate to the latest version of the Authentication database
 		/// </summary>
-		/// <param name="userId">User ID</param>
-		Task<Option<bool>> UpdateUserLastSignIn(UserId userId);
-
-		/// <summary>
-		/// Get the specified user
-		/// </summary>
-		/// <typeparam name="TUserModel">User model</typeparam>
-		/// <param name="userId">User ID</param>
-		Task<Option<TUserModel>> GetUserAsync<TUserModel>(UserId userId)
-			where TUserModel : IUserModel;
+		void MigrateToLatest();
 	}
 }

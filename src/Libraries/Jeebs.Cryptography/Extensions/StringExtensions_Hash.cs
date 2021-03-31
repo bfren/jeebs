@@ -2,8 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Text;
-using Sodium;
+using static F.OptionF;
 
 namespace Jeebs.Cryptography
 {
@@ -13,22 +12,24 @@ namespace Jeebs.Cryptography
 	public static class StringExtensions_Hash
 	{
 		/// <summary>
-		/// Compute a hash
-		/// A 32 byte hash returns a string of length 44
+		/// Compute a hash:<br/>
+		/// A 32 byte hash returns a string of length 44<br/>
 		/// A 64 byte hash (default) returns a string of length 88
 		/// </summary>
 		/// <param name="this">String to hash</param>
-		/// <param name="length">Hash length (in bytes)</param>
-		/// <returns>Base 64 encoded string</returns>
-		public static string Hash(this string @this, int length = 64)
-		{
-			if (string.IsNullOrEmpty(@this))
+		/// <param name="bytes">Hash length in bytes - must be between 16 and 64</param>
+		public static Option<string> Hash(this string @this, int bytes = 64) =>
+			@this switch
 			{
-				return string.Empty;
-			}
+				string input when !string.IsNullOrWhiteSpace(input) =>
+					F.CryptoF.Hash(@this, bytes)
+						.Map(
+							x => Convert.ToBase64String(x),
+							DefaultHandler
+						),
 
-			var hash = GenericHash.Hash(Encoding.UTF8.GetBytes(@this), null, length);
-			return Convert.ToBase64String(hash);
-		}
+				_ =>
+					string.Empty
+			};
 	}
 }

@@ -3,113 +3,49 @@
 
 using System;
 using System.Threading.Tasks;
-using Jeebs;
-using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class FilterAsync_Tests
+	public class FilterAsync_Tests : Jeebs_Tests.FilterAsync_Tests
 	{
 		[Fact]
-		public async Task If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+		public override async Task Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var option = new FakeOption();
-
-			// Act
-			var r0 = await FilterAsync(option, Substitute.For<Func<int, Task<bool>>>());
-			var r1 = await FilterAsync(option.AsTask, Substitute.For<Func<int, Task<bool>>>());
-
-			// Assert
-			var n0 = r0.AssertNone();
-			var m0 = Assert.IsType<UnhandledExceptionMsg>(n0);
-			Assert.IsType<UnknownOptionException>(m0.Exception);
-			var n1 = r1.AssertNone();
-			var m1 = Assert.IsType<UnhandledExceptionMsg>(n1);
-			Assert.IsType<UnknownOptionException>(m1.Exception);
-		}
-
-		[Fact]
-		public async Task Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
-		{
-			// Arrange
-			var option = Return(Rnd.Str);
-			var exception = new Exception();
-			Task<bool> throwFunc(string _) => throw exception;
-
-			// Act
-			var r0 = await FilterAsync(option, throwFunc);
-			var r1 = await FilterAsync(option.AsTask, throwFunc);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n1);
-		}
-
-		[Fact]
-		public async Task When_Some_And_Predicate_True_Returns_Value()
-		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
-
-			// Act
-			var r0 = await FilterAsync(option, x => Task.FromResult(x == value));
-			var r1 = await FilterAsync(option.AsTask, x => Task.FromResult(x == value));
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(value, s0);
-			var s1 = r1.AssertSome();
-			Assert.Equal(value, s1);
-		}
-
-		[Fact]
-		public async Task When_Some_And_Predicate_False_Returns_None_With_PredicateWasFalseMsg()
-		{
-			// Arrange
-			var value = Rnd.Int;
-			var option = Return(value);
-
-			// Act
-			var r0 = await FilterAsync(option, x => Task.FromResult(x != value));
-			var r1 = await FilterAsync(option.AsTask, x => Task.FromResult(x != value));
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<FilterPredicateWasFalseMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<FilterPredicateWasFalseMsg>(n1);
-		}
-
-		[Fact]
-		public async Task When_None_Returns_None_With_Original_Reason()
-		{
-			// Arrange
-			var reason = new TestMsg();
-			var option = None<int>(reason);
 			var predicate = Substitute.For<Func<int, Task<bool>>>();
 
-			// Act
-			var r0 = await FilterAsync(option, predicate);
-			var r1 = await FilterAsync(option.AsTask, predicate);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.Same(reason, n0);
-			var n1 = r1.AssertNone();
-			Assert.Same(reason, n1);
-			await predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
+			await Test00(opt => FilterAsync(opt, predicate));
+			await Test00(opt => FilterAsync(opt.AsTask, predicate));
 		}
 
-		public class FakeOption : Option<int> { }
+		[Fact]
+		public override async Task Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
+		{
+			await Test01((opt, predicate) => FilterAsync(opt, predicate));
+			await Test01((opt, predicate) => FilterAsync(opt.AsTask, predicate));
+		}
 
-		public record TestMsg : IMsg { }
+		[Fact]
+		public override async Task Test02_When_Some_And_Predicate_True_Returns_Value()
+		{
+			await Test02((opt, predicate) => FilterAsync(opt, predicate));
+			await Test02((opt, predicate) => FilterAsync(opt.AsTask, predicate));
+		}
+
+		[Fact]
+		public override async Task Test03_When_Some_And_Predicate_False_Returns_None_With_PredicateWasFalseMsg()
+		{
+			await Test03((opt, predicate) => FilterAsync(opt, predicate));
+			await Test03((opt, predicate) => FilterAsync(opt.AsTask, predicate));
+		}
+
+		[Fact]
+		public override async Task Test04_When_None_Returns_None_With_Original_Reason()
+		{
+			await Test04((opt, predicate) => FilterAsync(opt, predicate));
+			await Test04((opt, predicate) => FilterAsync(opt.AsTask, predicate));
+		}
 	}
 }

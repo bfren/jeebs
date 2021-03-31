@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System.Text.Json.Serialization;
+
 namespace Jeebs
 {
 	/// <summary>
@@ -12,6 +14,7 @@ namespace Jeebs
 		/// <summary>
 		/// Sometimes a reason for the 'None' value may be set
 		/// </summary>
+		[JsonIgnore]
 		public IMsg Reason { get; private init; }
 
 		internal None(IMsg reason) =>

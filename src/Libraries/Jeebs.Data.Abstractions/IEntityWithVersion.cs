@@ -6,16 +6,11 @@ namespace Jeebs.Data
 	/// <summary>
 	/// Database entity with version
 	/// </summary>
-	public interface IEntityWithVersion : IEntity
-	{
-		/// <summary>
-		/// Entity version
-		/// </summary>
-		long Version { get; set; }
-	}
+	public interface IEntityWithVersion : IEntity, IWithVersion { }
 
-	/// <summary>
-	/// Database entity with version
-	/// </summary>
-	public interface IEntityWithVersion<T> : IEntityWithVersion, IEntity<T> { }
+	/// <inheritdoc cref="IEntityWithVersion"/>
+	/// <typeparam name="T">StrongId Type</typeparam>
+	public interface IEntityWithVersion<T> : IEntityWithVersion, IWithId<T>
+		where T : StrongId
+	{ }
 }

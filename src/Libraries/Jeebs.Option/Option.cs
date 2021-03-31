@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Jeebs.Exceptions;
 using static F.OptionF;
@@ -13,11 +14,12 @@ namespace Jeebs
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract class Option<T>
+	public abstract class Option<T> : IEquatable<Option<T>>
 	{
 		/// <summary>
 		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>
 		/// </summary>
+		[JsonIgnore]
 		public Task<Option<T>> AsTask =>
 			Task.FromResult(this);
 
@@ -70,7 +72,14 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value) =>
-			Return(value);
+			value switch
+			{
+				T =>
+					new Some<T>(value), // Some<T> is only created by Return() functions and implicit operator
+
+				_ =>
+					None<T, Msg.NullValueMsg>()
+			};
 
 		/// <summary>
 		/// Compare an option type with a value type
@@ -98,6 +107,32 @@ namespace Jeebs
 				none: _ => true
 			);
 
+		/// <summary>
+		/// Compare an option type with a value type
+		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Value</param>
+		/// <param name="r">Option</param>
+		public static bool operator ==(T l, Option<T> r) =>
+			F.OptionF.Switch(
+				r,
+				some: v => Equals(v, l),
+				none: _ => false
+			);
+
+		/// <summary>
+		/// Compare an option type with a value type
+		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Value</param>
+		/// <param name="r">Option</param>
+		public static bool operator !=(T l, Option<T> r) =>
+			F.OptionF.Switch(
+				r,
+				some: v => !Equals(v, l),
+				none: _ => true
+			);
+
 		#endregion
 
 		#region Equals
@@ -110,6 +145,17 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="other">Object to compare to this <see cref="Option{T}"/></param>
 		public override bool Equals(object? other) =>
+			other switch
+			{
+				Option<T> option =>
+					Equals(option),
+
+				_ =>
+					false
+			};
+
+		/// <inheritdoc cref="Equals(object?)"/>
+		public bool Equals(Option<T>? other) =>
 			this switch
 			{
 				Some<T> x when other is Some<T> y =>
@@ -129,13 +175,13 @@ namespace Jeebs
 			this switch
 			{
 				Some<T> x when x.Value is T y =>
-					typeof(Some<>).GetHashCode() ^ y.GetHashCode(),
+					typeof(Some<>).GetHashCode() ^ typeof(T).GetHashCode() ^ y.GetHashCode(),
 
-				None<T> x when x.Reason is IMsg y =>
-					typeof(None<>).GetHashCode() ^ y.GetHashCode(),
+				Some<T> _ =>
+					typeof(Some<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
-				None<T> _ =>
-					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode(),
+				None<T> x =>
+					typeof(None<>).GetHashCode() ^ typeof(T).GetHashCode() ^ x.Reason.GetHashCode(),
 
 				_ =>
 					throw new UnknownOptionException() // as Option<T> is internal implementation only this should never happen...
@@ -145,49 +191,37 @@ namespace Jeebs
 
 		#region Audit
 
-		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}})"/>
-		public Option<T> Audit(Action<Option<T>> audit) =>
-			F.OptionF.Audit(this, audit);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<Option<T>> any) =>
+			F.OptionF.Audit(this, any, null, null);
 
-		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task})"/>
-		public Task<Option<T>> AuditAsync(Func<Option<T>, Task> audit) =>
-			F.OptionF.AuditAsync(this, audit);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<T> some) =>
+			F.OptionF.Audit(this, null, some, null);
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
-		public Option<T> AuditSwitch(Action<T> some) =>
-			F.OptionF.AuditSwitch(this, some, null);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<IMsg> none) =>
+			F.OptionF.Audit(this, null, null, none);
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
-		public Option<T> AuditSwitch(Action<IMsg> none) =>
-			F.OptionF.AuditSwitch(this, null, none);
+		/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		public Option<T> Audit(Action<T> some, Action<IMsg> none) =>
+			F.OptionF.Audit(this, null, some, none);
 
-		/// <inheritdoc cref="AuditSwitch{T}(Option{T}, Action{T}?, Action{IMsg}?)"/>
-		public Option<T> AuditSwitch(Action<T> some, Action<IMsg> none) =>
-			F.OptionF.AuditSwitch(this, some, none);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<Option<T>, Task> any) =>
+			F.OptionF.AuditAsync(this, any, null, null);
 
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<T> some) =>
-			F.OptionF.AuditSwitchAsync(this, some: v => { some?.Invoke(v); return Task.CompletedTask; }, none: null);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<T, Task> some) =>
+			F.OptionF.AuditAsync(this, null, some, null);
 
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some) =>
-			F.OptionF.AuditSwitchAsync(this, some: some, none: null);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<IMsg, Task> none) =>
+			F.OptionF.AuditAsync(this, null, null, none);
 
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<IMsg> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: null, none: r => { none?.Invoke(r); return Task.CompletedTask; });
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<IMsg, Task> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: null, none: none);
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Action<T> some, Action<IMsg> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: v => { some?.Invoke(v); return Task.CompletedTask; }, none: r => { none?.Invoke(r); return Task.CompletedTask; });
-
-		/// <inheritdoc cref="AuditSwitchAsync{T}(Option{T}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-		public Task<Option<T>> AuditSwitchAsync(Func<T, Task> some, Func<IMsg, Task> none) =>
-			F.OptionF.AuditSwitchAsync(this, some: some, none: none);
+		/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+		public Task<Option<T>> AuditAsync(Func<T, Task> some, Func<IMsg, Task> none) =>
+			F.OptionF.AuditAsync(this, null, some, none);
 
 		#endregion
 
@@ -210,8 +244,24 @@ namespace Jeebs
 			F.OptionF.Filter(this, predicate);
 
 		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
+		public Task<Option<T>> FilterAsync(Func<T, bool> predicate) =>
+			F.OptionF.FilterAsync(this, x => Task.FromResult(predicate(x)));
+
+		/// <inheritdoc cref="FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
 		public Task<Option<T>> FilterAsync(Func<T, Task<bool>> predicate) =>
 			F.OptionF.FilterAsync(this, predicate);
+
+		#endregion
+
+		#region IfNull
+
+		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
+		public Option<T> IfNull(Func<Option<T>> nullValue) =>
+			F.OptionF.IfNull(this, nullValue);
+
+		/// <inheritdoc cref="IfNullAsync{T}(Option{T}, Func{Task{Option{T}}})"/>
+		public Task<Option<T>> IfNullAsync(Func<Task<Option<T>>> nullValue) =>
+			F.OptionF.IfNullAsync(this, nullValue);
 
 		#endregion
 
@@ -227,67 +277,67 @@ namespace Jeebs
 
 		#endregion
 
-		#region Match
-
-		/// <inheritdoc cref="Match{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
-		public U Match<U>(Func<T, U> some, U none) =>
-			F.OptionF.Match(this, some: some, none: _ => none);
-
-		/// <inheritdoc cref="Match{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
-		public U Match<U>(Func<T, U> some, Func<U> none) =>
-			F.OptionF.Match(this, some: some, none: _ => none());
-
-		/// <inheritdoc cref="Match{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
-		public U Match<U>(Func<T, U> some, Func<IMsg, U> none) =>
-			F.OptionF.Match(this, some: some, none: none);
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, U none) =>
-			F.OptionF.MatchAsync(this, some: some, none: _ => Task.FromResult(none));
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, U> some, Task<U> none) =>
-			F.OptionF.MatchAsync(this, some: v => Task.FromResult(some(v)), none: _ => none);
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Task<U> none) =>
-			F.OptionF.MatchAsync(this, some: some, none: _ => none);
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<U> none) =>
-			F.OptionF.MatchAsync(this, some: some, none: _ => Task.FromResult(none()));
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, U> some, Func<Task<U>> none) =>
-			F.OptionF.MatchAsync(this, some: v => Task.FromResult(some(v)), none: _ => none());
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<Task<U>> none) =>
-			F.OptionF.MatchAsync(this, some: some, none: _ => none());
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, U> some, Func<IMsg, Task<U>> none) =>
-			F.OptionF.MatchAsync(this, some: v => Task.FromResult(some(v)), none: none);
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg, U> none) =>
-			F.OptionF.MatchAsync(this, some: some, none: r => Task.FromResult(none(r)));
-
-		/// <inheritdoc cref="MatchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-		public Task<U> MatchAsync<U>(Func<T, Task<U>> some, Func<IMsg, Task<U>> none) =>
-			F.OptionF.MatchAsync(this, some: some, none: none);
-
-		#endregion
-
 		#region Switch
 
-		/// <inheritdoc cref="Switch{T}(Option{T}, Action{T}, Action{IMsg})"/>
+		/// <inheritdoc cref="F.OptionF.Switch{T}(Option{T}, Action{T}, Action{IMsg})"/>
 		public void Switch(Action<T> some, Action none) =>
 			F.OptionF.Switch(this, some: some, none: _ => none());
 
-		/// <inheritdoc cref="Switch{T}(Option{T}, Action{T}, Action{IMsg})"/>
+		/// <inheritdoc cref="F.OptionF.Switch{T}(Option{T}, Action{T}, Action{IMsg})"/>
 		public void Switch(Action<T> some, Action<IMsg> none) =>
 			F.OptionF.Switch(this, some: some, none: none);
+
+		/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
+		public U Switch<U>(Func<T, U> some, U none) =>
+			F.OptionF.Switch(this, some: some, none: _ => none);
+
+		/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
+		public U Switch<U>(Func<T, U> some, Func<U> none) =>
+			F.OptionF.Switch(this, some: some, none: _ => none());
+
+		/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
+		public U Switch<U>(Func<T, U> some, Func<IMsg, U> none) =>
+			F.OptionF.Switch(this, some: some, none: none);
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, U none) =>
+			F.OptionF.SwitchAsync(this, some: some, none: _ => Task.FromResult(none));
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, U> some, Task<U> none) =>
+			F.OptionF.SwitchAsync(this, some: v => Task.FromResult(some(v)), none: _ => none);
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Task<U> none) =>
+			F.OptionF.SwitchAsync(this, some: some, none: _ => none);
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<U> none) =>
+			F.OptionF.SwitchAsync(this, some: some, none: _ => Task.FromResult(none()));
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, U> some, Func<Task<U>> none) =>
+			F.OptionF.SwitchAsync(this, some: v => Task.FromResult(some(v)), none: _ => none());
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<Task<U>> none) =>
+			F.OptionF.SwitchAsync(this, some: some, none: _ => none());
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, U> some, Func<IMsg, Task<U>> none) =>
+			F.OptionF.SwitchAsync(this, some: v => Task.FromResult(some(v)), none: none);
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<IMsg, U> none) =>
+			F.OptionF.SwitchAsync(this, some: some, none: r => Task.FromResult(none(r)));
+
+		/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+		public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<IMsg, Task<U>> none) =>
+			F.OptionF.SwitchAsync(this, some: some, none: none);
+
+		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		public Option<T> SwitchIf(Func<T, bool> check, Func<T, None<T>> ifFalse) =>
+			F.OptionF.SwitchIf(this, check, ifFalse);
 
 		#endregion
 
@@ -307,7 +357,7 @@ namespace Jeebs
 
 		/// <inheritdoc cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
 		public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
-			F.OptionF.UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
+			UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
 
 		#endregion
 	}

@@ -20,8 +20,11 @@ namespace Jeebs.Mvc
 		/// <param name="this">Controller</param>
 		/// <param name="reason">None</param>
 		/// <param name="code">[Optional] HTTP Status Code</param>
-		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg? reason, int? code = null)
+		public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg reason, int? code = null)
 		{
+			// Log error
+			@this.Log.Message(reason);
+
 			// Check for 404
 			var status = code switch
 			{
@@ -38,12 +41,6 @@ namespace Jeebs.Mvc
 							StatusCodes.Status500InternalServerError
 					}
 			};
-
-			// Log error
-			if (reason is IMsg)
-			{
-				@this.Log.Message(reason);
-			}
 
 			// Look for a view
 			var viewName = $"Error{status}";

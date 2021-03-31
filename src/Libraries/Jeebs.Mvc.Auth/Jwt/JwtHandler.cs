@@ -64,7 +64,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 			from token in
 				GetToken(authorisationHeader)
 			from principal in
-				GetPrincipal(ctx.HttpContext.RequestServices.GetRequiredService<IJwtAuthProvider>(), token)
+				GetPrincipal(ctx.HttpContext.RequestServices.GetRequiredService<IAuthJwtProvider>(), token)
 			select principal;
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace Jeebs.Mvc.Auth.Jwt
 		/// </summary>
 		/// <param name="auth">IJwtAuthProvider</param>
 		/// <param name="token">Token value</param>
-		internal static Option<ClaimsPrincipal> GetPrincipal(IJwtAuthProvider auth, string token) =>
+		internal static Option<ClaimsPrincipal> GetPrincipal(IAuthJwtProvider auth, string token) =>
 			auth.ValidateToken(token);
 
 		/// <summary>Messages</summary>

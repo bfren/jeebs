@@ -4,24 +4,38 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using static F.OptionF;
 
 namespace Jeebs.Linq
 {
 	/// <summary>
-	/// LinqExpression Extensions
+	/// LinqExpression Extensions: GetPropertyInfo
 	/// </summary>
 	public static class LinqExpressionExtensions
 	{
 		/// <summary>
-		/// Prepare a Linq Expression for use as property setter / getter
+		/// Prepare a Linq MemberExpression for use as property setter / getter
 		/// </summary>
 		/// <typeparam name="TObject">Object type</typeparam>
 		/// <typeparam name="TProperty">Property type</typeparam>
 		/// <param name="this">Expression to get property</param>
-		public static PropertyInfo<TObject, TProperty> GetPropertyInfo<TObject, TProperty>(this Expression<Func<TObject, TProperty>> @this)
+		public static Option<PropertyInfo<TObject, TProperty>> GetPropertyInfo<TObject, TProperty>(
+			this Expression<Func<TObject, TProperty>> @this
+		) =>
+			@this.Body switch
+			{
+				MemberExpression memberExpression =>
+					new PropertyInfo<TObject, TProperty>((PropertyInfo)memberExpression.Member),
+
+				_ =>
+					None<PropertyInfo<TObject, TProperty>, Msg.ExpressionIsNotAMemberExpressionMsg>()
+			};
+
+		/// <summary>Messages</summary>
+		public static class Msg
 		{
-			var body = (MemberExpression)@this.Body;
-			return new PropertyInfo<TObject, TProperty>((PropertyInfo)body.Member);
+			/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
+			public sealed record ExpressionIsNotAMemberExpressionMsg : IMsg { }
 		}
 	}
 }

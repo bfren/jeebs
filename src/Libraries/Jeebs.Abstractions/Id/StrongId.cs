@@ -1,20 +1,50 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-namespace Jeebs.Id
+namespace Jeebs
 {
-	/// <summary>
-	/// Strongly Typed ID record type
-	/// </summary>
-	/// <typeparam name="T">ID Value Type</typeparam>
+	/// <inheritdoc cref="IStrongId"/>
 	/// <param name="Value">ID Value</param>
-	public abstract record StrongId<T>(T Value) : IStrongId<T>
+	public abstract record StrongId(long Value) : IStrongId
 	{
-		/// <inheritdoc cref="IStrongId.ValueStr"/>
-		public string ValueStr =>
-			Value?.ToString() ?? "Unknown ID";
+		/// <inheritdoc/>
+		public bool IsDefault =>
+			Value == 0;
 
-		/// <inheritdoc cref="IStrongId.IsDefault"/>
-		public abstract bool IsDefault { get; }
+		#region Operators
+
+		/// <summary>
+		/// Compare a StrongId type with a plain long
+		/// </summary>
+		/// <param name="l">StrongId</param>
+		/// <param name="r">64-bit integer</param>
+		public static bool operator ==(StrongId l, long r) =>
+			l.Value == r;
+
+		/// <summary>
+		/// Compare a StrongId type with a plain long
+		/// </summary>
+		/// <param name="l">StrongId</param>
+		/// <param name="r">64-bit integer</param>
+		public static bool operator !=(StrongId l, long r) =>
+			l.Value != r;
+
+		/// <summary>
+		/// Compare a StrongId type with a plain long
+		/// </summary>
+		/// <param name="l">StrongId</param>
+		/// <param name="r">64-bit integer</param>
+		public static bool operator ==(long l, StrongId r) =>
+			l == r.Value;
+
+		/// <summary>
+		/// Compare a StrongId type with a plain long
+		/// </summary>
+		/// <param name="l">StrongId</param>
+		/// <param name="r">64-bit integer</param>
+		public static bool operator !=(long l, StrongId r) =>
+			l != r.Value;
+
+		#endregion
 	}
 }

@@ -30,6 +30,13 @@ namespace Jeebs.Mvc
 		/// <param name="code">Http Status Code</param>
 		[Route("/Error/{code:int}")]
 		public async Task<IActionResult> Handle(int code) =>
-			await this.ExecuteErrorAsync(null, code);
+			await this.ExecuteErrorAsync(new Msg.UnknownErrorMsg(), code);
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>An unknown error has occured</summary>
+			public sealed record UnknownErrorMsg : IMsg { }
+		}
 	}
 }

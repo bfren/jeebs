@@ -18,6 +18,8 @@ namespace F
 		/// <param name="none">Action to run if <see cref="Jeebs.None{T}"/></param>
 		public static void Switch<T>(Option<T> option, Action<T> some, Action<IMsg> none)
 		{
+			// No return value so unable to use switch statement
+
 			if (option is Some<T> x)
 			{
 				some(x.Value);

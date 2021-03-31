@@ -21,7 +21,8 @@ namespace Jeebs.Cryptography
 			{
 				T x =>
 					from l in new Lockable<T>(x).Lock(key)
-					select l.Serialise(),
+					from s in l.Serialise()
+					select s,
 
 				_ =>
 					F.JsonF.Empty
@@ -33,11 +34,12 @@ namespace Jeebs.Cryptography
 		/// <typeparam name="T">Type of object being encrypted</typeparam>
 		/// <param name="this">Value to encrypt</param>
 		/// <param name="key">Encryption key</param>
-		public static string Encrypt<T>(this T @this, string key) =>
+		public static Option<string> Encrypt<T>(this T @this, string key) =>
 			@this switch
 			{
 				T x =>
-					new Lockable<T>(x).Lock(key).Serialise(),
+					from s in new Lockable<T>(x).Lock(key).Serialise()
+					select s,
 
 				_ =>
 					F.JsonF.Empty

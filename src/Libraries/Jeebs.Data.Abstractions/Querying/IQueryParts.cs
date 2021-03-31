@@ -2,62 +2,59 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
+using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
 	/// <summary>
-	/// The various parts required to build a query
+	/// Contains all the parts necessary to build a query
 	/// </summary>
 	public interface IQueryParts
 	{
 		/// <summary>
 		/// From table
 		/// </summary>
-		string From { get; }
+		ITable From { get; init; }
 
 		/// <summary>
-		/// Select columns
+		/// Select columns (if empty will select all columns)
 		/// </summary>
-		string? Select { get; set; }
+		List<IColumn> Select { get; init; }
 
 		/// <summary>
 		/// Inner Joins
 		/// </summary>
-		IList<(string table, string on, string equals)>? InnerJoin { get; set; }
+		List<(IColumn from, IColumn to)> InnerJoin { get; init; }
 
 		/// <summary>
 		/// Left Joins
 		/// </summary>
-		IList<(string table, string on, string equals)>? LeftJoin { get; set; }
+		List<(IColumn from, IColumn to)> LeftJoin { get; init; }
 
 		/// <summary>
 		/// Right Joins
 		/// </summary>
-		IList<(string table, string on, string equals)>? RightJoin { get; set; }
+		List<(IColumn from, IColumn to)> RightJoin { get; init; }
 
 		/// <summary>
-		/// Where statements
+		/// Where Predicates
 		/// </summary>
-		IList<string>? Where { get; set; }
+		List<(IColumn column, SearchOperator op, object value)> Where { get; init; }
 
 		/// <summary>
-		/// Query Parameters
+		/// Sort columns
 		/// </summary>
-		IQueryParameters Parameters { get; set; }
+		List<(IColumn column, SortOrder order)> Sort { get; init; }
 
 		/// <summary>
-		/// Order By columns
+		/// Maximum number of results to return (if null will select all rows)
 		/// </summary>
-		IList<string>? OrderBy { get; set; }
+		long? Maximum { get; init; }
 
 		/// <summary>
-		/// Limit number
+		/// The number of results to skip<br/>
+		/// Note: setting this will do nothing if <see cref="Maximum"/> is not also set
 		/// </summary>
-		long? Limit { get; set; }
-
-		/// <summary>
-		/// Offset number
-		/// </summary>
-		long? Offset { get; set; }
+		long Skip { get; init; }
 	}
 }

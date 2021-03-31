@@ -4,14 +4,19 @@
 namespace Jeebs.Data.Querying
 {
 	/// <summary>
-	/// Builds a Query in a fluent manner
+	/// Fluently build a database query
 	/// </summary>
 	public interface IQueryBuilder
 	{
 		/// <summary>
-		/// Query Stage 1: Set the model for this query
+		/// Set the main table to select data from
 		/// </summary>
-		/// <typeparam name="T">Model type</typeparam>
-		IQueryWithModel<T> WithModel<T>();
+		/// <param name="table">ITable</param>
+		IQueryBuilderWithFrom From(ITable table);
+
+		/// <inheritdoc cref="From(ITable)"/>
+		/// <typeparam name="TTable">Table type</typeparam>
+		IQueryBuilderWithFrom From<TTable>()
+			where TTable : ITable, new();
 	}
 }

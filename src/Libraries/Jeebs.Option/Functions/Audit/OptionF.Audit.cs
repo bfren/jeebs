@@ -15,13 +15,29 @@ namespace F
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="option">Option being audited</param>
-		/// <param name="audit">Audit function</param>
-		public static Option<T> Audit<T>(Option<T> option, Action<Option<T>> audit)
+		/// <param name="any">[Optional] Action will run for any <paramref name="option"/></param>
+		/// <param name="some">[Optional] Action will run if <paramref name="option"/> is <see cref="Some{T}"/></param>
+		/// <param name="none">[Optional] Action will run if <paramref name="option"/> is <see cref="Jeebs.None{T}"/></param>
+		public static Option<T> Audit<T>(Option<T> option, Action<Option<T>>? any, Action<T>? some, Action<IMsg>? none)
 		{
+			// Do nothing if the user gave us nothing to do!
+			if (any == null && some == null && none == null)
+			{
+				return option;
+			}
+
+			// Work out which audit function to use
+			Action audit = Switch<T, Action>(
+				option,
+				some: v => () => some?.Invoke(v),
+				none: r => () => none?.Invoke(r)
+			);
+
 			// Perform the audit
 			try
 			{
-				audit(option);
+				any?.Invoke(option);
+				audit();
 			}
 			catch (Exception e)
 			{

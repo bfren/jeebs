@@ -18,9 +18,9 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="value">Guid value</param>
 		/// <returns>Guid</returns>
 		public override Guid Parse(object value) =>
-			value.ToString() switch
+			value?.ToString() switch
 			{
-				string guid =>
+				string guid when !string.IsNullOrWhiteSpace(guid) =>
 					Guid.Parse(guid),
 
 				_ =>
@@ -31,8 +31,8 @@ namespace Jeebs.Data.TypeHandlers
 		/// Set Guid value
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter</param>
-		/// <param name="value">Guid</param>
+		/// <param name="value">Guid value</param>
 		public override void SetValue(IDbDataParameter parameter, Guid value) =>
-			parameter.Value = value.ToString();
+			parameter.Value = value;
 	}
 }

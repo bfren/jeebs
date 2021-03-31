@@ -1,156 +1,66 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Threading.Tasks;
-using Jeebs;
-using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
 
 namespace F.OptionF_Tests
 {
-	public class ReturnAsync_Tests
+	public class ReturnAsync_Tests : Jeebs_Tests.ReturnAsync_Tests
 	{
 		[Fact]
-		public async Task Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+		public override async Task Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			Task<int> throwFunc() => throw new Exception();
-			Task<int?> throwFuncNullable() => throw new Exception();
-
-			// Act
-			var r0 = await ReturnAsync(throwFunc, DefaultHandler);
-			var r1 = await ReturnAsync(throwFuncNullable, DefaultHandler);
-			var r2 = await ReturnAsync(throwFuncNullable, true, DefaultHandler);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n1);
-			var n2 = r2.AssertNone();
-			Assert.IsType<UnhandledExceptionMsg>(n2);
+			await Test00((val, handler) => ReturnAsync(val, handler));
 		}
 
 		[Fact]
-		public async Task Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+		public override async Task Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
 		{
-			// Arrange
-			var handler = Substitute.For<Handler>();
-			var exception = new Exception();
-			Task<int> throwFunc() => throw exception;
-			Task<int?> throwFuncNullable() => throw exception;
-
-			// Act
-			var r0 = await ReturnAsync(throwFunc, handler);
-			var r1 = await ReturnAsync(throwFuncNullable, handler);
-			var r2 = await ReturnAsync(throwFuncNullable, false, handler);
-
-			// Assert
-			r0.AssertNone();
-			r1.AssertNone();
-			r2.AssertNone();
-			handler.Received(3).Invoke(exception);
+			await Test01((val, nullable, handler) => ReturnAsync(val, nullable, handler));
 		}
 
 		[Fact]
-		public async Task Null_Input_Returns_None()
+		public override async Task Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
 		{
-			// Arrange
-			Task<int?> value = Task.FromResult<int?>(null);
-
-			// Act
-			var r0 = await ReturnAsync(value);
-			var r1 = await ReturnAsync(() => value, DefaultHandler);
-			var r2 = await ReturnAsync(value, false);
-			var r3 = await ReturnAsync(() => value, false, DefaultHandler);
-
-			// Assert
-			var n0 = r0.AssertNone();
-			Assert.IsType<NullValueMsg>(n0);
-			var n1 = r1.AssertNone();
-			Assert.IsType<NullValueMsg>(n1);
-			var n2 = r2.AssertNone();
-			Assert.IsType<AllowNullWasFalseMsg>(n2);
-			var n3 = r3.AssertNone();
-			Assert.IsType<AllowNullWasFalseMsg>(n3);
+			await Test02((val, handler) => ReturnAsync(val, handler));
 		}
 
 		[Fact]
-		public async Task Null_Input_Returns_Some_If_AllowNull_Is_True()
+		public override async Task Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
 		{
-			// Arrange
-			Task<int?> value = Task.FromResult<int?>(null);
-
-			// Act
-			var r0 = await ReturnAsync(value, true);
-			var r1 = await ReturnAsync(() => value, true, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Null(s0);
-			var s1 = r1.AssertSome();
-			Assert.Null(s1);
-		}
-
-		[Theory]
-		[InlineData(18)]
-		[InlineData("foo")]
-		public async Task Value_Input_Returns_Some<T>(T input)
-		{
-			// Arrange
-			var value = Task.FromResult<T?>(input);
-
-			// Act
-			var r0 = await ReturnAsync(value);
-			var r1 = await ReturnAsync(() => value, DefaultHandler);
-			var r2 = await ReturnAsync(() => value, false, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(input, s0);
-			var s1 = r1.AssertSome();
-			Assert.Equal(input, s1);
-			var s2 = r2.AssertSome();
-			Assert.Equal(input, s2);
-		}
-
-		[Theory]
-		[InlineData(18)]
-		[InlineData("foo")]
-		public async Task Value_Input_Returns_Some_Nullable<T>(T? input)
-		{
-			// Arrange
-			var value = Task.FromResult(input);
-
-			// Act
-			var r0 = await ReturnAsync(value, true);
-			var r1 = await ReturnAsync(() => value, true, DefaultHandler);
-
-			// Assert
-			var s0 = r0.AssertSome();
-			Assert.Equal(input, s0);
-			var s1 = r1.AssertSome();
-			Assert.Equal(input, s1);
+			await Test03((val, nullable, handler) => ReturnAsync(val, nullable, handler));
 		}
 
 		[Fact]
-		public async Task Runs_Function_Returns_Some()
+		public override async Task Test04_Null_Input_Returns_None()
 		{
-			// Arrange
-			var value = Rnd.Int;
-			var get = Substitute.For<Func<Task<string>>>();
-			Task<string> getNotNull() => get();
-			async Task<string?> getNullable() => await get();
+			await Test04((val, handler) => ReturnAsync(val, handler));
+		}
 
-			// Act
-			await ReturnAsync(getNotNull, DefaultHandler);
-			await ReturnAsync(getNullable, false, DefaultHandler);
+		[Fact]
+		public override async Task Test05_Nullable_Allow_Null_False_Null_Input_Returns_None_With_AllowNullWasFalseMsg()
+		{
+			await Test05((val, nullable, handler) => ReturnAsync(val, nullable, handler));
+		}
 
-			// Assert
-			await get.Received(2).Invoke();
+		[Fact]
+		public override async Task Test06_Nullable_Allow_Null_True_Null_Input_Returns_Some_With_Null_Value()
+		{
+			await Test06((val, nullable, handler) => ReturnAsync(val, nullable, handler));
+		}
+
+		[Fact]
+		public override async Task Test07_Not_Null_Returns_Some()
+		{
+			await Test07((val, handler) => ReturnAsync(val, handler));
+		}
+
+		[Fact]
+		public override async Task Test08_Nullable_Not_Null_Returns_Some()
+		{
+			await Test08((val, nullable, handler) => ReturnAsync(val, nullable, handler));
 		}
 	}
 }

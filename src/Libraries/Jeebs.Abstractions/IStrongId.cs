@@ -9,25 +9,13 @@ namespace Jeebs
 	public interface IStrongId
 	{
 		/// <summary>
-		/// ID Value as string
+		/// ID Value
 		/// </summary>
-		string ValueStr { get; }
+		long Value { get; init; }
 
 		/// <summary>
 		/// Returns true if the current value is the default (i.e. unset) value
 		/// </summary>
 		bool IsDefault { get; }
-	}
-
-	/// <summary>
-	/// Represents a strongly-typed ID
-	/// </summary>
-	/// <typeparam name="T">ID value type</typeparam>
-	public interface IStrongId<T> : IStrongId
-	{
-		/// <summary>
-		/// ID Value
-		/// </summary>
-		T Value { get; init; }
 	}
 }

@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Text.Json;
 using Dapper;
 using static F.JsonF;
@@ -20,20 +19,13 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="value">T value</param>
 		/// <returns>JSON</returns>
 		protected override string Format(T value) =>
-			Serialise(value);
+			Serialise(value).Unwrap(Empty);
 
 		/// <summary>
 		/// Deserialise JSON string
 		/// </summary>
 		/// <param name="json">JSON string</param>
-		protected override T Parse(string json)
-		{
-			if (string.IsNullOrEmpty(json))
-			{
-				throw new ArgumentNullException(nameof(json));
-			}
-
-			return Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to deserialise JSON."));
-		}
+		protected override T Parse(string json) =>
+			Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to deserialise JSON."));
 	}
 }

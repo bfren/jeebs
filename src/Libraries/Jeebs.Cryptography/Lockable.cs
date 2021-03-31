@@ -30,7 +30,7 @@ namespace Jeebs.Cryptography
 		public Option<Locked<T>> Lock(byte[] key) =>
 			key.Length switch
 			{
-				Lockable.KeyLength =>
+				KeyLength =>
 					new Locked<T>(Contents, key),
 
 				_ =>

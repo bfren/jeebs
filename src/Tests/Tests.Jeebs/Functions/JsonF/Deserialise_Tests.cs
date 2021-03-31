@@ -8,7 +8,7 @@ using static F.JsonF.Msg;
 
 namespace F.JsonF_Tests
 {
-	public partial class Deserialise_Tests
+	public class Deserialise_Tests
 	{
 		[Theory]
 		[InlineData(null)]

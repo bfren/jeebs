@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Jeebs.Data;
-using Jeebs.Data.Querying;
+using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Querying;
 using static F.OptionF;
 
 namespace Jeebs.WordPress

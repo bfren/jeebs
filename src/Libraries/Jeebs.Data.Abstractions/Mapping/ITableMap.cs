@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data
 {
 	/// <summary>
 	/// Table Map
@@ -11,24 +11,29 @@ namespace Jeebs.Data.Mapping
 	public interface ITableMap
 	{
 		/// <summary>
+		/// Table object
+		/// </summary>
+		ITable Table { get; init; }
+
+		/// <summary>
 		/// Table Name
 		/// </summary>
-		string Name { get; set; }
+		string Name { get; }
 
 		/// <summary>
 		/// Mapped Columns
 		/// </summary>
-		IMappedColumnList Columns { get; set; }
+		IMappedColumnList Columns { get; init; }
 
 		/// <summary>
 		/// Id Column
 		/// </summary>
-		IMappedColumn IdColumn { get; set; }
+		IMappedColumn IdColumn { get; init; }
 
 		/// <summary>
 		/// [Optional] Version Column
 		/// </summary>
-		IMappedColumn? VersionColumn { get; set; }
+		IMappedColumn? VersionColumn { get; }
 
 		/// <summary>
 		/// Get all column names
@@ -45,11 +50,6 @@ namespace Jeebs.Data.Mapping
 		/// Get all column names and aliases for writeable columns
 		/// (i.e. not marked as Id / Computed / Readonly)
 		/// </summary>
-		(List<string> names, List<string> aliases) GetWriteableColumnNamesAndAliases();
-
-		/// <summary>
-		/// Should be overridden to provide the table name (escaped)
-		/// </summary>
-		string ToString();
+		Option<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases();
 	}
 }
