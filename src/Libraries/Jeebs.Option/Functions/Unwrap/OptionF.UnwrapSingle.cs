@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Jeebs;
@@ -26,14 +27,17 @@ namespace F
 					option,
 					some: v => v switch
 					{
-						IEnumerable<U> list when list.Count() == 1 =>
+						IList<U> list when list.Count == 1 =>
 							Return(list.Single()),
 
-						IEnumerable<U> list when !list.Any() =>
+						IList<U> list when list.Count == 0 =>
 							None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
 
-						IEnumerable<U> =>
+						IList<U> =>
 							None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
+
+						IList =>
+							None<U, Msg.UnwrapSingleIncorrectTypeErrorMsg>(),
 
 						_ =>
 							None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
