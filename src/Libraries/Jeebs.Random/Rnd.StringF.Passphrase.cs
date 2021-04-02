@@ -104,7 +104,7 @@ namespace F
 						word = word[0].ToString().ToUpper() + word[1..];
 					}
 
-					// Add a number to one of the words
+					// Add a number to the first word (the list will be shuffled later)
 					if (includeNumber && i == 0)
 					{
 						word += NumberF.GetInt64(0, 9);

@@ -57,6 +57,23 @@ namespace F.StringF_Tests
 		}
 
 		[Theory]
+		[InlineData(2)]
+		[InlineData(4)]
+		[InlineData(8)]
+		public void Uses_Correct_Number_Of_Words(int input)
+		{
+			// Arrange
+			const char sep = '|';
+
+			// Act
+			var result = Passphrase(input, separator: sep);
+
+			// Assert
+			var some = result.AssertSome().Split(sep);
+			Assert.Equal(input, some.Length);
+		}
+
+		[Theory]
 		[InlineData('|')]
 		[InlineData('^')]
 		[InlineData('+')]
