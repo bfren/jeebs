@@ -13,7 +13,7 @@ namespace Jeebs
 	{
 		/// <summary>
 		/// Create a copy of an array and shuffle the elements using a Fisher-Yates Shuffle
-		/// See https://forums.asp.net/post/4869658.aspx
+		/// See http://www.dotnetperls.com/fisher-yates-shuffle
 		/// </summary>
 		/// <typeparam name="T">Object type</typeparam>
 		/// <param name="this">Array to shuffle</param>
