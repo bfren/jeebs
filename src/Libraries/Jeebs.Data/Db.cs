@@ -11,7 +11,6 @@ using Jeebs.Config;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
-using static F.OptionF.Msg;
 using static F.OptionF;
 
 namespace Jeebs.Data

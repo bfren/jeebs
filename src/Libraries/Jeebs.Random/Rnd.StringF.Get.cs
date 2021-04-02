@@ -13,7 +13,7 @@ namespace F
 		/// <summary>
 		/// String functions
 		/// </summary>
-		public static class StringF
+		public static partial class StringF
 		{
 			/// <summary>
 			/// List of all characters

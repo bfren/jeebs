@@ -2,4 +2,14 @@
   <PropertyGroup>
     <RootNamespace>F</RootNamespace>
   </PropertyGroup>
+	<PropertyGroup>
+		<LongWordListFile>eff-long-word-list.csv</LongWordListFile>
+		<LongWordListPath>$([MSBuild]::GetPathOfFileAbove('$(LongWordListFile)'))</LongWordListPath>
+	</PropertyGroup>
+	<ItemGroup Label="Embed Long Word List">
+		<EmbeddedResource Include="$(LongWordListPath)" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
+	</ItemGroup>
 </Project>
