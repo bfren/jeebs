@@ -10,15 +10,15 @@ namespace F
 	public static partial class OptionF
 	{
 		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
-		public static Task<Option<T>> IfNullAsync<T>(Option<T> option, Func<Task<Option<T>>> nullValue) =>
+		public static Task<Option<T>> IfNullAsync<T>(Option<T> option, Func<Task<Option<T>>> ifNull) =>
 			CatchAsync(() =>
 				option switch
 				{
 					Some<T> x when x.Value is null =>
-						nullValue(),
+						ifNull(),
 
 					None<T> x when x.Reason is Msg.NullValueMsg =>
-						nullValue(),
+						ifNull(),
 
 					_ =>
 						option.AsTask
@@ -27,7 +27,12 @@ namespace F
 			);
 
 		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
-		public static async Task<Option<T>> IfNullAsync<T>(Task<Option<T>> option, Func<Task<Option<T>>> nullValue) =>
-			await IfNullAsync(await option, nullValue);
+		public static async Task<Option<T>> IfNullAsync<T>(Task<Option<T>> option, Func<Task<Option<T>>> ifNull) =>
+			await IfNullAsync(await option, ifNull);
+
+		/// <inheritdoc cref="IfNull{T, TMsg}(Option{T}, Func{TMsg})"/>
+		public static async Task<Option<T>> IfNullAsync<T, TMsg>(Task<Option<T>> option, Func<TMsg> ifNull)
+			where TMsg : IMsg =>
+			await IfNullAsync(await option, () => None<T>(ifNull()).AsTask);
 	}
 }

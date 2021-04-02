@@ -47,6 +47,10 @@ namespace F
 			}
 		}
 
+		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		public static Option<T> SwitchIf<T>(Option<T> option, Func<T, bool> check, Func<T, IMsg> ifFalse) =>
+			SwitchIf(option, check, x => None<T>(ifFalse(x)));
+
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{

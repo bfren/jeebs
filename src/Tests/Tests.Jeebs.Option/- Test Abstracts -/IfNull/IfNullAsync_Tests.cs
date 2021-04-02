@@ -34,34 +34,74 @@ namespace Jeebs_Tests
 			Assert.IsType<Msg.UnhandledExceptionMsg>(n1);
 		}
 
-		public abstract Task Test01_Some_With_Null_Value_Runs_NullValue_Func();
+		public abstract Task Test01_Some_With_Null_Value_Runs_IfNull_Func();
 
 		protected static async Task Test01(Func<Option<object?>, Func<Task<Option<object?>>>, Task<Option<object?>>> act)
 		{
 			// Arrange
 			var some = Return<object>(null, true);
-			var nullValue = Substitute.For<Func<Task<Option<object?>>>>();
+			var ifNull = Substitute.For<Func<Task<Option<object?>>>>();
 
 			// Act
-			await act(some, nullValue);
+			await act(some, ifNull);
 
 			// Assert
-			await nullValue.Received().Invoke();
+			await ifNull.Received().Invoke();
 		}
 
-		public abstract Task Test02_None_With_NullValueMsg_Runs_NullValue_Func();
+		public abstract Task Test02_None_With_NullValueMsg_Runs_IfNull_Func();
 
 		protected static async Task Test02(Func<Option<object>, Func<Task<Option<object>>>, Task<Option<object>>> act)
 		{
 			// Arrange
 			var none = None<object, Msg.NullValueMsg>();
-			var nullValue = Substitute.For<Func<Task<Option<object>>>>();
+			var ifNull = Substitute.For<Func<Task<Option<object>>>>();
 
 			// Act
-			await act(none, nullValue);
+			await act(none, ifNull);
 
 			// Assert
-			await nullValue.Received().Invoke();
+			await ifNull.Received().Invoke();
 		}
+
+		public abstract Task Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
+
+		protected static async Task Test03(Func<Option<object?>, Func<IMsg>, Task<Option<object?>>> act)
+		{
+			// Arrange
+			var option = Return<object>(null, true);
+			var ifNull = Substitute.For<Func<IMsg>>();
+			var msg = new TestMsg();
+			ifNull.Invoke().Returns(msg);
+
+			// Act
+			var result = await act(option, ifNull);
+
+			// Assert
+			ifNull.Received().Invoke();
+			var none = result.AssertNone();
+			Assert.Same(msg, none);
+		}
+
+		public abstract Task Test04_None_With_NullValueMsg_Runs_IfNull_Func_Returns_None_With_Reason();
+
+		protected static async Task Test04(Func<Option<object>, Func<IMsg>, Task<Option<object>>> act)
+		{
+			// Arrange
+			var option = None<object, Msg.NullValueMsg>();
+			var ifNull = Substitute.For<Func<IMsg>>();
+			var msg = new TestMsg();
+			ifNull.Invoke().Returns(msg);
+
+			// Act
+			var result = await act(option, ifNull);
+
+			// Assert
+			ifNull.Received().Invoke();
+			var none = result.AssertNone();
+			Assert.Same(msg, none);
+		}
+
+		public sealed record TestMsg : IMsg;
 	}
 }

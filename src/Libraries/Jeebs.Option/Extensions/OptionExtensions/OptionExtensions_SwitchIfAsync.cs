@@ -12,7 +12,13 @@ namespace Jeebs
 	public static class OptionExtensions_SwitchIfAsync
 	{
 		/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> SwitchIfAsync<T>(this Task<Option<T>> @this, Func<T, bool> check, Func<T, None<T>> ifFalse) =>
+			F.OptionF.SwitchIfAsync(@this, check, ifFalse);
+
+		/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		/// <param name="this">Option (awaitable)</param>
+		public static Task<Option<T>> SwitchIfAsync<T>(this Task<Option<T>> @this, Func<T, bool> check, Func<T, IMsg> ifFalse) =>
 			F.OptionF.SwitchIfAsync(@this, check, ifFalse);
 	}
 }

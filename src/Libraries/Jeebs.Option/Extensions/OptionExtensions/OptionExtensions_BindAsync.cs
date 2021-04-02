@@ -12,10 +12,12 @@ namespace Jeebs
 	public static class OptionExtensions_BindAsync
 	{
 		/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}})"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<U>> BindAsync<T, U>(this Task<Option<T>> @this, Func<T, Option<U>> bind) =>
 			F.OptionF.BindAsync(@this, x => Task.FromResult(bind(x)));
 
 		/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}})"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<U>> BindAsync<T, U>(this Task<Option<T>> @this, Func<T, Task<Option<U>>> bind) =>
 			F.OptionF.BindAsync(@this, bind);
 	}

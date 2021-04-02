@@ -12,22 +12,35 @@ namespace F.OptionF_Tests
 		[Fact]
 		public override async Task Test00_Exception_In_NullValue_Func_Returns_None_With_UnhandledExceptionMsg()
 		{
-			await Test00((opt, nullValue) => IfNullAsync(opt, nullValue));
-			await Test00((opt, nullValue) => IfNullAsync(opt.AsTask, nullValue));
+			await Test00((opt, ifNull) => IfNullAsync(opt, ifNull));
+			await Test00((opt, ifNull) => IfNullAsync(opt.AsTask, ifNull));
+			await Test00((opt, ifNull) => IfNullAsync(opt.AsTask, () => { ifNull(); return new TestMsg(); }));
 		}
 
 		[Fact]
-		public override async Task Test01_Some_With_Null_Value_Runs_NullValue_Func()
+		public override async Task Test01_Some_With_Null_Value_Runs_IfNull_Func()
 		{
-			await Test01((opt, nullValue) => IfNullAsync(opt, nullValue));
-			await Test01((opt, nullValue) => IfNullAsync(opt.AsTask, nullValue));
+			await Test01((opt, ifNull) => IfNullAsync(opt, ifNull));
+			await Test01((opt, ifNull) => IfNullAsync(opt.AsTask, ifNull));
 		}
 
 		[Fact]
-		public override async Task Test02_None_With_NullValueMsg_Runs_NullValue_Func()
+		public override async Task Test02_None_With_NullValueMsg_Runs_IfNull_Func()
 		{
-			await Test02((opt, nullValue) => IfNullAsync(opt, nullValue));
-			await Test02((opt, nullValue) => IfNullAsync(opt.AsTask, nullValue));
+			await Test02((opt, ifNull) => IfNullAsync(opt, ifNull));
+			await Test02((opt, ifNull) => IfNullAsync(opt.AsTask, ifNull));
+		}
+
+		[Fact]
+		public override async Task Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason()
+		{
+			await Test03((opt, ifNull) => IfNullAsync(opt.AsTask, ifNull));
+		}
+
+		[Fact]
+		public override async Task Test04_None_With_NullValueMsg_Runs_IfNull_Func_Returns_None_With_Reason()
+		{
+			await Test04((opt, ifNull) => IfNullAsync(opt.AsTask, ifNull));
 		}
 	}
 }

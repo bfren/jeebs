@@ -110,7 +110,7 @@ namespace Jeebs.Data
 			)
 			.SwitchIfAsync(
 				x => x.Any(),
-				_ => None<IEnumerable<TModel>, Msg.QueryItemsNotFoundMsg>()
+				_ => new Msg.QueryItemsNotFoundMsg()
 			);
 
 		/// <inheritdoc/>
@@ -131,7 +131,7 @@ namespace Jeebs.Data
 				e => new Msg.QuerySingleExceptionMsg(e)
 			)
 			.IfNullAsync(
-				() => None<TModel, Msg.QuerySingleItemNotFoundMsg>()
+				() => new Msg.QuerySingleItemNotFoundMsg()
 			);
 
 		/// <inheritdoc/>
