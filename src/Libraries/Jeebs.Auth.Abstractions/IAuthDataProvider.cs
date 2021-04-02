@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 
@@ -14,7 +13,6 @@ namespace Jeebs.Auth.Data
 		where TUserEntity : IAuthUser, IEntity
 		where TRoleEntity : IAuthRole, IEntity
 		where TUserRoleEntity : IAuthUserRole, IEntity
-
 	{
 		/// <summary>
 		/// User functions
@@ -30,8 +28,6 @@ namespace Jeebs.Auth.Data
 		/// User Role functions
 		/// </summary>
 		IAuthUserRoleRepository<TUserRoleEntity> UserRole { get; }
-
-		#region Users
 
 		/// <summary>
 		/// Validate a User based on their email and password
@@ -61,19 +57,5 @@ namespace Jeebs.Auth.Data
 		Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
 			where TUser : AuthUserWithRoles<TRole>
 			where TRole : IAuthRole;
-
-		#endregion
-
-		#region Roles
-
-		/// <summary>
-		/// Retrieve a list of Roles added to the specified User
-		/// </summary>
-		/// <typeparam name="TRole">Role type</typeparam>
-		/// <param name="userId">User ID</param>
-		Task<Option<List<TRole>>> RetrieveRolesForUserAsync<TRole>(AuthUserId userId)
-			where TRole : IAuthRole;
-
-		#endregion
 	}
 }

@@ -1,13 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
-using Jeebs.Data.Enums;
 using Jeebs.Linq;
 using static F.OptionF;
 
@@ -29,16 +27,22 @@ namespace Jeebs.Auth
 		/// <inheritdoc/>
 		public IAuthUserRoleRepository<AuthUserRoleEntity> UserRole { get; private init; }
 
+		public IAuthDbQuery Query { get; private init; }
+
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
 		/// <param name="user">IAuthUserRepository</param>
 		/// <param name="role">IAuthRoleRepository</param>
 		/// <param name="userRole">IAuthUserRoleRepository</param>
-		public AuthDataProvider(IAuthUserRepository user, IAuthRoleRepository role, IAuthUserRoleRepository userRole) =>
-			(User, Role, UserRole) = (user, role, userRole);
-
-		#region Users
+		/// <param name="query">IAuthDbQuery</param>
+		public AuthDataProvider(
+			IAuthUserRepository user,
+			IAuthRoleRepository role,
+			IAuthUserRoleRepository userRole,
+			IAuthDbQuery query
+		) =>
+			(User, Role, UserRole, Query) = (user, role, userRole, query);
 
 		/// <inheritdoc/>
 		public async Task<Option<TModel>> ValidateUserAsync<TModel>(string email, string password)
@@ -84,7 +88,7 @@ namespace Jeebs.Auth
 			where TUser : AuthUserWithRoles<TRole>
 			where TRole : IAuthRole =>
 			from u in User.RetrieveAsync<TUser>(id)
-			from r in RetrieveRolesForUserAsync<TRole>(u.Id)
+			from r in Query.GetRolesForUserAsync<TRole>(u.Id)
 			select u with { Roles = r };
 
 		/// <inheritdoc/>
@@ -92,35 +96,8 @@ namespace Jeebs.Auth
 			where TUser : AuthUserWithRoles<TRole>
 			where TRole : IAuthRole =>
 			from u in User.RetrieveAsync<TUser>(email)
-			from r in RetrieveRolesForUserAsync<TRole>(u.Id)
+			from r in Query.GetRolesForUserAsync<TRole>(u.Id)
 			select u with { Roles = r };
-
-		#endregion
-
-		#region Roles
-
-		/// <inheritdoc/>
-		public Task<Option<List<TRole>>> RetrieveRolesForUserAsync<TRole>(AuthUserId userId)
-			where TRole : IAuthRole =>
-			Return(
-				userId
-			)
-			.BindAsync(
-				userId => UserRole.QueryAsync<AuthUserRoleEntity>(
-					(ur => ur.UserId, SearchOperator.Equal, userId.Value)
-				)
-			)
-			.BindAsync(
-				userRoles => Role.QueryAsync<TRole>(
-					(r => r.Id, SearchOperator.In, string.Join(",", userRoles.Select(ur => ur.RoleId)))
-				)
-			)
-			.MapAsync(
-				roles => roles.ToList(),
-				DefaultHandler
-			);
-
-		#endregion
 
 		/// <summary>Messages</summary>
 		public static class Msg
