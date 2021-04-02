@@ -15,21 +15,21 @@ namespace F
 		public static partial class StringF
 		{
 			/// <summary>
-			/// Lazy property to avoid multiple reflection calls
+			/// Lazy property so the resource is only loaded once
 			/// </summary>
 			private static readonly Lazy<string[]> wordList = new(
 				() =>
 				{
 					// Attempt to get embedded word list file
-					var wordListResource = typeof(Rnd).Assembly.GetManifestResourceStream("F.eff-long-word-list.csv");
+					var wordListResource = typeof(Rnd).Assembly.GetManifestResourceStream("F.eff-long-word-list.txt");
 
-					// If it exists, read all words into an array
+					// Return empty array if the resource can't be found
 					if (wordListResource is null)
 					{
 						return Array.Empty<string>();
 					}
 
-					// Read words into a list
+					// Read the words into a list
 					using var reader = new StreamReader(wordListResource);
 					string? line;
 					var words = new List<string>();
@@ -43,14 +43,7 @@ namespace F
 				}
 			);
 
-			/// <summary>
-			/// Generate a random passphrase
-			/// </summary>
-			/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
-			/// <param name="separator">[Optional] Word separator</param>
-			/// <param name="upperFirst">[Optional] Whether or not to make the first letter of each word upper case</param>
-			/// <param name="includeNumber">[Optional] Whether or not to include a number with one of the words</param>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
+			/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool, RandomNumberGenerator?)"/>
 			public static Option<string> Passphrase(
 				int numberOfWords,
 				char separator = '-',
@@ -60,8 +53,15 @@ namespace F
 			) =>
 				Passphrase(wordList.Value, numberOfWords, separator, upperFirst, includeNumber, generator);
 
-			/// <inheritdoc cref="Passphrase(int, char, bool, bool, RandomNumberGenerator?)"/>
+			/// <summary>
+			/// Generate a random passphrase
+			/// </summary>
 			/// <param name="wordList">List of words to use for the passphrase</param>
+			/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
+			/// <param name="separator">[Optional] Word separator</param>
+			/// <param name="upperFirst">[Optional] Whether or not to make the first letter of each word upper case</param>
+			/// <param name="includeNumber">[Optional] Whether or not to include a number with one of the words</param>
+			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 			internal static Option<string> Passphrase(
 				string[] wordList,
 				int numberOfWords,
@@ -96,6 +96,8 @@ namespace F
 				{
 					// Get a random word
 					var index = getUniqueIndex();
+					used.Add(index);
+
 					var word = wordList[index];
 
 					// Make the first letter uppercase
@@ -120,7 +122,7 @@ namespace F
 				// Return joined
 				return string.Join(separator, shuffled);
 
-				// Get a unique word index
+				// Get a random array index that hasn't been used before
 				int getUniqueIndex()
 				{
 					var index = 0;
@@ -130,7 +132,6 @@ namespace F
 						index = NumberF.GetInt32(0, wordList.Length - 1, generator);
 					} while (used.Contains(index));
 
-					used.Add(index);
 					return index;
 				}
 			}

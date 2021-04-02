@@ -3,9 +3,12 @@
     <RootNamespace>F</RootNamespace>
   </PropertyGroup>
 	<PropertyGroup>
-		<LongWordListFile>eff-long-word-list.csv</LongWordListFile>
+		<LongWordListFile>eff-long-word-list.txt</LongWordListFile>
 		<LongWordListPath>$([MSBuild]::GetPathOfFileAbove('$(LongWordListFile)'))</LongWordListPath>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="eff-long-word-list.txt" />
+	</ItemGroup>
 	<ItemGroup Label="Embed Long Word List">
 		<EmbeddedResource Include="$(LongWordListPath)" />
 	</ItemGroup>
