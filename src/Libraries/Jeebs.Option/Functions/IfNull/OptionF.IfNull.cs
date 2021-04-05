@@ -33,6 +33,7 @@ namespace F
 			);
 
 		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
+		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="TMsg">Reason type</typeparam>
 		public static Option<T> IfNull<T, TMsg>(Option<T> option, Func<TMsg> ifNull)
 			where TMsg : IMsg =>

@@ -12,7 +12,6 @@ namespace Jeebs
 	public static class OptionExtensions_GetAsyncEnumerator
 	{
 		/// <inheritdoc cref="Option{T}.GetEnumerator"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static async IAsyncEnumerator<T> GetAsyncEnumerator<T>(this Task<Option<T>> @this)
 		{
 			if (await @this is Some<T> some)

@@ -30,6 +30,11 @@ namespace Jeebs.Auth.Data
 		IAuthUserRoleRepository<TUserRoleEntity> UserRole { get; }
 
 		/// <summary>
+		/// Database query object
+		/// </summary>
+		IAuthDbQuery Query { get; }
+
+		/// <summary>
 		/// Validate a User based on their email and password
 		/// </summary>
 		/// <typeparam name="TModel">Create Auth User Model type</typeparam>

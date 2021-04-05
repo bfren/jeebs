@@ -12,12 +12,10 @@ namespace Jeebs
 	public static class OptionExtensions_FilterAsync
 	{
 		/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, bool> predicate) =>
 			F.OptionF.FilterAsync(@this, x => Task.FromResult(predicate(x)));
 
 		/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
-		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, Task<bool>> predicate) =>
 			F.OptionF.FilterAsync(@this, predicate);
 	}
