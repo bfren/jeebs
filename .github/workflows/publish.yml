@@ -24,16 +24,16 @@ jobs:
         dotnet-version: '5.0.x'
     - 
       name: A - Restore
-      run: dotnet restore ./src/Pack.csproj
+      run: dotnet restore src/Pack.csproj
     - 
       name: B - Build
-      run: dotnet build ./src/Pack.csproj \
+      run: dotnet build src/Pack.csproj \
         --no-restore \
         --configuration Release
     - 
       if: success()
       name: C - Pack
-      run: dotnet pack ./src/Pack.csproj \
+      run: dotnet pack src/Pack.csproj \
         --no-build \
         --configuration Release \
         /p:PackageOutputPath=$HOME/.nupkgs \

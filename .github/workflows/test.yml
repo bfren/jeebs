@@ -27,15 +27,15 @@ jobs:
         dotnet-version: '5.0.x'
     -
       name: A - Restore
-      run: dotnet restore ./src/Test.csproj
+      run: dotnet restore src/Test.csproj
     -
       name: B - Build
-      run: dotnet build ./src/Test.csproj \
+      run: dotnet build src/Test.csproj \
         --no-restore \
         --configuration Release
     -
       name: C - Test
-      run: dotnet test ./src/Test.csproj \
+      run: dotnet test src/Test.csproj \
         --no-restore \
         --no-build \
         --configuration Release
