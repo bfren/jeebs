@@ -33,7 +33,7 @@ jobs:
       run: dotnet build src/Test.csproj --no-restore --configuration Release
     -
       name: C - Test
-      run: dotnet test src/Test.csproj --no-restore --no-build --configuration Release --verbosity normal
+      run: dotnet test src/Test.csproj --no-restore --no-build --configuration Release
     -
       if: success()
       name: Finish - Success
