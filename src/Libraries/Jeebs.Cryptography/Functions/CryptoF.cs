@@ -38,6 +38,13 @@ namespace F
 			);
 
 		/// <summary>
+		/// Generate a passphrase
+		/// </summary>
+		/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
+		public static Option<string> GeneratePassphrase(int numberOfWords = 3) =>
+			Rnd.StringF.Passphrase(numberOfWords);
+
+		/// <summary>
 		/// Generate a 32 byte key to use for encryption
 		/// </summary>
 		/// <returns>32 byte key</returns>

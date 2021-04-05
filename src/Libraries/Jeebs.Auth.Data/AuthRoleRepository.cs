@@ -24,14 +24,7 @@ namespace Jeebs.Auth
 		public AuthRoleRepository(IAuthDb db, ILog<AuthRoleRepository> log) : base(db, log) { }
 
 		/// <inheritdoc/>
-		public Task<Option<AuthRoleId>> CreateAsync(string name, IDbTransaction? transaction = null)
-		{
-			var role = new AuthRoleEntity
-			{
-				Name = name
-			};
-
-			return CreateAsync(role, transaction);
-		}
+		public Task<Option<AuthRoleId>> CreateAsync(string name, IDbTransaction? transaction = null) =>
+			CreateAsync(new AuthRoleEntity { Name = name }, transaction);
 	}
 }

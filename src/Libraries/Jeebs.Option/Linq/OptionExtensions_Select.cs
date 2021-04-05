@@ -28,10 +28,12 @@ namespace Jeebs.Linq
 			F.OptionF.MapAsync(@this, f, F.OptionF.DefaultHandler);
 
 		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<U>> Select<T, U>(this Task<Option<T>> @this, Func<T, U> f) =>
 			F.OptionF.MapAsync(@this, x => Task.FromResult(f(x)), F.OptionF.DefaultHandler);
 
 		/// <inheritdoc cref="Select{T, U}(Option{T}, Func{T, U})"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<U>> Select<T, U>(this Task<Option<T>> @this, Func<T, Task<U>> f) =>
 			F.OptionF.MapAsync(@this, f, F.OptionF.DefaultHandler);
 	}

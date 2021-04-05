@@ -12,6 +12,7 @@ namespace Jeebs
 	public static class OptionExtensions_AuditAsync
 	{
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Option<T>> any) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -21,6 +22,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<Option<T>, Task> any) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -30,6 +32,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -39,6 +42,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -48,6 +52,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<IMsg> none) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -57,6 +62,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<IMsg, Task> none) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -66,6 +72,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some, Action<IMsg> none) =>
 			F.OptionF.AuditAsync(
 				@this,
@@ -75,6 +82,7 @@ namespace Jeebs
 			);
 
 		/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+		/// <param name="this">Option (awaitable)</param>
 		public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some, Func<IMsg, Task> none) =>
 			F.OptionF.AuditAsync(
 				@this,

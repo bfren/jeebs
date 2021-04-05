@@ -8,21 +8,34 @@ namespace Jeebs.Option_Tests
 	public class IfNull_Tests : Jeebs_Tests.IfNull_Tests
 	{
 		[Fact]
-		public override void Test00_Exception_In_NullValue_Func_Returns_None_With_UnhandledExceptionMsg()
+		public override void Test00_Exception_In_IfNull_Func_Returns_None_With_UnhandledExceptionMsg()
 		{
-			Test00((opt, nullValue) => opt.IfNull(nullValue));
+			Test00((opt, ifNull) => opt.IfNull(ifNull));
+			Test00((opt, ifNull) => opt.IfNull(() => { ifNull(); return new TestMsg(); }));
 		}
 
 		[Fact]
-		public override void Test01_Some_With_Null_Value_Runs_NullValue_Func()
+		public override void Test01_Some_With_Null_Value_Runs_IfNull_Func()
 		{
-			Test01((opt, nullValue) => opt.IfNull(nullValue));
+			Test01((opt, ifNull) => opt.IfNull(ifNull));
 		}
 
 		[Fact]
-		public override void Test02_None_With_NullValueMsg_Runs_NullValue_Func()
+		public override void Test02_None_With_NullValueMsg_Runs_IfNull_Func()
 		{
-			Test02((opt, nullValue) => opt.IfNull(nullValue));
+			Test02((opt, ifNull) => opt.IfNull(ifNull));
+		}
+
+		[Fact]
+		public override void Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason()
+		{
+			Test03((opt, ifNull) => opt.IfNull(ifNull));
+		}
+
+		[Fact]
+		public override void Test04_None_With_NullValueMsg_Runs_IfNull_Func_Returns_None_With_Reason()
+		{
+			Test04((opt, ifNull) => opt.IfNull(ifNull));
 		}
 	}
 }

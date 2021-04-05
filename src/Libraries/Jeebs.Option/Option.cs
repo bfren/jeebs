@@ -255,13 +255,18 @@ namespace Jeebs
 
 		#region IfNull
 
-		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
-		public Option<T> IfNull(Func<Option<T>> nullValue) =>
-			F.OptionF.IfNull(this, nullValue);
+		/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
+		public Option<T> IfNull(Func<Option<T>> ifNull) =>
+			F.OptionF.IfNull(this, ifNull);
 
-		/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
-		public Task<Option<T>> IfNullAsync(Func<Task<Option<T>>> nullValue) =>
-			F.OptionF.IfNullAsync(this, nullValue);
+		/// <inheritdoc cref="IfNull{T, TMsg}(Option{T}, Func{TMsg})"/>
+		public Option<T> IfNull<TMsg>(Func<TMsg> ifNull)
+			where TMsg : IMsg =>
+			F.OptionF.IfNull(this, ifNull);
+
+		/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
+		public Task<Option<T>> IfNullAsync(Func<Task<Option<T>>> ifNull) =>
+			F.OptionF.IfNullAsync(this, ifNull);
 
 		#endregion
 
@@ -337,6 +342,10 @@ namespace Jeebs
 
 		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
 		public Option<T> SwitchIf(Func<T, bool> check, Func<T, None<T>> ifFalse) =>
+			F.OptionF.SwitchIf(this, check, ifFalse);
+
+		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		public Option<T> SwitchIf(Func<T, bool> check, Func<T, IMsg> ifFalse) =>
 			F.OptionF.SwitchIf(this, check, ifFalse);
 
 		#endregion

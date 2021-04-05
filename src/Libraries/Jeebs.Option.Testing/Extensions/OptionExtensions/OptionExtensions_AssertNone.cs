@@ -11,7 +11,7 @@ namespace Jeebs
 	public static class OptionExtensions_AssertNone
 	{
 		/// <summary>
-		/// Assert that <paramref name="this"/> is <see cref="None{T}"/> and return the (nullable) Reason
+		/// Assert that <paramref name="this"/> is <see cref="None{T}"/> and return the Reason
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="this">Option</param>

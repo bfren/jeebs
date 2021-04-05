@@ -11,12 +11,20 @@ namespace Jeebs
 	/// </summary>
 	public static class OptionExtensions_IfNullAsync
 	{
-		/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
-		public static Task<Option<T>> IfNullAsync<T>(this Task<Option<T>> @this, Func<Option<T>> nullValue) =>
-			F.OptionF.IfNullAsync(@this, () => Task.FromResult(nullValue()));
+		/// <inheritdoc cref="F.OptionF.IfNullAsync{T, TMsg}(Task{Option{T}}, Func{TMsg})"/>
+		/// <param name="this">Option (awaitable)</param>
+		public static Task<Option<T>> IfNullAsync<T>(this Task<Option<T>> @this, Func<Option<T>> ifNull) =>
+			F.OptionF.IfNullAsync(@this, () => Task.FromResult(ifNull()));
 
-		/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
-		public static Task<Option<T>> IfNullAsync<T>(this Task<Option<T>> @this, Func<Task<Option<T>>> nullValue) =>
-			F.OptionF.IfNullAsync(@this, nullValue);
+		/// <inheritdoc cref="F.OptionF.IfNullAsync{T, TMsg}(Task{Option{T}}, Func{TMsg})"/>
+		/// <param name="this">Option (awaitable)</param>
+		public static Task<Option<T>> IfNullAsync<T>(this Task<Option<T>> @this, Func<Task<Option<T>>> ifNull) =>
+			F.OptionF.IfNullAsync(@this, ifNull);
+
+		/// <inheritdoc cref="F.OptionF.IfNullAsync{T, TMsg}(Task{Option{T}}, Func{TMsg})"/>
+		/// <param name="this">Option (awaitable)</param>
+		public static Task<Option<T>> IfNullAsync<T, TMsg>(this Task<Option<T>> @this, Func<TMsg> ifNull)
+			where TMsg : IMsg =>
+			F.OptionF.IfNullAsync(@this, ifNull);
 	}
 }
