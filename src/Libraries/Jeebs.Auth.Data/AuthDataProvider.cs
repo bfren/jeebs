@@ -27,6 +27,7 @@ namespace Jeebs.Auth
 		/// <inheritdoc/>
 		public IAuthUserRoleRepository<AuthUserRoleEntity> UserRole { get; private init; }
 
+		/// <inheritdoc/>
 		public IAuthDbQuery Query { get; private init; }
 
 		/// <summary>

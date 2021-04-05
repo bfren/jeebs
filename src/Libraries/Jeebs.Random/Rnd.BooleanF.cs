@@ -15,7 +15,6 @@ namespace F
 			/// <summary>
 			/// Returns a random true or false value
 			/// </summary>
-			/// <param name="generator"></param>
 			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 			public static bool FlipCoin(RandomNumberGenerator? generator = null) =>
 				NumberF.GetInt64(0, 1, generator) switch
