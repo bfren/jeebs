@@ -54,7 +54,7 @@ namespace Jeebs.WordPress
 				where TWp : class, IWp<TWpConfig>
 				where TWpConfig : WpConfig
 			{
-				Services.Bind<TWpConfig>().To(section).Using(config);
+				Services.Configure<TWpConfig>(config.GetSection(section));
 				return Services
 					.AddData()
 					.AddSingleton<TWp>();

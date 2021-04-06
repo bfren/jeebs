@@ -29,6 +29,9 @@ namespace Jeebs.Apps
 			// Create host
 			using var host = app.CreateHost(args);
 
+			// Ready to go
+			app.Ready(host.Services, host.Services.GetRequiredService<ILog<T>>());
+
 			// Run default
 			if (run is null)
 			{

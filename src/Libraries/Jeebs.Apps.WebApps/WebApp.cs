@@ -31,46 +31,48 @@ namespace Jeebs.Apps
 			this.useHsts = useHsts;
 
 		/// <inheritdoc/>
-		public override IHost CreateHost(string[] args)
-		{
+		public override IHost CreateHost(string[] args) =>
 			// Create Default Host Builder
-			var host = Host.CreateDefaultBuilder(args)
+			Host.CreateDefaultBuilder(
+				args
+			)
 
-				// Use Web Host Defaults
-				.ConfigureWebHostDefaults(builder => builder
+			// Configure Host
+			.ConfigureHostConfiguration(
+				ConfigureHost
+			)
 
-					// App Configuration
-					.ConfigureAppConfiguration(
-						(host, config) => ConfigureApp(host.HostingEnvironment, config)
-					)
+			// Use Web Host Defaults
+			.ConfigureWebHostDefaults(builder => builder
 
-					// Serilog
-					.UseSerilog(
-						(host, logger) => ConfigureSerilog(host.Configuration, logger)
-					)
-
-					// Services
-					.ConfigureServices(
-						(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
-					)
-
-					// Configure
-					.Configure(
-						(host, app) => Configure(host.HostingEnvironment, app, host.Configuration)
-					)
-
-					// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
-					.UseSetting(WebHostDefaults.ApplicationKey, GetType().Assembly.FullName)
+				// App Configuration
+				.ConfigureAppConfiguration(
+					(host, config) => ConfigureApp(host.HostingEnvironment, config)
 				)
 
+				// Serilog
+				.UseSerilog(
+					(host, logger) => ConfigureSerilog(host.Configuration, logger)
+				)
+
+				// Services
+				.ConfigureServices(
+					(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
+				)
+
+				// Configure
+				.Configure(
+					(host, app) => Configure(host.HostingEnvironment, app, host.Configuration)
+				)
+
+				// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
+				.UseSetting(
+					WebHostDefaults.ApplicationKey, GetType().Assembly.FullName
+				)
+			)
+
+			// Build Web Host
 			.Build();
-
-			// Ready to go
-			Ready(host.Services);
-
-			// Return host
-			return host;
-		}
 
 		/// <inheritdoc/>
 		protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
@@ -136,7 +138,10 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected virtual void Configure_SiteVerification(IApplicationBuilder app, IConfiguration config)
 		{
-			if (config.GetSection<VerificationConfig>(VerificationConfig.Key) is VerificationConfig)
+			if (
+				config.GetSection<VerificationConfig>(VerificationConfig.Key) is VerificationConfig verification
+				&& verification.Google is not null
+			)
 			{
 				app.UseMiddleware<SiteVerificationMiddleware>();
 			}
@@ -170,7 +175,10 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected virtual void Configure_Auth(IApplicationBuilder app, IConfiguration config)
 		{
-			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+			if (
+				config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth
+				&& auth.Enabled
+			)
 			{
 				app.UseAuthorization();
 			}

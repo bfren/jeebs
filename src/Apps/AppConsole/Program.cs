@@ -8,6 +8,7 @@ using Jeebs;
 using Jeebs.Config;
 using Jeebs.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 await Jeebs.Apps.Program.MainAsync<App>(args,
 	async (provider, config) =>
@@ -15,7 +16,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args,
 		var log = provider.GetRequiredService<ILog<App>>();
 
 		Serilog.Debugging.SelfLog.Enable(Console.Error);
-		var jeebs = config.GetJeebsConfig();
+		var jeebs = provider.GetRequiredService<IOptions<JeebsConfig>>().Value;
 
 		log.Debug("Services loaded");
 		log.Debug("Project {Name}", jeebs.App.Name);

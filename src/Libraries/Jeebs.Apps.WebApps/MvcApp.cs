@@ -138,8 +138,8 @@ namespace Jeebs.Apps
 		/// <param name="opt">MvcOptions</param>
 		public virtual void ConfigureServices_MvcOptions(MvcOptions opt)
 		{
-			opt.CacheProfiles.Add(CacheProfiles.None, new CacheProfile() { NoStore = true });
-			opt.CacheProfiles.Add(CacheProfiles.Default, new CacheProfile() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
+			opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
+			opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
 		}
 
 		/// <summary>
@@ -264,7 +264,8 @@ namespace Jeebs.Apps
 			{
 				app.UseStaticFiles(new StaticFileOptions
 				{
-					OnPrepareResponse = ctx => ctx.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={60 * 60 * 24 * 365}"
+					OnPrepareResponse = ctx =>
+						ctx.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={60 * 60 * 24 * 365}"
 				});
 			}
 
@@ -296,7 +297,10 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected virtual void Configure_Redirections(IApplicationBuilder app, IConfiguration config)
 		{
-			if (config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig)
+			if (
+				config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig redirections
+				&& redirections.Count > 0
+			)
 			{
 				app.UseMiddleware<RedirectExactMiddleware>();
 			}
@@ -318,7 +322,10 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected override void Configure_Auth(IApplicationBuilder app, IConfiguration config)
 		{
-			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+			if (
+				config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth
+				&& auth.Enabled
+			)
 			{
 				app.UseAuthentication();
 				app.UseAuthorization();
