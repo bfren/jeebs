@@ -71,8 +71,8 @@ namespace F.DataF.QueryF_Tests
 		[InlineData(SearchOperator.Like)]
 		[InlineData(SearchOperator.MoreThan)]
 		[InlineData(SearchOperator.MoreThanOrEqual)]
-		[InlineData(SearchOperator.None)]
 		[InlineData(SearchOperator.NotEqual)]
+		[InlineData(SearchOperator.NotIn)]
 		public void Keeps_Original_SearchOperator(SearchOperator input)
 		{
 			// Arrange
@@ -100,7 +100,6 @@ namespace F.DataF.QueryF_Tests
 		[InlineData(SearchOperator.Like)]
 		[InlineData(SearchOperator.MoreThan)]
 		[InlineData(SearchOperator.MoreThanOrEqual)]
-		[InlineData(SearchOperator.None)]
 		[InlineData(SearchOperator.NotEqual)]
 		public void Operator_Not_In_Keeps_Original_Value(SearchOperator input)
 		{

@@ -5,7 +5,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Exceptions;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
+namespace Jeebs.Data.Clients.SqlServer.SearchOperatorExtensions_Tests
 {
 	public class ToOperator_Tests
 	{

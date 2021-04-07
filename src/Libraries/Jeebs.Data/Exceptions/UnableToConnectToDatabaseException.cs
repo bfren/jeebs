@@ -8,7 +8,7 @@ namespace Jeebs.Data.Exceptions
 	/// <summary>
 	/// Thrown by <see cref="Db(Config.DbConnectionConfig, ILog, IDbClient, string)"/>
 	/// </summary>
-	public class UnableToConnectToDatabaseException : Exception
+	public sealed class UnableToConnectToDatabaseException : Exception
 	{
 		/// <summary>
 		/// Create exception

@@ -3,9 +3,9 @@
 
 using System.Text;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.SqlServer
 {
-	public partial class MySqlDbClient : DbClient
+	public partial class SqlServerDbClient : DbClient
 	{
 		/// <inheritdoc/>
 		protected override string GetCreateQuery(
@@ -20,7 +20,7 @@ namespace Jeebs.Data.Clients.MySql
 			return
 				$"INSERT INTO {Escape(table)} {JoinList(col, true)} " +
 				$"VALUES {JoinList(par, true)};" +
-				" SELECT LAST_INSERT_ID();"
+				" SELECT SCOPE_IDENTITY();"
 			;
 		}
 
@@ -39,7 +39,7 @@ namespace Jeebs.Data.Clients.MySql
 			return
 				$"SELECT {JoinList(col, false)} " +
 				$"FROM {Escape(table)} " +
-				$"WHERE {Escape(idColumn)} = {id};"
+				$"WHERE {Escape(idColumn)} = {id}"
 			;
 		}
 
@@ -78,7 +78,6 @@ namespace Jeebs.Data.Clients.MySql
 			AddVersionToWhere(sql, versionColumn);
 
 			// Return query
-			sql.Append(';');
 			return sql.ToString();
 		}
 
@@ -108,7 +107,6 @@ namespace Jeebs.Data.Clients.MySql
 			AddVersionToWhere(sql, versionColumn);
 
 			// Return query
-			sql.Append(';');
 			return sql.ToString();
 		}
 	}

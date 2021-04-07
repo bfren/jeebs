@@ -9,11 +9,6 @@ namespace Jeebs.Data.Enums
 	public enum SearchOperator
 	{
 		/// <summary>
-		/// None / Unknown
-		/// </summary>
-		None,
-
-		/// <summary>
 		/// Equal
 		/// </summary>
 		Equal,
@@ -51,6 +46,11 @@ namespace Jeebs.Data.Enums
 		/// <summary>
 		/// In
 		/// </summary>
-		In
+		In,
+
+		/// <summary>
+		/// Not In
+		/// </summary>
+		NotIn
 	}
 }

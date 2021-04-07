@@ -6,9 +6,9 @@ using System.Text;
 using Jeebs.Data.Enums;
 using static F.DataF.QueryF;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.SqlServer
 {
-	public partial class MySqlDbClient : DbClient
+	public partial class SqlServerDbClient : DbClient
 	{
 		/// <inheritdoc/>
 		protected override (string query, IQueryParameters param) GetQuery(
@@ -25,7 +25,7 @@ namespace Jeebs.Data.Clients.MySql
 
 			// Return query and parameters
 			return (
-				$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)};",
+				$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)}",
 				param
 			);
 		}
@@ -85,22 +85,12 @@ namespace Jeebs.Data.Clients.MySql
 				sql.Append($" ORDER BY {JoinList(orderBy, false)}");
 			}
 
-			// Add LIMIT
-			if (parts.Maximum > 0)
+			// Add OFFSET and FETCH
+			if (parts.Maximum > 0 && parts.Skip >= 0)
 			{
-				// Add OFFSET
-				if (parts.Skip > 0)
-				{
-					sql.Append($" LIMIT {parts.Skip}, {parts.Maximum}");
-				}
-				else
-				{
-					sql.Append($" LIMIT {parts.Maximum}");
-				}
+				sql.Append($" OFFSET {parts.Skip} ROWS");
+				sql.Append($" FETCH NEXT {parts.Maximum} ROWS ONLY");
 			}
-
-			// Append semi-colon
-			sql.Append(';');
 
 			// Return query string
 			return (

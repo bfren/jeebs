@@ -71,7 +71,6 @@ namespace F.DataF.QueryF_Tests
 		[InlineData(SearchOperator.Like)]
 		[InlineData(SearchOperator.MoreThan)]
 		[InlineData(SearchOperator.MoreThanOrEqual)]
-		[InlineData(SearchOperator.None)]
 		[InlineData(SearchOperator.NotEqual)]
 		public void Operator_Not_In_Adds_Param(SearchOperator input)
 		{
@@ -104,14 +103,13 @@ namespace F.DataF.QueryF_Tests
 			);
 		}
 
-		[Fact]
-		public void Operator_Is_In_And_Value_Not_Enumerable_Ignores_Predicate()
+		private static void Test_In_With_Not_Enumerable(SearchOperator op)
 		{
 			// Arrange
 			var column = Substitute.For<IColumn>();
 			var predicates = new List<(IColumn, SearchOperator, object)>
 			{
-				(column, SearchOperator.In, Rnd.Int)
+				(column, op, Rnd.Int)
 			};
 
 			var client = Substitute.ForPartsOf<TestClient>();
@@ -124,7 +122,19 @@ namespace F.DataF.QueryF_Tests
 			Assert.Empty(param);
 		}
 
-		private static void Test_In_With_Enumerable(Func<int, int, int, object> getValue)
+		[Fact]
+		public void Operator_Is_In_And_Value_Not_Enumerable_Ignores_Predicate()
+		{
+			Test_In_With_Not_Enumerable(SearchOperator.In);
+		}
+
+		[Fact]
+		public void Operator_Is_NotIn_And_Value_Not_Enumerable_Ignores_Predicate()
+		{
+			Test_In_With_Not_Enumerable(SearchOperator.NotIn);
+		}
+
+		private static void Test_In_With_Enumerable(SearchOperator op, Func<int, int, int, object> getValue)
 		{
 			// Arrange
 			var name = Rnd.Str;
@@ -137,7 +147,7 @@ namespace F.DataF.QueryF_Tests
 			var value = getValue(v0, v1, v2);
 			var predicates = new List<(IColumn, SearchOperator, object)>
 			{
-				(column, SearchOperator.In, value)
+				(column, op, value)
 			};
 
 			var client = Substitute.ForPartsOf<TestClient>();
@@ -171,19 +181,37 @@ namespace F.DataF.QueryF_Tests
 		[Fact]
 		public void Operator_Is_In_And_Value_Is_Array_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable((v0, v1, v2) => new[] { v0, v1, v2 });
+			Test_In_With_Enumerable(SearchOperator.In, (v0, v1, v2) => new[] { v0, v1, v2 });
 		}
 
 		[Fact]
 		public void Operator_Is_In_And_Value_Is_IEnumerable_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable((v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
+			Test_In_With_Enumerable(SearchOperator.In, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
 		}
 
 		[Fact]
 		public void Operator_Is_In_And_Value_Is_List_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable((v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
+			Test_In_With_Enumerable(SearchOperator.In, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
+		}
+
+		[Fact]
+		public void Operator_Is_NotIn_And_Value_Is_Array_Joins_Value_And_Adds_Param()
+		{
+			Test_In_With_Enumerable(SearchOperator.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 });
+		}
+
+		[Fact]
+		public void Operator_Is_NotIn_And_Value_Is_IEnumerable_Joins_Value_And_Adds_Param()
+		{
+			Test_In_With_Enumerable(SearchOperator.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
+		}
+
+		[Fact]
+		public void Operator_Is_NotIn_And_Value_Is_List_Joins_Value_And_Adds_Param()
+		{
+			Test_In_With_Enumerable(SearchOperator.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
 		}
 
 		public abstract class TestClient : DbClient

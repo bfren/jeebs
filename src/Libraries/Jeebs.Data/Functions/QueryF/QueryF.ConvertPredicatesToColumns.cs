@@ -50,7 +50,7 @@ namespace F.DataF
 				}
 
 				// If predicate is IN, make sure it is a list
-				if (item.op == SearchOperator.In
+				if ((item.op == SearchOperator.In || item.op == SearchOperator.NotIn)
 					&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 				)
 				{

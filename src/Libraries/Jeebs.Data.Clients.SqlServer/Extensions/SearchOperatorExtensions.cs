@@ -4,7 +4,7 @@
 using Jeebs.Data.Enums;
 using Jeebs.Data.Exceptions;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.SqlServer
 {
 	/// <summary>
 	/// Extension methods for SearchOperator: ToOperator
@@ -12,7 +12,7 @@ namespace Jeebs.Data.Clients.MySql
 	public static class SearchOperatorExtensions
 	{
 		/// <summary>
-		/// Convert a <see cref="SearchOperator"/> type to the actual MySQL operator<br/>
+		/// Convert a <see cref="SearchOperator"/> type to the actual MS SQL operator<br/>
 		/// Default value is "="
 		/// </summary>
 		/// <param name="this">SearchOperator</param>
