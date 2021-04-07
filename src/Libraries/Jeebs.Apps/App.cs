@@ -30,7 +30,7 @@ namespace Jeebs.Apps
 
 			// Configure Host
 			.ConfigureHostConfiguration(
-				ConfigureHost
+				config => ConfigureHost(config, args)
 			)
 
 			// Configure App

@@ -39,7 +39,7 @@ namespace Jeebs.Apps
 
 			// Configure Host
 			.ConfigureHostConfiguration(
-				ConfigureHost
+				config => ConfigureHost(config, args)
 			)
 
 			// Use Web Host Defaults
@@ -125,8 +125,11 @@ namespace Jeebs.Apps
 				Configure_SecurityHeaders(app);
 			}
 
-			// Authorisation
-			Configure_Auth(app, config);
+			// Authentication and authorisation
+			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+			{
+				Configure_Auth(app, config);
+			}
 
 			// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
 		}
@@ -140,7 +143,7 @@ namespace Jeebs.Apps
 		{
 			if (
 				config.GetSection<VerificationConfig>(VerificationConfig.Key) is VerificationConfig verification
-				&& verification.Google is not null
+				&& verification.Any
 			)
 			{
 				app.UseMiddleware<SiteVerificationMiddleware>();
@@ -169,19 +172,13 @@ namespace Jeebs.Apps
 		}
 
 		/// <summary>
-		/// Override to configure authentication and authorisation
+		/// Override to configure authentication and authorisation - it is only called if Auth is enabled
 		/// </summary>
 		/// <param name="app">IApplicationBuilder</param>
 		/// <param name="config">IConfiguration</param>
 		protected virtual void Configure_Auth(IApplicationBuilder app, IConfiguration config)
 		{
-			if (
-				config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth
-				&& auth.Enabled
-			)
-			{
-				app.UseAuthorization();
-			}
+			app.UseAuthorization();
 		}
 	}
 }

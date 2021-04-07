@@ -322,14 +322,8 @@ namespace Jeebs.Apps
 		/// <param name="config">IConfiguration</param>
 		protected override void Configure_Auth(IApplicationBuilder app, IConfiguration config)
 		{
-			if (
-				config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth
-				&& auth.Enabled
-			)
-			{
-				app.UseAuthentication();
-				app.UseAuthorization();
-			}
+			app.UseAuthentication();
+			app.UseAuthorization();
 		}
 
 		/// <summary>

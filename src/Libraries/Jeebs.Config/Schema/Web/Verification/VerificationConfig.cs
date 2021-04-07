@@ -26,5 +26,11 @@ namespace Jeebs.Config
 		}
 
 		private string? googleCode;
+
+		/// <summary>
+		/// True if there are any verification configurations
+		/// </summary>
+		public bool Any =>
+			Google is not null;
 	}
 }
