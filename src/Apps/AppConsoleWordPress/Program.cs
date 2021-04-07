@@ -20,12 +20,10 @@ namespace AppConsoleWordPress
 {
 	internal sealed class Program : Jeebs.Apps.Program
 	{
-		private static ILog log = new Jeebs.Logging.SerilogLogger();
-
 		internal static async Task Main(string[] args) =>
 			await MainAsync<App>(
 				args,
-				async (provider, _) =>
+				async (provider, log) =>
 				{
 					// Begin
 					log.Debug("= WordPress Console Test =");
