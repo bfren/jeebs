@@ -31,7 +31,7 @@ namespace Jeebs.Apps
 			this.useHsts = useHsts;
 
 		/// <inheritdoc/>
-		public override IHost CreateHost(string[] args) =>
+		public override IHost BuildHost(string[] args) =>
 			// Create Default Host Builder
 			Host.CreateDefaultBuilder(
 				args

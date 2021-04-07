@@ -19,10 +19,10 @@ namespace Jeebs.Apps
 	public abstract class App
 	{
 		/// <summary>
-		/// Create <see cref="IHost"/> using specified arguments
+		/// Build <see cref="IHost"/> using specified arguments
 		/// </summary>
 		/// <param name="args">Command Line Arguments</param>
-		public virtual IHost CreateHost(string[] args) =>
+		public virtual IHost BuildHost(string[] args) =>
 			// Create Default Host Builder
 			Host.CreateDefaultBuilder(
 				args
@@ -69,10 +69,14 @@ namespace Jeebs.Apps
 		/// Configure Host
 		/// </summary>
 		/// <param name="config">IConfigurationBuilder</param>
-		protected virtual void ConfigureHost(IConfigurationBuilder config)
+		/// <param name="args">Command Line arguments</param>
+		protected virtual void ConfigureHost(IConfigurationBuilder config, string[] args)
 		{
 			// Set base path to be directory of running assembly
 			config.SetBasePath(Directory.GetCurrentDirectory());
+
+			// Add command line arguments
+			config.AddCommandLine(args);
 		}
 
 		/// <summary>

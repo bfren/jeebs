@@ -20,8 +20,8 @@ namespace Jeebs.Logging
 		/// <param name="jeebs">JeebsConfig</param>
 		public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 		{
-			// If there are no logging providers, return default configuration
-			if (jeebs.Logging.Providers is null)
+			// If there are no logging providers, use default configuration
+			if (jeebs.Logging.Providers.Count == 0)
 			{
 				return;
 			}
