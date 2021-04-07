@@ -18,11 +18,7 @@ namespace Jeebs.Data.Clients.MySql
 		)
 		{
 			// Get columns
-			var col = new List<string>();
-			foreach (var column in columns)
-			{
-				col.Add(Escape(column, true));
-			}
+			var col = GetColumnsFromList(this, columns);
 
 			// Add each predicate to the where and parameter lists
 			var (where, param) = GetWhereAndParameters(this, predicates, false);
@@ -37,23 +33,11 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		public override (string query, IQueryParameters param) GetQuery(IQueryParts parts)
 		{
-			// Convert select columns into joined list
-			string getSelect()
-			{
-				var select = new List<string>();
-				foreach (var column in parts.Select)
-				{
-					select.Add(EscapeWithTable(column, true));
-				}
-
-				return JoinList(select, false);
-			}
-
 			// Start query
 			var select = (parts.Select.Count > 0) switch
 			{
 				true =>
-					getSelect(),
+					GetSelectFromList(this, parts.Select),
 
 				false =>
 					"*"

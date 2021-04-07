@@ -3,6 +3,7 @@
 
 using System;
 using AppMvc.EfCore;
+using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Mvc.Auth;
@@ -30,9 +31,9 @@ namespace AppMvc
 			);
 		}
 
-		protected override void Ready(IServiceProvider services)
+		public override void Ready(IServiceProvider services, ILog log)
 		{
-			base.Ready(services);
+			base.Ready(services, log);
 
 			var db = services.GetRequiredService<AuthDb>();
 			db.MigrateToLatest();

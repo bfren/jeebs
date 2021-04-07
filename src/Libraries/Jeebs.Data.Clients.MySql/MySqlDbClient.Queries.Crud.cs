@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Collections.Generic;
 using System.Text;
 
 namespace Jeebs.Data.Clients.MySql
@@ -15,13 +14,7 @@ namespace Jeebs.Data.Clients.MySql
 		)
 		{
 			// Get columns
-			var col = new List<string>();
-			var par = new List<string>();
-			foreach (var column in columns)
-			{
-				col.Add(Escape(column.Name));
-				par.Add($"@{column.Alias}");
-			}
+			var (col, par) = GetColumnsForCreateQuery(columns);
 
 			// Build and return query
 			return
@@ -40,11 +33,7 @@ namespace Jeebs.Data.Clients.MySql
 		)
 		{
 			// Get columns
-			var col = new List<string>();
-			foreach (var column in columns)
-			{
-				col.Add(Escape(column, true));
-			}
+			var col = GetColumnsForRetrieveQuery(columns);
 
 			// Build and return query
 			return
@@ -73,17 +62,10 @@ namespace Jeebs.Data.Clients.MySql
 		)
 		{
 			// Get columns
-			var col = new List<string>();
-			foreach (var column in columns)
-			{
-				col.Add($"{Escape(column)} = @{column.Alias}");
-			}
+			var col = GetColumnsForUpdateQuery(columns);
 
 			// Add version column
-			if (versionColumn is not null)
-			{
-				col.Add($"{Escape(versionColumn)} = @{versionColumn.Alias} + 1");
-			}
+			AddVersionToColumnList(col, versionColumn);
 
 			// Begin query
 			var sql = new StringBuilder(
@@ -93,10 +75,7 @@ namespace Jeebs.Data.Clients.MySql
 			);
 
 			// Add WHERE Version
-			if (versionColumn is not null)
-			{
-				sql.Append($" AND {Escape(versionColumn)} = @{versionColumn.Alias}");
-			}
+			AddVersionToWhere(sql, versionColumn);
 
 			// Return query
 			sql.Append(';');
@@ -126,10 +105,7 @@ namespace Jeebs.Data.Clients.MySql
 			);
 
 			// Add WHERE Version
-			if (versionColumn is not null)
-			{
-				sql.Append($" AND {Escape(versionColumn)} = @{versionColumn.Alias}");
-			}
+			AddVersionToWhere(sql, versionColumn);
 
 			// Return query
 			sql.Append(';');

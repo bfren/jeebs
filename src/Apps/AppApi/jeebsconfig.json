@@ -1,0 +1,17 @@
+{
+	"jeebs": {
+		"app": {
+			"name": "API",
+			"suite": "Jeebs"
+		},
+		"logging": {
+			"minimumLevel": "Debug",
+			"console": true,
+			"providers": {
+				"seq.server04": {
+					"enabled": true
+				}
+			}
+		}
+	}
+}

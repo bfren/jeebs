@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data.Enums;
+using Jeebs.Data.Exceptions;
 using Xunit;
 
 namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
@@ -22,19 +23,6 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		}
 
 		[Fact]
-		public void Like_Returns_Like()
-		{
-			// Arrange
-			var value = SearchOperator.Like;
-
-			// Act
-			var result = value.ToOperator();
-
-			// Assert
-			Assert.Equal("LIKE", result);
-		}
-
-		[Fact]
 		public void NotEqual_Returns_NotEquals_Sign()
 		{
 			// Arrange
@@ -45,6 +33,19 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 
 			// Assert
 			Assert.Equal("!=", result);
+		}
+
+		[Fact]
+		public void Like_Returns_Like()
+		{
+			// Arrange
+			var value = SearchOperator.Like;
+
+			// Act
+			var result = value.ToOperator();
+
+			// Assert
+			Assert.Equal("LIKE", result);
 		}
 
 		[Fact]
@@ -99,20 +100,46 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 			Assert.Equal(">=", result);
 		}
 
-		[Theory]
-		[InlineData(0)]
-		[InlineData(10)]
-		[InlineData(20)]
-		public void Other_Returns_Equals_Sign(int input)
+		[Fact]
+		public void In_Returns_In()
 		{
 			// Arrange
-			var value = (SearchOperator)input;
+			var value = SearchOperator.In;
 
 			// Act
 			var result = value.ToOperator();
 
 			// Assert
-			Assert.Equal("=", result);
+			Assert.Equal("IN", result);
+		}
+
+		[Fact]
+		public void NotIn_Returns_Not_In()
+		{
+			// Arrange
+			var value = SearchOperator.NotIn;
+
+			// Act
+			var result = value.ToOperator();
+
+			// Assert
+			Assert.Equal("NOT IN", result);
+		}
+
+		[Theory]
+		[InlineData(10)]
+		[InlineData(20)]
+		[InlineData(30)]
+		public void Other_Throws_UnrecognisedSearchOperatorException(int input)
+		{
+			// Arrange
+			var value = (SearchOperator)input;
+
+			// Act
+			void action() => value.ToOperator();
+
+			// Assert
+			Assert.Throws<UnrecognisedSearchOperatorException>(action);
 		}
 	}
 }

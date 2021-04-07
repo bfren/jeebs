@@ -19,27 +19,32 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <typeparam name="T">Host type</typeparam>
 		/// <param name="args">Command Line arguments</param>
-		/// <param name="run">[Optional] Action to run program with IServiceProvider and IConfiguration</param>
-		public static async Task MainAsync<T>(string[] args, Action<IServiceProvider, IConfiguration>? run = null)
+		/// <param name="run">[Optional] Action to run program with IServiceProvider and ILog</param>
+		public static async Task MainAsync<T>(string[] args, Action<IServiceProvider, ILog>? run = null)
 			where T : App, new()
 		{
 			// Create app
 			var app = new T();
 
-			// Create host
-			using var host = app.CreateHost(args);
+			// Build host
+			using var host = app.BuildHost(args);
 
-			// Run default
+			// Get log for this app
+			var log = host.Services.GetRequiredService<ILog<T>>();
+
+			// Ready to go
+			app.Ready(host.Services, log);
+
+			// Run default app
 			if (run is null)
 			{
 				await host.RunAsync().ConfigureAwait(false);
 			}
 
-			// Run custom
+			// Run custom app
 			else
 			{
-				var config = host.Services.GetRequiredService<IConfiguration>();
-				run(host.Services, config);
+				run(host.Services, log);
 			}
 		}
 	}

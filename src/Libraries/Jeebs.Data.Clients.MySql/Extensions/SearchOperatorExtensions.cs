@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data.Enums;
+using Jeebs.Data.Exceptions;
 
 namespace Jeebs.Data.Clients.MySql
 {
@@ -18,6 +19,9 @@ namespace Jeebs.Data.Clients.MySql
 		public static string ToOperator(this SearchOperator @this) =>
 			@this switch
 			{
+				SearchOperator.Equal =>
+					"=",
+
 				SearchOperator.NotEqual =>
 					"!=",
 
@@ -39,8 +43,11 @@ namespace Jeebs.Data.Clients.MySql
 				SearchOperator.In =>
 					"IN",
 
+				SearchOperator.NotIn =>
+					"NOT IN",
+
 				_ =>
-					"="
+					throw new UnrecognisedSearchOperatorException(@this)
 			};
 	}
 }

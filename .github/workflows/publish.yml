@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  restore-build-pack-push:
+  restore-build-test-pack-push:
     runs-on: ubuntu-latest
     steps:
     - 

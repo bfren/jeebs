@@ -41,7 +41,7 @@ namespace F.DataF
 				};
 
 				// IN is a special case, handle ordinary cases first
-				if (op != SearchOperator.In)
+				if (op != SearchOperator.In && op != SearchOperator.NotIn)
 				{
 					var paramName = $"P{index++}";
 					param.Add(paramName, value);
