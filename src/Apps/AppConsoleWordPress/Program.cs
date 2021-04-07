@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AppConsoleWordPress;
 using AppConsoleWordPress.Bcg;
+using Bcg = AppConsoleWordPress.Bcg.Entities;
 using AppConsoleWordPress.Usa;
 using Jeebs;
 using Jeebs.WordPress;
@@ -16,352 +18,345 @@ using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using static F.OptionF;
 
-namespace AppConsoleWordPress
+await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 {
-	internal sealed class Program : Jeebs.Apps.Program
+	// Begin
+	log.Debug("= WordPress Console Test =");
+
+	// Get services
+	var bcg = provider.GetRequiredService<WpBcg>();
+	var usa = provider.GetRequiredService<WpUsa>();
+
+	// Run test methods
+	await TermsAsync("BCG", bcg.Db).AuditAsync((Action<Option<int>>)AuditTerms);
+	await TermsAsync("USA", usa.Db).AuditAsync((Action<Option<int>>)AuditTerms);
+
+	await Return(bcg.Db)
+		.BindAsync(InsertOptionAsync)
+		.AuditAsync(any: AuditOption);
+
+	await Return(bcg.Db)
+		.BindAsync(x => GetPagedSermonsAsync(x, "holiness", opt =>
+		{
+			opt.SearchText = "holiness";
+			opt.SearchOperator = SearchOperator.Like;
+			opt.Type = WpBcg.PostTypes.Sermon;
+			opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+			opt.Limit = 4;
+		}))
+		.AuditAsync(any: AuditPagedSermons);
+
+	await Return(bcg.Db)
+		.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
+		{
+			opt.SearchText = "holiness";
+			opt.SearchOperator = SearchOperator.Like;
+			opt.Type = WpBcg.PostTypes.Sermon;
+			opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
+			opt.Limit = 4;
+		}))
+		.AuditAsync(any: AuditSermons);
+
+	await Return(bcg.Db)
+		.BindAsync(x => SearchSermonsAsync(x, "jesus", opt =>
+		{
+			opt.Type = WpBcg.PostTypes.Sermon;
+			opt.SearchText = "jesus";
+			opt.SearchFields = SearchPostFields.Title;
+			opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
+			opt.Limit = 5;
+		}))
+		.AuditAsync(any: AuditSermons);
+
+	await Return(bcg.Db)
+		.BindAsync(FetchMeta)
+		.AuditAsync(any: AuditMeta)
+		.BindAsync(
+			_ => FetchCustomFields(bcg.Db)
+		)
+		.AuditAsync(any: AuditCustomFields);
+
+	Return<int>(
+		() => throw new Exception("Test"),
+		DefaultHandler
+	);
+
+	await Return(bcg.Db)
+		.BindAsync(FetchTaxonomies)
+		.AuditAsync(any: AuditTaxonomies);
+
+	await Return(bcg.Db)
+		.BindAsync(ApplyContentFilters)
+		.AuditAsync(any: AuditApplyContentFilters);
+
+	// End
+	Console.WriteLine();
+	log.Debug("Complete.");
+	Console.Read();
+
+	//
+	//	FUNCTIONS
+	//
+
+	async Task<Option<int>> TermsAsync(string section, IWpDb db)
 	{
-		internal static async Task Main(string[] args) =>
-			await MainAsync<App>(
-				args,
-				async (provider, log) =>
+		Console.WriteLine();
+		log.Debug($"== {section} Terms ==");
+
+		using var w = db.UnitOfWork;
+		return await w.ExecuteScalarAsync<int>(
+			$"SELECT COUNT(*) FROM {db.Term} WHERE {db.Term.Slug} LIKE @a;",
+			new { a = "%a%" }
+		);
+	}
+
+	void AuditTerms(Option<int> opt) =>
+		opt.Switch(
+			some: x => log.Debug("There are {0} terms", x),
+			none: r => log.Error($"No terms found: {r}")
+		);
+
+	async Task<Option<Bcg.Option>> InsertOptionAsync(IWpDb db)
+	{
+		Console.WriteLine();
+		log.Debug("== Option Insert ==");
+
+		var opt = new Bcg.Option
+		{
+			Key = Guid.NewGuid().ToString(),
+			Value = DateTime.Now.ToLongTimeString()
+		};
+
+		using var w = db.UnitOfWork;
+		return await w.CreateAsync(opt);
+	}
+
+	void AuditOption(Option<Bcg.Option> opt) =>
+		opt.Switch(
+			some: x => log.Debug("Test option '{Key}' = '{Value}'", x.Key, x.Value),
+			none: r => log.Error($"No option found: {r}")
+		);
+
+	async Task<Option<PagedList<SermonModel>>> GetPagedSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
+	{
+		Console.WriteLine();
+		log.Debug($"== Sermons: {search} ==");
+
+		using var q = db.GetQueryWrapper();
+		return await q.QueryPostsAsync<SermonModel>(1, modify: opt);
+	}
+
+	void AuditPagedSermons(Option<PagedList<SermonModel>> opt) =>
+		opt.Switch(
+			some: x =>
+			{
+				log.Debug("There are {Count} matching sermons", x.Count);
+				foreach (var item in x)
 				{
-					// Begin
-					log.Debug("= WordPress Console Test =");
-
-					// Get services
-					log = provider.GetRequiredService<ILog<Program>>();
-					var bcg = provider.GetRequiredService<WpBcg>();
-					var usa = provider.GetRequiredService<WpUsa>();
-
-					// Run test methods
-					await TermsAsync("BCG", bcg.Db).AuditAsync((Action<Option<int>>)AuditTerms);
-					await TermsAsync("USA", usa.Db).AuditAsync((Action<Option<int>>)AuditTerms);
-
-					await Return(bcg.Db)
-						.BindAsync(InsertOptionAsync)
-						.AuditAsync(any: AuditOption);
-
-					await Return(bcg.Db)
-						.BindAsync(x => GetPagedSermonsAsync(x, "holiness", opt =>
-						{
-							opt.SearchText = "holiness";
-							opt.SearchOperator = SearchOperator.Like;
-							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
-							opt.Limit = 4;
-						}))
-						.AuditAsync(any: AuditPagedSermons);
-
-					await Return(bcg.Db)
-						.BindAsync(x => SearchSermonsAsync(x, "holiness", opt =>
-						{
-							opt.SearchText = "holiness";
-							opt.SearchOperator = SearchOperator.Like;
-							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.Sort = new[] { (bcg.Db.Post.Title, SortOrder.Ascending) };
-							opt.Limit = 4;
-						}))
-						.AuditAsync(any: AuditSermons);
-
-					await Return(bcg.Db)
-						.BindAsync(x => SearchSermonsAsync(x, "jesus", opt =>
-						{
-							opt.Type = WpBcg.PostTypes.Sermon;
-							opt.SearchText = "jesus";
-							opt.SearchFields = SearchPostFields.Title;
-							opt.Taxonomies = new[] { (WpBcg.Taxonomies.BibleBook, 424L) };
-							opt.Limit = 5;
-						}))
-						.AuditAsync(any: AuditSermons);
-
-					await Return(bcg.Db)
-						.BindAsync(FetchMeta)
-						.AuditAsync(any: AuditMeta)
-						.BindAsync(
-							_ => FetchCustomFields(bcg.Db)
-						)
-						.AuditAsync(any: AuditCustomFields);
-
-					Return<int>(
-						() => throw new Exception("Test"),
-						DefaultHandler
-					);
-
-					await Return(bcg.Db)
-						.BindAsync(FetchTaxonomies)
-						.AuditAsync(any: AuditTaxonomies);
-
-					await Return(bcg.Db)
-						.BindAsync(ApplyContentFilters)
-						.AuditAsync(any: AuditApplyContentFilters);
-
-					// End
-					Console.WriteLine();
-					log.Debug("Complete.");
-					Console.Read();
+					log.Debug("{PostId:0000}: {Title}", item.PostId, item.Title);
 				}
-			).ConfigureAwait(false);
+			},
+			none: r => log.Error($"No sermons found: {r}")
+		);
 
-		internal static async Task<Option<int>> TermsAsync(string section, IWpDb db)
-		{
-			Console.WriteLine();
-			log.Debug($"== {section} Terms ==");
+	async Task<Option<List<SermonModel>>> SearchSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
+	{
+		Console.WriteLine();
+		log.Debug($"== Sermons: {search} ==");
 
-			using var w = db.UnitOfWork;
-			return await w.ExecuteScalarAsync<int>(
-				$"SELECT COUNT(*) FROM {db.Term} WHERE {db.Term.Slug} LIKE @a;",
-				new { a = "%a%" }
-			);
-		}
+		using var q = db.GetQueryWrapper();
+		return await q.QueryPostsAsync<SermonModel>(modify: opt);
+	}
 
-		internal static void AuditTerms(Option<int> opt) =>
-			opt.Switch(
-				some: x => log.Debug("There are {0} terms", x),
-				none: r => log.Error($"No terms found: {r}")
-			);
-
-		internal static async Task<Option<Bcg.Entities.Option>> InsertOptionAsync(IWpDb db)
-		{
-			Console.WriteLine();
-			log.Debug("== Option Insert ==");
-
-			var opt = new Bcg.Entities.Option
+	void AuditSermons(Option<List<SermonModel>> opt) =>
+		opt.Switch(
+			some: x =>
 			{
-				Key = Guid.NewGuid().ToString(),
-				Value = DateTime.Now.ToLongTimeString()
-			};
-
-			using var w = db.UnitOfWork;
-			return await w.CreateAsync(opt);
-		}
-
-		internal static void AuditOption(Option<Bcg.Entities.Option> opt) =>
-			opt.Switch(
-				some: x => log.Debug("Test option '{Key}' = '{Value}'", x.Key, x.Value),
-				none: r => log.Error($"No option found: {r}")
-			);
-
-		internal static async Task<Option<PagedList<SermonModel>>> GetPagedSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
-		{
-			Console.WriteLine();
-			log.Debug($"== Sermons: {search} ==");
-
-			using var q = db.GetQueryWrapper();
-			return await q.QueryPostsAsync<SermonModel>(1, modify: opt);
-		}
-
-		internal static void AuditPagedSermons(Option<PagedList<SermonModel>> opt) =>
-			opt.Switch(
-				some: x =>
+				log.Debug("There are {Count} matching sermons", x.Count);
+				foreach (var item in x)
 				{
-					log.Debug("There are {Count} matching sermons", x.Count);
-					foreach (var item in x)
-					{
-						log.Debug("{PostId:0000}: {Title}", item.PostId, item.Title);
-					}
-				},
-				none: r => log.Error($"No sermons found: {r}")
-			);
+					log.Debug("{PostId:0000}: {Title}", item.PostId, item.Title);
+				}
+			},
+			none: r => log.Error($"No sermons found: {r}")
+		);
 
-		internal static async Task<Option<List<SermonModel>>> SearchSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
-		{
-			Console.WriteLine();
-			log.Debug($"== Sermons: {search} ==");
+	async Task<Option<List<PostModel>>> FetchMeta(IWpDb db)
+	{
+		Console.WriteLine();
+		log.Debug("== Meta ==");
 
-			using var q = db.GetQueryWrapper();
-			return await q.QueryPostsAsync<SermonModel>(modify: opt);
-		}
+		using var w = db.GetQueryWrapper();
+		return await w.QueryPostsAsync<PostModel>(modify: opt => opt.Limit = 3);
+	}
 
-		internal static void AuditSermons(Option<List<SermonModel>> opt) =>
-			opt.Switch(
-				some: x =>
-				{
-					log.Debug("There are {Count} matching sermons", x.Count);
-					foreach (var item in x)
-					{
-						log.Debug("{PostId:0000}: {Title}", item.PostId, item.Title);
-					}
-				},
-				none: r => log.Error($"No sermons found: {r}")
-			);
-
-		internal static async Task<Option<List<PostModel>>> FetchMeta(IWpDb db)
-		{
-			Console.WriteLine();
-			log.Debug("== Meta ==");
-
-			using var w = db.GetQueryWrapper();
-			return await w.QueryPostsAsync<PostModel>(modify: opt => opt.Limit = 3);
-		}
-
-		internal static void AuditMeta(Option<List<PostModel>> opt) =>
-			opt.Switch(
-				some: x =>
-				{
-					foreach (var post in x)
-					{
-						log.Debug("Post {PostId}", post.PostId);
-						foreach (var item in post.Meta)
-						{
-							log.Debug(" - {Key}: {Value}", item.Key, item.Value);
-						}
-					}
-				},
-				none: r => log.Error($"No posts found: {r}")
-			);
-
-		internal static async Task<Option<List<SermonModelWithCustomFields>>> FetchCustomFields(IWpDb db)
-		{
-			Console.WriteLine();
-			log.Debug("== Custom Fields ==");
-
-			using var q = db.GetQueryWrapper();
-			return await q.QueryPostsAsync<SermonModelWithCustomFields>(modify: opt =>
+	void AuditMeta(Option<List<PostModel>> opt) =>
+		opt.Switch(
+			some: x =>
 			{
-				opt.Type = WpBcg.PostTypes.Sermon;
-				//opt.SortRandom = true;
-				//opt.Limit = 10;
-				opt.Ids = new[] { 924L, 2336L };
-			});
-		}
-
-		internal static void AuditCustomFields(Option<List<SermonModelWithCustomFields>> opt) =>
-			opt.Switch(
-				some: x =>
+				foreach (var post in x)
 				{
-					log.Debug("{Count} sermons found", x.Count);
-
-					foreach (var sermon in x)
+					log.Debug("Post {PostId}", post.PostId);
+					foreach (var item in post.Meta)
 					{
-						log.Debug("{SermonId:0000} '{Title}'", sermon.PostId, sermon.Title);
-						log.Debug("  - Passage: {Passage}", sermon.Passage);
-						log.Debug("  - PDF: {Pdf}", sermon.Pdf?.ToString() ?? "null");
-						log.Debug("  - Audio: {Audio}", sermon.Audio?.ToString() ?? "null");
-						log.Debug("  - First Preached: {FirstPreached}", sermon.FirstPreached);
-						log.Debug("  - Feed Image: {FeedImageUrl}", sermon.Image?.ValueObj.UrlPath ?? "null");
+						log.Debug(" - {Key}: {Value}", item.Key, item.Value);
 					}
-				},
-				none: r => log.Error($"No sermons found: {r}")
-			);
+				}
+			},
+			none: r => log.Error($"No posts found: {r}")
+		);
 
-		internal static async Task<Option<List<SermonModelWithTaxonomies>>> FetchTaxonomies(IWpDb db)
+	async Task<Option<List<SermonModelWithCustomFields>>> FetchCustomFields(IWpDb db)
+	{
+		Console.WriteLine();
+		log.Debug("== Custom Fields ==");
+
+		using var q = db.GetQueryWrapper();
+		return await q.QueryPostsAsync<SermonModelWithCustomFields>(modify: opt =>
 		{
-			Console.WriteLine();
-			log.Debug("== Taxonomies ==");
+			opt.Type = WpBcg.PostTypes.Sermon;
+			//opt.SortRandom = true;
+			//opt.Limit = 10;
+			opt.Ids = new[] { 924L, 2336L };
+		});
+	}
 
-			using var w = db.GetQueryWrapper();
-			return await w.QueryPostsAsync<SermonModelWithTaxonomies>(modify: opt =>
+	void AuditCustomFields(Option<List<SermonModelWithCustomFields>> opt) =>
+		opt.Switch(
+			some: x =>
 			{
-				opt.Type = WpBcg.PostTypes.Sermon;
-				opt.SortRandom = true;
-				opt.Limit = 10;
-			});
-		}
+				log.Debug("{Count} sermons found", x.Count);
 
-		internal static void AuditTaxonomies(Option<List<SermonModelWithTaxonomies>> opt) =>
-			opt.Switch(
-				some: x =>
+				foreach (var sermon in x)
 				{
-					log.Debug("{Count} sermons found", x.Count);
+					log.Debug("{SermonId:0000} '{Title}'", sermon.PostId, sermon.Title);
+					log.Debug("  - Passage: {Passage}", sermon.Passage);
+					log.Debug("  - PDF: {Pdf}", sermon.Pdf?.ToString() ?? "null");
+					log.Debug("  - Audio: {Audio}", sermon.Audio?.ToString() ?? "null");
+					log.Debug("  - First Preached: {FirstPreached}", sermon.FirstPreached);
+					log.Debug("  - Feed Image: {FeedImageUrl}", sermon.Image?.ValueObj.UrlPath ?? "null");
+				}
+			},
+			none: r => log.Error($"No sermons found: {r}")
+		);
 
-					foreach (var sermon in x)
-					{
-						log.Debug("{PostId:0000} '{Title}'", sermon.PostId, sermon.Title);
+	async Task<Option<List<SermonModelWithTaxonomies>>> FetchTaxonomies(IWpDb db)
+	{
+		Console.WriteLine();
+		log.Debug("== Taxonomies ==");
 
-						foreach (var book in sermon.BibleBooks)
-						{
-							log.Debug("  - Bible Book: {Book}", book);
-						}
-
-						foreach (var series in sermon.Series)
-						{
-							log.Debug("  - Series: {Series}", series);
-						}
-					}
-				},
-				none: r => log.Error($"No sermons found: {r}")
-			);
-
-		internal static async Task<Option<List<PostModelWithContent>>> ApplyContentFilters(IWpDb db)
+		using var w = db.GetQueryWrapper();
+		return await w.QueryPostsAsync<SermonModelWithTaxonomies>(modify: opt =>
 		{
-			Console.WriteLine();
-			log.Debug("== Apply Content Filters ==");
+			opt.Type = WpBcg.PostTypes.Sermon;
+			opt.SortRandom = true;
+			opt.Limit = 10;
+		});
+	}
 
-			using var w = db.GetQueryWrapper();
-			return await w.QueryPostsAsync<PostModelWithContent>(
-				modify: opt => opt.Limit = 3,
-				filters: GenerateExcerpt.Create()
-			);
-		}
+	void AuditTaxonomies(Option<List<SermonModelWithTaxonomies>> opt) =>
+		opt.Switch(
+			some: x =>
+			{
+				log.Debug("{Count} sermons found", x.Count);
 
-		internal static void AuditApplyContentFilters(Option<List<PostModelWithContent>> opt) =>
-			opt.Switch(
-				some: x =>
+				foreach (var sermon in x)
 				{
-					log.Debug("{Count} posts found", x.Count);
+					log.Debug("{PostId:0000} '{Title}'", sermon.PostId, sermon.Title);
 
-					foreach (var post in x)
+					foreach (var book in sermon.BibleBooks)
 					{
-						log.Debug("{PostId:0000} {Content}", post.PostId, post.Content);
+						log.Debug("  - Bible Book: {Book}", book);
 					}
-				},
-				none: r => log.Error($"No posts found: {r}")
-			);
-	}
 
-	internal class TermModel
+					foreach (var series in sermon.Series)
+					{
+						log.Debug("  - Series: {Series}", series);
+					}
+				}
+			},
+			none: r => log.Error($"No sermons found: {r}")
+		);
+
+	async Task<Option<List<PostModelWithContent>>> ApplyContentFilters(IWpDb db)
 	{
-		public string Title { get; set; } = string.Empty;
+		Console.WriteLine();
+		log.Debug("== Apply Content Filters ==");
 
-		public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
-
-		public int Count { get; set; }
+		using var w = db.GetQueryWrapper();
+		return await w.QueryPostsAsync<PostModelWithContent>(
+			modify: opt => opt.Limit = 3,
+			filters: GenerateExcerpt.Create()
+		);
 	}
 
-	internal class PostModel : IEntity
-	{
-		public long Id { get => PostId; set => PostId = value; }
+	void AuditApplyContentFilters(Option<List<PostModelWithContent>> opt) =>
+		opt.Switch(
+			some: x =>
+			{
+				log.Debug("{Count} posts found", x.Count);
 
-		public long PostId { get; set; }
+				foreach (var post in x)
+				{
+					log.Debug("{PostId:0000} {Content}", post.PostId, post.Content);
+				}
+			},
+			none: r => log.Error($"No posts found: {r}")
+		);
+}).ConfigureAwait(false);
 
-		public MetaDictionary Meta { get; set; } = new MetaDictionary();
-	}
+internal class TermModel
+{
+	public string Title { get; set; } = string.Empty;
 
-	internal class PostModelWithContent : PostModel
-	{
-		public string Content { get; set; } = string.Empty;
-	}
+	public Taxonomy Taxonomy { get; set; } = Taxonomy.Blank;
 
-	internal class SermonModel : IEntity
-	{
-		public long Id { get => PostId; set => PostId = value; }
+	public int Count { get; set; }
+}
 
-		public long PostId { get; set; }
+internal class PostModel : IEntity
+{
+	public long Id { get => PostId; set => PostId = value; }
 
-		public string Title { get; set; } = string.Empty;
+	public long PostId { get; set; }
 
-		public DateTime PublishedOn { get; set; }
-	}
+	public MetaDictionary Meta { get; set; } = new MetaDictionary();
+}
 
-	internal class SermonModelWithCustomFields : SermonModel
-	{
-		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+internal class PostModelWithContent : PostModel
+{
+	public string Content { get; set; } = string.Empty;
+}
 
-		public PassageCustomField Passage { get; set; } = new PassageCustomField();
+internal class SermonModel : IEntity
+{
+	public long Id { get => PostId; set => PostId = value; }
 
-		public PdfCustomField? Pdf { get; set; }
+	public long PostId { get; set; }
 
-		public AudioRecordingCustomField? Audio { get; set; }
+	public string Title { get; set; } = string.Empty;
 
-		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+	public DateTime PublishedOn { get; set; }
+}
 
-		public FeedImageCustomField? Image { get; set; }
-	}
+internal class SermonModelWithCustomFields : SermonModel
+{
+	public MetaDictionary Meta { get; set; } = new MetaDictionary();
 
-	internal class SermonModelWithTaxonomies : SermonModel
-	{
-		public TermList BibleBooks { get; set; } = new TermList(WpBcg.Taxonomies.BibleBook);
+	public PassageCustomField Passage { get; set; } = new PassageCustomField();
 
-		public TermList Series { get; set; } = new TermList(WpBcg.Taxonomies.Series);
-	}
+	public PdfCustomField? Pdf { get; set; }
+
+	public AudioRecordingCustomField? Audio { get; set; }
+
+	public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+
+	public FeedImageCustomField? Image { get; set; }
+}
+
+internal class SermonModelWithTaxonomies : SermonModel
+{
+	public TermList BibleBooks { get; set; } = new TermList(WpBcg.Taxonomies.BibleBook);
+
+	public TermList Series { get; set; } = new TermList(WpBcg.Taxonomies.Series);
 }
