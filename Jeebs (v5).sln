@@ -202,6 +202,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "custom", "custom", "{B881D1
 		docs\_sass\custom\custom.scss = docs\_sass\custom\custom.scss
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.WordPress.Entities", "src\Jeebs.WordPress.Entities\Jeebs.WordPress.Entities.csproj", "{D7A4B263-252A-4CF6-96FF-7B41781568B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -430,6 +432,10 @@ Global
 		{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A4B263-252A-4CF6-96FF-7B41781568B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A4B263-252A-4CF6-96FF-7B41781568B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A4B263-252A-4CF6-96FF-7B41781568B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A4B263-252A-4CF6-96FF-7B41781568B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -510,6 +516,7 @@ Global
 		{B2B30FE4-7AC7-4F7D-A0C2-DC5808BCCEF9} = {1E39E94F-9753-4AC1-87F4-B054FB00A7AD}
 		{0A008B4B-9801-49ED-8FE8-5D8BD2162A15} = {1E39E94F-9753-4AC1-87F4-B054FB00A7AD}
 		{B881D1E9-DDFB-4557-BA7F-6F2CDBCE4404} = {0A008B4B-9801-49ED-8FE8-5D8BD2162A15}
+		{D7A4B263-252A-4CF6-96FF-7B41781568B7} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
