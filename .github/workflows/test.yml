@@ -6,6 +6,9 @@ on:
       - 'main'
     tags-ignore:
       - '**'
+    paths:
+      - 'src/**'
+      - 'tests/**'
 
 jobs:
   restore-build-test:
