@@ -104,7 +104,7 @@ namespace Jeebs_Tests
 			some.Received().Invoke(value);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

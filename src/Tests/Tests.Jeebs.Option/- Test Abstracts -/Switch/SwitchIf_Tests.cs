@@ -123,7 +123,7 @@ namespace Jeebs_Tests
 			ifFalse.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public sealed record TestMsg : IMsg { }
 	}

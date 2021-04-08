@@ -53,7 +53,7 @@ namespace Jeebs_Tests
 		protected static async Task Test02(Func<Option<int>, Func<int, Task<Option<string>>>, Task<Option<string>>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act
@@ -96,7 +96,7 @@ namespace Jeebs_Tests
 			await bind.Received().Invoke(value);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

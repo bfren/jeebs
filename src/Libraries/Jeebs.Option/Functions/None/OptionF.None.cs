@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using Jeebs;
 
 namespace F
@@ -24,24 +25,14 @@ namespace F
 			where TMsg : IMsg, new() =>
 			new(new TMsg());
 
-		internal static None<T> None<T>(bool areYouSure) =>
-			areYouSure switch
-			{
-				true =>
-					new(new Msg.NoReasonGivenMsg()),
-
-				false =>
-					new(new Msg.IfYouArentSureDontMakeItMsg())
-			};
-
-		/// <summary>Messages</summary>
-		public static partial class Msg
-		{
-			/// <summary>No reason given</summary>
-			public sealed record NoReasonGivenMsg : IMsg { }
-
-			/// <summary>If you aren't sure you want to make a <see cref="Jeebs.None{T}"/> without a reason, don't do it!</summary>
-			public sealed record IfYouArentSureDontMakeItMsg : IMsg { }
-		}
+		/// <summary>
+		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason exception message by type
+		/// </summary>
+		/// <typeparam name="T">Option value type</typeparam>
+		/// <typeparam name="TExceptionMsg">Reason exception message type</typeparam>
+		/// <param name="ex">Exception object</param>
+		public static None<T> None<T, TExceptionMsg>(Exception ex)
+			where TExceptionMsg : IExceptionMsg, new() =>
+			new(new TExceptionMsg() { Exception = ex });
 	}
 }

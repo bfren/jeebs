@@ -31,7 +31,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 
 			// Act
 			var result = value;

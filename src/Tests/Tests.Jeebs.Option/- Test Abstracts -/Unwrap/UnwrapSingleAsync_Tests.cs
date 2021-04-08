@@ -35,7 +35,7 @@ namespace Jeebs_Tests
 		protected static async Task Test01(Func<Task<Option<int>>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 
 			// Act
 			var result = await act(option.AsTask);
@@ -189,7 +189,7 @@ namespace Jeebs_Tests
 			Assert.Equal(value, result);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}
