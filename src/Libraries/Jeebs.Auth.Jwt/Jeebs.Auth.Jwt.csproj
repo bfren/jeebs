@@ -3,7 +3,7 @@
     <RootNamespace>Jeebs.Auth</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Auth.Abstractions\Jeebs.Auth.Abstractions.csproj" />
