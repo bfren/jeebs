@@ -3,6 +3,6 @@
     <Folder Include="Tables\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Data.Abstractions\Jeebs.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
   </ItemGroup>
 </Project>
