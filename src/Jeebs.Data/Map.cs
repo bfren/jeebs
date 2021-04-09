@@ -1,6 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Entities;
+using Jeebs.Data.Mapping;
+
 namespace Jeebs.Data
 {
 	/// <summary>
@@ -8,7 +11,7 @@ namespace Jeebs.Data
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	public static class Map<TEntity>
-		where TEntity : IEntity
+		where TEntity : IWithId
 	{
 		/// <inheritdoc/>
 		public static ITableMap To<TTable>()

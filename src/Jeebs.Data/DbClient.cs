@@ -3,6 +3,7 @@
 
 using System;
 using System.Data;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.Data
 {
@@ -20,7 +21,7 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Create using default Mapper instance
 		/// </summary>
-		protected DbClient() : this(Data.Mapper.Instance) { }
+		protected DbClient() : this(Mapping.Mapper.Instance) { }
 
 		/// <summary>
 		/// Inject a Mapper instance

@@ -1,8 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <Folder Include="Tables\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
   </ItemGroup>
 </Project>

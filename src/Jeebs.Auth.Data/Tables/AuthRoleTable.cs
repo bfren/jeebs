@@ -3,7 +3,7 @@
 
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Data;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.Auth.Data.Tables
 {

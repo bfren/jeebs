@@ -25,7 +25,7 @@ namespace Jeebs.Data.Repository_Tests
 
 		public sealed record TestId(long Value) : StrongId(Value);
 
-		public sealed record TestEntity(TestId Id) : IEntity<TestId>;
+		public sealed record TestEntity(TestId Id) : IWithId<TestId>;
 
 		public sealed class TestFunc : Repository<TestEntity, TestId>
 		{

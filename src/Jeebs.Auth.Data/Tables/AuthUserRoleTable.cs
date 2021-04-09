@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Auth.Data.Entities;
-using Jeebs.Data;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.Auth.Data.Tables
 {

@@ -8,7 +8,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data;
+using Jeebs.Data.Entities;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.Linq;
 using static F.OptionF;
 
@@ -26,7 +28,7 @@ namespace F.DataF
 			IMappedColumnList columns,
 			(Expression<Func<TEntity, object>> column, SearchOperator op, object value)[] predicates
 		)
-			where TEntity : IEntity
+			where TEntity : IWithId
 		{
 			var list = new List<(IColumn, SearchOperator, object)>();
 			foreach (var item in predicates)

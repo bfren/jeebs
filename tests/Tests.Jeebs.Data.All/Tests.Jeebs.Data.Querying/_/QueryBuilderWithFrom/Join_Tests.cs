@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 using NSubstitute;
 using Xunit;

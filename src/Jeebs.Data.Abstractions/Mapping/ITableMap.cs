@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// Table Map

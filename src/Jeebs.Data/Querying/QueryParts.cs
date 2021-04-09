@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.Data.Querying
 {

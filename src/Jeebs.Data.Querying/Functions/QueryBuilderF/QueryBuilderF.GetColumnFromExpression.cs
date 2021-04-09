@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using Jeebs.Data;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 
 namespace F.DataF

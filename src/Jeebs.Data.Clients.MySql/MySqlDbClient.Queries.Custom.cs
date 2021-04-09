@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
+using Jeebs.Data.Querying;
 using static F.DataF.QueryF;
 
 namespace Jeebs.Data.Clients.MySql

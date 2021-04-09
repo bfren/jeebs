@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
+using Jeebs.Data.Querying;
 
 namespace Jeebs.Data
 {
@@ -87,7 +89,7 @@ namespace Jeebs.Data
 		Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
 			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		)
-			where TEntity : IEntity;
+			where TEntity : IWithId;
 
 		/// <summary>
 		/// Return a query to retrieve how many entities match the specified query parts
@@ -108,7 +110,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		Option<string> GetCreateQuery<TEntity>()
-			where TEntity : IEntity;
+			where TEntity : IWithId;
 
 		/// <summary>
 		/// Return a query to retrieve a single entity by ID
@@ -117,7 +119,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TModel">Return model type</typeparam>
 		/// <param name="id">Entity ID</param>
 		Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
-			where TEntity : IEntity;
+			where TEntity : IWithId;
 
 		/// <summary>
 		/// Return a query to update a single entity
@@ -126,7 +128,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TModel">Return model type</typeparam>
 		/// <param name="id">Entity ID</param>
 		Option<string> GetUpdateQuery<TEntity, TModel>(long id)
-			where TEntity : IEntity;
+			where TEntity : IWithId;
 
 		/// <summary>
 		/// Return a query to delete a single entity by ID
@@ -134,7 +136,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
 		Option<string> GetDeleteQuery<TEntity>(long id)
-			where TEntity : IEntity;
+			where TEntity : IWithId;
 
 		#endregion
 	}

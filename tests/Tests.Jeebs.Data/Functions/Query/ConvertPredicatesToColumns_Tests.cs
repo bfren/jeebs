@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 using static F.DataF.QueryF;
@@ -194,6 +195,6 @@ namespace F.DataF.QueryF_Tests
 
 		public sealed record TestId(long Value) : StrongId(Value);
 
-		public sealed record TestEntity(TestId Id, string Foo, int Bar) : IEntity<TestId>;
+		public sealed record TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
 	}
 }

@@ -12,7 +12,7 @@ namespace Jeebs.Auth.Data
 	/// </summary>
 	/// <typeparam name="TUserEntity">User Entity type</typeparam>
 	public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, AuthUserId>
-		where TUserEntity : IAuthUser, IEntity
+		where TUserEntity : IAuthUser, IWithId
 	{
 		/// <summary>
 		/// Create a new User

@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <summary>
 	/// Contains all the parts necessary to build a query

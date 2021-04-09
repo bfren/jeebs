@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IMappedColumn"/>
 	/// <param name="Table">Table name</param>

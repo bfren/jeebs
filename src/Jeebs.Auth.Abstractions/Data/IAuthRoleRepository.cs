@@ -12,7 +12,7 @@ namespace Jeebs.Auth.Data
 	/// </summary>
 	/// <typeparam name="TRoleEntity">Role Entity type</typeparam>
 	public interface IAuthRoleRepository<TRoleEntity> : IRepository<TRoleEntity, AuthRoleId>
-		where TRoleEntity : IAuthRole, IEntity
+		where TRoleEntity : IAuthRole, IWithId
 	{
 		/// <summary>
 		/// Create a new Role

@@ -6,10 +6,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Jeebs.Data.Entities;
 using Jeebs.Data.Exceptions;
 using static F.OptionF;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IMapper"/>
 	internal sealed class Mapper : IMapper, IDisposable
@@ -41,7 +42,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public ITableMap Map<TEntity>(ITable table)
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 			{
 				// Validate table
@@ -60,13 +61,13 @@ namespace Jeebs.Data
 				var idProperty = GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
 					reason => throw new UnableToFindIdColumnException(reason)
 				) with
-				{ Alias = nameof(IEntity.Id) };
+				{ Alias = nameof(IWithId.Id) };
 
 				// Create Table Map
 				var map = new TableMap(table, columns, idProperty);
 
 				// Get Version property
-				if (typeof(TEntity).Implements<IEntityWithVersion>())
+				if (typeof(TEntity).Implements<IWithVersion>())
 				{
 					map.VersionColumn = GetColumnWithAttribute<TEntity, VersionAttribute>(columns).Unwrap(
 						reason => throw new UnableToFindVersionColumnException(reason)
@@ -79,7 +80,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Option<ITableMap> GetTableMapFor<TEntity>()
-			where TEntity : IEntity
+			where TEntity : IWithId
 		{
 			if (mappedEntities.TryGetValue(typeof(TEntity), out var map))
 			{
@@ -95,7 +96,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="table">Table object</param>
 		internal static (bool valid, List<string> errors) ValidateTable<TEntity>(ITable table)
-			where TEntity : IEntity
+			where TEntity : IWithId
 		{
 			// Get types
 			var tableType = table.GetType();
@@ -150,7 +151,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="table">Table object</param>
 		internal static Option<MappedColumnList> GetMappedColumns<TEntity>(ITable table)
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			Return(
 				table
 			)
@@ -179,7 +180,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
 		/// <param name="columns">List of mapped columns</param>
 		internal static Option<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
-			where TEntity : IEntity
+			where TEntity : IWithId
 			where TAttribute : Attribute =>
 			Return(
 				columns

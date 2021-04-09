@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Querying;
 using NSubstitute;
 
 namespace Jeebs.Data.Repository_Tests
@@ -31,7 +32,7 @@ namespace Jeebs.Data.Repository_Tests
 			return (client, log, repo);
 		}
 
-		public sealed record Foo : IEntity<FooId>
+		public sealed record Foo : IWithId<FooId>
 		{
 			public FooId Id { get; init; } = new();
 		}

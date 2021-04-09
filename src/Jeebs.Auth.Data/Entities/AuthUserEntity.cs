@@ -3,14 +3,14 @@
 
 using System;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Data;
+using Jeebs.Data.Entities;
 
 namespace Jeebs.Auth.Data.Entities
 {
 	/// <summary>
 	/// Authentication User Entity
 	/// </summary>
-	public sealed record AuthUserEntity : AuthUserModel, IEntityWithVersion
+	public sealed record AuthUserEntity : AuthUserModel, IWithVersion
 	{
 		/// <inheritdoc/>
 		[Version]

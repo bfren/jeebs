@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using static F.DataF.QueryF;
 using static F.OptionF;

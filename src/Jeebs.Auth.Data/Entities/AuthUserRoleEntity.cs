@@ -1,14 +1,14 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs.Data;
+using Jeebs.Data.Entities;
 
 namespace Jeebs.Auth.Data.Entities
 {
 	/// <summary>
 	/// Authentication User Role
 	/// </summary>
-	public sealed record AuthUserRoleEntity : IEntity<AuthUserRoleId>, IAuthUserRole
+	public sealed record AuthUserRoleEntity : IWithId<AuthUserRoleId>, IAuthUserRole
 	{
 		/// <summary>
 		/// User Role ID

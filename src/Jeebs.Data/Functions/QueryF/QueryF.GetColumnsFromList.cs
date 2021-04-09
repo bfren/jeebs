@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Jeebs.Data;
+using Jeebs.Data.Mapping;
 
 namespace F.DataF
 {

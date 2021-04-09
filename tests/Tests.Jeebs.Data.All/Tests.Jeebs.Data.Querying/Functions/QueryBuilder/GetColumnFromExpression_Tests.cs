@@ -3,6 +3,7 @@
 
 using System;
 using Jeebs.Data;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 using Xunit;
 using static F.DataF.QueryBuilderF;

@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Data;
+using Jeebs.Data.Querying;
 using NSubstitute;
 
 namespace Jeebs.Data.DbQuery_Tests

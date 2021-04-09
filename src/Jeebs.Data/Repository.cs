@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Jeebs.Data.Entities;
 using Jeebs.Data.Enums;
 
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IRepository{TEntity, TId}"/>
 	public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
-		where TEntity : IEntity
+		where TEntity : IWithId
 		where TId : StrongId
 	{
 		/// <inheritdoc/>

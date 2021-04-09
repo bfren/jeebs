@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
+using Jeebs.Data.Querying;
 
 namespace F.DataF
 {

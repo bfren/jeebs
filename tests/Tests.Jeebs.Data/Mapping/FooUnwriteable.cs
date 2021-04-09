@@ -1,9 +1,11 @@
 // Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Entities;
+
 namespace Jeebs.Data.Mapping
 {
-	public class FooUnwriteable : IEntity
+	public class FooUnwriteable : IWithId
 	{
 		[Ignore]
 		public StrongId Id

@@ -3,11 +3,15 @@
 
 namespace Jeebs
 {
-	/// <inheritdoc cref="IStrongId"/>
+	/// <summary>
+	/// Represents a strongly-typed ID
+	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public abstract record StrongId(long Value) : IStrongId
+	public abstract record StrongId(long Value)
 	{
-		/// <inheritdoc/>
+		/// <summary>
+		/// Returns true if the current value is the default (i.e. unset) value
+		/// </summary>
 		public bool IsDefault =>
 			Value == 0;
 

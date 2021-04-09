@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Threading.Tasks;
-using Jeebs.Data;
 
 namespace Jeebs.Auth.Data
 {
@@ -10,9 +9,9 @@ namespace Jeebs.Auth.Data
 	/// Provides Authentication database functionality
 	/// </summary>
 	public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
-		where TUserEntity : IAuthUser, IEntity
-		where TRoleEntity : IAuthRole, IEntity
-		where TUserRoleEntity : IAuthUserRole, IEntity
+		where TUserEntity : IAuthUser, IWithId
+		where TRoleEntity : IAuthRole, IWithId
+		where TUserRoleEntity : IAuthUserRole, IWithId
 	{
 		/// <summary>
 		/// User functions

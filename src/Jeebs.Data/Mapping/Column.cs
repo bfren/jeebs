@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IColumn"/>
 	/// <param name="Table">Table Name</param>

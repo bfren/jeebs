@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.Linq;
 using static F.DataF.QueryF;
@@ -30,7 +31,7 @@ namespace Jeebs.Data
 		public Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
 			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
 		)
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			(
 				from map in Mapper.GetTableMapFor<TEntity>()
 				from sel in Extract<TModel>.From(map.Table)

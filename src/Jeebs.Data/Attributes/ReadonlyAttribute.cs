@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Entities
 {
 	/// <summary>
 	/// Mark property as Readonly

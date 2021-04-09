@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <summary>
 	/// Shorthand to make working with query parameters easier

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 using static F.DataF.QueryF;

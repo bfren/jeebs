@@ -4,9 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Jeebs.Data.Entities;
 using static F.OptionF;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="ITableMap"/>
 	public sealed record TableMap : ITableMap

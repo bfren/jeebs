@@ -16,7 +16,7 @@ namespace Jeebs.Data
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TId">StrongId type</typeparam>
 	public interface IRepository<TEntity, TId>
-		where TEntity : IEntity
+		where TEntity : IWithId
 		where TId : StrongId
 	{
 		/// <inheritdoc cref="IDb.UnitOfWork"/>

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using Jeebs.Data;
+using Jeebs.Data.Mapping;
 
 namespace F.DataF
 {

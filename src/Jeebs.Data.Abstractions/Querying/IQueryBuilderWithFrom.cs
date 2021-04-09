@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 
 namespace Jeebs.Data.Querying
 {

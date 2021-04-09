@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
-using static Jeebs.Data.TableMap.Msg;
+using static Jeebs.Data.Mapping.TableMap.Msg;
 
 namespace Jeebs.Data.Mapping.TableMap_Tests
 {

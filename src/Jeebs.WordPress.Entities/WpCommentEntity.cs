@@ -3,6 +3,7 @@
 
 using System;
 using Jeebs.Data;
+using Jeebs.Data.Entities;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Entities

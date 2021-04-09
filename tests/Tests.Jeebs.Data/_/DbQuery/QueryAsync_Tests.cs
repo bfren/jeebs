@@ -4,6 +4,7 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
+using Jeebs.Data.Querying;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;

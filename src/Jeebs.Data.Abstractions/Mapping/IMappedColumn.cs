@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Mapping
 {
 	/// <summary>
 	/// Holds information about a mapped column

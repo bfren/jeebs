@@ -2,6 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Linq;
+using Jeebs.Data.Entities;
+using Jeebs.Data.Mapping;
 using Jeebs.Linq;
 
 namespace Jeebs.Data
@@ -10,7 +12,7 @@ namespace Jeebs.Data
 	{
 		/// <inheritdoc/>
 		public Option<string> GetCreateQuery<TEntity>()
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			Mapper.GetTableMapFor<TEntity>().Map(
 				x => GetCreateQuery(x.Name, x.Columns),
 				e => new Msg.ErrorGettingCrudCreateQueryExceptionMsg(e)
@@ -26,7 +28,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			(
 				from map in Mapper.GetTableMapFor<TEntity>()
 				from columns in Extract<TModel>.From(map.Table)
@@ -51,14 +53,14 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			(
 				from map in Mapper.GetTableMapFor<TEntity>()
 				from columns in Extract<TModel>.From(map.Table)
 				select (map, columns)
 			)
 			.Map(
-				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
+				x => typeof(TEntity).Implements<IWithVersion>() switch
 				{
 					false =>
 						GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id),
@@ -94,9 +96,9 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Option<string> GetDeleteQuery<TEntity>(long id)
-			where TEntity : IEntity =>
+			where TEntity : IWithId =>
 			Mapper.GetTableMapFor<TEntity>().Map(
-				x => typeof(TEntity).Implements<IEntityWithVersion>() switch
+				x => typeof(TEntity).Implements<IWithVersion>() switch
 				{
 					false =>
 						GetDeleteQuery(x.Name, x.IdColumn, id),

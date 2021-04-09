@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 using Jeebs.Linq;
 using static F.DataF.QueryBuilderF;

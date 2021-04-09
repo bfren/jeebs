@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data
+namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryParameters"/>
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
