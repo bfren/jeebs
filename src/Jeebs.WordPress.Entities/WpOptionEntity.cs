@@ -32,7 +32,7 @@ namespace Jeebs.WordPress.Entities
 		/// <summary>
 		/// Key
 		/// </summary>
-		public string Key { get; init; } = string.Empty;
+		public string? Key { get; init; }
 
 		/// <summary>
 		/// Value
