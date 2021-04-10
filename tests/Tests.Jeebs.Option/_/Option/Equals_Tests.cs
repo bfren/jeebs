@@ -68,7 +68,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var o0 = Return(F.Rnd.Int);
-			var o1 = Create.EmptyNone<int>();
+			var o1 = Create.None<int>();
 
 			// Act
 			var r0 = o0.Equals(o1);

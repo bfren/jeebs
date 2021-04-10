@@ -68,7 +68,7 @@ namespace Jeebs_Tests
 		protected static void Test03(Func<Option<int>, Func<int, bool>, Func<int, None<int>>, Option<int>> act)
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 			var check = Substitute.For<Func<int, bool>>();
 			var ifFalse = Substitute.For<Func<int, None<int>>>();
 

@@ -35,7 +35,7 @@ namespace Jeebs_Tests
 		protected static async Task Test01(Func<Task<Option<int>>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 
 			// Act
 			var result = await act(option.AsTask);

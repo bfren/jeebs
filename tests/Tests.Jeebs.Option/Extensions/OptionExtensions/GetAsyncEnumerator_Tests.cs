@@ -32,7 +32,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Create.EmptyNone<int>().AsTask;
+			var option = Create.None<int>().AsTask;
 
 			// Act
 			var result = value;

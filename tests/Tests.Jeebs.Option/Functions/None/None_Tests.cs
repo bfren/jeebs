@@ -18,7 +18,7 @@ namespace F.OptionF_Tests
 			// Arrange
 
 			// Act
-			var result = Create.EmptyNone<int>();
+			var result = Create.None<int>();
 
 			// Assert
 			result.AssertNone();

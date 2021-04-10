@@ -52,7 +52,7 @@ namespace Jeebs_Tests
 		protected static void Test02(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act

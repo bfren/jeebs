@@ -53,7 +53,7 @@ namespace Jeebs_Tests
 		protected static async Task Test02(Func<Option<int>, Func<int, Task<Option<string>>>, Task<Option<string>>> act)
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 			var bind = Substitute.For<Func<int, Task<Option<string>>>>();
 
 			// Act

@@ -31,7 +31,7 @@ namespace F.JsonF_Tests.OptionConverter_Tests
 		public void Serialise_None_Returns_Empty_Json()
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 
 			// Act
 			var result = JsonF.Serialise(option);

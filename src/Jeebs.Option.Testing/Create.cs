@@ -9,10 +9,10 @@ namespace Jeebs
 	public static class Create
 	{
 		/// <summary>
-		/// Create an empty <see cref="None{T}"/>
+		/// Create an empty <see cref="Jeebs.None{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
-		public static Option<T> EmptyNone<T>() =>
+		public static Option<T> None<T>() =>
 			F.OptionF.None<T, Msg.EmptyNoneForTestingMsg>();
 
 		/// <summary>Messages</summary>

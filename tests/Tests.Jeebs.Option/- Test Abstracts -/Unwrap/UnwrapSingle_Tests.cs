@@ -34,7 +34,7 @@ namespace Jeebs_Tests
 		protected static void Test01(Func<Option<int>, Option<int>> act)
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 
 			// Act
 			var result = act(option);

@@ -70,7 +70,7 @@ namespace Jeebs_Tests
 		protected static void Test03(Func<Option<int>, Func<int, string>, Handler, Option<string>> act)
 		{
 			// Arrange
-			var option = Create.EmptyNone<int>();
+			var option = Create.None<int>();
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act

@@ -70,7 +70,7 @@ namespace Jeebs.OptionEqualityComparer_Tests
 		{
 			// Arrange
 			var o0 = Return(F.Rnd.Int);
-			var o1 = Create.EmptyNone<int>();
+			var o1 = Create.None<int>();
 			var comparer = new OptionEqualityComparer<int>();
 
 			// Act
