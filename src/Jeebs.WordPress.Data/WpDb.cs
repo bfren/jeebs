@@ -84,25 +84,18 @@ namespace Jeebs.WordPress.Data
 		#endregion
 
 		/// <inheritdoc cref="WpDb{Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum}.WpDb(IDbClient, IOptions{DbConfig}, ILog{IWpDb}, WpConfig)"/>
-		internal WpDb(
-			IOptions<DbConfig> dbConfig,
-			ILog<WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>> log,
-			WpConfig wpConfig
-		) : this(new MySqlDbClient(), dbConfig, log, wpConfig) { }
+		public WpDb(IOptions<DbConfig> dbConfig, ILog<IWpDb> log, WpConfig wpConfig)
+			: this(new MySqlDbClient(), dbConfig, log, wpConfig) { }
 
 		/// <summary>
 		/// Create tables and map entity types
 		/// </summary>
-		/// <param name="client">IDbClient</param>
-		/// <param name="dbConfig">DbConfig</param>
+		/// <param name="client">Database client</param>
+		/// <param name="dbConfig">Database configuration</param>
 		/// <param name="log">ILog</param>
-		/// <param name="wpConfig">WpConfig</param>
-		internal WpDb(
-			IDbClient client,
-			IOptions<DbConfig> dbConfig,
-			ILog<WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>> log,
-			WpConfig wpConfig
-		) : base(client, dbConfig, log, wpConfig.Db)
+		/// <param name="wpConfig">WordPress configuration</param>
+		internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, ILog<IWpDb> log, WpConfig wpConfig)
+			: base(client, dbConfig, log, wpConfig.Db)
 		{
 			// Get WordPress config
 			log.Verbose("WordPress Config: {@WpConfig}", wpConfig);

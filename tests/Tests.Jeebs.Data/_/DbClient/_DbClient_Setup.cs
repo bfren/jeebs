@@ -23,7 +23,7 @@ namespace Jeebs.Data.DbClient_Tests
 
 			var name = F.Rnd.Str;
 
-			var db = Substitute.ForPartsOf<Db>(config, log, client, name);
+			var db = Substitute.ForPartsOf<Db>(client, config, log, name);
 
 			return (config, log, client, connection, db);
 		}
