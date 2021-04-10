@@ -18,7 +18,6 @@
     <ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Random\Jeebs.Random.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj" />
-    <ProjectReference Include="..\Tests.Jeebs.WordPress.Data.Entities\Tests.Jeebs.WordPress.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

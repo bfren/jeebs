@@ -6,8 +6,8 @@ using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Tables;
 using Jeebs.WordPress.Data.TypeHandlers;
-using Jeebs.WordPress.Tables;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.WordPress.Data

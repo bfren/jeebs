@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data;
-using Jeebs.WordPress.Tables;
+using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
