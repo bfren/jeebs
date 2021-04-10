@@ -16,17 +16,17 @@ namespace Jeebs.WordPress.Data.TypeHandlers
 		/// <summary>
 		/// Columns where value is 1 / 0
 		/// </summary>
-		private readonly List<string> oneZero = new(new[] { "comment_approved" });
+		private readonly List<string> oneZero = new() { { "comment_approved" } };
 
 		/// <summary>
 		/// Columns where value is yes / no
 		/// </summary>
-		private readonly List<string> yesNo = new(new[] { "autoload" });
+		private readonly List<string> yesNo = new() { { "autoload" } };
 
 		/// <summary>
 		/// Columns where value is Y / N
 		/// </summary>
-		private readonly List<string> yN = new(new[] { "comment_subscribe", "link_visible" });
+		private readonly List<string> yN = new() { { "comment_subscribe" }, { "link_visible" } };
 
 		/// <summary>
 		/// Parse the various options of boolean values in WordPress database
@@ -34,7 +34,7 @@ namespace Jeebs.WordPress.Data.TypeHandlers
 		/// <param name="value">Database value</param>
 		/// <returns>True / False</returns>
 		public override bool Parse(object value) =>
-			new[] { "1", "y", "yes" }.Contains(value.ToString()?.ToLower());
+			new[] { "1", "y", "yes" }.Contains(value?.ToString()?.ToLower());
 
 		/// <summary>
 		/// Set the value based on the column name

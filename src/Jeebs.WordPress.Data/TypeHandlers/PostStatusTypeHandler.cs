@@ -2,7 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Data;
-using Jeebs.WordPress.Enums;
+using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data.TypeHandlers
 {
@@ -17,7 +17,7 @@ namespace Jeebs.WordPress.Data.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>PostStatus object</returns>
 		public override PostStatus Parse(object value) =>
-			value.ToString() switch
+			value?.ToString() switch
 			{
 				string postStatus =>
 					PostStatus.Parse(postStatus),

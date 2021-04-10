@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Enums.PostType_Tests
+namespace Jeebs.WordPress.Data.Enums.PostType_Tests
 {
 	public class AddCustomPostType_Tests
 	{

@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Enums.PostStatus_Tests
+namespace Jeebs.WordPress.Data.Enums.PostStatus_Tests
 {
 	public class Parse_Tests
 	{
@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Enums.PostStatus_Tests
 				{ "draft", PostStatus.Draft },
 				{ "inherit", PostStatus.Inherit },
 				{ "pending", PostStatus.Pending },
-				{ "publish", PostStatus.Publish },
+				{ "publish", PostStatus.Publish }
 			};
 
 		[Theory]

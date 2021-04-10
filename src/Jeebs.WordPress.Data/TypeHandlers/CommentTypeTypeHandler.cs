@@ -2,14 +2,14 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Data;
-using Jeebs.WordPress.Enums;
+using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data.TypeHandlers
 {
 	/// <summary>
 	/// Comment TypeHandler
 	/// </summary>
-	public sealed class CommentTypeHandler : Dapper.SqlMapper.TypeHandler<CommentType>
+	public sealed class CommentTypeTypeHandler : Dapper.SqlMapper.TypeHandler<CommentType>
 	{
 		/// <summary>
 		/// Parse the CommentType value
@@ -17,7 +17,7 @@ namespace Jeebs.WordPress.Data.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>CommentType object</returns>
 		public override CommentType Parse(object value) =>
-			value.ToString() switch
+			value?.ToString() switch
 			{
 				string commentType =>
 					CommentType.Parse(commentType),

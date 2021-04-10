@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Enums.PostType_Tests
+namespace Jeebs.WordPress.Data.Enums.PostType_Tests
 {
 	public class Parse_Tests
 	{
@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Enums.PostType_Tests
 				{ "nav_menu_item", PostType.MenuItem },
 				{ "page", PostType.Page },
 				{ "post", PostType.Post },
-				{ "revision", PostType.Revision },
+				{ "revision", PostType.Revision }
 			};
 
 		[Theory]

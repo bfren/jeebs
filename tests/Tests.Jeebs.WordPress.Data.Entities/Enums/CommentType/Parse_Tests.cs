@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Enums.CommentType_Tests
+namespace Jeebs.WordPress.Data.Enums.CommentType_Tests
 {
 	public class Parse_Tests
 	{

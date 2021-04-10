@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Enums.Taxonomy_Tests
+namespace Jeebs.WordPress.Data.Enums.Taxonomy_Tests
 {
 	public class Parse_Tests
 	{
@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Enums.Taxonomy_Tests
 				{ "category", Taxonomy.PostCategory },
 				{ "link_category", Taxonomy.LinkCategory },
 				{ "nav_menu", Taxonomy.NavMenu },
-				{ "post_tag", Taxonomy.PostTag },
+				{ "post_tag", Taxonomy.PostTag }
 			};
 
 		[Theory]

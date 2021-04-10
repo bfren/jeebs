@@ -4,8 +4,9 @@
 using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
+using Jeebs.Data.TypeHandlers;
+using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.TypeHandlers;
-using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Tables;
 using Microsoft.Extensions.Options;
 
@@ -131,7 +132,7 @@ namespace Jeebs.WordPress.Data
 		{
 			Dapper.SqlMapper.ResetTypeHandlers();
 			Dapper.SqlMapper.AddTypeHandler(new BooleanTypeHandler());
-			Dapper.SqlMapper.AddTypeHandler(new CommentTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new CommentTypeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new MimeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new PostStatusTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new PostTypeTypeHandler());
