@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Linq;
-using Jeebs.Data.Entities;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
 

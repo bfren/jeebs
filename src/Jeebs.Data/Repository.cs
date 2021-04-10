@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Jeebs.Data.Entities;
 using Jeebs.Data.Enums;
 
 namespace Jeebs.Data

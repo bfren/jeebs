@@ -4,7 +4,6 @@
 using System;
 using System.Linq.Expressions;
 using Jeebs;
-using Jeebs.Data;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
 
