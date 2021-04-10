@@ -5,11 +5,18 @@ using Jeebs.Data;
 
 namespace Jeebs.WordPress.Data
 {
-	public sealed class WpDbQuery : DbQuery
+	/// <inheritdoc cref="IWpDbQuery"/>
+	public sealed class WpDbQuery : DbQuery, IWpDbQuery
 	{
-		private IWpDb WpDb =>
-			(IWpDb)Db;
+		/// <inheritdoc/>
+		new public IWpDb Db =>
+			(IWpDb)base.Db;
 
-		public WpDbQuery(IWpDb wpDb, ILog log) : base(wpDb, log) { }
+		/// <summary>
+		/// Inject dependencies
+		/// </summary>
+		/// <param name="wpDb">IWpDb</param>
+		/// <param name="log">ILog</param>
+		public WpDbQuery(IWpDb wpDb, ILog<WpDbQuery> log) : base(wpDb, log) { }
 	}
 }

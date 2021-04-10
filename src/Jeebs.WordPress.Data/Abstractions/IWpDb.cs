@@ -7,12 +7,10 @@ using Jeebs.WordPress.Tables;
 namespace Jeebs.WordPress.Data
 {
 	/// <summary>
-	/// WordPress Database interface
+	/// WordPress Database instance
 	/// </summary>
 	public interface IWpDb : IDb
 	{
-		#region Tables
-
 		/// <summary>
 		/// Comment Table
 		/// </summary>
@@ -72,7 +70,5 @@ namespace Jeebs.WordPress.Data
 		/// User Meta Table
 		/// </summary>
 		UserMetaTable UserMeta { get; }
-
-		#endregion
 	}
 }
