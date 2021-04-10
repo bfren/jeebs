@@ -67,7 +67,7 @@ namespace Jeebs_Tests
 		protected static void Test03(Func<Option<bool>, Action<Option<bool>>, Option<bool>> act)
 		{
 			// Arrange
-			var option = None<bool>(true);
+			var option = Create.EmptyNone<bool>();
 			var audit = Substitute.For<Action<Option<bool>>>();
 
 			// Act
@@ -98,7 +98,7 @@ namespace Jeebs_Tests
 		protected static void Test05(Func<Option<bool>, Action<Option<bool>>, Option<bool>> act)
 		{
 			// Arrange
-			var none = None<bool>(true);
+			var none = Create.EmptyNone<bool>();
 			static void throwException(Option<bool> _) => throw new Exception();
 
 			// Act
@@ -167,7 +167,7 @@ namespace Jeebs_Tests
 		protected static void Test09(Func<Option<int>, Action<IMsg>, Option<int>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var exception = new Exception();
 			void throwException(IMsg _) => throw exception;
 
@@ -180,7 +180,7 @@ namespace Jeebs_Tests
 
 		#endregion
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using Jeebs;
 using NSubstitute;
 using Xunit;
@@ -17,23 +18,10 @@ namespace F.OptionF_Tests
 			// Arrange
 
 			// Act
-			var result = None<int>(true);
+			var result = Create.EmptyNone<int>();
 
 			// Assert
 			result.AssertNone();
-		}
-
-		[Fact]
-		public void Returns_None_With_IfYouArentSureDontMakeItMsg()
-		{
-			// Arrange
-
-			// Act
-			var result = None<int>(false);
-
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<IfYouArentSureDontMakeItMsg>(none);
 		}
 
 		[Fact]
@@ -63,6 +51,26 @@ namespace F.OptionF_Tests
 			Assert.IsType<TestMsg>(none);
 		}
 
+		[Fact]
+		public void Returns_None_With_Reason_Exception_Type()
+		{
+			// Arrange
+			var exception = new Exception();
+
+			// Act
+			var result = None<int, TestExceptionMsg>(exception);
+
+			// Assert
+			var none = result.AssertNone();
+			var msg = Assert.IsType<TestExceptionMsg>(none);
+			Assert.Same(exception, msg.Exception);
+		}
+
 		public record TestMsg : IMsg { }
+
+		public record TestExceptionMsg() : IExceptionMsg
+		{
+			public Exception Exception { get; init; } = new();
+		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Jeebs
 	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public abstract class Option<T> : IEquatable<Option<T>>
+	public abstract record Option<T> : IEquatable<Option<T>>
 	{
 		/// <summary>
 		/// Return as <see cref="Option{T}"/> wrapped in <see cref="Task{TResult}"/>
@@ -57,7 +57,10 @@ namespace Jeebs
 				none: r =>
 					r.ToString() switch
 					{
-						string reason when r is not Msg.NoReasonGivenMsg =>
+						string when r is IExceptionMsg e =>
+							$"{e.GetType()}: {e.Exception.Message}",
+
+						string reason =>
 							reason,
 
 						_ =>
@@ -137,25 +140,9 @@ namespace Jeebs
 
 		#region Equals
 
-		/// <summary>
-		/// Compare this <see cref="Option{T}"/> with another object
-		/// <para>If both are a <see cref="Some{T}"/> each <see cref="Some{T}.Value"/> will be compared</para>
-		/// <para>If both are a <see cref="None{T}"/> this will return true</para>
-		/// <para>Otherwise this will return false</para>
-		/// </summary>
-		/// <param name="other">Object to compare to this <see cref="Option{T}"/></param>
-		public override bool Equals(object? other) =>
-			other switch
-			{
-				Option<T> option =>
-					Equals(option),
-
-				_ =>
-					false
-			};
-
 		/// <inheritdoc cref="Equals(object?)"/>
-		public bool Equals(Option<T>? other) =>
+		/// <param name="other">Comparison object</param>
+		public virtual bool Equals(Option<T>? other) =>
 			this switch
 			{
 				Some<T> x when other is Some<T> y =>

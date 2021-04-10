@@ -52,7 +52,7 @@ namespace Jeebs_Tests
 		protected static void Test02(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act
@@ -95,7 +95,7 @@ namespace Jeebs_Tests
 			bind.Received().Invoke(value);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

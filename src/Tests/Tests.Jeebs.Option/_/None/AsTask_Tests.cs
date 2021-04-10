@@ -13,7 +13,7 @@ namespace Jeebs.None_Tests
 		public void Returns_None_As_Generic_Option()
 		{
 			// Arrange
-			var none = None<int>(true);
+			var none = Create.EmptyNone<int>();
 
 			// Act
 			var result = none.AsTask;

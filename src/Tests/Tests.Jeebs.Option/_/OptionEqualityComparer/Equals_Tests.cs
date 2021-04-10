@@ -70,7 +70,7 @@ namespace Jeebs.OptionEqualityComparer_Tests
 		{
 			// Arrange
 			var o0 = Return(F.Rnd.Int);
-			var o1 = None<int>(true);
+			var o1 = Create.EmptyNone<int>();
 			var comparer = new OptionEqualityComparer<int>();
 
 			// Act
@@ -82,7 +82,7 @@ namespace Jeebs.OptionEqualityComparer_Tests
 			Assert.False(r1);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg0 : IMsg { }
 

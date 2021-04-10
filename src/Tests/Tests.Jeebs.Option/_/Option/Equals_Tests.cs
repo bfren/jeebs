@@ -68,7 +68,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var o0 = Return(F.Rnd.Int);
-			var o1 = None<int>(true);
+			var o1 = Create.EmptyNone<int>();
 
 			// Act
 			var r0 = o0.Equals(o1);
@@ -79,7 +79,7 @@ namespace Jeebs.Option_Tests
 			Assert.False(r1);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg0 : IMsg { }
 

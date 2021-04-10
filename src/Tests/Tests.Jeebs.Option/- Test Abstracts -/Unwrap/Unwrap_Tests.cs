@@ -17,7 +17,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var ifNone = Substitute.For<Func<int>>();
 			ifNone.Invoke().Returns(value);
 

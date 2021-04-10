@@ -68,7 +68,7 @@ namespace Jeebs_Tests
 		protected static async Task Test03(Func<Option<bool>, Action<Option<bool>>, Task<Option<bool>>> act)
 		{
 			// Arrange
-			var option = None<bool>(true);
+			var option = Create.EmptyNone<bool>();
 			var audit = Substitute.For<Action<Option<bool>>>();
 
 			// Act
@@ -100,7 +100,7 @@ namespace Jeebs_Tests
 		protected static async Task Test05(Func<Option<bool>, Func<Option<bool>, Task>, Task<Option<bool>>> act)
 		{
 			// Arrange
-			var option = None<bool>(true);
+			var option = Create.EmptyNone<bool>();
 			var audit = Substitute.For<Func<Option<bool>, Task>>();
 
 			// Act
@@ -131,7 +131,7 @@ namespace Jeebs_Tests
 		protected static async Task Test07(Func<Option<bool>, Action<Option<bool>>, Task<Option<bool>>> act)
 		{
 			// Arrange
-			var option = None<bool>(true);
+			var option = Create.EmptyNone<bool>();
 			static void throwException(Option<bool> _) => throw new Exception();
 
 			// Act
@@ -161,7 +161,7 @@ namespace Jeebs_Tests
 		protected static async Task Test09(Func<Option<bool>, Func<Option<bool>, Task>, Task<Option<bool>>> act)
 		{
 			// Arrange
-			var option = None<bool>(true);
+			var option = Create.EmptyNone<bool>();
 			static Task throwException(Option<bool> _) => throw new Exception();
 
 			// Act
@@ -280,7 +280,7 @@ namespace Jeebs_Tests
 		protected static async Task Test16(Func<Option<int>, Action<IMsg>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var exception = new Exception();
 			void throwException(IMsg _) => throw exception;
 
@@ -296,7 +296,7 @@ namespace Jeebs_Tests
 		protected static async Task Test17(Func<Option<int>, Func<IMsg, Task>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var exception = new Exception();
 			Task throwException(IMsg _) => throw exception;
 
@@ -309,7 +309,7 @@ namespace Jeebs_Tests
 
 		#endregion
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

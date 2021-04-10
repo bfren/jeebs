@@ -70,7 +70,7 @@ namespace Jeebs_Tests
 		protected static void Test03(Func<Option<int>, Func<int, string>, Handler, Option<string>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act
@@ -113,7 +113,7 @@ namespace Jeebs_Tests
 			map.Received().Invoke(value);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

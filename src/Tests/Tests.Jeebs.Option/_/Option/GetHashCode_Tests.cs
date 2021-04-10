@@ -139,6 +139,6 @@ namespace Jeebs.Option_Tests
 			Assert.NotEqual(h0, h1);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 	}
 }

@@ -71,7 +71,7 @@ namespace Jeebs_Tests
 		protected static async Task Test03(Func<Option<int>, Func<int, Task<string>>, Handler, Task<Option<string>>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 			var map = Substitute.For<Func<int, Task<string>>>();
 
 			// Act
@@ -114,7 +114,7 @@ namespace Jeebs_Tests
 			await map.Received().Invoke(value);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}

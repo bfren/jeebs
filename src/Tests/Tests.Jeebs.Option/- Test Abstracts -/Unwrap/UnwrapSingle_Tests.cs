@@ -34,7 +34,7 @@ namespace Jeebs_Tests
 		protected static void Test01(Func<Option<int>, Option<int>> act)
 		{
 			// Arrange
-			var option = None<int>(true);
+			var option = Create.EmptyNone<int>();
 
 			// Act
 			var result = act(option);
@@ -188,7 +188,7 @@ namespace Jeebs_Tests
 			Assert.Equal(value, result);
 		}
 
-		public class FakeOption : Option<int> { }
+		public record FakeOption : Option<int> { }
 
 		public record TestMsg : IMsg { }
 	}
