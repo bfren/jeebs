@@ -3,23 +3,14 @@
 
 using Jeebs.WordPress.Data.Enums;
 using Xunit;
+using Base = Jeebs.WordPress.Data.Enums.PostStatus_Tests.Parse_Tests;
 
 namespace Jeebs.WordPress.Data.TypeHandlers.PostStatusTypeHandler_Tests
 {
 	public class Parse_Tests
 	{
-		public static TheoryData<string, PostStatus> Valid_Value_Returns_PostStatusType_Data =>
-			new()
-			{
-				{ "auto-draft", PostStatus.AutoDraft },
-				{ "draft", PostStatus.Draft },
-				{ "inherit", PostStatus.Inherit },
-				{ "pending", PostStatus.Pending },
-				{ "publish", PostStatus.Publish }
-			};
-
 		[Theory]
-		[MemberData(nameof(Valid_Value_Returns_PostStatusType_Data))]
+		[MemberData(nameof(Base.Returns_Correct_PostStatus_Data), MemberType = typeof(Base))]
 		public void Valid_Value_Returns_PostStatusType(string input, PostStatus expected)
 		{
 			// Arrange

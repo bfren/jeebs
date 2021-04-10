@@ -3,23 +3,14 @@
 
 using Jeebs.WordPress.Data.Enums;
 using Xunit;
+using Base = Jeebs.WordPress.Data.Enums.Taxonomy_Tests.Parse_Tests;
 
 namespace Jeebs.WordPress.Data.TypeHandlers.TaxonomyTypeHandler_Tests
 {
 	public class Parse_Tests
 	{
-		public static TheoryData<string, Taxonomy> Valid_Value_Returns_TaxonomyType_Data =>
-			new()
-			{
-				{ string.Empty, Taxonomy.Blank },
-				{ "category", Taxonomy.PostCategory },
-				{ "link_category", Taxonomy.LinkCategory },
-				{ "nav_menu", Taxonomy.NavMenu },
-				{ "post_tag", Taxonomy.PostTag }
-			};
-
 		[Theory]
-		[MemberData(nameof(Valid_Value_Returns_TaxonomyType_Data))]
+		[MemberData(nameof(Base.Returns_Correct_Taxonomy_Data), MemberType = typeof(Base))]
 		public void Valid_Value_Returns_TaxonomyType(string input, Taxonomy expected)
 		{
 			// Arrange

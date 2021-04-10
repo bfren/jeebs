@@ -3,24 +3,14 @@
 
 using Jeebs.WordPress.Data.Enums;
 using Xunit;
+using Base = Jeebs.WordPress.Data.Enums.PostType_Tests.Parse_Tests;
 
 namespace Jeebs.WordPress.Data.TypeHandlers.PostTypeTypeHandler_Tests
 {
 	public class Parse_Tests
 	{
-		public static TheoryData<string, PostType> Valid_Value_Returns_PostType_Data =>
-			new()
-			{
-				{ "acf", PostType.AdvancedCustomField },
-				{ "attachment", PostType.Attachment },
-				{ "nav_menu_item", PostType.MenuItem },
-				{ "page", PostType.Page },
-				{ "post", PostType.Post },
-				{ "revision", PostType.Revision }
-			};
-
 		[Theory]
-		[MemberData(nameof(Valid_Value_Returns_PostType_Data))]
+		[MemberData(nameof(Base.Returns_Correct_PostType_Data), MemberType = typeof(Base))]
 		public void Valid_Value_Returns_PostType(string input, PostType expected)
 		{
 			// Arrange

@@ -5,21 +5,15 @@ using System.Data;
 using Jeebs.WordPress.Data.Enums;
 using NSubstitute;
 using Xunit;
+using Base = Jeebs.WordPress.Data.Enums.CommentType_Tests.Parse_Tests;
 
 namespace Jeebs.WordPress.Data.TypeHandlers.CommentTypeTypeHandler_Tests
 {
 	public class SetValue_Tests
 	{
-		public static TheoryData<CommentType, string> Sets_Value_To_CommentType_Name_Data =>
-			new()
-			{
-				{ CommentType.Blank, string.Empty },
-				{ CommentType.Pingback, "pingback" }
-			};
-
 		[Theory]
-		[MemberData(nameof(Sets_Value_To_CommentType_Name_Data))]
-		public void Sets_Value_To_CommentType_Name(CommentType input, string expected)
+		[MemberData(nameof(Base.Returns_Correct_CommentType_Data), MemberType = typeof(Base))]
+		public void Sets_Value_To_CommentType_Name(string expected, CommentType input)
 		{
 			// Arrange
 			var handler = new CommentTypeTypeHandler();

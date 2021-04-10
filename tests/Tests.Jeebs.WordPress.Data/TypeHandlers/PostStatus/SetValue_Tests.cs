@@ -5,24 +5,15 @@ using System.Data;
 using Jeebs.WordPress.Data.Enums;
 using NSubstitute;
 using Xunit;
+using Base = Jeebs.WordPress.Data.Enums.PostStatus_Tests.Parse_Tests;
 
 namespace Jeebs.WordPress.Data.TypeHandlers.PostStatusTypeHandler_Tests
 {
 	public class SetValue_Tests
 	{
-		public static TheoryData<PostStatus, string> Sets_Value_To_PostStatus_Name_Data =>
-			new()
-			{
-				{ PostStatus.AutoDraft, "auto-draft" },
-				{ PostStatus.Draft, "draft" },
-				{ PostStatus.Inherit, "inherit" },
-				{ PostStatus.Pending, "pending" },
-				{ PostStatus.Publish, "publish" }
-			};
-
 		[Theory]
-		[MemberData(nameof(Sets_Value_To_PostStatus_Name_Data))]
-		public void Sets_Value_To_CommentType_Name(PostStatus input, string expected)
+		[MemberData(nameof(Base.Returns_Correct_PostStatus_Data), MemberType = typeof(Base))]
+		public void Sets_Value_To_CommentType_Name(string expected, PostStatus input)
 		{
 			// Arrange
 			var handler = new PostStatusTypeHandler();

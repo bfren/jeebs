@@ -3,20 +3,14 @@
 
 using Jeebs.WordPress.Data.Enums;
 using Xunit;
+using Base = Jeebs.WordPress.Data.Enums.CommentType_Tests.Parse_Tests;
 
 namespace Jeebs.WordPress.Data.TypeHandlers.CommentTypeTypeHandler_Tests
 {
 	public class Parse_Tests
 	{
-		public static TheoryData<string, CommentType> Valid_Value_Returns_CommentType_Data =>
-			new()
-			{
-				{ string.Empty, CommentType.Blank },
-				{ "pingback", CommentType.Pingback }
-			};
-
 		[Theory]
-		[MemberData(nameof(Valid_Value_Returns_CommentType_Data))]
+		[MemberData(nameof(Base.Returns_Correct_CommentType_Data), MemberType = typeof(Base))]
 		public void Valid_Value_Returns_CommentType(string input, CommentType expected)
 		{
 			// Arrange

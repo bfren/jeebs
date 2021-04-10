@@ -4,38 +4,15 @@
 using System.Data;
 using NSubstitute;
 using Xunit;
+using Base = Jeebs.MimeType_Tests.Parse_Tests;
 
 namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests
 {
 	public class SetValue_Tests
 	{
-		public static TheoryData<MimeType, string> Sets_Value_To_MimeType_Name_Data =>
-			new()
-			{
-				{ MimeType.Blank, string.Empty },
-				{ MimeType.General, "application/octet-stream" },
-				{ MimeType.Bmp, "image/bmp" },
-				{ MimeType.Doc, "application/msword" },
-				{ MimeType.Docx, "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
-				{ MimeType.Gif, "image/gif" },
-				{ MimeType.Jpg, "image/jpeg" },
-				{ MimeType.M4a, "audio/mp4" },
-				{ MimeType.Mp3, "audio/mp3" },
-				{ MimeType.Pdf, "application/pdf" },
-				{ MimeType.Png, "image/png" },
-				{ MimeType.Ppt, "application/vnd.ms-powerpoint" },
-				{ MimeType.Pptx, "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
-				{ MimeType.Rar, "application/x-rar-compressed" },
-				{ MimeType.Tar, "application/x-tar" },
-				{ MimeType.Text, "text/plain" },
-				{ MimeType.Xls, "application/vnd.ms-excel" },
-				{ MimeType.Xlsx, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
-				{ MimeType.Zip, "application/zip" },
-			};
-
 		[Theory]
-		[MemberData(nameof(Sets_Value_To_MimeType_Name_Data))]
-		public void Sets_Value_To_MimeType_Name(MimeType input, string expected)
+		[MemberData(nameof(Base.Returns_Correct_MimeType_Data), MemberType = typeof(Base))]
+		public void Sets_Value_To_MimeType_Name(string expected, MimeType input)
 		{
 			// Arrange
 			var handler = new MimeTypeTypeHandler();
