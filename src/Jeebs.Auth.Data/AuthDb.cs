@@ -34,11 +34,11 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// Create object
 		/// </summary>
+		/// <param name="client">IAuthDbClient</param>
 		/// <param name="config">DbConfig</param>
 		/// <param name="log">ILog</param>
-		/// <param name="client">IAuthDbClient</param>
-		public AuthDb(IOptions<DbConfig> config, ILog<AuthDb> log, IAuthDbClient client) :
-			base(config, log, client, config.Value.Authentication)
+		public AuthDb(IAuthDbClient client, IOptions<DbConfig> config, ILog<AuthDb> log) :
+			base(client, config, log, config.Value.Authentication)
 		{
 			// Set Client
 			Client = client;

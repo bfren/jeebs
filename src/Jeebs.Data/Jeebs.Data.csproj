@@ -14,5 +14,8 @@
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>Tests.$(AssemblyName).Clients.SqlServer</_Parameter1>
 		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Tests.Jeebs.WordPress.Data</_Parameter1>
+		</AssemblyAttribute>
 	</ItemGroup>
 </Project>

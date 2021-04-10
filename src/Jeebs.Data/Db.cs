@@ -49,22 +49,22 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Inject database connection and connect to client
 		/// </summary>
+		/// <param name="client">Database client</param>
 		/// <param name="config">Database configuration</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		/// <param name="client">Database client</param>
 		/// <param name="name">Connection name</param>
-		protected Db(IOptions<DbConfig> config, ILog log, IDbClient client, string name) :
-			this(config.Value.GetConnection(name), log, client, name)
+		protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
+			this(client, config.Value.GetConnection(name), log, name)
 		{ }
 
 		/// <summary>
 		/// Inject database connection and connect to client
 		/// </summary>
+		/// <param name="client">Database client</param>
 		/// <param name="config">Database configuration</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		/// <param name="client">Database client</param>
 		/// <param name="name">Connection name</param>
-		protected Db(DbConnectionConfig config, ILog log, IDbClient client, string name)
+		protected Db(IDbClient client, DbConnectionConfig config, ILog log, string name)
 		{
 			Client = client;
 			Config = config;

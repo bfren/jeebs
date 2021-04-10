@@ -6,7 +6,6 @@ using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
 using Jeebs;
-using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using NSubstitute;

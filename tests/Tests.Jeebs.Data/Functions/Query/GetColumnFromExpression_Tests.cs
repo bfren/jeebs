@@ -3,7 +3,6 @@
 
 using System;
 using Jeebs;
-using Jeebs.Data;
 using Jeebs.Data.Mapping;
 using Xunit;
 using static F.DataF.QueryF;

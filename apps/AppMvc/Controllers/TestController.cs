@@ -12,7 +12,6 @@ using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
-using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 using Microsoft.AspNetCore.Mvc;

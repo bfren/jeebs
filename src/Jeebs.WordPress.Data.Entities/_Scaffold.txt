@@ -1,0 +1,22 @@
+﻿using Jeebs.WordPress.Entities;
+
+namespace xxx
+{
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+	public static class Entities
+	{
+		public sealed record Comment : WpCommentEntity { }
+		public sealed record CommentMeta : WpCommentMetaEntity { }
+		public sealed record Link : WpLinkEntity { }
+		public sealed record Option : WpOptionEntity { }
+		public sealed record Post : WpPostEntity { }
+		public sealed record PostMeta : WpPostMetaEntity { }
+		public sealed record Term : WpTermEntity { }
+		public sealed record TermMeta : WpTermMetaEntity { }
+		public sealed record TermRelationship : WpTermRelationshipEntity { }
+		public sealed record TermTaxonomy : WpTermTaxonomyEntity { }
+		public sealed record User : WpUserEntity { }
+		public sealed record UserMeta : WpUserMetaEntity { }
+	}
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+}

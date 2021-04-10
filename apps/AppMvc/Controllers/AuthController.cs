@@ -6,7 +6,6 @@ using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Data;
 using Jeebs.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
