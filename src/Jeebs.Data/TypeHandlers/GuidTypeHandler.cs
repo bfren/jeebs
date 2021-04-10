@@ -3,14 +3,13 @@
 
 using System;
 using System.Data;
-using Dapper;
 
 namespace Jeebs.Data.TypeHandlers
 {
 	/// <summary>
 	/// Guid TypeHandler
 	/// </summary>
-	public sealed class GuidTypeHandler : SqlMapper.TypeHandler<Guid>
+	public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 	{
 		/// <summary>
 		/// Parse Guid

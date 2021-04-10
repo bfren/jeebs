@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Data;
-using Dapper;
 
 namespace Jeebs.Data.TypeHandlers
 {
@@ -10,7 +9,7 @@ namespace Jeebs.Data.TypeHandlers
 	/// StrongId TypeHandler
 	/// </summary>
 	/// <typeparam name="T">StrongId type</typeparam>
-	public sealed class StrongIdTypeHandler<T> : SqlMapper.TypeHandler<T>
+	public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		where T : StrongId, new()
 	{
 		/// <summary>

@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Jeebs.WordPress.Data.TypeHandlers
+namespace Jeebs.Data.TypeHandlers
 {
 	/// <summary>
 	/// Mime TypeHandler
@@ -16,7 +16,7 @@ namespace Jeebs.WordPress.Data.TypeHandlers
 		/// <param name="value">Database table value</param>
 		/// <returns>MimeType object</returns>
 		public override MimeType Parse(object value) =>
-			value.ToString() switch
+			value?.ToString() switch
 			{
 				string mimeType =>
 					MimeType.Parse(mimeType),

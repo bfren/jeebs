@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Text.Json;
-using Dapper;
 using static F.JsonF;
 
 namespace Jeebs.Data.TypeHandlers
@@ -11,7 +10,7 @@ namespace Jeebs.Data.TypeHandlers
 	/// JSON TypeHandler
 	/// </summary>
 	/// <typeparam name="T">Type to serialise from / deserialise to</typeparam>
-	public class JsonTypeHandler<T> : SqlMapper.StringTypeHandler<T>
+	public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>
 	{
 		/// <summary>
 		/// Serialise object to JSON
