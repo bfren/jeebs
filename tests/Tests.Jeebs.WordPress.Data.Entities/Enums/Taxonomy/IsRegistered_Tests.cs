@@ -8,19 +8,32 @@ namespace Jeebs.WordPress.Data.Enums.Taxonomy_Tests
 	public class IsRegistered_Tests
 	{
 		[Fact]
-		public void Adds_Custom_Taxonomy_To_HashSet()
+		public void Returns_True_If_Added()
+		{
+			// Arrange
+			var name = F.Rnd.Str;
+			var type = new Taxonomy(name);
+			Taxonomy.AddCustomTaxonomy(type);
+
+			// Act
+			var result = Taxonomy.IsRegistered(type);
+
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
+		public void Returns_False_If_Not_Added()
 		{
 			// Arrange
 			var name = F.Rnd.Str;
 			var type = new Taxonomy(name);
 
 			// Act
-			Taxonomy.AddCustomTaxonomy(type);
+			var result = Taxonomy.IsRegistered(type);
 
 			// Assert
-			Assert.Contains(Taxonomy.AllTest(),
-				x => x.Equals(type)
-			);
+			Assert.False(result);
 		}
 	}
 }

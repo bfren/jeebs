@@ -59,7 +59,7 @@ namespace Jeebs
 		/// <typeparam name="T">Enum value type</typeparam>
 		/// <param name="name">Enum name</param>
 		/// <param name="value">Enum value</param>
-		private static Option<T> Check<T>(string name, T value)
+		internal static Option<T> Check<T>(string name, T value)
 			where T : Enumerated =>
 			string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
 			{
@@ -158,6 +158,15 @@ namespace Jeebs
 		/// Compare an enumerated type with a value type
 		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
 		/// </summary>
+		/// <param name="l">Value</param>
+		/// <param name="r">Enumerated</param>
+		public static bool operator ==(string l, Enumerated r) =>
+			l.Equals(r);
+
+		/// <summary>
+		/// Compare an enumerated type with a value type
+		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
 		public static bool operator ==(Enumerated l, Enumerated r) =>
@@ -170,6 +179,15 @@ namespace Jeebs
 		/// <param name="l">Enumerated</param>
 		/// <param name="r">Value</param>
 		public static bool operator !=(Enumerated l, string r) =>
+			!l.Equals(r);
+
+		/// <summary>
+		/// Compare an enumerated type with a value type
+		/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
+		/// </summary>
+		/// <param name="l">Value</param>
+		/// <param name="r">Enumerated</param>
+		public static bool operator !=(string l, Enumerated r) =>
 			!l.Equals(r);
 
 		/// <summary>

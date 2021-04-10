@@ -1,36 +1,37 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Data;
 
 namespace Jeebs.Data.TypeHandlers
 {
 	/// <summary>
-	/// Mime TypeHandler
+	/// Enumerated TypeHandler
 	/// </summary>
-	public sealed class MimeTypeHandler : Dapper.SqlMapper.TypeHandler<MimeType>
+	public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
+		where T : Enumerated
 	{
 		/// <summary>
-		/// Parse the MimeType value
+		/// Parse the Enumerated value
 		/// </summary>
 		/// <param name="value">Database table value</param>
-		/// <returns>MimeType object</returns>
-		public override MimeType Parse(object value) =>
+		protected T Parse(object value, Func<string, T> parse, T ifNull) =>
 			value?.ToString() switch
 			{
-				string mimeType =>
-					MimeType.Parse(mimeType),
+				string taxonomy =>
+					parse(taxonomy),
 
 				_ =>
-					MimeType.Blank
+					ifNull
 			};
 
 		/// <summary>
-		/// Set the MimeType table value
+		/// Set the Enumerated table value
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter object</param>
-		/// <param name="value">MimeType value</param>
-		public override void SetValue(IDbDataParameter parameter, MimeType value) =>
+		/// <param name="value">Enumerated value</param>
+		public override void SetValue(IDbDataParameter parameter, T value) =>
 			parameter.Value = value.ToString();
 	}
 }

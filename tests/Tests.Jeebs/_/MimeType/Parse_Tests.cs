@@ -3,11 +3,11 @@
 
 using Xunit;
 
-namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests
+namespace Jeebs.MimeType_Tests
 {
 	public class Parse_Tests
 	{
-		public static TheoryData<string, MimeType> Valid_Value_Returns_MimeType_Data =>
+		public static TheoryData<string, MimeType> Returns_Correct_MimeType_Data =>
 			new()
 			{
 				{ string.Empty, MimeType.Blank },
@@ -32,45 +32,56 @@ namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests
 			};
 
 		[Theory]
-		[MemberData(nameof(Valid_Value_Returns_MimeType_Data))]
-		public void Valid_Value_Returns_MimeType(string input, MimeType expected)
+		[MemberData(nameof(Returns_Correct_MimeType_Data))]
+		public void Returns_Correct_MimeType(string name, MimeType type)
 		{
 			// Arrange
-			var handler = new MimeTypeTypeHandler();
 
 			// Act
-			var result = handler.Parse(input);
+			var result = MimeType.Parse(name);
 
 			// Assert
-			Assert.Same(expected, result);
+			Assert.Same(type, result);
 		}
 
-		[Theory]
-		[InlineData(null)]
-		public void Null_Value_Returns_Blank_MimeType(object input)
+		[Fact]
+		public void Null_Returns_Blank()
 		{
 			// Arrange
-			var handler = new MimeTypeTypeHandler();
 
 			// Act
-			var result = handler.Parse(input);
+			var result = MimeType.Parse(null);
 
 			// Assert
 			Assert.Same(MimeType.Blank, result);
 		}
 
 		[Fact]
-		public void Invalid_Value_Returns_General_MimeType()
+		public void Unknown_Returns_General()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var handler = new MimeTypeTypeHandler();
+			var name = F.Rnd.Str;
 
 			// Act
-			var result = handler.Parse(value);
+			var result = MimeType.Parse(name);
 
 			// Assert
 			Assert.Same(MimeType.General, result);
+		}
+
+		[Fact]
+		public void Returns_Custom_MimeType()
+		{
+			// Arrange
+			var name = F.Rnd.Str;
+			var type = new MimeType(name);
+			MimeType.AddCustomMimeType(type);
+
+			// Act
+			var result = MimeType.Parse(name);
+
+			// Assert
+			Assert.Same(type, result);
 		}
 	}
 }

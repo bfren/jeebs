@@ -17,119 +17,104 @@ namespace Jeebs
 		/// <param name="name">Value name</param>
 		public MimeType(string name) : base(name) { }
 
+		#region Default Mime Types
+
 		/// <summary>
 		/// Blank / unknown
 		/// </summary>
-		public static MimeType Blank =>
-			new(string.Empty);
+		public static readonly MimeType Blank = new(string.Empty);
 
 		/// <summary>
 		/// General
 		/// </summary>
-		public static MimeType General =>
-			new("application/octet-stream");
+		public static readonly MimeType General = new("application/octet-stream");
 
 		/// <summary>
 		/// Bitmap
 		/// </summary>
-		public static MimeType Bmp =>
-			new("image/bmp");
+		public static readonly MimeType Bmp = new("image/bmp");
 
 		/// <summary>
 		/// Word document
 		/// </summary>
-		public static MimeType Doc =>
-			new("application/msword");
+		public static readonly MimeType Doc = new("application/msword");
 
 		/// <summary>
 		/// Word document (new format)
 		/// </summary>
-		public static MimeType Docx =>
-			new("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+		public static readonly MimeType Docx = new("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
 		/// <summary>
 		/// Graphics Interchange Format
 		/// </summary>
-		public static MimeType Gif =>
-			new("image/gif");
+		public static readonly MimeType Gif = new("image/gif");
 
 		/// <summary>
 		/// Jpeg
 		/// </summary>
-		public static MimeType Jpg =>
-			new("image/jpeg");
+		public static readonly MimeType Jpg = new("image/jpeg");
 
 		/// <summary>
 		/// MP4 audio
 		/// </summary>
-		public static MimeType M4a =>
-			new("audio/mp4");
+		public static readonly MimeType M4a = new("audio/mp4");
 
 		/// <summary>
 		/// MP3 audio
 		/// </summary>
-		public static MimeType Mp3 =>
-			new("audio/mp3");
+		public static readonly MimeType Mp3 = new("audio/mp3");
 
 		/// <summary>
 		/// PDF document
 		/// </summary>
-		public static MimeType Pdf =>
-			new("application/pdf");
+		public static readonly MimeType Pdf = new("application/pdf");
 
 		/// <summary>
 		/// Portable Network Graphics
 		/// </summary>
-		public static MimeType Png =>
-			new("image/png");
+		public static readonly MimeType Png = new("image/png");
 
 		/// <summary>
 		/// PowerPoint document
 		/// </summary>
-		public static MimeType Ppt =>
-			new("application/vnd.ms-powerpoint");
+		public static readonly MimeType Ppt = new("application/vnd.ms-powerpoint");
 
 		/// <summary>
 		/// PowerPoint document (new format)
 		/// </summary>
-		public static MimeType Pptx =>
-			new("application/vnd.openxmlformats-officedocument.presentationml.presentation");
+		public static readonly MimeType Pptx = new("application/vnd.openxmlformats-officedocument.presentationml.presentation");
 
 		/// <summary>
 		/// RAR
 		/// </summary>
-		public static MimeType Rar =>
-			new("application/x-rar-compressed");
+		public static readonly MimeType Rar = new("application/x-rar-compressed");
 
 		/// <summary>
 		/// TAR
 		/// </summary>
-		public static MimeType Tar =>
-			new("application/x-tar");
+		public static readonly MimeType Tar = new("application/x-tar");
 
 		/// <summary>
 		/// Text
 		/// </summary>
-		public static MimeType Text =>
-			new("text/plain");
+		public static readonly MimeType Text = new("text/plain");
 
 		/// <summary>
 		/// Excel spreadsheet
 		/// </summary>
-		public static MimeType Xls =>
-			new("application/vnd.ms-excel");
+		public static readonly MimeType Xls = new("application/vnd.ms-excel");
 
 		/// <summary>
 		/// Excel spreadsheet (new format)
 		/// </summary>
-		public static MimeType Xlsx =>
-			new("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		public static readonly MimeType Xlsx = new("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
 		/// <summary>
 		/// ZIP
 		/// </summary>
-		public static MimeType Zip =>
-			new("application/zip");
+		public static readonly MimeType Zip = new("application/zip");
+
+		#endregion
 
 		/// <summary>
 		/// List of all mime types
@@ -142,6 +127,9 @@ namespace Jeebs
 		/// </summary>
 		static MimeType() =>
 			all = new HashSet<MimeType>(new[] { Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip });
+
+		internal static HashSet<MimeType> AllTest() =>
+			all;
 
 		/// <summary>
 		/// Add a custom mime types

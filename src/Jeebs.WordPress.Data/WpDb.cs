@@ -133,7 +133,7 @@ namespace Jeebs.WordPress.Data
 			Dapper.SqlMapper.ResetTypeHandlers();
 			Dapper.SqlMapper.AddTypeHandler(new BooleanTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new CommentTypeTypeHandler());
-			Dapper.SqlMapper.AddTypeHandler(new MimeTypeHandler());
+			Dapper.SqlMapper.AddTypeHandler(new MimeTypeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new PostStatusTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new PostTypeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());

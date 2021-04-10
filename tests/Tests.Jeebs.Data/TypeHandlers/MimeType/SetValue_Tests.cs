@@ -5,7 +5,7 @@ using System.Data;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.TypeHandlers.CommentTypeHandler_Tests
+namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests
 {
 	public class SetValue_Tests
 	{
@@ -38,7 +38,7 @@ namespace Jeebs.Data.TypeHandlers.CommentTypeHandler_Tests
 		public void Sets_Value_To_MimeType_Name(MimeType input, string expected)
 		{
 			// Arrange
-			var handler = new MimeTypeHandler();
+			var handler = new MimeTypeTypeHandler();
 			var parameter = Substitute.For<IDbDataParameter>();
 
 			// Act
