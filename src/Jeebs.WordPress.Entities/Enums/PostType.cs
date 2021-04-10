@@ -57,6 +57,9 @@ namespace Jeebs.WordPress.Enums
 		/// </summary>
 		private static readonly HashSet<PostType> all;
 
+		internal static HashSet<PostType> AllTest() =>
+			all;
+
 		/// <summary>
 		/// Populate set of post types
 		/// </summary>

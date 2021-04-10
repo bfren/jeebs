@@ -204,9 +204,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "custom", "custom", "{B881D1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Entities", "src\Jeebs.WordPress.Entities\Jeebs.WordPress.Entities.csproj", "{D7A4B263-252A-4CF6-96FF-7B41781568B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.WordPress.Data", "src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj", "{B10B6B18-9718-4BA4-A408-5408E60B21E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data", "src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj", "{B10B6B18-9718-4BA4-A408-5408E60B21E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress.Entities", "tests\Tests.Jeebs.WordPress.Entities\Tests.Jeebs.WordPress.Entities.csproj", "{88EFF08B-CE59-4EC6-96FB-6DF1E0642B3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Entities", "tests\Tests.Jeebs.WordPress.Entities\Tests.Jeebs.WordPress.Entities.csproj", "{88EFF08B-CE59-4EC6-96FB-6DF1E0642B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.WordPress.Abstractions", "src\Jeebs.WordPress.Abstractions\Jeebs.WordPress.Abstractions.csproj", "{DC78DEF7-DAD5-4B65-BAB1-B4AEC167DCEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -448,6 +450,10 @@ Global
 		{88EFF08B-CE59-4EC6-96FB-6DF1E0642B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88EFF08B-CE59-4EC6-96FB-6DF1E0642B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88EFF08B-CE59-4EC6-96FB-6DF1E0642B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC78DEF7-DAD5-4B65-BAB1-B4AEC167DCEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC78DEF7-DAD5-4B65-BAB1-B4AEC167DCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC78DEF7-DAD5-4B65-BAB1-B4AEC167DCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC78DEF7-DAD5-4B65-BAB1-B4AEC167DCEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -531,6 +537,7 @@ Global
 		{D7A4B263-252A-4CF6-96FF-7B41781568B7} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{B10B6B18-9718-4BA4-A408-5408E60B21E8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{88EFF08B-CE59-4EC6-96FB-6DF1E0642B3C} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
+		{DC78DEF7-DAD5-4B65-BAB1-B4AEC167DCEC} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

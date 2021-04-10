@@ -22,7 +22,7 @@ namespace Jeebs.WordPress.Enums
 		/// <summary>
 		/// Blank
 		/// </summary>
-		public static readonly Taxonomy Blank = new("");
+		public static readonly Taxonomy Blank = new(string.Empty);
 
 		/// <summary>
 		/// Category
@@ -51,6 +51,9 @@ namespace Jeebs.WordPress.Enums
 		/// Must be public static so it is thread safe
 		/// </summary>
 		private static readonly HashSet<Taxonomy> all;
+
+		internal static HashSet<Taxonomy> AllTest() =>
+			all;
 
 		/// <summary>
 		/// Populate list of taxonomies

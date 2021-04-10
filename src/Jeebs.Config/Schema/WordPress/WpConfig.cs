@@ -20,7 +20,7 @@ namespace Jeebs.Config
 		public string Db { get; init; } = string.Empty;
 
 		/// <summary>
-		/// If set, will override the table prefix in the DB connection settings
+		/// Overrides the table prefix in the DB connection settings
 		/// </summary>
 		public string TablePrefix { get; init; } = string.Empty;
 
