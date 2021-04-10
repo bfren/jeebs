@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress", "src\Jeebs.WordPress\Jeebs.WordPress.csproj", "{6CACF381-9F0A-41B1-9A14-715491CC6213}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Old", "src\Jeebs.WordPress.Old\Jeebs.WordPress.Old.csproj", "{6CACF381-9F0A-41B1-9A14-715491CC6213}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
@@ -84,7 +84,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Clients.Sq
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".WordPress", ".WordPress", "{0B5859A2-D126-488E-9232-9D71FCCFC777}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress", "tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Old", "tests\Tests.Jeebs.WordPress.Old\Tests.Jeebs.WordPress.Old.csproj", "{285DAEFE-B0B8-4CFA-9517-795F56A0E6B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data", "tests\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj", "{656E74E2-9E0A-4404-B7A9-F124680D1050}"
 EndProject
@@ -218,7 +218,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Option", ".Option", "{64C5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Option", ".Option", "{BF8740C6-55F6-489E-8ECB-6916B8440FBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Option.Testing", "tests\Tests.Jeebs.Option.Testing\Tests.Jeebs.Option.Testing.csproj", "{564E7800-3BBC-4187-AD0E-6D48956A11E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Option.Testing", "tests\Tests.Jeebs.Option.Testing\Tests.Jeebs.Option.Testing.csproj", "{564E7800-3BBC-4187-AD0E-6D48956A11E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress", "src\Jeebs.WordPress\Jeebs.WordPress.csproj", "{3B61328D-81EB-45DE-B4F3-562D8FAEE044}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress", "tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{3EDE4DCA-D279-4D90-A647-E5469D58DF18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -468,6 +472,14 @@ Global
 		{564E7800-3BBC-4187-AD0E-6D48956A11E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{564E7800-3BBC-4187-AD0E-6D48956A11E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{564E7800-3BBC-4187-AD0E-6D48956A11E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B61328D-81EB-45DE-B4F3-562D8FAEE044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B61328D-81EB-45DE-B4F3-562D8FAEE044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B61328D-81EB-45DE-B4F3-562D8FAEE044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B61328D-81EB-45DE-B4F3-562D8FAEE044}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -557,6 +569,8 @@ Global
 		{64C5C4E6-C78E-44F9-8DCD-488AFC966351} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{BF8740C6-55F6-489E-8ECB-6916B8440FBF} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{564E7800-3BBC-4187-AD0E-6D48956A11E1} = {BF8740C6-55F6-489E-8ECB-6916B8440FBF}
+		{3B61328D-81EB-45DE-B4F3-562D8FAEE044} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
+		{3EDE4DCA-D279-4D90-A647-E5469D58DF18} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

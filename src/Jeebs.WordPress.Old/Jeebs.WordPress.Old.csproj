@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="MySql.Data" Version="8.0.23" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
+    <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
+	</ItemGroup>
+</Project>
