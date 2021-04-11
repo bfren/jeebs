@@ -7,7 +7,7 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data.Exceptions
 {
 	/// <summary>
-	/// Thrown when an unrecognised <see cref="SearchOperator"/> is found
+	/// Thrown when an unrecognised <see cref="Compare"/> is found
 	/// </summary>
 	public sealed class UnrecognisedSearchOperatorException : Exception
 	{
@@ -19,8 +19,8 @@ namespace Jeebs.Data.Exceptions
 		/// <summary>
 		/// Create exception
 		/// </summary>
-		/// <param name="operator">SearchOperator</param>
-		public UnrecognisedSearchOperatorException(SearchOperator @operator) : this($"Unrecognised search operator: '{@operator}'.") { }
+		/// <param name="compare">Compare</param>
+		public UnrecognisedSearchOperatorException(Compare compare) : this($"Unrecognised comparison: '{compare}'.") { }
 
 		/// <summary>
 		/// Create exception

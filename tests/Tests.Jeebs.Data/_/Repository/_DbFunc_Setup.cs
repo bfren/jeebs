@@ -15,7 +15,7 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			var client = Substitute.For<IDbClient>();
 			client
-				.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, SearchOperator, object)[]>())
+				.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, Compare, object)[]>())
 				.Returns((F.Rnd.Str, Substitute.For<IQueryParameters>()));
 			client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
 			client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);

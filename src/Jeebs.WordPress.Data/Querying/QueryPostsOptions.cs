@@ -31,7 +31,7 @@ namespace Jeebs.WordPress.Data.Querying
 		public SearchPostFields SearchFields { get; init; } = SearchPostFields.All;
 
 		/// <inheritdoc/>
-		public SearchOperator SearchOperator { get; init; } = SearchOperator.Like;
+		public Compare SearchComparison { get; init; } = Compare.Like;
 
 		/// <inheritdoc/>
 		public DateTime? From { get; init; }
@@ -46,7 +46,7 @@ namespace Jeebs.WordPress.Data.Querying
 		public List<(Taxonomy taxonomy, long id)> Taxonomies { get; init; } = new();
 
 		/// <inheritdoc/>
-		public List<(ICustomField field, SearchOperator op, object value)> CustomFields { get; init; } = new();
+		public List<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } = new();
 
 		/// <inheritdoc/>
 		protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
@@ -80,14 +80,14 @@ namespace Jeebs.WordPress.Data.Querying
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
 		internal Option<QueryParts> AddWhereType(QueryParts parts) =>
-			AddWhere(parts, Db.Post, p => p.Type, SearchOperator.Equal, Type);
+			AddWhere(parts, Db.Post, p => p.Type, Compare.Equal, Type);
 
 		/// <summary>
 		/// Add Where Post Status
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
 		internal Option<QueryParts> AddWhereStatus(QueryParts parts) =>
-			AddWhere(parts, Db.Post, p => p.Status, SearchOperator.Equal, Status);
+			AddWhere(parts, Db.Post, p => p.Status, Compare.Equal, Status);
 
 		/// <summary>
 		/// Add Where Search
@@ -109,7 +109,7 @@ namespace Jeebs.WordPress.Data.Querying
 
 			// Set comparison operator and modify search string accordingly
 			var comparison = "=";
-			if (SearchOperator == SearchOperator.Like)
+			if (SearchComparison == Compare.Like)
 			{
 				// Change the comparison
 				comparison = "LIKE";
@@ -161,7 +161,7 @@ namespace Jeebs.WordPress.Data.Querying
 			}
 
 			// Return
-			return AddCustomWhere(parts, clause.ToString(), new { search });
+			return AddWhereCustom(parts, clause.ToString(), new { search });
 		}
 
 		/// <summary>
@@ -174,7 +174,7 @@ namespace Jeebs.WordPress.Data.Querying
 			if (From is DateTime fromBase)
 			{
 				var from = fromBase.StartOfDay().ToMySqlString();
-				return AddWhere(parts, Db.Post, p => p.PublishedOn, SearchOperator.MoreThanOrEqual, from);
+				return AddWhere(parts, Db.Post, p => p.PublishedOn, Compare.MoreThanOrEqual, from);
 			}
 
 			// Return
@@ -191,7 +191,7 @@ namespace Jeebs.WordPress.Data.Querying
 			if (To is DateTime toBase)
 			{
 				var to = toBase.EndOfDay().ToMySqlString();
-				return AddWhere(parts, Db.Post, p => p.PublishedOn, SearchOperator.LessThanOrEqual, to);
+				return AddWhere(parts, Db.Post, p => p.PublishedOn, Compare.LessThanOrEqual, to);
 			}
 
 			// Return
@@ -207,7 +207,7 @@ namespace Jeebs.WordPress.Data.Querying
 			// Add Parent ID
 			if (ParentId is int parentId)
 			{
-				return AddWhere(parts, Db.Post, p => p.ParentId, SearchOperator.Equal, parentId);
+				return AddWhere(parts, Db.Post, p => p.ParentId, Compare.Equal, parentId);
 			}
 
 			// Return
@@ -292,7 +292,7 @@ namespace Jeebs.WordPress.Data.Querying
 			}
 
 			// Add to main WHERE clause
-			return AddCustomWhere(parts, taxonomyWhere, taxonomyParameters);
+			return AddWhereCustom(parts, taxonomyWhere, taxonomyParameters);
 		}
 
 		/// <summary>
@@ -313,7 +313,7 @@ namespace Jeebs.WordPress.Data.Querying
 			var customFieldParameters = new QueryParameters();
 
 			// Add each custom field
-			foreach (var (field, op, value) in CustomFields)
+			foreach (var (field, cmp, value) in CustomFields)
 			{
 				// Add AND if this is not the first conditional clause
 				if (!string.IsNullOrEmpty(customFieldWhere))
@@ -331,7 +331,7 @@ namespace Jeebs.WordPress.Data.Querying
 				// Set comparison operators and modify search string accordingly
 				var customFieldComparison = "=";
 
-				if (op == SearchOperator.Like)
+				if (cmp == Compare.Like)
 				{
 					// Change the comparison
 					customFieldComparison = "LIKE";
@@ -364,7 +364,7 @@ namespace Jeebs.WordPress.Data.Querying
 			}
 
 			// Add to main WHERE clause
-			return AddCustomWhere(parts, customFieldWhere, customFieldParameters);
+			return AddWhereCustom(parts, customFieldWhere, customFieldParameters);
 		}
 	}
 }

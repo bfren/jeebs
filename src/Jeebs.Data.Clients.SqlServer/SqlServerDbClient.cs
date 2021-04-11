@@ -51,8 +51,8 @@ namespace Jeebs.Data.Clients.SqlServer
 			Escape(table) + "." + Escape(column);
 
 		/// <inheritdoc/>
-		public override string GetOperator(SearchOperator op) =>
-			op.ToOperator();
+		public override string GetOperator(Compare cmp) =>
+			cmp.ToOperator();
 
 		/// <inheritdoc/>
 		public override string GetParamRef(string paramName) =>

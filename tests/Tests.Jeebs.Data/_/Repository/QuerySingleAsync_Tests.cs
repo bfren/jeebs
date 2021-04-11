@@ -18,9 +18,9 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			// Arrange
 			var (client, _, repo) = Repository_Setup.Get();
-			var predicates = new List<(Expression<Func<Repository_Setup.Foo, object>>, SearchOperator, object)>
+			var predicates = new List<(Expression<Func<Repository_Setup.Foo, object>>, Compare, object)>
 			{
-				(f => f.Id, SearchOperator.NotEqual, F.Rnd.Int)
+				(f => f.Id, Compare.NotEqual, F.Rnd.Int)
 			}.ToArray();
 
 			// Act
@@ -35,9 +35,9 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			// Arrange
 			var (_, log, repo) = Repository_Setup.Get();
-			var predicates = new List<(Expression<Func<Repository_Setup.Foo, object>>, SearchOperator, object)>
+			var predicates = new List<(Expression<Func<Repository_Setup.Foo, object>>, Compare, object)>
 			{
-				(f => f.Id, SearchOperator.NotEqual, F.Rnd.Int)
+				(f => f.Id, Compare.NotEqual, F.Rnd.Int)
 			}.ToArray();
 
 			// Act

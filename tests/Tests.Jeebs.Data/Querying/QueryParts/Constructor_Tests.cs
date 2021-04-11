@@ -34,7 +34,7 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 				InnerJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 				LeftJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 				RightJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
-				Where = Substitute.For<IImmutableList<(IColumn, SearchOperator, object)>>(),
+				Where = Substitute.For<IImmutableList<(IColumn, Compare, object)>>(),
 				WhereCustom = Substitute.For<IImmutableList<(string, IQueryParameters)>>(),
 				Sort = Substitute.For<IImmutableList<(IColumn, SortOrder)>>(),
 				SortRandom = F.Rnd.Flip,

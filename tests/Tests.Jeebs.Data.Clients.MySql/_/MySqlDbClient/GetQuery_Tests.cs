@@ -28,14 +28,14 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 
 			var p0Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
-			var p0Operator = SearchOperator.Like;
+			var p0Operator = Compare.Like;
 			var p0Value = F.Rnd.Str;
 
 			var p1Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
-			var p1Operator = SearchOperator.MoreThanOrEqual;
+			var p1Operator = Compare.MoreThanOrEqual;
 			var p1Value = F.Rnd.Int;
 
-			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
 				( p0Column, p0Operator, p0Value ),
 				( p1Column, p1Operator, p1Value )
@@ -185,10 +185,10 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var c1Name = F.Rnd.Str;
 			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
 
-			var where = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
-				(c0, SearchOperator.Like, F.Rnd.Str),
-				(c1, SearchOperator.MoreThanOrEqual, F.Rnd.Int)
+				(c0, Compare.Like, F.Rnd.Str),
+				(c1, Compare.MoreThanOrEqual, F.Rnd.Int)
 			});
 
 			var parts = new QueryParts(fromTable) { Where = where };
@@ -275,10 +275,10 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var c1Value = F.Rnd.Int;
 			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
 
-			var where = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
-				(c0, SearchOperator.Like, c0Value),
-				(c1, SearchOperator.MoreThanOrEqual, c1Value)
+				(c0, Compare.Like, c0Value),
+				(c1, Compare.MoreThanOrEqual, c1Value)
 			});
 
 			var parts = new QueryParts(fromTable) { Where = where };

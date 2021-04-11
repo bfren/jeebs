@@ -7,7 +7,7 @@ using System.Collections;
 namespace Jeebs.Data.Querying.Exceptions
 {
 	/// <summary>
-	/// Thrown when <see cref="DbClient"/> is checking that a query predicate for the <see cref="Enums.SearchOperator.In"/>
+	/// Thrown when <see cref="DbClient"/> is checking that a query predicate for the <see cref="Enums.Compare.In"/>
 	/// operator is a valid <see cref="IList"/>
 	/// </summary>
 	public class InvalidQueryPredicateException : Exception

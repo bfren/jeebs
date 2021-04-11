@@ -19,7 +19,7 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			var builder = new QueryBuilderWithFrom(table);
 
 			// Act
-			void action() => builder.Where<TestTable>(t => t.Foo, SearchOperator.Equal, F.Rnd.Str);
+			void action() => builder.Where<TestTable>(t => t.Foo, Compare.Equal, F.Rnd.Str);
 
 			// Assert
 			Assert.Throws<WhereTableNotAddedException<TestTable>>(action);
@@ -34,7 +34,7 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			var value = F.Rnd.Str;
 
 			// Act
-			var result = (QueryBuilderWithFrom)builder.Where<TestTable>(t => t.Foo, SearchOperator.Like, value);
+			var result = (QueryBuilderWithFrom)builder.Where<TestTable>(t => t.Foo, Compare.Like, value);
 
 			// Assert
 			Assert.Collection(result.Parts.Where,
@@ -43,7 +43,7 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 					Assert.Equal("TestTable", x.column.Table);
 					Assert.Equal("TestFoo", x.column.Name);
 					Assert.Equal("Foo", x.column.Alias);
-					Assert.Equal(SearchOperator.Like, x.op);
+					Assert.Equal(Compare.Like, x.cmp);
 					Assert.Equal(value, x.value);
 				}
 			);

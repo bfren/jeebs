@@ -22,13 +22,13 @@ namespace F.DataF
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="columns">Mapped entity columns</param>
 		/// <param name="predicates">Predicates (matched using AND)</param>
-		public static Option<IImmutableList<(IColumn column, SearchOperator op, object value)>> ConvertPredicatesToColumns<TEntity>(
+		public static Option<IImmutableList<(IColumn column, Compare cmp, object value)>> ConvertPredicatesToColumns<TEntity>(
 			IMappedColumnList columns,
-			(Expression<Func<TEntity, object>> column, SearchOperator op, object value)[] predicates
+			(Expression<Func<TEntity, object>> column, Compare cmp, object value)[] predicates
 		)
 			where TEntity : IWithId
 		{
-			var list = new List<(IColumn, SearchOperator, object)>();
+			var list = new List<(IColumn, Compare, object)>();
 			foreach (var item in predicates)
 			{
 				// The property name is the column alias
@@ -50,15 +50,15 @@ namespace F.DataF
 				}
 
 				// If predicate is IN, make sure it is a list
-				if ((item.op == SearchOperator.In || item.op == SearchOperator.NotIn)
+				if ((item.cmp == Compare.In || item.cmp == Compare.NotIn)
 					&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 				)
 				{
-					return None<IImmutableList<(IColumn, SearchOperator, object)>, Msg.InOperatorRequiresValueToBeAListMsg>();
+					return None<IImmutableList<(IColumn, Compare, object)>, Msg.InOperatorRequiresValueToBeAListMsg>();
 				}
 
 				// Add to list of predicates using column name
-				list.Add((column, item.op, item.value));
+				list.Add((column, item.cmp, item.value));
 			}
 
 			return ImmutableList.Create(list);

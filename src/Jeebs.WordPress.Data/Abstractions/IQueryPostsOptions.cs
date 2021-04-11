@@ -38,9 +38,9 @@ namespace Jeebs.WordPress.Data
 		SearchPostFields SearchFields { get; init; }
 
 		/// <summary>
-		/// Search text operator (= or LIKE)
+		/// Search text comparison (should normally be <see cref="Compare.Equal"/> or <see cref="Compare.Like"/>)
 		/// </summary>
-		SearchOperator SearchOperator { get; init; }
+		Compare SearchComparison { get; init; }
 
 		/// <summary>
 		/// Search Post published from
@@ -65,6 +65,6 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Search custom fields
 		/// </summary>
-		List<(ICustomField field, SearchOperator op, object value)> CustomFields { get; init; }
+		List<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; }
 	}
 }

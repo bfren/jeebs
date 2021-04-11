@@ -24,9 +24,9 @@ namespace F.DataF.QueryF_Tests
 			var column = Substitute.For<IColumn>();
 			column.Name.Returns(name);
 
-			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
-				(column, SearchOperator.LessThan, Rnd.Int)
+				(column, Compare.LessThan, Rnd.Int)
 			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
@@ -36,7 +36,7 @@ namespace F.DataF.QueryF_Tests
 
 			// Assert
 			Assert.Collection(where,
-				x => Assert.Equal($"--{name}-- op ~P0", x)
+				x => Assert.Equal($"--{name}-- cmp ~P0", x)
 			);
 		}
 
@@ -50,9 +50,9 @@ namespace F.DataF.QueryF_Tests
 			column.Name.Returns(columnName);
 			column.Table.Returns(tableName);
 
-			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
-				(column, SearchOperator.LessThan, Rnd.Int)
+				(column, Compare.LessThan, Rnd.Int)
 			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
@@ -62,19 +62,19 @@ namespace F.DataF.QueryF_Tests
 
 			// Assert
 			Assert.Collection(where,
-				x => Assert.Equal($"--{tableName}|{columnName}-- op ~P0", x)
+				x => Assert.Equal($"--{tableName}|{columnName}-- cmp ~P0", x)
 			);
 		}
 
 		[Theory]
-		[InlineData(SearchOperator.Equal)]
-		[InlineData(SearchOperator.LessThan)]
-		[InlineData(SearchOperator.LessThanOrEqual)]
-		[InlineData(SearchOperator.Like)]
-		[InlineData(SearchOperator.MoreThan)]
-		[InlineData(SearchOperator.MoreThanOrEqual)]
-		[InlineData(SearchOperator.NotEqual)]
-		public void Operator_Not_In_Adds_Param(SearchOperator input)
+		[InlineData(Compare.Equal)]
+		[InlineData(Compare.LessThan)]
+		[InlineData(Compare.LessThanOrEqual)]
+		[InlineData(Compare.Like)]
+		[InlineData(Compare.MoreThan)]
+		[InlineData(Compare.MoreThanOrEqual)]
+		[InlineData(Compare.NotEqual)]
+		public void Operator_Not_In_Adds_Param(Compare input)
 		{
 			// Arrange
 			var name = Rnd.Str;
@@ -82,7 +82,7 @@ namespace F.DataF.QueryF_Tests
 			column.Name.Returns(name);
 
 			var value = Rnd.Int;
-			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
 				(column, input, value)
 			});
@@ -94,7 +94,7 @@ namespace F.DataF.QueryF_Tests
 
 			// Assert
 			Assert.Collection(where,
-				x => Assert.Equal($"--{name}-- op ~P0", x)
+				x => Assert.Equal($"--{name}-- cmp ~P0", x)
 			);
 			Assert.Collection(param,
 				x =>
@@ -105,13 +105,13 @@ namespace F.DataF.QueryF_Tests
 			);
 		}
 
-		private static void Test_In_With_Not_Enumerable(SearchOperator op)
+		private static void Test_In_With_Not_Enumerable(Compare cmp)
 		{
 			// Arrange
 			var column = Substitute.For<IColumn>();
-			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
-				(column, op, Rnd.Int)
+				(column, cmp, Rnd.Int)
 			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
@@ -127,16 +127,16 @@ namespace F.DataF.QueryF_Tests
 		[Fact]
 		public void Operator_Is_In_And_Value_Not_Enumerable_Ignores_Predicate()
 		{
-			Test_In_With_Not_Enumerable(SearchOperator.In);
+			Test_In_With_Not_Enumerable(Compare.In);
 		}
 
 		[Fact]
 		public void Operator_Is_NotIn_And_Value_Not_Enumerable_Ignores_Predicate()
 		{
-			Test_In_With_Not_Enumerable(SearchOperator.NotIn);
+			Test_In_With_Not_Enumerable(Compare.NotIn);
 		}
 
-		private static void Test_In_With_Enumerable(SearchOperator op, Func<int, int, int, object> getValue)
+		private static void Test_In_With_Enumerable(Compare cmp, Func<int, int, int, object> getValue)
 		{
 			// Arrange
 			var name = Rnd.Str;
@@ -147,9 +147,9 @@ namespace F.DataF.QueryF_Tests
 			var v1 = Rnd.Int;
 			var v2 = Rnd.Int;
 			var value = getValue(v0, v1, v2);
-			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
-				(column, op, value)
+				(column, cmp, value)
 			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
@@ -159,7 +159,7 @@ namespace F.DataF.QueryF_Tests
 
 			// Assert
 			Assert.Collection(where,
-				x => Assert.Equal($"--{name}-- op (~P0|~P1|~P2)", x)
+				x => Assert.Equal($"--{name}-- cmp (~P0|~P1|~P2)", x)
 			);
 			Assert.Collection(param,
 				x =>
@@ -183,43 +183,43 @@ namespace F.DataF.QueryF_Tests
 		[Fact]
 		public void Operator_Is_In_And_Value_Is_Array_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable(SearchOperator.In, (v0, v1, v2) => new[] { v0, v1, v2 });
+			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { v0, v1, v2 });
 		}
 
 		[Fact]
 		public void Operator_Is_In_And_Value_Is_IEnumerable_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable(SearchOperator.In, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
+			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
 		}
 
 		[Fact]
 		public void Operator_Is_In_And_Value_Is_List_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable(SearchOperator.In, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
+			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
 		}
 
 		[Fact]
 		public void Operator_Is_NotIn_And_Value_Is_Array_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable(SearchOperator.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 });
+			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 });
 		}
 
 		[Fact]
 		public void Operator_Is_NotIn_And_Value_Is_IEnumerable_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable(SearchOperator.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
+			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
 		}
 
 		[Fact]
 		public void Operator_Is_NotIn_And_Value_Is_List_Joins_Value_And_Adds_Param()
 		{
-			Test_In_With_Enumerable(SearchOperator.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
+			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
 		}
 
 		public abstract class TestClient : DbClient
 		{
-			public override string GetOperator(SearchOperator op) =>
-				"op";
+			public override string GetOperator(Compare cmp) =>
+				"cmp";
 
 			public override string Escape(IColumn column, bool withAlias = false) =>
 				$"--{column.Name}--";

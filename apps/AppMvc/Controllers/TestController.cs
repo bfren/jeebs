@@ -56,12 +56,12 @@ namespace AppMvc.Controllers
 					)
 					.BindAsync(
 						userId => provider.UserRole.QueryAsync<AuthUserRoleEntity>(
-							(ur => ur.UserId, SearchOperator.Equal, userId.Value)
+							(ur => ur.UserId, Compare.Equal, userId.Value)
 						)
 					)
 					.BindAsync(
 						userRoles => provider.Role.QueryAsync<AuthRoleEntity>(
-							(r => r.Id, SearchOperator.In, userRoles.Select(ur => ur.RoleId.Value))
+							(r => r.Id, Compare.In, userRoles.Select(ur => ur.RoleId.Value))
 						)
 					)
 					.MapAsync(
@@ -96,7 +96,7 @@ namespace AppMvc.Controllers
 							.QueryAsync<AuthRoleEntity>(builder => builder
 							.From<AuthRoleTable>()
 							.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, t => t.Id, t => t.RoleId)
-							.Where<AuthUserRoleTable>(t => t.UserId, SearchOperator.Equal, x.Value)
+							.Where<AuthUserRoleTable>(t => t.UserId, Compare.Equal, x.Value)
 						)
 					)
 					.MapAsync(
@@ -272,7 +272,7 @@ namespace AppMvc.Controllers
 						x => query
 							.QuerySingleAsync<AuthUserEntity>(builder => builder
 							.From<AuthUserTable>()
-							.Where<AuthUserTable>(t => t.Id, SearchOperator.Equal, x.Value)
+							.Where<AuthUserTable>(t => t.Id, Compare.Equal, x.Value)
 						)
 					)
 					.AuditAsync(
@@ -408,12 +408,12 @@ namespace AppMvc.Controllers
 					)
 					.BindAsync(
 						userId => provider.UserRole.QueryAsync<AuthUserRoleEntity>(
-							(ur => ur.UserId, SearchOperator.Equal, userId)
+							(ur => ur.UserId, Compare.Equal, userId)
 						)
 					)
 					.BindAsync(
 						userRoles => provider.Role.QueryAsync<AuthRoleEntity>(
-							(r => r.Id, SearchOperator.In, userRoles.Select(ur => ur.RoleId.Value))
+							(r => r.Id, Compare.In, userRoles.Select(ur => ur.RoleId.Value))
 						)
 					)
 					.MapAsync(
@@ -447,7 +447,7 @@ namespace AppMvc.Controllers
 							.QueryAsync<AuthRoleEntity>(builder => builder
 							.From<AuthRoleTable>()
 							.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, t => t.Id, t => t.RoleId)
-							.Where<AuthUserRoleTable>(t => t.UserId, SearchOperator.Equal, x)
+							.Where<AuthUserRoleTable>(t => t.UserId, Compare.Equal, x)
 						)
 					)
 					.MapAsync(

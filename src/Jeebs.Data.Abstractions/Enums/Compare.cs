@@ -4,9 +4,9 @@
 namespace Jeebs.Data.Enums
 {
 	/// <summary>
-	/// Search Operators
+	/// Compare Operators
 	/// </summary>
-	public enum SearchOperator
+	public enum Compare
 	{
 		/// <summary>
 		/// Equal

@@ -5,7 +5,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Exceptions;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
+namespace Jeebs.Data.Clients.SqlServer.CompareExtensions_Tests
 {
 	public class ToOperator_Tests
 	{
@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void Equal_Returns_Equals_Sign()
 		{
 			// Arrange
-			var value = SearchOperator.Equal;
+			var value = Compare.Equal;
 
 			// Act
 			var result = value.ToOperator();
@@ -26,7 +26,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void NotEqual_Returns_NotEquals_Sign()
 		{
 			// Arrange
-			var value = SearchOperator.NotEqual;
+			var value = Compare.NotEqual;
 
 			// Act
 			var result = value.ToOperator();
@@ -39,7 +39,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void Like_Returns_Like()
 		{
 			// Arrange
-			var value = SearchOperator.Like;
+			var value = Compare.Like;
 
 			// Act
 			var result = value.ToOperator();
@@ -52,7 +52,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void LessThan_Returns_LessThan_Sign()
 		{
 			// Arrange
-			var value = SearchOperator.LessThan;
+			var value = Compare.LessThan;
 
 			// Act
 			var result = value.ToOperator();
@@ -65,7 +65,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void LessThanOrEqual_Returns_LessThanOrEqual_Sign()
 		{
 			// Arrange
-			var value = SearchOperator.LessThanOrEqual;
+			var value = Compare.LessThanOrEqual;
 
 			// Act
 			var result = value.ToOperator();
@@ -78,7 +78,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void MoreThan_Returns_MoreThan_Sign()
 		{
 			// Arrange
-			var value = SearchOperator.MoreThan;
+			var value = Compare.MoreThan;
 
 			// Act
 			var result = value.ToOperator();
@@ -91,7 +91,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void MoreThanOrEqual_Returns_MoreThanOrEqual_Sign()
 		{
 			// Arrange
-			var value = SearchOperator.MoreThanOrEqual;
+			var value = Compare.MoreThanOrEqual;
 
 			// Act
 			var result = value.ToOperator();
@@ -104,7 +104,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void In_Returns_In()
 		{
 			// Arrange
-			var value = SearchOperator.In;
+			var value = Compare.In;
 
 			// Act
 			var result = value.ToOperator();
@@ -117,7 +117,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void NotIn_Returns_Not_In()
 		{
 			// Arrange
-			var value = SearchOperator.NotIn;
+			var value = Compare.NotIn;
 
 			// Act
 			var result = value.ToOperator();
@@ -133,7 +133,7 @@ namespace Jeebs.Data.Clients.MySql.SearchOperatorExtensions_Tests
 		public void Other_Throws_UnrecognisedSearchOperatorException(int input)
 		{
 			// Arrange
-			var value = (SearchOperator)input;
+			var value = (Compare)input;
 
 			// Act
 			void action() => value.ToOperator();

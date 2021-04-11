@@ -30,7 +30,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="predicates">Predicates (matched using AND)</param>
 		Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+			params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 		);
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="predicates">Predicates (matched using AND)</param>
 		Task<Option<TModel>> QuerySingleAsync<TModel>(
-			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+			params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 		);
 
 		#endregion

@@ -21,7 +21,7 @@ namespace F.DataF
 		/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
 		public static (IImmutableList<string> where, IQueryParameters param) GetWhereAndParameters(
 			IDbClient client,
-			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates,
+			IImmutableList<(IColumn column, Compare cmp, object value)> predicates,
 			bool includeTableName
 		)
 		{
@@ -31,7 +31,7 @@ namespace F.DataF
 			var index = 0;
 
 			// Loop through predicates and add each one
-			foreach (var (column, op, value) in predicates)
+			foreach (var (column, cmp, value) in predicates)
 			{
 				// Escape column with or without table
 				var escapedColumn = includeTableName switch
@@ -44,12 +44,12 @@ namespace F.DataF
 				};
 
 				// IN is a special case, handle ordinary cases first
-				if (op != SearchOperator.In && op != SearchOperator.NotIn)
+				if (cmp != Compare.In && cmp != Compare.NotIn)
 				{
 					var paramName = $"P{index++}";
 					param.Add(paramName, value);
 
-					where.Add($"{escapedColumn} {client.GetOperator(op)} {client.GetParamRef(paramName)}");
+					where.Add($"{escapedColumn} {client.GetOperator(cmp)} {client.GetParamRef(paramName)}");
 
 					continue;
 				}
@@ -70,7 +70,7 @@ namespace F.DataF
 					// If there are IN parameters, add to the query
 					if (inParam.Count > 0)
 					{
-						where.Add($"{escapedColumn} {client.GetOperator(op)} {client.JoinList(inParam, true)}");
+						where.Add($"{escapedColumn} {client.GetOperator(cmp)} {client.JoinList(inParam, true)}");
 					}
 				}
 			}

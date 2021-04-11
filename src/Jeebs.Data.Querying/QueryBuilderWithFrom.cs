@@ -130,7 +130,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, SearchOperator op, object value)
+		public IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, Compare cmp, object value)
 			where TTable : ITable, new()
 		{
 			// Check table
@@ -141,7 +141,7 @@ namespace Jeebs.Data.Querying
 			{
 				Parts = Parts with
 				{
-					Where = Parts.Where.With((GetColumnFromExpression(column), op, value))
+					Where = Parts.Where.With((GetColumnFromExpression(column), cmp, value))
 				}
 			};
 		}

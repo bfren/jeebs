@@ -27,10 +27,10 @@ namespace F.DataF.QueryF_Tests
 				new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
 				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 			});
-			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 			{
-				(e => e.Id, SearchOperator.Equal, Rnd.Lng),
-				(e => e.Bar, SearchOperator.Equal, Rnd.Int)
+				(e => e.Id, Compare.Equal, Rnd.Lng),
+				(e => e.Bar, Compare.Equal, Rnd.Int)
 			};
 
 			// Act
@@ -49,9 +49,9 @@ namespace F.DataF.QueryF_Tests
 			{
 				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 			});
-			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 			{
-				(e => e.Foo, SearchOperator.Equal, Rnd.Int)
+				(e => e.Foo, Compare.Equal, Rnd.Int)
 			};
 
 			// Act
@@ -64,16 +64,16 @@ namespace F.DataF.QueryF_Tests
 		}
 
 		[Theory]
-		[InlineData(SearchOperator.Equal)]
-		[InlineData(SearchOperator.In)]
-		[InlineData(SearchOperator.LessThan)]
-		[InlineData(SearchOperator.LessThanOrEqual)]
-		[InlineData(SearchOperator.Like)]
-		[InlineData(SearchOperator.MoreThan)]
-		[InlineData(SearchOperator.MoreThanOrEqual)]
-		[InlineData(SearchOperator.NotEqual)]
-		[InlineData(SearchOperator.NotIn)]
-		public void Keeps_Original_SearchOperator(SearchOperator input)
+		[InlineData(Compare.Equal)]
+		[InlineData(Compare.In)]
+		[InlineData(Compare.LessThan)]
+		[InlineData(Compare.LessThanOrEqual)]
+		[InlineData(Compare.Like)]
+		[InlineData(Compare.MoreThan)]
+		[InlineData(Compare.MoreThanOrEqual)]
+		[InlineData(Compare.NotEqual)]
+		[InlineData(Compare.NotIn)]
+		public void Keeps_Original_SearchOperator(Compare input)
 		{
 			// Arrange
 			var table = Rnd.Str;
@@ -81,7 +81,7 @@ namespace F.DataF.QueryF_Tests
 			{
 				new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
 			});
-			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 			{
 				(e => e.Id, input, Substitute.For<IList>()) // use list type so IN operator doesn't throw exception
 			};
@@ -90,18 +90,18 @@ namespace F.DataF.QueryF_Tests
 			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 			// Assert
-			Assert.Collection(result, x => Assert.Equal(input, x.op));
+			Assert.Collection(result, x => Assert.Equal(input, x.cmp));
 		}
 
 		[Theory]
-		[InlineData(SearchOperator.Equal)]
-		[InlineData(SearchOperator.LessThan)]
-		[InlineData(SearchOperator.LessThanOrEqual)]
-		[InlineData(SearchOperator.Like)]
-		[InlineData(SearchOperator.MoreThan)]
-		[InlineData(SearchOperator.MoreThanOrEqual)]
-		[InlineData(SearchOperator.NotEqual)]
-		public void Operator_Not_In_Keeps_Original_Value(SearchOperator input)
+		[InlineData(Compare.Equal)]
+		[InlineData(Compare.LessThan)]
+		[InlineData(Compare.LessThanOrEqual)]
+		[InlineData(Compare.Like)]
+		[InlineData(Compare.MoreThan)]
+		[InlineData(Compare.MoreThanOrEqual)]
+		[InlineData(Compare.NotEqual)]
+		public void Operator_Not_In_Keeps_Original_Value(Compare input)
 		{
 			// Arrange
 			var table = Rnd.Str;
@@ -110,7 +110,7 @@ namespace F.DataF.QueryF_Tests
 				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 			});
 			var value = Rnd.Str;
-			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 			{
 				(e => e.Foo, input, value)
 			};
@@ -137,9 +137,9 @@ namespace F.DataF.QueryF_Tests
 			var v1 = Rnd.Int;
 			var v2 = Rnd.Int;
 			var value = getValue(v0, v1, v2);
-			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 			{
-				(e => e.Foo, SearchOperator.In, value)
+				(e => e.Foo, Compare.In, value)
 			};
 
 			// Act
@@ -179,9 +179,9 @@ namespace F.DataF.QueryF_Tests
 				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 			});
 			var value = Rnd.Str;
-			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 			{
-				(e => e.Foo, SearchOperator.In, value)
+				(e => e.Foo, Compare.In, value)
 			};
 
 			// Act

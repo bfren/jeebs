@@ -34,9 +34,9 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="column">Table column</param>
-		/// <param name="op">Search operator</param>
+		/// <param name="cmp">Search operator</param>
 		/// <param name="value">Search value</param>
-		IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, SearchOperator op, object value)
+		IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, Compare cmp, object value)
 			where TTable : ITable, new();
 
 		/// <summary>

@@ -103,13 +103,13 @@ namespace Jeebs.Data.Querying
 			// Add Id EQUAL
 			if (Id is not null)
 			{
-				return parts with { Where = parts.Where.With((map.IdColumn, SearchOperator.Equal, Id)) };
+				return parts with { Where = parts.Where.With((map.IdColumn, Compare.Equal, Id)) };
 			}
 
 			// Add Id IN
 			else if (Ids is not null)
 			{
-				return parts with { Where = parts.Where.With((map.IdColumn, SearchOperator.In, Ids)) };
+				return parts with { Where = parts.Where.With((map.IdColumn, Compare.In, Ids)) };
 			}
 
 			// Return
@@ -145,20 +145,20 @@ namespace Jeebs.Data.Querying
 		/// <param name="parts">QueryParts</param>
 		/// <param name="table">Table object</param>
 		/// <param name="column">Column selector</param>
-		/// <param name="op">SearchOperator</param>
+		/// <param name="cmp">Compare operator</param>
 		/// <param name="value">Search value</param>
 		protected virtual Option<QueryParts> AddWhere<TTable>(
 			QueryParts parts,
 			TTable table,
 			Expression<Func<TTable, string>> column,
-			SearchOperator op,
+			Compare cmp,
 			object value
 		) where TTable : ITable =>
 			GetColumnFromExpression(
 				table, column
 			)
 			.Switch(
-				x => Return(parts with { Where = parts.Where.With((x, op, value)) }),
+				x => Return(parts with { Where = parts.Where.With((x, cmp, value)) }),
 				r => None<QueryParts>(r)
 			);
 
@@ -168,7 +168,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="parts">QueryParts</param>
 		/// <param name="clause">Clause text</param>
 		/// <param name="parameters">Clause parameters</param>
-		protected virtual Option<QueryParts> AddCustomWhere(QueryParts parts, string clause, object parameters)
+		protected virtual Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
 		{
 			// Check clause
 			if (string.IsNullOrWhiteSpace(clause))

@@ -23,12 +23,12 @@ namespace Jeebs.Data
 		protected abstract (string query, IQueryParameters param) GetQuery(
 			string table,
 			IColumnList columns,
-			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates
+			IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 		);
 
 		/// <inheritdoc/>
 		public Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
-			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+			(Expression<Func<TEntity, object>>, Compare, object)[] predicates
 		)
 			where TEntity : IWithId =>
 			(
@@ -54,7 +54,7 @@ namespace Jeebs.Data
 		internal (string query, IQueryParameters param) GetQueryTest(
 			string table,
 			ColumnList columns,
-			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates
+			IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 		) =>
 			GetQuery(table, columns, predicates);
 

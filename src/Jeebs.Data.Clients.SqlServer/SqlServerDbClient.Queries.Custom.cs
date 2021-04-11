@@ -16,7 +16,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		protected override (string query, IQueryParameters param) GetQuery(
 			string table,
 			IColumnList columns,
-			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates
+			IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 		)
 		{
 			// Get columns

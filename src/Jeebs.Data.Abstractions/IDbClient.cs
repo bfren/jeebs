@@ -58,10 +58,10 @@ namespace Jeebs.Data
 		string Escape(string column, string table);
 
 		/// <summary>
-		/// Convert a <see cref="SearchOperator"/> to actual operator
+		/// Convert a <see cref="Compare"/> to actual operator
 		/// </summary>
-		/// <param name="op">SearchOperator</param>
-		string GetOperator(SearchOperator op);
+		/// <param name="cmp">Compare</param>
+		string GetOperator(Compare cmp);
 
 		/// <summary>
 		/// Get a parameter reference - e.g. 'P2' becomes '@P2' for MySQL
@@ -87,7 +87,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TModel">Return model type</typeparam>
 		/// <param name="predicates">Predicates (matched using AND)</param>
 		Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
-			(Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+			(Expression<Func<TEntity, object>>, Compare, object)[] predicates
 		)
 			where TEntity : IWithId;
 

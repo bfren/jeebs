@@ -31,7 +31,7 @@ namespace Jeebs.Auth
 				x => this.QueryAsync<TRole>(builder => builder
 					.From<AuthRoleTable>()
 					.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, r => r.Id, ur => ur.RoleId)
-					.Where<AuthUserRoleTable>(ur => ur.UserId, SearchOperator.Equal, x.Value)
+					.Where<AuthUserRoleTable>(ur => ur.UserId, Compare.Equal, x.Value)
 				)
 			)
 			.MapAsync(

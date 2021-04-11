@@ -85,7 +85,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+			params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 		) =>
 			Db.Client.GetQuery<TEntity, TModel>(predicates)
 			.Audit(
@@ -97,7 +97,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
-			params (Expression<Func<TEntity, object>>, SearchOperator, object)[] predicates
+			params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 		) =>
 			QueryAsync<TModel>(
 				predicates

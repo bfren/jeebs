@@ -26,8 +26,8 @@ namespace Jeebs.Data.Querying
 			new ImmutableList<(IColumn from, IColumn to)>();
 
 		/// <inheritdoc/>
-		public IImmutableList<(IColumn column, SearchOperator op, object value)> Where { get; init; } =
-			new ImmutableList<(IColumn column, SearchOperator op, object value)>();
+		public IImmutableList<(IColumn column, Compare cmp, object value)> Where { get; init; } =
+			new ImmutableList<(IColumn column, Compare cmp, object value)>();
 
 		/// <inheritdoc/>
 		public IImmutableList<(string clause, IQueryParameters parameters)> WhereCustom { get; init; } =

@@ -47,7 +47,7 @@ namespace Jeebs.Auth
 		/// <inheritdoc/>
 		public Task<Option<TModel>> RetrieveAsync<TModel>(string email) =>
 			QuerySingleAsync<TModel>(
-				(u => u.EmailAddress, SearchOperator.Equal, email)
+				(u => u.EmailAddress, Compare.Equal, email)
 			);
 
 		/// <inheritdoc/>

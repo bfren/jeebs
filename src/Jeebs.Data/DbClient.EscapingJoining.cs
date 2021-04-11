@@ -25,7 +25,7 @@ namespace Jeebs.Data
 		public abstract string Escape(string column, string table);
 
 		/// <inheritdoc/>
-		public abstract string GetOperator(SearchOperator op);
+		public abstract string GetOperator(Compare cmp);
 
 		/// <inheritdoc/>
 		public abstract string GetParamRef(string paramName);
