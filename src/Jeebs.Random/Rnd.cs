@@ -11,6 +11,12 @@ namespace F
 	public static partial class Rnd
 	{
 		/// <summary>
+		/// 'Flip a coin' - generate a random true / false
+		/// </summary>
+		public static bool Flip =>
+			BooleanF.Get();
+
+		/// <summary>
 		/// Generate a random string 6 characters long, containing uppercase and lowercase letters but no numbers or special characters
 		/// </summary>
 		public static string Str =>
