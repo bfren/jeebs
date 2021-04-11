@@ -11,7 +11,6 @@ using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using static F.OptionF;
 
 namespace Jeebs.WordPress.Data.Querying
 {
@@ -64,7 +63,10 @@ namespace Jeebs.WordPress.Data.Querying
 				AddWhereSearch
 			)
 			.Bind(
-				AddWhereFromTo
+				AddWherePublishedFrom
+			)
+			.Bind(
+				AddWherePublishedTo
 			)
 			.Bind(
 				AddWhereParentId
@@ -166,20 +168,30 @@ namespace Jeebs.WordPress.Data.Querying
 		/// Add Where From / To
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
-		internal Option<QueryParts> AddWhereFromTo(QueryParts parts)
+		internal Option<QueryParts> AddWherePublishedFrom(QueryParts parts)
 		{
 			// Add From (use start of the day)
 			if (From is DateTime fromBase)
 			{
 				var from = fromBase.StartOfDay().ToMySqlString();
-				AddWhere(parts, Db.Post, p => p.PublishedOn, SearchOperator.MoreThanOrEqual, from);
+				return AddWhere(parts, Db.Post, p => p.PublishedOn, SearchOperator.MoreThanOrEqual, from);
 			}
 
+			// Return
+			return parts;
+		}
+
+		/// <summary>
+		/// Add Where From / To
+		/// </summary>
+		/// <param name="parts">QueryParts</param>
+		internal Option<QueryParts> AddWherePublishedTo(QueryParts parts)
+		{
 			// Add To (use end of the day)
 			if (To is DateTime toBase)
 			{
 				var to = toBase.EndOfDay().ToMySqlString();
-				AddWhere(parts, Db.Post, p => p.PublishedOn, SearchOperator.LessThanOrEqual, to);
+				return AddWhere(parts, Db.Post, p => p.PublishedOn, SearchOperator.LessThanOrEqual, to);
 			}
 
 			// Return
@@ -195,7 +207,7 @@ namespace Jeebs.WordPress.Data.Querying
 			// Add Parent ID
 			if (ParentId is int parentId)
 			{
-				AddWhere(parts, Db.Post, p => p.ParentId, SearchOperator.Equal, parentId);
+				return AddWhere(parts, Db.Post, p => p.ParentId, SearchOperator.Equal, parentId);
 			}
 
 			// Return
