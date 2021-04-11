@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace Jeebs.Data.Mapping
 {
-	/// <summary>
-	/// List of <see cref="IMappedColumn"/> objects
-	/// </summary>
-	public sealed class MappedColumnList : List<IMappedColumn>, IMappedColumnList
+	/// <inheritdoc cref="IMappedColumnList"/>
+	public sealed class MappedColumnList : ImmutableList<IMappedColumn>, IMappedColumnList
 	{
 		/// <summary>
 		/// Create empty list

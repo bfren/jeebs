@@ -62,6 +62,14 @@ namespace Jeebs
 		}
 
 		/// <summary>
+		/// Convert a collection to an immutable list
+		/// </summary>
+		/// <typeparam name="T">Item type</typeparam>
+		/// <param name="this">Collection</param>
+		public static IImmutableList<T> ToImmutableList<T>(this IEnumerable<T> @this) =>
+			new ImmutableList<T>(@this);
+
+		/// <summary>
 		/// Convert a collection to a paged list
 		/// </summary>
 		/// <typeparam name="T">Item type</typeparam>

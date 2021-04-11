@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Mapping
 {
 	/// <summary>
-	/// List of <seealso cref="IMappedColumn"/> objects
+	/// List of <seealso cref="IColumn"/> objects
 	/// </summary>
-	public interface IMappedColumnList : IImmutableList<IMappedColumn> { }
+	public interface IColumnList : IImmutableList<IColumn> { }
 }
