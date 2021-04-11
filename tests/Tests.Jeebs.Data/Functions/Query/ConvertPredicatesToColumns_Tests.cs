@@ -22,11 +22,11 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var table = Rnd.Str;
-			var columns = new MappedColumnList
+			var columns = new MappedColumnList(new[]
 			{
-				{ new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!) },
-				{ new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!) }
-			};
+				new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
+				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			});
 			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
 			{
 				(e => e.Id, SearchOperator.Equal, Rnd.Lng),
@@ -45,10 +45,10 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var table = Rnd.Str;
-			var columns = new MappedColumnList
+			var columns = new MappedColumnList(new[]
 			{
-				{ new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!) }
-			};
+				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			});
 			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
 			{
 				(e => e.Foo, SearchOperator.Equal, Rnd.Int)
@@ -77,10 +77,10 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var table = Rnd.Str;
-			var columns = new MappedColumnList
+			var columns = new MappedColumnList(new[]
 			{
-				{ new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!) }
-			};
+				new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
+			});
 			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
 			{
 				(e => e.Id, input, Substitute.For<IList>()) // use list type so IN operator doesn't throw exception
@@ -105,10 +105,10 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var table = Rnd.Str;
-			var columns = new MappedColumnList
+			var columns = new MappedColumnList(new[]
 			{
-				{ new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!) }
-			};
+				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			});
 			var value = Rnd.Str;
 			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
 			{
@@ -128,10 +128,10 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var table = Rnd.Str;
-			var columns = new MappedColumnList
+			var columns = new MappedColumnList(new[]
 			{
-				{ new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!) }
-			};
+				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			});
 
 			var v0 = Rnd.Int;
 			var v1 = Rnd.Int;
@@ -174,10 +174,10 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var table = Rnd.Str;
-			var columns = new MappedColumnList
+			var columns = new MappedColumnList(new[]
 			{
-				{ new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!) }
-			};
+				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			});
 			var value = Rnd.Str;
 			var predicates = new (Expression<Func<TestEntity, object>> column, SearchOperator op, object value)[]
 			{

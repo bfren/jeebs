@@ -41,8 +41,8 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		internal Option<IQueryParts> Select<TModel>() =>
-			from columns in Extract<TModel>.From(Tables.ToArray())
-			select (IQueryParts)(Parts with { Select = columns });
+			from cols in Extract<TModel>.From(Tables.ToArray())
+			select (IQueryParts)(Parts with { Select = cols });
 
 		/// <summary>
 		/// Verify that a table has been added to the list of tables
@@ -95,23 +95,38 @@ namespace Jeebs.Data.Querying
 			var toColumn = GetColumnFromExpression(to);
 
 			// Add to query
-			switch (join)
+			return join switch
 			{
-				case QueryJoin.Inner:
-					Parts.InnerJoin.Add((fromColumn, toColumn));
-					break;
+				QueryJoin.Inner =>
+					this with
+					{
+						Parts = Parts with
+						{
+							InnerJoin = Parts.InnerJoin.With((fromColumn, toColumn))
+						}
+					},
 
-				case QueryJoin.Left:
-					Parts.LeftJoin.Add((fromColumn, toColumn));
-					break;
+				QueryJoin.Left =>
+					this with
+					{
+						Parts = Parts with
+						{
+							LeftJoin = Parts.LeftJoin.With((fromColumn, toColumn))
+						}
+					},
 
-				case QueryJoin.Right:
-					Parts.RightJoin.Add((fromColumn, toColumn));
-					break;
-			}
+				QueryJoin.Right =>
+					this with
+					{
+						Parts = Parts with
+						{
+							RightJoin = Parts.RightJoin.With((fromColumn, toColumn))
+						}
+					},
 
-			// Return
-			return this;
+				_ =>
+					this
+			};
 		}
 
 		/// <inheritdoc/>
@@ -122,10 +137,13 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, WhereTableNotAddedException<TTable>>();
 
 			// Add predicate
-			Parts.Where.Add((GetColumnFromExpression(column), op, value));
-
-			// Return
-			return this;
+			return this with
+			{
+				Parts = Parts with
+				{
+					Where = Parts.Where.With((GetColumnFromExpression(column), op, value))
+				}
+			};
 		}
 
 		/// <inheritdoc/>
@@ -136,10 +154,13 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 			// Add sort column
-			Parts.Sort.Add((GetColumnFromExpression(column), SortOrder.Ascending));
-
-			// Return
-			return this;
+			return this with
+			{
+				Parts = Parts with
+				{
+					Sort = Parts.Sort.With((GetColumnFromExpression(column), SortOrder.Ascending))
+				}
+			};
 		}
 
 		/// <inheritdoc/>
@@ -150,10 +171,13 @@ namespace Jeebs.Data.Querying
 			CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 			// Add sort column
-			Parts.Sort.Add((GetColumnFromExpression(column), SortOrder.Descending));
-
-			// Return
-			return this;
+			return this with
+			{
+				Parts = Parts with
+				{
+					Sort = Parts.Sort.With((GetColumnFromExpression(column), SortOrder.Descending))
+				}
+			};
 		}
 
 		/// <inheritdoc/>

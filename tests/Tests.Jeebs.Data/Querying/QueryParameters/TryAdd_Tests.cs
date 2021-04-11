@@ -26,6 +26,29 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 		}
 
 		[Fact]
+		public void With_QueryParameters_Returns_False_If_Key_Exists()
+		{
+			// Arrange
+			var p0 = F.Rnd.Str;
+			var parameterToAdd = new QueryParameters
+			{
+				{ nameof(p0), p0 }
+			};
+
+			var parameters = new QueryParameters();
+			parameters.TryAdd(parameterToAdd);
+
+			// Act
+			var result = parameters.TryAdd(parameterToAdd);
+
+			// Assert
+			Assert.False(result);
+			Assert.Collection(parameters,
+				x => { Assert.Equal(nameof(p0), x.Key); Assert.Equal(p0, x.Value); }
+			);
+		}
+
+		[Fact]
 		public void Adds_QueryParameters_To_Dictionary()
 		{
 			// Arrange
@@ -50,6 +73,26 @@ namespace Jeebs.Data.Querying.QueryParameters_Tests
 				x => { Assert.Equal(nameof(p0), x.Key); Assert.Equal(p0, x.Value); },
 				x => { Assert.Equal(nameof(p1), x.Key); Assert.Equal(p1, x.Value); },
 				x => { Assert.Equal(nameof(p2), x.Key); Assert.Equal(p2, x.Value); }
+			);
+		}
+
+		[Fact]
+		public void With_AnonymousType_Returns_False_If_Key_Exists()
+		{
+			// Arrange
+			var p0 = F.Rnd.Str;
+			var parameterToAdd = new { p0 };
+
+			var parameters = new QueryParameters();
+			parameters.TryAdd(parameterToAdd);
+
+			// Act
+			var result = parameters.TryAdd(parameterToAdd);
+
+			// Assert
+			Assert.False(result);
+			Assert.Collection(parameters,
+				x => { Assert.Equal(nameof(p0), x.Key); Assert.Equal(p0, x.Value); }
 			);
 		}
 

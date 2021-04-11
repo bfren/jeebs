@@ -34,10 +34,10 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			var value = F.Rnd.Str;
 
 			// Act
-			builder.Where<TestTable>(t => t.Foo, SearchOperator.Like, value);
+			var result = (QueryBuilderWithFrom)builder.Where<TestTable>(t => t.Foo, SearchOperator.Like, value);
 
 			// Assert
-			Assert.Collection(builder.Parts.Where,
+			Assert.Collection(result.Parts.Where,
 				x =>
 				{
 					Assert.Equal("TestTable", x.column.Table);

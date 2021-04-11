@@ -15,8 +15,8 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		protected override (string query, IQueryParameters param) GetQuery(
 			string table,
-			ColumnList columns,
-			List<(IColumn column, SearchOperator op, object value)> predicates
+			IColumnList columns,
+			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates
 		)
 		{
 			// Get columns
@@ -67,16 +67,39 @@ namespace Jeebs.Data.Clients.MySql
 
 			// Add WHERE
 			IQueryParameters parameters = new QueryParameters();
-			if (parts.Where.Count > 0)
+			if (parts.Where.Count > 0 || parts.WhereCustom.Count > 0)
 			{
-				var (where, param) = GetWhereAndParameters(this, parts.Where, true);
-				sql.Append($" WHERE {string.Join(" AND ", where)}");
+				// This will be appended to the SQL query
+				var where = new List<string>();
 
-				parameters = param;
+				// Add simple WHERE
+				if (parts.Where.Count > 0)
+				{
+					var (whereSimple, param) = GetWhereAndParameters(this, parts.Where, true);
+					where.AddRange(whereSimple);
+					parameters.Merge(param);
+				}
+
+				// Add custom WHERE
+				foreach (var (whereCustom, param) in parts.WhereCustom)
+				{
+					where.Add($"({whereCustom})");
+					parameters.Merge(param);
+				}
+
+				// If there's anything to add, 
+				if (where.Count > 0)
+				{
+					sql.Append($" WHERE {string.Join(" AND ", where)}");
+				}
 			}
 
 			// Add ORDER BY
-			if (parts.Sort.Count > 0)
+			if (parts.SortRandom)
+			{
+				sql.Append(" ORDER BY RAND()");
+			}
+			else if (parts.Sort.Count > 0)
 			{
 				var orderBy = new List<string>();
 				foreach (var (column, order) in parts.Sort)

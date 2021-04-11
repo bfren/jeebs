@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Jeebs;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -18,9 +19,9 @@ namespace F.DataF
 		/// <param name="client">IDbClient</param>
 		/// <param name="predicates">List of predicates</param>
 		/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
-		public static (List<string> where, IQueryParameters param) GetWhereAndParameters(
+		public static (IImmutableList<string> where, IQueryParameters param) GetWhereAndParameters(
 			IDbClient client,
-			List<(IColumn column, SearchOperator op, object value)> predicates,
+			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates,
 			bool includeTableName
 		)
 		{
@@ -75,7 +76,7 @@ namespace F.DataF
 			}
 
 			// Return
-			return (where, param);
+			return (ImmutableList.Create(where), param);
 		}
 	}
 }

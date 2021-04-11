@@ -28,7 +28,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		protected override string GetRetrieveQuery(
 			string table,
-			ColumnList columns,
+			IColumnList columns,
 			IColumn idColumn,
 			long id
 		)
@@ -47,7 +47,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		protected override string GetUpdateQuery(
 			string table,
-			ColumnList columns,
+			IColumnList columns,
 			IColumn idColumn,
 			long id
 		) =>
@@ -56,7 +56,7 @@ namespace Jeebs.Data.Clients.MySql
 		/// <inheritdoc/>
 		protected override string GetUpdateQuery(
 			string table,
-			ColumnList columns,
+			IColumnList columns,
 			IColumn idColumn,
 			long id,
 			IColumn? versionColumn

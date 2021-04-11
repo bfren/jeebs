@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using Jeebs.Data.Mapping;
 
@@ -39,7 +40,7 @@ namespace F.DataF
 				var tableProperties = table.GetType().GetProperties();
 
 				// Holds the list of column names being extracted
-				var extracted = new ColumnList();
+				var extracted = new List<IColumn>();
 				foreach (var property in GetModelProperties<TModel>())
 				{
 					// Get the corresponding field
@@ -60,7 +61,7 @@ namespace F.DataF
 				}
 
 				// Return extracted columns
-				return extracted;
+				return new ColumnList(extracted);
 			}
 		}
 	}

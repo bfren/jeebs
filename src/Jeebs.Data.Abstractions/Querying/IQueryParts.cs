@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Collections.Generic;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 
@@ -20,32 +19,48 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Select columns (if empty will select all columns)
 		/// </summary>
-		List<IColumn> Select { get; init; }
+		IColumnList Select { get; init; }
 
 		/// <summary>
 		/// Inner Joins
 		/// </summary>
-		List<(IColumn from, IColumn to)> InnerJoin { get; init; }
+		IImmutableList<(IColumn from, IColumn to)> InnerJoin { get; init; }
 
 		/// <summary>
 		/// Left Joins
 		/// </summary>
-		List<(IColumn from, IColumn to)> LeftJoin { get; init; }
+		IImmutableList<(IColumn from, IColumn to)> LeftJoin { get; init; }
 
 		/// <summary>
 		/// Right Joins
 		/// </summary>
-		List<(IColumn from, IColumn to)> RightJoin { get; init; }
+		IImmutableList<(IColumn from, IColumn to)> RightJoin { get; init; }
 
 		/// <summary>
-		/// Where Predicates
+		/// Where predicates
 		/// </summary>
-		List<(IColumn column, SearchOperator op, object value)> Where { get; init; }
+		IImmutableList<(IColumn column, SearchOperator op, object value)> Where { get; init; }
+
+		/// <summary>
+		/// Additional Where predicates, allowing advanced custom queries (e.g. with OR) -
+		/// will be wrapped in brackets to be compatible with AND
+		/// </summary>
+		/// <remarks>
+		/// NB: you are responsible for ensuring that the parameter names don't clash
+		/// (avoid using P0/P1/P2 etc, as these are used automatically for clauses added using
+		/// <see cref="Where"/>)
+		/// </remarks>
+		IImmutableList<(string clause, IQueryParameters parameters)> WhereCustom { get; init; }
 
 		/// <summary>
 		/// Sort columns
 		/// </summary>
-		List<(IColumn column, SortOrder order)> Sort { get; init; }
+		IImmutableList<(IColumn column, SortOrder order)> Sort { get; init; }
+
+		/// <summary>
+		/// Sort randomly - if true, will take precedence over <see cref="Sort"/>
+		/// </summary>
+		bool SortRandom { get; init; }
 
 		/// <summary>
 		/// Maximum number of results to return (if null will select all rows)

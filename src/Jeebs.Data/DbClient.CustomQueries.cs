@@ -23,8 +23,8 @@ namespace Jeebs.Data
 		/// <param name="predicates">Predicates (matched using AND)</param>
 		protected abstract (string query, IQueryParameters param) GetQuery(
 			string table,
-			ColumnList columns,
-			List<(IColumn column, SearchOperator op, object value)> predicates
+			IColumnList columns,
+			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates
 		);
 
 		/// <inheritdoc/>
@@ -45,7 +45,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public (string query, IQueryParameters param) GetCountQuery(IQueryParts parts) =>
-			GetQuery(new QueryParts(parts) with { Select = new() });
+			GetQuery(new QueryParts(parts) with { Select = new ColumnList() });
 
 		/// <inheritdoc/>
 		public abstract (string query, IQueryParameters param) GetQuery(IQueryParts parts);
@@ -55,7 +55,7 @@ namespace Jeebs.Data
 		internal (string query, IQueryParameters param) GetQueryTest(
 			string table,
 			ColumnList columns,
-			List<(IColumn column, SearchOperator op, object value)> predicates
+			IImmutableList<(IColumn column, SearchOperator op, object value)> predicates
 		) =>
 			GetQuery(table, columns, predicates);
 

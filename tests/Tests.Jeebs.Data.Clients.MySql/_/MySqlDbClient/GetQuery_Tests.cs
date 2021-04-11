@@ -36,11 +36,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var p1Operator = SearchOperator.MoreThanOrEqual;
 			var p1Value = F.Rnd.Int;
 
-			var predicates = new List<(IColumn, SearchOperator, object)>
+			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
-				{ ( p0Column, p0Operator, p0Value ) },
-				{ ( p1Column, p1Operator, p1Value ) }
-			};
+				( p0Column, p0Operator, p0Value ),
+				( p1Column, p1Operator, p1Value )
+			});
 
 			var client = new MySqlDbClient();
 
@@ -109,7 +109,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var c1 = new Column(table.GetName(), c1Name, c1Alias);
 			var parts = new QueryParts(table)
 			{
-				Select = new() { c0, c1 }
+				Select = new ColumnList(new[] { c0, c1 })
 			};
 			var expected = "SELECT" +
 				$" `{table.GetName()}`.`{c0Name}` AS '{c0Alias}'," +
@@ -123,7 +123,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			Assert.Equal(expected, query);
 		}
 
-		private static void Test_Joins(Func<QueryParts, List<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+		private static void Test_Joins(Func<QueryParts, ImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
 		{
 			// Arrange
 			var (client, fromTable) = MySqlDbClient_Setup.Get();
@@ -139,7 +139,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var to1Name = F.Rnd.Str;
 			var to1 = new Column(to1Table, to1Name, F.Rnd.Str);
 
-			var join = new List<(IColumn, IColumn)> { (from, to0), (to0, to1) };
+			var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
 
 			var parts = setJoin(new(fromTable), join);
 
@@ -186,11 +186,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var c1Name = F.Rnd.Str;
 			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
 
-			var where = new List<(IColumn, SearchOperator, object)>
+			var where = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(c0, SearchOperator.Like, F.Rnd.Str),
 				(c1, SearchOperator.MoreThanOrEqual, F.Rnd.Int)
-			};
+			});
 
 			var parts = new QueryParts(fromTable) { Where = where };
 
@@ -202,6 +202,62 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			// Assert
 			Assert.Equal(expected, query);
+		}
+
+		[Fact]
+		public void With_Parts_Adds_Custom_Where_Clause_And_Parameters()
+		{
+			// Arrange
+			var (client, fromTable) = MySqlDbClient_Setup.Get();
+
+			var w0 = F.Rnd.Str;
+			var w1 = F.Rnd.Str;
+			var p0 = F.Rnd.Str;
+			var p1 = F.Rnd.Str;
+			var p2 = F.Rnd.Str;
+			var parametersToAdd0 = new QueryParameters
+			{
+				{ nameof(p0), p0 },
+				{ nameof(p1), p1 }
+			};
+			var parametersToAdd1 = new QueryParameters
+			{
+				{ nameof(p2), p2 }
+			};
+
+			var parts = new QueryParts(fromTable)
+			{
+				WhereCustom = ImmutableList.Create(new (string, IQueryParameters)[]
+				{
+					(w0, parametersToAdd0),
+					(w1, parametersToAdd1)
+				})
+			};
+
+			var expected = $"SELECT * FROM `{fromTable.GetName()}` WHERE ({w0}) AND ({w1});";
+
+			// Act
+			var (query, param) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+			Assert.Collection(param,
+				x =>
+				{
+					Assert.Equal(nameof(p0), x.Key);
+					Assert.Equal(p0, x.Value);
+				},
+				x =>
+				{
+					Assert.Equal(nameof(p1), x.Key);
+					Assert.Equal(p1, x.Value);
+				},
+				x =>
+				{
+					Assert.Equal(nameof(p2), x.Key);
+					Assert.Equal(p2, x.Value);
+				}
+			);
 		}
 
 		[Fact]
@@ -220,11 +276,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var c1Value = F.Rnd.Int;
 			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
 
-			var where = new List<(IColumn, SearchOperator, object)>
+			var where = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(c0, SearchOperator.Like, c0Value),
 				(c1, SearchOperator.MoreThanOrEqual, c1Value)
-			};
+			});
 
 			var parts = new QueryParts(fromTable) { Where = where };
 
@@ -247,6 +303,25 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 		}
 
 		[Fact]
+		public void With_Parts_Adds_Order_By_Random()
+		{
+			// Arrange
+			var (client, table) = MySqlDbClient_Setup.Get();
+			var parts = new QueryParts(table)
+			{
+				SortRandom = true
+			};
+
+			var expected = $"SELECT * FROM `{table.GetName()}` ORDER BY RAND();";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
 		public void With_Parts_Adds_Order_By_With_Table_Name()
 		{
 			// Arrange
@@ -262,11 +337,11 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			var parts = new QueryParts(table)
 			{
-				Sort = new()
+				Sort = ImmutableList.Create(new (IColumn, SortOrder)[]
 				{
 					(sort0, SortOrder.Ascending),
 					(sort1, SortOrder.Descending)
-				}
+				})
 			};
 
 			var expected = $"SELECT * FROM `{table.GetName()}` ORDER BY" +

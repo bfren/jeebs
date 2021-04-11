@@ -40,7 +40,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 			var (a2, c2) = Get();
 			var (a3, c3) = Get();
 			var table = Substitute.For<ITable>();
-			var map = new TableMap(table, new MappedColumnList() { c0, c1, c2, c3 }, c0);
+			var map = new TableMap(table, new MappedColumnList(new[] { c0, c1, c2, c3 }), c0);
 
 			// Act
 			var result = map.GetColumnAliases(true);
@@ -63,7 +63,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 			var (a2, c2) = Get();
 			var (a3, c3) = Get();
 			var table = Substitute.For<ITable>();
-			var map = new TableMap(table, new MappedColumnList() { c0, c1, c2, c3 }, c0);
+			var map = new TableMap(table, new MappedColumnList(new[] { c0, c1, c2, c3 }), c0);
 
 			// Act
 			var result = map.GetColumnAliases(false);

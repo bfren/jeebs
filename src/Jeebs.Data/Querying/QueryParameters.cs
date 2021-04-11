@@ -12,6 +12,22 @@ namespace Jeebs.Data.Querying
 	public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
 	{
 		/// <inheritdoc/>
+		public bool Merge(IQueryParameters parameters)
+		{
+			foreach (var p in parameters)
+			{
+				if (ContainsKey(p.Key))
+				{
+					return false;
+				}
+
+				Add(p.Key, p.Value);
+			}
+
+			return true;
+		}
+
+		/// <inheritdoc/>
 		public bool TryAdd(object? parameters)
 		{
 			// Stop int / long / char / etc being added as parameters
@@ -22,12 +38,7 @@ namespace Jeebs.Data.Querying
 			// Merge another IQueryParameters with this one 
 			else if (parameters is IQueryParameters queryParameters)
 			{
-				foreach (var p in queryParameters)
-				{
-					Add(p.Key, p.Value);
-				}
-
-				return true;
+				return Merge(queryParameters);
 			}
 			// Handle anonymous / standard objects
 			else if (getProperties() is var objectProperties && objectProperties.Any())
@@ -37,6 +48,11 @@ namespace Jeebs.Data.Querying
 					var name = p.Name;
 					if (p.GetValue(parameters) is object value)
 					{
+						if (ContainsKey(name))
+						{
+							return false;
+						}
+
 						Add(name, value);
 					}
 				}

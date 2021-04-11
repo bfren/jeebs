@@ -13,8 +13,8 @@ namespace F.DataF
 		/// Get the list of columns for a query, escaped with the alias
 		/// </summary>
 		/// <param name="client">IDbClient</param>
-		/// <param name="columns">ColumnList</param>
-		public static List<string> GetColumnsFromList(IDbClient client, List<IColumn> columns)
+		/// <param name="columns">IColumnList</param>
+		public static List<string> GetColumnsFromList(IDbClient client, IColumnList columns)
 		{
 			var col = new List<string>();
 			foreach (var column in columns)

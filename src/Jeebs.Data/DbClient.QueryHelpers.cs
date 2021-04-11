@@ -27,10 +27,10 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Get columns for <see cref="GetRetrieveQuery(string, ColumnList, IColumn, long)"/>
+		/// Get columns for <see cref="GetRetrieveQuery(string, IColumnList, IColumn, long)"/>
 		/// </summary>
 		/// <param name="columns">ColumnList</param>
-		protected virtual List<string> GetColumnsForRetrieveQuery(ColumnList columns)
+		protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
 		{
 			var col = new List<string>();
 			foreach (var column in columns)
@@ -42,10 +42,10 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Get columns for <see cref="GetUpdateQuery(string, ColumnList, IColumn, long, IColumn?)"/>
+		/// Get columns for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
 		/// </summary>
 		/// <param name="columns">ColumnList</param>
-		protected virtual List<string> GetColumnsForUpdateQuery(ColumnList columns)
+		protected virtual List<string> GetColumnsForUpdateQuery(IColumnList columns)
 		{
 			var col = new List<string>();
 			foreach (var column in columns)
@@ -57,7 +57,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Add version to column list for <see cref="GetUpdateQuery(string, ColumnList, IColumn, long, IColumn?)"/>,
+		/// Add version to column list for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>,
 		/// if <paramref name="versionColumn"/> is not null
 		/// </summary>
 		/// <param name="columns">List of column names</param>
@@ -71,7 +71,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Add version to where string for <see cref="GetUpdateQuery(string, ColumnList, IColumn, long, IColumn?)"/>
+		/// Add version to where string for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
 		/// and <see cref="GetDeleteQuery(string, IColumn, long, IColumn?)"/>
 		/// </summary>
 		/// <param name="sql">SQL query StringBuilder</param>

@@ -22,7 +22,7 @@ namespace F.DataF
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="columns">Mapped entity columns</param>
 		/// <param name="predicates">Predicates (matched using AND)</param>
-		public static Option<List<(IColumn column, SearchOperator op, object value)>> ConvertPredicatesToColumns<TEntity>(
+		public static Option<IImmutableList<(IColumn column, SearchOperator op, object value)>> ConvertPredicatesToColumns<TEntity>(
 			IMappedColumnList columns,
 			(Expression<Func<TEntity, object>> column, SearchOperator op, object value)[] predicates
 		)
@@ -54,14 +54,14 @@ namespace F.DataF
 					&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 				)
 				{
-					return None<List<(IColumn, SearchOperator, object)>, Msg.InOperatorRequiresValueToBeAListMsg>();
+					return None<IImmutableList<(IColumn, SearchOperator, object)>, Msg.InOperatorRequiresValueToBeAListMsg>();
 				}
 
 				// Add to list of predicates using column name
 				list.Add((column, item.op, item.value));
 			}
 
-			return list;
+			return ImmutableList.Create(list);
 		}
 
 		public static partial class Msg

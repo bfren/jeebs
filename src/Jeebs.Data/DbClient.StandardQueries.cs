@@ -45,7 +45,7 @@ namespace Jeebs.Data
 		/// <param name="id">Entity ID</param>
 		protected abstract string GetRetrieveQuery(
 			string table,
-			ColumnList columns,
+			IColumnList columns,
 			IColumn idColumn,
 			long id
 		);
@@ -74,7 +74,7 @@ namespace Jeebs.Data
 		/// <inheritdoc cref="GetUpdateQuery(string, ColumnList, IColumn, long, IColumn)"/>
 		protected abstract string GetUpdateQuery(
 			string table,
-			ColumnList columns,
+			IColumnList columns,
 			IColumn idColumn,
 			long id
 		);
@@ -87,7 +87,7 @@ namespace Jeebs.Data
 		/// <param name="versionColumn">Version column for predicate</param>
 		protected abstract string GetUpdateQuery(
 			string table,
-			ColumnList columns,
+			IColumnList columns,
 			IColumn idColumn,
 			long id,
 			IColumn? versionColumn
@@ -133,13 +133,13 @@ namespace Jeebs.Data
 		internal string GetCreateQueryTest(string table, IMappedColumnList columns) =>
 			GetCreateQuery(table, columns);
 
-		internal string GetRetrieveQueryTest(string table, ColumnList columns, IColumn idColumn, long id) =>
+		internal string GetRetrieveQueryTest(string table, IColumnList columns, IColumn idColumn, long id) =>
 			GetRetrieveQuery(table, columns, idColumn, id);
 
-		internal string GetUpdateQueryTest(string table, ColumnList columns, IColumn idColumn, long id) =>
+		internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, long id) =>
 			GetUpdateQuery(table, columns, idColumn, id);
 
-		internal string GetUpdateQueryTest(string table, ColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
+		internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
 			GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
 		internal string GetDeleteQueryTest(string table, IColumn idColumn, long id) =>

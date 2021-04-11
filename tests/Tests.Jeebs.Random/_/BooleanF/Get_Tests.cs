@@ -8,7 +8,7 @@ using static F.Rnd.BooleanF;
 
 namespace F.BooleanF_Tests
 {
-	public class FlipCoin_Tests
+	public class Get_Tests
 	{
 		[Fact]
 		public void Returns_True_Or_False()
@@ -20,7 +20,7 @@ namespace F.BooleanF_Tests
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				results.Add(FlipCoin());
+				results.Add(Get());
 			}
 
 			// Assert

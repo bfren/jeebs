@@ -21,7 +21,7 @@ namespace Jeebs.Data
 		/// Extract columns from specified tables
 		/// </summary>
 		/// <param name="tables">List of tables</param>
-		public static Option<ColumnList> From(params ITable[] tables)
+		public static Option<IColumnList> From(params ITable[] tables)
 		{
 			// If no tables, return empty extracted list
 			if (tables.Length == 0)
@@ -49,7 +49,7 @@ namespace Jeebs.Data
 					e => new Msg.ErrorExtractingDistinctColumnsExceptionMsg(e)
 				)
 				.Map(
-					x => new ColumnList(x),
+					x => (IColumnList)new ColumnList(x),
 					DefaultHandler
 				);
 		}

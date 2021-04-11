@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Jeebs;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -23,10 +24,10 @@ namespace F.DataF.QueryF_Tests
 			var column = Substitute.For<IColumn>();
 			column.Name.Returns(name);
 
-			var predicates = new List<(IColumn, SearchOperator, object)>
+			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(column, SearchOperator.LessThan, Rnd.Int)
-			};
+			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
 
@@ -49,10 +50,10 @@ namespace F.DataF.QueryF_Tests
 			column.Name.Returns(columnName);
 			column.Table.Returns(tableName);
 
-			var predicates = new List<(IColumn, SearchOperator, object)>
+			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(column, SearchOperator.LessThan, Rnd.Int)
-			};
+			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
 
@@ -81,10 +82,10 @@ namespace F.DataF.QueryF_Tests
 			column.Name.Returns(name);
 
 			var value = Rnd.Int;
-			var predicates = new List<(IColumn, SearchOperator, object)>
+			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(column, input, value)
-			};
+			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
 
@@ -108,10 +109,10 @@ namespace F.DataF.QueryF_Tests
 		{
 			// Arrange
 			var column = Substitute.For<IColumn>();
-			var predicates = new List<(IColumn, SearchOperator, object)>
+			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(column, op, Rnd.Int)
-			};
+			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
 
@@ -146,10 +147,10 @@ namespace F.DataF.QueryF_Tests
 			var v1 = Rnd.Int;
 			var v2 = Rnd.Int;
 			var value = getValue(v0, v1, v2);
-			var predicates = new List<(IColumn, SearchOperator, object)>
+			var predicates = ImmutableList.Create(new (IColumn, SearchOperator, object)[]
 			{
 				(column, op, value)
-			};
+			});
 
 			var client = Substitute.ForPartsOf<TestClient>();
 

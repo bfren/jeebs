@@ -44,17 +44,17 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			);
 		}
 
-		private static void Test_Add_Join(QueryJoin join, Func<IQueryParts, List<(IColumn from, IColumn to)>> getJoin)
+		private static void Test_Add_Join(QueryJoin join, Func<IQueryParts, IImmutableList<(IColumn from, IColumn to)>> getJoin)
 		{
 			// Arrange
 			var table = new TestTable0();
 			var builder = new QueryBuilderWithFrom(table);
 
 			// Act
-			builder.Join<TestTable0, TestTable1>(join, t => t.Foo, t => t.Bar);
+			var result = (QueryBuilderWithFrom)builder.Join<TestTable0, TestTable1>(join, t => t.Foo, t => t.Bar);
 
 			// Assert
-			Assert.Collection(getJoin(builder.Parts),
+			Assert.Collection(getJoin(result.Parts),
 				x =>
 				{
 					Assert.Equal("TestTable0", x.from.Table);

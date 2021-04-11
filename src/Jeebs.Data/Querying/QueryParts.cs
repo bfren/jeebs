@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Collections.Generic;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 
@@ -11,22 +10,35 @@ namespace Jeebs.Data.Querying
 	public sealed record QueryParts(ITable From) : IQueryParts
 	{
 		/// <inheritdoc/>
-		public List<IColumn> Select { get; init; } = new();
+		public IColumnList Select { get; init; } =
+			new ColumnList();
 
 		/// <inheritdoc/>
-		public List<(IColumn from, IColumn to)> InnerJoin { get; init; } = new();
+		public IImmutableList<(IColumn from, IColumn to)> InnerJoin { get; init; } =
+			new ImmutableList<(IColumn from, IColumn to)>();
 
 		/// <inheritdoc/>
-		public List<(IColumn from, IColumn to)> LeftJoin { get; init; } = new();
+		public IImmutableList<(IColumn from, IColumn to)> LeftJoin { get; init; } =
+			new ImmutableList<(IColumn from, IColumn to)>();
 
 		/// <inheritdoc/>
-		public List<(IColumn from, IColumn to)> RightJoin { get; init; } = new();
+		public IImmutableList<(IColumn from, IColumn to)> RightJoin { get; init; } =
+			new ImmutableList<(IColumn from, IColumn to)>();
 
 		/// <inheritdoc/>
-		public List<(IColumn column, SearchOperator op, object value)> Where { get; init; } = new();
+		public IImmutableList<(IColumn column, SearchOperator op, object value)> Where { get; init; } =
+			new ImmutableList<(IColumn column, SearchOperator op, object value)>();
 
 		/// <inheritdoc/>
-		public List<(IColumn column, SortOrder order)> Sort { get; init; } = new();
+		public IImmutableList<(string clause, IQueryParameters parameters)> WhereCustom { get; init; } =
+			new ImmutableList<(string clause, IQueryParameters parameters)>();
+
+		/// <inheritdoc/>
+		public IImmutableList<(IColumn column, SortOrder order)> Sort { get; init; } =
+			new ImmutableList<(IColumn column, SortOrder order)>();
+
+		/// <inheritdoc/>
+		public bool SortRandom { get; init; }
 
 		/// <inheritdoc/>
 		public long? Maximum { get; init; }
@@ -45,7 +57,9 @@ namespace Jeebs.Data.Querying
 			LeftJoin = parts.LeftJoin;
 			RightJoin = parts.RightJoin;
 			Where = parts.Where;
+			WhereCustom = parts.WhereCustom;
 			Sort = parts.Sort;
+			SortRandom = parts.SortRandom;
 			Maximum = parts.Maximum;
 			Skip = parts.Skip;
 		}

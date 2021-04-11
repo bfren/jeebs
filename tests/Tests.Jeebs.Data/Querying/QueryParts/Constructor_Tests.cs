@@ -31,12 +31,14 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 			var table = Substitute.For<ITable>();
 			var parts = new QueryParts(table)
 			{
-				Select = Substitute.For<List<IColumn>>(),
-				InnerJoin = Substitute.For<List<(IColumn, IColumn)>>(),
-				LeftJoin = Substitute.For<List<(IColumn, IColumn)>>(),
-				RightJoin = Substitute.For<List<(IColumn, IColumn)>>(),
-				Where = Substitute.For<List<(IColumn, SearchOperator, object)>>(),
-				Sort = Substitute.For<List<(IColumn, SortOrder)>>(),
+				Select = Substitute.For<IColumnList>(),
+				InnerJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
+				LeftJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
+				RightJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
+				Where = Substitute.For<IImmutableList<(IColumn, SearchOperator, object)>>(),
+				WhereCustom = Substitute.For<IImmutableList<(string, IQueryParameters)>>(),
+				Sort = Substitute.For<IImmutableList<(IColumn, SortOrder)>>(),
+				SortRandom = F.Rnd.Flip,
 				Maximum = F.Rnd.Lng,
 				Skip = F.Rnd.Lng
 			};
@@ -51,7 +53,9 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 			Assert.Same(parts.LeftJoin, result.LeftJoin);
 			Assert.Same(parts.RightJoin, result.RightJoin);
 			Assert.Same(parts.Where, result.Where);
+			Assert.Same(parts.WhereCustom, result.WhereCustom);
 			Assert.Same(parts.Sort, result.Sort);
+			Assert.Equal(parts.SortRandom, result.SortRandom);
 			Assert.Equal(parts.Maximum, result.Maximum);
 			Assert.Equal(parts.Skip, result.Skip);
 		}
