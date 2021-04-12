@@ -19,8 +19,8 @@ namespace Jeebs.Data.TypeHandlers
 		protected T Parse(object value, Func<string, T> parse, T ifNull) =>
 			value?.ToString() switch
 			{
-				string taxonomy =>
-					parse(taxonomy),
+				string valueString =>
+					parse(valueString),
 
 				_ =>
 					ifNull
@@ -32,6 +32,13 @@ namespace Jeebs.Data.TypeHandlers
 		/// <param name="parameter">IDbDataParameter object</param>
 		/// <param name="value">Enumerated value</param>
 		public override void SetValue(IDbDataParameter parameter, T value) =>
-			parameter.Value = value.ToString();
+			parameter.Value = value?.ToString();
+
+		#region Testing
+
+		internal T ParseTest(object value, Func<string, T> parse, T ifNull) =>
+			Parse(value, parse, ifNull);
+
+		#endregion
 	}
 }

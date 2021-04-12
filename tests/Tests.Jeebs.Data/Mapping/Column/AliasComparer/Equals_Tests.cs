@@ -25,8 +25,10 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 			var comparer = new Column.AliasComparer();
 
 			// Act
+			var result = comparer.Equals(c0, c1);
 
 			// Assert
+			Assert.True(result);
 			Assert.Equal(c0, c1, comparer);
 		}
 
@@ -43,8 +45,10 @@ namespace Jeebs.Data.Mapping.Column_AliasComparer_Tests
 			var comparer = new Column.AliasComparer();
 
 			// Act
+			var result = comparer.Equals(c0, c1);
 
 			// Assert
+			Assert.False(result);
 			Assert.NotEqual(c0, c1, comparer);
 		}
 	}
