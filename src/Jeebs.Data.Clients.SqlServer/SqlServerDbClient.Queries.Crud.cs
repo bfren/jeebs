@@ -62,16 +62,16 @@ namespace Jeebs.Data.Clients.SqlServer
 			IColumn? versionColumn
 		)
 		{
-			// Get columns
-			var col = GetColumnsForUpdateQuery(columns);
+			// Get set list
+			var set = GetSetListForUpdateQuery(columns);
 
-			// Add version column
-			AddVersionToColumnList(col, versionColumn);
+			// Add version
+			AddVersionToSetList(set, versionColumn);
 
 			// Begin query
 			var sql = new StringBuilder(
 				$"UPDATE {Escape(table)} " +
-				$"SET {JoinList(col, false)} " +
+				$"SET {JoinList(set, false)} " +
 				$"WHERE {Escape(idColumn)} = {id}"
 			);
 

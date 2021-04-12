@@ -45,7 +45,7 @@ namespace Jeebs.Data
 		/// Get columns for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
 		/// </summary>
 		/// <param name="columns">ColumnList</param>
-		protected virtual List<string> GetColumnsForUpdateQuery(IColumnList columns)
+		protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
 		{
 			var col = new List<string>();
 			foreach (var column in columns)
@@ -60,13 +60,13 @@ namespace Jeebs.Data
 		/// Add version to column list for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>,
 		/// if <paramref name="versionColumn"/> is not null
 		/// </summary>
-		/// <param name="columns">List of column names</param>
+		/// <param name="set">List of Set commands</param>
 		/// <param name="versionColumn">[Optional] Version column</param>
-		protected virtual void AddVersionToColumnList(List<string> columns, IColumn? versionColumn)
+		protected virtual void AddVersionToSetList(List<string> set, IColumn? versionColumn)
 		{
 			if (versionColumn is not null)
 			{
-				columns.Add($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)} + 1");
+				set.Add($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)} + 1");
 			}
 		}
 
@@ -80,8 +80,32 @@ namespace Jeebs.Data
 		{
 			if (versionColumn is not null)
 			{
-				sql.Append($" AND {Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)}");
+				if (sql.Length > 0)
+				{
+					sql.Append(" AND ");
+				}
+
+				sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)}");
 			}
 		}
+
+		#region Testing
+
+		internal (List<string> col, List<string> par) GetColumnsForCreateQueryTest(IMappedColumnList columns) =>
+			GetColumnsForCreateQuery(columns);
+
+		internal List<string> GetColumnsForRetrieveQueryTest(IColumnList columns) =>
+			GetColumnsForRetrieveQuery(columns);
+
+		internal List<string> GetSetListForUpdateQueryTest(IColumnList columns) =>
+			GetSetListForUpdateQuery(columns);
+
+		internal void AddVersionToSetListTest(List<string> columns, IColumn? versionColumn) =>
+			AddVersionToSetList(columns, versionColumn);
+
+		internal void AddVersionToWhereTest(StringBuilder sql, IColumn? versionColumn) =>
+			AddVersionToWhere(sql, versionColumn);
+
+		#endregion
 	}
 }
