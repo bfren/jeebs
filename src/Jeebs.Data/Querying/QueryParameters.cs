@@ -30,7 +30,7 @@ namespace Jeebs.Data.Querying
 		/// <inheritdoc/>
 		public bool TryAdd(object? parameters)
 		{
-			// Stop int / long / char / etc being added as parameters
+			// Stop null / int / long / char / etc being added as parameters
 			if (parameters?.GetType().IsPrimitive != false)
 			{
 				return false;

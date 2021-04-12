@@ -13,11 +13,27 @@ using static F.OptionF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryOptions{TEntity, TId}"/>
+	public abstract record QueryOptions
+	{
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Trying to add an empty where clause</summary>
+			public sealed record TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
+
+			/// <summary>Unable to add parameters to custom where</summary>
+			public sealed record UnableToAddParametersToWhereCustomMsg : IMsg { }
+		}
+	}
+
+	/// <inheritdoc cref="IQueryOptions{TEntity, TId}"/>
 	/// <param name="From">From table</param>
-	public abstract record QueryOptions<TEntity, TId> : IQueryOptions<TEntity, TId>
+	public abstract record QueryOptions<TEntity, TId> : QueryOptions, IQueryOptions<TEntity, TId>
 		where TEntity : IWithId<TId>
 		where TId : StrongId
 	{
+		private readonly IMapper mapper;
+
 		/// <inheritdoc/>
 		public TId? Id { get; init; }
 
@@ -36,9 +52,21 @@ namespace Jeebs.Data.Querying
 		/// <inheritdoc/>
 		public long Skip { get; init; }
 
+		/// <summary>
+		/// Create using default <see cref="IMapper"/>
+		/// </summary>
+		protected QueryOptions() : this(Mapper.Instance) { }
+
+		/// <summary>
+		/// Inject an <see cref="IMapper"/>
+		/// </summary>
+		/// <param name="mapper">IMapper</param>
+		protected QueryOptions(IMapper mapper) =>
+			this.mapper = mapper;
+
 		/// <inheritdoc/>
-		public Option<IQueryParts> GetParts<TModel>() =>
-			from map in Mapper.Instance.GetTableMapFor<TEntity>()
+		public virtual Option<IQueryParts> GetParts<TModel>() =>
+			from map in mapper.GetTableMapFor<TEntity>()
 			from cols in GetColumns<TModel>(map)
 			from parts in GetParts(map, cols)
 			select (IQueryParts)parts;
@@ -103,13 +131,14 @@ namespace Jeebs.Data.Querying
 			// Add Id EQUAL
 			if (Id is not null)
 			{
-				return parts with { Where = parts.Where.With((map.IdColumn, Compare.Equal, Id)) };
+				return parts with { Where = parts.Where.With((map.IdColumn, Compare.Equal, Id.Value)) };
 			}
 
 			// Add Id IN
 			else if (Ids is not null)
 			{
-				return parts with { Where = parts.Where.With((map.IdColumn, Compare.In, Ids)) };
+				var ids = Ids.Select(x => x.Value);
+				return parts with { Where = parts.Where.With((map.IdColumn, Compare.In, ids)) };
 			}
 
 			// Return
@@ -157,9 +186,9 @@ namespace Jeebs.Data.Querying
 			GetColumnFromExpression(
 				table, column
 			)
-			.Switch(
-				x => Return(parts with { Where = parts.Where.With((x, cmp, value)) }),
-				r => None<QueryParts>(r)
+			.Map(
+				x => parts with { Where = parts.Where.With((x, cmp, value)) },
+				DefaultHandler
 			);
 
 		/// <summary>
@@ -187,14 +216,35 @@ namespace Jeebs.Data.Querying
 			return parts with { WhereCustom = parts.WhereCustom.With((clause, param)) };
 		}
 
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>Trying to add an empty where clause</summary>
-			public sealed record TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
+		#region Testing
 
-			/// <summary>Unable to add parameters to custom where</summary>
-			public sealed record UnableToAddParametersToWhereCustomMsg : IMsg { }
-		}
+		internal Option<QueryParts> GetPartsTest(ITableMap map, IColumnList cols) =>
+			GetParts(map, cols);
+
+		internal Option<QueryParts> CreatePartsTest(ITableMap map) =>
+			CreateParts(map);
+
+		internal Option<QueryParts> AddSelectTest(QueryParts parts, IColumnList cols) =>
+			AddSelect(parts, cols);
+
+		internal Option<QueryParts> AddIdTest(QueryParts parts, ITableMap map) =>
+			AddId(parts, map);
+
+		internal Option<QueryParts> AddSortTest(QueryParts parts) =>
+			AddSort(parts);
+
+		internal Option<QueryParts> AddWhereTest<TTable>(
+			QueryParts parts,
+			TTable table,
+			Expression<Func<TTable, string>> column,
+			Compare cmp,
+			object value
+		) where TTable : ITable =>
+			AddWhere(parts, table, column, cmp, value);
+
+		internal Option<QueryParts> AddWhereCustomTest(QueryParts parts, string clause, object parameters) =>
+			AddWhereCustom(parts, clause, parameters);
+
+		#endregion
 	}
 }
