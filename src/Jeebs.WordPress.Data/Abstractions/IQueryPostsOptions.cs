@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections.Generic;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
@@ -14,8 +13,12 @@ namespace Jeebs.WordPress.Data
 	/// Query Posts Options
 	/// </summary>
 	/// <typeparam name="TEntity">Post Entity type</typeparam>
-	public interface IQueryPostsOptions<TEntity> : IQueryOptions<TEntity, WpPostId>
+	public interface IQueryPostsOptions<TEntity> : IQueryOptions<TEntity, WpPostId>, IQueryPostsOptions
 		where TEntity : WpPostEntity
+	{ }
+
+	/// <inheritdoc cref="IQueryPostsOptions{TEntity}"/>
+	public interface IQueryPostsOptions
 	{
 		/// <summary>
 		/// Search Post type
@@ -60,11 +63,11 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Search post taxonomies
 		/// </summary>
-		List<(Taxonomy taxonomy, long id)> Taxonomies { get; init; }
+		IImmutableList<(Taxonomy taxonomy, long id)> Taxonomies { get; init; }
 
 		/// <summary>
 		/// Search custom fields
 		/// </summary>
-		List<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; }
+		IImmutableList<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; }
 	}
 }

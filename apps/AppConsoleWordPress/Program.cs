@@ -136,7 +136,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			none: r => log.Error($"No option found: {r}")
 		);
 
-	async Task<Option<PagedList<SermonModel>>> GetPagedSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
+	async Task<Option<QueryWrapper.PagedList<SermonModel>>> GetPagedSermonsAsync(IWpDb db, string search, Action<QueryPosts.Options> opt)
 	{
 		Console.WriteLine();
 		log.Debug($"== Sermons: {search} ==");
@@ -145,7 +145,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		return await q.QueryPostsAsync<SermonModel>(1, modify: opt);
 	}
 
-	void AuditPagedSermons(Option<PagedList<SermonModel>> opt) =>
+	void AuditPagedSermons(Option<QueryWrapper.PagedList<SermonModel>> opt) =>
 		opt.Switch(
 			some: x =>
 			{

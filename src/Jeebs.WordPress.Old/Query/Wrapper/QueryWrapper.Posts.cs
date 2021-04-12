@@ -134,5 +134,52 @@ namespace Jeebs.WordPress
 			/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
 			public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
 		}
+
+		public sealed class PagedList<T> : List<T>, IPagedList<T>
+		{
+			/// <inheritdoc/>
+			public IPagingValues Values { get; }
+
+			Option<T> IImmutableList<T>.this[int index] => throw new NotImplementedException();
+
+			/// <summary>
+			/// Create an empty PagedList
+			/// </summary>
+			public PagedList() =>
+				Values = new PagingValues();
+
+			/// <summary>
+			/// Create PagedList from a collection of items
+			/// </summary>
+			/// <param name="values">PagingValues</param>
+			/// <param name="collection">Collection</param>
+			public PagedList(IPagingValues values, IEnumerable<T> collection) : base(collection) =>
+				Values = values;
+
+			public IEnumerable<T> AsEnumerable()
+			{
+				throw new NotImplementedException();
+			}
+
+			public IImmutableList<T> Clone()
+			{
+				throw new NotImplementedException();
+			}
+
+			public List<T> ToList()
+			{
+				throw new NotImplementedException();
+			}
+
+			public IImmutableList<T> With(T add)
+			{
+				throw new NotImplementedException();
+			}
+
+			public IImmutableList<T> WithRange(IEnumerable<T> collection)
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 }

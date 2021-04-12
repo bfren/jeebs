@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Data
 	public interface IWpDbQuery : IDbQuery
 	{
 		/// <summary>
-		/// IWpDb instance
+		/// WordPress Database instance
 		/// </summary>
 		IWpDb Db { get; }
 	}

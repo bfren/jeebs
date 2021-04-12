@@ -15,8 +15,8 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>
-		/// <param name="wpDb">IWpDb</param>
+		/// <param name="db">IWpDb</param>
 		/// <param name="log">ILog</param>
-		public WpDbQuery(IWpDb wpDb, ILog<WpDbQuery> log) : base(wpDb, log) { }
+		public WpDbQuery(IWpDb db, ILog<WpDbQuery> log) : base(db, log) { }
 	}
 }

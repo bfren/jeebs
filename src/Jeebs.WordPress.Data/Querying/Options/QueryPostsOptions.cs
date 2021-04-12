@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Jeebs.Data;
@@ -15,7 +14,7 @@ using Jeebs.WordPress.Data.Enums;
 namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryPostsOptions{TEntity}"/>
-	public sealed record QueryPostsOptions<TEntity>(IWpDb Db) : QueryOptions<TEntity, WpPostId>(Db), IQueryPostsOptions<TEntity>
+	public sealed record QueryPostsOptions<TEntity> : QueryOptions<TEntity, WpPostId>, IQueryPostsOptions<TEntity>
 		where TEntity : WpPostEntity
 	{
 		/// <inheritdoc/>
@@ -43,10 +42,18 @@ namespace Jeebs.WordPress.Data.Querying
 		public int? ParentId { get; init; }
 
 		/// <inheritdoc/>
-		public List<(Taxonomy taxonomy, long id)> Taxonomies { get; init; } = new();
+		public IImmutableList<(Taxonomy taxonomy, long id)> Taxonomies { get; init; } =
+			new ImmutableList<(Taxonomy taxonomy, long id)>();
 
 		/// <inheritdoc/>
-		public List<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } = new();
+		public IImmutableList<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } =
+			new ImmutableList<(ICustomField field, Compare cmp, object value)>();
+
+		/// <summary>
+		/// Internal creation only
+		/// </summary>
+		/// <param name="db">IWpDb</param>
+		internal QueryPostsOptions(IWpDb db) : base(db) { }
 
 		/// <inheritdoc/>
 		protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
@@ -59,20 +66,29 @@ namespace Jeebs.WordPress.Data.Querying
 			.Bind(
 				AddWhereStatus
 			)
-			.Bind(
+			.SwitchIf(
+				_ => SearchText is not null,
 				AddWhereSearch
 			)
-			.Bind(
+			.SwitchIf(
+				_ => From is not null,
 				AddWherePublishedFrom
 			)
-			.Bind(
+			.SwitchIf(
+				_ => To is not null,
 				AddWherePublishedTo
 			)
-			.Bind(
+			.SwitchIf(
+				_ => ParentId is not null,
 				AddWhereParentId
 			)
-			.Bind(
+			.SwitchIf(
+				_ => Taxonomies.Count > 0,
 				AddWhereTaxonomies
+			)
+			.SwitchIf(
+				_ => CustomFields.Count > 0,
+				AddWhereCustomFields
 			);
 
 		/// <summary>

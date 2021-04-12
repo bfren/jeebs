@@ -6,6 +6,7 @@ using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Data.Tables;
 using Jeebs.WordPress.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
@@ -83,6 +84,8 @@ namespace Jeebs.WordPress.Data
 
 		#endregion
 
+		private readonly WpDbQuery query;
+
 		/// <inheritdoc cref="WpDb{Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum}.WpDb(IDbClient, IOptions{DbConfig}, ILog{IWpDb}, WpConfig)"/>
 		public WpDb(IOptions<DbConfig> dbConfig, ILog<IWpDb> log, WpConfig wpConfig)
 			: this(new MySqlDbClient(), dbConfig, log, wpConfig) { }
@@ -97,6 +100,9 @@ namespace Jeebs.WordPress.Data
 		internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, ILog<IWpDb> log, WpConfig wpConfig)
 			: base(client, dbConfig, log, wpConfig.Db)
 		{
+			// Create query object
+			query = new(this, log.ForContext<WpDbQuery>());
+
 			// Get WordPress config
 			log.Verbose("WordPress Config: {@WpConfig}", wpConfig);
 
@@ -129,6 +135,9 @@ namespace Jeebs.WordPress.Data
 			Map<Tum>.To(UserMeta);
 		}
 
+		public Query.Posts QueryPosts =>
+			new(query, Log.ForContext<Query.Posts>());
+
 		/// <summary>
 		/// Add Dapper type handlers
 		/// This is in the static constructor so it only happens once per application load
@@ -142,6 +151,15 @@ namespace Jeebs.WordPress.Data
 			Dapper.SqlMapper.AddTypeHandler(new PostStatusTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new PostTypeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());
+		}
+
+		/// <summary>
+		/// Query implementations for the current WordPress entities
+		/// </summary>
+		public static class Query
+		{
+			/// <inheritdoc cref="QueryPosts{TEntity}"/>
+			public sealed record Posts(IWpDbQuery Query, ILog<Posts> Log) : QueryPosts<Tp>(Query, Log);
 		}
 	}
 }
