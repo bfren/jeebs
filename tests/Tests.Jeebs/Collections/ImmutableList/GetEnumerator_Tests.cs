@@ -15,7 +15,7 @@ namespace Jeebs.ImmutableList_Tests
 			// Arrange
 			var i0 = F.Rnd.Guid;
 			var i1 = F.Rnd.Guid;
-			var list = new ImmutableList<Guid>(new[] { i0, i1 });
+			var list = ImmutableList.Create(new[] { i0, i1 });
 
 			// Act
 			var result = list.GetEnumerator();

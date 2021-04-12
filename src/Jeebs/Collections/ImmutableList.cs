@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Jeebs.Linq;
 
 namespace Jeebs
 {
@@ -25,6 +26,10 @@ namespace Jeebs
 	public class ImmutableList<T> : IImmutableList<T>
 	{
 		internal List<T> List { get; private init; }
+
+		/// <inheritdoc/>
+		public Option<T> this[int index] =>
+			List.ElementAtOrNone(index);
 
 		/// <inheritdoc/>
 		public int Count =>

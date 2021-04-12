@@ -12,6 +12,12 @@ namespace Jeebs
 	public interface IImmutableList<T> : IEnumerable<T>
 	{
 		/// <summary>
+		/// Get the item at the specified index
+		/// </summary>
+		/// <param name="index">Item index</param>
+		Option<T> this[int index] { get; }
+
+		/// <summary>
 		/// Return the number of items in this <see cref="IImmutableList{T}"/>
 		/// </summary>
 		int Count { get; }

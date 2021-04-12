@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Jeebs
 {
 	/// <inheritdoc cref="IPagedList{T}"/>
-	public sealed class PagedList<T> : List<T>, IPagedList<T>
+	public sealed class PagedList<T> : ImmutableList<T>, IPagedList<T>
 	{
 		/// <inheritdoc/>
 		public IPagingValues Values { get; }

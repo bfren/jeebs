@@ -9,7 +9,7 @@ namespace Jeebs
 	/// List that supports paging operations
 	/// </summary>
 	/// <typeparam name="T">Type of objects in the list</typeparam>
-	public interface IPagedList<T> : IList<T>
+	public interface IPagedList<T> : IImmutableList<T>
 	{
 		/// <summary>
 		/// IPagingValues used to create this list
