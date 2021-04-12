@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using Jeebs.Reflection;
 using static F.OptionF;
 
 namespace Jeebs.Linq
@@ -22,13 +23,33 @@ namespace Jeebs.Linq
 		public static Option<PropertyInfo<TObject, TProperty>> GetPropertyInfo<TObject, TProperty>(
 			this Expression<Func<TObject, TProperty>> @this
 		) =>
-			@this.Body switch
+			GetMemberInfo(
+				@this.Body
+			)
+			.Bind(
+				x => typeof(TObject).HasProperty(x.Name) switch
+				{
+					true =>
+						Return(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
+
+					false =>
+						None<PropertyInfo<TObject, TProperty>>(new Msg.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))
+				}
+			);
+
+		/// <summary>
+		/// If <paramref name="expression"/> is a <see cref="MemberExpression"/>,
+		/// return the <see cref="MemberInfo"/>
+		/// </summary>
+		/// <param name="expression">Expression body</param>
+		private static Option<MemberInfo> GetMemberInfo(Expression expression) =>
+			expression switch
 			{
 				MemberExpression memberExpression =>
-					new PropertyInfo<TObject, TProperty>((PropertyInfo)memberExpression.Member),
+					memberExpression.Member,
 
 				_ =>
-					None<PropertyInfo<TObject, TProperty>, Msg.ExpressionIsNotAMemberExpressionMsg>()
+					None<MemberInfo, Msg.ExpressionIsNotAMemberExpressionMsg>()
 			};
 
 		/// <summary>Messages</summary>
@@ -36,6 +57,9 @@ namespace Jeebs.Linq
 		{
 			/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
 			public sealed record ExpressionIsNotAMemberExpressionMsg : IMsg { }
+
+			/// <summary>The specified property does not exist on the type</summary>
+			public sealed record PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

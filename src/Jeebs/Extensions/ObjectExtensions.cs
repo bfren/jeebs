@@ -26,11 +26,8 @@ namespace Jeebs.Reflection
 		/// </summary>
 		/// <param name="this">Object</param>
 		/// <param name="propertyName">The name of the property whose value you want to return</param>
-		public static bool HasProperty(this object @this, string propertyName)
-		{
-			TypeInfo type = @this.GetType().GetTypeInfo();
-			return type.DeclaredProperties.Any(x => x.Name == propertyName);
-		}
+		public static bool HasProperty(this object @this, string propertyName) =>
+			@this.GetType().GetTypeInfo().DeclaredProperties.Any(x => x.Name == propertyName);
 
 		/// <summary>
 		/// Return the value of a property dynamically - i.e. by property name
