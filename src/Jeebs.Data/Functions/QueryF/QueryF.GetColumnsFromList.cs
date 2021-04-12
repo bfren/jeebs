@@ -16,12 +16,16 @@ namespace F.DataF
 		/// <param name="columns">IColumnList</param>
 		public static List<string> GetColumnsFromList(IDbClient client, IColumnList columns)
 		{
+			// Create empty list
 			var col = new List<string>();
+
+			// Escape and Add each column
 			foreach (var column in columns)
 			{
 				col.Add(client.Escape(column, true));
 			}
 
+			// Return list
 			return col;
 		}
 	}
