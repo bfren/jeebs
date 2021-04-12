@@ -60,7 +60,7 @@ namespace Jeebs
 							val,
 
 						// Source object - get matching property value
-						{ } obj when obj.GetProperty(template) is Some<object> property =>
+						{ } obj when obj.GetPropertyValue(template) is Some<object> property =>
 							property.Value,
 
 						// Nothing has matched yet so to be safe put the template back
