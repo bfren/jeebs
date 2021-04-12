@@ -49,6 +49,10 @@ namespace Jeebs.Logging
 			this.logger = logger;
 
 		/// <inheritdoc/>
+		public override ILog<T> ForContext<T>() =>
+			new SerilogLogger<T>();
+
+		/// <inheritdoc/>
 		public override bool IsEnabled(LogLevel level) =>
 			logger.IsEnabled((LogEventLevel)level);
 

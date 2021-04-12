@@ -19,6 +19,12 @@ namespace Jeebs
 	public interface ILog
 	{
 		/// <summary>
+		/// Return a new log instance for a difference context
+		/// </summary>
+		/// <typeparam name="T">Log context</typeparam>
+		ILog<T> ForContext<T>();
+
+		/// <summary>
 		/// Whether or not the log will write for the specified Level
 		/// </summary>
 		/// <param name="level">LogLevel</param>

@@ -12,6 +12,9 @@ namespace Jeebs
 	public abstract class Log : ILog
 	{
 		/// <inheritdoc/>
+		public abstract ILog<T> ForContext<T>();
+
+		/// <inheritdoc/>
 		public void Message<T>(T? msg)
 			where T : IMsg
 		{
