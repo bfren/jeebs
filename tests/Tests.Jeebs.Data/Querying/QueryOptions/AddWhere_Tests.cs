@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
-using NSubstitute;
 using Xunit;
 using static Jeebs.Linq.LinqExpressionExtensions.Msg;
 
