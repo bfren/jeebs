@@ -9,11 +9,11 @@ namespace F
 {
 	public static partial class OptionF
 	{
-		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
-		public static async Task<Option<T>> SwitchIfAsync<T>(Task<Option<T>> option, Func<T, bool> check, Func<T, None<T>> ifFalse) =>
+		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}})"/>
+		public static async Task<Option<T>> SwitchIfAsync<T>(Task<Option<T>> option, Func<T, bool> check, Func<T, Option<T>> ifFalse) =>
 			SwitchIf(await option, check, ifFalse);
 
-		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}})"/>
 		public static async Task<Option<T>> SwitchIfAsync<T>(Task<Option<T>> option, Func<T, bool> check, Func<T, IMsg> ifFalse) =>
 			SwitchIf(await option, check, ifFalse);
 	}

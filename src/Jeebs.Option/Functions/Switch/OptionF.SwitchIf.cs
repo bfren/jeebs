@@ -17,7 +17,7 @@ namespace F
 		/// <param name="option">Option being switched</param>
 		/// <param name="check">Function to run if <paramref name="option"/> is <see cref="Some{T}"/></param>
 		/// <param name="ifFalse">Function to run if <paramref name="check"/> returns false</param>
-		public static Option<T> SwitchIf<T>(Option<T> option, Func<T, bool> check, Func<T, None<T>> ifFalse)
+		public static Option<T> SwitchIf<T>(Option<T> option, Func<T, bool> check, Func<T, Option<T>> ifFalse)
 		{
 			if (option is Some<T> x)
 			{
@@ -47,7 +47,7 @@ namespace F
 			}
 		}
 
-		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, None{T}})"/>
+		/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}})"/>
 		public static Option<T> SwitchIf<T>(Option<T> option, Func<T, bool> check, Func<T, IMsg> ifFalse) =>
 			SwitchIf(option, check, x => None<T>(ifFalse(x)));
 
