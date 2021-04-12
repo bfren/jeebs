@@ -71,7 +71,7 @@ namespace Jeebs.Data
 				e => new Msg.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetUpdateQuery(string, ColumnList, IColumn, long, IColumn)"/>
+		/// <inheritdoc cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn)"/>
 		protected abstract string GetUpdateQuery(
 			string table,
 			IColumnList columns,

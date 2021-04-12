@@ -135,6 +135,9 @@ namespace Jeebs.WordPress.Data
 			Map<Tum>.To(UserMeta);
 		}
 
+		/// <summary>
+		/// Query Post objects
+		/// </summary>
 		public Query.Posts QueryPosts =>
 			new(query, Log.ForContext<Query.Posts>());
 

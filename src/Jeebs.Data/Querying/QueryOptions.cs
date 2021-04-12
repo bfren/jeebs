@@ -27,7 +27,6 @@ namespace Jeebs.Data.Querying
 	}
 
 	/// <inheritdoc cref="IQueryOptions{TEntity, TId}"/>
-	/// <param name="From">From table</param>
 	public abstract record QueryOptions<TEntity, TId> : QueryOptions, IQueryOptions<TEntity, TId>
 		where TEntity : IWithId<TId>
 		where TId : StrongId

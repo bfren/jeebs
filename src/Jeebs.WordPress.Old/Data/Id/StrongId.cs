@@ -16,7 +16,9 @@ namespace Jeebs.Id
 		public string ValueStr =>
 			Value?.ToString() ?? "Unknown ID";
 
-		/// <inheritdoc cref="IStrongId.IsDefault"/>
+		/// <summary>
+		/// Whether or not this is the default value
+		/// </summary>
 		public abstract bool IsDefault { get; }
 	}
 }

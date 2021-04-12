@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Exceptions
 {
 	/// <summary>
-	/// See <see cref="Mapper.Map{TEntity}(ITable)"/>
+	/// See <see cref="Mapping.Mapper.Map{TEntity}(Mapping.ITable)"/>
 	/// </summary>
 	public sealed class InvalidTableMapException : Exception
 	{

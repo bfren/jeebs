@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Exceptions
 {
 	/// <summary>
-	/// Thrown by <see cref="Db(Config.DbConnectionConfig, ILog, IDbClient, string)"/>
+	/// Thrown by <see cref="Db(IDbClient, Microsoft.Extensions.Options.IOptions{Config.DbConfig}, ILog, string)"/>
 	/// </summary>
 	public sealed class UnableToConnectToDatabaseException : Exception
 	{

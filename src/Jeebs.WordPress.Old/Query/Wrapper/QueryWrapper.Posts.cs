@@ -135,6 +135,14 @@ namespace Jeebs.WordPress
 			public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
 		}
 
+		#region Old PagedList for compatibility
+
+#pragma warning disable RCS1079 // Throwing of new NotImplementedException.
+
+		/// <summary>
+		/// Old PagedList for compatibility
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		public sealed class PagedList<T> : List<T>, IPagedList<T>
 		{
 			/// <inheritdoc/>
@@ -156,30 +164,56 @@ namespace Jeebs.WordPress
 			public PagedList(IPagingValues values, IEnumerable<T> collection) : base(collection) =>
 				Values = values;
 
+			/// <summary>
+			/// Old PagedList for compatibility
+			/// </summary>
+			/// <returns></returns>
 			public IEnumerable<T> AsEnumerable()
 			{
 				throw new NotImplementedException();
 			}
 
+			/// <summary>
+			/// Old PagedList for compatibility
+			/// </summary>
+			/// <returns></returns>
 			public IImmutableList<T> Clone()
 			{
 				throw new NotImplementedException();
 			}
 
+			/// <summary>
+			/// Old PagedList for compatibility
+			/// </summary>
+			/// <returns></returns>
 			public List<T> ToList()
 			{
 				throw new NotImplementedException();
 			}
 
+			/// <summary>
+			/// Old PagedList for compatibility
+			/// </summary>
+			/// <param name="add"></param>
+			/// <returns></returns>
 			public IImmutableList<T> With(T add)
 			{
 				throw new NotImplementedException();
 			}
 
+			/// <summary>
+			/// Old PagedList for compatibility
+			/// </summary>
+			/// <param name="collection"></param>
+			/// <returns></returns>
 			public IImmutableList<T> WithRange(IEnumerable<T> collection)
 			{
 				throw new NotImplementedException();
 			}
+
+#pragma warning restore RCS1079 // Throwing of new NotImplementedException.
+
+			#endregion
 		}
 	}
 }

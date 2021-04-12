@@ -14,7 +14,7 @@ namespace Jeebs.Id
 		/// </summary>
 		public const int Default = 0;
 
-		/// <inheritdoc cref="IStrongId.IsDefault"/>
+		/// <inheritdoc cref="StrongId{T}.IsDefault"/>
 		public override bool IsDefault =>
 			Value == Default;
 

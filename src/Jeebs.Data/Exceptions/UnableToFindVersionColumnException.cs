@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Exceptions
 {
 	/// <summary>
-	/// See <see cref="Mapper.Map{TEntity}(ITable)"/>
+	/// See <see cref="Mapping.Mapper.Map{TEntity}(Mapping.ITable)"/>
 	/// </summary>
 	public sealed class UnableToFindVersionColumnException : Exception
 	{
