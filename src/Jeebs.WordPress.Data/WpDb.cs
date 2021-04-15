@@ -6,7 +6,6 @@ using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Data.Tables;
 using Jeebs.WordPress.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
@@ -139,7 +138,13 @@ namespace Jeebs.WordPress.Data
 		/// Query Post objects
 		/// </summary>
 		public Query.Posts QueryPosts =>
-			new(query, Log.ForContext<Query.Posts>());
+			new(query);
+
+		/// <summary>
+		/// Query Post Meta object
+		/// </summary>
+		public Query.PostsMeta QueryPostsMeta =>
+			new(query);
 
 		/// <summary>
 		/// Add Dapper type handlers
@@ -161,8 +166,11 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		public static class Query
 		{
-			/// <inheritdoc cref="QueryPosts{TEntity}"/>
-			public sealed record Posts(IWpDbQuery Query, ILog<Posts> Log) : QueryPosts<Tp>(Query, Log);
+			/// <inheritdoc cref="Jeebs.WordPress.Data.Query.Posts{TPost, TPostMeta}"/>
+			public sealed record Posts(IWpDbQuery Query) : Data.Query.Posts<Tp, Tpm>(Query, new PostsMeta(Query));
+
+			/// <inheritdoc cref="Jeebs.WordPress.Data.Query.PostsMeta{TEntity}"/>
+			public sealed record PostsMeta(IWpDbQuery Query) : Data.Query.PostsMeta<Tpm>(Query);
 		}
 	}
 }

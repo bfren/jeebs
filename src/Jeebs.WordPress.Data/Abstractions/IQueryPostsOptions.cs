@@ -13,12 +13,8 @@ namespace Jeebs.WordPress.Data
 	/// Query Posts Options
 	/// </summary>
 	/// <typeparam name="TEntity">Post Entity type</typeparam>
-	public interface IQueryPostsOptions<TEntity> : IQueryOptions<TEntity, WpPostId>, IQueryPostsOptions
+	public interface IQueryPostsOptions<TEntity> : IQueryOptions<TEntity, WpPostId>
 		where TEntity : WpPostEntity
-	{ }
-
-	/// <inheritdoc cref="IQueryPostsOptions{TEntity}"/>
-	public interface IQueryPostsOptions
 	{
 		/// <summary>
 		/// Search Post type
@@ -58,7 +54,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Parent ID
 		/// </summary>
-		int? ParentId { get; init; }
+		long? ParentId { get; init; }
 
 		/// <summary>
 		/// Search post taxonomies
