@@ -6,7 +6,7 @@ using Jeebs.Data;
 namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="IWpDbQuery"/>
-	public sealed class WpDbQuery : DbQuery, IWpDbQuery
+	internal sealed class WpDbQuery : DbQuery, IWpDbQuery
 	{
 		/// <inheritdoc/>
 		new public IWpDb Db =>
@@ -17,6 +17,6 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="db">IWpDb</param>
 		/// <param name="log">ILog</param>
-		public WpDbQuery(IWpDb db, ILog<WpDbQuery> log) : base(db, log) { }
+		internal WpDbQuery(IWpDb db, ILog<WpDbQuery> log) : base(db, log) { }
 	}
 }
