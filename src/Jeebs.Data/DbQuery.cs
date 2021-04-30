@@ -63,42 +63,6 @@ namespace Jeebs.Data
 				r => throw new Exception(r.ToString())
 			);
 
-		#region Logging
-
-		/// <summary>
-		/// Use Debug log by default - override to send elsewhere (or to disable entirely)
-		/// </summary>
-		/// <param name="message">Log message</param>
-		/// <param name="args">Log message arguments</param>
-		protected virtual void WriteToLog(string message, object[] args) =>
-			Log.Debug(message, args);
-
-		/// <summary>
-		/// Log the query for a function
-		/// </summary>
-		/// <param name="method">Method name</param>
-		/// <param name="query">Query text</param>
-		/// <param name="parameters">[Optional] Query parameters</param>
-		protected void LogQuery(string method, string query, object? parameters)
-		{
-			// Always log operation, entity, and query
-			var message = "{Method}: {Query}";
-			var args = new object[] { method, query };
-
-			// Log with or without parameters
-			if (parameters == null)
-			{
-				WriteToLog(message, args);
-			}
-			else
-			{
-				message += " {@Parameters}";
-				WriteToLog(message, args.ExtendWith(parameters));
-			}
-		}
-
-		#endregion
-
 		#region QueryAsync
 
 		/// <inheritdoc/>
@@ -111,9 +75,9 @@ namespace Jeebs.Data
 			Return(
 				(query, param)
 			)
-			.Audit(
-				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
-			)
+			//.Audit(
+			//	some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
+			//)
 			.BindAsync(
 				x => Db.QueryAsync<TModel>(x.query, x.param, type, transaction)
 			);
@@ -153,9 +117,6 @@ namespace Jeebs.Data
 						}),
 						e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 					)
-					.Audit(
-						some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
-					)
 					.BindAsync(
 						x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
 					)
@@ -174,9 +135,6 @@ namespace Jeebs.Data
 				() => Db.Client.GetQuery(parts),
 				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
-			.Audit(
-				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
-			)
 			.BindAsync(
 				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
 			);
@@ -194,9 +152,6 @@ namespace Jeebs.Data
 		) =>
 			Return(
 				(query, param)
-			)
-			.Audit(
-				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
 			)
 			.BindAsync(
 				x => Db.QuerySingleAsync<TModel>(x.query, x.param, type, transaction)
@@ -219,9 +174,6 @@ namespace Jeebs.Data
 				() => Db.Client.GetQuery(parts),
 				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
-			.Audit(
-				some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
-			)
 			.BindAsync(
 				x => Db.QuerySingleAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
 			);
@@ -239,9 +191,6 @@ namespace Jeebs.Data
 		) =>
 			Return(
 				(query, param)
-			)
-			.Audit(
-				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
 			)
 			.BindAsync(
 				x => Db.ExecuteAsync(x.query, x.param, type, transaction)
@@ -265,9 +214,6 @@ namespace Jeebs.Data
 			Return(
 				(query, param)
 			)
-			.Audit(
-				some: x => LogQuery(nameof(QuerySingleAsync), x.query, x.param)
-			)
 			.BindAsync(
 				x => Db.ExecuteAsync<TReturn>(x.query, x.param, type, transaction)
 			);
@@ -283,9 +229,6 @@ namespace Jeebs.Data
 		#endregion
 
 		#region Testing
-
-		internal void WriteToLogTest(string message, object[] args) =>
-			WriteToLog(message, args);
 
 		internal string EscapeTest<TTable>(TTable table, Expression<Func<TTable, string>> column)
 			where TTable : ITable =>
