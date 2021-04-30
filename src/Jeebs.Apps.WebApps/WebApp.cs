@@ -39,7 +39,7 @@ namespace Jeebs.Apps
 
 			// Configure Host
 			.ConfigureHostConfiguration(
-				config => ConfigureHost(config, args)
+				config => ConfigureHost(config)
 			)
 
 			// Use Web Host Defaults
@@ -47,7 +47,7 @@ namespace Jeebs.Apps
 
 				// App Configuration
 				.ConfigureAppConfiguration(
-					(host, config) => ConfigureApp(host.HostingEnvironment, config)
+					(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
 				)
 
 				// Serilog

@@ -211,6 +211,11 @@ namespace Jeebs.WordPress
 				throw new NotImplementedException();
 			}
 
+			public IImmutableList<T> WithRange(params T[] collection)
+			{
+				throw new NotImplementedException();
+			}
+
 #pragma warning restore RCS1079 // Throwing of new NotImplementedException.
 
 			#endregion

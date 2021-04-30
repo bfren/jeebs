@@ -40,14 +40,15 @@ namespace Tests.Jeebs.WordPress.Data.WpDb_Tests
 			var log = Substitute.For<ILog<IWpDb>>();
 
 			var prefix = F.Rnd.Str;
-			var wpConfig = new WpConfig
+			var wpConfig = Substitute.For<IOptions<WpConfig>>();
+			wpConfig.Value.Returns(new WpConfig
 			{
 				TablePrefix = prefix
-			};
+			});
 
 			// Act
 			var _ = new WpDb<Comment, CommentMeta, Link, Option, Post, PostMeta, Term, TermMeta,
-				TermRelationship, TermTaxonomy, User, UserMeta>(client, dbConfig, log, wpConfig);
+				TermRelationship, TermTaxonomy, User, UserMeta>(client, dbConfig, wpConfig, log);
 
 			// Assert
 			var s0 = Mapper.Instance.GetTableMapFor<Comment>().AssertSome();

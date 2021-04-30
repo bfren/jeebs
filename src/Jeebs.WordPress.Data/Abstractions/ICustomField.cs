@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System.Threading.Tasks;
+
 namespace Jeebs.WordPress.Data
 {
 	/// <summary>
@@ -17,6 +19,13 @@ namespace Jeebs.WordPress.Data
 		/// Whether or not this Custom Field is required (default: false)
 		/// </summary>
 		bool IsRequired { get; }
+
+		/// <summary>
+		/// Hydrate this Custom Field using <see cref="IWpDb"/>, and <see cref="MetaDictionary"/>
+		/// </summary>
+		/// <param name="db">IWpDb</param>
+		/// <param name="meta">Meta Dictionary</param>
+		Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta);
 	}
 
 	/// <inheritdoc/>
