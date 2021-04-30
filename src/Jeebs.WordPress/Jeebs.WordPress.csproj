@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
     <ProjectReference Include="..\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj" />
   </ItemGroup>
 
