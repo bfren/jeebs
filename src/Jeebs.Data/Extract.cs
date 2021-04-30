@@ -42,7 +42,7 @@ namespace Jeebs.Data
 				)
 				.SwitchIf(
 					x => x.Any(),
-					_ => None<IEnumerable<IColumn>, Msg.NoColumnsExtractedFromTableMsg>()
+					_ => new Msg.NoColumnsExtractedFromTableMsg()
 				)
 				.Map(
 					x => x.Distinct(new Column.AliasComparer()),
