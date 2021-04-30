@@ -11,12 +11,21 @@ namespace Jeebs
 	/// </summary>
 	public static class OptionExtensions_SwitchIfAsync
 	{
-		/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}})"/>
-		public static Task<Option<T>> SwitchIfAsync<T>(this Task<Option<T>> @this, Func<T, bool> check, Func<T, Option<T>> ifFalse) =>
-			F.OptionF.SwitchIfAsync(@this, check, ifFalse);
+		/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}}?, Func{T, Option{T}}?)"/>
+		public static Task<Option<T>> SwitchIfAsync<T>(
+			this Task<Option<T>> @this,
+			Func<T, bool> check,
+			Func<T, Option<T>>? ifTrue = null,
+			Func<T, Option<T>>? ifFalse = null
+		) =>
+			F.OptionF.SwitchIfAsync(@this, check, ifTrue, ifFalse);
 
-		/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}})"/>
-		public static Task<Option<T>> SwitchIfAsync<T>(this Task<Option<T>> @this, Func<T, bool> check, Func<T, IMsg> ifFalse) =>
+		/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, IMsg})"/>
+		public static Task<Option<T>> SwitchIfAsync<T>(
+			this Task<Option<T>> @this,
+			Func<T, bool> check,
+			Func<T, IMsg> ifFalse
+		) =>
 			F.OptionF.SwitchIfAsync(@this, check, ifFalse);
 	}
 }
