@@ -121,6 +121,51 @@ namespace Jeebs.Data.Querying
 			parts with { Select = cols };
 
 		/// <summary>
+		/// Add Inner Join
+		/// </summary>
+		/// <param name="parts">QueryParts</param>
+		protected virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
+			QueryParts parts,
+			(TFrom table, Expression<Func<TFrom, string>> column) from,
+			(TTo table, Expression<Func<TTo, string>> column) to
+		)
+			where TFrom : ITable
+			where TTo : ITable =>
+			from colFrom in GetColumnFromExpression(@from.table, @from.column)
+			from colTo in GetColumnFromExpression(to.table, to.column)
+			select parts with { InnerJoin = parts.InnerJoin.With((colFrom, colTo)) };
+
+		/// <summary>
+		/// Add Left Join
+		/// </summary>
+		/// <param name="parts">QueryParts</param>
+		protected virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
+			QueryParts parts,
+			(TFrom table, Expression<Func<TFrom, string>> column) from,
+			(TTo table, Expression<Func<TTo, string>> column) to
+		)
+			where TFrom : ITable
+			where TTo : ITable =>
+			from colFrom in GetColumnFromExpression(@from.table, @from.column)
+			from colTo in GetColumnFromExpression(to.table, to.column)
+			select parts with { LeftJoin = parts.LeftJoin.With((colFrom, colTo)) };
+
+		/// <summary>
+		/// Add Right Join
+		/// </summary>
+		/// <param name="parts">QueryParts</param>
+		protected virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
+			QueryParts parts,
+			(TFrom table, Expression<Func<TFrom, string>> column) from,
+			(TTo table, Expression<Func<TTo, string>> column) to
+		)
+			where TFrom : ITable
+			where TTo : ITable =>
+			from colFrom in GetColumnFromExpression(@from.table, @from.column)
+			from colTo in GetColumnFromExpression(to.table, to.column)
+			select parts with { RightJoin = parts.RightJoin.With((colFrom, colTo)) };
+
+		/// <summary>
 		/// Add Id / Ids - Id takes precedence over Ids
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
