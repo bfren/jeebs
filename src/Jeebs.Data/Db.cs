@@ -82,13 +82,34 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Write all queries to the Verbose log
+		/// Use Verbose log by default - override to send elsewhere (or to disable entirely)
 		/// </summary>
-		/// <param name="query">Query text</param>
-		/// <param name="parameters">Query parameters</param>
-		/// <param name="type">Query type</param>
-		private void LogVerbose(string query, object parameters, CommandType type) =>
-			Log.Verbose("{Query} ({Type}) {@Parameters}", query, type, parameters);
+		protected virtual Action<string, object[]> WriteToLog =>
+			Log.Verbose;
+
+		/// <summary>
+		/// Write query to the log
+		/// </summary>
+		/// <param name="input">Input values</param>
+		private void LogQuery((string query, object? parameters, CommandType type) input)
+		{
+			var (query, parameters, type) = input;
+
+			// Always log operation, entity, and query
+			var message = "{Type}: {Query}";
+			var args = new object[] { type, query };
+
+			// Log with or without parameters
+			if (parameters == null)
+			{
+				WriteToLog(message, args);
+			}
+			else if (parameters.ToString() is string param)
+			{
+				message += " Parameters: {@Parameters}";
+				WriteToLog(message, args.ExtendWith(param));
+			}
+		}
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
@@ -101,7 +122,7 @@ namespace Jeebs.Data
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
-				some: x => LogVerbose(x.query, x.parameters, x.type)
+				some: LogQuery
 			)
 			.MapAsync(
 				x => Connection.QueryAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
@@ -123,7 +144,7 @@ namespace Jeebs.Data
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
-				some: x => LogVerbose(x.query, x.parameters, x.type)
+				some: LogQuery
 			)
 			.MapAsync(
 				x => Connection.QuerySingleOrDefaultAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
@@ -144,7 +165,7 @@ namespace Jeebs.Data
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
-				some: x => LogVerbose(x.query, x.parameters, x.type)
+				some: LogQuery
 			)
 			.MapAsync(
 				x => Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
@@ -166,7 +187,7 @@ namespace Jeebs.Data
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
-				some: x => LogVerbose(x.query, x.parameters, x.type)
+				some: LogQuery
 			)
 			.MapAsync(
 				x => Connection.ExecuteScalarAsync<TReturn>(x.query, x.parameters, transaction, commandType: x.type),
@@ -241,6 +262,13 @@ namespace Jeebs.Data
 		protected static void AddStrongIdTypeHandler<T>()
 			where T : StrongId, new() =>
 			SqlMapper.AddTypeHandler(new StrongIdTypeHandler<T>());
+
+		#endregion
+
+		#region Testing
+
+		internal void WriteToLogTest(string message, object[] args) =>
+			WriteToLog(message, args);
 
 		#endregion
 
