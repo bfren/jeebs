@@ -15,13 +15,13 @@ namespace Jeebs.WordPress.Data
 			where TEntity : WpPostMetaEntity
 		{
 			/// <inheritdoc/>
-			public long? PostId { get; set; }
+			public long? PostId { get; init; }
 
 			/// <inheritdoc/>
-			public IImmutableList<long>? PostIds { get; set; }
+			public IImmutableList<long>? PostIds { get; init; }
 
 			/// <inheritdoc/>
-			public string? Key { get; set; }
+			public string? Key { get; init; }
 
 			/// <summary>
 			/// Internal creation only
@@ -35,16 +35,16 @@ namespace Jeebs.WordPress.Data
 					map, cols
 				)
 				.SwitchIf(
-					_ => PostId is not null && PostId > 0,
-					AddWherePostId
+					_ => PostId is not null and > 0,
+					ifTrue: AddWherePostId
 				)
 				.SwitchIf(
-					_ => PostIds is not null && PostIds.Count > 0,
-					AddWherePostIds
+					_ => PostIds?.Count > 0,
+					ifTrue: AddWherePostIds
 				)
 				.SwitchIf(
 					_ => Key is not null && !string.IsNullOrEmpty(Key),
-					AddWhereKey
+					ifTrue: AddWhereKey
 				);
 
 			/// <summary>
@@ -56,7 +56,7 @@ namespace Jeebs.WordPress.Data
 				// Add Post ID
 				if (PostId is long postId)
 				{
-					return AddWhere(parts, Db.PostMeta, p => p.PostId, Compare.Equal, postId);
+					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, postId);
 				}
 
 				// Return
@@ -72,7 +72,7 @@ namespace Jeebs.WordPress.Data
 				// Add Post IDs
 				if (PostIds is ImmutableList<long> postIds && postIds.Count > 0)
 				{
-					return AddWhere(parts, Db.PostMeta, p => p.PostId, Compare.In, postIds);
+					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.In, postIds);
 				}
 
 				// Return
@@ -88,7 +88,7 @@ namespace Jeebs.WordPress.Data
 				// Add Key
 				if (Key is string key && !string.IsNullOrEmpty(key))
 				{
-					return AddWhere(parts, Db.PostMeta, p => p.Key, Compare.Equal, key);
+					return AddWhere(parts, T.PostMeta, p => p.Key, Compare.Equal, key);
 				}
 
 				// Return

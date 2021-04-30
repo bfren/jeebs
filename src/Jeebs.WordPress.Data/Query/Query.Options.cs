@@ -39,6 +39,12 @@ namespace Jeebs.WordPress.Data
 				(Client, Db) = (new MySqlDbClient(), db);
 
 			/// <summary>
+			/// Shorthand for Database Schema
+			/// </summary>
+			protected IWpDbSchema T =>
+				Db.Schema;
+
+			/// <summary>
 			/// Escape a table
 			/// </summary>
 			/// <typeparam name="TTable">Table type</typeparam>
@@ -62,7 +68,7 @@ namespace Jeebs.WordPress.Data
 			{
 				if (GetColumnFromExpression(table, selector) is Some<IColumn> column)
 				{
-					return Client.EscapeWithTable(column.Value, true);
+					return Client.EscapeWithTable(column.Value);
 				}
 
 				throw new Exception("Unable to get column.");

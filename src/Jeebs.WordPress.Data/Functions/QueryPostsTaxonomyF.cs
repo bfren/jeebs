@@ -4,9 +4,9 @@
 namespace F.WordPressF.DataF
 {
 	/// <summary>
-	/// Query Posts Functions
+	/// Query Posts Taxonomy Functions
 	/// </summary>
-	public static partial class QueryPostsF
+	public static partial class QueryPostsTaxonomyF
 	{
 		/// <summary>Messages</summary>
 		public static partial class Msg { }

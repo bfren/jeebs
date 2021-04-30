@@ -17,12 +17,12 @@ namespace Jeebs.WordPress.Data
 		where TEntity : WpPostEntity
 	{
 		/// <summary>
-		/// Search Post type
+		/// Search Post type - default is <see cref="PostType.Post"/>
 		/// </summary>
 		PostType Type { get; init; }
 
 		/// <summary>
-		/// Search Post status
+		/// Search Post status - default is <see cref="PostStatus.Publish"/>
 		/// </summary>
 		PostStatus Status { get; init; }
 

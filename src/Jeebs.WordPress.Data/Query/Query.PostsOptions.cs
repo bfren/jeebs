@@ -17,7 +17,7 @@ namespace Jeebs.WordPress.Data
 	{
 		/// <inheritdoc cref="IQueryPostsOptions{TEntity}"/>
 		public sealed record PostsOptions<TEntity> : Options<TEntity, WpPostId>, IQueryPostsOptions<TEntity>
-			where TEntity : WpPostEntity
+		where TEntity : WpPostEntity
 		{
 			/// <inheritdoc/>
 			public PostType Type { get; init; } = PostType.Post;
@@ -70,27 +70,27 @@ namespace Jeebs.WordPress.Data
 				)
 				.SwitchIf(
 					_ => SearchText is not null,
-					AddWhereSearch
+					ifTrue: AddWhereSearch
 				)
 				.SwitchIf(
 					_ => From is not null,
-					AddWherePublishedFrom
+					ifTrue: AddWherePublishedFrom
 				)
 				.SwitchIf(
 					_ => To is not null,
-					AddWherePublishedTo
+					ifTrue: AddWherePublishedTo
 				)
 				.SwitchIf(
 					_ => ParentId is not null,
-					AddWhereParentId
+					ifTrue: AddWhereParentId
 				)
 				.SwitchIf(
 					_ => Taxonomies.Count > 0,
-					AddWhereTaxonomies
+					ifTrue: AddWhereTaxonomies
 				)
 				.SwitchIf(
 					_ => CustomFields.Count > 0,
-					AddWhereCustomFields
+					ifTrue: AddWhereCustomFields
 				);
 
 			/// <summary>
@@ -98,14 +98,14 @@ namespace Jeebs.WordPress.Data
 			/// </summary>
 			/// <param name="parts">QueryParts</param>
 			internal Option<QueryParts> AddWhereType(QueryParts parts) =>
-				AddWhere(parts, Db.Post, p => p.Type, Compare.Equal, Type);
+				AddWhere(parts, T.Post, p => p.Type, Compare.Equal, Type);
 
 			/// <summary>
 			/// Add Where Post Status
 			/// </summary>
 			/// <param name="parts">QueryParts</param>
 			internal Option<QueryParts> AddWhereStatus(QueryParts parts) =>
-				AddWhere(parts, Db.Post, p => p.Status, Compare.Equal, Status);
+				AddWhere(parts, T.Post, p => p.Status, Compare.Equal, Status);
 
 			/// <summary>
 			/// Add Where Search
@@ -142,7 +142,7 @@ namespace Jeebs.WordPress.Data
 				// Search title
 				if ((SearchFields & SearchPostFields.Title) != 0)
 				{
-					clause.Append($"{__(Db.Post, p => p.Title)} {comparison} @{nameof(search)}");
+					clause.Append($"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
 				}
 
 				// Search slug
@@ -153,7 +153,7 @@ namespace Jeebs.WordPress.Data
 						clause.Append(" OR ");
 					}
 
-					clause.Append($"{__(Db.Post, p => p.Slug)} {comparison} @{nameof(search)}");
+					clause.Append($"{__(T.Post, p => p.Slug)} {comparison} @{nameof(search)}");
 				}
 
 				// Search content
@@ -164,7 +164,7 @@ namespace Jeebs.WordPress.Data
 						clause.Append(" OR ");
 					}
 
-					clause.Append($"{__(Db.Post, p => p.Content)} {comparison} @{nameof(search)}");
+					clause.Append($"{__(T.Post, p => p.Content)} {comparison} @{nameof(search)}");
 				}
 
 				// Search excerpt
@@ -175,7 +175,7 @@ namespace Jeebs.WordPress.Data
 						clause.Append(" OR ");
 					}
 
-					clause.Append($"{__(Db.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
+					clause.Append($"{__(T.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
 				}
 
 				// Return
@@ -192,7 +192,7 @@ namespace Jeebs.WordPress.Data
 				if (From is DateTime fromBase)
 				{
 					var from = fromBase.StartOfDay().ToMySqlString();
-					return AddWhere(parts, Db.Post, p => p.PublishedOn, Compare.MoreThanOrEqual, from);
+					return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.MoreThanOrEqual, from);
 				}
 
 				// Return
@@ -209,7 +209,7 @@ namespace Jeebs.WordPress.Data
 				if (To is DateTime toBase)
 				{
 					var to = toBase.EndOfDay().ToMySqlString();
-					return AddWhere(parts, Db.Post, p => p.PublishedOn, Compare.LessThanOrEqual, to);
+					return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.LessThanOrEqual, to);
 				}
 
 				// Return
@@ -225,7 +225,7 @@ namespace Jeebs.WordPress.Data
 				// Add Parent ID
 				if (ParentId is long parentId)
 				{
-					return AddWhere(parts, Db.Post, p => p.ParentId, Compare.Equal, parentId);
+					return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId);
 				}
 
 				// Return
@@ -273,11 +273,11 @@ namespace Jeebs.WordPress.Data
 
 					// Add SQL commands to lookup taxonomy terms
 					var subQuery = "SELECT COUNT(1) ";
-					subQuery += $"FROM {__(Db.TermRelationship)} ";
-					subQuery += $"INNER JOIN {__(Db.TermTaxonomy)} ON {__(Db.TermRelationship, tr => tr.TermTaxonomyId)} = {__(Db.TermTaxonomy, tx => tx.TermTaxonomyId)} ";
-					subQuery += $"WHERE {__(Db.TermTaxonomy, tx => tx.Taxonomy)} = {taxonomyNameParameter} ";
-					subQuery += $"AND {__(Db.TermRelationship, tr => tr.PostId)} = {__(Db.Post, p => p.PostId)} ";
-					subQuery += $"AND {__(Db.TermTaxonomy, tx => tx.TermId)} IN (";
+					subQuery += $"FROM {__(T.TermRelationship)} ";
+					subQuery += $"INNER JOIN {__(T.TermTaxonomy)} ON {__(T.TermRelationship, tr => tr.TermTaxonomyId)} = {__(T.TermTaxonomy, tx => tx.TermTaxonomyId)} ";
+					subQuery += $"WHERE {__(T.TermTaxonomy, tx => tx.Taxonomy)} = {taxonomyNameParameter} ";
+					subQuery += $"AND {__(T.TermRelationship, tr => tr.PostId)} = {__(T.Post, p => p.PostId)} ";
+					subQuery += $"AND {__(T.TermTaxonomy, tx => tx.TermId)} IN (";
 
 					// Add the terms for this taxonomy
 					var taxonomyIdIndex = 0;
@@ -369,10 +369,10 @@ namespace Jeebs.WordPress.Data
 
 					// Add SQL commands to lookup custom field
 					var subQuery = "SELECT COUNT(1) ";
-					subQuery += $"FROM {__(Db.PostMeta)} ";
-					subQuery += $"WHERE {__(Db.PostMeta, pm => pm.PostId)} = {__(Db.Post, p => p.PostId)} ";
-					subQuery += $"AND {__(Db.PostMeta, pm => pm.Key)} = {customFieldKeyParameter} ";
-					subQuery += $"AND {__(Db.PostMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter} ";
+					subQuery += $"FROM {__(T.PostMeta)} ";
+					subQuery += $"WHERE {__(T.PostMeta, pm => pm.PostId)} = {__(T.Post, p => p.PostId)} ";
+					subQuery += $"AND {__(T.PostMeta, pm => pm.Key)} = {customFieldKeyParameter} ";
+					subQuery += $"AND {__(T.PostMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter} ";
 
 					// Add sub query to where
 					customFieldWhere += $"({subQuery}) = 1";

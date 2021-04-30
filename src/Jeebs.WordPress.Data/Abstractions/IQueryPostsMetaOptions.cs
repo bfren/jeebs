@@ -16,16 +16,16 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get meta for a single Post
 		/// </summary>
-		long? PostId { get; set; }
+		long? PostId { get; init; }
 
 		/// <summary>
 		/// Get meta for multiple Posts
 		/// </summary>
-		IImmutableList<long>? PostIds { get; set; }
+		IImmutableList<long>? PostIds { get; init; }
 
 		/// <summary>
 		/// Only return a single Key
 		/// </summary>
-		string? Key { get; set; }
+		string? Key { get; init; }
 	}
 }
