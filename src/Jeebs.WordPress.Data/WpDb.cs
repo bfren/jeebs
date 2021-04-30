@@ -1,12 +1,14 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using F.WordPressF.DataF;
 using Jeebs.Config;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Tables;
 using Jeebs.WordPress.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
 
@@ -43,108 +45,75 @@ namespace Jeebs.WordPress.Data
 		where Tu : WpUserEntity
 		where Tum : WpUserMetaEntity
 	{
-		#region Tables
-
-		/// <inheritdoc/>
-		public CommentTable Comment { get; private init; }
-
-		/// <inheritdoc/>
-		public CommentMetaTable CommentMeta { get; private init; }
-
-		/// <inheritdoc/>
-		public LinkTable Link { get; private init; }
-
-		/// <inheritdoc/>
-		public OptionTable Option { get; private init; }
-
-		/// <inheritdoc/>
-		public PostTable Post { get; private init; }
-
-		/// <inheritdoc/>
-		public PostMetaTable PostMeta { get; private init; }
-
-		/// <inheritdoc/>
-		public TermTable Term { get; private init; }
-
-		/// <inheritdoc/>
-		public TermMetaTable TermMeta { get; private init; }
-
-		/// <inheritdoc/>
-		public TermRelationshipTable TermRelationship { get; private init; }
-
-		/// <inheritdoc/>
-		public TermTaxonomyTable TermTaxonomy { get; private init; }
-
-		/// <inheritdoc/>
-		public UserTable User { get; private init; }
-
-		/// <inheritdoc/>
-		public UserMetaTable UserMeta { get; private init; }
-
-		#endregion
-
 		private readonly WpDbQuery query;
 
+		public IWpDbSchema Schema { get; private init; }
+
 		/// <inheritdoc cref="WpDb{Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum}.WpDb(IDbClient, IOptions{DbConfig}, ILog{IWpDb}, WpConfig)"/>
-		public WpDb(IOptions<DbConfig> dbConfig, ILog<IWpDb> log, WpConfig wpConfig)
-			: this(new MySqlDbClient(), dbConfig, log, wpConfig) { }
+		public WpDb(IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log)
+			: this(new MySqlDbClient(), dbConfig, wpConfig, log) { }
 
 		/// <summary>
 		/// Create tables and map entity types
 		/// </summary>
 		/// <param name="client">Database client</param>
 		/// <param name="dbConfig">Database configuration</param>
-		/// <param name="log">ILog</param>
 		/// <param name="wpConfig">WordPress configuration</param>
-		internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, ILog<IWpDb> log, WpConfig wpConfig)
-			: base(client, dbConfig, log, wpConfig.Db)
+		/// <param name="log">ILog</param>
+		internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log)
+			: base(client, dbConfig, log, wpConfig.Value.Db)
 		{
 			// Create query object
 			query = new(this, log.ForContext<WpDbQuery>());
 
 			// Get WordPress config
-			log.Verbose("WordPress Config: {@WpConfig}", wpConfig);
+			log.Verbose("WordPress Config: {@WpConfig}", wpConfig.Value);
 
-			// Create table definitions
-			Comment = new CommentTable(wpConfig.TablePrefix);
-			CommentMeta = new CommentMetaTable(wpConfig.TablePrefix);
-			Link = new LinkTable(wpConfig.TablePrefix);
-			Option = new OptionTable(wpConfig.TablePrefix);
-			Post = new PostTable(wpConfig.TablePrefix);
-			PostMeta = new PostMetaTable(wpConfig.TablePrefix);
-			Term = new TermTable(wpConfig.TablePrefix);
-			TermMeta = new TermMetaTable(wpConfig.TablePrefix);
-			TermRelationship = new TermRelationshipTable(wpConfig.TablePrefix);
-			TermTaxonomy = new TermTaxonomyTable(wpConfig.TablePrefix);
-			User = new UserTable(wpConfig.TablePrefix);
-			UserMeta = new UserMetaTable(wpConfig.TablePrefix);
+			// Create schema
+			Schema = new WpDbSchema(wpConfig.Value.TablePrefix);
 
 			// Map entities to tables
-			Map<Tc>.To(Comment);
-			Map<Tcm>.To(CommentMeta);
-			Map<Tl>.To(Link);
-			Map<To>.To(Option);
-			Map<Tp>.To(Post);
-			Map<Tpm>.To(PostMeta);
-			Map<Tt>.To(Term);
-			Map<Ttm>.To(TermMeta);
-			Map<Ttr>.To(TermRelationship);
-			Map<Ttt>.To(TermTaxonomy);
-			Map<Tu>.To(User);
-			Map<Tum>.To(UserMeta);
+			Map<Tc>.To(Schema.Comment);
+			Map<Tcm>.To(Schema.CommentMeta);
+			Map<Tl>.To(Schema.Link);
+			Map<To>.To(Schema.Option);
+			Map<Tp>.To(Schema.Post);
+			Map<Tpm>.To(Schema.PostMeta);
+			Map<Tt>.To(Schema.Term);
+			Map<Ttm>.To(Schema.TermMeta);
+			Map<Ttr>.To(Schema.TermRelationship);
+			Map<Ttt>.To(Schema.TermTaxonomy);
+			Map<Tu>.To(Schema.User);
+			Map<Tum>.To(Schema.UserMeta);
 		}
+
+		#region Query Methods
+
+		/// <inheritdoc cref="QueryPostsAsync{TModel}(long, Query.GetPostsOptions{Tp})"/>
+		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions<Tp> opt)
+			where TModel : IWithId =>
+			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(query, opt);
 
 		/// <summary>
 		/// Query Post objects
 		/// </summary>
-		public Query.Posts QueryPosts =>
-			new(query);
+		/// <param name="page">Page number</param>
+		/// <param name="opt">Query options</param>
+		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions<Tp> opt)
+			where TModel : IWithId =>
+			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(query, page, opt);
 
 		/// <summary>
-		/// Query Post Meta object
+		/// Query Terms
 		/// </summary>
-		public Query.PostsMeta QueryPostsMeta =>
-			new(query);
+		/// <param name="opt">Query options</param>
+		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermOptions<Tt> opt)
+			where TModel : IWithId =>
+			QueryPostsTaxonomyF.ExecuteAsync<Tt, TModel>(query, opt);
+
+		#endregion
+
+		#region Static
 
 		/// <summary>
 		/// Add Dapper type handlers
@@ -161,16 +130,6 @@ namespace Jeebs.WordPress.Data
 			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());
 		}
 
-		/// <summary>
-		/// Query implementations for the current WordPress entities
-		/// </summary>
-		public static class Query
-		{
-			/// <inheritdoc cref="Jeebs.WordPress.Data.Query.Posts{TPost, TPostMeta}"/>
-			public sealed record Posts(IWpDbQuery Query) : Data.Query.Posts<Tp, Tpm>(Query, new PostsMeta(Query));
-
-			/// <inheritdoc cref="Jeebs.WordPress.Data.Query.PostsMeta{TEntity}"/>
-			public sealed record PostsMeta(IWpDbQuery Query) : Data.Query.PostsMeta<Tpm>(Query);
-		}
+		#endregion
 	}
 }
