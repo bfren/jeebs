@@ -216,6 +216,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress", "src\Jeeb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress", "tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{3EDE4DCA-D279-4D90-A647-E5469D58DF18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppConsoleWp", "apps\AppConsoleWp\AppConsoleWp.csproj", "{8691C959-1846-44C1-8D2B-23B97F2CF1A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -464,6 +466,10 @@ Global
 		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EDE4DCA-D279-4D90-A647-E5469D58DF18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8691C959-1846-44C1-8D2B-23B97F2CF1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8691C959-1846-44C1-8D2B-23B97F2CF1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8691C959-1846-44C1-8D2B-23B97F2CF1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8691C959-1846-44C1-8D2B-23B97F2CF1A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -551,6 +557,7 @@ Global
 		{564E7800-3BBC-4187-AD0E-6D48956A11E1} = {BF8740C6-55F6-489E-8ECB-6916B8440FBF}
 		{3B61328D-81EB-45DE-B4F3-562D8FAEE044} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{3EDE4DCA-D279-4D90-A647-E5469D58DF18} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
+		{8691C959-1846-44C1-8D2B-23B97F2CF1A6} = {A256449B-4234-43DD-B18F-741D69906712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
