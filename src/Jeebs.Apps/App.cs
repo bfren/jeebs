@@ -30,12 +30,12 @@ namespace Jeebs.Apps
 
 			// Configure Host
 			.ConfigureHostConfiguration(
-				config => ConfigureHost(config, args)
+				config => ConfigureHost(config)
 			)
 
 			// Configure App
 			.ConfigureAppConfiguration(
-				(host, config) => ConfigureApp(host.HostingEnvironment, config)
+				(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
 			)
 
 			// Configure Serilog
@@ -70,13 +70,10 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="config">IConfigurationBuilder</param>
 		/// <param name="args">Command Line arguments</param>
-		protected virtual void ConfigureHost(IConfigurationBuilder config, string[] args)
+		protected virtual void ConfigureHost(IConfigurationBuilder config)
 		{
 			// Set base path to be directory of running assembly
 			config.SetBasePath(Directory.GetCurrentDirectory());
-
-			// Add command line arguments
-			config.AddCommandLine(args);
 		}
 
 		/// <summary>
@@ -84,7 +81,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfigurationBuilder</param>
-		protected virtual void ConfigureApp(IHostEnvironment env, IConfigurationBuilder config)
+		protected virtual void ConfigureApp(IHostEnvironment env, IConfigurationBuilder config, string[] args)
 		{
 			// Validate main configuration file
 			var path = $"{env.ContentRootPath}/jeebsconfig.json";
@@ -114,6 +111,9 @@ namespace Jeebs.Apps
 					new ClientSecretCredential(vault.TenantId, vault.ClientId, vault.ClientSecret)
 				);
 			}
+
+			// Add command line arguments
+			config.AddCommandLine(args);
 		}
 
 		/// <summary>
