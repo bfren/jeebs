@@ -17,11 +17,6 @@ namespace Jeebs.WordPress
 		IWpDb Db { get; }
 
 		/// <summary>
-		/// WordPress Query instance
-		/// </summary>
-		IWpDbQuery Query { get; }
-
-		/// <summary>
 		/// Register custom post types
 		/// </summary>
 		void RegisterCustomPostTypes();

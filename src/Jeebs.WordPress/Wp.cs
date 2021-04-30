@@ -45,27 +45,26 @@ namespace Jeebs.WordPress
 		/// <inheritdoc/>
 		public TConfig Config { get; private init; }
 
-		/// <inheritdoc/>
-		public IWpDb Db { get; private init; }
+		/// <inheritdoc cref="IWp.Db"/>
+		public WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> Db { get; private init; }
 
 		/// <inheritdoc/>
-		public IWpDbQuery Query { get; private init; }
+		IWpDb IWp.Db =>
+			Db;
 
 		/// <summary>
 		/// Create object and register custom fields / post types / taxonomies
 		/// </summary>
-		/// <param name="query">IWpDbQuery</param>
 		/// <param name="dbConfig">DbConfig</param>
 		/// <param name="wpConfig">WpConfig</param>
-		/// <param name="log">ILog</param>
-		protected Wp(IWpDbQuery query, IOptions<DbConfig> dbConfig, TConfig wpConfig, ILog<IWpDb> log)
+		/// <param name="logForDb">ILog</param>
+		protected Wp(IOptions<DbConfig> dbConfig, IOptions<TConfig> wpConfig, ILog logForDb)
 		{
-			// Store config and query objects
-			Config = wpConfig;
-			Query = query;
+			// Store config
+			Config = wpConfig.Value;
 
 			// Create new database object using this instance's entity types
-			Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, log, wpConfig);
+			Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, logForDb);
 
 			// Don't need to lock here - if two threads try to register custom types etc,
 			// it will simply return false
