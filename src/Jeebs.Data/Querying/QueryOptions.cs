@@ -46,7 +46,7 @@ namespace Jeebs.Data.Querying
 		public bool SortRandom { get; init; }
 
 		/// <inheritdoc/>
-		public long? Maximum { get; init; }
+		public long? Maximum { get; init; } = 10;
 
 		/// <inheritdoc/>
 		public long Skip { get; init; }
@@ -64,7 +64,7 @@ namespace Jeebs.Data.Querying
 			this.mapper = mapper;
 
 		/// <inheritdoc/>
-		public virtual Option<IQueryParts> GetParts<TModel>() =>
+		public Option<IQueryParts> GetParts<TModel>() =>
 			from map in mapper.GetTableMapFor<TEntity>()
 			from cols in GetColumns<TModel>(map)
 			from parts in GetParts(map, cols)
@@ -85,40 +85,30 @@ namespace Jeebs.Data.Querying
 		/// <param name="cols">Select ColumnList</param>
 		protected virtual Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
 			CreateParts(
-				map
+				map.Table, cols
 			)
-			.Bind(
-				x => AddSelect(x, cols)
+			.SwitchIf(
+				_ => Id is not null || Ids is not null,
+				x => AddWhereId(x, map)
 			)
-			.Bind(
-				x => AddId(x, map)
-			)
-			.Bind(
-				x => AddSort(x)
-			)
-			.Map(
-				x => x with
-				{
-					Maximum = Maximum,
-					Skip = Skip
-				},
-				DefaultHandler
+			.SwitchIf(
+				_ => SortRandom || Sort is not null,
+				AddSort
 			);
 
 		/// <summary>
-		/// Create a new QueryParts object
+		/// Create a new QueryParts object, adding <paramref name="select"/> columns and
+		/// <see cref="Maximum"/> and <see cref="Skip"/> values
 		/// </summary>
-		/// <param name="map">ITableMap for <typeparamref name="TEntity"/></param>
-		protected virtual Option<QueryParts> CreateParts(ITableMap map) =>
-			new QueryParts(map.Table);
-
-		/// <summary>
-		/// Add Select columns
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="cols">Select ColumnList</param>
-		protected virtual Option<QueryParts> AddSelect(QueryParts parts, IColumnList cols) =>
-			parts with { Select = cols };
+		/// <param name="table"><see cref="ITable"/> mapped to <typeparamref name="TEntity"/></param>
+		/// <param name="select">Columns to select</param>
+		protected virtual Option<QueryParts> CreateParts(ITable table, IColumnList select) =>
+			new QueryParts(table)
+			{
+				Select = select,
+				Maximum = Maximum,
+				Skip = Skip
+			};
 
 		/// <summary>
 		/// Add Inner Join
@@ -170,7 +160,7 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
 		/// <param name="map">ITableMap for <typeparamref name="TEntity"/></param>
-		protected virtual Option<QueryParts> AddId(QueryParts parts, ITableMap map)
+		protected virtual Option<QueryParts> AddWhereId(QueryParts parts, ITableMap map)
 		{
 			// Add Id EQUAL
 			if (Id is not null)
@@ -265,14 +255,11 @@ namespace Jeebs.Data.Querying
 		internal Option<QueryParts> GetPartsTest(ITableMap map, IColumnList cols) =>
 			GetParts(map, cols);
 
-		internal Option<QueryParts> CreatePartsTest(ITableMap map) =>
-			CreateParts(map);
+		internal Option<QueryParts> CreatePartsTest(ITable table, IColumnList select) =>
+			CreateParts(table, select);
 
-		internal Option<QueryParts> AddSelectTest(QueryParts parts, IColumnList cols) =>
-			AddSelect(parts, cols);
-
-		internal Option<QueryParts> AddIdTest(QueryParts parts, ITableMap map) =>
-			AddId(parts, map);
+		internal Option<QueryParts> AddWhereIdTest(QueryParts parts, ITableMap map) =>
+			AddWhereId(parts, map);
 
 		internal Option<QueryParts> AddSortTest(QueryParts parts) =>
 			AddSort(parts);

@@ -63,7 +63,7 @@ namespace Jeebs.Data.Querying
 		bool SortRandom { get; init; }
 
 		/// <summary>
-		/// Maximum number of results to return (if null will select all rows)
+		/// Maximum number of results to return (if null will select all rows) - default is 10
 		/// </summary>
 		long? Maximum { get; init; }
 
