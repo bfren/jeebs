@@ -45,8 +45,12 @@ namespace Jeebs.WordPress.Data
 		where Tu : WpUserEntity
 		where Tum : WpUserMetaEntity
 	{
-		private readonly WpDbQuery query;
+		/// <summary>
+		/// WpDbQuery
+		/// </summary>
+		internal WpDbQuery Query { get; private init; }
 
+		/// <inheritdoc/>
 		public IWpDbSchema Schema { get; private init; }
 
 		/// <inheritdoc cref="WpDb{Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum}.WpDb(IDbClient, IOptions{DbConfig}, ILog{IWpDb}, WpConfig)"/>
@@ -64,7 +68,7 @@ namespace Jeebs.WordPress.Data
 			: base(client, dbConfig, log, wpConfig.Value.Db)
 		{
 			// Create query object
-			query = new(this, log.ForContext<WpDbQuery>());
+			Query = new(this, log.ForContext<WpDbQuery>());
 
 			// Get WordPress config
 			log.Verbose("WordPress Config: {@WpConfig}", wpConfig.Value);
@@ -92,7 +96,7 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc cref="QueryPostsAsync{TModel}(long, Query.GetPostsOptions{Tp})"/>
 		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions<Tp> opt)
 			where TModel : IWithId =>
-			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(query, opt);
+			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(Query, opt);
 
 		/// <summary>
 		/// Query Post objects
@@ -101,15 +105,15 @@ namespace Jeebs.WordPress.Data
 		/// <param name="opt">Query options</param>
 		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions<Tp> opt)
 			where TModel : IWithId =>
-			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(query, page, opt);
+			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(Query, page, opt);
 
 		/// <summary>
 		/// Query Terms
 		/// </summary>
 		/// <param name="opt">Query options</param>
-		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermOptions<Tt> opt)
+		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermsOptions<Tt> opt)
 			where TModel : IWithId =>
-			QueryPostsTaxonomyF.ExecuteAsync<Tt, TModel>(query, opt);
+			QueryTermsF.ExecuteAsync<Tt, TModel>(Query, opt);
 
 		#endregion
 

@@ -2,7 +2,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Functions\QueryTermsF\" />
-  </ItemGroup>
 </Project>

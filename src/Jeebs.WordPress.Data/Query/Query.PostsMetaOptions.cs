@@ -11,8 +11,8 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsMetaOptions{TEntity}"/>
-		public sealed record PostsMetaOptions<TEntity> : Options<TEntity, WpPostMetaId>, IQueryPostsMetaOptions<TEntity>
-			where TEntity : WpPostMetaEntity
+		public sealed record PostsMetaOptions<TPostMeta> : Options<TPostMeta, WpPostMetaId>, IQueryPostsMetaOptions<TPostMeta>
+			where TPostMeta : WpPostMetaEntity
 		{
 			/// <inheritdoc/>
 			public long? PostId { get; init; }

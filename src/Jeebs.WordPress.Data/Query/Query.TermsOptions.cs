@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Linq;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -10,32 +9,34 @@ using Jeebs.Linq;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using static F.DataF.QueryF;
-using static F.OptionF;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
-		/// <inheritdoc cref="IQueryPostsTaxonomyOptions{TEntity}"/>
-		public sealed record PostsTaxonomyOptions<TTerm> : Options<TTerm, WpTermId>, IQueryPostsTaxonomyOptions<TTerm>
+		/// <inheritdoc cref="IQueryTermsOptions{TEntity}"/>
+		public sealed record TermsOptions<TTerm> : Options<TTerm, WpTermId>, IQueryTermsOptions<TTerm>
 			where TTerm : WpTermEntity
 		{
 			/// <inheritdoc/>
-			public IImmutableList<Taxonomy>? Taxonomies { get; init; }
+			public Taxonomy? Taxonomy { get; init; }
 
 			/// <inheritdoc/>
-			public IImmutableList<long>? PostIds { get; init; }
+			public string? Slug { get; init; }
+
+			/// <inheritdoc/>
+			public long CountAtLeast { get; init; } = 1;
 
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal PostsTaxonomyOptions(IWpDb db) : base(db) =>
+			internal TermsOptions(IWpDb db) : base(db) =>
 				Maximum = null;
 
 			/// <inheritdoc/>
 			protected override Option<IColumnList> GetColumns<TModel>(ITableMap _) =>
-				Extract<TModel>.From(T.Term, T.TermRelationship, T.TermTaxonomy);
+				Extract<TModel>.From(T.Term, T.TermTaxonomy);
 
 			/// <inheritdoc/>
 			protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
@@ -45,35 +46,36 @@ namespace Jeebs.WordPress.Data
 				.Bind(
 					x => AddInnerJoin(x, (T.Term, t => t.TermId), (T.TermTaxonomy, tx => tx.TermId))
 				)
-				.Bind(
-					x => AddInnerJoin(x, (T.TermTaxonomy, tx => tx.TermTaxonomyId), (T.TermRelationship, tr => tr.TermTaxonomyId))
-				)
 				.SwitchIf(
 					_ => Id is not null || Ids is not null,
 					x => AddWhereId(x, map)
 				)
 				.SwitchIf(
-					_ => Taxonomies?.Count > 0,
-					ifTrue: AddWhereTaxonomies
+					_ => Taxonomy is not null,
+					ifTrue: AddWhereTaxonomy
 				)
 				.SwitchIf(
-					_ => PostIds?.Count > 0,
-					ifTrue: AddWherePostIds
+					_ => string.IsNullOrEmpty(Slug),
+					ifFalse: AddWhereSlug
+				)
+				.SwitchIf(
+					_ => CountAtLeast > 0,
+					ifTrue: AddWhereCount
 				)
 				.Bind(
 					x => AddSort(x)
 				);
 
 			/// <summary>
-			/// Add Where Taxonomies
+			/// Add Where Taxonomy
 			/// </summary>
 			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereTaxonomies(QueryParts parts)
+			internal Option<QueryParts> AddWhereTaxonomy(QueryParts parts)
 			{
-				// Add Taxonomies
-				if (Taxonomies is ImmutableList<Taxonomy> taxonomies && taxonomies.Count > 0)
+				// Add Taxonomy
+				if (Taxonomy is Taxonomy taxonomy)
 				{
-					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.In, taxonomies);
+					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.Equal, taxonomy);
 				}
 
 				// Return
@@ -81,15 +83,31 @@ namespace Jeebs.WordPress.Data
 			}
 
 			/// <summary>
-			/// Add Where Post IDs
+			/// Add Where Slug
 			/// </summary>
 			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWherePostIds(QueryParts parts)
+			internal Option<QueryParts> AddWhereSlug(QueryParts parts)
 			{
-				// Add Post IDs
-				if (PostIds is ImmutableList<long> postIds && postIds.Count > 0)
+				// Add Slug
+				if (Slug is string slug)
 				{
-					return AddWhere(parts, T.TermRelationship, t => t.PostId, Compare.In, postIds);
+					return AddWhere(parts, T.Term, t => t.Slug, Compare.Equal, slug);
+				}
+
+				// Return
+				return parts;
+			}
+
+			/// <summary>
+			/// Add Where Count
+			/// </summary>
+			/// <param name="parts">QueryParts</param>
+			internal Option<QueryParts> AddWhereCount(QueryParts parts)
+			{
+				// Add Count
+				if (CountAtLeast is long count)
+				{
+					return AddWhere(parts, T.TermTaxonomy, t => t.Count, Compare.MoreThanOrEqual, count);
 				}
 
 				// Return

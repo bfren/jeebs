@@ -18,7 +18,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var (_, map, parts, options) = QueryOptions_Setup.Get();
 
 			// Act
-			var result = options.AddIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, map);
 
 			// Assert
 			var some = result.AssertSome();
@@ -35,7 +35,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			map.IdColumn.Returns(idColumn);
 
 			// Act
-			var result = options.AddIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, map);
 
 			// Assert
 			var some = result.AssertSome();
@@ -63,7 +63,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			map.IdColumn.Returns(idColumn);
 
 			// Act
-			var result = options.AddIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, map);
 
 			// Assert
 			var some = result.AssertSome();
@@ -90,7 +90,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			map.IdColumn.Returns(idColumn);
 
 			// Act
-			var result = options.AddIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, map);
 
 			// Assert
 			var some = result.AssertSome();

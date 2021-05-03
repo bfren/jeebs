@@ -11,10 +11,10 @@ using static F.OptionF;
 
 namespace F.WordPressF.DataF
 {
-	public static partial class QueryPostsTaxonomyF
+	public static partial class QueryTermsF
 	{
 		/// <summary>
-		/// Execute Posts Taxonomy query
+		/// Execute Terms query
 		/// </summary>
 		/// <typeparam name="TTerm">Term Entity type</typeparam>
 		/// <typeparam name="TModel">Return Model type</typeparam>
@@ -22,13 +22,13 @@ namespace F.WordPressF.DataF
 		/// <param name="opt">Function to return query options</param>
 		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TTerm, TModel>(
 			IWpDbQuery query,
-			Query.GetPostsTaxonomyOptions<TTerm> opt
+			Query.GetTermsOptions<TTerm> opt
 		)
 			where TTerm : WpTermEntity
 			where TModel : IWithId =>
 			Return(
-				() => opt(new Query.PostsTaxonomyOptions<TTerm>(query.Db)),
-				e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
+				() => opt(new Query.TermsOptions<TTerm>(query.Db)),
+				e => new Msg.ErrorGettingQueryTermsOptionsMsg(e)
 			)
 			.Bind(
 				x => x.GetParts<TModel>()
@@ -40,9 +40,9 @@ namespace F.WordPressF.DataF
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>Unable to get posts taxonomy query</summary>
+			/// <summary>Unable to get terms query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryPostsTaxonomyOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record ErrorGettingQueryTermsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

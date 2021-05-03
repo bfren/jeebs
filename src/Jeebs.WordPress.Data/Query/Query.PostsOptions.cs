@@ -16,8 +16,8 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsOptions{TEntity}"/>
-		public sealed record PostsOptions<TEntity> : Options<TEntity, WpPostId>, IQueryPostsOptions<TEntity>
-		where TEntity : WpPostEntity
+		public sealed record PostsOptions<TPost> : Options<TPost, WpPostId>, IQueryPostsOptions<TPost>
+			where TPost : WpPostEntity
 		{
 			/// <inheritdoc/>
 			public PostType Type { get; init; } = PostType.Post;
@@ -69,8 +69,8 @@ namespace Jeebs.WordPress.Data
 					AddWhereStatus
 				)
 				.SwitchIf(
-					_ => SearchText is not null,
-					ifTrue: AddWhereSearch
+					_ => string.IsNullOrEmpty(SearchText),
+					ifFalse: AddWhereSearch
 				)
 				.SwitchIf(
 					_ => From is not null,

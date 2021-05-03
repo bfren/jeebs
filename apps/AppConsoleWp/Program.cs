@@ -19,7 +19,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var bcg = provider.GetRequiredService<WpBcg>();
 	var usa = provider.GetRequiredService<WpUsa>();
 
+	//
 	// Get random posts
+	//
+
 	Console.WriteLine();
 	log.Debug("== Three Random Posts ==");
 	await bcg.Db.QueryPostsAsync<PostModel>(opt => opt with
@@ -43,7 +46,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		none: r => log.Message(r)
 	);
 
-	// Search for posts with a string term
+	//
+	// Search for sermons with a string term
+	//
+
 	const string term = "holiness";
 	Console.WriteLine();
 	log.Debug("== Search for Sermons with '{Term}' ==", term);
@@ -72,41 +78,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		none: r => log.Message(r)
 	);
 
-	// Search for posts with a taxonomy
-	var taxonomy = WpBcg.Taxonomies.BibleBook;
-	const long book0 = 423L;
-	const long book1 = 628L;
-	Console.WriteLine();
-	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0, book1);
-	await bcg.Db.QueryPostsAsync<SermonModel>(opt => opt with
-	{
-		Type = WpBcg.PostTypes.Sermon,
-		Taxonomies = new[] { (taxonomy, book0), (taxonomy, book1) }.ToImmutableList(),
-		Maximum = 5
-	})
-	.AuditAsync(
-		some: x =>
-		{
-			if (!x.Any())
-			{
-				log.Error("No sermons found.");
-			}
-
-			if (x.Count() > 1)
-			{
-				log.Error("Too many sermons found.");
-				return;
-			}
-
-			foreach (var item in x)
-			{
-				log.Debug("Sermon {Id}: {Title}", item.PostId, item.Title);
-			}
-		},
-		none: r => log.Message(r)
-	);
-
+	//
 	// Get sermons with taxonomies
+	//
+
 	Console.WriteLine();
 	log.Debug("== Get Sermons with Taxonomy properties ==");
 	await bcg.Db.QueryPostsAsync<SermonModelWithTaxonomies>(opt => opt with
@@ -132,6 +107,75 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		},
 		none: r => log.Message(r)
 	);
+
+	//
+	// Search for sermons with a taxonomy
+	//
+
+	var taxonomy = WpBcg.Taxonomies.BibleBook;
+	const long book0 = 423L;
+	const long book1 = 628L;
+	Console.WriteLine();
+	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0, book1);
+	await bcg.Db.QueryPostsAsync<SermonModelWithTaxonomies>(opt => opt with
+	{
+		Type = WpBcg.PostTypes.Sermon,
+		Taxonomies = new[] { (taxonomy, book0), (taxonomy, book1) }.ToImmutableList(),
+		Maximum = 5
+	})
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No sermons found.");
+			}
+
+			if (x.Count() > 1)
+			{
+				log.Error("Too many sermons found.");
+				return;
+			}
+
+			foreach (var item in x)
+			{
+				log.Debug("Sermon {Id}: {Title}", item.PostId, item.Title);
+				log.Debug("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
+			}
+		},
+		none: r => log.Message(r)
+	);
+
+	//
+	// Get taxonomies
+	//
+
+	Console.WriteLine();
+	log.Debug("== Get Category taxonomy ==");
+	await usa.Db.QueryTermsAsync<TaxonomyModel>(opt => opt with
+	{
+		Taxonomy = Taxonomy.PostCategory,
+		CountAtLeast = 3
+	})
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No terms found.");
+			}
+
+			foreach (var item in x)
+			{
+				log.Debug("Term {Id}: {Title} ({Count})", item.TermId, item.Title, item.Count);
+			}
+		},
+		none: r => log.Message(r)
+	);
+
+	//
+	// Get sermons with custom fields
+	//
 
 	// End
 	Console.WriteLine();

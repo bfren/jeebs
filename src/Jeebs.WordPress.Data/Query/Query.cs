@@ -21,17 +21,25 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get default PostsMetaOptions and modify
 		/// </summary>
-		/// <typeparam name="TTaxonomy">Post Meta Entity type</typeparam>
+		/// <typeparam name="TPostMeta">Post Meta Entity type</typeparam>
 		/// <param name="opt">Modify default options</param>
-		public delegate PostsMetaOptions<TTaxonomy> GetPostsMetaOptions<TTaxonomy>(PostsMetaOptions<TTaxonomy> opt)
-			where TTaxonomy : WpPostMetaEntity;
+		public delegate PostsMetaOptions<TPostMeta> GetPostsMetaOptions<TPostMeta>(PostsMetaOptions<TPostMeta> opt)
+			where TPostMeta : WpPostMetaEntity;
 
 		/// <summary>
-		/// Get default TaxonomyOptions and modify
+		/// Get default PostsTaxonomyOptions and modify
 		/// </summary>
 		/// <typeparam name="TTerm">Term Entity type</typeparam>
 		/// <param name="opt">Modify default options</param>
-		public delegate PostsTaxonomy<TTerm> GetTermOptions<TTerm>(PostsTaxonomy<TTerm> opt)
+		public delegate PostsTaxonomyOptions<TTerm> GetPostsTaxonomyOptions<TTerm>(PostsTaxonomyOptions<TTerm> opt)
+			where TTerm : WpTermEntity;
+
+		/// <summary>
+		/// Get default TermsOptions and modify
+		/// </summary>
+		/// <typeparam name="TTerm">Term Entity type</typeparam>
+		/// <param name="opt">Modify default options</param>
+		public delegate TermsOptions<TTerm> GetTermsOptions<TTerm>(TermsOptions<TTerm> opt)
 			where TTerm : WpTermEntity;
 	}
 }
