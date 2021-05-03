@@ -18,23 +18,23 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TTerm">Term Entity type</typeparam>
 		/// <typeparam name="TModel">Return Model type</typeparam>
-		/// <param name="query">IWpDbQuery</param>
+		/// <param name="db">IWpDb</param>
 		/// <param name="opt">Function to return query options</param>
 		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TTerm, TModel>(
-			IWpDbQuery query,
+			IWpDb db,
 			Query.GetPostsTaxonomyOptions<TTerm> opt
 		)
 			where TTerm : WpTermEntity
 			where TModel : IWithId =>
 			Return(
-				() => opt(new Query.PostsTaxonomyOptions<TTerm>(query.Db)),
+				() => opt(new Query.PostsTaxonomyOptions<TTerm>(db)),
 				e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
 			)
 			.Bind(
 				x => x.GetParts<TModel>()
 			)
 			.BindAsync(
-				x => query.QueryAsync<TModel>(x)
+				x => db.Query.QueryAsync<TModel>(x)
 			);
 
 		/// <summary>Messages</summary>

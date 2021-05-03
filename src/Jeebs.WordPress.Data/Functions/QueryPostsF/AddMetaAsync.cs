@@ -20,16 +20,16 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <typeparam name="TPostMeta">Post Meta Entity type</typeparam>
-		/// <param name="query">IWpDbQuery</param>
+		/// <param name="db">IWpDbQueIWpDbry</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddMetaAsync<TList, TModel, TPostMeta>(IWpDbQuery query, TList posts)
+		internal static Task<Option<TList>> AddMetaAsync<TList, TModel, TPostMeta>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId
 			where TPostMeta : WpPostMetaEntity =>
 			GetMetaDictionary<TModel>()
 			.SwitchAsync(
 				some: x =>
-					from postMeta in QueryPostsMetaF.ExecuteAsync<TPostMeta, TPostMeta>(query, opt => opt with
+					from postMeta in QueryPostsMetaF.ExecuteAsync<TPostMeta, TPostMeta>(db, opt => opt with
 					{
 						PostIds = posts.Select(p => p.Id.Value).ToImmutableList()
 					})

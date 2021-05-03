@@ -18,9 +18,9 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="query">IWpDbQuery</param>
+		/// <param name="db">IWpDbQuery</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDbQuery query, TList posts)
+		internal static Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId
 		{
@@ -34,7 +34,7 @@ namespace F.WordPressF.DataF
 			// Get terms and add them to the posts
 			return GetMetaDictionary<TModel>()
 				.BindAsync(
-					x => HydrateAsync(query.Db, posts, x, fields)
+					x => HydrateAsync(db, posts, x, fields)
 				);
 		}
 
@@ -43,7 +43,7 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="db">IWpDb</param>
+		/// <param name="db">IWpDbQuery</param>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Meta property</param>
 		/// <param name="fields">Custom Fields</param>

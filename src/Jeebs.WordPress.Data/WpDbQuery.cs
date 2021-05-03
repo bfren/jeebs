@@ -8,10 +8,6 @@ namespace Jeebs.WordPress.Data
 	/// <inheritdoc cref="IWpDbQuery"/>
 	internal sealed class WpDbQuery : DbQuery, IWpDbQuery
 	{
-		/// <inheritdoc/>
-		new public IWpDb Db =>
-			(IWpDb)base.Db;
-
 		/// <summary>
 		/// Inject dependencies
 		/// </summary>

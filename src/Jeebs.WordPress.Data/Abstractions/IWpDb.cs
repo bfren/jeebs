@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data;
-using Jeebs.WordPress.Data.Entities;
 
 namespace Jeebs.WordPress.Data
 {
@@ -11,9 +10,10 @@ namespace Jeebs.WordPress.Data
 	/// </summary>
 	public interface IWpDb : IDb
 	{
-		/// <summary>
-		/// WordPress Database schema
-		/// </summary>
+		/// <inheritdoc cref="IWpDbQuery"/>
+		IWpDbQuery Query { get; }
+
+		/// <inheritdoc cref="IWpDbSchema"/>
 		IWpDbSchema Schema { get; }
 	}
 }

@@ -20,9 +20,9 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="query">IWpDbQuery</param>
+		/// <param name="db">IWpDb</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddTaxonomiesAsync<TList, TModel, TTerm>(IWpDbQuery query, TList posts)
+		internal static Task<Option<TList>> AddTaxonomiesAsync<TList, TModel, TTerm>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId
 			where TTerm : WpTermEntity
@@ -36,7 +36,7 @@ namespace F.WordPressF.DataF
 
 			// Get terms and add them to the posts
 			return QueryPostsTaxonomyF
-				.ExecuteAsync<TTerm, Term>(query, opt => opt with
+				.ExecuteAsync<TTerm, Term>(db, opt => opt with
 				{
 					PostIds = posts.Select(p => p.Id.Value).ToImmutableList()
 				})

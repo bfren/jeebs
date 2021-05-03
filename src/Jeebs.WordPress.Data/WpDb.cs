@@ -45,10 +45,8 @@ namespace Jeebs.WordPress.Data
 		where Tu : WpUserEntity
 		where Tum : WpUserMetaEntity
 	{
-		/// <summary>
-		/// WpDbQuery
-		/// </summary>
-		internal WpDbQuery Query { get; private init; }
+		/// <inheritdoc/>
+		public IWpDbQuery Query { get; private init; }
 
 		/// <inheritdoc/>
 		public IWpDbSchema Schema { get; private init; }
@@ -67,11 +65,11 @@ namespace Jeebs.WordPress.Data
 		internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log)
 			: base(client, dbConfig, log, wpConfig.Value.Db)
 		{
-			// Create query object
-			Query = new(this, log.ForContext<WpDbQuery>());
-
-			// Get WordPress config
+			// Log WordPress config
 			log.Verbose("WordPress Config: {@WpConfig}", wpConfig.Value);
+
+			// Create query object
+			Query = new WpDbQuery(this, log.ForContext<WpDbQuery>());
 
 			// Create schema
 			Schema = new WpDbSchema(wpConfig.Value.TablePrefix);
@@ -96,7 +94,7 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc cref="QueryPostsAsync{TModel}(long, Query.GetPostsOptions{Tp})"/>
 		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions<Tp> opt)
 			where TModel : IWithId =>
-			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(Query, opt);
+			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(this, opt);
 
 		/// <summary>
 		/// Query Post objects
@@ -105,7 +103,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="opt">Query options</param>
 		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions<Tp> opt)
 			where TModel : IWithId =>
-			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(Query, page, opt);
+			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(this, page, opt);
 
 		/// <summary>
 		/// Query Terms
@@ -113,7 +111,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="opt">Query options</param>
 		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermsOptions<Tt> opt)
 			where TModel : IWithId =>
-			QueryTermsF.ExecuteAsync<Tt, TModel>(Query, opt);
+			QueryTermsF.ExecuteAsync<Tt, TModel>(this, opt);
 
 		#endregion
 

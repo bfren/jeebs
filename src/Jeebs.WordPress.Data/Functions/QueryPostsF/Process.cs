@@ -17,9 +17,9 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="query">IWpDbQuery</param>
+		/// <param name="db">IWpDb</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> Process<TList, TModel, TPostMeta, TTerm>(IWpDbQuery query, TList posts)
+		internal static Task<Option<TList>> Process<TList, TModel, TPostMeta, TTerm>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId
 			where TPostMeta : WpPostMetaEntity
@@ -28,13 +28,13 @@ namespace F.WordPressF.DataF
 				posts
 			)
 			.BindAsync(
-				x => AddMetaAsync<TList, TModel, TPostMeta>(query, x)
+				x => AddMetaAsync<TList, TModel, TPostMeta>(db, x)
 			)
 			.BindAsync(
-				x => AddCustomFieldsAsync<TList, TModel>(query, x)
+				x => AddCustomFieldsAsync<TList, TModel>(db, x)
 			)
 			.BindAsync(
-				x => AddTaxonomiesAsync<TList, TModel, TTerm>(query, x)
+				x => AddTaxonomiesAsync<TList, TModel, TTerm>(db, x)
 			);
 	}
 }
