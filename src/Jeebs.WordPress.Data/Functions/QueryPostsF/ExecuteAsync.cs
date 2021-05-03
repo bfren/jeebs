@@ -37,6 +37,28 @@ namespace F.WordPressF.DataF
 			);
 
 		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions{TPost})"/>
+		internal static Task<Option<IEnumerable<TPost>>> ExecuteAsync<TPost>(
+			IWpDb db,
+			Query.GetPostsOptions<TPost> opt
+		)
+			where TPost : WpPostEntity =>
+			ExecuteAsync<TPost, TPost>(db, opt);
+
+		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions{TPost})"/>
+		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TPost, TModel>(
+			IWpDb db,
+			Query.GetPostsOptions<TPost> opt
+		)
+			where TPost : WpPostEntity
+			where TModel : IWithId =>
+			GetQueryParts<TPost, TModel>(
+				db, opt
+			)
+			.BindAsync(
+				x => db.Query.QueryAsync<TModel>(x)
+			);
+
+		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions{TPost})"/>
 		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TPost, TPostMeta, TTerm, TModel>(
 			IWpDb db,
 			Query.GetPostsOptions<TPost> opt
@@ -45,11 +67,8 @@ namespace F.WordPressF.DataF
 			where TPostMeta : WpPostMetaEntity
 			where TTerm : WpTermEntity
 			where TModel : IWithId =>
-			GetQueryParts<TPost, TModel>(
+			ExecuteAsync<TPost, TModel>(
 				db, opt
-			)
-			.BindAsync(
-				x => db.Query.QueryAsync<TModel>(x)
 			)
 			.BindAsync(
 				x => x.Count() switch
