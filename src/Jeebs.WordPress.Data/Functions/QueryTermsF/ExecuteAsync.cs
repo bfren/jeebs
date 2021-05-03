@@ -13,6 +13,14 @@ namespace F.WordPressF.DataF
 {
 	public static partial class QueryTermsF
 	{
+		/// <inheritdoc cref="ExecuteAsync{TTerm, TModel}(IWpDb, Query.GetTermsOptions{TTerm})"/>
+		public static Task<Option<IEnumerable<TTerm>>> ExecuteAsync<TTerm>(
+			IWpDb db,
+			Query.GetTermsOptions<TTerm> opt
+		)
+			where TTerm : WpTermEntity =>
+			ExecuteAsync<TTerm, TTerm>(db, opt);
+
 		/// <summary>
 		/// Execute Terms query
 		/// </summary>
