@@ -1,18 +1,20 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
-		/// <inheritdoc cref="IQueryPostsMetaOptions{TEntity}"/>
-		public sealed record PostsMetaOptions<TPostMeta> : Options<TPostMeta, WpPostMetaId>, IQueryPostsMetaOptions<TPostMeta>
-			where TPostMeta : WpPostMetaEntity
+		/// <inheritdoc cref="IQueryPostsMetaOptions"/>
+		public sealed record PostsMetaOptions : Options<WpPostMetaId, PostMetaTable>, IQueryPostsMetaOptions
 		{
 			/// <inheritdoc/>
 			public long? PostId { get; init; }
@@ -23,16 +25,20 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			public string? Key { get; init; }
 
+			/// <inheritdoc/>
+			protected override Expression<Func<PostMetaTable, string>> IdColumn =>
+				table => table.PostMetaId;
+
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal PostsMetaOptions(IWpDb db) : base(db) { }
+			internal PostsMetaOptions(IWpDb db) : base(db, db.Schema.PostMeta) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
+			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
 				base.GetParts(
-					map, cols
+					table, cols, idColumn
 				)
 				.SwitchIf(
 					_ => PostId is not null and > 0,

@@ -13,10 +13,10 @@ namespace F.WordPressF.DataF
 {
 	public static partial class QueryTermsF
 	{
-		/// <inheritdoc cref="ExecuteAsync{TTerm, TModel}(IWpDb, Query.GetTermsOptions{TTerm})"/>
+		/// <inheritdoc cref="ExecuteAsync{TTerm, TModel}(IWpDb, Query.GetTermsOptions)"/>
 		public static Task<Option<IEnumerable<TTerm>>> ExecuteAsync<TTerm>(
 			IWpDb db,
-			Query.GetTermsOptions<TTerm> opt
+			Query.GetTermsOptions opt
 		)
 			where TTerm : WpTermEntity =>
 			ExecuteAsync<TTerm, TTerm>(db, opt);
@@ -30,12 +30,12 @@ namespace F.WordPressF.DataF
 		/// <param name="opt">Function to return query options</param>
 		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TTerm, TModel>(
 			IWpDb db,
-			Query.GetTermsOptions<TTerm> opt
+			Query.GetTermsOptions opt
 		)
 			where TTerm : WpTermEntity
 			where TModel : IWithId =>
 			Return(
-				() => opt(new Query.TermsOptions<TTerm>(db)),
+				() => opt(new Query.TermsOptions(db)),
 				e => new Msg.ErrorGettingQueryTermsOptionsMsg(e)
 			)
 			.Bind(

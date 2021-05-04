@@ -24,30 +24,30 @@ namespace F.WordPressF.DataF
 		/// <param name="opt">Function to return query options</param>
 		internal static Option<IQueryParts> GetQueryParts<TPost, TModel>(
 			IWpDb db,
-			Query.GetPostsOptions<TPost> opt
+			Query.GetPostsOptions opt
 		)
 			where TPost : WpPostEntity
 			where TModel : IWithId =>
 			Return(
-				() => opt(new Query.PostsOptions<TPost>(db)),
+				() => opt(new Query.PostsOptions(db)),
 				e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
 			)
 			.Bind(
 				x => x.GetParts<TModel>()
 			);
 
-		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions{TPost})"/>
+		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions)"/>
 		internal static Task<Option<IEnumerable<TPost>>> ExecuteAsync<TPost>(
 			IWpDb db,
-			Query.GetPostsOptions<TPost> opt
+			Query.GetPostsOptions opt
 		)
 			where TPost : WpPostEntity =>
 			ExecuteAsync<TPost, TPost>(db, opt);
 
-		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions{TPost})"/>
+		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions)"/>
 		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TPost, TModel>(
 			IWpDb db,
-			Query.GetPostsOptions<TPost> opt
+			Query.GetPostsOptions opt
 		)
 			where TPost : WpPostEntity
 			where TModel : IWithId =>
@@ -58,10 +58,10 @@ namespace F.WordPressF.DataF
 				x => db.Query.QueryAsync<TModel>(x)
 			);
 
-		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions{TPost})"/>
+		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions)"/>
 		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TPost, TPostMeta, TTerm, TModel>(
 			IWpDb db,
-			Query.GetPostsOptions<TPost> opt
+			Query.GetPostsOptions opt
 		)
 			where TPost : WpPostEntity
 			where TPostMeta : WpPostMetaEntity
@@ -93,7 +93,7 @@ namespace F.WordPressF.DataF
 		internal static Task<Option<IPagedList<TModel>>> ExecuteAsync<TPost, TPostMeta, TTerm, TModel>(
 			IWpDb db,
 			long page,
-			Query.GetPostsOptions<TPost> opt
+			Query.GetPostsOptions opt
 		)
 			where TPost : WpPostEntity
 			where TPostMeta : WpPostMetaEntity

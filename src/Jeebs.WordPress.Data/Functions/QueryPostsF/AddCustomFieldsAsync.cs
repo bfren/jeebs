@@ -72,9 +72,10 @@ namespace F.WordPressF.DataF
 						var result = await customField.HydrateAsync(db, metaDict).ConfigureAwait(false);
 
 						// If it failed and it's required, return None
-						if (result is None<bool> && customField.IsRequired)
+						if (result is None<bool> none && customField.IsRequired)
 						{
-							return None<TList>(new Msg.RequiredCustomFieldNotFoundMsg<TModel>(post.Id, info.Name, customField.Key));
+							return None<TList>(none.Reason);
+							//return None<TList>(new Msg.RequiredCustomFieldNotFoundMsg<TModel>(post.Id, info.Name, customField.Key));
 						}
 
 						// Set the value

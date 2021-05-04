@@ -26,13 +26,10 @@ namespace Jeebs.Data.Querying
 		}
 	}
 
-	/// <inheritdoc cref="IQueryOptions{TEntity, TId}"/>
-	public abstract record QueryOptions<TEntity, TId> : QueryOptions, IQueryOptions<TEntity, TId>
-		where TEntity : IWithId<TId>
+	/// <inheritdoc cref="IQueryOptions{TId}"/>
+	public abstract record QueryOptions<TId> : QueryOptions, IQueryOptions<TId>
 		where TId : StrongId
 	{
-		private readonly IMapper mapper;
-
 		/// <inheritdoc/>
 		public TId? Id { get; init; }
 
@@ -51,45 +48,39 @@ namespace Jeebs.Data.Querying
 		/// <inheritdoc/>
 		public long Skip { get; init; }
 
-		/// <summary>
-		/// Create using default <see cref="IMapper"/>
-		/// </summary>
-		protected QueryOptions() : this(Mapper.Instance) { }
-
-		/// <summary>
-		/// Inject an <see cref="IMapper"/>
-		/// </summary>
-		/// <param name="mapper">IMapper</param>
-		protected QueryOptions(IMapper mapper) =>
-			this.mapper = mapper;
-
 		/// <inheritdoc/>
-		public Option<IQueryParts> GetParts<TModel>() =>
-			from map in mapper.GetTableMapFor<TEntity>()
-			from cols in GetColumns<TModel>(map)
-			from parts in GetParts(map, cols)
+		public virtual Option<IQueryParts> GetParts<TModel>() =>
+			from map in GetMap()
+			from cols in GetColumns<TModel>(map.table)
+			from parts in GetParts(map.table, cols, map.idColumn)
 			select (IQueryParts)parts;
+
+		/// <summary>
+		/// Get mapped Table and ID Column
+		/// </summary>
+		protected abstract Option<(ITable table, IColumn idColumn)> GetMap();
 
 		/// <summary>
 		/// Get select columns for the specified <typeparamref name="TModel"/>
 		/// </summary>
 		/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
-		/// <param name="map">ITableMap for <typeparamref name="TEntity"/></param>
-		protected virtual Option<IColumnList> GetColumns<TModel>(ITableMap map) =>
-			Extract<TModel>.From(map.Table);
+		/// <param name="table">ITableMap for <typeparamref name="TEntity"/></param>
+		protected virtual Option<IColumnList> GetColumns<TModel>(ITable table) =>
+			Extract<TModel>.From(table);
 
 		/// <summary>
 		/// Actually get the various query parts using helper functions
 		/// </summary>
-		/// <param name="map">ITableMap for <typeparamref name="TEntity"/></param>
+		/// <param name="table">ITableMap for <typeparamref name="TEntity"/></param>
 		/// <param name="cols">Select ColumnList</param>
-		protected virtual Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
+		/// <param name="idColumn">ID Column</param>
+		protected virtual Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
 			CreateParts(
-				map.Table, cols
+				table, cols
 			)
 			.SwitchIf(
 				_ => Id is not null || Ids is not null,
-				x => AddWhereId(x, map)
+				x => AddWhereId(x, idColumn)
 			)
 			.SwitchIf(
 				_ => SortRandom || Sort is not null,
@@ -160,19 +151,19 @@ namespace Jeebs.Data.Querying
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
 		/// <param name="map">ITableMap for <typeparamref name="TEntity"/></param>
-		protected virtual Option<QueryParts> AddWhereId(QueryParts parts, ITableMap map)
+		protected virtual Option<QueryParts> AddWhereId(QueryParts parts, IColumn idColumn)
 		{
 			// Add Id EQUAL
 			if (Id is not null)
 			{
-				return parts with { Where = parts.Where.With((map.IdColumn, Compare.Equal, Id.Value)) };
+				return parts with { Where = parts.Where.With((idColumn, Compare.Equal, Id.Value)) };
 			}
 
 			// Add Id IN
 			else if (Ids is not null)
 			{
 				var ids = Ids.Select(x => x.Value);
-				return parts with { Where = parts.Where.With((map.IdColumn, Compare.In, ids)) };
+				return parts with { Where = parts.Where.With((idColumn, Compare.In, ids)) };
 			}
 
 			// Return
@@ -252,14 +243,14 @@ namespace Jeebs.Data.Querying
 
 		#region Testing
 
-		internal Option<QueryParts> GetPartsTest(ITableMap map, IColumnList cols) =>
-			GetParts(map, cols);
+		internal Option<QueryParts> GetPartsTest(ITable table, IColumnList cols, IColumn idColumn) =>
+			GetParts(table, cols, idColumn);
 
 		internal Option<QueryParts> CreatePartsTest(ITable table, IColumnList select) =>
 			CreateParts(table, select);
 
-		internal Option<QueryParts> AddWhereIdTest(QueryParts parts, ITableMap map) =>
-			AddWhereId(parts, map);
+		internal Option<QueryParts> AddWhereIdTest(QueryParts parts, IColumn idColumn) =>
+			AddWhereId(parts, idColumn);
 
 		internal Option<QueryParts> AddSortTest(QueryParts parts) =>
 			AddSort(parts);
@@ -277,5 +268,32 @@ namespace Jeebs.Data.Querying
 			AddWhereCustom(parts, clause, parameters);
 
 		#endregion
+	}
+
+	/// <inheritdoc cref="IQueryOptions{TId}"/>
+	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TId">Entity ID type</typeparam>
+	public abstract record QueryOptions<TEntity, TId> : QueryOptions<TId>, IQueryOptions<TId>
+		where TEntity : IWithId<TId>
+		where TId : StrongId
+	{
+		private readonly IMapper mapper;
+
+		/// <summary>
+		/// Create using default <see cref="IMapper"/>
+		/// </summary>
+		protected QueryOptions() : this(Mapper.Instance) { }
+
+		/// <summary>
+		/// Inject an <see cref="IMapper"/>
+		/// </summary>
+		/// <param name="mapper">IMapper</param>
+		protected QueryOptions(IMapper mapper) =>
+			this.mapper = mapper;
+
+		/// <inheritdoc/>
+		protected override Option<(ITable table, IColumn idColumn)> GetMap() =>
+			from map in mapper.GetTableMapFor<TEntity>()
+			select (map.Table, (IColumn)map.IdColumn);
 	}
 }

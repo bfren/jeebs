@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Linq.Expressions;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -8,15 +10,15 @@ using Jeebs.Data.Querying;
 using Jeebs.Linq;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Tables;
 using static F.DataF.QueryF;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
-		/// <inheritdoc cref="IQueryTermsOptions{TEntity}"/>
-		public sealed record TermsOptions<TTerm> : Options<TTerm, WpTermId>, IQueryTermsOptions<TTerm>
-			where TTerm : WpTermEntity
+		/// <inheritdoc cref="IQueryTermsOptions"/>
+		public sealed record TermsOptions : Options<WpTermId, TermTable>, IQueryTermsOptions
 		{
 			/// <inheritdoc/>
 			public Taxonomy? Taxonomy { get; init; }
@@ -27,28 +29,32 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			public long CountAtLeast { get; init; } = 1;
 
+			/// <inheritdoc/>
+			protected override Expression<Func<TermTable, string>> IdColumn =>
+				table => table.TermId;
+
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal TermsOptions(IWpDb db) : base(db) =>
+			internal TermsOptions(IWpDb db) : base(db, db.Schema.Term) =>
 				Maximum = null;
 
 			/// <inheritdoc/>
-			protected override Option<IColumnList> GetColumns<TModel>(ITableMap _) =>
-				Extract<TModel>.From(T.Term, T.TermTaxonomy);
+			protected override Option<IColumnList> GetColumns<TModel>(ITable table) =>
+				Extract<TModel>.From(table, T.TermTaxonomy);
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
+			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
 				CreateParts(
-					T.Term, cols
+					table, cols
 				)
 				.Bind(
 					x => AddInnerJoin(x, (T.Term, t => t.TermId), (T.TermTaxonomy, tx => tx.TermId))
 				)
 				.SwitchIf(
 					_ => Id is not null || Ids is not null,
-					x => AddWhereId(x, map)
+					x => AddWhereId(x, idColumn)
 				)
 				.SwitchIf(
 					_ => Taxonomy is not null,

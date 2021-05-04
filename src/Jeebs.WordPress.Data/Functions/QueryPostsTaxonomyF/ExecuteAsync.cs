@@ -22,12 +22,12 @@ namespace F.WordPressF.DataF
 		/// <param name="opt">Function to return query options</param>
 		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TTerm, TModel>(
 			IWpDb db,
-			Query.GetPostsTaxonomyOptions<TTerm> opt
+			Query.GetPostsTaxonomyOptions opt
 		)
 			where TTerm : WpTermEntity
 			where TModel : IWithId =>
 			Return(
-				() => opt(new Query.PostsTaxonomyOptions<TTerm>(db)),
+				() => opt(new Query.PostsTaxonomyOptions(db)),
 				e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
 			)
 			.Bind(

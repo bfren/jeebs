@@ -12,9 +12,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Query Posts Options
 	/// </summary>
-	/// <typeparam name="TPost">Post Entity type</typeparam>
-	public interface IQueryPostsOptions<TPost> : IQueryOptions<TPost, WpPostId>
-		where TPost : WpPostEntity
+	public interface IQueryPostsOptions : IQueryOptions<WpPostId>
 	{
 		/// <summary>
 		/// Search Post type - default is <see cref="PostType.Post"/>

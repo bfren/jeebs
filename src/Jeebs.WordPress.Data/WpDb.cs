@@ -92,7 +92,7 @@ namespace Jeebs.WordPress.Data
 		#region Query Methods
 
 		/// <inheritdoc cref="QueryPostsAsync{TModel}(long, Query.GetPostsOptions{Tp})"/>
-		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions<Tp> opt)
+		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt)
 			where TModel : IWithId =>
 			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(this, opt);
 
@@ -101,7 +101,7 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="page">Page number</param>
 		/// <param name="opt">Query options</param>
-		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions<Tp> opt)
+		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions opt)
 			where TModel : IWithId =>
 			QueryPostsF.ExecuteAsync<Tp, Tpm, Tt, TModel>(this, page, opt);
 
@@ -109,7 +109,7 @@ namespace Jeebs.WordPress.Data
 		/// Query Terms
 		/// </summary>
 		/// <param name="opt">Query options</param>
-		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermsOptions<Tt> opt)
+		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermsOptions opt)
 			where TModel : IWithId =>
 			QueryTermsF.ExecuteAsync<Tt, TModel>(this, opt);
 

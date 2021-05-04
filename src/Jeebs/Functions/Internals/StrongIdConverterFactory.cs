@@ -4,6 +4,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs;
 
 namespace F.Internals
 {
@@ -17,7 +18,7 @@ namespace F.Internals
 		/// </summary>
 		/// <param name="typeToConvert">Type to convert</param>
 		public override bool CanConvert(Type typeToConvert) =>
-			typeToConvert.IsSubclassOf(typeof(Jeebs.StrongId));
+			typeToConvert.Implements(typeof(StrongId));
 
 		/// <summary>
 		/// Creates JsonConverter using StrongId type as generic argument

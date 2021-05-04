@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>AppConsoleWp</ActiveDebugProfile>
+    <ActiveDebugProfile>AppConsoleWp (Verbose)</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs.WordPress.Data.Entities;
-
 namespace Jeebs.WordPress.Data
 {
 	/// <summary>
@@ -13,33 +11,25 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get default PostsOptions and modify
 		/// </summary>
-		/// <typeparam name="TPost">Post Entity type</typeparam>
 		/// <param name="opt">Modify default options</param>
-		public delegate PostsOptions<TPost> GetPostsOptions<TPost>(PostsOptions<TPost> opt)
-			where TPost : WpPostEntity;
+		public delegate PostsOptions GetPostsOptions(PostsOptions opt);
 
 		/// <summary>
 		/// Get default PostsMetaOptions and modify
 		/// </summary>
-		/// <typeparam name="TPostMeta">Post Meta Entity type</typeparam>
 		/// <param name="opt">Modify default options</param>
-		public delegate PostsMetaOptions<TPostMeta> GetPostsMetaOptions<TPostMeta>(PostsMetaOptions<TPostMeta> opt)
-			where TPostMeta : WpPostMetaEntity;
+		public delegate PostsMetaOptions GetPostsMetaOptions(PostsMetaOptions opt);
 
 		/// <summary>
 		/// Get default PostsTaxonomyOptions and modify
 		/// </summary>
-		/// <typeparam name="TTerm">Term Entity type</typeparam>
 		/// <param name="opt">Modify default options</param>
-		public delegate PostsTaxonomyOptions<TTerm> GetPostsTaxonomyOptions<TTerm>(PostsTaxonomyOptions<TTerm> opt)
-			where TTerm : WpTermEntity;
+		public delegate PostsTaxonomyOptions GetPostsTaxonomyOptions(PostsTaxonomyOptions opt);
 
 		/// <summary>
 		/// Get default TermsOptions and modify
 		/// </summary>
-		/// <typeparam name="TTerm">Term Entity type</typeparam>
 		/// <param name="opt">Modify default options</param>
-		public delegate TermsOptions<TTerm> GetTermsOptions<TTerm>(TermsOptions<TTerm> opt)
-			where TTerm : WpTermEntity;
+		public delegate TermsOptions GetTermsOptions(TermsOptions opt);
 	}
 }

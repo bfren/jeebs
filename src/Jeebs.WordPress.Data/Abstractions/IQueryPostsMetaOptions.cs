@@ -9,9 +9,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Query Posts Meta Options
 	/// </summary>
-	/// <typeparam name="TEntity">Post Meta Entity type</typeparam>
-	public interface IQueryPostsMetaOptions<TEntity> : IQueryOptions<TEntity, WpPostMetaId>
-		where TEntity : WpPostMetaEntity
+	public interface IQueryPostsMetaOptions : IQueryOptions<WpPostMetaId>
 	{
 		/// <summary>
 		/// Get meta for a single Post

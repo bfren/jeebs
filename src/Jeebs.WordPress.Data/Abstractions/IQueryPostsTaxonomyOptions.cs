@@ -10,9 +10,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Query Posts Taxonomy Options
 	/// </summary>
-	/// <typeparam name="TEntity">Term Entity type</typeparam>
-	public interface IQueryPostsTaxonomyOptions<TEntity> : IQueryOptions<TEntity, WpTermId>
-		where TEntity : WpTermEntity
+	public interface IQueryPostsTaxonomyOptions : IQueryOptions<WpTermId>
 	{
 		/// <summary>
 		/// The taxonomies to get

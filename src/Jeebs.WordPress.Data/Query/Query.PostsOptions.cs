@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
@@ -10,14 +11,14 @@ using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
-		/// <inheritdoc cref="IQueryPostsOptions{TEntity}"/>
-		public sealed record PostsOptions<TPost> : Options<TPost, WpPostId>, IQueryPostsOptions<TPost>
-			where TPost : WpPostEntity
+		/// <inheritdoc cref="IQueryPostsOptions"/>
+		public sealed record PostsOptions : Options<WpPostId, PostTable>, IQueryPostsOptions
 		{
 			/// <inheritdoc/>
 			public PostType Type { get; init; } = PostType.Post;
@@ -51,16 +52,20 @@ namespace Jeebs.WordPress.Data
 			public IImmutableList<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } =
 				new ImmutableList<(ICustomField field, Compare cmp, object value)>();
 
+			/// <inheritdoc/>
+			protected override Expression<Func<PostTable, string>> IdColumn =>
+				table => table.PostId;
+
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal PostsOptions(IWpDb db) : base(db) { }
+			internal PostsOptions(IWpDb db) : base(db, db.Schema.Post) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
+			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
 				base.GetParts(
-					map, cols
+					table, cols, idColumn
 				)
 				.Bind(
 					AddWhereType

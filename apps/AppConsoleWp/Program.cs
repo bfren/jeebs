@@ -7,6 +7,7 @@ using AppConsoleWp;
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
 using Jeebs;
+using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -176,6 +177,34 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 	// Get sermons with custom fields
 	//
+
+	Console.WriteLine();
+	log.Debug("== Get Sermons with Custom Fields ==");
+	await bcg.Db.QueryPostsAsync<SermonModelWithCustomFields>(opt => opt with
+	{
+		Type = WpBcg.PostTypes.Sermon,
+		Ids = new[] { new WpPostId(924L), new WpPostId(2336L) }
+	})
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No sermons found.");
+			}
+
+			foreach (var item in x)
+			{
+				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("  - Passage: {Passage}", item.Passage);
+				log.Debug("  - PDF: {Pdf}", item.Pdf);
+				log.Debug("  - Audio: {Audio}", item.Audio);
+				log.Debug("  - First Preached: {First}", item.FirstPreached);
+				log.Debug("  - Image: {Image}", item.Image);
+			}
+		},
+		none: r => log.Message(r)
+	);
 
 	// End
 	Console.WriteLine();

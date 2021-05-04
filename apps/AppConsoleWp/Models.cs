@@ -43,6 +43,21 @@ namespace AppConsoleWp
 		public TermList Series { get; set; } = new TermList(WpBcg.Taxonomies.Series);
 	}
 
+	internal class SermonModelWithCustomFields : SermonModel
+	{
+		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+
+		public PassageCustomField Passage { get; set; } = new PassageCustomField();
+
+		public PdfCustomField? Pdf { get; set; }
+
+		public AudioRecordingCustomField? Audio { get; set; }
+
+		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+
+		public FeedImageCustomField? Image { get; set; }
+	}
+
 	internal class TaxonomyModel : IWithId<WpTermId>
 	{
 		public WpTermId Id { get; init; } = new();

@@ -9,9 +9,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Query Terms Options
 	/// </summary>
-	/// <typeparam name="TEntity">Term Entity type</typeparam>
-	public interface IQueryTermsOptions<TEntity> : IQueryOptions<TEntity, WpTermId>
-		where TEntity : WpTermEntity
+	public interface IQueryTermsOptions : IQueryOptions<WpTermId>
 	{
 		/// <summary>
 		/// Search taxonomy type

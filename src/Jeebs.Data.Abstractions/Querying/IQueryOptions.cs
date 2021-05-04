@@ -9,10 +9,8 @@ namespace Jeebs.Data.Querying
 	/// <summary>
 	/// An alternative method to <see cref="IQueryParts"/> for building a database query
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TId">Entity ID type</typeparam>
-	public interface IQueryOptions<TEntity, TId>
-		where TEntity : IWithId<TId>
+	public interface IQueryOptions<TId>
 		where TId : StrongId
 	{
 		/// <summary>

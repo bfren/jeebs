@@ -61,7 +61,9 @@ namespace Jeebs.Data.Mapping
 				var idProperty = GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
 					reason => throw new UnableToFindIdColumnException(reason)
 				) with
-				{ Alias = nameof(IWithId.Id) };
+				{
+					Alias = nameof(IWithId.Id)
+				};
 
 				// Create Table Map
 				var map = new TableMap(table, columns, idProperty);

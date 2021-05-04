@@ -1,7 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -9,6 +11,7 @@ using Jeebs.Data.Querying;
 using Jeebs.Linq;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Tables;
 using static F.DataF.QueryF;
 using static F.OptionF;
 
@@ -16,9 +19,8 @@ namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
-		/// <inheritdoc cref="IQueryPostsTaxonomyOptions{TEntity}"/>
-		public sealed record PostsTaxonomyOptions<TTerm> : Options<TTerm, WpTermId>, IQueryPostsTaxonomyOptions<TTerm>
-			where TTerm : WpTermEntity
+		/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
+		public sealed record PostsTaxonomyOptions : Options<WpTermId, TermTable>, IQueryPostsTaxonomyOptions
 		{
 			/// <inheritdoc/>
 			public IImmutableList<Taxonomy>? Taxonomies { get; init; }
@@ -26,21 +28,25 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			public IImmutableList<long>? PostIds { get; init; }
 
+			/// <inheritdoc/>
+			protected override Expression<Func<TermTable, string>> IdColumn =>
+				table => table.TermId;
+
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal PostsTaxonomyOptions(IWpDb db) : base(db) =>
+			internal PostsTaxonomyOptions(IWpDb db) : base(db, db.Schema.Term) =>
 				Maximum = null;
 
 			/// <inheritdoc/>
-			protected override Option<IColumnList> GetColumns<TModel>(ITableMap _) =>
-				Extract<TModel>.From(T.Term, T.TermRelationship, T.TermTaxonomy);
+			protected override Option<IColumnList> GetColumns<TModel>(ITable table) =>
+				Extract<TModel>.From(table, T.TermRelationship, T.TermTaxonomy);
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITableMap map, IColumnList cols) =>
+			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
 				CreateParts(
-					T.Term, cols
+					table, cols
 				)
 				.Bind(
 					x => AddInnerJoin(x, (T.Term, t => t.TermId), (T.TermTaxonomy, tx => tx.TermId))
@@ -50,7 +56,7 @@ namespace Jeebs.WordPress.Data
 				)
 				.SwitchIf(
 					_ => Id is not null || Ids is not null,
-					x => AddWhereId(x, map)
+					x => AddWhereId(x, idColumn)
 				)
 				.SwitchIf(
 					_ => Taxonomies?.Count > 0,

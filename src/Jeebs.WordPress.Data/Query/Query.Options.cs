@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
+using Jeebs.Linq;
 using static F.DataF.QueryF;
 
 namespace Jeebs.WordPress.Data
@@ -15,11 +16,11 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// WordPress Query Options
 		/// </summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TId">Entity ID type</typeparam>
-		public abstract record Options<TEntity, TId> : QueryOptions<TEntity, TId>
-			where TEntity : IWithId<TId>
+		/// <typeparam name="TPrimaryTable">Primary Table type</typeparam>
+		public abstract record Options<TId, TPrimaryTable> : QueryOptions<TId>
 			where TId : StrongId
+			where TPrimaryTable : ITable
 		{
 			/// <summary>
 			/// MySQL Client
@@ -32,17 +33,33 @@ namespace Jeebs.WordPress.Data
 			protected IWpDb Db { get; init; }
 
 			/// <summary>
-			/// Inject dependencies
-			/// </summary>
-			/// <param name="db">WordPress Database instance</param>
-			protected Options(IWpDb db) =>
-				(Client, Db) = (new MySqlDbClient(), db);
-
-			/// <summary>
 			/// Shorthand for Database Schema
 			/// </summary>
 			protected IWpDbSchema T =>
 				Db.Schema;
+
+			/// <summary>
+			/// Primary Table
+			/// </summary>
+			protected TPrimaryTable Table { get; init; }
+
+			/// <summary>
+			/// ID Column selector
+			/// </summary>
+			protected abstract Expression<Func<TPrimaryTable, string>> IdColumn { get; }
+
+			/// <summary>
+			/// Inject dependencies
+			/// </summary>
+			/// <param name="db">WordPress Database instance</param>
+			/// <param name="table">Primary table</param>
+			protected Options(IWpDb db, TPrimaryTable table) =>
+				(Client, Db, Table) = (new MySqlDbClient(), db, table);
+
+			/// <inheritdoc/>
+			protected override Option<(ITable table, IColumn idColumn)> GetMap() =>
+				from idColumn in GetColumnFromExpression(Table, IdColumn)
+				select ((ITable)Table, idColumn);
 
 			/// <summary>
 			/// Escape a table
