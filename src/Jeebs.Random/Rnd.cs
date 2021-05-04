@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using Jeebs;
 
 namespace F
 {
@@ -21,6 +22,12 @@ namespace F
 		/// </summary>
 		public static string Str =>
 			StringF.Get(6);
+
+		/// <summary>
+		/// Generate a random passphrase with five dictionary words, a number, and one uppercase letter
+		/// </summary>
+		public static Option<string> Pass =>
+			StringF.Passphrase(5);
 
 		/// <summary>
 		/// Generate a random 32-bit integer between 0 and 10000

@@ -127,10 +127,8 @@ namespace F
 				{
 					var index = 0;
 
-					do
-					{
-						index = NumberF.GetInt32(0, wordList.Length - 1, generator);
-					} while (used.Contains(index));
+					do { index = NumberF.GetInt32(0, wordList.Length - 1, generator); }
+					while (used.Contains(index));
 
 					return index;
 				}
