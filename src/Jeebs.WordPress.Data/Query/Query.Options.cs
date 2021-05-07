@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -25,12 +26,18 @@ namespace Jeebs.WordPress.Data
 			/// <summary>
 			/// MySQL Client
 			/// </summary>
-			protected MySqlDbClient Client { get; private init; }
+			protected IDbClient Client { get; private init; }
+
+			internal IDbClient ClientTest =>
+				Client;
 
 			/// <summary>
 			/// WordPress Database instance
 			/// </summary>
 			protected IWpDb Db { get; init; }
+
+			internal IWpDb DbTest =>
+				Db;
 
 			/// <summary>
 			/// Shorthand for Database Schema
@@ -38,10 +45,16 @@ namespace Jeebs.WordPress.Data
 			protected IWpDbSchema T =>
 				Db.Schema;
 
+			internal IWpDbSchema TTest =>
+				T;
+
 			/// <summary>
 			/// Primary Table
 			/// </summary>
 			protected TPrimaryTable Table { get; init; }
+
+			internal TPrimaryTable TableTest =>
+				Table;
 
 			/// <summary>
 			/// ID Column selector
@@ -53,8 +66,16 @@ namespace Jeebs.WordPress.Data
 			/// </summary>
 			/// <param name="db">WordPress Database instance</param>
 			/// <param name="table">Primary table</param>
-			protected Options(IWpDb db, TPrimaryTable table) =>
-				(Client, Db, Table) = (new MySqlDbClient(), db, table);
+			protected Options(IWpDb db, TPrimaryTable table) : this(new MySqlDbClient(), db, table) { }
+
+			/// <summary>
+			/// Inject dependencies
+			/// </summary>
+			/// <param name="client">IDbClient</param>
+			/// <param name="db">WordPress Database instance</param>
+			/// <param name="table">Primary table</param>
+			internal Options(IDbClient client, IWpDb db, TPrimaryTable table) =>
+				(Client, Db, Table) = (client, db, table);
 
 			/// <inheritdoc/>
 			protected override Option<(ITable table, IColumn idColumn)> GetMap() =>
@@ -92,6 +113,21 @@ namespace Jeebs.WordPress.Data
 
 				throw new Exception("Unable to get column.");
 			}
+
+			#region Testing
+
+			internal Option<(ITable table, IColumn idColumn)> GetMapTest() =>
+				GetMap();
+
+			internal string EscapeTest<TTable>(TTable table)
+				where TTable : ITable =>
+				__(table);
+
+			internal string EscapeTest<TTable>(TTable table, Expression<Func<TTable, string>> selector)
+				where TTable : ITable =>
+				__(table, selector);
+
+			#endregion
 		}
 	}
 }
