@@ -17,7 +17,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// String representation of the value - normally retrieved from the database
 		/// </summary>
-		protected string ValueStr { get; set; }
+		protected string? ValueStr { get; set; }
 
 		/// <summary>
 		/// Create object with specified meta key
@@ -25,7 +25,16 @@ namespace Jeebs.WordPress.Data
 		/// <param name="key">Meta key (for post_meta table)</param>
 		/// <param name="value">Default value</param>
 		public CustomField(string key, T value) =>
-			(Key, ValueObj, ValueStr) = (key, value, string.Empty);
+			(Key, ValueObj) = (key, value);
+
+		/// <summary>
+		/// Create object with specified meta key and value string for testing <see cref="ToString"/>
+		/// </summary>
+		/// <param name="key">Meta key (for post_meta table)</param>
+		/// <param name="value">Default value</param>
+		/// <param name="str">Value string (for testing)</param>
+		internal CustomField(string key, T value, string str) : this(key, value) =>
+			ValueStr = str;
 
 		/// <inheritdoc/>
 		public abstract Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired);
@@ -33,7 +42,13 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)
 		/// </summary>
-		public override string ToString() =>
+		protected virtual string GetValueAsString() =>
 			ValueObj?.ToString() ?? ValueStr ?? Key;
+
+		/// <summary>
+		/// Don't use the default record ToString()
+		/// </summary>
+		public override string ToString() =>
+			GetValueAsString();
 	}
 }

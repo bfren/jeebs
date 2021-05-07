@@ -104,9 +104,9 @@ namespace Jeebs.WordPress.Data
 			});
 
 		/// <summary>
-		/// Return term Title
+		/// Return Attachment Title
 		/// </summary>
-		public override string ToString() =>
+		protected override string GetValueAsString() =>
 			ValueObj?.Title ?? base.ToString();
 
 		/// <summary>

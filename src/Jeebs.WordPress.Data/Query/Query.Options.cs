@@ -68,9 +68,11 @@ namespace Jeebs.WordPress.Data
 			/// <param name="table">Table object</param>
 #pragma warning disable IDE1006 // Naming Styles
 			protected string __<TTable>(TTable table)
+				where TTable : ITable
 #pragma warning restore IDE1006 // Naming Styles
-			where TTable : ITable =>
-				Client.Escape(table);
+			{
+				return Client.Escape(table);
+			}
 
 			/// <summary>
 			/// Get and escape a column using a Linq Expression selector
@@ -80,8 +82,8 @@ namespace Jeebs.WordPress.Data
 			/// <param name="selector">Column selector</param>
 #pragma warning disable IDE1006 // Naming Styles
 			protected string __<TTable>(TTable table, Expression<Func<TTable, string>> selector)
+				where TTable : ITable
 #pragma warning restore IDE1006 // Naming Styles
-			where TTable : ITable
 			{
 				if (GetColumnFromExpression(table, selector) is Some<IColumn> column)
 				{

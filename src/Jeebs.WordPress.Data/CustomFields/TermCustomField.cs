@@ -86,9 +86,9 @@ namespace Jeebs.WordPress.Data
 			QueryTermsF.ExecuteAsync<Term>(db, opt => opt with { Id = termId });
 
 		/// <summary>
-		/// Return term Title
+		/// Return Term Title
 		/// </summary>
-		public override string ToString() =>
+		protected override string GetValueAsString() =>
 			ValueObj?.Title ?? base.ToString();
 
 		/// <summary>

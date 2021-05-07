@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.Data
 		public override string ValueObj
 		{
 			get =>
-				ValueStr;
+				ValueStr ?? Key;
 
 			protected set =>
 				ValueStr = value;
