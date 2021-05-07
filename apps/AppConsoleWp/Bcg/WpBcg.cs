@@ -61,7 +61,11 @@ namespace AppConsoleWp.Bcg
 		/// </summary>
 		public static class CustomFields
 		{
-
+			public readonly static AudioRecordingCustomField Audio = new();
+			public readonly static FeedImageCustomField FeedImage = new();
+			public readonly static FirstPreachedCustomField FirstPreached = new();
+			public readonly static PassageCustomField Passage = new();
+			public readonly static PdfCustomField Pdf = new();
 		}
 
 		/// <summary>

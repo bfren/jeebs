@@ -7,6 +7,8 @@ using AppConsoleWp;
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
 using Jeebs;
+using Jeebs.Data.Enums;
+using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using Microsoft.Extensions.DependencyInjection;
@@ -201,6 +203,43 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 				log.Debug("  - Audio: {Audio}", item.Audio?.ValueObj.UrlPath ?? "none");
 				log.Debug("  - First Preached: {First}", item.FirstPreached.ValueObj.Title);
 				log.Debug("  - Image: {Image}", item.Image?.ValueObj.UrlPath ?? "none");
+			}
+		},
+		none: r => log.Message(r)
+	);
+
+	//
+	// Search for sermons with custom fields
+	//
+
+	Console.WriteLine();
+	ICustomField field = WpBcg.CustomFields.FirstPreached;
+	object first = 422L;
+	log.Debug("== Get Sermons where First Preached is {First} ==", first);
+	await bcg.Db.QueryPostsAsync<SermonModelWithCustomFields>(opt => opt with
+	{
+		Type = WpBcg.PostTypes.Sermon,
+		CustomFields = ImmutableList.Create(new[] { (field, Compare.Equal, first) })
+	})
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No sermons found.");
+			}
+
+			if (x.Count() > 2)
+			{
+				log.Error("Too many sermons found.");
+				return;
+			}
+
+			foreach (var item in x)
+			{
+				var obj = item.FirstPreached.ValueObj;
+				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("  - {FirstId:0000}: {FirstTitle}", obj.TermId, obj.Title);
 			}
 		},
 		none: r => log.Message(r)
