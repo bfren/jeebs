@@ -17,10 +17,10 @@ namespace Jeebs.WordPress.Data
 	public abstract record AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
 		/// <inheritdoc/>
-		protected AttachmentCustomField(string key, bool isRequired = false) : base(key, new Attachment(), isRequired) { }
+		protected AttachmentCustomField(string key) : base(key, new Attachment()) { }
 
 		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta)
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
 		{
 			// First, get the Attachment Post ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -31,7 +31,7 @@ namespace Jeebs.WordPress.Data
 			}
 			else
 			{
-				if (IsRequired)
+				if (isRequired)
 				{
 					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 				}

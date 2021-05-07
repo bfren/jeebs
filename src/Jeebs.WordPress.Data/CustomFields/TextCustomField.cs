@@ -25,10 +25,10 @@ namespace Jeebs.WordPress.Data
 		}
 
 		/// <inheritdoc/>
-		protected TextCustomField(string key, bool isRequired = false) : base(key, string.Empty, isRequired) { }
+		protected TextCustomField(string key) : base(key, string.Empty) { }
 
 		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta)
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
 		{
 			// If meta contains the key and the value is not null / empty, return it
 			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
@@ -38,7 +38,7 @@ namespace Jeebs.WordPress.Data
 			}
 
 			// Return error if the field is required
-			if (IsRequired)
+			if (isRequired)
 			{
 				return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}

@@ -16,16 +16,12 @@ namespace Jeebs.WordPress.Data
 		string Key { get; }
 
 		/// <summary>
-		/// Whether or not this Custom Field is required (default: false)
-		/// </summary>
-		bool IsRequired { get; }
-
-		/// <summary>
 		/// Hydrate this Custom Field using <see cref="IWpDb"/>, and <see cref="MetaDictionary"/>
 		/// </summary>
 		/// <param name="db">IWpDb</param>
 		/// <param name="meta">Meta Dictionary</param>
-		Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta);
+		/// <param name="isRequired">Whether or not the field is required</param>
+		Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired);
 	}
 
 	/// <inheritdoc/>

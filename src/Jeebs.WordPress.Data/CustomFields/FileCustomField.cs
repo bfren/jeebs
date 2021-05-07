@@ -12,7 +12,6 @@ namespace Jeebs.WordPress.Data
 		/// Create object with specified meta key
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
-		/// <param name="isRequired">Whether or not this custom field is required</param>
-		protected FileCustomField(string key, bool isRequired = false) : base(key, isRequired) { }
+		protected FileCustomField(string key) : base(key) { }
 	}
 }

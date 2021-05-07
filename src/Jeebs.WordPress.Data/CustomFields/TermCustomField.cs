@@ -16,10 +16,10 @@ namespace Jeebs.WordPress.Data
 	public abstract record TermCustomField : CustomField<TermCustomField.Term>
 	{
 		/// <inheritdoc/>
-		protected TermCustomField(string key, bool isRequired = false) : base(key, new Term(), isRequired) { }
+		protected TermCustomField(string key) : base(key, new Term()) { }
 
 		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta)
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
 		{
 			// First, get the Term ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -30,7 +30,7 @@ namespace Jeebs.WordPress.Data
 			}
 			else
 			{
-				if (IsRequired)
+				if (isRequired)
 				{
 					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 				}

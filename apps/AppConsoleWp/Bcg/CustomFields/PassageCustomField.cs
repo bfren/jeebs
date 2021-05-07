@@ -13,6 +13,6 @@ namespace AppConsoleWp.Bcg
 		/// <summary>
 		/// This is a required field
 		/// </summary>
-		public PassageCustomField() : base("passage", true) { }
+		public PassageCustomField() : base("passage") { }
 	}
 }
