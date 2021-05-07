@@ -69,7 +69,6 @@ namespace Jeebs.Apps
 		/// Configure Host
 		/// </summary>
 		/// <param name="config">IConfigurationBuilder</param>
-		/// <param name="args">Command Line arguments</param>
 		protected virtual void ConfigureHost(IConfigurationBuilder config)
 		{
 			// Set base path to be directory of running assembly
@@ -81,6 +80,7 @@ namespace Jeebs.Apps
 		/// </summary>
 		/// <param name="env">IHostEnvironment</param>
 		/// <param name="config">IConfigurationBuilder</param>
+		/// <param name="args">Command Line arguments</param>
 		protected virtual void ConfigureApp(IHostEnvironment env, IConfigurationBuilder config, string[] args)
 		{
 			// Validate main configuration file

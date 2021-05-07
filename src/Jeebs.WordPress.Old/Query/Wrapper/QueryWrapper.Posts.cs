@@ -211,6 +211,11 @@ namespace Jeebs.WordPress
 				throw new NotImplementedException();
 			}
 
+			/// <summary>
+			/// Old WithRange for compatibility
+			/// </summary>
+			/// <param name="collection"></param>
+			/// <returns></returns>
 			public IImmutableList<T> WithRange(params T[] collection)
 			{
 				throw new NotImplementedException();

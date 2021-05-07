@@ -5,15 +5,15 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-/// <summary>
-/// See https://github.com/dotnet/runtime/issues/29039#issuecomment-498481064
-/// </summary>
 namespace System.Runtime.CompilerServices
 {
 	/// <summary>
 	/// Provide NullatbleAttribute so the compiler doesn't have to, and we can access it using
 	/// <see cref="Jeebs.PropertyInfoExtensions.IsNullable(PropertyInfo)"/>
 	/// </summary>
+	/// <remarks>
+	/// See https://github.com/dotnet/runtime/issues/29039#issuecomment-498481064
+	/// </remarks>
 	[AttributeUsage(
 		AttributeTargets.Class |
 		AttributeTargets.GenericParameter |
@@ -22,6 +22,9 @@ namespace System.Runtime.CompilerServices
 		AllowMultiple = false)]
 	public sealed class NullableAttribute : Attribute
 	{
+		/// <summary>
+		/// Nullable Flags
+		/// </summary>
 		public readonly byte[] NullableFlags;
 
 		/// <summary>

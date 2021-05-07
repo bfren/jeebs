@@ -12,7 +12,7 @@ using static F.OptionF;
 
 namespace Jeebs.Data.Querying
 {
-	/// <inheritdoc cref="IQueryOptions{TEntity, TId}"/>
+	/// <inheritdoc cref="IQueryOptions{TId}"/>
 	public abstract record QueryOptions
 	{
 		/// <summary>Messages</summary>
@@ -64,14 +64,14 @@ namespace Jeebs.Data.Querying
 		/// Get select columns for the specified <typeparamref name="TModel"/>
 		/// </summary>
 		/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
-		/// <param name="table">ITableMap for <typeparamref name="TEntity"/></param>
+		/// <param name="table">Select columns from this table</param>
 		protected virtual Option<IColumnList> GetColumns<TModel>(ITable table) =>
 			Extract<TModel>.From(table);
 
 		/// <summary>
 		/// Actually get the various query parts using helper functions
 		/// </summary>
-		/// <param name="table">ITableMap for <typeparamref name="TEntity"/></param>
+		/// <param name="table">Primary table</param>
 		/// <param name="cols">Select ColumnList</param>
 		/// <param name="idColumn">ID Column</param>
 		protected virtual Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
@@ -91,7 +91,7 @@ namespace Jeebs.Data.Querying
 		/// Create a new QueryParts object, adding <paramref name="select"/> columns and
 		/// <see cref="Maximum"/> and <see cref="Skip"/> values
 		/// </summary>
-		/// <param name="table"><see cref="ITable"/> mapped to <typeparamref name="TEntity"/></param>
+		/// <param name="table">Primary table</param>
 		/// <param name="select">Columns to select</param>
 		protected virtual Option<QueryParts> CreateParts(ITable table, IColumnList select) =>
 			new QueryParts(table)
@@ -105,6 +105,8 @@ namespace Jeebs.Data.Querying
 		/// Add Inner Join
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
+		/// <param name="from">From table - should already be added to the query</param>
+		/// <param name="to">To table</param>
 		protected virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
 			QueryParts parts,
 			(TFrom table, Expression<Func<TFrom, string>> column) from,
@@ -120,6 +122,8 @@ namespace Jeebs.Data.Querying
 		/// Add Left Join
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
+		/// <param name="from">From table - should already be added to the query</param>
+		/// <param name="to">To table</param>
 		protected virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
 			QueryParts parts,
 			(TFrom table, Expression<Func<TFrom, string>> column) from,
@@ -135,6 +139,8 @@ namespace Jeebs.Data.Querying
 		/// Add Right Join
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
+		/// <param name="from">From table - should already be added to the query</param>
+		/// <param name="to">To table</param>
 		protected virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
 			QueryParts parts,
 			(TFrom table, Expression<Func<TFrom, string>> column) from,
@@ -150,7 +156,7 @@ namespace Jeebs.Data.Querying
 		/// Add Id / Ids - Id takes precedence over Ids
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
-		/// <param name="map">ITableMap for <typeparamref name="TEntity"/></param>
+		/// <param name="idColumn">ID Column</param>
 		protected virtual Option<QueryParts> AddWhereId(QueryParts parts, IColumn idColumn)
 		{
 			// Add Id EQUAL

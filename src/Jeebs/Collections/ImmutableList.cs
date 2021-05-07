@@ -75,7 +75,7 @@ namespace Jeebs
 		public IImmutableList<T> With(T add) =>
 			new ImmutableList<T>(new List<T>(List) { add });
 
-		/// <inheritdoc/>
+		///// <inheritdoc/>
 		//public IImmutableList<T> WithRange(IEnumerable<T> add)
 		//{
 		//	var newList = new List<T>(List);

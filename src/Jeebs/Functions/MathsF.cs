@@ -3,6 +3,9 @@
 
 namespace F
 {
+	/// <summary>
+	/// Maths Functions
+	/// </summary>
 	public static class MathsF
 	{
 		/// <summary>

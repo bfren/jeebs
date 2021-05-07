@@ -48,10 +48,10 @@ namespace Jeebs
 		/// <param name="add">Item to add</param>
 		IImmutableList<T> With(T add);
 
-		/// <summary>
-		/// Create a new <see cref="IImmutableList{T}"/> with the specified items added to the end
-		/// </summary>
-		/// <param name="collection">Collection of items to add</param>
+		///// <summary>
+		///// Create a new <see cref="IImmutableList{T}"/> with the specified items added to the end
+		///// </summary>
+		///// <param name="collection">Collection of items to add</param>
 		//IImmutableList<T> WithRange(IEnumerable<T> collection);
 
 		/// <summary>
