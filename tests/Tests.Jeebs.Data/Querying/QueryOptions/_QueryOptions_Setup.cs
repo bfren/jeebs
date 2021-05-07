@@ -44,4 +44,30 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public sealed record TestOptions(IMapper Mapper) : QueryOptions<TestEntity, TestId>(Mapper);
 	}
+
+	public sealed record Table0 : ITable
+	{
+		private readonly string name;
+
+		public string Foo { get; init; }
+
+		public Table0(string name, string foo) =>
+			(this.name, Foo) = (name, foo);
+
+		public string GetName() =>
+			name;
+	}
+
+	public sealed record Table1 : ITable
+	{
+		private readonly string name;
+
+		public string Bar { get; init; }
+
+		public Table1(string name, string bar) =>
+			(this.name, Bar) = (name, bar);
+
+		public string GetName() =>
+			name;
+	}
 }

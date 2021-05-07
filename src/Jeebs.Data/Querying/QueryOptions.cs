@@ -15,6 +15,31 @@ namespace Jeebs.Data.Querying
 	/// <inheritdoc cref="IQueryOptions{TId}"/>
 	public abstract record QueryOptions
 	{
+		/// <summary>
+		/// Add Join
+		/// </summary>
+		/// <param name="parts">QueryParts</param>
+		/// <param name="fromTable">From table - should already be added to the query</param>
+		/// <param name="fromSelector">From column</param>
+		/// <param name="toTable">To table - should be a new table not already added to the query</param>
+		/// <param name="toSelector">To column</param>
+		/// <param name="withJoin">Function to add the Join to the correct list</param>
+		protected internal static Option<QueryParts> AddJoin<TFrom, TTo>(
+			QueryParts parts,
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector,
+			Func<QueryParts, IColumn, IColumn, QueryParts> withJoin
+		)
+			where TFrom : ITable
+			where TTo : ITable
+		{
+			return from colFrom in GetColumnFromExpression(fromTable, fromSelector)
+				   from colTo in GetColumnFromExpression(toTable, toSelector)
+				   select withJoin(parts, colFrom, colTo);
+		}
+
 		/// <summary>Messages</summary>
 		public static class Msg
 		{
@@ -101,56 +126,53 @@ namespace Jeebs.Data.Querying
 				Skip = Skip
 			};
 
-		/// <summary>
-		/// Add Inner Join
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="from">From table - should already be added to the query</param>
-		/// <param name="to">To table</param>
+		/// <inheritdoc cref="QueryOptions.AddJoin"/>
 		protected virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
 			QueryParts parts,
-			(TFrom table, Expression<Func<TFrom, string>> column) from,
-			(TTo table, Expression<Func<TTo, string>> column) to
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector
 		)
 			where TFrom : ITable
-			where TTo : ITable =>
-			from colFrom in GetColumnFromExpression(@from.table, @from.column)
-			from colTo in GetColumnFromExpression(to.table, to.column)
-			select parts with { InnerJoin = parts.InnerJoin.With((colFrom, colTo)) };
+			where TTo : ITable
+		{
+			return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
+				parts with { InnerJoin = parts.InnerJoin.With((colFrom, colTo)) }
+			);
+		}
 
-		/// <summary>
-		/// Add Left Join
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="from">From table - should already be added to the query</param>
-		/// <param name="to">To table</param>
+		/// <inheritdoc cref="QueryOptions.AddJoin"/>
 		protected virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
 			QueryParts parts,
-			(TFrom table, Expression<Func<TFrom, string>> column) from,
-			(TTo table, Expression<Func<TTo, string>> column) to
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector
 		)
 			where TFrom : ITable
-			where TTo : ITable =>
-			from colFrom in GetColumnFromExpression(@from.table, @from.column)
-			from colTo in GetColumnFromExpression(to.table, to.column)
-			select parts with { LeftJoin = parts.LeftJoin.With((colFrom, colTo)) };
+			where TTo : ITable
+		{
+			return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
+				parts with { LeftJoin = parts.LeftJoin.With((colFrom, colTo)) }
+			);
+		}
 
-		/// <summary>
-		/// Add Right Join
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="from">From table - should already be added to the query</param>
-		/// <param name="to">To table</param>
+		/// <inheritdoc cref="QueryOptions.AddJoin"/>
 		protected virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
 			QueryParts parts,
-			(TFrom table, Expression<Func<TFrom, string>> column) from,
-			(TTo table, Expression<Func<TTo, string>> column) to
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector
 		)
 			where TFrom : ITable
-			where TTo : ITable =>
-			from colFrom in GetColumnFromExpression(@from.table, @from.column)
-			from colTo in GetColumnFromExpression(to.table, to.column)
-			select parts with { RightJoin = parts.RightJoin.With((colFrom, colTo)) };
+			where TTo : ITable
+		{
+			return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
+				parts with { RightJoin = parts.RightJoin.With((colFrom, colTo)) }
+			);
+		}
 
 		/// <summary>
 		/// Add Id / Ids - Id takes precedence over Ids
@@ -213,14 +235,17 @@ namespace Jeebs.Data.Querying
 			Expression<Func<TTable, string>> column,
 			Compare cmp,
 			object value
-		) where TTable : ITable =>
-			GetColumnFromExpression(
+		)
+			where TTable : ITable
+		{
+			return GetColumnFromExpression(
 				table, column
 			)
 			.Map(
 				x => parts with { Where = parts.Where.With((x, cmp, value)) },
 				DefaultHandler
 			);
+		}
 
 		/// <summary>
 		/// Add a custom Where predicate
@@ -257,6 +282,39 @@ namespace Jeebs.Data.Querying
 
 		internal Option<QueryParts> CreatePartsTest(ITable table, IColumnList select) =>
 			CreateParts(table, select);
+
+		internal Option<QueryParts> AddInnerJoinTest<TFrom, TTo>(
+			QueryParts parts,
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector
+		)
+			where TFrom : ITable
+			where TTo : ITable =>
+			AddInnerJoin(parts, fromTable, fromSelector, toTable, toSelector);
+
+		internal Option<QueryParts> AddLeftJoinTest<TFrom, TTo>(
+			QueryParts parts,
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector
+		)
+			where TFrom : ITable
+			where TTo : ITable =>
+			AddLeftJoin(parts, fromTable, fromSelector, toTable, toSelector);
+
+		internal Option<QueryParts> AddRightJoinTest<TFrom, TTo>(
+			QueryParts parts,
+			TFrom fromTable,
+			Expression<Func<TFrom, string>> fromSelector,
+			TTo toTable,
+			Expression<Func<TTo, string>> toSelector
+		)
+			where TFrom : ITable
+			where TTo : ITable =>
+			AddRightJoin(parts, fromTable, fromSelector, toTable, toSelector);
 
 		internal Option<QueryParts> AddWhereIdTest(QueryParts parts, IColumn idColumn) =>
 			AddWhereId(parts, idColumn);
@@ -304,5 +362,12 @@ namespace Jeebs.Data.Querying
 		protected override Option<(ITable table, IColumn idColumn)> GetMap() =>
 			from map in mapper.GetTableMapFor<TEntity>()
 			select (map.Table, (IColumn)map.IdColumn);
+
+		#region Testing
+
+		internal Option<(ITable table, IColumn idColumn)> GetMapTest() =>
+			GetMap();
+
+		#endregion
 	}
 }

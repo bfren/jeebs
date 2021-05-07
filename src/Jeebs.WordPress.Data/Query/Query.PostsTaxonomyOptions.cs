@@ -49,10 +49,10 @@ namespace Jeebs.WordPress.Data
 					table, cols
 				)
 				.Bind(
-					x => AddInnerJoin(x, (T.Term, t => t.TermId), (T.TermTaxonomy, tx => tx.TermId))
+					x => AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.Bind(
-					x => AddInnerJoin(x, (T.TermTaxonomy, tx => tx.TermTaxonomyId), (T.TermRelationship, tr => tr.TermTaxonomyId))
+					x => AddInnerJoin(x, T.TermTaxonomy, tx => tx.TermTaxonomyId, T.TermRelationship, tr => tr.TermTaxonomyId)
 				)
 				.SwitchIf(
 					_ => Id is not null || Ids is not null,
