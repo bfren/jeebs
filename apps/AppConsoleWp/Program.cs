@@ -183,7 +183,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	await bcg.Db.QueryPostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
-		Ids = new[] { new WpPostId(924L), new WpPostId(2336L) }
+		Ids = new WpPostId[] { new(924L), new(1867L), new(2020L) }
 	})
 	.AuditAsync(
 		some: x =>
@@ -196,11 +196,11 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			foreach (var item in x)
 			{
 				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
-				log.Debug("  - Passage: {Passage}", item.Passage);
-				log.Debug("  - PDF: {Pdf}", item.Pdf);
-				log.Debug("  - Audio: {Audio}", item.Audio);
-				log.Debug("  - First Preached: {First}", item.FirstPreached);
-				log.Debug("  - Image: {Image}", item.Image);
+				log.Debug("  - Passage: {Passage}", item.Passage.ValueObj);
+				log.Debug("  - PDF: {Pdf}", item.Pdf?.ValueObj.UrlPath ?? "none");
+				log.Debug("  - Audio: {Audio}", item.Audio?.ValueObj.UrlPath ?? "none");
+				log.Debug("  - First Preached: {First}", item.FirstPreached.ValueObj.Title);
+				log.Debug("  - Image: {Image}", item.Image?.ValueObj.UrlPath ?? "none");
 			}
 		},
 		none: r => log.Message(r)
