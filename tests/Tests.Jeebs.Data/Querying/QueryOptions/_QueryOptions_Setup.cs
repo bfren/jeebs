@@ -14,22 +14,26 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			var table = Substitute.For<ITable>();
 
+			var parts = new QueryParts(table);
+
+			var idColumn = Substitute.For<IMappedColumn>();
+
 			var map = Substitute.For<ITableMap>();
 			map.Table.Returns(table);
-
-			var parts = new QueryParts(table);
+			map.IdColumn.Returns(idColumn);
 
 			var mapper = Substitute.For<IMapper>();
 			mapper.GetTableMapFor<TestEntity>().Returns(Return(map));
 
 			var options = new TestOptions(mapper);
 
-			return new(table, map, parts, opt?.Invoke(options) ?? options);
+			return new(table, map, idColumn, parts, opt?.Invoke(options) ?? options);
 		}
 
 		public sealed record Vars(
 			ITable Table,
 			ITableMap Map,
+			IColumn IdColumn,
 			QueryParts Parts,
 			TestOptions Options
 		);

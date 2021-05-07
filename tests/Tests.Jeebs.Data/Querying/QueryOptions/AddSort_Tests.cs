@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void SortRandom_True_Returns_New_Parts_With_SortRandom_True()
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get(opt => opt with { SortRandom = true });
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get(opt => opt with { SortRandom = true });
 
 			// Act
 			var result = options.AddSortTest(parts);
@@ -31,7 +31,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var sort = Array.Empty<(IColumn, SortOrder)>();
-			var (_, _, parts, options) = QueryOptions_Setup.Get(opt => opt with { Sort = sort, SortRandom = true });
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get(opt => opt with { Sort = sort, SortRandom = true });
 
 			// Act
 			var result = options.AddSortTest(parts);
@@ -51,7 +51,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var c1 = Substitute.For<IColumn>();
 			var o1 = SortOrder.Descending;
 			var sort = new[] { (c0, o0), (c1, o1) };
-			var (_, _, parts, options) = QueryOptions_Setup.Get(opt => opt with { Sort = sort });
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get(opt => opt with { Sort = sort });
 
 			// Act
 			var result = options.AddSortTest(parts);
@@ -77,7 +77,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void SortRandom_False_And_Sort_Null_Returns_Original_Parts()
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get();
 
 			// Act
 			var result = options.AddSortTest(parts);

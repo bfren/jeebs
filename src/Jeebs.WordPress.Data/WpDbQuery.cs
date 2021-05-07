@@ -13,6 +13,6 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="db">IWpDb</param>
 		/// <param name="log">ILog</param>
-		internal WpDbQuery(IWpDb db, ILog<WpDbQuery> log) : base(db, log) { }
+		internal WpDbQuery(IWpDb db, ILog<IWpDbQuery> log) : base(db, log) { }
 	}
 }

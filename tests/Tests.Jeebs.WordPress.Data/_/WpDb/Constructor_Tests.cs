@@ -37,7 +37,9 @@ namespace Tests.Jeebs.WordPress.Data.WpDb_Tests
 				}
 			});
 
-			var log = Substitute.For<ILog<IWpDb>>();
+			var log = Substitute.For<ILog>();
+			var logForQuery = Substitute.For<ILog<IWpDbQuery>>();
+			log.ForContext<IWpDbQuery>().Returns(logForQuery);
 
 			var prefix = F.Rnd.Str;
 			var wpConfig = Substitute.For<IOptions<WpConfig>>();

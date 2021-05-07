@@ -61,23 +61,5 @@ namespace Jeebs.Data.DbQuery_Tests
 			client.Received().GetQuery(parts);
 			await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
 		}
-
-		[Fact]
-		public async Task Logs_Query_To_Debug()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
-			var (parts, param) = DbQuery_Setup.GetParts();
-			var (_, _, log, query) = DbQuery_Setup.Get(value, param);
-			var transaction = Substitute.For<IDbTransaction>();
-
-			// Act
-			await query.QuerySingleAsync<int>(value, param, transaction);
-			await query.QuerySingleAsync<int>(value, param, CommandType.StoredProcedure, transaction);
-			await query.QuerySingleAsync<int>(parts, transaction);
-
-			// Assert
-			log.ReceivedWithAnyArgs(3).Debug(Arg.Any<string>(), Arg.Any<object[]>());
-		}
 	}
 }

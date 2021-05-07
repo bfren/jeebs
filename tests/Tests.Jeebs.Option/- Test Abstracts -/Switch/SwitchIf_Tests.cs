@@ -130,7 +130,7 @@ namespace Jeebs_Tests
 
 		public abstract void Test07_Check_Returns_True_Runs_IfTrue_Returns_Value();
 
-		protected static void Test07(Func<Option<int>, Func<int, bool>, Func<int, None<int>>, Option<int>> act)
+		protected static void Test07(Func<Option<int>, Func<int, bool>, Func<int, Option<int>>, Option<int>> act)
 		{
 			// Arrange
 			var v0 = F.Rnd.Int;
@@ -138,7 +138,7 @@ namespace Jeebs_Tests
 			var option = Return(v0);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(v0).Returns(true);
-			var ifTrue = Substitute.For<Func<int, None<int>>>();
+			var ifTrue = Substitute.For<Func<int, Option<int>>>();
 			ifTrue.Invoke(v0).Returns(Return(v0 + v1));
 
 			// Act

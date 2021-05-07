@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string input)
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get();
 
 			// Act
 			var result = options.AddWhereCustomTest(parts, input, new());
@@ -33,7 +33,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input)
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get();
 			var clause = F.Rnd.Str;
 
 			// Act
@@ -48,7 +48,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Returns_New_Parts_With_Clause_And_Parameters()
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get();
 			var clause = F.Rnd.Str;
 			var value = F.Rnd.Lng;
 			var parameters = new { value };

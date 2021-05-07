@@ -249,6 +249,9 @@ namespace Jeebs.Data.Querying
 
 		#region Testing
 
+		internal Option<IColumnList> GetColumnsTest<TModel>(ITable table) =>
+			GetColumns<TModel>(table);
+
 		internal Option<QueryParts> GetPartsTest(ITable table, IColumnList cols, IColumn idColumn) =>
 			GetParts(table, cols, idColumn);
 

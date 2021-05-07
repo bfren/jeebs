@@ -69,7 +69,7 @@ namespace Jeebs.WordPress.Data
 			log.Verbose("WordPress Config: {@WpConfig}", wpConfig.Value);
 
 			// Create query object
-			Query = new WpDbQuery(this, log.ForContext<WpDbQuery>());
+			Query = new WpDbQuery(this, log.ForContext<IWpDbQuery>());
 
 			// Create schema
 			Schema = new WpDbSchema(wpConfig.Value.TablePrefix);

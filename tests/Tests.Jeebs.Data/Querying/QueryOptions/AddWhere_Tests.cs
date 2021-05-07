@@ -14,7 +14,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Column_Exists_Adds_Where()
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get();
 			var bar = F.Rnd.Str;
 			var cmp = Compare.LessThan;
 			var val = F.Rnd.Int;
@@ -38,7 +38,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg()
 		{
 			// Arrange
-			var (_, _, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, _, parts, options) = QueryOptions_Setup.Get();
 			var bar = F.Rnd.Str;
 			var cmp = Compare.LessThan;
 			var val = F.Rnd.Int;

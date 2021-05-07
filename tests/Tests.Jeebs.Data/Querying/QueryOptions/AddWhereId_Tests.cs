@@ -9,16 +9,16 @@ using Xunit;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
-	public class AddId_Tests
+	public class AddWhereId_Tests
 	{
 		[Fact]
 		public void Id_And_Ids_Null_Returns_Original_Parts()
 		{
 			// Arrange
-			var (_, map, parts, options) = QueryOptions_Setup.Get();
+			var (_, _, idColumn, parts, options) = QueryOptions_Setup.Get();
 
 			// Act
-			var result = options.AddWhereIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -30,12 +30,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var id = F.Rnd.Lng;
-			var (_, map, parts, options) = QueryOptions_Setup.Get(opt => opt with { Id = new(id) });
-			var idColumn = Substitute.For<IMappedColumn>();
-			map.IdColumn.Returns(idColumn);
+			var (_, _, idColumn, parts, options) = QueryOptions_Setup.Get(opt => opt with { Id = new(id) });
 
 			// Act
-			var result = options.AddWhereIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -58,12 +56,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var i1 = F.Rnd.Lng;
 			var i2 = F.Rnd.Lng;
 			var ids = new QueryOptions_Setup.TestId[] { new(i1), new(i2) };
-			var (_, map, parts, options) = QueryOptions_Setup.Get(opt => opt with { Id = new(i0), Ids = ids });
-			var idColumn = Substitute.For<IMappedColumn>();
-			map.IdColumn.Returns(idColumn);
+			var (_, _, idColumn, parts, options) = QueryOptions_Setup.Get(opt => opt with { Id = new(i0), Ids = ids });
 
 			// Act
-			var result = options.AddWhereIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -85,12 +81,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var i0 = F.Rnd.Lng;
 			var i1 = F.Rnd.Lng;
 			var ids = new QueryOptions_Setup.TestId[] { new(i0), new(i1) };
-			var (_, map, parts, options) = QueryOptions_Setup.Get(opt => opt with { Ids = ids });
-			var idColumn = Substitute.For<IMappedColumn>();
-			map.IdColumn.Returns(idColumn);
+			var (_, _, idColumn, parts, options) = QueryOptions_Setup.Get(opt => opt with { Ids = ids });
 
 			// Act
-			var result = options.AddWhereIdTest(parts, map);
+			var result = options.AddWhereIdTest(parts, idColumn);
 
 			// Assert
 			var some = result.AssertSome();

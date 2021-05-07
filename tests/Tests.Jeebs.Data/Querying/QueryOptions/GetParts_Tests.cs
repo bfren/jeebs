@@ -15,11 +15,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Adds_Select()
 		{
 			// Arrange
-			var (_, map, _, options) = QueryOptions_Setup.Get();
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get();
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -31,13 +31,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var id = F.Rnd.Lng;
-			var (_, map, _, options) = QueryOptions_Setup.Get(opt => opt with { Id = new(id) });
-			var idColumn = Substitute.For<IMappedColumn>();
-			map.IdColumn.Returns(idColumn);
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Id = new(id) });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -58,13 +56,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var i0 = F.Rnd.Lng;
 			var i1 = F.Rnd.Lng;
 			var ids = new QueryOptions_Setup.TestId[] { new(i0), new(i1) };
-			var (_, map, _, options) = QueryOptions_Setup.Get(opt => opt with { Ids = ids });
-			var idColumn = Substitute.For<IMappedColumn>();
-			map.IdColumn.Returns(idColumn);
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Ids = ids });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -87,11 +83,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		public void Adds_SortRandom()
 		{
 			// Arrange
-			var (_, map, _, options) = QueryOptions_Setup.Get(opt => opt with { SortRandom = true });
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { SortRandom = true });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -107,11 +103,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var c1 = Substitute.For<IColumn>();
 			var o1 = SortOrder.Descending;
 			var sort = new[] { (c0, o0), (c1, o1) };
-			var (_, map, _, options) = QueryOptions_Setup.Get(opt => opt with { Sort = sort });
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Sort = sort });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -134,11 +130,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var maximum = F.Rnd.Lng;
-			var (_, map, _, options) = QueryOptions_Setup.Get(opt => opt with { Maximum = maximum });
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Maximum = maximum });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -150,11 +146,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var skip = F.Rnd.Lng;
-			var (_, map, _, options) = QueryOptions_Setup.Get(opt => opt with { Skip = skip });
+			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Skip = skip });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(map, cols);
+			var result = options.GetPartsTest(table, cols, idColumn);
 
 			// Assert
 			var some = result.AssertSome();

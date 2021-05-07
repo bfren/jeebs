@@ -15,14 +15,14 @@ namespace Jeebs.Data.Db_Tests
 			// Arrange
 			var (_, log, _, _, db) = Db_Setup.Get();
 			var query = F.Rnd.Str;
-			object parameters = F.Rnd.Guid;
+			var parameters = F.Rnd.Guid.ToString();
 			const CommandType type = CommandType.TableDirect;
 
 			// Act
 			var _ = db.QuerySingleAsync<int>(query, parameters, type);
 
 			// Assert
-			log.Received().Verbose("{Query} ({Type}) {@Parameters}", query, type, parameters);
+			log.Received().Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
 		}
 	}
 }
