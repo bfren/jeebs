@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -18,15 +17,13 @@ namespace F.WordPressF.DataF
 		/// <summary>
 		/// Get query parts using the specific options
 		/// </summary>
-		/// <typeparam name="TPost">Post Entity type</typeparam>
 		/// <typeparam name="TModel">Return value type</typeparam>
 		/// <param name="db">IWpDb</param>
 		/// <param name="opt">Function to return query options</param>
-		internal static Option<IQueryParts> GetQueryParts<TPost, TModel>(
+		internal static Option<IQueryParts> GetQueryParts<TModel>(
 			IWpDb db,
 			Query.GetPostsOptions opt
 		)
-			where TPost : WpPostEntity
 			where TModel : IWithId =>
 			Return(
 				() => opt(new Query.PostsOptions(db)),
@@ -36,45 +33,23 @@ namespace F.WordPressF.DataF
 				x => x.GetParts<TModel>()
 			);
 
-		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions)"/>
-		internal static Task<Option<IEnumerable<TPost>>> ExecuteAsync<TPost>(
+		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, long, Query.GetPostsOptions)"/>
+		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			Query.GetPostsOptions opt
 		)
-			where TPost : WpPostEntity =>
-			ExecuteAsync<TPost, TPost>(db, opt);
-
-		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions)"/>
-		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TPost, TModel>(
-			IWpDb db,
-			Query.GetPostsOptions opt
-		)
-			where TPost : WpPostEntity
 			where TModel : IWithId =>
-			GetQueryParts<TPost, TModel>(
+			GetQueryParts<TModel>(
 				db, opt
 			)
 			.BindAsync(
 				x => db.Query.QueryAsync<TModel>(x)
-			);
-
-		/// <inheritdoc cref="ExecuteAsync{TPost, TPostMeta, TTerm, TModel}(IWpDb, long, Query.GetPostsOptions)"/>
-		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TPost, TPostMeta, TTerm, TModel>(
-			IWpDb db,
-			Query.GetPostsOptions opt
-		)
-			where TPost : WpPostEntity
-			where TPostMeta : WpPostMetaEntity
-			where TTerm : WpTermEntity
-			where TModel : IWithId =>
-			ExecuteAsync<TPost, TModel>(
-				db, opt
 			)
 			.BindAsync(
 				x => x.Count() switch
 				{
 					> 0 =>
-						Process<IEnumerable<TModel>, TModel, TPostMeta, TTerm>(db, x),
+						Process<IEnumerable<TModel>, TModel>(db, x),
 
 					_ =>
 						Return(x).AsTask
@@ -84,22 +59,17 @@ namespace F.WordPressF.DataF
 		/// <summary>
 		/// Run a query and return multiple items with paging
 		/// </summary>
-		/// <typeparam name="TPost">Post Entity type</typeparam>
-		/// <typeparam name="TPostMeta">Post Meta Entity type</typeparam>
 		/// <typeparam name="TModel">Return value type</typeparam>
 		/// <param name="db">IWpDb</param>
 		/// <param name="page">Page number</param>
 		/// <param name="opt">Function to return query options</param>
-		internal static Task<Option<IPagedList<TModel>>> ExecuteAsync<TPost, TPostMeta, TTerm, TModel>(
+		internal static Task<Option<IPagedList<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			long page,
 			Query.GetPostsOptions opt
 		)
-			where TPost : WpPostEntity
-			where TPostMeta : WpPostMetaEntity
-			where TTerm : WpTermEntity
 			where TModel : IWithId =>
-			GetQueryParts<TPost, TModel>(
+			GetQueryParts<TModel>(
 				db, opt
 			)
 			.BindAsync(
@@ -109,7 +79,7 @@ namespace F.WordPressF.DataF
 				x => x switch
 				{
 					PagedList<TModel> when x.Count > 0 =>
-						Process<IPagedList<TModel>, TModel, TPostMeta, TTerm>(db, x),
+						Process<IPagedList<TModel>, TModel>(db, x),
 
 					PagedList<TModel> =>
 						Return(x).AsTask,

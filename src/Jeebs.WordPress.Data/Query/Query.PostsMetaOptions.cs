@@ -33,7 +33,8 @@ namespace Jeebs.WordPress.Data
 			/// Internal creation only
 			/// </summary>
 			/// <param name="db">IWpDb</param>
-			internal PostsMetaOptions(IWpDb db) : base(db, db.Schema.PostMeta) { }
+			internal PostsMetaOptions(IWpDb db) : base(db, db.Schema.PostMeta) =>
+				Maximum = null;
 
 			/// <inheritdoc/>
 			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>

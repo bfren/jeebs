@@ -19,21 +19,19 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <typeparam name="TPostMeta">Post Meta Entity type</typeparam>
 		/// <param name="db">IWpDbQueIWpDbry</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddMetaAsync<TList, TModel, TPostMeta>(IWpDb db, TList posts)
+		internal static Task<Option<TList>> AddMetaAsync<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId
-			where TPostMeta : WpPostMetaEntity =>
+			where TModel : IWithId =>
 			GetMetaDictionary<TModel>()
 			.SwitchAsync(
 				some: x =>
-					from postMeta in QueryPostsMetaF.ExecuteAsync<TPostMeta, TPostMeta>(db, opt => opt with
+					from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, opt => opt with
 					{
 						PostIds = posts.Select(p => p.Id.Value).ToImmutableList()
 					})
-					from withMeta in SetMeta<TList, TModel, TPostMeta>(posts, postMeta.ToList(), x)
+					from withMeta in SetMeta(posts, postMeta.ToList(), x)
 					select posts,
 				none: Return(posts)
 			);
@@ -43,14 +41,12 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <typeparam name="TPostMeta">Post Meta Entity type</typeparam>
 		/// <param name="posts">Posts</param>
 		/// <param name="postsMeta">Posts Meta</param>
 		/// <param name="metaDict">Meta Dictionary property for <typeparamref name="TModel"/></param>
-		internal static Option<TList> SetMeta<TList, TModel, TPostMeta>(TList posts, List<TPostMeta> postsMeta, Meta<TModel> metaDict)
+		internal static Option<TList> SetMeta<TList, TModel>(TList posts, List<PostMeta> postsMeta, Meta<TModel> metaDict)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId
-			where TPostMeta : WpPostMetaEntity
 		{
 			if (postsMeta.Count > 0)
 			{
@@ -77,5 +73,7 @@ namespace F.WordPressF.DataF
 
 			return posts;
 		}
+
+		internal sealed record PostMeta : WpPostMetaEntity;
 	}
 }

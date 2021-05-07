@@ -65,14 +65,17 @@ namespace F.WordPressF.DataF
 				// Add each custom field
 				foreach (var info in fields)
 				{
+					// Whether or not the field is required
+					var required = !info.IsNullable();
+
 					// Get custom field
 					if (GetCustomField(post, info) is ICustomField customField)
 					{
 						// Hydrate the field
-						var result = await customField.HydrateAsync(db, metaDict).ConfigureAwait(false);
+						var result = await customField.HydrateAsync(db, metaDict, required).ConfigureAwait(false);
 
 						// If it failed and it's required, return None
-						if (result is None<bool> none && customField.IsRequired)
+						if (result is None<bool> none && required)
 						{
 							return None<TList>(none.Reason);
 							//return None<TList>(new Msg.RequiredCustomFieldNotFoundMsg<TModel>(post.Id, info.Name, customField.Key));

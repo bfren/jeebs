@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -16,15 +15,13 @@ namespace F.WordPressF.DataF
 		/// <summary>
 		/// Execute Posts Taxonomy query
 		/// </summary>
-		/// <typeparam name="TTerm">Term Entity type</typeparam>
 		/// <typeparam name="TModel">Return Model type</typeparam>
 		/// <param name="db">IWpDb</param>
 		/// <param name="opt">Function to return query options</param>
-		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TTerm, TModel>(
+		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			Query.GetPostsTaxonomyOptions opt
 		)
-			where TTerm : WpTermEntity
 			where TModel : IWithId =>
 			Return(
 				() => opt(new Query.PostsTaxonomyOptions(db)),
