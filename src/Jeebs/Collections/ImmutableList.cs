@@ -27,6 +27,14 @@ namespace Jeebs
 		/// <param name="collection">Collection of items to add</param>
 		public static ImmutableList<T> Create<T>(IEnumerable<T> collection) =>
 			new(collection);
+
+		/// <summary>
+		/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
+		/// </summary>
+		/// <typeparam name="T">List Item type</typeparam>
+		/// <param name="items">Items to add</param>
+		public static ImmutableList<T> Create<T>(params T[] items) =>
+			new(items);
 	}
 
 	/// <inheritdoc cref="IImmutableList{T}"/>

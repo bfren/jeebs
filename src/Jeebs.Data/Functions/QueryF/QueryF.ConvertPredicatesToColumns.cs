@@ -61,7 +61,7 @@ namespace F.DataF
 				list.Add((column, item.cmp, item.value));
 			}
 
-			return ImmutableList.Create(list);
+			return ImmutableList.Create(collection: list);
 		}
 
 		public static partial class Msg
