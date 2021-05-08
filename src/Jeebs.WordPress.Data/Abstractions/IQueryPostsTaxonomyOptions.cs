@@ -20,6 +20,6 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get taxonomies for specific Posts
 		/// </summary>
-		IImmutableList<long>? PostIds { get; init; }
+		IImmutableList<WpPostId>? PostIds { get; init; }
 	}
 }

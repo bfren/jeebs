@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -22,17 +23,20 @@ namespace F.WordPressF.DataF
 			IWpDb db,
 			Query.GetPostsMetaOptions opt
 		)
-			where TModel : IWithId =>
-			Return(
-				() => opt(new Query.PostsMetaOptions(db)),
-				e => new Msg.ErrorGettingQueryPostsMetaOptionsMsg(e)
-			)
-			.Bind(
-				x => x.GetParts<TModel>()
-			)
-			.BindAsync(
-				x => db.Query.QueryAsync<TModel>(x)
-			);
+			where TModel : IWithId<WpPostMetaId>
+		{
+			return
+				Return(
+					() => opt(new Query.PostsMetaOptions(db)),
+					e => new Msg.ErrorGettingQueryPostsMetaOptionsMsg(e)
+				)
+				.Bind(
+					x => x.GetParts<TModel>()
+				)
+				.BindAsync(
+					x => db.Query.QueryAsync<TModel>(x)
+				);
+		}
 
 		/// <summary>Messages</summary>
 		public static partial class Msg

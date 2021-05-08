@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -17,10 +18,10 @@ namespace Jeebs.WordPress.Data
 		public sealed record PostsMetaOptions : Options<WpPostMetaId, PostMetaTable>, IQueryPostsMetaOptions
 		{
 			/// <inheritdoc/>
-			public long? PostId { get; init; }
+			public WpPostId? PostId { get; init; }
 
 			/// <inheritdoc/>
-			public IImmutableList<long>? PostIds { get; init; }
+			public IImmutableList<WpPostId>? PostIds { get; init; }
 
 			/// <inheritdoc/>
 			public string? Key { get; init; }
@@ -28,6 +29,9 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			protected override Expression<Func<PostMetaTable, string>> IdColumn =>
 				table => table.PostMetaId;
+
+			internal Expression<Func<PostMetaTable, string>> IdColumnTest =>
+				IdColumn;
 
 			/// <summary>
 			/// Internal creation only
@@ -42,12 +46,8 @@ namespace Jeebs.WordPress.Data
 					table, cols, idColumn
 				)
 				.SwitchIf(
-					_ => PostId is not null and > 0,
+					_ => PostId?.Value > 0 || PostIds?.Count > 0,
 					ifTrue: AddWherePostId
-				)
-				.SwitchIf(
-					_ => PostIds?.Count > 0,
-					ifTrue: AddWherePostIds
 				)
 				.SwitchIf(
 					_ => Key is not null && !string.IsNullOrEmpty(Key),
@@ -60,25 +60,16 @@ namespace Jeebs.WordPress.Data
 			/// <param name="parts">QueryParts</param>
 			internal Option<QueryParts> AddWherePostId(QueryParts parts)
 			{
-				// Add Post ID
-				if (PostId is long postId)
+				// Add Post ID EQUAL
+				if (PostId?.Value > 0)
 				{
-					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, postId);
+					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, PostId.Value);
 				}
 
-				// Return
-				return parts;
-			}
-
-			/// <summary>
-			/// Add Where Post IDs
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWherePostIds(QueryParts parts)
-			{
-				// Add Post IDs
-				if (PostIds is ImmutableList<long> postIds && postIds.Count > 0)
+				// Add Post ID IN
+				else if (PostIds?.Count > 0)
 				{
+					var postIds = PostIds.Select(p => p.Value);
 					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.In, postIds);
 				}
 

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using static F.OptionF;
 
@@ -23,7 +24,7 @@ namespace F.WordPressF.DataF
 		/// <param name="posts">Posts</param>
 		internal static Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId
+			where TModel : IWithId<WpPostId>
 		{
 			// Only proceed if there is at least one term list in this model
 			var termLists = GetTermLists<TModel>();
@@ -36,7 +37,7 @@ namespace F.WordPressF.DataF
 			return QueryPostsTaxonomyF
 				.ExecuteAsync<Term>(db, opt => opt with
 				{
-					PostIds = posts.Select(p => p.Id.Value).ToImmutableList()
+					PostIds = posts.Select(p => p.Id).ToImmutableList()
 				})
 				.BindAsync(
 					x => SetTaxonomies<TList, TModel>(posts, x, termLists)
@@ -53,7 +54,7 @@ namespace F.WordPressF.DataF
 		/// <param name="termLists">Term List properties</param>
 		internal static Option<TList> SetTaxonomies<TList, TModel>(TList posts, IEnumerable<Term> terms, List<PropertyInfo> termLists)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId
+			where TModel : IWithId<WpPostId>
 		{
 			foreach (var post in posts)
 			{
@@ -64,7 +65,7 @@ namespace F.WordPressF.DataF
 
 					// Get terms
 					var termsForThisPost = from t in terms
-										   where t.PostId == post.Id
+										   where t.PostId == post.Id.Value
 										   && t.Taxonomy == list.Taxonomy
 										   select (TermList.Term)t;
 

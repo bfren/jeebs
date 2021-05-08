@@ -23,13 +23,13 @@ namespace F.WordPressF.DataF
 		/// <param name="posts">Posts</param>
 		internal static Task<Option<TList>> AddMetaAsync<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId =>
+			where TModel : IWithId<WpPostId> =>
 			GetMetaDictionary<TModel>()
 			.SwitchAsync(
 				some: x =>
 					from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, opt => opt with
 					{
-						PostIds = posts.Select(p => p.Id.Value).ToImmutableList()
+						PostIds = posts.Select(p => p.Id).ToImmutableList()
 					})
 					from withMeta in SetMeta(posts, postMeta.ToList(), x)
 					select posts,
@@ -46,7 +46,7 @@ namespace F.WordPressF.DataF
 		/// <param name="metaDict">Meta Dictionary property for <typeparamref name="TModel"/></param>
 		internal static Option<TList> SetMeta<TList, TModel>(TList posts, List<PostMeta> postsMeta, Meta<TModel> metaDict)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId
+			where TModel : IWithId<WpPostId>
 		{
 			if (postsMeta.Count > 0)
 			{
@@ -56,7 +56,7 @@ namespace F.WordPressF.DataF
 					var postMeta = from m in postsMeta
 								   let key = m.Key
 								   let value = m.Value
-								   where m.PostId == post.Id
+								   where m.PostId == post.Id.Value
 								   && !string.IsNullOrEmpty(key)
 								   && !string.IsNullOrEmpty(value)
 								   select new KeyValuePair<string, string>(key, value);

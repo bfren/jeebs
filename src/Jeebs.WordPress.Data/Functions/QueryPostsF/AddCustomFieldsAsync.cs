@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -22,7 +23,7 @@ namespace F.WordPressF.DataF
 		/// <param name="posts">Posts</param>
 		internal static Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId
+			where TModel : IWithId<WpPostId>
 		{
 			// Only proceed if there are custom fields, and a meta property for this model
 			var fields = GetCustomFields<TModel>();
@@ -54,7 +55,7 @@ namespace F.WordPressF.DataF
 			List<PropertyInfo> fields
 		)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId
+			where TModel : IWithId<WpPostId>
 		{
 			// Hydrate all custom fields for all posts
 			foreach (var post in posts)

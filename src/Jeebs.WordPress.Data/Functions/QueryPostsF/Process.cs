@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -20,18 +21,21 @@ namespace F.WordPressF.DataF
 		/// <param name="posts">Posts</param>
 		internal static Task<Option<TList>> Process<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId =>
-			Return(
-				posts
-			)
-			.BindAsync(
-				x => AddMetaAsync<TList, TModel>(db, x)
-			)
-			.BindAsync(
-				x => AddCustomFieldsAsync<TList, TModel>(db, x)
-			)
-			.BindAsync(
-				x => AddTaxonomiesAsync<TList, TModel>(db, x)
-			);
+			where TModel : IWithId<WpPostId>
+		{
+			return
+				Return(
+					posts
+				)
+				.BindAsync(
+					x => AddMetaAsync<TList, TModel>(db, x)
+				)
+				.BindAsync(
+					x => AddCustomFieldsAsync<TList, TModel>(db, x)
+				)
+				.BindAsync(
+					x => AddTaxonomiesAsync<TList, TModel>(db, x)
+				);
+		}
 	}
 }

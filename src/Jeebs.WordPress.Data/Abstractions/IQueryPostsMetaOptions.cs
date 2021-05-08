@@ -14,12 +14,12 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get meta for a single Post
 		/// </summary>
-		long? PostId { get; init; }
+		WpPostId? PostId { get; init; }
 
 		/// <summary>
 		/// Get meta for multiple Posts
 		/// </summary>
-		IImmutableList<long>? PostIds { get; init; }
+		IImmutableList<WpPostId>? PostIds { get; init; }
 
 		/// <summary>
 		/// Only return a single Key

@@ -93,17 +93,17 @@ namespace Jeebs.WordPress.Data
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt)
-			where TModel : IWithId =>
+			where TModel : IWithId<WpPostId> =>
 			QueryPostsF.ExecuteAsync<TModel>(this, opt);
 
 		/// <inheritdoc/>
 		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions opt)
-			where TModel : IWithId =>
+			where TModel : IWithId<WpPostId> =>
 			QueryPostsF.ExecuteAsync<TModel>(this, page, opt);
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermsOptions opt)
-			where TModel : IWithId =>
+			where TModel : IWithId<WpTermId> =>
 			QueryTermsF.ExecuteAsync<TModel>(this, opt);
 
 		#endregion
