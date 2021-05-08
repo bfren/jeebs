@@ -18,7 +18,7 @@ namespace Jeebs.ImmutableList_Tests
 			{
 				items.Add(F.Rnd.Int);
 			}
-			var list = ImmutableList.Create(items);
+			var list = ImmutableList.Create(items: items);
 
 			// Act
 			var result = list.Count;

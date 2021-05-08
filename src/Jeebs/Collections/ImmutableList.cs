@@ -21,20 +21,20 @@ namespace Jeebs
 			new();
 
 		/// <summary>
-		/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
+		/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="items"/>
 		/// </summary>
 		/// <typeparam name="T">List Item type</typeparam>
-		/// <param name="collection">Collection of items to add</param>
-		public static ImmutableList<T> Create<T>(IEnumerable<T> collection) =>
-			new(collection);
+		/// <param name="items">Collection of items to add</param>
+		public static ImmutableList<T> Create<T>(IEnumerable<T> items) =>
+			new(items);
 
 		/// <summary>
-		/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
+		/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="args"/>
 		/// </summary>
 		/// <typeparam name="T">List Item type</typeparam>
-		/// <param name="items">Items to add</param>
-		public static ImmutableList<T> Create<T>(params T[] items) =>
-			new(items);
+		/// <param name="args">Items to add</param>
+		public static ImmutableList<T> Create<T>(params T[] args) =>
+			new(args);
 	}
 
 	/// <inheritdoc cref="IImmutableList{T}"/>
@@ -82,15 +82,6 @@ namespace Jeebs
 		/// <inheritdoc/>
 		public IImmutableList<T> With(T add) =>
 			new ImmutableList<T>(new List<T>(List) { add });
-
-		///// <inheritdoc/>
-		//public IImmutableList<T> WithRange(IEnumerable<T> add)
-		//{
-		//	var newList = new List<T>(List);
-		//	newList.AddRange(add);
-
-		//	return new ImmutableList<T>(newList);
-		//}
 
 		/// <inheritdoc/>
 		public IImmutableList<T> WithRange(params T[] add)

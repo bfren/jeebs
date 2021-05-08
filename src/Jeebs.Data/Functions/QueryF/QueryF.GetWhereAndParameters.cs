@@ -76,7 +76,7 @@ namespace F.DataF
 			}
 
 			// Return
-			return (ImmutableList.Create(collection: where), param);
+			return (ImmutableList.Create(items: where), param);
 		}
 	}
 }
