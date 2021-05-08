@@ -104,7 +104,7 @@ namespace Jeebs.Data.Querying
 				table, cols
 			)
 			.SwitchIf(
-				_ => Id is not null || Ids is not null,
+				_ => Id?.Value > 0 || Ids?.Length > 0,
 				x => AddWhereId(x, idColumn)
 			)
 			.SwitchIf(
@@ -182,13 +182,13 @@ namespace Jeebs.Data.Querying
 		protected virtual Option<QueryParts> AddWhereId(QueryParts parts, IColumn idColumn)
 		{
 			// Add Id EQUAL
-			if (Id is not null)
+			if (Id?.Value > 0)
 			{
 				return parts with { Where = parts.Where.With((idColumn, Compare.Equal, Id.Value)) };
 			}
 
 			// Add Id IN
-			else if (Ids is not null)
+			else if (Ids?.Length > 0)
 			{
 				var ids = Ids.Select(x => x.Value);
 				return parts with { Where = parts.Where.With((idColumn, Compare.In, ids)) };

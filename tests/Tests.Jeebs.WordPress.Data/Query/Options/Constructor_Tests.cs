@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Query_Tests.Option_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 {
 	public class Constructor_Tests
 	{
@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.Option_Tests
 		public void Sets_Properties()
 		{
 			// Arrange
-			var (client, wpDb, schema, table, _) = Query_Setup.Get();
+			var (client, wpDb, schema, table, _) = Options_Setup.Get();
 
 			// Act
 			var result = new TestOptions(client, wpDb, table);

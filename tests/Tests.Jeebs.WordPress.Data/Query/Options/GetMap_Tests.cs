@@ -1,15 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NSubstitute;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Query_Tests.Option_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 {
 	public class GetMap_Tests
 	{
@@ -17,7 +11,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.Option_Tests
 		public void Returns_Table_And_IdColumn()
 		{
 			// Arrange
-			var (_, _, _, table, options) = Query_Setup.Get();
+			var (_, _, _, table, options) = Options_Setup.Get();
 
 			// Act
 			var result = options.GetMapTest();

@@ -11,20 +11,6 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
 	public class GetParts_Tests
 	{
-		[Fact]
-		public void Adds_Select()
-		{
-			// Arrange
-			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get();
-			var cols = Substitute.For<IColumnList>();
-
-			// Act
-			var result = options.GetPartsTest(table, cols, idColumn);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Same(cols, some.Select);
-		}
 
 		[Fact]
 		public void Adds_Id()
@@ -123,38 +109,6 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 					Assert.Equal(o1, x.order);
 				}
 			);
-		}
-
-		[Fact]
-		public void Adds_Maximum()
-		{
-			// Arrange
-			var maximum = F.Rnd.Lng;
-			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Maximum = maximum });
-			var cols = Substitute.For<IColumnList>();
-
-			// Act
-			var result = options.GetPartsTest(table, cols, idColumn);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(maximum, some.Maximum);
-		}
-
-		[Fact]
-		public void Adds_Skip()
-		{
-			// Arrange
-			var skip = F.Rnd.Lng;
-			var (table, _, idColumn, _, options) = QueryOptions_Setup.Get(opt => opt with { Skip = skip });
-			var cols = Substitute.For<IColumnList>();
-
-			// Act
-			var result = options.GetPartsTest(table, cols, idColumn);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(skip, some.Skip);
 		}
 	}
 }

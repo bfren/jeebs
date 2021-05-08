@@ -7,9 +7,9 @@ using Jeebs.Data;
 using Jeebs.Data.Mapping;
 using NSubstitute;
 
-namespace Jeebs.WordPress.Data.Query_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 {
-	public static class Query_Setup
+	public static class Options_Setup
 	{
 		public static Vars Get()
 		{

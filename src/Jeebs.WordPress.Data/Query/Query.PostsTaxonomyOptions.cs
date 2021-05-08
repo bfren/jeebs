@@ -13,7 +13,6 @@ using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using Jeebs.WordPress.Data.Tables;
 using static F.DataF.QueryF;
-using static F.OptionF;
 
 namespace Jeebs.WordPress.Data
 {
@@ -26,7 +25,7 @@ namespace Jeebs.WordPress.Data
 			public IImmutableList<Taxonomy>? Taxonomies { get; init; }
 
 			/// <inheritdoc/>
-			public IImmutableList<long>? PostIds { get; init; }
+			public IImmutableList<WpPostId>? PostIds { get; init; }
 
 			/// <inheritdoc/>
 			protected override Expression<Func<TermTable, string>> IdColumn =>
