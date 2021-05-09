@@ -42,7 +42,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		QueryParts Parts
 	);
 
-	public record TestId(long Value) : StrongId(Value);
+	public record TestId(long Value) : StrongId(Value)
+	{
+		public TestId() : this(0) { }
+	}
 
 	public record TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 
