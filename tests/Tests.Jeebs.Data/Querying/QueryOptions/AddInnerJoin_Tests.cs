@@ -1,17 +1,18 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Mapping;
 using Xunit;
-using static F.DataF_Tests.QueryOptionsF_Tests;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
-	public class AddInnerJoin_Tests
+	public class AddInnerJoin_Tests : AddInnerJoin<TestOptions, TestId>
 	{
+		protected override TestOptions Create(IMapper mapper) =>
+			new(mapper);
+
 		[Fact]
-		public void Adds_Columns_To_InnerJoin()
-		{
-			Adds_Columns_To_InnerJoin<TestOptions, TestId>(mapper => new TestOptions(mapper));
-		}
+		public override void Test00_Adds_Columns_To_InnerJoin() =>
+			Test00();
 	}
 }
