@@ -8,19 +8,19 @@ using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 {
-	public class AddWhereKey_Tests
+	public class AddWhereKey_Tests : PostsMetaOptions_Tests
 	{
 		[Fact]
 		public void Returns_New_Parts_With_Clause_And_Parameters()
 		{
 			// Arrange
-			var v = PostsMetaOptions_Setup.Get();
-			var keyColumn = new Column(v.Options.TableTest.GetName(), v.Options.TableTest.Key, nameof(PostMetaTable.Key));
+			var (options, v) = Setup();
+			var keyColumn = new Column(options.TableTest.GetName(), options.TableTest.Key, nameof(PostMetaTable.Key));
 			var key = F.Rnd.Str;
-			var options = v.Options with { Key = key };
+			var optionsWithKey = options with { Key = key };
 
 			// Act
-			var result = options.AddWhereKey(v.Parts);
+			var result = optionsWithKey.AddWhereKey(v.Parts);
 
 			// Assert
 			var some = result.AssertSome();

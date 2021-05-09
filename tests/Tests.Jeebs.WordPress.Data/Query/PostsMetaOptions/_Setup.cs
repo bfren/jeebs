@@ -9,9 +9,9 @@ using NSubstitute;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 {
-	public static class PostsMetaOptions_Setup
+	public abstract class PostsMetaOptions_Tests
 	{
-		public static Vars Get(Func<Query.PostsMetaOptions, Query.PostsMetaOptions>? opt = null)
+		public static (Query.PostsMetaOptions options, Vars v) Setup(Func<Query.PostsMetaOptions, Query.PostsMetaOptions>? opt = null)
 		{
 			var schema = new WpDbSchema(F.Rnd.Str);
 
@@ -24,13 +24,12 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 
 			var parts = new QueryParts(schema.PostMeta);
 
-			return new(wpDb, idColumn, opt?.Invoke(options) ?? options, parts);
+			return (opt?.Invoke(options) ?? options, new(wpDb, idColumn, parts));
 		}
 
 		public sealed record Vars(
 			IWpDb WpDb,
 			IColumn PostIdColumn,
-			Query.PostsMetaOptions Options,
 			QueryParts Parts
 		);
 	}

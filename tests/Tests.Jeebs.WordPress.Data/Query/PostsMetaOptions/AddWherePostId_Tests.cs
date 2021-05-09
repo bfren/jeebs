@@ -10,16 +10,16 @@ using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 {
-	public class AddWherePostId_Tests
+	public class AddWherePostId_Tests : PostsMetaOptions_Tests
 	{
 		[Fact]
 		public void PostId_And_PostIds_Null_Returns_Original_Parts()
 		{
 			// Arrange
-			var v = PostsMetaOptions_Setup.Get();
+			var (options, v) = Setup();
 
 			// Act
-			var result = v.Options.AddWherePostId(v.Parts);
+			var result = options.AddWherePostId(v.Parts);
 
 			// Assert
 			var some = result.AssertSome();
@@ -31,10 +31,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 		{
 			// Arrange
 			var id = F.Rnd.Lng;
-			var v = PostsMetaOptions_Setup.Get(opt => opt with { PostId = new(id) });
+			var (options, v) = Setup(opt => opt with { PostId = new(id) });
 
 			// Act
-			var result = v.Options.AddWherePostId(v.Parts);
+			var result = options.AddWherePostId(v.Parts);
 
 			// Assert
 			var some = result.AssertSome();
@@ -57,10 +57,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			var i1 = F.Rnd.Lng;
 			var i2 = F.Rnd.Lng;
 			var ids = ImmutableList.Create<WpPostId>(new(i0), new(i1), new(i2));
-			var v = PostsMetaOptions_Setup.Get(opt => opt with { PostId = new(i0), PostIds = ids });
+			var (options, v) = Setup(opt => opt with { PostId = new(i0), PostIds = ids });
 
 			// Act
-			var result = v.Options.AddWherePostId(v.Parts);
+			var result = options.AddWherePostId(v.Parts);
 
 			// Assert
 			var some = result.AssertSome();
@@ -82,10 +82,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			var i0 = F.Rnd.Lng;
 			var i1 = F.Rnd.Lng;
 			var ids = ImmutableList.Create<WpPostId>(new(i0), new(i1));
-			var v = PostsMetaOptions_Setup.Get(opt => opt with { PostIds = ids });
+			var (options, v) = Setup(opt => opt with { PostIds = ids });
 
 			// Act
-			var result = v.Options.AddWherePostId(v.Parts);
+			var result = options.AddWherePostId(v.Parts);
 
 			// Assert
 			var some = result.AssertSome();

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 {
-	public class Constructor_Tests
+	public class Constructor_Tests : PostsMetaOptions_Tests
 	{
 		[Fact]
 		public void Sets_Maximum_To_Null()

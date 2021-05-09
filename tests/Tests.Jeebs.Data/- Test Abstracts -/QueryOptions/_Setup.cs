@@ -14,7 +14,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 	{
 		protected abstract TOptions Create(IMapper mapper);
 
-		public (TOptions, Vars) Setup(Func<TOptions, TOptions>? opt = null)
+		public (TOptions options, Vars v) Setup(Func<TOptions, TOptions>? opt = null)
 		{
 			var table = Substitute.For<ITable>();
 

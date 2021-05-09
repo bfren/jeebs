@@ -9,9 +9,9 @@ using NSubstitute;
 
 namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 {
-	public static class Options_Setup
+	public abstract class Options_Tests
 	{
-		public static Vars Get()
+		public static (TestOptions options, Vars v) Setup()
 		{
 			var client = Substitute.For<IDbClient>();
 
@@ -24,15 +24,14 @@ namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 
 			var options = new TestOptions(client, wpDb, table);
 
-			return new(client, wpDb, schema, table, options);
+			return (options, new(client, wpDb, schema, table));
 		}
 
 		public sealed record Vars(
 			IDbClient DbClient,
 			IWpDb WpDb,
 			IWpDbSchema Schema,
-			TestTable Table,
-			TestOptions Options
+			TestTable Table
 		);
 	}
 

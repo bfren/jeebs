@@ -5,22 +5,22 @@ using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 {
-	public class Constructor_Tests
+	public class Constructor_Tests : Options_Tests
 	{
 		[Fact]
 		public void Sets_Properties()
 		{
 			// Arrange
-			var (client, wpDb, schema, table, _) = Options_Setup.Get();
+			var (_, v) = Setup();
 
 			// Act
-			var result = new TestOptions(client, wpDb, table);
+			var result = new TestOptions(v.DbClient, v.WpDb, v.Table);
 
 			// Assert
-			Assert.Same(client, result.ClientTest);
-			Assert.Same(wpDb, result.DbTest);
-			Assert.Same(schema, result.TTest);
-			Assert.Same(table, result.TableTest);
+			Assert.Same(v.DbClient, result.ClientTest);
+			Assert.Same(v.WpDb, result.DbTest);
+			Assert.Same(v.Schema, result.TTest);
+			Assert.Same(v.Table, result.TableTest);
 		}
 	}
 }
