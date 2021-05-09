@@ -2,73 +2,29 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data.Mapping;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
-	public class CreateParts_Tests
+	public class CreateParts_Tests : CreateParts<TestOptions, TestId>
 	{
-		[Fact]
-		public void Returns_New_QueryParts_With_Table()
-		{
-			// Arrange
-			var (table, _, _, _, options) = QueryOptions_Setup.Get();
-			var cols = Substitute.For<IColumnList>();
-
-			// Act
-			var result = options.CreatePartsTest(table, cols);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Same(table, some.From);
-		}
+		protected override TestOptions Create(IMapper mapper) =>
+			new(mapper);
 
 		[Fact]
-		public void Returns_New_QueryParts_With_Select()
-		{
-			// Arrange
-			var (table, _, _, _, options) = QueryOptions_Setup.Get();
-			var cols = Substitute.For<IColumnList>();
-
-			// Act
-			var result = options.CreatePartsTest(table, cols);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Same(cols, some.Select);
-		}
+		public override void Test00_Returns_New_QueryParts_With_Table() =>
+			Test00();
 
 		[Fact]
-		public void Returns_New_QueryParts_With_Maximum()
-		{
-			// Arrange
-			var maximum = F.Rnd.Lng;
-			var (table, _, _, _, options) = QueryOptions_Setup.Get(opt => opt with { Maximum = maximum });
-			var cols = Substitute.For<IColumnList>();
-
-			// Act
-			var result = options.CreatePartsTest(table, cols);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(maximum, some.Maximum);
-		}
+		public override void Test01_Returns_New_QueryParts_With_Select() =>
+			Test01();
 
 		[Fact]
-		public void Returns_New_QueryParts_With_Skip()
-		{
-			// Arrange
-			var skip = F.Rnd.Lng;
-			var (table, _, _, _, options) = QueryOptions_Setup.Get(opt => opt with { Skip = skip });
-			var cols = Substitute.For<IColumnList>();
+		public override void Test02_Returns_New_QueryParts_With_Maximum() =>
+			Test02();
 
-			// Act
-			var result = options.CreatePartsTest(table, cols);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(skip, some.Skip);
-		}
+		[Fact]
+		public override void Test03_Returns_New_QueryParts_With_Skip() =>
+			Test03();
 	}
 }
