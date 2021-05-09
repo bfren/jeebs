@@ -11,7 +11,6 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
 	public class GetParts_Tests
 	{
-
 		[Fact]
 		public void Adds_Id()
 		{
