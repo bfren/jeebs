@@ -54,7 +54,7 @@ namespace Jeebs.WordPress.Data
 					x => AddInnerJoin(x, T.TermTaxonomy, tx => tx.TermTaxonomyId, T.TermRelationship, tr => tr.TermTaxonomyId)
 				)
 				.SwitchIf(
-					_ => Id is not null || Ids is not null,
+					_ => Id?.Value > 0 || Ids?.Length > 0,
 					x => AddWhereId(x, idColumn)
 				)
 				.SwitchIf(
@@ -76,9 +76,9 @@ namespace Jeebs.WordPress.Data
 			internal Option<QueryParts> AddWhereTaxonomies(QueryParts parts)
 			{
 				// Add Taxonomies
-				if (Taxonomies is ImmutableList<Taxonomy> taxonomies && taxonomies.Count > 0)
+				if (Taxonomies?.Count > 0)
 				{
-					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.In, taxonomies);
+					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.In, Taxonomies);
 				}
 
 				// Return
@@ -92,9 +92,9 @@ namespace Jeebs.WordPress.Data
 			internal Option<QueryParts> AddWherePostIds(QueryParts parts)
 			{
 				// Add Post IDs
-				if (PostIds is ImmutableList<long> postIds && postIds.Count > 0)
+				if (PostIds?.Count > 0)
 				{
-					return AddWhere(parts, T.TermRelationship, t => t.PostId, Compare.In, postIds);
+					return AddWhere(parts, T.TermRelationship, t => t.PostId, Compare.In, PostIds);
 				}
 
 				// Return

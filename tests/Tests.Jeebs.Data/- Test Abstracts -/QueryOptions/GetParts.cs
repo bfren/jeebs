@@ -13,7 +13,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		where TOptions : QueryOptions<TId>
 		where TId : StrongId, new()
 	{
-		public abstract void Test00_Adds_Id();
+		public abstract void Test00_Returns_New_QueryParts_With_Where_Id();
 
 		protected void Test00()
 		{
@@ -27,6 +27,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Collection(some.Where,
 				x =>
 				{
@@ -37,7 +38,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			);
 		}
 
-		public abstract void Test01_Adds_Ids();
+		public abstract void Test01_Returns_New_QueryParts_With_Where_Ids();
 
 		protected void Test01()
 		{
@@ -52,6 +53,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Collection(some.Where,
 				x =>
 				{
@@ -67,7 +69,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			);
 		}
 
-		public abstract void Test02_Adds_SortRandom();
+		public abstract void Test02_Returns_New_QueryParts_With_Sort_Random();
 
 		protected void Test02()
 		{
@@ -80,10 +82,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.True(some.SortRandom);
 		}
 
-		public abstract void Test03_Adds_Sort();
+		public abstract void Test03_Returns_New_QueryParts_With_Sort();
 
 		protected void Test03()
 		{
@@ -101,6 +104,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Collection(some.Sort,
 				x =>
 				{

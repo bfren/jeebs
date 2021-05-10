@@ -24,6 +24,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Same(v.Table, some.From);
 		}
 
@@ -40,6 +41,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Same(cols, some.Select);
 		}
 
@@ -57,6 +59,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Equal(maximum, some.Maximum);
 		}
 
@@ -74,6 +77,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			// Assert
 			var some = result.AssertSome();
+			Assert.NotSame(v.Parts, some);
 			Assert.Equal(skip, some.Skip);
 		}
 	}
