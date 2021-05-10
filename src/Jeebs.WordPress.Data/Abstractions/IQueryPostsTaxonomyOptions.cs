@@ -21,5 +21,11 @@ namespace Jeebs.WordPress.Data
 		/// Get taxonomies for specific Posts
 		/// </summary>
 		IImmutableList<WpPostId>? PostIds { get; init; }
+
+		/// <summary>
+		/// Sort order for Taxonomy terms - will be ignored if <see cref="IQueryOptions{TId}.Sort"/>
+		/// or <see cref="IQueryOptions{TId}.SortRandom"/> are used
+		/// </summary>
+		TaxonomySort SortBy { get; init; }
 	}
 }

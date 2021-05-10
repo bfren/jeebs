@@ -28,6 +28,9 @@ namespace Jeebs.WordPress.Data
 			public IImmutableList<WpPostId>? PostIds { get; init; }
 
 			/// <inheritdoc/>
+			public TaxonomySort SortBy { get; init; }
+
+			/// <inheritdoc/>
 			protected override Expression<Func<TermTable, string>> IdColumn =>
 				table => table.TermId;
 
@@ -102,19 +105,30 @@ namespace Jeebs.WordPress.Data
 			}
 
 			/// <summary>
-			/// Sort by Title and then Count
+			/// Add custom Sort or default Sort
 			/// </summary>
 			/// <param name="parts">QueryParts</param>
-			protected override Option<QueryParts> AddSort(QueryParts parts) =>
-				from title in GetColumnFromExpression(T.Term, t => t.Title)
-				from count in GetColumnFromExpression(T.TermTaxonomy, tx => tx.Count)
-				select parts with
+			protected override Option<QueryParts> AddSort(QueryParts parts)
+			{
+				// Add custom Sort options
+				if (SortRandom || Sort?.Length > 0)
 				{
-					Sort = parts.Sort.WithRange(
-						(title, SortOrder.Ascending),
-						(count, SortOrder.Descending)
-					)
-				};
+					return base.AddSort(parts);
+				}
+
+				// Add sort
+				return from title in GetColumnFromExpression(T.Term, t => t.Title)
+					   from count in GetColumnFromExpression(T.TermTaxonomy, tx => tx.Count)
+					   let sortRange = SortBy switch
+					   {
+						   TaxonomySort.CountDescending =>
+							   new[] { (count, SortOrder.Descending), (title, SortOrder.Ascending) },
+
+						   _ =>
+							   new[] { (title, SortOrder.Ascending) }
+					   }
+					   select parts with { Sort = parts.Sort.WithRange(sortRange) };
+			}
 		}
 	}
 }
