@@ -63,8 +63,8 @@ namespace Jeebs.WordPress.Data
 			internal PostsOptions(IWpDb db) : base(db, db.Schema.Post) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				base.GetParts(
+			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
+				base.BuildParts(
 					table, cols, idColumn
 				)
 				.Bind(

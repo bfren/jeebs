@@ -11,7 +11,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		where TOptions : QueryOptions<TId>
 		where TId : StrongId
 	{
-		public abstract void Test00_Returns_New_QueryParts_With_Table();
+		public abstract void Test00_Returns_With_Table();
 
 		protected void Test00()
 		{
@@ -28,7 +28,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			Assert.Same(v.Table, some.From);
 		}
 
-		public abstract void Test01_Returns_New_QueryParts_With_Select();
+		public abstract void Test01_Returns_With_Select();
 
 		protected void Test01()
 		{
@@ -45,7 +45,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			Assert.Same(cols, some.Select);
 		}
 
-		public abstract void Test02_Returns_New_QueryParts_With_Maximum();
+		public abstract void Test02_Returns_With_Maximum();
 
 		protected void Test02()
 		{
@@ -63,7 +63,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			Assert.Equal(maximum, some.Maximum);
 		}
 
-		public abstract void Test03_Returns_New_QueryParts_With_Skip();
+		public abstract void Test03_Returns_With_Skip();
 
 		protected void Test03()
 		{

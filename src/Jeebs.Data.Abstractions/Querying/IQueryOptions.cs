@@ -21,10 +21,10 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Query IDs
 		/// </summary>
-		TId[]? Ids { get; init; }
+		IImmutableList<TId> Ids { get; init; }
 
 		/// <inheritdoc cref="IQueryParts.Sort"/>
-		(IColumn column, SortOrder order)[]? Sort { get; init; }
+		IImmutableList<(IColumn column, SortOrder order)> Sort { get; init; }
 
 		/// <inheritdoc cref="IQueryParts.SortRandom"/>
 		bool SortRandom { get; init; }
@@ -39,6 +39,6 @@ namespace Jeebs.Data.Querying
 		/// Convert the query options to <see cref="IQueryParts"/> for use in a database query
 		/// </summary>
 		/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
-		Option<IQueryParts> GetParts<TModel>();
+		Option<IQueryParts> ToParts<TModel>();
 	}
 }

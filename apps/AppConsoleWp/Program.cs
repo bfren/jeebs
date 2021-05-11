@@ -185,7 +185,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	await bcg.Db.QueryPostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
-		Ids = new WpPostId[] { new(924L), new(1867L), new(2020L) }
+		Ids = ImmutableList.Create<WpPostId>(new(924L), new(1867L), new(2020L))
 	})
 	.AuditAsync(
 		some: x =>

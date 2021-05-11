@@ -15,12 +15,12 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// The taxonomies to get
 		/// </summary>
-		IImmutableList<Taxonomy>? Taxonomies { get; init; }
+		IImmutableList<Taxonomy> Taxonomies { get; init; }
 
 		/// <summary>
 		/// Get taxonomies for specific Posts
 		/// </summary>
-		IImmutableList<WpPostId>? PostIds { get; init; }
+		IImmutableList<WpPostId> PostIds { get; init; }
 
 		/// <summary>
 		/// Sort order for Taxonomy terms - will be ignored if <see cref="IQueryOptions{TId}.Sort"/>

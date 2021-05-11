@@ -19,7 +19,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get meta for multiple Posts
 		/// </summary>
-		IImmutableList<WpPostId>? PostIds { get; init; }
+		IImmutableList<WpPostId> PostIds { get; init; }
 
 		/// <summary>
 		/// Only return a single Key

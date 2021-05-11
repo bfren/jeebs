@@ -31,7 +31,7 @@ namespace F.WordPressF.DataF
 					e => new Msg.ErrorGettingQueryTermsOptionsMsg(e)
 				)
 				.Bind(
-					x => x.GetParts<TModel>()
+					x => x.ToParts<TModel>()
 				)
 				.BindAsync(
 					x => db.Query.QueryAsync<TModel>(x)

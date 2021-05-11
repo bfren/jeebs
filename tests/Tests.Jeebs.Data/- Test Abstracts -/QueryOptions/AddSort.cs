@@ -55,7 +55,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var o0 = SortOrder.Ascending;
 			var c1 = Substitute.For<IColumn>();
 			var o1 = SortOrder.Descending;
-			var sort = new[] { (c0, o0), (c1, o1) };
+			var sort = ImmutableList.Create((c0, o0), (c1, o1));
 			var (options, v) = Setup(opt => opt with { Sort = sort });
 
 			// Act

@@ -45,7 +45,7 @@ namespace Jeebs.WordPress.Data
 				Extract<TModel>.From(table, T.TermTaxonomy);
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
+			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
 				CreateParts(
 					table, cols
 				)

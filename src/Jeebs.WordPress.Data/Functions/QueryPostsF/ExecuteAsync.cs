@@ -33,7 +33,7 @@ namespace F.WordPressF.DataF
 					e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
 				)
 				.Bind(
-					x => x.GetParts<TModel>()
+					x => x.ToParts<TModel>()
 				);
 		}
 

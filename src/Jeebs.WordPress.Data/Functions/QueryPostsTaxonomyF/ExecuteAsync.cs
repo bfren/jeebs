@@ -31,7 +31,7 @@ namespace F.WordPressF.DataF
 					e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
 				)
 				.Bind(
-					x => x.GetParts<TModel>()
+					x => x.ToParts<TModel>()
 				)
 				.BindAsync(
 					x => db.Query.QueryAsync<TModel>(x)

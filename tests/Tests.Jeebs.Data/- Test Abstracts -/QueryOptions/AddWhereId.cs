@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Collections.Generic;
+using Castle.Components.DictionaryAdapter;
 using Jeebs.Data.Enums;
 using Xunit;
 
@@ -58,7 +59,8 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var i0 = new TId { Value = F.Rnd.Lng };
 			var i1 = new TId { Value = F.Rnd.Lng };
 			var i2 = new TId { Value = F.Rnd.Lng };
-			var (options, v) = Setup(opt => opt with { Id = i0, Ids = new[] { i1, i2 } });
+			var ids = ImmutableList.Create(i1, i2);
+			var (options, v) = Setup(opt => opt with { Id = i0, Ids = ids });
 
 			// Act
 			var result = options.AddWhereIdTest(v.Parts, v.IdColumn);
@@ -83,7 +85,8 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			// Arrange
 			var i0 = new TId { Value = F.Rnd.Lng };
 			var i1 = new TId { Value = F.Rnd.Lng };
-			var (options, v) = Setup(opt => opt with { Ids = new[] { i0, i1 } });
+			var ids = ImmutableList.Create(i0, i1);
+			var (options, v) = Setup(opt => opt with { Ids = ids });
 
 			// Act
 			var result = options.AddWhereIdTest(v.Parts, v.IdColumn);

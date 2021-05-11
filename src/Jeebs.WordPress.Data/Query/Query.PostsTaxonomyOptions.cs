@@ -22,10 +22,12 @@ namespace Jeebs.WordPress.Data
 		public sealed record PostsTaxonomyOptions : Options<WpTermId, TermTable>, IQueryPostsTaxonomyOptions
 		{
 			/// <inheritdoc/>
-			public IImmutableList<Taxonomy>? Taxonomies { get; init; }
+			public IImmutableList<Taxonomy> Taxonomies { get; init; } =
+				new ImmutableList<Taxonomy>();
 
 			/// <inheritdoc/>
-			public IImmutableList<WpPostId>? PostIds { get; init; }
+			public IImmutableList<WpPostId> PostIds { get; init; } =
+				new ImmutableList<WpPostId>();
 
 			/// <inheritdoc/>
 			public TaxonomySort SortBy { get; init; }
@@ -46,7 +48,7 @@ namespace Jeebs.WordPress.Data
 				Extract<TModel>.From(table, T.TermRelationship, T.TermTaxonomy);
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
+			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
 				CreateParts(
 					table, cols
 				)
@@ -57,15 +59,15 @@ namespace Jeebs.WordPress.Data
 					x => AddInnerJoin(x, T.TermTaxonomy, tx => tx.TermTaxonomyId, T.TermRelationship, tr => tr.TermTaxonomyId)
 				)
 				.SwitchIf(
-					_ => Id?.Value > 0 || Ids?.Length > 0,
+					_ => Id?.Value > 0 || Ids.Count > 0,
 					x => AddWhereId(x, idColumn)
 				)
 				.SwitchIf(
-					_ => Taxonomies?.Count > 0,
+					_ => Taxonomies.Count > 0,
 					ifTrue: AddWhereTaxonomies
 				)
 				.SwitchIf(
-					_ => PostIds?.Count > 0,
+					_ => PostIds.Count > 0,
 					ifTrue: AddWherePostIds
 				)
 				.Bind(
@@ -79,7 +81,7 @@ namespace Jeebs.WordPress.Data
 			internal Option<QueryParts> AddWhereTaxonomies(QueryParts parts)
 			{
 				// Add Taxonomies
-				if (Taxonomies?.Count > 0)
+				if (Taxonomies.Count > 0)
 				{
 					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.In, Taxonomies);
 				}
@@ -95,7 +97,7 @@ namespace Jeebs.WordPress.Data
 			internal Option<QueryParts> AddWherePostIds(QueryParts parts)
 			{
 				// Add Post IDs
-				if (PostIds?.Count > 0)
+				if (PostIds.Count > 0)
 				{
 					return AddWhere(parts, T.TermRelationship, t => t.PostId, Compare.In, PostIds);
 				}
@@ -110,13 +112,13 @@ namespace Jeebs.WordPress.Data
 			/// <param name="parts">QueryParts</param>
 			protected override Option<QueryParts> AddSort(QueryParts parts)
 			{
-				// Add custom Sort options
-				if (SortRandom || Sort?.Length > 0)
+				// Add base (custom) Sort options
+				if (SortRandom || Sort.Count > 0)
 				{
 					return base.AddSort(parts);
 				}
 
-				// Add sort
+				// Add default sort
 				return from title in GetColumnFromExpression(T.Term, t => t.Title)
 					   from count in GetColumnFromExpression(T.TermTaxonomy, tx => tx.Count)
 					   let sortRange = SortBy switch

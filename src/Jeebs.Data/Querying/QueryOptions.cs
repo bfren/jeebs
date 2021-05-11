@@ -59,10 +59,12 @@ namespace Jeebs.Data.Querying
 		public TId? Id { get; init; }
 
 		/// <inheritdoc/>
-		public TId[]? Ids { get; init; }
+		public IImmutableList<TId> Ids { get; init; } =
+			new ImmutableList<TId>();
 
 		/// <inheritdoc/>
-		public (IColumn column, SortOrder order)[]? Sort { get; init; }
+		public IImmutableList<(IColumn column, SortOrder order)> Sort { get; init; } =
+			new ImmutableList<(IColumn column, SortOrder order)>();
 
 		/// <inheritdoc/>
 		public bool SortRandom { get; init; }
@@ -74,10 +76,10 @@ namespace Jeebs.Data.Querying
 		public long Skip { get; init; }
 
 		/// <inheritdoc/>
-		public virtual Option<IQueryParts> GetParts<TModel>() =>
+		public virtual Option<IQueryParts> ToParts<TModel>() =>
 			from map in GetMap()
 			from cols in GetColumns<TModel>(map.table)
-			from parts in GetParts(map.table, cols, map.idColumn)
+			from parts in BuildParts(map.table, cols, map.idColumn)
 			select (IQueryParts)parts;
 
 		/// <summary>
@@ -99,12 +101,12 @@ namespace Jeebs.Data.Querying
 		/// <param name="table">Primary table</param>
 		/// <param name="cols">Select ColumnList</param>
 		/// <param name="idColumn">ID Column</param>
-		protected virtual Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
+		protected virtual Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
 			CreateParts(
 				table, cols
 			)
 			.SwitchIf(
-				_ => Id?.Value > 0 || Ids?.Length > 0,
+				_ => Id?.Value > 0 || Ids?.Count > 0,
 				x => AddWhereId(x, idColumn)
 			)
 			.SwitchIf(
@@ -188,7 +190,7 @@ namespace Jeebs.Data.Querying
 			}
 
 			// Add Id IN
-			else if (Ids?.Length > 0)
+			else if (Ids.Count > 0)
 			{
 				var ids = Ids.Select(x => x.Value);
 				return parts with { Where = parts.Where.With((idColumn, Compare.In, ids)) };
@@ -211,7 +213,7 @@ namespace Jeebs.Data.Querying
 			}
 
 			// Add specific sort
-			else if (Sort is not null)
+			else if (Sort.Count > 0)
 			{
 				return parts with { Sort = Sort.ToImmutableList() };
 			}
@@ -277,8 +279,8 @@ namespace Jeebs.Data.Querying
 		internal Option<IColumnList> GetColumnsTest<TModel>(ITable table) =>
 			GetColumns<TModel>(table);
 
-		internal Option<QueryParts> GetPartsTest(ITable table, IColumnList cols, IColumn idColumn) =>
-			GetParts(table, cols, idColumn);
+		internal Option<QueryParts> BuildPartsTest(ITable table, IColumnList cols, IColumn idColumn) =>
+			BuildParts(table, cols, idColumn);
 
 		internal Option<QueryParts> CreatePartsTest(ITable table, IColumnList select) =>
 			CreateParts(table, select);

@@ -15,19 +15,19 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyOptions_Tests
 			new(Substitute.For<IWpDb>());
 
 		[Fact]
-		public override void Test00_Returns_New_QueryParts_With_Table() =>
+		public override void Test00_Returns_With_Table() =>
 			Test00();
 
 		[Fact]
-		public override void Test01_Returns_New_QueryParts_With_Select() =>
+		public override void Test01_Returns_With_Select() =>
 			Test01();
 
 		[Fact]
-		public override void Test02_Returns_New_QueryParts_With_Maximum() =>
+		public override void Test02_Returns_With_Maximum() =>
 			Test02();
 
 		[Fact]
-		public override void Test03_Returns_New_QueryParts_With_Skip() =>
+		public override void Test03_Returns_With_Skip() =>
 			Test03();
 	}
 }

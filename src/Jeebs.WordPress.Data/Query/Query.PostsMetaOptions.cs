@@ -21,7 +21,8 @@ namespace Jeebs.WordPress.Data
 			public WpPostId? PostId { get; init; }
 
 			/// <inheritdoc/>
-			public IImmutableList<WpPostId>? PostIds { get; init; }
+			public IImmutableList<WpPostId> PostIds { get; init; } =
+				new ImmutableList<WpPostId>();
 
 			/// <inheritdoc/>
 			public string? Key { get; init; }
@@ -41,16 +42,16 @@ namespace Jeebs.WordPress.Data
 				Maximum = null;
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> GetParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				base.GetParts(
+			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
+				base.BuildParts(
 					table, cols, idColumn
 				)
 				.SwitchIf(
-					_ => PostId?.Value > 0 || PostIds?.Count > 0,
+					_ => PostId?.Value > 0 || PostIds.Count > 0,
 					ifTrue: AddWherePostId
 				)
 				.SwitchIf(
-					_ => Key is not null && !string.IsNullOrEmpty(Key),
+					_ => !string.IsNullOrEmpty(Key),
 					ifTrue: AddWhereKey
 				);
 
@@ -67,7 +68,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Add Post ID IN
-				else if (PostIds?.Count > 0)
+				else if (PostIds.Count > 0)
 				{
 					var postIds = PostIds.Select(p => p.Value);
 					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.In, postIds);

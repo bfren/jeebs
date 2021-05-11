@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
-	public abstract class GetParts<TOptions, TId> : QueryOptions_Tests<TOptions, TId>
+	public abstract class BuildParts<TOptions, TId> : QueryOptions_Tests<TOptions, TId>
 		where TOptions : QueryOptions<TId>
 		where TId : StrongId, new()
 	{
@@ -23,7 +23,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(v.Table, cols, v.IdColumn);
+			var result = options.BuildPartsTest(v.Table, cols, v.IdColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -45,11 +45,12 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			// Arrange
 			var i0 = new TId { Value = F.Rnd.Lng };
 			var i1 = new TId { Value = F.Rnd.Lng };
-			var (options, v) = Setup(opt => opt with { Ids = new[] { i0, i1 } });
+			var ids = ImmutableList.Create(i0, i1);
+			var (options, v) = Setup(opt => opt with { Ids = ids });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(v.Table, cols, v.IdColumn);
+			var result = options.BuildPartsTest(v.Table, cols, v.IdColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -78,7 +79,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(v.Table, cols, v.IdColumn);
+			var result = options.BuildPartsTest(v.Table, cols, v.IdColumn);
 
 			// Assert
 			var some = result.AssertSome();
@@ -95,12 +96,12 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var o0 = SortOrder.Ascending;
 			var c1 = Substitute.For<IColumn>();
 			var o1 = SortOrder.Descending;
-			var sort = new[] { (c0, o0), (c1, o1) };
+			var sort = ImmutableList.Create((c0, o0), (c1, o1));
 			var (options, v) = Setup(opt => opt with { Sort = sort });
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.GetPartsTest(v.Table, cols, v.IdColumn);
+			var result = options.BuildPartsTest(v.Table, cols, v.IdColumn);
 
 			// Assert
 			var some = result.AssertSome();
