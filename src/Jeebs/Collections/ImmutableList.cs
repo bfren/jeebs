@@ -17,7 +17,7 @@ namespace Jeebs
 		/// Create an empty <see cref="ImmutableList{T}"/>
 		/// </summary>
 		/// <typeparam name="T">List Item type</typeparam>
-		public static ImmutableList<T> Create<T>() =>
+		public static ImmutableList<T> Empty<T>() =>
 			new();
 
 		/// <summary>
