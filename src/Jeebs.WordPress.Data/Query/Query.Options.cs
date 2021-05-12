@@ -3,8 +3,6 @@
 
 using System;
 using System.Linq.Expressions;
-using Jeebs.Data;
-using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.Linq;
@@ -24,29 +22,12 @@ namespace Jeebs.WordPress.Data
 			where TPrimaryTable : ITable
 		{
 			/// <summary>
-			/// MySQL Client
-			/// </summary>
-			protected IDbClient Client { get; private init; }
-
-			internal IDbClient ClientTest =>
-				Client;
-
-			/// <summary>
 			/// WordPress Database instance
 			/// </summary>
 			protected IWpDb Db { get; init; }
 
 			internal IWpDb DbTest =>
 				Db;
-
-			/// <summary>
-			/// Shorthand for Database Schema
-			/// </summary>
-			protected IWpDbSchema T =>
-				Db.Schema;
-
-			internal IWpDbSchema TTest =>
-				T;
 
 			/// <summary>
 			/// Primary Table
@@ -57,6 +38,15 @@ namespace Jeebs.WordPress.Data
 				Table;
 
 			/// <summary>
+			/// IWpDbSchema shorthand
+			/// </summary>
+			protected IWpDbSchema T =>
+				Db.Schema;
+
+			internal IWpDbSchema TTest =>
+				T;
+
+			/// <summary>
 			/// ID Column selector
 			/// </summary>
 			protected abstract Expression<Func<TPrimaryTable, string>> IdColumn { get; }
@@ -65,67 +55,20 @@ namespace Jeebs.WordPress.Data
 			/// Inject dependencies
 			/// </summary>
 			/// <param name="db">WordPress Database instance</param>
+			/// <param name="builder">IQueryPartsBuilder</param>
 			/// <param name="table">Primary table</param>
-			protected Options(IWpDb db, TPrimaryTable table) : this(new MySqlDbClient(), db, table) { }
-
-			/// <summary>
-			/// Inject dependencies
-			/// </summary>
-			/// <param name="client">IDbClient</param>
-			/// <param name="db">WordPress Database instance</param>
-			/// <param name="table">Primary table</param>
-			internal Options(IDbClient client, IWpDb db, TPrimaryTable table) =>
-				(Client, Db, Table) = (client, db, table);
+			internal Options(IWpDb db, IQueryPartsBuilder<TId> builder, TPrimaryTable table) : base(builder) =>
+				(Db, Table) = (db, table);
 
 			/// <inheritdoc/>
 			protected override Option<(ITable table, IColumn idColumn)> GetMap() =>
 				from idColumn in GetColumnFromExpression(Table, IdColumn)
 				select ((ITable)Table, idColumn);
 
-			/// <summary>
-			/// Escape a table
-			/// </summary>
-			/// <typeparam name="TTable">Table type</typeparam>
-			/// <param name="table">Table object</param>
-#pragma warning disable IDE1006 // Naming Styles
-			protected string __<TTable>(TTable table)
-				where TTable : ITable
-#pragma warning restore IDE1006 // Naming Styles
-			{
-				return Client.Escape(table);
-			}
-
-			/// <summary>
-			/// Get and escape a column using a Linq Expression selector
-			/// </summary>
-			/// <typeparam name="TTable">Table type</typeparam>
-			/// <param name="table">Table object</param>
-			/// <param name="selector">Column selector</param>
-#pragma warning disable IDE1006 // Naming Styles
-			protected string __<TTable>(TTable table, Expression<Func<TTable, string>> selector)
-				where TTable : ITable
-#pragma warning restore IDE1006 // Naming Styles
-			{
-				if (GetColumnFromExpression(table, selector) is Some<IColumn> column)
-				{
-					return Client.EscapeWithTable(column.Value);
-				}
-
-				throw new Exception("Unable to get column.");
-			}
-
 			#region Testing
 
 			internal Option<(ITable table, IColumn idColumn)> GetMapTest() =>
 				GetMap();
-
-			internal string EscapeTest<TTable>(TTable table)
-				where TTable : ITable =>
-				__(table);
-
-			internal string EscapeTest<TTable>(TTable table, Expression<Func<TTable, string>> selector)
-				where TTable : ITable =>
-				__(table, selector);
 
 			#endregion
 		}

@@ -3,123 +3,39 @@
 
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
-		/// <inheritdoc cref="IQueryPostsOptions"/>
-		public sealed record PostsOptions : Options<WpPostId, PostTable>, IQueryPostsOptions
+		/// <inheritdoc cref="IQueryPostsPartsBuilder"/>
+		public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsPartsBuilder
 		{
-			/// <inheritdoc/>
-			public PostType Type { get; init; } = PostType.Post;
-
-			/// <inheritdoc/>
-			public PostStatus Status { get; init; } = PostStatus.Publish;
-
-			/// <inheritdoc/>
-			public string? SearchText { get; init; }
-
-			/// <inheritdoc/>
-			public SearchPostFields SearchFields { get; init; } = SearchPostFields.All;
-
-			/// <inheritdoc/>
-			public Compare SearchComparison { get; init; } = Compare.Like;
-
-			/// <inheritdoc/>
-			public DateTime? From { get; init; }
-
-			/// <inheritdoc/>
-			public DateTime? To { get; init; }
-
-			/// <inheritdoc/>
-			public long? ParentId { get; init; }
-
-			/// <inheritdoc/>
-			public IImmutableList<(Taxonomy taxonomy, long id)> Taxonomies { get; init; } =
-				new ImmutableList<(Taxonomy taxonomy, long id)>();
-
-			/// <inheritdoc/>
-			public IImmutableList<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } =
-				new ImmutableList<(ICustomField field, Compare cmp, object value)>();
-
-			/// <inheritdoc/>
-			protected override Expression<Func<PostTable, string>> IdColumn =>
-				table => table.PostId;
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
-			/// <param name="db">IWpDb</param>
-			internal PostsOptions(IWpDb db) : base(db, db.Schema.Post) { }
+			/// <param name="schema">IWpDbSchema</param>
+			internal PostsPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				base.BuildParts(
-					table, cols, idColumn
-				)
-				.Bind(
-					AddWhereType
-				)
-				.Bind(
-					AddWhereStatus
-				)
-				.SwitchIf(
-					_ => string.IsNullOrEmpty(SearchText),
-					ifFalse: AddWhereSearch
-				)
-				.SwitchIf(
-					_ => From is not null,
-					ifTrue: AddWherePublishedFrom
-				)
-				.SwitchIf(
-					_ => To is not null,
-					ifTrue: AddWherePublishedTo
-				)
-				.SwitchIf(
-					_ => ParentId is not null,
-					ifTrue: AddWhereParentId
-				)
-				.SwitchIf(
-					_ => Taxonomies.Count > 0,
-					ifTrue: AddWhereTaxonomies
-				)
-				.SwitchIf(
-					_ => CustomFields.Count > 0,
-					ifTrue: AddWhereCustomFields
-				);
+			public Option<QueryParts> AddWhereType(QueryParts parts, PostType type) =>
+				AddWhere(parts, T.Post, p => p.Type, Compare.Equal, type);
 
-			/// <summary>
-			/// Add Where Post Type
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereType(QueryParts parts) =>
-				AddWhere(parts, T.Post, p => p.Type, Compare.Equal, Type);
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWhereStatus(QueryParts parts, PostStatus status) =>
+				AddWhere(parts, T.Post, p => p.Status, Compare.Equal, status);
 
-			/// <summary>
-			/// Add Where Post Status
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereStatus(QueryParts parts) =>
-				AddWhere(parts, T.Post, p => p.Status, Compare.Equal, Status);
-
-			/// <summary>
-			/// Add Where Search
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereSearch(QueryParts parts)
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWhereSearch(QueryParts parts, string? text, SearchPostFields fields, Compare cmp)
 			{
 				// If there isn't any search text, don't do anything
-				if (SearchText is null)
+				if (text is null)
 				{
 					return parts;
 				}
@@ -128,11 +44,11 @@ namespace Jeebs.WordPress.Data
 				var clause = new StringBuilder();
 
 				// Trim search text
-				var search = SearchText.Trim();
+				var search = text.Trim();
 
 				// Set comparison operator and modify search string accordingly
 				var comparison = "=";
-				if (SearchComparison == Compare.Like)
+				if (cmp == Compare.Like)
 				{
 					// Change the comparison
 					comparison = "LIKE";
@@ -145,13 +61,13 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Search title
-				if ((SearchFields & SearchPostFields.Title) != 0)
+				if ((fields & SearchPostFields.Title) != 0)
 				{
 					clause.Append($"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
 				}
 
 				// Search slug
-				if ((SearchFields & SearchPostFields.Slug) != 0)
+				if ((fields & SearchPostFields.Slug) != 0)
 				{
 					if (clause.Length > 0)
 					{
@@ -162,7 +78,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Search content
-				if ((SearchFields & SearchPostFields.Content) != 0)
+				if ((fields & SearchPostFields.Content) != 0)
 				{
 					if (clause.Length > 0)
 					{
@@ -173,7 +89,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Search excerpt
-				if ((SearchFields & SearchPostFields.Excerpt) != 0)
+				if ((fields & SearchPostFields.Excerpt) != 0)
 				{
 					if (clause.Length > 0)
 					{
@@ -187,48 +103,39 @@ namespace Jeebs.WordPress.Data
 				return AddWhereCustom(parts, clause.ToString(), new { search });
 			}
 
-			/// <summary>
-			/// Add Where From / To
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWherePublishedFrom(QueryParts parts)
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWherePublishedFrom(QueryParts parts, DateTime? from)
 			{
 				// Add From (use start of the day)
-				if (From is DateTime fromBase)
+				if (from is DateTime fromBase)
 				{
-					var from = fromBase.StartOfDay().ToMySqlString();
-					return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.MoreThanOrEqual, from);
+					var start = fromBase.StartOfDay().ToMySqlString();
+					return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.MoreThanOrEqual, start);
 				}
 
 				// Return
 				return parts;
 			}
 
-			/// <summary>
-			/// Add Where From / To
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWherePublishedTo(QueryParts parts)
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWherePublishedTo(QueryParts parts, DateTime? to)
 			{
 				// Add To (use end of the day)
-				if (To is DateTime toBase)
+				if (to is DateTime toBase)
 				{
-					var to = toBase.EndOfDay().ToMySqlString();
-					return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.LessThanOrEqual, to);
+					var end = toBase.EndOfDay().ToMySqlString();
+					return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.LessThanOrEqual, end);
 				}
 
 				// Return
 				return parts;
 			}
 
-			/// <summary>
-			/// Add Where Parent ID
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereParentId(QueryParts parts)
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWhereParentId(QueryParts parts, long? parentId)
 			{
 				// Add Parent ID
-				if (ParentId is long parentId)
+				if (parentId > 0)
 				{
 					return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId);
 				}
@@ -237,14 +144,11 @@ namespace Jeebs.WordPress.Data
 				return parts;
 			}
 
-			/// <summary>
-			/// Add Where Taxonomies
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereTaxonomies(QueryParts parts)
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, long id)> taxonomies)
 			{
 				// If there aren't any, don't do anything
-				if (Taxonomies.Count == 0)
+				if (taxonomies.Count == 0)
 				{
 					return parts;
 				}
@@ -255,16 +159,16 @@ namespace Jeebs.WordPress.Data
 				var taxonomyParameters = new QueryParameters();
 
 				// Group taxonomies by taxonomy name
-				var taxonomies = from t in Taxonomies
-								 group t by t.taxonomy into g
-								 select new
-								 {
-									 Name = g.Key,
-									 Ids = g.Select(x => x.id).ToList()
-								 };
+				var grouped = from t in taxonomies
+							  group t by t.taxonomy into g
+							  select new
+							  {
+								  Name = g.Key,
+								  Ids = g.Select(x => x.id).ToList()
+							  };
 
 				// Add each taxonomy
-				foreach (var taxonomy in taxonomies)
+				foreach (var taxonomy in grouped)
 				{
 					// Add AND if this is not the first conditional clause
 					if (!string.IsNullOrEmpty(taxonomyWhere))
@@ -318,14 +222,11 @@ namespace Jeebs.WordPress.Data
 				return AddWhereCustom(parts, taxonomyWhere, taxonomyParameters);
 			}
 
-			/// <summary>
-			/// Add Where Custom Fields
-			/// </summary>
-			/// <param name="parts">QueryParts</param>
-			internal Option<QueryParts> AddWhereCustomFields(QueryParts parts)
+			/// <inheritdoc/>
+			public Option<QueryParts> AddWhereCustomFields(QueryParts parts, IImmutableList<(ICustomField, Compare, object)> customFields)
 			{
 				// If there aren't any, don't do anything
-				if (CustomFields.Count == 0)
+				if (customFields.Count == 0)
 				{
 					return parts;
 				}
@@ -336,7 +237,7 @@ namespace Jeebs.WordPress.Data
 				var customFieldParameters = new QueryParameters();
 
 				// Add each custom field
-				foreach (var (field, cmp, value) in CustomFields)
+				foreach (var (field, cmp, value) in customFields)
 				{
 					// Add AND if this is not the first conditional clause
 					if (!string.IsNullOrEmpty(customFieldWhere))
