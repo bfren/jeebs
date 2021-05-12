@@ -1,20 +1,14 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using Jeebs.Data.Mapping;
 using NSubstitute;
-using static F.OptionF;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests
+namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
-	public abstract class QueryOptions_Tests<TOptions, TId>
-		where TOptions : QueryOptions<TId>
-		where TId : StrongId
+	public abstract class QueryPartsBuilder_Tests
 	{
-		protected abstract TOptions Create(IMapper mapper);
-
-		public (TOptions options, Vars v) Setup(Func<TOptions, TOptions>? opt = null)
+		public static (TestBuilder builder, Vars v) Setup()
 		{
 			var table = Substitute.For<ITable>();
 
@@ -22,25 +16,17 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			var idColumn = Substitute.For<IMappedColumn>();
 
-			var map = Substitute.For<ITableMap>();
-			map.Table.Returns(table);
-			map.IdColumn.Returns(idColumn);
+			var builder = new TestBuilder();
 
-			var mapper = Substitute.For<IMapper>();
-			mapper.GetTableMapFor<TestEntity>().Returns(Return(map));
-
-			var options = Create(mapper);
-
-			return (opt?.Invoke(options) ?? options, new(table, map, idColumn, parts));
+			return (builder, new(table, idColumn, parts));
 		}
-	}
 
-	public sealed record Vars(
-		ITable Table,
-		ITableMap Map,
-		IColumn IdColumn,
-		QueryParts Parts
-	);
+		public sealed record Vars(
+			ITable Table,
+			IColumn IdColumn,
+			QueryParts Parts
+		);
+	}
 
 	public record TestId(long Value) : StrongId(Value)
 	{
@@ -49,7 +35,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 	public record TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 
-	public record TestOptions(IMapper Mapper) : QueryOptions<TestEntity, TestId>(Mapper);
+	public class TestBuilder : QueryPartsBuilder<TestId> { }
 
 	public record TestTable0 : ITable
 	{

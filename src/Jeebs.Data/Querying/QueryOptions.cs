@@ -1,60 +1,22 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using System.Linq;
-using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
-using static F.DataF.QueryF;
-using static F.OptionF;
 
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryOptions{TId}"/>
-	public abstract record QueryOptions
-	{
-		/// <summary>
-		/// Add Join
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="fromTable">From table - should already be added to the query</param>
-		/// <param name="fromSelector">From column</param>
-		/// <param name="toTable">To table - should be a new table not already added to the query</param>
-		/// <param name="toSelector">To column</param>
-		/// <param name="withJoin">Function to add the Join to the correct list</param>
-		protected internal static Option<QueryParts> AddJoin<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector,
-			Func<QueryParts, IColumn, IColumn, QueryParts> withJoin
-		)
-			where TFrom : ITable
-			where TTo : ITable
-		{
-			return from colFrom in GetColumnFromExpression(fromTable, fromSelector)
-				   from colTo in GetColumnFromExpression(toTable, toSelector)
-				   select withJoin(parts, colFrom, colTo);
-		}
-
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>Trying to add an empty where clause</summary>
-			public sealed record TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
-
-			/// <summary>Unable to add parameters to custom where</summary>
-			public sealed record UnableToAddParametersToWhereCustomMsg : IMsg { }
-		}
-	}
-
-	/// <inheritdoc cref="IQueryOptions{TId}"/>
-	public abstract record QueryOptions<TId> : QueryOptions, IQueryOptions<TId>
+	public abstract record QueryOptions<TId> : IQueryOptions<TId>
 		where TId : StrongId
 	{
+		/// <summary>
+		/// Abstraction for building query parts
+		/// </summary>
+		protected IQueryPartsBuilder<TId> Builder { get; init; }
+
 		/// <inheritdoc/>
 		public TId? Id { get; init; }
 
@@ -74,6 +36,13 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public long Skip { get; init; }
+
+		/// <summary>
+		/// Inject builder
+		/// </summary>
+		/// <param name="builder">IQueryPartsBuilder</param>
+		protected QueryOptions(IQueryPartsBuilder<TId> builder) =>
+			Builder = builder;
 
 		/// <inheritdoc/>
 		public virtual Option<IQueryParts> ToParts<TModel>() =>
@@ -102,177 +71,17 @@ namespace Jeebs.Data.Querying
 		/// <param name="cols">Select ColumnList</param>
 		/// <param name="idColumn">ID Column</param>
 		protected virtual Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
-			CreateParts(
-				table, cols
+			Builder.Create(
+				table, cols, Maximum, Skip
 			)
 			.SwitchIf(
-				_ => Id?.Value > 0 || Ids?.Count > 0,
-				x => AddWhereId(x, idColumn)
+				_ => Id?.Value > 0 || Ids.Count > 0,
+				x => Builder.AddWhereId(x, idColumn, Id, Ids)
 			)
 			.SwitchIf(
-				_ => SortRandom || Sort is not null,
-				AddSort
+				_ => SortRandom || Sort.Count > 0,
+				x => Builder.AddSort(x, SortRandom, Sort)
 			);
-
-		/// <summary>
-		/// Create a new QueryParts object, adding <paramref name="select"/> columns and
-		/// <see cref="Maximum"/> and <see cref="Skip"/> values
-		/// </summary>
-		/// <param name="table">Primary table</param>
-		/// <param name="select">Columns to select</param>
-		protected virtual Option<QueryParts> CreateParts(ITable table, IColumnList select) =>
-			new QueryParts(table)
-			{
-				Select = select,
-				Maximum = Maximum,
-				Skip = Skip
-			};
-
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
-		protected virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector
-		)
-			where TFrom : ITable
-			where TTo : ITable
-		{
-			return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
-				parts with { InnerJoin = parts.InnerJoin.With((colFrom, colTo)) }
-			);
-		}
-
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
-		protected virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector
-		)
-			where TFrom : ITable
-			where TTo : ITable
-		{
-			return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
-				parts with { LeftJoin = parts.LeftJoin.With((colFrom, colTo)) }
-			);
-		}
-
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
-		protected virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector
-		)
-			where TFrom : ITable
-			where TTo : ITable
-		{
-			return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
-				parts with { RightJoin = parts.RightJoin.With((colFrom, colTo)) }
-			);
-		}
-
-		/// <summary>
-		/// Add Id / Ids - Id takes precedence over Ids
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="idColumn">ID Column</param>
-		protected virtual Option<QueryParts> AddWhereId(QueryParts parts, IColumn idColumn)
-		{
-			// Add Id EQUAL
-			if (Id?.Value > 0)
-			{
-				return parts with { Where = parts.Where.With((idColumn, Compare.Equal, Id.Value)) };
-			}
-
-			// Add Id IN
-			else if (Ids.Count > 0)
-			{
-				var ids = Ids.Select(x => x.Value);
-				return parts with { Where = parts.Where.With((idColumn, Compare.In, ids)) };
-			}
-
-			// Return
-			return parts;
-		}
-
-		/// <summary>
-		/// Add Sort - SortRandom takes precendence over Sort
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		protected virtual Option<QueryParts> AddSort(QueryParts parts)
-		{
-			// Add random sort
-			if (SortRandom)
-			{
-				return parts with { SortRandom = true };
-			}
-
-			// Add specific sort
-			else if (Sort.Count > 0)
-			{
-				return parts with { Sort = Sort.ToImmutableList() };
-			}
-
-			// Return
-			return parts;
-		}
-
-		/// <summary>
-		/// Add a Where predicate using Linq Expressions
-		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="table">Table object</param>
-		/// <param name="column">Column selector</param>
-		/// <param name="cmp">Compare operator</param>
-		/// <param name="value">Search value</param>
-		protected virtual Option<QueryParts> AddWhere<TTable>(
-			QueryParts parts,
-			TTable table,
-			Expression<Func<TTable, string>> column,
-			Compare cmp,
-			object value
-		)
-			where TTable : ITable
-		{
-			return GetColumnFromExpression(
-				table, column
-			)
-			.Map(
-				x => parts with { Where = parts.Where.With((x, cmp, value)) },
-				DefaultHandler
-			);
-		}
-
-		/// <summary>
-		/// Add a custom Where predicate
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="clause">Clause text</param>
-		/// <param name="parameters">Clause parameters</param>
-		protected virtual Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
-		{
-			// Check clause
-			if (string.IsNullOrWhiteSpace(clause))
-			{
-				return None<QueryParts, Msg.TryingToAddEmptyClauseToWhereCustomMsg>();
-			}
-
-			// Get parameters
-			var param = new QueryParameters();
-			if (!param.TryAdd(parameters))
-			{
-				return None<QueryParts, Msg.UnableToAddParametersToWhereCustomMsg>();
-			}
-
-			// Add clause and return
-			return parts with { WhereCustom = parts.WhereCustom.With((clause, param)) };
-		}
 
 		#region Testing
 
@@ -281,60 +90,6 @@ namespace Jeebs.Data.Querying
 
 		internal Option<QueryParts> BuildPartsTest(ITable table, IColumnList cols, IColumn idColumn) =>
 			BuildParts(table, cols, idColumn);
-
-		internal Option<QueryParts> CreatePartsTest(ITable table, IColumnList select) =>
-			CreateParts(table, select);
-
-		internal Option<QueryParts> AddInnerJoinTest<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector
-		)
-			where TFrom : ITable
-			where TTo : ITable =>
-			AddInnerJoin(parts, fromTable, fromSelector, toTable, toSelector);
-
-		internal Option<QueryParts> AddLeftJoinTest<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector
-		)
-			where TFrom : ITable
-			where TTo : ITable =>
-			AddLeftJoin(parts, fromTable, fromSelector, toTable, toSelector);
-
-		internal Option<QueryParts> AddRightJoinTest<TFrom, TTo>(
-			QueryParts parts,
-			TFrom fromTable,
-			Expression<Func<TFrom, string>> fromSelector,
-			TTo toTable,
-			Expression<Func<TTo, string>> toSelector
-		)
-			where TFrom : ITable
-			where TTo : ITable =>
-			AddRightJoin(parts, fromTable, fromSelector, toTable, toSelector);
-
-		internal Option<QueryParts> AddWhereIdTest(QueryParts parts, IColumn idColumn) =>
-			AddWhereId(parts, idColumn);
-
-		internal Option<QueryParts> AddSortTest(QueryParts parts) =>
-			AddSort(parts);
-
-		internal Option<QueryParts> AddWhereTest<TTable>(
-			QueryParts parts,
-			TTable table,
-			Expression<Func<TTable, string>> column,
-			Compare cmp,
-			object value
-		) where TTable : ITable =>
-			AddWhere(parts, table, column, cmp, value);
-
-		internal Option<QueryParts> AddWhereCustomTest(QueryParts parts, string clause, object parameters) =>
-			AddWhereCustom(parts, clause, parameters);
 
 		#endregion
 	}
@@ -351,13 +106,15 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Create using default <see cref="IMapper"/>
 		/// </summary>
-		protected QueryOptions() : this(Mapper.Instance) { }
+		/// <param name="builder">IQueryPartsBuilder</param>
+		protected QueryOptions(IQueryPartsBuilder<TId> builder) : this(Mapper.Instance, builder) { }
 
 		/// <summary>
-		/// Inject an <see cref="IMapper"/>
+		/// Inject an <see cref="IMapper"/> and <see cref="TBuilder"/> for testing
 		/// </summary>
 		/// <param name="mapper">IMapper</param>
-		protected QueryOptions(IMapper mapper) =>
+		/// <param name="builder">IQueryPartsBuilder</param>
+		internal QueryOptions(IMapper mapper, IQueryPartsBuilder<TId> builder) : base(builder) =>
 			this.mapper = mapper;
 
 		/// <inheritdoc/>

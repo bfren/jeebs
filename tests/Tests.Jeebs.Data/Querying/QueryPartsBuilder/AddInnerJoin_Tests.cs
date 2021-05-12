@@ -3,18 +3,15 @@
 
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests
+namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
-	public abstract class AddRightJoin<TOptions, TId> : QueryOptions_Tests<TOptions, TId>
-		where TOptions : QueryOptions<TId>
-		where TId : StrongId
+	public class AddInnerJoin_Tests : QueryPartsBuilder_Tests
 	{
-		public abstract void Test00_Adds_Columns_To_RightJoin();
-
-		protected void Test00()
+		[Fact]
+		public void Adds_Columns_To_InnerJoin()
 		{
 			// Arrange
-			var (options, v) = Setup();
+			var (builder, v) = Setup();
 
 			var t0Name = F.Rnd.Str;
 			var t0Column = F.Rnd.Str;
@@ -25,11 +22,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var t1 = new TestTable1(t1Name, t1Column);
 
 			// Act
-			var result = options.AddRightJoinTest(v.Parts, t0, t => t.Foo, t1, t => t.Bar);
+			var result = builder.AddInnerJoin(v.Parts, t0, t => t.Foo, t1, t => t.Bar);
 
 			// Assert
 			var some = result.AssertSome();
-			Assert.Collection(some.RightJoin,
+			Assert.Collection(some.InnerJoin,
 				x =>
 				{
 					Assert.Equal(t0Name, x.from.Table);

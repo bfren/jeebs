@@ -5,22 +5,19 @@ using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests
+namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
-	public abstract class CreateParts<TOptions, TId> : QueryOptions_Tests<TOptions, TId>
-		where TOptions : QueryOptions<TId>
-		where TId : StrongId
+	public class Create_Tests : QueryPartsBuilder_Tests
 	{
-		public abstract void Test00_Returns_With_Table();
-
-		protected void Test00()
+		[Fact]
+		public void Returns_With_Table()
 		{
 			// Arrange
-			var (options, v) = Setup();
+			var (builder, v) = Setup();
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.CreatePartsTest(v.Table, cols);
+			var result = builder.Create(v.Table, cols, null, F.Rnd.Lng);
 
 			// Assert
 			var some = result.AssertSome();
@@ -28,16 +25,15 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			Assert.Same(v.Table, some.From);
 		}
 
-		public abstract void Test01_Returns_With_Select();
-
-		protected void Test01()
+		[Fact]
+		public void Returns_With_Select()
 		{
 			// Arrange
-			var (options, v) = Setup();
+			var (builder, v) = Setup();
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.CreatePartsTest(v.Table, cols);
+			var result = builder.Create(v.Table, cols, null, F.Rnd.Lng);
 
 			// Assert
 			var some = result.AssertSome();
@@ -45,17 +41,16 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			Assert.Same(cols, some.Select);
 		}
 
-		public abstract void Test02_Returns_With_Maximum();
-
-		protected void Test02()
+		[Fact]
+		public void Returns_With_Maximum()
 		{
 			// Arrange
 			var maximum = F.Rnd.Lng;
-			var (options, v) = Setup(opt => opt with { Maximum = maximum });
+			var (builder, v) = Setup();
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.CreatePartsTest(v.Table, cols);
+			var result = builder.Create(v.Table, cols, maximum, F.Rnd.Lng);
 
 			// Assert
 			var some = result.AssertSome();
@@ -63,17 +58,16 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			Assert.Equal(maximum, some.Maximum);
 		}
 
-		public abstract void Test03_Returns_With_Skip();
-
-		protected void Test03()
+		[Fact]
+		public void Returns_With_Skip()
 		{
 			// Arrange
 			var skip = F.Rnd.Lng;
-			var (options, v) = Setup(opt => opt with { Skip = skip });
+			var (builder, v) = Setup();
 			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = options.CreatePartsTest(v.Table, cols);
+			var result = builder.Create(v.Table, cols, null, skip);
 
 			// Assert
 			var some = result.AssertSome();
