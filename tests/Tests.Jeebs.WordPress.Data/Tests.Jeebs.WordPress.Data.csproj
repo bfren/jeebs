@@ -25,8 +25,4 @@
     <ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Query\" />
-  </ItemGroup>
-
 </Project>

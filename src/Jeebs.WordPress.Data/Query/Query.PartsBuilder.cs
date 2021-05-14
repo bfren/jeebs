@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -22,19 +23,32 @@ namespace Jeebs.WordPress.Data
 			/// <summary>
 			/// IDbClient
 			/// </summary>
-			protected MySqlDbClient Client { get; private init; }
+			protected IDbClient Client { get; private init; }
+
+			internal IDbClient ClientTest =>
+				Client;
 
 			/// <summary>
 			/// IWpDbSchema
 			/// </summary>
 			protected IWpDbSchema T { get; private init; }
 
+			internal IWpDbSchema TTest =>
+				T;
+
 			/// <summary>
 			/// Create object
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			protected PartsBuilder(IWpDbSchema schema) =>
-				(Client, T) = (new MySqlDbClient(), schema);
+			protected PartsBuilder(IWpDbSchema schema) : this(new MySqlDbClient(), schema) { }
+
+			/// <summary>
+			/// Create object
+			/// </summary>
+			/// <param name="client">IDbClient</param>
+			/// <param name="schema">IWpDbSchema</param>
+			internal PartsBuilder(IDbClient client, IWpDbSchema schema) =>
+				(Client, T) = (client, schema);
 
 			/// <summary>
 			/// Escape a table
