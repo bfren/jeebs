@@ -1,12 +1,23 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Querying.QueryOptions_Tests;
+using Jeebs.WordPress.Data.Entities;
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 {
-	public class ToParts_Tests : QueryOptions_Tests
+	public class ToParts_Tests : ToParts_Tests<Query.PostsMetaOptions, IQueryPostsMetaPartsBuilder, WpPostMetaId>
 	{
+		protected override (Query.PostsMetaOptions options, IQueryPostsMetaPartsBuilder builder) Setup()
+		{
+			var schema = new WpDbSchema(F.Rnd.Str);
+			var builder = GetConfiguredBuilder(schema.PostMeta);
+			var options = new Query.PostsMetaOptions(schema, builder);
+
+			return (options, builder);
+		}
+
 		[Fact]
 		public override void Test00_Calls_Builder_Create_With_Maximum_And_Skip() =>
 			Test00();

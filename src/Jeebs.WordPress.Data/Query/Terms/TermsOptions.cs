@@ -47,10 +47,6 @@ namespace Jeebs.WordPress.Data
 					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.SwitchIf(
-					_ => Id is not null || Ids is not null,
-					x => Builder.AddWhereId(x, Id, Ids)
-				)
-				.SwitchIf(
 					_ => Taxonomy is not null,
 					ifTrue: x => Builder.AddWhereTaxonomy(x, Taxonomy)
 				)
@@ -61,9 +57,6 @@ namespace Jeebs.WordPress.Data
 				.SwitchIf(
 					_ => CountAtLeast > 0,
 					ifTrue: x => Builder.AddWhereCount(x, CountAtLeast)
-				)
-				.Bind(
-					x => Builder.AddSort(x, SortRandom, Sort)
 				);
 		}
 	}

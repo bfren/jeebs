@@ -4,6 +4,7 @@
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using NSubstitute;
+using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
@@ -12,11 +13,29 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		where TBuilder : class, IQueryPartsBuilder<TId>
 		where TId : StrongId, new()
 	{
+		protected abstract (TOptions options, TBuilder builder) Setup();
+
+		protected virtual TBuilder GetConfiguredBuilder(ITable table)
+		{
+			var parts = new QueryParts(table)
+			{
+				Maximum = F.Rnd.Lng,
+				Skip = F.Rnd.Lng
+			};
+
+			var builder = Substitute.For<TBuilder>();
+			builder.Create<TestModel>(Arg.Any<long?>(), Arg.Any<long>()).Returns(parts);
+			builder.ReturnsForAll(parts.Return());
+
+			return builder;
+		}
+
 		public abstract void Test00_Calls_Builder_Create_With_Maximum_And_Skip();
 
-		protected void Test00(TOptions options, TBuilder builder)
+		protected void Test00()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 			var max = F.Rnd.Lng;
 			var skip = F.Rnd.Lng;
 			var opt = options with
@@ -34,9 +53,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public abstract void Test01_Id_Null_Ids_Empty_Does_Not_Call_Builder_AddWhereId();
 
-		protected void Test01(TOptions options, TBuilder builder)
+		protected void Test01()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 
 			// Act
 			options.ToParts<TestModel>();
@@ -47,9 +67,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public abstract void Test02_Id_Not_Null_Calls_Builder_AddWhereId();
 
-		protected void Test02(TOptions options, TBuilder builder)
+		protected void Test02()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 			var id = new TId { Value = F.Rnd.Lng };
 			var opt = options with
 			{
@@ -65,9 +86,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public abstract void Test03_Ids_Not_Empty_Calls_Builder_AddWhereId();
 
-		protected void Test03(TOptions options, TBuilder builder)
+		protected void Test03()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 			var i0 = new TId { Value = F.Rnd.Lng };
 			var i1 = new TId { Value = F.Rnd.Lng };
 			var ids = ImmutableList.Create(i0, i1);
@@ -85,9 +107,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public abstract void Test04_SortRandom_False_Sort_Empty_Does_Not_Call_Builder_AddSort();
 
-		protected void Test04(TOptions options, TBuilder builder)
+		protected void Test04()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 
 			// Act
 			options.ToParts<TestModel>();
@@ -98,9 +121,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public abstract void Test05_SortRandom_True_Calls_Builder_AddSort();
 
-		protected void Test05(TOptions options, TBuilder builder)
+		protected void Test05()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 			var opt = options with
 			{
 				SortRandom = true
@@ -115,9 +139,10 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 		public abstract void Test06_Sort_Not_Empty_Calls_Builder_AddSort();
 
-		protected void Test06(TOptions options, TBuilder builder)
+		protected void Test06()
 		{
 			// Arrange
+			var (options, builder) = Setup();
 			var sort = ImmutableList.Create(
 				(Substitute.For<IColumn>(), SortOrder.Ascending),
 				(Substitute.For<IColumn>(), SortOrder.Descending)
