@@ -35,7 +35,13 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Create with default mapper
 		/// </summary>
-		protected QueryPartsBuilderWithEntity() =>
-			mapper = Mapper.Instance;
+		protected QueryPartsBuilderWithEntity() : this(Mapper.Instance) { }
+
+		/// <summary>
+		/// Inject mapper
+		/// </summary>
+		/// <param name="mapper">IMapper</param>
+		protected QueryPartsBuilderWithEntity(IMapper mapper) =>
+			this.mapper = mapper;
 	}
 }
