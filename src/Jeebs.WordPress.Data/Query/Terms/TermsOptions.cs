@@ -1,14 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Linq.Expressions;
-using Jeebs.Data;
-using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
