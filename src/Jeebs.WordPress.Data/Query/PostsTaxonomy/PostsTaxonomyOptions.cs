@@ -1,21 +1,16 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Linq.Expressions;
-using Jeebs.Data;
-using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
-		public sealed record PostsTaxonomyOptions : Options<WpTermId, TermTable>, IQueryPostsTaxonomyOptions
+		public sealed record PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
 		{
 			private new IQueryPostsTaxonomyPartsBuilder Builder =>
 				(IQueryPostsTaxonomyPartsBuilder)base.Builder;
@@ -31,25 +26,24 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			public TaxonomySort SortBy { get; init; }
 
-			/// <inheritdoc/>
-			protected override Expression<Func<TermTable, string>> IdColumn =>
-				table => table.TermId;
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
-			/// <param name="db">IWpDb</param>
-			internal PostsTaxonomyOptions(IWpDb db) : base(db, new PostsTaxonomyPartsBuilder(db.Schema), db.Schema.Term) =>
+			/// <param name="schema">IWpDbSchema</param>
+			internal PostsTaxonomyOptions(IWpDbSchema schema) : base(schema, new PostsTaxonomyPartsBuilder(schema)) =>
 				Maximum = null;
 
-			/// <inheritdoc/>
-			protected override Option<IColumnList> GetColumns<TModel>(ITable table) =>
-				Extract<TModel>.From(table, T.TermRelationship, T.TermTaxonomy);
+			/// <summary>
+			/// Allow Builder to be injected
+			/// </summary>
+			/// <param name="schema">IWpDbSchema</param>
+			/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>
+			internal PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				Builder.Create(
-					table, cols, Maximum, Skip
+			protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+				base.Build(
+					parts
 				)
 				.Bind(
 					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
@@ -59,7 +53,7 @@ namespace Jeebs.WordPress.Data
 				)
 				.SwitchIf(
 					_ => Id?.Value > 0 || Ids.Count > 0,
-					x => Builder.AddWhereId(x, idColumn, Id, Ids)
+					x => Builder.AddWhereId(x, Id, Ids)
 				)
 				.SwitchIf(
 					_ => Taxonomies.Count > 0,

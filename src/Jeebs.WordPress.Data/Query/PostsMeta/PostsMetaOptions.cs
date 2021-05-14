@@ -1,19 +1,15 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Linq.Expressions;
-using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsMetaOptions"/>
-		public sealed record PostsMetaOptions : Options<WpPostMetaId, PostMetaTable>, IQueryPostsMetaOptions
+		public sealed record PostsMetaOptions : Options<WpPostMetaId>, IQueryPostsMetaOptions
 		{
 			private new IQueryPostsMetaPartsBuilder Builder =>
 				(IQueryPostsMetaPartsBuilder)base.Builder;
@@ -28,24 +24,24 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			public string? Key { get; init; }
 
-			/// <inheritdoc/>
-			protected override Expression<Func<PostMetaTable, string>> IdColumn =>
-				table => table.PostMetaId;
-
-			internal Expression<Func<PostMetaTable, string>> IdColumnTest =>
-				IdColumn;
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
-			/// <param name="db">IWpDb</param>
-			internal PostsMetaOptions(IWpDb db) : base(db, new PostsMetaPartsBuilder(db.Schema), db.Schema.PostMeta) =>
+			/// <param name="schema">IWpDbSchema</param>
+			internal PostsMetaOptions(IWpDbSchema schema) : base(schema, new PostsMetaPartsBuilder(schema)) =>
 				Maximum = null;
 
+			/// <summary>
+			/// Allow Builder to be injected
+			/// </summary>
+			/// <param name="schema">IWpDbSchema</param>
+			/// <param name="builder">IQueryPostsMetaPartsBuilder</param>
+			internal PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) { }
+
 			/// <inheritdoc/>
-			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				base.BuildParts(
-					table, cols, idColumn
+			protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+				base.Build(
+					parts
 				)
 				.SwitchIf(
 					_ => PostId?.Value > 0 || PostIds.Count > 0,
@@ -55,8 +51,6 @@ namespace Jeebs.WordPress.Data
 					_ => !string.IsNullOrEmpty(Key),
 					ifTrue: x => Builder.AddWhereKey(x, Key)
 				);
-
-
 		}
 	}
 }

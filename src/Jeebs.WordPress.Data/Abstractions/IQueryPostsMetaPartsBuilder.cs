@@ -7,7 +7,7 @@ using Jeebs.WordPress.Data.Entities;
 namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="IQueryPartsBuilder{TId}"/>
-	public interface IQueryPostsMetaPartsBuilder
+	public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
 	{
 		/// <summary>
 		/// Add Where Post ID

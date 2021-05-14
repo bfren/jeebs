@@ -33,7 +33,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilderWithEntity_Tests
 
 	public record TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 
-	public abstract record TestBuilder : QueryPartsBuilderWithEntity<TestEntity, TestId>
+	public abstract class TestBuilder : QueryPartsBuilderWithEntity<TestEntity, TestId>
 	{
 		protected TestBuilder(IMapper mapper) : base(mapper) { }
 	}

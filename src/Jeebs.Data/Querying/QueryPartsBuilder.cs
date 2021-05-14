@@ -13,7 +13,7 @@ using static F.OptionF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="QueryPartsBuilder{TId}"/>
-	public abstract record QueryPartsBuilder
+	public abstract class QueryPartsBuilder
 	{
 		/// <summary>Messages</summary>
 		public static class Msg
@@ -30,7 +30,7 @@ namespace Jeebs.Data.Querying
 	/// Builds a <see cref="QueryParts"/> object from various options
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
-	public abstract record QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
+	public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
 		where TId : StrongId
 	{
 		/// <inheritdoc/>
@@ -48,9 +48,16 @@ namespace Jeebs.Data.Querying
 				Skip = skip
 			};
 
+		/// <summary>
+		/// Extract columns for the specified model
+		/// </summary>
+		/// <typeparam name="TModel">Return Model type</typeparam>
+		protected virtual Option<IColumnList> ExtractColumns<TModel>() =>
+			Extract<TModel>.From(Table);
+
 		/// <inheritdoc/>
 		public virtual IColumnList GetColumns<TModel>() =>
-			Extract<TModel>.From(Table).Unwrap(() => new ColumnList());
+			ExtractColumns<TModel>().Unwrap(() => new ColumnList());
 
 		/// <summary>
 		/// Add Join
@@ -80,7 +87,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddInnerJoin<TFrom, TTo>(
+		public virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
 			QueryParts parts,
 			TFrom fromTable,
 			Expression<Func<TFrom, string>> fromSelector,
@@ -96,7 +103,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddLeftJoin<TFrom, TTo>(
+		public virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
 			QueryParts parts,
 			TFrom fromTable,
 			Expression<Func<TFrom, string>> fromSelector,
@@ -112,7 +119,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddRightJoin<TFrom, TTo>(
+		public virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
 			QueryParts parts,
 			TFrom fromTable,
 			Expression<Func<TFrom, string>> fromSelector,
@@ -128,7 +135,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
+		public virtual Option<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
 		{
 			// Add Id EQUAL
 			if (id?.Value > 0)
@@ -148,7 +155,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
+		public virtual Option<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
 		{
 			// Add random sort
 			if (sortRandom)
@@ -167,7 +174,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhere<TTable>(
+		public virtual Option<QueryParts> AddWhere<TTable>(
 			QueryParts parts,
 			TTable table,
 			Expression<Func<TTable, string>> column,
@@ -186,7 +193,7 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
+		public virtual Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
 		{
 			// Check clause
 			if (string.IsNullOrWhiteSpace(clause))

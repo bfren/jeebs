@@ -7,6 +7,7 @@ using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data
 {
+	/// <inheritdoc cref="IQueryPartsBuilder{TId}"/>
 	public interface IQueryTermsPartsBuilder : IQueryPartsBuilder<WpTermId>
 	{
 		/// <summary>

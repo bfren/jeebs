@@ -27,7 +27,7 @@ namespace F.WordPressF.DataF
 		{
 			return
 				Return(
-					() => opt(new Query.PostsTaxonomyOptions(db)),
+					() => opt(new Query.PostsTaxonomyOptions(db.Schema)),
 					e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
 				)
 				.Bind(

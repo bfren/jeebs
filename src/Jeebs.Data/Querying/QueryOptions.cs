@@ -45,20 +45,22 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public Option<IQueryParts> ToParts<TModel>() =>
-			Return(
+			Build(
 				Builder.Create<TModel>(Maximum, Skip)
 			)
-			.SwitchIf(
+			.Map(
+				x => (IQueryParts)x,
+				DefaultHandler
+			);
+
+		protected virtual Option<QueryParts> Build(Option<QueryParts> parts) =>
+			parts.SwitchIf(
 				_ => Id?.Value > 0 || Ids.Count > 0,
 				x => Builder.AddWhereId(x, Id, Ids)
 			)
 			.SwitchIf(
 				_ => SortRandom || Sort.Count > 0,
 				x => Builder.AddSort(x, SortRandom, Sort)
-			)
-			.Map(
-				x => (IQueryParts)x,
-				DefaultHandler
 			);
 	}
 }

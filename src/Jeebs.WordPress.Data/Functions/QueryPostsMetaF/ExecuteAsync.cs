@@ -27,7 +27,7 @@ namespace F.WordPressF.DataF
 		{
 			return
 				Return(
-					() => opt(new Query.PostsMetaOptions(db)),
+					() => opt(new Query.PostsMetaOptions(db.Schema)),
 					e => new Msg.ErrorGettingQueryPostsMetaOptionsMsg(e)
 				)
 				.Bind(

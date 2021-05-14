@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Linq;
+using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -17,11 +18,23 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc cref="IQueryPostsPartsBuilder"/>
 		public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsPartsBuilder
 		{
+			/// <inheritdoc/>
+			public override ITable Table =>
+				T.Term;
+
+			/// <inheritdoc/>
+			public override IColumn IdColumn =>
+				new Column(T.Term.GetName(), T.Term.TermId, nameof(T.Term.TermId));
+
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
 			internal TermsPartsBuilder(IWpDbSchema schema) : base(schema) { }
+
+			/// <inheritdoc/>
+			protected override Option<IColumnList> ExtractColumns<TModel>() =>
+				Extract<TModel>.From(Table, T.TermTaxonomy);
 
 			/// <inheritdoc/>
 			public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? Taxonomy)

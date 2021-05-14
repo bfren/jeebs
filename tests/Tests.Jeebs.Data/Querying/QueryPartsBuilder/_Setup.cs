@@ -44,7 +44,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 	public record TestModel(int Foo);
 
-	public abstract record TestBuilder : QueryPartsBuilder<TestId>;
+	public abstract class TestBuilder : QueryPartsBuilder<TestId> { }
 
 	public record TestTable0 : ITable
 	{

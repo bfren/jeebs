@@ -2,20 +2,17 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System;
-using System.Linq.Expressions;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using Jeebs.WordPress.Data.Tables;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsOptions"/>
-		public sealed record PostsOptions : Options<WpPostId, PostTable>, IQueryPostsOptions
+		public sealed record PostsOptions : Options<WpPostId>, IQueryPostsOptions
 		{
 			private new IQueryPostsPartsBuilder Builder =>
 				(IQueryPostsPartsBuilder)base.Builder;
@@ -52,27 +49,23 @@ namespace Jeebs.WordPress.Data
 			public IImmutableList<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } =
 				new ImmutableList<(ICustomField field, Compare cmp, object value)>();
 
-			/// <inheritdoc/>
-			protected override Expression<Func<PostTable, string>> IdColumn =>
-				table => table.PostId;
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
-			/// <param name="db">IWpDb</param>
-			internal PostsOptions(IWpDb db) : base(db, new PostsPartsBuilder(db.Schema), db.Schema.Post) { }
+			/// <param name="schema">IWpDbSchema</param>
+			internal PostsOptions(IWpDbSchema schema) : base(schema, new PostsPartsBuilder(schema)) { }
 
 			/// <summary>
 			/// Allow Builder to be injected
 			/// </summary>
-			/// <param name="db">IWpDb</param>
+			/// <param name="schema">IWpDbSchema</param>
 			/// <param name="builder">IQueryPostsPartsBuilder</param>
-			internal PostsOptions(IWpDb db, IQueryPostsPartsBuilder builder) : base(db, builder, db.Schema.Post) { }
+			internal PostsOptions(IWpDbSchema schema, IQueryPostsPartsBuilder builder) : base(schema, builder) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				base.BuildParts(
-					table, cols, idColumn
+			protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+				base.Build(
+					parts
 				)
 				.Bind(
 					x => Builder.AddWhereType(x, Type)

@@ -29,7 +29,7 @@ namespace F.WordPressF.DataF
 		{
 			return
 				Return(
-					() => opt(new Query.PostsOptions(db)),
+					() => opt(new Query.PostsOptions(db.Schema)),
 					e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
 				)
 				.Bind(

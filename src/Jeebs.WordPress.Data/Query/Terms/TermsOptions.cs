@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryTermsOptions"/>
-		public sealed record TermsOptions : Options<WpTermId, TermTable>, IQueryTermsOptions
+		public sealed record TermsOptions : Options<WpTermId>, IQueryTermsOptions
 		{
 			private new IQueryTermsPartsBuilder Builder =>
 				(IQueryTermsPartsBuilder)base.Builder;
@@ -29,32 +29,31 @@ namespace Jeebs.WordPress.Data
 			/// <inheritdoc/>
 			public long CountAtLeast { get; init; } = 1;
 
-			/// <inheritdoc/>
-			protected override Expression<Func<TermTable, string>> IdColumn =>
-				table => table.TermId;
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
-			/// <param name="db">IWpDb</param>
-			internal TermsOptions(IWpDb db) : base(db, new TermsPartsBuilder(db.Schema), db.Schema.Term) =>
+			/// <param name="schema">IWpDbSchema</param>
+			internal TermsOptions(IWpDbSchema schema) : base(schema, new TermsPartsBuilder(schema)) =>
 				Maximum = null;
 
-			/// <inheritdoc/>
-			protected override Option<IColumnList> GetColumns<TModel>(ITable table) =>
-				Extract<TModel>.From(table, T.TermTaxonomy);
+			/// <summary>
+			/// Allow Builder to be injected
+			/// </summary>
+			/// <param name="schema">IWpDbSchema</param>
+			/// <param name="builder">IQueryTermsPartsBuilder</param>
+			internal TermsOptions(IWpDbSchema schema, IQueryTermsPartsBuilder builder) : base(schema, builder) { }
 
 			/// <inheritdoc/>
-			protected override Option<QueryParts> BuildParts(ITable table, IColumnList cols, IColumn idColumn) =>
-				Builder.Create(
-					table, cols, Maximum, Skip
+			protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+				base.Build(
+					parts
 				)
 				.Bind(
 					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.SwitchIf(
 					_ => Id is not null || Ids is not null,
-					x => Builder.AddWhereId(x, idColumn, Id, Ids)
+					x => Builder.AddWhereId(x, Id, Ids)
 				)
 				.SwitchIf(
 					_ => Taxonomy is not null,

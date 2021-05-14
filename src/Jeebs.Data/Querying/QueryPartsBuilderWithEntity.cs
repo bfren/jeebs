@@ -11,7 +11,7 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TId">Entity ID type</typeparam>
-	public abstract record QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuilder<TId>
+	public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuilder<TId>
 		where TEntity : IWithId<TId>
 		where TId : StrongId
 	{

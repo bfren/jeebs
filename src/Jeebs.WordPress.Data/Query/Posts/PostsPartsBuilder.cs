@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
@@ -17,6 +18,14 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc cref="IQueryPostsPartsBuilder"/>
 		public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsPartsBuilder
 		{
+			/// <inheritdoc/>
+			public override ITable Table =>
+				T.Post;
+
+			/// <inheritdoc/>
+			public override IColumn IdColumn =>
+				new Column(T.Post.GetName(), T.Post.PostId, nameof(T.Post.PostId));
+
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
