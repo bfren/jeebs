@@ -13,7 +13,7 @@ using static F.OptionF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="QueryPartsBuilder{TId}"/>
-	public abstract class QueryPartsBuilder
+	public abstract record QueryPartsBuilder
 	{
 		/// <summary>Messages</summary>
 		public static class Msg
@@ -30,24 +30,27 @@ namespace Jeebs.Data.Querying
 	/// Builds a <see cref="QueryParts"/> object from various options
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
-	public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
+	public abstract record QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
 		where TId : StrongId
 	{
-		/// <summary>
-		/// Create a new QueryParts object, adding <paramref name="select"/> columns and
-		/// <see cref="Maximum"/> and <see cref="Skip"/> values
-		/// </summary>
-		/// <param name="table">Primary table</param>
-		/// <param name="select">Columns to select</param>
-		/// <param name="maximum">Maximum number of results to select</param>
-		/// <param name="skip">Number of results to skip</param>
-		public virtual Option<QueryParts> Create(ITable table, IColumnList select, long? maximum, long skip) =>
-			new QueryParts(table)
+		/// <inheritdoc/>
+		public abstract ITable Table { get; }
+
+		/// <inheritdoc/>
+		public abstract IColumn IdColumn { get; }
+
+		/// <inheritdoc/>
+		public Option<QueryParts> Create<TModel>(long? maximum, long skip) =>
+			new QueryParts(Table)
 			{
-				Select = select,
+				Select = GetColumns<TModel>(),
 				Maximum = maximum,
 				Skip = skip
 			};
+
+		/// <inheritdoc/>
+		public virtual IColumnList GetColumns<TModel>() =>
+			Extract<TModel>.From(Table).Unwrap(() => new ColumnList());
 
 		/// <summary>
 		/// Add Join
@@ -76,8 +79,8 @@ namespace Jeebs.Data.Querying
 				   select withJoin(parts, colFrom, colTo);
 		}
 
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
-		public virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
+		/// <inheritdoc/>
+		public Option<QueryParts> AddInnerJoin<TFrom, TTo>(
 			QueryParts parts,
 			TFrom fromTable,
 			Expression<Func<TFrom, string>> fromSelector,
@@ -92,8 +95,8 @@ namespace Jeebs.Data.Querying
 			);
 		}
 
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
-		public virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
+		/// <inheritdoc/>
+		public Option<QueryParts> AddLeftJoin<TFrom, TTo>(
 			QueryParts parts,
 			TFrom fromTable,
 			Expression<Func<TFrom, string>> fromSelector,
@@ -108,8 +111,8 @@ namespace Jeebs.Data.Querying
 			);
 		}
 
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
-		public virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
+		/// <inheritdoc/>
+		public Option<QueryParts> AddRightJoin<TFrom, TTo>(
 			QueryParts parts,
 			TFrom fromTable,
 			Expression<Func<TFrom, string>> fromSelector,
@@ -124,39 +127,28 @@ namespace Jeebs.Data.Querying
 			);
 		}
 
-		/// <summary>
-		/// Add Id / Ids - Id takes precedence over Ids
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="idColumn">ID Column</param>
-		/// <param name="id">Single ID</param>
-		/// <param name="ids">List of IDs</param>
-		public virtual Option<QueryParts> AddWhereId(QueryParts parts, IColumn idColumn, TId? id, IImmutableList<TId> ids)
+		/// <inheritdoc/>
+		public Option<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
 		{
 			// Add Id EQUAL
 			if (id?.Value > 0)
 			{
-				return parts with { Where = parts.Where.With((idColumn, Compare.Equal, id.Value)) };
+				return parts with { Where = parts.Where.With((IdColumn, Compare.Equal, id.Value)) };
 			}
 
 			// Add Id IN
 			else if (ids.Count > 0)
 			{
 				var idValues = ids.Select(x => x.Value);
-				return parts with { Where = parts.Where.With((idColumn, Compare.In, idValues)) };
+				return parts with { Where = parts.Where.With((IdColumn, Compare.In, idValues)) };
 			}
 
 			// Return
 			return parts;
 		}
 
-		/// <summary>
-		/// Add Sort - SortRandom takes precendence over Sort
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="sortRandom">If true, will sort results randomly</param>
-		/// <param name="sort">Sort columns</param>
-		public virtual Option<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
+		/// <inheritdoc/>
+		public Option<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
 		{
 			// Add random sort
 			if (sortRandom)
@@ -174,16 +166,8 @@ namespace Jeebs.Data.Querying
 			return parts;
 		}
 
-		/// <summary>
-		/// Add a Where predicate using Linq Expressions
-		/// </summary>
-		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="table">Table object</param>
-		/// <param name="column">Column selector</param>
-		/// <param name="cmp">Compare operator</param>
-		/// <param name="value">Search value</param>
-		public virtual Option<QueryParts> AddWhere<TTable>(
+		/// <inheritdoc/>
+		public Option<QueryParts> AddWhere<TTable>(
 			QueryParts parts,
 			TTable table,
 			Expression<Func<TTable, string>> column,
@@ -201,13 +185,8 @@ namespace Jeebs.Data.Querying
 			);
 		}
 
-		/// <summary>
-		/// Add a custom Where predicate
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="clause">Clause text</param>
-		/// <param name="parameters">Clause parameters</param>
-		public virtual Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
+		/// <inheritdoc/>
+		public Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
 		{
 			// Check clause
 			if (string.IsNullOrWhiteSpace(clause))

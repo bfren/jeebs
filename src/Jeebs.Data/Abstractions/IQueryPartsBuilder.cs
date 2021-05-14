@@ -16,29 +16,51 @@ namespace Jeebs.Data.Querying
 		where TId : StrongId
 	{
 		/// <summary>
-		/// Create a new QueryParts object, adding <paramref name="select"/> columns and
-		/// <see cref="Maximum"/> and <see cref="Skip"/> values
+		/// The primary table for this query
 		/// </summary>
-		/// <param name="table">Primary table</param>
-		/// <param name="select">Columns to select</param>
+		ITable Table { get; }
+
+		/// <summary>
+		/// ID Column details
+		/// </summary>
+		IColumn IdColumn { get; }
+
+		/// <summary>
+		/// Retrieve columns matching the specified model
+		/// </summary>
+		/// <typeparam name="TModel">Return Model type</typeparam>
+		IColumnList GetColumns<TModel>();
+
+		/// <summary>
+		/// Create a new QueryParts object, adding <paramref name="maximum"/> and <paramref name="skip"/> values
+		/// </summary>
+		/// <typeparam name="TModel">Return Model type</typeparam>
 		/// <param name="maximum">Maximum number of results to select</param>
 		/// <param name="skip">Number of results to skip</param>
-		Option<QueryParts> Create(ITable table,
-			IColumnList select, long? maximum, long skip);
+		Option<QueryParts> Create<TModel>(long? maximum, long skip);
 
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
+		/// <summary>
+		/// Add Join
+		/// </summary>
+		/// <typeparam name="TFrom">From Table type</typeparam>
+		/// <typeparam name="TTo">To Table type</typeparam>
+		/// <param name="parts">QueryParts</param>
+		/// <param name="fromTable">From table - should already be added to the query</param>
+		/// <param name="fromSelector">From column</param>
+		/// <param name="toTable">To table - should be a new table not already added to the query</param>
+		/// <param name="toSelector">To column</param>
 		Option<QueryParts> AddInnerJoin<TFrom, TTo>(QueryParts parts,
 			TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 			where TFrom : ITable
 			where TTo : ITable;
 
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
+		/// <inheritdoc cref="AddInnerJoin"/>
 		Option<QueryParts> AddLeftJoin<TFrom, TTo>(QueryParts parts,
 			TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 			where TFrom : ITable
 			where TTo : ITable;
 
-		/// <inheritdoc cref="QueryOptions.AddJoin"/>
+		/// <inheritdoc cref="AddInnerJoin"/>
 		Option<QueryParts> AddRightJoin<TFrom, TTo>(QueryParts parts,
 			TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 			where TFrom : ITable
@@ -48,11 +70,10 @@ namespace Jeebs.Data.Querying
 		/// Add Id / Ids - Id takes precedence over Ids
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
-		/// <param name="idColumn">ID Column</param>
 		/// <param name="id">Single ID</param>
 		/// <param name="ids">List of IDs</param>
 		Option<QueryParts> AddWhereId(QueryParts parts,
-			IColumn idColumn, TId? id, IImmutableList<TId> ids);
+			TId? id, IImmutableList<TId> ids);
 
 		/// <summary>
 		/// Add Sort - SortRandom takes precendence over Sort

@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
@@ -14,10 +12,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, v) = Setup();
-			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = builder.Create(v.Table, cols, null, F.Rnd.Lng);
+			var result = builder.Create<TestEntity>(null, F.Rnd.Lng);
 
 			// Assert
 			var some = result.AssertSome();
@@ -30,15 +27,14 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, v) = Setup();
-			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = builder.Create(v.Table, cols, null, F.Rnd.Lng);
+			var result = builder.Create<TestEntity>(null, F.Rnd.Lng);
 
 			// Assert
 			var some = result.AssertSome();
 			Assert.NotSame(v.Parts, some);
-			Assert.Same(cols, some.Select);
+			Assert.Same(v.Columns, some.Select);
 		}
 
 		[Fact]
@@ -47,10 +43,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			// Arrange
 			var maximum = F.Rnd.Lng;
 			var (builder, v) = Setup();
-			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = builder.Create(v.Table, cols, maximum, F.Rnd.Lng);
+			var result = builder.Create<TestEntity>(maximum, F.Rnd.Lng);
 
 			// Assert
 			var some = result.AssertSome();
@@ -64,10 +59,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			// Arrange
 			var skip = F.Rnd.Lng;
 			var (builder, v) = Setup();
-			var cols = Substitute.For<IColumnList>();
 
 			// Act
-			var result = builder.Create(v.Table, cols, null, skip);
+			var result = builder.Create<TestEntity>(null, skip);
 
 			// Assert
 			var some = result.AssertSome();

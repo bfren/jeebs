@@ -3,6 +3,7 @@
 
 using Jeebs.Data.Mapping;
 using NSubstitute;
+using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
@@ -14,15 +15,21 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 			var parts = new QueryParts(table);
 
-			var idColumn = Substitute.For<IMappedColumn>();
+			var columns = Substitute.For<IColumnList>();
 
-			var builder = new TestBuilder();
+			var idColumn = Substitute.For<IColumn>();
 
-			return (builder, new(table, idColumn, parts));
+			var builder = Substitute.ForPartsOf<TestBuilder>();
+			builder.Table.Returns(table);
+			builder.IdColumn.Returns(idColumn);
+			builder.Configure().GetColumns<TestEntity>().Returns(columns);
+
+			return (builder, new(table, columns, idColumn, parts));
 		}
 
 		public sealed record Vars(
 			ITable Table,
+			IColumnList Columns,
 			IColumn IdColumn,
 			QueryParts Parts
 		);
@@ -35,7 +42,9 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 	public record TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 
-	public class TestBuilder : QueryPartsBuilder<TestId> { }
+	public record TestModel(int Foo);
+
+	public abstract record TestBuilder : QueryPartsBuilder<TestId>;
 
 	public record TestTable0 : ITable
 	{

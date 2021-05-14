@@ -3,9 +3,7 @@
 
 using System.Collections.Generic;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
 using Jeebs.WordPress.Data.Entities;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
@@ -27,7 +25,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 		}
 
 		[Fact]
-		public void PostId_Set_Adds_Where_Id_Equal()
+		public void PostId_Set_Adds_Where_PostId_Equal()
 		{
 			// Arrange
 			var id = F.Rnd.Lng;
@@ -50,7 +48,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 		}
 
 		[Fact]
-		public void Id_And_Ids_Set_Adds_Where_Id_Equal()
+		public void PostId_And_PostIds_Set_Adds_Where_PostId_Equal()
 		{
 			// Arrange
 			var i0 = F.Rnd.Lng;
@@ -76,7 +74,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 		}
 
 		[Fact]
-		public void Id_Null_Ids_Set_Adds_Where_Id_In()
+		public void PostId_Null_PostIds_Set_Adds_Where_PostId_In()
 		{
 			// Arrange
 			var i0 = F.Rnd.Lng;

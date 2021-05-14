@@ -16,7 +16,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.AddWhereId(v.Parts, v.IdColumn, null, ImmutableList.Empty<TestId>());
+			var result = builder.AddWhereId(v.Parts, null, ImmutableList.Empty<TestId>());
 
 			// Assert
 			var some = result.AssertSome();
@@ -31,7 +31,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.AddWhereId(v.Parts, v.IdColumn, id, ImmutableList.Empty<TestId>());
+			var result = builder.AddWhereId(v.Parts, id, ImmutableList.Empty<TestId>());
 
 			// Assert
 			var some = result.AssertSome();
@@ -57,7 +57,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.AddWhereId(v.Parts, v.IdColumn, i0, ids);
+			var result = builder.AddWhereId(v.Parts, i0, ids);
 
 			// Assert
 			var some = result.AssertSome();
@@ -82,7 +82,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (options, v) = Setup();
 
 			// Act
-			var result = options.AddWhereId(v.Parts, v.IdColumn, null, ids);
+			var result = options.AddWhereId(v.Parts, null, ids);
 
 			// Assert
 			var some = result.AssertSome();
