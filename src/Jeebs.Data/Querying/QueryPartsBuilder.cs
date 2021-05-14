@@ -40,8 +40,8 @@ namespace Jeebs.Data.Querying
 		public abstract IColumn IdColumn { get; }
 
 		/// <inheritdoc/>
-		public Option<QueryParts> Create<TModel>(long? maximum, long skip) =>
-			new QueryParts(Table)
+		public QueryParts Create<TModel>(long? maximum, long skip) =>
+			new(Table)
 			{
 				Select = GetColumns<TModel>(),
 				Maximum = maximum,

@@ -17,7 +17,4 @@
     <ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
     <ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Querying\QueryOptions\" />
-  </ItemGroup>
 </Project>

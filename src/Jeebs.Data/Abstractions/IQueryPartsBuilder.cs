@@ -9,7 +9,8 @@ using Jeebs.Data.Mapping;
 namespace Jeebs.Data.Querying
 {
 	/// <summary>
-	/// Build an <see cref="IQueryParts"/> object
+	/// Build an <see cref="QueryParts"/> object
+	/// This must be in Jeebs.Data project as it requires access to the <see cref="QueryParts"/> definition
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
 	public interface IQueryPartsBuilder<TId>
@@ -37,7 +38,7 @@ namespace Jeebs.Data.Querying
 		/// <typeparam name="TModel">Return Model type</typeparam>
 		/// <param name="maximum">Maximum number of results to select</param>
 		/// <param name="skip">Number of results to skip</param>
-		Option<QueryParts> Create<TModel>(long? maximum, long skip);
+		QueryParts Create<TModel>(long? maximum, long skip);
 
 		/// <summary>
 		/// Add Join

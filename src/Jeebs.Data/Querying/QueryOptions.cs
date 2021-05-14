@@ -45,8 +45,8 @@ namespace Jeebs.Data.Querying
 
 		/// <inheritdoc/>
 		public Option<IQueryParts> ToParts<TModel>() =>
-			Builder.Create<TModel>(
-				Maximum, Skip
+			Return(
+				Builder.Create<TModel>(Maximum, Skip)
 			)
 			.SwitchIf(
 				_ => Id?.Value > 0 || Ids.Count > 0,

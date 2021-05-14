@@ -17,9 +17,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var result = builder.Create<TestEntity>(null, F.Rnd.Lng);
 
 			// Assert
-			var some = result.AssertSome();
-			Assert.NotSame(v.Parts, some);
-			Assert.Same(v.Table, some.From);
+			Assert.NotSame(v.Parts, result);
+			Assert.Same(v.Table, result.From);
 		}
 
 		[Fact]
@@ -32,9 +31,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var result = builder.Create<TestEntity>(null, F.Rnd.Lng);
 
 			// Assert
-			var some = result.AssertSome();
-			Assert.NotSame(v.Parts, some);
-			Assert.Same(v.Columns, some.Select);
+			Assert.NotSame(v.Parts, result);
+			Assert.Same(v.Columns, result.Select);
 		}
 
 		[Fact]
@@ -48,9 +46,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var result = builder.Create<TestEntity>(maximum, F.Rnd.Lng);
 
 			// Assert
-			var some = result.AssertSome();
-			Assert.NotSame(v.Parts, some);
-			Assert.Equal(maximum, some.Maximum);
+			Assert.NotSame(v.Parts, result);
+			Assert.Equal(maximum, result.Maximum);
 		}
 
 		[Fact]
@@ -64,9 +61,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var result = builder.Create<TestEntity>(null, skip);
 
 			// Assert
-			var some = result.AssertSome();
-			Assert.NotSame(v.Parts, some);
-			Assert.Equal(skip, some.Skip);
+			Assert.NotSame(v.Parts, result);
+			Assert.Equal(skip, result.Skip);
 		}
 	}
 }
