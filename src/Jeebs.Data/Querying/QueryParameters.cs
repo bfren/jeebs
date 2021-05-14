@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using F;
-using F.Internals;
 using Jeebs.Reflection;
 
 namespace Jeebs.Data.Querying
@@ -78,7 +76,7 @@ namespace Jeebs.Data.Querying
 		/// Return parameters as JSON
 		/// </summary>
 		public override string ToString() =>
-			JsonF.Serialise(this, JsonSerializerOptions).Unwrap(GetType().ToString());
+			F.JsonF.Serialise(this, JsonSerializerOptions).Unwrap(GetType().ToString());
 
 		/// <summary>
 		/// Don't change parameter names when serialising to JSON
@@ -87,7 +85,7 @@ namespace Jeebs.Data.Querying
 		{
 			get
 			{
-				var options = JsonF.CopyOptions();
+				var options = F.JsonF.CopyOptions();
 				options.DictionaryKeyPolicy = null;
 				options.PropertyNamingPolicy = null;
 				return options;

@@ -1,10 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Linq;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
-using Jeebs.Linq;
 using static F.OptionF;
 
 namespace Jeebs.Data.Querying

@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using NSubstitute;
-using NSubstitute.Extensions;
 using Xunit;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests

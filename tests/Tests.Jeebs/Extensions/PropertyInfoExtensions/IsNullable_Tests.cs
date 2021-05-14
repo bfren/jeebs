@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System.Reflection;
 using Xunit;
 
 namespace Jeebs.Reflection.PropertyInfoExtensions_Tests
