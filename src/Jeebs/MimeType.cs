@@ -118,7 +118,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// List of all mime types
-		/// Must be public static so it is thread safe
+		/// Must be static so it is thread safe
 		/// </summary>
 		private static readonly HashSet<MimeType> all;
 

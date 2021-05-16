@@ -48,7 +48,7 @@ namespace Jeebs.WordPress.Data.Enums
 
 		/// <summary>
 		/// List of all taxonomies
-		/// Must be public static so it is thread safe
+		/// Must be static so it is thread safe
 		/// </summary>
 		private static readonly HashSet<Taxonomy> all;
 
