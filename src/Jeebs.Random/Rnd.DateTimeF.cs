@@ -19,7 +19,7 @@ namespace F
 			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 			public static DateTime Get(RandomNumberGenerator? generator = null) =>
 				new(
-					year: NumberF.GetInt32(0, 9999, generator),
+					year: NumberF.GetInt32(1, 9999, generator),
 					month: NumberF.GetInt32(1, 12, generator),
 					day: NumberF.GetInt32(1, 28, generator),
 					hour: NumberF.GetInt32(0, 23, generator),

@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace F.MathsF_Tests
+namespace F.NumberF_Tests
 {
 	public class Permutations_Tests
 	{

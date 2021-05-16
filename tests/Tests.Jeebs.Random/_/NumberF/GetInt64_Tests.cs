@@ -7,7 +7,7 @@ using System.Linq;
 using Xunit;
 using static F.Rnd.NumberF;
 
-namespace F.MathsF_Tests
+namespace F.NumberF_Tests
 {
 	public class GetInt64_Tests
 	{

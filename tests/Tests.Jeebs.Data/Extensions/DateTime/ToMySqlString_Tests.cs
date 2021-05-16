@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using Xunit;
 
 namespace Jeebs.Data.DateTimeExtensions_Tests
@@ -12,16 +11,10 @@ namespace Jeebs.Data.DateTimeExtensions_Tests
 		public void DateTime_Returns_Valid_MySql_DateTime_String()
 		{
 			// Arrange
-			var year = F.Rnd.NumberF.GetInt32(1, 9999);
-			var month = F.Rnd.NumberF.GetInt32(1, 12);
-			var day = F.Rnd.NumberF.GetInt32(1, 28);
-			var hour = F.Rnd.NumberF.GetInt32(0, 23);
-			var minute = F.Rnd.NumberF.GetInt32(0, 59);
-			var second = F.Rnd.NumberF.GetInt32(0, 59);
-			var dt = new DateTime(year, month, day, hour, minute, second);
+			var dt = F.Rnd.DateTime;
 			var expected = string.Format(
 				"{0:0000}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}",
-				year, month, day, hour, minute, second
+				dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second
 			);
 
 			// Act
