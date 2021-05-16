@@ -62,7 +62,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceive().AddWhereId(Arg.Any<QueryParts>(), Arg.Any<TId?>(), Arg.Any<IImmutableList<TId>>());
+			builder.DidNotReceiveWithAnyArgs().AddWhereId(Arg.Any<QueryParts>(), default, Arg.Any<IImmutableList<TId>>());
 		}
 
 		public abstract void Test02_Id_Not_Null_Calls_Builder_AddWhereId();

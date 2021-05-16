@@ -41,7 +41,7 @@ namespace Jeebs.WordPress.Data
 				AddWhere(parts, T.Post, p => p.Status, Compare.Equal, status);
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereSearch(QueryParts parts, string? text, SearchPostFields fields, Compare cmp)
+			public Option<QueryParts> AddWhereSearch(QueryParts parts, SearchPostFields fields, Compare cmp, string? text)
 			{
 				// If there isn't any search text, don't do anything
 				if (text is null)

@@ -75,7 +75,7 @@ namespace Jeebs.WordPress.Data
 				)
 				.SwitchIf(
 					_ => string.IsNullOrEmpty(SearchText),
-					ifFalse: x => Builder.AddWhereSearch(x, SearchText, SearchFields, SearchComparison)
+					ifFalse: x => Builder.AddWhereSearch(x, SearchFields, SearchComparison, SearchText)
 				)
 				.SwitchIf(
 					_ => From is not null,

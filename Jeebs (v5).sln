@@ -103,6 +103,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Test.csproj = Test.csproj
 		.github\workflows\test.yml = .github\workflows\test.yml
 		Version = Version
+		.github\workflows\workflow-cleanup.yml = .github\workflows\workflow-cleanup.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Services", ".Services", "{6C31552E-8082-4D9A-BA93-A6BA41A47000}"
@@ -216,7 +217,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress", "src\Jeeb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress", "tests\Tests.Jeebs.WordPress\Tests.Jeebs.WordPress.csproj", "{3EDE4DCA-D279-4D90-A647-E5469D58DF18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppConsoleWp", "apps\AppConsoleWp\AppConsoleWp.csproj", "{8691C959-1846-44C1-8D2B-23B97F2CF1A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsoleWp", "apps\AppConsoleWp\AppConsoleWp.csproj", "{8691C959-1846-44C1-8D2B-23B97F2CF1A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
