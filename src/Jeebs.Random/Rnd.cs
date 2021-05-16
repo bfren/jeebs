@@ -18,6 +18,12 @@ namespace F
 			BooleanF.Get();
 
 		/// <summary>
+		/// Generate a random DateTime between the year 0 and the year 9999
+		/// </summary>
+		public static DateTime DateTime =>
+			DateTimeF.Get();
+
+		/// <summary>
 		/// Generate a random string 6 characters long, containing uppercase and lowercase letters but no numbers or special characters
 		/// </summary>
 		public static string Str =>
