@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,13 @@ namespace Jeebs.Apps
 		/// <inheritdoc/>
 		protected override void ConfigureServices_Endpoints(IServiceCollection services)
 		{
-			services.AddControllers();
+			services.AddControllers(ConfigureServices_MvcOptions);
+		}
+
+		/// <inheritdoc/>
+		public override void ConfigureServices_MvcOptions(MvcOptions opt)
+		{
+			// do nothing
 		}
 
 		#endregion
