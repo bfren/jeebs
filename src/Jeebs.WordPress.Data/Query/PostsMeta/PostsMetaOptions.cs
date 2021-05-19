@@ -48,8 +48,8 @@ namespace Jeebs.WordPress.Data
 					ifTrue: x => Builder.AddWherePostId(x, PostId, PostIds)
 				)
 				.SwitchIf(
-					_ => !string.IsNullOrEmpty(Key),
-					ifTrue: x => Builder.AddWhereKey(x, Key)
+					_ => string.IsNullOrEmpty(Key),
+					ifFalse: x => Builder.AddWhereKey(x, Key)
 				);
 		}
 	}

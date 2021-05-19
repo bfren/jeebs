@@ -53,6 +53,10 @@ namespace Jeebs.Data.Querying
 				DefaultHandler
 			);
 
+		/// <summary>
+		/// Build QueryParts
+		/// </summary>
+		/// <param name="parts">Initial QueryParts</param>
 		protected virtual Option<QueryParts> Build(Option<QueryParts> parts) =>
 			parts.SwitchIf(
 				_ => Id?.Value > 0 || Ids.Count > 0,

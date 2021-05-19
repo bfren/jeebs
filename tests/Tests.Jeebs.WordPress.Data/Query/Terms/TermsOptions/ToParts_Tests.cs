@@ -1,8 +1,13 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Linq.Expressions;
 using Jeebs.Data.Querying.QueryOptions_Tests;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Tables;
+using NSubstitute;
 using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.TermsOptions_Tests
@@ -16,6 +21,126 @@ namespace Jeebs.WordPress.Data.Query_Tests.TermsOptions_Tests
 			var options = new Query.TermsOptions(schema, builder);
 
 			return (options, builder);
+		}
+
+		[Fact]
+		public void Calls_Builder_AddInnerJoin()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var t = options.TTest;
+			var termId = t.Term.TermId;
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddInnerJoin(
+				Qp,
+				t.Term,
+				Arg.Is<Expression<Func<TermTable, string>>>(x => termId == x.Compile().Invoke(t.Term)),
+				t.TermTaxonomy,
+				Arg.Is<Expression<Func<TermTaxonomyTable, string>>>(x => termId == x.Compile().Invoke(t.TermTaxonomy))
+			);
+		}
+
+		[Fact]
+		public void Taxonomy_Null_Does_Not_Call_AddWhereTaxonomy()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomy(Qp, default);
+		}
+
+		[Fact]
+		public void Taxonomy_Not_Null_Calls_Add_Where_Taxonomy()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var taxonomy = Taxonomy.NavMenu;
+			var opt = options with
+			{
+				Taxonomy = taxonomy
+			};
+
+			// Act
+			opt.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddWhereTaxonomy(Qp, taxonomy);
+		}
+
+		[Fact]
+		public void Slug_Null_Does_Not_Call_AddWhereSlug()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.DidNotReceiveWithAnyArgs().AddWhereSlug(Qp, default);
+		}
+
+		[Fact]
+		public void Slug_Not_Null_Calls_Add_Where_Slug()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var slug = F.Rnd.Str;
+			var opt = options with
+			{
+				Slug = slug
+			};
+
+			// Act
+			opt.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddWhereSlug(Qp, slug);
+		}
+
+		[Theory]
+		[InlineData(-1)]
+		[InlineData(0)]
+		public void CountAtLeast_Less_Than_Or_Equal_To_Zero_Does_Not_Call_Builder_AddWhereCount(long input)
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var opt = options with
+			{
+				CountAtLeast = input
+			};
+
+			// Act
+			opt.ToParts<TestModel>();
+
+			// Assert
+			builder.DidNotReceiveWithAnyArgs().AddWhereCount(Qp, default);
+		}
+
+		[Fact]
+		public void CountAtLeast_Greater_Than_Zero_Calls_Builder_AddWhereCount()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var count = F.Rnd.Lng;
+			var opt = options with
+			{
+				CountAtLeast = count
+			};
+
+			// Act
+			opt.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddWhereCount(Qp, count);
 		}
 
 		[Fact]
