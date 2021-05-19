@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
 using Jeebs.Data.Querying.QueryOptions_Tests;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
@@ -37,7 +36,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereType(Arg.Any<QueryParts>(), type);
+			builder.Received().AddWhereType(Qp, type);
 		}
 
 		[Fact]
@@ -55,7 +54,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereStatus(Arg.Any<QueryParts>(), status);
+			builder.Received().AddWhereStatus(Qp, status);
 		}
 
 		[Theory]
@@ -74,7 +73,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereSearch(Arg.Any<QueryParts>(), default, default, default);
+			builder.DidNotReceiveWithAnyArgs().AddWhereSearch(Qp, default, default, default);
 		}
 
 		[Fact]
@@ -96,7 +95,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereSearch(Arg.Any<QueryParts>(), fields, cmp, text);
+			builder.Received().AddWhereSearch(Qp, fields, cmp, text);
 		}
 
 		[Fact]
@@ -109,7 +108,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWherePublishedFrom(Arg.Any<QueryParts>(), default);
+			builder.DidNotReceiveWithAnyArgs().AddWherePublishedFrom(Qp, default);
 		}
 
 		[Fact]
@@ -127,7 +126,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWherePublishedFrom(Arg.Any<QueryParts>(), from);
+			builder.Received().AddWherePublishedFrom(Qp, from);
 		}
 
 		[Fact]
@@ -140,7 +139,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWherePublishedTo(Arg.Any<QueryParts>(), default);
+			builder.DidNotReceiveWithAnyArgs().AddWherePublishedTo(Qp, default);
 		}
 
 		[Fact]
@@ -158,7 +157,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWherePublishedTo(Arg.Any<QueryParts>(), to);
+			builder.Received().AddWherePublishedTo(Qp, to);
 		}
 
 		[Fact]
@@ -171,7 +170,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereParentId(Arg.Any<QueryParts>(), default);
+			builder.DidNotReceiveWithAnyArgs().AddWhereParentId(Qp, default);
 		}
 
 		[Fact]
@@ -189,7 +188,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereParentId(Arg.Any<QueryParts>(), parentId);
+			builder.Received().AddWhereParentId(Qp, parentId);
 		}
 
 		[Fact]
@@ -202,7 +201,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomies(Arg.Any<QueryParts>(), Arg.Any<IImmutableList<(Taxonomy, long)>>());
+			builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<(Taxonomy, long)>>());
 		}
 
 		[Fact]
@@ -222,7 +221,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereTaxonomies(Arg.Any<QueryParts>(), taxonomies);
+			builder.Received().AddWhereTaxonomies(Qp, taxonomies);
 		}
 
 		[Fact]
@@ -235,7 +234,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereCustomFields(Arg.Any<QueryParts>(), Arg.Any<IImmutableList<(ICustomField, Compare, object)>>());
+			builder.DidNotReceiveWithAnyArgs().AddWhereCustomFields(Qp, Arg.Any<IImmutableList<(ICustomField, Compare, object)>>());
 		}
 
 		[Fact]
@@ -255,7 +254,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereCustomFields(Arg.Any<QueryParts>(), fields);
+			builder.Received().AddWhereCustomFields(Qp, fields);
 		}
 
 		[Fact]

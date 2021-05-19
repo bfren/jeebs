@@ -1,8 +1,15 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
+using System.Linq.Expressions;
+using Jeebs.Data.Enums;
+using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.QueryOptions_Tests;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Data.Tables;
+using NSubstitute;
 using Xunit;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyOptions_Tests
@@ -16,6 +23,117 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyOptions_Tests
 			var options = new Query.PostsTaxonomyOptions(schema, builder);
 
 			return (options, builder);
+		}
+
+		[Fact]
+		public void Calls_Builder_AddInnerJoin()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var t = options.TTest;
+			var termId = t.Term.TermId;
+			var termTaxonomyId = t.TermTaxonomy.TermTaxonomyId;
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddInnerJoin(
+				Qp,
+				t.Term,
+				Arg.Is<Expression<Func<TermTable, string>>>(x => termId == x.Compile().Invoke(t.Term)),
+				t.TermTaxonomy,
+				Arg.Is<Expression<Func<TermTaxonomyTable, string>>>(x => termId == x.Compile().Invoke(t.TermTaxonomy))
+			);
+			builder.Received().AddInnerJoin(
+				Qp,
+				t.TermTaxonomy,
+				Arg.Is<Expression<Func<TermTaxonomyTable, string>>>(x => termTaxonomyId == x.Compile().Invoke(t.TermTaxonomy)),
+				t.TermRelationship,
+				Arg.Is<Expression<Func<TermRelationshipTable, string>>>(x => termTaxonomyId == x.Compile().Invoke(t.TermRelationship))
+			);
+		}
+
+		[Fact]
+		public void Taxonomies_Empty_Does_Not_Call_AddWhereTaxonomies()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.DidNotReceive().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<Taxonomy>>());
+		}
+
+		[Fact]
+		public void Taxonomies_Not_Empty_Calls_AddWhereTaxonomies()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var taxonomies = ImmutableList.Create(Taxonomy.NavMenu);
+			var opt = options with
+			{
+				Taxonomies = taxonomies
+			};
+
+			// Act
+			opt.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddWhereTaxonomies(Qp, taxonomies);
+		}
+
+		[Fact]
+		public void PostIds_Empty_Does_Not_Call_Builder_AddWherePostIds()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.DidNotReceive().AddWherePostIds(Qp, Arg.Any<IImmutableList<WpPostId>>());
+		}
+
+		[Fact]
+		public void PostIds_Not_Empty_Calls_Builder_AddWherePostIds()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var i0 = new WpPostId(F.Rnd.Lng);
+			var i1 = new WpPostId(F.Rnd.Lng);
+			var postIds = ImmutableList.Create(i0, i1);
+			var opt = options with
+			{
+				PostIds = postIds
+			};
+
+			// Act
+			opt.ToParts<TestModel>();
+
+			// Assert
+			builder.Received().AddWherePostIds(Qp, postIds);
+		}
+
+		[Fact]
+		public void Calls_Builder_AddSort_With_SortBy()
+		{
+			// Arrange
+			var (options, builder) = Setup();
+			var sortBy = (TaxonomySort)F.Rnd.Int;
+			var opt = options with
+			{
+				SortBy = sortBy
+			};
+
+			// Act
+			options.ToParts<TestModel>();
+
+			// Assert
+			builder.ReceivedWithAnyArgs().AddSort(Qp, default, Arg.Any<IImmutableList<(IColumn, SortOrder)>>(), sortBy);
 		}
 
 		[Fact]

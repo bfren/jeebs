@@ -15,6 +15,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 	{
 		protected abstract (TOptions options, TBuilder builder) Setup();
 
+#pragma warning disable NS1004 // Argument matcher used with a non-virtual member of a class.
+		protected QueryParts Qp =>
+			Arg.Any<QueryParts>();
+#pragma warning restore NS1004 // Argument matcher used with a non-virtual member of a class.
+
 		protected virtual TBuilder GetConfiguredBuilder(ITable table)
 		{
 			var parts = new QueryParts(table)
@@ -62,7 +67,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereId(Arg.Any<QueryParts>(), default, Arg.Any<IImmutableList<TId>>());
+			builder.DidNotReceiveWithAnyArgs().AddWhereId(Qp, default, Arg.Any<IImmutableList<TId>>());
 		}
 
 		public abstract void Test02_Id_Not_Null_Calls_Builder_AddWhereId();
@@ -81,7 +86,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereId(Arg.Any<QueryParts>(), id, Arg.Any<IImmutableList<TId>>());
+			builder.Received().AddWhereId(Qp, id, Arg.Any<IImmutableList<TId>>());
 		}
 
 		public abstract void Test03_Ids_Not_Empty_Calls_Builder_AddWhereId();
@@ -102,7 +107,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereId(Arg.Any<QueryParts>(), null, ids);
+			builder.Received().AddWhereId(Qp, null, ids);
 		}
 
 		public abstract void Test04_SortRandom_False_Sort_Empty_Does_Not_Call_Builder_AddSort();
@@ -116,7 +121,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceive().AddSort(Arg.Any<QueryParts>(), Arg.Any<bool>(), Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
+			builder.DidNotReceive().AddSort(Qp, Arg.Any<bool>(), Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
 		}
 
 		public abstract void Test05_SortRandom_True_Calls_Builder_AddSort();
@@ -134,7 +139,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddSort(Arg.Any<QueryParts>(), true, Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
+			builder.Received().AddSort(Qp, true, Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
 		}
 
 		public abstract void Test06_Sort_Not_Empty_Calls_Builder_AddSort();
@@ -156,7 +161,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddSort(Arg.Any<QueryParts>(), false, sort);
+			builder.Received().AddSort(Qp, false, sort);
 		}
 	}
 

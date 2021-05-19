@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using Jeebs.Data.Querying;
 using Jeebs.Data.Querying.QueryOptions_Tests;
 using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
@@ -30,7 +29,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWherePostId(Arg.Any<QueryParts>(), default, Arg.Any<IImmutableList<WpPostId>>());
+			builder.DidNotReceiveWithAnyArgs().AddWherePostId(Qp, default, Arg.Any<IImmutableList<WpPostId>>());
 		}
 
 		[Fact]
@@ -48,7 +47,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWherePostId(Arg.Any<QueryParts>(), postId, Arg.Any<IImmutableList<WpPostId>>());
+			builder.Received().AddWherePostId(Qp, postId, Arg.Any<IImmutableList<WpPostId>>());
 		}
 
 		[Fact]
@@ -68,7 +67,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWherePostId(Arg.Any<QueryParts>(), null, postIds);
+			builder.Received().AddWherePostId(Qp, null, postIds);
 		}
 
 		[Fact]
@@ -81,7 +80,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereKey(Arg.Any<QueryParts>(), default);
+			builder.DidNotReceiveWithAnyArgs().AddWhereKey(Qp, default);
 		}
 
 		[Fact]
@@ -99,7 +98,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereKey(Arg.Any<QueryParts>(), key);
+			builder.Received().AddWhereKey(Qp, key);
 		}
 
 		[Fact]
