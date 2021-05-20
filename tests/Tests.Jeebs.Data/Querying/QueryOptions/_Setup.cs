@@ -6,9 +6,9 @@ using NSubstitute;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
-	public abstract class QueryOptions_Tests : ToParts_Tests<TestOptions, ITestBuilder, TestId>
+	public static class Setup
 	{
-		protected override (TestOptions options, ITestBuilder builder) Setup()
+		public static (TestOptions options, ITestBuilder builder) GetOptions()
 		{
 			var table = Substitute.For<ITable>();
 

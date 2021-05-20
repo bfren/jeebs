@@ -2,11 +2,15 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
+using static Jeebs.Data.Querying.QueryOptions_Tests.Setup;
 
 namespace Jeebs.Data.Querying.QueryOptions_Tests
 {
-	public class ToParts_Tests : QueryOptions_Tests
+	public class ToParts_Tests : ToParts_Tests<TestOptions, ITestBuilder, TestId>
 	{
+		protected override (TestOptions options, ITestBuilder builder) Setup() =>
+			GetOptions();
+
 		[Fact]
 		public override void Test00_Calls_Builder_Create_With_Maximum_And_Skip() =>
 			Test00();
