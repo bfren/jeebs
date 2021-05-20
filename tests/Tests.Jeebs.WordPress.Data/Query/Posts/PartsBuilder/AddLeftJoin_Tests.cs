@@ -8,13 +8,13 @@ using static Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 {
-	public class AddRightJoin_Tests : AddRightJoin_Tests<Query.PostsPartsBuilder, WpPostId>
+	public class AddLeftJoin_Tests : AddLeftJoin_Tests<Query.PostsPartsBuilder, WpPostId>
 	{
 		protected override Query.PostsPartsBuilder GetConfiguredBuilder() =>
 			GetBuilder();
 
 		[Fact]
-		public override void Test00_Adds_Columns_To_RightJoin() =>
+		public override void Test00_Adds_Columns_To_LeftJoin() =>
 			Test00();
 	}
 }
