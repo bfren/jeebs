@@ -2,6 +2,8 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data.Mapping;
+using NSubstitute;
+using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
@@ -17,12 +19,27 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 			var parts = new QueryParts(builder.Table);
 
-			return (GetConfiguredBuilder(), new(parts));
+			return (builder, new(parts));
 		}
 
-		public sealed record Vars(
+		public (TBuilder builder, VarsWithColumns v) Setup<TModel>()
+		{
+			var (builder, v) = Setup();
+
+			var columns = Substitute.For<IColumnList>();
+			builder.Configure().GetColumns<TModel>().Returns(columns);
+
+			return (builder, new(columns, v.Parts));
+		}
+
+		public record Vars(
 			QueryParts Parts
 		);
+
+		public record VarsWithColumns(
+			IColumnList Columns,
+			QueryParts Parts
+		) : Vars(Parts);
 	}
 
 	public record TestTable0 : ITable

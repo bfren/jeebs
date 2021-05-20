@@ -6,17 +6,13 @@ using static Jeebs.Data.Querying.QueryPartsBuilder_Tests.Setup;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
-	public class AddWhere_Tests : AddWhere_Tests<TestBuilder, TestId>
+	public class AddRightJoin_Tests : AddRightJoin_Tests<TestBuilder, TestId>
 	{
 		protected override TestBuilder GetConfiguredBuilder() =>
 			GetBuilder();
 
 		[Fact]
-		public override void Test00_Column_Exists_Adds_Where() =>
+		public override void Test00_Adds_Columns_To_RightJoin() =>
 			Test00();
-
-		[Fact]
-		public override void Test01_Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg() =>
-			Test01();
 	}
 }

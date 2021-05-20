@@ -1,47 +1,29 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using NSubstitute;
 using Xunit;
+using static Jeebs.Data.Querying.QueryPartsBuilder_Tests.Setup;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
-	public class GetColumns_Tests : QueryPartsBuilder_Tests
+	public class GetColumns_Tests : GetColumns_Tests<TestBuilder, TestId>
 	{
-		[Fact]
-		public void No_Matching_Properties_Returns_Empty_List()
-		{
-			// Arrange
-			var (builder, _) = Setup();
-
-			// Act
-			var result = builder.GetColumns<TestEntity>();
-
-			// Assert
-			Assert.Empty(result);
-		}
+		protected override TestBuilder GetConfiguredBuilder() =>
+			GetBuilder();
 
 		[Fact]
-		public void Returns_Columns_For_Matching_Properties()
+		public override void Test00_No_Matching_Properties_Returns_Empty_List() =>
+			Test00<NoMatchingProperties>();
+
+		[Fact]
+		public override void Test01_Returns_Columns_For_Matching_Properties()
 		{
-			// Arrange
-			var (builder, _) = Setup();
-			var table = F.Rnd.Str;
 			var column = F.Rnd.Str;
-			builder.Table.Returns(new TestTable0(table, column));
-
-			// Act
-			var result = builder.GetColumns<TestModel>();
-
-			// Assert
-			Assert.Collection(result,
-				x =>
-				{
-					Assert.Equal(table, x.Table);
-					Assert.Equal(column, x.Name);
-					Assert.Equal(nameof(TestTable0.Foo), x.Alias);
-				}
-			);
+			Test01<WithMatchingProperties>(new TestTable0(F.Rnd.Str, column), column, nameof(TestTable0.Foo));
 		}
+
+		public record NoMatchingProperties;
+
+		public record WithMatchingProperties(int Foo);
 	}
 }
