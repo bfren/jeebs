@@ -5,10 +5,13 @@ using Xunit;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
-	public class AddLeftJoin_Tests : QueryPartsBuilder_Tests
+	public abstract class AddInnerJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
+		where TBuilder : QueryPartsBuilder<TId>
+		where TId : StrongId
 	{
-		[Fact]
-		public void Adds_Columns_To_LeftJoin()
+		public abstract void Test00_Adds_Columns_To_InnerJoin();
+
+		protected void Test00()
 		{
 			// Arrange
 			var (builder, v) = Setup();
@@ -22,11 +25,12 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var t1 = new TestTable1(t1Name, t1Column);
 
 			// Act
-			var result = builder.AddLeftJoin(v.Parts, t0, t => t.Foo, t1, t => t.Bar);
+			var result = builder.AddInnerJoin(v.Parts, t0, t => t.Foo, t1, t => t.Bar);
 
 			// Assert
 			var some = result.AssertSome();
-			Assert.Collection(some.LeftJoin,
+			Assert.NotSame(v.Parts, some);
+			Assert.Collection(some.InnerJoin,
 				x =>
 				{
 					Assert.Equal(t0Name, x.from.Table);
