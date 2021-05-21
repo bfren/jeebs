@@ -1,0 +1,21 @@
+﻿// Jeebs Unit Tests
+// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+
+using Jeebs.Data;
+using Jeebs.Data.Querying.QueryPartsBuilder_Tests;
+using Jeebs.WordPress.Data.Entities;
+using Xunit;
+using static Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests.Setup;
+
+namespace Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests
+{
+	public class GetColumns_Tests : GetColumns_Tests<Query.TermsPartsBuilder, WpTermId>
+	{
+		protected override Query.TermsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+			GetBuilder(extract);
+
+		[Fact]
+		public override void Test00_Calls_Extract_From() =>
+			Test00<WpPostEntity>();
+	}
+}
