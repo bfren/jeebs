@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using System.Linq;
+using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -27,6 +28,13 @@ namespace Jeebs.WordPress.Data
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
 			internal PostsMetaPartsBuilder(IWpDbSchema schema) : base(schema) { }
+
+			/// <summary>
+			/// Internal creation only
+			/// </summary>
+			/// <param name="extract">IExtract</param>
+			/// <param name="schema">IWpDbSchema</param>
+			internal PostsMetaPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 			/// <inheritdoc/>
 			public Option<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds)
