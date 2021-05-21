@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
 using Jeebs.Data;
 using Jeebs.Data.Mapping;
 using NSubstitute;
@@ -10,7 +9,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 {
 	public abstract class PartsBuilder_Tests
 	{
-		public (TestPartsBuilder builder, Vars v) Setup()
+		public static (TestPartsBuilder builder, Vars v) Setup()
 		{
 			var extract = Substitute.For<IExtract>();
 
@@ -36,13 +35,15 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 
 	public class TestPartsBuilder : Query.PartsBuilder<TestId>
 	{
-		public TestPartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract, client, schema) { }
+		public TestPartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract, client, schema)
+		{
+			Table = Substitute.For<ITable>();
+			IdColumn = Substitute.For<IColumn>();
+		}
 
-		public override ITable Table =>
-			throw new NotImplementedException();
+		public override ITable Table { get; }
 
-		public override IColumn IdColumn =>
-			throw new NotImplementedException();
+		public override IColumn IdColumn { get; }
 	}
 
 	public sealed record TestTable : ITable

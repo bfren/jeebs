@@ -2,6 +2,7 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Xunit;
+using static Jeebs.Data.Mapping.Mapper.Msg;
 
 namespace Jeebs.Data.Mapping.Mapper_Tests
 {
