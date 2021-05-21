@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq.Expressions;
-using System.Security.Authentication.ExtendedProtection;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Mapping;
