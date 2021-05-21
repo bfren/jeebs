@@ -5,7 +5,6 @@ using System.Data;
 using Jeebs;
 using Jeebs.Config;
 using Jeebs.Data;
-using Jeebs.Data.Mapping;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Tables;

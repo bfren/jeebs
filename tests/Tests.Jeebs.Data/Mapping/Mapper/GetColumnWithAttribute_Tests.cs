@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Entities;
 using Xunit;
-using static Jeebs.Data.Mapping.Mapper.Msg;
 
 namespace Jeebs.Data.Mapping.Mapper_Tests
 {
