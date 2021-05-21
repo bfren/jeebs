@@ -33,8 +33,8 @@ namespace Jeebs.WordPress.Data
 			internal TermsPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
 			/// <inheritdoc/>
-			protected override Option<IColumnList> ExtractColumns<TModel>() =>
-				Extract<TModel>.From(Table, T.TermTaxonomy);
+			public override IColumnList GetColumns<TModel>() =>
+				Extract.From<TModel>(Table, T.TermTaxonomy);
 
 			/// <inheritdoc/>
 			public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? Taxonomy)

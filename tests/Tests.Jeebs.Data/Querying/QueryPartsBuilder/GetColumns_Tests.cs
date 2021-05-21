@@ -8,22 +8,13 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class GetColumns_Tests : GetColumns_Tests<TestBuilder, TestId>
 	{
-		protected override TestBuilder GetConfiguredBuilder() =>
-			GetBuilder();
+		protected override TestBuilder GetConfiguredBuilder(IExtract extract) =>
+			GetBuilder(extract);
 
 		[Fact]
-		public override void Test00_No_Matching_Properties_Returns_Empty_List() =>
-			Test00<NoMatchingProperties>();
+		public override void Test00_Calls_Extract_From() =>
+			Test00<TestModel>();
 
-		[Fact]
-		public override void Test01_Returns_Columns_For_Matching_Properties()
-		{
-			var column = F.Rnd.Str;
-			Test01<WithMatchingProperties>(new TestTable0(F.Rnd.Str, column), column, nameof(TestTable0.Foo));
-		}
-
-		public record NoMatchingProperties;
-
-		public record WithMatchingProperties(int Foo);
+		public record TestModel;
 	}
 }

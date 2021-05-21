@@ -1,6 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using Jeebs.Data.Mapping;
+using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
@@ -14,7 +16,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		protected void Test00()
 		{
 			// Arrange
-			var (builder, v) = Setup<TModel>();
+			var (builder, v) = Setup();
 
 			// Act
 			var result = builder.Create<TModel>(null, F.Rnd.Lng);
@@ -24,19 +26,19 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			Assert.Same(builder.Table, result.From);
 		}
 
-		public abstract void Test01_Returns_With_Select();
+		public abstract void Test01_Calls_Extract_From();
 
 		protected void Test01()
 		{
 			// Arrange
-			var (builder, v) = Setup<TModel>();
+			var (builder, v) = Setup();
 
 			// Act
 			var result = builder.Create<TModel>(null, F.Rnd.Lng);
 
 			// Assert
 			Assert.NotSame(v.Parts, result);
-			Assert.Same(v.Columns, result.Select);
+			v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
 		}
 
 		public abstract void Test02_Returns_With_Maximum();
@@ -45,7 +47,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var maximum = F.Rnd.Lng;
-			var (builder, v) = Setup<TModel>();
+			var (builder, v) = Setup();
 
 			// Act
 			var result = builder.Create<TModel>(maximum, F.Rnd.Lng);
@@ -61,7 +63,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		{
 			// Arrange
 			var skip = F.Rnd.Lng;
-			var (builder, v) = Setup<TModel>();
+			var (builder, v) = Setup();
 
 			// Act
 			var result = builder.Create<TModel>(null, skip);

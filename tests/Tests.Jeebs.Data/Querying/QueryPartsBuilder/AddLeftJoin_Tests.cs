@@ -8,8 +8,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class AddLeftJoin_Tests : AddLeftJoin_Tests<TestBuilder, TestId>
 	{
-		protected override TestBuilder GetConfiguredBuilder() =>
-			GetBuilder();
+		protected override TestBuilder GetConfiguredBuilder(IExtract extract) =>
+			GetBuilder(extract);
 
 		[Fact]
 		public override void Test00_Adds_Columns_To_LeftJoin() =>

@@ -8,8 +8,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class AddWhereCustom_Tests : AddWhereCustom_Tests<TestBuilder, TestId>
 	{
-		protected override TestBuilder GetConfiguredBuilder() =>
-			GetBuilder();
+		protected override TestBuilder GetConfiguredBuilder(IExtract extract) =>
+			GetBuilder(extract);
 
 		[Theory]
 		[MemberData(nameof(Test00_Data))]

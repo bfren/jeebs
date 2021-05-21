@@ -8,15 +8,15 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class Create_Tests : Create_Tests<TestBuilder, TestId, TestModel>
 	{
-		protected override TestBuilder GetConfiguredBuilder() =>
-			GetBuilder();
+		protected override TestBuilder GetConfiguredBuilder(IExtract extract) =>
+			GetBuilder(extract);
 
 		[Fact]
 		public override void Test00_Returns_With_Table() =>
 			Test00();
 
 		[Fact]
-		public override void Test01_Returns_With_Select() =>
+		public override void Test01_Calls_Extract_From() =>
 			Test01();
 
 		[Fact]

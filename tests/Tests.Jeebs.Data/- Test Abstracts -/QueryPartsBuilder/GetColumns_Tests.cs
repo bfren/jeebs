@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Mapping;
 using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
@@ -11,40 +10,18 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		where TBuilder : QueryPartsBuilder<TId>
 		where TId : StrongId
 	{
-		public abstract void Test00_No_Matching_Properties_Returns_Empty_List();
+		public abstract void Test00_Calls_Extract_From();
 
-		protected void Test00<TWithoutMatchinProperties>()
+		protected void Test00<TModel>()
 		{
 			// Arrange
-			var (builder, _) = Setup();
+			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.GetColumns<TWithoutMatchinProperties>();
+			builder.GetColumns<TModel>();
 
 			// Assert
-			Assert.Empty(result);
-		}
-
-		public abstract void Test01_Returns_Columns_For_Matching_Properties();
-
-		protected void Test01<TWithMatchingProperties>(ITable table, string column, string alias)
-		{
-			// Arrange
-			var (builder, _) = Setup();
-			builder.Table.Returns(table);
-
-			// Act
-			var result = builder.GetColumns<TWithMatchingProperties>();
-
-			// Assert
-			Assert.Collection(result,
-				x =>
-				{
-					Assert.Equal(table.GetName(), x.Table);
-					Assert.Equal(column, x.Name);
-					Assert.Equal(alias, x.Alias);
-				}
-			);
+			v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
 		}
 	}
 }

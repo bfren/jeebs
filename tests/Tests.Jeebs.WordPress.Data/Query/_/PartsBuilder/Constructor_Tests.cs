@@ -13,11 +13,12 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 		public void Sets_Client()
 		{
 			// Arrange
+			var extract = Substitute.For<IExtract>();
 			var client = Substitute.For<IDbClient>();
 			var schema = Substitute.For<IWpDbSchema>();
 
 			// Act
-			var result = new TestPartsBuilder(client, schema);
+			var result = new TestPartsBuilder(extract, client, schema);
 
 			// Assert
 			Assert.Same(client, result.ClientTest);
@@ -27,11 +28,12 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 		public void Sets_Schema()
 		{
 			// Arrange
+			var extract = Substitute.For<IExtract>();
 			var client = Substitute.For<IDbClient>();
 			var schema = Substitute.For<IWpDbSchema>();
 
 			// Act
-			var result = new TestPartsBuilder(client, schema);
+			var result = new TestPartsBuilder(extract, client, schema);
 
 			// Assert
 			Assert.Same(schema, result.TTest);

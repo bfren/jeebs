@@ -32,10 +32,9 @@ namespace Jeebs.WordPress.Data
 			/// <param name="schema">IWpDbSchema</param>
 			internal PostsTaxonomyPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
-
 			/// <inheritdoc/>
-			protected override Option<IColumnList> ExtractColumns<TModel>() =>
-				Extract<TModel>.From(Table, T.TermRelationship, T.TermTaxonomy);
+			public override IColumnList GetColumns<TModel>() =>
+				Extract.From<TModel>(Table, T.TermRelationship, T.TermTaxonomy);
 
 			/// <inheritdoc/>
 			public Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies)

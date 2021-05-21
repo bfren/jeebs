@@ -12,11 +12,13 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 	{
 		public (TestPartsBuilder builder, Vars v) Setup()
 		{
+			var extract = Substitute.For<IExtract>();
+
 			var client = Substitute.For<IDbClient>();
 
 			var schema = Substitute.For<IWpDbSchema>();
 
-			var builder = new TestPartsBuilder(client, schema);
+			var builder = new TestPartsBuilder(extract, client, schema);
 
 			var table = new TestTable(F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
 
@@ -34,7 +36,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 
 	public class TestPartsBuilder : Query.PartsBuilder<TestId>
 	{
-		public TestPartsBuilder(IDbClient client, IWpDbSchema schema) : base(client, schema) { }
+		public TestPartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract, client, schema) { }
 
 		public override ITable Table =>
 			throw new NotImplementedException();

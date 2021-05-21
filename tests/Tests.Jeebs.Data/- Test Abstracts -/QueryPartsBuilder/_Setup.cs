@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Mapping;
 using NSubstitute;
-using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
@@ -11,35 +10,23 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		where TBuilder : QueryPartsBuilder<TId>
 		where TId : StrongId
 	{
-		protected abstract TBuilder GetConfiguredBuilder();
+		protected abstract TBuilder GetConfiguredBuilder(IExtract extract);
 
 		public (TBuilder builder, Vars v) Setup()
 		{
-			var builder = GetConfiguredBuilder();
+			var extract = Substitute.For<IExtract>();
+
+			var builder = GetConfiguredBuilder(extract);
 
 			var parts = new QueryParts(builder.Table);
 
-			return (builder, new(parts));
-		}
-
-		public (TBuilder builder, VarsWithColumns v) Setup<TModel>()
-		{
-			var (builder, v) = Setup();
-
-			var columns = Substitute.For<IColumnList>();
-			builder.Configure().GetColumns<TModel>().Returns(columns);
-
-			return (builder, new(columns, v.Parts));
+			return (builder, new(extract, parts));
 		}
 
 		public record Vars(
+			IExtract Extract,
 			QueryParts Parts
 		);
-
-		public record VarsWithColumns(
-			IColumnList Columns,
-			QueryParts Parts
-		) : Vars(Parts);
 	}
 
 	public record TestTable0 : ITable

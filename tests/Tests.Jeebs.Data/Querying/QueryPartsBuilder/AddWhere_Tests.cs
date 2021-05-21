@@ -8,8 +8,8 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public class AddWhere_Tests : AddWhere_Tests<TestBuilder, TestId>
 	{
-		protected override TestBuilder GetConfiguredBuilder() =>
-			GetBuilder();
+		protected override TestBuilder GetConfiguredBuilder(IExtract extract) =>
+			GetBuilder(extract);
 
 		[Fact]
 		public override void Test00_Column_Exists_Adds_Where() =>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Security.Authentication.ExtendedProtection;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Mapping;
@@ -40,14 +41,22 @@ namespace Jeebs.WordPress.Data
 			/// Create object
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			protected PartsBuilder(IWpDbSchema schema) : this(new MySqlDbClient(), schema) { }
+			protected PartsBuilder(IWpDbSchema schema) : this(new Extract(), schema) { }
 
 			/// <summary>
 			/// Create object
 			/// </summary>
+			/// <param name="extract">IExtract</param>
+			/// <param name="schema">IWpDbSchema</param>
+			internal PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, new MySqlDbClient(), schema) { }
+
+			/// <summary>
+			/// Create object
+			/// </summary>
+			/// <param name="extract">IExtract</param>
 			/// <param name="client">IDbClient</param>
 			/// <param name="schema">IWpDbSchema</param>
-			internal PartsBuilder(IDbClient client, IWpDbSchema schema) =>
+			internal PartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract) =>
 				(Client, T) = (client, schema);
 
 			/// <summary>

@@ -43,7 +43,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			Assert.Collection(some.Where,
 				x =>
 				{
-					Assert.Same(builder.IdColumn, x.column);
+					Assert.Equal(builder.IdColumn, x.column);
 					Assert.Equal(Compare.Equal, x.cmp);
 					Assert.Equal(id.Value, x.value);
 				}
@@ -70,7 +70,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			Assert.Collection(some.Where,
 				x =>
 				{
-					Assert.Same(builder.IdColumn, x.column);
+					Assert.Equal(builder.IdColumn, x.column);
 					Assert.Equal(Compare.Equal, x.cmp);
 					Assert.Equal(i0.Value, x.value);
 				}
@@ -96,7 +96,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			Assert.Collection(some.Where,
 				x =>
 				{
-					Assert.Same(builder.IdColumn, x.column);
+					Assert.Equal(builder.IdColumn, x.column);
 					Assert.Equal(Compare.In, x.cmp);
 
 					var value = Assert.IsAssignableFrom<IEnumerable<long>>(x.value);

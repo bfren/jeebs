@@ -3,14 +3,13 @@
 
 using Jeebs.Data.Mapping;
 using NSubstitute;
-using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class Setup
 	{
-		public static TestBuilder GetBuilder() =>
-			Substitute.ForPartsOf<TestBuilder>();
+		public static TestBuilder GetBuilder(IExtract extract) =>
+			new(extract);
 	}
 
 	public record TestId(long Value) : StrongId(Value)
@@ -20,5 +19,16 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 
 	public record TestModel;
 
-	public abstract class TestBuilder : QueryPartsBuilder<TestId> { }
+	public class TestBuilder : QueryPartsBuilder<TestId>
+	{
+		public override ITable Table { get; }
+
+		public override IColumn IdColumn { get; }
+
+		public TestBuilder(IExtract extract) : base(extract)
+		{
+			Table = Substitute.For<ITable>();
+			IdColumn = Substitute.For<IColumn>();
+		}
+	}
 }

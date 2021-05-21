@@ -32,6 +32,13 @@ namespace Jeebs.WordPress.Data
 			/// <param name="schema">IWpDbSchema</param>
 			internal PostsPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
+			/// <summary>
+			/// Internal creation only
+			/// </summary>
+			/// <param name="extract">IExtract</param>
+			/// <param name="schema">IWpDbSchema</param>
+			internal PostsPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
+
 			/// <inheritdoc/>
 			public Option<QueryParts> AddWhereType(QueryParts parts, PostType type) =>
 				AddWhere(parts, T.Post, p => p.Type, Compare.Equal, type);

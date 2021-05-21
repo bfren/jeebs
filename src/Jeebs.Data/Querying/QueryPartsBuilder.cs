@@ -33,11 +33,28 @@ namespace Jeebs.Data.Querying
 	public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
 		where TId : StrongId
 	{
+		/// <summary>
+		/// IExtract
+		/// </summary>
+		protected IExtract Extract { get; private init; }
+
 		/// <inheritdoc/>
 		public abstract ITable Table { get; }
 
 		/// <inheritdoc/>
 		public abstract IColumn IdColumn { get; }
+
+		/// <summary>
+		/// Create object with default extractor
+		/// </summary>
+		protected QueryPartsBuilder() : this(new Extract()) { }
+
+		/// <summary>
+		/// Inject extract object
+		/// </summary>
+		/// <param name="extract">IExtract</param>
+		protected QueryPartsBuilder(IExtract extract) =>
+			Extract = extract;
 
 		/// <inheritdoc/>
 		public QueryParts Create<TModel>(long? maximum, long skip) =>
@@ -48,16 +65,9 @@ namespace Jeebs.Data.Querying
 				Skip = skip
 			};
 
-		/// <summary>
-		/// Extract columns for the specified model
-		/// </summary>
-		/// <typeparam name="TModel">Return Model type</typeparam>
-		protected virtual Option<IColumnList> ExtractColumns<TModel>() =>
-			Extract<TModel>.From(Table);
-
 		/// <inheritdoc/>
 		public virtual IColumnList GetColumns<TModel>() =>
-			ExtractColumns<TModel>().Unwrap(() => new ColumnList());
+			Extract.From<TModel>(Table);
 
 		/// <summary>
 		/// Add Join

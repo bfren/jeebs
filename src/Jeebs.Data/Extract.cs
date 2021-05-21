@@ -10,6 +10,14 @@ using Msg = Jeebs.Data.ExtractMsg;
 
 namespace Jeebs.Data
 {
+	/// <inheritdoc cref="IExtract"/>
+	public sealed class Extract : IExtract
+	{
+		/// <inheritdoc/>
+		public IColumnList From<TModel>(params ITable[] tables) =>
+			Extract<TModel>.From(tables).Unwrap(() => new ColumnList());
+	}
+
 	/// <summary>
 	/// Extract columns from a table that match <typeparamref name="TModel"/>
 	/// </summary>
