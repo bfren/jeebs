@@ -44,10 +44,10 @@ namespace Jeebs.WordPress.Data
 				Extract.From<TModel>(Table, T.TermTaxonomy);
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? Taxonomy)
+			public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
 			{
 				// Add Taxonomy
-				if (Taxonomy is Taxonomy taxonomy)
+				if (taxonomy is Taxonomy)
 				{
 					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.Equal, taxonomy);
 				}
@@ -57,12 +57,12 @@ namespace Jeebs.WordPress.Data
 			}
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereSlug(QueryParts parts, string? Slug)
+			public Option<QueryParts> AddWhereSlug(QueryParts parts, string? slug)
 			{
 				// Add Slug
-				if (!string.IsNullOrEmpty(Slug))
+				if (!string.IsNullOrEmpty(slug))
 				{
-					return AddWhere(parts, T.Term, t => t.Slug, Compare.Equal, Slug);
+					return AddWhere(parts, T.Term, t => t.Slug, Compare.Equal, slug);
 				}
 
 				// Return
@@ -70,12 +70,12 @@ namespace Jeebs.WordPress.Data
 			}
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereCount(QueryParts parts, long CountAtLeast)
+			public Option<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast)
 			{
 				// Add Count
-				if (CountAtLeast > 0)
+				if (countAtLeast > 0)
 				{
-					return AddWhere(parts, T.TermTaxonomy, t => t.Count, Compare.MoreThanOrEqual, CountAtLeast);
+					return AddWhere(parts, T.TermTaxonomy, t => t.Count, Compare.MoreThanOrEqual, countAtLeast);
 				}
 
 				// Return
