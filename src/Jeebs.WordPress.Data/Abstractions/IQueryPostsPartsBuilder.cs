@@ -33,7 +33,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="fields">Fields to search</param>
 		/// <param name="cmp">Search Comparison</param>
 		/// <param name="text">Search text</param>
-		Option<QueryParts> AddWhereSearch(QueryParts parts, SearchPostFields fields, Compare cmp, string? text);
+		Option<QueryParts> AddWhereSearch(QueryParts parts, SearchPostField fields, Compare cmp, string? text);
 
 		/// <summary>
 		/// Add Where From / To

@@ -32,7 +32,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Search text fields
 		/// </summary>
-		SearchPostFields SearchFields { get; init; }
+		SearchPostField SearchFields { get; init; }
 
 		/// <summary>
 		/// Search text comparison (should normally be <see cref="Compare.Equal"/> or <see cref="Compare.Like"/>)

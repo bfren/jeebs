@@ -13,23 +13,23 @@ namespace Jeebs.WordPress.Data.Enums.SearchPostFields_Tests
 			// Arrange
 
 			// Act
-			var result = (SearchPostFields)0;
+			var result = (SearchPostField)0;
 
 			// Assert
-			Assert.Equal(SearchPostFields.None, result);
+			Assert.Equal(SearchPostField.None, result);
 		}
 
 		[Theory]
-		[InlineData(SearchPostFields.Title)]
-		[InlineData(SearchPostFields.Slug)]
-		[InlineData(SearchPostFields.Content)]
-		[InlineData(SearchPostFields.Excerpt)]
-		public void Matches_All_Fields(SearchPostFields field)
+		[InlineData(SearchPostField.Title)]
+		[InlineData(SearchPostField.Slug)]
+		[InlineData(SearchPostField.Content)]
+		[InlineData(SearchPostField.Excerpt)]
+		public void Matches_All_Fields(SearchPostField field)
 		{
 			// Arrange
 
 			// Act
-			var result = SearchPostFields.All & field;
+			var result = SearchPostField.All & field;
 
 			// Assert
 			Assert.Equal(field, result);

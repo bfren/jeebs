@@ -27,7 +27,7 @@ namespace Jeebs.WordPress.Data
 			public string? SearchText { get; init; }
 
 			/// <inheritdoc/>
-			public SearchPostFields SearchFields { get; init; } = SearchPostFields.All;
+			public SearchPostField SearchFields { get; init; } = SearchPostField.All;
 
 			/// <inheritdoc/>
 			public Compare SearchComparison { get; init; } = Compare.Like;

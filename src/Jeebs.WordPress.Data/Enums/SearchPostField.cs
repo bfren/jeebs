@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Enums
 	/// Search Post Fields
 	/// </summary>
 	[Flags]
-	public enum SearchPostFields
+	public enum SearchPostField
 	{
 		/// <summary>
 		/// Search nothing

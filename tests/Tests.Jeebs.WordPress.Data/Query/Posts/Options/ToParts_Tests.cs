@@ -81,7 +81,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var fields = SearchPostFields.Excerpt;
+			var fields = SearchPostField.Excerpt;
 			var cmp = Compare.Like;
 			var text = F.Rnd.Str;
 			var opt = options with

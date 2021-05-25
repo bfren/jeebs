@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text;
 using Jeebs.Data;
+using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -48,7 +49,7 @@ namespace Jeebs.WordPress.Data
 				AddWhere(parts, T.Post, p => p.Status, Compare.Equal, status);
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereSearch(QueryParts parts, SearchPostFields fields, Compare cmp, string? text)
+			public Option<QueryParts> AddWhereSearch(QueryParts parts, SearchPostField fields, Compare cmp, string? text)
 			{
 				// If there isn't any search text, don't do anything
 				if (text is null)
@@ -56,34 +57,29 @@ namespace Jeebs.WordPress.Data
 					return parts;
 				}
 
-				// Create objects
+				// Create clause
 				var clause = new StringBuilder();
 
 				// Trim search text
 				var search = text.Trim();
 
-				// Set comparison operator and modify search string accordingly
-				var comparison = "=";
-				if (cmp == Compare.Like)
-				{
-					// Change the comparison
-					comparison = "LIKE";
+				// Get comparison operator
+				var comparison = cmp.ToOperator();
 
-					// If % has not already been added to the search string, add it
-					if (!search.Contains("%", StringComparison.CurrentCulture))
-					{
-						search = $"%{search}%";
-					}
+				// If % has not already been added to the search string, add it
+				if (cmp == Compare.Like && !search.Contains("%", StringComparison.CurrentCulture))
+				{
+					search = $"%{search}%";
 				}
 
 				// Search title
-				if ((fields & SearchPostFields.Title) != 0)
+				if ((fields & SearchPostField.Title) != 0)
 				{
 					clause.Append($"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
 				}
 
 				// Search slug
-				if ((fields & SearchPostFields.Slug) != 0)
+				if ((fields & SearchPostField.Slug) != 0)
 				{
 					if (clause.Length > 0)
 					{
@@ -94,7 +90,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Search content
-				if ((fields & SearchPostFields.Content) != 0)
+				if ((fields & SearchPostField.Content) != 0)
 				{
 					if (clause.Length > 0)
 					{
@@ -105,7 +101,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Search excerpt
-				if ((fields & SearchPostFields.Excerpt) != 0)
+				if ((fields & SearchPostField.Excerpt) != 0)
 				{
 					if (clause.Length > 0)
 					{
