@@ -63,10 +63,8 @@ namespace Jeebs.WordPress.Data
 				// Trim search text
 				var search = text.Trim();
 
-				// Get comparison operator
+				// Get comparison operator - if it's LIKE and % has not already been added to the search string, add it
 				var comparison = cmp.ToOperator();
-
-				// If % has not already been added to the search string, add it
 				if (cmp == Compare.Like && !search.Contains("%", StringComparison.CurrentCulture))
 				{
 					search = $"%{search}%";
@@ -166,7 +164,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Setup variables
-				var taxonomyWhere = string.Empty;
+				var taxonomyWhere = new StringBuilder();
 				var taxonomyNameIndex = 0;
 				var taxonomyParameters = new QueryParameters();
 
@@ -183,9 +181,9 @@ namespace Jeebs.WordPress.Data
 				foreach (var taxonomy in grouped)
 				{
 					// Add AND if this is not the first conditional clause
-					if (!string.IsNullOrEmpty(taxonomyWhere))
+					if (taxonomyWhere.Length > 0)
 					{
-						taxonomyWhere += " AND ";
+						taxonomyWhere.Append(" AND ");
 					}
 
 					// Name of the taxonomy parameter
@@ -193,12 +191,14 @@ namespace Jeebs.WordPress.Data
 					taxonomyParameters.Add(taxonomyNameParameter, taxonomy.Name);
 
 					// Add SQL commands to lookup taxonomy terms
-					var subQuery = "SELECT COUNT(1) ";
-					subQuery += $"FROM {__(T.TermRelationship)} ";
-					subQuery += $"INNER JOIN {__(T.TermTaxonomy)} ON {__(T.TermRelationship, tr => tr.TermTaxonomyId)} = {__(T.TermTaxonomy, tx => tx.TermTaxonomyId)} ";
-					subQuery += $"WHERE {__(T.TermTaxonomy, tx => tx.Taxonomy)} = {taxonomyNameParameter} ";
-					subQuery += $"AND {__(T.TermRelationship, tr => tr.PostId)} = {__(T.Post, p => p.PostId)} ";
-					subQuery += $"AND {__(T.TermTaxonomy, tx => tx.TermId)} IN (";
+					var subQuery = new StringBuilder(
+						"SELECT COUNT(1) " +
+						$"FROM {__(T.TermRelationship)} " +
+						$"INNER JOIN {__(T.TermTaxonomy)} ON {__(T.TermRelationship, tr => tr.TermTaxonomyId)} = {__(T.TermTaxonomy, tx => tx.TermTaxonomyId)} " +
+						$"WHERE {__(T.TermTaxonomy, tx => tx.Taxonomy)} = {taxonomyNameParameter} " +
+						$"AND {__(T.TermRelationship, tr => tr.PostId)} = {__(T.Post, p => p.PostId)} " +
+						$"AND {__(T.TermTaxonomy, tx => tx.TermId)} IN ("
+					);
 
 					// Add the terms for this taxonomy
 					var taxonomyIdIndex = 0;
@@ -207,13 +207,13 @@ namespace Jeebs.WordPress.Data
 						// Add a comma if this is not the first term
 						if (taxonomyIdIndex > 0)
 						{
-							subQuery += ", ";
+							subQuery.Append(", ");
 						}
 
 						// Add the term parameter and reference
 						var taxonomyIdParameter = $"{taxonomyNameParameter}_{taxonomyIdIndex}";
 
-						subQuery += taxonomyIdParameter;
+						subQuery.Append(taxonomyIdParameter);
 						taxonomyParameters.Add(taxonomyIdParameter, taxonomyId);
 
 						// Increase taxonomy term index
@@ -221,17 +221,17 @@ namespace Jeebs.WordPress.Data
 					}
 
 					// Close IN function
-					subQuery += ")";
+					subQuery.Append(')');
 
 					// Add to sub-query, matching the number of terms
-					taxonomyWhere += $"({subQuery}) = {taxonomy.Ids.Count}";
+					taxonomyWhere.Append($"({subQuery}) = {taxonomy.Ids.Count}");
 
 					// Increase taxonomy name index
 					taxonomyNameIndex++;
 				}
 
 				// Add to main WHERE clause
-				return AddWhereCustom(parts, taxonomyWhere, taxonomyParameters);
+				return AddWhereCustom(parts, taxonomyWhere.ToString(), taxonomyParameters);
 			}
 
 			/// <inheritdoc/>
@@ -244,7 +244,7 @@ namespace Jeebs.WordPress.Data
 				}
 
 				// Setup variables
-				var customFieldWhere = string.Empty;
+				var customFieldWhere = new StringBuilder();
 				var customFieldIndex = 0;
 				var customFieldParameters = new QueryParameters();
 
@@ -252,9 +252,9 @@ namespace Jeebs.WordPress.Data
 				foreach (var (field, cmp, value) in customFields)
 				{
 					// Add AND if this is not the first conditional clause
-					if (!string.IsNullOrEmpty(customFieldWhere))
+					if (customFieldWhere.Length > 0)
 					{
-						customFieldWhere += " AND ";
+						customFieldWhere.Append(" AND ");
 					}
 
 					// Ensure there is a search value
@@ -264,19 +264,11 @@ namespace Jeebs.WordPress.Data
 						continue;
 					}
 
-					// Set comparison operators and modify search string accordingly
-					var customFieldComparison = "=";
-
-					if (cmp == Compare.Like)
+					// Get comparison operator - if it's LIKE and % has not already been added to the search string, add it
+					var customFieldComparison = cmp.ToOperator();
+					if (cmp == Compare.Like && !customFieldSearch.Contains("%", StringComparison.CurrentCulture))
 					{
-						// Change the comparison
-						customFieldComparison = "LIKE";
-
-						// If % has not already been added to the search string, add it
-						if (!customFieldSearch.Contains("%", StringComparison.CurrentCulture))
-						{
-							customFieldSearch = $"%{customFieldSearch}%";
-						}
+						customFieldSearch = $"%{customFieldSearch}%";
 					}
 
 					// Name of the custom field parameter
@@ -286,21 +278,23 @@ namespace Jeebs.WordPress.Data
 					customFieldParameters.Add(customFieldValueParameter, customFieldSearch);
 
 					// Add SQL commands to lookup custom field
-					var subQuery = "SELECT COUNT(1) ";
-					subQuery += $"FROM {__(T.PostMeta)} ";
-					subQuery += $"WHERE {__(T.PostMeta, pm => pm.PostId)} = {__(T.Post, p => p.PostId)} ";
-					subQuery += $"AND {__(T.PostMeta, pm => pm.Key)} = {customFieldKeyParameter} ";
-					subQuery += $"AND {__(T.PostMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter} ";
+					var subQuery = new StringBuilder(
+						"SELECT COUNT(1) " +
+						$"FROM {__(T.PostMeta)} " +
+						$"WHERE {__(T.PostMeta, pm => pm.PostId)} = {__(T.Post, p => p.PostId)} " +
+						$"AND {__(T.PostMeta, pm => pm.Key)} = {customFieldKeyParameter} " +
+						$"AND {__(T.PostMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter}"
+					);
 
 					// Add sub query to where
-					customFieldWhere += $"({subQuery}) = 1";
+					customFieldWhere.Append($"({subQuery}) = 1");
 
 					// Increase custom field index
 					customFieldIndex++;
 				}
 
 				// Add to main WHERE clause
-				return AddWhereCustom(parts, customFieldWhere, customFieldParameters);
+				return AddWhereCustom(parts, customFieldWhere.ToString(), customFieldParameters);
 			}
 		}
 	}
