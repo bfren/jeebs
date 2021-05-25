@@ -7,10 +7,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests
 {
 	public static class Setup
 	{
-		public static Query.TermsPartsBuilder GetBuilder(IExtract extract)
-		{
-			var schema = new WpDbSchema(F.Rnd.Str);
-			return new(extract, schema);
-		}
+		private readonly static WpDbSchema schema =
+			new(F.Rnd.Str);
+
+		public static Query.TermsPartsBuilder GetBuilder(IExtract extract) =>
+			new(extract, schema);
 	}
 }
