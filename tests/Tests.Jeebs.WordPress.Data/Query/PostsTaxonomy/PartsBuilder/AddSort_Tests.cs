@@ -74,7 +74,6 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyPartsBuilder_Tests
 			);
 		}
 
-
 		[Fact]
 		public override void Test00_SortRandom_True_Returns_New_Parts_With_SortRandom_True() =>
 			Test00();

@@ -130,7 +130,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyOptions_Tests
 			};
 
 			// Act
-			options.ToParts<TestModel>();
+			opt.ToParts<TestModel>();
 
 			// Assert
 			builder.ReceivedWithAnyArgs().AddSort(Qp, default, Arg.Any<IImmutableList<(IColumn, SortOrder)>>(), sortBy);
