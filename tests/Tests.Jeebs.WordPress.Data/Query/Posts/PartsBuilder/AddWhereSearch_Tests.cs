@@ -120,18 +120,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 			);
 		}
 
-		public static IEnumerable<object[]> Adds_Comparison_Data()
-		{
-			yield return new object[] { Compare.Equal };
-			yield return new object[] { Compare.NotEqual };
-			yield return new object[] { Compare.Like };
-			yield return new object[] { Compare.LessThan };
-			yield return new object[] { Compare.LessThanOrEqual };
-			yield return new object[] { Compare.MoreThan };
-			yield return new object[] { Compare.MoreThanOrEqual };
-			yield return new object[] { Compare.In };
-			yield return new object[] { Compare.NotIn };
-		}
+		public static IEnumerable<object[]> Adds_Comparison_Data() =>
+			GetCompareValues();
 
 		[Theory]
 		[MemberData(nameof(Adds_Comparison_Data))]

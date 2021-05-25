@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System.Collections.Generic;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
@@ -33,6 +34,19 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 					Assert.Equal(value, x.value);
 				}
 			);
+		}
+
+		public static IEnumerable<object[]> GetCompareValues()
+		{
+			yield return new object[] { Compare.Equal };
+			yield return new object[] { Compare.NotEqual };
+			yield return new object[] { Compare.Like };
+			yield return new object[] { Compare.LessThan };
+			yield return new object[] { Compare.LessThanOrEqual };
+			yield return new object[] { Compare.MoreThan };
+			yield return new object[] { Compare.MoreThanOrEqual };
+			yield return new object[] { Compare.In };
+			yield return new object[] { Compare.NotIn };
 		}
 	}
 }

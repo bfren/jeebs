@@ -2,7 +2,6 @@
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
 using Jeebs.Data;
-using Jeebs.Data.Enums;
 using Jeebs.Data.Querying.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
@@ -66,7 +65,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 		}
 
 		[Fact]
-		public void Single_Taxonomy_Adds_Taxonomy_Parameters()
+		public void Single_Taxonomy_Adds_Parameters()
 		{
 			// Arrange
 			var (builder, v) = Setup();
@@ -142,7 +141,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 		}
 
 		[Fact]
-		public void Multiple_Taxonomies_Adds_Taxonomy_Parameters()
+		public void Multiple_Taxonomies_Adds_Parameters()
 		{
 			// Arrange
 			var (builder, v) = Setup();
