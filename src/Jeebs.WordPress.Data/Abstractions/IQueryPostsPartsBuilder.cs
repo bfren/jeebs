@@ -60,12 +60,14 @@ namespace Jeebs.WordPress.Data
 		/// Add Where Taxonomies
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
+		/// <param name="taxonomies">Taxonomies</param>
 		Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, long id)> taxonomies);
 
 		/// <summary>
 		/// Add Where Custom Fields
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
+		/// <param name="customFields">Custom Fields</param>
 		Option<QueryParts> AddWhereCustomFields(QueryParts parts, IImmutableList<(ICustomField, Compare, object)> customFields);
 	}
 }

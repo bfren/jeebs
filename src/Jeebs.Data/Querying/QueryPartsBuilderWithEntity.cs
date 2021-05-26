@@ -17,6 +17,9 @@ namespace Jeebs.Data.Querying
 	{
 		private readonly IMapper mapper;
 
+		/// <summary>
+		/// Get table map for <typeparamref name="TEntity"/>
+		/// </summary>
 		public virtual Lazy<ITableMap> Map =>
 			new(() =>
 				mapper.GetTableMapFor<TEntity>().Unwrap(r =>

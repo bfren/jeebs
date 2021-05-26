@@ -3,6 +3,9 @@
 
 namespace Jeebs.WordPress.Data.Enums
 {
+	/// <summary>
+	/// Sort Options for Taxonomy lists
+	/// </summary>
 	public enum TaxonomySort
 	{
 		/// <summary>
