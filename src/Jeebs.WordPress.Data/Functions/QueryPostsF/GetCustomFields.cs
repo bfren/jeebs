@@ -28,7 +28,7 @@ namespace F.WordPressF.DataF
 			var customFields = customFieldsCache.GetOrAdd(
 				typeof(TModel),
 				type => from cf in type.GetProperties()
-						where cf.PropertyType.Implements<ICustomField>()
+						where cf.PropertyType.IsAssignableFrom(typeof(ICustomField))
 						select cf
 			);
 

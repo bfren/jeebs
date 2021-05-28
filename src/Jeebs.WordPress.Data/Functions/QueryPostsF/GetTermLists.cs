@@ -34,7 +34,7 @@ namespace F.WordPressF.DataF
 			// If there aren't any return an empty list
 			if (!taxonomies.Any())
 			{
-				return new List<PropertyInfo>();
+				return new();
 			}
 
 			return taxonomies.ToList();
