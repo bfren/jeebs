@@ -21,7 +21,7 @@ namespace F.WordPressF.DataF
 		/// Get Term Lists for specified model
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
-		private static List<PropertyInfo> GetTermLists<TModel>()
+		internal static List<PropertyInfo> GetTermLists<TModel>()
 		{
 			// Get from or Add to the cache
 			var taxonomies = termListsCache.GetOrAdd(
