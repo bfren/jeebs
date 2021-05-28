@@ -30,6 +30,7 @@ namespace F.WordPressF.DataF
 				typeof(TModel),
 				type => from c in type.GetProperties()
 						where c.Name == nameof(WpPostEntity.Content)
+						&& c.PropertyType == typeof(string)
 						select c
 			);
 
@@ -39,13 +40,15 @@ namespace F.WordPressF.DataF
 				return None<PropertyInfo, Msg.ContentPropertyNotFoundMsg<TModel>>();
 			}
 
+			// Return single property
+			// There cannot be more than one because the property is found by name, which must be unique
 			return content.Single();
 		}
 
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
-			/// <summary>Content property not found on entity</summary>
+			/// <summary>Content property not found on model</summary>
 			/// <typeparam name="T">Post Model type</typeparam>
 			public sealed record ContentPropertyNotFoundMsg<T> : IMsg { }
 		}
