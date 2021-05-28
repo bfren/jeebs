@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs;
@@ -25,6 +26,12 @@ namespace F.WordPressF.DataF
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
+			// If there are no posts, do nothing
+			if (!posts.Any())
+			{
+				return Return(posts).AsTask;
+			}
+
 			// Only proceed if there are custom fields, and a meta property for this model
 			var fields = GetCustomFields<TModel>();
 			if (fields.Count == 0)

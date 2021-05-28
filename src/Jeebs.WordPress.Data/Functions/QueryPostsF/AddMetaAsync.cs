@@ -23,18 +23,27 @@ namespace F.WordPressF.DataF
 		/// <param name="posts">Posts</param>
 		internal static Task<Option<TList>> AddMetaAsync<TList, TModel>(IWpDb db, TList posts)
 			where TList : IEnumerable<TModel>
-			where TModel : IWithId<WpPostId> =>
-			GetMetaDictionary<TModel>()
-			.SwitchAsync(
-				some: x =>
-					from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, opt => opt with
-					{
-						PostIds = posts.Select(p => p.Id).ToImmutableList()
-					})
-					from withMeta in SetMeta(posts, postMeta.ToList(), x)
-					select posts,
-				none: Return(posts)
-			);
+			where TModel : IWithId<WpPostId>
+		{
+			// If there are no posts, do nothing
+			if (!posts.Any())
+			{
+				return Return(posts).AsTask;
+			}
+
+			// Get Meta values
+			return GetMetaDictionary<TModel>()
+				.SwitchAsync(
+					some: x =>
+						from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, opt => opt with
+						{
+							PostIds = posts.Select(p => p.Id).ToImmutableList()
+						})
+						from withMeta in SetMeta(posts, postMeta.ToList(), x)
+						select posts,
+					none: Return(posts)
+				);
+		}
 
 		/// <summary>
 		/// Set meta dictionary property for each post
@@ -48,7 +57,7 @@ namespace F.WordPressF.DataF
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
-			if (postsMeta.Count > 0)
+			if (posts.Any() && postsMeta.Count > 0)
 			{
 				// Add meta to each post
 				foreach (var post in posts)

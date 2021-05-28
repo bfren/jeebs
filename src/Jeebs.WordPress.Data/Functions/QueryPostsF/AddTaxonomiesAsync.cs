@@ -26,6 +26,12 @@ namespace F.WordPressF.DataF
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
+			// If there are no posts, do nothing
+			if (!posts.Any())
+			{
+				return Return(posts).AsTask;
+			}
+
 			// Only proceed if there is at least one term list in this model
 			var termLists = GetTermLists<TModel>();
 			if (termLists.Count == 0)

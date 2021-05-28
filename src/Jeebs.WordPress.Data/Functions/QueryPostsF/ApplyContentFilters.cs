@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
@@ -23,25 +24,18 @@ namespace F.WordPressF.DataF
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
-			// If there are no filters, do nothing
-			if (filters.Length == 0)
+			// If there are no posts or filters, do nothing
+			if (!posts.Any() || filters.Length == 0)
 			{
 				return posts;
 			}
 
 			// Post content field is required as we are expected to apply content filters
-			return GetPostContentInfo<TModel>() switch
-			{
-				Some<Content<TModel>> x =>
-					Return(posts)
-						.Map(
-							y => ExecuteContentFilters(y, x.Value, filters),
-							e => new Msg.ApplyContentFiltersExceptionMsg<TModel>(e)
-						),
-
-				_ =>
-					None<TList, Msg.RequiredContentPropertyNotFoundMsg<TModel>>()
-			};
+			return GetPostContentInfo<TModel>()
+				.Map(
+					x => ExecuteContentFilters(posts, x, filters),
+					e => new Msg.ApplyContentFiltersExceptionMsg<TModel>(e)
+				);
 		}
 
 		/// <summary>Messages</summary>
