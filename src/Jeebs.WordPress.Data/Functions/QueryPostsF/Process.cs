@@ -19,7 +19,8 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="db">IWpDb</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> Process<TList, TModel>(IWpDb db, TList posts)
+		/// <param name="filters">Optional content filters</param>
+		internal static Task<Option<TList>> Process<TList, TModel>(IWpDb db, TList posts, params IContentFilter[] filters)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
@@ -35,6 +36,10 @@ namespace F.WordPressF.DataF
 				)
 				.BindAsync(
 					x => AddTaxonomiesAsync<TList, TModel>(db, x)
+				)
+				.SwitchIfAsync(
+					_ => filters.Length > 0,
+					ifTrue: x => ApplyContentFilters<TList, TModel>(x, filters)
 				);
 		}
 	}

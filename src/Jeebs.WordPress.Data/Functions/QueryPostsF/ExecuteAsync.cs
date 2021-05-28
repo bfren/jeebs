@@ -37,10 +37,11 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, long, Query.GetPostsOptions)"/>
+		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, long, Query.GetPostsOptions, IContentFilter[])"/>
 		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
-			Query.GetPostsOptions opt
+			Query.GetPostsOptions opt,
+			params IContentFilter[] filters
 		)
 			where TModel : IWithId<WpPostId>
 		{
@@ -55,7 +56,7 @@ namespace F.WordPressF.DataF
 					x => x.Count() switch
 					{
 						> 0 =>
-							Process<IEnumerable<TModel>, TModel>(db, x),
+							Process<IEnumerable<TModel>, TModel>(db, x, filters),
 
 						_ =>
 							Return(x).AsTask
@@ -70,10 +71,12 @@ namespace F.WordPressF.DataF
 		/// <param name="db">IWpDb</param>
 		/// <param name="page">Page number</param>
 		/// <param name="opt">Function to return query options</param>
+		/// <param name="filters">Optional content filters to apply</param>
 		internal static Task<Option<IPagedList<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			long page,
-			Query.GetPostsOptions opt
+			Query.GetPostsOptions opt,
+			params IContentFilter[] filters
 		)
 			where TModel : IWithId<WpPostId>
 		{
@@ -88,7 +91,7 @@ namespace F.WordPressF.DataF
 					x => x switch
 					{
 						PagedList<TModel> when x.Count > 0 =>
-							Process<IPagedList<TModel>, TModel>(db, x),
+							Process<IPagedList<TModel>, TModel>(db, x, filters),
 
 						PagedList<TModel> =>
 							Return(x).AsTask,

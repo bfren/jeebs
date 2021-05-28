@@ -92,14 +92,14 @@ namespace Jeebs.WordPress.Data
 		#region Query Methods
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt)
+		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt, params IContentFilter[]filters)
 			where TModel : IWithId<WpPostId> =>
-			QueryPostsF.ExecuteAsync<TModel>(this, opt);
+			QueryPostsF.ExecuteAsync<TModel>(this, opt, filters);
 
 		/// <inheritdoc/>
-		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions opt)
+		public Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions opt, params IContentFilter[] filters)
 			where TModel : IWithId<WpPostId> =>
-			QueryPostsF.ExecuteAsync<TModel>(this, page, opt);
+			QueryPostsF.ExecuteAsync<TModel>(this, page, opt, filters);
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<TModel>>> QueryTermsAsync<TModel>(Query.GetTermsOptions opt)

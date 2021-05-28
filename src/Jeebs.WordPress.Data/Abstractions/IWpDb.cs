@@ -21,8 +21,8 @@ namespace Jeebs.WordPress.Data
 
 		#region Query Methods
 
-		/// <inheritdoc cref="QueryPostsAsync{TModel}(long, Query.GetPostsOptions)"/>
-		Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt)
+		/// <inheritdoc cref="QueryPostsAsync{TModel}(long, Query.GetPostsOptions,IContentFilter[])"/>
+		Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt, params IContentFilter[] filters)
 			where TModel : IWithId<WpPostId>;
 
 		/// <summary>
@@ -30,7 +30,8 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="page">Page number</param>
 		/// <param name="opt">Query options</param>
-		Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions opt)
+		/// <param name="filters">Optional content filters</param>
+		Task<Option<IPagedList<TModel>>> QueryPostsAsync<TModel>(long page, Query.GetPostsOptions opt, params IContentFilter[] filters)
 			where TModel : IWithId<WpPostId>;
 
 		/// <summary>

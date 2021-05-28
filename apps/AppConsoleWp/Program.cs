@@ -9,6 +9,7 @@ using AppConsoleWp.Usa;
 using Jeebs;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.ContentFilters;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using Microsoft.Extensions.DependencyInjection;
@@ -241,6 +242,32 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 				var obj = item.FirstPreached.ValueObj;
 				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
 				log.Debug("  - {FirstId:0000}: {FirstTitle}", obj.TermId, obj.Title);
+			}
+		},
+		none: r => log.Message(r)
+	);
+
+	//
+	// Generate Excerpts
+	//
+
+	Console.WriteLine();
+	log.Debug("== Get Posts with generated excerpt ==");
+	await bcg.Db.QueryPostsAsync<PostModelWithContent>(opt => opt with
+	{
+		SortRandom=true
+	}, GenerateExcerpt.Create())
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No posts found.");
+			}
+
+			foreach (var item in x)
+			{
+				log.Debug("Post {Id:0000}: {@Content}", item.PostId, item.Content);
 			}
 		},
 		none: r => log.Message(r)
