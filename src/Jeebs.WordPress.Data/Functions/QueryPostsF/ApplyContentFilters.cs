@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
@@ -43,48 +42,6 @@ namespace F.WordPressF.DataF
 				_ =>
 					None<TList, Msg.RequiredContentPropertyNotFoundMsg<TModel>>()
 			};
-		}
-
-		/// <summary>
-		/// Apply content filters to each post
-		/// </summary>
-		/// <typeparam name="TList">List type</typeparam>
-		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="content">Content Property for <typeparamref name="TModel"/></param>
-		/// <param name="filters">Content Filters</param>
-		internal static TList ExecuteContentFilters<TList, TModel>(TList posts, Content<TModel> content, IContentFilter[] filters)
-			where TList : IEnumerable<TModel>
-			where TModel : IWithId<WpPostId>
-		{
-			foreach (var post in posts)
-			{
-				// Get post content
-				var postContent = content.Get(post);
-
-				// Apply filters
-				foreach (var filter in filters)
-				{
-					postContent = filter.Execute(postContent);
-				}
-
-				// Set filtered content
-				content.Set(post, postContent);
-			}
-
-			return posts;
-		}
-
-		internal static Option<Content<TModel>> GetPostContentInfo<TModel>()
-			where TModel : IWithId<WpPostId>
-		{
-			return GetPostContent<TModel>().Map(x => new Content<TModel>(x), DefaultHandler);
-		}
-
-		internal class Content<TModel> : PropertyInfo<TModel, string>
-			where TModel : IWithId<WpPostId>
-		{
-			public Content(PropertyInfo info) : base(info) { }
 		}
 
 		/// <summary>Messages</summary>
