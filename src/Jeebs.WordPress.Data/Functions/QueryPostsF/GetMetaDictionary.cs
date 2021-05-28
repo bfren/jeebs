@@ -23,40 +23,29 @@ namespace F.WordPressF.DataF
 		/// Get the Meta Dictionary Info for <typeparamref name="TModel"/>
 		/// </summary>
 		/// <typeparam name="TModel">Post Model type</typeparam>
-		internal static Option<Meta<TModel>> GetMetaDictionary<TModel>() =>
-			GetMetaDictionaryProperty<TModel>()
-			.Map(
-				x => new Meta<TModel>(x),
-				DefaultHandler
-			);
-
-		/// <summary>
-		/// Get the Meta Dictionary Property for <typeparamref name="TModel"/>
-		/// </summary>
-		/// <typeparam name="TModel">Post Model type</typeparam>
-		internal static Option<PropertyInfo> GetMetaDictionaryProperty<TModel>()
+		internal static Option<Meta<TModel>> GetMetaDictionary<TModel>()
 		{
 			// Get from or Add to the cache
 			var metaDictionary = metaDictionaryCache.GetOrAdd(
 				typeof(TModel),
 				type => from m in type.GetProperties()
-						where m.PropertyType.IsEquivalentTo(typeof(MetaDictionary))
+						where m.PropertyType == typeof(MetaDictionary)
 						select m
 			);
+
+			// If MetaDictionary is not defined return none
+			if (!metaDictionary.Any())
+			{
+				return None<Meta<TModel>, Msg.MetaDictionaryPropertyNotFoundMsg<TModel>>();
+			}
 
 			// Throw an error if there are multiple MetaDictionaries
 			if (metaDictionary.Count() > 1)
 			{
-				return None<PropertyInfo, Msg.OnlyOneMetaDictionaryPropertySupportedMsg<TModel>>();
+				return None<Meta<TModel>, Msg.MoreThanOneMetaDictionaryMsg<TModel>>();
 			}
 
-			// If MetaDictionary is not defined return null
-			if (!metaDictionary.Any())
-			{
-				return None<PropertyInfo, Msg.MetaDictionaryPropertyNotFoundMsg<TModel>>();
-			}
-
-			return metaDictionary.Single();
+			return new Meta<TModel>(metaDictionary.Single());
 		}
 
 		/// <summary>
@@ -80,7 +69,7 @@ namespace F.WordPressF.DataF
 
 			/// <summary>Multiple MetaDictionary properties found on <typeparamref name="T"/></summary>
 			/// <typeparam name="T">Post type</typeparam>
-			public sealed record OnlyOneMetaDictionaryPropertySupportedMsg<T> : IMsg { }
+			public sealed record MoreThanOneMetaDictionaryMsg<T> : IMsg { }
 		}
 	}
 }

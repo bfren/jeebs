@@ -1,14 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data.Entities;
-using Microsoft.VisualBasic.FileIO;
 using Xunit;
 using static F.WordPressF.DataF.QueryPostsF;
 
@@ -35,11 +29,11 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			// Arrange
 
 			// Act
-			var result = GetPostContent<ContentPropertyWrongType>();
+			var result = GetPostContent<WithContentPropertyWrongType>();
 
 			// Assert
 			var none = result.AssertNone();
-			Assert.IsType<Msg.ContentPropertyNotFoundMsg<ContentPropertyWrongType>>(none);
+			Assert.IsType<Msg.ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>(none);
 		}
 
 		[Fact]
@@ -58,7 +52,7 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 
 		public sealed record NoContentProperty;
 
-		public sealed record ContentPropertyWrongType(int Content);
+		public sealed record WithContentPropertyWrongType(int Content);
 
 		public sealed record WithContentProperty(string Content);
 	}
