@@ -19,7 +19,7 @@ namespace Jeebs.Mvc.Models
 		/// <summary>
 		/// List of top-level menu items
 		/// </summary>
-		public List<MenuItem> Items { get; set; } = new List<MenuItem>();
+		public List<MenuItem> Items { get; set; } = new();
 
 		/// <summary>
 		/// Use a UrlHelper object to get simple menu items
@@ -32,12 +32,7 @@ namespace Jeebs.Mvc.Models
 			{
 				if (GetUri(url, item) is string uri)
 				{
-					yield return new MenuItemSimple
-					{
-						Guid = Guid.NewGuid(),
-						Text = item.Text ?? item.Controller,
-						Url = uri
-					};
+					yield return new MenuItemSimple(Guid.NewGuid(), item.Text ?? item.Controller, uri);
 				}
 			}
 		}

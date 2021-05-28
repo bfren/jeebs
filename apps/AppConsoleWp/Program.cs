@@ -154,11 +154,12 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Category taxonomy ==");
+	const long countAtLeast = 3;
+	log.Debug("== Get Category taxonomy with at least {CountAtLeast} posts ==", countAtLeast);
 	await usa.Db.QueryTermsAsync<TaxonomyModel>(opt => opt with
 	{
 		Taxonomy = Taxonomy.PostCategory,
-		CountAtLeast = 3
+		CountAtLeast = countAtLeast
 	})
 	.AuditAsync(
 		some: x =>

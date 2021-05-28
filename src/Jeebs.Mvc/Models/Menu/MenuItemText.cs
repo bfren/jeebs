@@ -6,7 +6,7 @@ namespace Jeebs.Mvc.Models
 	/// <summary>
 	/// MenuItem Text
 	/// </summary>
-	public class MenuItemText : MenuItem
+	public record MenuItemText : MenuItem
 	{
 		/// <summary>
 		/// Set IsLink to be false
