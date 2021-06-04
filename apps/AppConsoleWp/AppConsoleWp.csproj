@@ -1,16 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<None Remove="appsettings.json" />
 		<None Remove="jeebsconfig-secrets.json" />
 		<None Remove="jeebsconfig.json" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Content Include="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -22,7 +18,6 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Services\Jeebs.Services.csproj" />
@@ -33,5 +28,4 @@
 			<UserProperties jeebsconfig_1json__JsonSchema="..\..\src\Jeebs.Config\schema.json" />
 		</VisualStudio>
 	</ProjectExtensions>
-
 </Project>
