@@ -3,6 +3,6 @@
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
+		<ProjectReference Include="..\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 	</ItemGroup>
 </Project>

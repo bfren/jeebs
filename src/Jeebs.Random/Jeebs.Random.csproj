@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <RootNamespace>F</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>F</RootNamespace>
+	</PropertyGroup>
 	<PropertyGroup>
 		<LongWordListFile>eff-long-word-list.txt</LongWordListFile>
 		<LongWordListPath>$([MSBuild]::GetPathOfFileAbove('$(LongWordListFile)'))</LongWordListPath>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="eff-long-word-list.txt" />
+		<None Remove="eff-long-word-list.txt" />
 	</ItemGroup>
 	<ItemGroup Label="Embed Long Word List">
 		<EmbeddedResource Include="$(LongWordListPath)" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
+		<ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
 	</ItemGroup>
 </Project>

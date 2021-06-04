@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
-  </ItemGroup>
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj">
 			<PrivateAssets>Jeebs.Auth.Data.Entities</PrivateAssets>
 		</ProjectReference>
-    <ProjectReference Include="..\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
-    <ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
-  </ItemGroup>
+		<ProjectReference Include="..\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
+		<ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
+	</ItemGroup>
 </Project>

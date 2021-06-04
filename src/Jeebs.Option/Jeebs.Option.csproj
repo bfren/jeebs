@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <RootNamespace>Jeebs</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>Jeebs</RootNamespace>
+	</PropertyGroup>
 	<!-- Make internals visible to all Test projects -->
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
