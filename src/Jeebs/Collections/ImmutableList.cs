@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +92,10 @@ namespace Jeebs
 
 			return new ImmutableList<T>(newList);
 		}
+
+		/// <inheritdoc/>
+		public IImmutableList<T> Filter(Func<T, bool> predicate) =>
+			new ImmutableList<T>(List.Where(predicate));
 
 		/// <inheritdoc/>
 		public IEnumerator<T> GetEnumerator() =>

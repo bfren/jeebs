@@ -221,6 +221,16 @@ namespace Jeebs.WordPress
 				throw new NotImplementedException();
 			}
 
+			/// <summary>
+			/// Old Filter for compatibility
+			/// </summary>
+			/// <param name="predicate"></param>
+			/// <returns></returns>
+			public IImmutableList<T> Filter(Func<T, bool> predicate)
+			{
+				throw new NotImplementedException();
+			}
+
 #pragma warning restore RCS1079 // Throwing of new NotImplementedException.
 
 			#endregion

@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using System.Collections.Generic;
 
 namespace Jeebs
@@ -59,5 +60,11 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="collection">Collection of items to add</param>
 		IImmutableList<T> WithRange(params T[] collection);
+
+		/// <summary>
+		/// Filter the list based on <paramref name="predicate"/>
+		/// </summary>
+		/// <param name="predicate">Item predicate - if true will be included</param>
+		IImmutableList<T> Filter(Func<T, bool> predicate);
 	}
 }
