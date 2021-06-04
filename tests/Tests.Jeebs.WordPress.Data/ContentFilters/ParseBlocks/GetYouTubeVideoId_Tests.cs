@@ -52,5 +52,18 @@ namespace Jeebs.WordPress.Data.ContentFilters.ParseBlocks_Tests
 			// Assert
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		public void Incorrect_Url_Returns_Null()
+		{
+			// Arrange
+			var uri = new Uri($"https://{F.Rnd.Str}.com");
+
+			// Act
+			var result = ParseBlocks.GetYouTubeVideoId(uri);
+
+			// Assert
+			Assert.Null(result);
+		}
 	}
 }

@@ -9,7 +9,7 @@ namespace F
 	public static partial class OptionF
 	{
 		/// <summary>
-		/// Run <paramref name="ifSome"/> to type <typeparamref name="U"/> if <paramref name="option"/> is a <see cref="Some{T}"/>,
+		/// Run <paramref name="ifSome"/> if <paramref name="option"/> is a <see cref="Some{T}"/>,
 		/// and returns the original <paramref name="option"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
