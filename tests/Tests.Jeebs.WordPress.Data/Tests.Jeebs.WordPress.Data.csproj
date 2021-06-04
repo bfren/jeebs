@@ -21,5 +21,6 @@
 		<ProjectReference Include="..\..\src\Jeebs.Random\Jeebs.Random.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj" />
 		<ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
+		<ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
 	</ItemGroup>
 </Project>

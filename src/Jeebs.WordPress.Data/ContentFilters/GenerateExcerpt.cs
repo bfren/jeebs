@@ -34,10 +34,10 @@ namespace Jeebs.WordPress.Data.ContentFilters
 				}
 
 				// Strip out square brackets
-				var squareBrackets1 = new Regex(@"\[(\w+) (.*)\](.*)(\[\/(\1)\])", RegexOptions.Multiline);
+				var squareBrackets1 = new Regex(@"\[(\w+) *(.*)\](.*)(\[\/(\1)\])", RegexOptions.Singleline);
 				content = squareBrackets1.Replace(content, " ");
 
-				var squareBrackets2 = new Regex(@"\[(\w+) (.*)\]", RegexOptions.Multiline);
+				var squareBrackets2 = new Regex(@"\[(\w+) *(.*)\]", RegexOptions.Singleline);
 				content = squareBrackets2.Replace(content, " ");
 
 				// Strip out new lines
