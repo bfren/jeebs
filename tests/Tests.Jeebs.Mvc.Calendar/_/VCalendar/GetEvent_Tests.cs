@@ -19,17 +19,17 @@ namespace Jeebs.Mvc.Calendar.VCalendar_Tests
 			var uid = F.Rnd.Str;
 			var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
 			var expected =
-				"BEGIN:VEVENT\r\n" +
-				$"UID:{uid}\r\n" +
-				$"CREATED:{VCalendar.Format(DateTime.Now)}\r\n" +
-				$"LAST-MODIFIED:{VCalendar.Format(lastModified)}\r\n" +
-				$"DTSTAMP:{VCalendar.Format(lastModified)}\r\n" +
-				$"SUMMARY:{e.Summary}\r\n" +
-				$"DESCRIPTION:{e.Description}\r\n" +
-				$"LOCATION:{e.Location}\r\n" +
-				$"DTSTART;TZID={tzid}:{VCalendar.Format(e.Start)}\r\n" +
-				$"DTEND;TZID={tzid}:{VCalendar.Format(e.End)}\r\n" +
-				"END:VEVENT\r\n";
+				$"BEGIN:VEVENT{Environment.NewLine}" +
+				$"UID:{uid}{Environment.NewLine}" +
+				$"CREATED:{VCalendar.Format(DateTime.Now)}{Environment.NewLine}" +
+				$"LAST-MODIFIED:{VCalendar.Format(lastModified)}{Environment.NewLine}" +
+				$"DTSTAMP:{VCalendar.Format(lastModified)}{Environment.NewLine}" +
+				$"SUMMARY:{e.Summary}{Environment.NewLine}" +
+				$"DESCRIPTION:{e.Description}{Environment.NewLine}" +
+				$"LOCATION:{e.Location}{Environment.NewLine}" +
+				$"DTSTART;TZID={tzid}:{VCalendar.Format(e.Start)}{Environment.NewLine}" +
+				$"DTEND;TZID={tzid}:{VCalendar.Format(e.End)}{Environment.NewLine}" +
+				$"END:VEVENT{Environment.NewLine}";
 
 			// Act
 			var result = VCalendar.GetEvent(lastModified, tzid, uid, e);
@@ -47,16 +47,16 @@ namespace Jeebs.Mvc.Calendar.VCalendar_Tests
 			var uid = F.Rnd.Str;
 			var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, true, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
 			var expected =
-				"BEGIN:VEVENT\r\n" +
-				$"UID:{uid}\r\n" +
-				$"CREATED:{VCalendar.Format(DateTime.Now)}\r\n" +
-				$"LAST-MODIFIED:{VCalendar.Format(lastModified)}\r\n" +
-				$"DTSTAMP:{VCalendar.Format(lastModified)}\r\n" +
-				$"SUMMARY:{e.Summary}\r\n" +
-				$"DESCRIPTION:{e.Description}\r\n" +
-				$"LOCATION:{e.Location}\r\n" +
-				$"DTSTART;TZID={tzid};VALUE=DATE:{VCalendar.Format(e.Start, false)}\r\n" +
-				"END:VEVENT\r\n";
+				$"BEGIN:VEVENT{Environment.NewLine}" +
+				$"UID:{uid}{Environment.NewLine}" +
+				$"CREATED:{VCalendar.Format(DateTime.Now)}{Environment.NewLine}" +
+				$"LAST-MODIFIED:{VCalendar.Format(lastModified)}{Environment.NewLine}" +
+				$"DTSTAMP:{VCalendar.Format(lastModified)}{Environment.NewLine}" +
+				$"SUMMARY:{e.Summary}{Environment.NewLine}" +
+				$"DESCRIPTION:{e.Description}{Environment.NewLine}" +
+				$"LOCATION:{e.Location}{Environment.NewLine}" +
+				$"DTSTART;TZID={tzid};VALUE=DATE:{VCalendar.Format(e.Start, false)}{Environment.NewLine}" +
+				$"END:VEVENT{Environment.NewLine}";
 
 			// Act
 			var result = VCalendar.GetEvent(lastModified, tzid, uid, e);

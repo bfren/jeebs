@@ -24,51 +24,51 @@ namespace Jeebs.Mvc.Calendar.VCalendar_Tests
 			var domain = F.Rnd.Str;
 			var vcal = new VCalendar(calendar, tzid);
 			var expected =
-				"BEGIN:VCALENDAR\r\n" +
-				"VERSION:2.0\r\n" +
-				"PRODID:-//bcg|design//NONSGML Jeebs.Mvc.Calendar//EN\r\n" +
-				"CALSCALE:GREGORIAN\r\n" +
-				"X-PUBLISHED-TTL:PT1H\r\n" +
-				"BEGIN:VTIMEZONE\r\n" +
-				"TZID:Europe/London\r\n" +
-				"BEGIN:STANDARD\r\n" +
-				"TZNAME:GMT\r\n" +
-				"DTSTART:19710101T020000\r\n" +
-				"TZOFFSETFROM:+0100\r\n" +
-				"TZOFFSETTO:+0000\r\n" +
-				"RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU\r\n" +
-				"END:STANDARD\r\n" +
-				"BEGIN:DAYLIGHT\r\n" +
-				"TZNAME:BST\r\n" +
-				"DTSTART:19710101T010000\r\n" +
-				"TZOFFSETFROM:+0000\r\n" +
-				"TZOFFSETTO:+0100\r\n" +
-				"RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU\r\n" +
-				"END:DAYLIGHT\r\n" +
-				"END:VTIMEZONE\r\n" +
-				"BEGIN:VEVENT\r\n" +
-				$"UID:{lastModifiedStr}-000000@{domain}\r\n" +
-				$"CREATED:{createdStr}\r\n" +
-				$"LAST-MODIFIED:{lastModifiedStr}\r\n" +
-				$"DTSTAMP:{lastModifiedStr}\r\n" +
-				$"SUMMARY:{e0.Summary}\r\n" +
-				$"DESCRIPTION:{e0.Description}\r\n" +
-				$"LOCATION:{e0.Location}\r\n" +
-				$"DTSTART;TZID={tzid}:{VCalendar.Format(e0.Start)}\r\n" +
-				$"DTEND;TZID={tzid}:{VCalendar.Format(e0.End)}\r\n" +
-				"END:VEVENT\r\n" +
-				"BEGIN:VEVENT\r\n" +
-				$"UID:{lastModifiedStr}-000001@{domain}\r\n" +
-				$"CREATED:{createdStr}\r\n" +
-				$"LAST-MODIFIED:{lastModifiedStr}\r\n" +
-				$"DTSTAMP:{lastModifiedStr}\r\n" +
-				$"SUMMARY:{e1.Summary}\r\n" +
-				$"DESCRIPTION:{e1.Description}\r\n" +
-				$"LOCATION:{e1.Location}\r\n" +
-				$"DTSTART;TZID={tzid}:{VCalendar.Format(e1.Start)}\r\n" +
-				$"DTEND;TZID={tzid}:{VCalendar.Format(e1.End)}\r\n" +
-				"END:VEVENT\r\n" +
-				"END:VCALENDAR\r\n";
+				$"BEGIN:VCALENDAR{Environment.NewLine}" +
+				$"VERSION:2.0{Environment.NewLine}" +
+				$"PRODID:-//bcg|design//NONSGML Jeebs.Mvc.Calendar//EN{Environment.NewLine}" +
+				$"CALSCALE:GREGORIAN{Environment.NewLine}" +
+				$"X-PUBLISHED-TTL:PT1H{Environment.NewLine}" +
+				$"BEGIN:VTIMEZONE{Environment.NewLine}" +
+				$"TZID:Europe/London{Environment.NewLine}" +
+				$"BEGIN:STANDARD{Environment.NewLine}" +
+				$"TZNAME:GMT{Environment.NewLine}" +
+				$"DTSTART:19710101T020000{Environment.NewLine}" +
+				$"TZOFFSETFROM:+0100{Environment.NewLine}" +
+				$"TZOFFSETTO:+0000{Environment.NewLine}" +
+				$"RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU{Environment.NewLine}" +
+				$"END:STANDARD{Environment.NewLine}" +
+				$"BEGIN:DAYLIGHT{Environment.NewLine}" +
+				$"TZNAME:BST{Environment.NewLine}" +
+				$"DTSTART:19710101T010000{Environment.NewLine}" +
+				$"TZOFFSETFROM:+0000{Environment.NewLine}" +
+				$"TZOFFSETTO:+0100{Environment.NewLine}" +
+				$"RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU{Environment.NewLine}" +
+				$"END:DAYLIGHT{Environment.NewLine}" +
+				$"END:VTIMEZONE{Environment.NewLine}" +
+				$"BEGIN:VEVENT{Environment.NewLine}" +
+				$"UID:{lastModifiedStr}-000000@{domain}{Environment.NewLine}" +
+				$"CREATED:{createdStr}{Environment.NewLine}" +
+				$"LAST-MODIFIED:{lastModifiedStr}{Environment.NewLine}" +
+				$"DTSTAMP:{lastModifiedStr}{Environment.NewLine}" +
+				$"SUMMARY:{e0.Summary}{Environment.NewLine}" +
+				$"DESCRIPTION:{e0.Description}{Environment.NewLine}" +
+				$"LOCATION:{e0.Location}{Environment.NewLine}" +
+				$"DTSTART;TZID={tzid}:{VCalendar.Format(e0.Start)}{Environment.NewLine}" +
+				$"DTEND;TZID={tzid}:{VCalendar.Format(e0.End)}{Environment.NewLine}" +
+				$"END:VEVENT{Environment.NewLine}" +
+				$"BEGIN:VEVENT{Environment.NewLine}" +
+				$"UID:{lastModifiedStr}-000001@{domain}{Environment.NewLine}" +
+				$"CREATED:{createdStr}{Environment.NewLine}" +
+				$"LAST-MODIFIED:{lastModifiedStr}{Environment.NewLine}" +
+				$"DTSTAMP:{lastModifiedStr}{Environment.NewLine}" +
+				$"SUMMARY:{e1.Summary}{Environment.NewLine}" +
+				$"DESCRIPTION:{e1.Description}{Environment.NewLine}" +
+				$"LOCATION:{e1.Location}{Environment.NewLine}" +
+				$"DTSTART;TZID={tzid}:{VCalendar.Format(e1.Start)}{Environment.NewLine}" +
+				$"DTEND;TZID={tzid}:{VCalendar.Format(e1.End)}{Environment.NewLine}" +
+				$"END:VEVENT{Environment.NewLine}" +
+				$"END:VCALENDAR{Environment.NewLine}";
 
 			// Act
 			var result = vcal.ToString(domain);

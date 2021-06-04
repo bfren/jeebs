@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
 
+using System;
 using Xunit;
 
 namespace Jeebs.Mvc.Calendar.VCalendar_Tests
@@ -12,11 +13,11 @@ namespace Jeebs.Mvc.Calendar.VCalendar_Tests
 		{
 			// Arrange
 			var expected =
-				"BEGIN:VCALENDAR\r\n" +
-				"VERSION:2.0\r\n" +
-				"PRODID:-//bcg|design//NONSGML Jeebs.Mvc.Calendar//EN\r\n" +
-				"CALSCALE:GREGORIAN\r\n" +
-				"X-PUBLISHED-TTL:PT1H\r\n";
+				$"BEGIN:VCALENDAR{Environment.NewLine}" +
+				$"VERSION:2.0{Environment.NewLine}" +
+				$"PRODID:-//bcg|design//NONSGML Jeebs.Mvc.Calendar//EN{Environment.NewLine}" +
+				$"CALSCALE:GREGORIAN{Environment.NewLine}" +
+				$"X-PUBLISHED-TTL:PT1H{Environment.NewLine}";
 
 			// Act
 			var result = VCalendar.GetHeader();
