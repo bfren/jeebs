@@ -14,6 +14,7 @@ namespace F.MvcF.CalendarF_Tests
 			var lastModified = Rnd.DateTime;
 			var domain = Rnd.Str;
 			var expected = @$"{lastModified:yyyyMMdd\THHmmss}-000000@{domain}";
+			CalendarF.EventCounter = 0;
 
 			// Act
 			var result = CalendarF.GenerateEventUid(lastModified, domain);
@@ -28,12 +29,13 @@ namespace F.MvcF.CalendarF_Tests
 			// Arrange
 			var lastModified = Rnd.DateTime;
 			var domain = Rnd.Str;
+			CalendarF.EventCounter = 0;
 
 			// Act
 			_ = CalendarF.GenerateEventUid(lastModified, domain);
 
 			// Assert
-			Assert.Equal(1, CalendarF.eventCounter);
+			Assert.Equal(1, CalendarF.EventCounter);
 		}
 	}
 }

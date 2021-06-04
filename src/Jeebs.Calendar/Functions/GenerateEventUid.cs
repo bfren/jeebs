@@ -10,7 +10,7 @@ namespace F.MvcF
 	/// </summary>
 	public static class CalendarF
 	{
-		internal static int eventCounter;
+		internal static int EventCounter { get; set; }
 
 		/// <summary>
 		/// Generate Event UID
@@ -18,6 +18,6 @@ namespace F.MvcF
 		/// <param name="lastModified">Calendar Last Modified</param>
 		/// <param name="domain">Calendar / app Domain</param>
 		public static string GenerateEventUid(DateTime lastModified, string domain) =>
-			@$"{lastModified:yyyyMMdd\THHmmss}-{eventCounter++:000000}@{domain}";
+			@$"{lastModified:yyyyMMdd\THHmmss}-{EventCounter++:000000}@{domain}";
 	}
 }

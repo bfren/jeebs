@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using F.MvcF;
 using Jeebs.Mvc.Calendar.Models;
 using static F.MvcF.CalendarF;
 
@@ -45,6 +46,7 @@ namespace Jeebs.Mvc.Calendar
 			builder.Append(GetTimezone());
 
 			// Add Events
+			EventCounter = 0;
 			foreach (var e in calendar.Events)
 			{
 				var uid = GenerateEventUid(calendar.LastModified, domain);
