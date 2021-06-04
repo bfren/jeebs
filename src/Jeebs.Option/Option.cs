@@ -257,6 +257,18 @@ namespace Jeebs
 
 		#endregion
 
+		#region IfSome
+
+		/// <inheritdoc cref="F.OptionF.IfSome{T}(Option{T}, Action{T})"/>
+		public Option<T> IfSome(Action<T> ifSome) =>
+			F.OptionF.IfSome(this, ifSome);
+
+		/// <inheritdoc cref="F.OptionF.IfSome{T}(Option{T}, Action{T})"/>
+		public Task<Option<T>> IfSomeAsync(Func<T, Task> ifSome) =>
+			F.OptionF.IfSomeAsync(this, ifSome);
+
+		#endregion
+
 		#region Map
 
 		/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler)"/>
