@@ -3,51 +3,48 @@
 
 using System;
 using System.Text.RegularExpressions;
+using static F.JsonF;
 
-namespace Jeebs.WordPress.Data.ContentFilters.Blocks
+namespace Jeebs.WordPress.Data.ContentFilters
 {
-	/// <summary>
-	/// YouTube block
-	/// </summary>
-	internal sealed class YouTube : ParseBlocks.Block
+	public sealed partial class ParseBlocks
 	{
 		/// <summary>
-		/// Output format
+		/// Parse embedded YouTube videos
 		/// </summary>
-		private const string format = @"<div id=""{0}"" class=""hide video-youtube"" data-v=""{1}"">{2}</div>";
-
-		/// <summary>
-		/// Parse content
-		/// </summary>
-		/// <param name="content">Content to parse</param>
-		internal override string Parse(string content)
+		/// <param name="content">Post content</param>
+		internal static string ParseYouTube(string content)
 		{
 			// Get YouTube info
-			var matches = Regex.Matches(content, "<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->", RegexOptions.Singleline);
+			const string pattern = "<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->";
+			var matches = Regex.Matches(content, pattern, RegexOptions.Singleline);
 			if (matches.Count == 0)
 			{
 				return content;
 			}
 
+			// Replacement format
+			const string format = "<div id=\"{0}\" class=\"hide video-youtube\" data-v=\"{1}\">{2}</div>";
+
 			// Parse each match
 			foreach (Match match in matches)
 			{
-				// Info is encoded as JSON
-				var json = match.Groups[2].Value;
-				if (F.JsonF.Deserialise<YouTubeParsed>(json) is Some<YouTubeParsed> youTube)
+				// Info is encoded as JSON so deserialise it first
+				var info = match.Groups[2].Value;
+				Deserialise<YouTubeParsed>(info).IfSome(youTube =>
 				{
 					// Get URI
-					var uri = new Uri(youTube.Value.Url);
+					var uri = new Uri(youTube.Url);
 
 					// Get Video ID and replace content using output format
-					if (GetVideoId(uri) is string videoId)
+					if (GetYouTubeVideoId(uri) is string videoId)
 					{
 						content = content.Replace(
 							match.Value,
 							string.Format(format, F.Rnd.StringF.Get(10), videoId, uri)
 						);
 					}
-				}
+				});
 			}
 
 			// Return parsed content
@@ -59,7 +56,7 @@ namespace Jeebs.WordPress.Data.ContentFilters.Blocks
 		/// Regex comes from https://stackoverflow.com/a/27728417/8199362
 		/// </summary>
 		/// <param name="uri">URI</param>
-		private static string? GetVideoId(Uri uri)
+		internal static string? GetYouTubeVideoId(Uri uri)
 		{
 			var regex = new Regex(@"^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*");
 			var m = regex.Match(uri.AbsoluteUri);
@@ -75,12 +72,7 @@ namespace Jeebs.WordPress.Data.ContentFilters.Blocks
 		/// <summary>
 		/// Used to parse YouTube JSON
 		/// </summary>
-		private class YouTubeParsed
-		{
-			/// <summary>
-			/// YouTube Url
-			/// </summary>
-			public string Url { get; set; } = string.Empty;
-		}
+		/// <param name="Url">YouTube URL</param>
+		private sealed record YouTubeParsed(string Url);
 	}
 }

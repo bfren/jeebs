@@ -4,7 +4,7 @@
 using Jeebs.StringExtensions_Tests;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.ContentFilters.CurlyQuotes_Tests
+namespace Jeebs.WordPress.Data.ContentFilters.CurlQuotes_Tests
 {
 	public class Execute_Tests
 	{
@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Data.ContentFilters.CurlyQuotes_Tests
 			// Arrange
 
 			// Act
-			var result = CurlyQuotes.Create().Execute(input);
+			var result = CurlQuotes.Create().Execute(input);
 
 			// Assert
 			Assert.Equal(expected, result);

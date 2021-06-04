@@ -8,15 +8,15 @@ namespace Jeebs.WordPress.Data.ContentFilters
 	/// <summary>
 	/// Curly Quotes
 	/// </summary>
-	public sealed class CurlyQuotes : ContentFilter
+	public sealed class CurlQuotes : ContentFilter
 	{
 		/// <inheritdoc/>
-		private CurlyQuotes(Func<string, string> filter) : base(filter) { }
+		private CurlQuotes(Func<string, string> filter) : base(filter) { }
 
 		/// <summary>
 		/// Create filter
 		/// </summary>
 		public static ContentFilter Create() =>
-			new CurlyQuotes(content => content.ConvertInnerHtmlQuotes());
+			new CurlQuotes(content => content.ConvertInnerHtmlQuotes());
 	}
 }
