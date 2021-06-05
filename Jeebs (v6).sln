@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Old", "src\Jeebs.WordPress.Old\Jeebs.WordPress.Old.csproj", "{6CACF381-9F0A-41B1-9A14-715491CC6213}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
 		tests\.editorconfig = tests\.editorconfig
@@ -55,8 +53,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppWeb", "apps\AppWeb\AppWeb.csproj", "{1E88CE0B-D46D-4886-9D80-9CC22FE49CB0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppRazor", "apps\AppRazor\AppRazor.csproj", "{324EDD9C-5236-41A5-9253-A4336248FE5C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsoleWordPress", "apps\AppConsoleWordPress\AppConsoleWordPress.csproj", "{52CF9096-6186-48F0-8481-BFC6E4E0CFA4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Apps", "src\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj", "{947F6189-FD20-4230-8B27-71D0953B1438}"
 EndProject
@@ -220,7 +216,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc", "tests\Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Calendar", "src\Jeebs.Calendar\Jeebs.Mvc.Calendar.csproj", "{A8B46561-04F5-475B-AE85-63A04B5C6629}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Mvc.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Mvc.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Mvc.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -228,10 +224,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6CACF381-9F0A-41B1-9A14-715491CC6213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CACF381-9F0A-41B1-9A14-715491CC6213}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CACF381-9F0A-41B1-9A14-715491CC6213}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CACF381-9F0A-41B1-9A14-715491CC6213}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -275,9 +267,6 @@ Global
 		{324EDD9C-5236-41A5-9253-A4336248FE5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{324EDD9C-5236-41A5-9253-A4336248FE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{324EDD9C-5236-41A5-9253-A4336248FE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52CF9096-6186-48F0-8481-BFC6E4E0CFA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52CF9096-6186-48F0-8481-BFC6E4E0CFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52CF9096-6186-48F0-8481-BFC6E4E0CFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{947F6189-FD20-4230-8B27-71D0953B1438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{947F6189-FD20-4230-8B27-71D0953B1438}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{947F6189-FD20-4230-8B27-71D0953B1438}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -487,7 +476,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6CACF381-9F0A-41B1-9A14-715491CC6213} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{57A42A82-B6A3-41FF-8C77-3A0BCFA9A497} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
 		{2C74A640-5088-487E-8B3D-0B8C818EDFCB} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{0B3996E1-B1FF-4037-B3FB-15E0ABE01032} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
@@ -504,7 +492,6 @@ Global
 		{95B72871-8799-43BB-AF07-C2C719BB0118} = {F005B321-074A-4182-869A-5E7E1CE8F9DA}
 		{1E88CE0B-D46D-4886-9D80-9CC22FE49CB0} = {A256449B-4234-43DD-B18F-741D69906712}
 		{324EDD9C-5236-41A5-9253-A4336248FE5C} = {A256449B-4234-43DD-B18F-741D69906712}
-		{52CF9096-6186-48F0-8481-BFC6E4E0CFA4} = {A256449B-4234-43DD-B18F-741D69906712}
 		{947F6189-FD20-4230-8B27-71D0953B1438} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
 		{BD8813AD-C9E3-4B05-A9E0-F044D53AE06F} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{7B521F2C-855B-4296-B02B-880F90E9A0E0} = {BD8813AD-C9E3-4B05-A9E0-F044D53AE06F}
