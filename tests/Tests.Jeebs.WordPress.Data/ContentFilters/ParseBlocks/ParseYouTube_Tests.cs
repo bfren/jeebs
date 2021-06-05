@@ -19,7 +19,7 @@ namespace Jeebs.WordPress.Data.ContentFilters.ParseBlocks_Tests
 
 			yield return new object[]
 			{
-				"<!-- wp:embed {\"url\":\"https://youtu.be/R5OzX-f9ATY\",\"type\":\"video\",\"providerNameSlug\":\"youtube\",\"responsive\":true,\"className\":\"wp-embed-aspect-16-9 wp-has-aspect-ratio\"} --><!-- /wp:embed -->",
+				"<!-- wp:core-embed/youtube {\"url\":\"https://youtu.be/R5OzX-f9ATY\",\"type\":\"video\",\"providerNameSlug\":\"youtube\",\"responsive\":true,\"className\":\"wp-embed-aspect-16-9 wp-has-aspect-ratio\"} --><!-- /wp:core-embed/youtube -->",
 				"R5OzX-f9ATY",
 				"https://youtu.be/R5OzX-f9ATY"
 			};
