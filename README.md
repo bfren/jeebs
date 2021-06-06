@@ -1,12 +1,12 @@
 # Jeebs
 
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/bencgreen/jeebs?include_prereleases) ![GitHub](https://img.shields.io/github/license/bencgreen/jeebs)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/bfren/jeebs?include_prereleases) ![GitHub](https://img.shields.io/github/license/bfren/jeebs)
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bencgreen/jeebs/Publish) ![Publish](https://github.com/bencgreen/jeebs/workflows/Publish/badge.svg)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bfren/jeebs/Publish) ![Publish](https://github.com/bfren/jeebs/workflows/Publish/badge.svg)
 
 Libraries for use in .NET Core projects for rapid application development.
 
-Please [view the wiki](https://github.com/bencgreen/jeebs/wiki) for information on how to use these libraries.
+Please [view the wiki](https://github.com/bfren/jeebs/wiki) for information on how to use these libraries.
 
 ## History
 
@@ -16,15 +16,11 @@ The code in these libraries has been under active development and use for over a
 
 The most recent changes - v5.x - come from a) rewriting the entire codebase to make use of improvements in .NET 5.0, and C# 8 &amp; 9, not least to null handling, and b) a COVID lockdown project of learning to write in F#.  I thought for a while I might completely switch, but I decided I would prefer to bring some of the things I loved about F# into my C# - Jeebs 5 is the result.
 
-## Authors
-
-* [Ben Green](https://github.com/bencgreen)
-
 ## License
 
-> [MIT](https://mit.bcgdesign.com/2013)
+> [MIT](https://mit.bfren.uk/2013)
 
 ## Copyright
 
-> Copyright (c) 2021 Ben Green <https://bcgdesign.com>  
+> Copyright (c) 2013-2021 [bfren.uk](https://bfren.uk)
 > Unless otherwise stated
