@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema",
-	"id": "https://raw.githubusercontent.com/bencgreen/jeebs/main/Libraries/Jeebs.Config/schema.json",
+	"id": "https://raw.githubusercontent.com/bfren/jeebs/main/Libraries/Jeebs.Config/schema.json",
 	"title": "Jeebs Libraries Configuration Settings",
 	"type": "object",
 	"required": [ "jeebs" ],
