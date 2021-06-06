@@ -1,7 +1,7 @@
 ﻿[*.cs]
 
 # Add file header
-file_header_template = Jeebs Test Applications\nCopyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+file_header_template = Jeebs Test Applications\nCopyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 # RCS1090: Add call to 'ConfigureAwait' (or vice versa).
 dotnet_diagnostic.RCS1090.severity = none
