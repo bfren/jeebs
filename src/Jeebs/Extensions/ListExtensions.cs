@@ -16,11 +16,10 @@ namespace Jeebs
 		/// </summary>
 		/// <typeparam name="T">List item type</typeparam>
 		/// <param name="this">List</param>
-		/// <param name="first">Index of first item</param>
-		/// <param name="last">Index of last item</param>
-		public static List<T> GetSlice<T>(this List<T> @this, int first, int last)
+		/// <param name="range">Range of slice to return (exclusive of end element)</param>
+		public static List<T> GetSlice<T>(this List<T> @this, Range range)
 		{
-			var (start, length) = (first..last).GetOffsetAndLength(@this.Count);
+			var (start, length) = range.GetOffsetAndLength(@this.Count);
 			return @this.GetRange(start, length);
 		}
 

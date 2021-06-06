@@ -26,7 +26,7 @@ namespace Jeebs.ListExtensions_Tests
 			var expected = new List<string> { v3, v4 };
 
 			// Act
-			var result = list.GetSlice(3, 5);
+			var result = list.GetSlice(3..5);
 
 			// Assert
 			Assert.Equal(expected, result);
