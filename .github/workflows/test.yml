@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
     -
       name: Prepare - Read Version
-      uses: bencgreen/read-file-action@v1
+      uses: bfren/read-file-action@v1
       with:
         path: ./Version
       id: version
@@ -37,7 +37,7 @@ jobs:
     -
       if: success()
       name: Finish - Success
-      uses: bencgreen/action-slack-notify@master
+      uses: bfren/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Jeebs (GitHub)
@@ -47,7 +47,7 @@ jobs:
     -
       if: failure()
       name: Finish - Failure
-      uses: bencgreen/action-slack-notify@master
+      uses: bfren/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Jeebs (GitHub)
