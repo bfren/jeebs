@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v2
     -
       name: Prepare - Read Version
-      uses: bencgreen/read-file-action@v1
+      uses: bfren/read-file-action@v1
       with:
         path: ./Version
       id: version
@@ -49,20 +49,20 @@ jobs:
     -
       if: success()
       name: Finish - Success
-      uses: bencgreen/action-slack-notify@master
+      uses: bfren/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Jeebs (GitHub)
         SLACK_MESSAGE: Tests Passed
         SLACK_COLOR: good
-        SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
+        SLACK_ICON: https://bfren.uk/img/logo-square-500x500.jpg
     -
       if: failure()
       name: Finish - Failure
-      uses: bencgreen/action-slack-notify@master
+      uses: bfren/action-slack-notify@master
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Jeebs (GitHub)
         SLACK_MESSAGE: Test Failed
         SLACK_COLOR: danger
-        SLACK_ICON: https://bcgdesign.com/img/logo-square-580x580.png
+        SLACK_ICON: https://bfren.uk/img/logo-square-500x500.jpg
