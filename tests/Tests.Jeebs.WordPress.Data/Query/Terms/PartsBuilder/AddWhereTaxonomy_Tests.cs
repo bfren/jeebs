@@ -1,13 +1,11 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Linq;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests.Setup;
 

@@ -1,9 +1,8 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System;
 using Jeebs.Mvc.Calendar.Models;
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Mvc.Calendar.VCalendar_Tests

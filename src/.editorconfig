@@ -1,7 +1,7 @@
 ﻿[*.cs]
 
 # Add file header
-file_header_template = Jeebs Rapid Application Development\nCopyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+file_header_template = Jeebs Rapid Application Development\nCopyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none

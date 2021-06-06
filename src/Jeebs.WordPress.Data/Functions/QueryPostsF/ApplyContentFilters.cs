@@ -1,5 +1,5 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.uk/2013
 
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,6 @@ using System.Linq;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
 
 namespace F.WordPressF.DataF
 {

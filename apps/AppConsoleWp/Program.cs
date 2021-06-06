@@ -1,5 +1,5 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System;
 using System.Linq;
@@ -255,7 +255,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Debug("== Get Posts with generated excerpt ==");
 	await bcg.Db.QueryPostsAsync<PostModelWithContent>(opt => opt with
 	{
-		SortRandom=true
+		SortRandom = true
 	}, GenerateExcerpt.Create())
 	.AuditAsync(
 		some: x =>

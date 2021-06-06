@@ -1,5 +1,5 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.uk/2013
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -92,7 +92,7 @@ namespace Jeebs.WordPress.Data
 		#region Query Methods
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt, params IContentFilter[]filters)
+		public Task<Option<IEnumerable<TModel>>> QueryPostsAsync<TModel>(Query.GetPostsOptions opt, params IContentFilter[] filters)
 			where TModel : IWithId<WpPostId> =>
 			QueryPostsF.ExecuteAsync<TModel>(this, opt, filters);
 

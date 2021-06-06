@@ -1,12 +1,11 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.uk/2013
 
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jeebs;
 using Jeebs.WordPress.Data;
 
 namespace F.WordPressF.DataF

@@ -1,9 +1,8 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bcg|design - licensed under https://mit.bcgdesign.com/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.uk/2013
 
 using System;
 using System.Text;
-using F.MvcF;
 using Jeebs.Mvc.Calendar.Models;
 using static F.MvcF.CalendarF;
 
