@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AppConsoleWp": {
+      "commandName": "Project",
+      "commandLineArgs": "--Jeebs:Logging:MinimumLevel=Debug"
+    },
+    "AppConsoleWp (Verbose)": {
+      "commandName": "Project",
+      "commandLineArgs": "--Jeebs:Logging:MinimumLevel=Verbose"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
+	</ItemGroup>
+</Project>

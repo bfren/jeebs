@@ -1,6 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Apps\Jeebs.Apps.csproj" />
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
-  </ItemGroup>
-</Project>

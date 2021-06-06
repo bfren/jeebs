@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Services\Jeebs.Services.csproj" />
-    <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
-  </ItemGroup>
-</Project>
