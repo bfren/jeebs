@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.Data
 		public override string ValueObj
 		{
 			get =>
-				ValueStr ?? Key;
+				ValueStr ?? string.Empty;
 
 			protected set =>
 				ValueStr = value;
@@ -30,10 +30,10 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc/>
 		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
 		{
-			// If meta contains the key and the value is not null / empty, return it
-			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
+			// If meta contains the key, return it
+			if (meta.TryGetValue(Key, out string? value))
 			{
-				ValueObj = ValueStr = value;
+				ValueStr = value;
 				return True.AsTask;
 			}
 

@@ -27,15 +27,6 @@ namespace Jeebs.WordPress.Data
 		public CustomField(string key, T value) =>
 			(Key, ValueObj) = (key, value);
 
-		/// <summary>
-		/// Create object with specified meta key and value string for testing <see cref="ToString"/>
-		/// </summary>
-		/// <param name="key">Meta key (for post_meta table)</param>
-		/// <param name="value">Default value</param>
-		/// <param name="str">Value string (for testing)</param>
-		internal CustomField(string key, T value, string str) : this(key, value) =>
-			ValueStr = str;
-
 		/// <inheritdoc/>
 		public abstract Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired);
 

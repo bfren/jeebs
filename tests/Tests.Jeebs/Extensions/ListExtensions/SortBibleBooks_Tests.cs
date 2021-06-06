@@ -14,15 +14,13 @@ namespace Jeebs.ListExtensions_Tests
 		{
 			// Arrange
 			var books = Constants.BibleBooks.All;
+			var shuffled = books.ToArray().Shuffle().ToList();
 
 			// Act
-			var shuffled = books.ToArray().Shuffle().ToList();
-			Assert.NotEqual(books, shuffled);
-
 			shuffled.SortBibleBooks(b => b);
-			Assert.Equal(books, shuffled);
 
 			// Assert
+			Assert.Equal(books, shuffled);
 		}
 
 		[Fact]
@@ -30,16 +28,14 @@ namespace Jeebs.ListExtensions_Tests
 		{
 			// Arrange
 			var array = new[] { F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str };
+			var shuffled = array.Shuffle().ToList();
+			var originalOrder = Serialise(shuffled);
 
 			// Act
-			var shuffled = array.Shuffle().ToList();
-			var order0 = Serialise(shuffled);
-
 			shuffled.SortBibleBooks(b => b);
-			var order1 = Serialise(shuffled);
 
 			// Assert
-			Assert.Equal(order0, order1);
+			Assert.Equal(originalOrder, Serialise(shuffled));
 		}
 	}
 }
