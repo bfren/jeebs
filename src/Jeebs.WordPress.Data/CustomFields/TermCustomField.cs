@@ -38,7 +38,7 @@ namespace Jeebs.WordPress.Data
 				return False.AsTask;
 			}
 
-			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
+			// If we're here we have a Term ID, so get it and hydrate the custom field
 			return
 				Return(
 					ValueStr
@@ -89,7 +89,10 @@ namespace Jeebs.WordPress.Data
 		/// Return Term Title
 		/// </summary>
 		protected override string GetValueAsString() =>
-			ValueObj?.Title ?? base.ToString();
+			ValueObj.Title;
+
+		internal string GetValueAsStringTest() =>
+			GetValueAsString();
 
 		/// <summary>
 		/// Term class
