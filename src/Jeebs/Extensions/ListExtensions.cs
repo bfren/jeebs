@@ -12,6 +12,19 @@ namespace Jeebs
 	public static class ListExtensions
 	{
 		/// <summary>
+		/// Get a slice of values from a list
+		/// </summary>
+		/// <typeparam name="T">List item type</typeparam>
+		/// <param name="this">List</param>
+		/// <param name="first">Index of first item</param>
+		/// <param name="last">Index of last item</param>
+		public static List<T> GetSlice<T>(this List<T> @this, int first, int last)
+		{
+			var (start, length) = (first..last).GetOffsetAndLength(@this.Count);
+			return @this.GetRange(start, length);
+		}
+
+		/// <summary>
 		/// Sort a list of Bible books, according to their place in Scripture
 		/// </summary>
 		/// <typeparam name="T">Object Type</typeparam>
