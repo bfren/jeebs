@@ -23,7 +23,7 @@ namespace Jeebs.Data.DbQuery_Tests
 			Assert.Same(log, result.LogTest);
 		}
 
-		public sealed class TestQuery : DbQuery
+		public sealed class TestQuery : DbQuery<IDb>
 		{
 			public TestQuery(IDb db, ILog log) : base(db, log) { }
 		}

@@ -29,7 +29,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Debug("== Three Random Posts ==");
-	await bcg.Db.QueryPostsAsync<PostModel>(opt => opt with
+	await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 	{
 		SortRandom = true,
 		Maximum = 3
@@ -57,7 +57,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	const string term = "holiness";
 	Console.WriteLine();
 	log.Debug("== Search for Sermons with '{Term}' ==", term);
-	await bcg.Db.QueryPostsAsync<SermonModel>(2, opt => opt with
+	await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		SearchText = term,
@@ -88,7 +88,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Debug("== Get Sermons with Taxonomy properties ==");
-	await bcg.Db.QueryPostsAsync<SermonModelWithTaxonomies>(opt => opt with
+	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		SortRandom = true,
@@ -121,7 +121,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	const long book1 = 628L;
 	Console.WriteLine();
 	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0, book1);
-	await bcg.Db.QueryPostsAsync<SermonModelWithTaxonomies>(opt => opt with
+	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		Taxonomies = new[] { (taxonomy, book0), (taxonomy, book1) }.ToImmutableList(),
@@ -157,7 +157,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	Console.WriteLine();
 	const long countAtLeast = 3;
 	log.Debug("== Get Category taxonomy with at least {CountAtLeast} posts ==", countAtLeast);
-	await usa.Db.QueryTermsAsync<TaxonomyModel>(opt => opt with
+	await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 	{
 		Taxonomy = Taxonomy.PostCategory,
 		CountAtLeast = countAtLeast
@@ -184,7 +184,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Debug("== Get Sermons with Custom Fields ==");
-	await bcg.Db.QueryPostsAsync<SermonModelWithCustomFields>(opt => opt with
+	await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		Ids = ImmutableList.Create<WpPostId>(new(924L), new(1867L), new(2020L))
@@ -218,7 +218,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	ICustomField field = WpBcg.CustomFields.FirstPreached;
 	object first = 422L;
 	log.Debug("== Get Sermons where First Preached is {First} ==", first);
-	await bcg.Db.QueryPostsAsync<SermonModelWithCustomFields>(opt => opt with
+	await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		CustomFields = ImmutableList.Create(new[] { (field, Compare.Equal, first) })
@@ -253,7 +253,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Debug("== Get Posts with generated excerpt ==");
-	await bcg.Db.QueryPostsAsync<PostModelWithContent>(opt => opt with
+	await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
 	{
 		SortRandom = true
 	}, GenerateExcerpt.Create())

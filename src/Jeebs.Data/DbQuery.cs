@@ -13,19 +13,35 @@ using static F.OptionF;
 
 namespace Jeebs.Data
 {
+	public abstract class DbQuery
+	{
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>Error getting query from parts</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+
+			/// <summary>Error getting count query from parts</summary>
+			/// <param name="Exception">Exception object</param>
+			public sealed record ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+		}
+	}
+
 	/// <inheritdoc cref="IDbQuery"/>
-	public abstract class DbQuery : IDbQuery
+	public abstract class DbQuery<TDb> : DbQuery, IDbQuery
+		where TDb : IDb
 	{
 		/// <inheritdoc/>
 		public IUnitOfWork UnitOfWork =>
 			Db.UnitOfWork;
 
 		/// <summary>
-		/// IDb
+		/// TDb
 		/// </summary>
-		protected IDb Db { get; private init; }
+		protected TDb Db { get; private init; }
 
-		internal IDb DbTest =>
+		internal TDb DbTest =>
 			Db;
 
 		/// <summary>
@@ -39,9 +55,9 @@ namespace Jeebs.Data
 		/// <summary>
 		/// Inject database and log objects
 		/// </summary>
-		/// <param name="db">IDb</param>
+		/// <param name="db">TDb</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		protected DbQuery(IDb db, ILog log) =>
+		protected DbQuery(TDb db, ILog log) =>
 			(Db, Log) = (db, log);
 
 		/// <summary>
@@ -235,17 +251,5 @@ namespace Jeebs.Data
 			__(table, column);
 
 		#endregion
-
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>Error getting query from parts</summary>
-			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
-
-			/// <summary>Error getting count query from parts</summary>
-			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
-		}
 	}
 }

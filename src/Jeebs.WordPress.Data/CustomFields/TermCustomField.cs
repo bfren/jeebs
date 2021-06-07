@@ -83,7 +83,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="db">IWpDb</param>
 		/// <param name="termId">Term ID</param>
 		internal static Task<Option<IEnumerable<Term>>> GetTerms(IWpDb db, WpTermId termId) =>
-			QueryTermsF.ExecuteAsync<Term>(db, opt => opt with { Id = termId });
+			db.Query.TermsAsync<Term>(opt => opt with { Id = termId });
 
 		/// <summary>
 		/// Return Term Title

@@ -19,24 +19,18 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="TModel">Return Model type</typeparam>
 		/// <param name="db">IWpDb</param>
 		/// <param name="opt">Function to return query options</param>
-		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
-			IWpDb db,
-			Query.GetPostsTaxonomyOptions opt
-		)
-			where TModel : IWithId<WpTermId>
-		{
-			return
-				Return(
-					() => opt(new Query.PostsTaxonomyOptions(db.Schema)),
-					e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
-				)
-				.Bind(
-					x => x.ToParts<TModel>()
-				)
-				.BindAsync(
-					x => db.Query.QueryAsync<TModel>(x)
-				);
-		}
+		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, Query.GetPostsTaxonomyOptions opt)
+			where TModel : IWithId<WpTermId> =>
+			Return(
+				() => opt(new Query.PostsTaxonomyOptions(db.Schema)),
+				e => new Msg.ErrorGettingQueryPostsTaxonomyOptionsMsg(e)
+			)
+			.Bind(
+				x => x.ToParts<TModel>()
+			)
+			.BindAsync(
+				x => db.Query.QueryAsync<TModel>(x)
+			);
 
 		/// <summary>Messages</summary>
 		public static partial class Msg

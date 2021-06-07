@@ -14,7 +14,7 @@ using static F.OptionF;
 namespace Jeebs.Auth
 {
 	/// <inheritdoc cref="IAuthDbQuery"/>
-	public sealed class AuthDbQuery : DbQuery, IAuthDbQuery
+	public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 	{
 		/// <summary>
 		/// Inject dependencies

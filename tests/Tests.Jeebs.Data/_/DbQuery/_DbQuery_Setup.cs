@@ -9,7 +9,7 @@ namespace Jeebs.Data.DbQuery_Tests
 {
 	public static class DbQuery_Setup
 	{
-		public static (IDb db, IDbClient client, ILog log, DbQuery query) Get(string? queryText = null, IQueryParameters? queryParams = null)
+		public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText = null, IQueryParameters? queryParams = null)
 		{
 			var text = queryText ?? F.Rnd.Str;
 			var param = queryParams ?? Substitute.For<IQueryParameters>();
@@ -24,7 +24,7 @@ namespace Jeebs.Data.DbQuery_Tests
 			db.ExecuteAsync<long>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(1);
 
 			var log = Substitute.For<ILog>();
-			var query = Substitute.ForPartsOf<DbQuery>(db, log);
+			var query = Substitute.ForPartsOf<DbQuery<IDb>>(db, log);
 
 			return (db, client, log, query);
 		}
