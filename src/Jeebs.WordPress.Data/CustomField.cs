@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Jeebs.WordPress.Data
 {
 	/// <inheritdoc cref="ICustomField{T}"/>
-	public abstract record CustomField<T> : ICustomField<T>
+	public abstract class CustomField<T> : ICustomField<T>
 	{
 		/// <inheritdoc/>
 		public string Key { get; private init; }
@@ -24,7 +24,7 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="key">Meta key (for post_meta table)</param>
 		/// <param name="value">Default value</param>
-		public CustomField(string key, T value) =>
+		protected CustomField(string key, T value) =>
 			(Key, ValueObj) = (key, value);
 
 		/// <inheritdoc/>
@@ -37,7 +37,7 @@ namespace Jeebs.WordPress.Data
 			ValueObj?.ToString() ?? ValueStr ?? Key;
 
 		/// <summary>
-		/// Don't use the default record ToString()
+		/// Don't use the default ToString()
 		/// </summary>
 		public override string ToString() =>
 			GetValueAsString();

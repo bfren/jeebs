@@ -8,7 +8,7 @@ namespace AppConsoleWp.Bcg
 	/// <summary>
 	/// Bible Passage
 	/// </summary>
-	public sealed record PassageCustomField : TextCustomField
+	public sealed class PassageCustomField : TextCustomField
 	{
 		/// <summary>
 		/// This is a required field

@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Simple text value custom field
 	/// </summary>
-	public abstract record TextCustomField : CustomField<string>
+	public abstract class TextCustomField : CustomField<string>
 	{
 		/// <summary>
 		/// Custom Field value
@@ -46,6 +46,13 @@ namespace Jeebs.WordPress.Data
 			// Return OK but not set
 			return False.AsTask;
 		}
+
+		/// <inheritdoc/>
+		protected override string GetValueAsString() =>
+			ValueObj;
+
+		internal string GetValueAsStringTest() =>
+			GetValueAsString();
 
 		/// <summary>Messages</summary>
 		public static class Msg

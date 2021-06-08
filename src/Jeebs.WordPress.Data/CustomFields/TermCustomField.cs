@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using F.WordPressF.DataF;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
@@ -13,7 +12,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Term Taxonomy Custom Field
 	/// </summary>
-	public abstract record TermCustomField : CustomField<TermCustomField.Term>
+	public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
 		/// <inheritdoc/>
 		protected TermCustomField(string key) : base(key, new Term()) { }

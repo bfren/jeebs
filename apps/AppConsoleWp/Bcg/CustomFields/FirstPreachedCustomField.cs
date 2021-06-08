@@ -8,7 +8,7 @@ namespace AppConsoleWp.Bcg
 	/// <summary>
 	/// The place a sermon was first preached
 	/// </summary>
-	public sealed record FirstPreachedCustomField : TermCustomField
+	public sealed class FirstPreachedCustomField : TermCustomField
 	{
 		/// <summary>
 		/// This is a required field

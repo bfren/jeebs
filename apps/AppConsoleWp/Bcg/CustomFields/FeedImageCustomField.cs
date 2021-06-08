@@ -8,7 +8,7 @@ namespace AppConsoleWp.Bcg
 	/// <summary>
 	/// The place a sermon was first preached
 	/// </summary>
-	public sealed record FeedImageCustomField : AttachmentCustomField
+	public sealed class FeedImageCustomField : AttachmentCustomField
 	{
 		/// <summary>
 		/// This is not a required field

@@ -55,13 +55,10 @@ namespace Jeebs.WordPress.Data.CustomField_Tests
 			Assert.Equal(key, result);
 		}
 
-		public abstract record Test : CustomField<Guid?>
+		public abstract class Test : CustomField<Guid?>
 		{
-			public Test(string key, Guid? value, string str) : base(key, value) =>
+			protected Test(string key, Guid? value, string str) : base(key, value) =>
 				ValueStr = str;
-
-			public override string ToString() =>
-				GetValueAsString();
 		}
 	}
 }

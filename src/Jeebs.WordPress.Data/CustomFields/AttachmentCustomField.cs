@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Post Attachment Custom Field
 	/// </summary>
-	public abstract record AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
+	public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
 		/// <inheritdoc/>
 		protected AttachmentCustomField(string key) : base(key, new Attachment()) { }
@@ -107,7 +107,7 @@ namespace Jeebs.WordPress.Data
 		/// Return Attachment Title
 		/// </summary>
 		protected override string GetValueAsString() =>
-			ValueObj?.Title ?? base.ToString();
+			ValueObj.Title;
 
 		/// <summary>
 		/// Attachment class

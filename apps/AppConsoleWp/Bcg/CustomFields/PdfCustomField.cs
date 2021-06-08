@@ -8,7 +8,7 @@ namespace AppConsoleWp.Bcg
 	/// <summary>
 	/// Sermon script PDF
 	/// </summary>
-	public sealed record PdfCustomField : FileCustomField
+	public sealed class PdfCustomField : FileCustomField
 	{
 		/// <summary>
 		/// This is not a required field

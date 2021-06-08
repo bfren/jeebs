@@ -8,7 +8,7 @@ namespace AppConsoleWp.Bcg
 	/// <summary>
 	/// Audio recording of sermon
 	/// </summary>
-	public sealed record AudioRecordingCustomField : FileCustomField
+	public sealed class AudioRecordingCustomField : FileCustomField
 	{
 		/// <summary>
 		/// This is not a required field
