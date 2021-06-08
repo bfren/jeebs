@@ -17,5 +17,8 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc/>
 		protected override string GetValueAsString() =>
 			ValueObj.UrlPath ?? base.ToString();
+
+		internal string GetValueAsStringTest() =>
+			GetValueAsString();
 	}
 }
