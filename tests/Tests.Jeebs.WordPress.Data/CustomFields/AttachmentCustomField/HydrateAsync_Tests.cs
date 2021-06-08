@@ -4,10 +4,10 @@
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using static Jeebs.WordPress.Data.TermCustomField;
-using static Jeebs.WordPress.Data.TermCustomField.Msg;
+using static Jeebs.WordPress.Data.AttachmentCustomField;
+using static Jeebs.WordPress.Data.AttachmentCustomField.Msg;
 
-namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
+namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 {
 	public class HydrateAsync_Tests
 	{
@@ -49,12 +49,12 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 		public async Task Meta_Contains_Key_Multiple_Terms_Found_Returns_None_With_MultipleTermsFoundMsg()
 		{
 			// Arrange
-			var t0 = new Term();
-			var t1 = new Term();
-			var terms = new[] { t0, t1 };
+			var a0 = new Attachment();
+			var a1 = new Attachment();
+			var attachments = new[] { a0, a1 };
 
 			var query = Substitute.For<IWpDbQuery>();
-			query.TermsAsync<Term>(Arg.Any<Query.GetTermsOptions>()).Returns(terms);
+			query.PostsAsync<Attachment>(Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
 
 			var db = Substitute.For<IWpDb>();
 			db.Query.Returns(query);
@@ -69,7 +69,7 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 
 			// Assert
 			var none = result.AssertNone();
-			var msg = Assert.IsType<MultipleTermsFoundMsg>(none);
+			var msg = Assert.IsType<MultipleAttachmentsFoundMsg>(none);
 			Assert.Equal(value.ToString(), msg.Value);
 		}
 
@@ -77,11 +77,11 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 		public async Task Meta_Contains_Key_Single_Item_Found_Sets_ValueObj_Returns_True()
 		{
 			// Arrange
-			var term = new Term();
-			var terms = new[] { term };
+			var attachment = new Attachment();
+			var attachments = new[] { attachment };
 
 			var query = Substitute.For<IWpDbQuery>();
-			query.TermsAsync<Term>(Arg.Any<Query.GetTermsOptions>()).Returns(terms);
+			query.PostsAsync<Attachment>(Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
 
 			var db = Substitute.For<IWpDb>();
 			db.Query.Returns(query);
@@ -95,10 +95,40 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 
 			// Assert
 			result.AssertTrue();
-			Assert.Same(term, field.ValueObj);
+			Assert.Same(attachment, field.ValueObj);
 		}
 
-		public class Test : TermCustomField
+		[Fact]
+		public async Task Meta_Contains_Key_Single_Item_Found_Sets_ValueObj_Properties_Returns_True()
+		{
+			// Arrange
+			var attachment = new Attachment();
+			var urlPath = F.Rnd.Str;
+			attachment.Meta.Add(Constants.Attachment, urlPath);
+			var info = F.Rnd.Str;
+			attachment.Meta.Add(Constants.AttachmentMetadata, "s:6:\"" + info + "\";");
+			var attachments = new[] { attachment };
+
+			var query = Substitute.For<IWpDbQuery>();
+			query.PostsAsync<Attachment>(Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+
+			var db = Substitute.For<IWpDb>();
+			db.Query.Returns(query);
+
+			var key = F.Rnd.Str;
+			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
+			var field = new Test(key);
+
+			// Act
+			var result = await field.HydrateAsync(db, meta, true);
+
+			// Assert
+			result.AssertTrue();
+			Assert.Equal(urlPath, field.ValueObj.UrlPath);
+			Assert.Contains(info, field.ValueObj.Info);
+		}
+
+		public class Test : AttachmentCustomField
 		{
 			public Test(string key) : base(key) { }
 		}

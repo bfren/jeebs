@@ -13,12 +13,12 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// MetaDictionary
 		/// </summary>
-		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+		public MetaDictionary Meta { get; init; } = new();
 
 		/// <summary>
 		/// UrlPath
 		/// </summary>
-		public string UrlPath { get; set; } = string.Empty;
+		public string UrlPath { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Deserialise <see cref="info"/> and return as JSON
@@ -28,7 +28,7 @@ namespace Jeebs.WordPress.Data.Entities
 			get =>
 				Serialise(F.PhpF.Deserialise(info)).Unwrap(Empty);
 
-			set =>
+			init =>
 				info = value;
 		}
 

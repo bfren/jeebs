@@ -3,28 +3,28 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.CustomFields.FileCustomField_Tests
+namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 {
 	public class GetValueAsString_Tests
 	{
 		[Fact]
-		public void Returns_File_UrlPath()
+		public void Returns_Attachment_Title()
 		{
 			// Arrange
-			var urlPath = F.Rnd.Str;
-			var field = new Test(F.Rnd.Str, urlPath);
+			var title = F.Rnd.Str;
+			var field = new Test(F.Rnd.Str, title);
 
 			// Act
 			var result = field.GetValueAsStringTest();
 
 			// Assert
-			Assert.Equal(urlPath, result);
+			Assert.Equal(title, result);
 		}
 
-		public class Test : FileCustomField
+		public class Test : AttachmentCustomField
 		{
 			public Test(string key, string urlPath) : base(key) =>
-				ValueObj = new() { UrlPath = urlPath };
+				ValueObj = new() { Title = urlPath };
 		}
 	}
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using F.WordPressF.DataF;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using static F.OptionF;
@@ -60,12 +59,12 @@ namespace Jeebs.WordPress.Data
 
 						if (ValueObj.Meta.TryGetValue(Constants.Attachment, out var urlPath))
 						{
-							ValueObj.UrlPath = urlPath;
+							ValueObj = ValueObj with { UrlPath = urlPath };
 						}
 
 						if (ValueObj.Meta.TryGetValue(Constants.AttachmentMetadata, out var info))
 						{
-							ValueObj.Info = info;
+							ValueObj = ValueObj with { Info = info };
 						}
 
 						return true;
@@ -95,7 +94,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="db">IWpDb</param>
 		/// <param name="attachmentPostId">Post ID</param>
 		internal static Task<Option<IEnumerable<Attachment>>> GetAttachment(IWpDb db, WpPostId attachmentPostId) =>
-			QueryPostsF.ExecuteAsync<Attachment>(db, opt => opt with
+			db.Query.PostsAsync<Attachment>(opt => opt with
 			{
 				Id = attachmentPostId,
 				Type = PostType.Attachment,
@@ -103,11 +102,12 @@ namespace Jeebs.WordPress.Data
 				Maximum = 1
 			});
 
-		/// <summary>
-		/// Return Attachment Title
-		/// </summary>
+		/// <inheritdoc/>
 		protected override string GetValueAsString() =>
 			ValueObj.Title;
+
+		internal string GetValueAsStringTest() =>
+			GetValueAsString();
 
 		/// <summary>
 		/// Attachment class
