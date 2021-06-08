@@ -97,9 +97,11 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 			// Assert
 			result.AssertTrue();
 			Assert.Same(term, field.ValueObj);
-
 		}
 
-		public record Test(string Key) : TermCustomField(Key);
+		public class Test : TermCustomField
+		{
+			public Test(string key) : base(key) { }
+		}
 	}
 }

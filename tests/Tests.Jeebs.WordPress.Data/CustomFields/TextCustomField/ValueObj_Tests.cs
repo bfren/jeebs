@@ -34,10 +34,10 @@ namespace Jeebs.WordPress.Data.CustomFields.TextCustomField_Tests
 			Assert.Equal(string.Empty, result);
 		}
 
-		public record Test : TextCustomField
+		public class Test : TextCustomField
 		{
-			public Test(string Key, string? Value) : base(Key) =>
-				ValueStr = Value;
+			public Test(string key, string? value) : base(key) =>
+				ValueStr = value;
 		}
 	}
 }

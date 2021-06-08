@@ -65,6 +65,9 @@ namespace Jeebs.WordPress.Data.CustomFields.TextCustomField_Tests
 			Assert.Equal(string.Empty, field.ValueObj);
 		}
 
-		public record Test(string Key) : TextCustomField(Key);
+		public class Test : TextCustomField
+		{
+			public Test(string key) : base(key) { }
+		}
 	}
 }
