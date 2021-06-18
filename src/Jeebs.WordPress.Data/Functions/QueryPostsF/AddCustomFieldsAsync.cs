@@ -86,7 +86,6 @@ namespace F.WordPressF.DataF
 						if (result is None<bool> none && required)
 						{
 							return None<TList>(none.Reason);
-							//return None<TList>(new Msg.RequiredCustomFieldNotFoundMsg<TModel>(post.Id, info.Name, customField.Key));
 						}
 
 						// Set the value

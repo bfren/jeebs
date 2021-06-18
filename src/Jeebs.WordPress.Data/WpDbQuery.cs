@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using F.WordPressF.DataF;
@@ -18,6 +19,11 @@ namespace Jeebs.WordPress.Data
 		/// <param name="db">IWpDb</param>
 		/// <param name="log">ILog</param>
 		internal WpDbQuery(IWpDb db, ILog<IWpDbQuery> log) : base(db, log) { }
+
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
+			where T : IAttachment =>
+			QueryAttachmentsF.ExecuteAsync<T>(Db, opt, Db.WpConfig.VirtualUploadsUrl);
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)

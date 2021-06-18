@@ -9,6 +9,12 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <summary>
+		/// Get default AttachmentsOptions and modify
+		/// </summary>
+		/// <param name="opt">Modify default options</param>
+		public delegate AttachmentsOptions GetAttachmentsOptions(AttachmentsOptions opt);
+
+		/// <summary>
 		/// Get default PostsOptions and modify
 		/// </summary>
 		/// <param name="opt">Modify default options</param>

@@ -112,7 +112,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Attachment class
 		/// </summary>
-		public sealed record Attachment : WpPostAttachmentEntity { }
+		public sealed record Attachment : WpAttachmentEntity { }
 
 		/// <summary>Messages</summary>
 		public static class Msg

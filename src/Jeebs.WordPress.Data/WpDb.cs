@@ -43,6 +43,9 @@ namespace Jeebs.WordPress.Data
 		where Tum : WpUserMetaEntity
 	{
 		/// <inheritdoc/>
+		public WpConfig WpConfig { get; private init; }
+
+		/// <inheritdoc/>
 		public IWpDbQuery Query { get; private init; }
 
 		/// <inheritdoc/>
@@ -63,13 +66,14 @@ namespace Jeebs.WordPress.Data
 			: base(client, dbConfig, log, wpConfig.Value.Db)
 		{
 			// Log WordPress config
-			log.Verbose("WordPress Config: {@WpConfig}", wpConfig.Value);
+			WpConfig = wpConfig.Value;
+			log.Verbose("WordPress Config: {@WpConfig}", WpConfig);
 
 			// Create query object
 			Query = new WpDbQuery(this, log.ForContext<IWpDbQuery>());
 
 			// Create schema
-			Schema = new WpDbSchema(wpConfig.Value.TablePrefix);
+			Schema = new WpDbSchema(WpConfig.TablePrefix);
 
 			// Map entities to tables
 			Map<Tc>.To(Schema.Comment);

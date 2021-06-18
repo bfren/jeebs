@@ -14,6 +14,14 @@ namespace Jeebs.WordPress.Data
 	public interface IWpDbQuery : IDbQuery
 	{
 		/// <summary>
+		/// Get Attachments matching the specified options
+		/// </summary>
+		/// <typeparam name="T">Return Model type</typeparam>
+		/// <param name="opt">Function to return query options</param>
+		Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
+			where T : IAttachment;
+
+		/// <summary>
 		/// Get Posts matching the specified options
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>

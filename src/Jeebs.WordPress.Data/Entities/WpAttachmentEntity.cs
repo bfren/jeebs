@@ -6,23 +6,24 @@ using static F.JsonF;
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
-	/// Post Attachment entity
+	/// Attachment entity
 	/// </summary>
-	public abstract record WpPostAttachmentEntity : WpPostEntity
+	public abstract record WpAttachmentEntity : WpPostEntity, IAttachment
 	{
-		/// <summary>
-		/// MetaDictionary
-		/// </summary>
+		/// <inheritdoc/>
+		public string Description
+		{
+			get => Excerpt;
+			init => Excerpt = value;
+		}
+
+		/// <inheritdoc/>
 		public MetaDictionary Meta { get; init; } = new();
 
-		/// <summary>
-		/// UrlPath
-		/// </summary>
+		/// <inheritdoc/>
 		public string UrlPath { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Deserialise <see cref="info"/> and return as JSON
-		/// </summary>
+		/// <inheritdoc/>
 		public string Info
 		{
 			get =>
