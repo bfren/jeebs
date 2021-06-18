@@ -27,7 +27,12 @@ namespace Jeebs.WordPress.Data.Entities
 		public string Info
 		{
 			get =>
-				Serialise(F.PhpF.Deserialise(info)).Unwrap(Empty);
+				Serialise(
+					F.PhpF.Deserialise(info)
+				)
+				.Unwrap(
+					Empty
+				);
 
 			init =>
 				info = value;
