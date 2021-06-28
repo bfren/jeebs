@@ -38,41 +38,12 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		/// <summary>
-		/// Build custom query to return file attachments with URL from meta values
-		/// </summary>
-		/// <param name="schema">IWpDbSchema</param>
-		/// <param name="fileIds">Attachment IDs</param>
-		/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param> 
-		internal static Option<string> GetQuery(IWpDbSchema schema, IImmutableList<WpPostId> fileIds, string virtualUploadsUrl)
-		{
-			// Check for empty list
-			if (fileIds.Count == 0)
-			{
-				return None<string, Msg.NoFileIdsMsg>();
-			}
-
-			// Build query
-			return "SELECT " +
-				$"`p`.`{schema.Post.Title}` AS '{nameof(WpAttachmentEntity.Title)}', " +
-				$"`p`.`{schema.Post.Excerpt}` AS '{nameof(WpAttachmentEntity.Description)}', " +
-				$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostMeta.Value}`) AS '{nameof(WpAttachmentEntity.Url)}' " +
-			$"FROM `{schema.Post}` AS `p` " +
-				$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`{schema.Post.PostId}` = `pm`.`{schema.PostMeta.PostId}` " +
-			$"WHERE `p`.`{schema.Post.PostId}` IN ({string.Join(',', fileIds)}) " +
-				$"AND `pm`.`{schema.PostMeta.Key}` = '{Constants.Attachment}';"
-			;
-		}
-
 		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
 			/// <summary>Unable to get attachments query</summary>
 			/// <param name="Exception">Exception object</param>
 			public sealed record ErrorGettingQueryAttachmentsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
-
-			/// <summary>No File IDs have been passed to <see cref="GetQuery(IWpDbSchema, IImmutableList{WpPostId}, string)"/></summary>
-			public sealed record NoFileIdsMsg : IMsg { }
 		}
 	}
 }
