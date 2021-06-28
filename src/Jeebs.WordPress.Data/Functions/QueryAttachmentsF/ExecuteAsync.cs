@@ -32,9 +32,8 @@ namespace F.WordPressF.DataF
 				.Bind(
 					x => GetQuery(db.Schema, x.Ids, virtualUploadsUrl)
 				)
-				.SwitchAsync(
-					some: x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text),
-					none: () => new List<T>()
+				.BindAsync(
+					x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text)
 				);
 		}
 
