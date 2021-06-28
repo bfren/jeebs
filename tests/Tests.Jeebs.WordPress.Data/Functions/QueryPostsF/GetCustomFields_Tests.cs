@@ -34,18 +34,28 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 				x =>
 				{
 					Assert.Equal(nameof(WithCustomFields.Field0), x.Name);
-					Assert.True(x.PropertyType.IsAssignableFrom(typeof(ICustomField)));
+					Assert.True(typeof(ICustomField).IsAssignableFrom(x.PropertyType));
 				},
 				x =>
 				{
 					Assert.Equal(nameof(WithCustomFields.Field1), x.Name);
-					Assert.True(x.PropertyType.IsAssignableFrom(typeof(ICustomField)));
+					Assert.True(typeof(ICustomField).IsAssignableFrom(x.PropertyType));
 				}
 			);
 		}
 
 		public sealed record NoCustomFields;
 
-		public sealed record WithCustomFields(ICustomField Field0, ICustomField Field1);
+		public sealed record WithCustomFields(CustomField0 Field0, AttachmentCustomField Field1);
+
+		public sealed class CustomField0 : TextCustomField
+		{
+			public CustomField0() : base(F.Rnd.Str) { }
+		}
+
+		public sealed class CustomField1 : AttachmentCustomField
+		{
+			public CustomField1() : base(F.Rnd.Str) { }
+		}
 	}
 }
