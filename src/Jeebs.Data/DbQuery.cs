@@ -13,6 +13,7 @@ using static F.OptionF;
 
 namespace Jeebs.Data
 {
+	/// <inheritdoc cref="IDbQuery"/>
 	public abstract class DbQuery
 	{
 		/// <summary>Messages</summary>
