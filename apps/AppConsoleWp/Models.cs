@@ -9,20 +9,20 @@ using Jeebs.WordPress.Data.Entities;
 
 namespace AppConsoleWp
 {
-	internal class PostModel : IWithId<WpPostId>
+	internal record PostModel : IWithId<WpPostId>
 	{
 		public WpPostId Id { get; init; } = new();
 
 		public long PostId { get => Id.Value; init => Id = new(value); }
 
-		public string Title { get; init; } = string.Empty;
+		public string Title { get; set; } = string.Empty;
 
-		public MetaDictionary Meta { get; init; } = new MetaDictionary();
+		public MetaDictionary Meta { get; set; } = new();
 	}
 
-	internal class PostModelWithContent : PostModel
+	internal record PostModelWithContent : PostModel
 	{
-		public string Content { get; init; } = string.Empty;
+		public string Content { get; set; } = string.Empty;
 	}
 
 	internal class SermonModel : IWithId<WpPostId>
@@ -31,29 +31,29 @@ namespace AppConsoleWp
 
 		public long PostId { get => Id.Value; init => Id = new(value); }
 
-		public string Title { get; init; } = string.Empty;
+		public string Title { get; set; } = string.Empty;
 
-		public DateTime PublishedOn { get; init; }
+		public DateTime PublishedOn { get; set; }
 	}
 
 	internal class SermonModelWithTaxonomies : SermonModel
 	{
-		public TermList BibleBooks { get; set; } = new TermList(WpBcg.Taxonomies.BibleBook);
+		public TermList BibleBooks { get; set; } = new(WpBcg.Taxonomies.BibleBook);
 
-		public TermList Series { get; set; } = new TermList(WpBcg.Taxonomies.Series);
+		public TermList Series { get; set; } = new(WpBcg.Taxonomies.Series);
 	}
 
 	internal class SermonModelWithCustomFields : SermonModel
 	{
-		public MetaDictionary Meta { get; set; } = new MetaDictionary();
+		public MetaDictionary Meta { get; set; } = new();
 
-		public PassageCustomField Passage { get; set; } = new PassageCustomField();
+		public PassageCustomField Passage { get; set; } = new();
 
 		public PdfCustomField? Pdf { get; set; }
 
 		public AudioRecordingCustomField? Audio { get; set; }
 
-		public FirstPreachedCustomField FirstPreached { get; set; } = new FirstPreachedCustomField();
+		public FirstPreachedCustomField FirstPreached { get; set; } = new();
 
 		public FeedImageCustomField? Image { get; set; }
 	}
@@ -68,4 +68,6 @@ namespace AppConsoleWp
 
 		public long Count { get; set; }
 	}
+
+	internal record Attachment : WpAttachmentEntity;
 }

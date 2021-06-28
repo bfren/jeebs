@@ -1,12 +1,14 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
+using Jeebs.WordPress.Data.Entities;
+
 namespace Jeebs.WordPress.Data
 {
 	/// <summary>
 	/// Attachment entity
 	/// </summary>
-	public interface IAttachment
+	public interface IAttachment : IWithId<WpPostId>
 	{
 		/// <summary>
 		/// Attachment description

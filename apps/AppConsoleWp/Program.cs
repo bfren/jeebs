@@ -61,7 +61,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		SearchText = term,
-		SearchComparison = Jeebs.Data.Enums.Compare.Like,
+		SearchComparison = Compare.Like,
 		SortRandom = true
 	})
 	.AuditAsync(
@@ -270,6 +270,48 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 				log.Debug("Post {Id:0000}: {@Content}", item.PostId, item.Content);
 			}
 		},
+		none: r => log.Message(r)
+	);
+
+	//
+	// Get attachments
+	//
+
+	Console.WriteLine();
+	log.Debug("== Get Attachments ==");
+	await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
+	{
+		Ids = ImmutableList.Create<WpPostId>(new(802L), new(862L), new(2377L))
+	})
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No attachments found.");
+			}
+
+			foreach (var item in x)
+			{
+				log.Debug("Attachment {Id:0000}: {Description}", item.PostId, item.Title);
+				log.Debug("  - {Description}", item.Description);
+				log.Debug("  - {Url}", item.Url);
+				log.Debug("  - {UrlPath}", item.UrlPath);
+				log.Debug("  - {FilePath}", item.GetFilePath(bcg.Db.WpConfig.UploadsPath));
+			}
+		},
+		none: r => log.Message(r)
+	);
+
+	//
+	// Get attachment file path
+	//
+
+	Console.WriteLine();
+	log.Debug("== Get Attachment file path ==");
+	await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
+	.AuditAsync(
+		some: x => log.Debug("Path: {FilePath}", x),
 		none: r => log.Message(r)
 	);
 

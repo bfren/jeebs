@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
+using System.Security.Permissions;
+using Jeebs.Data.Entities;
 using static F.JsonF;
 
 namespace Jeebs.WordPress.Data.Entities
