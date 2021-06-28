@@ -27,5 +27,11 @@ namespace Jeebs.WordPress.Data
 		/// Additional information about the file (encoded as JSON)
 		/// </summary>
 		string Info { get; init; }
+
+		/// <summary>
+		/// Get the filesystem path to this attachment
+		/// </summary>
+		/// <param name="wpUploadsPath">Filesystem path to wp-uploads directory</param>
+		string GetFilePath(string wpUploadsPath);
 	}
 }

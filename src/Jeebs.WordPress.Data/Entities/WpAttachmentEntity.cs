@@ -42,5 +42,9 @@ namespace Jeebs.WordPress.Data.Entities
 		/// PHP serialised info
 		/// </summary>
 		private string info = string.Empty;
+
+		/// <inheritdoc/>
+		public string GetFilePath(string wpUploadsPath) =>
+			wpUploadsPath.EndWith('/') + UrlPath.TrimStart('/');
 	}
 }
