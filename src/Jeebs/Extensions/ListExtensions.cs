@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using static F.OptionF;
 
 namespace Jeebs
 {
@@ -11,6 +12,59 @@ namespace Jeebs
 	/// </summary>
 	public static class ListExtensions
 	{
+		/// <summary>
+		/// Return the items either side of <paramref name="item"/> - or <see cref="None{T}"/>
+		/// </summary>
+		/// <remarks>
+		/// NB: if there are multiple items matching <paramref name="item"/>, the first will be used
+		/// (this is how <see cref="List{T}.IndexOf(T)"/> works)
+		/// </remarks>
+		/// <typeparam name="T">Item type</typeparam>
+		/// <param name="this">List of items</param>
+		/// <param name="item">Item to match</param>
+		public static (Option<T> prev, Option<T> next) GetEitherSide<T>(this List<T> @this, T item)
+		{
+			static (Option<T>, Option<T>) invalid(IMsg reason) =>
+				(None<T>(reason), None<T>(reason));
+
+			// There are no items
+			if (@this.Count == 0)
+			{
+				return invalid(new Msg.ListIsEmptyMsg());
+			}
+
+			// There is only one item
+			if (@this.Count == 1)
+			{
+				return invalid(new Msg.ListContainsSingleItemMsg());
+			}
+
+			// The item is not in the list
+			if (!@this.Contains(item))
+			{
+				return invalid(new Msg.ListDoesNotContainItemMsg<T>(item));
+			}
+
+			// Get the index of the item
+			var index = @this.IndexOf(item);
+
+			// If it is the first item, Previous should be None
+			if (index == 0)
+			{
+				return (None<T, Msg.ItemIsFirstItemMsg>(), @this[1]);
+			}
+			// If it is the last item, Next should be None
+			else if (index == @this.Count - 1)
+			{
+				return (@this[index - 1], None<T, Msg.ItemIsLastItemMsg>());
+			}
+			// Return the items either side of the item
+			else
+			{
+				return (@this[index - 1], @this[index + 1]);
+			}
+		}
+
 		/// <summary>
 		/// Get a slice of values from a list
 		/// </summary>
@@ -48,6 +102,25 @@ namespace Jeebs
 
 			// Sort list
 			@this.Sort(comp);
+		}
+
+		/// <summary>Messages</summary>
+		public static class Msg
+		{
+			/// <summary>List is empty</summary>
+			public sealed record ListIsEmptyMsg : IMsg { }
+
+			/// <summary>List contains only one item</summary>
+			public sealed record ListContainsSingleItemMsg : IMsg { }
+
+			/// <summary>List does not contain the specified item</summary>
+			public sealed record ListDoesNotContainItemMsg<T>(T Value) : WithValueMsg<T>;
+
+			/// <summary>The specified item is the first in the list (so there is no previous item)</summary>
+			public sealed record ItemIsFirstItemMsg : IMsg { }
+
+			/// <summary>The specified item is the last in the list (so there is no next item)</summary>
+			public sealed record ItemIsLastItemMsg : IMsg { }
 		}
 	}
 }
