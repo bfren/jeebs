@@ -1,34 +1,13 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using Jeebs.Data.Entities;
-
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
 	/// PostMeta entity
 	/// </summary>
-	public abstract record WpPostMetaEntity : IWithId<WpPostMetaId>
+	public abstract record WpPostMetaEntity : WpPostMetaEntityWithId
 	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Ignore]
-		public WpPostMetaId Id
-		{
-			get =>
-				new(PostMetaId);
-
-			init =>
-				PostMetaId = value.Value;
-		}
-
-		/// <summary>
-		/// PostMetaId
-		/// </summary>
-		[Id]
-		public long PostMetaId { get; init; }
-
 		/// <summary>
 		/// PostId
 		/// </summary>

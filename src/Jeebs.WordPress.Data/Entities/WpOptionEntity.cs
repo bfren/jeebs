@@ -1,34 +1,13 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using Jeebs.Data.Entities;
-
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
 	/// Option entity
 	/// </summary>
-	public abstract record WpOptionEntity : IWithId<WpOptionId>
+	public abstract record WpOptionEntity : WpOptionEntityWithId
 	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Ignore]
-		public WpOptionId Id
-		{
-			get =>
-				new(OptionId);
-
-			init =>
-				OptionId = value.Value;
-		}
-
-		/// <summary>
-		/// OptionId
-		/// </summary>
-		[Id]
-		public long OptionId { get; init; }
-
 		/// <summary>
 		/// Key
 		/// </summary>

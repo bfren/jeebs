@@ -2,7 +2,6 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System;
-using Jeebs.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data.Entities
@@ -10,27 +9,8 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Comment entity
 	/// </summary>
-	public abstract record WpCommentEntity : IWithId<WpCommentId>
+	public abstract record WpCommentEntity : WpCommentEntityWithId
 	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Ignore]
-		public WpCommentId Id
-		{
-			get =>
-				new(CommentId);
-
-			init =>
-				CommentId = value.Value;
-		}
-
-		/// <summary>
-		/// CommentId
-		/// </summary>
-		[Id]
-		public long CommentId { get; init; }
-
 		/// <summary>
 		/// PostId
 		/// </summary>

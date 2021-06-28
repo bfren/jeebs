@@ -1,26 +1,32 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
+using Jeebs.Data.Entities;
+
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
 	/// Term entity
 	/// </summary>
-	public abstract record WpTermEntity : WpTermEntityWithId
+	public abstract record WpTermEntityWithId : IWithId<WpTermId>
 	{
 		/// <summary>
-		/// Title
+		/// Id
 		/// </summary>
-		public string Title { get; init; } = string.Empty;
+		[Ignore]
+		public WpTermId Id
+		{
+			get =>
+				new(TermId);
+
+			init =>
+				TermId = value.Value;
+		}
 
 		/// <summary>
-		/// Slug
+		/// TermId
 		/// </summary>
-		public string Slug { get; init; } = string.Empty;
-
-		/// <summary>
-		/// Group
-		/// </summary>
-		public long Group { get; init; }
+		[Id]
+		public long TermId { get; init; }
 	}
 }

@@ -2,7 +2,6 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System;
-using Jeebs.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data.Entities
@@ -10,27 +9,8 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Post entity
 	/// </summary>
-	public abstract record WpPostEntity : IWithId<WpPostId>
+	public abstract record WpPostEntity : WpPostEntityWithId
 	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Ignore]
-		public WpPostId Id
-		{
-			get =>
-				new(PostId);
-
-			init =>
-				PostId = value.Value;
-		}
-
-		/// <summary>
-		/// PostId
-		/// </summary>
-		[Id]
-		public long PostId { get; init; }
-
 		/// <summary>
 		/// AuthorId
 		/// </summary>

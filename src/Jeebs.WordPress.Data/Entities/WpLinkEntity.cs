@@ -2,34 +2,14 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System;
-using Jeebs.Data.Entities;
 
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public abstract record WpLinkEntity : IWithId<WpLinkId>
+	public abstract record WpLinkEntity : WpLinkEntityWithId
 	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Ignore]
-		public WpLinkId Id
-		{
-			get =>
-				new(LinkId);
-
-			init =>
-				LinkId = value.Value;
-		}
-
-		/// <summary>
-		/// LinkId
-		/// </summary>
-		[Id]
-		public long LinkId { get; init; }
-
 		/// <summary>
 		/// Url
 		/// </summary>
