@@ -13,7 +13,6 @@ using NSubstitute;
 using Xunit;
 using static F.WordPressF.DataF.QueryAttachmentsF;
 using static F.WordPressF.DataF.QueryAttachmentsF.Msg;
-using static Jeebs.WordPress.Data.Query;
 
 namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 {
