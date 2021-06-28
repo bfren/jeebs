@@ -96,7 +96,6 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
 			/// <summary>Unable to get posts query</summary>
