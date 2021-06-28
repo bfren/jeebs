@@ -42,6 +42,7 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 				"SELECT " +
 					"`p`.`post_title` AS 'Title', " +
 					"`p`.`post_excerpt` AS 'Description', " +
+					"`pm`.`meta_value` AS 'UrlPath', " +
 					$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`meta_value`) AS 'Url' " +
 				$"FROM `{schema.Post}` AS `p` " +
 					$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +

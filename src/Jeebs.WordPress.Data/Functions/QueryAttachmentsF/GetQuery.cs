@@ -30,6 +30,7 @@ namespace F.WordPressF.DataF
 				"SELECT " +
 					$"`p`.`{schema.Post.Title}` AS '{nameof(WpAttachmentEntity.Title)}', " +
 					$"`p`.`{schema.Post.Excerpt}` AS '{nameof(WpAttachmentEntity.Description)}', " +
+					$"`pm`.`{schema.PostMeta.Value}` AS '{nameof(WpAttachmentEntity.UrlPath)}', " +
 					$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostMeta.Value}`) AS '{nameof(WpAttachmentEntity.Url)}' " +
 				$"FROM `{schema.Post}` AS `p` " +
 					$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`{schema.Post.PostId}` = `pm`.`{schema.PostMeta.PostId}` " +
