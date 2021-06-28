@@ -40,12 +40,14 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 			var virtualUploadsUrl = Rnd.Str;
 			var expected =
 				"SELECT " +
+					"`p`.`ID` AS 'PostId', " +
 					"`p`.`post_title` AS 'Title', " +
 					"`p`.`post_excerpt` AS 'Description', " +
+					"`p`.`guid` AS 'Url', " +
 					"`pm`.`meta_value` AS 'UrlPath', " +
 					$"CONCAT('{virtualUploadsUrl}/', `pm`.`meta_value`) AS 'Url' " +
-				$"FROM `{schema.Post}` AS `p` " +
-					$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +
+				$"FROM `{schema.Post.GetName()}` AS `p` " +
+					$"LEFT JOIN `{schema.PostMeta.GetName()}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +
 				$"WHERE `p`.`ID` IN ({i0},{i1}) " +
 					"AND `pm`.`meta_key` = '_wp_attached_file';"
 			;
