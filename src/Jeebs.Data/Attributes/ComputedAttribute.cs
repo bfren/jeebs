@@ -8,6 +8,6 @@ namespace Jeebs.Data.Entities
 	/// <summary>
 	/// Mark property as Computed
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, Inherited = true, AllowMultiple = false)]
 	public sealed class ComputedAttribute : Attribute { }
 }
