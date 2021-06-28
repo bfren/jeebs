@@ -7,7 +7,7 @@ using static F.WordPressF.DataF.QueryPostsF;
 
 namespace F.WordPressF.DataF.QueryPostsF_Tests
 {
-	public class GetCustomFields
+	public class GetCustomFields_Tests
 	{
 		[Fact]
 		public void No_CustomFields_Returns_Empty_List()
