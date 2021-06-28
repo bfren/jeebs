@@ -39,6 +39,10 @@ namespace Jeebs.WordPress.Data
 			QueryPostsF.ExecuteAsync<T>(Db, page, opt, filters);
 
 		/// <inheritdoc/>
+		public Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId currentId, Query.GetPostsOptions opt) =>
+			QueryPostsF.GetPreviousAndNextAsync(Db, currentId, opt);
+
+		/// <inheritdoc/>
 		public Task<Option<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
 			where T : IWithId<WpPostMetaId> =>
 			QueryPostsMetaF.ExecuteAsync<T>(Db, opt);

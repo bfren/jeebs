@@ -47,6 +47,13 @@ namespace Jeebs.WordPress.Data
 			where T : IWithId<WpPostId>;
 
 		/// <summary>
+		/// Get the Previous and Next posts matching the current query
+		/// </summary>
+		/// <param name="currentId">Current Post ID</param>
+		/// <param name="opt">Function to return query options</param>
+		Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId currentId, Query.GetPostsOptions opt);
+
+		/// <summary>
 		/// Get Posts Meta matching the specified options
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>
