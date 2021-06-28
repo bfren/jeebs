@@ -3,70 +3,64 @@
 
 using System;
 using AppConsoleWp.Bcg;
+using AppConsoleWp.Usa;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 
 namespace AppConsoleWp
 {
-	internal record PostModel : IWithId<WpPostId>
+	internal record PostModel : WpPostEntityWithId
 	{
-		public WpPostId Id { get; init; } = new();
+		public string Title { get; init; } = string.Empty;
 
-		public long PostId { get => Id.Value; init => Id = new(value); }
-
-		public string Title { get; set; } = string.Empty;
-
-		public MetaDictionary Meta { get; set; } = new();
+		public MetaDictionary Meta { get; init; } = new();
 	}
 
 	internal record PostModelWithContent : PostModel
 	{
-		public string Content { get; set; } = string.Empty;
+		public string Content { get; init; } = string.Empty;
 	}
 
-	internal class SermonModel : IWithId<WpPostId>
+	internal record PostModelWithCustomFields : PostModel
 	{
-		public WpPostId Id { get; init; } = new();
-
-		public long PostId { get => Id.Value; init => Id = new(value); }
-
-		public string Title { get; set; } = string.Empty;
-
-		public DateTime PublishedOn { get; set; }
+		public FeaturedImageId FeaturedImage { get; set; } = new();
 	}
 
-	internal class SermonModelWithTaxonomies : SermonModel
+	internal record SermonModel : WpPostEntityWithId
 	{
-		public TermList BibleBooks { get; set; } = new(WpBcg.Taxonomies.BibleBook);
+		public string Title { get; init; } = string.Empty;
 
-		public TermList Series { get; set; } = new(WpBcg.Taxonomies.Series);
+		public DateTime PublishedOn { get; init; }
 	}
 
-	internal class SermonModelWithCustomFields : SermonModel
+	internal record SermonModelWithTaxonomies : SermonModel
 	{
-		public MetaDictionary Meta { get; set; } = new();
+		public TermList BibleBooks { get; init; } = new(WpBcg.Taxonomies.BibleBook);
 
-		public PassageCustomField Passage { get; set; } = new();
-
-		public PdfCustomField? Pdf { get; set; }
-
-		public AudioRecordingCustomField? Audio { get; set; }
-
-		public FirstPreachedCustomField FirstPreached { get; set; } = new();
-
-		public FeedImageCustomField? Image { get; set; }
+		public TermList Series { get; init; } = new(WpBcg.Taxonomies.Series);
 	}
 
-	internal class TaxonomyModel : IWithId<WpTermId>
+	internal record SermonModelWithCustomFields : SermonModel
 	{
-		public WpTermId Id { get; init; } = new();
+		public MetaDictionary Meta { get; init; } = new();
 
-		public long TermId { get => Id.Value; init => Id = new(value); }
+		public PassageCustomField Passage { get; init; } = new();
 
-		public string Title { get; set; } = string.Empty;
+		public PdfCustomField? Pdf { get; init; }
 
-		public long Count { get; set; }
+		public AudioRecordingCustomField? Audio { get; init; }
+
+		public FirstPreachedCustomField FirstPreached { get; init; } = new();
+
+		public FeedImageCustomField? Image { get; init; }
+	}
+
+	internal record TaxonomyModel : WpTermEntityWithId
+	{
+		public string Title { get; init; } = string.Empty;
+
+		public long Count { get; init; }
 	}
 
 	internal record Attachment : WpAttachmentEntity;

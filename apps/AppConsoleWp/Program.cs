@@ -179,6 +179,30 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	);
 
 	//
+	// Get posts with custom fields
+	//
+
+	Console.WriteLine();
+	log.Debug("== Get Posts with Custom Fields ==");
+	await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No posts found.");
+			}
+
+			foreach (var item in x)
+			{
+				log.Debug("Post {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("  - Image: {Image}", item.FeaturedImage.ValueObj);
+			}
+		},
+		none: r => log.Message(r)
+	);
+
+	//
 	// Get sermons with custom fields
 	//
 

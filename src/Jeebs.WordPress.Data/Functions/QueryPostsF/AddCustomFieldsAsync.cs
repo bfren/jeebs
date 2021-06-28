@@ -74,7 +74,7 @@ namespace F.WordPressF.DataF
 				foreach (var info in fields)
 				{
 					// Whether or not the field is required
-					var required = !info.IsNullable();
+					var required = info.GetValue(post) is not null;
 
 					// Get custom field
 					if (GetCustomField(post, info) is ICustomField customField)
