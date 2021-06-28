@@ -71,7 +71,9 @@ namespace Jeebs.Data
 		protected string __<TTable>(TTable table, Expression<Func<TTable, string>> column)
 #pragma warning restore IDE1006 // Naming Styles
 			where TTable : ITable =>
-			GetColumnFromExpression(table, column)
+			GetColumnFromExpression(
+				table, column
+			)
 			.Map(
 				x => Db.Client.Escape(x, true),
 				DefaultHandler
@@ -89,15 +91,7 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			Return(
-				(query, param)
-			)
-			//.Audit(
-			//	some: x => LogQuery(nameof(QueryAsync), x.query, x.param)
-			//)
-			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, type, transaction)
-			);
+			Db.QueryAsync<TModel>(query, param, type, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
@@ -105,7 +99,7 @@ namespace Jeebs.Data
 			object? param,
 			IDbTransaction? transaction = null
 		) =>
-			QueryAsync<TModel>(query, param, CommandType.Text, transaction);
+			Db.QueryAsync<TModel>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
@@ -167,12 +161,7 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			Return(
-				(query, param)
-			)
-			.BindAsync(
-				x => Db.QuerySingleAsync<TModel>(x.query, x.param, type, transaction)
-			);
+			Db.QuerySingleAsync<TModel>(query, param, type, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> QuerySingleAsync<TModel>(
@@ -180,7 +169,7 @@ namespace Jeebs.Data
 			object? param,
 			IDbTransaction? transaction = null
 		) =>
-			QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
+			Db.QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<TModel>> QuerySingleAsync<TModel>(
@@ -206,12 +195,7 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			Return(
-				(query, param)
-			)
-			.BindAsync(
-				x => Db.ExecuteAsync(x.query, x.param, type, transaction)
-			);
+			Db.ExecuteAsync(query, param, type, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<bool>> ExecuteAsync(
@@ -219,7 +203,7 @@ namespace Jeebs.Data
 			object? param,
 			IDbTransaction? transaction = null
 		) =>
-			ExecuteAsync(query, param, CommandType.Text, transaction);
+			Db.ExecuteAsync(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
@@ -228,12 +212,7 @@ namespace Jeebs.Data
 			CommandType type,
 			IDbTransaction? transaction = null
 		) =>
-			Return(
-				(query, param)
-			)
-			.BindAsync(
-				x => Db.ExecuteAsync<TReturn>(x.query, x.param, type, transaction)
-			);
+			Db.ExecuteAsync<TReturn>(query, param, type, transaction);
 
 		/// <inheritdoc/>
 		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
@@ -241,7 +220,7 @@ namespace Jeebs.Data
 			object? param,
 			IDbTransaction? transaction = null
 		) =>
-			ExecuteAsync<TReturn>(query, param, CommandType.Text, transaction);
+			Db.ExecuteAsync<TReturn>(query, param, CommandType.Text, transaction);
 
 		#endregion
 
