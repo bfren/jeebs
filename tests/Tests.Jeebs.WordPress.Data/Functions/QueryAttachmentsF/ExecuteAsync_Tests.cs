@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Config;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
@@ -19,10 +20,9 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 		{
 			// Arrange
 			var db = Substitute.For<IWpDb>();
-			var virtualUploadsUrl = Rnd.Str;
 
 			// Act
-			var result = await ExecuteAsync<WpAttachmentEntity>(db, _ => throw new System.Exception(), virtualUploadsUrl);
+			var result = await ExecuteAsync<WpAttachmentEntity>(db, _ => throw new System.Exception());
 
 			// Assert
 			var none = result.AssertNone();
@@ -33,14 +33,18 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 		public async Task Calls_Db_QueryAsync()
 		{
 			// Arrange
-			var schema = new WpDbSchema(Rnd.Str);
 			var db = Substitute.For<IWpDb>();
+
+			var schema = new WpDbSchema(Rnd.Str);
 			db.Schema.Returns(schema);
+
+			var config = new WpConfig();
+			db.WpConfig.Returns(config);
+
 			var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Lng), new(Rnd.Lng));
-			var virtualUploadsUrl = Rnd.Str;
 
 			// Act
-			var result = await ExecuteAsync<WpAttachmentEntity>(db, opt => opt with { Ids = fileIds }, virtualUploadsUrl);
+			var result = await ExecuteAsync<WpAttachmentEntity>(db, opt => opt with { Ids = fileIds });
 
 			// Assert
 			await db.Received().QueryAsync<WpAttachmentEntity>(Arg.Any<string>(), Arg.Any<object?>(), System.Data.CommandType.Text);

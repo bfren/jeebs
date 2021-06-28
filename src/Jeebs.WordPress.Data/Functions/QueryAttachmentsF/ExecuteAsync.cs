@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -20,8 +18,7 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="T"></typeparam>
 		/// <param name="db">IWpDb</param>
 		/// <param name="opt">Function to return query options</param>
-		/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param>
-		internal static Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, Query.GetAttachmentsOptions opt, string virtualUploadsUrl)
+		internal static Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, Query.GetAttachmentsOptions opt)
 			where T : IAttachment
 		{
 			return
@@ -30,14 +27,13 @@ namespace F.WordPressF.DataF
 					e => new Msg.ErrorGettingQueryAttachmentsOptionsMsg(e)
 				)
 				.Bind(
-					x => GetQuery(db.Schema, x.Ids, virtualUploadsUrl)
+					x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)
 				)
 				.BindAsync(
 					x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text)
 				);
 		}
 
-		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
 			/// <summary>Unable to get attachments query</summary>

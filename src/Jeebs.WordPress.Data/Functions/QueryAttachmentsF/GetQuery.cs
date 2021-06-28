@@ -39,7 +39,6 @@ namespace F.WordPressF.DataF
 			;
 		}
 
-		/// <summary>Messages</summary>
 		public static partial class Msg
 		{
 			/// <summary>No File IDs have been passed to <see cref="GetQuery(IWpDbSchema, IImmutableList{WpPostId}, string)"/></summary>
