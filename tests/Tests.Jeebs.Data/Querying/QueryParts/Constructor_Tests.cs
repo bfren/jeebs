@@ -30,6 +30,7 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 			var table = Substitute.For<ITable>();
 			var parts = new QueryParts(table)
 			{
+				SelectCount = F.Rnd.Flip,
 				Select = Substitute.For<IColumnList>(),
 				InnerJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 				LeftJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
@@ -46,6 +47,7 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 			var result = new QueryParts(parts);
 
 			// Assert
+			Assert.Equal(parts.SelectCount, result.SelectCount);
 			Assert.Same(parts.From, result.From);
 			Assert.Same(parts.Select, result.Select);
 			Assert.Same(parts.InnerJoin, result.InnerJoin);

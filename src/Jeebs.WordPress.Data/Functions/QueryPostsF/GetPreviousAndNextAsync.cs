@@ -40,7 +40,7 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		private record PostWithId([Ignore] WpPostId Id, [Id] long PostId) : IWithId<WpPostId>;
+		private record PostWithId : WpPostEntityWithId;
 
 		public static partial class Msg
 		{

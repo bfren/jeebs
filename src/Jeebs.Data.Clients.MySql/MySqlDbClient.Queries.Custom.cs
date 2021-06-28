@@ -36,13 +36,20 @@ namespace Jeebs.Data.Clients.MySql
 		public override (string query, IQueryParameters param) GetQuery(IQueryParts parts)
 		{
 			// Start query
-			var select = (parts.Select.Count > 0) switch
+			var select = parts.SelectCount switch
 			{
 				true =>
-					GetSelectFromList(this, parts.Select),
+					"COUNT(*)",
 
 				false =>
-					"*"
+					(parts.Select.Count > 0) switch
+					{
+						true =>
+							GetSelectFromList(this, parts.Select),
+
+						false =>
+							"*"
+					}
 			};
 
 			var sql = new StringBuilder($"SELECT {select} FROM {Escape(parts.From)}");

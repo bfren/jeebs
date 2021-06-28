@@ -76,7 +76,7 @@ namespace Jeebs.Mvc.TagHelpers
 			var href = Url + "?p={0}";
 			if (!string.IsNullOrEmpty(Query))
 			{
-				href += $"&{QueryPrefix}={Query}";
+				href += $"&amp;{QueryPrefix}={Query}";
 			}
 
 			// Create the wrapper

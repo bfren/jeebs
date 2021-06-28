@@ -44,7 +44,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public (string query, IQueryParameters param) GetCountQuery(IQueryParts parts) =>
-			GetQuery(new QueryParts(parts) with { Select = new ColumnList() });
+			GetQuery(new QueryParts(parts) with { SelectCount = true });
 
 		/// <inheritdoc/>
 		public abstract (string query, IQueryParameters param) GetQuery(IQueryParts parts);

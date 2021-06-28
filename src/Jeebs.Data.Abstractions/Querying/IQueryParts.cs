@@ -17,6 +17,11 @@ namespace Jeebs.Data.Querying
 		ITable From { get; init; }
 
 		/// <summary>
+		/// If true, tells the query to select a count of rows instead of columns
+		/// </summary>
+		bool SelectCount { get; init; }
+
+		/// <summary>
 		/// Select columns (if empty will select all columns)
 		/// </summary>
 		IColumnList Select { get; init; }

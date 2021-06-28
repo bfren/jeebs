@@ -10,6 +10,9 @@ namespace Jeebs.Data.Querying
 	public sealed record QueryParts(ITable From) : IQueryParts
 	{
 		/// <inheritdoc/>
+		public bool SelectCount { get; init; }
+
+		/// <inheritdoc/>
 		public IColumnList Select { get; init; } =
 			new ColumnList();
 
@@ -52,6 +55,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="parts">IQueryParts</param>
 		public QueryParts(IQueryParts parts) : this(parts.From)
 		{
+			SelectCount = parts.SelectCount;
 			Select = parts.Select;
 			InnerJoin = parts.InnerJoin;
 			LeftJoin = parts.LeftJoin;

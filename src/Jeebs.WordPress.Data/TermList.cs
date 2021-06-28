@@ -27,18 +27,8 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Term Model
 		/// </summary>
-		public abstract record Term : IWithId<WpTermId>
+		public abstract record Term : WpTermEntityWithId
 		{
-			/// <summary>
-			/// TermId
-			/// </summary>
-			public WpTermId Id { get; init; } = new();
-
-			/// <summary>
-			/// TermId
-			/// </summary>
-			public long TermId { get; init; }
-
 			/// <summary>
 			/// Title
 			/// </summary>
@@ -53,12 +43,6 @@ namespace Jeebs.WordPress.Data
 			/// Count
 			/// </summary>
 			public long Count { get; init; }
-
-			/// <summary>
-			/// Display title
-			/// </summary>
-			public override string ToString() =>
-				Title;
 		}
 	}
 }

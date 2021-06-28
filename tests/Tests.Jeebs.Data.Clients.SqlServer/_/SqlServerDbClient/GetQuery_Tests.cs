@@ -80,6 +80,21 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 		}
 
 		[Fact]
+		public void With_Parts_SelectCount_True_Selects_Count()
+		{
+			// Arrange
+			var (client, table) = SqlServerClient_Setup.Get();
+			var parts = new QueryParts(table) with { SelectCount = true };
+			var expected = $"SELECT COUNT(*) FROM [{table.GetName()}]";
+
+			// Act
+			var (query, _) = client.GetQuery(parts);
+
+			// Assert
+			Assert.Equal(expected, query);
+		}
+
+		[Fact]
 		public void With_Parts_Select_Empty_Selects_All()
 		{
 			// Arrange

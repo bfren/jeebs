@@ -315,6 +315,35 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		none: r => log.Message(r)
 	);
 
+	//
+	// Test paging
+	//
+
+	Console.WriteLine();
+	log.Debug("== Test Paging Values ==");
+	await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
+	{
+		SortRandom = true,
+		Maximum = 15
+	})
+	.AuditAsync(
+		some: x =>
+		{
+			if (!x.Any())
+			{
+				log.Error("No posts found.");
+			}
+
+			log.Debug("Pages: {NumberOfPages}", x.Values.Pages);
+			log.Debug("  - Items: {Items}", x.Values.Items);
+			log.Debug("  - First Page: {FirstPage}", x.Values.LowerPage);
+			log.Debug("  - Last Page: {LastPage}", x.Values.UpperPage);
+			log.Debug("  - First Item: {FirstItem}", x.Values.FirstItem);
+			log.Debug("  - Last Item: {LastItem}", x.Values.LastItem);
+		},
+		none: r => log.Message(r)
+	);
+
 	// End
 	Console.WriteLine();
 	log.Debug("Complete.");
