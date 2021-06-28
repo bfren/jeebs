@@ -22,6 +22,12 @@ namespace Jeebs.WordPress.Data
 			where T : IAttachment;
 
 		/// <summary>
+		/// Get filesystem path of specified Attachment
+		/// </summary>
+		/// <param name="fileId">Attachment ID</param>
+		Task<Option<string>> AttachmentFilePathAsync(WpPostId fileId);
+
+		/// <summary>
 		/// Get Posts matching the specified options
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>

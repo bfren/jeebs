@@ -23,7 +23,11 @@ namespace Jeebs.WordPress.Data
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
 			where T : IAttachment =>
-			QueryAttachmentsF.ExecuteAsync<T>(Db, opt, Db.WpConfig.VirtualUploadsUrl);
+			QueryAttachmentsF.ExecuteAsync<T>(Db, opt);
+
+		/// <inheritdoc/>
+		public Task<Option<string>> AttachmentFilePathAsync(WpPostId fileId) =>
+			QueryAttachmentsF.GetFilePathAsync(Db, fileId);
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
