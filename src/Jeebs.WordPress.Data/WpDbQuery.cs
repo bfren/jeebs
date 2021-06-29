@@ -20,41 +20,65 @@ namespace Jeebs.WordPress.Data
 		internal WpDbQuery(IWpDb db, ILog<IWpDbQuery> log) : base(db, log) { }
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
-			where T : IAttachment =>
-			QueryAttachmentsF.ExecuteAsync<T>(Db, opt);
+		public async Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
+			where T : IAttachment
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryAttachmentsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<string>> AttachmentFilePathAsync(WpPostId fileId) =>
-			QueryAttachmentsF.GetFilePathAsync(Db, fileId);
+		public async Task<Option<string>> AttachmentFilePathAsync(WpPostId fileId)
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryAttachmentsF.GetFilePathAsync(Db, w, fileId).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
-			where T : IWithId<WpPostId> =>
-			QueryPostsF.ExecuteAsync<T>(Db, opt, filters);
+		public async Task<Option<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
+			where T : IWithId<WpPostId>
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryPostsF.ExecuteAsync<T>(Db, w, opt, filters).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<IPagedList<T>>> PostsAsync<T>(long page, Query.GetPostsOptions opt, params IContentFilter[] filters)
-			where T : IWithId<WpPostId> =>
-			QueryPostsF.ExecuteAsync<T>(Db, page, opt, filters);
+		public async Task<Option<IPagedList<T>>> PostsAsync<T>(long page, Query.GetPostsOptions opt, params IContentFilter[] filters)
+			where T : IWithId<WpPostId>
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryPostsF.ExecuteAsync<T>(Db, w, page, opt, filters).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId currentId, Query.GetPostsOptions opt) =>
-			QueryPostsF.GetPreviousAndNextAsync(Db, currentId, opt);
+		public async Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt)
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryPostsF.GetPreviousAndNextAsync(Db, w, id, opt).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
-			where T : IWithId<WpPostMetaId> =>
-			QueryPostsMetaF.ExecuteAsync<T>(Db, opt);
+		public async Task<Option<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
+			where T : IWithId<WpPostMetaId>
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryPostsMetaF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
-			where T : IWithId<WpTermId> =>
-			QueryPostsTaxonomyF.ExecuteAsync<T>(Db, opt);
+		public async Task<Option<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
+			where T : IWithId<WpTermId>
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryPostsTaxonomyF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
-			where T : IWithId<WpTermId> =>
-			QueryTermsF.ExecuteAsync<T>(Db, opt);
+		public async Task<Option<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
+			where T : IWithId<WpTermId>
+		{
+			using var w = Db.UnitOfWork;
+			return await QueryTermsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		}
 	}
 }

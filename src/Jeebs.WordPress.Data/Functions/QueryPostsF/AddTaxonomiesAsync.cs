@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
@@ -21,8 +22,9 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Post type</typeparam>
 		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(IWpDb db, TList posts)
+		internal static Task<Option<TList>> AddTaxonomiesAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
@@ -41,7 +43,7 @@ namespace F.WordPressF.DataF
 
 			// Get terms and add them to the posts
 			return QueryPostsTaxonomyF
-				.ExecuteAsync<Term>(db, opt => opt with
+				.ExecuteAsync<Term>(db, w, opt => opt with
 				{
 					PostIds = posts.Select(p => p.Id).ToImmutableList()
 				})

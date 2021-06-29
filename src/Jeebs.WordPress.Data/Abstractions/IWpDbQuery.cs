@@ -49,9 +49,9 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Get the Previous and Next posts matching the current query
 		/// </summary>
-		/// <param name="currentId">Current Post ID</param>
+		/// <param name="id">Current Post ID</param>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId currentId, Query.GetPostsOptions opt);
+		Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt);
 
 		/// <summary>
 		/// Get Posts Meta matching the specified options

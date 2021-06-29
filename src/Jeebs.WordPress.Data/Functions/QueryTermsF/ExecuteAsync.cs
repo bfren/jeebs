@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
@@ -18,8 +19,9 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TModel">Return Model type</typeparam>
 		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="opt">Function to return query options</param>
-		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, Query.GetTermsOptions opt)
+		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, Query.GetTermsOptions opt)
 			where TModel : IWithId<WpTermId> =>
 			Return(
 				() => opt(new Query.TermsOptions(db.Schema)),
@@ -29,7 +31,7 @@ namespace F.WordPressF.DataF
 				x => x.ToParts<TModel>()
 			)
 			.BindAsync(
-				x => db.Query.QueryAsync<TModel>(x)
+				x => db.Query.QueryAsync<TModel>(x, w.Transaction)
 			);
 
 		/// <summary>Messages</summary>

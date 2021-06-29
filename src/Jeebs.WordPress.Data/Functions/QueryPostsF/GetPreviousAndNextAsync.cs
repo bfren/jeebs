@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.Data.Entities;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
@@ -18,17 +19,19 @@ namespace F.WordPressF.DataF
 		/// Get Previous and Next posts, if they exist, for the specified query options
 		/// </summary>
 		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="currentId">Current Post ID</param>
 		/// <param name="opt">Function to return query options</param>
 		internal static Task<Option<(WpPostId? prev, WpPostId? next)>> GetPreviousAndNextAsync(
 			IWpDb db,
+			IUnitOfWork w,
 			WpPostId currentId,
 			Query.GetPostsOptions opt
 		)
 		{
 			return
 				ExecuteAsync<PostWithId>(
-					db, x => opt(x) with { Maximum = null }
+					db, w, x => opt(x) with { Maximum = null }
 				)
 				.MapAsync(
 					x => x.Select(p => p.PostId).ToList(),

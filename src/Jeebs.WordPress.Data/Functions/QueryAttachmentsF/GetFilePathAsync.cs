@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 
@@ -15,12 +16,13 @@ namespace F.WordPressF.DataF
 		/// Get the filesystem path to the specified Attachment
 		/// </summary>
 		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="fileId">File (Post) ID</param>
-		internal static Task<Option<string>> GetFilePathAsync(IWpDb db, WpPostId fileId)
+		internal static Task<Option<string>> GetFilePathAsync(IWpDb db, IUnitOfWork w, WpPostId fileId)
 		{
 			return
 				ExecuteAsync<Attachment>(
-					db, opt => opt with { Ids = ImmutableList.Create(fileId) }
+					db, w, opt => opt with { Ids = ImmutableList.Create(fileId) }
 				)
 				.UnwrapAsync(
 					x => x.Single<Attachment>(

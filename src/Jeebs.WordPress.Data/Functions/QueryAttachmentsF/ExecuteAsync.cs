@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using static F.OptionF;
 
@@ -17,8 +18,9 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="opt">Function to return query options</param>
-		internal static Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, Query.GetAttachmentsOptions opt)
+		internal static Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, Query.GetAttachmentsOptions opt)
 			where T : IAttachment
 		{
 			return
@@ -30,7 +32,7 @@ namespace F.WordPressF.DataF
 					x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)
 				)
 				.BindAsync(
-					x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text)
+					x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text, w.Transaction)
 				);
 		}
 

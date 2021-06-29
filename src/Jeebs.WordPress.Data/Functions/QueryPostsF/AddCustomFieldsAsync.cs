@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
@@ -20,9 +21,10 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="db">IWpDbQuery</param>
+		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, TList posts)
+		internal static Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
@@ -42,7 +44,7 @@ namespace F.WordPressF.DataF
 			// Get terms and add them to the posts
 			return GetMetaDictionary<TModel>()
 				.BindAsync(
-					x => HydrateAsync(db, posts, x, fields)
+					x => HydrateAsync(db, w, posts, x, fields)
 				);
 		}
 
@@ -51,12 +53,14 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="db">IWpDbQuery</param>
+		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="posts">Posts</param>
 		/// <param name="meta">Meta property</param>
 		/// <param name="fields">Custom Fields</param>
 		internal static async Task<Option<TList>> HydrateAsync<TList, TModel>(
 			IWpDb db,
+			IUnitOfWork w,
 			TList posts,
 			Meta<TModel> meta,
 			List<PropertyInfo> fields
@@ -80,7 +84,7 @@ namespace F.WordPressF.DataF
 					if (GetCustomField(post, info) is ICustomField customField)
 					{
 						// Hydrate the field
-						var result = await customField.HydrateAsync(db, metaDict, required).ConfigureAwait(false);
+						var result = await customField.HydrateAsync(db, w, metaDict, required).ConfigureAwait(false);
 
 						// If it failed and it's required, return None
 						if (result is None<bool> none && required)

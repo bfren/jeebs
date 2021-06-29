@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
@@ -18,9 +19,10 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="posts">Posts</param>
 		/// <param name="filters">Optional content filters</param>
-		internal static Task<Option<TList>> Process<TList, TModel>(IWpDb db, TList posts, params IContentFilter[] filters)
+		internal static Task<Option<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
@@ -29,13 +31,13 @@ namespace F.WordPressF.DataF
 					posts
 				)
 				.BindAsync(
-					x => AddMetaAsync<TList, TModel>(db, x)
+					x => AddMetaAsync<TList, TModel>(db, w, x)
 				)
 				.BindAsync(
-					x => AddCustomFieldsAsync<TList, TModel>(db, x)
+					x => AddCustomFieldsAsync<TList, TModel>(db, w, x)
 				)
 				.BindAsync(
-					x => AddTaxonomiesAsync<TList, TModel>(db, x)
+					x => AddTaxonomiesAsync<TList, TModel>(db, w, x)
 				)
 				.SwitchIfAsync(
 					_ => filters.Length > 0,

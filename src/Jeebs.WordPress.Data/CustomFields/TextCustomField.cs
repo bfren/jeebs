@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs.Data;
 using static F.OptionF;
 
 namespace Jeebs.WordPress.Data
@@ -28,7 +29,7 @@ namespace Jeebs.WordPress.Data
 		protected TextCustomField(string key) : base(key, string.Empty) { }
 
 		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 		{
 			// If meta contains the key, return it
 			if (meta.TryGetValue(Key, out string? value))

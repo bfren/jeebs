@@ -2,6 +2,7 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System.Threading.Tasks;
+using Jeebs.Data;
 
 namespace Jeebs.WordPress.Data
 {
@@ -28,7 +29,7 @@ namespace Jeebs.WordPress.Data
 			(Key, ValueObj) = (key, value);
 
 		/// <inheritdoc/>
-		public abstract Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired);
+		public abstract Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
 
 		/// <summary>
 		/// Return the value, or post_meta key (instead of the class name)

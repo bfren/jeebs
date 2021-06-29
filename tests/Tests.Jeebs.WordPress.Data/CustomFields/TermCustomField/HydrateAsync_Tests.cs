@@ -2,6 +2,7 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System.Threading.Tasks;
+using Jeebs.Data;
 using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.TermCustomField;
@@ -16,12 +17,13 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 		{
 			// Arrange
 			var db = Substitute.For<IWpDb>();
+			var unitOfWork = Substitute.For<IUnitOfWork>();
 			var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
 			var key = F.Rnd.Str;
-			var field = new Test(key);
+			var field = new Test(Substitute.For<IQueryTerms>(), key);
 
 			// Act
-			var result = await field.HydrateAsync(db, meta, true);
+			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 			// Assert
 			var none = result.AssertNone();
@@ -35,11 +37,12 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 		{
 			// Arrange
 			var db = Substitute.For<IWpDb>();
+			var unitOfWork = Substitute.For<IUnitOfWork>();
 			var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-			var field = new Test(F.Rnd.Str);
+			var field = new Test(Substitute.For<IQueryTerms>(), F.Rnd.Str);
 
 			// Act
-			var result = await field.HydrateAsync(db, meta, false);
+			var result = await field.HydrateAsync(db, unitOfWork, meta, false);
 
 			// Assert
 			result.AssertFalse();
@@ -53,19 +56,20 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 			var t1 = new Term();
 			var terms = new[] { t0, t1 };
 
-			var query = Substitute.For<IWpDbQuery>();
-			query.TermsAsync<Term>(Arg.Any<Query.GetTermsOptions>()).Returns(terms);
-
 			var db = Substitute.For<IWpDb>();
-			db.Query.Returns(query);
+			var unitOfWork = Substitute.For<IUnitOfWork>();
 
 			var key = F.Rnd.Str;
 			var value = F.Rnd.Lng;
 			var meta = new MetaDictionary { { key, value.ToString() } };
-			var field = new Test(key);
+
+			var queryTerms = Substitute.For<IQueryTerms>();
+			queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<Query.GetTermsOptions>()).Returns(terms);
+
+			var field = new Test(queryTerms, key);
 
 			// Act
-			var result = await field.HydrateAsync(db, meta, true);
+			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 			// Assert
 			var none = result.AssertNone();
@@ -80,18 +84,19 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 			var term = new Term();
 			var terms = new[] { term };
 
-			var query = Substitute.For<IWpDbQuery>();
-			query.TermsAsync<Term>(Arg.Any<Query.GetTermsOptions>()).Returns(terms);
-
 			var db = Substitute.For<IWpDb>();
-			db.Query.Returns(query);
+			var unitOfWork = Substitute.For<IUnitOfWork>();
 
 			var key = F.Rnd.Str;
 			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
-			var field = new Test(key);
+
+			var queryTerms = Substitute.For<IQueryTerms>();
+			queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<Query.GetTermsOptions>()).Returns(terms);
+
+			var field = new Test(queryTerms, key);
 
 			// Act
-			var result = await field.HydrateAsync(db, meta, true);
+			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 			// Assert
 			result.AssertTrue();
@@ -100,7 +105,7 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 
 		public class Test : TermCustomField
 		{
-			public Test(string key) : base(key) { }
+			public Test(IQueryTerms queryTerms, string key) : base(queryTerms, key) { }
 		}
 	}
 }

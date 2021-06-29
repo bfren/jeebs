@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using F.WordPressF.DataF;
+using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 using static F.OptionF;
@@ -15,11 +17,19 @@ namespace Jeebs.WordPress.Data
 	/// </summary>
 	public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 	{
-		/// <inheritdoc/>
-		protected AttachmentCustomField(string key) : base(key, new Attachment()) { }
+		/// <summary>
+		/// IQueryPosts
+		/// </summary>
+		protected IQueryPosts QueryPosts { get; private init; }
 
 		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
+		protected AttachmentCustomField(string key) : this(new Query.Posts(), key) { }
+
+		internal AttachmentCustomField(IQueryPosts queryPosts, string key) : base(key, new Attachment()) =>
+			QueryPosts = queryPosts;
+
+		/// <inheritdoc/>
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 		{
 			// First, get the Attachment Post ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -47,10 +57,18 @@ namespace Jeebs.WordPress.Data
 					x => ParseAttachmentPostId(GetType(), x)
 				)
 				.BindAsync(
-					x => GetAttachment(db, x)
+					x => QueryPosts.ExecuteAsync<Attachment>(db, w, opt => opt with
+					{
+						Id = x,
+						Type = PostType.Attachment,
+						Status = PostStatus.Inherit,
+						Maximum = 1
+					})
 				)
 				.UnwrapAsync(
-					x => x.Single<Attachment>(tooMany: () => new Msg.MultipleAttachmentsFoundMsg(ValueStr))
+					x => x.Single<Attachment>(
+						tooMany: () => new Msg.MultipleAttachmentsFoundMsg(ValueStr)
+					)
 				)
 				.MapAsync(
 					x =>
@@ -87,20 +105,6 @@ namespace Jeebs.WordPress.Data
 
 			return new WpPostId(attachmentPostId);
 		}
-
-		/// <summary>
-		/// Get the Attachment by Post ID
-		/// </summary>
-		/// <param name="db">IWpDb</param>
-		/// <param name="attachmentPostId">Post ID</param>
-		internal static Task<Option<IEnumerable<Attachment>>> GetAttachment(IWpDb db, WpPostId attachmentPostId) =>
-			db.Query.PostsAsync<Attachment>(opt => opt with
-			{
-				Id = attachmentPostId,
-				Type = PostType.Attachment,
-				Status = PostStatus.Inherit,
-				Maximum = 1
-			});
 
 		/// <inheritdoc/>
 		protected override string GetValueAsString() =>

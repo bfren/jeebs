@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using F.WordPressF.DataF;
+using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
@@ -14,11 +16,19 @@ namespace Jeebs.WordPress.Data
 	/// </summary>
 	public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
-		/// <inheritdoc/>
-		protected TermCustomField(string key) : base(key, new Term()) { }
+		/// <summary>
+		/// IQueryTerms
+		/// </summary>
+		protected IQueryTerms QueryTerms { get; private init; }
 
 		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, MetaDictionary meta, bool isRequired)
+		protected TermCustomField(string key) : this(new Query.Terms(), key) { }
+
+		internal TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
+			QueryTerms = queryTerms;
+
+		/// <inheritdoc/>
+		public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 		{
 			// First, get the Term ID from the meta dictionary
 			// If meta doesn't contain the key and this is a required field, return failure
@@ -46,10 +56,12 @@ namespace Jeebs.WordPress.Data
 					x => ParseTermId(GetType(), x)
 				)
 				.BindAsync(
-					x => GetTerms(db, x)
+					x => QueryTerms.ExecuteAsync<Term>(db, w, opt => opt with { Id = x })
 				)
 				.UnwrapAsync(
-					x => x.Single<Term>(tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr))
+					x => x.Single<Term>(
+						tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr)
+					)
 				)
 				.MapAsync(
 					x =>
@@ -75,14 +87,6 @@ namespace Jeebs.WordPress.Data
 
 			return new WpTermId(termId);
 		}
-
-		/// <summary>
-		/// Get the Term by ID
-		/// </summary>
-		/// <param name="db">IWpDb</param>
-		/// <param name="termId">Term ID</param>
-		internal static Task<Option<IEnumerable<Term>>> GetTerms(IWpDb db, WpTermId termId) =>
-			db.Query.TermsAsync<Term>(opt => opt with { Id = termId });
 
 		/// <summary>
 		/// Return Term Title

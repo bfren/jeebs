@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.Data;
 using Jeebs.Linq;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
@@ -21,7 +22,7 @@ namespace F.WordPressF.DataF
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="db">IWpDbQueIWpDbry</param>
 		/// <param name="posts">Posts</param>
-		internal static Task<Option<TList>> AddMetaAsync<TList, TModel>(IWpDb db, TList posts)
+		internal static Task<Option<TList>> AddMetaAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 			where TList : IEnumerable<TModel>
 			where TModel : IWithId<WpPostId>
 		{
@@ -35,7 +36,7 @@ namespace F.WordPressF.DataF
 			return GetMetaDictionary<TModel>()
 				.SwitchAsync(
 					some: x =>
-						from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, opt => opt with
+						from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, w, opt => opt with
 						{
 							PostIds = posts.Select(p => p.Id).ToImmutableList()
 						})
