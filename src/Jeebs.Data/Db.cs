@@ -124,10 +124,6 @@ namespace Jeebs.Data
 			.MapAsync(
 				x => transaction.Connection.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.QueryExceptionMsg(e)
-			)
-			.SwitchIfAsync(
-				x => x.Any(),
-				_ => new Msg.QueryItemsNotFoundMsg()
 			);
 
 		/// <inheritdoc/>
@@ -243,9 +239,6 @@ namespace Jeebs.Data
 			/// <summary>Error running QueryAsync</summary>
 			/// <param name="Exception">Exception object</param>
 			public sealed record QueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
-
-			/// <summary>The query returned any empty list</summary>
-			public sealed record QueryItemsNotFoundMsg : NotFoundMsg { }
 
 			/// <summary>Error running QuerySingleAsync</summary>
 			/// <param name="Exception">Exception object</param>
