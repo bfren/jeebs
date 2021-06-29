@@ -26,12 +26,7 @@ namespace Jeebs.Auth
 		public AuthUserRepository(IAuthDb db, ILog<AuthUserRepository> log) : base(db, log) { }
 
 		/// <inheritdoc/>
-		public Task<Option<AuthUserId>> CreateAsync(
-			string email,
-			string password,
-			string? friendlyName,
-			IDbTransaction? transaction = null
-		)
+		public Task<Option<AuthUserId>> CreateAsync(string email, string password, string? friendlyName)
 		{
 			var user = new AuthUserEntity
 			{
@@ -41,7 +36,7 @@ namespace Jeebs.Auth
 				IsEnabled = true
 			};
 
-			return CreateAsync(user, transaction);
+			return CreateAsync(user);
 		}
 
 		/// <inheritdoc/>
@@ -51,7 +46,7 @@ namespace Jeebs.Auth
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction? transaction = null) =>
-			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure, transaction);
+		public Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId) =>
+			Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
 	}
 }

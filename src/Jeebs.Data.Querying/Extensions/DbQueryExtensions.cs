@@ -14,51 +14,82 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	public static class DbQueryExtensions
 	{
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		public static async Task<Option<IPagedList<T>>> QueryAsync<T>(
+			this IDbQuery @this,
+			long page,
+			Func<IQueryBuilder, IQueryBuilderWithFrom> builder
+		)
+		{
+			using var w = @this.UnitOfWork;
+			return await QueryAsync<T>(@this, page, builder, w.Transaction).ConfigureAwait(false);
+		}
+
 		/// <summary>
 		/// Use a fluent <see cref="IQueryBuilder"/> to create a query to run against the database
 		/// </summary>
-		/// <typeparam name="TModel">Return model type</typeparam>
+		/// <typeparam name="T">Return model type</typeparam>
 		/// <param name="this">IDbQuery</param>
 		/// <param name="page">Page number</param>
 		/// <param name="builder">Query builder</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
-		public static Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
+		/// <param name="transaction">Database transaction</param>
+		public static Task<Option<IPagedList<T>>> QueryAsync<T>(
 			this IDbQuery @this,
 			long page,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
-			IDbTransaction? transaction = null
+			IDbTransaction transaction
 		) =>
-			Build<TModel>(
+			Build<T>(
 				builder
 			)
 			.BindAsync(
-				x => @this.QueryAsync<TModel>(page, x, transaction)
+				x => @this.QueryAsync<T>(page, x, transaction)
 			);
 
-		/// <inheritdoc cref="QueryAsync{TModel}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction?)"/>
-		public static Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		public static async Task<Option<IEnumerable<T>>> QueryAsync<T>(
+			this IDbQuery @this,
+			Func<IQueryBuilder, IQueryBuilderWithFrom> builder
+		)
+		{
+			using var w = @this.UnitOfWork;
+			return await QueryAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		public static Task<Option<IEnumerable<T>>> QueryAsync<T>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
-			IDbTransaction? transaction = null
+			IDbTransaction transaction
 		) =>
-			Build<TModel>(
+			Build<T>(
 				builder
 			)
 			.BindAsync(
-				x => @this.QueryAsync<TModel>(x, transaction)
+				x => @this.QueryAsync<T>(x, transaction)
 			);
 
-		/// <inheritdoc cref="QueryAsync{TModel}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction?)"/>
-		public static Task<Option<TModel>> QuerySingleAsync<TModel>(
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		public static async Task<Option<T>> QuerySingleAsync<T>(
+			this IDbQuery @this,
+			Func<IQueryBuilder, IQueryBuilderWithFrom> builder
+		)
+		{
+			using var w = @this.UnitOfWork;
+			return await QuerySingleAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		public static Task<Option<T>> QuerySingleAsync<T>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
-			IDbTransaction? transaction = null
+			IDbTransaction transaction
 		) =>
-			Build<TModel>(
+			Build<T>(
 				builder
 			)
 			.BindAsync(
-				x => @this.QuerySingleAsync<TModel>(x, transaction)
+				x => @this.QuerySingleAsync<T>(x, transaction)
 			);
 	}
 }

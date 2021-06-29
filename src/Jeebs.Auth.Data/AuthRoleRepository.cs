@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
@@ -24,7 +23,7 @@ namespace Jeebs.Auth
 		public AuthRoleRepository(IAuthDb db, ILog<AuthRoleRepository> log) : base(db, log) { }
 
 		/// <inheritdoc/>
-		public Task<Option<AuthRoleId>> CreateAsync(string name, IDbTransaction? transaction = null) =>
-			CreateAsync(new AuthRoleEntity { Name = name }, transaction);
+		public Task<Option<AuthRoleId>> CreateAsync(string name) =>
+			CreateAsync(new AuthRoleEntity { Name = name });
 	}
 }

@@ -84,16 +84,23 @@ namespace Jeebs.Data
 		#region Custom Queries
 
 		/// <inheritdoc/>
-		public virtual Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+		public virtual async Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
 			params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-		) =>
-			Db.Client.GetQuery<TEntity, TModel>(predicates)
-			.Audit(
-				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
-			)
-			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text)
-			);
+		)
+		{
+			using var w = Db.UnitOfWork;
+			return await
+				Db.Client.GetQuery<TEntity, TModel>(
+					predicates
+				)
+				.Audit(
+					some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
+				)
+				.BindAsync(
+					x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, w.Transaction)
+				)
+				.ConfigureAwait(false);
+		}
 
 		/// <inheritdoc/>
 		public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
@@ -111,7 +118,14 @@ namespace Jeebs.Data
 		#region CRUD Queries
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction? transaction = null) =>
+		public virtual async Task<Option<TId>> CreateAsync(TEntity entity)
+		{
+			using var w = Db.UnitOfWork;
+			return await CreateAsync(entity, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
 			Db.Client.GetCreateQuery<TEntity>()
 			.Audit(
 				some: x => LogFunc(nameof(CreateAsync), x, entity)
@@ -121,7 +135,14 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction? transaction = null) =>
+		public virtual async Task<Option<TModel>> RetrieveAsync<TModel>(TId id)
+		{
+			using var w = Db.UnitOfWork;
+			return await RetrieveAsync<TModel>(id, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
 			Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 			.Audit(
 				some: x => LogFunc(nameof(RetrieveAsync), x, id)
@@ -131,7 +152,15 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction? transaction = null)
+		public virtual async Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+			where TModel : IWithId
+		{
+			using var w = Db.UnitOfWork;
+			return await UpdateAsync(model, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 			where TModel : IWithId =>
 			Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 			.Audit(
@@ -142,7 +171,14 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public virtual Task<Option<bool>> DeleteAsync(TId id, IDbTransaction? transaction = null) =>
+		public virtual async Task<Option<bool>> DeleteAsync(TId id)
+		{
+			using var w = Db.UnitOfWork;
+			return await DeleteAsync(id, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public virtual Task<Option<bool>> DeleteAsync(TId id, IDbTransaction transaction) =>
 			Db.Client.GetDeleteQuery<TEntity>(id.Value)
 			.Audit(
 				some: x => LogFunc(nameof(DeleteAsync), x, id)

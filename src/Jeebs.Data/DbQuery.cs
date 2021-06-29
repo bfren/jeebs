@@ -85,28 +85,30 @@ namespace Jeebs.Data
 		#region QueryAsync
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			string query,
-			object? param,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
-			Db.QueryAsync<TModel>(query, param, type, transaction);
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type) =>
+			Db.QueryAsync<T>(query, param, type);
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			string query,
-			object? param,
-			IDbTransaction? transaction = null
-		) =>
-			Db.QueryAsync<TModel>(query, param, CommandType.Text, transaction);
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+			Db.QueryAsync<T>(query, param, type, transaction);
 
 		/// <inheritdoc/>
-		public Task<Option<IPagedList<TModel>>> QueryAsync<TModel>(
-			long page,
-			IQueryParts parts,
-			IDbTransaction? transaction = null
-		) =>
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param) =>
+			Db.QueryAsync<T>(query, param, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, IDbTransaction transaction) =>
+			Db.QueryAsync<T>(query, param, CommandType.Text, transaction);
+
+		/// <inheritdoc/>
+		public async Task<Option<IPagedList<T>>> QueryAsync<T>(long page, IQueryParts parts)
+		{
+			using var w = UnitOfWork;
+			return await QueryAsync<T>(page, parts, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<IPagedList<T>>> QueryAsync<T>(long page, IQueryParts parts, IDbTransaction transaction) =>
 			Return(
 				() => Db.Client.GetCountQuery(parts),
 				e => new Msg.ErrorGettingCountQueryFromPartsExceptionMsg(e)
@@ -129,25 +131,29 @@ namespace Jeebs.Data
 						e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 					)
 					.BindAsync(
-						x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+						x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
 					)
 					.MapAsync(
-						x => (IPagedList<TModel>)new PagedList<TModel>(pagingValues, x),
+						x => (IPagedList<T>)new PagedList<T>(pagingValues, x),
 						DefaultHandler
 					)
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			IQueryParts parts,
-			IDbTransaction? transaction = null
-		) =>
+		public async Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
+		{
+			using var w = UnitOfWork;
+			return await QueryAsync<T>(parts, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
 			Return(
 				() => Db.Client.GetQuery(parts),
 				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
 			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+				x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
 			);
 
 		#endregion
@@ -155,33 +161,36 @@ namespace Jeebs.Data
 		#region QuerySingleAsync
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(
-			string query,
-			object? param,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
-			Db.QuerySingleAsync<TModel>(query, param, type, transaction);
+		public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type) =>
+			Db.QuerySingleAsync<T>(query, param, type);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(
-			string query,
-			object? param,
-			IDbTransaction? transaction = null
-		) =>
-			Db.QuerySingleAsync<TModel>(query, param, CommandType.Text, transaction);
+		public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+			Db.QuerySingleAsync<T>(query, param, type, transaction);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(
-			IQueryParts parts,
-			IDbTransaction? transaction = null
-		) =>
+		public Task<Option<T>> QuerySingleAsync<T>(string query, object? param) =>
+			Db.QuerySingleAsync<T>(query, param, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, IDbTransaction transaction) =>
+			Db.QuerySingleAsync<T>(query, param, CommandType.Text, transaction);
+
+		/// <inheritdoc/>
+		public async Task<Option<T>> QuerySingleAsync<T>(IQueryParts parts)
+		{
+			using var w = UnitOfWork;
+			return await QuerySingleAsync<T>(parts, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
 			Return(
 				() => Db.Client.GetQuery(parts),
 				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
 			.BindAsync(
-				x => Db.QuerySingleAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+				x => Db.QuerySingleAsync<T>(x.query, x.param, CommandType.Text, transaction)
 			);
 
 		#endregion
@@ -189,38 +198,36 @@ namespace Jeebs.Data
 		#region ExecuteAsync
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> ExecuteAsync(
-			string query,
-			object? param,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
+		public Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type) =>
+			Db.ExecuteAsync(query, param, type);
+
+		/// <inheritdoc/>
+		public Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
 			Db.ExecuteAsync(query, param, type, transaction);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> ExecuteAsync(
-			string query,
-			object? param,
-			IDbTransaction? transaction = null
-		) =>
+		public Task<Option<bool>> ExecuteAsync(string query, object? param) =>
+			Db.ExecuteAsync(query, param, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<Option<bool>> ExecuteAsync(string query, object? param, IDbTransaction transaction) =>
 			Db.ExecuteAsync(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
-		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
-			string query,
-			object? param,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
-			Db.ExecuteAsync<TReturn>(query, param, type, transaction);
+		public Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type) =>
+			Db.ExecuteAsync<T>(query, param, type);
 
 		/// <inheritdoc/>
-		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
-			string query,
-			object? param,
-			IDbTransaction? transaction = null
-		) =>
-			Db.ExecuteAsync<TReturn>(query, param, CommandType.Text, transaction);
+		public Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+			Db.ExecuteAsync<T>(query, param, type, transaction);
+
+		/// <inheritdoc/>
+		public Task<Option<T>> ExecuteAsync<T>(string query, object? param) =>
+			Db.ExecuteAsync<T>(query, param, CommandType.Text);
+
+		/// <inheritdoc/>
+		public Task<Option<T>> ExecuteAsync<T>(string query, object? param, IDbTransaction transaction) =>
+			Db.ExecuteAsync<T>(query, param, CommandType.Text, transaction);
 
 		#endregion
 

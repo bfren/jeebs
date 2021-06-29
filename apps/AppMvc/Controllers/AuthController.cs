@@ -31,15 +31,13 @@ namespace AppMvc.Controllers
 
 		public async Task<IActionResult> InsertTestData()
 		{
-			using var w = Auth.User.UnitOfWork;
-
 			var userId = await (
-				from user in Auth.User.CreateAsync("ben@bcgdesign.com", "fred", "Ben", w.Transaction)
-				from r1 in Auth.Role.CreateAsync("One", w.Transaction)
-				from r2 in Auth.Role.CreateAsync("Two", w.Transaction)
-				from r3 in Auth.Role.CreateAsync("Three", w.Transaction)
-				from ur1 in Auth.UserRole.CreateAsync(user, r1, w.Transaction)
-				from ur2 in Auth.UserRole.CreateAsync(user, r2, w.Transaction)
+				from user in Auth.User.CreateAsync("ben@bcgdesign.com", "fred", "Ben")
+				from r1 in Auth.Role.CreateAsync("One")
+				from r2 in Auth.Role.CreateAsync("Two")
+				from r3 in Auth.Role.CreateAsync("Three")
+				from ur1 in Auth.UserRole.CreateAsync(user, r1)
+				from ur2 in Auth.UserRole.CreateAsync(user, r2)
 				select user
 			);
 

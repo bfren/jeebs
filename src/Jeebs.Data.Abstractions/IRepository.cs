@@ -46,36 +46,49 @@ namespace Jeebs.Data
 
 		#region CRUD Queries
 
+		/// <inheritdoc cref="CreateAsync(TEntity, IDbTransaction)"/>
+		Task<Option<TId>> CreateAsync(TEntity entity);
+
 		/// <summary>
 		/// Create an entity
 		/// </summary>
 		/// <param name="entity">Entity to create</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
-		Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction? transaction = null);
+		/// <param name="transaction">Database transaction</param>
+		Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction transaction);
+
+		/// <inheritdoc cref="RetrieveAsync{TModel}(TId, IDbTransaction)"/>
+		Task<Option<TModel>> RetrieveAsync<TModel>(TId id);
 
 		/// <summary>
 		/// Retrieve an entity
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="id">Entity ID</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
-		Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction? transaction = null);
+		/// <param name="transaction">Database transaction</param>
+		Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction);
+
+		/// <inheritdoc cref="UpdateAsync{TModel}(TModel, IDbTransaction)"/>
+		Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+			where TModel : IWithId;
 
 		/// <summary>
 		/// Update an entity with the values in <paramref name="model"/>
 		/// </summary>
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="model">Model with updated values</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
-		Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction? transaction = null)
+		/// <param name="transaction">Database transaction</param>
+		Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 			where TModel : IWithId;
+
+		/// <inheritdoc cref="DeleteAsync(TId, IDbTransaction)"/>
+		Task<Option<bool>> DeleteAsync(TId id);
 
 		/// <summary>
 		/// Delete an entity
 		/// </summary>
 		/// <param name="id">Entity ID</param>
-		/// <param name="transaction">[Optional] Database transaction</param>
-		Task<Option<bool>> DeleteAsync(TId id, IDbTransaction? transaction = null);
+		/// <param name="transaction">Database transaction</param>
+		Task<Option<bool>> DeleteAsync(TId id, IDbTransaction transaction);
 
 		#endregion
 	}

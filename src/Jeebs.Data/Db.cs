@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config;
-using Jeebs.Data.Exceptions;
 using Jeebs.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
 using static F.OptionF;
@@ -16,7 +15,7 @@ using static F.OptionF;
 namespace Jeebs.Data
 {
 	/// <inheritdoc cref="IDb"/>
-	public abstract class Db : IDb, IDisposable
+	public abstract class Db : IDb
 	{
 		/// <inheritdoc/>
 		public IDbClient Client { get; private init; }
@@ -26,8 +25,17 @@ namespace Jeebs.Data
 		{
 			get
 			{
+				// Connect to the database
+				Log.Debug("Connecting to database.");
+				var connection = Client.Connect(Config.ConnectionString);
+				if (connection.State != ConnectionState.Open)
+				{
+					connection.Open();
+				}
+
+				// Create Unit of Work
 				Log.Debug("Starting new Unit of Work.");
-				return new UnitOfWork(Connection.BeginTransaction(), Log);
+				return new UnitOfWork(connection.BeginTransaction(), Log.ForContext<UnitOfWork>());
 			}
 		}
 
@@ -37,14 +45,12 @@ namespace Jeebs.Data
 		public DbConnectionConfig Config { get; private init; }
 
 		/// <summary>
-		/// IDbConnection object
-		/// </summary>
-		private IDbConnection Connection { get; init; }
-
-		/// <summary>
 		/// ILog (should be given a context of the implementing class)
 		/// </summary>
 		protected ILog Log { get; private init; }
+
+		internal ILog LogTest =>
+			Log;
 
 		/// <summary>
 		/// Inject database connection and connect to client
@@ -54,7 +60,7 @@ namespace Jeebs.Data
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
 		/// <param name="name">Connection name</param>
 		protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
-			this(client, config.Value.GetConnection(name), log, name)
+			this(client, config.Value.GetConnection(name), log)
 		{ }
 
 		/// <summary>
@@ -63,22 +69,11 @@ namespace Jeebs.Data
 		/// <param name="client">Database client</param>
 		/// <param name="config">Database configuration</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		/// <param name="name">Connection name</param>
-		protected Db(IDbClient client, DbConnectionConfig config, ILog log, string name)
+		protected Db(IDbClient client, DbConnectionConfig config, ILog log)
 		{
 			Client = client;
 			Config = config;
 			Log = log;
-
-			try
-			{
-				Connection = client.Connect(Config.ConnectionString);
-				Connection.Open();
-			}
-			catch (Exception e)
-			{
-				throw new UnableToConnectToDatabaseException($"Unable to connect to database {name}.", e);
-			}
 		}
 
 		/// <summary>
@@ -112,12 +107,14 @@ namespace Jeebs.Data
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-			string query,
-			object? parameters,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
+		public async Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters, CommandType type)
+		{
+			using var w = UnitOfWork;
+			return await QueryAsync<T>(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
 			Return(
 				(query, parameters: parameters ?? new object(), type)
 			)
@@ -125,7 +122,7 @@ namespace Jeebs.Data
 				some: LogQuery
 			)
 			.MapAsync(
-				x => Connection.QueryAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
+				x => transaction.Connection.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.QueryExceptionMsg(e)
 			)
 			.SwitchIfAsync(
@@ -134,12 +131,14 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<TModel>> QuerySingleAsync<TModel>(
-			string query,
-			object? parameters,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
+		public async Task<Option<T>> QuerySingleAsync<T>(string query, object? parameters, CommandType type)
+		{
+			using var w = UnitOfWork;
+			return await QuerySingleAsync<T>(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<T>> QuerySingleAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
 			Return(
 				(query, parameters: parameters ?? new object(), type)
 			)
@@ -147,7 +146,7 @@ namespace Jeebs.Data
 				some: LogQuery
 			)
 			.MapAsync(
-				x => Connection.QuerySingleOrDefaultAsync<TModel>(x.query, x.parameters, transaction, commandType: x.type),
+				x => transaction.Connection.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.QuerySingleExceptionMsg(e)
 			)
 			.IfNullAsync(
@@ -155,12 +154,14 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<bool>> ExecuteAsync(
-			string query,
-			object? parameters,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
+		public async Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type)
+		{
+			using var w = UnitOfWork;
+			return await ExecuteAsync(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
 			Return(
 				(query, parameters: parameters ?? new object(), type)
 			)
@@ -168,7 +169,7 @@ namespace Jeebs.Data
 				some: LogQuery
 			)
 			.MapAsync(
-				x => Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
+				x => transaction.Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.ExecuteExceptionMsg(e)
 			)
 			.MapAsync(
@@ -177,12 +178,14 @@ namespace Jeebs.Data
 			);
 
 		/// <inheritdoc/>
-		public Task<Option<TReturn>> ExecuteAsync<TReturn>(
-			string query,
-			object? parameters,
-			CommandType type,
-			IDbTransaction? transaction = null
-		) =>
+		public async Task<Option<T>> ExecuteAsync<T>(string query, object? parameters, CommandType type)
+		{
+			using var w = UnitOfWork;
+			return await ExecuteAsync<T>(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		}
+
+		/// <inheritdoc/>
+		public Task<Option<T>> ExecuteAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
 			Return(
 				(query, parameters: parameters ?? new object(), type)
 			)
@@ -190,47 +193,9 @@ namespace Jeebs.Data
 				some: LogQuery
 			)
 			.MapAsync(
-				x => Connection.ExecuteScalarAsync<TReturn>(x.query, x.parameters, transaction, commandType: x.type),
+				x => transaction.Connection.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 				e => new Msg.ExecuteScalarExceptionMsg(e)
 			);
-
-		#region Dispose
-
-		/// <summary>
-		/// Set to true if the object has been disposed
-		/// </summary>
-		private bool disposed = false;
-
-		/// <summary>
-		/// Suppress garbage collection and call <see cref="Dispose(bool)"/>
-		/// https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
-		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		/// <summary>
-		/// Dispose managed resources
-		/// </summary>
-		/// <param name="disposing">True if disposing</param>
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposed)
-			{
-				return;
-			}
-
-			if (disposing)
-			{
-				Connection?.Dispose();
-			}
-
-			disposed = true;
-		}
-
-		#endregion
 
 		#region Static
 

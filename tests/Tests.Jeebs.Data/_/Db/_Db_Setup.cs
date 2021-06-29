@@ -21,9 +21,7 @@ namespace Jeebs.Data.Db_Tests
 			var client = Substitute.For<IDbClient>();
 			client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var name = F.Rnd.Str;
-
-			var db = Substitute.ForPartsOf<Db>(client, config, log, name);
+			var db = Substitute.ForPartsOf<Db>(client, config, log);
 
 			return (config, log, client, connection, db);
 		}

@@ -23,9 +23,11 @@ namespace Jeebs.Data.DbQuery_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 
 			// Act
-			await query.QuerySingleAsync<int>(value, param, input, transaction);
+			_ = await query.QuerySingleAsync<int>(value, param, input);
+			_ = await query.QuerySingleAsync<int>(value, param, input, transaction);
 
 			// Assert
+			await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>());
 			await db.Received().QuerySingleAsync<int>(value, param, input, transaction);
 		}
 
@@ -39,9 +41,11 @@ namespace Jeebs.Data.DbQuery_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 
 			// Act
-			await query.QuerySingleAsync<int>(value, param, transaction);
+			_ = await query.QuerySingleAsync<int>(value, param);
+			_ = await query.QuerySingleAsync<int>(value, param, transaction);
 
 			// Assert
+			await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
 			await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
 		}
 
@@ -55,10 +59,12 @@ namespace Jeebs.Data.DbQuery_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 
 			// Act
-			await query.QuerySingleAsync<int>(parts, transaction);
+			_ = await query.QuerySingleAsync<int>(parts);
+			_ = await query.QuerySingleAsync<int>(parts, transaction);
 
 			// Assert
-			client.Received().GetQuery(parts);
+			client.Received(2).GetQuery(parts);
+			await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
 			await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
 		}
 	}

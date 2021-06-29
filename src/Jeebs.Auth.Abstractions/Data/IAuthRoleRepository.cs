@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Data;
 
@@ -18,7 +17,6 @@ namespace Jeebs.Auth.Data
 		/// Create a new Role
 		/// </summary>
 		/// <param name="name">Role name</param>
-		/// <param name="transaction">[Optional] Transaction</param>
-		Task<Option<AuthRoleId>> CreateAsync(string name, IDbTransaction? transaction = null);
+		Task<Option<AuthRoleId>> CreateAsync(string name);
 	}
 }

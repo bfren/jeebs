@@ -23,11 +23,15 @@ namespace Jeebs.Data.DbQuery_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 
 			// Act
-			await query.ExecuteAsync(value, param, input, transaction);
-			await query.ExecuteAsync<long>(value, param, input, transaction);
+			_ = await query.ExecuteAsync(value, param, input);
+			_ = await query.ExecuteAsync(value, param, input, transaction);
+			_ = await query.ExecuteAsync<long>(value, param, input);
+			_ = await query.ExecuteAsync<long>(value, param, input, transaction);
 
 			// Assert
+			await db.Received().ExecuteAsync(value, param, input, Arg.Any<IDbTransaction>());
 			await db.Received().ExecuteAsync(value, param, input, transaction);
+			await db.Received().ExecuteAsync<long>(value, param, input, Arg.Any<IDbTransaction>());
 			await db.Received().ExecuteAsync<long>(value, param, input, transaction);
 		}
 
@@ -41,11 +45,15 @@ namespace Jeebs.Data.DbQuery_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 
 			// Act
-			await query.ExecuteAsync(value, param, transaction);
-			await query.ExecuteAsync<long>(value, param, transaction);
+			_ = await query.ExecuteAsync(value, param);
+			_ = await query.ExecuteAsync(value, param, transaction);
+			_ = await query.ExecuteAsync<long>(value, param);
+			_ = await query.ExecuteAsync<long>(value, param, transaction);
 
 			// Assert
+			await db.Received().ExecuteAsync(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
 			await db.Received().ExecuteAsync(value, param, CommandType.Text, transaction);
+			await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
 			await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, transaction);
 		}
 	}

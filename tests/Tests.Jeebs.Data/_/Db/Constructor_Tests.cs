@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.Data.Db_Tests
@@ -14,23 +13,12 @@ namespace Jeebs.Data.Db_Tests
 			// Arrange
 
 			// Act
-			var (config, _, client, _, db) = Db_Setup.Get();
+			var (config, log, client, _, db) = Db_Setup.Get();
 
 			// Assert
 			Assert.Same(client, db.Client);
 			Assert.Same(config, db.Config);
-		}
-
-		[Fact]
-		public void Attempts_To_Connect_To_Database()
-		{
-			// Arrange
-
-			// Act
-			var (config, _, client, _, _) = Db_Setup.Get();
-
-			// Assert
-			client.Received().Connect(config.ConnectionString);
+			Assert.Same(log, db.LogTest);
 		}
 	}
 }

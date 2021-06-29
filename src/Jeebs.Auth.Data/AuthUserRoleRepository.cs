@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
@@ -24,7 +23,7 @@ namespace Jeebs.Auth
 		public AuthUserRoleRepository(IAuthDb db, ILog<AuthUserRoleRepository> log) : base(db, log) { }
 
 		/// <inheritdoc/>
-		public Task<Option<AuthUserRoleId>> CreateAsync(AuthUserId userId, AuthRoleId roleId, IDbTransaction? transaction = null)
+		public Task<Option<AuthUserRoleId>> CreateAsync(AuthUserId userId, AuthRoleId roleId)
 		{
 			var userRole = new AuthUserRoleEntity
 			{
@@ -32,7 +31,7 @@ namespace Jeebs.Auth
 				RoleId = roleId
 			};
 
-			return CreateAsync(userRole, transaction);
+			return CreateAsync(userRole);
 		}
 	}
 }
