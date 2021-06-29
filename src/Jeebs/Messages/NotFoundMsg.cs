@@ -4,5 +4,5 @@
 namespace Jeebs
 {
 	/// <summary>Standard Not Found message</summary>
-	public abstract record NotFoundMsg : IMsg { }
+	public abstract record NotFoundMsg : INotFoundMsg { }
 }
