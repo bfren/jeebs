@@ -35,7 +35,7 @@ namespace Jeebs.Data
 
 				// Create Unit of Work
 				Log.Debug("Starting new Unit of Work.");
-				return new UnitOfWork(connection.BeginTransaction(), Log.ForContext<UnitOfWork>());
+				return new UnitOfWork(connection, Log.ForContext<UnitOfWork>());
 			}
 		}
 

@@ -9,18 +9,20 @@ namespace Jeebs.Data
 	/// <inheritdoc cref="IUnitOfWork"/>
 	public sealed class UnitOfWork : IUnitOfWork
 	{
+		private readonly IDbConnection connection;
+
 		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; private init; }
 
 		private ILog Log { get; init; }
 
 		/// <summary>
-		/// Inject a transaction
+		/// Save connection and start transaction
 		/// </summary>
-		/// <param name="transaction">Transaction</param>
+		/// <param name="connection">IDbConnection</param>
 		/// <param name="log">ILog</param>
-		public UnitOfWork(IDbTransaction transaction, ILog log) =>
-			(Transaction, Log) = (transaction, log);
+		public UnitOfWork(IDbConnection connection, ILog log) =>
+			(this.connection, Transaction, Log) = (connection, connection.BeginTransaction(), log);
 
 		private bool pending = true;
 
@@ -72,12 +74,13 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Commits and disposes of <see cref="Transaction"/> object
+		/// Commits transaction, then disposes <see cref="Transaction"/> and <see cref="connection"/> objects
 		/// </summary>
 		public void Dispose()
 		{
 			Commit();
 			Transaction.Dispose();
+			connection.Dispose();
 		}
 	}
 }
