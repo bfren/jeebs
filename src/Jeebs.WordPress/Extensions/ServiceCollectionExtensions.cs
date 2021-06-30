@@ -17,7 +17,7 @@ namespace Jeebs.WordPress
 		/// Register WordPress instance
 		/// </summary>
 		/// <param name="this">IServiceCollection</param>
-		/// <param name="name">Name of the WordPress Instance</param>
+		/// <param name="name">Name of the WordPress instance in configuration settings</param>
 		public static FluentAddWordPress AddWordPressInstance(this IServiceCollection @this, string name) =>
 			new(@this, name);
 
@@ -40,15 +40,15 @@ namespace Jeebs.WordPress
 			/// Start configuring WordPress instance
 			/// </summary>
 			/// <param name="services">IServiceCollection</param>
-			/// <param name="name">Name of the WordPress Instance</param>
+			/// <param name="name">Name of the WordPress instance in configuration settings</param>
 			public FluentAddWordPress(IServiceCollection services, string name) =>
 				(this.services, section) = (services, $"{WpConfig.Key}:{name}");
 
 			/// <summary>
 			/// Register WordPress instance and configuration type
 			/// </summary>
-			/// <typeparam name="TWp">WordPress instance</typeparam>
-			/// <typeparam name="TWpConfig">WordPress configuration</typeparam>
+			/// <typeparam name="TWp">WordPress instance type</typeparam>
+			/// <typeparam name="TWpConfig">WordPress configuration type</typeparam>
 			/// <param name="config">IConfiguration</param>
 			public IServiceCollection Using<TWp, TWpConfig>(IConfiguration config)
 				where TWp : class, IWp<TWpConfig>
