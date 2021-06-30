@@ -9,12 +9,12 @@ namespace Jeebs.Data
 	/// <inheritdoc cref="IUnitOfWork"/>
 	public sealed class UnitOfWork : IUnitOfWork
 	{
-		private readonly IDbConnection connection;
-
 		/// <inheritdoc/>
 		public IDbTransaction Transaction { get; private init; }
 
-		private ILog Log { get; init; }
+		private readonly IDbConnection connection;
+
+		private readonly ILog log;
 
 		/// <summary>
 		/// Save connection and start transaction
@@ -22,7 +22,7 @@ namespace Jeebs.Data
 		/// <param name="connection">IDbConnection</param>
 		/// <param name="log">ILog</param>
 		public UnitOfWork(IDbConnection connection, ILog log) =>
-			(this.connection, Transaction, Log) = (connection, connection.BeginTransaction(), log);
+			(Transaction, this.connection, this.log) = (connection.BeginTransaction(), connection, log);
 
 		private bool pending = true;
 
@@ -36,12 +36,12 @@ namespace Jeebs.Data
 
 			try
 			{
-				Log.Debug("Committing transaction.");
+				log.Debug("Committing transaction.");
 				Transaction.Commit();
 			}
 			catch (Exception ex)
 			{
-				Log.Error(ex, "Error committing transaction.");
+				log.Error(ex, "Error committing transaction.");
 				Rollback();
 			}
 			finally
@@ -60,12 +60,12 @@ namespace Jeebs.Data
 
 			try
 			{
-				Log.Debug("Rolling back transaction.");
+				log.Debug("Rolling back transaction.");
 				Transaction.Rollback();
 			}
 			catch (Exception ex)
 			{
-				Log.Error(ex, "Error rolling back transaction.");
+				log.Error(ex, "Error rolling back transaction.");
 			}
 			finally
 			{

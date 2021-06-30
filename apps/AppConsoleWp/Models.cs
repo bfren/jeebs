@@ -4,7 +4,6 @@
 using System;
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
-using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 
