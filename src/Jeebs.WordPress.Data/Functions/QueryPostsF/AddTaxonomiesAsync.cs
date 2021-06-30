@@ -3,13 +3,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Enums;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -50,60 +48,6 @@ namespace F.WordPressF.DataF
 				.BindAsync(
 					x => SetTaxonomies<TList, TModel>(posts, x, termLists)
 				);
-		}
-
-		/// <summary>
-		/// Set Taxonomies for each post
-		/// </summary>
-		/// <typeparam name="TList">List type</typeparam>
-		/// <typeparam name="TModel">Post type</typeparam>
-		/// <param name="posts">Posts</param>
-		/// <param name="terms">Terms</param>
-		/// <param name="termLists">Term List properties</param>
-		internal static Option<TList> SetTaxonomies<TList, TModel>(TList posts, IEnumerable<Term> terms, List<PropertyInfo> termLists)
-			where TList : IEnumerable<TModel>
-			where TModel : IWithId<WpPostId>
-		{
-			foreach (var post in posts)
-			{
-				foreach (var info in termLists)
-				{
-					// Get PropertyInfo<> for the TermList
-					var list = new PropertyInfo<TModel, TermList>(info).Get(post);
-
-					// Get terms
-					var termsForThisPost = from t in terms
-										   where t.PostId == post.Id.Value
-										   && t.Taxonomy == list.Taxonomy
-										   select (TermList.Term)t;
-
-					// Add terms to post
-					if (!termsForThisPost.Any())
-					{
-						continue;
-					}
-
-					list.AddRange(termsForThisPost);
-				}
-			}
-
-			return posts;
-		}
-
-		/// <summary>
-		/// Internal term type for linking terms with posts
-		/// </summary>
-		internal sealed record Term : TermList.Term
-		{
-			/// <summary>
-			/// Enables query for multiple posts and multiple taxonomies
-			/// </summary>
-			public long PostId { get; init; }
-
-			/// <summary>
-			/// Enables query for multiple posts and multiple taxonomies
-			/// </summary>
-			public Taxonomy Taxonomy { get; init; } = Taxonomy.Blank;
 		}
 	}
 }

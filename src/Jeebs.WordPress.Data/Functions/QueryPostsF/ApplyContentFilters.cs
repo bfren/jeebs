@@ -44,10 +44,6 @@ namespace F.WordPressF.DataF
 			/// <typeparam name="T">Post Model type</typeparam>
 			/// <param name="Exception">Exception object</param>
 			public sealed record ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
-
-			/// <summary>Required Content property not found</summary>
-			/// <typeparam name="T">Post Model type</typeparam>
-			public sealed record RequiredContentPropertyNotFoundMsg<T> : IMsg { }
 		}
 	}
 }
