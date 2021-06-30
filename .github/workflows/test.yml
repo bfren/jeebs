@@ -10,6 +10,7 @@ on:
       - '.github/workflows/test.yml'
       - 'src/**'
       - 'tests/**'
+  workflow_dispatch:
 
 jobs:
   restore-build-test:
