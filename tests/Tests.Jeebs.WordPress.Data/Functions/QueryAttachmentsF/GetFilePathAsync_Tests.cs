@@ -6,9 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs;
-using Jeebs.Config;
-using Jeebs.Data;
-using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
 using Xunit;
@@ -17,41 +14,19 @@ using static F.WordPressF.DataF.QueryAttachmentsF.Msg;
 
 namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 {
-	public class GetFilePathAsync_Tests
+	public class GetFilePathAsync_Tests : Query_Tests
 	{
-		private static (IWpDb, Vars) Setup()
-		{
-			var db = Substitute.For<IWpDb>();
-
-			var schema = new WpDbSchema(Rnd.Str);
-			db.Schema.Returns(schema);
-
-			var uploadsPath = Rnd.Str;
-
-			var config = new WpConfig { UploadsPath = uploadsPath };
-			db.WpConfig.Returns(config);
-
-			var unitOfWork = Substitute.For<IUnitOfWork>();
-
-			return (db, new(uploadsPath, unitOfWork));
-		}
-
-		private record Vars(
-			string UploadsPath,
-			IUnitOfWork UnitOfWork
-		);
-
 		[Fact]
 		public async Task Attachment_Not_Found_Returns_None_With_AttachmentNotFoundMsg()
 		{
 			// Arrange
-			var (db, v) = Setup();
+			var (db, w, _) = Setup();
 			var empty = new List<Attachment>().AsEnumerable().Return();
 			db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(empty);
 			var fileId = new WpPostId(Rnd.Lng);
 
 			// Act
-			var result = await GetFilePathAsync(db, v.UnitOfWork, fileId);
+			var result = await GetFilePathAsync(db, w, fileId);
 
 			// Assert
 			var none = result.AssertNone();
@@ -63,13 +38,13 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 		public async Task Multiple_Attachments_Found_Returns_None_With_MultipleAttachmentsFoundMsg()
 		{
 			// Arrange
-			var (db, v) = Setup();
+			var (db, w, _) = Setup();
 			var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Return();
 			db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(list);
 			var fileId = new WpPostId(Rnd.Lng);
 
 			// Act
-			var result = await GetFilePathAsync(db, v.UnitOfWork, fileId);
+			var result = await GetFilePathAsync(db, w, fileId);
 
 			// Assert
 			var none = result.AssertNone();
@@ -81,13 +56,13 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 		public async Task Returns_Attachment_File_Path()
 		{
 			// Arrange
-			var (db, v) = Setup();
+			var (db, w, v) = Setup();
 			var urlPath = Rnd.Str;
 			var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().Return();
 			db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 			// Act
-			var result = await GetFilePathAsync(db, v.UnitOfWork, new(Rnd.Lng));
+			var result = await GetFilePathAsync(db, w, new(Rnd.Lng));
 
 			// Assert
 			var some = result.AssertSome();
