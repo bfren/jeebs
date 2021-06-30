@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			// Arrange
 			var table = Substitute.For<ITable>();
 			var builder = new QueryBuilderWithFrom(table);
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 
 			// Act
 			var result = builder.Maximum(value);

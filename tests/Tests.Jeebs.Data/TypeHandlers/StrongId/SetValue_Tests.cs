@@ -14,7 +14,7 @@ namespace Jeebs.Data.TypeHandlers.StrongId_Tests
 		{
 			// Arrange
 			var handler = new StrongIdTypeHandler<TestId>();
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 			var id = new TestId { Value = value };
 			var parameter = Substitute.For<IDbDataParameter>();
 

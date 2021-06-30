@@ -13,10 +13,10 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 		public void Empty_List_Returns_None_With_ListIsEmptyMsg()
 		{
 			// Arrange
-			var list = new List<long>();
+			var list = new List<ulong>();
 
 			// Act
-			var (r0, r1) = GetPreviousAndNext(Rnd.Lng, list);
+			var (r0, r1) = GetPreviousAndNext(Rnd.Ulng, list);
 
 			// Assert
 			Assert.Null(r0);
@@ -27,10 +27,10 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 		public void Single_Item_Returns_None_With_ListContainsSingleItemMsg()
 		{
 			// Arrange
-			var list = new List<long> { Rnd.Lng };
+			var list = new List<ulong> { Rnd.Ulng };
 
 			// Act
-			var (r0, r1) = GetPreviousAndNext(Rnd.Lng, list);
+			var (r0, r1) = GetPreviousAndNext(Rnd.Ulng, list);
 
 			// Assert
 			Assert.Null(r0);
@@ -41,8 +41,8 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 		public void Item_Not_In_List_Returns_None_With_ListDoesNotContainItemMsg()
 		{
 			// Arrange
-			var value = -1;
-			var list = new List<long> { Rnd.Lng, Rnd.Lng, Rnd.Lng };
+			var value = 10001U;
+			var list = new List<ulong> { Rnd.Ulng, Rnd.Ulng, Rnd.Ulng };
 
 			// Act
 			var (r0, r1) = GetPreviousAndNext(value, list);
@@ -56,9 +56,9 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 		public void First_Item_Returns_None_And_Next_Item()
 		{
 			// Arrange
-			var value = Rnd.Lng;
-			var next = Rnd.Lng;
-			var list = new List<long> { value, next, Rnd.Lng, Rnd.Lng };
+			var value = Rnd.Ulng;
+			var next = Rnd.Ulng;
+			var list = new List<ulong> { value, next, Rnd.Ulng, Rnd.Ulng };
 
 			// Act
 			var (r0, r1) = GetPreviousAndNext(value, list);
@@ -73,9 +73,9 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 		public void Last_Item_Returns_Previous_Item_And_None()
 		{
 			// Arrange
-			var value = Rnd.Lng;
-			var prev = Rnd.Lng;
-			var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value };
+			var value = Rnd.Ulng;
+			var prev = Rnd.Ulng;
+			var list = new List<ulong> { Rnd.Ulng, Rnd.Ulng, prev, value };
 
 			// Act
 			var (r0, r1) = GetPreviousAndNext(value, list);
@@ -90,10 +90,10 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 		public void Returns_Previous_And_Next_Items()
 		{
 			// Arrange
-			var value = Rnd.Lng;
-			var prev = Rnd.Lng;
-			var next = Rnd.Lng;
-			var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value, next, Rnd.Lng, Rnd.Lng };
+			var value = Rnd.Ulng;
+			var prev = Rnd.Ulng;
+			var next = Rnd.Ulng;
+			var list = new List<ulong> { Rnd.Ulng, Rnd.Ulng, prev, value, next, Rnd.Ulng, Rnd.Ulng };
 
 			// Act
 			var (r0, r1) = GetPreviousAndNext(value, list);

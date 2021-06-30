@@ -12,7 +12,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 		public void Serialise_Returns_Json_Value()
 		{
 			// Arrange
-			var value = Rnd.Lng;
+			var value = Rnd.Ulng;
 			var id = new TestId { Value = value };
 
 			// Act

@@ -27,6 +27,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// CommentMetaId
 		/// </summary>
 		[Id]
-		public long CommentMetaId { get; init; }
+		public ulong CommentMetaId { get; init; }
 	}
 }

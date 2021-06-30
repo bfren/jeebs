@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// WordPress User Meta ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpUserMetaId(long Value) : StrongId(Value)
+	public sealed record WpUserMetaId(ulong Value) : StrongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

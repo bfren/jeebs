@@ -48,7 +48,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// Status
 		/// </summary>
-		public int Status { get; init; }
+		public uint Status { get; init; }
 
 		/// <summary>
 		/// DisplayName

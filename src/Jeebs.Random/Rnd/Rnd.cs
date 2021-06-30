@@ -60,6 +60,18 @@ namespace F
 		public static string Str =>
 			StringF.Get(6);
 
+		/// <summary>
+		/// Generate a random 32-bit unsigned integer between 0 and 10000
+		/// </summary>
+		public static uint Uint =>
+			NumberF.GetUInt32(max: 10000);
+
+		/// <summary>
+		/// Generate a random 64-bit unsigned integer between 0 and 10000
+		/// </summary>
+		public static ulong Ulng =>
+			NumberF.GetUInt64(max: 10000L);
+
 		#region Classes
 
 		/// <summary>Random boolean functions</summary>

@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public long AuthorId { get; init; }
+		public ulong AuthorId { get; init; }
 
 		/// <summary>
 		/// PublishedOn
@@ -64,7 +64,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public long ParentId { get; init; }
+		public ulong ParentId { get; init; }
 
 		/// <summary>
 		/// Url
@@ -84,6 +84,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// CommentsCount
 		/// </summary>
-		public long CommentsCount { get; init; }
+		public ulong CommentsCount { get; init; }
 	}
 }

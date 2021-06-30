@@ -15,7 +15,7 @@ namespace F.WordPressF.DataF
 {
 	public static partial class QueryPostsF
 	{
-		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, IUnitOfWork, long, Query.GetPostsOptions, IContentFilter[])"/>
+		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, IUnitOfWork, ulong, Query.GetPostsOptions, IContentFilter[])"/>
 		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			IUnitOfWork w,
@@ -55,7 +55,7 @@ namespace F.WordPressF.DataF
 		internal static Task<Option<IPagedList<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			IUnitOfWork w,
-			long page,
+			ulong page,
 			Query.GetPostsOptions opt,
 			params IContentFilter[] filters
 		)

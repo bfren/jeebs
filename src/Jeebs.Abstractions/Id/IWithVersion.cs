@@ -11,7 +11,7 @@ namespace Jeebs
 		/// <summary>
 		/// Version
 		/// </summary>
-		long Version { get; }
+		ulong Version { get; }
 	}
 
 	/// <inheritdoc cref="IWithVersion"/>

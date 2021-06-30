@@ -27,6 +27,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// TermMetaId
 		/// </summary>
 		[Id]
-		public long TermMetaId { get; init; }
+		public ulong TermMetaId { get; init; }
 	}
 }

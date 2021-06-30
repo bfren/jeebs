@@ -7,7 +7,7 @@ namespace Jeebs
 	/// Represents a strongly-typed ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public abstract record StrongId(long Value)
+	public abstract record StrongId(ulong Value)
 	{
 		/// <summary>
 		/// Returns true if the current value is the default (i.e. unset) value
@@ -22,7 +22,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">StrongId</param>
 		/// <param name="r">64-bit integer</param>
-		public static bool operator ==(StrongId l, long r) =>
+		public static bool operator ==(StrongId l, ulong r) =>
 			l.Value == r;
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">StrongId</param>
 		/// <param name="r">64-bit integer</param>
-		public static bool operator !=(StrongId l, long r) =>
+		public static bool operator !=(StrongId l, ulong r) =>
 			l.Value != r;
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">StrongId</param>
 		/// <param name="r">64-bit integer</param>
-		public static bool operator ==(long l, StrongId r) =>
+		public static bool operator ==(ulong l, StrongId r) =>
 			l == r.Value;
 
 		/// <summary>
@@ -46,7 +46,7 @@ namespace Jeebs
 		/// </summary>
 		/// <param name="l">StrongId</param>
 		/// <param name="r">64-bit integer</param>
-		public static bool operator !=(long l, StrongId r) =>
+		public static bool operator !=(ulong l, StrongId r) =>
 			l != r.Value;
 
 		#endregion

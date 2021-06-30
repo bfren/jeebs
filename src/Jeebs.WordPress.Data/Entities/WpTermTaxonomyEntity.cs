@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public long TermId { get; init; }
+		public ulong TermId { get; init; }
 
 		/// <summary>
 		/// Taxonomy
@@ -28,11 +28,11 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public long ParentId { get; init; }
+		public ulong ParentId { get; init; }
 
 		/// <summary>
 		/// Count
 		/// </summary>
-		public long Count { get; init; }
+		public ulong Count { get; init; }
 	}
 }

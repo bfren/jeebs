@@ -12,10 +12,10 @@ namespace Jeebs.WordPress.Data.Entities
 	{
 		public abstract void Test00_Id_Returns_Database_Id();
 
-		protected void Test00(Func<long, TEntity> create)
+		protected void Test00(Func<ulong, TEntity> create)
 		{
 			// Arrange
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 			var entity = create(value);
 
 			// Act

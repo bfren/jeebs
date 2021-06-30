@@ -17,7 +17,7 @@ namespace Jeebs.Data.TypeHandlers
 		/// </summary>
 		/// <param name="value">Id Value</param>
 		public override T Parse(object value) =>
-			long.TryParse(value?.ToString(), out long id) switch
+			ulong.TryParse(value?.ToString(), out ulong id) switch
 			{
 				true =>
 					new() { Value = id },

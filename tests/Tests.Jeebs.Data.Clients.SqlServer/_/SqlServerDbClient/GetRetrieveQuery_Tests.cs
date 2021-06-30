@@ -33,7 +33,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 			var client = new SqlServerDbClient();
 
-			var id = F.Rnd.Lng;
+			var id = F.Rnd.Ulng;
 
 			var expected = $"SELECT [{c0Name}] AS [{c0Alias}], [{c1Name}] AS [{c1Alias}] " +
 				$"FROM [{table}] WHERE [{c2Name}] = {id}";

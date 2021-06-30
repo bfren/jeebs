@@ -79,9 +79,9 @@ namespace Jeebs
 		/// <param name="pagesPer">Pages per screen</param>
 		public static IPagedList<T> ToPagedList<T>(
 			this IEnumerable<T> @this,
-			long page,
-			long itemsPer = D.ItemsPer,
-			long pagesPer = D.PagesPer
+			ulong page,
+			ulong itemsPer = D.ItemsPer,
+			ulong pagesPer = D.PagesPer
 		)
 		{
 			// Return empty list
@@ -91,7 +91,7 @@ namespace Jeebs
 			}
 
 			// Calculate values and get items
-			var values = new PagingValues(items: @this.Count(), page: page, itemsPer: itemsPer, pagesPer: pagesPer);
+			var values = new PagingValues(items: (ulong)@this.Count(), page: page, itemsPer: itemsPer, pagesPer: pagesPer);
 			var items = @this.Skip(values.Skip).Take(values.Take);
 
 			// Create new paged list with only the necessary items

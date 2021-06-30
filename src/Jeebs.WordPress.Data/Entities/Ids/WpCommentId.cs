@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// WordPress Comment ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpCommentId(long Value) : StrongId(Value)
+	public sealed record WpCommentId(ulong Value) : StrongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

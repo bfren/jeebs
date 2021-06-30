@@ -28,7 +28,7 @@ namespace F.WordPressF.DataF
 			/// <summary>
 			/// Enables query for multiple posts and multiple taxonomies
 			/// </summary>
-			public long PostId { get; init; }
+			public ulong PostId { get; init; }
 
 			/// <summary>
 			/// Enables query for multiple posts and multiple taxonomies

@@ -27,7 +27,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Get columns for <see cref="GetRetrieveQuery(string, IColumnList, IColumn, long)"/>
+		/// Get columns for <see cref="GetRetrieveQuery(string, IColumnList, IColumn, ulong)"/>
 		/// </summary>
 		/// <param name="columns">ColumnList</param>
 		protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
@@ -42,7 +42,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Get columns for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
+		/// Get columns for <see cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn?)"/>
 		/// </summary>
 		/// <param name="columns">ColumnList</param>
 		protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
@@ -57,7 +57,7 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Add version to column list for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>,
+		/// Add version to column list for <see cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn?)"/>,
 		/// if <paramref name="versionColumn"/> is not null
 		/// </summary>
 		/// <param name="set">List of Set commands</param>
@@ -71,8 +71,8 @@ namespace Jeebs.Data
 		}
 
 		/// <summary>
-		/// Add version to where string for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
-		/// and <see cref="GetDeleteQuery(string, IColumn, long, IColumn?)"/>
+		/// Add version to where string for <see cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn?)"/>
+		/// and <see cref="GetDeleteQuery(string, IColumn, ulong, IColumn?)"/>
 		/// </summary>
 		/// <param name="sql">SQL query StringBuilder</param>
 		/// <param name="versionColumn">[Optional] Version column</param>

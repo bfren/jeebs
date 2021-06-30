@@ -52,12 +52,12 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Parent ID
 		/// </summary>
-		long? ParentId { get; init; }
+		WpPostId? ParentId { get; init; }
 
 		/// <summary>
 		/// Search post taxonomies
 		/// </summary>
-		IImmutableList<(Taxonomy taxonomy, long id)> Taxonomies { get; init; }
+		IImmutableList<(Taxonomy taxonomy, WpTermId id)> Taxonomies { get; init; }
 
 		/// <summary>
 		/// Search custom fields

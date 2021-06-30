@@ -19,7 +19,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.Create<TModel>(null, F.Rnd.Lng);
+			var result = builder.Create<TModel>(null, F.Rnd.Ulng);
 
 			// Assert
 			Assert.NotSame(v.Parts, result);
@@ -34,7 +34,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.Create<TModel>(null, F.Rnd.Lng);
+			var result = builder.Create<TModel>(null, F.Rnd.Ulng);
 
 			// Assert
 			Assert.NotSame(v.Parts, result);
@@ -46,11 +46,11 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		protected void Test02()
 		{
 			// Arrange
-			var maximum = F.Rnd.Lng;
+			var maximum = F.Rnd.Ulng;
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.Create<TModel>(maximum, F.Rnd.Lng);
+			var result = builder.Create<TModel>(maximum, F.Rnd.Ulng);
 
 			// Assert
 			Assert.NotSame(v.Parts, result);
@@ -62,7 +62,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		protected void Test03()
 		{
 			// Arrange
-			var skip = F.Rnd.Lng;
+			var skip = F.Rnd.Ulng;
 			var (builder, v) = Setup();
 
 			// Act

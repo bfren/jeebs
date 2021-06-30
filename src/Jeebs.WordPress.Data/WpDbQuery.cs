@@ -43,7 +43,7 @@ namespace Jeebs.WordPress.Data
 		}
 
 		/// <inheritdoc/>
-		public async Task<Option<IPagedList<T>>> PostsAsync<T>(long page, Query.GetPostsOptions opt, params IContentFilter[] filters)
+		public async Task<Option<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
 			where T : IWithId<WpPostId>
 		{
 			using var w = Db.UnitOfWork;

@@ -36,9 +36,9 @@ namespace Jeebs.EnumerableExtensions_Tests
 			var newList = list.ToPagedList(3, 5);
 
 			// Assert
-			Assert.Equal(3, newList.Values.Page);
-			Assert.Equal(5, newList.Values.Pages);
-			Assert.Equal(25, newList.Values.Items);
+			Assert.Equal(3U, newList.Values.Page);
+			Assert.Equal(5U, newList.Values.Pages);
+			Assert.Equal(25U, newList.Values.Items);
 			Assert.Equal(5, newList.Count);
 			Assert.Equal("Item 11", newList[0]);
 			Assert.Equal("Item 15", newList[4]);

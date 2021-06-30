@@ -10,31 +10,31 @@ namespace Jeebs
 	public sealed class PagingValues : IPagingValues
 	{
 		/// <inheritdoc/>
-		public long Items { get; }
+		public ulong Items { get; }
 
 		/// <inheritdoc/>
-		public long ItemsPer { get; }
+		public ulong ItemsPer { get; }
 
 		/// <inheritdoc/>
-		public long FirstItem { get; }
+		public ulong FirstItem { get; }
 
 		/// <inheritdoc/>
-		public long LastItem { get; }
+		public ulong LastItem { get; }
 
 		/// <inheritdoc/>
-		public long Page { get; }
+		public ulong Page { get; }
 
 		/// <inheritdoc/>
-		public long Pages { get; }
+		public ulong Pages { get; }
 
 		/// <inheritdoc/>
-		public long PagesPer { get; }
+		public ulong PagesPer { get; }
 
 		/// <inheritdoc/>
-		public long LowerPage { get; }
+		public ulong LowerPage { get; }
 
 		/// <inheritdoc/>
-		public long UpperPage { get; }
+		public ulong UpperPage { get; }
 
 		/// <inheritdoc/>
 		public int Skip { get; }
@@ -56,21 +56,15 @@ namespace Jeebs
 		/// <param name="page">Current page</param>
 		/// <param name="itemsPer">[Optional] Number of items per page</param>
 		/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
-		public PagingValues(long items, long page, long itemsPer = D.ItemsPer, long pagesPer = D.PagesPer)
+		public PagingValues(ulong items, ulong page, ulong itemsPer = D.ItemsPer, ulong pagesPer = D.PagesPer)
 		{
-			// Ensure a valid current page
-			if (page < 0)
-			{
-				throw new InvalidOperationException($"{nameof(page)} must be greater than zero");
-			}
-
 			// If itemsPerPage is zero, use totalItems instead (i.e. no paging)
 			Items = items;
 			ItemsPer = itemsPer > 0 ? itemsPer : items;
 
 			// Calculate the number of pages in total - if there are no items,
 			// we still display one page, just with no results
-			Pages = (Items == 0 || Items == ItemsPer) ? 1 : (long)Math.Ceiling((double)Items / ItemsPer);
+			Pages = (Items == 0 || Items == ItemsPer) ? 1 : (ulong)Math.Ceiling((double)Items / ItemsPer);
 			PagesPer = pagesPer > 0 ? pagesPer : Pages;
 
 			// Reduce the page number if it is greated than the Number of Pages
@@ -96,7 +90,7 @@ namespace Jeebs
 			}
 			else
 			{
-				LowerPage = (long)(Math.Floor((double)(Page - 1) / PagesPer) * PagesPer) + 1;
+				LowerPage = (ulong)(Math.Floor((double)(Page - 1) / PagesPer) * PagesPer) + 1;
 				UpperPage = LowerPage + PagesPer - 1;
 
 				if (UpperPage > Pages)

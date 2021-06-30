@@ -57,7 +57,7 @@ namespace Jeebs.Data.Querying
 			Extract = extract;
 
 		/// <inheritdoc/>
-		public QueryParts Create<TModel>(long? maximum, long skip) =>
+		public QueryParts Create<TModel>(ulong? maximum, ulong skip) =>
 			new(Table)
 			{
 				Select = GetColumns<TModel>(),

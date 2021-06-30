@@ -13,11 +13,11 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			var table = Substitute.For<ITable>();
 
 			var builder = Substitute.For<ITestBuilder>();
-			builder.Create<TestModel>(Arg.Any<long?>(), Arg.Any<long>()).Returns(x =>
+			builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(x =>
 				new QueryParts(table)
 				{
-					Maximum = x.ArgAt<long?>(0),
-					Skip = x.ArgAt<long>(1)
+					Maximum = x.ArgAt<ulong?>(0),
+					Skip = x.ArgAt<ulong>(1)
 				}
 			);
 
@@ -25,7 +25,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		}
 	}
 
-	public record TestId(long Value) : StrongId(Value)
+	public record TestId(ulong Value) : StrongId(Value)
 	{
 		public TestId() : this(0) { }
 	}

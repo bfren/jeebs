@@ -70,12 +70,12 @@ namespace Jeebs.Data.Querying
 		/// <summary>
 		/// Maximum number of results to return (if null will select all rows) - default is 10
 		/// </summary>
-		long? Maximum { get; init; }
+		ulong? Maximum { get; init; }
 
 		/// <summary>
 		/// The number of results to skip<br/>
 		/// Note: setting this will do nothing if <see cref="Maximum"/> is not also set
 		/// </summary>
-		long Skip { get; init; }
+		ulong Skip { get; init; }
 	}
 }

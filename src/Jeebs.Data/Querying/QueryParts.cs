@@ -44,10 +44,10 @@ namespace Jeebs.Data.Querying
 		public bool SortRandom { get; init; }
 
 		/// <inheritdoc/>
-		public long? Maximum { get; init; }
+		public ulong? Maximum { get; init; }
 
 		/// <inheritdoc/>
-		public long Skip { get; init; }
+		public ulong Skip { get; init; }
 
 		/// <summary>
 		/// Create from another object by copying values

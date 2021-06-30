@@ -55,7 +55,7 @@ namespace F.DataF
 				}
 
 				// IN requires value to be a list of items
-				if (value is IEnumerable list)
+				if (value is not string && value is IEnumerable list)
 				{
 					// Add a parameter for each value
 					var inParam = new List<string>();

@@ -43,7 +43,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="page">Page number</param>
 		/// <param name="opt">Function to return query options</param>
 		/// <param name="filters">Optional content filters to apply</param>
-		Task<Option<IPagedList<T>>> PostsAsync<T>(long page, Query.GetPostsOptions opt, params IContentFilter[] filters)
+		Task<Option<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
 			where T : IWithId<WpPostId>;
 
 		/// <summary>

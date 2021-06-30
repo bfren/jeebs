@@ -108,7 +108,7 @@ namespace AppMvc.Controllers
 		{
 			public AuthUserId Id { get; init; } = new();
 
-			public long Version { get; init; }
+			public ulong Version { get; init; }
 
 			public string FriendlyName { get; init; } = string.Empty;
 		}

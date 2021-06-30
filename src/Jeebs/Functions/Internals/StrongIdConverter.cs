@@ -27,11 +27,11 @@ namespace F.Internals
 				{
 					// Handle numbers
 					JsonTokenType.Number =>
-						reader.GetInt64(),
+						reader.GetUInt64(),
 
 					// Handle strings if strings are allowed
 					JsonTokenType.String when (options.NumberHandling & JsonNumberHandling.AllowReadingFromString) != 0 =>
-						long.TryParse(reader.GetString(), out long id) switch
+						ulong.TryParse(reader.GetString(), out ulong id) switch
 						{
 							true =>
 								id,

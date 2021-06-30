@@ -14,10 +14,10 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	public static class DbQueryExtensions
 	{
-		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
 		public static async Task<Option<IPagedList<T>>> QueryAsync<T>(
 			this IDbQuery @this,
-			long page,
+			ulong page,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder
 		)
 		{
@@ -35,7 +35,7 @@ namespace Jeebs.Data.Querying
 		/// <param name="transaction">Database transaction</param>
 		public static Task<Option<IPagedList<T>>> QueryAsync<T>(
 			this IDbQuery @this,
-			long page,
+			ulong page,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
 			IDbTransaction transaction
 		) =>
@@ -46,7 +46,7 @@ namespace Jeebs.Data.Querying
 				x => @this.QueryAsync<T>(page, x, transaction)
 			);
 
-		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
 		public static async Task<Option<IEnumerable<T>>> QueryAsync<T>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder
@@ -56,7 +56,7 @@ namespace Jeebs.Data.Querying
 			return await QueryAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
 		}
 
-		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
 		public static Task<Option<IEnumerable<T>>> QueryAsync<T>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
@@ -69,7 +69,7 @@ namespace Jeebs.Data.Querying
 				x => @this.QueryAsync<T>(x, transaction)
 			);
 
-		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
 		public static async Task<Option<T>> QuerySingleAsync<T>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder
@@ -79,7 +79,7 @@ namespace Jeebs.Data.Querying
 			return await QuerySingleAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
 		}
 
-		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, long, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
+		/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
 		public static Task<Option<T>> QuerySingleAsync<T>(
 			this IDbQuery @this,
 			Func<IQueryBuilder, IQueryBuilderWithFrom> builder,

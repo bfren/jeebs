@@ -26,7 +26,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilderWithEntity_Tests
 		);
 	}
 
-	public record TestId(long Value) : StrongId(Value)
+	public record TestId(ulong Value) : StrongId(Value)
 	{
 		public TestId() : this(0) { }
 	}

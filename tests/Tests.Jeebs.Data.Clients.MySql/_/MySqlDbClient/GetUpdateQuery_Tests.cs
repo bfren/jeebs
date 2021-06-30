@@ -33,7 +33,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 			var client = new MySqlDbClient();
 
-			var id = F.Rnd.Lng;
+			var id = F.Rnd.Ulng;
 
 			var expected = $"UPDATE `{table}` SET `{c0Name}` = @{c0Alias}, `{c1Name}` = @{c1Alias} " +
 				$"WHERE `{c2Name}` = {id};";
@@ -74,7 +74,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 			var list = new ColumnList(new[] { c0, c1 });
 			var client = new MySqlDbClient();
 
-			var id = F.Rnd.Lng;
+			var id = F.Rnd.Ulng;
 
 			var expected = $"UPDATE `{table}` SET `{c0Name}` = @{c0Alias}, `{c1Name}` = @{c1Alias}, `{c3Name}` = @{c3Alias} + 1 " +
 				$"WHERE `{c2Name}` = {id} AND `{c3Name}` = @{c3Alias};";

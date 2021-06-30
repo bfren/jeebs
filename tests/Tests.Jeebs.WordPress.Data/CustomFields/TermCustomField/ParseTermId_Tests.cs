@@ -28,7 +28,7 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 		{
 			// Arrange
 			var type = typeof(ParseTermId_Tests);
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 
 			// Act
 			var result = TermCustomField.ParseTermId(type, value.ToString());

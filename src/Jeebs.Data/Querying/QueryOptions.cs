@@ -31,10 +31,10 @@ namespace Jeebs.Data.Querying
 		public bool SortRandom { get; init; }
 
 		/// <inheritdoc/>
-		public long? Maximum { get; init; } = 10;
+		public ulong? Maximum { get; init; } = 10;
 
 		/// <inheritdoc/>
-		public long Skip { get; init; }
+		public ulong Skip { get; init; }
 
 		/// <summary>
 		/// Inject builder

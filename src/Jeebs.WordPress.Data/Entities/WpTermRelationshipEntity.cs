@@ -21,16 +21,16 @@ namespace Jeebs.WordPress.Data.Entities
 		/// PostId
 		/// </summary>
 		[Id]
-		public long PostId { get; init; }
+		public ulong PostId { get; init; }
 
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public long TermTaxonomyId { get; init; }
+		public ulong TermTaxonomyId { get; init; }
 
 		/// <summary>
 		/// SortOrder
 		/// </summary>
-		public long SortOrder { get; init; }
+		public ulong SortOrder { get; init; }
 	}
 }

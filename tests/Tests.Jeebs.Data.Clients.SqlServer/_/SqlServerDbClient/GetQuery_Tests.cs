@@ -374,7 +374,7 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 		{
 			// Arrange
 			var (client, table) = SqlServerClient_Setup.Get();
-			var max = F.Rnd.Lng;
+			var max = F.Rnd.Ulng;
 			var parts = new QueryParts(table) { Maximum = max };
 			var expected = $"SELECT * FROM [{table.GetName()}] OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
 
@@ -390,8 +390,8 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 		{
 			// Arrange
 			var (client, table) = SqlServerClient_Setup.Get();
-			var skip = F.Rnd.Lng;
-			var max = F.Rnd.Lng;
+			var skip = F.Rnd.Ulng;
+			var max = F.Rnd.Ulng;
 			var parts = new QueryParts(table) { Skip = skip, Maximum = max };
 			var expected = $"SELECT * FROM [{table.GetName()}] OFFSET {skip} ROWS FETCH NEXT {max} ROWS ONLY";
 

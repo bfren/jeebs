@@ -30,10 +30,10 @@ namespace Jeebs.Data.Querying
 		bool SortRandom { get; init; }
 
 		/// <inheritdoc cref="IQueryParts.Maximum"/>
-		long? Maximum { get; init; }
+		ulong? Maximum { get; init; }
 
 		/// <inheritdoc cref="IQueryParts.Skip"/>
-		long Skip { get; init; }
+		ulong Skip { get; init; }
 
 		/// <summary>
 		/// Convert the query options to <see cref="IQueryParts"/> for use in a database query

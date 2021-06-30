@@ -117,8 +117,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	var taxonomy = WpBcg.Taxonomies.BibleBook;
-	const long book0 = 423L;
-	const long book1 = 628L;
+	var book0 = new WpTermId(423U);
+	var book1 = new WpTermId(628U);
 	Console.WriteLine();
 	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0, book1);
 	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with

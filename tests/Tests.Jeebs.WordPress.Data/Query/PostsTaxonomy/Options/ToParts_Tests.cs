@@ -103,8 +103,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var i0 = new WpPostId(F.Rnd.Lng);
-			var i1 = new WpPostId(F.Rnd.Lng);
+			var i0 = new WpPostId(F.Rnd.Ulng);
+			var i1 = new WpPostId(F.Rnd.Ulng);
 			var postIds = ImmutableList.Create(i0, i1);
 			var opt = options with
 			{

@@ -23,7 +23,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.AddWhereTaxonomies(v.Parts, Substitute.For<IImmutableList<(Taxonomy, long)>>());
+			var result = builder.AddWhereTaxonomies(v.Parts, Substitute.For<IImmutableList<(Taxonomy, WpTermId)>>());
 
 			// Assert
 			var some = result.AssertSome();
@@ -36,7 +36,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 			// Arrange
 			var (builder, v) = Setup();
 			var taxonomy = Taxonomy.PostCategory;
-			var id = F.Rnd.Lng;
+			var id = new WpTermId(F.Rnd.Ulng);
 			var taxonomies = ImmutableList.Create((taxonomy, id));
 
 			var tt = builder.TTest.TermTaxonomy.GetName();
@@ -70,7 +70,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 			// Arrange
 			var (builder, v) = Setup();
 			var taxonomy = Taxonomy.PostCategory;
-			var id = F.Rnd.Lng;
+			var id = new WpTermId(F.Rnd.Ulng);
 			var taxonomies = ImmutableList.Create((taxonomy, id));
 
 			// Act
@@ -90,7 +90,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 						y =>
 						{
 							Assert.Equal("@taxonomy0_0", y.Key);
-							Assert.Equal(id, y.Value);
+							Assert.Equal(id.Value, y.Value);
 						}
 					);
 				}
@@ -103,10 +103,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 			// Arrange
 			var (builder, v) = Setup();
 			var t0 = Taxonomy.PostCategory;
-			var id0 = F.Rnd.Lng;
+			var id0 = new WpTermId(F.Rnd.Ulng);
 			var t1 = Taxonomy.NavMenu;
-			var id1 = F.Rnd.Lng;
-			var id2 = F.Rnd.Lng;
+			var id1 = new WpTermId(F.Rnd.Ulng);
+			var id2 = new WpTermId(F.Rnd.Ulng);
 			var taxonomies = ImmutableList.Create((t0, id0), (t1, id1), (t1, id2));
 
 			var tt = builder.TTest.TermTaxonomy.GetName();
@@ -146,10 +146,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 			// Arrange
 			var (builder, v) = Setup();
 			var t0 = Taxonomy.PostCategory;
-			var id0 = F.Rnd.Lng;
-			var id1 = F.Rnd.Lng;
+			var id0 = new WpTermId(F.Rnd.Ulng);
+			var id1 = new WpTermId(F.Rnd.Ulng);
 			var t1 = Taxonomy.LinkCategory;
-			var id2 = F.Rnd.Lng;
+			var id2 = new WpTermId(F.Rnd.Ulng);
 			var taxonomies = ImmutableList.Create((t0, id0), (t0, id1), (t1, id2));
 
 			// Act
@@ -169,12 +169,12 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 						y =>
 						{
 							Assert.Equal("@taxonomy0_0", y.Key);
-							Assert.Equal(id0, y.Value);
+							Assert.Equal(id0.Value, y.Value);
 						},
 						y =>
 						{
 							Assert.Equal("@taxonomy0_1", y.Key);
-							Assert.Equal(id1, y.Value);
+							Assert.Equal(id1.Value, y.Value);
 						},
 						y =>
 						{
@@ -184,7 +184,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 						y =>
 						{
 							Assert.Equal("@taxonomy1_0", y.Key);
-							Assert.Equal(id2, y.Value);
+							Assert.Equal(id2.Value, y.Value);
 						}
 					);
 				}

@@ -24,7 +24,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			var client = new MySqlDbClient();
 
-			var id = F.Rnd.Lng;
+			var id = F.Rnd.Ulng;
 
 			var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = {id};";
 
@@ -55,7 +55,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 
 			var client = new MySqlDbClient();
 
-			var id = F.Rnd.Lng;
+			var id = F.Rnd.Ulng;
 
 			var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = {id} AND `{c1Name}` = @{c1Alias};";
 

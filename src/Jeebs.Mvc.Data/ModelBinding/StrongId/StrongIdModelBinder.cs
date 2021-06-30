@@ -30,7 +30,7 @@ namespace Jeebs.Mvc.Data.ModelBinding
 
 			// Get the value and attempt to parse it as a long
 			var value = valueProviderResult.FirstValue;
-			if (long.TryParse(value, out long id))
+			if (ulong.TryParse(value, out ulong id))
 			{
 				setValue(id);
 			}
@@ -42,7 +42,7 @@ namespace Jeebs.Mvc.Data.ModelBinding
 			return Task.CompletedTask;
 
 			// Set the model value using the parsed ID
-			void setValue(long id) =>
+			void setValue(ulong id) =>
 				bindingContext.Result = ModelBindingResult.Success(new T { Value = id });
 		}
 	}

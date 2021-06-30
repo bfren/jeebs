@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// WordPress Term ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpTermId(long Value) : StrongId(Value)
+	public sealed record WpTermId(ulong Value) : StrongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

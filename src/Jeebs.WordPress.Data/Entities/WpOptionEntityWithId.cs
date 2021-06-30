@@ -27,6 +27,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// OptionId
 		/// </summary>
 		[Id]
-		public long OptionId { get; init; }
+		public ulong OptionId { get; init; }
 	}
 }

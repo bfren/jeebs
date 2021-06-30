@@ -18,9 +18,9 @@ namespace Jeebs.Data.Repository_Tests
 				.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, Compare, object)[]>())
 				.Returns((F.Rnd.Str, Substitute.For<IQueryParameters>()));
 			client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
-			client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
-			client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
-			client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(F.Rnd.Str);
+			client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<ulong>()).Returns(F.Rnd.Str);
+			client.GetUpdateQuery<Foo, FooModel>(Arg.Any<ulong>()).Returns(F.Rnd.Str);
+			client.GetDeleteQuery<Foo>(Arg.Any<ulong>()).Returns(F.Rnd.Str);
 
 			var db = Substitute.For<IDb>();
 			db.Client.Returns(client);
@@ -42,7 +42,7 @@ namespace Jeebs.Data.Repository_Tests
 			public FooId Id { get; init; } = new();
 		}
 
-		public sealed record FooId(long Value) : StrongId(Value)
+		public sealed record FooId(ulong Value) : StrongId(Value)
 		{
 			public FooId() : this(0) { }
 		}

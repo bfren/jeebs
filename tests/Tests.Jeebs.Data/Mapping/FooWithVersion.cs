@@ -9,6 +9,6 @@ namespace Jeebs.Data.Mapping
 	public record FooWithVersion : Foo, IWithVersion
 	{
 		[Version]
-		public long Version { get; init; }
+		public ulong Version { get; init; }
 	}
 }

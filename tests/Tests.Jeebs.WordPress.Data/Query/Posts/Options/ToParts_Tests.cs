@@ -178,7 +178,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var parentId = F.Rnd.Lng;
+			var parentId = new WpPostId(F.Rnd.Ulng);
 			var opt = options with
 			{
 				ParentId = parentId
@@ -201,7 +201,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			options.ToParts<TestModel>();
 
 			// Assert
-			builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<(Taxonomy, long)>>());
+			builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<(Taxonomy, WpTermId)>>());
 		}
 
 		[Fact]
@@ -210,7 +210,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsOptions_Tests
 			// Arrange
 			var (options, builder) = Setup();
 			var taxonomies = ImmutableList.Create(
-				(Taxonomy.LinkCategory, F.Rnd.Lng)
+				(Taxonomy.LinkCategory, new WpTermId(F.Rnd.Ulng))
 			);
 			var opt = options with
 			{

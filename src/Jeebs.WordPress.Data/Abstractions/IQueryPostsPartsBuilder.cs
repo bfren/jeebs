@@ -54,14 +54,14 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
 		/// <param name="parentId">Parent ID</param>
-		Option<QueryParts> AddWhereParentId(QueryParts parts, long? parentId);
+		Option<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId);
 
 		/// <summary>
 		/// Add Where Taxonomies
 		/// </summary>
 		/// <param name="parts">QueryParts</param>
 		/// <param name="taxonomies">Taxonomies</param>
-		Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, long id)> taxonomies);
+		Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, WpTermId id)> taxonomies);
 
 		/// <summary>
 		/// Add Where Custom Fields

@@ -27,6 +27,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// TermTaxonomyId
 		/// </summary>
 		[Id]
-		public long TermTaxonomyId { get; init; }
+		public ulong TermTaxonomyId { get; init; }
 	}
 }

@@ -27,6 +27,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// UserId
 		/// </summary>
 		[Id]
-		public long UserId { get; init; }
+		public ulong UserId { get; init; }
 	}
 }

@@ -83,8 +83,8 @@ namespace Jeebs.Data.DbQuery_Tests
 			client.GetCountQuery(parts).Throws<Exception>();
 
 			// Act
-			var r0 = await query.QueryAsync<int>(F.Rnd.Lng, parts);
-			var r1 = await query.QueryAsync<int>(F.Rnd.Lng, parts, transaction);
+			var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts);
+			var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction);
 
 			// Assert
 			var n0 = r0.AssertNone();
@@ -103,8 +103,8 @@ namespace Jeebs.Data.DbQuery_Tests
 			client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
 
 			// Act
-			var r0 = await query.QueryAsync<int>(F.Rnd.Lng, parts);
-			var r1 = await query.QueryAsync<int>(F.Rnd.Lng, parts, transaction);
+			var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts);
+			var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction);
 
 			// Assert
 			var n0 = r0.AssertNone();
@@ -142,13 +142,13 @@ namespace Jeebs.Data.DbQuery_Tests
 			var transaction = Substitute.For<IDbTransaction>();
 
 			// Act
-			_ = await query.QueryAsync<int>(F.Rnd.Lng, parts);
-			_ = await query.QueryAsync<int>(F.Rnd.Lng, parts, transaction);
+			_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts);
+			_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction);
 
 			// Assert
 			client.Received(2).GetCountQuery(parts);
-			await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-			await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, transaction);
+			await db.Received().ExecuteAsync<ulong>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
+			await db.Received().ExecuteAsync<ulong>(value, param, CommandType.Text, transaction);
 			client.Received(2).GetQuery(Arg.Any<IQueryParts>());
 			await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
 			await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction);

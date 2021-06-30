@@ -17,15 +17,15 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 
 		[Theory]
 		[InlineData(null)]
-		[InlineData(0)]
-		[InlineData(-1)]
-		public void Invalid_ParentId_Does_Nothing(long? input)
+		[InlineData(0U)]
+		public void Invalid_ParentId_Does_Nothing(ulong? input)
 		{
 			// Arrange
 			var (builder, v) = Setup();
+			WpPostId? id = input is null ? null : new(input.Value);
 
 			// Act
-			var result = builder.AddWhereParentId(v.Parts, input);
+			var result = builder.AddWhereParentId(v.Parts, id);
 
 			// Assert
 			var some = result.AssertSome();
@@ -37,13 +37,13 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, v) = Setup();
-			var parentId = F.Rnd.NumberF.GetInt64(1, max: 1000);
+			var parentId = new WpPostId(F.Rnd.Ulng);
 
 			// Act
 			var result = builder.AddWhereParentId(v.Parts, parentId);
 
 			// Assert
-			AssertWhere(v.Parts, result, Post.ParentId, Compare.Equal, parentId);
+			AssertWhere(v.Parts, result, Post.ParentId, Compare.Equal, parentId.Value);
 		}
 	}
 }

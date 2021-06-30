@@ -26,7 +26,7 @@ namespace Jeebs.Data
 		);
 
 		/// <inheritdoc/>
-		public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
+		public Option<string> GetRetrieveQuery<TEntity, TModel>(ulong id)
 			where TEntity : IWithId =>
 			(
 				from map in Mapper.GetTableMapFor<TEntity>()
@@ -38,7 +38,7 @@ namespace Jeebs.Data
 				e => new Msg.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(long)"/>
+		/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(ulong)"/>
 		/// <param name="table">Table name</param>
 		/// <param name="columns">List of columns to select</param>
 		/// <param name="idColumn">ID column for predicate</param>
@@ -47,11 +47,11 @@ namespace Jeebs.Data
 			string table,
 			IColumnList columns,
 			IColumn idColumn,
-			long id
+			ulong id
 		);
 
 		/// <inheritdoc/>
-		public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
+		public Option<string> GetUpdateQuery<TEntity, TModel>(ulong id)
 			where TEntity : IWithId =>
 			(
 				from map in Mapper.GetTableMapFor<TEntity>()
@@ -71,12 +71,12 @@ namespace Jeebs.Data
 				e => new Msg.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn)"/>
+		/// <inheritdoc cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn)"/>
 		protected abstract string GetUpdateQuery(
 			string table,
 			IColumnList columns,
 			IColumn idColumn,
-			long id
+			ulong id
 		);
 
 		/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
@@ -89,12 +89,12 @@ namespace Jeebs.Data
 			string table,
 			IColumnList columns,
 			IColumn idColumn,
-			long id,
+			ulong id,
 			IColumn? versionColumn
 		);
 
 		/// <inheritdoc/>
-		public Option<string> GetDeleteQuery<TEntity>(long id)
+		public Option<string> GetDeleteQuery<TEntity>(ulong id)
 			where TEntity : IWithId =>
 			Mapper.GetTableMapFor<TEntity>().Map(
 				x => typeof(TEntity).Implements<IWithVersion>() switch
@@ -109,11 +109,11 @@ namespace Jeebs.Data
 				e => new Msg.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 			);
 
-		/// <inheritdoc cref="GetDeleteQuery(string, IColumn, long, IColumn?)"/>
+		/// <inheritdoc cref="GetDeleteQuery(string, IColumn, ulong, IColumn?)"/>
 		protected abstract string GetDeleteQuery(
 			string table,
 			IColumn idColumn,
-			long id
+			ulong id
 		);
 
 		/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
@@ -124,7 +124,7 @@ namespace Jeebs.Data
 		protected abstract string GetDeleteQuery(
 			string table,
 			IColumn idColumn,
-			long id,
+			ulong id,
 			IColumn? versionColumn
 		);
 
@@ -133,19 +133,19 @@ namespace Jeebs.Data
 		internal string GetCreateQueryTest(string table, IMappedColumnList columns) =>
 			GetCreateQuery(table, columns);
 
-		internal string GetRetrieveQueryTest(string table, IColumnList columns, IColumn idColumn, long id) =>
+		internal string GetRetrieveQueryTest(string table, IColumnList columns, IColumn idColumn, ulong id) =>
 			GetRetrieveQuery(table, columns, idColumn, id);
 
-		internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, long id) =>
+		internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, ulong id) =>
 			GetUpdateQuery(table, columns, idColumn, id);
 
-		internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
+		internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, ulong id, IColumn? versionColumn) =>
 			GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
-		internal string GetDeleteQueryTest(string table, IColumn idColumn, long id) =>
+		internal string GetDeleteQueryTest(string table, IColumn idColumn, ulong id) =>
 			GetDeleteQuery(table, idColumn, id);
 
-		internal string GetDeleteQueryTest(string table, IColumn idColumn, long id, IColumn? versionColumn) =>
+		internal string GetDeleteQueryTest(string table, IColumn idColumn, ulong id, IColumn? versionColumn) =>
 			GetDeleteQuery(table, idColumn, id, versionColumn);
 
 		#endregion

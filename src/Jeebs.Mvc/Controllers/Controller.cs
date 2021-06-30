@@ -21,8 +21,8 @@ namespace Jeebs.Mvc
 		/// <summary>
 		/// Current page number
 		/// </summary>
-		public long Page =>
-			long.TryParse(Request.Query["p"], out long p) switch
+		public ulong Page =>
+			ulong.TryParse(Request.Query["p"], out ulong p) switch
 			{
 				true =>
 					p,

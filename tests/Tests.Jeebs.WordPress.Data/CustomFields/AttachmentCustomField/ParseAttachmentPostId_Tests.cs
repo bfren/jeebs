@@ -28,7 +28,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 		{
 			// Arrange
 			var type = typeof(ParseAttachmentPostId_Tests);
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 
 			// Act
 			var result = AttachmentCustomField.ParseAttachmentPostId(type, value.ToString());

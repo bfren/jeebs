@@ -96,7 +96,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="value">Post ID value</param>
 		internal static Option<WpPostId> ParseAttachmentPostId(Type type, string value)
 		{
-			if (!long.TryParse(value, out var attachmentPostId))
+			if (!ulong.TryParse(value, out ulong attachmentPostId))
 			{
 				return None<WpPostId>(new Msg.ValueIsInvalidPostIdMsg(type, value));
 			}

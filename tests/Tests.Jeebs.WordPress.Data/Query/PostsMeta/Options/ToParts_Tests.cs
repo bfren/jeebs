@@ -37,7 +37,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var postId = new WpPostId(F.Rnd.Lng);
+			var postId = new WpPostId(F.Rnd.Ulng);
 			var opt = options with
 			{
 				PostId = postId
@@ -55,8 +55,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var i0 = new WpPostId(F.Rnd.Lng);
-			var i1 = new WpPostId(F.Rnd.Lng);
+			var i0 = new WpPostId(F.Rnd.Ulng);
+			var i1 = new WpPostId(F.Rnd.Ulng);
 			var postIds = ImmutableList.Create(i0, i1);
 			var opt = options with
 			{

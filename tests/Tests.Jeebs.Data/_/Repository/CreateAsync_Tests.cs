@@ -14,7 +14,7 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			// Arrange
 			var (client, _, repo) = Repository_Setup.Get();
-			var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Int) };
+			var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Ulng) };
 
 			// Act
 			await repo.CreateAsync(foo);
@@ -28,7 +28,7 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			// Arrange
 			var (_, log, repo) = Repository_Setup.Get();
-			var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Int) };
+			var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Ulng) };
 
 			// Act
 			await repo.CreateAsync(foo);

@@ -59,12 +59,12 @@ namespace Jeebs.Data.Querying
 		/// Add a limit to the number of results returned by this query
 		/// </summary>
 		/// <param name="max">The maximum number of results to return</param>
-		IQueryBuilderWithFrom Maximum(long max);
+		IQueryBuilderWithFrom Maximum(ulong max);
 
 		/// <summary>
 		/// Skip a number of results before returning
 		/// </summary>
 		/// <param name="skip">The number of results to skip</param>
-		IQueryBuilderWithFrom Skip(long skip);
+		IQueryBuilderWithFrom Skip(ulong skip);
 	}
 }

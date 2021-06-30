@@ -16,7 +16,7 @@ namespace Jeebs.StrongId_Tests
 			var id = new TestId();
 
 			// Assert
-			Assert.Equal(0L, id.Value);
+			Assert.Equal(0U, id.Value);
 		}
 
 		public record TestId() : StrongId(0);

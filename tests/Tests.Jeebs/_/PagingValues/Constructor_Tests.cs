@@ -9,19 +9,6 @@ namespace Jeebs.PagingValues_Tests
 	public class Constructor_Tests
 	{
 		[Fact]
-		public void Invalid_Page_Throws_InvalidException()
-		{
-			// Arrange
-			const int invalidPage = -1;
-
-			// Act
-			static PagingValues createPagingValuesWithInvalidPage() => new(items: 0, page: invalidPage);
-
-			// Assert
-			Assert.Throws<InvalidOperationException>(createPagingValuesWithInvalidPage);
-		}
-
-		[Fact]
 		public void No_Page_Or_Items_Current_Page_Equals_1()
 		{
 			// Arrange
@@ -31,15 +18,15 @@ namespace Jeebs.PagingValues_Tests
 			// Act
 
 			// Assert
-			Assert.Equal(1, pageNoItems.Page);
-			Assert.Equal(1, itemsNoPage.Page);
+			Assert.Equal(1U, pageNoItems.Page);
+			Assert.Equal(1U, itemsNoPage.Page);
 		}
 
 		[Theory]
 		[InlineData(1, 1, 10)]
 		[InlineData(2, 11, 20)]
 		[InlineData(3, 21, 25)]
-		public void Correct_First_And_Last_Items(int page, int firstItem, int lastItem)
+		public void Correct_First_And_Last_Items(ulong page, ulong firstItem, ulong lastItem)
 		{
 			// Arrange
 			var values = new PagingValues(items: 25, page: page);
@@ -56,7 +43,7 @@ namespace Jeebs.PagingValues_Tests
 		[InlineData(4, 478, 1, 10)]
 		[InlineData(17, 478, 11, 20)]
 		[InlineData(45, 478, 41, 48)]
-		public void Correct_Upper_And_Lower_Pages(int page, int items, int lowerPage, int upperPage)
+		public void Correct_Upper_And_Lower_Pages(ulong page, ulong items, ulong lowerPage, ulong upperPage)
 		{
 			// Arrange
 			var values = new PagingValues(items: items, page: page);

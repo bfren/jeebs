@@ -38,7 +38,7 @@ namespace Jeebs.Data.Querying
 		/// <typeparam name="TModel">Return Model type</typeparam>
 		/// <param name="maximum">Maximum number of results to select</param>
 		/// <param name="skip">Number of results to skip</param>
-		QueryParts Create<TModel>(long? maximum, long skip);
+		QueryParts Create<TModel>(ulong? maximum, ulong skip);
 
 		/// <summary>
 		/// Add Join

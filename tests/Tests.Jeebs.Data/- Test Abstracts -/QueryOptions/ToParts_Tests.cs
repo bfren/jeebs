@@ -18,8 +18,8 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var max = F.Rnd.Lng;
-			var skip = F.Rnd.Lng;
+			var max = F.Rnd.Ulng;
+			var skip = F.Rnd.Ulng;
 			var opt = options with
 			{
 				Maximum = max,
@@ -53,7 +53,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var id = new TId { Value = F.Rnd.Lng };
+			var id = new TId { Value = F.Rnd.Ulng };
 			var opt = options with
 			{
 				Id = id
@@ -72,8 +72,8 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			// Arrange
 			var (options, builder) = Setup();
-			var i0 = new TId { Value = F.Rnd.Lng };
-			var i1 = new TId { Value = F.Rnd.Lng };
+			var i0 = new TId { Value = F.Rnd.Ulng };
+			var i1 = new TId { Value = F.Rnd.Ulng };
 			var ids = ImmutableList.Create(i0, i1);
 			var opt = options with
 			{

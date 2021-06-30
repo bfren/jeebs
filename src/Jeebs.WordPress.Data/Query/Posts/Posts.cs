@@ -30,7 +30,7 @@ namespace Jeebs.WordPress.Data
 			public Task<Option<IPagedList<T>>> ExecuteAsync<T>(
 				IWpDb db,
 				IUnitOfWork w,
-				long page,
+				ulong page,
 				GetPostsOptions opt,
 				params IContentFilter[] filters
 			)

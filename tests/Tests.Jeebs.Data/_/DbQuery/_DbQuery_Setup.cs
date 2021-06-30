@@ -21,7 +21,7 @@ namespace Jeebs.Data.DbQuery_Tests
 			var db = Substitute.For<IDb>();
 			db.Client.Returns(client);
 			db.ExecuteAsync(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(true);
-			db.ExecuteAsync<long>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(1);
+			db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(1U);
 
 			var log = Substitute.For<ILog>();
 			var query = Substitute.ForPartsOf<DbQuery<IDb>>(db, log);

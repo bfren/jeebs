@@ -181,11 +181,11 @@ namespace Jeebs.Data.Querying
 		}
 
 		/// <inheritdoc/>
-		public IQueryBuilderWithFrom Maximum(long max) =>
+		public IQueryBuilderWithFrom Maximum(ulong max) =>
 			this with { Parts = Parts with { Maximum = max } };
 
 		/// <inheritdoc/>
-		public IQueryBuilderWithFrom Skip(long skip) =>
+		public IQueryBuilderWithFrom Skip(ulong skip) =>
 			this with { Parts = Parts with { Skip = skip } };
 	}
 }

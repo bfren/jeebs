@@ -43,7 +43,7 @@ namespace AppMvc.EfCore
 
 		public sealed record EfCoreAuthRoleEntity
 		{
-			public long Id { get; init; }
+			public ulong Id { get; init; }
 
 			public string Name { get; init; } = string.Empty;
 
@@ -54,18 +54,18 @@ namespace AppMvc.EfCore
 
 		public sealed record EfCoreAuthUserRoleEntity
 		{
-			public long Id { get; init; }
+			public ulong Id { get; init; }
 
-			public long UserId { get; init; }
+			public ulong UserId { get; init; }
 
-			public long RoleId { get; init; }
+			public ulong RoleId { get; init; }
 
 			internal EfCoreAuthUserRoleEntity() { }
 		}
 
 		public sealed record EfCoreAuthUserEntity
 		{
-			public long Id { get; init; }
+			public ulong Id { get; init; }
 
 			public string EmailAddress { get; init; } = string.Empty;
 
@@ -77,7 +77,7 @@ namespace AppMvc.EfCore
 
 			public bool IsSuper { get; init; }
 
-			public long Version { get; init; }
+			public ulong Version { get; init; }
 
 			public string PasswordHash { get; init; } = string.Empty;
 

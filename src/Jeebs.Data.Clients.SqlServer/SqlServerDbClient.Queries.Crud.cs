@@ -30,7 +30,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			string table,
 			IColumnList columns,
 			IColumn idColumn,
-			long id
+			ulong id
 		)
 		{
 			// Get columns
@@ -49,7 +49,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			string table,
 			IColumnList columns,
 			IColumn idColumn,
-			long id
+			ulong id
 		) =>
 			GetUpdateQuery(table, columns, idColumn, id, null);
 
@@ -58,7 +58,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			string table,
 			IColumnList columns,
 			IColumn idColumn,
-			long id,
+			ulong id,
 			IColumn? versionColumn
 		)
 		{
@@ -86,7 +86,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		protected override string GetDeleteQuery(
 			string table,
 			IColumn idColumn,
-			long id
+			ulong id
 		) =>
 			GetDeleteQuery(table, idColumn, id, null);
 
@@ -94,7 +94,7 @@ namespace Jeebs.Data.Clients.SqlServer
 		protected override string GetDeleteQuery(
 			string table,
 			IColumn idColumn,
-			long id,
+			ulong id,
 			IColumn? versionColumn
 		)
 		{

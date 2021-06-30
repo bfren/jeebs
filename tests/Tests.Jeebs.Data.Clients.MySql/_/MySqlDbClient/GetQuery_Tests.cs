@@ -374,7 +374,7 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 		{
 			// Arrange
 			var (client, table) = MySqlDbClient_Setup.Get();
-			var max = F.Rnd.Lng;
+			var max = F.Rnd.Ulng;
 			var parts = new QueryParts(table) { Maximum = max };
 			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {max};";
 
@@ -390,8 +390,8 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
 		{
 			// Arrange
 			var (client, table) = MySqlDbClient_Setup.Get();
-			var skip = F.Rnd.Lng;
-			var max = F.Rnd.Lng;
+			var skip = F.Rnd.Ulng;
+			var max = F.Rnd.Ulng;
 			var parts = new QueryParts(table) { Skip = skip, Maximum = max };
 			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {skip}, {max};";
 

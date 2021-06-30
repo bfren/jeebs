@@ -23,12 +23,12 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		{
 			var parts = new QueryParts(table)
 			{
-				Maximum = F.Rnd.Lng,
-				Skip = F.Rnd.Lng
+				Maximum = F.Rnd.Ulng,
+				Skip = F.Rnd.Ulng
 			};
 
 			var builder = Substitute.For<TBuilder>();
-			builder.Create<TestModel>(Arg.Any<long?>(), Arg.Any<long>()).Returns(parts);
+			builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(parts);
 			builder.ReturnsForAll(parts.Return());
 
 			return builder;

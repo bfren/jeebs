@@ -30,8 +30,8 @@ namespace Jeebs.Data
 		/// <inheritdoc cref="IDb.QueryAsync{T}(string, object?, CommandType, IDbTransaction)"/>
 		Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, IDbTransaction transaction);
 
-		/// <inheritdoc cref="QueryAsync{T}(long, IQueryParts, IDbTransaction)"/>
-		Task<Option<IPagedList<T>>> QueryAsync<T>(long page, IQueryParts parts);
+		/// <inheritdoc cref="QueryAsync{T}(ulong, IQueryParts, IDbTransaction)"/>
+		Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts);
 
 		/// <summary>
 		/// Build a query from <see cref="IQueryParts"/> and return multiple items
@@ -40,12 +40,12 @@ namespace Jeebs.Data
 		/// <param name="page">Page number</param>
 		/// <param name="parts">Query parts</param>
 		/// <param name="transaction">[Optional] Database transaction</param>
-		Task<Option<IPagedList<T>>> QueryAsync<T>(long page, IQueryParts parts, IDbTransaction transaction);
+		Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction);
 
-		/// <inheritdoc cref="QueryAsync{T}(long, IQueryParts)"/>
+		/// <inheritdoc cref="QueryAsync{T}(ulong, IQueryParts)"/>
 		Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts);
 
-		/// <inheritdoc cref="QueryAsync{T}(long, IQueryParts, IDbTransaction)"/>
+		/// <inheritdoc cref="QueryAsync{T}(ulong, IQueryParts, IDbTransaction)"/>
 		Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction);
 
 		#endregion

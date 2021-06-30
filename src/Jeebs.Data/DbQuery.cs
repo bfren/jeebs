@@ -101,20 +101,20 @@ namespace Jeebs.Data
 			Db.QueryAsync<T>(query, param, CommandType.Text, transaction);
 
 		/// <inheritdoc/>
-		public async Task<Option<IPagedList<T>>> QueryAsync<T>(long page, IQueryParts parts)
+		public async Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts)
 		{
 			using var w = UnitOfWork;
 			return await QueryAsync<T>(page, parts, w.Transaction).ConfigureAwait(false);
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<IPagedList<T>>> QueryAsync<T>(long page, IQueryParts parts, IDbTransaction transaction) =>
+		public Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
 			Return(
 				() => Db.Client.GetCountQuery(parts),
 				e => new Msg.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 			)
 			.BindAsync(
-				x => Db.ExecuteAsync<long>(x.query, x.param, CommandType.Text, transaction)
+				x => Db.ExecuteAsync<ulong>(x.query, x.param, CommandType.Text, transaction)
 			)
 			.MapAsync(
 				x => new PagingValues(x, page, parts.Maximum ?? Defaults.PagingValues.ItemsPer),

@@ -14,7 +14,7 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			// Arrange
 			var (client, _, repo) = Repository_Setup.Get();
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 
 			// Act
 			await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value));
@@ -28,7 +28,7 @@ namespace Jeebs.Data.Repository_Tests
 		{
 			// Arrange
 			var (_, log, repo) = Repository_Setup.Get();
-			var value = F.Rnd.Lng;
+			var value = F.Rnd.Ulng;
 
 			// Act
 			await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value));

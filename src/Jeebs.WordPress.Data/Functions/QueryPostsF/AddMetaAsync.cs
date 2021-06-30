@@ -20,7 +20,8 @@ namespace F.WordPressF.DataF
 		/// </summary>
 		/// <typeparam name="TList">List type</typeparam>
 		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="db">IWpDbQueIWpDbry</param>
+		/// <param name="db">IWpDb</param>
+		/// <param name="w">IUnitOfWork</param>
 		/// <param name="posts">Posts</param>
 		internal static Task<Option<TList>> AddMetaAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 			where TList : IEnumerable<TModel>

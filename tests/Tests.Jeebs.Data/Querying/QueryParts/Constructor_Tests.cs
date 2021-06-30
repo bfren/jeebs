@@ -39,8 +39,8 @@ namespace Jeebs.Data.Querying.QueryParts_Tests
 				WhereCustom = Substitute.For<IImmutableList<(string, IQueryParameters)>>(),
 				Sort = Substitute.For<IImmutableList<(IColumn, SortOrder)>>(),
 				SortRandom = F.Rnd.Flip,
-				Maximum = F.Rnd.Lng,
-				Skip = F.Rnd.Lng
+				Maximum = F.Rnd.Ulng,
+				Skip = F.Rnd.Ulng
 			};
 
 			// Act

@@ -39,11 +39,11 @@ namespace Jeebs.WordPress.Data
 			public DateTime? To { get; init; }
 
 			/// <inheritdoc/>
-			public long? ParentId { get; init; }
+			public WpPostId? ParentId { get; init; }
 
 			/// <inheritdoc/>
-			public IImmutableList<(Taxonomy taxonomy, long id)> Taxonomies { get; init; } =
-				new ImmutableList<(Taxonomy taxonomy, long id)>();
+			public IImmutableList<(Taxonomy taxonomy, WpTermId id)> Taxonomies { get; init; } =
+				new ImmutableList<(Taxonomy taxonomy, WpTermId id)>();
 
 			/// <inheritdoc/>
 			public IImmutableList<(ICustomField field, Compare cmp, object value)> CustomFields { get; init; } =

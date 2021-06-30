@@ -17,7 +17,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 		[Id]
 		public FooId FooId { get; init; } = new();
 
-		public long Version { get; init; }
+		public ulong Version { get; init; }
 
 		public string Bar0 { get; init; } = string.Empty;
 

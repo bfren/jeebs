@@ -142,12 +142,12 @@ namespace Jeebs.WordPress.Data
 			}
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereParentId(QueryParts parts, long? parentId)
+			public Option<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId)
 			{
 				// Add Parent ID
-				if (parentId > 0)
+				if (parentId?.Value > 0)
 				{
-					return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId);
+					return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId.Value);
 				}
 
 				// Return
@@ -155,7 +155,7 @@ namespace Jeebs.WordPress.Data
 			}
 
 			/// <inheritdoc/>
-			public Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, long id)> taxonomies)
+			public Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, WpTermId id)> taxonomies)
 			{
 				// If there aren't any, don't do anything
 				if (taxonomies.Count == 0)
@@ -174,7 +174,7 @@ namespace Jeebs.WordPress.Data
 							  select new
 							  {
 								  Name = g.Key,
-								  Ids = g.Select(x => x.id).ToList()
+								  Ids = g.Select(x => x.id.Value).ToList()
 							  };
 
 				// Add each taxonomy

@@ -118,7 +118,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TModel">Return model type</typeparam>
 		/// <param name="id">Entity ID</param>
-		Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
+		Option<string> GetRetrieveQuery<TEntity, TModel>(ulong id)
 			where TEntity : IWithId;
 
 		/// <summary>
@@ -127,7 +127,7 @@ namespace Jeebs.Data
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TModel">Return model type</typeparam>
 		/// <param name="id">Entity ID</param>
-		Option<string> GetUpdateQuery<TEntity, TModel>(long id)
+		Option<string> GetUpdateQuery<TEntity, TModel>(ulong id)
 			where TEntity : IWithId;
 
 		/// <summary>
@@ -135,7 +135,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="id">Entity ID</param>
-		Option<string> GetDeleteQuery<TEntity>(long id)
+		Option<string> GetDeleteQuery<TEntity>(ulong id)
 			where TEntity : IWithId;
 
 		#endregion

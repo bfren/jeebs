@@ -14,7 +14,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 		public void Deserialise_Valid_Json_Returns_LongId_With_Value(string format)
 		{
 			// Arrange
-			var value = Rnd.Lng;
+			var value = Rnd.Ulng;
 			var json = string.Format(format, value);
 
 			// Act
@@ -32,7 +32,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 		{
 			// Arrange
 			var v0 = Rnd.Int;
-			var v1 = Rnd.Lng;
+			var v1 = Rnd.Ulng;
 			var json = $"{{ \"id\": {v0}, \"longId\": {string.Format(format, v1)} }}";
 
 			// Act
@@ -58,7 +58,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 
 			// Assert
 			var some = Assert.IsType<Some<IdTest0>>(result);
-			Assert.Equal(0, some.Value.Value);
+			Assert.Equal(0U, some.Value.Value);
 		}
 
 		[Theory]
@@ -80,7 +80,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			// Assert
 			var wrapper = Assert.IsType<Some<LongIdWrapperTest0>>(result).Value;
 			Assert.Equal(v0, wrapper.Id);
-			Assert.Equal(0, wrapper.LongId.Value);
+			Assert.Equal(0U, wrapper.LongId.Value);
 		}
 
 		public record IdTest0() : StrongId(0);

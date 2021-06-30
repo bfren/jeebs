@@ -11,47 +11,47 @@ namespace Jeebs
 		/// <summary>
 		/// The total number of items that match the search
 		/// </summary>
-		long Items { get; }
+		ulong Items { get; }
 
 		/// <summary>
 		/// The number of items to display on each page of results
 		/// </summary>
-		long ItemsPer { get; }
+		ulong ItemsPer { get; }
 
 		/// <summary>
 		/// The index of the first item being displayed
 		/// </summary>
-		long FirstItem { get; }
+		ulong FirstItem { get; }
 
 		/// <summary>
 		/// The index + 1 of the last item being displayed
 		/// </summary>
-		long LastItem { get; }
+		ulong LastItem { get; }
 
 		/// <summary>
 		/// The page number to display
 		/// </summary>
-		long Page { get; }
+		ulong Page { get; }
 
 		/// <summary>
 		/// The number of pages needed to display all the items
 		/// </summary>
-		long Pages { get; }
+		ulong Pages { get; }
 
 		/// <summary>
 		/// The number of pages per group of page numbers
 		/// </summary>
-		long PagesPer { get; }
+		ulong PagesPer { get; }
 
 		/// <summary>
 		/// The first page to display
 		/// </summary>
-		long LowerPage { get; }
+		ulong LowerPage { get; }
 
 		/// <summary>
 		/// The last page to display
 		/// </summary>
-		long UpperPage { get; }
+		ulong UpperPage { get; }
 
 		/// <summary>
 		/// The number of items to Skip() in a Linq query

@@ -78,7 +78,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="value">Term ID value</param>
 		internal static Option<WpTermId> ParseTermId(Type type, string value)
 		{
-			if (!long.TryParse(value, out var termId))
+			if (!ulong.TryParse(value, out ulong termId))
 			{
 				return None<WpTermId>(new Msg.ValueIsInvalidTermIdMsg(type, value));
 			}

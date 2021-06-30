@@ -42,16 +42,16 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Attachment not found</summary>
 			/// <param name="FileId">File (Post) ID</param>
-			public sealed record AttachmentNotFoundMsg(long FileId) : IMsg { }
+			public sealed record AttachmentNotFoundMsg(ulong FileId) : IMsg { }
 
 			/// <summary>Multiple Attachments found</summary>
 			/// <param name="FileId">File (Post) ID</param>
-			public sealed record MultipleAttachmentsFoundMsg(long FileId) : IMsg { }
+			public sealed record MultipleAttachmentsFoundMsg(ulong FileId) : IMsg { }
 
 			/// <summary>Unable to get Attachment file path</summary>
 			/// <param name="Exception">Exception object</param>
 			/// <param name="FileId">File (Post) ID</param>
-			public sealed record ErrorGettingAttachmentFilePathMsg(Exception Exception, long FileId) : ExceptionMsg(Exception);
+			public sealed record ErrorGettingAttachmentFilePathMsg(Exception Exception, ulong FileId) : ExceptionMsg(Exception);
 		}
 	}
 }

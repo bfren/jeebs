@@ -36,7 +36,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, v) = Setup();
-			var postId = new WpPostId(F.Rnd.Lng);
+			var postId = new WpPostId(F.Rnd.Ulng);
 
 			// Act
 			var result = builder.AddWherePostId(v.Parts, postId, Substitute.For<IImmutableList<WpPostId>>());
@@ -50,8 +50,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests
 		{
 			// Arrange
 			var (builder, v) = Setup();
-			var id0 = new WpPostId(F.Rnd.Lng);
-			var id1 = new WpPostId(F.Rnd.Lng);
+			var id0 = new WpPostId(F.Rnd.Ulng);
+			var id1 = new WpPostId(F.Rnd.Ulng);
 			var postIds = ImmutableList.Create(id0, id1);
 			var postIdValues = postIds.Select(p => p.Value);
 

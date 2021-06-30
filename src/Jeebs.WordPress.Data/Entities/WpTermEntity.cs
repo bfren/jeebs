@@ -21,6 +21,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// Group
 		/// </summary>
-		public long Group { get; init; }
+		public ulong Group { get; init; }
 	}
 }

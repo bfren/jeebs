@@ -14,7 +14,7 @@ namespace Jeebs.Auth.Data.Entities
 	{
 		/// <inheritdoc/>
 		[Version]
-		public long Version { get; init; }
+		public ulong Version { get; init; }
 
 		/// <summary>
 		/// The user's encrypted password
