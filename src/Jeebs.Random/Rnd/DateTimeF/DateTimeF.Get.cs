@@ -11,7 +11,7 @@ namespace F
 		/// <summary>
 		/// Random DateTime function
 		/// </summary>
-		public static class DateTimeF
+		public static partial class DateTimeF
 		{
 			/// <summary>
 			/// Return a random DateTime

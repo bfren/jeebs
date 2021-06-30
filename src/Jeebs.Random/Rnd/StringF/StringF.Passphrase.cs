@@ -94,7 +94,7 @@ namespace F
 				var words = new List<string>();
 				for (int i = 0; i < numberOfWords; i++)
 				{
-					// Get a random word
+					// Get the index of a word that hasn't been used yet
 					var index = getUniqueIndex();
 					used.Add(index);
 

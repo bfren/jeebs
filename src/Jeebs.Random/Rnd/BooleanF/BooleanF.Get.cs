@@ -1,24 +1,27 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Security.Cryptography;
 
 namespace F
 {
 	public static partial class Rnd
 	{
-		/// <summary>
-		/// Random Guid function
-		/// </summary>
-		public static class GuidF
+		public static partial class BooleanF
 		{
 			/// <summary>
-			/// Return a secure random Guid
+			/// Returns a random true or false value
 			/// </summary>
 			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static Guid Get(RandomNumberGenerator? generator = null) =>
-				new(ByteF.Get(16, generator));
+			public static bool Get(RandomNumberGenerator? generator = null) =>
+				NumberF.GetInt64(0, 1, generator) switch
+				{
+					0 =>
+						false,
+
+					_ =>
+						true
+				};
 		}
 	}
 }

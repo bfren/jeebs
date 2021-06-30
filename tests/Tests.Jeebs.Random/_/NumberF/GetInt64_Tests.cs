@@ -48,11 +48,12 @@ namespace F.NumberF_Tests
 			const long min = 1L;
 			const long max = 10L;
 			var numbers = new List<long>();
+			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(GetInt64(min, max));
+				numbers.Add(GetInt64(min, max, generator));
 			}
 
 			// Assert
@@ -66,11 +67,12 @@ namespace F.NumberF_Tests
 			// Arrange
 			const int iterations = 10000;
 			var numbers = new List<long>();
+			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(GetInt64());
+				numbers.Add(GetInt64(generator: generator));
 			}
 
 			var unique = numbers.Distinct();

@@ -16,11 +16,12 @@ namespace F.BooleanF_Tests
 			// Arrange
 			const int iterations = 100;
 			var results = new List<bool>();
+			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				results.Add(Get());
+				results.Add(Get(generator));
 			}
 
 			// Assert

@@ -28,7 +28,7 @@ namespace Jeebs
 			for (int i = shuffled.Length; i > 1; i--)
 			{
 				int j = F.Rnd.NumberF.GetInt32(max: i - 1, generator: rng);
-				T tmp = shuffled[j];
+				var tmp = shuffled[j];
 				shuffled[j] = shuffled[i - 1];
 				shuffled[i - 1] = tmp;
 			}

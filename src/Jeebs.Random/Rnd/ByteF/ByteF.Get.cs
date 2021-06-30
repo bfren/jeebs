@@ -10,7 +10,7 @@ namespace F
 		/// <summary>
 		/// Byte functions
 		/// </summary>
-		public static class ByteF
+		public static partial class ByteF
 		{
 			/// <summary>
 			/// Return an array of random bytes
@@ -23,7 +23,7 @@ namespace F
 
 				if (generator is null)
 				{
-					using var csp = new RNGCryptoServiceProvider();
+					using var csp = Generator;
 					csp.GetBytes(b);
 				}
 				else

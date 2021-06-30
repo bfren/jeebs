@@ -161,11 +161,12 @@ namespace F.StringF_Tests
 			// Arrange
 			const int iterations = 10000;
 			var phrases = new List<string>();
+			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				phrases.Add(Passphrase(2).UnsafeUnwrap());
+				phrases.Add(Passphrase(2, generator: generator).UnsafeUnwrap());
 			}
 
 			var unique = phrases.Distinct();
