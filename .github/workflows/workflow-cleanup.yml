@@ -1,4 +1,4 @@
-name: delete-workflow-runs
+name: Cleanup
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         default: "60"
 
 jobs:
-  del_old_runs:
+  delete-workflow-runs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete old workflow runs
