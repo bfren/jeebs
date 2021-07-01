@@ -1,0 +1,34 @@
+﻿// Jeebs Unit Tests
+// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
+using static F.Rnd.GuidF;
+
+namespace F.GuidF_Tests
+{
+	public class Get_Tests
+	{
+		[Fact]
+		public void Returns_Different_Bytes_Each_Time()
+		{
+			// Arrange
+			const int iterations = 10000;
+			var numbers = new List<Guid>();
+			using var generator = Rnd.Generator;
+
+			// Act
+			for (int i = 0; i < iterations; i++)
+			{
+				numbers.Add(Get(generator));
+			}
+
+			var unique = numbers.Distinct();
+
+			// Assert
+			Assert.Equal(unique.Count(), numbers.Count);
+		}
+	}
+}

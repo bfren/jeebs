@@ -6,6 +6,11 @@ on:
       - 'main'
     tags-ignore:
       - '**'
+    paths:
+      - '.github/workflows/test.yml'
+      - 'src/**'
+      - 'tests/**'
+  workflow_dispatch:
 
 jobs:
   restore-build-test:
@@ -27,13 +32,21 @@ jobs:
         dotnet-version: '5.0.x'
     -
       name: A - Restore
-      run: dotnet restore src/Test.csproj
+      run: |
+        dotnet restore ./Test.csproj
     -
       name: B - Build
-      run: dotnet build src/Test.csproj --no-restore --configuration Release
+      run: |
+        dotnet build ./Test.csproj \
+          --no-restore \
+          --configuration Release
     -
       name: C - Test
-      run: dotnet test src/Test.csproj --no-restore --no-build --configuration Release
+      run: |
+        dotnet test ./Test.csproj \
+          --no-restore \
+          --no-build \
+          --configuration Release
     -
       if: success()
       name: Finish - Success

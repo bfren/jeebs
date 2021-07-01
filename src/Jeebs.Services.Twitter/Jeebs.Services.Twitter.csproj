@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="..\Jeebs.Services\Jeebs.Services.csproj" />
+	</ItemGroup>
+</Project>
