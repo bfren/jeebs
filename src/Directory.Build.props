@@ -41,9 +41,9 @@
 	
 	<!-- Package Configuration -->
 	<PropertyGroup Label="Package">
-		<Authors>Ben Green</Authors>
-		<Company>bcg|design</Company>
-		<Copyright>Copyright © bcg 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
+		<Authors>bfren</Authors>
+		<Company>bfren</Company>
+		<Copyright>Copyright © bfren.uk 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
 		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
