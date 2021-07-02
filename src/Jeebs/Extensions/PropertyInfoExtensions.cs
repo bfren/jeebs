@@ -16,10 +16,14 @@ namespace System.Runtime.CompilerServices
 	/// </remarks>
 	[AttributeUsage(
 		AttributeTargets.Class |
+		AttributeTargets.Event |
+		AttributeTargets.Field |
 		AttributeTargets.GenericParameter |
-		AttributeTargets.Event | AttributeTargets.Field | AttributeTargets.Property |
-		AttributeTargets.Parameter | AttributeTargets.ReturnValue,
-		AllowMultiple = false)]
+		AttributeTargets.Parameter |
+		AttributeTargets.Property |
+		AttributeTargets.ReturnValue,
+		AllowMultiple = false,
+		Inherited = false)]
 	public sealed class NullableAttribute : Attribute
 	{
 		/// <summary>
@@ -30,16 +34,16 @@ namespace System.Runtime.CompilerServices
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="b">Type info</param>
-		public NullableAttribute(byte b) =>
-			NullableFlags = new[] { b };
+		/// <param name="flag">Type info</param>
+		public NullableAttribute(byte flag) =>
+			NullableFlags = new[] { flag };
 
 		/// <summary>
 		/// Create object
 		/// </summary>
-		/// <param name="b">Type info</param>
-		public NullableAttribute(byte[] b) =>
-			NullableFlags = b;
+		/// <param name="flags">Type info</param>
+		public NullableAttribute(byte[] flags) =>
+			NullableFlags = flags;
 	}
 }
 
