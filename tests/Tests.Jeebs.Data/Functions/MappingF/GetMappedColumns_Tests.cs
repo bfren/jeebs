@@ -2,6 +2,7 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Xunit;
+using static F.DataF.MappingF;
 
 namespace Jeebs.Data.Mapping.Mapper_Tests
 {
@@ -13,7 +14,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 			// Arrange
 
 			// Act
-			var result = Mapper.GetMappedColumns<FooWithIgnored>(new FooTable());
+			var result = GetMappedColumns<FooWithIgnored>(new FooTable());
 
 			// Assert
 			var some = result.AssertSome();
@@ -27,7 +28,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 			// Arrange
 
 			// Act
-			var result = Mapper.GetMappedColumns<FooWithIgnored>(new FooTable());
+			var result = GetMappedColumns<FooWithIgnored>(new FooTable());
 
 			// Assert
 			var some = result.AssertSome();

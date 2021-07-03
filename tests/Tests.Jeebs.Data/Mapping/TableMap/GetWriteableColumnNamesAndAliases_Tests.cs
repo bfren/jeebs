@@ -2,6 +2,7 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Xunit;
+using static F.DataF.MappingF;
 using static Jeebs.Data.Mapping.TableMap.Msg;
 
 namespace Jeebs.Data.Mapping.TableMap_Tests
@@ -13,7 +14,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 		{
 			// Arrange
 			var table = new FooUnwriteableTable();
-			var columns = Mapper.GetMappedColumns<FooUnwriteable>(table).UnsafeUnwrap();
+			var columns = GetMappedColumns<FooUnwriteable>(table).UnsafeUnwrap();
 			var map = new TableMap(table, columns, GetColumnNames_Tests.Get().column);
 
 			// Act
@@ -29,7 +30,7 @@ namespace Jeebs.Data.Mapping.TableMap_Tests
 		{
 			// Arrange
 			var table = new FooTable();
-			var columns = Mapper.GetMappedColumns<Foo>(table).UnsafeUnwrap();
+			var columns = GetMappedColumns<Foo>(table).UnsafeUnwrap();
 			var map = new TableMap(table, columns, GetColumnNames_Tests.Get().column);
 
 			// Act
