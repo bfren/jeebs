@@ -37,6 +37,13 @@ namespace Jeebs.Mvc.Auth.Controllers
 	public abstract class AuthControllerBase : Controller
 	{
 		/// <summary>
+		/// Returns custom claims for a given user
+		/// </summary>
+		/// <param name="user">User Model</param>
+		/// <param name="password">The User's password</param>
+		public delegate Task<List<Claim>> GetClaims(AuthUserModel user, string password);
+
+		/// <summary>
 		/// IAuthDataProvider
 		/// </summary>
 		protected IAuthDataProvider Auth { get; private init; }
@@ -44,7 +51,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// <summary>
 		/// Add application-specific claims to an authenticated user
 		/// </summary>
-		protected virtual Func<AuthUserModel, List<Claim>>? AddClaims { get; }
+		protected virtual GetClaims? AddClaims { get; }
 
 		/// <summary>
 		/// Inject dependencies
@@ -74,7 +81,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 			{
 				// Get user principal
 				Log.Debug("User validated.");
-				var principal = GetPrincipal(user);
+				var principal = await GetPrincipal(user, model.Password);
 
 				// Update last sign in
 				var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
@@ -109,7 +116,8 @@ namespace Jeebs.Mvc.Auth.Controllers
 		/// Get principal for specified user with all necessary claims
 		/// </summary>
 		/// <param name="user">User Model</param>
-		internal ClaimsPrincipal GetPrincipal(AuthUserModel user)
+		/// <param name="password">The user's password</param>
+		internal async Task<ClaimsPrincipal> GetPrincipal(AuthUserModel user, string password)
 		{
 			// Create claims object
 			var claims = new List<Claim>
@@ -134,7 +142,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 			// Add custom Claims
 			if (AddClaims != null)
 			{
-				claims.AddRange(AddClaims(user));
+				claims.AddRange(await AddClaims(user, password));
 			}
 
 			// Create and return identity and principal objects

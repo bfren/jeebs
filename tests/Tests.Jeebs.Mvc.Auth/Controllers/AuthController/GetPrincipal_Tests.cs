@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
@@ -16,7 +17,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 	public class GetPrincipal_Tests
 	{
 		[Fact]
-		public void Returns_ClaimsPrincipal_With_User_Info_Claims()
+		public async Task Returns_ClaimsPrincipal_With_User_Info_Claims()
 		{
 			// Arrange
 			var auth = Substitute.For<IAuthDataProvider>();
@@ -31,7 +32,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			};
 
 			// Act
-			var result = controller.GetPrincipal(user);
+			var result = await controller.GetPrincipal(user, F.Rnd.Str);
 
 			// Assert
 			Assert.Collection(result.Claims,
@@ -59,7 +60,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		}
 
 		[Fact]
-		public void Returns_ClaimsPrincipal_With_Role_Claims()
+		public async Task Returns_ClaimsPrincipal_With_Role_Claims()
 		{
 			// Arrange
 			var auth = Substitute.For<IAuthDataProvider>();
@@ -79,7 +80,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			};
 
 			// Act
-			var result = controller.GetPrincipal(user);
+			var result = await controller.GetPrincipal(user, F.Rnd.Str);
 
 			// Assert
 			Assert.Collection(result.Claims,
@@ -117,7 +118,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 		}
 
 		[Fact]
-		public void Adds_Custom_Claims()
+		public async Task Adds_Custom_Claims()
 		{
 			// Arrange
 			var auth = Substitute.For<IAuthDataProvider>();
@@ -132,7 +133,7 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 			};
 
 			// Act
-			var result = controller.GetPrincipal(user);
+			var result = await controller.GetPrincipal(user, F.Rnd.Str);
 
 			// Assert
 			Assert.Equal(5, result.Claims.Count());
@@ -151,9 +152,12 @@ namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests
 
 		public class AuthTestControllerWithClaims : AuthTestController
 		{
-			protected override Func<IAuthUser, List<Claim>>? AddClaims =>
-				user =>
-					new() { new(nameof(AuthTestControllerWithClaims), $"{user.Id}+{user.FriendlyName}") };
+			protected override GetClaims? AddClaims =>
+				(user, _) =>
+					Task.FromResult(new List<Claim>
+					{
+						new(nameof(AuthTestControllerWithClaims), $"{user.Id}+{user.FriendlyName}")
+					});
 
 			public AuthTestControllerWithClaims(IAuthDataProvider auth, ILog log) :
 				base(auth, log)
