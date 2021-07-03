@@ -68,12 +68,8 @@ namespace Jeebs.Data
 		/// <param name="client">Database client</param>
 		/// <param name="config">Database configuration</param>
 		/// <param name="log">ILog (should be given a context of the implementing class)</param>
-		protected Db(IDbClient client, DbConnectionConfig config, ILog log)
-		{
-			Client = client;
-			Config = config;
-			Log = log;
-		}
+		protected Db(IDbClient client, DbConnectionConfig config, ILog log) =>
+			(Client, Config, Log) = (client, config, log);
 
 		/// <summary>
 		/// Use Verbose log by default - override to send elsewhere (or to disable entirely)
