@@ -46,11 +46,15 @@ namespace F.DataF
 				// IN is a special case, handle ordinary cases first
 				if (cmp != Compare.In && cmp != Compare.NotIn)
 				{
+					// Auto-increment namd and get parameter value (to support StrongId)
 					var paramName = $"P{index++}";
-					param.Add(paramName, value);
+					var paramValue = GetParameterValue(value);
 
+					// Add parameter
+					param.Add(paramName, paramValue);
 					where.Add($"{escapedColumn} {client.GetOperator(cmp)} {client.GetParamRef(paramName)}");
 
+					// Move to next predicate
 					continue;
 				}
 
@@ -61,9 +65,12 @@ namespace F.DataF
 					var inParam = new List<string>();
 					foreach (var inValue in list)
 					{
+						// Auto-increment namd and get parameter value (to support StrongId)
 						var inParamName = $"P{index++}";
+						var inParamValue = GetParameterValue(inValue);
 
-						param.Add(inParamName, inValue);
+						// Add parameter
+						param.Add(inParamName, inParamValue);
 						inParam.Add(client.GetParamRef(inParamName));
 					}
 

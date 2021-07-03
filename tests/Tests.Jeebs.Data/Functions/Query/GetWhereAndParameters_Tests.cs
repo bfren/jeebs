@@ -105,6 +105,45 @@ namespace F.DataF.QueryF_Tests
 			);
 		}
 
+		[Theory]
+		[InlineData(Compare.Equal)]
+		[InlineData(Compare.LessThan)]
+		[InlineData(Compare.LessThanOrEqual)]
+		[InlineData(Compare.Like)]
+		[InlineData(Compare.MoreThan)]
+		[InlineData(Compare.MoreThanOrEqual)]
+		[InlineData(Compare.NotEqual)]
+		public void Operator_Not_In_Adds_StrongId_Param(Compare input)
+		{
+			// Arrange
+			var name = Rnd.Str;
+			var column = Substitute.For<IColumn>();
+			column.Name.Returns(name);
+
+			var value = Rnd.Ulng;
+			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
+			{
+				(column, input, new TestId(value))
+			});
+
+			var client = Substitute.ForPartsOf<TestClient>();
+
+			// Act
+			var (where, param) = GetWhereAndParameters(client, predicates, false);
+
+			// Assert
+			Assert.Collection(where,
+				x => Assert.Equal($"--{name}-- cmp ~P0", x)
+			);
+			Assert.Collection(param,
+				x =>
+				{
+					Assert.Equal("P0", x.Key);
+					Assert.Equal(value, x.Value);
+				}
+			);
+		}
+
 		private static void Test_In_With_Not_Enumerable(Compare cmp)
 		{
 			// Arrange
@@ -136,16 +175,16 @@ namespace F.DataF.QueryF_Tests
 			Test_In_With_Not_Enumerable(Compare.NotIn);
 		}
 
-		private static void Test_In_With_Enumerable(Compare cmp, Func<int, int, int, object> getValue)
+		private static void Test_In_With_Enumerable(Compare cmp, Func<ulong, ulong, ulong, object> getValue)
 		{
 			// Arrange
 			var name = Rnd.Str;
 			var column = Substitute.For<IColumn>();
 			column.Name.Returns(name);
 
-			var v0 = Rnd.Int;
-			var v1 = Rnd.Int;
-			var v2 = Rnd.Int;
+			var v0 = Rnd.Ulng;
+			var v1 = Rnd.Ulng;
+			var v2 = Rnd.Ulng;
 			var value = getValue(v0, v1, v2);
 			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 			{
@@ -187,9 +226,21 @@ namespace F.DataF.QueryF_Tests
 		}
 
 		[Fact]
+		public void Operator_Is_In_And_Value_Is_Array_Joins_Value_And_Adds_StrongId_Param()
+		{
+			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) });
+		}
+
+		[Fact]
 		public void Operator_Is_In_And_Value_Is_IEnumerable_Joins_Value_And_Adds_Param()
 		{
 			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { v0, v1, v2 }.AsEnumerable());
+		}
+
+		[Fact]
+		public void Operator_Is_In_And_Value_Is_IEnumerable_Joins_Value_And_Adds_StrongId_Param()
+		{
+			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.AsEnumerable());
 		}
 
 		[Fact]
@@ -199,9 +250,21 @@ namespace F.DataF.QueryF_Tests
 		}
 
 		[Fact]
+		public void Operator_Is_In_And_Value_Is_List_Joins_Value_And_Adds_StrongId_Param()
+		{
+			Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.ToList());
+		}
+
+		[Fact]
 		public void Operator_Is_NotIn_And_Value_Is_Array_Joins_Value_And_Adds_Param()
 		{
 			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 });
+		}
+
+		[Fact]
+		public void Operator_Is_NotIn_And_Value_Is_Array_Joins_Value_And_Adds_StrongId_Param()
+		{
+			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) });
 		}
 
 		[Fact]
@@ -211,9 +274,21 @@ namespace F.DataF.QueryF_Tests
 		}
 
 		[Fact]
+		public void Operator_Is_NotIn_And_Value_Is_IEnumerable_Joins_Value_And_Adds_StrongId_Param()
+		{
+			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.AsEnumerable());
+		}
+
+		[Fact]
 		public void Operator_Is_NotIn_And_Value_Is_List_Joins_Value_And_Adds_Param()
 		{
 			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { v0, v1, v2 }.ToList());
+		}
+
+		[Fact]
+		public void Operator_Is_NotIn_And_Value_Is_List_Joins_Value_And_Adds_StrongId_Param()
+		{
+			Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.ToList());
 		}
 
 		public abstract class TestClient : DbClient
@@ -233,5 +308,7 @@ namespace F.DataF.QueryF_Tests
 			public override string JoinList(List<string> objects, bool wrap) =>
 				$"({string.Join('|', objects)})";
 		}
+
+		public sealed record TestId(ulong Value) : StrongId(Value);
 	}
 }

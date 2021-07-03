@@ -124,6 +124,37 @@ namespace F.DataF.QueryF_Tests
 			);
 		}
 
+		[Theory]
+		[InlineData(Compare.Equal)]
+		[InlineData(Compare.LessThan)]
+		[InlineData(Compare.LessThanOrEqual)]
+		[InlineData(Compare.Like)]
+		[InlineData(Compare.MoreThan)]
+		[InlineData(Compare.MoreThanOrEqual)]
+		[InlineData(Compare.NotEqual)]
+		public void Operator_Not_In_Gets_StrongId_Value(Compare input)
+		{
+			// Arrange
+			var table = Rnd.Str;
+			var columns = new MappedColumnList(new[]
+			{
+				new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			});
+			var value = Rnd.Ulng;
+			var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+			{
+				(e => e.Foo, input, new TestId(value))
+			};
+
+			// Act
+			var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+
+			// Assert
+			Assert.Collection(result,
+				x => Assert.Equal(value, x.value)
+			);
+		}
+
 		private static void Test_In_With_Enumerable(Func<int, int, int, object> getValue)
 		{
 			// Arrange
