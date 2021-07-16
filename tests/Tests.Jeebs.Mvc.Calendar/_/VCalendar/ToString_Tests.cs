@@ -26,7 +26,7 @@ namespace Jeebs.Mvc.Calendar.VCalendar_Tests
 			var expected =
 				$"BEGIN:VCALENDAR{Environment.NewLine}" +
 				$"VERSION:2.0{Environment.NewLine}" +
-				$"PRODID:-//bcg|design//NONSGML Jeebs.Mvc.Calendar//EN{Environment.NewLine}" +
+				$"PRODID:-//bfren//NONSGML Jeebs.Mvc.Calendar//EN{Environment.NewLine}" +
 				$"CALSCALE:GREGORIAN{Environment.NewLine}" +
 				$"X-PUBLISHED-TTL:PT1H{Environment.NewLine}" +
 				$"BEGIN:VTIMEZONE{Environment.NewLine}" +

@@ -57,8 +57,11 @@ namespace F.DataF
 					return None<IImmutableList<(IColumn, Compare, object)>, Msg.InOperatorRequiresValueToBeAListMsg>();
 				}
 
+				// Get parameter value (to support StrongId)
+				var value = GetParameterValue(item.value);
+
 				// Add to list of predicates using column name
-				list.Add((column, item.cmp, item.value));
+				list.Add((column, item.cmp, value));
 			}
 
 			return ImmutableList.Create(items: list);

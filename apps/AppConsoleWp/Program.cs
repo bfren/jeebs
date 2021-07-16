@@ -120,7 +120,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var book0 = new WpTermId(423U);
 	var book1 = new WpTermId(628U);
 	Console.WriteLine();
-	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0, book1);
+	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
 	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
@@ -318,10 +318,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			foreach (var item in x)
 			{
 				log.Debug("Attachment {Id:0000}: {Description}", item.PostId, item.Title);
-				log.Debug("  - {Description}", item.Description);
-				log.Debug("  - {Url}", item.Url);
-				log.Debug("  - {UrlPath}", item.UrlPath);
-				log.Debug("  - {FilePath}", item.GetFilePath(bcg.Db.WpConfig.UploadsPath));
+				log.Debug("  - Description: {Description}", item.Description);
+				log.Debug("  - Url: {Url}", item.Url);
+				log.Debug("  - UrlPath: {UrlPath}", item.UrlPath);
+				log.Debug("  - FilePath: {FilePath}", item.GetFilePath(bcg.Db.WpConfig.UploadsPath));
 			}
 		},
 		none: r => log.Message(r)

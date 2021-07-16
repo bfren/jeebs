@@ -67,7 +67,7 @@ namespace Jeebs.Mvc.Calendar
 			var builder = new StringBuilder();
 			builder.AppendLine("BEGIN:VCALENDAR");
 			builder.AppendLine("VERSION:2.0");
-			builder.AppendLine("PRODID:-//bcg|design//NONSGML Jeebs.Mvc.Calendar//EN");
+			builder.AppendLine("PRODID:-//bfren//NONSGML Jeebs.Mvc.Calendar//EN");
 			builder.AppendLine("CALSCALE:GREGORIAN");
 			builder.AppendLine("X-PUBLISHED-TTL:PT1H");
 			return builder.ToString();

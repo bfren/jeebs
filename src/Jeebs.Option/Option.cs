@@ -23,6 +23,20 @@ namespace Jeebs
 		public Task<Option<T>> AsTask =>
 			Task.FromResult(this);
 
+		/// <summary>
+		/// Whether or not this is <see cref="Some{T}"/>
+		/// </summary>
+		[JsonIgnore]
+		public bool IsSome =>
+			this is Some<T>;
+
+		/// <summary>
+		/// Whether or not this is <see cref="None{T}"/>
+		/// </summary>
+		[JsonIgnore]
+		public bool IsNone =>
+			this is None<T>;
+
 		internal Option() { }
 
 		/// <summary>
