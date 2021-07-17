@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj">

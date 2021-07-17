@@ -36,6 +36,10 @@ namespace Jeebs.Auth
 				IsEnabled = true
 			};
 
+			StartFluentQuery()
+				.Where(x => x.FamilyName, Compare.Equal, "")
+				.QueryAsync<int>();
+
 			return CreateAsync(user);
 		}
 

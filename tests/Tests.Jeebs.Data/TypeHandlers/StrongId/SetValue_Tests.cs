@@ -10,7 +10,7 @@ namespace Jeebs.Data.TypeHandlers.StrongId_Tests
 	public class SetValue_Tests
 	{
 		[Fact]
-		public void Sets_Parameter_Value_As_Int64()
+		public void Sets_Parameter_Value_As_UInt64()
 		{
 			// Arrange
 			var handler = new StrongIdTypeHandler<TestId>();
