@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Querying;
 
 namespace Jeebs.Data
 {
@@ -80,6 +81,14 @@ namespace Jeebs.Data
 				WriteToLog(message, args.ExtendWith(parameters));
 			}
 		}
+
+		#region Fluent Queries
+
+		/// <inheritdoc/>
+		public virtual IQueryFluent<TEntity, TId> StartFluentQuery() =>
+			new QueryFluent<TEntity, TId>(this);
+
+		#endregion
 
 		#region Custom Queries
 

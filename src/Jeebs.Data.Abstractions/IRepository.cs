@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Querying;
 
 namespace Jeebs.Data
 {
@@ -21,6 +22,15 @@ namespace Jeebs.Data
 	{
 		/// <inheritdoc cref="IDb.UnitOfWork"/>
 		IUnitOfWork UnitOfWork { get; }
+
+		#region Fluent Queries
+
+		/// <summary>
+		/// Start a new fluent query
+		/// </summary>
+		IQueryFluent<TEntity, TId> StartFluentQuery();
+
+		#endregion
 
 		#region Custom Queries
 
