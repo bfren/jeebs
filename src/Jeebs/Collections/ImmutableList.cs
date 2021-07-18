@@ -36,6 +36,14 @@ namespace Jeebs
 		/// <param name="args">Items to add</param>
 		public static ImmutableList<T> Create<T>(params T[] args) =>
 			new(args);
+
+		/// <summary>
+		/// Merge multiple <see cref="ImmutableList{T}"/> objects into one
+		/// </summary>
+		/// <typeparam name="T">List Item type</typeparam>
+		/// <param name="lists">Lists to merge</param>
+		public static ImmutableList<T> Merge<T>(params IImmutableList<T>[] lists) =>
+			new(lists.SelectMany(x => x));
 	}
 
 	/// <inheritdoc cref="IImmutableList{T}"/>
