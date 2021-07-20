@@ -7,6 +7,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config;
+using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
 using Microsoft.Extensions.Options;
 using static F.OptionF;
@@ -191,18 +192,15 @@ namespace Jeebs.Data
 		#region Static
 
 		/// <summary>
-		/// Add default type handlers
-		/// </summary>
-		static Db() =>
-			SqlMapper.AddTypeHandler(new GuidTypeHandler());
-
-		/// <summary>
 		/// Persist an EnumList to the database by encoding it as JSON
 		/// </summary>
 		/// <typeparam name="T">Type to handle</typeparam>
 		protected static void AddEnumeratedListTypeHandler<T>()
 			where T : Enumerated =>
 			SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
+
+		protected static void AddGuidTypeHandler() =>
+			SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
 		/// <summary>
 		/// Persist a type to the database by encoding it as JSON
@@ -212,12 +210,50 @@ namespace Jeebs.Data
 			SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 		/// <summary>
-		/// Persist a StrongId to the database
+		/// Persist <see cref="StrongId"/> properties to the database
 		/// </summary>
-		/// <typeparam name="T">StrongId itype</typeparam>
-		protected static void AddStrongIdTypeHandler<T>()
-			where T : StrongId, new() =>
-			SqlMapper.AddTypeHandler(new StrongIdTypeHandler<T>());
+		protected static void AddStrongIdTypeHandlers() =>
+			AddGenericTypeHandlers<StrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+
+		/// <summary>
+		/// Persist <see cref="Locked{T}"/> properties to the database
+		/// </summary>
+		protected static void AddLockedTypeHandlers() =>
+			AddGenericTypeHandlers<Locked>(typeof(JsonTypeHandler<>), SqlMapper.AddTypeHandler);
+
+		/// <summary>
+		/// Add generic type handlers
+		/// </summary>
+		/// <typeparam name="TBaseType">Base (abstract or interface) type to map</typeparam>
+		/// <param name="handlerType">Handler type (with generic argument)</param>
+		internal static void AddGenericTypeHandlers<TBaseType>(Type handlerType, AddTypeHandler addTypeHandler)
+		{
+			if (!handlerType.ContainsGenericParameters)
+			{
+				return;
+			}
+
+			if (!handlerType.Implements<SqlMapper.ITypeHandler>())
+			{
+				return;
+			}
+
+			AppDomain.CurrentDomain.GetTypesOfPropertiesImplenting<TBaseType>().ForEach(t =>
+			{
+				var genericHandlerType = handlerType.MakeGenericType(t);
+				if (Activator.CreateInstance(genericHandlerType) is SqlMapper.ITypeHandler handler)
+				{
+					addTypeHandler(t, handler);
+				}
+			});
+		}
+
+		/// <summary>
+		/// For testing - used to register a type handler
+		/// </summary>
+		/// <param name="type">Base (abstract or interface) type to map</param>
+		/// <param name="handler">Handler type (with generic argument)</param>
+		public delegate void AddTypeHandler(Type type, SqlMapper.ITypeHandler handler);
 
 		#endregion
 
