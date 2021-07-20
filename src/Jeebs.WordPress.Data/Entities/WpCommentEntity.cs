@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// PostId
 		/// </summary>
-		public ulong PostId { get; init; }
+		public WpPostId PostId { get; init; } = new();
 
 		/// <summary>
 		/// AuthorName
@@ -74,12 +74,12 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public long ParentId { get; init; }
+		public WpCommentId ParentId { get; init; } = new();
 
 		/// <summary>
 		/// AuthorId
 		/// </summary>
-		public long AuthorId { get; init; }
+		public WpUserId AuthorId { get; init; } = new();
 
 		/// <summary>
 		/// AuthorIsSubscribed

@@ -33,7 +33,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// CategoryId
 		/// </summary>
-		public ulong CategoryId { get; init; }
+		public WpTermId CategoryId { get; init; } = new();
 
 		/// <summary>
 		/// Description
@@ -48,7 +48,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// OwnerId
 		/// </summary>
-		public ulong OwnerId { get; init; }
+		public WpUserId OwnerId { get; init; } = new();
 
 		/// <summary>
 		/// Rating

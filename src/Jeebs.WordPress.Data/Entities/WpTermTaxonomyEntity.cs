@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public ulong TermId { get; init; }
+		public WpTermId TermId { get; init; } = new();
 
 		/// <summary>
 		/// Taxonomy
@@ -28,7 +28,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// ParentId
 		/// </summary>
-		public ulong ParentId { get; init; }
+		public WpTermId ParentId { get; init; } = new();
 
 		/// <summary>
 		/// Count

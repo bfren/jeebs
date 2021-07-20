@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// TermId
 		/// </summary>
-		public ulong TermId { get; init; }
+		public WpTermId TermId { get; init; } = new();
 
 		/// <summary>
 		/// Key

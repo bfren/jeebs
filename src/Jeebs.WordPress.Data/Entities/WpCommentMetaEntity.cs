@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// CommentId
 		/// </summary>
-		public ulong CommentId { get; init; }
+		public WpCommentId CommentId { get; init; } = new();
 
 		/// <summary>
 		/// Key
