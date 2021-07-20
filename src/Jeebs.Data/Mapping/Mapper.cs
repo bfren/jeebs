@@ -55,16 +55,18 @@ namespace Jeebs.Data.Mapping
 					reason => throw new UnableToGetMappedColumnsException(reason)
 				);
 
-				// Get ID property
-				var idProperty = GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
-					reason => throw new UnableToFindIdColumnException(reason)
+				// Get ID column by attribute (to allow ID to be overridden)
+				var idColumn = GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
+					_ => GetIdColumn<TEntity>(columns).Unwrap(
+						reason => throw new UnableToFindIdColumnException(reason)
+					)
 				) with
 				{
 					Alias = nameof(IWithId.Id)
 				};
 
 				// Create Table Map
-				var map = new TableMap(table, columns, idProperty);
+				var map = new TableMap(table, columns, idColumn);
 
 				// Get Version property
 				if (typeof(TEntity).Implements<IWithVersion>())
