@@ -29,21 +29,20 @@ namespace Jeebs.Mvc.Data.ModelBinding
 			bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
 
 			// Get the value and attempt to parse it as a long
-			var value = valueProviderResult.FirstValue;
-			if (ulong.TryParse(value, out ulong id))
+			bindingContext.Result = ulong.TryParse(valueProviderResult.FirstValue, out ulong id) switch
 			{
-				setValue(id);
-			}
-			else
-			{
-				setValue(0);
-			}
+				true =>
+					success(id),
+
+				false =>
+					success(0)
+			};
 
 			return Task.CompletedTask;
 
 			// Set the model value using the parsed ID
-			void setValue(ulong id) =>
-				bindingContext.Result = ModelBindingResult.Success(new T { Value = id });
+			static ModelBindingResult success(ulong id) =>
+				ModelBindingResult.Success(new T { Value = id });
 		}
 	}
 }
