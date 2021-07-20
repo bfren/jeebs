@@ -25,6 +25,6 @@ namespace Jeebs.Data.TypeHandlers
 		/// </summary>
 		/// <param name="json">JSON string</param>
 		protected override T Parse(string json) =>
-			Deserialise<T>(json).Unwrap(() => throw new JsonException("Unable to deserialise JSON."));
+			Deserialise<T>(json).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}."));
 	}
 }

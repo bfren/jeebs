@@ -44,7 +44,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Post {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
 			}
 		},
 		none: r => log.Message(r)
@@ -74,7 +74,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}", item.PostId);
+				log.Debug("Sermon {Id:0000}", item.Id.Value);
 				log.Debug("  - Title: {Title}", item.Title);
 				log.Debug("  - Published: {Published:dd/MM/yyyy}", item.PublishedOn);
 			}
@@ -104,7 +104,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
 				log.Debug("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
 				log.Debug("  - Series: {Series}", string.Join(", ", item.Series.Select(b => b.Title)));
 			}
@@ -143,7 +143,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
 				log.Debug("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
 			}
 		},
@@ -172,7 +172,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Term {Id:00}: {Title} ({Count})", item.TermId, item.Title, item.Count);
+				log.Debug("Term {Id:00}: {Title} ({Count})", item.Id.Value, item.Title, item.Count);
 			}
 		},
 		none: r => log.Message(r)
@@ -195,7 +195,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Post {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
 				log.Debug("  - Image: {Image}", item.FeaturedImage.ValueObj);
 			}
 		},
@@ -223,7 +223,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
+				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
 				log.Debug("  - Passage: {Passage}", item.Passage.ValueObj);
 				log.Debug("  - PDF: {Pdf}", item.Pdf?.ValueObj.UrlPath ?? "none");
 				log.Debug("  - Audio: {Audio}", item.Audio?.ValueObj.UrlPath ?? "none");
@@ -264,8 +264,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			foreach (var item in x)
 			{
 				var obj = item.FirstPreached.ValueObj;
-				log.Debug("Sermon {Id:0000}: {Title}", item.PostId, item.Title);
-				log.Debug("  - {FirstId:0000}: {FirstTitle}", obj.TermId, obj.Title);
+				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Debug("  - {FirstId:0000}: {FirstTitle}", obj.Id.Value, obj.Title);
 			}
 		},
 		none: r => log.Message(r)
@@ -291,7 +291,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Post {Id:0000}: {@Content}", item.PostId, item.Content);
+				log.Debug("Post {Id:0000}: {@Content}", item.Id.Value, item.Content);
 			}
 		},
 		none: r => log.Message(r)
@@ -317,7 +317,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 			foreach (var item in x)
 			{
-				log.Debug("Attachment {Id:0000}: {Description}", item.PostId, item.Title);
+				log.Debug("Attachment {Id:0000}: {Description}", item.Id.Value, item.Title);
 				log.Debug("  - Description: {Description}", item.Description);
 				log.Debug("  - Url: {Url}", item.Url);
 				log.Debug("  - UrlPath: {UrlPath}", item.UrlPath);

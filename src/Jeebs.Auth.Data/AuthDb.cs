@@ -61,11 +61,7 @@ namespace Jeebs.Auth
 		/// <summary>
 		/// Add type handlers
 		/// </summary>
-		static AuthDb()
-		{
-			AddStrongIdTypeHandler<AuthRoleId>();
-			AddStrongIdTypeHandler<AuthUserId>();
-			AddStrongIdTypeHandler<AuthUserRoleId>();
-		}
+		static AuthDb() =>
+			AddStrongIdTypeHandlers();
 	}
 }
