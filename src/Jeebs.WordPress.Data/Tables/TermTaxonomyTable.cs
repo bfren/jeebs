@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Tables
 		/// <summary>
 		/// TermTaxonomyId
 		/// </summary>
-		public string TermTaxonomyId =>
+		public string Id =>
 			"term_taxonomy_id";
 
 		/// <summary>

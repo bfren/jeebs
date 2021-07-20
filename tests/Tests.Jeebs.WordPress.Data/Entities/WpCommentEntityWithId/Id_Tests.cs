@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Entities.WpCommentEntityWithId_Tests
 	{
 		[Fact]
 		public override void Test00_Id_Returns_Database_Id() =>
-			Test00(id => new() { CommentId = id });
+			Test00(id => new() { Id = new(id) });
 
 		public sealed record Test : WpCommentEntityWithId;
 	}

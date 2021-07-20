@@ -13,20 +13,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// Id
 		/// </summary>
-		[Ignore]
-		public WpTermTaxonomyId Id
-		{
-			get =>
-				new(TermTaxonomyId);
-
-			init =>
-				TermTaxonomyId = value.Value;
-		}
-
-		/// <summary>
-		/// TermTaxonomyId
-		/// </summary>
 		[Id]
-		public ulong TermTaxonomyId { get; init; }
+		public WpTermTaxonomyId Id { get; init; } = new();
 	}
 }

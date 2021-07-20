@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Entities.WpOptionEntityWithId_Tests
 	{
 		[Fact]
 		public override void Test00_Id_Returns_Database_Id() =>
-			Test00(id => new() { OptionId = id });
+			Test00(id => new() { Id = new(id) });
 
 		public sealed record Test : WpOptionEntityWithId;
 	}

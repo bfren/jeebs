@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Tables
 		/// <summary>
 		/// LinkId
 		/// </summary>
-		public string LinkId =>
+		public string Id =>
 
 			"link_id";
 

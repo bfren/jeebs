@@ -13,20 +13,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// Id
 		/// </summary>
-		[Ignore]
-		public WpLinkId Id
-		{
-			get =>
-				new(LinkId);
-
-			init =>
-				LinkId = value.Value;
-		}
-
-		/// <summary>
-		/// LinkId
-		/// </summary>
-		[Id]
-		public ulong LinkId { get; init; }
+		public WpLinkId Id { get; init; } = new();
 	}
 }

@@ -25,7 +25,7 @@ namespace Jeebs.WordPress.Data
 
 			/// <inheritdoc/>
 			public override IColumn IdColumn =>
-				new Column(T.Post.GetName(), T.Post.PostId, nameof(T.Post.PostId));
+				new Column(T.Post.GetName(), T.Post.Id, nameof(T.Post.Id));
 
 			/// <summary>
 			/// Internal creation only
@@ -194,9 +194,9 @@ namespace Jeebs.WordPress.Data
 					var subQuery = new StringBuilder(
 						"SELECT COUNT(1) " +
 						$"FROM {__(T.TermRelationship)} " +
-						$"INNER JOIN {__(T.TermTaxonomy)} ON {__(T.TermRelationship, tr => tr.TermTaxonomyId)} = {__(T.TermTaxonomy, tx => tx.TermTaxonomyId)} " +
+						$"INNER JOIN {__(T.TermTaxonomy)} ON {__(T.TermRelationship, tr => tr.TermTaxonomyId)} = {__(T.TermTaxonomy, tx => tx.Id)} " +
 						$"WHERE {__(T.TermTaxonomy, tx => tx.Taxonomy)} = {taxonomyNameParameter} " +
-						$"AND {__(T.TermRelationship, tr => tr.PostId)} = {__(T.Post, p => p.PostId)} " +
+						$"AND {__(T.TermRelationship, tr => tr.PostId)} = {__(T.Post, p => p.Id)} " +
 						$"AND {__(T.TermTaxonomy, tx => tx.TermId)} IN ("
 					);
 
@@ -281,7 +281,7 @@ namespace Jeebs.WordPress.Data
 					var subQuery = new StringBuilder(
 						"SELECT COUNT(1) " +
 						$"FROM {__(T.PostMeta)} " +
-						$"WHERE {__(T.PostMeta, pm => pm.PostId)} = {__(T.Post, p => p.PostId)} " +
+						$"WHERE {__(T.PostMeta, pm => pm.PostId)} = {__(T.Post, p => p.Id)} " +
 						$"AND {__(T.PostMeta, pm => pm.Key)} = {customFieldKeyParameter} " +
 						$"AND {__(T.PostMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter}"
 					);

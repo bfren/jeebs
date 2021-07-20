@@ -13,20 +13,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// Id
 		/// </summary>
-		[Ignore]
-		public WpTermId Id
-		{
-			get =>
-				new(TermId);
-
-			init =>
-				TermId = value.Value;
-		}
-
-		/// <summary>
-		/// TermId
-		/// </summary>
 		[Id]
-		public ulong TermId { get; init; }
+		public WpTermId Id { get; init; } = new();
 	}
 }

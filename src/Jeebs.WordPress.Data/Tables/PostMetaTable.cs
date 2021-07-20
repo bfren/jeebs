@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Tables
 		/// <summary>
 		/// PostMetaId
 		/// </summary>
-		public string PostMetaId =>
+		public string Id =>
 			"meta_id";
 
 		/// <summary>

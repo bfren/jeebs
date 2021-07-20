@@ -26,8 +26,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests
 
 			// Assert
 			Assert.Equal(builder.TTest.PostMeta.GetName(), result.Table);
-			Assert.Equal(builder.TTest.PostMeta.PostMetaId, result.Name);
-			Assert.Equal(nameof(PostMetaTable.PostMetaId), result.Alias);
+			Assert.Equal(builder.TTest.PostMeta.Id, result.Name);
+			Assert.Equal(nameof(PostMetaTable.Id), result.Alias);
 		}
 	}
 }

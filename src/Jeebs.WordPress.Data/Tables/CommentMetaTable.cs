@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Tables
 		/// <summary>
 		/// CommentMetaId
 		/// </summary>
-		public string CommentMetaId =>
+		public string Id =>
 			"meta_id";
 
 		/// <summary>

@@ -46,10 +46,10 @@ namespace Jeebs.WordPress.Data
 					parts
 				)
 				.Bind(
-					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
+					x => Builder.AddInnerJoin(x, T.Term, t => t.Id, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.Bind(
-					x => Builder.AddInnerJoin(x, T.TermTaxonomy, tx => tx.TermTaxonomyId, T.TermRelationship, tr => tr.TermTaxonomyId)
+					x => Builder.AddInnerJoin(x, T.TermTaxonomy, tx => tx.Id, T.TermRelationship, tr => tr.TermTaxonomyId)
 				)
 				.SwitchIf(
 					_ => Id?.Value > 0 || Ids.Count > 0,

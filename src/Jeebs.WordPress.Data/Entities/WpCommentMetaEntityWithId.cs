@@ -13,20 +13,6 @@ namespace Jeebs.WordPress.Data.Entities
 		/// <summary>
 		/// Id
 		/// </summary>
-		[Ignore]
-		public WpCommentMetaId Id
-		{
-			get =>
-				new(CommentMetaId);
-
-			init =>
-				CommentMetaId = value.Value;
-		}
-
-		/// <summary>
-		/// CommentMetaId
-		/// </summary>
-		[Id]
-		public ulong CommentMetaId { get; init; }
+		public WpCommentMetaId Id { get; init; } = new();
 	}
 }

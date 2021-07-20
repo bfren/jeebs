@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Tables
 		/// <summary>
 		/// OptionId
 		/// </summary>
-		public string OptionId =>
+		public string Id =>
 			"option_id";
 
 		/// <summary>

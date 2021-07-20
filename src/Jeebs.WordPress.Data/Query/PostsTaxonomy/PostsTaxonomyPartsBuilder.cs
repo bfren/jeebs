@@ -24,7 +24,7 @@ namespace Jeebs.WordPress.Data
 
 			/// <inheritdoc/>
 			public override IColumn IdColumn =>
-				new Column(T.Term.GetName(), T.Term.TermId, nameof(T.Term.TermId));
+				new Column(T.Term.GetName(), T.Term.Id, nameof(T.Term.Id));
 
 			/// <summary>
 			/// Internal creation only

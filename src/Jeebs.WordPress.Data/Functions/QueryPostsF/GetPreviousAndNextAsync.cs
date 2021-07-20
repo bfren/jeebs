@@ -33,7 +33,7 @@ namespace F.WordPressF.DataF
 					db, w, x => opt(x) with { Maximum = null }
 				)
 				.MapAsync(
-					x => x.Select(p => p.PostId).ToList(),
+					x => x.Select(p => p.Id.Value).ToList(),
 					DefaultHandler
 				)
 				.MapAsync(

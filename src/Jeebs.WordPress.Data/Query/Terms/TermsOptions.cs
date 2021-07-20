@@ -44,7 +44,7 @@ namespace Jeebs.WordPress.Data
 					parts
 				)
 				.Bind(
-					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
+					x => Builder.AddInnerJoin(x, T.Term, t => t.Id, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.SwitchIf(
 					_ => Taxonomy is not null,
