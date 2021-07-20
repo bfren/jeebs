@@ -199,6 +199,9 @@ namespace Jeebs.Data
 			where T : Enumerated =>
 			SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
 
+		/// <summary>
+		/// Persist a nullable Guid type to the database
+		/// </summary>
 		protected static void AddGuidTypeHandler() =>
 			SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
@@ -226,6 +229,7 @@ namespace Jeebs.Data
 		/// </summary>
 		/// <typeparam name="TBaseType">Base (abstract or interface) type to map</typeparam>
 		/// <param name="handlerType">Handler type (with generic argument)</param>
+		/// <param name="addTypeHandler">Function to add a type handler</param>
 		internal static void AddGenericTypeHandlers<TBaseType>(Type handlerType, AddTypeHandler addTypeHandler)
 		{
 			if (!handlerType.ContainsGenericParameters)
