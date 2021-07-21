@@ -30,15 +30,15 @@ namespace Jeebs.WordPress.Data
 			/// Internal creation only
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			internal PostsTaxonomyOptions(IWpDbSchema schema) : base(schema, new PostsTaxonomyPartsBuilder(schema)) =>
-				Maximum = null;
+			internal PostsTaxonomyOptions(IWpDbSchema schema) : this(schema, new PostsTaxonomyPartsBuilder(schema)) { }
 
 			/// <summary>
 			/// Allow Builder to be injected
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
 			/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>
-			internal PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) { }
+			internal PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) =>
+				Maximum = null;
 
 			/// <inheritdoc/>
 			protected override Option<QueryParts> Build(Option<QueryParts> parts) =>

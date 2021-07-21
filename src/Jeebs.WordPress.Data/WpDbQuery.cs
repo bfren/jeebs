@@ -21,7 +21,7 @@ namespace Jeebs.WordPress.Data
 
 		/// <inheritdoc/>
 		public async Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
-			where T : IAttachment
+			where T : IPostAttachment
 		{
 			using var w = Db.UnitOfWork;
 			return await QueryAttachmentsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);

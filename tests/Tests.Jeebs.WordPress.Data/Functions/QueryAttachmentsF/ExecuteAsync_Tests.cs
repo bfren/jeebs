@@ -4,6 +4,7 @@
 using System.Data;
 using System.Threading.Tasks;
 using Jeebs;
+using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
 using Xunit;
@@ -21,7 +22,7 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 			var (db, w, _) = Setup();
 
 			// Act
-			var result = await ExecuteAsync<WpAttachmentEntity>(db, w, _ => throw new System.Exception());
+			var result = await ExecuteAsync<PostAttachment>(db, w, _ => throw new System.Exception());
 
 			// Assert
 			var none = result.AssertNone();
@@ -36,10 +37,10 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 			var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Ulng), new(Rnd.Ulng));
 
 			// Act
-			var result = await ExecuteAsync<WpAttachmentEntity>(db, w, opt => opt with { Ids = fileIds });
+			var result = await ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));
 
 			// Assert
-			await db.Received().QueryAsync<WpAttachmentEntity>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
+			await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
 		}
 	}
 }

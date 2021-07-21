@@ -53,7 +53,7 @@ namespace Jeebs.WordPress.Data
 			/// Internal creation only
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			internal PostsOptions(IWpDbSchema schema) : base(schema, new PostsPartsBuilder(schema)) { }
+			internal PostsOptions(IWpDbSchema schema) : this(schema, new PostsPartsBuilder(schema)) { }
 
 			/// <summary>
 			/// Allow Builder to be injected

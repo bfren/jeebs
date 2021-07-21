@@ -19,7 +19,7 @@ namespace Jeebs.WordPress.Data
 		/// <typeparam name="T">Return Model type</typeparam>
 		/// <param name="opt">Function to return query options</param>
 		Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
-			where T : IAttachment;
+			where T : IPostAttachment;
 
 		/// <summary>
 		/// Get filesystem path of specified Attachment

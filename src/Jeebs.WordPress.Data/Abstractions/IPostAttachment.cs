@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Attachment entity
 	/// </summary>
-	public interface IAttachment : IWithId<WpPostId>
+	public interface IPostAttachment : IWithId<WpPostId>
 	{
 		/// <summary>
 		/// Attachment description

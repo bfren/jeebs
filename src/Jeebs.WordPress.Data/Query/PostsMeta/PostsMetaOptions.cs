@@ -28,15 +28,15 @@ namespace Jeebs.WordPress.Data
 			/// Internal creation only
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			internal PostsMetaOptions(IWpDbSchema schema) : base(schema, new PostsMetaPartsBuilder(schema)) =>
-				Maximum = null;
+			internal PostsMetaOptions(IWpDbSchema schema) : this(schema, new PostsMetaPartsBuilder(schema)) { }
 
 			/// <summary>
 			/// Allow Builder to be injected
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
 			/// <param name="builder">IQueryPostsMetaPartsBuilder</param>
-			internal PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) { }
+			internal PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) =>
+				Maximum = null;
 
 			/// <inheritdoc/>
 			protected override Option<QueryParts> Build(Option<QueryParts> parts) =>

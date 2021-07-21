@@ -4,7 +4,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Entities.WpAttachmentEntity_Tests
+namespace Jeebs.WordPress.Data.PostAttachment_Tests
 {
 	public class GetFilePath_Tests
 	{
@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Data.Entities.WpAttachmentEntity_Tests
 		{
 			// Arrange
 			var wpUploads = F.Rnd.Str;
-			var attachment = Substitute.ForPartsOf<WpAttachmentEntity>();
+			var attachment = Substitute.ForPartsOf<PostAttachment>();
 
 			// Act
 			var result = attachment.GetFilePath(wpUploads);
@@ -51,6 +51,6 @@ namespace Jeebs.WordPress.Data.Entities.WpAttachmentEntity_Tests
 			Assert.Equal($"{wpUploads}/{urlPath}", result);
 		}
 
-		public record Test : WpAttachmentEntity;
+		public record Test : PostAttachment;
 	}
 }

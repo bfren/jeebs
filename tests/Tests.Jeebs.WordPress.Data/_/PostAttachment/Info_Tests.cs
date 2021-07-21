@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Entities.WpAttachmentEntity_Tests
+namespace Jeebs.WordPress.Data.PostAttachment_Tests
 {
 	public class Info_Tests
 	{
@@ -54,6 +54,6 @@ namespace Jeebs.WordPress.Data.Entities.WpAttachmentEntity_Tests
 			Assert.Equal(expected, result);
 		}
 
-		public sealed record Test : WpAttachmentEntity;
+		public sealed record Test : PostAttachment;
 	}
 }

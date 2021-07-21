@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
+		<ProjectReference Include="..\Jeebs.WordPress.Abstractions\Jeebs.WordPress.Abstractions.csproj" />
+		<ProjectReference Include="..\Jeebs.WordPress.Types\Jeebs.WordPress.Types.csproj" />
 	</ItemGroup>
 </Project>

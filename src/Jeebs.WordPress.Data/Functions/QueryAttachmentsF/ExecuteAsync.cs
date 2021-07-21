@@ -21,7 +21,7 @@ namespace F.WordPressF.DataF
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="opt">Function to return query options</param>
 		internal static Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, Query.GetAttachmentsOptions opt)
-			where T : IAttachment
+			where T : IPostAttachment
 		{
 			return
 				Return(

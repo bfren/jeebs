@@ -28,12 +28,12 @@ namespace F.WordPressF.DataF
 			// Build query
 			return
 				"SELECT " +
-					$"`p`.`{schema.Post.Id}` AS '{nameof(WpAttachmentEntity.Id)}', " +
-					$"`p`.`{schema.Post.Title}` AS '{nameof(WpAttachmentEntity.Title)}', " +
-					$"`p`.`{schema.Post.Excerpt}` AS '{nameof(WpAttachmentEntity.Description)}', " +
-					$"`p`.`{schema.Post.Url}` AS '{nameof(WpAttachmentEntity.Url)}', " +
-					$"`pm`.`{schema.PostMeta.Value}` AS '{nameof(WpAttachmentEntity.UrlPath)}', " +
-					$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostMeta.Value}`) AS '{nameof(WpAttachmentEntity.Url)}' " +
+					$"`p`.`{schema.Post.Id}` AS '{nameof(PostAttachment.Id)}', " +
+					$"`p`.`{schema.Post.Title}` AS '{nameof(PostAttachment.Title)}', " +
+					$"`p`.`{schema.Post.Excerpt}` AS '{nameof(PostAttachment.Description)}', " +
+					$"`p`.`{schema.Post.Url}` AS '{nameof(PostAttachment.Url)}', " +
+					$"`pm`.`{schema.PostMeta.Value}` AS '{nameof(PostAttachment.UrlPath)}', " +
+					$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostMeta.Value}`) AS '{nameof(PostAttachment.Url)}' " +
 				$"FROM `{schema.Post.GetName()}` AS `p` " +
 					$"LEFT JOIN `{schema.PostMeta.GetName()}` AS `pm` ON `p`.`{schema.Post.Id}` = `pm`.`{schema.PostMeta.PostId}` " +
 				$"WHERE `p`.`{schema.Post.Id}` IN ({string.Join(',', fileIds.Select(x => x.Value))}) " +

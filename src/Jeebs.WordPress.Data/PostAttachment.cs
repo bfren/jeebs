@@ -1,14 +1,15 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
+using Jeebs.WordPress.Data.Entities;
 using static F.JsonF;
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data
 {
 	/// <summary>
-	/// Attachment entity
+	/// Post Attachment
 	/// </summary>
-	public abstract record WpAttachmentEntity : WpPostEntity, IAttachment
+	public abstract record PostAttachment : WpPostEntity, IPostAttachment
 	{
 		/// <inheritdoc/>
 		public string Description
