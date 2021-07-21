@@ -13,12 +13,6 @@ namespace F
 	public static partial class Rnd
 	{
 		/// <summary>
-		/// Generate a new <see cref="RNGCryptoServiceProvider"/>
-		/// </summary>
-		public static RandomNumberGenerator Generator =>
-			new RNGCryptoServiceProvider();
-
-		/// <summary>
 		/// Generate a random DateTime between the year 0 and the year 9999
 		/// </summary>
 		public static DateTime DateTime =>

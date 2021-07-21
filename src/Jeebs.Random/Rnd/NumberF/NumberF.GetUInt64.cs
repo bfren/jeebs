@@ -18,8 +18,7 @@ namespace F
 			/// </remarks>
 			/// <param name="min">Minimum acceptable value</param>
 			/// <param name="max">Maximum acceptable value</param>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static ulong GetUInt64(ulong min = 0, ulong max = ulong.MaxValue, RandomNumberGenerator? generator = null)
+			public static ulong GetUInt64(ulong min = 0, ulong max = ulong.MaxValue)
 			{
 				// Check arguments
 				if (min >= max)
@@ -31,7 +30,7 @@ namespace F
 				var range = max - min;
 
 				// Now add a random amount of the range to the minimum value - it will never exceed maximum value
-				var add = Math.Round(range * Get(generator));
+				var add = Math.Round(range * Get());
 				return (ulong)(min + add);
 			}
 		}

@@ -12,9 +12,8 @@ namespace F
 			/// <summary>
 			/// Returns a random true or false value
 			/// </summary>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static bool Get(RandomNumberGenerator? generator = null) =>
-				NumberF.GetInt64(0, 1, generator) switch
+			public static bool Get() =>
+				NumberF.GetInt64(0, 1) switch
 				{
 					0 =>
 						false,

@@ -81,13 +81,11 @@ namespace F
 			/// <param name="upper">If true (default) uppercase letters will be included</param>
 			/// <param name="numbers">If true numbers will be included</param>
 			/// <param name="special">If true special characters will be included</param>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 			public static string Get(
 				int length,
 				bool upper = true,
 				bool numbers = false,
-				bool special = false,
-				RandomNumberGenerator? generator = null
+				bool special = false
 			)
 			{
 				// Setup
@@ -96,7 +94,7 @@ namespace F
 				// Function to return a random list index
 				void AppendOneOf(List<char> list)
 				{
-					var index = NumberF.GetInt32(max: list.Count - 1, generator: generator);
+					var index = NumberF.GetInt32(max: list.Count - 1);
 					random.Add(list[index]);
 				}
 

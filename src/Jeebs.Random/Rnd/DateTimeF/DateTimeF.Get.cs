@@ -16,15 +16,14 @@ namespace F
 			/// <summary>
 			/// Return a random DateTime
 			/// </summary>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static DateTime Get(RandomNumberGenerator? generator = null) =>
+			public static DateTime Get() =>
 				new(
-					year: NumberF.GetInt32(1, 9999, generator),
-					month: NumberF.GetInt32(1, 12, generator),
-					day: NumberF.GetInt32(1, 28, generator),
-					hour: NumberF.GetInt32(0, 23, generator),
-					minute: NumberF.GetInt32(0, 59, generator),
-					second: NumberF.GetInt32(0, 59, generator)
+					year: NumberF.GetInt32(1, 9999),
+					month: NumberF.GetInt32(1, 12),
+					day: NumberF.GetInt32(1, 28),
+					hour: NumberF.GetInt32(0, 23),
+					minute: NumberF.GetInt32(0, 59),
+					second: NumberF.GetInt32(0, 59)
 				);
 		}
 	}

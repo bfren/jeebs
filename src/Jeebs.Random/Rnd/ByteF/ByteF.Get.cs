@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
+using System;
 using System.Security.Cryptography;
 
 namespace F
@@ -16,22 +17,11 @@ namespace F
 			/// Return an array of random bytes
 			/// </summary>
 			/// <param name="length">The length of the byte array</param>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static byte[] Get(int length, RandomNumberGenerator? generator = null)
+			public static byte[] Get(int length)
 			{
-				byte[] b = new byte[length];
-
-				if (generator is null)
-				{
-					using var csp = Generator;
-					csp.GetBytes(b);
-				}
-				else
-				{
-					generator.GetBytes(b);
-				}
-
-				return b;
+				Span<byte> b = stackalloc byte[length];
+				RandomNumberGenerator.Fill(b);
+				return b.ToArray();
 			}
 		}
 	}

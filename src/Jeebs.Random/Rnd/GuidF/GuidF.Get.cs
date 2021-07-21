@@ -16,9 +16,8 @@ namespace F
 			/// <summary>
 			/// Return a secure random Guid
 			/// </summary>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static Guid Get(RandomNumberGenerator? generator = null) =>
-				new(ByteF.Get(16, generator));
+			public static Guid Get() =>
+				new(ByteF.Get(16));
 		}
 	}
 }

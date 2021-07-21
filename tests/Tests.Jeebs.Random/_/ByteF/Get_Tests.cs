@@ -34,12 +34,11 @@ namespace F.ByteF_Tests
 			// Arrange
 			const int iterations = 10000;
 			var numbers = new List<byte[]>();
-			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(Get(4, generator));
+				numbers.Add(Get(4));
 			}
 
 			var unique = numbers.Distinct();
