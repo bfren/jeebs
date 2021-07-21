@@ -43,7 +43,7 @@ namespace F
 				}
 			);
 
-			/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool, RandomNumberGenerator?)"/>
+			/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
 			public static Option<string> Passphrase(
 				int numberOfWords,
 				char separator = '-',

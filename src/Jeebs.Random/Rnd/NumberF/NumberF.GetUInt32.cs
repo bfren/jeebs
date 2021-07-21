@@ -14,7 +14,7 @@ namespace F
 			/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 			/// </summary>
 			/// <remarks>
-			/// Don't share code with <see cref="GetUInt64(ulong, ulong, RandomNumberGenerator?)"/> for memory allocation reasons
+			/// Don't share code with <see cref="GetUInt64(ulong, ulong)"/> for memory allocation reasons
 			/// </remarks>
 			/// <param name="min">Minimum acceptable value</param>
 			/// <param name="max">Maximum acceptable value</param>
