@@ -6,8 +6,8 @@
 		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Random\Jeebs.Random.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj" />
-		<ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
-		<ProjectReference Include="..\Tests.Jeebs.WordPress.Types\Tests.Jeebs.WordPress.Types.csproj" />
 		<ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
+		<ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
+		<ProjectReference Include="..\Tests.Jeebs.WordPress.Data.Types\Tests.Jeebs.WordPress.Data.Types.csproj" />
 	</ItemGroup>
 </Project>

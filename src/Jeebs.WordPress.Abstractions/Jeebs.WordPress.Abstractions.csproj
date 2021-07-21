@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.WordPress.Types\Jeebs.WordPress.Types.csproj" />
+		<ProjectReference Include="..\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj" />
 	</ItemGroup>
 </Project>

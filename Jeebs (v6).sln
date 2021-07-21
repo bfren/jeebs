@@ -218,11 +218,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Calendar", "src\J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Mvc.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Types", "src\Jeebs.WordPress.Types\Jeebs.WordPress.Types.csproj", "{8E915008-C90F-4268-AB01-25F1D5022CD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data.Types", "src\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj", "{8E915008-C90F-4268-AB01-25F1D5022CD8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Abstractions", "src\Jeebs.WordPress.Abstractions\Jeebs.WordPress.Abstractions.csproj", "{859A657E-D84F-42AB-9BBB-8EBD6EED1873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress.Types", "tests\Tests.Jeebs.WordPress.Types\Tests.Jeebs.WordPress.Types.csproj", "{89815535-A65E-428A-B63B-87D1793E22C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Data.Types", "tests\Tests.Jeebs.WordPress.Data.Types\Tests.Jeebs.WordPress.Data.Types.csproj", "{89815535-A65E-428A-B63B-87D1793E22C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

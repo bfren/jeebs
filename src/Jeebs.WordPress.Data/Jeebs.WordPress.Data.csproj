@@ -2,6 +2,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
 		<ProjectReference Include="..\Jeebs.WordPress.Abstractions\Jeebs.WordPress.Abstractions.csproj" />
-		<ProjectReference Include="..\Jeebs.WordPress.Types\Jeebs.WordPress.Types.csproj" />
+		<ProjectReference Include="..\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj" />
 	</ItemGroup>
 </Project>
