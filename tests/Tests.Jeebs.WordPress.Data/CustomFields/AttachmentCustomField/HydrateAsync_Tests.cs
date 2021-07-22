@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.WordPress.Data.Querying;
 using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.AttachmentCustomField;
@@ -64,7 +65,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var meta = new MetaDictionary { { key, value.ToString() } };
 
 			var queryPosts = Substitute.For<IQueryPosts>();
-			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
 			var field = new TestCustomField(queryPosts, key);
 
@@ -91,7 +92,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 			var queryPosts = Substitute.For<IQueryPosts>();
-			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
 			var field = new TestCustomField(queryPosts, key);
 
@@ -121,7 +122,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 			var queryPosts = Substitute.For<IQueryPosts>();
-			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
 			var field = new TestCustomField(queryPosts, key);
 

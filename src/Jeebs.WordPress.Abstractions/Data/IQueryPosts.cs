@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 
 namespace Jeebs.WordPress.Data
 {
@@ -17,7 +18,7 @@ namespace Jeebs.WordPress.Data
 		Task<Option<IEnumerable<T>>> ExecuteAsync<T>(
 			IWpDb db,
 			IUnitOfWork w,
-			Query.GetPostsOptions opt,
+			GetPostsOptions opt,
 			params IContentFilter[] filters
 		)
 			where T : IWithId<WpPostId>;
@@ -35,7 +36,7 @@ namespace Jeebs.WordPress.Data
 			IWpDb db,
 			IUnitOfWork w,
 			ulong page,
-			Query.GetPostsOptions opt,
+			GetPostsOptions opt,
 			params IContentFilter[] filters
 		)
 			where T : IWithId<WpPostId>;

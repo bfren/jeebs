@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
+		Task<Option<IEnumerable<T>>> AttachmentsAsync<T>(Querying.GetAttachmentsOptions opt)
 			where T : IPostAttachment;
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace Jeebs.WordPress.Data
 		/// <typeparam name="T">Return Model type</typeparam>
 		/// <param name="opt">Function to return query options</param>
 		/// <param name="filters">Optional content filters to apply</param>
-		Task<Option<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
+		Task<Option<IEnumerable<T>>> PostsAsync<T>(Querying.GetPostsOptions opt, params IContentFilter[] filters)
 			where T : IWithId<WpPostId>;
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="page">Page number</param>
 		/// <param name="opt">Function to return query options</param>
 		/// <param name="filters">Optional content filters to apply</param>
-		Task<Option<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
+		Task<Option<IPagedList<T>>> PostsAsync<T>(ulong page, Querying.GetPostsOptions opt, params IContentFilter[] filters)
 			where T : IWithId<WpPostId>;
 
 		/// <summary>
@@ -51,14 +51,14 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <param name="id">Current Post ID</param>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt);
+		Task<Option<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Querying.GetPostsOptions opt);
 
 		/// <summary>
 		/// Get Posts Meta matching the specified options
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
+		Task<Option<IEnumerable<T>>> PostsMetaAsync<T>(Querying.GetPostsMetaOptions opt)
 			where T : IWithId<WpPostMetaId>;
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
+		Task<Option<IEnumerable<T>>> PostsTaxonomyAsync<T>(Querying.GetPostsTaxonomyOptions opt)
 			where T : IWithId<WpTermId>;
 
 		/// <summary>
@@ -74,7 +74,7 @@ namespace Jeebs.WordPress.Data
 		/// </summary>
 		/// <typeparam name="T">Return Model type</typeparam>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
+		Task<Option<IEnumerable<T>>> TermsAsync<T>(Querying.GetTermsOptions opt)
 			where T : IWithId<WpTermId>;
 	}
 }

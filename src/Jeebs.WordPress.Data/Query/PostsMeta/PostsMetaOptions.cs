@@ -2,28 +2,14 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs.Data.Querying;
-using Jeebs.WordPress.Data.Entities;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsMetaOptions"/>
-		public sealed record PostsMetaOptions : Options<WpPostMetaId>, IQueryPostsMetaOptions
+		public sealed record PostsMetaOptions : Querying.PostsMetaOptions
 		{
-			private new IQueryPostsMetaPartsBuilder Builder =>
-				(IQueryPostsMetaPartsBuilder)base.Builder;
-
-			/// <inheritdoc/>
-			public WpPostId? PostId { get; init; }
-
-			/// <inheritdoc/>
-			public IImmutableList<WpPostId> PostIds { get; init; } =
-				new ImmutableList<WpPostId>();
-
-			/// <inheritdoc/>
-			public string? Key { get; init; }
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>

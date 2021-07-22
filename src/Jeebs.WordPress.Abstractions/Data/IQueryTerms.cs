@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 
 namespace Jeebs.WordPress.Data
 {
@@ -20,7 +21,7 @@ namespace Jeebs.WordPress.Data
 		/// <param name="db">IWpDb</param>
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="opt">Function to return query options</param>
-		Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, Query.GetTermsOptions opt)
+		Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
 			where T : IWithId<WpTermId>;
 	}
 }

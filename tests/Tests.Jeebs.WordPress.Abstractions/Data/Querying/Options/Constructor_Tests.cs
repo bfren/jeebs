@@ -5,7 +5,7 @@ using Jeebs.Data.Querying;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
+namespace Jeebs.WordPress.Data.Querying.Options_Tests
 {
 	public class Constructor_Tests
 	{
@@ -28,7 +28,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.Options_Tests
 			public TestId() : this(0) { }
 		}
 
-		public sealed record TestOptions : Query.Options<TestId>
+		public sealed record TestOptions : Options<TestId>
 		{
 			public TestOptions(IWpDbSchema schema, IQueryPartsBuilder<TestId> builder) : base(schema, builder) { }
 		}
