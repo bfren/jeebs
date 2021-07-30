@@ -16,12 +16,11 @@ namespace F.DateTimeF_Tests
 			// Arrange
 			const int iterations = 100000;
 			var numbers = new List<int>();
-			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				var dt = Get(generator);
+				var dt = Get();
 				numbers.Add(value(dt));
 			}
 

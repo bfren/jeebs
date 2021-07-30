@@ -20,7 +20,10 @@ namespace Jeebs.Data.Querying.QueryFluent_Tests
 			IRepository<TestEntity, TestId> Repo
 		);
 
-		public sealed record TestId(ulong Value) : StrongId(Value);
+		public sealed record TestId(ulong Value) : StrongId(Value)
+		{
+			public TestId() : this(0) { }
+		}
 
 		public sealed record TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
 	}

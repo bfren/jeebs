@@ -29,7 +29,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.TermsOptions_Tests
 			// Arrange
 			var (options, builder) = Setup();
 			var t = options.TTest;
-			var termId = t.Term.TermId;
+			var termId = t.Term.Id;
 
 			// Act
 			options.ToParts<TestModel>();

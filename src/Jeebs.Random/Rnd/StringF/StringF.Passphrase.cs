@@ -43,15 +43,14 @@ namespace F
 				}
 			);
 
-			/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool, RandomNumberGenerator?)"/>
+			/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
 			public static Option<string> Passphrase(
 				int numberOfWords,
 				char separator = '-',
 				bool upperFirst = true,
-				bool includeNumber = true,
-				RandomNumberGenerator? generator = null
+				bool includeNumber = true
 			) =>
-				Passphrase(wordList.Value, numberOfWords, separator, upperFirst, includeNumber, generator);
+				Passphrase(wordList.Value, numberOfWords, separator, upperFirst, includeNumber);
 
 			/// <summary>
 			/// Generate a random passphrase
@@ -61,14 +60,12 @@ namespace F
 			/// <param name="separator">[Optional] Word separator</param>
 			/// <param name="upperFirst">[Optional] Whether or not to make the first letter of each word upper case</param>
 			/// <param name="includeNumber">[Optional] Whether or not to include a number with one of the words</param>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
 			internal static Option<string> Passphrase(
 				string[] wordList,
 				int numberOfWords,
 				char separator = '-',
 				bool upperFirst = true,
-				bool includeNumber = true,
-				RandomNumberGenerator? generator = null
+				bool includeNumber = true
 			)
 			{
 				// Number of words must be at least 2
@@ -127,7 +124,7 @@ namespace F
 				{
 					var index = 0;
 
-					do { index = NumberF.GetInt32(0, wordList.Length - 1, generator); }
+					do { index = NumberF.GetInt32(0, wordList.Length - 1); }
 					while (used.Contains(index));
 
 					return index;

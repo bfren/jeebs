@@ -112,9 +112,9 @@ namespace Jeebs.WordPress.Data
 			GetValueAsString();
 
 		/// <summary>
-		/// Attachment class
+		/// Attachment file
 		/// </summary>
-		public sealed record Attachment : WpAttachmentEntity { }
+		public sealed record Attachment : PostAttachment { }
 
 		/// <summary>Messages</summary>
 		public static class Msg

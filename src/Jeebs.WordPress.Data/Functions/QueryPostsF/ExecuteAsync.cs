@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
+using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
@@ -15,11 +16,11 @@ namespace F.WordPressF.DataF
 {
 	public static partial class QueryPostsF
 	{
-		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, IUnitOfWork, ulong, Query.GetPostsOptions, IContentFilter[])"/>
+		/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
 		internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 			IWpDb db,
 			IUnitOfWork w,
-			Query.GetPostsOptions opt,
+			GetPostsOptions opt,
 			params IContentFilter[] filters
 		)
 			where TModel : IWithId<WpPostId>
@@ -56,7 +57,7 @@ namespace F.WordPressF.DataF
 			IWpDb db,
 			IUnitOfWork w,
 			ulong page,
-			Query.GetPostsOptions opt,
+			GetPostsOptions opt,
 			params IContentFilter[] filters
 		)
 			where TModel : IWithId<WpPostId>

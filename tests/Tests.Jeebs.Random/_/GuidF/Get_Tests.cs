@@ -17,12 +17,11 @@ namespace F.GuidF_Tests
 			// Arrange
 			const int iterations = 10000;
 			var numbers = new List<Guid>();
-			using var generator = Rnd.Generator;
 
 			// Act
 			for (int i = 0; i < iterations; i++)
 			{
-				numbers.Add(Get(generator));
+				numbers.Add(Get());
 			}
 
 			var unique = numbers.Distinct();

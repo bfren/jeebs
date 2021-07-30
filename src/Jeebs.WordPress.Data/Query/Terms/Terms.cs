@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using F.WordPressF.DataF;
 using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 
 namespace Jeebs.WordPress.Data
 {

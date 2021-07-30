@@ -218,6 +218,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Calendar", "src\J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Mvc.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data.Types", "src\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj", "{8E915008-C90F-4268-AB01-25F1D5022CD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Abstractions", "src\Jeebs.WordPress.Abstractions\Jeebs.WordPress.Abstractions.csproj", "{859A657E-D84F-42AB-9BBB-8EBD6EED1873}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Data.Types", "tests\Tests.Jeebs.WordPress.Data.Types\Tests.Jeebs.WordPress.Data.Types.csproj", "{89815535-A65E-428A-B63B-87D1793E22C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress.Abstractions", "tests\Tests.Jeebs.WordPress.Abstractions\Tests.Jeebs.WordPress.Abstractions.csproj", "{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -471,6 +479,22 @@ Global
 		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E915008-C90F-4268-AB01-25F1D5022CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E915008-C90F-4268-AB01-25F1D5022CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E915008-C90F-4268-AB01-25F1D5022CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E915008-C90F-4268-AB01-25F1D5022CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{859A657E-D84F-42AB-9BBB-8EBD6EED1873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859A657E-D84F-42AB-9BBB-8EBD6EED1873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859A657E-D84F-42AB-9BBB-8EBD6EED1873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859A657E-D84F-42AB-9BBB-8EBD6EED1873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89815535-A65E-428A-B63B-87D1793E22C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89815535-A65E-428A-B63B-87D1793E22C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89815535-A65E-428A-B63B-87D1793E22C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89815535-A65E-428A-B63B-87D1793E22C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -559,6 +583,10 @@ Global
 		{4D4D46ED-4332-48E4-AB7B-37D82879350A} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
 		{A8B46561-04F5-475B-AE85-63A04B5C6629} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
 		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
+		{8E915008-C90F-4268-AB01-25F1D5022CD8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
+		{859A657E-D84F-42AB-9BBB-8EBD6EED1873} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
+		{89815535-A65E-428A-B63B-87D1793E22C6} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
+		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

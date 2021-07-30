@@ -31,7 +31,10 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 		);
 	}
 
-	public sealed record TestId(ulong Value) : StrongId(Value);
+	public sealed record TestId(ulong Value) : StrongId(Value)
+	{
+		public TestId() : this(0) { }
+	}
 
 	public class TestPartsBuilder : Query.PartsBuilder<TestId>
 	{

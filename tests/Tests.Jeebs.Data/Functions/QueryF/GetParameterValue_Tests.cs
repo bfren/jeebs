@@ -35,6 +35,9 @@ namespace F.DataF.QueryF_Tests
 			Assert.Equal(value, result);
 		}
 
-		public sealed record TestId(ulong Value) : StrongId(Value);
+		public sealed record TestId(ulong Value) : StrongId(Value)
+		{
+			public TestId() : this(0) { }
+		}
 	}
 }

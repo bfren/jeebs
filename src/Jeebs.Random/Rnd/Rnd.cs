@@ -2,7 +2,6 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System;
-using System.Security.Cryptography;
 using Jeebs;
 
 namespace F
@@ -12,12 +11,6 @@ namespace F
 	/// </summary>
 	public static partial class Rnd
 	{
-		/// <summary>
-		/// Generate a new <see cref="RNGCryptoServiceProvider"/>
-		/// </summary>
-		public static RandomNumberGenerator Generator =>
-			new RNGCryptoServiceProvider();
-
 		/// <summary>
 		/// Generate a random DateTime between the year 0 and the year 9999
 		/// </summary>

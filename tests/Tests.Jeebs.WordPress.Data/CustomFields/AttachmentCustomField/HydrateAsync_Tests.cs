@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.WordPress.Data.Querying;
 using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.AttachmentCustomField;
@@ -20,7 +21,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var unitOfWork = Substitute.For<IUnitOfWork>();
 			var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
 			var key = F.Rnd.Str;
-			var field = new Test(Substitute.For<IQueryPosts>(), key);
+			var field = new TestCustomField(Substitute.For<IQueryPosts>(), key);
 
 			// Act
 			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
@@ -28,7 +29,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			// Assert
 			var none = result.AssertNone();
 			var msg = Assert.IsType<MetaKeyNotFoundMsg>(none);
-			Assert.Equal(typeof(Test), msg.Type);
+			Assert.Equal(typeof(TestCustomField), msg.Type);
 			Assert.Equal(key, msg.Value);
 		}
 
@@ -39,7 +40,7 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var db = Substitute.For<IWpDb>();
 			var unitOfWork = Substitute.For<IUnitOfWork>();
 			var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-			var field = new Test(Substitute.For<IQueryPosts>(), F.Rnd.Str);
+			var field = new TestCustomField(Substitute.For<IQueryPosts>(), F.Rnd.Str);
 
 			// Act
 			var result = await field.HydrateAsync(db, unitOfWork, meta, false);
@@ -64,9 +65,9 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var meta = new MetaDictionary { { key, value.ToString() } };
 
 			var queryPosts = Substitute.For<IQueryPosts>();
-			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
-			var field = new Test(queryPosts, key);
+			var field = new TestCustomField(queryPosts, key);
 
 			// Act
 			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
@@ -91,9 +92,9 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 			var queryPosts = Substitute.For<IQueryPosts>();
-			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
-			var field = new Test(queryPosts, key);
+			var field = new TestCustomField(queryPosts, key);
 
 			// Act
 			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
@@ -121,9 +122,9 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 			var queryPosts = Substitute.For<IQueryPosts>();
-			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<Query.GetPostsOptions>()).Returns(attachments);
+			queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
-			var field = new Test(queryPosts, key);
+			var field = new TestCustomField(queryPosts, key);
 
 			// Act
 			var result = await field.HydrateAsync(db, unitOfWork, meta, true);
@@ -134,9 +135,9 @@ namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests
 			Assert.Contains(info, field.ValueObj.Info);
 		}
 
-		public class Test : AttachmentCustomField
+		public class TestCustomField : AttachmentCustomField
 		{
-			public Test(IQueryPosts queryPosts, string key) : base(queryPosts, key) { }
+			public TestCustomField(IQueryPosts queryPosts, string key) : base(queryPosts, key) { }
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace Jeebs.WordPress.Data
 
 			/// <inheritdoc/>
 			public override IColumn IdColumn =>
-				new Column(T.PostMeta.GetName(), T.PostMeta.PostMetaId, nameof(T.PostMeta.PostMetaId));
+				new Column(T.PostMeta.GetName(), T.PostMeta.Id, nameof(T.PostMeta.Id));
 
 			/// <summary>
 			/// Internal creation only

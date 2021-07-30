@@ -2,7 +2,6 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace Jeebs
 {
@@ -22,12 +21,9 @@ namespace Jeebs
 			// Don't alter the original array
 			var shuffled = @this.ToArray();
 
-			// For speed share the random number generator
-			using var rng = new RNGCryptoServiceProvider();
-
 			for (int i = shuffled.Length; i > 1; i--)
 			{
-				int j = F.Rnd.NumberF.GetInt32(max: i - 1, generator: rng);
+				int j = F.Rnd.NumberF.GetInt32(max: i - 1);
 				var tmp = shuffled[j];
 				shuffled[j] = shuffled[i - 1];
 				shuffled[i - 1] = tmp;

@@ -2,34 +2,19 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs.Data.Querying;
-using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryTermsOptions"/>
-		public sealed record TermsOptions : Options<WpTermId>, IQueryTermsOptions
+		public sealed record TermsOptions : Querying.TermsOptions
 		{
-			private new IQueryTermsPartsBuilder Builder =>
-				(IQueryTermsPartsBuilder)base.Builder;
-
-			/// <inheritdoc/>
-			public Taxonomy? Taxonomy { get; init; }
-
-			/// <inheritdoc/>
-			public string? Slug { get; init; }
-
-			/// <inheritdoc/>
-			public long CountAtLeast { get; init; } = 1;
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			internal TermsOptions(IWpDbSchema schema) : base(schema, new TermsPartsBuilder(schema)) =>
-				Maximum = null;
+			internal TermsOptions(IWpDbSchema schema) : base(schema, new TermsPartsBuilder(schema)) { }
 
 			/// <summary>
 			/// Allow Builder to be injected
@@ -44,7 +29,7 @@ namespace Jeebs.WordPress.Data
 					parts
 				)
 				.Bind(
-					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
+					x => Builder.AddInnerJoin(x, T.Term, t => t.Id, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.SwitchIf(
 					_ => Taxonomy is not null,

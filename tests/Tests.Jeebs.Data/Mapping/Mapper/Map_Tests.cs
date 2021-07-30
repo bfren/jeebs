@@ -58,7 +58,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 		{
 			// Arrange
 			using var mapper = new Mapper();
-			var error = $"Required {typeof(IdAttribute)} missing on entity {typeof(FooWithoutIdAttribute)}.";
+			var error = $"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithoutIdAttribute)}.";
 
 			// Act
 			void action() => mapper.Map<FooWithoutIdAttribute>(new FooTable());
@@ -73,7 +73,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 		{
 			// Arrange
 			using var svc = new Mapper();
-			var error = $"More than one {typeof(IdAttribute)} found on entity {typeof(FooWithMultipleIdAttributes)}.";
+			var error = $"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithMultipleIdAttributes)}.";
 
 			// Act
 			void action() => svc.Map<FooWithMultipleIdAttributes>(new FooTable());

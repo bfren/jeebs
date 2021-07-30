@@ -31,8 +31,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyOptions_Tests
 			// Arrange
 			var (options, builder) = Setup();
 			var t = options.TTest;
-			var termId = t.Term.TermId;
-			var termTaxonomyId = t.TermTaxonomy.TermTaxonomyId;
+			var termId = t.Term.Id;
+			var termTaxonomyId = t.TermTaxonomy.Id;
 
 			// Act
 			options.ToParts<TestModel>();

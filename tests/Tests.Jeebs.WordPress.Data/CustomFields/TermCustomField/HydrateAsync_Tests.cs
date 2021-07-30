@@ -7,6 +7,7 @@ using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.TermCustomField;
 using static Jeebs.WordPress.Data.TermCustomField.Msg;
+using Jeebs.WordPress.Data.Querying;
 
 namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 {
@@ -64,7 +65,7 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 			var meta = new MetaDictionary { { key, value.ToString() } };
 
 			var queryTerms = Substitute.For<IQueryTerms>();
-			queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<Query.GetTermsOptions>()).Returns(terms);
+			queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);
 
 			var field = new Test(queryTerms, key);
 
@@ -91,7 +92,7 @@ namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 			var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 			var queryTerms = Substitute.For<IQueryTerms>();
-			queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<Query.GetTermsOptions>()).Returns(terms);
+			queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);
 
 			var field = new Test(queryTerms, key);
 

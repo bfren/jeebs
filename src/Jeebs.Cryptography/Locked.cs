@@ -38,14 +38,20 @@ namespace Jeebs.Cryptography
 			(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
 
 		internal Locked(T contents, byte[] key) : this() =>
-			EncryptedContents = F.JsonF.Serialise(contents)
+			EncryptedContents = F.JsonF
+				.Serialise(
+					contents
+				)
 				.Map(
 					x => SecretBox.Create(x, Nonce, key),
 					e => new Msg.CreatingSecretBoxExceptionMsg(e)
 				);
 
 		internal Locked(T contents, string key) : this() =>
-			EncryptedContents = F.JsonF.Serialise(contents)
+			EncryptedContents = F.JsonF
+				.Serialise(
+					contents
+				)
 				.Map(
 					x => SecretBox.Create(x, Nonce, HashKey(key)),
 					e => new Msg.CreatingSecretBoxExceptionMsg(e)
@@ -66,9 +72,10 @@ namespace Jeebs.Cryptography
 						var secret = SecretBox.Open(x, Nonce, key);
 
 						// Deserialise contents and return
-						var json = Encoding.UTF8.GetString(secret);
 						return F.JsonF
-							.Deserialise<T>(json)
+							.Deserialise<T>(
+								Encoding.UTF8.GetString(secret)
+							)
 							.Map(
 								x => new Lockable<T>(x),
 								DefaultHandler

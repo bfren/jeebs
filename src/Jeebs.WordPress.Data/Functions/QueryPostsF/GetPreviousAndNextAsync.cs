@@ -8,6 +8,7 @@ using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -25,7 +26,7 @@ namespace F.WordPressF.DataF
 			IWpDb db,
 			IUnitOfWork w,
 			WpPostId currentId,
-			Query.GetPostsOptions opt
+			GetPostsOptions opt
 		)
 		{
 			return
@@ -33,7 +34,7 @@ namespace F.WordPressF.DataF
 					db, w, x => opt(x) with { Maximum = null }
 				)
 				.MapAsync(
-					x => x.Select(p => p.PostId).ToList(),
+					x => x.Select(p => p.Id.Value).ToList(),
 					DefaultHandler
 				)
 				.MapAsync(

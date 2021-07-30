@@ -8,6 +8,7 @@ using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -21,7 +22,7 @@ namespace F.WordPressF.DataF
 		/// <param name="db">IWpDbQuery</param>
 		/// <param name="w">IUnitOfWork</param>
 		/// <param name="opt">Function to return query options</param>
-		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, Query.GetPostsMetaOptions opt)
+		public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetPostsMetaOptions opt)
 			where TModel : IWithId<WpPostMetaId> =>
 			Return(
 				() => opt(new Query.PostsMetaOptions(db.Schema)),

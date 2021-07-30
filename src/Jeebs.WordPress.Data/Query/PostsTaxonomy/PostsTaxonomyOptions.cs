@@ -2,36 +2,19 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs.Data.Querying;
-using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data
 {
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
-		public sealed record PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
+		public sealed record PostsTaxonomyOptions : Querying.PostsTaxonomyOptions
 		{
-			private new IQueryPostsTaxonomyPartsBuilder Builder =>
-				(IQueryPostsTaxonomyPartsBuilder)base.Builder;
-
-			/// <inheritdoc/>
-			public IImmutableList<Taxonomy> Taxonomies { get; init; } =
-				new ImmutableList<Taxonomy>();
-
-			/// <inheritdoc/>
-			public IImmutableList<WpPostId> PostIds { get; init; } =
-				new ImmutableList<WpPostId>();
-
-			/// <inheritdoc/>
-			public TaxonomySort SortBy { get; init; }
-
 			/// <summary>
 			/// Internal creation only
 			/// </summary>
 			/// <param name="schema">IWpDbSchema</param>
-			internal PostsTaxonomyOptions(IWpDbSchema schema) : base(schema, new PostsTaxonomyPartsBuilder(schema)) =>
-				Maximum = null;
+			internal PostsTaxonomyOptions(IWpDbSchema schema) : base(schema, new PostsTaxonomyPartsBuilder(schema)) { }
 
 			/// <summary>
 			/// Allow Builder to be injected
@@ -46,10 +29,10 @@ namespace Jeebs.WordPress.Data
 					parts
 				)
 				.Bind(
-					x => Builder.AddInnerJoin(x, T.Term, t => t.TermId, T.TermTaxonomy, tx => tx.TermId)
+					x => Builder.AddInnerJoin(x, T.Term, t => t.Id, T.TermTaxonomy, tx => tx.TermId)
 				)
 				.Bind(
-					x => Builder.AddInnerJoin(x, T.TermTaxonomy, tx => tx.TermTaxonomyId, T.TermRelationship, tr => tr.TermTaxonomyId)
+					x => Builder.AddInnerJoin(x, T.TermTaxonomy, tx => tx.Id, T.TermRelationship, tr => tr.TermTaxonomyId)
 				)
 				.SwitchIf(
 					_ => Id?.Value > 0 || Ids.Count > 0,

@@ -26,8 +26,8 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyPartsBuilder_Tests
 
 			// Assert
 			Assert.Equal(builder.TTest.Term.GetName(), result.Table);
-			Assert.Equal(builder.TTest.Term.TermId, result.Name);
-			Assert.Equal(nameof(TermTable.TermId), result.Alias);
+			Assert.Equal(builder.TTest.Term.Id, result.Name);
+			Assert.Equal(nameof(TermTable.Id), result.Alias);
 		}
 	}
 }

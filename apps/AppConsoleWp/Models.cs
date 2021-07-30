@@ -62,5 +62,5 @@ namespace AppConsoleWp
 		public long Count { get; init; }
 	}
 
-	internal record Attachment : WpAttachmentEntity;
+	internal record Attachment : PostAttachment;
 }

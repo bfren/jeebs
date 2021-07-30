@@ -40,7 +40,7 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 			var virtualUploadsUrl = Rnd.Str;
 			var expected =
 				"SELECT " +
-					"`p`.`ID` AS 'PostId', " +
+					"`p`.`ID` AS 'Id', " +
 					"`p`.`post_title` AS 'Title', " +
 					"`p`.`post_excerpt` AS 'Description', " +
 					"`p`.`guid` AS 'Url', " +

@@ -36,7 +36,7 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		internal record Attachment : WpAttachmentEntity;
+		internal record Attachment : PostAttachment;
 
 		public static partial class Msg
 		{

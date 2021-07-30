@@ -105,6 +105,8 @@ namespace Jeebs.WordPress.Data
 			Dapper.SqlMapper.AddTypeHandler(new PostStatusTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new PostTypeTypeHandler());
 			Dapper.SqlMapper.AddTypeHandler(new TaxonomyTypeHandler());
+
+			AddStrongIdTypeHandlers();
 		}
 
 		#endregion

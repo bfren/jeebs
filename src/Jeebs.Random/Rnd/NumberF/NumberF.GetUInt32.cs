@@ -14,12 +14,11 @@ namespace F
 			/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 			/// </summary>
 			/// <remarks>
-			/// Don't share code with <see cref="GetUInt64(ulong, ulong, RandomNumberGenerator?)"/> for memory allocation reasons
+			/// Don't share code with <see cref="GetUInt64(ulong, ulong)"/> for memory allocation reasons
 			/// </remarks>
 			/// <param name="min">Minimum acceptable value</param>
 			/// <param name="max">Maximum acceptable value</param>
-			/// <param name="generator">[Optional] Random Number Generator - if null will use <see cref="RNGCryptoServiceProvider"/></param>
-			public static uint GetUInt32(uint min = 0, uint max = int.MaxValue, RandomNumberGenerator? generator = null)
+			public static uint GetUInt32(uint min = 0, uint max = int.MaxValue)
 			{
 				// Check arguments
 				if (min >= max)
@@ -31,7 +30,7 @@ namespace F
 				var range = max - min;
 
 				// Now add a random amount of the range to the minimum value - it will never exceed maximum value
-				var add = Math.Round(range * Get(generator));
+				var add = Math.Round(range * Get());
 				return (uint)(min + add);
 			}
 		}
