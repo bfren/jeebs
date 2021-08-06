@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
