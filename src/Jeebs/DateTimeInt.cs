@@ -10,39 +10,34 @@ namespace Jeebs
 	/// <summary>
 	/// DateTime Integer
 	/// </summary>
-	public sealed class DateTimeInt
+	public readonly record struct DateTimeInt
 	{
 		private const string format = "000000000000";
 
 		/// <summary>
 		/// Year
 		/// </summary>
-		public int Year { get; set; }
+		public int Year { get; init; }
 
 		/// <summary>
 		/// Month
 		/// </summary>
-		public int Month { get; set; }
+		public int Month { get; init; }
 
 		/// <summary>
 		/// Day
 		/// </summary>
-		public int Day { get; set; }
+		public int Day { get; init; }
 
 		/// <summary>
 		/// Hour
 		/// </summary>
-		public int Hour { get; set; }
+		public int Hour { get; init; }
 
 		/// <summary>
 		/// Minute
 		/// </summary>
-		public int Minute { get; set; }
-
-		/// <summary>
-		/// Empty constructor
-		/// </summary>
-		public DateTimeInt() { }
+		public int Minute { get; init; }
 
 		/// <summary>
 		/// Construct object using specified date/time integers
@@ -53,67 +48,20 @@ namespace Jeebs
 		/// <param name="hour">Hour</param>
 		/// <param name="minute">Minute</param>
 		public DateTimeInt(int year, int month, int day, int hour, int minute) =>
-			Init(year, month, day, hour, minute);
+			(Year, Month, Day, Hour, Minute) = (year, month, day, hour, minute);
 
 		/// <summary>
 		/// Construct object using a DateTime object
 		/// </summary>
 		/// <param name="dt">DateTime</param>
-		public DateTimeInt(DateTime dt) =>
-			Init(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute);
-
-		/// <summary>
-		/// Construct object using a nullable DateTime object
-		/// </summary>
-		/// <param name="dt">Nullable DateTime</param>
-		public DateTimeInt(DateTime? dt)
-		{
-			if (dt.HasValue)
-			{
-				Init(dt.Value.Year, dt.Value.Month, dt.Value.Day, dt.Value.Hour, dt.Value.Minute);
-			}
-		}
-
-		/// <summary>
-		/// Initialise class properties
-		/// </summary>
-		/// <param name="year">Year</param>
-		/// <param name="month">Month</param>
-		/// <param name="day">Day</param>
-		/// <param name="hour">Hour</param>
-		/// <param name="minute">Minute</param>
-		private void Init(int year, int month, int day, int hour, int minute)
-		{
-			Year = year;
-			Month = month;
-			Day = day;
-			Hour = hour;
-			Minute = minute;
-		}
+		public DateTimeInt(DateTime dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
 
 		/// <summary>
 		/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM)
 		/// </summary>
 		/// <param name="value">DateTime string value - format yyyymmddHHMM</param>
-		public DateTimeInt(string value)
-		{
-			if (string.IsNullOrEmpty(value))
-			{
-				return;
-			}
-
-			if (value.Length != 12)
-			{
-				throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long", nameof(value));
-			}
-
-			if (!long.TryParse(value, out _))
-			{
-				throw new ArgumentException("Not a valid number", nameof(value));
-			}
-
-			Init(value);
-		}
+		public DateTimeInt(string value) =>
+			(Year, Month, Day, Hour, Minute) = Parse(value);
 
 		/// <summary>
 		/// Construct object from long - will be converted to a 12-digit string with leading zeroes
@@ -121,7 +69,7 @@ namespace Jeebs
 		/// <param name="value">DateTime long value - format yyyymmddHHMM</param>
 		public DateTimeInt(long value)
 		{
-			if (value <= 99999999999)
+			if (value <= 100000000000)
 			{
 				throw new ArgumentException("Too small - must be 12 digits long", nameof(value));
 			}
@@ -131,16 +79,7 @@ namespace Jeebs
 				throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 			}
 
-			Init(value.ToString(format));
-		}
-
-		private void Init(string value)
-		{
-			Year = int.Parse(value[0..4]);
-			Month = int.Parse(value[4..6]);
-			Day = int.Parse(value[6..8]);
-			Hour = int.Parse(value[8..10]);
-			Minute = int.Parse(value[10..]);
+			(Year, Month, Day, Hour, Minute) = Parse(value.ToString(format));
 		}
 
 		/// <summary>
@@ -184,7 +123,7 @@ namespace Jeebs
 					0
 			};
 
-		private (bool Valid, string Part) IsValidDateTime()
+		internal (bool Valid, string Part) IsValidDateTime()
 		{
 			if (Year < 0 || Year > 9999)
 			{
@@ -248,6 +187,48 @@ namespace Jeebs
 
 			return year % 4 == 0;
 		}
+
+		#region Static
+
+		/// <summary>
+		/// Minimum possible value
+		/// </summary>
+		public static DateTimeInt MinValue =>
+			new(0, 0, 0, 0, 0);
+
+		/// <summary>
+		/// Maximum possible value
+		/// </summary>
+		public static DateTimeInt MaxValue =>
+			new(9999, 12, 31, 23, 59);
+
+		private static (int year, int month, int day, int hour, int minute) Parse(string value)
+		{
+			if (string.IsNullOrEmpty(value))
+			{
+				return (0, 0, 0, 0, 0);
+			}
+
+			if (value.Length != 12)
+			{
+				throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long", nameof(value));
+			}
+
+			if (!ulong.TryParse(value, out _))
+			{
+				throw new ArgumentException("Not a valid number", nameof(value));
+			}
+
+			return (
+				year: int.Parse(value[0..4]),
+				month: int.Parse(value[4..6]),
+				day: int.Parse(value[6..8]),
+				hour: int.Parse(value[8..10]),
+				minute: int.Parse(value[10..])
+			);
+		}
+
+		#endregion
 
 		/// <summary>Messages</summary>
 		public static class Msg

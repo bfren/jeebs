@@ -3,11 +3,11 @@
 
 using System.Threading.Tasks;
 using Jeebs.Data;
+using Jeebs.WordPress.Data.Querying;
 using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.TermCustomField;
 using static Jeebs.WordPress.Data.TermCustomField.Msg;
-using Jeebs.WordPress.Data.Querying;
 
 namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests
 {
