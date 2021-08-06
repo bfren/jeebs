@@ -23,7 +23,9 @@ namespace Jeebs.DateTimeInt_Tests
 
 		[Theory]
 		[MemberData(nameof(IsValidDateTime_Tests.Invalid_DateTime_Data), MemberType = typeof(IsValidDateTime_Tests))]
+#pragma warning disable xUnit1026 // Theory methods should use all of their parameters
 		public void Invalid_Returns_Zero(int year, int month, int day, int hour, int minute, string _)
+#pragma warning restore xUnit1026 // Theory methods should use all of their parameters
 		{
 			// Arrange
 			var input = new DateTimeInt(year, month, day, hour, minute);

@@ -3,6 +3,6 @@
 		<RootNamespace>Jeebs.Mvc.Calendar</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Calendar\Jeebs.Mvc.Calendar.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Calendar\Jeebs.Calendar.csproj" />
 	</ItemGroup>
 </Project>

@@ -27,7 +27,7 @@ namespace Jeebs.DateTimeInt_Tests
 
 		[Theory]
 		[MemberData(nameof(IsValidDateTime_Tests.Invalid_DateTime_Data), MemberType = typeof(IsValidDateTime_Tests))]
-		public void Invalid_DateTime_Returns_None(int year, int month, int day, int hour, int minute, string _)
+		public void Invalid_DateTime_Returns_None(int year, int month, int day, int hour, int minute, string part)
 		{
 			// Arrange
 			var input = new DateTimeInt(year, month, day, hour, minute);
@@ -37,7 +37,8 @@ namespace Jeebs.DateTimeInt_Tests
 
 			// Assert
 			var none = Assert.IsType<None<DateTime>>(result);
-			Assert.IsType<InvalidDateTimeMsg>(none.Reason);
+			var msg = Assert.IsType<InvalidDateTimeMsg>(none.Reason);
+			Assert.Equal(part, msg.Value.part);
 		}
 	}
 }
