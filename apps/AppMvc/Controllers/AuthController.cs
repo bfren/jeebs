@@ -88,7 +88,7 @@ namespace AppMvc.Controllers
 					DefaultHandler
 				)
 				.UnwrapAsync(
-					x => x.Value(r => Content(r.ToString()))
+					x => x.Value(Content("Ooops"))
 				);
 
 		public async Task<IActionResult> ShowUserByEmail(string email) =>

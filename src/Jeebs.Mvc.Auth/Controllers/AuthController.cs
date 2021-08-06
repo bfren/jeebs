@@ -192,7 +192,7 @@ namespace Jeebs.Mvc.Auth.Controllers
 					url,
 
 				_ =>
-					Url.Action("Index")
+					Url.Action("Index") ?? "/"
 			};
 	}
 }
