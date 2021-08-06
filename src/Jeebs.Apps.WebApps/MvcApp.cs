@@ -40,11 +40,6 @@ namespace Jeebs.Apps
 		protected readonly CookiePolicyOptions cookiePolicyOptions = new();
 
 		/// <summary>
-		/// [Optional] MVC Compatibility Version
-		/// </summary>
-		protected readonly CompatibilityVersion? compatibilityVersion;
-
-		/// <summary>
 		/// [Optional] JsonSerializerOptions
 		/// </summary>
 		protected readonly JsonSerializerOptions? jsonSerialiserOptions;
@@ -158,7 +153,7 @@ namespace Jeebs.Apps
 			var defaultOptions = F.JsonF.CopyOptions();
 
 			// Set options
-			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? defaultOptions).IgnoreNullValues;
+			opt.JsonSerializerOptions.DefaultIgnoreCondition = (jsonSerialiserOptions ?? defaultOptions).DefaultIgnoreCondition;
 			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
 			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
 			opt.JsonSerializerOptions.NumberHandling = (jsonSerialiserOptions ?? defaultOptions).NumberHandling;
