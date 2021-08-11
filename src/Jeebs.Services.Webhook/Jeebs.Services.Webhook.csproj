@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0-preview.6.21352.12" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0-preview.7.21377.19" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Services\Jeebs.Services.csproj" />
