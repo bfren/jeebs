@@ -11,4 +11,7 @@
 	<ItemGroup>
 	  <PackageReference Include="System.Text.Json" Version="6.0.0-preview.7.21377.19" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Jeebs.Option.Abstractions\Jeebs.Option.Abstractions.csproj" />
+	</ItemGroup>
 </Project>
