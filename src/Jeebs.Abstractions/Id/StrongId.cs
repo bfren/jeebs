@@ -17,9 +17,8 @@ namespace Jeebs
 
 		/// <summary>
 		/// Override to return <see cref="Value"/>
-		/// TODO: use sealed with C# 10
 		/// </summary>
-		public override string ToString() =>
+		public sealed override string ToString() =>
 			Value.ToString();
 
 		#region Operators
