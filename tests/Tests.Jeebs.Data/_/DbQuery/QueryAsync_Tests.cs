@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Data;
-using System.Threading.Tasks;
 using Jeebs.Data.Querying;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;

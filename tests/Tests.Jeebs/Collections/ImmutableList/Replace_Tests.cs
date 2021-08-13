@@ -36,7 +36,7 @@ namespace Jeebs.ImmutableList_Tests
 			var list = new ImmutableList<string>(new[] { i0, i1 });
 
 			// Act
-			var result = list.Replace(i0,i2);
+			var result = list.Replace(i0, i2);
 			i1 = F.Rnd.Str;
 			i2 = F.Rnd.Str;
 

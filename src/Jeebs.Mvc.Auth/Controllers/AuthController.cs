@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Mvc.Auth.Models;
