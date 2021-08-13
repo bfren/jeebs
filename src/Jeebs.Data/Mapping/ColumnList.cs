@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IColumnList"/>
-	public sealed class ColumnList : ImmutableList<IColumn>, IColumnList
+	public sealed record class ColumnList : ImmutableList<IColumn>, IColumnList
 	{
 		/// <summary>
 		/// Create empty list
