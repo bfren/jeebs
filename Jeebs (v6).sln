@@ -216,7 +216,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc", "tests\Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Calendar", "src\Jeebs.Calendar\Jeebs.Calendar.csproj", "{A8B46561-04F5-475B-AE85-63A04B5C6629}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Calendar", "tests\Tests.Jeebs.Calendar\Tests.Jeebs.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data.Types", "src\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj", "{8E915008-C90F-4268-AB01-25F1D5022CD8}"
 EndProject
