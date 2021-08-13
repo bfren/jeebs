@@ -7,40 +7,40 @@ using D = Jeebs.Defaults.PagingValues;
 namespace Jeebs
 {
 	/// <inheritdoc cref="IPagingValues"/>
-	public sealed class PagingValues : IPagingValues
+	public readonly record struct PagingValues : IPagingValues
 	{
 		/// <inheritdoc/>
-		public ulong Items { get; }
+		public ulong Items { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong ItemsPer { get; }
+		public ulong ItemsPer { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong FirstItem { get; }
+		public ulong FirstItem { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong LastItem { get; }
+		public ulong LastItem { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong Page { get; }
+		public ulong Page { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong Pages { get; }
+		public ulong Pages { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong PagesPer { get; }
+		public ulong PagesPer { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong LowerPage { get; }
+		public ulong LowerPage { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public ulong UpperPage { get; }
+		public ulong UpperPage { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public int Skip { get; }
+		public int Skip { get; init; } = 0;
 
 		/// <inheritdoc/>
-		public int Take { get; }
+		public int Take { get; init; } = 0;
 
 		/// <summary>
 		/// Create empty values
