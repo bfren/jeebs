@@ -102,6 +102,6 @@ namespace Jeebs_Tests
 			Assert.Same(msg, none);
 		}
 
-		public sealed record TestMsg : IMsg;
+		public sealed record class TestMsg : IMsg;
 	}
 }

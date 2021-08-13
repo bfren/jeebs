@@ -20,6 +20,6 @@ namespace Jeebs.OptionAbstractions.IMsg_Tests
 			Assert.Equal($"{typeof(TestMsg).Name} {{ }}", result);
 		}
 
-		public record TestMsg : IMsg { }
+		public record class TestMsg : IMsg { }
 	}
 }

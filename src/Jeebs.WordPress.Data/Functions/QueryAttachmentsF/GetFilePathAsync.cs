@@ -36,22 +36,22 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		internal record Attachment : PostAttachment;
+		internal record class Attachment : PostAttachment;
 
 		public static partial class Msg
 		{
 			/// <summary>Attachment not found</summary>
 			/// <param name="FileId">File (Post) ID</param>
-			public sealed record AttachmentNotFoundMsg(ulong FileId) : IMsg { }
+			public sealed record class AttachmentNotFoundMsg(ulong FileId) : IMsg { }
 
 			/// <summary>Multiple Attachments found</summary>
 			/// <param name="FileId">File (Post) ID</param>
-			public sealed record MultipleAttachmentsFoundMsg(ulong FileId) : IMsg { }
+			public sealed record class MultipleAttachmentsFoundMsg(ulong FileId) : IMsg { }
 
 			/// <summary>Unable to get Attachment file path</summary>
 			/// <param name="Exception">Exception object</param>
 			/// <param name="FileId">File (Post) ID</param>
-			public sealed record ErrorGettingAttachmentFilePathMsg(Exception Exception, ulong FileId) : ExceptionMsg(Exception);
+			public sealed record class ErrorGettingAttachmentFilePathMsg(Exception Exception, ulong FileId) : ExceptionMsg(Exception);
 		}
 	}
 }

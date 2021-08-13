@@ -7,5 +7,5 @@ namespace Jeebs.Mvc.Auth.Models
 	/// Access Denied Model
 	/// </summary>
 	/// <param name="AccessUrl">The URL the user was trying to access</param>
-	public sealed record DeniedModel(string? AccessUrl);
+	public sealed record class DeniedModel(string? AccessUrl);
 }

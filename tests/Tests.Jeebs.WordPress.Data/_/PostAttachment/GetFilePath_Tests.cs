@@ -51,6 +51,6 @@ namespace Jeebs.WordPress.Data.PostAttachment_Tests
 			Assert.Equal($"{wpUploads}/{urlPath}", result);
 		}
 
-		public record Test : PostAttachment;
+		public record class Test : PostAttachment;
 	}
 }

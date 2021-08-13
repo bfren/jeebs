@@ -98,7 +98,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Term class
 		/// </summary>
-		public sealed record Term : WpTermEntity { }
+		public sealed record class Term : WpTermEntity { }
 
 		/// <summary>Messages</summary>
 		public static class Msg
@@ -106,16 +106,16 @@ namespace Jeebs.WordPress.Data
 			/// <summary>Meta key not found in MetaDictionary</summary>
 			/// <param name="Type">Custom Field type</param>
 			/// <param name="Value">Meta Key</param>
-			public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+			public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
 
 			/// <summary>Multiple matching terms were found (should always be 1)</summary>
 			/// <param name="Value">Term ID</param>
-			public sealed record MultipleTermsFoundMsg(string Value) : WithValueMsg<string> { }
+			public sealed record class MultipleTermsFoundMsg(string Value) : WithValueMsg<string> { }
 
 			/// <summary>The value in the meta dictionary is not a valid ID</summary>
 			/// <param name="Type">Custom Field type</param>
 			/// <param name="Value">Meta Key</param>
-			public sealed record ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string> { }
+			public sealed record class ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string> { }
 		}
 	}
 }

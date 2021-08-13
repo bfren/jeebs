@@ -65,11 +65,11 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>MetaDictionary property not found on <typeparamref name="T"/></summary>
 			/// <typeparam name="T">Post type</typeparam>
-			public sealed record MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
+			public sealed record class MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
 
 			/// <summary>Multiple MetaDictionary properties found on <typeparamref name="T"/></summary>
 			/// <typeparam name="T">Post type</typeparam>
-			public sealed record MoreThanOneMetaDictionaryMsg<T> : IMsg { }
+			public sealed record class MoreThanOneMetaDictionaryMsg<T> : IMsg { }
 		}
 	}
 }

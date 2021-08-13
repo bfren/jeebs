@@ -52,11 +52,11 @@ namespace F
 		public static class Msg
 		{
 			/// <summary>Null Value</summary>
-			public sealed record NullValueMsg : IMsg { }
+			public sealed record class NullValueMsg : IMsg { }
 
 			/// <summary>Unrecognised boolean value</summary>
 			/// <param name="Value">Unrecognised Value</param>
-			public sealed record UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
+			public sealed record class UnrecognisedValueMsg(string Value) : WithValueMsg<string>() { }
 		}
 	}
 }

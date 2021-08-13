@@ -37,7 +37,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		public static class Msg
 		{
 			/// <summary>The image file was not found</summary>
-			public sealed record ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
+			public sealed record class ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
 		}
 	}
 }

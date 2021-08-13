@@ -82,8 +82,8 @@ namespace F.JsonF_Tests.OptionConverter_Tests
 			Assert.IsType<DeserialiseExceptionMsg>(none);
 		}
 
-		public record Test(string Foo, int Bar);
+		public record class Test(string Foo, int Bar);
 
-		public record Wrapper(Option<Test> Test);
+		public record class Wrapper(Option<Test> Test);
 	}
 }

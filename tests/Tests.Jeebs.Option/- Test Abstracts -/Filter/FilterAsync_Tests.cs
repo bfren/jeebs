@@ -101,8 +101,8 @@ namespace Jeebs_Tests
 			await predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
 		}
 
-		public record FakeOption : Option<int> { }
+		public record class FakeOption : Option<int> { }
 
-		public record TestMsg : IMsg { }
+		public record class TestMsg : IMsg { }
 	}
 }

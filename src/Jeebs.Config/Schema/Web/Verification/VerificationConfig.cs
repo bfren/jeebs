@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Site Verification Configuration
 	/// </summary>
-	public record VerificationConfig
+	public record class VerificationConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

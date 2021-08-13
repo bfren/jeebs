@@ -12,18 +12,18 @@ using static F.OptionF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryFluent{TEntity, TId}"/>
-	public abstract record QueryFluent
+	public abstract record class QueryFluent
 	{
 		/// <summary>Messages</summary>
 		public static class Msg
 		{
 			/// <summary>No predicates were added when query execution was attempted</summary>
-			public sealed record NoPredicatesMsg : IMsg { }
+			public sealed record class NoPredicatesMsg : IMsg { }
 		}
 	}
 
 	/// <inheritdoc cref="IQueryFluent{TEntity, TId}"/>
-	public sealed record QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent<TEntity, TId>
+	public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent<TEntity, TId>
 		where TEntity : IWithId
 		where TId : StrongId
 	{

@@ -10,5 +10,5 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// <param name="Y">Y co-ordinate</param>
 	/// <param name="Width">Rectangle width</param>
 	/// <param name="Height">Rectangle height</param>
-	public sealed record Rectangle(int X, int Y, int Width, int Height);
+	public sealed record class Rectangle(int X, int Y, int Width, int Height);
 }

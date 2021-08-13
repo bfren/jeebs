@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data
 	/// <summary>
 	/// Post Attachment
 	/// </summary>
-	public abstract record PostAttachment : WpPostEntity, IPostAttachment
+	public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 	{
 		/// <inheritdoc/>
 		public string Description

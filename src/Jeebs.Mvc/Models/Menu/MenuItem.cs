@@ -9,7 +9,7 @@ namespace Jeebs.Mvc.Models
 	/// <summary>
 	/// Menu Item
 	/// </summary>
-	public record MenuItem
+	public record class MenuItem
 	{
 		/// <summary>
 		/// Each menu item needs a unique identifier

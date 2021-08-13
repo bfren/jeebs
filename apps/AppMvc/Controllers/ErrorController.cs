@@ -34,5 +34,5 @@ namespace AppMvc.Controllers
 		public class NotFoundMsg : INotFoundMsg { }
 	}
 
-	public record TestErrorMsg : IMsg { }
+	public record class TestErrorMsg : IMsg { }
 }

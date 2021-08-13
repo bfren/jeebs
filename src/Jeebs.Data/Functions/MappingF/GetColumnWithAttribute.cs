@@ -46,12 +46,12 @@ namespace F.DataF
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <typeparam name="TAttribute">Attribute type</typeparam>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>No property with specified attribute found on entity</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <typeparam name="TAttribute">Attribute type</typeparam>
-			public sealed record NoPropertyWithAttributeMsg<TEntity, TAttribute>() : IMsg
+			public sealed record class NoPropertyWithAttributeMsg<TEntity, TAttribute>() : IMsg
 			{
 				/// <summary>Return message with class type parameters</summary>
 				public override string ToString() =>
@@ -61,7 +61,7 @@ namespace F.DataF
 			/// <summary>Too many properties with specified attribute found on entity</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <typeparam name="TAttribute">Attribute type</typeparam>
-			public sealed record TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : IMsg
+			public sealed record class TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : IMsg
 			{
 				/// <summary>Return message with class type parameters</summary>
 				public override string ToString() =>

@@ -139,29 +139,29 @@ namespace Jeebs.Cryptography
 		{
 			/// <summary>Error creating secret box</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record CreatingSecretBoxExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class CreatingSecretBoxExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Encrypted contents not created yet</summary>
-			public sealed record EncryptedContentsNotCreatedYetMsg : IMsg { }
+			public sealed record class EncryptedContentsNotCreatedYetMsg : IMsg { }
 
 			/// <summary>Incorrect key or nonce</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record IncorrectKeyOrNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class IncorrectKeyOrNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Invalid key</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record InvalidKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class InvalidKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Invalid nonce</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record InvalidNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class InvalidNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Unlock exception</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record UnlockExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class UnlockExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Trying to unlock a box without any content</summary>
-			public sealed record UnlockWhenEncryptedContentsIsNoneMsg : IMsg { }
+			public sealed record class UnlockWhenEncryptedContentsIsNoneMsg : IMsg { }
 		}
 	}
 }

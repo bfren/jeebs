@@ -5,7 +5,7 @@ using Jeebs.Data.Entities;
 
 namespace Jeebs.Data.Mapping
 {
-	public record Foo : IWithId
+	public record class Foo : IWithId
 	{
 		[Ignore]
 		public StrongId Id

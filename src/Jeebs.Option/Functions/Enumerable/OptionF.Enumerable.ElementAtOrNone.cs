@@ -41,10 +41,10 @@ namespace F
 			public static partial class Msg
 			{
 				/// <summary>Null or no item found when doing ElementAtOrDefault()</summary>
-				public sealed record ElementAtIsNullMsg : IMsg { }
+				public sealed record class ElementAtIsNullMsg : IMsg { }
 
 				/// <summary>The list is empty</summary>
-				public sealed record ListIsEmptyMsg : IMsg { }
+				public sealed record class ListIsEmptyMsg : IMsg { }
 			}
 		}
 	}

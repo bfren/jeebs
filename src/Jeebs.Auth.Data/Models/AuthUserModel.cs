@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data.Models
 	/// <summary>
 	/// Authentication User model
 	/// </summary>
-	public record AuthUserModel : IAuthUser
+	public record class AuthUserModel : IAuthUser
 	{
 		/// <summary>
 		/// User ID

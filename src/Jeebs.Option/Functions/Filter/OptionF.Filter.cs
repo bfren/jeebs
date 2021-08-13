@@ -32,7 +32,7 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>Predicate was false</summary>
-			public sealed record FilterPredicateWasFalseMsg : IMsg { }
+			public sealed record class FilterPredicateWasFalseMsg : IMsg { }
 		}
 	}
 }

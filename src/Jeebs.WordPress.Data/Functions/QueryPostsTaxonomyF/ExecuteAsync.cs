@@ -40,7 +40,7 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Unable to get posts taxonomy query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryPostsTaxonomyOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingQueryPostsTaxonomyOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

@@ -119,12 +119,12 @@ namespace F
 		{
 			/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
 			/// <param name="Value">Enum type</param>
-			public sealed record NotAValidEnumMsg(Type Value) : WithValueMsg<Type> { }
+			public sealed record class NotAValidEnumMsg(Type Value) : WithValueMsg<Type> { }
 
 			/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
 			/// <typeparam name="T">Enum type</typeparam>
 			/// <param name="Value">Enum value</param>
-			public sealed record NotAValidEnumValueMsg<T>(string Value) : WithValueMsg<string>
+			public sealed record class NotAValidEnumValueMsg<T>(string Value) : WithValueMsg<string>
 				where T : struct, Enum
 			{
 				/// <summary>Return message</summary>
@@ -135,7 +135,7 @@ namespace F
 			/// <summary><paramref name="Value"/> is not a valid value of <paramref name="Type"/></summary>
 			/// <param name="Type">Enum type</param>
 			/// <param name="Value">Enum value</param>
-			public sealed record NotAValidEnumValueMsg(Type Type, string Value) : WithValueMsg<string>
+			public sealed record class NotAValidEnumValueMsg(Type Type, string Value) : WithValueMsg<string>
 			{
 				/// <summary>Return message</summary>
 				public override string ToString() =>
@@ -146,7 +146,7 @@ namespace F
 			/// <typeparam name="TFrom">From Enum</typeparam>
 			/// <typeparam name="TTo">To Enum</typeparam>
 			/// <param name="Value">From Enum value</param>
-			public sealed record ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : WithValueMsg<TFrom>
+			public sealed record class ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : WithValueMsg<TFrom>
 				where TFrom : struct, Enum
 				where TTo : struct, Enum
 			{

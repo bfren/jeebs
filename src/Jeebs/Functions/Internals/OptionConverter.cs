@@ -57,6 +57,6 @@ namespace F.Internals
 	public static class OptionConverterMsg
 	{
 		/// <summary>Deserialisation returned a null value</summary>
-		public sealed record DeserialisingReturnedNullMsg() : IMsg { }
+		public sealed record class DeserialisingReturnedNullMsg() : IMsg { }
 	}
 }

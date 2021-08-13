@@ -309,7 +309,7 @@ namespace F.DataF.QueryF_Tests
 				$"({string.Join('|', objects)})";
 		}
 
-		public sealed record TestId(ulong Value) : StrongId(Value)
+		public sealed record class TestId(ulong Value) : StrongId(Value)
 		{
 			public TestId() : this(0) { }
 		}

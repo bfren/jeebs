@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Twitter.Models
 {
 	/// <inheritdoc cref="ITwitterAuthor"/>
-	public sealed record AuthorModel : ITwitterAuthor
+	public sealed record class AuthorModel : ITwitterAuthor
 	{
 		/// <inheritdoc/>
 		public string ScreenName { get; init; } = string.Empty;

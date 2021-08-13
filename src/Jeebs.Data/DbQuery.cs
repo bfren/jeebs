@@ -21,11 +21,11 @@ namespace Jeebs.Data
 		{
 			/// <summary>Error getting query from parts</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+			public sealed record class ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
 
 			/// <summary>Error getting count query from parts</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+			public sealed record class ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
 		}
 	}
 

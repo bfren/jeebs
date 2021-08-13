@@ -10,7 +10,7 @@ namespace Jeebs.Auth.Data.Entities
 	/// <summary>
 	/// Authentication User Entity
 	/// </summary>
-	public sealed record AuthUserEntity : AuthUserModel, IWithVersion
+	public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 	{
 		/// <inheritdoc/>
 		[Version]

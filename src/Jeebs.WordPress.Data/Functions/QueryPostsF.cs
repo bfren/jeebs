@@ -18,12 +18,12 @@ namespace F.WordPressF.DataF
 		/// <summary>
 		/// Internal Post Meta type for getting meta values
 		/// </summary>
-		internal sealed record PostMeta : WpPostMetaEntity;
+		internal sealed record class PostMeta : WpPostMetaEntity;
 
 		/// <summary>
 		/// Internal Term type for linking terms with posts
 		/// </summary>
-		internal sealed record Term : TermList.Term
+		internal sealed record class Term : TermList.Term
 		{
 			/// <summary>
 			/// Enables query for multiple posts and multiple taxonomies

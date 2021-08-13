@@ -41,6 +41,6 @@ namespace Jeebs.Option_Tests
 			Assert.False(r1);
 		}
 
-		public record TestMsg : IMsg { }
+		public record class TestMsg : IMsg { }
 	}
 }

@@ -19,10 +19,10 @@ namespace Jeebs.Data.Querying
 		public static class Msg
 		{
 			/// <summary>Trying to add an empty where clause</summary>
-			public sealed record TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
+			public sealed record class TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
 
 			/// <summary>Unable to add parameters to custom where</summary>
-			public sealed record UnableToAddParametersToWhereCustomMsg : IMsg { }
+			public sealed record class UnableToAddParametersToWhereCustomMsg : IMsg { }
 		}
 	}
 

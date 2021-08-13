@@ -41,6 +41,6 @@ namespace Jeebs.Data.TypeHandlers.StrongId_Tests
 			Assert.True(result == 42);
 		}
 
-		public sealed record TestId() : StrongId(0);
+		public sealed record class TestId() : StrongId(0);
 	}
 }

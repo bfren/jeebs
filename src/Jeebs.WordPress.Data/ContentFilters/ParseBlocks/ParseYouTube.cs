@@ -73,6 +73,6 @@ namespace Jeebs.WordPress.Data.ContentFilters
 		/// Used to parse YouTube JSON
 		/// </summary>
 		/// <param name="Url">YouTube URL</param>
-		private sealed record YouTubeParsed(string Url);
+		private sealed record class YouTubeParsed(string Url);
 	}
 }

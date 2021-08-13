@@ -223,11 +223,11 @@ namespace F.DataF.QueryF_Tests
 			Assert.IsType<InOperatorRequiresValueToBeAListMsg>(none);
 		}
 
-		public sealed record TestId(ulong Value) : StrongId(Value)
+		public sealed record class TestId(ulong Value) : StrongId(Value)
 		{
 			public TestId() : this(0) { }
 		}
 
-		public sealed record TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
+		public sealed record class TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
 	}
 }

@@ -41,7 +41,7 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Unable to get attachments query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryAttachmentsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingQueryAttachmentsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

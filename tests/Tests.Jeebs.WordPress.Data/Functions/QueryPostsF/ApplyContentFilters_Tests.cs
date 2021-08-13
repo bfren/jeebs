@@ -90,6 +90,6 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			f1.Received(1).Execute(c1);
 		}
 
-		public sealed record Model(WpPostId Id, string Content) : IWithId<WpPostId>;
+		public sealed record class Model(WpPostId Id, string Content) : IWithId<WpPostId>;
 	}
 }

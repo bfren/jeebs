@@ -67,7 +67,7 @@ namespace Jeebs.Data.Extract_Tests
 			public string Bar2 { get; set; } = string.Empty;
 		}
 
-		public record FooDuplicateTable : FooTable;
+		public record class FooDuplicateTable : FooTable;
 
 		public class FooNone
 		{

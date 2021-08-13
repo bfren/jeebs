@@ -72,7 +72,7 @@ namespace F
 		{
 			/// <summary>An exception was caught while executing one of the SwitchIf functions</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record SwitchIfFuncExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record class SwitchIfFuncExceptionMsg(Exception Exception) : IExceptionMsg { }
 		}
 	}
 }

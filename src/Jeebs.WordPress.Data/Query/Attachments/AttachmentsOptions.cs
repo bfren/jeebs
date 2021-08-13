@@ -6,6 +6,6 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryAttachmentsOptions"/>
-		public sealed record AttachmentsOptions : Querying.AttachmentsOptions;
+		public sealed record class AttachmentsOptions : Querying.AttachmentsOptions;
 	}
 }

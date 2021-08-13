@@ -15,6 +15,6 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 		public override void Test00_Calls_Extract_From() =>
 			Test00<TestModel>();
 
-		public record TestModel;
+		public record class TestModel;
 	}
 }

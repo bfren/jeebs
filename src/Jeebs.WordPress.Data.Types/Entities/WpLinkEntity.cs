@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public abstract record WpLinkEntity : WpLinkEntityWithId
+	public abstract record class WpLinkEntity : WpLinkEntityWithId
 	{
 		/// <summary>
 		/// Url

@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Link Table
 	/// </summary>
-	public sealed record LinkTable : Table
+	public sealed record class LinkTable : Table
 	{
 		/// <summary>
 		/// LinkId

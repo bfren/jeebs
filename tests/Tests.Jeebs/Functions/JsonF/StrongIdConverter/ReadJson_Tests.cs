@@ -83,7 +83,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			Assert.Equal(0U, wrapper.LongId.Value);
 		}
 
-		public record IdTest0() : StrongId(0);
+		public record class IdTest0() : StrongId(0);
 
 		public class LongIdWrapperTest0
 		{

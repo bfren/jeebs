@@ -19,7 +19,7 @@ namespace Jeebs.Auth.Data
 	}
 
 	/// <inheritdoc cref="IAuthUserWithRoles{TRole}"/>
-	public abstract record AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole>
+	public abstract record class AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole>
 		where TRole : IAuthRole
 	{
 		/// <summary>

@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Jeebs Configuration
 	/// </summary>
-	public record JeebsConfig
+	public record class JeebsConfig
 	{
 		/// <summary>
 		/// Path to Jeebs settings configuration section

@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Querying
 	/// WordPress Query Options
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
-	public abstract record Options<TId> : QueryOptions<TId>
+	public abstract record class Options<TId> : QueryOptions<TId>
 		where TId : StrongId
 	{
 		/// <summary>

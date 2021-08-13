@@ -63,13 +63,13 @@ namespace Jeebs.Mvc.Auth
 		public static class Msg
 		{
 			/// <summary>The User ID Claim was not a valid number</summary>
-			public sealed record InvalidUserIdMsg : IMsg { }
+			public sealed record class InvalidUserIdMsg : IMsg { }
 
 			/// <summary>Unable to find the User ID Claim</summary>
-			public sealed record UnableToFindUserIdClaimMsg : IMsg { }
+			public sealed record class UnableToFindUserIdClaimMsg : IMsg { }
 
 			/// <summary>The current User is not correctly authenticated</summary>
-			public sealed record UserIsNotAuthenticatedMsg : IMsg { }
+			public sealed record class UserIsNotAuthenticatedMsg : IMsg { }
 		}
 	}
 }

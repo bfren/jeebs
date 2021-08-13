@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Link entity with ID properties
 	/// </summary>
-	public abstract record WpLinkEntityWithId : IWithId<WpLinkId>
+	public abstract record class WpLinkEntityWithId : IWithId<WpLinkId>
 	{
 		/// <summary>
 		/// Id

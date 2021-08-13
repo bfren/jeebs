@@ -235,7 +235,7 @@ namespace Jeebs
 		{
 			/// <summary>Unable to parse DateTime integer</summary>
 			/// <param name="Value">Invalid part and DateTimeInt</param>
-			public sealed record InvalidDateTimeMsg((string part, DateTimeInt dt) Value) :
+			public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) :
 				WithValueMsg<(string part, DateTimeInt dt)>()
 			{
 				/// <summary>Return message</summary>

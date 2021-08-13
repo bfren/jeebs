@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// TermTaxonomy entity
 	/// </summary>
-	public abstract record WpTermTaxonomyEntityWithId : IWithId<WpTermTaxonomyId>
+	public abstract record class WpTermTaxonomyEntityWithId : IWithId<WpTermTaxonomyId>
 	{
 		/// <summary>
 		/// Id

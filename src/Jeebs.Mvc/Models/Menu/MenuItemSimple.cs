@@ -11,5 +11,5 @@ namespace Jeebs.Mvc.Models
 	/// <param name="Guid">Each menu item needs a unique identifier</param>
 	/// <param name="Text">Menu item display text</param>
 	/// <param name="Url">Fully qualified URI to this item</param>
-	public record MenuItemSimple(Guid Guid, string Text, string Url);
+	public sealed record class MenuItemSimple(Guid Guid, string Text, string Url);
 }

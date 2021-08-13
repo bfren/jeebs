@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Seq configuration
 	/// </summary>
-	public record SeqConfig : WebhookServiceConfig
+	public record class SeqConfig : WebhookServiceConfig
 	{
 		/// <inheritdoc/>
 		public override string Webhook =>

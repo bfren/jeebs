@@ -7,7 +7,7 @@ using Jeebs.Logging;
 namespace Jeebs
 {
 	/// <inheritdoc cref="ILogMsg"/>
-	public abstract record LogMsg : ILogMsg
+	public abstract record class LogMsg : ILogMsg
 	{
 		private const LogLevel DefaultLevel = LogLevel.Information;
 

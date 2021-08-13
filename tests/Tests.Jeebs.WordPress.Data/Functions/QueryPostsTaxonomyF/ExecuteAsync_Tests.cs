@@ -41,6 +41,6 @@ namespace F.WordPressF.DataF.QueryPostsTaxonomyF_Tests
 			await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
 		}
 
-		public record Test : WpTermEntity;
+		public record class Test : WpTermEntity;
 	}
 }

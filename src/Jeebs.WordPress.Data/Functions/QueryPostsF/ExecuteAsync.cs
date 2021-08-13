@@ -88,10 +88,10 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Unable to get posts query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryPostsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingQueryPostsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
-			public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
+			public sealed record class UnrecognisedPagedListTypeMsg : IMsg { }
 		}
 	}
 }

@@ -14,7 +14,7 @@ using static F.DataF.QueryBuilderF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryBuilderWithFrom"/>
-	public sealed record QueryBuilderWithFrom : IQueryBuilderWithFrom
+	public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	{
 		/// <summary>
 		/// Query Parts

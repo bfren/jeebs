@@ -52,13 +52,13 @@ namespace F
 			public static partial class Msg
 			{
 				/// <summary>Multiple items found when doing SingleOrDefault()</summary>
-				public sealed record MultipleItemsMsg : IMsg { }
+				public sealed record class MultipleItemsMsg : IMsg { }
 
 				/// <summary>No items found matching the predicate</summary>
-				public sealed record NoMatchingItemsMsg : IMsg { }
+				public sealed record class NoMatchingItemsMsg : IMsg { }
 
 				/// <summary>Null item found when doing SingleOrDefault()</summary>
-				public sealed record NullItemMsg : IMsg { }
+				public sealed record class NullItemMsg : IMsg { }
 			}
 		}
 	}

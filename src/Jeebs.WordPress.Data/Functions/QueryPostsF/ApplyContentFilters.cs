@@ -43,7 +43,7 @@ namespace F.WordPressF.DataF
 			/// <summary>An exception occured while applying content filters to posts</summary>
 			/// <typeparam name="T">Post Model type</typeparam>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

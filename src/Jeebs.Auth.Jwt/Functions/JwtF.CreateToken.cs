@@ -115,25 +115,25 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>JwtConfig invalid</summary>
-			public sealed record ConfigInvalidMsg : IMsg { }
+			public sealed record class ConfigInvalidMsg : IMsg { }
 
 			/// <summary>Exception when creating JwtSecurityToken</summary>
-			public sealed record CreatingJwtSecurityTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class CreatingJwtSecurityTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>The Encrypting Key is not long enough</summary>
-			public sealed record EncryptingKeyNotLongEnoughMsg : IMsg { }
+			public sealed record class EncryptingKeyNotLongEnoughMsg : IMsg { }
 
 			/// <summary>The User's Identity is not authenticated</summary>
-			public sealed record IdentityNotAuthenticatedMsg : IMsg { }
+			public sealed record class IdentityNotAuthenticatedMsg : IMsg { }
 
 			/// <summary>One of the Signing / Encrypting keys is not long enough</summary>
-			public sealed record KeyNotLongEnoughMsg : IMsg { }
+			public sealed record class KeyNotLongEnoughMsg : IMsg { }
 
 			/// <summary>The Principal's Identity is null</summary>
-			public sealed record NullIdentityMsg : IMsg { }
+			public sealed record class NullIdentityMsg : IMsg { }
 
 			/// <summary>The Signing Key is not long enough</summary>
-			public sealed record SigningKeyNotLongEnoughMsg : IMsg { }
+			public sealed record class SigningKeyNotLongEnoughMsg : IMsg { }
 		}
 	}
 }

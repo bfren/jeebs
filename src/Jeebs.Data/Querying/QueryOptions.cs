@@ -8,7 +8,7 @@ using static F.OptionF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryOptions{TId}"/>
-	public abstract record QueryOptions<TId> : IQueryOptions<TId>
+	public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 		where TId : StrongId
 	{
 		/// <summary>

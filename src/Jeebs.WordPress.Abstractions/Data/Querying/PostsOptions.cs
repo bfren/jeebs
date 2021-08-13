@@ -9,7 +9,7 @@ using Jeebs.WordPress.Data.Enums;
 namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryPostsOptions"/>
-	public abstract record PostsOptions : Options<WpPostId>, IQueryPostsOptions
+	public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOptions
 	{
 		/// <summary>
 		/// IQueryPostsPartsBuilder

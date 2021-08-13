@@ -7,7 +7,7 @@ namespace Jeebs
 	/// Represents a strongly-typed ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public abstract record StrongId(ulong Value)
+	public abstract record class StrongId(ulong Value)
 	{
 		/// <summary>
 		/// Returns true if the current value is the default (i.e. unset) value

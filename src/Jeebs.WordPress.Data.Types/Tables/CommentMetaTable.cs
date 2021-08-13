@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Comment Meta Table
 	/// </summary>
-	public sealed record CommentMetaTable : Table
+	public sealed record class CommentMetaTable : Table
 	{
 		/// <summary>
 		/// CommentMetaId

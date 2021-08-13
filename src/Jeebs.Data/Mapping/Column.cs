@@ -9,7 +9,7 @@ namespace Jeebs.Data.Mapping
 	/// <param name="Table">Table Name</param>
 	/// <param name="Name">Column Name</param>
 	/// <param name="Alias">Column Alias</param>
-	public partial record Column(string Table, string Name, string Alias) : IColumn
+	public partial record class Column(string Table, string Name, string Alias) : IColumn
 	{
 		/// <summary>
 		/// Column Alias Comparer

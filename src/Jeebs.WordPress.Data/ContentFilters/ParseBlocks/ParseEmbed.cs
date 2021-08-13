@@ -55,7 +55,7 @@ namespace Jeebs.WordPress.Data.ContentFilters
 		/// <param name="Url">Embedded resource URL</param>
 		/// <param name="Type">Resource type</param>
 		/// <param name="ProviderNameSlug">Provider</param>
-		internal sealed record EmbedParsed(string Url, EmbedType Type, Provider ProviderNameSlug);
+		internal sealed record class EmbedParsed(string Url, EmbedType Type, Provider ProviderNameSlug);
 
 		/// <summary>
 		/// Supported embed types

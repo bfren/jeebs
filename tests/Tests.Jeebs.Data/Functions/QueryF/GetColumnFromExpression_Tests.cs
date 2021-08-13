@@ -51,7 +51,7 @@ namespace F.DataF.QueryF_Tests
 			Assert.Equal(nameof(table.Foo), s1.Alias);
 		}
 
-		public record BrokenTable : TestTable
+		public record class BrokenTable : TestTable
 		{
 			public BrokenTable() : base(F.Rnd.Str) { }
 
@@ -59,7 +59,7 @@ namespace F.DataF.QueryF_Tests
 				throw new Exception();
 		}
 
-		public record TestTable : Table
+		public record class TestTable : Table
 		{
 			public const string Prefix =
 				"Bar_";

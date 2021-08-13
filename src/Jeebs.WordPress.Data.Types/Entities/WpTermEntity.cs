@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Term entity
 	/// </summary>
-	public abstract record WpTermEntity : WpTermEntityWithId
+	public abstract record class WpTermEntity : WpTermEntityWithId
 	{
 		/// <summary>
 		/// Title

@@ -83,20 +83,20 @@ namespace Jeebs.Reflection
 		{
 			/// <summary>See <see cref="GetPropertyValue{T}(object, string)"/> and <see cref="GetPropertyValue(object, string)"/></summary>
 			/// <param name="Value">Object type and Property name</param>
-			public abstract record GetPropertyMsg((Type type, string property) Value) : WithValueMsg<(Type type, string property)>() { }
+			public abstract record class GetPropertyMsg((Type type, string property) Value) : WithValueMsg<(Type type, string property)>() { }
 
 			/// <summary>The property could not be found</summary>
 			/// <inheritdoc cref="GetPropertyMsg"/>
-			public sealed record PropertyNotFoundMsg((Type, string) Value) : GetPropertyMsg(Value) { }
+			public sealed record class PropertyNotFoundMsg((Type, string) Value) : GetPropertyMsg(Value) { }
 
 			/// <summary>The property value is null</summary>
 			/// <inheritdoc cref="GetPropertyMsg"/>
-			public sealed record NullValueMsg<T>((Type, string) Value) : GetPropertyMsg(Value) { }
+			public sealed record class NullValueMsg<T>((Type, string) Value) : GetPropertyMsg(Value) { }
 
 			/// <summary>The property type doesn't match the requested type</summary>
 			/// <typeparam name="T">Requested property value type</typeparam>
 			/// <inheritdoc cref="GetPropertyMsg"/>
-			public sealed record UnexpectedPropertyTypeMsg<T>((Type type, string property) Value) : GetPropertyMsg(Value) { }
+			public sealed record class UnexpectedPropertyTypeMsg<T>((Type type, string property) Value) : GetPropertyMsg(Value) { }
 		}
 	}
 }

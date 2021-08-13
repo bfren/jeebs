@@ -104,7 +104,7 @@ namespace AppMvc.Controllers
 					x => x.Value(() => View("Unknown"))
 				);
 
-		public sealed record UpdateUserModel : IWithId<AuthUserId>, IWithVersion
+		public sealed record class UpdateUserModel : IWithId<AuthUserId>, IWithVersion
 		{
 			public AuthUserId Id { get; init; } = new();
 

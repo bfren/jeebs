@@ -49,7 +49,7 @@ namespace F
 		{
 			/// <summary>Unable to parse DateTime string</summary>
 			/// <param name="Value">DateTime string</param>
-			public sealed record InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
+			public sealed record class InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

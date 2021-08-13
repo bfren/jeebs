@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Term Taxonomy Table
 	/// </summary>
-	public sealed record TermTaxonomyTable : Table
+	public sealed record class TermTaxonomyTable : Table
 	{
 		/// <summary>
 		/// TermTaxonomyId

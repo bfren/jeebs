@@ -67,13 +67,13 @@ namespace Jeebs.Option_Tests
 			Assert.Equal($"{typeof(TestExceptionMsg)}: {value}", result);
 		}
 
-		public record TestMsg(string Value) : IMsg
+		public record class TestMsg(string Value) : IMsg
 		{
 			public override string ToString() =>
 				$"{nameof(TestMsg)}: {Value}";
 		}
 
-		public record TestExceptionMsg() : IExceptionMsg
+		public record class TestExceptionMsg() : IExceptionMsg
 		{
 			public Exception Exception { get; init; } = new();
 		}

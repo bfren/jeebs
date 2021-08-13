@@ -40,7 +40,7 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Unable to get terms query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryTermsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingQueryTermsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

@@ -188,8 +188,8 @@ namespace Jeebs_Tests
 			Assert.Equal(value, result);
 		}
 
-		public record FakeOption : Option<int> { }
+		public record class FakeOption : Option<int> { }
 
-		public record TestMsg : IMsg { }
+		public record class TestMsg : IMsg { }
 	}
 }

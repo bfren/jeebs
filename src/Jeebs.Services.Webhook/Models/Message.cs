@@ -8,7 +8,7 @@ namespace Jeebs.Services.Webhook.Models
 	/// <summary>
 	/// Message model
 	/// </summary>
-	public sealed record Message : IWebhookMessage
+	public sealed record class Message : IWebhookMessage
 	{
 		/// <inheritdoc/>
 		public string Content { get; init; } = string.Empty;

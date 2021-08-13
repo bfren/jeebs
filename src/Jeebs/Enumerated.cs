@@ -248,7 +248,7 @@ namespace Jeebs
 			/// <summary>Value does not belong to the specified Enumerated type</summary>
 			/// <typeparam name="T">Enum type</typeparam>
 			/// <param name="Value">Value being parsed</param>
-			public sealed record NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
+			public sealed record class NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
 				where T : Enumerated
 			{
 				/// <summary>Return message</summary>

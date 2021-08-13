@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Term Meta Table
 	/// </summary>
-	public sealed record TermMetaTable : Table
+	public sealed record class TermMetaTable : Table
 	{
 		/// <summary>
 		/// TermMetaId

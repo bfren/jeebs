@@ -8,7 +8,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 	/// <summary>
 	/// Slack attachment
 	/// </summary>
-	public sealed record SlackAttachment
+	public sealed record class SlackAttachment
 	{
 		/// <summary>
 		/// Attachment text

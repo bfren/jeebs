@@ -44,7 +44,7 @@ namespace F.WordPressF.DataF
 		public static partial class Msg
 		{
 			/// <summary>No File IDs have been passed to <see cref="GetQuery(IWpDbSchema, IImmutableList{WpPostId}, string)"/></summary>
-			public sealed record NoFileIdsMsg : IMsg { }
+			public sealed record class NoFileIdsMsg : IMsg { }
 		}
 	}
 }

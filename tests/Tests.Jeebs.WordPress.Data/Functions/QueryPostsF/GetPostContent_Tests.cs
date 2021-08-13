@@ -50,10 +50,10 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			Assert.Equal(typeof(string), some.PropertyType);
 		}
 
-		public sealed record NoContentProperty;
+		public sealed record class NoContentProperty;
 
-		public sealed record WithContentPropertyWrongType(int Content);
+		public sealed record class WithContentPropertyWrongType(int Content);
 
-		public sealed record WithContentProperty(string Content);
+		public sealed record class WithContentProperty(string Content);
 	}
 }

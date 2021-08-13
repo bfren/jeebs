@@ -6,7 +6,7 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User ID
 	/// </summary>
-	public sealed record AuthUserId(ulong Value) : StrongId(Value)
+	public sealed record class AuthUserId(ulong Value) : StrongId(Value)
 	{
 		/// <summary>
 		/// Create with default value

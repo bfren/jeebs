@@ -41,6 +41,6 @@ namespace F.WordPressF.DataF.QueryPostsMetaF_Tests
 			await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
 		}
 
-		public record Test : WpPostMetaEntity;
+		public record class Test : WpPostMetaEntity;
 	}
 }

@@ -90,17 +90,17 @@ namespace Tests.Jeebs.WordPress.Data.WpDb_Tests
 			Assert.IsAssignableFrom<UserMetaTable>(s11.Table);
 		}
 
-		public sealed record Comment : WpCommentEntity { }
-		public sealed record CommentMeta : WpCommentMetaEntity { }
-		public sealed record Link : WpLinkEntity { }
-		public sealed record Option : WpOptionEntity { }
-		public sealed record Post : WpPostEntity { }
-		public sealed record PostMeta : WpPostMetaEntity { }
-		public sealed record Term : WpTermEntity { }
-		public sealed record TermMeta : WpTermMetaEntity { }
-		public sealed record TermRelationship : WpTermRelationshipEntity { }
-		public sealed record TermTaxonomy : WpTermTaxonomyEntity { }
-		public sealed record User : WpUserEntity { }
-		public sealed record UserMeta : WpUserMetaEntity { }
+		public sealed record class Comment : WpCommentEntity { }
+		public sealed record class CommentMeta : WpCommentMetaEntity { }
+		public sealed record class Link : WpLinkEntity { }
+		public sealed record class Option : WpOptionEntity { }
+		public sealed record class Post : WpPostEntity { }
+		public sealed record class PostMeta : WpPostMetaEntity { }
+		public sealed record class Term : WpTermEntity { }
+		public sealed record class TermMeta : WpTermMetaEntity { }
+		public sealed record class TermRelationship : WpTermRelationshipEntity { }
+		public sealed record class TermTaxonomy : WpTermTaxonomyEntity { }
+		public sealed record class User : WpUserEntity { }
+		public sealed record class UserMeta : WpUserMetaEntity { }
 	}
 }

@@ -34,7 +34,7 @@ namespace F.DataF
 		{
 			/// <summary>Something went wrong while creating a column from the expression</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record UnableToGetColumnFromExpressionExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class UnableToGetColumnFromExpressionExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

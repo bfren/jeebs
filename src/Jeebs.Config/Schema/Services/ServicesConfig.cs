@@ -9,7 +9,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Third-party services configuration
 	/// </summary>
-	public record ServicesConfig
+	public record class ServicesConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

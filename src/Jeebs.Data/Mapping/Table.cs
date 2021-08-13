@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="ITable"/>
-	public abstract record Table : ITable
+	public abstract record class Table : ITable
 	{
 		private readonly string name;
 

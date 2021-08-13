@@ -7,7 +7,7 @@ using Jeebs.Logging;
 namespace Jeebs
 {
 	/// <inheritdoc cref="IExceptionMsg"/>
-	public abstract record ExceptionMsg : LogMsg, IExceptionMsg
+	public abstract record class ExceptionMsg : LogMsg, IExceptionMsg
 	{
 		/// <inheritdoc/>
 		public Exception Exception { get; init; }

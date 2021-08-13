@@ -67,13 +67,13 @@ namespace Jeebs.Data
 	{
 		/// <summary>An error occurred extracting columns from a table</summary>
 		/// <param name="Exception">Exception object</param>
-		public sealed record ErrorExtractingColumnsFromTableExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		public sealed record class ErrorExtractingColumnsFromTableExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 		/// <summary>An error occurred getting distinct columns</summary>
 		/// <param name="Exception">Exception object</param>
-		public sealed record ErrorExtractingDistinctColumnsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		public sealed record class ErrorExtractingDistinctColumnsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 		/// <summary>No matching columns were extracted from the table</summary>
-		public sealed record NoColumnsExtractedFromTableMsg : IMsg { }
+		public sealed record class NoColumnsExtractedFromTableMsg : IMsg { }
 	}
 }

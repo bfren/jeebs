@@ -7,7 +7,7 @@ using Jeebs.WordPress.Data.Enums;
 namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
-	public abstract record PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
+	public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
 	{
 		/// <summary>
 		/// IQueryPostsTaxonomyPartsBuilder

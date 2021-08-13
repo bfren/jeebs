@@ -35,6 +35,6 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public record TestId() : StrongId(0) { }
+		public record class TestId() : StrongId(0) { }
 	}
 }

@@ -24,7 +24,7 @@ namespace F.DataF.QueryF_Tests
 			);
 		}
 
-		public sealed record TestModel
+		public sealed record class TestModel
 		{
 			public int Foo { get; set; }
 

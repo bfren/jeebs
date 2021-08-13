@@ -6,7 +6,7 @@ using Jeebs.Data.Mapping;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryBuilder"/>
-	public sealed record QueryBuilder : IQueryBuilder
+	public sealed record class QueryBuilder : IQueryBuilder
 	{
 		/// <summary>
 		/// Internal creation only

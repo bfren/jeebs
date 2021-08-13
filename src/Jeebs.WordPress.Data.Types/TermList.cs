@@ -27,7 +27,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Term Model
 		/// </summary>
-		public abstract record Term : WpTermEntityWithId
+		public abstract record class Term : WpTermEntityWithId
 		{
 			/// <summary>
 			/// Title

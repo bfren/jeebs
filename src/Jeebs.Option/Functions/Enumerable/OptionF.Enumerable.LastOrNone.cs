@@ -42,7 +42,7 @@ namespace F
 			public static partial class Msg
 			{
 				/// <summary>Null item found when doing LastOrDefault()</summary>
-				public sealed record LastItemIsNullMsg : IMsg { }
+				public sealed record class LastItemIsNullMsg : IMsg { }
 			}
 		}
 	}

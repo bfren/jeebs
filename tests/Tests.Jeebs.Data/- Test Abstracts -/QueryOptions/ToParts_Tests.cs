@@ -142,5 +142,5 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		}
 	}
 
-	public sealed record TestModel;
+	public sealed record class TestModel;
 }

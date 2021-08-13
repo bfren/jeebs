@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Post entity
 	/// </summary>
-	public abstract record WpPostEntity : WpPostEntityWithId
+	public abstract record class WpPostEntity : WpPostEntityWithId
 	{
 		/// <summary>
 		/// AuthorId

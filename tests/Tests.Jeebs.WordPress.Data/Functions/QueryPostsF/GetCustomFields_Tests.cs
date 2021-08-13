@@ -44,9 +44,9 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			);
 		}
 
-		public sealed record NoCustomFields;
+		public sealed record class NoCustomFields;
 
-		public sealed record WithCustomFields(CustomField0 Field0, AttachmentCustomField Field1);
+		public sealed record class WithCustomFields(CustomField0 Field0, AttachmentCustomField Field1);
 
 		public sealed class CustomField0 : TextCustomField
 		{

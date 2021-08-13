@@ -171,8 +171,8 @@ namespace Jeebs_Tests
 			Assert.IsType<TestMsg>(none);
 		}
 
-		public record FakeOption : Option<int> { }
+		public record class FakeOption : Option<int> { }
 
-		public sealed record TestMsg : IMsg { }
+		public sealed record class TestMsg : IMsg { }
 	}
 }

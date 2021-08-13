@@ -7,7 +7,7 @@ namespace Jeebs
 	/// 'Some' option - wraps value to enable safe non-null returns (see <seealso cref="None{T}"/>)
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public sealed record Some<T> : Option<T>
+	public sealed record class Some<T> : Option<T>
 	{
 		/// <summary>
 		/// Option Value - nullability will match the nullability of <typeparamref name="T"/>

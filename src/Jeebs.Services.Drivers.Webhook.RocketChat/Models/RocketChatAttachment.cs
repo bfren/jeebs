@@ -9,7 +9,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 	/// <summary>
 	/// RocketChat Attachment
 	/// </summary>
-	public sealed record RocketChatAttachment
+	public sealed record class RocketChatAttachment
 	{
 		/// <summary>
 		/// Text

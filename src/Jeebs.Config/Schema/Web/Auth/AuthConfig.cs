@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Jeebs Authentication and Authorisation Configuraiton
 	/// </summary>
-	public record AuthConfig
+	public record class AuthConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

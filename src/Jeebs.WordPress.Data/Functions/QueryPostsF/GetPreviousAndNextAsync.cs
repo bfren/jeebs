@@ -43,13 +43,13 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		private record PostWithId : WpPostEntityWithId;
+		private record class PostWithId : WpPostEntityWithId;
 
 		public static partial class Msg
 		{
 			/// <summary>Error while calculating previous and next posts</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record ErrorWhileGettingPreviousAndNextPostsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorWhileGettingPreviousAndNextPostsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

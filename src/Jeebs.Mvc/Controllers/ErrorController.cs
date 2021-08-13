@@ -36,7 +36,7 @@ namespace Jeebs.Mvc
 		public static class Msg
 		{
 			/// <summary>An unknown error has occured</summary>
-			public sealed record UnknownErrorMsg : IMsg { }
+			public sealed record class UnknownErrorMsg : IMsg { }
 		}
 	}
 }

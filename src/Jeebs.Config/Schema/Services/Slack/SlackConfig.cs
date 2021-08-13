@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Slack configuration
 	/// </summary>
-	public record SlackConfig : WebhookServiceConfig
+	public record class SlackConfig : WebhookServiceConfig
 	{
 		/// <summary>
 		/// Whether or not to add attachments to a message (error type and timestamp)

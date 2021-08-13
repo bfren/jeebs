@@ -3,7 +3,7 @@
 
 namespace Jeebs.Data.Mapping
 {
-	public record FooId(ulong Value) : StrongId(Value)
+	public record class FooId(ulong Value) : StrongId(Value)
 	{
 		public FooId() : this(0) { }
 	}

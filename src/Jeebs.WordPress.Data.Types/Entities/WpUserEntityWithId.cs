@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// User entity
 	/// </summary>
-	public abstract record WpUserEntityWithId : IWithId<WpUserId>
+	public abstract record class WpUserEntityWithId : IWithId<WpUserId>
 	{
 		/// <summary>
 		/// Id

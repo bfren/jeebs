@@ -38,23 +38,23 @@ namespace Jeebs.Data
 		{
 			/// <summary>Error getting General Retrieve query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingGeneralRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingGeneralRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error getting CRUD Create query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCrudCreateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingCrudCreateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error getting CRUD Retrieve query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCrudRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingCrudRetrieveQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error getting CRUD Update query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCrudUpdateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingCrudUpdateQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error getting CRUD Delete query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCrudDeleteQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingCrudDeleteQueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

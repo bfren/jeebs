@@ -49,7 +49,7 @@ namespace F.DataF
 			/// <summary>Messages</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingMappedColumnsMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingMappedColumnsMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

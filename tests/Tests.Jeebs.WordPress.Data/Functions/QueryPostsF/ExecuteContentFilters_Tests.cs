@@ -73,6 +73,6 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			f1.Received(1).Execute(c1);
 		}
 
-		public sealed record Model(string Content);
+		public sealed record class Model(string Content);
 	}
 }

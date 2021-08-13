@@ -65,9 +65,9 @@ namespace F.OptionF_Tests
 			Assert.Same(exception, msg.Exception);
 		}
 
-		public record TestMsg : IMsg { }
+		public record class TestMsg : IMsg { }
 
-		public record TestExceptionMsg() : IExceptionMsg
+		public record class TestExceptionMsg() : IExceptionMsg
 		{
 			public Exception Exception { get; init; } = new();
 		}

@@ -40,7 +40,7 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Unable to get posts meta query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryPostsMetaOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingQueryPostsMetaOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

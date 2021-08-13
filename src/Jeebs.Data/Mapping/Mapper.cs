@@ -123,7 +123,7 @@ namespace Jeebs.Data.Mapping
 		{
 			/// <summary>The entity being requested has not been mapped yet</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
-			public sealed record TryingToGetUnmappedEntityMsg<TEntity> : IMsg { }
+			public sealed record class TryingToGetUnmappedEntityMsg<TEntity> : IMsg { }
 		}
 	}
 }

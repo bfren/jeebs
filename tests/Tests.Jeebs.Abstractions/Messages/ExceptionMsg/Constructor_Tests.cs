@@ -62,7 +62,7 @@ namespace Jeebs.ExceptionMsg_Tests
 			Assert.Equal(value, result.Level);
 		}
 
-		public record TestMsg : ExceptionMsg
+		public record class TestMsg : ExceptionMsg
 		{
 			public TestMsg() { }
 			public TestMsg(Exception ex) : base(ex) { }

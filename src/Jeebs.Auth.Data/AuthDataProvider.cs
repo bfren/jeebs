@@ -104,19 +104,19 @@ namespace Jeebs.Auth
 		public static class Msg
 		{
 			/// <summary>Invalid password</summary>
-			public sealed record InvalidPasswordMsg : IMsg { }
+			public sealed record class InvalidPasswordMsg : IMsg { }
 
 			/// <summary>Null or empty email address</summary>
-			public sealed record NullOrEmptyEmailMsg : IMsg { }
+			public sealed record class NullOrEmptyEmailMsg : IMsg { }
 
 			/// <summary>Null or empty password</summary>
-			public sealed record NullOrEmptyPasswordMsg : IMsg { }
+			public sealed record class NullOrEmptyPasswordMsg : IMsg { }
 
 			/// <summary>User not enabled</summary>
-			public sealed record UserNotEnabledMsg(string Value) : WithValueMsg<string> { }
+			public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string> { }
 
 			/// <summary>User not found</summary>
-			public sealed record UserNotFoundMsg(string EmailAddress) : NotFoundMsg { }
+			public sealed record class UserNotFoundMsg(string EmailAddress) : NotFoundMsg { }
 		}
 	}
 }

@@ -144,6 +144,6 @@ namespace Jeebs.Linq_Tests
 			Assert.IsType<InvalidIntegerMsg>(none);
 		}
 
-		public record InvalidIntegerMsg : IMsg { }
+		public record class InvalidIntegerMsg : IMsg { }
 	}
 }

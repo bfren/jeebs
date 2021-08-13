@@ -27,11 +27,11 @@ namespace Jeebs.Data.Querying.DbQueryExtensions_Tests
 			await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), transaction);
 		}
 
-		public sealed record TestTable() : Table(F.Rnd.Str)
+		public sealed record class TestTable() : Table(F.Rnd.Str)
 		{
 			public string Foo { get; set; } = nameof(Foo);
 		}
 
-		public sealed record TestModel(int Foo);
+		public sealed record class TestModel(int Foo);
 	}
 }

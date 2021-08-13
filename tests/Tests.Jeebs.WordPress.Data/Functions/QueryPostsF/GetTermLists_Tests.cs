@@ -44,8 +44,8 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			);
 		}
 
-		public record NoTermLists;
+		public record class NoTermLists;
 
-		public record WithTermLists(TermList Terms0, TermList Terms1);
+		public record class WithTermLists(TermList Terms0, TermList Terms1);
 	}
 }

@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// WordPress configuration
 	/// </summary>
-	public record WpConfig
+	public record class WpConfig
 	{
 		/// <summary>
 		/// Path to WordPress settings configuration section

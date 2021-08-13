@@ -134,13 +134,13 @@ namespace F
 			public static class Msg
 			{
 				/// <summary>Number of words must be at least 2</summary>
-				public sealed record NumberOfWordsMustBeAtLeastTwoMsg : IMsg { }
+				public sealed record class NumberOfWordsMustBeAtLeastTwoMsg : IMsg { }
 
 				/// <summary>Number of words must be less than length of word list</summary>
-				public sealed record NumberOfWordsCannotBeMoreThanWordListMsg : IMsg { }
+				public sealed record class NumberOfWordsCannotBeMoreThanWordListMsg : IMsg { }
 
 				/// <summary>The word list was empty</summary>
-				public sealed record EmptyWordListMsg : IMsg { }
+				public sealed record class EmptyWordListMsg : IMsg { }
 			}
 		}
 	}

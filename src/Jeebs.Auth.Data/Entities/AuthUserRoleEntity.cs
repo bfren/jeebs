@@ -8,7 +8,7 @@ namespace Jeebs.Auth.Data.Entities
 	/// <summary>
 	/// Authentication User Role
 	/// </summary>
-	public sealed record AuthUserRoleEntity : IWithId<AuthUserRoleId>, IAuthUserRole
+	public sealed record class AuthUserRoleEntity : IWithId<AuthUserRoleId>, IAuthUserRole
 	{
 		/// <summary>
 		/// User Role ID

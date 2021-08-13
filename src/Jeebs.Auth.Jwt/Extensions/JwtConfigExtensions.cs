@@ -36,7 +36,7 @@ namespace Jeebs.Auth
 		public static class Msg
 		{
 			/// <summary>The Encrypting Key is null</summary>
-			public sealed record NullEncryptingKeyMsg : IMsg { }
+			public sealed record class NullEncryptingKeyMsg : IMsg { }
 		}
 	}
 }

@@ -20,18 +20,18 @@ namespace Jeebs.Data.Querying.QueryPartsBuilderWithEntity_Tests
 			return (builder, new(mapper, map));
 		}
 
-		public sealed record Vars(
+		public sealed record class Vars(
 			IMapper Mapper,
 			ITableMap Map
 		);
 	}
 
-	public record TestId(ulong Value) : StrongId(Value)
+	public record class TestId(ulong Value) : StrongId(Value)
 	{
 		public TestId() : this(0) { }
 	}
 
-	public record TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
+	public record class TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 
 	public abstract class TestBuilder : QueryPartsBuilderWithEntity<TestEntity, TestId>
 	{

@@ -32,17 +32,17 @@ namespace Jeebs.Data.Repository_Tests
 			return (client, log, repo);
 		}
 
-		public sealed record Foo : IWithId<FooId>
+		public sealed record class Foo : IWithId<FooId>
 		{
 			public FooId Id { get; init; } = new();
 		}
 
-		public sealed record FooModel : IWithId<FooId>
+		public sealed record class FooModel : IWithId<FooId>
 		{
 			public FooId Id { get; init; } = new();
 		}
 
-		public sealed record FooId(ulong Value) : StrongId(Value)
+		public sealed record class FooId(ulong Value) : StrongId(Value)
 		{
 			public FooId() : this(0) { }
 		}

@@ -22,6 +22,6 @@ namespace Jeebs.Abstractions.Messages.WithValueMsg_Tests
 			Assert.Equal($"TestMsg {{ Value = {value} }}", result);
 		}
 
-		public record TestMsg(string Value) : WithValueMsg<string> { }
+		public record class TestMsg(string Value) : WithValueMsg<string> { }
 	}
 }

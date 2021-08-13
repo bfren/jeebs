@@ -32,7 +32,7 @@ namespace F.DataF
 		{
 			/// <summary>Error while building query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record QueryBuilderExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class QueryBuilderExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

@@ -55,6 +55,6 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			Assert.IsType<PropertyDoesNotExistOnTypeMsg<TestTable>>(none);
 		}
 
-		public sealed record TestTable(string Foo, string Bar) : Table(F.Rnd.Str);
+		public sealed record class TestTable(string Foo, string Bar) : Table(F.Rnd.Str);
 	}
 }

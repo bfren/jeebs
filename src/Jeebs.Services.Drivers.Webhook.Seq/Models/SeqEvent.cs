@@ -9,7 +9,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 	/// <summary>
 	/// Seq Event
 	/// </summary>
-	public sealed record SeqEvent
+	public sealed record class SeqEvent
 	{
 		/// <summary>
 		/// Timestamp - ISO 8601 format

@@ -3,7 +3,7 @@
 
 namespace Jeebs.Data.Mapping.Mapper_Tests
 {
-	public record FooTableWithBar2 : Table
+	public record class FooTableWithBar2 : Table
 	{
 		public string FooId { get; } = "foo_id";
 

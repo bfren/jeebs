@@ -25,6 +25,6 @@ namespace Jeebs.Data.TypeHandlers.StrongId_Tests
 			Assert.Equal(parameter.Value, value);
 		}
 
-		public sealed record TestId() : StrongId(0);
+		public sealed record class TestId() : StrongId(0);
 	}
 }

@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// TermRelationship entity
 	/// </summary>
-	public abstract record WpTermRelationshipEntity : IWithId
+	public abstract record class WpTermRelationshipEntity : IWithId
 	{
 		/// <summary>
 		/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table

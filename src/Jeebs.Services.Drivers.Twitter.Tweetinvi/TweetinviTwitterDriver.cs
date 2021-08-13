@@ -143,32 +143,32 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		{
 			/// <summary>Exception converting tweets</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Exception getting profile image stream</summary>
 			/// <param name="ScreenName">Screen Name</param>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Exception getting profile image URL</summary>
 			/// <param name="ScreenName">Screen Name</param>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Exception getting user timeline</summary>
 			/// <param name="ScreenName">Screen Name</param>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Exception getting user</summary>
 			/// <param name="ScreenName">Screen Name</param>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>User not found</summary>
 			/// <param name="ScreenName">Screen Name</param>
 			/// <param name="Exception">Exception object</param>
-			public sealed record UserNotFoundExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class UserNotFoundExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

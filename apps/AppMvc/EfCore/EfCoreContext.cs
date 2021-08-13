@@ -41,7 +41,7 @@ namespace AppMvc.EfCore
 			user.Property(u => u.LastSignedIn).HasColumnName("UserLastSignedIn");
 		}
 
-		public sealed record EfCoreAuthRoleEntity
+		public sealed record class EfCoreAuthRoleEntity
 		{
 			public ulong Id { get; init; }
 
@@ -52,7 +52,7 @@ namespace AppMvc.EfCore
 			internal EfCoreAuthRoleEntity() { }
 		}
 
-		public sealed record EfCoreAuthUserRoleEntity
+		public sealed record class EfCoreAuthUserRoleEntity
 		{
 			public ulong Id { get; init; }
 
@@ -63,7 +63,7 @@ namespace AppMvc.EfCore
 			internal EfCoreAuthUserRoleEntity() { }
 		}
 
-		public sealed record EfCoreAuthUserEntity
+		public sealed record class EfCoreAuthUserEntity
 		{
 			public ulong Id { get; init; }
 

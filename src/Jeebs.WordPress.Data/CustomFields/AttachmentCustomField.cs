@@ -114,7 +114,7 @@ namespace Jeebs.WordPress.Data
 		/// <summary>
 		/// Attachment file
 		/// </summary>
-		public sealed record Attachment : PostAttachment { }
+		public sealed record class Attachment : PostAttachment { }
 
 		/// <summary>Messages</summary>
 		public static class Msg
@@ -122,16 +122,16 @@ namespace Jeebs.WordPress.Data
 			/// <summary>Meta key not found in MetaDictionary</summary>
 			/// <param name="Type">Custom Field type</param>
 			/// <param name="Value">Meta Key</param>
-			public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+			public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
 
 			/// <summary>Multiple matching attachments were found (should always be 1)</summary>
 			/// <param name="Value">Attachment (Post) ID</param>
-			public sealed record MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string> { }
+			public sealed record class MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string> { }
 
 			/// <summary>The value in the meta dictionary is not a valid ID</summary>
 			/// <param name="Type">Custom Field type</param>
 			/// <param name="Value">Meta Key</param>
-			public sealed record ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string> { }
+			public sealed record class ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string> { }
 		}
 	}
 }

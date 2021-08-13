@@ -3,7 +3,7 @@
 
 namespace Jeebs.Data.Mapping.Mapper_Tests
 {
-	public record FooTableWithoutAny : Table
+	public record class FooTableWithoutAny : Table
 	{
 		public FooTableWithoutAny() : base("foo_without_any") { }
 	}

@@ -41,11 +41,11 @@ namespace F.DataF
 		public static partial class Msg
 		{
 			/// <summary>No Id property found on entity</summary>
-			public sealed record ErrorGettingIdPropertyMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingIdPropertyMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>No property with specified attribute found on entity</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
-			public sealed record NoIdPropertyMsg<TEntity>() : IMsg
+			public sealed record class NoIdPropertyMsg<TEntity>() : IMsg
 			{
 				/// <summary>Return message with class type parameters</summary>
 				public override string ToString() =>
@@ -54,7 +54,7 @@ namespace F.DataF
 
 			/// <summary>Too many properties with specified attribute found on entity</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
-			public sealed record TooManyPropertiesWithIdAttributeMsg<TEntity>() : IMsg
+			public sealed record class TooManyPropertiesWithIdAttributeMsg<TEntity>() : IMsg
 			{
 				/// <summary>Return message with class type parameters</summary>
 				public override string ToString() =>

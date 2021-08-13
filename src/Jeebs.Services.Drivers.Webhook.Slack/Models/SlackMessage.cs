@@ -9,7 +9,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 	/// <summary>
 	/// Slack Message
 	/// </summary>
-	public sealed record SlackMessage
+	public sealed record class SlackMessage
 	{
 		/// <summary>
 		/// Username (filled with application name)

@@ -46,7 +46,7 @@ namespace Jeebs.Logging.LogMsg_Tests
 			Assert.Equal("{MsgType} " + value, result.Format);
 		}
 
-		public record TestMsg : LogMsg
+		public record class TestMsg : LogMsg
 		{
 			public override Func<object[]> Args =>
 				() => Array.Empty<object>();

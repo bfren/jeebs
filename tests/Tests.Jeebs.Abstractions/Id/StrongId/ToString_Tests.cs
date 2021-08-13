@@ -21,6 +21,6 @@ namespace Jeebs.StrongId_Tests
 			Assert.Equal(value.ToString(), result);
 		}
 
-		public record Test(ulong Value) : StrongId(Value);
+		public record class Test(ulong Value) : StrongId(Value);
 	}
 }

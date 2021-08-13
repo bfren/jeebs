@@ -33,6 +33,6 @@ namespace Jeebs.WordPress.Data.PostAttachment_Tests
 			Assert.Equal(value, result.Description);
 		}
 
-		public sealed record Test : PostAttachment;
+		public sealed record class Test : PostAttachment;
 	}
 }

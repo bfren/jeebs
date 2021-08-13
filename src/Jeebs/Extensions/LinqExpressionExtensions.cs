@@ -56,10 +56,10 @@ namespace Jeebs.Linq
 		public static class Msg
 		{
 			/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
-			public sealed record ExpressionIsNotAMemberExpressionMsg : IMsg { }
+			public sealed record class ExpressionIsNotAMemberExpressionMsg : IMsg { }
 
 			/// <summary>The specified property does not exist on the type</summary>
-			public sealed record PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }
+			public sealed record class PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

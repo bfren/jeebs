@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Rocket.Chat configuration
 	/// </summary>
-	public record RocketChatConfig : WebhookServiceConfig
+	public record class RocketChatConfig : WebhookServiceConfig
 	{
 		/// <inheritdoc/>
 		public override bool IsValid =>

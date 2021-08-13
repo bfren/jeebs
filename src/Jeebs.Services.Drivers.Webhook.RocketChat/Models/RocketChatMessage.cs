@@ -9,7 +9,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 	/// <summary>
 	/// RocketChat message
 	/// </summary>
-	public sealed record RocketChatMessage
+	public sealed record class RocketChatMessage
 	{
 		/// <summary>
 		/// Message alias - will be set to the Application name

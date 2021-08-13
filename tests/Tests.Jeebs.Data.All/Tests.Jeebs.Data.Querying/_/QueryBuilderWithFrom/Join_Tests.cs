@@ -84,14 +84,14 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			Test_Add_Join(QueryJoin.Right, x => x.RightJoin);
 		}
 
-		public sealed record TestTable0() : Table(nameof(TestTable0))
+		public sealed record class TestTable0() : Table(nameof(TestTable0))
 		{
 			public const string Prefix = "Test";
 
 			public string Foo { get; set; } = Prefix + nameof(Foo);
 		}
 
-		public sealed record TestTable1() : Table(nameof(TestTable1))
+		public sealed record class TestTable1() : Table(nameof(TestTable1))
 		{
 			public const string Prefix = "Test";
 

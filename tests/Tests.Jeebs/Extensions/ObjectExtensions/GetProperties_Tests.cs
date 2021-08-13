@@ -39,6 +39,6 @@ namespace Jeebs.Reflection.ObjectExtensions_Tests
 			);
 		}
 
-		public sealed record Test(string Foo, int Bar);
+		public sealed record class Test(string Foo, int Bar);
 	}
 }

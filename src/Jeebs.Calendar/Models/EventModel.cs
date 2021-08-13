@@ -14,7 +14,7 @@ namespace Jeebs.Mvc.Calendar.Models
 	/// <param name="Summary">Event summary / title</param>
 	/// <param name="Description">Event description / details</param>
 	/// <param name="Location">Event location</param>
-	public sealed record EventModel(
+	public sealed record class EventModel(
 		DateTime Start,
 		DateTime End,
 		bool IsAllDay,

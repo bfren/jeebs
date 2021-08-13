@@ -107,10 +107,10 @@ namespace Jeebs.Mvc.Auth.Jwt
 		public static class Msg
 		{
 			/// <summary>Unable to find Authorization header in headers dictionary</summary>
-			public sealed record MissingAuthorisationHeaderMsg : IMsg { }
+			public sealed record class MissingAuthorisationHeaderMsg : IMsg { }
 
 			/// <summary>The Authorization header was not a valid Bearer</summary>
-			public sealed record InvalidAuthorisationHeaderMsg : IMsg { }
+			public sealed record class InvalidAuthorisationHeaderMsg : IMsg { }
 		}
 	}
 }
