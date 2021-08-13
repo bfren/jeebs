@@ -6,13 +6,13 @@ using System;
 namespace Jeebs
 {
 	/// <inheritdoc cref="IRange{T}"/>
-	public sealed class DateRange : IRange<DateTime>
+	public readonly record struct DateRange : IRange<DateTime>
 	{
 		/// <inheritdoc/>
-		public DateTime Start { get; }
+		public DateTime Start { get; init; }
 
 		/// <inheritdoc/>
-		public DateTime End { get; }
+		public DateTime End { get; init; }
 
 		/// <inheritdoc/>
 		public int Length =>

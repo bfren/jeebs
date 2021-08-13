@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Xunit;
 
 namespace Jeebs.DateRange_Tests
@@ -23,6 +22,20 @@ namespace Jeebs.DateRange_Tests
 		}
 
 		[Fact]
+		public void Start_Before_End_Returns_DateRange()
+		{
+			// Arrange
+			var date1 = new DateTime(2000, 1, 1);
+			var date2 = new DateTime(2000, 1, 2);
+
+			// Act
+			var result = new DateRange(date1, date2);
+
+			// Assert
+			Assert.IsType<DateRange>(result);
+		}
+
+		[Fact]
 		public void Start_Must_Be_Before_End_Tests()
 		{
 			// Arrange
@@ -30,11 +43,9 @@ namespace Jeebs.DateRange_Tests
 			var date2 = new DateTime(2000, 1, 2);
 
 			// Act
-			DateRange correct() => new(date1, date2);
-			DateRange incorrect() => new(date2, date1);
+			object incorrect() => new DateRange(date2, date1);
 
 			// Assert
-			Assert.IsType<DateRange>(correct());
 			Assert.Throws<ArgumentException>(incorrect);
 		}
 	}
