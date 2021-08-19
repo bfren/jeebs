@@ -13,7 +13,7 @@ namespace Jeebs.Calendar
 		/// <summary>
 		/// The default time zone, only used if none is specified
 		/// </summary>
-		public const string DefaultTimeZone = "Europe/London";
+		public const string DefaultTimezone = "Europe/London";
 
 		/// <summary>
 		/// The calendar
@@ -21,7 +21,7 @@ namespace Jeebs.Calendar
 		internal readonly CalendarModel calendar;
 
 		/// <summary>
-		/// The calendar's timezone (default: see <see cref="DefaultTimeZone"/>)
+		/// The calendar's timezone (default: see <see cref="DefaultTimezone"/>)
 		/// </summary>
 		internal readonly string tzid;
 

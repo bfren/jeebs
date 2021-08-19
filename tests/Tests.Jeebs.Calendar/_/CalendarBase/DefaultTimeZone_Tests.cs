@@ -14,7 +14,7 @@ namespace Jeebs.Calendar.CalendarBase_Tests
 			var expected = "Europe/London";
 
 			// Act
-			var result = CalendarBase.DefaultTimeZone;
+			var result = CalendarBase.DefaultTimezone;
 
 			// Assert
 			Assert.Equal(expected, result);

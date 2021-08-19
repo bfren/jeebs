@@ -12,11 +12,11 @@ namespace F.CalendarF_Tests
 		{
 			// Arrange
 			var lastModified = Rnd.DateTime;
-			var expected = @$"{lastModified:yyyyMMdd\THHmmss}-000000";
-			CalendarF.EventCounter = 0;
+			var counter = Rnd.Int;
+			var expected = @$"{lastModified:yyyyMMdd\THHmmss}-{counter:000000}";
 
 			// Act
-			var result = CalendarF.GenerateEventUid(lastModified);
+			var result = CalendarF.GenerateEventUid(counter, lastModified);
 
 			// Assert
 			Assert.Equal(expected, result);
@@ -27,30 +27,15 @@ namespace F.CalendarF_Tests
 		{
 			// Arrange
 			var lastModified = Rnd.DateTime;
+			var counter = Rnd.Int;
 			var domain = Rnd.Str;
-			var expected = @$"{lastModified:yyyyMMdd\THHmmss}-000000@{domain}";
-			CalendarF.EventCounter = 0;
+			var expected = @$"{lastModified:yyyyMMdd\THHmmss}-{counter:000000}@{domain}";
 
 			// Act
-			var result = CalendarF.GenerateEventUid(lastModified, domain);
+			var result = CalendarF.GenerateEventUid(counter, lastModified, domain);
 
 			// Assert
 			Assert.Equal(expected, result);
-		}
-
-		[Fact]
-		public void Counter_Incrememts_Correctly()
-		{
-			// Arrange
-			var lastModified = Rnd.DateTime;
-			var domain = Rnd.Str;
-			CalendarF.EventCounter = 0;
-
-			// Act
-			_ = CalendarF.GenerateEventUid(lastModified, domain);
-
-			// Assert
-			Assert.Equal(1, CalendarF.EventCounter);
 		}
 	}
 }

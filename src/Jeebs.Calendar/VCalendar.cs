@@ -3,33 +3,28 @@
 
 using System;
 using System.Text;
-using Jeebs.Mvc.Calendar.Models;
-using static F.MvcF.CalendarF;
+using Jeebs.Calendar.Models;
+using static F.CalendarF;
 
-namespace Jeebs.Mvc.Calendar
+namespace Jeebs.Calendar
 {
 	/// <summary>
 	/// Export calendar model as VCalendar (ICS format)
 	/// </summary>
-	public class VCalendar
+	public class VCalendar : CalendarBase
 	{
-		internal readonly CalendarModel calendar;
-
-		internal readonly string tzid;
-
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="calendar">Calendar</param>
-		public VCalendar(CalendarModel calendar) : this(calendar, "Europe/London") { }
+		public VCalendar(CalendarModel calendar) : this(calendar, DefaultTimezone) { }
 
 		/// <summary>
 		/// Create object
 		/// </summary>
 		/// <param name="calendar">Calendar</param>
 		/// <param name="tzid">Timezone</param>
-		public VCalendar(CalendarModel calendar, string tzid) =>
-			(this.calendar, this.tzid) = (calendar, tzid);
+		public VCalendar(CalendarModel calendar, string tzid) : base(calendar, tzid) { }
 
 		/// <summary>
 		/// Convert calendar to ICS format
@@ -45,10 +40,10 @@ namespace Jeebs.Mvc.Calendar
 			builder.Append(GetTimezone());
 
 			// Add Events
-			EventCounter = 0;
+			var counter = 0;
 			foreach (var e in calendar.Events)
 			{
-				var uid = GenerateEventUid(calendar.LastModified, domain);
+				var uid = GenerateEventUid(counter++, calendar.LastModified, domain);
 				builder.Append(GetEvent(calendar.LastModified, tzid, uid, e));
 			}
 

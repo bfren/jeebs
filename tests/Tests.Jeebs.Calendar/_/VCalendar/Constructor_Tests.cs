@@ -10,7 +10,7 @@ namespace Jeebs.Calendar.VCalendar_Tests
 	public class Constructor_Tests
 	{
 		[Fact]
-		public void Sets_Default_Tzid_To_DefaultTimeZone()
+		public void Without_Tzid_Uses_DefaultTimeZone()
 		{
 			// Arrange
 			var events = Substitute.For<IImmutableList<EventModel>>();
@@ -20,7 +20,7 @@ namespace Jeebs.Calendar.VCalendar_Tests
 			var result = new VCalendar(calendar);
 
 			// Assert
-			Assert.Equal(CalendarBase.DefaultTimeZone, result.tzid);
+			Assert.Equal(CalendarBase.DefaultTimezone, result.tzid);
 		}
 
 		[Fact]
