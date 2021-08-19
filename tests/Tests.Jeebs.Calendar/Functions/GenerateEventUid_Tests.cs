@@ -3,12 +3,27 @@
 
 using Xunit;
 
-namespace F.MvcF.CalendarF_Tests
+namespace F.CalendarF_Tests
 {
 	public class GenerateEventUid_Tests
 	{
 		[Fact]
-		public void Generates_Correct_Uid()
+		public void Generates_Correct_Uid_Without_Domain()
+		{
+			// Arrange
+			var lastModified = Rnd.DateTime;
+			var expected = @$"{lastModified:yyyyMMdd\THHmmss}-000000";
+			CalendarF.EventCounter = 0;
+
+			// Act
+			var result = CalendarF.GenerateEventUid(lastModified);
+
+			// Assert
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public void Generates_Correct_Uid_With_Domain()
 		{
 			// Arrange
 			var lastModified = Rnd.DateTime;

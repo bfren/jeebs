@@ -2,10 +2,10 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System.Text;
-using Jeebs.Mvc.Calendar.Models;
+using Jeebs.Calendar.Models;
 using Xunit;
 
-namespace Jeebs.Mvc.Calendar.VCalendar_Tests
+namespace Jeebs.Calendar.VCalendar_Tests
 {
 	public class ToString_Tests
 	{

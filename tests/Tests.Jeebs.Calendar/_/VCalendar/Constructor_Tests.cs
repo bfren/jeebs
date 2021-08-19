@@ -1,16 +1,16 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using Jeebs.Mvc.Calendar.Models;
+using Jeebs.Calendar.Models;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Mvc.Calendar.VCalendar_Tests
+namespace Jeebs.Calendar.VCalendar_Tests
 {
 	public class Constructor_Tests
 	{
 		[Fact]
-		public void Sets_Default_Tzid_To_Europe_London()
+		public void Sets_Default_Tzid_To_DefaultTimeZone()
 		{
 			// Arrange
 			var events = Substitute.For<IImmutableList<EventModel>>();
@@ -20,7 +20,7 @@ namespace Jeebs.Mvc.Calendar.VCalendar_Tests
 			var result = new VCalendar(calendar);
 
 			// Assert
-			Assert.Equal("Europe/London", result.tzid);
+			Assert.Equal(CalendarBase.DefaultTimeZone, result.tzid);
 		}
 
 		[Fact]

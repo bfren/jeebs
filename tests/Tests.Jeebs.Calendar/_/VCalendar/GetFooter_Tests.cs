@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.Mvc.Calendar.VCalendar_Tests
+namespace Jeebs.Calendar.VCalendar_Tests
 {
 	public class GetFooter_Tests
 	{
