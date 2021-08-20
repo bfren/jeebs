@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Jeebs Application Configuraiton
 	/// </summary>
-	public record class AppConfig
+	public readonly record struct AppConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

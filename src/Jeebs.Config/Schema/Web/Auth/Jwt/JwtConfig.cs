@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// JSON Web Tokens (JWT) configuration
 	/// </summary>
-	public record class JwtConfig
+	public readonly record struct JwtConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

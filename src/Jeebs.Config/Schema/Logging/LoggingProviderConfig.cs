@@ -8,7 +8,7 @@ namespace Jeebs.Config.Logging
 	/// <summary>
 	/// Logging Provider
 	/// </summary>
-	public record class LoggingProviderConfig
+	public readonly record struct LoggingProviderConfig
 	{
 		/// <summary>
 		/// Whether or not this provider is enabled

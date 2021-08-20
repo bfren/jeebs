@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Database configuration
 	/// </summary>
-	public record class DbConfig
+	public readonly record struct DbConfig
 	{
 		/// <summary>
 		/// Path to database settings configuration section
@@ -28,11 +28,11 @@ namespace Jeebs.Config
 			get =>
 				authenticationConnectionValue ?? Default;
 
-			set =>
+			init =>
 				authenticationConnectionValue = value;
 		}
 
-		private string? authenticationConnectionValue;
+		private readonly string? authenticationConnectionValue;
 
 		/// <summary>
 		/// Dictionary of database connections
@@ -52,13 +52,13 @@ namespace Jeebs.Config
 			string connection = string.IsNullOrWhiteSpace(name) ? Default : name;
 			if (string.IsNullOrEmpty(connection))
 			{
-				throw new Jx.Config.DefaultDbConnectionUndefinedException("Default database connection is not defined.");
+				throw new DefaultDbConnectionUndefinedException("Default database connection is not defined.");
 			}
 
 			// Attempt to retrieve the connection
 			if (Connections.Count == 0)
 			{
-				throw new Jx.Config.NoDbConnectionsException("At least one database connection must be defined.");
+				throw new NoDbConnectionsException("At least one database connection must be defined.");
 			}
 
 			if (Connections.TryGetValue(connection, out var config))
@@ -67,7 +67,7 @@ namespace Jeebs.Config
 			}
 			else
 			{
-				throw new Jx.Config.NamedDbConnectionNotFoundException(connection);
+				throw new NamedDbConnectionNotFoundException(connection);
 			}
 		}
 

@@ -6,10 +6,13 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Rocket.Chat configuration
 	/// </summary>
-	public record class RocketChatConfig : WebhookServiceConfig
+	public readonly record struct RocketChatConfig : IWebhookServiceConfig
 	{
 		/// <inheritdoc/>
-		public override bool IsValid =>
+		public string Webhook { get; init; }
+
+		/// <inheritdoc/>
+		public bool IsValid =>
 			F.UriF.IsHttps(Webhook);
 	}
 }

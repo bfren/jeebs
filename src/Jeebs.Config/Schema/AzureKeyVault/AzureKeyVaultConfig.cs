@@ -7,7 +7,7 @@ namespace Jeebs.Config
 	/// Azure Key Vault Configuration
 	/// These values should only ever be set in jeebsconfig-secrets.json to avoid them being checked into version control
 	/// </summary>
-	public record class AzureKeyVaultConfig
+	public readonly record struct AzureKeyVaultConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

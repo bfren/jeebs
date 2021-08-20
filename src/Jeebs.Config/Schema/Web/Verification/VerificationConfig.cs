@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Site Verification Configuration
 	/// </summary>
-	public record class VerificationConfig
+	public readonly record struct VerificationConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
@@ -25,7 +25,7 @@ namespace Jeebs.Config
 				googleCode = value;
 		}
 
-		private string? googleCode;
+		private readonly string? googleCode;
 
 		/// <summary>
 		/// True if there are any verification configurations

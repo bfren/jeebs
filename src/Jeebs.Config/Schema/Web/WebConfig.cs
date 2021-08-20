@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Configuration options for Web Apps
 	/// </summary>
-	public record class WebConfig
+	public readonly record struct WebConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

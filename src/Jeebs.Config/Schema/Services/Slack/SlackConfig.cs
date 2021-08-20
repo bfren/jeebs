@@ -6,15 +6,18 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Slack configuration
 	/// </summary>
-	public record class SlackConfig : WebhookServiceConfig
+	public readonly record struct SlackConfig : IWebhookServiceConfig
 	{
+		/// <inheritdoc/>
+		public string Webhook { get; init; }
+
 		/// <summary>
 		/// Whether or not to add attachments to a message (error type and timestamp)
 		/// </summary>
 		public bool ShowAttachments { get; init; }
 
 		/// <inheritdoc/>
-		public override bool IsValid =>
+		public bool IsValid =>
 			F.UriF.IsHttps(Webhook);
 	}
 }

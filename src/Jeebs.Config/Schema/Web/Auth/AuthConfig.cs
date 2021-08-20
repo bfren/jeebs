@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Jeebs Authentication and Authorisation Configuraiton
 	/// </summary>
-	public record class AuthConfig
+	public readonly record struct AuthConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
@@ -16,22 +16,22 @@ namespace Jeebs.Config
 		/// <summary>
 		/// Whether or not auth is enabled
 		/// </summary>
-		public bool Enabled { get; set; }
+		public bool Enabled { get; init; }
 
 		/// <summary>
 		/// Authentication scheme
 		/// </summary>
-		public AuthScheme? Scheme { get; set; }
+		public AuthScheme? Scheme { get; init; }
 
 		/// <summary>
 		/// Path to the login page
 		/// </summary>
-		public string? LoginPath { get; set; }
+		public string? LoginPath { get; init; }
 
 		/// <summary>
 		/// Path to the access denied page
 		/// </summary>
-		public string? AccessDeniedPath { get; set; }
+		public string? AccessDeniedPath { get; init; }
 
 		/// <summary>
 		/// JwtConfig

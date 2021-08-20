@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Redirections configuration
 	/// </summary>
-	public class RedirectionsConfig : Dictionary<string, string>
+	public sealed class RedirectionsConfig : Dictionary<string, string>
 	{
 		/// <summary>
 		/// Path to this configuration section

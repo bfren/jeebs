@@ -9,7 +9,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Third-party services configuration
 	/// </summary>
-	public record class ServicesConfig
+	public readonly record struct ServicesConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
@@ -58,7 +58,7 @@ namespace Jeebs.Config
 					GetServiceConfig(c => c.Twitter, name),
 
 				(string type, _) =>
-					throw new Jx.Config.UnsupportedServiceException(type)
+					throw new UnsupportedServiceException(type)
 			};
 
 		/// <summary>
@@ -76,13 +76,13 @@ namespace Jeebs.Config
 			var services = getCollection(this);
 			if (!services.ContainsKey(name))
 			{
-				throw new Jx.Config.UnknownServiceException(name, typeof(TConfig));
+				throw new UnknownServiceException(name, typeof(TConfig));
 			}
 
 			var config = services[name];
 			if (!config.IsValid)
 			{
-				throw new Jx.Config.InvalidServiceConfigurationException(name, typeof(TConfig));
+				throw new InvalidServiceConfigurationException(name, typeof(TConfig));
 			}
 
 			return config;
@@ -104,12 +104,12 @@ namespace Jeebs.Config
 						(x[0], x[1]),
 
 					_ =>
-						throw new Jx.Config.InvalidServiceDefinitionException(definition)
+						throw new InvalidServiceDefinitionException(definition)
 				};
 			}
 			catch (Exception)
 			{
-				throw new Jx.Config.InvalidServiceDefinitionException(definition);
+				throw new InvalidServiceDefinitionException(definition);
 			}
 		}
 	}
