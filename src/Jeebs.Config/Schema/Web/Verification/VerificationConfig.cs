@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Site Verification Configuration
 	/// </summary>
-	public readonly record struct VerificationConfig
+	public sealed record class VerificationConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

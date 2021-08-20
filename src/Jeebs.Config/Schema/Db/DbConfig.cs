@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Database configuration
 	/// </summary>
-	public readonly record struct DbConfig
+	public sealed record class DbConfig
 	{
 		/// <summary>
 		/// Path to database settings configuration section

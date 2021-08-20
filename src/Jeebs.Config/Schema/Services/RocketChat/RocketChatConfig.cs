@@ -6,10 +6,10 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Rocket.Chat configuration
 	/// </summary>
-	public readonly record struct RocketChatConfig : IWebhookServiceConfig
+	public sealed record class RocketChatConfig : IWebhookServiceConfig
 	{
 		/// <inheritdoc/>
-		public string Webhook { get; init; }
+		public string Webhook { get; init; } = string.Empty;
 
 		/// <inheritdoc/>
 		public bool IsValid =>

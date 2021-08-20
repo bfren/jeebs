@@ -20,7 +20,7 @@ namespace Jeebs.Config.SlackConfig_Tests
 		}
 
 		[Fact]
-		public void Implements_WebhookServiceConfig()
+		public void Implements_IWebhookServiceConfig()
 		{
 			// Arrange
 			var config = new SlackConfig();
@@ -28,7 +28,7 @@ namespace Jeebs.Config.SlackConfig_Tests
 			// Act
 
 			// Assert
-			Assert.IsAssignableFrom<WebhookServiceConfig>(config);
+			Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
 		}
 	}
 }

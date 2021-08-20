@@ -9,7 +9,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Third-party services configuration
 	/// </summary>
-	public readonly record struct ServicesConfig
+	public sealed record class ServicesConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

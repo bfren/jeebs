@@ -6,10 +6,10 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Slack configuration
 	/// </summary>
-	public readonly record struct SlackConfig : IWebhookServiceConfig
+	public sealed record class SlackConfig : IWebhookServiceConfig
 	{
 		/// <inheritdoc/>
-		public string Webhook { get; init; }
+		public string Webhook { get; init; } = string.Empty;
 
 		/// <summary>
 		/// Whether or not to add attachments to a message (error type and timestamp)

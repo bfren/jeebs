@@ -8,7 +8,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Database connection configuration
 	/// </summary>
-	public readonly record struct DbConnectionConfig
+	public sealed record class DbConnectionConfig
 	{
 		/// <summary>
 		/// Database connection string

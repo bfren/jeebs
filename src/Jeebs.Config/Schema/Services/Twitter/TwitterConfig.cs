@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Twitter configuration
 	/// </summary>
-	public readonly record struct TwitterConfig : IServiceConfig
+	public sealed record class TwitterConfig : IServiceConfig
 	{
 		/// <summary>
 		/// UserAccessToken

@@ -6,7 +6,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Seq configuration
 	/// </summary>
-	public readonly record struct SeqConfig : IWebhookServiceConfig
+	public sealed record class SeqConfig : IWebhookServiceConfig
 	{
 		/// <inheritdoc/>
 		public string Webhook =>

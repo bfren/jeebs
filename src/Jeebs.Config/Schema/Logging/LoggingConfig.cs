@@ -10,7 +10,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Logging configuration
 	/// </summary>
-	public readonly record struct LoggingConfig
+	public sealed record class LoggingConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
