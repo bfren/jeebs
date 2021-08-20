@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jx.Config
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// Adding auth when auth is not enabled in configuration

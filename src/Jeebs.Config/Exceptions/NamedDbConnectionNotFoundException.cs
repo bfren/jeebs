@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jx.Config
+namespace Jeebs.Config
 {
 	/// <summary>
 	/// Named DB Connection Not Found

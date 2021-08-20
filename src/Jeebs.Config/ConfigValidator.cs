@@ -51,7 +51,7 @@ namespace Jeebs.Config
 					sb.AppendLine(item);
 				}
 
-				throw new Jx.Config.ConfigurationSchemaValidationFailedException(sb.ToString());
+				throw new ConfigurationSchemaValidationFailedException(sb.ToString());
 			}
 
 			// Return original path on success
