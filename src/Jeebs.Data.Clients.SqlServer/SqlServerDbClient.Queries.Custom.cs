@@ -118,7 +118,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Add OFFSET and FETCH
-			if (parts.Maximum != 0)
+			if (parts.Maximum > 0)
 			{
 				sql.Append($" OFFSET {parts.Skip} ROWS");
 				sql.Append($" FETCH NEXT {parts.Maximum} ROWS ONLY");
