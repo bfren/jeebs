@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Data
 	/// </summary>
 	public interface IQueryPosts
 	{
-		/// <inheritdoc cref="ExecuteAsync{T}(IWpDb, IUnitOfWork, ulong, Query.GetPostsOptions, IContentFilter[])"/>
+		/// <inheritdoc cref="ExecuteAsync{T}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
 		Task<Option<IEnumerable<T>>> ExecuteAsync<T>(
 			IWpDb db,
 			IUnitOfWork w,

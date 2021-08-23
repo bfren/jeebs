@@ -40,7 +40,7 @@ namespace Jeebs.Config
 		/// Get a service configuration from the definition
 		/// <para>Definition must be in the format <c>service_type.service_name</c></para>
 		/// </summary>
-		/// <exception cref="Jx.Config.UnsupportedServiceException"></exception>
+		/// <exception cref="UnsupportedServiceException"></exception>
 		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 		public IServiceConfig GetServiceConfig(string definition) =>
 			SplitDefinition(definition) switch
@@ -66,8 +66,8 @@ namespace Jeebs.Config
 		/// <para>Checks if it is valid before returning it</para>
 		/// </summary>
 		/// <typeparam name="TConfig"></typeparam>
-		/// <exception cref="Jx.Config.UnknownServiceException"></exception>
-		/// <exception cref="Jx.Config.InvalidServiceConfigurationException"></exception>
+		/// <exception cref="UnknownServiceException"></exception>
+		/// <exception cref="InvalidServiceConfigurationException"></exception>
 		/// <param name="getCollection">The service collection to use</param>
 		/// <param name="name">The name of the service to get</param>
 		public TConfig GetServiceConfig<TConfig>(Func<ServicesConfig, Dictionary<string, TConfig>> getCollection, string name)
@@ -92,7 +92,7 @@ namespace Jeebs.Config
 		/// Split a service definition
 		/// <para>Definition must be in the format <c>service_type.service_name</c></para>
 		/// </summary>
-		/// <exception cref="Jx.Config.InvalidServiceDefinitionException"></exception>
+		/// <exception cref="InvalidServiceDefinitionException"></exception>
 		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 		public static (string type, string name) SplitDefinition(string definition)
 		{
