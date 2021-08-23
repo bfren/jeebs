@@ -8,7 +8,6 @@ namespace Jeebs.DateTimeInt_Tests
 {
 	public class ToDateTime_Tests
 	{
-
 		[Fact]
 		public void Valid_DateTime_Returns_Some()
 		{

@@ -47,7 +47,7 @@ namespace Jeebs.WordPress.Data
 			public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
 			{
 				// Add Taxonomy
-				if (taxonomy is Taxonomy)
+				if (taxonomy is not null)
 				{
 					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.Equal, taxonomy);
 				}
