@@ -22,6 +22,8 @@ namespace Jeebs.Auth.Data.Clients.MySql.Migrations
 					`UserVersion` INT(11) NOT NULL DEFAULT '0',
 					`UserEmailAddress` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
 					`UserPasswordHash` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
+					`UserTotpSecret` VARCHAR(64) NULL COLLATE 'utf8_general_ci',
+					`UserTotpBackupCodes` VARCHAR(132) NOT NULL COLLATE 'utf8_general_ci',
 					`UserFriendlyName` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 					`UserGivenName` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 					`UserFamilyName` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
@@ -46,3 +48,4 @@ namespace Jeebs.Auth.Data.Clients.MySql.Migrations
 		}
 	}
 }
+

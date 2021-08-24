@@ -55,6 +55,14 @@ namespace Jeebs.Auth.Data.Tables
 		public string PasswordHash =>
 			ColumnPrefix + nameof(PasswordHash);
 
+		/// <inheritdoc cref="AuthUserEntity.TotpSecret"/>
+		public string TotpSecret =>
+			ColumnPrefix + nameof(TotpSecret);
+
+		/// <inheritdoc cref="AuthUserEntity.TotpBackupCodes"/>
+		public string TotpBackupCodes =>
+			ColumnPrefix + nameof(TotpBackupCodes);
+
 		/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
 		public string IsEnabled =>
 			ColumnPrefix + nameof(IsEnabled);
