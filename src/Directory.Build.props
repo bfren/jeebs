@@ -3,7 +3,7 @@
 	
 	<!-- Standard Configuration -->
 	<PropertyGroup Label="Framework and Language">
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>preview</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
