@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config;
 using Jeebs.Cryptography;
@@ -237,13 +234,12 @@ namespace Jeebs.Data
 				return;
 			}
 
-			if (!handlerType.Implements<SqlMapper.ITypeHandler>())
+			if (!typeof(SqlMapper.ITypeHandler).IsAssignableFrom(handlerType))
 			{
 				return;
 			}
 
-			var implementingTypes = AppDomain.CurrentDomain.GetTypesOfPropertiesImplenting<TBaseType>();
-			implementingTypes.ForEach(t =>
+			AppDomain.CurrentDomain.GetTypesOfPropertiesImplenting<TBaseType>().ForEach(t =>
 			{
 				var genericHandlerType = handlerType.MakeGenericType(t);
 				if (Activator.CreateInstance(genericHandlerType) is SqlMapper.ITypeHandler handler)
