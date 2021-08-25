@@ -11,13 +11,13 @@ namespace Jeebs.Mvc.Data.ModelBinding
 	public sealed class StrongIdModelBinderProvider : IModelBinderProvider
 	{
 		/// <summary>
-		/// If the model type implements <see cref="StrongId"/>, create <see cref="StrongIdModelBinder{T}"/>
+		/// If the model type implements <see cref="IStrongId"/>, create <see cref="StrongIdModelBinder{T}"/>
 		/// </summary>
 		/// <param name="context">ModelBinderProviderContext</param>
 		public IModelBinder? GetBinder(ModelBinderProviderContext context)
 		{
 			// Return null if this is the wrong type
-			if (!context.Metadata.ModelType.Implements<StrongId>())
+			if (!context.Metadata.ModelType.Implements<IStrongId>())
 			{
 				return null;
 			}

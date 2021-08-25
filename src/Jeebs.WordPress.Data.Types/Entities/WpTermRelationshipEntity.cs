@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Data.Entities
 		/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table
 		/// </summary>
 		[Ignore]
-		public StrongId Id =>
+		public IStrongId Id =>
 			throw new System.NotSupportedException("Term Relationships do not have unique IDs in the WordPress database.");
 
 		/// <summary>

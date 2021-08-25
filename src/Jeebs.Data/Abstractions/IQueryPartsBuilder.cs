@@ -14,7 +14,7 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
 	public interface IQueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <summary>
 		/// The primary table for this query

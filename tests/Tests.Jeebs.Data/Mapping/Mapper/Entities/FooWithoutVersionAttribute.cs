@@ -8,7 +8,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 	public class FooWithoutVersionAttribute : IWithVersion
 	{
 		[Ignore]
-		public StrongId Id
+		public IStrongId Id
 		{
 			get => FooId;
 			init => FooId = new(value.Value);

@@ -8,7 +8,7 @@ namespace Jeebs.Data.Mapping
 	public record class FooWithIgnored : IWithId
 	{
 		[Ignore]
-		public StrongId Id
+		public IStrongId Id
 		{
 			get => FooId;
 			init => FooId = new(value.Value);

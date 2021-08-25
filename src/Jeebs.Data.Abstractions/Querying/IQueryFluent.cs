@@ -16,7 +16,7 @@ namespace Jeebs.Data.Querying
 	/// <typeparam name="TId">StrongId type</typeparam>
 	public interface IQueryFluent<TEntity, TId>
 		where TEntity : IWithId
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <summary>
 		/// Add a WHERE predicate (multiple predicates will be added using AND)

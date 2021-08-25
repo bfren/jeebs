@@ -9,23 +9,23 @@ namespace Jeebs
 	public interface IWithId
 	{
 		/// <summary>
-		/// StrongId (wrapping a long value)
+		/// IStrongId (wrapping a long value)
 		/// </summary>
-		StrongId Id { get; }
+		IStrongId Id { get; }
 	}
 
 	/// <inheritdoc cref="IWithId"/>
-	/// <typeparam name="T">StrongId Type</typeparam>
+	/// <typeparam name="T">IStrongId Type</typeparam>
 	public interface IWithId<T> : IWithId
-		where T : StrongId
+		where T : IStrongId
 	{
 		/// <summary>
-		/// Strongly-typed StrongId (wrapping a long value)
+		/// Strongly-typed IStrongId (wrapping a long value)
 		/// </summary>
 		new T Id { get; init; }
 
 		/// <inheritdoc/>
-		StrongId IWithId.Id =>
+		IStrongId IWithId.Id =>
 			Id;
 	}
 }

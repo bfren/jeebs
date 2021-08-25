@@ -23,10 +23,7 @@ namespace Jeebs.WordPress.Data.Querying.Options_Tests
 			Assert.Same(schema, result.TTest);
 		}
 
-		public sealed record class TestId(ulong Value) : StrongId(Value)
-		{
-			public TestId() : this(0) { }
-		}
+		public readonly record struct TestId(ulong Value) : IStrongId;
 
 		public sealed record class TestOptions : Options<TestId>
 		{

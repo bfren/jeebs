@@ -7,7 +7,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class AddInnerJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 		where TBuilder : QueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		public abstract void Test00_Adds_Columns_To_InnerJoin();
 

@@ -14,7 +14,7 @@ namespace Jeebs.Data
 	/// <inheritdoc cref="IRepository{TEntity, TId}"/>
 	public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TEntity : IWithId
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <inheritdoc/>
 		public IUnitOfWork UnitOfWork =>

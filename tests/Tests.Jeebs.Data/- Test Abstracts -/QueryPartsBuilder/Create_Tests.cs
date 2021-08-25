@@ -9,7 +9,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Tests<TBuilder, TId>
 		where TBuilder : QueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		public abstract void Test00_Returns_With_Table();
 

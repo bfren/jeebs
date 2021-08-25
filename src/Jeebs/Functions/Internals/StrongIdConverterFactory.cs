@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
@@ -9,21 +8,21 @@ using Jeebs;
 namespace F.Internals
 {
 	/// <summary>
-	/// StrongId Converter Factory
+	/// <see cref="IStrongId"/> Converter Factory
 	/// </summary>
 	public sealed class StrongIdConverterFactory : JsonConverterFactory
 	{
 		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Jeebs.StrongId"/>
+		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="IStrongId"/>
 		/// </summary>
-		/// <param name="typeToConvert">Type to convert</param>
+		/// <param name="typeToConvert"><see cref="IStrongId"/> type</param>
 		public override bool CanConvert(Type typeToConvert) =>
-			typeToConvert.Implements(typeof(StrongId));
+			typeof(IStrongId).IsAssignableFrom(typeToConvert);
 
 		/// <summary>
-		/// Creates JsonConverter using StrongId type as generic argument
+		/// Creates JsonConverter using <see cref="IStrongId"/> type as generic argument
 		/// </summary>
-		/// <param name="typeToConvert">StrongId type</param>
+		/// <param name="typeToConvert"><see cref="IStrongId"/> type</param>
 		/// <param name="options">JsonSerializerOptions</param>
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 		{

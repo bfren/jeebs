@@ -15,8 +15,8 @@ namespace Jeebs
 	}
 
 	/// <inheritdoc cref="IWithVersion"/>
-	/// <typeparam name="T">StrongId Type</typeparam>
+	/// <typeparam name="T">IStrongId Type</typeparam>
 	public interface IWithVersion<T> : IWithId<T>, IWithVersion
-		where T : StrongId
+		where T : IStrongId
 	{ }
 }

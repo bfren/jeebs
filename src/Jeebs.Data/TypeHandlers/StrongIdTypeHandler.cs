@@ -6,31 +6,38 @@ using System.Data;
 namespace Jeebs.Data.TypeHandlers
 {
 	/// <summary>
-	/// StrongId TypeHandler
+	/// <see cref="IStrongId"/> TypeHandler
 	/// </summary>
-	/// <typeparam name="T">StrongId type</typeparam>
+	/// <typeparam name="T"><see cref="IStrongId"/> type</typeparam>
 	public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
-		where T : StrongId, new()
+		where T : IStrongId, new()
 	{
 		/// <summary>
-		/// Parse value as ID and create new StrongId
+		/// Parse value as ulong and create new <see cref="IStrongId"/>
 		/// </summary>
-		/// <param name="value">Id Value</param>
+		/// <param name="value"><see cref="IStrongId"/> Value</param>
 		public override T Parse(object value) =>
-			ulong.TryParse(value?.ToString(), out ulong id) switch
+			value switch
 			{
-				true =>
+				ulong id =>
 					new() { Value = id },
 
-				false =>
-					new()
+				_ =>
+					ulong.TryParse(value?.ToString(), out ulong id) switch
+					{
+						true =>
+							new() { Value = id },
+
+						false =>
+							new()
+					}
 			};
 
 		/// <summary>
 		/// Set ID value
 		/// </summary>
 		/// <param name="parameter">IDbDataParameter</param>
-		/// <param name="value">StrongId value</param>
+		/// <param name="value"><see cref="IStrongId"/> value</param>
 		public override void SetValue(IDbDataParameter parameter, T value) =>
 			parameter.Value = value.Value;
 	}

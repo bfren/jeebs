@@ -10,7 +10,7 @@ namespace Jeebs.Mvc.Data.ModelBinding
 	/// </summary>
 	/// <typeparam name="T">StrongID type</typeparam>
 	public sealed class StrongIdModelBinder<T> : IModelBinder
-		where T : StrongId, new()
+		where T : IStrongId, new()
 	{
 		/// <summary>
 		/// Get value and attempt to parse as a long

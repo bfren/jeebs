@@ -24,7 +24,7 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 
 		[Theory]
 		[InlineData(null)]
-		public void Serialise_Returns_Empty_Json(TestId input)
+		public void Serialise_Returns_Empty_Json(TestId? input)
 		{
 			// Arrange
 
@@ -35,6 +35,6 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			Assert.Equal(JsonF.Empty, result);
 		}
 
-		public record class TestId() : StrongId(0) { }
+		public readonly record struct TestId(ulong Value) : IStrongId;
 	}
 }

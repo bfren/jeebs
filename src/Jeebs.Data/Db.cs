@@ -213,10 +213,10 @@ namespace Jeebs.Data
 			SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 		/// <summary>
-		/// Persist <see cref="StrongId"/> properties to the database
+		/// Persist <see cref="IStrongId"/> properties to the database
 		/// </summary>
 		protected static void AddStrongIdTypeHandlers() =>
-			AddGenericTypeHandlers<StrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+			AddGenericTypeHandlers<IStrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
 
 		/// <summary>
 		/// Persist <see cref="Locked{T}"/> properties to the database
@@ -242,7 +242,8 @@ namespace Jeebs.Data
 				return;
 			}
 
-			AppDomain.CurrentDomain.GetTypesOfPropertiesImplenting<TBaseType>().ForEach(t =>
+			var implementingTypes = AppDomain.CurrentDomain.GetTypesOfPropertiesImplenting<TBaseType>();
+			implementingTypes.ForEach(t =>
 			{
 				var genericHandlerType = handlerType.MakeGenericType(t);
 				if (Activator.CreateInstance(genericHandlerType) is SqlMapper.ITypeHandler handler)

@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Data.Entities
 {
 	public abstract class Id_Tests<TEntity, TId>
 		where TEntity : IWithId<TId>, new()
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		public abstract void Test00_Id_Returns_Database_Id();
 

@@ -8,7 +8,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 		where TBuilder : QueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		protected abstract TBuilder GetConfiguredBuilder(IExtract extract);
 

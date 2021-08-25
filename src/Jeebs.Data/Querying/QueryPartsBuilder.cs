@@ -31,7 +31,7 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
 	public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <summary>
 		/// IExtract

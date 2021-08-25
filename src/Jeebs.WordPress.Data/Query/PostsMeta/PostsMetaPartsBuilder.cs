@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Linq;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -42,7 +41,7 @@ namespace Jeebs.WordPress.Data
 				// Add Post ID EQUAL
 				if (postId?.Value > 0)
 				{
-					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, postId.Value);
+					return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, postId.Value.Value);
 				}
 
 				// Add Post ID IN

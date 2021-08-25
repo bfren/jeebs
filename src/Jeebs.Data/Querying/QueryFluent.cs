@@ -25,7 +25,7 @@ namespace Jeebs.Data.Querying
 	/// <inheritdoc cref="IQueryFluent{TEntity, TId}"/>
 	public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent<TEntity, TId>
 		where TEntity : IWithId
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <summary>
 		/// IRepository

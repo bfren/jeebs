@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Linq;
 using System.Text;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
@@ -65,7 +63,7 @@ namespace Jeebs.WordPress.Data
 
 				// Get comparison operator - if it's LIKE and % has not already been added to the search string, add it
 				var comparison = cmp.ToOperator();
-				if (cmp == Compare.Like && !search.Contains("%", StringComparison.CurrentCulture))
+				if (cmp == Compare.Like && !search.Contains('%', StringComparison.CurrentCulture))
 				{
 					search = $"%{search}%";
 				}
@@ -147,7 +145,7 @@ namespace Jeebs.WordPress.Data
 				// Add Parent ID
 				if (parentId?.Value > 0)
 				{
-					return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId.Value);
+					return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId.Value.Value);
 				}
 
 				// Return
@@ -266,7 +264,7 @@ namespace Jeebs.WordPress.Data
 
 					// Get comparison operator - if it's LIKE and % has not already been added to the search string, add it
 					var customFieldComparison = cmp.ToOperator();
-					if (cmp == Compare.Like && !customFieldSearch.Contains("%", StringComparison.CurrentCulture))
+					if (cmp == Compare.Like && !customFieldSearch.Contains('%', StringComparison.CurrentCulture))
 					{
 						customFieldSearch = $"%{customFieldSearch}%";
 					}

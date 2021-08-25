@@ -32,7 +32,7 @@ namespace F.WordPressF.DataF
 					var postMeta = from m in postsMeta
 								   let key = m.Key
 								   let value = m.Value
-								   where m.PostId == post.Id.Value
+								   where m.PostId == post.Id
 								   && !string.IsNullOrEmpty(key)
 								   && !string.IsNullOrEmpty(value)
 								   select new KeyValuePair<string, string>(key, value);

@@ -23,10 +23,7 @@ namespace Jeebs.Data.Repository_Tests
 			Assert.Same(log, result.LogTest);
 		}
 
-		public sealed record class TestId(ulong Value) : StrongId(Value)
-		{
-			public TestId() : this(0) { }
-		}
+		public readonly record struct TestId(ulong Value) : IStrongId;
 
 		public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
 

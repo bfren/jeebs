@@ -306,9 +306,6 @@ namespace F.DataF.QueryF_Tests
 				$"({string.Join('|', objects)})";
 		}
 
-		public sealed record class TestId(ulong Value) : StrongId(Value)
-		{
-			public TestId() : this(0) { }
-		}
+		readonly record struct TestId(ulong Value) : IStrongId;
 	}
 }

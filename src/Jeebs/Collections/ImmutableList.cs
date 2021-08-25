@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs.Linq;
 using Sys = System.Collections.Immutable;
 
@@ -121,8 +118,15 @@ namespace Jeebs
 		/// Compare sequences
 		/// </summary>
 		/// <param name="other">Another list to compare with this one</param>
-		public virtual bool Equals(ImmutableList<T> other) =>
-			List.SequenceEqual(other.List);
+		public virtual bool Equals(ImmutableList<T>? other) =>
+			other switch
+			{
+				ImmutableList<T> x =>
+					List.SequenceEqual(x.List),
+
+				_ =>
+					false
+			};
 
 		/// <summary>
 		/// Return list hash code
