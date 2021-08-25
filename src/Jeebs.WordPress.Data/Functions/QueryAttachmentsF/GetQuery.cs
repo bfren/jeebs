@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Linq;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
