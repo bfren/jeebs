@@ -49,7 +49,7 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			);
 		}
 
-		public sealed record TestTable() : Table(nameof(TestTable))
+		public sealed record class TestTable() : Table(nameof(TestTable))
 		{
 			public const string Prefix = "Test";
 

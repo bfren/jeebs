@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs;
 using Jeebs.Data.Querying;
 using static F.OptionF;
@@ -32,7 +31,7 @@ namespace F.DataF
 		{
 			/// <summary>Error while building query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record QueryBuilderExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class QueryBuilderExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

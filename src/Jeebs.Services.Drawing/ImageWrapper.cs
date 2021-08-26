@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Services.Drawing.Geometry;
 using static F.OptionF;
 
@@ -61,10 +60,10 @@ namespace Jeebs.Services.Drawing
 		public static class Msg
 		{
 			/// <summary>A height or width is required for creating a mask</summary>
-			public sealed record MaskHeightOrWidthRequiredMsg : IMsg { }
+			public sealed record class MaskHeightOrWidthRequiredMsg : IMsg { }
 
 			/// <summary>An exception occurred while applying the mask</summary>
-			public sealed record ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data.Enums;
@@ -70,7 +67,7 @@ namespace F.DataF
 		public static partial class Msg
 		{
 			/// <summary>IN predicate means value is 'in' an array of values so the value must be a list</summary>
-			public sealed record InOperatorRequiresValueToBeAListMsg : IMsg { }
+			public sealed record class InOperatorRequiresValueToBeAListMsg : IMsg { }
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Jeebs
 		public static class Msg
 		{
 			/// <summary>Empty None created for testing</summary>
-			public sealed record EmptyNoneForTestingMsg : IMsg { };
+			public sealed record class EmptyNoneForTestingMsg : IMsg { };
 		}
 	}
 }

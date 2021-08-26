@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text.Json.Serialization;
 
 namespace Jeebs.Services.Drivers.Webhook.Seq
@@ -9,7 +8,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq
 	/// <summary>
 	/// Seq Event
 	/// </summary>
-	public sealed record SeqEvent
+	public sealed record class SeqEvent
 	{
 		/// <summary>
 		/// Timestamp - ISO 8601 format

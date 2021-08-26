@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
@@ -9,7 +8,7 @@ using Jeebs.WordPress.Data.Enums;
 namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryPostsOptions"/>
-	public abstract record PostsOptions : Options<WpPostId>, IQueryPostsOptions
+	public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOptions
 	{
 		/// <summary>
 		/// IQueryPostsPartsBuilder

@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Jeebs;
 using Jeebs.WordPress.Data.Entities;
@@ -50,7 +47,7 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Content property not found on model</summary>
 			/// <typeparam name="T">Post Model type</typeparam>
-			public sealed record ContentPropertyNotFoundMsg<T> : IMsg { }
+			public sealed record class ContentPropertyNotFoundMsg<T> : IMsg { }
 		}
 	}
 }

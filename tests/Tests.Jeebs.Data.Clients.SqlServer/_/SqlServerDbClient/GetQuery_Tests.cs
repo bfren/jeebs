@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -43,8 +42,11 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 
 			var client = new SqlServerDbClient();
 
-			var expected = $"SELECT [{c0Name}] AS [{c0Alias}], [{c1Name}] AS [{c1Alias}] " +
-				$"FROM [{table}] WHERE [{p0Column.Name}] LIKE @P0 AND [{p1Column.Name}] >= @P1";
+			var expected = "SELECT" +
+				$" [{c0Name}] AS [{c0Alias}], [{c1Name}] AS [{c1Alias}]" +
+				$" FROM [{table}]" +
+				$" WHERE [{p0Column.Name}] LIKE @P0" +
+				$" AND [{p1Column.Name}] >= @P1";
 
 			// Act
 			var (query, param) = client.GetQueryTest(table, list, predicates);
@@ -157,7 +159,8 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 
 			var parts = setJoin(new(fromTable), join);
 
-			var expected = $"SELECT * FROM [{fromTable.GetName()}]" +
+			var expected = "SELECT" +
+				$" * FROM [{fromTable.GetName()}]" +
 				$" {joinType} JOIN [{to0Table}] ON [{fromTable.GetName()}].[{fromName}] = [{to0Table}].[{to0Name}]" +
 				$" {joinType} JOIN [{to1Table}] ON [{to0Table}].[{to0Name}] = [{to1Table}].[{to1Name}]";
 
@@ -208,8 +211,10 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 
 			var parts = new QueryParts(fromTable) { Where = where };
 
-			var expected = $"SELECT * FROM [{fromTable.GetName()}]" +
-				$" WHERE [{c0Table}].[{c0Name}] LIKE @P0 AND [{c1Table}].[{c1Name}] >= @P1";
+			var expected = "SELECT" +
+				$" * FROM [{fromTable.GetName()}]" +
+				$" WHERE [{c0Table}].[{c0Name}] LIKE @P0" +
+				$" AND [{c1Table}].[{c1Name}] >= @P1";
 
 			// Act
 			var (query, _) = client.GetQuery(parts);
@@ -358,7 +363,8 @@ namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests
 				})
 			};
 
-			var expected = $"SELECT * FROM [{table.GetName()}] ORDER BY" +
+			var expected = "SELECT" +
+				$" * FROM [{table.GetName()}] ORDER BY" +
 				$" [{sort0Table}].[{sort0Name}] ASC," +
 				$" [{sort1Table}].[{sort1Name}] DESC";
 

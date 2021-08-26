@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
@@ -172,8 +170,8 @@ namespace Jeebs_Tests
 			Assert.IsType<TestMsg>(none);
 		}
 
-		public record FakeOption : Option<int> { }
+		public record class FakeOption : Option<int> { }
 
-		public sealed record TestMsg : IMsg { }
+		public sealed record class TestMsg : IMsg { }
 	}
 }

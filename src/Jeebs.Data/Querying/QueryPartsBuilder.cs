@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -19,10 +17,10 @@ namespace Jeebs.Data.Querying
 		public static class Msg
 		{
 			/// <summary>Trying to add an empty where clause</summary>
-			public sealed record TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
+			public sealed record class TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
 
 			/// <summary>Unable to add parameters to custom where</summary>
-			public sealed record UnableToAddParametersToWhereCustomMsg : IMsg { }
+			public sealed record class UnableToAddParametersToWhereCustomMsg : IMsg { }
 		}
 	}
 
@@ -31,7 +29,7 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
 	public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <summary>
 		/// IExtract

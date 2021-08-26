@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using Jeebs.Reflection;
@@ -39,13 +38,18 @@ namespace Jeebs.Linq
 
 		/// <summary>
 		/// If <paramref name="expression"/> is a <see cref="MemberExpression"/>,
-		/// return the <see cref="MemberInfo"/>
+		/// return the <see cref="MemberInfo"/>;
+		/// If <paramref name="expression"/> is a <see cref="UnaryExpression"/>,
+		/// return the <see cref="UnaryExpression.Operand"/> member as <see cref="MemberInfo"/>
 		/// </summary>
 		/// <param name="expression">Expression body</param>
 		private static Option<MemberInfo> GetMemberInfo(Expression expression) =>
 			expression switch
 			{
 				MemberExpression memberExpression =>
+					memberExpression.Member,
+
+				UnaryExpression unaryExpression when unaryExpression.Operand is MemberExpression memberExpression =>
 					memberExpression.Member,
 
 				_ =>
@@ -56,10 +60,10 @@ namespace Jeebs.Linq
 		public static class Msg
 		{
 			/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
-			public sealed record ExpressionIsNotAMemberExpressionMsg : IMsg { }
+			public sealed record class ExpressionIsNotAMemberExpressionMsg : IMsg { }
 
 			/// <summary>The specified property does not exist on the type</summary>
-			public sealed record PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }
+			public sealed record class PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

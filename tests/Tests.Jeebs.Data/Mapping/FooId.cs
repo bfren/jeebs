@@ -3,8 +3,5 @@
 
 namespace Jeebs.Data.Mapping
 {
-	public record FooId(ulong Value) : StrongId(Value)
-	{
-		public FooId() : this(0) { }
-	}
+	public readonly record struct FooId(ulong Value) : IStrongId;
 }

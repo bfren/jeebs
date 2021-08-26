@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Entities;
 
 namespace Jeebs.Data.Mapping.Mapper_Tests
@@ -9,7 +8,7 @@ namespace Jeebs.Data.Mapping.Mapper_Tests
 	public class FooWithMultipleVersionAttributes : IWithVersion
 	{
 		[Ignore]
-		public StrongId Id
+		public IStrongId Id
 		{
 			get => FooId;
 			init => FooId = new(value.Value);

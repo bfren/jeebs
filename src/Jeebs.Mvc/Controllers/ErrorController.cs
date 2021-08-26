@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +35,7 @@ namespace Jeebs.Mvc
 		public static class Msg
 		{
 			/// <summary>An unknown error has occured</summary>
-			public sealed record UnknownErrorMsg : IMsg { }
+			public sealed record class UnknownErrorMsg : IMsg { }
 		}
 	}
 }

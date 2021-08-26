@@ -11,7 +11,7 @@ namespace Jeebs.Data.Querying
 	/// </summary>
 	/// <typeparam name="TId">Entity ID type</typeparam>
 	public interface IQueryOptions<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <summary>
 		/// Query Id

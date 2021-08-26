@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
@@ -84,14 +83,14 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			Test_Add_Join(QueryJoin.Right, x => x.RightJoin);
 		}
 
-		public sealed record TestTable0() : Table(nameof(TestTable0))
+		public sealed record class TestTable0() : Table(nameof(TestTable0))
 		{
 			public const string Prefix = "Test";
 
 			public string Foo { get; set; } = Prefix + nameof(Foo);
 		}
 
-		public sealed record TestTable1() : Table(nameof(TestTable1))
+		public sealed record class TestTable1() : Table(nameof(TestTable1))
 		{
 			public const string Prefix = "Test";
 

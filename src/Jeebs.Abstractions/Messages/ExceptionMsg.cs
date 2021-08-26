@@ -1,13 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Logging;
 
 namespace Jeebs
 {
 	/// <inheritdoc cref="IExceptionMsg"/>
-	public abstract record ExceptionMsg : LogMsg, IExceptionMsg
+	public abstract record class ExceptionMsg : LogMsg, IExceptionMsg
 	{
 		/// <inheritdoc/>
 		public Exception Exception { get; init; }

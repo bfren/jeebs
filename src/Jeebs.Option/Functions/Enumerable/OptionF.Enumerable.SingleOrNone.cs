@@ -1,9 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs;
 
 namespace F
@@ -52,13 +49,13 @@ namespace F
 			public static partial class Msg
 			{
 				/// <summary>Multiple items found when doing SingleOrDefault()</summary>
-				public sealed record MultipleItemsMsg : IMsg { }
+				public sealed record class MultipleItemsMsg : IMsg { }
 
 				/// <summary>No items found matching the predicate</summary>
-				public sealed record NoMatchingItemsMsg : IMsg { }
+				public sealed record class NoMatchingItemsMsg : IMsg { }
 
 				/// <summary>Null item found when doing SingleOrDefault()</summary>
-				public sealed record NullItemMsg : IMsg { }
+				public sealed record class NullItemMsg : IMsg { }
 			}
 		}
 	}

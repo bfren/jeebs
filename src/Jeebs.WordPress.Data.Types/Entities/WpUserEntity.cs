@@ -1,14 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
 	/// User entity
 	/// </summary>
-	public abstract record WpUserEntity : WpUserEntityWithId
+	public abstract record class WpUserEntity : WpUserEntityWithId
 	{
 		/// <summary>
 		/// Username

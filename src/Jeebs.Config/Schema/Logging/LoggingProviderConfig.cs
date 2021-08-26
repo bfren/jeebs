@@ -8,7 +8,7 @@ namespace Jeebs.Config.Logging
 	/// <summary>
 	/// Logging Provider
 	/// </summary>
-	public record LoggingProviderConfig
+	public sealed record class LoggingProviderConfig
 	{
 		/// <summary>
 		/// Whether or not this provider is enabled

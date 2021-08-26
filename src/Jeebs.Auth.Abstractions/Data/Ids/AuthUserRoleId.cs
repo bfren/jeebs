@@ -6,11 +6,6 @@ namespace Jeebs.Auth.Data
 	/// <summary>
 	/// User Role ID
 	/// </summary>
-	public sealed record AuthUserRoleId(ulong Value) : StrongId(Value)
-	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public AuthUserRoleId() : this(0) { }
-	}
+	/// <param name="Value">ID Value</param>
+	public readonly record struct AuthUserRoleId(ulong Value) : IStrongId;
 }

@@ -1,9 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -14,7 +11,7 @@ using static F.DataF.QueryBuilderF;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryBuilderWithFrom"/>
-	public sealed record QueryBuilderWithFrom : IQueryBuilderWithFrom
+	public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	{
 		/// <summary>
 		/// Query Parts

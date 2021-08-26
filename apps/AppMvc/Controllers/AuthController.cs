@@ -1,7 +1,6 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
@@ -88,7 +87,7 @@ namespace AppMvc.Controllers
 					DefaultHandler
 				)
 				.UnwrapAsync(
-					x => x.Value(r => Content(r.ToString()))
+					x => x.Value(Content("Ooops"))
 				);
 
 		public async Task<IActionResult> ShowUserByEmail(string email) =>
@@ -104,7 +103,7 @@ namespace AppMvc.Controllers
 					x => x.Value(() => View("Unknown"))
 				);
 
-		public sealed record UpdateUserModel : IWithId<AuthUserId>, IWithVersion
+		public sealed record class UpdateUserModel : IWithId<AuthUserId>, IWithVersion
 		{
 			public AuthUserId Id { get; init; } = new();
 

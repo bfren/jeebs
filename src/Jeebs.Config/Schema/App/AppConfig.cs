@@ -1,14 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-
 namespace Jeebs.Config
 {
 	/// <summary>
 	/// Jeebs Application Configuraiton
 	/// </summary>
-	public record AppConfig
+	public sealed record class AppConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

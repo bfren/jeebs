@@ -30,7 +30,7 @@ namespace F.WordPressF.DataF
 			return (db, unitOfWork, new(schema, config, uploadsPath, transaction));
 		}
 
-		public sealed record Vars(
+		public sealed record class Vars(
 			WpDbSchema Schema,
 			WpConfig Config,
 			string UploadsPath,

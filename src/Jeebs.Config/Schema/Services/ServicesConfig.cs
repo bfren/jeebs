@@ -1,15 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-
 namespace Jeebs.Config
 {
 	/// <summary>
 	/// Third-party services configuration
 	/// </summary>
-	public record ServicesConfig
+	public sealed record class ServicesConfig
 	{
 		/// <summary>
 		/// Path to this configuration section
@@ -40,7 +37,7 @@ namespace Jeebs.Config
 		/// Get a service configuration from the definition
 		/// <para>Definition must be in the format <c>service_type.service_name</c></para>
 		/// </summary>
-		/// <exception cref="Jx.Config.UnsupportedServiceException"></exception>
+		/// <exception cref="UnsupportedServiceException"></exception>
 		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 		public IServiceConfig GetServiceConfig(string definition) =>
 			SplitDefinition(definition) switch
@@ -58,7 +55,7 @@ namespace Jeebs.Config
 					GetServiceConfig(c => c.Twitter, name),
 
 				(string type, _) =>
-					throw new Jx.Config.UnsupportedServiceException(type)
+					throw new UnsupportedServiceException(type)
 			};
 
 		/// <summary>
@@ -66,8 +63,8 @@ namespace Jeebs.Config
 		/// <para>Checks if it is valid before returning it</para>
 		/// </summary>
 		/// <typeparam name="TConfig"></typeparam>
-		/// <exception cref="Jx.Config.UnknownServiceException"></exception>
-		/// <exception cref="Jx.Config.InvalidServiceConfigurationException"></exception>
+		/// <exception cref="UnknownServiceException"></exception>
+		/// <exception cref="InvalidServiceConfigurationException"></exception>
 		/// <param name="getCollection">The service collection to use</param>
 		/// <param name="name">The name of the service to get</param>
 		public TConfig GetServiceConfig<TConfig>(Func<ServicesConfig, Dictionary<string, TConfig>> getCollection, string name)
@@ -76,13 +73,13 @@ namespace Jeebs.Config
 			var services = getCollection(this);
 			if (!services.ContainsKey(name))
 			{
-				throw new Jx.Config.UnknownServiceException(name, typeof(TConfig));
+				throw new UnknownServiceException(name, typeof(TConfig));
 			}
 
 			var config = services[name];
 			if (!config.IsValid)
 			{
-				throw new Jx.Config.InvalidServiceConfigurationException(name, typeof(TConfig));
+				throw new InvalidServiceConfigurationException(name, typeof(TConfig));
 			}
 
 			return config;
@@ -92,7 +89,7 @@ namespace Jeebs.Config
 		/// Split a service definition
 		/// <para>Definition must be in the format <c>service_type.service_name</c></para>
 		/// </summary>
-		/// <exception cref="Jx.Config.InvalidServiceDefinitionException"></exception>
+		/// <exception cref="InvalidServiceDefinitionException"></exception>
 		/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 		public static (string type, string name) SplitDefinition(string definition)
 		{
@@ -104,12 +101,12 @@ namespace Jeebs.Config
 						(x[0], x[1]),
 
 					_ =>
-						throw new Jx.Config.InvalidServiceDefinitionException(definition)
+						throw new InvalidServiceDefinitionException(definition)
 				};
 			}
 			catch (Exception)
 			{
-				throw new Jx.Config.InvalidServiceDefinitionException(definition);
+				throw new InvalidServiceDefinitionException(definition);
 			}
 		}
 	}

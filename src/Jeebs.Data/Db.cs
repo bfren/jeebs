@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config;
 using Jeebs.Cryptography;
@@ -213,10 +210,10 @@ namespace Jeebs.Data
 			SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 		/// <summary>
-		/// Persist <see cref="StrongId"/> properties to the database
+		/// Persist <see cref="IStrongId"/> properties to the database
 		/// </summary>
 		protected static void AddStrongIdTypeHandlers() =>
-			AddGenericTypeHandlers<StrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+			AddGenericTypeHandlers<IStrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
 
 		/// <summary>
 		/// Persist <see cref="Locked{T}"/> properties to the database
@@ -237,7 +234,7 @@ namespace Jeebs.Data
 				return;
 			}
 
-			if (!handlerType.Implements<SqlMapper.ITypeHandler>())
+			if (!typeof(SqlMapper.ITypeHandler).IsAssignableFrom(handlerType))
 			{
 				return;
 			}
@@ -273,22 +270,22 @@ namespace Jeebs.Data
 		{
 			/// <summary>Error running QueryAsync</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record QueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class QueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error running QuerySingleAsync</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record QuerySingleExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class QuerySingleExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>The query returned no items, or more than one</summary>
-			public sealed record QuerySingleItemNotFoundMsg : NotFoundMsg { }
+			public sealed record class QuerySingleItemNotFoundMsg : NotFoundMsg { }
 
 			/// <summary>Error running ExecuteAsync</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ExecuteExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ExecuteExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error running ExecuteScalarAsync</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ExecuteScalarExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ExecuteScalarExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

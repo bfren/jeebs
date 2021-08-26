@@ -88,7 +88,7 @@ Option<int> Divide(int x, int y)
 
 public static class Msg
 {
-    public sealed record YouCannotDivideByZeroMsg : IMsg { }
+    public sealed record class YouCannotDivideByZeroMsg : IMsg { }
 }
 ```
 
@@ -128,7 +128,7 @@ Option<int> Divide(int x, int y)
 
 public static class Msg
 {
-    public sealed record DivisionExceptionMsg(Exception Exception) : IExceptionMsg { }
+    public sealed record class DivisionExceptionMsg(Exception Exception) : IExceptionMsg { }
 }
 ```
 
@@ -164,7 +164,7 @@ if (option is None<int> failed)
 
 public static class Msg
 {
-    public sealed record DivisionExceptionMsg(Exception Exception) : IExceptionMsg { }
+    public sealed record class DivisionExceptionMsg(Exception Exception) : IExceptionMsg { }
 }
 ```
 
@@ -182,7 +182,7 @@ This means:
 The messages we've used so far have been pretty simple, but here is an example of one from `Jeebs.Data.Mapping`:
 
 ```csharp
-public sealed record UpdateErrorMsg<T>(string Method, long Id)
+public sealed record class UpdateErrorMsg<T>(string Method, long Id)
     : LogMsg(LogLevel.Warning, "{Method} {Id}")
 {
     public override Func<object[]> Args =>

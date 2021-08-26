@@ -1,13 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Logging;
 
 namespace Jeebs
 {
 	/// <inheritdoc cref="ILogMsg"/>
-	public abstract record LogMsg : ILogMsg
+	public abstract record class LogMsg : ILogMsg
 	{
 		private const LogLevel DefaultLevel = LogLevel.Information;
 

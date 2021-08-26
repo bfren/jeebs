@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using NSubstitute;
 using Xunit;
 
 namespace Jeebs.WordPress.Data.PostAttachment_Tests
@@ -13,7 +12,7 @@ namespace Jeebs.WordPress.Data.PostAttachment_Tests
 		{
 			// Arrange
 			var wpUploads = F.Rnd.Str;
-			var attachment = Substitute.ForPartsOf<PostAttachment>();
+			var attachment = new Test();
 
 			// Act
 			var result = attachment.GetFilePath(wpUploads);
@@ -51,6 +50,6 @@ namespace Jeebs.WordPress.Data.PostAttachment_Tests
 			Assert.Equal($"{wpUploads}/{urlPath}", result);
 		}
 
-		public record Test : PostAttachment;
+		public record class Test : PostAttachment;
 	}
 }

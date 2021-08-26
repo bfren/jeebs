@@ -1,11 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 
@@ -14,7 +11,7 @@ namespace Jeebs.Data
 	/// <inheritdoc cref="IRepository{TEntity, TId}"/>
 	public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TEntity : IWithId
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		/// <inheritdoc/>
 		public IUnitOfWork UnitOfWork =>

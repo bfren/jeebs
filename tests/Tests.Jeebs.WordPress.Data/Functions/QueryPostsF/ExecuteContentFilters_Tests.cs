@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using NSubstitute;
@@ -73,6 +71,6 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			f1.Received(1).Execute(c1);
 		}
 
-		public sealed record Model(string Content);
+		public sealed record class Model(string Content);
 	}
 }

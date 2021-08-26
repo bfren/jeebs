@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Linq;
 using System.Reflection;
 using Jeebs;
 using Jeebs.Data.Entities;
@@ -49,7 +47,7 @@ namespace F.DataF
 			/// <summary>Messages</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingMappedColumnsMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingMappedColumnsMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

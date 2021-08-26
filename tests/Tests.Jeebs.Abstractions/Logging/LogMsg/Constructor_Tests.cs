@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Xunit;
 
 namespace Jeebs.Logging.LogMsg_Tests
@@ -46,7 +45,7 @@ namespace Jeebs.Logging.LogMsg_Tests
 			Assert.Equal("{MsgType} " + value, result.Format);
 		}
 
-		public record TestMsg : LogMsg
+		public record class TestMsg : LogMsg
 		{
 			public override Func<object[]> Args =>
 				() => Array.Empty<object>();

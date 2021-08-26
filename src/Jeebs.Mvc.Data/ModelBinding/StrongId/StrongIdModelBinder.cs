@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Jeebs.Mvc.Data.ModelBinding
@@ -11,7 +10,7 @@ namespace Jeebs.Mvc.Data.ModelBinding
 	/// </summary>
 	/// <typeparam name="T">StrongID type</typeparam>
 	public sealed class StrongIdModelBinder<T> : IModelBinder
-		where T : StrongId, new()
+		where T : IStrongId, new()
 	{
 		/// <summary>
 		/// Get value and attempt to parse as a long

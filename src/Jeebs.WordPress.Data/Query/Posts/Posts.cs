@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using F.WordPressF.DataF;
 using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;

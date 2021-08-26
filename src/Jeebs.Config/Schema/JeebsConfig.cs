@@ -1,14 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-
 namespace Jeebs.Config
 {
 	/// <summary>
 	/// Jeebs Configuration
 	/// </summary>
-	public record JeebsConfig
+	public sealed record class JeebsConfig
 	{
 		/// <summary>
 		/// Path to Jeebs settings configuration section

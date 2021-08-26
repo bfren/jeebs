@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.WordPress.Data.Enums;
 
 namespace Jeebs.WordPress.Data.Entities
@@ -9,7 +8,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Comment entity
 	/// </summary>
-	public abstract record WpCommentEntity : WpCommentEntityWithId
+	public abstract record class WpCommentEntity : WpCommentEntityWithId
 	{
 		/// <summary>
 		/// PostId

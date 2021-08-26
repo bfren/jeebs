@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Entities;
 using static F.OptionF;
@@ -10,7 +8,7 @@ using static F.OptionF;
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="ITableMap"/>
-	public sealed record TableMap : ITableMap
+	public sealed record class TableMap : ITableMap
 	{
 		/// <inheritdoc/>
 		public ITable Table { get; init; }
@@ -80,7 +78,7 @@ namespace Jeebs.Data.Mapping
 		public static class Msg
 		{
 			/// <summary>No writeable columns found (i.e. they are all marked as Id / Ignore / Computed)</summary>
-			public sealed record NoWriteableColumnsFoundMsg : IMsg { }
+			public sealed record class NoWriteableColumnsFoundMsg : IMsg { }
 		}
 	}
 }

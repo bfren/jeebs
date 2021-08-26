@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Globalization;
 using Jeebs;
 using static F.OptionF;
@@ -49,7 +48,7 @@ namespace F
 		{
 			/// <summary>Unable to parse DateTime string</summary>
 			/// <param name="Value">DateTime string</param>
-			public sealed record InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
+			public sealed record class InvalidDateTimeMsg(string Value) : WithValueMsg<string> { }
 		}
 	}
 }

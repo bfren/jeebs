@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using System.Text;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -118,7 +117,7 @@ namespace Jeebs.Data.Clients.SqlServer
 			}
 
 			// Add OFFSET and FETCH
-			if (parts.Maximum > 0 && parts.Skip >= 0)
+			if (parts.Maximum > 0)
 			{
 				sql.Append($" OFFSET {parts.Skip} ROWS");
 				sql.Append($" FETCH NEXT {parts.Maximum} ROWS ONLY");

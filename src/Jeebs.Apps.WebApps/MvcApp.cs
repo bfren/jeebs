@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -38,11 +37,6 @@ namespace Jeebs.Apps
 		/// CookiePolicyOptions
 		/// </summary>
 		protected readonly CookiePolicyOptions cookiePolicyOptions = new();
-
-		/// <summary>
-		/// [Optional] MVC Compatibility Version
-		/// </summary>
-		protected readonly CompatibilityVersion? compatibilityVersion;
 
 		/// <summary>
 		/// [Optional] JsonSerializerOptions
@@ -158,7 +152,7 @@ namespace Jeebs.Apps
 			var defaultOptions = F.JsonF.CopyOptions();
 
 			// Set options
-			opt.JsonSerializerOptions.IgnoreNullValues = (jsonSerialiserOptions ?? defaultOptions).IgnoreNullValues;
+			opt.JsonSerializerOptions.DefaultIgnoreCondition = (jsonSerialiserOptions ?? defaultOptions).DefaultIgnoreCondition;
 			opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
 			opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
 			opt.JsonSerializerOptions.NumberHandling = (jsonSerialiserOptions ?? defaultOptions).NumberHandling;

@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs;
 using Jeebs.Linq;
 using Jeebs.WordPress.Data;
@@ -32,7 +30,7 @@ namespace F.WordPressF.DataF
 					var postMeta = from m in postsMeta
 								   let key = m.Key
 								   let value = m.Value
-								   where m.PostId == post.Id.Value
+								   where m.PostId == post.Id
 								   && !string.IsNullOrEmpty(key)
 								   && !string.IsNullOrEmpty(value)
 								   select new KeyValuePair<string, string>(key, value);

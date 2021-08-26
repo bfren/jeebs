@@ -59,6 +59,6 @@ namespace Jeebs.Reflection.ObjectExtensions_Tests
 			Assert.False(result);
 		}
 
-		public sealed record Test(string Foo);
+		public sealed record class Test(string Foo);
 	}
 }

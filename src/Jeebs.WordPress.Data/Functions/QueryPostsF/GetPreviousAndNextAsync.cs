@@ -1,9 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
@@ -43,13 +40,13 @@ namespace F.WordPressF.DataF
 				);
 		}
 
-		private record PostWithId : WpPostEntityWithId;
+		private record class PostWithId : WpPostEntityWithId;
 
 		public static partial class Msg
 		{
 			/// <summary>Error while calculating previous and next posts</summary>
 			/// <param name="Exception">Exception</param>
-			public sealed record ErrorWhileGettingPreviousAndNextPostsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorWhileGettingPreviousAndNextPostsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

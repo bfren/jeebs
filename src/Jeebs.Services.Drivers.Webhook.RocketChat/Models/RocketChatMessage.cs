@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Jeebs.Config;
 
 namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
@@ -9,7 +8,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 	/// <summary>
 	/// RocketChat message
 	/// </summary>
-	public sealed record RocketChatMessage
+	public sealed record class RocketChatMessage
 	{
 		/// <summary>
 		/// Message alias - will be set to the Application name

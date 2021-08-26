@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Logging;
 using Xunit;
 
@@ -62,7 +61,7 @@ namespace Jeebs.ExceptionMsg_Tests
 			Assert.Equal(value, result.Level);
 		}
 
-		public record TestMsg : ExceptionMsg
+		public record class TestMsg : ExceptionMsg
 		{
 			public TestMsg() { }
 			public TestMsg(Exception ex) : base(ex) { }

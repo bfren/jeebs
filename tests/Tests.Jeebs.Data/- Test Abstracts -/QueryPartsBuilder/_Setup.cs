@@ -8,7 +8,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 		where TBuilder : QueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		protected abstract TBuilder GetConfiguredBuilder(IExtract extract);
 
@@ -23,13 +23,13 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			return (builder, new(extract, parts));
 		}
 
-		public record Vars(
+		public record class Vars(
 			IExtract Extract,
 			QueryParts Parts
 		);
 	}
 
-	public record TestTable0 : ITable
+	public record class TestTable0 : ITable
 	{
 		private readonly string name;
 
@@ -42,7 +42,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			name;
 	}
 
-	public record TestTable1 : ITable
+	public record class TestTable1 : ITable
 	{
 		private readonly string name;
 

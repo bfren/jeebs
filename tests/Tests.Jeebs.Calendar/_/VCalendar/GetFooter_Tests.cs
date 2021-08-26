@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Xunit;
 
-namespace Jeebs.Mvc.Calendar.VCalendar_Tests
+namespace Jeebs.Calendar.VCalendar_Tests
 {
 	public class GetFooter_Tests
 	{

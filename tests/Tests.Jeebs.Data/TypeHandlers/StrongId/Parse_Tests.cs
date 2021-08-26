@@ -22,7 +22,7 @@ namespace Jeebs.Data.TypeHandlers.StrongId_Tests
 			var result = handler.Parse(input);
 
 			// Assert
-			Assert.True(result == 0);
+			Assert.True(result.Value == 0);
 		}
 
 		[Theory]
@@ -38,9 +38,9 @@ namespace Jeebs.Data.TypeHandlers.StrongId_Tests
 			var result = handler.Parse(input);
 
 			// Assert
-			Assert.True(result == 42);
+			Assert.True(result.Value == 42);
 		}
 
-		public sealed record TestId() : StrongId(0);
+		public readonly record struct TestId(ulong Value) : IStrongId;
 	}
 }

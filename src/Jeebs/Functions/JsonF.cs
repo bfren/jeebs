@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
@@ -130,17 +129,17 @@ namespace F
 		{
 			/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>A null or empty string cannot be deserialised</summary>
-			public sealed record DeserialisingNullOrEmptyStringMsg : IMsg { }
+			public sealed record class DeserialisingNullOrEmptyStringMsg : IMsg { }
 
 			/// <summary>The object was deserialised but returned null</summary>
-			public sealed record DeserialisingReturnedNullMsg : IMsg { }
+			public sealed record class DeserialisingReturnedNullMsg : IMsg { }
 
 			/// <summary>Exception caught during <see cref="JsonSerializer.Serialize{TValue}(TValue, JsonSerializerOptions?)"/></summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record SerialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class SerialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

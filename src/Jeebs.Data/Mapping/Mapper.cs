@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections.Concurrent;
 using Jeebs.Data.Entities;
 using Jeebs.Data.Exceptions;
@@ -123,7 +122,7 @@ namespace Jeebs.Data.Mapping
 		{
 			/// <summary>The entity being requested has not been mapped yet</summary>
 			/// <typeparam name="TEntity">Entity type</typeparam>
-			public sealed record TryingToGetUnmappedEntityMsg<TEntity> : IMsg { }
+			public sealed record class TryingToGetUnmappedEntityMsg<TEntity> : IMsg { }
 		}
 	}
 }

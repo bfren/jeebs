@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Linq;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
@@ -47,7 +46,7 @@ namespace Jeebs.WordPress.Data
 			public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
 			{
 				// Add Taxonomy
-				if (taxonomy is Taxonomy)
+				if (taxonomy is not null)
 				{
 					return AddWhere(parts, T.TermTaxonomy, t => t.Taxonomy, Compare.Equal, taxonomy);
 				}

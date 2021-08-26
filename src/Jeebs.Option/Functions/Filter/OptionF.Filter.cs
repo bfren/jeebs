@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs;
 
 namespace F
@@ -32,7 +31,7 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>Predicate was false</summary>
-			public sealed record FilterPredicateWasFalseMsg : IMsg { }
+			public sealed record class FilterPredicateWasFalseMsg : IMsg { }
 		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
@@ -57,6 +56,6 @@ namespace F.Internals
 	public static class OptionConverterMsg
 	{
 		/// <summary>Deserialisation returned a null value</summary>
-		public sealed record DeserialisingReturnedNullMsg() : IMsg { }
+		public sealed record class DeserialisingReturnedNullMsg() : IMsg { }
 	}
 }

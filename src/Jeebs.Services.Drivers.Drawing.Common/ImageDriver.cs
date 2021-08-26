@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.IO;
 using Jeebs.Services.Drawing;
 using static F.OptionF;
 
@@ -37,7 +36,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		public static class Msg
 		{
 			/// <summary>The image file was not found</summary>
-			public sealed record ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
+			public sealed record class ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
 		}
 	}
 }

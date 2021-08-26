@@ -55,7 +55,7 @@ namespace Jeebs.Data.TypeHandlers.Json_Tests
 			Assert.Equal(expected, result);
 		}
 
-		public record Test
+		public record class Test
 		{
 			public string Foo { get; set; } = string.Empty;
 

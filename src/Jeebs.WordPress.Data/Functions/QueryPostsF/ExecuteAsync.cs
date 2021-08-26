@@ -1,15 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress.Data.Querying;
 using static F.OptionF;
 
 namespace F.WordPressF.DataF
@@ -88,10 +84,10 @@ namespace F.WordPressF.DataF
 		{
 			/// <summary>Unable to get posts query</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryPostsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ErrorGettingQueryPostsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
-			public sealed record UnrecognisedPagedListTypeMsg : IMsg { }
+			public sealed record class UnrecognisedPagedListTypeMsg : IMsg { }
 		}
 	}
 }

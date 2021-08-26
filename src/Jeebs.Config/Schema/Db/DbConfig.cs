@@ -1,14 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-
 namespace Jeebs.Config
 {
 	/// <summary>
 	/// Database configuration
 	/// </summary>
-	public record DbConfig
+	public sealed record class DbConfig
 	{
 		/// <summary>
 		/// Path to database settings configuration section
@@ -28,11 +26,11 @@ namespace Jeebs.Config
 			get =>
 				authenticationConnectionValue ?? Default;
 
-			set =>
+			init =>
 				authenticationConnectionValue = value;
 		}
 
-		private string? authenticationConnectionValue;
+		private readonly string? authenticationConnectionValue;
 
 		/// <summary>
 		/// Dictionary of database connections
@@ -43,22 +41,22 @@ namespace Jeebs.Config
 		/// Retrieve default Connection, unless name is set
 		/// </summary>
 		/// <param name="name">[Optional] Connection name</param>
-		/// <exception cref="Jx.Config.DefaultDbConnectionUndefinedException"></exception>
-		/// <exception cref="Jx.Config.NoDbConnectionsException"></exception>
-		/// <exception cref="Jx.Config.NamedDbConnectionNotFoundException"></exception>
+		/// <exception cref="DefaultDbConnectionUndefinedException"></exception>
+		/// <exception cref="NoDbConnectionsException"></exception>
+		/// <exception cref="NamedDbConnectionNotFoundException"></exception>
 		public DbConnectionConfig GetConnection(string? name = null)
 		{
 			// If name is null or empty, use Default connection
 			string connection = string.IsNullOrWhiteSpace(name) ? Default : name;
 			if (string.IsNullOrEmpty(connection))
 			{
-				throw new Jx.Config.DefaultDbConnectionUndefinedException("Default database connection is not defined.");
+				throw new DefaultDbConnectionUndefinedException("Default database connection is not defined.");
 			}
 
 			// Attempt to retrieve the connection
 			if (Connections.Count == 0)
 			{
-				throw new Jx.Config.NoDbConnectionsException("At least one database connection must be defined.");
+				throw new NoDbConnectionsException("At least one database connection must be defined.");
 			}
 
 			if (Connections.TryGetValue(connection, out var config))
@@ -67,7 +65,7 @@ namespace Jeebs.Config
 			}
 			else
 			{
-				throw new Jx.Config.NamedDbConnectionNotFoundException(connection);
+				throw new NamedDbConnectionNotFoundException(connection);
 			}
 		}
 

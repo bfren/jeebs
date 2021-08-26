@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29209.62
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
@@ -214,9 +214,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsoleWp", "apps\AppCon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc", "tests\Tests.Jeebs.Mvc\Tests.Jeebs.Mvc.csproj", "{4D4D46ED-4332-48E4-AB7B-37D82879350A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Calendar", "src\Jeebs.Calendar\Jeebs.Mvc.Calendar.csproj", "{A8B46561-04F5-475B-AE85-63A04B5C6629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Calendar", "src\Jeebs.Calendar\Jeebs.Calendar.csproj", "{A8B46561-04F5-475B-AE85-63A04B5C6629}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Mvc.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Calendar", "tests\Tests.Jeebs.Calendar\Tests.Jeebs.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data.Types", "src\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj", "{8E915008-C90F-4268-AB01-25F1D5022CD8}"
 EndProject
@@ -224,7 +224,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Abstraction
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Data.Types", "tests\Tests.Jeebs.WordPress.Data.Types\Tests.Jeebs.WordPress.Data.Types.csproj", "{89815535-A65E-428A-B63B-87D1793E22C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress.Abstractions", "tests\Tests.Jeebs.WordPress.Abstractions\Tests.Jeebs.WordPress.Abstractions.csproj", "{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Abstractions", "tests\Tests.Jeebs.WordPress.Abstractions\Tests.Jeebs.WordPress.Abstractions.csproj", "{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Option.Abstractions", "src\Jeebs.Option.Abstractions\Jeebs.Option.Abstractions.csproj", "{E44357C0-3F59-4653-B059-CE8F23EDE208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -495,6 +497,10 @@ Global
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -581,12 +587,13 @@ Global
 		{3EDE4DCA-D279-4D90-A647-E5469D58DF18} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{8691C959-1846-44C1-8D2B-23B97F2CF1A6} = {A256449B-4234-43DD-B18F-741D69906712}
 		{4D4D46ED-4332-48E4-AB7B-37D82879350A} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
-		{A8B46561-04F5-475B-AE85-63A04B5C6629} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
-		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
+		{A8B46561-04F5-475B-AE85-63A04B5C6629} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{8E915008-C90F-4268-AB01-25F1D5022CD8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{859A657E-D84F-42AB-9BBB-8EBD6EED1873} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{89815535-A65E-428A-B63B-87D1793E22C6} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
+		{E44357C0-3F59-4653-B059-CE8F23EDE208} = {64C5C4E6-C78E-44F9-8DCD-488AFC966351}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

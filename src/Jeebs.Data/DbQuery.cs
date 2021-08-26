@@ -1,11 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using static F.DataF.QueryF;
@@ -21,11 +18,11 @@ namespace Jeebs.Data
 		{
 			/// <summary>Error getting query from parts</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+			public sealed record class ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
 
 			/// <summary>Error getting count query from parts</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+			public sealed record class ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
 		}
 	}
 

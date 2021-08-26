@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 using NSubstitute;
@@ -53,6 +52,6 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			public TestException(string message, Exception inner) : base(message, inner) { }
 		}
 
-		public sealed record TestTable() : Table(F.Rnd.Str);
+		public sealed record class TestTable() : Table(F.Rnd.Str);
 	}
 }

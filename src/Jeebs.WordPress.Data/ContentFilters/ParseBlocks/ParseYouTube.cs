@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text.RegularExpressions;
 using static F.JsonF;
 
@@ -73,6 +72,6 @@ namespace Jeebs.WordPress.Data.ContentFilters
 		/// Used to parse YouTube JSON
 		/// </summary>
 		/// <param name="Url">YouTube URL</param>
-		private sealed record YouTubeParsed(string Url);
+		private sealed record class YouTubeParsed(string Url);
 	}
 }

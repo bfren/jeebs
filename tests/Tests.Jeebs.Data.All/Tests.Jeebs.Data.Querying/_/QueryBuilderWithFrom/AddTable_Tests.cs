@@ -42,6 +42,6 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 			);
 		}
 
-		public sealed record TestTable() : Table(F.Rnd.Str);
+		public sealed record class TestTable() : Table(F.Rnd.Str);
 	}
 }

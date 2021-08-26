@@ -1,12 +1,6 @@
 // Jeebs Test Applications
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 namespace AppRazor
 {
 	public class Startup

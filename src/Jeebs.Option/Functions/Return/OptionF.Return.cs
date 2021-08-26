@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs;
 
 namespace F
@@ -83,10 +82,10 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>Value was null when trying to wrap using Return</summary>
-			public sealed record NullValueMsg : IMsg { }
+			public sealed record class NullValueMsg : IMsg { }
 
 			/// <summary>Allow null was set to false when trying to return null value</summary>
-			public sealed record AllowNullWasFalseMsg : IMsg { }
+			public sealed record class AllowNullWasFalseMsg : IMsg { }
 		}
 	}
 }

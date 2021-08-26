@@ -24,17 +24,14 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 			return (builder, new(client, schema, table));
 		}
 
-		public sealed record Vars(
+		public sealed record class Vars(
 			IDbClient Client,
 			IWpDbSchema Schema,
 			TestTable Table
 		);
 	}
 
-	public sealed record TestId(ulong Value) : StrongId(Value)
-	{
-		public TestId() : this(0) { }
-	}
+	public readonly record struct TestId(ulong Value) : IStrongId;
 
 	public class TestPartsBuilder : Query.PartsBuilder<TestId>
 	{
@@ -49,7 +46,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
 		public override IColumn IdColumn { get; }
 	}
 
-	public sealed record TestTable : ITable
+	public sealed record class TestTable : ITable
 	{
 		private readonly string name;
 

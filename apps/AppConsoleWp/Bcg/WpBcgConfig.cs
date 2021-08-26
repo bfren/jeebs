@@ -5,7 +5,5 @@ using Jeebs.Config;
 
 namespace AppConsoleWp.Bcg
 {
-	public sealed record WpBcgConfig : WpConfig
-	{
-	}
+	public sealed record class WpBcgConfig : WpConfig;
 }

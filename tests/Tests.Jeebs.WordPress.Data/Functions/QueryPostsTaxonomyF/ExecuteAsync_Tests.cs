@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Threading.Tasks;
 using Jeebs;
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
@@ -41,6 +40,6 @@ namespace F.WordPressF.DataF.QueryPostsTaxonomyF_Tests
 			await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
 		}
 
-		public record Test : WpTermEntity;
+		public record class Test : WpTermEntity;
 	}
 }

@@ -1,14 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-
 namespace Jeebs.WordPress.Data.Entities
 {
 	/// <summary>
 	/// Link entity
 	/// </summary>
-	public abstract record WpLinkEntity : WpLinkEntityWithId
+	public abstract record class WpLinkEntity : WpLinkEntityWithId
 	{
 		/// <summary>
 		/// Url

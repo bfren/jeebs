@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text;
 using Jeebs;
 using Sodium;
@@ -66,23 +65,23 @@ namespace F
 		{
 			/// <summary>Something went wrong while generating a key</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GeneratingKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GeneratingKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Something went wrong while generating a nonce</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GeneratingNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GeneratingNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>An unknown error occurred while creating the hash</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GenericHashExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GenericHashExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Error converting string to byte array</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record GettingBytesForGenericHashExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class GettingBytesForGenericHashExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 
 			/// <summary>Hash bytes must be between 16 and 64</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record HashBytesMustBeBetween16And64ExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class HashBytesMustBeBetween16And64ExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

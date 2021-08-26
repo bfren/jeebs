@@ -6,7 +6,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 	/// <summary>
 	/// RocketChat Attachment Field
 	/// </summary>
-	public sealed record RocketChatAttachmentField
+	public sealed record class RocketChatAttachmentField
 	{
 		/// <summary>
 		/// Whether or not this is a short field

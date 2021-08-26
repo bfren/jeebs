@@ -1,9 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
@@ -43,7 +40,7 @@ namespace F.WordPressF.DataF
 			/// <summary>An exception occured while applying content filters to posts</summary>
 			/// <typeparam name="T">Post Model type</typeparam>
 			/// <param name="Exception">Exception object</param>
-			public sealed record ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

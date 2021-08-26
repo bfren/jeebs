@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Comment entity ID properties
 	/// </summary>
-	public abstract record WpCommentEntityWithId : IWithId<WpCommentId>
+	public abstract record class WpCommentEntityWithId : IWithId<WpCommentId>
 	{
 		/// <summary>
 		/// Id

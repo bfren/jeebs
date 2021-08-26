@@ -1,10 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs;
 
 namespace F
@@ -51,19 +48,19 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>Base UnwrapSingle error message</summary>
-			public abstract record UnwrapSingleErrorMsg(UnwrapSingleError Error) : IMsg { }
+			public abstract record class UnwrapSingleErrorMsg(UnwrapSingleError Error) : IMsg { }
 
 			/// <summary>No items in the list</summary>
-			public sealed record UnwrapSingleNoItemsMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
+			public sealed record class UnwrapSingleNoItemsMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
 
 			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleTooManyItemsErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.TooManyItems) { }
+			public sealed record class UnwrapSingleTooManyItemsErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.TooManyItems) { }
 
 			/// <summary>Too many items in the list</summary>
-			public sealed record UnwrapSingleIncorrectTypeErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.IncorrectType) { }
+			public sealed record class UnwrapSingleIncorrectTypeErrorMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.IncorrectType) { }
 
 			/// <summary>Not a list</summary>
-			public sealed record UnwrapSingleNotAListMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
+			public sealed record class UnwrapSingleNotAListMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
 
 			/// <summary>
 			/// Possible reasons for

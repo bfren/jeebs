@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsOptions"/>
-		public sealed record PostsOptions : Querying.PostsOptions
+		public sealed record class PostsOptions : Querying.PostsOptions
 		{
 			/// <summary>
 			/// Internal creation only

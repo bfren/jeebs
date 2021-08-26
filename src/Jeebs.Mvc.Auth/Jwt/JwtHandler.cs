@@ -1,9 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Linq;
 using Microsoft.AspNetCore.Authorization;
@@ -107,10 +105,10 @@ namespace Jeebs.Mvc.Auth.Jwt
 		public static class Msg
 		{
 			/// <summary>Unable to find Authorization header in headers dictionary</summary>
-			public sealed record MissingAuthorisationHeaderMsg : IMsg { }
+			public sealed record class MissingAuthorisationHeaderMsg : IMsg { }
 
 			/// <summary>The Authorization header was not a valid Bearer</summary>
-			public sealed record InvalidAuthorisationHeaderMsg : IMsg { }
+			public sealed record class InvalidAuthorisationHeaderMsg : IMsg { }
 		}
 	}
 }

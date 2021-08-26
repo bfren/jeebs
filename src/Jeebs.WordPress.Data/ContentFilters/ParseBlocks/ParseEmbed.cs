@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Text.RegularExpressions;
 using static F.JsonF;
 
@@ -55,7 +54,7 @@ namespace Jeebs.WordPress.Data.ContentFilters
 		/// <param name="Url">Embedded resource URL</param>
 		/// <param name="Type">Resource type</param>
 		/// <param name="ProviderNameSlug">Provider</param>
-		internal sealed record EmbedParsed(string Url, EmbedType Type, Provider ProviderNameSlug);
+		internal sealed record class EmbedParsed(string Url, EmbedType Type, Provider ProviderNameSlug);
 
 		/// <summary>
 		/// Supported embed types

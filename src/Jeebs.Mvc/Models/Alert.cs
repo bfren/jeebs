@@ -8,5 +8,5 @@ namespace Jeebs.Mvc.Models
 	/// </summary>
 	/// <param name="Type">Alert type</param>
 	/// <param name="Text">Alert text</param>
-	public sealed record Alert(AlertType Type, string Text);
+	public sealed record class Alert(AlertType Type, string Text);
 }

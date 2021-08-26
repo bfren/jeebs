@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// User Table
 	/// </summary>
-	public sealed record UserTable : Table
+	public sealed record class UserTable : Table
 	{
 		/// <summary>
 		/// UserId

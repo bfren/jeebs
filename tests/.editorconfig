@@ -6,11 +6,14 @@ file_header_template = Jeebs Unit Tests\nCopyright (c) bfren.uk - licensed under
 # RCS1021: Convert lambda expression body to expression-body.
 dotnet_diagnostic.RCS1021.severity = none
 
-# RCS1090: Add call to 'ConfigureAwait' (or vice versa).
-dotnet_diagnostic.RCS1090.severity = none
-
 # RCS1032: Remove redundant parentheses.
 dotnet_diagnostic.RCS1032.severity = none
 
+# RCS1090: Add call to 'ConfigureAwait' (or vice versa).
+dotnet_diagnostic.RCS1090.severity = none
+
 # RCS1118: Mark local variable as const.
 dotnet_diagnostic.RCS1118.severity = none
+
+# RCS1197: Optimize StringBuilder.Append/AppendLine call.
+dotnet_diagnostic.RCS1197.severity = none

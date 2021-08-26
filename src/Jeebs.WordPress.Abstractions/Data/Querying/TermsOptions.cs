@@ -7,7 +7,7 @@ using Jeebs.WordPress.Data.Enums;
 namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryTermsOptions"/>
-	public abstract record TermsOptions : Options<WpTermId>, IQueryTermsOptions
+	public abstract record class TermsOptions : Options<WpTermId>, IQueryTermsOptions
 	{
 		/// <summary>
 		/// IQueryTermsPartsBuilder

@@ -39,9 +39,9 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 		}
 	}
 
-	public sealed record TestModel(int Foo, bool Bar);
+	public sealed record class TestModel(int Foo, bool Bar);
 
-	public sealed record TestTable0() : Table(nameof(TestTable0))
+	public sealed record class TestTable0() : Table(nameof(TestTable0))
 	{
 		public const string Prefix = "Test";
 
@@ -50,7 +50,7 @@ namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests
 		public string Ignore { get; set; } = Prefix + nameof(Ignore);
 	}
 
-	public sealed record TestTable1() : Table(nameof(TestTable1))
+	public sealed record class TestTable1() : Table(nameof(TestTable1))
 	{
 		public const string Prefix = "Test";
 

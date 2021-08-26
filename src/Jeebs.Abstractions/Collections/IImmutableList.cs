@@ -1,9 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-
 namespace Jeebs
 {
 	/// <summary>
@@ -29,11 +26,6 @@ namespace Jeebs
 		IEnumerable<T> AsEnumerable();
 
 		/// <summary>
-		/// Clone the <see cref="IImmutableList{T}"/>
-		/// </summary>
-		IImmutableList<T> Clone();
-
-		/// <summary>
 		/// Return the <see cref="IImmutableList{T}"/> as an array
 		/// </summary>
 		T[] ToArray();
@@ -49,17 +41,31 @@ namespace Jeebs
 		/// <param name="add">Item to add</param>
 		IImmutableList<T> With(T add);
 
-		///// <summary>
-		///// Create a new <see cref="IImmutableList{T}"/> with the specified items added to the end
-		///// </summary>
-		///// <param name="collection">Collection of items to add</param>
-		//IImmutableList<T> WithRange(IEnumerable<T> collection);
+		/// <summary>
+		/// Create a new <see cref="IImmutableList{T}"/> without the specified item
+		/// </summary>
+		/// <param name="remove">Item to remove</param>
+		IImmutableList<T> Without(T remove);
 
 		/// <summary>
 		/// Create a new <see cref="IImmutableList{T}"/> with the specified items added to the end
 		/// </summary>
-		/// <param name="collection">Collection of items to add</param>
-		IImmutableList<T> WithRange(params T[] collection);
+		/// <param name="add">Collection of items to add</param>
+		IImmutableList<T> WithRange(params T[] add);
+
+		/// <summary>
+		/// Create a new <see cref="IImmutableList{T}"/> with the specified items removed
+		/// </summary>
+		/// <param name="remove">Collection of items to remove</param>
+		IImmutableList<T> WithoutRange(params T[] remove);
+
+		/// <summary>
+		/// Create a new <see cref="IImmutableList{T}"/> with one item replaced by another
+		/// </summary>
+		/// <param name="remove">Item to remove</param>
+		/// <param name="add">Item to add</param>
+		/// <returns></returns>
+		IImmutableList<T> Replace(T remove, T add);
 
 		/// <summary>
 		/// Filter the list based on <paramref name="predicate"/>

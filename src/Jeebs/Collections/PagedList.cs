@@ -1,15 +1,13 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-
 namespace Jeebs
 {
 	/// <inheritdoc cref="IPagedList{T}"/>
-	public sealed class PagedList<T> : ImmutableList<T>, IPagedList<T>
+	public sealed record class PagedList<T> : ImmutableList<T>, IPagedList<T>
 	{
 		/// <inheritdoc/>
-		public IPagingValues Values { get; }
+		public IPagingValues Values { get; init; }
 
 		/// <summary>
 		/// Create an empty PagedList

@@ -48,6 +48,6 @@ namespace Jeebs.WordPress.Data.ContentFilters
 		/// </summary>
 		/// <param name="Ids">Image IDs</param>
 		/// <param name="Columns">The number of columns to display</param>
-		private record GalleryParsed(int[] Ids, int Columns);
+		private record class GalleryParsed(int[] Ids, int Columns);
 	}
 }

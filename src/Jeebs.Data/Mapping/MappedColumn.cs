@@ -9,7 +9,7 @@ namespace Jeebs.Data.Mapping
 	/// <param name="Table">Table name</param>
 	/// <param name="Name">Column Name</param>
 	/// <param name="Property">Entity property PropertyInfo</param>
-	public sealed record MappedColumn(string Table, string Name, PropertyInfo Property) :
+	public sealed record class MappedColumn(string Table, string Name, PropertyInfo Property) :
 		Column(Table, Name, Property.Name), IMappedColumn
 	{
 		/// <summary>

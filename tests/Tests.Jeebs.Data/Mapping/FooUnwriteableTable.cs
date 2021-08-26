@@ -3,7 +3,7 @@
 
 namespace Jeebs.Data.Mapping
 {
-	public record FooUnwriteableTable : Table
+	public record class FooUnwriteableTable : Table
 	{
 		public string FooId { get; } = "foo_unwriteable_id";
 

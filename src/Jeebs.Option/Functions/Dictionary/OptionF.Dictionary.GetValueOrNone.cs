@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Jeebs;
 
 namespace F
@@ -49,18 +48,18 @@ namespace F
 			public static class Msg
 			{
 				/// <summary>The dictionary is empty</summary>
-				public sealed record DictionaryIsEmptyMsg : IMsg { }
+				public sealed record class DictionaryIsEmptyMsg : IMsg { }
 
 				/// <summary>The dictionary key cannot be null</summary>
-				public sealed record KeyCannotBeNullMsg : IMsg { }
+				public sealed record class KeyCannotBeNullMsg : IMsg { }
 
 				/// <summary>The specified key does not exist in the dictionary</summary>
 				/// <typeparam name="TKey">Key type</typeparam>
-				public sealed record KeyDoesNotExistMsg<TKey>(TKey Key) : IMsg { }
+				public sealed record class KeyDoesNotExistMsg<TKey>(TKey Key) : IMsg { }
 
 				/// <summary>The dictionary value for the specified key was null</summary>
 				/// <typeparam name="TKey">Key type</typeparam>
-				public sealed record NullValueMsg<TKey>(TKey Key) : IMsg { }
+				public sealed record class NullValueMsg<TKey>(TKey Key) : IMsg { }
 			}
 		}
 	}

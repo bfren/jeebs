@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Entities
 	/// <summary>
 	/// Option entity with ID properties
 	/// </summary>
-	public abstract record WpOptionEntityWithId : IWithId<WpOptionId>
+	public abstract record class WpOptionEntityWithId : IWithId<WpOptionId>
 	{
 		/// <summary>
 		/// Id

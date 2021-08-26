@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.IO;
 using Jeebs;
 
 namespace F
@@ -51,11 +49,11 @@ namespace F
 			/// <summary>Exception while creating a new object</summary>
 			/// <typeparam name="T">The type of the object being created</typeparam>
 			/// <param name="Exception">Exception object</param>
-			public sealed record CreateNewExceptionMsg<T>(Exception Exception) : IExceptionMsg { }
+			public sealed record class CreateNewExceptionMsg<T>(Exception Exception) : IExceptionMsg { }
 
 			/// <summary>Unhandled exception</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record class UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
 		}
 	}
 }

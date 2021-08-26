@@ -10,7 +10,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 	public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 		where TOptions : QueryOptions<TId>
 		where TBuilder : class, IQueryPartsBuilder<TId>
-		where TId : StrongId, new()
+		where TId : IStrongId, new()
 	{
 		public abstract void Test00_Calls_Builder_Create_With_Maximum_And_Skip();
 
@@ -84,7 +84,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 			opt.ToParts<TestModel>();
 
 			// Assert
-			builder.Received().AddWhereId(Qp, null, ids);
+			builder.Received().AddWhereId(Qp, default, ids);
 		}
 
 		public abstract void Test04_SortRandom_False_Sort_Empty_Does_Not_Call_Builder_AddSort();
@@ -142,5 +142,5 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		}
 	}
 
-	public sealed record TestModel;
+	public sealed record class TestModel;
 }

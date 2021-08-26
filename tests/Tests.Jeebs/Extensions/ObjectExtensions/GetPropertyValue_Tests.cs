@@ -75,6 +75,6 @@ namespace Jeebs.Reflection.ObjectExtensions_Tests
 			Assert.Equal(value, s1);
 		}
 
-		public sealed record Test(string Foo);
+		public sealed record class Test(string Foo);
 	}
 }

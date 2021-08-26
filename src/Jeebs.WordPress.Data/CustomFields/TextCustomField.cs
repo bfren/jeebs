@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Threading.Tasks;
 using Jeebs.Data;
 using static F.OptionF;
 
@@ -61,7 +59,7 @@ namespace Jeebs.WordPress.Data
 			/// <summary>Meta key not found in MetaDictionary</summary>
 			/// <param name="Type">Custom Field type</param>
 			/// <param name="Value">Meta Key</param>
-			public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+			public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
 		}
 	}
 }

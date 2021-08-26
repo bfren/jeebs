@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 using Xunit;
@@ -45,7 +44,7 @@ namespace F.DataF.QueryBuilderF_Tests
 			Assert.Equal(nameof(table.Foo), r1.Alias);
 		}
 
-		public record BrokenTable : TestTable
+		public record class BrokenTable : TestTable
 		{
 			public BrokenTable() : base(F.Rnd.Str) { }
 
@@ -53,7 +52,7 @@ namespace F.DataF.QueryBuilderF_Tests
 				throw new Exception();
 		}
 
-		public record TestTable : Table
+		public record class TestTable : Table
 		{
 			public const string Prefix =
 				"Bar_";

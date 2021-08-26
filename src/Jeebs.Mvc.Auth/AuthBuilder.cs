@@ -45,7 +45,7 @@ namespace Jeebs.Mvc.Auth
 					CookieAuthenticationDefaults.AuthenticationScheme,
 
 				_ =>
-					throw new Jx.Config.UnsupportedAuthenticationSchemeException(config.Scheme?.ToString() ?? "unknown")
+					throw new UnsupportedAuthenticationSchemeException(config.Scheme?.ToString() ?? "unknown")
 			});
 
 			// Add cookie info
@@ -114,7 +114,7 @@ namespace Jeebs.Mvc.Auth
 			// Ensure JWT configuration is valid
 			if (!config.Jwt.IsValid)
 			{
-				throw new Jx.Config.InvalidJwtConfigurationException();
+				throw new InvalidJwtConfigurationException();
 			}
 
 			// Add services

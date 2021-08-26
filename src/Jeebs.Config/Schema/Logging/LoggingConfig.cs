@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Jeebs.Config.Logging;
 using Jeebs.Logging;
 
@@ -10,7 +9,7 @@ namespace Jeebs.Config
 	/// <summary>
 	/// Logging configuration
 	/// </summary>
-	public record LoggingConfig
+	public sealed record class LoggingConfig
 	{
 		/// <summary>
 		/// Path to this configuration section

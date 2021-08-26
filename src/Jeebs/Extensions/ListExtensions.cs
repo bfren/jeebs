@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
 using static F.OptionF;
 
 namespace Jeebs
@@ -108,19 +106,19 @@ namespace Jeebs
 		public static class Msg
 		{
 			/// <summary>List is empty</summary>
-			public sealed record ListIsEmptyMsg : IMsg { }
+			public sealed record class ListIsEmptyMsg : IMsg { }
 
 			/// <summary>List contains only one item</summary>
-			public sealed record ListContainsSingleItemMsg : IMsg { }
+			public sealed record class ListContainsSingleItemMsg : IMsg { }
 
 			/// <summary>List does not contain the specified item</summary>
-			public sealed record ListDoesNotContainItemMsg<T>(T Value) : WithValueMsg<T>;
+			public sealed record class ListDoesNotContainItemMsg<T>(T Value) : WithValueMsg<T>;
 
 			/// <summary>The specified item is the first in the list (so there is no previous item)</summary>
-			public sealed record ItemIsFirstItemMsg : IMsg { }
+			public sealed record class ItemIsFirstItemMsg : IMsg { }
 
 			/// <summary>The specified item is the last in the list (so there is no next item)</summary>
-			public sealed record ItemIsLastItemMsg : IMsg { }
+			public sealed record class ItemIsLastItemMsg : IMsg { }
 		}
 	}
 }

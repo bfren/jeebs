@@ -7,11 +7,5 @@ namespace Jeebs.WordPress.Data.Entities
 	/// WordPress Term Taxonomy ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpTermTaxonomyId(ulong Value) : StrongId(Value)
-	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public WpTermTaxonomyId() : this(0) { }
-	}
+	public readonly record struct WpTermTaxonomyId(ulong Value) : IStrongId;
 }

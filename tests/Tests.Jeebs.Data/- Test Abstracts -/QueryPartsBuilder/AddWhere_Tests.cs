@@ -10,7 +10,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 		where TBuilder : QueryPartsBuilder<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		public abstract void Test00_Column_Exists_Adds_Where();
 
@@ -55,6 +55,6 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			Assert.IsType<PropertyDoesNotExistOnTypeMsg<TestTable>>(none);
 		}
 
-		public sealed record TestTable(string Foo, string Bar) : Table(F.Rnd.Str);
+		public sealed record class TestTable(string Foo, string Bar) : Table(F.Rnd.Str);
 	}
 }

@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Linq;
-using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
@@ -104,19 +102,19 @@ namespace Jeebs.Auth
 		public static class Msg
 		{
 			/// <summary>Invalid password</summary>
-			public sealed record InvalidPasswordMsg : IMsg { }
+			public sealed record class InvalidPasswordMsg : IMsg { }
 
 			/// <summary>Null or empty email address</summary>
-			public sealed record NullOrEmptyEmailMsg : IMsg { }
+			public sealed record class NullOrEmptyEmailMsg : IMsg { }
 
 			/// <summary>Null or empty password</summary>
-			public sealed record NullOrEmptyPasswordMsg : IMsg { }
+			public sealed record class NullOrEmptyPasswordMsg : IMsg { }
 
 			/// <summary>User not enabled</summary>
-			public sealed record UserNotEnabledMsg(string Value) : WithValueMsg<string> { }
+			public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string> { }
 
 			/// <summary>User not found</summary>
-			public sealed record UserNotFoundMsg(string EmailAddress) : NotFoundMsg { }
+			public sealed record class UserNotFoundMsg(string EmailAddress) : NotFoundMsg { }
 		}
 	}
 }

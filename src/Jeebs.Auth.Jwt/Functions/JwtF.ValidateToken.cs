@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Jeebs;
@@ -61,13 +60,13 @@ namespace F
 		public static partial class Msg
 		{
 			/// <summary>The token has expired</summary>
-			public sealed record TokenHasExpiredMsg : IMsg { }
+			public sealed record class TokenHasExpiredMsg : IMsg { }
 
 			/// <summary>The token is not valid yet</summary>
-			public sealed record TokenIsNotValidYetMsg : IMsg { }
+			public sealed record class TokenIsNotValidYetMsg : IMsg { }
 
 			/// <summary>Exception while validating token</summary>
-			public sealed record ValidatingTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class ValidatingTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

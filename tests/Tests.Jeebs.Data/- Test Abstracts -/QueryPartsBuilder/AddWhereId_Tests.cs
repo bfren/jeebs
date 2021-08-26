@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Jeebs.Data.Enums;
 using Xunit;
 
@@ -9,7 +8,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 {
 	public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 		where TBuilder : QueryPartsBuilder<TId>
-		where TId : StrongId, new()
+		where TId : IStrongId, new()
 	{
 		public abstract void Test00_Id_And_Ids_Null_Returns_Original_Parts();
 
@@ -19,7 +18,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.AddWhereId(v.Parts, null, ImmutableList.Empty<TId>());
+			var result = builder.AddWhereId(v.Parts, default, ImmutableList.Empty<TId>());
 
 			// Assert
 			var some = result.AssertSome();
@@ -88,7 +87,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests
 			var (builder, v) = Setup();
 
 			// Act
-			var result = builder.AddWhereId(v.Parts, null, ids);
+			var result = builder.AddWhereId(v.Parts, default, ids);
 
 			// Assert
 			var some = result.AssertSome();

@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Threading.Tasks;
 using static F.OptionF;
 
 namespace F.OptionF_Tests

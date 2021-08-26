@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data.Mapping;
@@ -34,7 +33,7 @@ namespace F.DataF
 		{
 			/// <summary>Something went wrong while creating a column from the expression</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record UnableToGetColumnFromExpressionExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+			public sealed record class UnableToGetColumnFromExpressionExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
 		}
 	}
 }

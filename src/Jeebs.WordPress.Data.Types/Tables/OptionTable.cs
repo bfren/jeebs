@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Option Table
 	/// </summary>
-	public sealed record OptionTable : Table
+	public sealed record class OptionTable : Table
 	{
 		/// <summary>
 		/// OptionId

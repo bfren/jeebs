@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Post Table
 	/// </summary>
-	public sealed record PostTable : Table
+	public sealed record class PostTable : Table
 	{
 		/// <summary>
 		/// PostId

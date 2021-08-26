@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
@@ -309,9 +306,6 @@ namespace F.DataF.QueryF_Tests
 				$"({string.Join('|', objects)})";
 		}
 
-		public sealed record TestId(ulong Value) : StrongId(Value)
-		{
-			public TestId() : this(0) { }
-		}
+		readonly record struct TestId(ulong Value) : IStrongId;
 	}
 }

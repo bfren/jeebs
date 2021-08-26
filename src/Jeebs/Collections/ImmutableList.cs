@@ -1,11 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs.Linq;
+using Sys = System.Collections.Immutable;
 
 namespace Jeebs
 {
@@ -47,9 +45,9 @@ namespace Jeebs
 	}
 
 	/// <inheritdoc cref="IImmutableList{T}"/>
-	public class ImmutableList<T> : IImmutableList<T>
+	public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableList<T>>
 	{
-		internal List<T> List { get; private init; }
+		internal Sys.ImmutableList<T> List { get; init; }
 
 		/// <inheritdoc/>
 		public Option<T> this[int index] =>
@@ -62,44 +60,48 @@ namespace Jeebs
 		/// <summary>
 		/// Create a new, empty <see cref="ImmutableList{T}"/>
 		/// </summary>
-		public ImmutableList() =>
-			List = new();
+		public ImmutableList() : this(Sys.ImmutableList<T>.Empty) { }
 
 		/// <summary>
 		/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
 		/// </summary>
 		/// <param name="collection">Collection of items to add</param>
-		public ImmutableList(IEnumerable<T> collection) =>
-			List = new(collection);
+		public ImmutableList(IEnumerable<T> collection) : this(Sys.ImmutableList<T>.Empty.AddRange(collection)) { }
+
+		internal ImmutableList(Sys.ImmutableList<T> list) =>
+			List = list;
 
 		/// <inheritdoc/>
 		public IEnumerable<T> AsEnumerable() =>
-			ToList().AsEnumerable();
-
-		/// <inheritdoc/>
-		public IImmutableList<T> Clone() =>
-			new ImmutableList<T>(List);
+			List.AsEnumerable();
 
 		/// <inheritdoc/>
 		public T[] ToArray() =>
-			ToList().ToArray();
+			List.ToArray();
 
 		/// <inheritdoc/>
 		public List<T> ToList() =>
-			new(List);
+			List.ToList();
 
 		/// <inheritdoc/>
 		public IImmutableList<T> With(T add) =>
-			new ImmutableList<T>(new List<T>(List) { add });
+			this with { List = List.Add(add) };
 
 		/// <inheritdoc/>
-		public IImmutableList<T> WithRange(params T[] add)
-		{
-			var newList = new List<T>(List);
-			newList.AddRange(add);
+		public IImmutableList<T> Without(T remove) =>
+			this with { List = List.Remove(remove) };
 
-			return new ImmutableList<T>(newList);
-		}
+		/// <inheritdoc/>
+		public IImmutableList<T> WithRange(params T[] add) =>
+			this with { List = List.AddRange(add) };
+
+		/// <inheritdoc/>
+		public IImmutableList<T> WithoutRange(params T[] remove) =>
+			this with { List = List.RemoveRange(remove) };
+
+		/// <inheritdoc/>
+		public IImmutableList<T> Replace(T remove, T add) =>
+			this with { List = List.Replace(remove, add) };
 
 		/// <inheritdoc/>
 		public IImmutableList<T> Filter(Func<T, bool> predicate) =>
@@ -111,5 +113,25 @@ namespace Jeebs
 
 		IEnumerator IEnumerable.GetEnumerator() =>
 			GetEnumerator();
+
+		/// <summary>
+		/// Compare sequences
+		/// </summary>
+		/// <param name="other">Another list to compare with this one</param>
+		public virtual bool Equals(ImmutableList<T>? other) =>
+			other switch
+			{
+				ImmutableList<T> x =>
+					List.SequenceEqual(x.List),
+
+				_ =>
+					false
+			};
+
+		/// <summary>
+		/// Return list hash code
+		/// </summary>
+		public override int GetHashCode() =>
+			List.GetHashCode();
 	}
 }

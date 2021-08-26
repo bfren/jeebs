@@ -10,7 +10,7 @@ namespace Jeebs.Auth.Data.Tables
 	/// <summary>
 	/// Authentication User Table
 	/// </summary>
-	public sealed record AuthUserTable() : Table("auth_user")
+	public sealed record class AuthUserTable() : Table("auth_user")
 	{
 		/// <summary>
 		/// Prefix added before all columns
@@ -54,6 +54,14 @@ namespace Jeebs.Auth.Data.Tables
 		/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
 		public string PasswordHash =>
 			ColumnPrefix + nameof(PasswordHash);
+
+		/// <inheritdoc cref="AuthUserEntity.TotpSecret"/>
+		public string TotpSecret =>
+			ColumnPrefix + nameof(TotpSecret);
+
+		/// <inheritdoc cref="AuthUserEntity.TotpBackupCodes"/>
+		public string TotpBackupCodes =>
+			ColumnPrefix + nameof(TotpBackupCodes);
 
 		/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
 		public string IsEnabled =>

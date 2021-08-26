@@ -7,7 +7,7 @@ using Jeebs.Data.Mapping;
 namespace Jeebs.Data.Querying
 {
 	/// <inheritdoc cref="IQueryParts"/>
-	public sealed record QueryParts(ITable From) : IQueryParts
+	public sealed record class QueryParts(ITable From) : IQueryParts
 	{
 		/// <inheritdoc/>
 		public bool SelectCount { get; init; }

@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
@@ -32,19 +31,16 @@ namespace Jeebs.Data.Repository_Tests
 			return (client, log, repo);
 		}
 
-		public sealed record Foo : IWithId<FooId>
+		public sealed record class Foo : IWithId<FooId>
 		{
 			public FooId Id { get; init; } = new();
 		}
 
-		public sealed record FooModel : IWithId<FooId>
+		public sealed record class FooModel : IWithId<FooId>
 		{
 			public FooId Id { get; init; } = new();
 		}
 
-		public sealed record FooId(ulong Value) : StrongId(Value)
-		{
-			public FooId() : this(0) { }
-		}
+		public readonly record struct FooId(ulong Value) : IStrongId;
 	}
 }

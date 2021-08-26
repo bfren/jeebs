@@ -11,6 +11,6 @@ namespace Jeebs.WordPress.Data.Entities.WpUserMetaEntityWithId_Tests
 		public override void Test00_Id_Returns_Database_Id() =>
 			Test00(id => new() { Id = new(id) });
 
-		public sealed record Test : WpUserMetaEntityWithId;
+		public sealed record class Test : WpUserMetaEntityWithId;
 	}
 }

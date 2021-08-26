@@ -10,7 +10,7 @@ namespace Jeebs.Mvc.Auth.Models
 	/// <param name="Password">Password</param>
 	/// <param name="RememberMe">Remember Me</param>
 	/// <param name="ReturnUrl">Return URL (after successful sign in)</param>
-	public sealed record SignInModel(string Email, string Password, bool RememberMe, string? ReturnUrl)
+	public sealed record class SignInModel(string Email, string Password, bool RememberMe, string? ReturnUrl)
 	{
 		/// <summary>
 		/// Create empty model

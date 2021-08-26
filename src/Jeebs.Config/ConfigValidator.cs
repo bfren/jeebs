@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Jeebs.Config.Properties;
 using Newtonsoft.Json;
@@ -20,7 +18,7 @@ namespace Jeebs.Config
 		/// Validate a Jeebs config file against the schema
 		/// </summary>
 		/// <exception cref="FileNotFoundException"></exception>
-		/// <exception cref="Jx.Config.ConfigurationSchemaValidationFailedException"></exception>
+		/// <exception cref="ConfigurationSchemaValidationFailedException"></exception>
 		/// <param name="path">Absolute path to Jeebs configuration file</param>
 		public static string Validate(string path)
 		{
@@ -51,7 +49,7 @@ namespace Jeebs.Config
 					sb.AppendLine(item);
 				}
 
-				throw new Jx.Config.ConfigurationSchemaValidationFailedException(sb.ToString());
+				throw new ConfigurationSchemaValidationFailedException(sb.ToString());
 			}
 
 			// Return original path on success

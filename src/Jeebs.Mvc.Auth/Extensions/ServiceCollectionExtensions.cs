@@ -26,7 +26,7 @@ namespace Jeebs.Mvc.Auth
 			}
 
 			// Auth must be enable in configuration settings
-			throw new Jx.Config.AuthNotEnabledException();
+			throw new AuthNotEnabledException();
 		}
 	}
 }

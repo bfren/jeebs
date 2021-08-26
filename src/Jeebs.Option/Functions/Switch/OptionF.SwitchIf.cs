@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs;
 using Jeebs.Exceptions;
 
@@ -72,7 +71,7 @@ namespace F
 		{
 			/// <summary>An exception was caught while executing one of the SwitchIf functions</summary>
 			/// <param name="Exception">Exception object</param>
-			public sealed record SwitchIfFuncExceptionMsg(Exception Exception) : IExceptionMsg { }
+			public sealed record class SwitchIfFuncExceptionMsg(Exception Exception) : IExceptionMsg { }
 		}
 	}
 }

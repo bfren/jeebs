@@ -1,8 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-
 namespace Jeebs.Auth.Data
 {
 	/// <summary>
@@ -19,7 +17,7 @@ namespace Jeebs.Auth.Data
 	}
 
 	/// <inheritdoc cref="IAuthUserWithRoles{TRole}"/>
-	public abstract record AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole>
+	public abstract record class AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole>
 		where TRole : IAuthRole
 	{
 		/// <summary>

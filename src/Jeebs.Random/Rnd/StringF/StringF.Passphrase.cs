@@ -1,10 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
 using Jeebs;
 using static F.OptionF;
 
@@ -135,13 +131,13 @@ namespace F
 			public static class Msg
 			{
 				/// <summary>Number of words must be at least 2</summary>
-				public sealed record NumberOfWordsMustBeAtLeastTwoMsg : IMsg { }
+				public sealed record class NumberOfWordsMustBeAtLeastTwoMsg : IMsg { }
 
 				/// <summary>Number of words must be less than length of word list</summary>
-				public sealed record NumberOfWordsCannotBeMoreThanWordListMsg : IMsg { }
+				public sealed record class NumberOfWordsCannotBeMoreThanWordListMsg : IMsg { }
 
 				/// <summary>The word list was empty</summary>
-				public sealed record EmptyWordListMsg : IMsg { }
+				public sealed record class EmptyWordListMsg : IMsg { }
 			}
 		}
 	}

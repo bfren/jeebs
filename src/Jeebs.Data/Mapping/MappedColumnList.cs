@@ -1,12 +1,10 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-
 namespace Jeebs.Data.Mapping
 {
 	/// <inheritdoc cref="IMappedColumnList"/>
-	public sealed class MappedColumnList : ImmutableList<IMappedColumn>, IMappedColumnList
+	public sealed record class MappedColumnList : ImmutableList<IMappedColumn>, IMappedColumnList
 	{
 		/// <summary>
 		/// Create empty list

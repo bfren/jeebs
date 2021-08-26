@@ -7,11 +7,5 @@ namespace Jeebs.WordPress.Data.Entities
 	/// WordPress Link ID
 	/// </summary>
 	/// <param name="Value">ID Value</param>
-	public sealed record WpLinkId(ulong Value) : StrongId(Value)
-	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public WpLinkId() : this(0) { }
-	}
+	public readonly record struct WpLinkId(ulong Value) : IStrongId;
 }

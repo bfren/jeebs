@@ -1,14 +1,12 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
-
 namespace Jeebs.Config
 {
 	/// <summary>
 	/// Database connection configuration
 	/// </summary>
-	public record DbConnectionConfig
+	public sealed record class DbConnectionConfig
 	{
 		/// <summary>
 		/// Database connection string

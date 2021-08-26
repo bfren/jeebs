@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Threading.Tasks;
 using Jeebs.Linq;
 using Xunit;
 using static F.OptionF;
@@ -186,6 +185,6 @@ namespace Jeebs.Linq_Tests
 			Assert.IsType<InvalidIntegerMsg>(n5);
 		}
 
-		public record InvalidIntegerMsg : IMsg { }
+		public record class InvalidIntegerMsg : IMsg { }
 	}
 }

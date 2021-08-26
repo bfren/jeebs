@@ -1,16 +1,12 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using AppMvc.EfCore;
 using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Mvc.Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace AppMvc
 {

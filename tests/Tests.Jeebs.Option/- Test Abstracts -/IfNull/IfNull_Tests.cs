@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -101,6 +100,6 @@ namespace Jeebs_Tests
 			Assert.Same(msg, none);
 		}
 
-		public sealed record TestMsg : IMsg;
+		public sealed record class TestMsg : IMsg;
 	}
 }

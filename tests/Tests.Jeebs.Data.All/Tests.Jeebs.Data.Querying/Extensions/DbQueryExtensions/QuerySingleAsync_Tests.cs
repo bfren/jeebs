@@ -2,7 +2,6 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System.Data;
-using System.Threading.Tasks;
 using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
@@ -27,11 +26,11 @@ namespace Jeebs.Data.Querying.DbQueryExtensions_Tests
 			await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), transaction);
 		}
 
-		public sealed record TestTable() : Table(F.Rnd.Str)
+		public sealed record class TestTable() : Table(F.Rnd.Str)
 		{
 			public string Foo { get; set; } = nameof(Foo);
 		}
 
-		public sealed record TestModel(int Foo);
+		public sealed record class TestModel(int Foo);
 	}
 }

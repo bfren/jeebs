@@ -6,7 +6,7 @@ using Jeebs.WordPress.Data.Entities;
 namespace Jeebs.WordPress.Data.Querying
 {
 	/// <inheritdoc cref="IQueryPostsMetaOptions"/>
-	public abstract record PostsMetaOptions : Options<WpPostMetaId>, IQueryPostsMetaOptions
+	public abstract record class PostsMetaOptions : Options<WpPostMetaId>, IQueryPostsMetaOptions
 	{
 		/// <summary>
 		/// IQueryPostsMetaPartsBuilder

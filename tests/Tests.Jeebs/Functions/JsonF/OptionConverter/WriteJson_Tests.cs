@@ -41,6 +41,6 @@ namespace F.JsonF_Tests.OptionConverter_Tests
 			Assert.Equal(JsonF.Empty, some);
 		}
 
-		public record Test(string Foo, int Bar);
+		public record class Test(string Foo, int Bar);
 	}
 }

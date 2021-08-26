@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data.Tables
 	/// <summary>
 	/// Term Relationship Table
 	/// </summary>
-	public sealed record TermRelationshipTable : Table
+	public sealed record class TermRelationshipTable : Table
 	{
 		/// <summary>
 		/// PostId

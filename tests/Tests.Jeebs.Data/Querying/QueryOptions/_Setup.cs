@@ -25,12 +25,9 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 		}
 	}
 
-	public record TestId(ulong Value) : StrongId(Value)
-	{
-		public TestId() : this(0) { }
-	}
+	public readonly record struct TestId(ulong Value) : IStrongId;
 
-	public record TestOptions : QueryOptions<TestId>
+	public record class TestOptions : QueryOptions<TestId>
 	{
 		public TestOptions(ITestBuilder builder) : base(builder) { }
 	}

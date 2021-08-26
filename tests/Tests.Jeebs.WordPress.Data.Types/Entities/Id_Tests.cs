@@ -1,14 +1,13 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Xunit;
 
 namespace Jeebs.WordPress.Data.Entities
 {
 	public abstract class Id_Tests<TEntity, TId>
 		where TEntity : IWithId<TId>, new()
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		public abstract void Test00_Id_Returns_Database_Id();
 

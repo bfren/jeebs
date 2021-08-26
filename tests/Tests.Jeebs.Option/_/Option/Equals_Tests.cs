@@ -79,10 +79,10 @@ namespace Jeebs.Option_Tests
 			Assert.False(r1);
 		}
 
-		public record FakeOption : Option<int> { }
+		public record class FakeOption : Option<int> { }
 
-		public record TestMsg0 : IMsg { }
+		public record class TestMsg0 : IMsg { }
 
-		public record TestMsg1 : IMsg { }
+		public record class TestMsg1 : IMsg { }
 	}
 }

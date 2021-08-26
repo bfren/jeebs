@@ -7,7 +7,7 @@ namespace Jeebs
 	/// 'None' option - used to replace null returns (see <seealso cref="Some{T}"/>)
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
-	public sealed record None<T> : Option<T>
+	public sealed record class None<T> : Option<T>
 	{
 		/// <summary>
 		/// Sometimes a reason for the 'None' value may be set

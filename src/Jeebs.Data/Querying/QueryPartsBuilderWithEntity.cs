@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using Jeebs.Data.Mapping;
 
 namespace Jeebs.Data.Querying
@@ -13,7 +12,7 @@ namespace Jeebs.Data.Querying
 	/// <typeparam name="TId">Entity ID type</typeparam>
 	public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuilder<TId>
 		where TEntity : IWithId<TId>
-		where TId : StrongId
+		where TId : IStrongId
 	{
 		private readonly IMapper mapper;
 

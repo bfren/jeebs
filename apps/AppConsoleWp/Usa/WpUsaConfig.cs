@@ -5,7 +5,5 @@ using Jeebs.Config;
 
 namespace AppConsoleWp.Usa
 {
-	public sealed record WpUsaConfig : WpConfig
-	{
-	}
+	public sealed record class WpUsaConfig : WpConfig;
 }

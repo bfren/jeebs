@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
@@ -9,7 +8,7 @@ namespace Jeebs.Services.Drivers.Webhook.RocketChat.Models
 	/// <summary>
 	/// RocketChat Attachment
 	/// </summary>
-	public sealed record RocketChatAttachment
+	public sealed record class RocketChatAttachment
 	{
 		/// <summary>
 		/// Text

@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Xunit;
 using static F.WordPressF.DataF.QueryPostsF;
 
@@ -66,7 +65,7 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			// Assert
 			Assert.Null(r0);
 			Assert.NotNull(r1);
-			Assert.Equal(next, r1!.Value);
+			Assert.Equal(next, r1!.Value.Value);
 		}
 
 		[Fact]
@@ -82,7 +81,7 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 
 			// Assert
 			Assert.NotNull(r0);
-			Assert.Equal(prev, r0!.Value);
+			Assert.Equal(prev, r0!.Value.Value);
 			Assert.Null(r1);
 		}
 
@@ -100,9 +99,9 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 
 			// Assert
 			Assert.NotNull(r0);
-			Assert.Equal(prev, r0!.Value);
+			Assert.Equal(prev, r0!.Value.Value);
 			Assert.NotNull(r1);
-			Assert.Equal(next, r1!.Value);
+			Assert.Equal(next, r1!.Value.Value);
 		}
 	}
 }

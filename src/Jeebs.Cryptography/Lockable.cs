@@ -61,7 +61,7 @@ namespace Jeebs.Cryptography
 		public static class Msg
 		{
 			/// <summary>Encryption key is not the correct length to lock the box</summary>
-			public sealed record InvalidKeyLengthMsg : IMsg { }
+			public sealed record class InvalidKeyLengthMsg : IMsg { }
 		}
 	}
 }

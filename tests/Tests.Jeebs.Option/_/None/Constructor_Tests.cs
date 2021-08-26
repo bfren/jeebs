@@ -21,5 +21,5 @@ namespace Jeebs.None_Tests
 		}
 	}
 
-	public record TestMsg : IMsg { }
+	public record class TestMsg : IMsg { }
 }

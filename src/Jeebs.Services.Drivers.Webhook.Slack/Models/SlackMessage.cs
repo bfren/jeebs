@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Jeebs.Config;
 
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models
@@ -9,7 +8,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models
 	/// <summary>
 	/// Slack Message
 	/// </summary>
-	public sealed record SlackMessage
+	public sealed record class SlackMessage
 	{
 		/// <summary>
 		/// Username (filled with application name)

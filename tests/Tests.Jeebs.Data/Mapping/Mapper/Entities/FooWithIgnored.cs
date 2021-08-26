@@ -5,10 +5,10 @@ using Jeebs.Data.Entities;
 
 namespace Jeebs.Data.Mapping
 {
-	public record FooWithIgnored : IWithId
+	public record class FooWithIgnored : IWithId
 	{
 		[Ignore]
-		public StrongId Id
+		public IStrongId Id
 		{
 			get => FooId;
 			init => FooId = new(value.Value);

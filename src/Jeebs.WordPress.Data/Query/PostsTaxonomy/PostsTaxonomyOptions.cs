@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Data
 	public static partial class Query
 	{
 		/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
-		public sealed record PostsTaxonomyOptions : Querying.PostsTaxonomyOptions
+		public sealed record class PostsTaxonomyOptions : Querying.PostsTaxonomyOptions
 		{
 			/// <summary>
 			/// Internal creation only
@@ -35,7 +35,7 @@ namespace Jeebs.WordPress.Data
 					x => Builder.AddInnerJoin(x, T.TermTaxonomy, tx => tx.Id, T.TermRelationship, tr => tr.TermTaxonomyId)
 				)
 				.SwitchIf(
-					_ => Id?.Value > 0 || Ids.Count > 0,
+					_ => Id.Value > 0 || Ids.Count > 0,
 					x => Builder.AddWhereId(x, Id, Ids)
 				)
 				.SwitchIf(

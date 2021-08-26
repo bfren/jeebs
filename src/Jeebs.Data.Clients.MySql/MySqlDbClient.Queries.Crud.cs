@@ -18,10 +18,11 @@ namespace Jeebs.Data.Clients.MySql
 			var (col, par) = GetColumnsForCreateQuery(columns);
 
 			// Build and return query
-			return
-				$"INSERT INTO {Escape(table)} {JoinList(col, true)} " +
-				$"VALUES {JoinList(par, true)};" +
-				" SELECT LAST_INSERT_ID();"
+			return new StringBuilder()
+				.Append($"INSERT INTO {Escape(table)} {JoinList(col, true)} ")
+				.Append($"VALUES {JoinList(par, true)};")
+				.Append(" SELECT LAST_INSERT_ID();")
+				.ToString()
 			;
 		}
 
@@ -37,10 +38,11 @@ namespace Jeebs.Data.Clients.MySql
 			var col = GetColumnsForRetrieveQuery(columns);
 
 			// Build and return query
-			return
-				$"SELECT {JoinList(col, false)} " +
-				$"FROM {Escape(table)} " +
-				$"WHERE {Escape(idColumn)} = {id};"
+			return new StringBuilder()
+				.Append($"SELECT {JoinList(col, false)} ")
+				.Append($"FROM {Escape(table)} ")
+				.Append($"WHERE {Escape(idColumn)} = {id};")
+				.ToString()
 			;
 		}
 
@@ -69,11 +71,11 @@ namespace Jeebs.Data.Clients.MySql
 			AddVersionToSetList(set, versionColumn);
 
 			// Begin query
-			var sql = new StringBuilder(
-				$"UPDATE {Escape(table)} " +
-				$"SET {JoinList(set, false)} " +
-				$"WHERE {Escape(idColumn)} = {id}"
-			);
+			var sql = new StringBuilder()
+				.Append($"UPDATE {Escape(table)} ")
+				.Append($"SET {JoinList(set, false)} ")
+				.Append($"WHERE {Escape(idColumn)} = {id}")
+			;
 
 			// Add WHERE Version
 			AddVersionToWhere(sql, versionColumn);
@@ -100,10 +102,10 @@ namespace Jeebs.Data.Clients.MySql
 		)
 		{
 			// Begin query
-			var sql = new StringBuilder(
-				$"DELETE FROM {Escape(table)} " +
-				$"WHERE {Escape(idColumn)} = {id}"
-			);
+			var sql = new StringBuilder()
+				.Append($"DELETE FROM {Escape(table)} ")
+				.Append($"WHERE {Escape(idColumn)} = {id}")
+			;
 
 			// Add WHERE Version
 			AddVersionToWhere(sql, versionColumn);

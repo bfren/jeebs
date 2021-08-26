@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
 using System.Collections;
-using System.Linq;
 using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data.Enums;
@@ -223,11 +221,8 @@ namespace F.DataF.QueryF_Tests
 			Assert.IsType<InOperatorRequiresValueToBeAListMsg>(none);
 		}
 
-		public sealed record TestId(ulong Value) : StrongId(Value)
-		{
-			public TestId() : this(0) { }
-		}
+		public readonly record struct TestId(ulong Value) : IStrongId;
 
-		public sealed record TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
+		public sealed record class TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
 	}
 }

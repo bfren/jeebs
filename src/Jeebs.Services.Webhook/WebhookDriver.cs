@@ -1,11 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using Jeebs.Config;
-using Jeebs.Logging;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
 using static F.ThreadF;
@@ -14,7 +10,7 @@ namespace Jeebs.Services.Webhook
 {
 	/// <inheritdoc cref="IWebhookDriver{TConfig, TMessage}"/>
 	public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebhookDriver<TConfig, TMessage>
-		where TConfig : WebhookServiceConfig
+		where TConfig : IWebhookServiceConfig
 		where TMessage : notnull
 	{
 		/// <summary>

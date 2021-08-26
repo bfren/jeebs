@@ -49,10 +49,10 @@ namespace F.WordPressF.DataF.QueryPostsF_Tests
 			Assert.Equal(nameof(SingleMetaDictionaryProperty.Meta), some.Name);
 		}
 
-		public sealed record NoMetaDictionaryProperties;
+		public sealed record class NoMetaDictionaryProperties;
 
-		public sealed record MoreThanOneMetaDictionaryProperty(MetaDictionary Meta0, MetaDictionary Meta1);
+		public sealed record class MoreThanOneMetaDictionaryProperty(MetaDictionary Meta0, MetaDictionary Meta1);
 
-		public sealed record SingleMetaDictionaryProperty(MetaDictionary Meta);
+		public sealed record class SingleMetaDictionaryProperty(MetaDictionary Meta);
 	}
 }

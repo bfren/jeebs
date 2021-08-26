@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-using System.Collections.Generic;
 using Jeebs.Data.Entities;
 
 namespace Jeebs.Auth.Data.Models
@@ -9,7 +8,7 @@ namespace Jeebs.Auth.Data.Models
 	/// <summary>
 	/// Authentication User model
 	/// </summary>
-	public record AuthUserModel : IAuthUser
+	public record class AuthUserModel : IAuthUser
 	{
 		/// <summary>
 		/// User ID
