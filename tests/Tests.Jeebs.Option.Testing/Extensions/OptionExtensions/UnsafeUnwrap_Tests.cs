@@ -13,7 +13,7 @@ namespace Jeebs.OptionExtensions_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 
 			// Act
 			var result = option.UnsafeUnwrap();

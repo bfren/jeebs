@@ -34,7 +34,7 @@ namespace Jeebs_Tests
 		protected static void Test01(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var exception = new Exception();
 			Option<string> throwFunc() => throw exception;
 
@@ -84,7 +84,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var bind = Substitute.For<Func<int, Option<string>>>();
 
 			// Act

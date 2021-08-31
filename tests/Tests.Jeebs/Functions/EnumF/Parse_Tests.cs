@@ -19,7 +19,7 @@ namespace F.EnumF_Tests
 			var result = EnumF.Parse<TestA>(input);
 
 			// Assert
-			Assert.IsType<None<TestA>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ namespace F.EnumF_Tests
 			var result = EnumF.Parse<TestA>(input);
 
 			// Assert
-			Assert.IsType<None<TestA>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -58,7 +58,7 @@ namespace F.EnumF_Tests
 			var result = EnumF.Parse(typeof(string), input);
 
 			// Assert
-			Assert.IsType<None<object>>(result);
+			result.AssertNone();
 		}
 
 		public enum TestA

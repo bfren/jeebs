@@ -25,7 +25,7 @@ namespace F
 					some: v => v switch
 					{
 						IList<U> list when list.Count == 1 =>
-							Return(list.Single()),
+							Some(list.Single()),
 
 						IList<U> list when list.Count == 0 =>
 							None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
@@ -39,7 +39,7 @@ namespace F
 						_ =>
 							None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
 					},
-					none: r => new None<U>(r)
+					none: r => None<U>(r)
 				),
 				DefaultHandler
 			);

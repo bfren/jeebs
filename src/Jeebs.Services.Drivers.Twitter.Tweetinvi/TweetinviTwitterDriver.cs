@@ -45,7 +45,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		}
 
 		private Task<Option<IUser>> GetUser(string screenName) =>
-			ReturnAsync(
+			SomeAsync(
 				() => client.Users.GetUserAsync(screenName),
 				e => new Msg.UserNotFoundExceptionMsg(screenName, e)
 			);
@@ -53,7 +53,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// <inheritdoc/>
 		public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 		{
-			return Return(screenName)
+			return Some(screenName)
 				.BindAsync(
 					GetUser
 				)
@@ -85,7 +85,7 @@ namespace Jeebs.Services.Drivers.Twitter.Tweetinvi
 		/// <inheritdoc/>
 		public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
 		{
-			return Return(screenName)
+			return Some(screenName)
 				.BindAsync(
 					GetUser
 				)

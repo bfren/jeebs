@@ -179,7 +179,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var some = Substitute.For<Action<int>>();
 
 			// Act
@@ -196,7 +196,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var some = Substitute.For<Func<int, Task>>();
 
 			// Act
@@ -246,7 +246,7 @@ namespace Jeebs_Tests
 		protected static async Task Test14(Func<Option<int>, Action<int>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var exception = new Exception();
 			void throwException(int _) => throw exception;
 
@@ -262,7 +262,7 @@ namespace Jeebs_Tests
 		protected static async Task Test15(Func<Option<int>, Func<int, Task>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var exception = new Exception();
 			Task throwException(int _) => throw exception;
 

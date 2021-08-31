@@ -45,7 +45,7 @@ namespace Jeebs.WordPress.Data
 
 			// If we're here we have a Term ID, so get it and hydrate the custom field
 			return
-				Return(
+				Some(
 					ValueStr
 				)
 				.Bind(

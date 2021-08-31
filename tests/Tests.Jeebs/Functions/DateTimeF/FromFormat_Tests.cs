@@ -20,8 +20,8 @@ namespace F.DateTimeF_Tests
 			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			var success = Assert.IsType<Some<DateTime>>(result);
-			Assert.Equal(expected, success.Value);
+			var success = result.AssertSome();
+			Assert.Equal(expected, success);
 		}
 
 		[Fact]
@@ -35,7 +35,7 @@ namespace F.DateTimeF_Tests
 			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.IsType<None<DateTime>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -49,7 +49,7 @@ namespace F.DateTimeF_Tests
 			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.IsType<None<DateTime>>(result);
+			result.AssertNone();
 		}
 
 		[Fact]
@@ -63,7 +63,7 @@ namespace F.DateTimeF_Tests
 			var result = DateTimeF.FromFormat(input, format);
 
 			// Assert
-			Assert.IsType<None<DateTime>>(result);
+			result.AssertNone();
 		}
 	}
 }

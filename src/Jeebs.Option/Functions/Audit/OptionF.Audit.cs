@@ -16,7 +16,7 @@ namespace F
 		/// <param name="option">Option being audited</param>
 		/// <param name="any">[Optional] Action will run for any <paramref name="option"/></param>
 		/// <param name="some">[Optional] Action will run if <paramref name="option"/> is <see cref="Some{T}"/></param>
-		/// <param name="none">[Optional] Action will run if <paramref name="option"/> is <see cref="Jeebs.None{T}"/></param>
+		/// <param name="none">[Optional] Action will run if <paramref name="option"/> is <see cref="Jeebs.Internals.None{T}"/></param>
 		public static Option<T> Audit<T>(Option<T> option, Action<Option<T>>? any, Action<T>? some, Action<IMsg>? none)
 		{
 			// Do nothing if the user gave us nothing to do!

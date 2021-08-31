@@ -12,8 +12,8 @@ namespace F
 			CatchAsync(() =>
 				Switch(
 					option,
-					some: async v => { var x = await map(v); return Return(x); },
-					none: r => new None<U>(r).AsTask
+					some: async v => { var x = await map(v); return Some(x); },
+					none: r => None<U>(r).AsTask
 				),
 				handler
 			);

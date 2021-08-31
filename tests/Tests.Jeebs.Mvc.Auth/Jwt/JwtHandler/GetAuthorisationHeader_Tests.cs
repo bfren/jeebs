@@ -19,8 +19,8 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 			var result = JwtHandler.GetAuthorisationHeader(headers);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<MissingAuthorisationHeaderMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<MissingAuthorisationHeaderMsg>(none);
 		}
 
 		[Fact]
@@ -37,8 +37,8 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 			var result = JwtHandler.GetAuthorisationHeader(headers);
 
 			// Assert
-			var some = Assert.IsType<Some<string>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }

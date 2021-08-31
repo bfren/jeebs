@@ -13,7 +13,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 
 			// Act
 			var result = 0;

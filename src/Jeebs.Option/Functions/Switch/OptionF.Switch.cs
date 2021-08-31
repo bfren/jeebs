@@ -3,18 +3,19 @@
 
 using Jeebs;
 using Jeebs.Exceptions;
+using Jeebs.Internals;
 
 namespace F
 {
 	public static partial class OptionF
 	{
 		/// <summary>
-		/// Run an action depending on whether <paramref name="option"/> is a <see cref="Some{T}"/> or <see cref="Jeebs.None{T}"/>
+		/// Run an action depending on whether <paramref name="option"/> is a <see cref="Jeebs.Internals.Some{T}"/> or <see cref="Jeebs.Internals.None{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="option">Option being switched</param>
-		/// <param name="some">Action to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Action to run if <see cref="Jeebs.None{T}"/></param>
+		/// <param name="some">Action to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Action to run if <see cref="Jeebs.Internals.None{T}"/></param>
 		public static void Switch<T>(Option<T> option, Action<T> some, Action<IMsg> none)
 		{
 			// No return value so unable to use switch statement
@@ -34,13 +35,13 @@ namespace F
 		}
 
 		/// <summary>
-		/// Run a function depending on whether <paramref name="option"/> is a <see cref="Some{T}"/> or <see cref="Jeebs.None{T}"/>
+		/// Run a function depending on whether <paramref name="option"/> is a <see cref="Jeebs.Internals.Some{T}"/> or <see cref="Jeebs.Internals.None{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="U">Next value type</typeparam>
 		/// <param name="option">Option being switched</param>
-		/// <param name="some">Function to run if <see cref="Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
-		/// <param name="none">Function to run if <see cref="Jeebs.None{T}"/></param>
+		/// <param name="some">Function to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
+		/// <param name="none">Function to run if <see cref="Jeebs.Internals.None{T}"/></param>
 		public static U Switch<T, U>(Option<T> option, Func<T, U> some, Func<IMsg, U> none) =>
 			option switch
 			{

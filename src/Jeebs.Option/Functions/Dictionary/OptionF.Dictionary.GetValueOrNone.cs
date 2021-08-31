@@ -10,7 +10,7 @@ namespace F
 		public static partial class Dictionary
 		{
 			/// <summary>
-			/// Return the value or <see cref="Jeebs.None{T}"/>
+			/// Return the value or <see cref="Jeebs.Internals.None{T}"/>
 			/// </summary>
 			/// <typeparam name="TKey">Key type</typeparam>
 			/// <typeparam name="TValue">Value type</typeparam>

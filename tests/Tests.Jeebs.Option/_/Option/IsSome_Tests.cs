@@ -12,7 +12,7 @@ namespace Jeebs.Option_Tests
 		public void Is_Some_Returns_True()
 		{
 			// Arrange
-			var some = Return(F.Rnd.Str);
+			var some = Some(F.Rnd.Str);
 
 			// Act
 			var result = some.IsSome;

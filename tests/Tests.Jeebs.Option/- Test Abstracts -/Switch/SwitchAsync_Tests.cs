@@ -47,7 +47,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var some = Substitute.For<Func<int, Task<string>>>();
 
 			// Act

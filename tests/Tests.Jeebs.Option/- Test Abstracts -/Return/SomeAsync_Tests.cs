@@ -9,7 +9,7 @@ using static F.OptionF.Msg;
 
 namespace Jeebs_Tests
 {
-	public abstract class ReturnAsync_Tests
+	public abstract class SomeAsync_Tests
 	{
 		public abstract Task Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 

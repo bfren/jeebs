@@ -81,12 +81,10 @@ namespace Jeebs.WordPress.Data
 				where TTable : ITable
 #pragma warning restore IDE1006 // Naming Styles
 			{
-				if (GetColumnFromExpression(table, selector) is Some<IColumn> column)
-				{
-					return Client.EscapeWithTable(column.Value);
-				}
-
-				throw new Exception("Unable to get column.");
+				return GetColumnFromExpression(table, selector).Switch(
+					some: column => Client.EscapeWithTable(column),
+					none: () => throw new Exception("Unable to get column.")
+				);
 			}
 
 			#region Testing

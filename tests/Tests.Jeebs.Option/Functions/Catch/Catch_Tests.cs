@@ -18,7 +18,7 @@ namespace F.OptionF_Tests
 			var value = Rnd.Int;
 
 			// Act
-			var result = Catch(() => Return(value), DefaultHandler);
+			var result = Catch(() => Some(value), DefaultHandler);
 
 			// Assert
 			var some = result.AssertSome();

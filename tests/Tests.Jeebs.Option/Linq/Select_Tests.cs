@@ -14,7 +14,7 @@ namespace Jeebs.Linq_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 
 			// Act
 			var r0 = option.Select(s => s ^ 2);
@@ -33,7 +33,7 @@ namespace Jeebs.Linq_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 
 			// Act
 			var r0 = await option.AsTask.Select(s => s ^ 2);

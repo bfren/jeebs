@@ -16,7 +16,7 @@ namespace Jeebs_Tests
 		protected static async Task Test00(Func<Option<object?>, Func<Task<Option<object?>>>, Task<Option<object?>>> act)
 		{
 			// Arrange
-			var some = Return<object>(null, true);
+			var some = Some<object>(null, true);
 			var none = None<object?, Msg.NullValueMsg>();
 			var throws = Substitute.For<Func<Task<Option<object?>>>>();
 			throws.Invoke().Throws<Exception>();
@@ -37,7 +37,7 @@ namespace Jeebs_Tests
 		protected static async Task Test01(Func<Option<object?>, Func<Task<Option<object?>>>, Task<Option<object?>>> act)
 		{
 			// Arrange
-			var some = Return<object>(null, true);
+			var some = Some<object>(null, true);
 			var ifNull = Substitute.For<Func<Task<Option<object?>>>>();
 
 			// Act
@@ -67,7 +67,7 @@ namespace Jeebs_Tests
 		protected static async Task Test03(Func<Option<object?>, Func<IMsg>, Task<Option<object?>>> act)
 		{
 			// Arrange
-			var option = Return<object>(null, true);
+			var option = Some<object>(null, true);
 			var ifNull = Substitute.For<Func<IMsg>>();
 			var msg = new TestMsg();
 			ifNull.Invoke().Returns(msg);

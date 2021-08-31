@@ -35,7 +35,7 @@ namespace F.WordPressF.DataF
 							Process<IEnumerable<TModel>, TModel>(db, w, x, filters),
 
 						_ =>
-							Return(x).AsTask
+							Some(x).AsTask
 					}
 				);
 		}
@@ -72,7 +72,7 @@ namespace F.WordPressF.DataF
 							Process<IPagedList<TModel>, TModel>(db, w, x, filters),
 
 						PagedList<TModel> =>
-							Return(x).AsTask,
+							Some(x).AsTask,
 
 						_ =>
 							None<IPagedList<TModel>, Msg.UnrecognisedPagedListTypeMsg>().AsTask

@@ -20,7 +20,7 @@ namespace F
 					predicate(x) switch
 					{
 						true =>
-							Return(x),
+							Some(x),
 
 						false =>
 							None<T, Msg.FilterPredicateWasFalseMsg>()

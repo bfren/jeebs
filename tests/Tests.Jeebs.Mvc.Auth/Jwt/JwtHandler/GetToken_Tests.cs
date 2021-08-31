@@ -18,8 +18,8 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 			var result = JwtHandler.GetToken(header);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<InvalidAuthorisationHeaderMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidAuthorisationHeaderMsg>(none);
 		}
 
 		[Fact]
@@ -33,8 +33,8 @@ namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
 			var result = JwtHandler.GetToken(header);
 
 			// Assert
-			var some = Assert.IsType<Some<string>>(result);
-			Assert.Equal(value, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some);
 		}
 	}
 }

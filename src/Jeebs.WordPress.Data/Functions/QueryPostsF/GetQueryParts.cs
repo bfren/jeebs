@@ -20,7 +20,7 @@ namespace F.WordPressF.DataF
 		/// <param name="opt">Function to return query options</param>
 		internal static Option<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
 			where TModel : IWithId<WpPostId> =>
-			Return(
+			Some(
 				() => opt(new Query.PostsOptions(db.Schema)),
 				e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
 			)

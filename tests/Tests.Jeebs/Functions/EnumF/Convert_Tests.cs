@@ -31,7 +31,7 @@ namespace F.EnumF_Tests
 			var result = EnumF.Convert(input).To<TestA>();
 
 			// Assert
-			Assert.IsType<None<TestA>>(result);
+			result.AssertNone();
 		}
 
 		public enum TestA

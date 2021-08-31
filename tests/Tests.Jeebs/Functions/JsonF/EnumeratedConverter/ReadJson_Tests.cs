@@ -20,8 +20,8 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 			var result = JsonF.Deserialise<EnumeratedTest0>(json);
 
 			// Assert
-			var some = Assert.IsType<Some<EnumeratedTest0>>(result);
-			Assert.Equal(value, some.Value.ToString());
+			var some = result.AssertSome();
+			Assert.Equal(value, some.ToString());
 		}
 
 		[Fact]
@@ -34,8 +34,8 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 			var result = JsonF.Deserialise<EnumeratedTest0>(json);
 
 			// Assert
-			var value = Assert.IsType<Some<EnumeratedTest0>>(result).Value;
-			Assert.Equal(string.Empty, value.ToString());
+			var some = result.AssertSome();
+			Assert.Equal(string.Empty, some.ToString());
 		}
 
 		[Fact]
@@ -50,9 +50,9 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 			var result = JsonF.Deserialise<EnumeratedWrapperTest0>(json);
 
 			// Assert
-			var wrapper = Assert.IsType<Some<EnumeratedWrapperTest0>>(result).Value;
-			Assert.Equal(id, wrapper.Id);
-			Assert.Equal(value, wrapper.EnumeratedValue.ToString());
+			var some = result.AssertSome();
+			Assert.Equal(id, some.Id);
+			Assert.Equal(value, some.EnumeratedValue.ToString());
 		}
 
 		[Theory]
@@ -68,8 +68,8 @@ namespace F.JsonF_Tests.EnumeratedConverter_Tests
 			var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json);
 
 			// Assert
-			var none = Assert.IsType<None<EnumeratedWrapperTest1>>(result);
-			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialiseExceptionMsg>(none);
 		}
 
 		public class EnumeratedTest0 : Enumerated

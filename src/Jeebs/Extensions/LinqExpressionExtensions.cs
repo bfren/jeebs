@@ -29,7 +29,7 @@ namespace Jeebs.Linq
 				x => typeof(TObject).HasProperty(x.Name) switch
 				{
 					true =>
-						Return(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
+						Some(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
 
 					false =>
 						None<PropertyInfo<TObject, TProperty>>(new Msg.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))

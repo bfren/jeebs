@@ -15,7 +15,7 @@ namespace F.DataF
 		/// <typeparam name="TModel">Model type</typeparam>
 		/// <param name="builder">Query builder</param>
 		public static Option<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
-			Return(
+			Some(
 				new QueryBuilder()
 			)
 			.Map(

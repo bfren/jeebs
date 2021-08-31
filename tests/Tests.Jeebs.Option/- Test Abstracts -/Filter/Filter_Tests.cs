@@ -33,7 +33,7 @@ namespace Jeebs_Tests
 		protected static void Test01(Func<Option<string>, Func<string, bool>, Option<string>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Str);
+			var option = Some(F.Rnd.Str);
 			var exception = new Exception();
 			bool throwFunc(string _) => throw exception;
 
@@ -51,7 +51,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var predicate = Substitute.For<Func<int, bool>>();
 			predicate.Invoke(Arg.Any<int>()).Returns(true);
 
@@ -69,7 +69,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var option = Return(value);
+			var option = Some(value);
 			var predicate = Substitute.For<Func<string, bool>>();
 			predicate.Invoke(Arg.Any<string>()).Returns(false);
 

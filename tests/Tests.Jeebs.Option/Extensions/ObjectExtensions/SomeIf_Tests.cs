@@ -5,27 +5,27 @@ using Xunit;
 
 namespace Jeebs.ObjectExtensions_Tests
 {
-	public class ReturnIf_Tests : Jeebs_Tests.ReturnIf_Tests
+	public class SomeIf_Tests : Jeebs_Tests.SomeIf_Tests
 	{
 		[Fact]
 		public override void Test00_Exception_Thrown_By_Predicate_With_Value_Calls_Handler_Returns_None()
 		{
-			Test00((predicate, value, handler) => value.ReturnIf(predicate, handler));
-			Test00((predicate, value, handler) => value.ReturnIf(_ => predicate(), handler));
+			Test00((predicate, value, handler) => value.SomeIf(predicate, handler));
+			Test00((predicate, value, handler) => value.SomeIf(_ => predicate(), handler));
 		}
 
 		[Fact]
 		public override void Test03_Predicate_True_With_Value_Returns_Some()
 		{
-			Test03((predicate, value, handler) => value.ReturnIf(predicate, handler));
-			Test03((predicate, value, handler) => value.ReturnIf(_ => predicate(), handler));
+			Test03((predicate, value, handler) => value.SomeIf(predicate, handler));
+			Test03((predicate, value, handler) => value.SomeIf(_ => predicate(), handler));
 		}
 
 		[Fact]
 		public override void Test05_Predicate_False_With_Value_Returns_None_With_PredicateWasFalseMsg()
 		{
-			Test05((predicate, value, handler) => value.ReturnIf(predicate, handler));
-			Test05((predicate, value, handler) => value.ReturnIf(_ => predicate(), handler));
+			Test05((predicate, value, handler) => value.SomeIf(predicate, handler));
+			Test05((predicate, value, handler) => value.SomeIf(_ => predicate(), handler));
 		}
 
 		#region Unused

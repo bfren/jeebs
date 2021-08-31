@@ -2,13 +2,14 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs;
+using Jeebs.Internals;
 
 namespace F
 {
 	public static partial class OptionF
 	{
 		/// <summary>
-		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message
+		/// Create a <see cref="Jeebs.Internals.None{T}"/> Option with a Reason message
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="reason">Reason message</param>
@@ -16,7 +17,7 @@ namespace F
 			new(reason);
 
 		/// <summary>
-		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason message by type
+		/// Create a <see cref="Jeebs.Internals.None{T}"/> Option with a Reason message by type
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="TMsg">Reason message type</typeparam>
@@ -25,7 +26,7 @@ namespace F
 			new(new TMsg());
 
 		/// <summary>
-		/// Create a <see cref="Jeebs.None{T}"/> Option with a Reason exception message by type
+		/// Create a <see cref="Jeebs.Internals.None{T}"/> Option with a Reason exception message by type
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="TExceptionMsg">Reason exception message type</typeparam>

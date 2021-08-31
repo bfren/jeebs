@@ -9,7 +9,7 @@ using static F.OptionF.Msg;
 
 namespace Jeebs_Tests
 {
-	public abstract class Return_Tests
+	public abstract class Some_Tests
 	{
 		public abstract void Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 

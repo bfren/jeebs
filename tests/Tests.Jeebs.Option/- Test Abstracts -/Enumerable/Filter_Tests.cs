@@ -17,8 +17,8 @@ namespace Jeebs_Tests.Enumerable
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = Create.None<int>();
 			var o3 = Create.None<int>();
 			var list = new[] { o0, o1, o2, o3 };
@@ -40,8 +40,8 @@ namespace Jeebs_Tests.Enumerable
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = Create.None<int>();
 			var o3 = Create.None<int>();
 			var list = new[] { o0, o1, o2, o3 };

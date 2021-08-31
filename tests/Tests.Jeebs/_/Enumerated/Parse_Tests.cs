@@ -17,8 +17,8 @@ namespace Jeebs.Enumerated_Tests
 			var result = EnumeratedTest.Parse(input);
 
 			// Assert
-			var success = Assert.IsType<Some<EnumeratedTest>>(result);
-			Assert.Equal(EnumeratedTest.Test1, success.Value);
+			var some = result.AssertSome();
+			Assert.Equal(EnumeratedTest.Test1, some);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ namespace Jeebs.Enumerated_Tests
 			var result = EnumeratedTest.Parse(input);
 
 			// Assert
-			Assert.IsType<None<EnumeratedTest>>(result);
+			result.AssertNone();
 		}
 	}
 

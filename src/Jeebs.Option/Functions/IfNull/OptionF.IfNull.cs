@@ -2,14 +2,15 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs;
+using Jeebs.Internals;
 
 namespace F
 {
 	public static partial class OptionF
 	{
 		/// <summary>
-		/// If <paramref name="option"/> is <see cref="Jeebs.None{T}"/> and the reason is <see cref="Msg.NullValueMsg"/>,
-		/// or <paramref name="option"/> is <see cref="Some{T}"/> and <see cref="Some{T}.Value"/> is null,
+		/// If <paramref name="option"/> is <see cref="Jeebs.Internals.None{T}"/> and the reason is <see cref="Msg.NullValueMsg"/>,
+		/// or <paramref name="option"/> is <see cref="Jeebs.Internals.Some{T}"/> and <see cref="Some{T}.Value"/> is null,
 		/// runs <paramref name="ifNull"/> - which gives you the opportunity to return a more useful 'Not Found' message
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>

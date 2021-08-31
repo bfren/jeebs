@@ -64,8 +64,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.ValidateToken(config, token);
 
 			// Assert
-			var none = Assert.IsType<None<ClaimsPrincipal>>(result);
-			Assert.IsType<TokenIsNotValidYetMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<TokenIsNotValidYetMsg>(none);
 		}
 
 		[Fact]
@@ -78,8 +78,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.ValidateToken(config, token);
 
 			// Assert
-			var none = Assert.IsType<None<ClaimsPrincipal>>(result);
-			Assert.IsType<TokenHasExpiredMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<TokenHasExpiredMsg>(none);
 		}
 
 		[Fact]
@@ -92,8 +92,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.ValidateToken(config, token);
 
 			// Assert
-			var some = Assert.IsType<Some<ClaimsPrincipal>>(result);
-			Assert.Equal(name, some.Value.Identity?.Name);
+			var some = result.AssertSome();
+			Assert.Equal(name, some.Identity?.Name);
 		}
 
 		[Fact]
@@ -106,8 +106,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.ValidateToken(config, token);
 
 			// Assert
-			var some = Assert.IsType<Some<ClaimsPrincipal>>(result);
-			Assert.Equal(name, some.Value.Identity?.Name);
+			var some = result.AssertSome();
+			Assert.Equal(name, some.Identity?.Name);
 		}
 	}
 }

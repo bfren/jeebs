@@ -45,7 +45,7 @@ namespace Jeebs.Data.Mapping
 
 		/// <inheritdoc/>
 		public Option<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
-			Return(
+			Some(
 				() => from c in Columns
 					  where c.Property.GetCustomAttribute<IdAttribute>() == null
 					  && c.Property.GetCustomAttribute<ComputedAttribute>() == null
@@ -57,7 +57,7 @@ namespace Jeebs.Data.Mapping
 				x => x.Any() switch
 				{
 					true =>
-						Return(x),
+						Some(x),
 
 					false =>
 						None<IEnumerable<IMappedColumn>, Msg.NoWriteableColumnsFoundMsg>()

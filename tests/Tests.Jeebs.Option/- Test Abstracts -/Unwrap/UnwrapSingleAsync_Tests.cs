@@ -64,7 +64,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var empty = Array.Empty<int>();
-			var option = Return(empty);
+			var option = Some(empty);
 
 			// Act
 			var result = await act(option.AsTask);
@@ -80,7 +80,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var empty = Array.Empty<int>();
-			var option = Return(empty);
+			var option = Some(empty);
 			var noItems = Substitute.For<Func<IMsg>>();
 
 			// Act
@@ -96,7 +96,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var list = new[] { F.Rnd.Int, F.Rnd.Int };
-			var option = Return(list);
+			var option = Some(list);
 
 			// Act
 			var result = await act(option.AsTask);
@@ -112,7 +112,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var list = new[] { F.Rnd.Int, F.Rnd.Int };
-			var option = Return(list);
+			var option = Some(list);
 			var tooMany = Substitute.For<Func<IMsg>>();
 
 			// Act
@@ -128,7 +128,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 
 			// Act
 			var result = await act(option.AsTask);
@@ -144,7 +144,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var notAList = Substitute.For<Func<IMsg>>();
 
 			// Act
@@ -161,7 +161,7 @@ namespace Jeebs_Tests
 			// Arrange
 			var value = F.Rnd.Int;
 			var list = new[] { value };
-			var option = Return(list);
+			var option = Some(list);
 
 			// Act
 			var result = await act(option.AsTask);
@@ -178,7 +178,7 @@ namespace Jeebs_Tests
 			// Arrange
 			var value = F.Rnd.Int;
 			var list = new[] { value };
-			var option = Return(list);
+			var option = Some(list);
 
 			// Act
 			var result = await act(option.AsTask);

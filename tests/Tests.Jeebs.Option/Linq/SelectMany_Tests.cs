@@ -15,8 +15,8 @@ namespace Jeebs.Linq_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 
 			// Act
 			var result = from a in o0
@@ -34,8 +34,8 @@ namespace Jeebs.Linq_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0).AsTask;
-			var o1 = Return(v1).AsTask;
+			var o0 = Some(v0).AsTask;
+			var o1 = Some(v1).AsTask;
 
 			// Act
 			var result = await (
@@ -57,10 +57,10 @@ namespace Jeebs.Linq_Tests
 			var v1 = F.Rnd.Int;
 			var v2 = F.Rnd.Int;
 			var v3 = F.Rnd.Int;
-			var o0 = Return(v0).AsTask;
-			var o1 = Return(v1);
-			var o2 = Return(v2).AsTask;
-			var o3 = Return(v3);
+			var o0 = Some(v0).AsTask;
+			var o1 = Some(v1);
+			var o2 = Some(v2).AsTask;
+			var o3 = Some(v3);
 
 			// Act
 			var result = await (
@@ -82,8 +82,8 @@ namespace Jeebs.Linq_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = None<int>(new InvalidIntegerMsg());
 
 			// Act
@@ -103,8 +103,8 @@ namespace Jeebs.Linq_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0).AsTask;
-			var o1 = Return(v1).AsTask;
+			var o0 = Some(v0).AsTask;
+			var o1 = Some(v1).AsTask;
 			var o2 = None<int>(new InvalidIntegerMsg()).AsTask;
 
 			// Act
@@ -126,8 +126,8 @@ namespace Jeebs.Linq_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0).AsTask;
-			var o1 = Return(v1).AsTask;
+			var o0 = Some(v0).AsTask;
+			var o1 = Some(v1).AsTask;
 			var o2 = None<int>(new InvalidIntegerMsg());
 
 			// Act

@@ -27,7 +27,7 @@ namespace F.WordPressF.DataF
 			// If there are no posts, do nothing
 			if (!posts.Any())
 			{
-				return Return(posts).AsTask;
+				return Some(posts).AsTask;
 			}
 
 			// Get Meta values
@@ -40,7 +40,7 @@ namespace F.WordPressF.DataF
 						})
 						from withMeta in SetMeta(posts, postMeta.ToList(), x)
 						select posts,
-					none: Return(posts)
+					none: Some(posts)
 				);
 		}
 	}

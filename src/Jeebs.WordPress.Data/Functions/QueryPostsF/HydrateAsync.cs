@@ -4,6 +4,7 @@
 using System.Reflection;
 using Jeebs;
 using Jeebs.Data;
+using Jeebs.Internals;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
@@ -57,7 +58,7 @@ namespace F.WordPressF.DataF
 						}
 
 						// Set the value
-						if (result is Some<bool> ok && ok.Value)
+						if (result is Some<bool> some && some.Value)
 						{
 							info.SetValue(post, customField);
 						}

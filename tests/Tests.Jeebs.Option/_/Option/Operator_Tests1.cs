@@ -13,7 +13,7 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var some = Return(value);
+			var some = Some(value);
 
 			// Act
 			var r0 = some == value;
@@ -30,7 +30,7 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var some = Return(v0);
+			var some = Some(v0);
 
 			// Act
 			var r0 = some == v1;

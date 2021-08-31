@@ -13,7 +13,7 @@ namespace Jeebs.Data.Querying.QueryPartsBuilderWithEntity_Tests
 			var mapper = Substitute.For<IMapper>();
 
 			var map = Substitute.For<ITableMap>();
-			mapper.GetTableMapFor<TestEntity>().Returns(map.Return());
+			mapper.GetTableMapFor<TestEntity>().Returns(map.Some());
 
 			var builder = Substitute.ForPartsOf<TestBuilder>(mapper);
 

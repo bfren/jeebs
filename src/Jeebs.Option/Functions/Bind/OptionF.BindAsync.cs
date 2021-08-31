@@ -13,7 +13,7 @@ namespace F
 				Switch(
 					option,
 					some: v => bind(v),
-					none: r => new None<U>(r).AsTask
+					none: r => None<U>(r).AsTask
 				),
 				DefaultHandler
 			);

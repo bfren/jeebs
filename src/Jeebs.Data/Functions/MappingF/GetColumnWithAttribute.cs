@@ -22,7 +22,7 @@ namespace F.DataF
 		public static Option<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
 			where TEntity : IWithId
 			where TAttribute : Attribute =>
-			Return(
+			Some(
 				columns
 			)
 			.Map(

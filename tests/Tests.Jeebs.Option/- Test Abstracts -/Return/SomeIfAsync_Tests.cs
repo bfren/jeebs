@@ -9,7 +9,7 @@ using static F.OptionF.Msg;
 
 namespace Jeebs_Tests
 {
-	public abstract class ReturnIfAsync_Tests
+	public abstract class SomeIfAsync_Tests
 	{
 		public abstract Task Test00_Exception_Thrown_By_Predicate_With_Value_Calls_Handler_Returns_None();
 

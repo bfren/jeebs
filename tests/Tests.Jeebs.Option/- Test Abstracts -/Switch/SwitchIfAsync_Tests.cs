@@ -3,6 +3,7 @@
 
 using Jeebs;
 using Jeebs.Exceptions;
+using Jeebs.Internals;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
@@ -48,7 +49,7 @@ namespace Jeebs_Tests
 		protected static async Task Test02(Func<Task<Option<int>>, Func<int, bool>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			static bool check(int _) => throw new Exception();
 
 			// Act
@@ -64,7 +65,7 @@ namespace Jeebs_Tests
 		protected static async Task Test03(Func<Task<Option<int>>, Func<int, bool>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(Arg.Any<int>()).Returns(true);
 
@@ -80,7 +81,7 @@ namespace Jeebs_Tests
 		protected static async Task Test04(Func<Task<Option<int>>, Func<int, bool>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(Arg.Any<int>()).Returns(false);
 
@@ -96,7 +97,7 @@ namespace Jeebs_Tests
 		protected static async Task Test05(Func<Task<Option<int>>, Func<int, bool>, Func<int, None<int>>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(Arg.Any<int>()).Returns(true);
 			static None<int> ifTrue(int _) => throw new Exception();
@@ -114,7 +115,7 @@ namespace Jeebs_Tests
 		protected static async Task Test06(Func<Task<Option<int>>, Func<int, bool>, Func<int, None<int>>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(Arg.Any<int>()).Returns(false);
 			static None<int> ifFalse(int _) => throw new Exception();
@@ -134,11 +135,11 @@ namespace Jeebs_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var option = Return(v0);
+			var option = Some(v0);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(v0).Returns(true);
 			var ifTrue = Substitute.For<Func<int, Option<int>>>();
-			ifTrue.Invoke(v0).Returns(Return(v0 + v1));
+			ifTrue.Invoke(v0).Returns(Some(v0 + v1));
 
 			// Act
 			var result = await act(option.AsTask, check, ifTrue);
@@ -155,7 +156,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var check = Substitute.For<Func<int, bool>>();
 			check.Invoke(value).Returns(false);
 			var ifFalse = Substitute.For<Func<int, None<int>>>();

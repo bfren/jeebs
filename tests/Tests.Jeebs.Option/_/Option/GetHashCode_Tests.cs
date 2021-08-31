@@ -28,8 +28,8 @@ namespace Jeebs.Option_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Str;
-			var s0 = value.Return();
-			var s1 = value.Return();
+			var s0 = value.Some();
+			var s1 = value.Some();
 
 			// Act
 			var h0 = s0.GetHashCode();
@@ -45,8 +45,8 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var v0 = F.Rnd.Str;
 			var v1 = F.Rnd.Str;
-			var s0 = v0.Return();
-			var s1 = v1.Return();
+			var s0 = v0.Some();
+			var s1 = v1.Some();
 
 			// Act
 			var h0 = s0.GetHashCode();
@@ -62,8 +62,8 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			string? v0 = null;
 			string? v1 = null;
-			var s0 = Return(v0, true);
-			var s1 = Return(v1, true);
+			var s0 = Some(v0, true);
+			var s1 = Some(v1, true);
 
 			// Act
 			var h0 = s0.GetHashCode();
@@ -79,8 +79,8 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			string? v0 = null;
 			int? v1 = null;
-			var s0 = Return(v0, true);
-			var s1 = Return(v1, true);
+			var s0 = Some(v0, true);
+			var s1 = Some(v1, true);
 
 			// Act
 			var h0 = s0.GetHashCode();

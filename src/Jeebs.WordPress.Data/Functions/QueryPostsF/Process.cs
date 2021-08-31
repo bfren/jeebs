@@ -25,7 +25,7 @@ namespace F.WordPressF.DataF
 			where TModel : IWithId<WpPostId>
 		{
 			return
-				Return(
+				Some(
 					posts
 				)
 				.BindAsync(

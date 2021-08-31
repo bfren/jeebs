@@ -13,7 +13,7 @@ namespace Jeebs.OptionEqualityComparer_Tests
 		{
 			// Arrange
 			var fake = new FakeOption();
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var comparer = new OptionEqualityComparer<int>();
 
 			// Act
@@ -31,9 +31,9 @@ namespace Jeebs.OptionEqualityComparer_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v0);
-			var o2 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v0);
+			var o2 = Some(v1);
 			var comparer = new OptionEqualityComparer<int>();
 
 			// Act
@@ -69,7 +69,7 @@ namespace Jeebs.OptionEqualityComparer_Tests
 		public void Mixed_Returns_False()
 		{
 			// Arrange
-			var o0 = Return(F.Rnd.Int);
+			var o0 = Some(F.Rnd.Int);
 			var o1 = Create.None<int>();
 			var comparer = new OptionEqualityComparer<int>();
 

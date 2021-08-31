@@ -2,6 +2,7 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using System.Text.RegularExpressions;
+using Jeebs.Internals;
 using Jeebs.Reflection;
 
 namespace Jeebs

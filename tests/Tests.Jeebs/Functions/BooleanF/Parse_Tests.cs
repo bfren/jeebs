@@ -28,8 +28,8 @@ namespace F.BooleanF_Tests
 			var result = Parse(input);
 
 			// Assert
-			var some = Assert.IsType<Some<bool>>(result);
-			Assert.True(some.Value);
+			var some = result.AssertSome();
+			Assert.True(some);
 		}
 
 		[Theory]
@@ -48,8 +48,8 @@ namespace F.BooleanF_Tests
 			var result = Parse(input);
 
 			// Assert
-			var some = Assert.IsType<Some<bool>>(result);
-			Assert.False(some.Value);
+			var some = result.AssertSome();
+			Assert.False(some);
 		}
 
 		[Theory]
@@ -63,8 +63,8 @@ namespace F.BooleanF_Tests
 			var result = Parse(input);
 
 			// Assert
-			var none = Assert.IsType<None<bool>>(result);
-			Assert.IsType<UnrecognisedValueMsg>(none.Reason);
+			var msg = result.AssertNone();
+			Assert.IsType<UnrecognisedValueMsg>(msg);
 		}
 	}
 }

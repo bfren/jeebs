@@ -10,7 +10,7 @@ namespace F
 		public static partial class Enumerable
 		{
 			/// <summary>
-			/// Return the element at <paramref name="index"/> or <see cref="Jeebs.None{T}"/>
+			/// Return the element at <paramref name="index"/> or <see cref="Jeebs.Internals.None{T}"/>
 			/// </summary>
 			/// <typeparam name="T">Value type</typeparam>
 			/// <param name="list">List of values</param>

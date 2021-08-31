@@ -16,7 +16,7 @@ namespace F.JsonF_Tests.OptionConverter_Tests
 			var valueStr = Rnd.Str;
 			var valueInt = Rnd.Int;
 			var value = new Test(valueStr, valueInt);
-			var option = Return(value);
+			var option = Some(value);
 			var json = $"{{\"foo\":\"{valueStr}\",\"bar\":{valueInt}}}";
 
 			// Act

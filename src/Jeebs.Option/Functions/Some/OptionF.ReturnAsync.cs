@@ -2,13 +2,14 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs;
+using Jeebs.Internals;
 
 namespace F
 {
 	public static partial class OptionF
 	{
-		/// <inheritdoc cref="Return{T}(Func{T}, Handler?)"/>
-		public static async Task<Option<T>> ReturnAsync<T>(Func<Task<T>> value, Handler handler)
+		/// <inheritdoc cref="Some{T}(Func{T}, Handler?)"/>
+		public static async Task<Option<T>> SomeAsync<T>(Func<Task<T>> value, Handler handler)
 		{
 			try
 			{
@@ -28,8 +29,8 @@ namespace F
 			}
 		}
 
-		/// <inheritdoc cref="Return{T}(Func{T}, bool, Handler)"/>
-		public static async Task<Option<T?>> ReturnAsync<T>(Func<Task<T?>> value, bool allowNull, Handler handler)
+		/// <inheritdoc cref="Some{T}(Func{T}, bool, Handler)"/>
+		public static async Task<Option<T?>> SomeAsync<T>(Func<Task<T?>> value, bool allowNull, Handler handler)
 		{
 			try
 			{

@@ -31,9 +31,9 @@ namespace Jeebs.Option_Tests
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v0);
-			var o2 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v0);
+			var o2 = Some(v1);
 
 			// Act
 			var r0 = o0.Equals(o1);
@@ -67,7 +67,7 @@ namespace Jeebs.Option_Tests
 		public void Mixed_Returns_False()
 		{
 			// Arrange
-			var o0 = Return(F.Rnd.Int);
+			var o0 = Some(F.Rnd.Int);
 			var o1 = Create.None<int>();
 
 			// Act

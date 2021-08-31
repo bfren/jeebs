@@ -46,7 +46,7 @@ namespace Jeebs.WordPress.Data
 
 			// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 			return
-				Return(
+				Some(
 					ValueStr
 				)
 				.Bind(

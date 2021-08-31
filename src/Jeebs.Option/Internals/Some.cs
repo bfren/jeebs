@@ -1,7 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
-namespace Jeebs
+namespace Jeebs.Internals
 {
 	/// <summary>
 	/// 'Some' option - wraps value to enable safe non-null returns (see <seealso cref="None{T}"/>)

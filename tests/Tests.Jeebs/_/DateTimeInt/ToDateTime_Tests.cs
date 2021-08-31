@@ -19,8 +19,8 @@ namespace Jeebs.DateTimeInt_Tests
 			var result = input.ToDateTime();
 
 			// Assert
-			var some = Assert.IsType<Some<DateTime>>(result);
-			Assert.Equal(dt, some.Value);
+			var some = result.AssertSome();
+			Assert.Equal(dt, some);
 		}
 
 		[Theory]
@@ -34,8 +34,8 @@ namespace Jeebs.DateTimeInt_Tests
 			var result = input.ToDateTime();
 
 			// Assert
-			var none = Assert.IsType<None<DateTime>>(result);
-			var msg = Assert.IsType<InvalidDateTimeMsg>(none.Reason);
+			var none = result.AssertNone();
+			var msg = Assert.IsType<InvalidDateTimeMsg>(none);
 			Assert.Equal(part, msg.Value.part);
 		}
 	}

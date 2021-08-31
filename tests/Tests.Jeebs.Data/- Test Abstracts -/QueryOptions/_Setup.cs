@@ -29,7 +29,7 @@ namespace Jeebs.Data.Querying.QueryOptions_Tests
 
 			var builder = Substitute.For<TBuilder>();
 			builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(parts);
-			builder.ReturnsForAll(parts.Return());
+			builder.ReturnsForAll(parts.Some());
 
 			return builder;
 		}

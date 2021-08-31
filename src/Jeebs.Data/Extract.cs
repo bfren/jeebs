@@ -36,7 +36,7 @@ namespace Jeebs.Data
 
 			// Extract distinct columns
 			return
-				Return(
+				Some(
 					() =>
 					{
 						return from table in tables

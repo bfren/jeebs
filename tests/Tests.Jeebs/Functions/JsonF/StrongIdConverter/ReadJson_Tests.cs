@@ -21,8 +21,8 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			var result = JsonF.Deserialise<IdTest0>(json);
 
 			// Assert
-			var some = Assert.IsType<Some<IdTest0>>(result);
-			Assert.Equal(value, some.Value.Value);
+			var some = result.AssertSome();
+			Assert.Equal(value, some.Value);
 		}
 
 		[Theory]
@@ -39,9 +39,9 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			var result = JsonF.Deserialise<LongIdWrapperTest0>(json);
 
 			// Assert
-			var wrapper = Assert.IsType<Some<LongIdWrapperTest0>>(result).Value;
-			Assert.Equal(v0, wrapper.Id);
-			Assert.Equal(v1, wrapper.LongId.Value);
+			var some = result.AssertSome();
+			Assert.Equal(v0, some.Id);
+			Assert.Equal(v1, some.LongId.Value);
 		}
 
 		[Theory]
@@ -57,8 +57,8 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			var result = JsonF.Deserialise<IdTest0>(input);
 
 			// Assert
-			var some = Assert.IsType<Some<IdTest0>>(result);
-			Assert.Equal(0U, some.Value.Value);
+			var some = result.AssertSome();
+			Assert.Equal(0U, some.Value);
 		}
 
 		[Theory]
@@ -78,9 +78,9 @@ namespace F.JsonF_Tests.StrongIdConverter_Tests
 			var result = JsonF.Deserialise<LongIdWrapperTest0>(json);
 
 			// Assert
-			var wrapper = Assert.IsType<Some<LongIdWrapperTest0>>(result).Value;
-			Assert.Equal(v0, wrapper.Id);
-			Assert.Equal(0U, wrapper.LongId.Value);
+			var some = result.AssertSome();
+			Assert.Equal(v0, some.Id);
+			Assert.Equal(0U, some.LongId.Value);
 		}
 
 		public readonly record struct IdTest0(ulong Value) : IStrongId;

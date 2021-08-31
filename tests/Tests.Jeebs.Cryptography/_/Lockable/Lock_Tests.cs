@@ -19,8 +19,8 @@ namespace Jeebs.Cryptography.Lockable_Tests
 			var result = box.Lock(key);
 
 			// Assert
-			var none = Assert.IsType<None<Locked<string>>>(result);
-			Assert.IsType<InvalidKeyLengthMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<InvalidKeyLengthMsg>(none);
 		}
 
 		[Fact]
@@ -34,8 +34,8 @@ namespace Jeebs.Cryptography.Lockable_Tests
 			var result = box.Lock(key);
 
 			// Assert
-			var some = Assert.IsType<Some<Locked<string>>>(result);
-			Assert.NotNull(some.Value.EncryptedContents);
+			var some = result.AssertSome();
+			Assert.NotNull(some.EncryptedContents);
 		}
 
 		[Fact]

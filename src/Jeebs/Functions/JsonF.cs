@@ -74,7 +74,7 @@ namespace F
 			obj switch
 			{
 				T x =>
-					Return(
+					Some(
 						() => JsonSerializer.Serialize(x, options),
 						e => new Msg.SerialiseExceptionMsg(e)
 					),

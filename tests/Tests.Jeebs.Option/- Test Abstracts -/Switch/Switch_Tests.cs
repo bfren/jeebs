@@ -77,7 +77,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var some = Substitute.For<Action<int>>();
 
 			// Act
@@ -93,7 +93,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var some = Substitute.For<Func<int, string>>();
 
 			// Act

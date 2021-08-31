@@ -18,7 +18,7 @@ namespace F.OptionF_Tests
 			var value = Rnd.Int;
 
 			// Act
-			var result = await CatchAsync(() => Return(value).AsTask, DefaultHandler);
+			var result = await CatchAsync(() => Some(value).AsTask, DefaultHandler);
 
 			// Assert
 			var some = result.AssertSome();

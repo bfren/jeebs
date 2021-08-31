@@ -23,8 +23,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var result = input.Decrypt<int>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
 		}
 
 		[Fact]
@@ -38,8 +38,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var result = json.Decrypt<int>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialiseExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -51,8 +51,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var result = defaultInputStringEncryptedWithStringKey.Decrypt<int>(string.Empty);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -65,8 +65,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<string>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 		}
 
 		[Fact]
@@ -80,8 +80,8 @@ namespace Jeebs.Cryptography.StringExtensions_Tests
 			var result = json.Decrypt<int>(key);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
 		}
 
 		[Fact]

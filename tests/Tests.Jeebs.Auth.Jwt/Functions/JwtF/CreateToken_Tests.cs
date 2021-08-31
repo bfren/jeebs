@@ -25,8 +25,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<NullIdentityMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<NullIdentityMsg>(none);
 		}
 
 		[Fact]
@@ -40,8 +40,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<IdentityNotAuthenticatedMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<IdentityNotAuthenticatedMsg>(none);
 		}
 
 		[Fact]
@@ -58,8 +58,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<ConfigInvalidMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<ConfigInvalidMsg>(none);
 		}
 
 		[Fact]
@@ -81,8 +81,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<SigningKeyNotLongEnoughMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<SigningKeyNotLongEnoughMsg>(none);
 		}
 
 		[Fact]
@@ -105,8 +105,8 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			var none = Assert.IsType<None<string>>(result);
-			Assert.IsType<EncryptingKeyNotLongEnoughMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<EncryptingKeyNotLongEnoughMsg>(none);
 		}
 
 		[Fact]
@@ -128,7 +128,7 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			Assert.IsType<Some<string>>(result);
+			result.AssertSome();
 		}
 
 		[Fact]
@@ -151,7 +151,7 @@ namespace F.JwtF_Tests
 			var result = JwtF.CreateToken(config, principal);
 
 			// Assert
-			Assert.IsType<Some<string>>(result);
+			result.AssertSome();
 		}
 	}
 }

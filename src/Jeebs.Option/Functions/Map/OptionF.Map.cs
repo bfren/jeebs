@@ -20,8 +20,8 @@ namespace F
 			Catch(() =>
 				Switch(
 					option,
-					some: v => Return(map(v)),
-					none: r => new None<U>(r)
+					some: v => Some(map(v)),
+					none: r => None<U>(r)
 				),
 				handler
 			);

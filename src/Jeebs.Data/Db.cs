@@ -108,7 +108,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
-			Return(
+			Some(
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
@@ -128,7 +128,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<T>> QuerySingleAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
-			Return(
+			Some(
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
@@ -151,7 +151,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
-			Return(
+			Some(
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(
@@ -175,7 +175,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<T>> ExecuteAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
-			Return(
+			Some(
 				(query, parameters: parameters ?? new object(), type)
 			)
 			.Audit(

@@ -117,7 +117,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var some = Substitute.For<Action<int>>();
 
 			// Act
@@ -150,7 +150,7 @@ namespace Jeebs_Tests
 		protected static void Test08(Func<Option<int>, Action<int>, Option<int>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			var exception = new Exception();
 			void throwException(int _) => throw exception;
 

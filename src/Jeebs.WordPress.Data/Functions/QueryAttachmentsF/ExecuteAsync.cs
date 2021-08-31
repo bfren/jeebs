@@ -22,7 +22,7 @@ namespace F.WordPressF.DataF
 			where T : IPostAttachment
 		{
 			return
-				Return(
+				Some(
 					() => opt(new Query.AttachmentsOptions()),
 					e => new Msg.ErrorGettingQueryAttachmentsOptionsMsg(e)
 				)

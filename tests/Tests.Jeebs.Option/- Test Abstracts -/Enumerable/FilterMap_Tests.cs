@@ -17,8 +17,8 @@ namespace Jeebs_Tests.Enumerable
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = Create.None<int>();
 			var o3 = Create.None<int>();
 			var list = new[] { o0, o1, o2, o3 };
@@ -43,13 +43,13 @@ namespace Jeebs_Tests.Enumerable
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = Create.None<int>();
 			var o3 = Create.None<int>();
 			var list = new[] { o0, o1, o2, o3 };
 			var map = Substitute.For<Func<int, Option<string>>>();
-			map.Invoke(Arg.Any<int>()).Returns(x => Return(x.ArgAt<int>(0).ToString()));
+			map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
 
 			// Act
 			var result = act(list, map);
@@ -77,8 +77,8 @@ namespace Jeebs_Tests.Enumerable
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = Create.None<int>();
 			var o3 = Create.None<int>();
 			var list = new[] { o0, o1, o2, o3 };
@@ -106,14 +106,14 @@ namespace Jeebs_Tests.Enumerable
 			// Arrange
 			var v0 = F.Rnd.Int;
 			var v1 = F.Rnd.Int;
-			var o0 = Return(v0);
-			var o1 = Return(v1);
+			var o0 = Some(v0);
+			var o1 = Some(v1);
 			var o2 = Create.None<int>();
 			var o3 = Create.None<int>();
 			var list = new[] { o0, o1, o2, o3 };
 
 			var map = Substitute.For<Func<int, Option<string>>>();
-			map.Invoke(Arg.Any<int>()).Returns(x => Return(x.ArgAt<int>(0).ToString()));
+			map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
 
 			var predicate = Substitute.For<Func<int, bool>>();
 			predicate.Invoke(v1).Returns(true);

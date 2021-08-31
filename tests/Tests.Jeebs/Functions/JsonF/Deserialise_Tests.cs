@@ -22,8 +22,8 @@ namespace F.JsonF_Tests
 			var result = JsonF.Deserialise<Test>(input);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
 		}
 
 		[Fact]
@@ -36,8 +36,8 @@ namespace F.JsonF_Tests
 			var result = JsonF.Deserialise<Test>(input);
 
 			// Assert
-			var none = Assert.IsAssignableFrom<None<Test>>(result);
-			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
+			var none = result.AssertNone();
+			Assert.IsType<DeserialiseExceptionMsg>(none);
 		}
 
 		[Fact]

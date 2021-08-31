@@ -4,6 +4,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
+using Jeebs.Internals;
 using static F.OptionF;
 using Msg = F.Internals.OptionConverterMsg;
 

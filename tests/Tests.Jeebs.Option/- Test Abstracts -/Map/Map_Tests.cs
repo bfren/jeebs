@@ -34,7 +34,7 @@ namespace Jeebs_Tests
 		protected static void Test01(Func<Option<string>, Func<string, int>, Handler, Option<int>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Str);
+			var option = Some(F.Rnd.Str);
 			var exception = new Exception();
 			int throwFunc(string _) => throw exception;
 
@@ -51,7 +51,7 @@ namespace Jeebs_Tests
 		protected static void Test02(Func<Option<string>, Func<string, int>, Handler, Option<int>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Str);
+			var option = Some(F.Rnd.Str);
 			var handler = Substitute.For<Handler>();
 			var exception = new Exception();
 			int throwFunc(string _) => throw exception;
@@ -102,7 +102,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var map = Substitute.For<Func<int, string>>();
 
 			// Act

@@ -23,7 +23,7 @@ namespace Jeebs.Auth
 		/// <inheritdoc/>
 		public Task<Option<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
 			where TRole : IAuthRole =>
-			Return(userId)
+			Some(userId)
 			.BindAsync(
 				x => this.QueryAsync<TRole>(builder => builder
 					.From<AuthRoleTable>()

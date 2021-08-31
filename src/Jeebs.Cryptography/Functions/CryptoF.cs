@@ -20,7 +20,7 @@ namespace F
 		/// <param name="input">Input string</param>
 		/// <param name="bytes">The number of bytes for the hash - must be between 16 and 64</param>
 		public static Option<byte[]> Hash(string input, int bytes = 64) =>
-			Return(
+			Some(
 				() => Encoding.UTF8.GetBytes(input),
 				e => new Msg.GettingBytesForGenericHashExceptionMsg(e)
 			)
@@ -48,7 +48,7 @@ namespace F
 		/// </summary>
 		/// <returns>32 byte key</returns>
 		public static Option<byte[]> GenerateKey() =>
-			Return(
+			Some(
 				() => SecretBox.GenerateKey(),
 				e => new Msg.GeneratingKeyExceptionMsg(e)
 			);

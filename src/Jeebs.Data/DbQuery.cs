@@ -106,7 +106,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
-			Return(
+			Some(
 				() => Db.Client.GetCountQuery(parts),
 				e => new Msg.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 			)
@@ -119,7 +119,7 @@ namespace Jeebs.Data
 			)
 			.BindAsync(
 				pagingValues =>
-					Return(
+					Some(
 						() => Db.Client.GetQuery(new QueryParts(parts) with
 						{
 							Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
@@ -145,7 +145,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-			Return(
+			Some(
 				() => Db.Client.GetQuery(parts),
 				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)
@@ -182,7 +182,7 @@ namespace Jeebs.Data
 
 		/// <inheritdoc/>
 		public Task<Option<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-			Return(
+			Some(
 				() => Db.Client.GetQuery(parts),
 				e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
 			)

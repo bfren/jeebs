@@ -18,7 +18,7 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 		{
 			// Arrange
 			var (db, w, _) = Setup();
-			var empty = new List<Attachment>().AsEnumerable().Return();
+			var empty = new List<Attachment>().AsEnumerable().Some();
 			db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(empty);
 			var fileId = new WpPostId(Rnd.Ulng);
 
@@ -36,7 +36,7 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 		{
 			// Arrange
 			var (db, w, _) = Setup();
-			var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Return();
+			var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Some();
 			db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(list);
 			var fileId = new WpPostId(Rnd.Ulng);
 
@@ -55,7 +55,7 @@ namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
 			// Arrange
 			var (db, w, v) = Setup();
 			var urlPath = Rnd.Str;
-			var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().Return();
+			var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().Some();
 			db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 			// Act

@@ -119,7 +119,7 @@ namespace Jeebs.Cryptography
 		public Option<string> Serialise() =>
 			EncryptedContents.Switch(
 				some: _ => F.JsonF.Serialise(this),
-				none: Return(F.JsonF.Empty)
+				none: Some(F.JsonF.Empty)
 			);
 
 		private byte[] HashKey(string key) =>

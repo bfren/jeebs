@@ -48,7 +48,7 @@ namespace AppMvc.Controllers
 			for (int i = 0; i < reps; i++)
 			{
 				var roles = await
-					Return(
+					Some(
 						userId
 					)
 					.BindAsync(
@@ -85,7 +85,7 @@ namespace AppMvc.Controllers
 			for (int i = 0; i < reps; i++)
 			{
 				var roles = await
-					Return(
+					Some(
 						userId
 					)
 					.BindAsync(
@@ -131,7 +131,7 @@ namespace AppMvc.Controllers
 					$"WHERE `{db.UserRole.GetName()}`.`{db.UserRole.UserId}` = @P0;";
 
 				var roles = await
-					Return(
+					Some(
 						userId
 					)
 					.BindAsync(
@@ -237,7 +237,7 @@ namespace AppMvc.Controllers
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				await Return(
+				await Some(
 						userId
 					)
 					.BindAsync(
@@ -262,7 +262,7 @@ namespace AppMvc.Controllers
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				await Return(
+				await Some(
 						userId
 					)
 					.BindAsync(
@@ -306,7 +306,7 @@ namespace AppMvc.Controllers
 					$"FROM `{db.User.GetName()}` " +
 					$"WHERE `{db.User.GetName()}`.`{db.User.Id}` = @P0;";
 
-				await Return(
+				await Some(
 						userId
 					)
 					.BindAsync(
@@ -400,7 +400,7 @@ namespace AppMvc.Controllers
 			for (int i = 0; i < reps; i++)
 			{
 				var roles = await
-					Return(
+					Some(
 						F.Rnd.Lng
 					)
 					.BindAsync(
@@ -436,7 +436,7 @@ namespace AppMvc.Controllers
 			for (int i = 0; i < reps; i++)
 			{
 				var roles = await
-					Return(
+					Some(
 						F.Rnd.Lng
 					)
 					.BindAsync(
@@ -480,7 +480,7 @@ namespace AppMvc.Controllers
 			for (int i = 0; i < reps; i++)
 			{
 				var roles = await
-					Return(
+					Some(
 						F.Rnd.Lng
 					)
 					.BindAsync(

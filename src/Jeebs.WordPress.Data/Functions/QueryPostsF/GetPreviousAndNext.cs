@@ -2,6 +2,7 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs;
+using Jeebs.Internals;
 using Jeebs.WordPress.Data.Entities;
 
 namespace F.WordPressF.DataF

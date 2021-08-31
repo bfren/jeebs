@@ -15,7 +15,7 @@ namespace Jeebs_Tests
 		protected static async Task Test00(Func<Option<int>, Func<int, Task>, Task<Option<int>>> act)
 		{
 			// Arrange
-			var option = Return(F.Rnd.Int);
+			var option = Some(F.Rnd.Int);
 			static Task ifSome(int _) => throw new Exception();
 
 			// Act
@@ -48,7 +48,7 @@ namespace Jeebs_Tests
 		{
 			// Arrange
 			var value = F.Rnd.Int;
-			var option = Return(value);
+			var option = Some(value);
 			var ifSome = Substitute.For<Func<int, Task>>();
 
 			// Act

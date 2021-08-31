@@ -21,7 +21,7 @@ namespace F.DataF
 		/// <param name="columns">List of mapped columns</param>
 		public static Option<MappedColumn> GetIdColumn<TEntity>(MappedColumnList columns)
 			where TEntity : IWithId =>
-			Return(
+			Some(
 				columns
 			)
 			.Map(

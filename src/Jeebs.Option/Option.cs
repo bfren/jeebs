@@ -3,12 +3,13 @@
 
 using System.Text.Json.Serialization;
 using Jeebs.Exceptions;
+using Jeebs.Internals;
 using static F.OptionF;
 
 namespace Jeebs
 {
 	/// <summary>
-	/// Option type - enables null-safe returning by wrapping value in <see cref="Some{T}"/> and null in <see cref="None{T}"/>
+	/// Option type - enables null-safe returning by wrapping value in <see cref="Internals.Some{T}"/> and null in <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	public abstract record class Option<T> : IEquatable<Option<T>>
@@ -21,7 +22,7 @@ namespace Jeebs
 			Task.FromResult(this);
 
 		/// <summary>
-		/// Whether or not this is <see cref="Some{T}"/>
+		/// Whether or not this is <see cref="Internals.Some{T}"/>
 		/// </summary>
 		[JsonIgnore]
 		public bool IsSome =>
@@ -49,7 +50,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Return:
-		///    Value (if this is <see cref="Some{T}"/> and Value is not null)
+		///    Value (if this is <see cref="Internals.Some{T}"/> and Value is not null)
 		///    Reason (if this is <see cref="None{T}"/> and it has a reason)
 		/// </summary>
 		public override string ToString() =>
@@ -82,7 +83,7 @@ namespace Jeebs
 		#region Operators
 
 		/// <summary>
-		/// Wrap a value in a <see cref="Some{T}"/>
+		/// Wrap a value in a <see cref="Internals.Some{T}"/>
 		/// </summary>
 		/// <param name="value">Value</param>
 		public static implicit operator Option<T>(T value) =>
@@ -97,7 +98,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Compare an option type with a value type
-		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// <para>If <paramref name="l"/> is a <see cref="Internals.Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
 		/// </summary>
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
@@ -110,7 +111,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Compare an option type with a value type
-		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// <para>If <paramref name="l"/> is a <see cref="Internals.Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
 		/// </summary>
 		/// <param name="l">Option</param>
 		/// <param name="r">Value</param>
@@ -123,7 +124,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Compare an option type with a value type
-		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// <para>If <paramref name="l"/> is a <see cref="Internals.Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
 		/// </summary>
 		/// <param name="l">Value</param>
 		/// <param name="r">Option</param>
@@ -136,7 +137,7 @@ namespace Jeebs
 
 		/// <summary>
 		/// Compare an option type with a value type
-		/// <para>If <paramref name="l"/> is a <see cref="Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
+		/// <para>If <paramref name="l"/> is a <see cref="Internals.Some{T}"/> the <see cref="Some{T}.Value"/> will be compared to <paramref name="r"/></para>
 		/// </summary>
 		/// <param name="l">Value</param>
 		/// <param name="r">Option</param>

@@ -31,10 +31,7 @@ namespace F
 					IssuerSigningKey = config.GetSigningKey()
 				};
 
-				if (config.GetEncryptingKey() is Some<SecurityKey> encryptingKey)
-				{
-					parameters.TokenDecryptionKey = encryptingKey.Value;
-				}
+				config.GetEncryptingKey().IfSome(encryptingKey => parameters.TokenDecryptionKey = encryptingKey);
 
 				// Create handler to validate token
 				var handler = new JwtSecurityTokenHandler();

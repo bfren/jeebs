@@ -21,7 +21,7 @@ namespace F.DataF
 		/// <param name="table">Table object</param>
 		public static Option<MappedColumnList> GetMappedColumns<TEntity>(ITable table)
 			where TEntity : IWithId =>
-			Return(
+			Some(
 				table
 			)
 			.Map(
