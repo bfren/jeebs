@@ -6,9 +6,9 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// <summary>
 	/// Size
 	/// </summary>
-	/// <param name="Height">Rectangle height</param>
 	/// <param name="Width">Rectangle width</param>
-	public sealed record class Size(int Height, int Width)
+	/// <param name="Height">Rectangle height</param>
+	public readonly record struct Size(int Width, int Height)
 	{
 		/// <summary>
 		/// Ratio of Width / Height

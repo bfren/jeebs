@@ -12,6 +12,7 @@
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Data\Jeebs.Mvc.Data.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Update="jeebsconfig-secrets.json">

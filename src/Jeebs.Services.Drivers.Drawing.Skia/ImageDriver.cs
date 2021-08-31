@@ -22,7 +22,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia
 
 			// Create and return image object
 			using var image = SKImage.FromEncodedData(path);
-			return new ImageWrapper(image);
+			return new ImageWrapper(image.EncodedData);
 		}
 
 		/// <inheritdoc/>
@@ -30,7 +30,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia
 		{
 			// Create and return image object
 			using var image = SKImage.FromEncodedData(stream);
-			return new ImageWrapper(image);
+			return new ImageWrapper(image.EncodedData);
 		}
 
 		/// <summary>Messages</summary>

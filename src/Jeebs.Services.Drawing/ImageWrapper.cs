@@ -19,7 +19,10 @@ namespace Jeebs.Services.Drawing
 		public abstract void Save(string path, ImageFormat format = ImageFormat.Jpeg);
 
 		/// <inheritdoc/>
-		public abstract byte[] ToJpegByteArray();
+		public abstract byte[] ToJpegByteArray(int quality = 80);
+
+		/// <inheritdoc/>
+		public abstract byte[] ToPngByteArray(int quality = 80);
 
 		/// <inheritdoc/>
 		public abstract Option<IImageWrapper> ApplyMask(int width, int height);

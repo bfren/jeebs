@@ -28,7 +28,14 @@ namespace Jeebs.Services.Drawing
 		/// <summary>
 		/// Return image as a JPEG byte array
 		/// </summary>
-		byte[] ToJpegByteArray();
+		/// <param name="quality">[Optional] Image quality (0 - 100)</param>
+		byte[] ToJpegByteArray(int quality = 80);
+
+		/// <summary>
+		/// Return image as a PNG byte array
+		/// </summary>
+		/// <param name="quality">[Optional] Image quality (0 - 100)</param>
+		byte[] ToPngByteArray(int quality = 80);
 
 		/// <summary>
 		/// Resize and crop an image to fill a mask of specified width and height

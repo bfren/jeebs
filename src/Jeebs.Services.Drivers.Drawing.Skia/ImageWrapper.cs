@@ -13,30 +13,42 @@ namespace Jeebs.Services.Drivers.Drawing.Skia
 	{
 		/// <inheritdoc/>
 		public override int Width =>
-			image.Width;
+			SKImage.FromEncodedData(image).Width;
 
 		/// <inheritdoc/>
 		public override int Height =>
-			image.Height;
+			SKImage.FromEncodedData(image).Height;
 
-		private readonly SKImage image;
+		private readonly SKData image;
 
-		internal ImageWrapper(SKImage image) =>
+		internal ImageWrapper(SKData image) =>
 			this.image = image;
 
 		/// <inheritdoc/>
 		public override void Save(string path, ImageFormat format = ImageFormat.Jpeg)
 		{
 			var encodedFormat = format.GetEncodedImageFormat();
-			using var data = image.Encode(encodedFormat, 80);
+			using var data = SKImage.FromEncodedData(image).Encode(encodedFormat, 80);
 			using var fs = File.OpenWrite(path);
 			data.SaveTo(fs);
 		}
 
 		/// <inheritdoc/>
-		public override byte[] ToJpegByteArray()
+		public override byte[] ToJpegByteArray(int quality = 80) =>
+			ToByteArray(SKEncodedImageFormat.Jpeg, quality);
+
+		/// <inheritdoc/>
+		public override byte[] ToPngByteArray(int quality = 80) =>
+			ToByteArray(SKEncodedImageFormat.Png, quality);
+
+		/// <summary>
+		/// Output image as byte array
+		/// </summary>
+		/// <param name="format">SKEncodedImageFormat</param>
+		/// <param name="quality">Image quality (0 - 100)</param>
+		internal byte[] ToByteArray(SKEncodedImageFormat format, int quality)
 		{
-			using var data = image.Encode(SKEncodedImageFormat.Jpeg, 80);
+			using var data = SKImage.FromEncodedData(image).Encode(format, quality);
 			using var ms = new MemoryStream();
 			data.SaveTo(ms);
 			return ms.ToArray();
@@ -58,7 +70,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia
 				if (width <= 200 && height <= 200)
 				{
 					paint.IsAntialias = false;
-					paint.FilterQuality = SKFilterQuality.Low;
+					paint.FilterQuality = SKFilterQuality.Medium;
 				}
 				else
 				{
@@ -67,11 +79,12 @@ namespace Jeebs.Services.Drivers.Drawing.Skia
 				}
 
 				// Draw the actual image
-				surface.Canvas.DrawImage(image, source, destination, paint);
+				surface.Canvas.DrawImage(SKImage.FromEncodedData(image), source, destination, paint);
 
 				// Return resized image
 				using var resized = surface.Snapshot();
-				return new ImageWrapper(resized);
+
+				return new ImageWrapper(resized.Encode());
 			});
 
 		/// <inheritdoc/>

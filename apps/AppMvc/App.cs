@@ -6,6 +6,8 @@ using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Mvc.Auth;
+using Jeebs.Services.Drawing;
+using Jeebs.Services.Drivers.Drawing.Skia;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppMvc
@@ -25,6 +27,8 @@ namespace AppMvc
 			services.AddDbContext<EfCoreContext>(
 				options => options.UseMySQL("server=192.168.1.104;port=18793;user id=test;password=test;database=test;convert zero datetime=True;sslmode=none")
 			);
+
+			services.AddTransient<IImageDriver, ImageDriver>();
 		}
 
 		public override void Ready(IServiceProvider services, ILog log)
