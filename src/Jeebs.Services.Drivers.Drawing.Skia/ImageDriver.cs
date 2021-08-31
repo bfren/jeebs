@@ -2,12 +2,13 @@
 // Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
 
 using Jeebs.Services.Drawing;
+using SkiaSharp;
 using static F.OptionF;
 
-namespace Jeebs.Services.Drivers.Drawing.Common
+namespace Jeebs.Services.Drivers.Drawing.Skia
 {
 	/// <summary>
-	/// Image Driver implemented using System.Drawing.Common
+	/// Image Driver implemented using SkiaSharp
 	/// </summary>
 	public sealed class ImageDriver : IImageDriver
 	{
@@ -20,7 +21,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 			}
 
 			// Create and return image object
-			var image = System.Drawing.Image.FromFile(path);
+			using var image = SKImage.FromEncodedData(path);
 			return new ImageWrapper(image);
 		}
 
@@ -28,7 +29,7 @@ namespace Jeebs.Services.Drivers.Drawing.Common
 		public IImageWrapper FromStream(Stream stream)
 		{
 			// Create and return image object
-			var image = System.Drawing.Image.FromStream(stream);
+			using var image = SKImage.FromEncodedData(stream);
 			return new ImageWrapper(image);
 		}
 

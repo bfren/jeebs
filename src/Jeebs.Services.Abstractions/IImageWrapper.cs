@@ -22,7 +22,8 @@ namespace Jeebs.Services.Drawing
 		/// Save image to the hard drive
 		/// </summary>
 		/// <param name="path">Absolute path</param>
-		void Save(string path);
+		/// <param name="format">Image format</param>
+		void Save(string path, ImageFormat format = ImageFormat.Jpeg);
 
 		/// <summary>
 		/// Return image as a JPEG byte array

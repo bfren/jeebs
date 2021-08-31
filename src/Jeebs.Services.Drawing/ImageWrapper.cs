@@ -16,7 +16,7 @@ namespace Jeebs.Services.Drawing
 		public abstract int Height { get; }
 
 		/// <inheritdoc/>
-		public abstract void Save(string path);
+		public abstract void Save(string path, ImageFormat format = ImageFormat.Jpeg);
 
 		/// <inheritdoc/>
 		public abstract byte[] ToJpegByteArray();
@@ -48,7 +48,7 @@ namespace Jeebs.Services.Drawing
 			try
 			{
 				var resized = apply(size, mask);
-				return Return(resized);
+				return Some(resized);
 			}
 			catch (Exception e)
 			{
