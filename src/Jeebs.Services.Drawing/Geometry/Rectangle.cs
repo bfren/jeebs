@@ -10,5 +10,12 @@ namespace Jeebs.Services.Drawing.Geometry
 	/// <param name="Y">Y co-ordinate</param>
 	/// <param name="Width">Rectangle width</param>
 	/// <param name="Height">Rectangle height</param>
-	public sealed record class Rectangle(int X, int Y, int Width, int Height);
+	public readonly record struct Rectangle(int X, int Y, int Width, int Height)
+	{
+		/// <summary>
+		/// Ratio of Width / Height
+		/// </summary>
+		public double Ratio =>
+			(double)Width / Height;
+	}
 }
