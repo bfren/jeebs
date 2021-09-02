@@ -1,26 +1,25 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Enums
+namespace Jeebs.Data.Enums;
+
+/// <summary>
+/// Query JOIN types
+/// </summary>
+public enum QueryJoin
 {
 	/// <summary>
-	/// Query JOIN types
+	/// INNER join
 	/// </summary>
-	public enum QueryJoin
-	{
-		/// <summary>
-		/// INNER join
-		/// </summary>
-		Inner,
+	Inner,
 
-		/// <summary>
-		/// LEFT join
-		/// </summary>
-		Left,
+	/// <summary>
+	/// LEFT join
+	/// </summary>
+	Left,
 
-		/// <summary>
-		/// RIGHT join
-		/// </summary>
-		Right
-	}
+	/// <summary>
+	/// RIGHT join
+	/// </summary>
+	Right
 }

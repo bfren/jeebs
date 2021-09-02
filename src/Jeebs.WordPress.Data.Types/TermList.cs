@@ -4,44 +4,43 @@
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+/// <summary>
+/// Term List - allows taxonomies to be added to posts
+/// </summary>
+public sealed class TermList : List<TermList.Term>
 {
 	/// <summary>
-	/// Term List - allows taxonomies to be added to posts
+	/// Taxonomy of this Term List
 	/// </summary>
-	public sealed class TermList : List<TermList.Term>
+	public Taxonomy Taxonomy { get; }
+
+	/// <summary>
+	/// Create object
+	/// </summary>
+	/// <param name="taxonomy">Taxonomy of these terms</param>
+	public TermList(Taxonomy taxonomy) =>
+		Taxonomy = taxonomy;
+
+	/// <summary>
+	/// Term Model
+	/// </summary>
+	public abstract record class Term : WpTermEntityWithId
 	{
 		/// <summary>
-		/// Taxonomy of this Term List
+		/// Title
 		/// </summary>
-		public Taxonomy Taxonomy { get; }
+		public string Title { get; init; } = string.Empty;
 
 		/// <summary>
-		/// Create object
+		/// Slug
 		/// </summary>
-		/// <param name="taxonomy">Taxonomy of these terms</param>
-		public TermList(Taxonomy taxonomy) =>
-			Taxonomy = taxonomy;
+		public string Slug { get; init; } = string.Empty;
 
 		/// <summary>
-		/// Term Model
+		/// Count
 		/// </summary>
-		public abstract record class Term : WpTermEntityWithId
-		{
-			/// <summary>
-			/// Title
-			/// </summary>
-			public string Title { get; init; } = string.Empty;
-
-			/// <summary>
-			/// Slug
-			/// </summary>
-			public string Slug { get; init; } = string.Empty;
-
-			/// <summary>
-			/// Count
-			/// </summary>
-			public long Count { get; init; }
-		}
+		public long Count { get; init; }
 	}
 }

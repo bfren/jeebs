@@ -10,202 +10,201 @@ using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests;
+
+public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuilder, WpPostId>
 {
-	public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuilder, WpPostId>
+	protected override Query.PostsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public void No_CustomFields_Does_Nothing()
 	{
-		protected override Query.PostsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+		// Arrange
+		var (builder, v) = Setup();
 
-		[Fact]
-		public void No_CustomFields_Does_Nothing()
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, Substitute.For<IImmutableList<(ICustomField, Compare, object)>>());
 
-			// Act
-			var result = builder.AddWhereCustomFields(v.Parts, Substitute.For<IImmutableList<(ICustomField, Compare, object)>>());
+		// Assert
+		var some = result.AssertSome();
+		Assert.Same(v.Parts, some);
+	}
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Same(v.Parts, some);
-		}
+	public static IEnumerable<object[]> Single_CustomField_Adds_Where_Clause_Data() =>
+		GetCompareValues();
 
-		public static IEnumerable<object[]> Single_CustomField_Adds_Where_Clause_Data() =>
-			GetCompareValues();
+	[Theory]
+	[MemberData(nameof(Single_CustomField_Adds_Where_Clause_Data))]
+	public void Single_CustomField_Adds_Where_Clause(Compare input)
+	{
+		// Arrange
+		var (builder, v) = Setup();
 
-		[Theory]
-		[MemberData(nameof(Single_CustomField_Adds_Where_Clause_Data))]
-		public void Single_CustomField_Adds_Where_Clause(Compare input)
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		var key = F.Rnd.Str;
+		object value = F.Rnd.Str;
 
-			var key = F.Rnd.Str;
-			object value = F.Rnd.Str;
+		var field = Substitute.For<ICustomField>();
+		field.Key.Returns(key);
 
-			var field = Substitute.For<ICustomField>();
-			field.Key.Returns(key);
+		var customFields = ImmutableList.Create((field, input, value));
 
-			var customFields = ImmutableList.Create((field, input, value));
+		var p = builder.TTest.Post.GetName();
+		var pm = builder.TTest.PostMeta.GetName();
 
-			var p = builder.TTest.Post.GetName();
-			var pm = builder.TTest.PostMeta.GetName();
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
-			// Act
-			var result = builder.AddWhereCustomFields(v.Parts, customFields);
+		// Assert
+		var some = result.AssertSome();
+		Assert.Collection(some.WhereCustom,
+			x =>
+			{
+				Assert.Equal("(" +
+					$"SELECT COUNT(1) FROM `{pm}` " +
+					$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
+					$"AND `{pm}`.`meta_key` = @customField0_Key " +
+					$"AND `{pm}`.`meta_value` {input.ToOperator()} @customField0_Value" +
+					") = 1",
+					x.clause
+				);
+			}
+		);
+	}
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Collection(some.WhereCustom,
-				x =>
-				{
-					Assert.Equal("(" +
-						$"SELECT COUNT(1) FROM `{pm}` " +
-						$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
-						$"AND `{pm}`.`meta_key` = @customField0_Key " +
-						$"AND `{pm}`.`meta_value` {input.ToOperator()} @customField0_Value" +
-						") = 1",
-						x.clause
-					);
-				}
-			);
-		}
+	[Fact]
+	public void Single_CustomField_Adds_Parameters()
+	{
+		// Arrange
+		var (builder, v) = Setup();
 
-		[Fact]
-		public void Single_CustomField_Adds_Parameters()
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		var key = F.Rnd.Str;
+		object value = F.Rnd.Str;
 
-			var key = F.Rnd.Str;
-			object value = F.Rnd.Str;
+		var field = Substitute.For<ICustomField>();
+		field.Key.Returns(key);
 
-			var field = Substitute.For<ICustomField>();
-			field.Key.Returns(key);
+		var customFields = ImmutableList.Create((field, Compare.Equal, value));
 
-			var customFields = ImmutableList.Create((field, Compare.Equal, value));
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
-			// Act
-			var result = builder.AddWhereCustomFields(v.Parts, customFields);
+		// Assert
+		var some = result.AssertSome();
+		Assert.Collection(some.WhereCustom,
+			x =>
+			{
+				Assert.Collection(x.parameters,
+					y =>
+					{
+						Assert.Equal("@customField0_Key", y.Key);
+						Assert.Equal(key, y.Value);
+					},
+					y =>
+					{
+						Assert.Equal("@customField0_Value", y.Key);
+						Assert.Equal(value, y.Value);
+					}
+				);
+			}
+		);
+	}
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Collection(some.WhereCustom,
-				x =>
-				{
-					Assert.Collection(x.parameters,
-						y =>
-						{
-							Assert.Equal("@customField0_Key", y.Key);
-							Assert.Equal(key, y.Value);
-						},
-						y =>
-						{
-							Assert.Equal("@customField0_Value", y.Key);
-							Assert.Equal(value, y.Value);
-						}
-					);
-				}
-			);
-		}
+	[Fact]
+	public void Multiple_CustomFields_Adds_Where_Clause()
+	{
+		// Arrange
+		var (builder, v) = Setup();
 
-		[Fact]
-		public void Multiple_CustomFields_Adds_Where_Clause()
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		var k0 = F.Rnd.Str;
+		object v0 = F.Rnd.Str;
+		var f0 = Substitute.For<ICustomField>();
+		f0.Key.Returns(k0);
 
-			var k0 = F.Rnd.Str;
-			object v0 = F.Rnd.Str;
-			var f0 = Substitute.For<ICustomField>();
-			f0.Key.Returns(k0);
+		var k1 = F.Rnd.Str;
+		object v1 = F.Rnd.Str;
+		var f1 = Substitute.For<ICustomField>();
+		f1.Key.Returns(k1);
 
-			var k1 = F.Rnd.Str;
-			object v1 = F.Rnd.Str;
-			var f1 = Substitute.For<ICustomField>();
-			f1.Key.Returns(k1);
+		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f0, Compare.Equal, v1));
 
-			var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f0, Compare.Equal, v1));
+		var p = builder.TTest.Post.GetName();
+		var pm = builder.TTest.PostMeta.GetName();
 
-			var p = builder.TTest.Post.GetName();
-			var pm = builder.TTest.PostMeta.GetName();
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
-			// Act
-			var result = builder.AddWhereCustomFields(v.Parts, customFields);
+		// Assert
+		var some = result.AssertSome();
+		Assert.Collection(some.WhereCustom,
+			x =>
+			{
+				Assert.Equal("(" +
+					$"SELECT COUNT(1) FROM `{pm}` " +
+					$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
+					$"AND `{pm}`.`meta_key` = @customField0_Key " +
+					$"AND `{pm}`.`meta_value` = @customField0_Value" +
+					") = 1 AND (" +
+					$"SELECT COUNT(1) FROM `{pm}` " +
+					$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
+					$"AND `{pm}`.`meta_key` = @customField1_Key " +
+					$"AND `{pm}`.`meta_value` = @customField1_Value" +
+					") = 1",
+					x.clause
+				);
+			}
+		);
+	}
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Collection(some.WhereCustom,
-				x =>
-				{
-					Assert.Equal("(" +
-						$"SELECT COUNT(1) FROM `{pm}` " +
-						$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
-						$"AND `{pm}`.`meta_key` = @customField0_Key " +
-						$"AND `{pm}`.`meta_value` = @customField0_Value" +
-						") = 1 AND (" +
-						$"SELECT COUNT(1) FROM `{pm}` " +
-						$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
-						$"AND `{pm}`.`meta_key` = @customField1_Key " +
-						$"AND `{pm}`.`meta_value` = @customField1_Value" +
-						") = 1",
-						x.clause
-					);
-				}
-			);
-		}
+	[Fact]
+	public void Multiple_CustomFields_Adds_Parameters()
+	{
+		// Arrange
+		var (builder, v) = Setup();
 
-		[Fact]
-		public void Multiple_CustomFields_Adds_Parameters()
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		var k0 = F.Rnd.Str;
+		object v0 = F.Rnd.Str;
+		var f0 = Substitute.For<ICustomField>();
+		f0.Key.Returns(k0);
 
-			var k0 = F.Rnd.Str;
-			object v0 = F.Rnd.Str;
-			var f0 = Substitute.For<ICustomField>();
-			f0.Key.Returns(k0);
+		var k1 = F.Rnd.Str;
+		object v1 = F.Rnd.Str;
+		var f1 = Substitute.For<ICustomField>();
+		f1.Key.Returns(k1);
 
-			var k1 = F.Rnd.Str;
-			object v1 = F.Rnd.Str;
-			var f1 = Substitute.For<ICustomField>();
-			f1.Key.Returns(k1);
+		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f1, Compare.Equal, v1));
 
-			var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f1, Compare.Equal, v1));
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
-			// Act
-			var result = builder.AddWhereCustomFields(v.Parts, customFields);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Collection(some.WhereCustom,
-				x =>
-				{
-					Assert.Collection(x.parameters,
-						y =>
-						{
-							Assert.Equal("@customField0_Key", y.Key);
-							Assert.Equal(k0, y.Value);
-						},
-						y =>
-						{
-							Assert.Equal("@customField0_Value", y.Key);
-							Assert.Equal(v0, y.Value);
-						},
-						y =>
-						{
-							Assert.Equal("@customField1_Key", y.Key);
-							Assert.Equal(k1, y.Value);
-						},
-						y =>
-						{
-							Assert.Equal("@customField1_Value", y.Key);
-							Assert.Equal(v1, y.Value);
-						}
-					);
-				}
-			);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Collection(some.WhereCustom,
+			x =>
+			{
+				Assert.Collection(x.parameters,
+					y =>
+					{
+						Assert.Equal("@customField0_Key", y.Key);
+						Assert.Equal(k0, y.Value);
+					},
+					y =>
+					{
+						Assert.Equal("@customField0_Value", y.Key);
+						Assert.Equal(v0, y.Value);
+					},
+					y =>
+					{
+						Assert.Equal("@customField1_Key", y.Key);
+						Assert.Equal(k1, y.Value);
+					},
+					y =>
+					{
+						Assert.Equal("@customField1_Value", y.Key);
+						Assert.Equal(v1, y.Value);
+					}
+				);
+			}
+		);
 	}
 }

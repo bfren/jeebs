@@ -3,16 +3,15 @@
 
 using Jeebs.WordPress.Data;
 
-namespace AppConsoleWp.Bcg
+namespace AppConsoleWp.Bcg;
+
+/// <summary>
+/// The place a sermon was first preached
+/// </summary>
+public sealed class FeedImageCustomField : AttachmentCustomField
 {
 	/// <summary>
-	/// The place a sermon was first preached
+	/// This is not a required field
 	/// </summary>
-	public sealed class FeedImageCustomField : AttachmentCustomField
-	{
-		/// <summary>
-		/// This is not a required field
-		/// </summary>
-		public FeedImageCustomField() : base("image") { }
-	}
+	public FeedImageCustomField() : base("image") { }
 }

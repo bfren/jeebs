@@ -3,26 +3,25 @@
 
 using Jeebs.Auth.Constants;
 
-namespace F
+namespace F;
+
+/// <summary>
+/// JSON Web Tokens functions
+/// </summary>
+public static partial class JwtF
 {
+	private static string GenerateKey(int bytes) =>
+		Rnd.StringF.Get(bytes, numbers: true, special: true);
+
 	/// <summary>
-	/// JSON Web Tokens functions
+	/// Generate a signing key of length <see cref="JwtSecurity.SigningKeyBytes"/>
 	/// </summary>
-	public static partial class JwtF
-	{
-		private static string GenerateKey(int bytes) =>
-			Rnd.StringF.Get(bytes, numbers: true, special: true);
+	public static string GenerateSigningKey() =>
+		GenerateKey(JwtSecurity.SigningKeyBytes);
 
-		/// <summary>
-		/// Generate a signing key of length <see cref="JwtSecurity.SigningKeyBytes"/>
-		/// </summary>
-		public static string GenerateSigningKey() =>
-			GenerateKey(JwtSecurity.SigningKeyBytes);
-
-		/// <summary>
-		/// Generate an encrypting key of length <see cref="JwtSecurity.EncryptingKeyBytes"/>
-		/// </summary>
-		public static string GenerateEncryptingKey() =>
-			GenerateKey(JwtSecurity.EncryptingKeyBytes);
-	}
+	/// <summary>
+	/// Generate an encrypting key of length <see cref="JwtSecurity.EncryptingKeyBytes"/>
+	/// </summary>
+	public static string GenerateEncryptingKey() =>
+		GenerateKey(JwtSecurity.EncryptingKeyBytes);
 }

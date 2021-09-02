@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.Constants.BibleBooks_Tests
+namespace Jeebs.Constants.BibleBooks_Tests;
+
+public class Wisdom_Tests
 {
-	public class Wisdom_Tests
+	[Fact]
+	public void Returns_Wisdom_Books()
 	{
-		[Fact]
-		public void Returns_Wisdom_Books()
-		{
-			// Arrange
-			const string? wisdom = "[\"Job\",\"Psalms\",\"Proverbs\",\"Ecclesiastes\",\"Song of Songs\"]";
+		// Arrange
+		const string? wisdom = "[\"Job\",\"Psalms\",\"Proverbs\",\"Ecclesiastes\",\"Song of Songs\"]";
 
-			// Act
-			var result = F.JsonF.Serialise(BibleBooks.Wisdom);
+		// Act
+		var result = F.JsonF.Serialise(BibleBooks.Wisdom);
 
-			// Assert
-			Assert.Equal(wisdom, result);
-		}
+		// Assert
+		Assert.Equal(wisdom, result);
 	}
 }

@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.ArrayExtensions_Tests
+namespace Jeebs.ArrayExtensions_Tests;
+
+public class Shuffle_Tests
 {
-	public class Shuffle_Tests
+	[Fact]
+	public void Array_ReturnsShuffledArray()
 	{
-		[Fact]
-		public void Array_ReturnsShuffledArray()
-		{
-			// Arrange
-			var array = Enumerable.Range(0, 100).ToArray();
+		// Arrange
+		var array = Enumerable.Range(0, 100).ToArray();
 
-			// Act
-			var result = array.Shuffle();
+		// Act
+		var result = array.Shuffle();
 
-			// Assert
-			Assert.NotEqual(array, result);
-		}
+		// Assert
+		Assert.NotEqual(array, result);
 	}
 }

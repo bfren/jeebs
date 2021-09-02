@@ -3,41 +3,40 @@
 
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.WordPress.Data.Tables
+namespace Jeebs.WordPress.Data.Tables;
+
+/// <summary>
+/// Option Table
+/// </summary>
+public sealed record class OptionTable : Table
 {
 	/// <summary>
-	/// Option Table
+	/// OptionId
 	/// </summary>
-	public sealed record class OptionTable : Table
-	{
-		/// <summary>
-		/// OptionId
-		/// </summary>
-		public string Id =>
-			"option_id";
+	public string Id =>
+		"option_id";
 
-		/// <summary>
-		/// Key
-		/// </summary>
-		public string Key =>
-			"option_name";
+	/// <summary>
+	/// Key
+	/// </summary>
+	public string Key =>
+		"option_name";
 
-		/// <summary>
-		/// Value
-		/// </summary>
-		public string Value =>
-			"option_value";
+	/// <summary>
+	/// Value
+	/// </summary>
+	public string Value =>
+		"option_value";
 
-		/// <summary>
-		/// IsAutoloaded
-		/// </summary>
-		public string IsAutoloaded =>
-			"autoload";
+	/// <summary>
+	/// IsAutoloaded
+	/// </summary>
+	public string IsAutoloaded =>
+		"autoload";
 
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="prefix">Table prefix</param>
-		public OptionTable(string prefix) : base($"{prefix}options") { }
-	}
+	/// <summary>
+	/// Create object
+	/// </summary>
+	/// <param name="prefix">Table prefix</param>
+	public OptionTable(string prefix) : base($"{prefix}options") { }
 }

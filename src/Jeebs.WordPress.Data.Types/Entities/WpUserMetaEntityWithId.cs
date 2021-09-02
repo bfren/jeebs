@@ -3,17 +3,16 @@
 
 using Jeebs.Data.Entities;
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// UserMeta entity
+/// </summary>
+public abstract record class WpUserMetaEntityWithId : IWithId<WpUserMetaId>
 {
 	/// <summary>
-	/// UserMeta entity
+	/// Id
 	/// </summary>
-	public abstract record class WpUserMetaEntityWithId : IWithId<WpUserMetaId>
-	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Id]
-		public WpUserMetaId Id { get; init; } = new();
-	}
+	[Id]
+	public WpUserMetaId Id { get; init; } = new();
 }

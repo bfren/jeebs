@@ -3,47 +3,46 @@
 
 using Xunit;
 
-namespace Jeebs.TypeExtensions_Tests
+namespace Jeebs.TypeExtensions_Tests;
+
+public class ImplementsGenericClass_Tests
 {
-	public class ImplementsGenericClass_Tests
+	[Theory]
+	[InlineData(typeof(Foo), typeof(DoesImplement<>))]
+	[InlineData(typeof(Foo), typeof(DoesImplement<string>))]
+	[InlineData(typeof(Foo<>), typeof(DoesImplement<>))]
+	[InlineData(typeof(Foo<string>), typeof(DoesImplement<string>))]
+	[InlineData(typeof(FooLevel2), typeof(DoesImplement<>))]
+	[InlineData(typeof(FooLevel2), typeof(DoesImplement<string>))]
+	public void Does_Implement_Returns_True(Type @base, Type @class)
 	{
-		[Theory]
-		[InlineData(typeof(Foo), typeof(DoesImplement<>))]
-		[InlineData(typeof(Foo), typeof(DoesImplement<string>))]
-		[InlineData(typeof(Foo<>), typeof(DoesImplement<>))]
-		[InlineData(typeof(Foo<string>), typeof(DoesImplement<string>))]
-		[InlineData(typeof(FooLevel2), typeof(DoesImplement<>))]
-		[InlineData(typeof(FooLevel2), typeof(DoesImplement<string>))]
-		public void Does_Implement_Returns_True(Type @base, Type @class)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = @base.ImplementsGenericClass(@class);
+		// Act
+		var result = @base.ImplementsGenericClass(@class);
 
-			// Assert
-			Assert.True(result);
-		}
-
-		[Theory]
-		[InlineData(typeof(Foo), typeof(DoesNotImplement<>))]
-		[InlineData(typeof(Foo<>), typeof(DoesNotImplement<>))]
-		[InlineData(typeof(Foo<string>), typeof(DoesNotImplement<int>))]
-		public void Does_Not_Implement_Returns_False(Type @base, Type @class)
-		{
-			// Arrange
-
-			// Act
-			var result = @base.ImplementsGenericClass(@class);
-
-			// Assert
-			Assert.False(result);
-		}
-
-		public class DoesImplement<T> { }
-		public class DoesNotImplement<T> { }
-		public class Foo : DoesImplement<string> { }
-		public class Foo<T> : DoesImplement<T> { }
-		public class FooLevel2 : Foo { }
+		// Assert
+		Assert.True(result);
 	}
+
+	[Theory]
+	[InlineData(typeof(Foo), typeof(DoesNotImplement<>))]
+	[InlineData(typeof(Foo<>), typeof(DoesNotImplement<>))]
+	[InlineData(typeof(Foo<string>), typeof(DoesNotImplement<int>))]
+	public void Does_Not_Implement_Returns_False(Type @base, Type @class)
+	{
+		// Arrange
+
+		// Act
+		var result = @base.ImplementsGenericClass(@class);
+
+		// Assert
+		Assert.False(result);
+	}
+
+	public class DoesImplement<T> { }
+	public class DoesNotImplement<T> { }
+	public class Foo : DoesImplement<string> { }
+	public class Foo<T> : DoesImplement<T> { }
+	public class FooLevel2 : Foo { }
 }

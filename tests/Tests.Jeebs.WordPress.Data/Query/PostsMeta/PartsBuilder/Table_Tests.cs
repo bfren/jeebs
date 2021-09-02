@@ -8,24 +8,23 @@ using Jeebs.WordPress.Data.Tables;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests;
+
+public class Table_Tests : QueryPartsBuilder_Tests<Query.PostsMetaPartsBuilder, WpPostMetaId>
 {
-	public class Table_Tests : QueryPartsBuilder_Tests<Query.PostsMetaPartsBuilder, WpPostMetaId>
+	protected override Query.PostsMetaPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public void Returns_PostMetaTable()
 	{
-		protected override Query.PostsMetaPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+		// Arrange
+		var (builder, _) = Setup();
 
-		[Fact]
-		public void Returns_PostMetaTable()
-		{
-			// Arrange
-			var (builder, _) = Setup();
+		// Act
+		var result = builder.Table;
 
-			// Act
-			var result = builder.Table;
-
-			// Assert
-			Assert.IsType<PostMetaTable>(result);
-		}
+		// Assert
+		Assert.IsType<PostMetaTable>(result);
 	}
 }

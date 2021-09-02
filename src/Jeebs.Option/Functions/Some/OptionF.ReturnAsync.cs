@@ -4,59 +4,58 @@
 using Jeebs;
 using Jeebs.Internals;
 
-namespace F
+namespace F;
+
+public static partial class OptionF
 {
-	public static partial class OptionF
+	/// <inheritdoc cref="Some{T}(Func{T}, Handler?)"/>
+	public static async Task<Option<T>> SomeAsync<T>(Func<Task<T>> value, Handler handler)
 	{
-		/// <inheritdoc cref="Some{T}(Func{T}, Handler?)"/>
-		public static async Task<Option<T>> SomeAsync<T>(Func<Task<T>> value, Handler handler)
+		try
 		{
-			try
+			return await value() switch
 			{
-				return await value() switch
-				{
-					T x =>
-						new Some<T>(x), // Some<T> is only created by Return() functions and implicit operator
+				T x =>
+					new Some<T>(x), // Some<T> is only created by Return() functions and implicit operator
 
-					_ =>
-						None<T, Msg.NullValueMsg>()
+				_ =>
+					None<T, Msg.NullValueMsg>()
 
-				};
-			}
-			catch (Exception e)
-			{
-				return None<T>(handler(e));
-			}
+			};
 		}
-
-		/// <inheritdoc cref="Some{T}(Func{T}, bool, Handler)"/>
-		public static async Task<Option<T?>> SomeAsync<T>(Func<Task<T?>> value, bool allowNull, Handler handler)
+		catch (Exception e)
 		{
-			try
+			return None<T>(handler(e));
+		}
+	}
+
+	/// <inheritdoc cref="Some{T}(Func{T}, bool, Handler)"/>
+	public static async Task<Option<T?>> SomeAsync<T>(Func<Task<T?>> value, bool allowNull, Handler handler)
+	{
+		try
+		{
+			var v = await value();
+
+			return v switch
 			{
-				var v = await value();
+				T x =>
+					new Some<T?>(x), // Some<T> is only created by Return() functions and implicit operator
 
-				return v switch
-				{
-					T x =>
-						new Some<T?>(x), // Some<T> is only created by Return() functions and implicit operator
+				_ =>
+					allowNull switch
+					{
+						true =>
+							new Some<T?>(v), // Some<T> is only created by Return() functions and implicit operator
 
-					_ =>
-						allowNull switch
-						{
-							true =>
-								new Some<T?>(v), // Some<T> is only created by Return() functions and implicit operator
+						false =>
+							None<T?, Msg.AllowNullWasFalseMsg>()
+					}
 
-							false =>
-								None<T?, Msg.AllowNullWasFalseMsg>()
-						}
-
-				};
-			}
-			catch (Exception e)
-			{
-				return None<T?>(handler(e));
-			}
+			};
+		}
+		catch (Exception e)
+		{
+			return None<T?>(handler(e));
 		}
 	}
 }

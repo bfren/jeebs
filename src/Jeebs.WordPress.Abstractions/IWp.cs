@@ -4,39 +4,38 @@
 using Jeebs.Config;
 using Jeebs.WordPress.Data;
 
-namespace Jeebs.WordPress
+namespace Jeebs.WordPress;
+
+/// <summary>
+/// WordPress wrapper
+/// </summary>
+public interface IWp
 {
 	/// <summary>
-	/// WordPress wrapper
+	/// WordPress Database instance
 	/// </summary>
-	public interface IWp
-	{
-		/// <summary>
-		/// WordPress Database instance
-		/// </summary>
-		IWpDb Db { get; }
-
-		/// <summary>
-		/// Register custom post types
-		/// </summary>
-		void RegisterCustomPostTypes();
-
-		/// <summary>
-		/// Register custom taxonomies
-		/// </summary>
-		void RegisterCustomTaxonomies();
-	}
+	IWpDb Db { get; }
 
 	/// <summary>
-	/// WordPress wrapper
+	/// Register custom post types
 	/// </summary>
-	/// <typeparam name="TConfig">WpConfig type</typeparam>
-	public interface IWp<TConfig> : IWp
-		where TConfig : WpConfig
-	{
-		/// <summary>
-		/// WordPress configuration
-		/// </summary>
-		TConfig Config { get; }
-	}
+	void RegisterCustomPostTypes();
+
+	/// <summary>
+	/// Register custom taxonomies
+	/// </summary>
+	void RegisterCustomTaxonomies();
+}
+
+/// <summary>
+/// WordPress wrapper
+/// </summary>
+/// <typeparam name="TConfig">WpConfig type</typeparam>
+public interface IWp<TConfig> : IWp
+	where TConfig : WpConfig
+{
+	/// <summary>
+	/// WordPress configuration
+	/// </summary>
+	TConfig Config { get; }
 }

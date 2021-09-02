@@ -4,23 +4,22 @@
 using Jeebs.Internals;
 using Xunit;
 
-namespace Jeebs.None_Tests
+namespace Jeebs.None_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Reason()
 	{
-		[Fact]
-		public void Sets_Reason()
-		{
-			// Arrange
-			var reason = new TestMsg();
+		// Arrange
+		var reason = new TestMsg();
 
-			// Act
-			var result = new None<string>(reason);
+		// Act
+		var result = new None<string>(reason);
 
-			// Assert
-			Assert.Equal(reason, result.Reason);
-		}
+		// Assert
+		Assert.Equal(reason, result.Reason);
 	}
-
-	public record class TestMsg : IMsg { }
 }
+
+public record class TestMsg : IMsg { }

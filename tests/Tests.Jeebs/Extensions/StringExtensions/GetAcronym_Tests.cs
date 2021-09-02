@@ -3,23 +3,22 @@
 
 using Xunit;
 
-namespace Jeebs.StringExtensions_Tests
+namespace Jeebs.StringExtensions_Tests;
+
+public class GetAcronym_Tests
 {
-	public class GetAcronym_Tests
+	[Theory]
+	[InlineData("XML", "XML")]
+	[InlineData("eXtensible Markup Language", "XML")]
+	[InlineData("Jean-Luc Picard", "JLP")]
+	public void Generates_Acronym(string input, string expected)
 	{
-		[Theory]
-		[InlineData("XML", "XML")]
-		[InlineData("eXtensible Markup Language", "XML")]
-		[InlineData("Jean-Luc Picard", "JLP")]
-		public void Generates_Acronym(string input, string expected)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = input.GetAcronym();
+		// Act
+		var result = input.GetAcronym();
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

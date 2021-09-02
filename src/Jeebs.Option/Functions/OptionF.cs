@@ -3,21 +3,20 @@
 
 using Jeebs;
 
-namespace F
+namespace F;
+
+/// <summary>
+/// Functions for interacting with and manipulating <see cref="Option{T}"/>
+/// </summary>
+public static partial class OptionF
 {
 	/// <summary>
-	/// Functions for interacting with and manipulating <see cref="Option{T}"/>
+	/// Functions for interacting with <see cref="IDictionary{TKey, TValue}"/>
 	/// </summary>
-	public static partial class OptionF
-	{
-		/// <summary>
-		/// Functions for interacting with <see cref="IDictionary{TKey, TValue}"/>
-		/// </summary>
-		public static partial class Dictionary { }
+	public static partial class Dictionary { }
 
-		/// <summary>
-		/// Functions for interacting with <see cref="IEnumerable{T}"/>
-		/// </summary>
-		public static partial class Enumerable { }
-	}
+	/// <summary>
+	/// Functions for interacting with <see cref="IEnumerable{T}"/>
+	/// </summary>
+	public static partial class Enumerable { }
 }

@@ -8,24 +8,23 @@ using Jeebs.WordPress.Data.Tables;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests;
+
+public class Table_Tests : QueryPartsBuilder_Tests<Query.TermsPartsBuilder, WpTermId>
 {
-	public class Table_Tests : QueryPartsBuilder_Tests<Query.TermsPartsBuilder, WpTermId>
+	protected override Query.TermsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public void Returns_PostMetaTable()
 	{
-		protected override Query.TermsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+		// Arrange
+		var (builder, _) = Setup();
 
-		[Fact]
-		public void Returns_PostMetaTable()
-		{
-			// Arrange
-			var (builder, _) = Setup();
+		// Act
+		var result = builder.Table;
 
-			// Act
-			var result = builder.Table;
-
-			// Assert
-			Assert.IsType<TermTable>(result);
-		}
+		// Assert
+		Assert.IsType<TermTable>(result);
 	}
 }

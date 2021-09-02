@@ -3,11 +3,10 @@
 
 using Jeebs.Config;
 
-namespace Jeebs.Services
-{
-	/// <summary>
-	/// Service driver arguments
-	/// </summary>
-	/// <typeparam name="TConfig">Service configuration type</typeparam>
-	public interface IDriverArgs<TConfig> where TConfig : IServiceConfig { }
-}
+namespace Jeebs.Services;
+
+/// <summary>
+/// Service driver arguments
+/// </summary>
+/// <typeparam name="TConfig">Service configuration type</typeparam>
+public interface IDriverArgs<TConfig> where TConfig : IServiceConfig { }

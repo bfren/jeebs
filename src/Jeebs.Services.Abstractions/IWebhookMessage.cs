@@ -1,26 +1,25 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Services.Webhook
+namespace Jeebs.Services.Webhook;
+
+/// <summary>
+/// Webhook message interface
+/// </summary>
+public interface IWebhookMessage
 {
 	/// <summary>
-	/// Webhook message interface
+	/// Message content
 	/// </summary>
-	public interface IWebhookMessage
-	{
-		/// <summary>
-		/// Message content
-		/// </summary>
-		string Content { get; init; }
+	string Content { get; init; }
 
-		/// <summary>
-		/// Message level
-		/// </summary>
-		NotificationLevel Level { get; init; }
+	/// <summary>
+	/// Message level
+	/// </summary>
+	NotificationLevel Level { get; init; }
 
-		/// <summary>
-		/// Additional fields to send
-		/// </summary>
-		Dictionary<string, object> Fields { get; init; }
-	}
+	/// <summary>
+	/// Additional fields to send
+	/// </summary>
+	Dictionary<string, object> Fields { get; init; }
 }

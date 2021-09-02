@@ -3,16 +3,15 @@
 
 using Jeebs.WordPress.Data;
 
-namespace AppConsoleWp.Bcg
+namespace AppConsoleWp.Bcg;
+
+/// <summary>
+/// Bible Passage
+/// </summary>
+public sealed class PassageCustomField : TextCustomField
 {
 	/// <summary>
-	/// Bible Passage
+	/// This is a required field
 	/// </summary>
-	public sealed class PassageCustomField : TextCustomField
-	{
-		/// <summary>
-		/// This is a required field
-		/// </summary>
-		public PassageCustomField() : base("passage") { }
-	}
+	public PassageCustomField() : base("passage") { }
 }

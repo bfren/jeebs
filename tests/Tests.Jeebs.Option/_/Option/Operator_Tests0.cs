@@ -4,37 +4,36 @@
 using Xunit;
 using static F.OptionF.Msg;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.Option_Tests;
+
+public partial class Operator_Tests
 {
-	public partial class Operator_Tests
+	[Theory]
+	[InlineData(18)]
+	[InlineData("foo")]
+	public void Implicit_With_Value_Returns_Some<T>(T input)
 	{
-		[Theory]
-		[InlineData(18)]
-		[InlineData("foo")]
-		public void Implicit_With_Value_Returns_Some<T>(T input)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			Option<T> result = input;
+		// Act
+		Option<T> result = input;
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(input, some);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Equal(input, some);
+	}
 
-		[Theory]
-		[InlineData(null)]
-		public void Implicit_With_Null_Returns_None(object input)
-		{
-			// Arrange
+	[Theory]
+	[InlineData(null)]
+	public void Implicit_With_Null_Returns_None(object input)
+	{
+		// Arrange
 
-			// Act
-			Option<object> result = input;
+		// Act
+		Option<object> result = input;
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<NullValueMsg>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<NullValueMsg>(none);
 	}
 }

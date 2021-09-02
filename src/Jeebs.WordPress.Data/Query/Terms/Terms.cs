@@ -6,19 +6,18 @@ using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Querying;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+public static partial class Query
 {
-	public static partial class Query
+	/// <inheritdoc cref="IQueryTerms"/>
+	public sealed class Terms : IQueryTerms
 	{
-		/// <inheritdoc cref="IQueryTerms"/>
-		public sealed class Terms : IQueryTerms
+		/// <inheritdoc/>
+		public Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
+			where T : IWithId<WpTermId>
 		{
-			/// <inheritdoc/>
-			public Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
-				where T : IWithId<WpTermId>
-			{
-				return QueryTermsF.ExecuteAsync<T>(db, w, opt);
-			}
+			return QueryTermsF.ExecuteAsync<T>(db, w, opt);
 		}
 	}
 }

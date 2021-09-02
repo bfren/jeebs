@@ -3,18 +3,17 @@
 
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.Data
+namespace Jeebs.Data;
+
+/// <summary>
+/// Interface wrapper for column extraction function
+/// </summary>
+public interface IExtract
 {
 	/// <summary>
-	/// Interface wrapper for column extraction function
+	/// Extract columns from the list of <paramref name="tables"/> that match properties on <typeparamref name="TModel"/>
 	/// </summary>
-	public interface IExtract
-	{
-		/// <summary>
-		/// Extract columns from the list of <paramref name="tables"/> that match properties on <typeparamref name="TModel"/>
-		/// </summary>
-		/// <typeparam name="TModel">Model type</typeparam>
-		/// <param name="tables">Tables</param>
-		IColumnList From<TModel>(params ITable[] tables);
-	}
+	/// <typeparam name="TModel">Model type</typeparam>
+	/// <param name="tables">Tables</param>
+	IColumnList From<TModel>(params ITable[] tables);
 }

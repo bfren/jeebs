@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping
-{
-	public readonly record struct FooId(ulong Value) : IStrongId;
-}
+namespace Jeebs.Data.Mapping;
+
+public readonly record struct FooId(ulong Value) : IStrongId;

@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.Calendar.CalendarBase_Tests
+namespace Jeebs.Calendar.CalendarBase_Tests;
+
+public class DefaultTimeZone_Tests
 {
-	public class DefaultTimeZone_Tests
+	[Fact]
+	public void Returns_Europe_London()
 	{
-		[Fact]
-		public void Returns_Europe_London()
-		{
-			// Arrange
-			var expected = "Europe/London";
+		// Arrange
+		var expected = "Europe/London";
 
-			// Act
-			var result = CalendarBase.DefaultTimezone;
+		// Act
+		var result = CalendarBase.DefaultTimezone;
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

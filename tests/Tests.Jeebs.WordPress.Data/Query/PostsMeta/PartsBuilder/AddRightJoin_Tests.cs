@@ -7,15 +7,14 @@ using Jeebs.WordPress.Data.Entities;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests
-{
-	public class AddRightJoin_Tests : AddRightJoin_Tests<Query.PostsMetaPartsBuilder, WpPostMetaId>
-	{
-		protected override Query.PostsMetaPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests;
 
-		[Fact]
-		public override void Test00_Adds_Columns_To_RightJoin() =>
-			Test00();
-	}
+public class AddRightJoin_Tests : AddRightJoin_Tests<Query.PostsMetaPartsBuilder, WpPostMetaId>
+{
+	protected override Query.PostsMetaPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public override void Test00_Adds_Columns_To_RightJoin() =>
+		Test00();
 }

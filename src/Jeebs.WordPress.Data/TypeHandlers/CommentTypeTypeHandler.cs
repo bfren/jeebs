@@ -4,19 +4,18 @@
 using Jeebs.Data.TypeHandlers;
 using Jeebs.WordPress.Data.Enums;
 
-namespace Jeebs.WordPress.Data.TypeHandlers
+namespace Jeebs.WordPress.Data.TypeHandlers;
+
+/// <summary>
+/// Comment TypeHandler
+/// </summary>
+public sealed class CommentTypeTypeHandler : EnumeratedTypeHandler<CommentType>
 {
 	/// <summary>
-	/// Comment TypeHandler
+	/// Parse the CommentType value
 	/// </summary>
-	public sealed class CommentTypeTypeHandler : EnumeratedTypeHandler<CommentType>
-	{
-		/// <summary>
-		/// Parse the CommentType value
-		/// </summary>
-		/// <param name="value">Database table value</param>
-		/// <returns>CommentType object</returns>
-		public override CommentType Parse(object value) =>
-			Parse(value, CommentType.Parse, CommentType.Blank);
-	}
+	/// <param name="value">Database table value</param>
+	/// <returns>CommentType object</returns>
+	public override CommentType Parse(object value) =>
+		Parse(value, CommentType.Parse, CommentType.Blank);
 }

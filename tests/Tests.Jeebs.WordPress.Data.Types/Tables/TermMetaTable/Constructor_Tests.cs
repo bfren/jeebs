@@ -4,22 +4,21 @@
 using Jeebs.WordPress.Data.Tables;
 using Xunit;
 
-namespace Jeebs.WordPress.Entities.Tables.TermMetaTable_Tests
+namespace Jeebs.WordPress.Entities.Tables.TermMetaTable_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Adds_Prefix_To_Table_Name()
 	{
-		[Fact]
-		public void Adds_Prefix_To_Table_Name()
-		{
-			// Arrange
-			var prefix = F.Rnd.Str;
-			var expected = $"{prefix}termmeta";
+		// Arrange
+		var prefix = F.Rnd.Str;
+		var expected = $"{prefix}termmeta";
 
-			// Act
-			var result = new TermMetaTable(prefix).GetName();
+		// Act
+		var result = new TermMetaTable(prefix).GetName();
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

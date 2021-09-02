@@ -3,17 +3,16 @@
 
 using Jeebs.Data.Entities;
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// Term entity
+/// </summary>
+public abstract record class WpTermEntityWithId : IWithId<WpTermId>
 {
 	/// <summary>
-	/// Term entity
+	/// Id
 	/// </summary>
-	public abstract record class WpTermEntityWithId : IWithId<WpTermId>
-	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Id]
-		public WpTermId Id { get; init; } = new();
-	}
+	[Id]
+	public WpTermId Id { get; init; } = new();
 }

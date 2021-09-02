@@ -3,21 +3,20 @@
 
 using Jeebs.Data;
 
-namespace Jeebs.Auth.Data
+namespace Jeebs.Auth.Data;
+
+/// <summary>
+/// Adds additional Authentication functionality to the base <see cref="IDb"/>
+/// </summary>
+public interface IAuthDb : IDb
 {
 	/// <summary>
-	/// Adds additional Authentication functionality to the base <see cref="IDb"/>
+	/// Authentication Database Client
 	/// </summary>
-	public interface IAuthDb : IDb
-	{
-		/// <summary>
-		/// Authentication Database Client
-		/// </summary>
-		new public IAuthDbClient Client { get; }
+	new public IAuthDbClient Client { get; }
 
-		/// <summary>
-		/// Migrate to the latest version of the Authentication database
-		/// </summary>
-		void MigrateToLatest();
-	}
+	/// <summary>
+	/// Migrate to the latest version of the Authentication database
+	/// </summary>
+	void MigrateToLatest();
 }

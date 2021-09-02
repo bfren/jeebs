@@ -3,22 +3,21 @@
 
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.Data.Querying
+namespace Jeebs.Data.Querying;
+
+/// <summary>
+/// Fluently build a database query
+/// </summary>
+public interface IQueryBuilder
 {
 	/// <summary>
-	/// Fluently build a database query
+	/// Set the main table to select data from
 	/// </summary>
-	public interface IQueryBuilder
-	{
-		/// <summary>
-		/// Set the main table to select data from
-		/// </summary>
-		/// <param name="table">ITable</param>
-		IQueryBuilderWithFrom From(ITable table);
+	/// <param name="table">ITable</param>
+	IQueryBuilderWithFrom From(ITable table);
 
-		/// <inheritdoc cref="From(ITable)"/>
-		/// <typeparam name="TTable">Table type</typeparam>
-		IQueryBuilderWithFrom From<TTable>()
-			where TTable : ITable, new();
-	}
+	/// <inheritdoc cref="From(ITable)"/>
+	/// <typeparam name="TTable">Table type</typeparam>
+	IQueryBuilderWithFrom From<TTable>()
+		where TTable : ITable, new();
 }

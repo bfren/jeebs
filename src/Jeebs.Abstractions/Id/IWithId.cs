@@ -1,31 +1,30 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs
+namespace Jeebs;
+
+/// <summary>
+/// Object (Entity or Model) with ID property
+/// </summary>
+public interface IWithId
 {
 	/// <summary>
-	/// Object (Entity or Model) with ID property
+	/// IStrongId (wrapping a long value)
 	/// </summary>
-	public interface IWithId
-	{
-		/// <summary>
-		/// IStrongId (wrapping a long value)
-		/// </summary>
-		IStrongId Id { get; }
-	}
+	IStrongId Id { get; }
+}
 
-	/// <inheritdoc cref="IWithId"/>
-	/// <typeparam name="T">IStrongId Type</typeparam>
-	public interface IWithId<T> : IWithId
-		where T : IStrongId
-	{
-		/// <summary>
-		/// Strongly-typed IStrongId (wrapping a long value)
-		/// </summary>
-		new T Id { get; init; }
+/// <inheritdoc cref="IWithId"/>
+/// <typeparam name="T">IStrongId Type</typeparam>
+public interface IWithId<T> : IWithId
+	where T : IStrongId
+{
+	/// <summary>
+	/// Strongly-typed IStrongId (wrapping a long value)
+	/// </summary>
+	new T Id { get; init; }
 
-		/// <inheritdoc/>
-		IStrongId IWithId.Id =>
-			Id;
-	}
+	/// <inheritdoc/>
+	IStrongId IWithId.Id =>
+		Id;
 }

@@ -3,21 +3,20 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Data
+namespace Jeebs.Data;
+
+/// <summary>
+/// IServiceCollection extension methods
+/// </summary>
+public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// IServiceCollection extension methods
+	/// Configure data
 	/// </summary>
-	public static class ServiceCollectionExtensions
+	/// <param name="this">IServiceCollection</param>
+	public static IServiceCollection AddData(this IServiceCollection @this)
 	{
-		/// <summary>
-		/// Configure data
-		/// </summary>
-		/// <param name="this">IServiceCollection</param>
-		public static IServiceCollection AddData(this IServiceCollection @this)
-		{
-			// Return
-			return @this;
-		}
+		// Return
+		return @this;
 	}
 }

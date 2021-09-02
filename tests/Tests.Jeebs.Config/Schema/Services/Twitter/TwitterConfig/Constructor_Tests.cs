@@ -3,20 +3,19 @@
 
 using Xunit;
 
-namespace Jeebs.Config.TwitterConfig_Tests
+namespace Jeebs.Config.TwitterConfig_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Implements_ServiceConfig()
 	{
-		[Fact]
-		public void Implements_ServiceConfig()
-		{
-			// Arrange
-			var config = new TwitterConfig();
+		// Arrange
+		var config = new TwitterConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IServiceConfig>(config);
 	}
 }

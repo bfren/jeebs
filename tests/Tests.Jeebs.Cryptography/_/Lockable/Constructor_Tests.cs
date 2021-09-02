@@ -3,22 +3,21 @@
 
 using Xunit;
 
-namespace Jeebs.Cryptography.Lockable_Tests
+namespace Jeebs.Cryptography.Lockable_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Properties()
 	{
-		[Fact]
-		public void Sets_Properties()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
-			var box = new Lockable<string>(value);
+		// Arrange
+		var value = F.Rnd.Str;
+		var box = new Lockable<string>(value);
 
-			// Act
-			var result = box.Contents;
+		// Act
+		var result = box.Contents;
 
-			// Assert
-			Assert.Equal(value, result);
-		}
+		// Assert
+		Assert.Equal(value, result);
 	}
 }

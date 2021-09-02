@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.None_Tests
+namespace Jeebs.None_Tests;
+
+public class AsTask_Tests
 {
-	public class AsTask_Tests
+	[Fact]
+	public void Returns_None_As_Generic_Option()
 	{
-		[Fact]
-		public void Returns_None_As_Generic_Option()
-		{
-			// Arrange
-			var none = Create.None<int>();
+		// Arrange
+		var none = Create.None<int>();
 
-			// Act
-			var result = none.AsTask;
+		// Act
+		var result = none.AsTask;
 
-			// Assert
-			Assert.IsType<Task<Option<int>>>(result);
-		}
+		// Assert
+		Assert.IsType<Task<Option<int>>>(result);
 	}
 }

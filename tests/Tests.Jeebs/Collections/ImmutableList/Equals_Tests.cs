@@ -3,42 +3,41 @@
 
 using Xunit;
 
-namespace Jeebs.ImmutableList_Tests
+namespace Jeebs.ImmutableList_Tests;
+
+public class Equals_Tests
 {
-	public class Equals_Tests
+	[Fact]
+	public void Lists_Equal_Returns_True()
 	{
-		[Fact]
-		public void Lists_Equal_Returns_True()
-		{
-			// Arrange
-			var i0 = F.Rnd.Str;
-			var i1 = F.Rnd.Str;
-			var i2 = F.Rnd.Str;
-			var l0 = new ImmutableList<string>(new[] { i0, i1, i2 });
-			var l1 = new ImmutableList<string>(new[] { i0, i1, i2 });
+		// Arrange
+		var i0 = F.Rnd.Str;
+		var i1 = F.Rnd.Str;
+		var i2 = F.Rnd.Str;
+		var l0 = new ImmutableList<string>(new[] { i0, i1, i2 });
+		var l1 = new ImmutableList<string>(new[] { i0, i1, i2 });
 
-			// Act
-			var result = l0 == l1;
+		// Act
+		var result = l0 == l1;
 
-			// Assert
-			Assert.True(result);
-		}
+		// Assert
+		Assert.True(result);
+	}
 
-		[Fact]
-		public void Lists_Not_Equal_Returns_False()
-		{
-			// Arrange
-			var i0 = F.Rnd.Str;
-			var i1 = F.Rnd.Str;
-			var i2 = F.Rnd.Str;
-			var l0 = new ImmutableList<string>(new[] { i0, i1, i2 });
-			var l1 = new ImmutableList<string>(new[] { i2, i1, i0 });
+	[Fact]
+	public void Lists_Not_Equal_Returns_False()
+	{
+		// Arrange
+		var i0 = F.Rnd.Str;
+		var i1 = F.Rnd.Str;
+		var i2 = F.Rnd.Str;
+		var l0 = new ImmutableList<string>(new[] { i0, i1, i2 });
+		var l1 = new ImmutableList<string>(new[] { i2, i1, i0 });
 
-			// Act
-			var result = l0 == l1;
+		// Act
+		var result = l0 == l1;
 
-			// Assert
-			Assert.False(result);
-		}
+		// Assert
+		Assert.False(result);
 	}
 }

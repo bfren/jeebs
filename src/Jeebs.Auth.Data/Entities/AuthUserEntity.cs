@@ -4,45 +4,44 @@
 using Jeebs.Auth.Data.Models;
 using Jeebs.Data.Entities;
 
-namespace Jeebs.Auth.Data.Entities
+namespace Jeebs.Auth.Data.Entities;
+
+/// <summary>
+/// Authentication User Entity
+/// </summary>
+public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 {
+	/// <inheritdoc/>
+	[Version]
+	public ulong Version { get; init; }
+
 	/// <summary>
-	/// Authentication User Entity
+	/// The user's encrypted password
 	/// </summary>
-	public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
-	{
-		/// <inheritdoc/>
-		[Version]
-		public ulong Version { get; init; }
+	public string PasswordHash { get; init; } = string.Empty;
 
-		/// <summary>
-		/// The user's encrypted password
-		/// </summary>
-		public string PasswordHash { get; init; } = string.Empty;
+	/// <summary>
+	/// TOTP secret - used for generating one-time authentication codes
+	/// </summary>
+	public string? TotpSecret { get; init; }
 
-		/// <summary>
-		/// TOTP secret - used for generating one-time authentication codes
-		/// </summary>
-		public string? TotpSecret { get; init; }
+	/// <summary>
+	/// TOTP backup codes - used when the authenticator is not available
+	/// </summary>
+	public List<string> TotpBackupCodes { get; init; } = new();
 
-		/// <summary>
-		/// TOTP backup codes - used when the authenticator is not available
-		/// </summary>
-		public List<string> TotpBackupCodes { get; init; } = new();
+	/// <summary>
+	/// Whether or not the user account is enabled
+	/// </summary>
+	public bool IsEnabled { get; init; }
 
-		/// <summary>
-		/// Whether or not the user account is enabled
-		/// </summary>
-		public bool IsEnabled { get; init; }
+	/// <summary>
+	/// The last time the user signed in
+	/// </summary>
+	public DateTimeOffset? LastSignedIn { get; init; }
 
-		/// <summary>
-		/// The last time the user signed in
-		/// </summary>
-		public DateTimeOffset? LastSignedIn { get; init; }
+	internal AuthUserEntity() { }
 
-		internal AuthUserEntity() { }
-
-		internal AuthUserEntity(AuthUserId id, string email, string passwordHash) : base(id, email) =>
-			PasswordHash = passwordHash;
-	}
+	internal AuthUserEntity(AuthUserId id, string email, string passwordHash) : base(id, email) =>
+		PasswordHash = passwordHash;
 }

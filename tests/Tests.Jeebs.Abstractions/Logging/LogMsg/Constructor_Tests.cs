@@ -3,55 +3,54 @@
 
 using Xunit;
 
-namespace Jeebs.Logging.LogMsg_Tests
+namespace Jeebs.Logging.LogMsg_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Without_Level_Uses_Default_Level_Information()
 	{
-		[Fact]
-		public void Without_Level_Uses_Default_Level_Information()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = new TestMsg(F.Rnd.Str);
+		// Act
+		var result = new TestMsg(F.Rnd.Str);
 
-			// Assert
-			Assert.Equal(LogLevel.Information, result.Level);
-		}
+		// Assert
+		Assert.Equal(LogLevel.Information, result.Level);
+	}
 
-		[Fact]
-		public void With_Level_Sets_Level()
-		{
-			// Arrange
-			const LogLevel value = LogLevel.Fatal;
+	[Fact]
+	public void With_Level_Sets_Level()
+	{
+		// Arrange
+		const LogLevel value = LogLevel.Fatal;
 
-			// Act
-			var result = new TestMsg(value, F.Rnd.Str);
+		// Act
+		var result = new TestMsg(value, F.Rnd.Str);
 
-			// Assert
-			Assert.Equal(value, result.Level);
-		}
+		// Assert
+		Assert.Equal(value, result.Level);
+	}
 
-		[Fact]
-		public void Prepends_MsgType_To_Format()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
+	[Fact]
+	public void Prepends_MsgType_To_Format()
+	{
+		// Arrange
+		var value = F.Rnd.Str;
 
-			// Act
-			var result = new TestMsg(value);
+		// Act
+		var result = new TestMsg(value);
 
-			// Assert
-			Assert.Equal("{MsgType} " + value, result.Format);
-		}
+		// Assert
+		Assert.Equal("{MsgType} " + value, result.Format);
+	}
 
-		public record class TestMsg : LogMsg
-		{
-			public override Func<object[]> Args =>
-				() => Array.Empty<object>();
+	public record class TestMsg : LogMsg
+	{
+		public override Func<object[]> Args =>
+			() => Array.Empty<object>();
 
-			public TestMsg(string format) : base(format) { }
-			public TestMsg(LogLevel level, string format) : base(level, format) { }
-		}
+		public TestMsg(string format) : base(format) { }
+		public TestMsg(LogLevel level, string format) : base(level, format) { }
 	}
 }

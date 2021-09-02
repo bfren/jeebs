@@ -3,39 +3,38 @@
 
 using Xunit;
 
-namespace Jeebs.Config.SlackConfig_Tests
+namespace Jeebs.Config.SlackConfig_Tests;
+
+public class IsValid_Tests
 {
-	public class IsValid_Tests
+	[Theory]
+	[InlineData(null)]
+	[InlineData("")]
+	[InlineData(" ")]
+	[InlineData("http://news.contoso.com")]
+	public void Returns_False(string webhook)
 	{
-		[Theory]
-		[InlineData(null)]
-		[InlineData("")]
-		[InlineData(" ")]
-		[InlineData("http://news.contoso.com")]
-		public void Returns_False(string webhook)
-		{
-			// Arrange
-			var config = new SlackConfig { Webhook = webhook };
+		// Arrange
+		var config = new SlackConfig { Webhook = webhook };
 
-			// Act
-			var result = config.IsValid;
+		// Act
+		var result = config.IsValid;
 
-			// Assert
-			Assert.False(result);
-		}
+		// Assert
+		Assert.False(result);
+	}
 
-		[Theory]
-		[InlineData("https://news.contoso.com")]
-		public void Returns_True(string webhook)
-		{
-			// Arrange
-			var config = new SlackConfig { Webhook = webhook };
+	[Theory]
+	[InlineData("https://news.contoso.com")]
+	public void Returns_True(string webhook)
+	{
+		// Arrange
+		var config = new SlackConfig { Webhook = webhook };
 
-			// Act
-			var result = config.IsValid;
+		// Act
+		var result = config.IsValid;
 
-			// Assert
-			Assert.True(result);
-		}
+		// Assert
+		Assert.True(result);
 	}
 }

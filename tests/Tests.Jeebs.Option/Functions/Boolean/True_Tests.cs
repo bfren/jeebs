@@ -5,20 +5,19 @@ using Jeebs;
 using Xunit;
 using static F.OptionF;
 
-namespace F.OptionF_Tests
+namespace F.OptionF_Tests;
+
+public class True_Tests
 {
-	public class True_Tests
+	[Fact]
+	public void Returns_Some_With_Value_True()
 	{
-		[Fact]
-		public void Returns_Some_With_Value_True()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = True;
+		// Act
+		var result = True;
 
-			// Assert
-			result.AssertTrue();
-		}
+		// Assert
+		result.AssertTrue();
 	}
 }

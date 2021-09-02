@@ -5,21 +5,20 @@ using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbClient_Tests
+namespace Jeebs.Data.DbClient_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Properties()
 	{
-		[Fact]
-		public void Sets_Properties()
-		{
-			// Arrange
-			var mapper = Substitute.For<IMapper>();
+		// Arrange
+		var mapper = Substitute.For<IMapper>();
 
-			// Act
-			var result = Substitute.ForPartsOf<DbClient>(mapper);
+		// Act
+		var result = Substitute.ForPartsOf<DbClient>(mapper);
 
-			// Assert
-			Assert.Same(mapper, result.MapperTest);
-		}
+		// Assert
+		Assert.Same(mapper, result.MapperTest);
 	}
 }

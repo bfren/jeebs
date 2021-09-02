@@ -3,31 +3,30 @@
 
 using Jeebs.Logging;
 
-namespace Jeebs.Services
+namespace Jeebs.Services;
+
+/// <summary>
+/// LogLevel Extensions - ToMessageLevel
+/// </summary>
+public static class NotificationLevelExtensions
 {
 	/// <summary>
-	/// LogLevel Extensions - ToMessageLevel
+	/// Convert a <see cref="LogLevel"/> to a <see cref="NotificationLevel"/>
 	/// </summary>
-	public static class NotificationLevelExtensions
-	{
-		/// <summary>
-		/// Convert a <see cref="LogLevel"/> to a <see cref="NotificationLevel"/>
-		/// </summary>
-		/// <param name="this"></param>
-		public static NotificationLevel ToNotificationLevel(this LogLevel @this) =>
-			@this switch
-			{
-				LogLevel.Warning =>
-					NotificationLevel.Warning,
+	/// <param name="this"></param>
+	public static NotificationLevel ToNotificationLevel(this LogLevel @this) =>
+		@this switch
+		{
+			LogLevel.Warning =>
+				NotificationLevel.Warning,
 
-				LogLevel.Error =>
-					NotificationLevel.Error,
+			LogLevel.Error =>
+				NotificationLevel.Error,
 
-				LogLevel.Fatal =>
-					NotificationLevel.Error,
+			LogLevel.Fatal =>
+				NotificationLevel.Error,
 
-				_ =>
-					NotificationLevel.Information
-			};
-	}
+			_ =>
+				NotificationLevel.Information
+		};
 }

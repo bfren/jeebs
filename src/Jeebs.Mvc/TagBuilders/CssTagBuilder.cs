@@ -3,21 +3,20 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Jeebs.Mvc.TagBuilders
+namespace Jeebs.Mvc.TagBuilders;
+
+/// <summary>
+/// CSS TagBuilder
+/// </summary>
+public sealed class CssTagBuilder : TagBuilder
 {
 	/// <summary>
-	/// CSS TagBuilder
+	/// Create object
 	/// </summary>
-	public sealed class CssTagBuilder : TagBuilder
+	/// <param name="href">Stylesheet URI</param>
+	public CssTagBuilder(string href) : base("link")
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="href">Stylesheet URI</param>
-		public CssTagBuilder(string href) : base("link")
-		{
-			Attributes.Add("rel", "stylesheet");
-			Attributes.Add("href", href);
-		}
+		Attributes.Add("rel", "stylesheet");
+		Attributes.Add("href", href);
 	}
 }

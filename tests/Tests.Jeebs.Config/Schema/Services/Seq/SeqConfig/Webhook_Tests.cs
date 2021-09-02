@@ -3,22 +3,21 @@
 
 using Xunit;
 
-namespace Jeebs.Config.SeqConfig_Tests
+namespace Jeebs.Config.SeqConfig_Tests;
+
+public class Webhook_Tests
 {
-	public class Webhook_Tests
+	[Fact]
+	public void Returns_With_Server_Value()
 	{
-		[Fact]
-		public void Returns_With_Server_Value()
-		{
-			// Arrange
-			var server = F.Rnd.Str;
-			var config = new SeqConfig { Server = server };
+		// Arrange
+		var server = F.Rnd.Str;
+		var config = new SeqConfig { Server = server };
 
-			// Act
-			var result = config.Webhook;
+		// Act
+		var result = config.Webhook;
 
-			// Assert
-			Assert.Equal($"{server}/api/events/raw?clef", result);
-		}
+		// Assert
+		Assert.Equal($"{server}/api/events/raw?clef", result);
 	}
 }

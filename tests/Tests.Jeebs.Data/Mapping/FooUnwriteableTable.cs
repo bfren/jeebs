@@ -1,16 +1,15 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data.Mapping;
+
+public record class FooUnwriteableTable : Table
 {
-	public record class FooUnwriteableTable : Table
-	{
-		public string FooId { get; } = "foo_unwriteable_id";
+	public string FooId { get; } = "foo_unwriteable_id";
 
-		public string Bar2 { get; } = "foo_unwriteable_bar2";
+	public string Bar2 { get; } = "foo_unwriteable_bar2";
 
-		public string Bar3 { get; } = "foo_unwriteable_bar3";
+	public string Bar3 { get; } = "foo_unwriteable_bar3";
 
-		public FooUnwriteableTable() : base("foo_unwriteable") { }
-	}
+	public FooUnwriteableTable() : base("foo_unwriteable") { }
 }

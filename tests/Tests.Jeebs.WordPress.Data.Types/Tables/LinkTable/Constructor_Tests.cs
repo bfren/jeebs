@@ -4,22 +4,21 @@
 using Jeebs.WordPress.Data.Tables;
 using Xunit;
 
-namespace Jeebs.WordPress.Entities.Tables.LinkTable_Tests
+namespace Jeebs.WordPress.Entities.Tables.LinkTable_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Adds_Prefix_To_Table_Name()
 	{
-		[Fact]
-		public void Adds_Prefix_To_Table_Name()
-		{
-			// Arrange
-			var prefix = F.Rnd.Str;
-			var expected = $"{prefix}links";
+		// Arrange
+		var prefix = F.Rnd.Str;
+		var expected = $"{prefix}links";
 
-			// Act
-			var result = new LinkTable(prefix).GetName();
+		// Act
+		var result = new LinkTable(prefix).GetName();
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

@@ -3,31 +3,30 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Jeebs.Mvc.TagBuilders
+namespace Jeebs.Mvc.TagBuilders;
+
+/// <summary>
+/// JS TagBuilder
+/// </summary>
+public sealed class JsTagBuilder : TagBuilder
 {
 	/// <summary>
-	/// JS TagBuilder
+	/// Create object
 	/// </summary>
-	public sealed class JsTagBuilder : TagBuilder
+	public JsTagBuilder() : base("script") =>
+		Attributes.Add("type", "text/javascript");
+
+	/// <summary>
+	/// Construct object
+	/// </summary>
+	/// <param name="src">Script file source</param>
+	/// <param name="async">[Optional] Output async attribute</param>
+	/// <param name="defer">[Optional] Output defer attribute</param>
+	public JsTagBuilder(string src, bool async = false, bool defer = false) : this()
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public JsTagBuilder() : base("script") =>
-			Attributes.Add("type", "text/javascript");
+		Attributes.Add("src", src);
 
-		/// <summary>
-		/// Construct object
-		/// </summary>
-		/// <param name="src">Script file source</param>
-		/// <param name="async">[Optional] Output async attribute</param>
-		/// <param name="defer">[Optional] Output defer attribute</param>
-		public JsTagBuilder(string src, bool async = false, bool defer = false) : this()
-		{
-			Attributes.Add("src", src);
-
-			if (async) Attributes.Add("async", "async");
-			if (defer) Attributes.Add("defer", "defer");
-		}
+		if (async) Attributes.Add("async", "async");
+		if (defer) Attributes.Add("defer", "defer");
 	}
 }

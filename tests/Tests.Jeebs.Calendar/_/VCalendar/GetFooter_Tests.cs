@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.Calendar.VCalendar_Tests
+namespace Jeebs.Calendar.VCalendar_Tests;
+
+public class GetFooter_Tests
 {
-	public class GetFooter_Tests
+	[Fact]
+	public void Returns_Correct_Footer_Definition()
 	{
-		[Fact]
-		public void Returns_Correct_Footer_Definition()
-		{
-			// Arrange
-			var expected = $"END:VCALENDAR{Environment.NewLine}";
+		// Arrange
+		var expected = $"END:VCALENDAR{Environment.NewLine}";
 
-			// Act
-			var result = VCalendar.GetFooter();
+		// Act
+		var result = VCalendar.GetFooter();
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

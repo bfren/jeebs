@@ -1,16 +1,15 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Config
+namespace Jeebs.Config;
+
+/// <summary>
+/// Redirections configuration
+/// </summary>
+public sealed class RedirectionsConfig : Dictionary<string, string>
 {
 	/// <summary>
-	/// Redirections configuration
+	/// Path to this configuration section
 	/// </summary>
-	public sealed class RedirectionsConfig : Dictionary<string, string>
-	{
-		/// <summary>
-		/// Path to this configuration section
-		/// </summary>
-		public const string Key = WebConfig.Key + ":redirections";
-	}
+	public const string Key = WebConfig.Key + ":redirections";
 }

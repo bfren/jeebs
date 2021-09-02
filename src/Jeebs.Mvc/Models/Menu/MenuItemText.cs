@@ -1,20 +1,19 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Mvc.Models
+namespace Jeebs.Mvc.Models;
+
+/// <summary>
+/// MenuItem Text
+/// </summary>
+public sealed record class MenuItemText : MenuItem
 {
 	/// <summary>
-	/// MenuItem Text
+	/// Set IsLink to be false
 	/// </summary>
-	public sealed record class MenuItemText : MenuItem
+	public MenuItemText(string text)
 	{
-		/// <summary>
-		/// Set IsLink to be false
-		/// </summary>
-		public MenuItemText(string text)
-		{
-			IsLink = false;
-			Text = text;
-		}
+		IsLink = false;
+		Text = text;
 	}
 }

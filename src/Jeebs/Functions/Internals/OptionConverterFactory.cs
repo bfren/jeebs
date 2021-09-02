@@ -5,40 +5,39 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
 
-namespace F.Internals
+namespace F.Internals;
+
+/// <summary>
+/// Option Converter Factory
+/// </summary>
+public sealed class OptionConverterFactory : JsonConverterFactory
 {
 	/// <summary>
-	/// Option Converter Factory
+	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Option{T}"/>
 	/// </summary>
-	public sealed class OptionConverterFactory : JsonConverterFactory
+	/// <param name="typeToConvert">Type to convert</param>
+	public override bool CanConvert(Type typeToConvert) =>
+		typeToConvert.Implements(typeof(Option<>));
+
+	/// <summary>
+	/// Creates JsonConverter for <see cref="Option{T}"/>
+	/// </summary>
+	/// <param name="typeToConvert">Option type</param>
+	/// <param name="options">JsonSerializerOptions</param>
+	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
-		/// <summary>
-		/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Option{T}"/>
-		/// </summary>
-		/// <param name="typeToConvert">Type to convert</param>
-		public override bool CanConvert(Type typeToConvert) =>
-			typeToConvert.Implements(typeof(Option<>));
+		// Get converter type
+		var wrappedType = typeToConvert.GetGenericArguments()[0];
+		var converterType = typeof(OptionConverter<>).MakeGenericType(wrappedType);
 
-		/// <summary>
-		/// Creates JsonConverter for <see cref="Option{T}"/>
-		/// </summary>
-		/// <param name="typeToConvert">Option type</param>
-		/// <param name="options">JsonSerializerOptions</param>
-		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+		// Create converter
+		return Activator.CreateInstance(converterType) switch
 		{
-			// Get converter type
-			var wrappedType = typeToConvert.GetGenericArguments()[0];
-			var converterType = typeof(OptionConverter<>).MakeGenericType(wrappedType);
+			JsonConverter x =>
+				x,
 
-			// Create converter
-			return Activator.CreateInstance(converterType) switch
-			{
-				JsonConverter x =>
-					x,
-
-				_ =>
-					throw new JsonException($"Unable to create {converterType} for type {typeToConvert}.")
-			};
-		}
+			_ =>
+				throw new JsonException($"Unable to create {converterType} for type {typeToConvert}.")
+		};
 	}
 }

@@ -1,26 +1,25 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// UserMeta entity
+/// </summary>
+public abstract record class WpUserMetaEntity : WpUserMetaEntityWithId
 {
 	/// <summary>
-	/// UserMeta entity
+	/// UserId
 	/// </summary>
-	public abstract record class WpUserMetaEntity : WpUserMetaEntityWithId
-	{
-		/// <summary>
-		/// UserId
-		/// </summary>
-		public WpUserId UserId { get; init; } = new();
+	public WpUserId UserId { get; init; } = new();
 
-		/// <summary>
-		/// Key
-		/// </summary>
-		public string? Key { get; init; }
+	/// <summary>
+	/// Key
+	/// </summary>
+	public string? Key { get; init; }
 
-		/// <summary>
-		/// Value
-		/// </summary>
-		public string? Value { get; init; }
-	}
+	/// <summary>
+	/// Value
+	/// </summary>
+	public string? Value { get; init; }
 }

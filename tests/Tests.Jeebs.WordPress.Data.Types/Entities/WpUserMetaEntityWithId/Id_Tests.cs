@@ -3,14 +3,13 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Entities.WpUserMetaEntityWithId_Tests
-{
-	public class Id_Tests : Id_Tests<Id_Tests.Test, WpUserMetaId>
-	{
-		[Fact]
-		public override void Test00_Id_Returns_Database_Id() =>
-			Test00(id => new() { Id = new(id) });
+namespace Jeebs.WordPress.Data.Entities.WpUserMetaEntityWithId_Tests;
 
-		public sealed record class Test : WpUserMetaEntityWithId;
-	}
+public class Id_Tests : Id_Tests<Id_Tests.Test, WpUserMetaId>
+{
+	[Fact]
+	public override void Test00_Id_Returns_Database_Id() =>
+		Test00(id => new() { Id = new(id) });
+
+	public sealed record class Test : WpUserMetaEntityWithId;
 }

@@ -3,27 +3,26 @@
 
 using Xunit;
 
-namespace Jeebs.ImmutableList_Tests
+namespace Jeebs.ImmutableList_Tests;
+
+public class Count_Tests
 {
-	public class Count_Tests
+	[Fact]
+	public void Returns_Number_Of_Items()
 	{
-		[Fact]
-		public void Returns_Number_Of_Items()
+		// Arrange
+		var count = F.Rnd.NumberF.GetInt32(10, 20);
+		var items = new List<int>();
+		for (int i = 0; i < count; i++)
 		{
-			// Arrange
-			var count = F.Rnd.NumberF.GetInt32(10, 20);
-			var items = new List<int>();
-			for (int i = 0; i < count; i++)
-			{
-				items.Add(F.Rnd.Int);
-			}
-			var list = ImmutableList.Create(items: items);
-
-			// Act
-			var result = list.Count;
-
-			// Assert
-			Assert.Equal(count, result);
+			items.Add(F.Rnd.Int);
 		}
+		var list = ImmutableList.Create(items: items);
+
+		// Act
+		var result = list.Count;
+
+		// Assert
+		Assert.Equal(count, result);
 	}
 }

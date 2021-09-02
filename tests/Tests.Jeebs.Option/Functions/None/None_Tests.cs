@@ -6,69 +6,68 @@ using NSubstitute;
 using Xunit;
 using static F.OptionF;
 
-namespace F.OptionF_Tests
+namespace F.OptionF_Tests;
+
+public class None_Tests
 {
-	public class None_Tests
+	[Fact]
+	public void Returns_None_Without_Reason()
 	{
-		[Fact]
-		public void Returns_None_Without_Reason()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = Create.None<int>();
+		// Act
+		var result = Create.None<int>();
 
-			// Assert
-			result.AssertNone();
-		}
+		// Assert
+		result.AssertNone();
+	}
 
-		[Fact]
-		public void Returns_None_With_Reason_Object()
-		{
-			// Arrange
-			var reason = Substitute.For<IMsg>();
+	[Fact]
+	public void Returns_None_With_Reason_Object()
+	{
+		// Arrange
+		var reason = Substitute.For<IMsg>();
 
-			// Act
-			var result = None<int>(reason);
+		// Act
+		var result = None<int>(reason);
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.Same(reason, none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.Same(reason, none);
+	}
 
-		[Fact]
-		public void Returns_None_With_Reason_Type()
-		{
-			// Arrange
+	[Fact]
+	public void Returns_None_With_Reason_Type()
+	{
+		// Arrange
 
-			// Act
-			var result = None<int, TestMsg>();
+		// Act
+		var result = None<int, TestMsg>();
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<TestMsg>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<TestMsg>(none);
+	}
 
-		[Fact]
-		public void Returns_None_With_Reason_Exception_Type()
-		{
-			// Arrange
-			var exception = new Exception();
+	[Fact]
+	public void Returns_None_With_Reason_Exception_Type()
+	{
+		// Arrange
+		var exception = new Exception();
 
-			// Act
-			var result = None<int, TestExceptionMsg>(exception);
+		// Act
+		var result = None<int, TestExceptionMsg>(exception);
 
-			// Assert
-			var none = result.AssertNone();
-			var msg = Assert.IsType<TestExceptionMsg>(none);
-			Assert.Same(exception, msg.Exception);
-		}
+		// Assert
+		var none = result.AssertNone();
+		var msg = Assert.IsType<TestExceptionMsg>(none);
+		Assert.Same(exception, msg.Exception);
+	}
 
-		public record class TestMsg : IMsg { }
+	public record class TestMsg : IMsg { }
 
-		public record class TestExceptionMsg() : IExceptionMsg
-		{
-			public Exception Exception { get; init; } = new();
-		}
+	public record class TestExceptionMsg() : IExceptionMsg
+	{
+		public Exception Exception { get; init; } = new();
 	}
 }

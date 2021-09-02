@@ -5,34 +5,33 @@ using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests;
+
+public class Escape_Tests : PartsBuilder_Tests
 {
-	public class Escape_Tests : PartsBuilder_Tests
+	[Fact]
+	public void Escape_Table_Calls_Client_Escape()
 	{
-		[Fact]
-		public void Escape_Table_Calls_Client_Escape()
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		// Arrange
+		var (builder, v) = Setup();
 
-			// Act
-			_ = builder.EscapeTest(v.Table);
+		// Act
+		_ = builder.EscapeTest(v.Table);
 
-			// Assert
-			v.Client.Received().Escape(v.Table);
-		}
+		// Assert
+		v.Client.Received().Escape(v.Table);
+	}
 
-		[Fact]
-		public void Escape_Column_Calls_Client_Escape()
-		{
-			// Arrange
-			var (options, v) = Setup();
+	[Fact]
+	public void Escape_Column_Calls_Client_Escape()
+	{
+		// Arrange
+		var (options, v) = Setup();
 
-			// Act
-			_ = options.EscapeTest(v.Table, t => t.Id);
+		// Act
+		_ = options.EscapeTest(v.Table, t => t.Id);
 
-			// Assert
-			v.Client.Received().EscapeWithTable(Arg.Any<IColumn>());
-		}
+		// Assert
+		v.Client.Received().EscapeWithTable(Arg.Any<IColumn>());
 	}
 }

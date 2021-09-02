@@ -4,24 +4,23 @@
 using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data.Entities;
 
-namespace Jeebs.WordPress.Data
-{
-	/// <inheritdoc cref="IQueryPartsBuilder{TId}"/>
-	public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
-	{
-		/// <summary>
-		/// Add Where Post ID
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="postId">Post ID</param>
-		/// <param name="postIds">Post IDs</param>
-		Option<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds);
+namespace Jeebs.WordPress.Data;
 
-		/// <summary>
-		/// Add Where Post Status
-		/// </summary>
-		/// <param name="parts">QueryParts</param>
-		/// <param name="Key">Meta Key</param>
-		Option<QueryParts> AddWhereKey(QueryParts parts, string? Key);
-	}
+/// <inheritdoc cref="IQueryPartsBuilder{TId}"/>
+public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
+{
+	/// <summary>
+	/// Add Where Post ID
+	/// </summary>
+	/// <param name="parts">QueryParts</param>
+	/// <param name="postId">Post ID</param>
+	/// <param name="postIds">Post IDs</param>
+	Option<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds);
+
+	/// <summary>
+	/// Add Where Post Status
+	/// </summary>
+	/// <param name="parts">QueryParts</param>
+	/// <param name="Key">Meta Key</param>
+	Option<QueryParts> AddWhereKey(QueryParts parts, string? Key);
 }

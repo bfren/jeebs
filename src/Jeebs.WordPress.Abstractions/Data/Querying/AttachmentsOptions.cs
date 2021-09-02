@@ -3,13 +3,12 @@
 
 using Jeebs.WordPress.Data.Entities;
 
-namespace Jeebs.WordPress.Data.Querying
+namespace Jeebs.WordPress.Data.Querying;
+
+/// <inheritdoc cref="IQueryAttachmentsOptions"/>
+public abstract record class AttachmentsOptions : IQueryAttachmentsOptions
 {
-	/// <inheritdoc cref="IQueryAttachmentsOptions"/>
-	public abstract record class AttachmentsOptions : IQueryAttachmentsOptions
-	{
-		/// <inheritdoc/>
-		public IImmutableList<WpPostId> Ids { get; init; } =
-			new ImmutableList<WpPostId>();
-	}
+	/// <inheritdoc/>
+	public IImmutableList<WpPostId> Ids { get; init; } =
+		new ImmutableList<WpPostId>();
 }

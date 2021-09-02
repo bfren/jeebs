@@ -7,15 +7,14 @@ using Jeebs.WordPress.Data.Entities;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
-{
-	public class GetColumns_Tests : GetColumns_Tests<Query.PostsPartsBuilder, WpPostId>
-	{
-		protected override Query.PostsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests;
 
-		[Fact]
-		public override void Test00_Calls_Extract_From() =>
-			Test00<WpPostEntity>();
-	}
+public class GetColumns_Tests : GetColumns_Tests<Query.PostsPartsBuilder, WpPostId>
+{
+	protected override Query.PostsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public override void Test00_Calls_Extract_From() =>
+		Test00<WpPostEntity>();
 }

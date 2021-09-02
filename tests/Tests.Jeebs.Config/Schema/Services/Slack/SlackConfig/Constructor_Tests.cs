@@ -3,32 +3,31 @@
 
 using Xunit;
 
-namespace Jeebs.Config.SlackConfig_Tests
+namespace Jeebs.Config.SlackConfig_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Implements_ServiceConfig()
 	{
-		[Fact]
-		public void Implements_ServiceConfig()
-		{
-			// Arrange
-			var config = new SlackConfig();
+		// Arrange
+		var config = new SlackConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IServiceConfig>(config);
+	}
 
-		[Fact]
-		public void Implements_IWebhookServiceConfig()
-		{
-			// Arrange
-			var config = new SlackConfig();
+	[Fact]
+	public void Implements_IWebhookServiceConfig()
+	{
+		// Arrange
+		var config = new SlackConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
 	}
 }

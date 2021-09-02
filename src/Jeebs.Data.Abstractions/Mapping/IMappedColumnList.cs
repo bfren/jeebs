@@ -1,10 +1,9 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping
-{
-	/// <summary>
-	/// List of <seealso cref="IMappedColumn"/> objects
-	/// </summary>
-	public interface IMappedColumnList : IImmutableList<IMappedColumn> { }
-}
+namespace Jeebs.Data.Mapping;
+
+/// <summary>
+/// List of <seealso cref="IMappedColumn"/> objects
+/// </summary>
+public interface IMappedColumnList : IImmutableList<IMappedColumn> { }

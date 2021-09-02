@@ -5,40 +5,39 @@ using Microsoft.Extensions.Primitives;
 using Xunit;
 using static Jeebs.Mvc.Auth.Jwt.JwtHandler.Msg;
 
-namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests
+namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
+
+public class GetAuthorisationHeader_Tests
 {
-	public class GetAuthorisationHeader_Tests
+	[Fact]
+	public void Missing_Header_Returns_None_With_MissingAuthorisationHeaderMsg()
 	{
-		[Fact]
-		public void Missing_Header_Returns_None_With_MissingAuthorisationHeaderMsg()
+		// Arrange
+		var headers = new Dictionary<string, StringValues>();
+
+		// Act
+		var result = JwtHandler.GetAuthorisationHeader(headers);
+
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<MissingAuthorisationHeaderMsg>(none);
+	}
+
+	[Fact]
+	public void Returns_Authorization_Header()
+	{
+		// Arrange
+		var value = F.Rnd.Str;
+		var headers = new Dictionary<string, StringValues>
 		{
-			// Arrange
-			var headers = new Dictionary<string, StringValues>();
+			{ "Authorization", value }
+		};
 
-			// Act
-			var result = JwtHandler.GetAuthorisationHeader(headers);
+		// Act
+		var result = JwtHandler.GetAuthorisationHeader(headers);
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<MissingAuthorisationHeaderMsg>(none);
-		}
-
-		[Fact]
-		public void Returns_Authorization_Header()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
-			var headers = new Dictionary<string, StringValues>
-			{
-				{ "Authorization", value }
-			};
-
-			// Act
-			var result = JwtHandler.GetAuthorisationHeader(headers);
-
-			// Assert
-			var some = result.AssertSome();
-			Assert.Equal(value, some);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Equal(value, some);
 	}
 }

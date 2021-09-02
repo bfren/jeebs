@@ -5,36 +5,35 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using Jeebs.WordPress.Data;
 
-namespace F.WordPressF.DataF
+namespace F.WordPressF.DataF;
+
+public static partial class QueryPostsF
 {
-	public static partial class QueryPostsF
+	/// <summary>
+	/// Taxonomies cache
+	/// </summary>
+	private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> termListsCache = new();
+
+	/// <summary>
+	/// Get Term Lists for specified model
+	/// </summary>
+	/// <typeparam name="TModel">Model type</typeparam>
+	internal static List<PropertyInfo> GetTermLists<TModel>()
 	{
-		/// <summary>
-		/// Taxonomies cache
-		/// </summary>
-		private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> termListsCache = new();
+		// Get from or Add to the cache
+		var taxonomies = termListsCache.GetOrAdd(
+			typeof(TModel),
+			type => from p in type.GetProperties()
+					where p.PropertyType == typeof(TermList)
+					select p
+		);
 
-		/// <summary>
-		/// Get Term Lists for specified model
-		/// </summary>
-		/// <typeparam name="TModel">Model type</typeparam>
-		internal static List<PropertyInfo> GetTermLists<TModel>()
+		// If there aren't any return an empty list
+		if (!taxonomies.Any())
 		{
-			// Get from or Add to the cache
-			var taxonomies = termListsCache.GetOrAdd(
-				typeof(TModel),
-				type => from p in type.GetProperties()
-						where p.PropertyType == typeof(TermList)
-						select p
-			);
-
-			// If there aren't any return an empty list
-			if (!taxonomies.Any())
-			{
-				return new();
-			}
-
-			return taxonomies.ToList();
+			return new();
 		}
+
+		return taxonomies.ToList();
 	}
 }

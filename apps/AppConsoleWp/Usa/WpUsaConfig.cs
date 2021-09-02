@@ -3,7 +3,6 @@
 
 using Jeebs.Config;
 
-namespace AppConsoleWp.Usa
-{
-	public sealed record class WpUsaConfig : WpConfig;
-}
+namespace AppConsoleWp.Usa;
+
+public sealed record class WpUsaConfig : WpConfig;

@@ -1,16 +1,15 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Config
+namespace Jeebs.Config;
+
+/// <summary>
+/// Webhook service configuration interface
+/// </summary>
+public interface IWebhookServiceConfig : IServiceConfig
 {
 	/// <summary>
-	/// Webhook service configuration interface
+	/// Webhook URI
 	/// </summary>
-	public interface IWebhookServiceConfig : IServiceConfig
-	{
-		/// <summary>
-		/// Webhook URI
-		/// </summary>
-		string Webhook { get; }
-	}
+	string Webhook { get; }
 }

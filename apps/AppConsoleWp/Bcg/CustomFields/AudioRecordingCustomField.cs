@@ -3,16 +3,15 @@
 
 using Jeebs.WordPress.Data;
 
-namespace AppConsoleWp.Bcg
+namespace AppConsoleWp.Bcg;
+
+/// <summary>
+/// Audio recording of sermon
+/// </summary>
+public sealed class AudioRecordingCustomField : FileCustomField
 {
 	/// <summary>
-	/// Audio recording of sermon
+	/// This is not a required field
 	/// </summary>
-	public sealed class AudioRecordingCustomField : FileCustomField
-	{
-		/// <summary>
-		/// This is not a required field
-		/// </summary>
-		public AudioRecordingCustomField() : base("audio") { }
-	}
+	public AudioRecordingCustomField() : base("audio") { }
 }

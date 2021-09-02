@@ -3,25 +3,24 @@
 
 using System.Security.Cryptography;
 
-namespace F
+namespace F;
+
+public static partial class Rnd
 {
-	public static partial class Rnd
+	/// <summary>
+	/// Byte functions
+	/// </summary>
+	public static partial class ByteF
 	{
 		/// <summary>
-		/// Byte functions
+		/// Return an array of random bytes
 		/// </summary>
-		public static partial class ByteF
+		/// <param name="length">The length of the byte array</param>
+		public static byte[] Get(int length)
 		{
-			/// <summary>
-			/// Return an array of random bytes
-			/// </summary>
-			/// <param name="length">The length of the byte array</param>
-			public static byte[] Get(int length)
-			{
-				Span<byte> b = stackalloc byte[length];
-				RandomNumberGenerator.Fill(b);
-				return b.ToArray();
-			}
+			Span<byte> b = stackalloc byte[length];
+			RandomNumberGenerator.Fill(b);
+			return b.ToArray();
 		}
 	}
 }

@@ -3,36 +3,35 @@
 
 using Xunit;
 
-namespace Jeebs.Calendar.VCalendar_Tests
+namespace Jeebs.Calendar.VCalendar_Tests;
+
+public class Format_Tests
 {
-	public class Format_Tests
+	[Fact]
+	public void Returns_Date_With_Time()
 	{
-		[Fact]
-		public void Returns_Date_With_Time()
-		{
-			// Arrange
-			var dt = F.Rnd.DateTime;
-			var expected = dt.ToString(@"yyyyMMdd\THHmmss");
+		// Arrange
+		var dt = F.Rnd.DateTime;
+		var expected = dt.ToString(@"yyyyMMdd\THHmmss");
 
-			// Act
-			var result = VCalendar.Format(dt);
+		// Act
+		var result = VCalendar.Format(dt);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
+	}
 
-		[Fact]
-		public void Returns_Date_Without_Time()
-		{
-			// Arrange
-			var dt = F.Rnd.DateTime;
-			var expected = dt.ToString("yyyyMMdd");
+	[Fact]
+	public void Returns_Date_Without_Time()
+	{
+		// Arrange
+		var dt = F.Rnd.DateTime;
+		var expected = dt.ToString("yyyyMMdd");
 
-			// Act
-			var result = VCalendar.Format(dt, false);
+		// Act
+		var result = VCalendar.Format(dt, false);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

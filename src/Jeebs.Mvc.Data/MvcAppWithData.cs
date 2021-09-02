@@ -4,26 +4,25 @@
 using Jeebs.Mvc.Data.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jeebs.Apps
+namespace Jeebs.Apps;
+
+/// <summary>
+/// MVC Application bootstrapped using IHost - with Data access enabled
+/// </summary>
+public abstract class MvcAppWithData : MvcApp
 {
 	/// <summary>
-	/// MVC Application bootstrapped using IHost - with Data access enabled
+	/// Create object
 	/// </summary>
-	public abstract class MvcAppWithData : MvcApp
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	protected MvcAppWithData(bool useHsts) : base(useHsts) { }
+
+	/// <inheritdoc/>
+	public override void ConfigureServices_MvcOptions(MvcOptions opt)
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-		protected MvcAppWithData(bool useHsts) : base(useHsts) { }
+		base.ConfigureServices_MvcOptions(opt);
 
-		/// <inheritdoc/>
-		public override void ConfigureServices_MvcOptions(MvcOptions opt)
-		{
-			base.ConfigureServices_MvcOptions(opt);
-
-			// Add custom model binders
-			opt.ModelBinderProviders.Insert(0, new StrongIdModelBinderProvider());
-		}
+		// Add custom model binders
+		opt.ModelBinderProviders.Insert(0, new StrongIdModelBinderProvider());
 	}
 }

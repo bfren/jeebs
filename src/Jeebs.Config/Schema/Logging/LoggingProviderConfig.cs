@@ -3,21 +3,20 @@
 
 using Jeebs.Logging;
 
-namespace Jeebs.Config.Logging
+namespace Jeebs.Config.Logging;
+
+/// <summary>
+/// Logging Provider
+/// </summary>
+public sealed record class LoggingProviderConfig
 {
 	/// <summary>
-	/// Logging Provider
+	/// Whether or not this provider is enabled
 	/// </summary>
-	public sealed record class LoggingProviderConfig
-	{
-		/// <summary>
-		/// Whether or not this provider is enabled
-		/// </summary>
-		public bool Enabled { get; init; }
+	public bool Enabled { get; init; }
 
-		/// <summary>
-		/// This provider's minimum log level (overrides the default minimum level in main Logging section)
-		/// </summary>
-		public LogLevel? MinimumLevel { get; init; }
-	}
+	/// <summary>
+	/// This provider's minimum log level (overrides the default minimum level in main Logging section)
+	/// </summary>
+	public LogLevel? MinimumLevel { get; init; }
 }

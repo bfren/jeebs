@@ -3,19 +3,18 @@
 
 using static F.OptionF;
 
-namespace Jeebs
-{
-	/// <summary>
-	/// Object Extensions: ReturnAsync
-	/// </summary>
-	public static class ObjectExtensions_SomeAsync
-	{
-		/// <inheritdoc cref="F.OptionF.SomeAsync{T}(Func{Task{T}}, Handler)"/>
-		public static Task<Option<T>> SomeAsync<T>(this Func<Task<T>> @this, Handler handler) =>
-			F.OptionF.SomeAsync(@this, handler);
+namespace Jeebs;
 
-		/// <inheritdoc cref="F.OptionF.SomeAsync{T}(Func{Task{T}}, bool, Handler)"/>
-		public static Task<Option<T?>> SomeAsync<T>(this Func<Task<T?>> @this, bool allowNull, Handler handler) =>
-			F.OptionF.SomeAsync(@this, allowNull, handler);
-	}
+/// <summary>
+/// Object Extensions: ReturnAsync
+/// </summary>
+public static class ObjectExtensions_SomeAsync
+{
+	/// <inheritdoc cref="F.OptionF.SomeAsync{T}(Func{Task{T}}, Handler)"/>
+	public static Task<Option<T>> SomeAsync<T>(this Func<Task<T>> @this, Handler handler) =>
+		F.OptionF.SomeAsync(@this, handler);
+
+	/// <inheritdoc cref="F.OptionF.SomeAsync{T}(Func{Task{T}}, bool, Handler)"/>
+	public static Task<Option<T?>> SomeAsync<T>(this Func<Task<T?>> @this, bool allowNull, Handler handler) =>
+		F.OptionF.SomeAsync(@this, allowNull, handler);
 }

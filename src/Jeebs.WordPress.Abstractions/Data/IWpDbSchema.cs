@@ -3,71 +3,70 @@
 
 using Jeebs.WordPress.Data.Tables;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+/// <summary>
+/// WordPress Database schema
+/// </summary>
+public interface IWpDbSchema
 {
 	/// <summary>
-	/// WordPress Database schema
+	/// Comment Table
 	/// </summary>
-	public interface IWpDbSchema
-	{
-		/// <summary>
-		/// Comment Table
-		/// </summary>
-		CommentTable Comment { get; }
+	CommentTable Comment { get; }
 
-		/// <summary>
-		/// Comment Meta Table
-		/// </summary>
-		CommentMetaTable CommentMeta { get; }
+	/// <summary>
+	/// Comment Meta Table
+	/// </summary>
+	CommentMetaTable CommentMeta { get; }
 
-		/// <summary>
-		/// Link Table
-		/// </summary>
-		LinkTable Link { get; }
+	/// <summary>
+	/// Link Table
+	/// </summary>
+	LinkTable Link { get; }
 
-		/// <summary>
-		/// Option Table
-		/// </summary>
-		OptionTable Option { get; }
+	/// <summary>
+	/// Option Table
+	/// </summary>
+	OptionTable Option { get; }
 
-		/// <summary>
-		/// Post Table
-		/// </summary>
-		PostTable Post { get; }
+	/// <summary>
+	/// Post Table
+	/// </summary>
+	PostTable Post { get; }
 
-		/// <summary>
-		/// Post Meta Table
-		/// </summary>
-		PostMetaTable PostMeta { get; }
+	/// <summary>
+	/// Post Meta Table
+	/// </summary>
+	PostMetaTable PostMeta { get; }
 
-		/// <summary>
-		/// Term Table
-		/// </summary>
-		TermTable Term { get; }
+	/// <summary>
+	/// Term Table
+	/// </summary>
+	TermTable Term { get; }
 
-		/// <summary>
-		/// Term Meta Table
-		/// </summary>
-		TermMetaTable TermMeta { get; }
+	/// <summary>
+	/// Term Meta Table
+	/// </summary>
+	TermMetaTable TermMeta { get; }
 
-		/// <summary>
-		/// Term Relationship Table
-		/// </summary>
-		TermRelationshipTable TermRelationship { get; }
+	/// <summary>
+	/// Term Relationship Table
+	/// </summary>
+	TermRelationshipTable TermRelationship { get; }
 
-		/// <summary>
-		/// Term Taxonomy Table
-		/// </summary>
-		TermTaxonomyTable TermTaxonomy { get; }
+	/// <summary>
+	/// Term Taxonomy Table
+	/// </summary>
+	TermTaxonomyTable TermTaxonomy { get; }
 
-		/// <summary>
-		/// User Table
-		/// </summary>
-		UserTable User { get; }
+	/// <summary>
+	/// User Table
+	/// </summary>
+	UserTable User { get; }
 
-		/// <summary>
-		/// User Meta Table
-		/// </summary>
-		UserMetaTable UserMeta { get; }
-	}
+	/// <summary>
+	/// User Meta Table
+	/// </summary>
+	UserMetaTable UserMeta { get; }
 }

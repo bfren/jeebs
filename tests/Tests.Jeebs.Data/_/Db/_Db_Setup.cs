@@ -5,25 +5,24 @@ using System.Data;
 using Jeebs.Config;
 using NSubstitute;
 
-namespace Jeebs.Data.Db_Tests
+namespace Jeebs.Data.Db_Tests;
+
+public static class Db_Setup
 {
-	public static class Db_Setup
+	public static (DbConnectionConfig config, ILog log, IDbClient client, IDbConnection connection, Db db) Get()
 	{
-		public static (DbConnectionConfig config, ILog log, IDbClient client, IDbConnection connection, Db db) Get()
-		{
-			var connectionString = F.Rnd.Str;
-			var config = new DbConnectionConfig { ConnectionString = connectionString };
+		var connectionString = F.Rnd.Str;
+		var config = new DbConnectionConfig { ConnectionString = connectionString };
 
-			var log = Substitute.For<ILog>();
+		var log = Substitute.For<ILog>();
 
-			var connection = Substitute.For<IDbConnection>();
+		var connection = Substitute.For<IDbConnection>();
 
-			var client = Substitute.For<IDbClient>();
-			client.Connect(Arg.Any<string>()).Returns(connection);
+		var client = Substitute.For<IDbClient>();
+		client.Connect(Arg.Any<string>()).Returns(connection);
 
-			var db = Substitute.ForPartsOf<Db>(client, config, log);
+		var db = Substitute.ForPartsOf<Db>(client, config, log);
 
-			return (config, log, client, connection, db);
-		}
+		return (config, log, client, connection, db);
 	}
 }

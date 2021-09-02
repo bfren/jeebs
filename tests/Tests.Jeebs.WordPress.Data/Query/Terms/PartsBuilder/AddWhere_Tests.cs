@@ -7,19 +7,18 @@ using Jeebs.WordPress.Data.Entities;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.TermsPartsBuilder_Tests;
+
+public class AddWhere_Tests : AddWhere_Tests<Query.TermsPartsBuilder, WpTermId>
 {
-	public class AddWhere_Tests : AddWhere_Tests<Query.TermsPartsBuilder, WpTermId>
-	{
-		protected override Query.TermsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+	protected override Query.TermsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
 
-		[Fact]
-		public override void Test00_Column_Exists_Adds_Where() =>
-			Test00();
+	[Fact]
+	public override void Test00_Column_Exists_Adds_Where() =>
+		Test00();
 
-		[Fact]
-		public override void Test01_Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg() =>
-			Test01();
-	}
+	[Fact]
+	public override void Test01_Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg() =>
+		Test01();
 }

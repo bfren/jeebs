@@ -6,41 +6,40 @@ using Jeebs.Linq;
 using Xunit;
 using static Jeebs.Linq.LinqExpressionExtensions.Msg;
 
-namespace Jeebs.LinqExtensions_Tests
+namespace Jeebs.LinqExtensions_Tests;
+
+public class GetPropertyInfo_Tests
 {
-	public class GetPropertyInfo_Tests
+	[Fact]
+	public void Property_Exists_Returns_Some_With_PropertyInfo()
 	{
-		[Fact]
-		public void Property_Exists_Returns_Some_With_PropertyInfo()
-		{
-			// Arrange
-			Expression<Func<Test, int>> expr = t => t.MyProperty;
+		// Arrange
+		Expression<Func<Test, int>> expr = t => t.MyProperty;
 
-			// Act
-			var result = expr.GetPropertyInfo();
+		// Act
+		var result = expr.GetPropertyInfo();
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.IsType<PropertyInfo<Test, int>>(some);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.IsType<PropertyInfo<Test, int>>(some);
+	}
 
-		[Fact]
-		public void Property_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg()
-		{
-			// Arrange
-			Expression<Func<Test, int>> expr = _ => F.Rnd.Int;
+	[Fact]
+	public void Property_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg()
+	{
+		// Arrange
+		Expression<Func<Test, int>> expr = _ => F.Rnd.Int;
 
-			// Act
-			var result = expr.GetPropertyInfo();
+		// Act
+		var result = expr.GetPropertyInfo();
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<PropertyDoesNotExistOnTypeMsg<Test>>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<PropertyDoesNotExistOnTypeMsg<Test>>(none);
+	}
 
-		public class Test
-		{
-			public int MyProperty { get; set; }
-		}
+	public class Test
+	{
+		public int MyProperty { get; set; }
 	}
 }

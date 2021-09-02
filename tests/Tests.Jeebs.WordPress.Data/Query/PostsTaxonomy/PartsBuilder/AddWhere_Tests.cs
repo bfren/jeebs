@@ -7,19 +7,18 @@ using Jeebs.WordPress.Data.Entities;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyPartsBuilder_Tests;
+
+public class AddWhere_Tests : AddWhere_Tests<Query.PostsTaxonomyPartsBuilder, WpTermId>
 {
-	public class AddWhere_Tests : AddWhere_Tests<Query.PostsTaxonomyPartsBuilder, WpTermId>
-	{
-		protected override Query.PostsTaxonomyPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+	protected override Query.PostsTaxonomyPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
 
-		[Fact]
-		public override void Test00_Column_Exists_Adds_Where() =>
-			Test00();
+	[Fact]
+	public override void Test00_Column_Exists_Adds_Where() =>
+		Test00();
 
-		[Fact]
-		public override void Test01_Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg() =>
-			Test01();
-	}
+	[Fact]
+	public override void Test01_Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg() =>
+		Test01();
 }

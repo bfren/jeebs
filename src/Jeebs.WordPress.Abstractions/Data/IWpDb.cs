@@ -4,22 +4,21 @@
 using Jeebs.Config;
 using Jeebs.Data;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+/// <summary>
+/// WordPress Database instance
+/// </summary>
+public interface IWpDb : IDb
 {
 	/// <summary>
-	/// WordPress Database instance
+	/// WordPress configuration
 	/// </summary>
-	public interface IWpDb : IDb
-	{
-		/// <summary>
-		/// WordPress configuration
-		/// </summary>
-		WpConfig WpConfig { get; }
+	WpConfig WpConfig { get; }
 
-		/// <inheritdoc cref="IWpDbQuery"/>
-		IWpDbQuery Query { get; }
+	/// <inheritdoc cref="IWpDbQuery"/>
+	IWpDbQuery Query { get; }
 
-		/// <inheritdoc cref="IWpDbSchema"/>
-		IWpDbSchema Schema { get; }
-	}
+	/// <inheritdoc cref="IWpDbSchema"/>
+	IWpDbSchema Schema { get; }
 }

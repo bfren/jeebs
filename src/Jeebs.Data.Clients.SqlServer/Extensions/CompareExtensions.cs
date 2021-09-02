@@ -4,50 +4,49 @@
 using Jeebs.Data.Enums;
 using Jeebs.Data.Exceptions;
 
-namespace Jeebs.Data.Clients.SqlServer
+namespace Jeebs.Data.Clients.SqlServer;
+
+/// <summary>
+/// Extension methods for Compare: ToOperator
+/// </summary>
+public static class CompareExtensions
 {
 	/// <summary>
-	/// Extension methods for Compare: ToOperator
+	/// Convert a <see cref="Compare"/> type to the actual MS SQL operator<br/>
+	/// Default value is "="
 	/// </summary>
-	public static class CompareExtensions
-	{
-		/// <summary>
-		/// Convert a <see cref="Compare"/> type to the actual MS SQL operator<br/>
-		/// Default value is "="
-		/// </summary>
-		/// <param name="this">Compare</param>
-		public static string ToOperator(this Compare @this) =>
-			@this switch
-			{
-				Compare.Equal =>
-					"=",
+	/// <param name="this">Compare</param>
+	public static string ToOperator(this Compare @this) =>
+		@this switch
+		{
+			Compare.Equal =>
+				"=",
 
-				Compare.NotEqual =>
-					"!=",
+			Compare.NotEqual =>
+				"!=",
 
-				Compare.Like =>
-					"LIKE",
+			Compare.Like =>
+				"LIKE",
 
-				Compare.LessThan =>
-					"<",
+			Compare.LessThan =>
+				"<",
 
-				Compare.LessThanOrEqual =>
-					"<=",
+			Compare.LessThanOrEqual =>
+				"<=",
 
-				Compare.MoreThan =>
-					">",
+			Compare.MoreThan =>
+				">",
 
-				Compare.MoreThanOrEqual =>
-					">=",
+			Compare.MoreThanOrEqual =>
+				">=",
 
-				Compare.In =>
-					"IN",
+			Compare.In =>
+				"IN",
 
-				Compare.NotIn =>
-					"NOT IN",
+			Compare.NotIn =>
+				"NOT IN",
 
-				_ =>
-					throw new UnrecognisedSearchOperatorException(@this)
-			};
-	}
+			_ =>
+				throw new UnrecognisedSearchOperatorException(@this)
+		};
 }

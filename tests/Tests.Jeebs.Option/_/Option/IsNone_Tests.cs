@@ -4,34 +4,33 @@
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.Option_Tests
+namespace Jeebs.Option_Tests;
+
+public class IsNone_Tests
 {
-	public class IsNone_Tests
+	[Fact]
+	public void Is_Some_Returns_False()
 	{
-		[Fact]
-		public void Is_Some_Returns_False()
-		{
-			// Arrange
-			var some = Some(F.Rnd.Str);
+		// Arrange
+		var some = Some(F.Rnd.Str);
 
-			// Act
-			var result = some.IsNone;
+		// Act
+		var result = some.IsNone;
 
-			// Assert
-			Assert.False(result);
-		}
+		// Assert
+		Assert.False(result);
+	}
 
-		[Fact]
-		public void Is_None_Returns_True()
-		{
-			// Arrange
-			var none = Create.None<string>();
+	[Fact]
+	public void Is_None_Returns_True()
+	{
+		// Arrange
+		var none = Create.None<string>();
 
-			// Act
-			var result = none.IsNone;
+		// Act
+		var result = none.IsNone;
 
-			// Assert
-			Assert.True(result);
-		}
+		// Assert
+		Assert.True(result);
 	}
 }

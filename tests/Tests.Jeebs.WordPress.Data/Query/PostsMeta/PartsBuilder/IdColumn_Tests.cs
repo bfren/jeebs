@@ -8,26 +8,25 @@ using Jeebs.WordPress.Data.Tables;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PostsMetaPartsBuilder_Tests;
+
+public class IdColumn_Tests : QueryPartsBuilder_Tests<Query.PostsMetaPartsBuilder, WpPostMetaId>
 {
-	public class IdColumn_Tests : QueryPartsBuilder_Tests<Query.PostsMetaPartsBuilder, WpPostMetaId>
+	protected override Query.PostsMetaPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public void Returns_Id_Column()
 	{
-		protected override Query.PostsMetaPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+		// Arrange
+		var (builder, _) = Setup();
 
-		[Fact]
-		public void Returns_Id_Column()
-		{
-			// Arrange
-			var (builder, _) = Setup();
+		// Act
+		var result = builder.IdColumn;
 
-			// Act
-			var result = builder.IdColumn;
-
-			// Assert
-			Assert.Equal(builder.TTest.PostMeta.GetName(), result.Table);
-			Assert.Equal(builder.TTest.PostMeta.Id, result.Name);
-			Assert.Equal(nameof(PostMetaTable.Id), result.Alias);
-		}
+		// Assert
+		Assert.Equal(builder.TTest.PostMeta.GetName(), result.Table);
+		Assert.Equal(builder.TTest.PostMeta.Id, result.Name);
+		Assert.Equal(nameof(PostMetaTable.Id), result.Alias);
 	}
 }

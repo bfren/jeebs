@@ -3,40 +3,39 @@
 
 using Xunit;
 
-namespace Jeebs.StringExtensions_Tests
+namespace Jeebs.StringExtensions_Tests;
+
+public class ConvertQuotes_Tests
 {
-	public class ConvertQuotes_Tests
+	[Theory]
+	[InlineData(null)]
+	[InlineData("")]
+	public void NullOrEmpty_ReturnsOriginal(string input)
 	{
-		[Theory]
-		[InlineData(null)]
-		[InlineData("")]
-		public void NullOrEmpty_ReturnsOriginal(string input)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = input.ConvertCurlyQuotes();
+		// Act
+		var result = input.ConvertCurlyQuotes();
 
-			// Assert
-			Assert.Equal(input, result);
-		}
+		// Assert
+		Assert.Equal(input, result);
+	}
 
-		[Theory]
-		[InlineData("'Ben'", "‘Ben’")]
-		[InlineData("'Ben' 'Green'", "‘Ben’ ‘Green’")]
-		[InlineData("'Ben's Test'", "‘Ben’s Test’")]
-		[InlineData("\"Ben\"", "“Ben”")]
-		[InlineData("\"Ben\" \"Green\"", "“Ben” “Green”")]
-		[InlineData("\"Ben's Test\"", "“Ben’s Test”")]
-		public void String_ReturnsValueWithQuotesConverted(string input, string expected)
-		{
-			// Arrange
+	[Theory]
+	[InlineData("'Ben'", "‘Ben’")]
+	[InlineData("'Ben' 'Green'", "‘Ben’ ‘Green’")]
+	[InlineData("'Ben's Test'", "‘Ben’s Test’")]
+	[InlineData("\"Ben\"", "“Ben”")]
+	[InlineData("\"Ben\" \"Green\"", "“Ben” “Green”")]
+	[InlineData("\"Ben's Test\"", "“Ben’s Test”")]
+	public void String_ReturnsValueWithQuotesConverted(string input, string expected)
+	{
+		// Arrange
 
-			// Act
-			var result = input.ConvertCurlyQuotes();
+		// Act
+		var result = input.ConvertCurlyQuotes();
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

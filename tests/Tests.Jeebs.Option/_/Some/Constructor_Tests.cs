@@ -4,21 +4,20 @@
 using Jeebs.Internals;
 using Xunit;
 
-namespace Jeebs.Some_Tests
+namespace Jeebs.Some_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Value()
 	{
-		[Fact]
-		public void Sets_Value()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
+		// Arrange
+		var value = F.Rnd.Str;
 
-			// Act
-			var result = new Some<string>(value);
+		// Act
+		var result = new Some<string>(value);
 
-			// Assert
-			Assert.Equal(value, result.Value);
-		}
+		// Assert
+		Assert.Equal(value, result.Value);
 	}
 }

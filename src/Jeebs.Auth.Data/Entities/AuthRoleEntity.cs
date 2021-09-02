@@ -3,18 +3,17 @@
 
 using Jeebs.Auth.Data.Models;
 
-namespace Jeebs.Auth.Data.Entities
+namespace Jeebs.Auth.Data.Entities;
+
+/// <summary>
+/// Authentication Role Entity
+/// </summary>
+public sealed record class AuthRoleEntity : AuthRoleModel, IWithId<AuthRoleId>
 {
 	/// <summary>
-	/// Authentication Role Entity
+	/// Role Description
 	/// </summary>
-	public sealed record class AuthRoleEntity : AuthRoleModel, IWithId<AuthRoleId>
-	{
-		/// <summary>
-		/// Role Description
-		/// </summary>
-		public string Description { get; init; } = string.Empty;
+	public string Description { get; init; } = string.Empty;
 
-		internal AuthRoleEntity() { }
-	}
+	internal AuthRoleEntity() { }
 }

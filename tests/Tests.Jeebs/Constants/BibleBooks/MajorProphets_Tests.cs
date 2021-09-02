@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.Constants.BibleBooks_Tests
+namespace Jeebs.Constants.BibleBooks_Tests;
+
+public class MajorProphets_Tests
 {
-	public class MajorProphets_Tests
+	[Fact]
+	public void Returns_MajorProphets_Books()
 	{
-		[Fact]
-		public void Returns_MajorProphets_Books()
-		{
-			// Arrange
-			const string? prophets = "[\"Isaiah\",\"Jeremiah\",\"Lamentations\",\"Ezekiel\",\"Daniel\"]";
+		// Arrange
+		const string? prophets = "[\"Isaiah\",\"Jeremiah\",\"Lamentations\",\"Ezekiel\",\"Daniel\"]";
 
-			// Act
-			var result = F.JsonF.Serialise(BibleBooks.MajorProphets);
+		// Act
+		var result = F.JsonF.Serialise(BibleBooks.MajorProphets);
 
-			// Assert
-			Assert.Equal(prophets, result);
-		}
+		// Assert
+		Assert.Equal(prophets, result);
 	}
 }

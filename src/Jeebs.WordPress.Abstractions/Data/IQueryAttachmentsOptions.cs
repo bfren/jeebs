@@ -3,16 +3,15 @@
 
 using Jeebs.WordPress.Data.Entities;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+/// <summary>
+/// Query Attachments Options
+/// </summary>
+public interface IQueryAttachmentsOptions
 {
 	/// <summary>
-	/// Query Attachments Options
+	/// Attachment IDs
 	/// </summary>
-	public interface IQueryAttachmentsOptions
-	{
-		/// <summary>
-		/// Attachment IDs
-		/// </summary>
-		IImmutableList<WpPostId> Ids { get; init; }
-	}
+	IImmutableList<WpPostId> Ids { get; init; }
 }

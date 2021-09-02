@@ -3,32 +3,31 @@
 
 using Sodium;
 
-namespace Jeebs.Cryptography
+namespace Jeebs.Cryptography;
+
+/// <summary>
+/// String Extensions: VerifyPassword
+/// </summary>
+public static class StringExtensions_VerifyPassword
 {
 	/// <summary>
-	/// String Extensions: VerifyPassword
+	/// Verify a password hashed using argon2id
 	/// </summary>
-	public static class StringExtensions_VerifyPassword
+	/// <param name="this">Password hash</param>
+	/// <param name="password">Password to verify</param>
+	/// <returns>Whether or not the password is valid</returns>
+	public static bool VerifyPassword(this string @this, string password)
 	{
-		/// <summary>
-		/// Verify a password hashed using argon2id
-		/// </summary>
-		/// <param name="this">Password hash</param>
-		/// <param name="password">Password to verify</param>
-		/// <returns>Whether or not the password is valid</returns>
-		public static bool VerifyPassword(this string @this, string password)
+		if (string.IsNullOrEmpty(@this))
 		{
-			if (string.IsNullOrEmpty(@this))
-			{
-				return false;
-			}
-
-			if (string.IsNullOrEmpty(password))
-			{
-				return false;
-			}
-
-			return PasswordHash.ArgonHashStringVerify(@this, password);
+			return false;
 		}
+
+		if (string.IsNullOrEmpty(password))
+		{
+			return false;
+		}
+
+		return PasswordHash.ArgonHashStringVerify(@this, password);
 	}
 }

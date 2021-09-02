@@ -3,20 +3,19 @@
 
 using Jeebs.Internals;
 
-namespace Jeebs
+namespace Jeebs;
+
+/// <summary>
+/// <see cref="Option{T}"/> Extensions: GetAsyncEnumerator
+/// </summary>
+public static class OptionExtensions_GetAsyncEnumerator
 {
-	/// <summary>
-	/// <see cref="Option{T}"/> Extensions: GetAsyncEnumerator
-	/// </summary>
-	public static class OptionExtensions_GetAsyncEnumerator
+	/// <inheritdoc cref="Option{T}.GetEnumerator"/>
+	public static async IAsyncEnumerator<T> GetAsyncEnumerator<T>(this Task<Option<T>> @this)
 	{
-		/// <inheritdoc cref="Option{T}.GetEnumerator"/>
-		public static async IAsyncEnumerator<T> GetAsyncEnumerator<T>(this Task<Option<T>> @this)
+		if (await @this is Some<T> some)
 		{
-			if (await @this is Some<T> some)
-			{
-				yield return some.Value;
-			}
+			yield return some.Value;
 		}
 	}
 }

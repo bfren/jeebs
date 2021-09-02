@@ -3,32 +3,31 @@
 
 using Xunit;
 
-namespace Jeebs.Mvc.Models.MenuItem_Tests
+namespace Jeebs.Mvc.Models.MenuItem_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Action_Is_Index()
 	{
-		[Fact]
-		public void Action_Is_Index()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = new MenuItem();
+		// Act
+		var result = new MenuItem();
 
-			// Assert
-			Assert.Equal("Index", result.Action);
-		}
+		// Assert
+		Assert.Equal("Index", result.Action);
+	}
 
-		[Fact]
-		public void IsLink_Is_True()
-		{
-			// Arrange
+	[Fact]
+	public void IsLink_Is_True()
+	{
+		// Arrange
 
-			// Act
-			var result = new MenuItem();
+		// Act
+		var result = new MenuItem();
 
-			// Assert
-			Assert.True(result.IsLink);
-		}
+		// Assert
+		Assert.True(result.IsLink);
 	}
 }

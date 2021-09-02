@@ -3,25 +3,24 @@
 
 using Xunit;
 
-namespace Jeebs.Data.Mapping.Column_Tests
+namespace Jeebs.Data.Mapping.Column_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Properties_Set()
 	{
-		[Fact]
-		public void Properties_Set()
-		{
-			// Arrange
-			var table = F.Rnd.Str;
-			var name = F.Rnd.Str;
-			var alias = F.Rnd.Str;
-			var column = new Column(table, name, alias);
+		// Arrange
+		var table = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var alias = F.Rnd.Str;
+		var column = new Column(table, name, alias);
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.Equal(table, column.Table);
-			Assert.Equal(name, column.Name);
-			Assert.Equal(alias, column.Alias);
-		}
+		// Assert
+		Assert.Equal(table, column.Table);
+		Assert.Equal(name, column.Name);
+		Assert.Equal(alias, column.Alias);
 	}
 }

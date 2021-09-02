@@ -3,23 +3,22 @@
 
 using Xunit;
 
-namespace Jeebs.ImmutableList_Tests
+namespace Jeebs.ImmutableList_Tests;
+
+public class GetEnumerator_Tests
 {
-	public class GetEnumerator_Tests
+	[Fact]
+	public void Returns_Enumerator()
 	{
-		[Fact]
-		public void Returns_Enumerator()
-		{
-			// Arrange
-			var i0 = F.Rnd.Guid;
-			var i1 = F.Rnd.Guid;
-			var list = ImmutableList.Create(new[] { i0, i1 });
+		// Arrange
+		var i0 = F.Rnd.Guid;
+		var i1 = F.Rnd.Guid;
+		var list = ImmutableList.Create(new[] { i0, i1 });
 
-			// Act
-			var result = list.GetEnumerator();
+		// Act
+		var result = list.GetEnumerator();
 
-			// Assert
-			Assert.IsAssignableFrom<IEnumerator<Guid>>(result);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IEnumerator<Guid>>(result);
 	}
 }

@@ -3,22 +3,21 @@
 
 using Xunit;
 
-namespace Jeebs.StrongId_Tests
+namespace Jeebs.StrongId_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Default()
 	{
-		[Fact]
-		public void Sets_Default()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var id = new TestId();
+		// Act
+		var id = new TestId();
 
-			// Assert
-			Assert.Equal(0U, id.Value);
-		}
-
-		public readonly record struct TestId(ulong Value) : IStrongId;
+		// Assert
+		Assert.Equal(0U, id.Value);
 	}
+
+	public readonly record struct TestId(ulong Value) : IStrongId;
 }

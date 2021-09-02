@@ -5,50 +5,49 @@ using Jeebs.WordPress.Data.Enums;
 using Xunit;
 using Base = Jeebs.WordPress.Data.Enums.PostType_Tests.Parse_Tests;
 
-namespace Jeebs.WordPress.Data.TypeHandlers.PostTypeTypeHandler_Tests
+namespace Jeebs.WordPress.Data.TypeHandlers.PostTypeTypeHandler_Tests;
+
+public class Parse_Tests
 {
-	public class Parse_Tests
+	[Theory]
+	[MemberData(nameof(Base.Returns_Correct_PostType_Data), MemberType = typeof(Base))]
+	public void Valid_Value_Returns_PostType(string input, PostType expected)
 	{
-		[Theory]
-		[MemberData(nameof(Base.Returns_Correct_PostType_Data), MemberType = typeof(Base))]
-		public void Valid_Value_Returns_PostType(string input, PostType expected)
-		{
-			// Arrange
-			var handler = new PostTypeTypeHandler();
+		// Arrange
+		var handler = new PostTypeTypeHandler();
 
-			// Act
-			var result = handler.Parse(input);
+		// Act
+		var result = handler.Parse(input);
 
-			// Assert
-			Assert.Same(expected, result);
-		}
+		// Assert
+		Assert.Same(expected, result);
+	}
 
-		[Theory]
-		[InlineData(null)]
-		public void Null_Value_Returns_Post_PostType(object input)
-		{
-			// Arrange
-			var handler = new PostTypeTypeHandler();
+	[Theory]
+	[InlineData(null)]
+	public void Null_Value_Returns_Post_PostType(object input)
+	{
+		// Arrange
+		var handler = new PostTypeTypeHandler();
 
-			// Act
-			var result = handler.Parse(input);
+		// Act
+		var result = handler.Parse(input);
 
-			// Assert
-			Assert.Same(PostType.Post, result);
-		}
+		// Assert
+		Assert.Same(PostType.Post, result);
+	}
 
-		[Fact]
-		public void Invalid_Value_Returns_Post_PostType()
-		{
-			// Arrange
-			var value = F.Rnd.Str;
-			var handler = new PostTypeTypeHandler();
+	[Fact]
+	public void Invalid_Value_Returns_Post_PostType()
+	{
+		// Arrange
+		var value = F.Rnd.Str;
+		var handler = new PostTypeTypeHandler();
 
-			// Act
-			var result = handler.Parse(value);
+		// Act
+		var result = handler.Parse(value);
 
-			// Assert
-			Assert.Same(PostType.Post, result);
-		}
+		// Assert
+		Assert.Same(PostType.Post, result);
 	}
 }

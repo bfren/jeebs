@@ -3,32 +3,31 @@
 
 using Xunit;
 
-namespace Jeebs.Config.RocketChatConfig_Tests
+namespace Jeebs.Config.RocketChatConfig_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Implements_ServiceConfig()
 	{
-		[Fact]
-		public void Implements_ServiceConfig()
-		{
-			// Arrange
-			var config = new RocketChatConfig();
+		// Arrange
+		var config = new RocketChatConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IServiceConfig>(config);
+	}
 
-		[Fact]
-		public void Implements_IWebhookServiceConfig()
-		{
-			// Arrange
-			var config = new RocketChatConfig();
+	[Fact]
+	public void Implements_IWebhookServiceConfig()
+	{
+		// Arrange
+		var config = new RocketChatConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
 	}
 }

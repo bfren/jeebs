@@ -1,29 +1,28 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Config
+namespace Jeebs.Config;
+
+/// <summary>
+/// Invalid JWT configuration
+/// </summary>
+public class InvalidJwtConfigurationException : Exception
 {
 	/// <summary>
-	/// Invalid JWT configuration
+	/// Create exception
 	/// </summary>
-	public class InvalidJwtConfigurationException : Exception
-	{
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		public InvalidJwtConfigurationException() { }
+	public InvalidJwtConfigurationException() { }
 
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="message"></param>
-		public InvalidJwtConfigurationException(string message) : base(message) { }
+	/// <summary>
+	/// Create exception
+	/// </summary>
+	/// <param name="message"></param>
+	public InvalidJwtConfigurationException(string message) : base(message) { }
 
-		/// <summary>
-		/// Create exception
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="inner"></param>
-		public InvalidJwtConfigurationException(string message, Exception inner) : base(message, inner) { }
-	}
+	/// <summary>
+	/// Create exception
+	/// </summary>
+	/// <param name="message"></param>
+	/// <param name="inner"></param>
+	public InvalidJwtConfigurationException(string message, Exception inner) : base(message, inner) { }
 }

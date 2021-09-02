@@ -3,11 +3,10 @@
 
 using Jeebs.Data.Entities;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data.Mapping;
+
+public record class FooWithVersion : Foo, IWithVersion
 {
-	public record class FooWithVersion : Foo, IWithVersion
-	{
-		[Version]
-		public ulong Version { get; init; }
-	}
+	[Version]
+	public ulong Version { get; init; }
 }

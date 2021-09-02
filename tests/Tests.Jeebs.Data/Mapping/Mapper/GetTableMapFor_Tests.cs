@@ -4,37 +4,36 @@
 using Xunit;
 using static Jeebs.Data.Mapping.Mapper.Msg;
 
-namespace Jeebs.Data.Mapping.Mapper_Tests
+namespace Jeebs.Data.Mapping.Mapper_Tests;
+
+public class GetTableMapFor_Tests
 {
-	public class GetTableMapFor_Tests
+	[Fact]
+	public void Unmapped_Entity_Returns_None_With_TryingToGetUnmappedEntityMsg()
 	{
-		[Fact]
-		public void Unmapped_Entity_Returns_None_With_TryingToGetUnmappedEntityMsg()
-		{
-			// Arrange
-			using var mapper = new Mapper();
+		// Arrange
+		using var mapper = new Mapper();
 
-			// Act
-			var result = mapper.GetTableMapFor<Foo>();
+		// Act
+		var result = mapper.GetTableMapFor<Foo>();
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<TryingToGetUnmappedEntityMsg<Foo>>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<TryingToGetUnmappedEntityMsg<Foo>>(none);
+	}
 
-		[Fact]
-		public void Mapped_Entity_Returns_Some_With_TableMap()
-		{
-			// Arrange
-			using var mapper = new Mapper();
-			var map = mapper.Map<Foo>(new FooTable());
+	[Fact]
+	public void Mapped_Entity_Returns_Some_With_TableMap()
+	{
+		// Arrange
+		using var mapper = new Mapper();
+		var map = mapper.Map<Foo>(new FooTable());
 
-			// Act
-			var result = mapper.GetTableMapFor<Foo>();
+		// Act
+		var result = mapper.GetTableMapFor<Foo>();
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Same(map, some);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Same(map, some);
 	}
 }

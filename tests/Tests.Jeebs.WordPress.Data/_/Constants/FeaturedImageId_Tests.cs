@@ -3,21 +3,20 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Constants_Tests
+namespace Jeebs.WordPress.Data.Constants_Tests;
+
+public class FeaturedImageId_Tests
 {
-	public class FeaturedImageId_Tests
+	[Fact]
+	public void Returns_Correct_Value()
 	{
-		[Fact]
-		public void Returns_Correct_Value()
-		{
-			// Arrange
-			var expected = "_thumbnail_id";
+		// Arrange
+		var expected = "_thumbnail_id";
 
-			// Act
-			var result = Constants.FeaturedImageId;
+		// Act
+		var result = Constants.FeaturedImageId;
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

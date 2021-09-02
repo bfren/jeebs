@@ -3,26 +3,25 @@
 
 using Jeebs.Logging;
 
-namespace Jeebs
+namespace Jeebs;
+
+/// <summary>
+/// Represents a framework message supporting logging
+/// </summary>
+public interface ILogMsg : IMsg
 {
 	/// <summary>
-	/// Represents a framework message supporting logging
+	/// Log level
 	/// </summary>
-	public interface ILogMsg : IMsg
-	{
-		/// <summary>
-		/// Log level
-		/// </summary>
-		LogLevel Level { get; init; }
+	LogLevel Level { get; init; }
 
-		/// <summary>
-		/// Output format
-		/// </summary>
-		string Format { get; init; }
+	/// <summary>
+	/// Output format
+	/// </summary>
+	string Format { get; init; }
 
-		/// <summary>
-		/// Output arguments
-		/// </summary>
-		Func<object[]> Args { get; }
-	}
+	/// <summary>
+	/// Output arguments
+	/// </summary>
+	Func<object[]> Args { get; }
 }

@@ -3,35 +3,34 @@
 
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.WordPress.Data.Tables
+namespace Jeebs.WordPress.Data.Tables;
+
+/// <summary>
+/// Term Relationship Table
+/// </summary>
+public sealed record class TermRelationshipTable : Table
 {
 	/// <summary>
-	/// Term Relationship Table
+	/// PostId
 	/// </summary>
-	public sealed record class TermRelationshipTable : Table
-	{
-		/// <summary>
-		/// PostId
-		/// </summary>
-		public string PostId =>
-			"object_id";
+	public string PostId =>
+		"object_id";
 
-		/// <summary>
-		/// TermTaxonomyId
-		/// </summary>
-		public string TermTaxonomyId =>
-			"term_taxonomy_id";
+	/// <summary>
+	/// TermTaxonomyId
+	/// </summary>
+	public string TermTaxonomyId =>
+		"term_taxonomy_id";
 
-		/// <summary>
-		/// SortOrder
-		/// </summary>
-		public string SortOrder =>
-			"term_order";
+	/// <summary>
+	/// SortOrder
+	/// </summary>
+	public string SortOrder =>
+		"term_order";
 
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="prefix">Table prefix</param>
-		public TermRelationshipTable(string prefix) : base($"{prefix}term_relationships") { }
-	}
+	/// <summary>
+	/// Create object
+	/// </summary>
+	/// <param name="prefix">Table prefix</param>
+	public TermRelationshipTable(string prefix) : base($"{prefix}term_relationships") { }
 }

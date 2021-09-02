@@ -6,23 +6,22 @@ using NSubstitute;
 using Xunit;
 using Base = Jeebs.MimeType_Tests.Parse_Tests;
 
-namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests
+namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests;
+
+public class SetValue_Tests
 {
-	public class SetValue_Tests
+	[Theory]
+	[MemberData(nameof(Base.Returns_Correct_MimeType_Data), MemberType = typeof(Base))]
+	public void Sets_Value_To_MimeType_Name(string expected, MimeType input)
 	{
-		[Theory]
-		[MemberData(nameof(Base.Returns_Correct_MimeType_Data), MemberType = typeof(Base))]
-		public void Sets_Value_To_MimeType_Name(string expected, MimeType input)
-		{
-			// Arrange
-			var handler = new MimeTypeTypeHandler();
-			var parameter = Substitute.For<IDbDataParameter>();
+		// Arrange
+		var handler = new MimeTypeTypeHandler();
+		var parameter = Substitute.For<IDbDataParameter>();
 
-			// Act
-			handler.SetValue(parameter, input);
+		// Act
+		handler.SetValue(parameter, input);
 
-			// Assert
-			parameter.Received().Value = expected;
-		}
+		// Assert
+		parameter.Received().Value = expected;
 	}
 }

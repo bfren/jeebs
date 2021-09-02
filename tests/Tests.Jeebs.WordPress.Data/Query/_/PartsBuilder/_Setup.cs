@@ -5,59 +5,58 @@ using Jeebs.Data;
 using Jeebs.Data.Mapping;
 using NSubstitute;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests;
+
+public abstract class PartsBuilder_Tests
 {
-	public abstract class PartsBuilder_Tests
+	public static (TestPartsBuilder builder, Vars v) Setup()
 	{
-		public static (TestPartsBuilder builder, Vars v) Setup()
-		{
-			var extract = Substitute.For<IExtract>();
+		var extract = Substitute.For<IExtract>();
 
-			var client = Substitute.For<IDbClient>();
+		var client = Substitute.For<IDbClient>();
 
-			var schema = Substitute.For<IWpDbSchema>();
+		var schema = Substitute.For<IWpDbSchema>();
 
-			var builder = new TestPartsBuilder(extract, client, schema);
+		var builder = new TestPartsBuilder(extract, client, schema);
 
-			var table = new TestTable(F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
+		var table = new TestTable(F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
 
-			return (builder, new(client, schema, table));
-		}
-
-		public sealed record class Vars(
-			IDbClient Client,
-			IWpDbSchema Schema,
-			TestTable Table
-		);
+		return (builder, new(client, schema, table));
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public sealed record class Vars(
+		IDbClient Client,
+		IWpDbSchema Schema,
+		TestTable Table
+	);
+}
 
-	public class TestPartsBuilder : Query.PartsBuilder<TestId>
+public readonly record struct TestId(ulong Value) : IStrongId;
+
+public class TestPartsBuilder : Query.PartsBuilder<TestId>
+{
+	public TestPartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract, client, schema)
 	{
-		public TestPartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract, client, schema)
-		{
-			Table = Substitute.For<ITable>();
-			IdColumn = Substitute.For<IColumn>();
-		}
-
-		public override ITable Table { get; }
-
-		public override IColumn IdColumn { get; }
+		Table = Substitute.For<ITable>();
+		IdColumn = Substitute.For<IColumn>();
 	}
 
-	public sealed record class TestTable : ITable
-	{
-		private readonly string name;
+	public override ITable Table { get; }
 
-		public string Id { get; init; }
+	public override IColumn IdColumn { get; }
+}
 
-		public string Foo { get; init; }
+public sealed record class TestTable : ITable
+{
+	private readonly string name;
 
-		public TestTable(string name, string id, string foo) =>
-			(this.name, Id, Foo) = (name, id, foo);
+	public string Id { get; init; }
 
-		public string GetName() =>
-			name;
-	}
+	public string Foo { get; init; }
+
+	public TestTable(string name, string id, string foo) =>
+		(this.name, Id, Foo) = (name, id, foo);
+
+	public string GetName() =>
+		name;
 }

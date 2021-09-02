@@ -5,23 +5,22 @@ using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilderWithEntity_Tests
+namespace Jeebs.Data.Querying.QueryPartsBuilderWithEntity_Tests;
+
+public class IdColumn_Tests : QueryPartsBuilderWithEntity_Tests
 {
-	public class IdColumn_Tests : QueryPartsBuilderWithEntity_Tests
+	[Fact]
+	public void Returns_Map_IdColumn()
 	{
-		[Fact]
-		public void Returns_Map_IdColumn()
-		{
-			// Arrange
-			var (builder, v) = Setup();
-			var idColumn = Substitute.For<IMappedColumn>();
-			v.Map.IdColumn.Returns(idColumn);
+		// Arrange
+		var (builder, v) = Setup();
+		var idColumn = Substitute.For<IMappedColumn>();
+		v.Map.IdColumn.Returns(idColumn);
 
-			// Act
-			var result = builder.IdColumn;
+		// Act
+		var result = builder.IdColumn;
 
-			// Assert
-			Assert.Same(idColumn, result);
-		}
+		// Assert
+		Assert.Same(idColumn, result);
 	}
 }

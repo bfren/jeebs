@@ -1,17 +1,16 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs
+namespace Jeebs;
+
+/// <summary>
+/// Represents a framework message
+/// </summary>
+public interface IMsg
 {
 	/// <summary>
-	/// Represents a framework message
+	/// Return the message type name
 	/// </summary>
-	public interface IMsg
-	{
-		/// <summary>
-		/// Return the message type name
-		/// </summary>
-		string? ToString() =>
-			GetType().FullName;
-	}
+	string? ToString() =>
+		GetType().FullName;
 }

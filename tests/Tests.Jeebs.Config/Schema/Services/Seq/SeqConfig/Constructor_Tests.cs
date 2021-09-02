@@ -3,32 +3,31 @@
 
 using Xunit;
 
-namespace Jeebs.Config.SeqConfig_Tests
+namespace Jeebs.Config.SeqConfig_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Implements_ServiceConfig()
 	{
-		[Fact]
-		public void Implements_ServiceConfig()
-		{
-			// Arrange
-			var config = new SeqConfig();
+		// Arrange
+		var config = new SeqConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IServiceConfig>(config);
+	}
 
-		[Fact]
-		public void Implements_IWebhookServiceConfig()
-		{
-			// Arrange
-			var config = new SeqConfig();
+	[Fact]
+	public void Implements_IWebhookServiceConfig()
+	{
+		// Arrange
+		var config = new SeqConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
 	}
 }

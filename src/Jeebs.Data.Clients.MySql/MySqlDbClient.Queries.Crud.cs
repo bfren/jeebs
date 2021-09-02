@@ -4,115 +4,114 @@
 using System.Text;
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.Data.Clients.MySql
+namespace Jeebs.Data.Clients.MySql;
+
+public partial class MySqlDbClient : DbClient
 {
-	public partial class MySqlDbClient : DbClient
+	/// <inheritdoc/>
+	protected override string GetCreateQuery(
+		string table,
+		IMappedColumnList columns
+	)
 	{
-		/// <inheritdoc/>
-		protected override string GetCreateQuery(
-			string table,
-			IMappedColumnList columns
-		)
-		{
-			// Get columns
-			var (col, par) = GetColumnsForCreateQuery(columns);
+		// Get columns
+		var (col, par) = GetColumnsForCreateQuery(columns);
 
-			// Build and return query
-			return new StringBuilder()
-				.Append($"INSERT INTO {Escape(table)} {JoinList(col, true)} ")
-				.Append($"VALUES {JoinList(par, true)};")
-				.Append(" SELECT LAST_INSERT_ID();")
-				.ToString()
-			;
-		}
+		// Build and return query
+		return new StringBuilder()
+			.Append($"INSERT INTO {Escape(table)} {JoinList(col, true)} ")
+			.Append($"VALUES {JoinList(par, true)};")
+			.Append(" SELECT LAST_INSERT_ID();")
+			.ToString()
+		;
+	}
 
-		/// <inheritdoc/>
-		protected override string GetRetrieveQuery(
-			string table,
-			IColumnList columns,
-			IColumn idColumn,
-			ulong id
-		)
-		{
-			// Get columns
-			var col = GetColumnsForRetrieveQuery(columns);
+	/// <inheritdoc/>
+	protected override string GetRetrieveQuery(
+		string table,
+		IColumnList columns,
+		IColumn idColumn,
+		ulong id
+	)
+	{
+		// Get columns
+		var col = GetColumnsForRetrieveQuery(columns);
 
-			// Build and return query
-			return new StringBuilder()
-				.Append($"SELECT {JoinList(col, false)} ")
-				.Append($"FROM {Escape(table)} ")
-				.Append($"WHERE {Escape(idColumn)} = {id};")
-				.ToString()
-			;
-		}
+		// Build and return query
+		return new StringBuilder()
+			.Append($"SELECT {JoinList(col, false)} ")
+			.Append($"FROM {Escape(table)} ")
+			.Append($"WHERE {Escape(idColumn)} = {id};")
+			.ToString()
+		;
+	}
 
-		/// <inheritdoc/>
-		protected override string GetUpdateQuery(
-			string table,
-			IColumnList columns,
-			IColumn idColumn,
-			ulong id
-		) =>
-			GetUpdateQuery(table, columns, idColumn, id, null);
+	/// <inheritdoc/>
+	protected override string GetUpdateQuery(
+		string table,
+		IColumnList columns,
+		IColumn idColumn,
+		ulong id
+	) =>
+		GetUpdateQuery(table, columns, idColumn, id, null);
 
-		/// <inheritdoc/>
-		protected override string GetUpdateQuery(
-			string table,
-			IColumnList columns,
-			IColumn idColumn,
-			ulong id,
-			IColumn? versionColumn
-		)
-		{
-			// Get set list
-			var set = GetSetListForUpdateQuery(columns);
+	/// <inheritdoc/>
+	protected override string GetUpdateQuery(
+		string table,
+		IColumnList columns,
+		IColumn idColumn,
+		ulong id,
+		IColumn? versionColumn
+	)
+	{
+		// Get set list
+		var set = GetSetListForUpdateQuery(columns);
 
-			// Add version
-			AddVersionToSetList(set, versionColumn);
+		// Add version
+		AddVersionToSetList(set, versionColumn);
 
-			// Begin query
-			var sql = new StringBuilder()
-				.Append($"UPDATE {Escape(table)} ")
-				.Append($"SET {JoinList(set, false)} ")
-				.Append($"WHERE {Escape(idColumn)} = {id}")
-			;
+		// Begin query
+		var sql = new StringBuilder()
+			.Append($"UPDATE {Escape(table)} ")
+			.Append($"SET {JoinList(set, false)} ")
+			.Append($"WHERE {Escape(idColumn)} = {id}")
+		;
 
-			// Add WHERE Version
-			AddVersionToWhere(sql, versionColumn);
+		// Add WHERE Version
+		AddVersionToWhere(sql, versionColumn);
 
-			// Return query
-			sql.Append(';');
-			return sql.ToString();
-		}
+		// Return query
+		sql.Append(';');
+		return sql.ToString();
+	}
 
-		/// <inheritdoc/>
-		protected override string GetDeleteQuery(
-			string table,
-			IColumn idColumn,
-			ulong id
-		) =>
-			GetDeleteQuery(table, idColumn, id, null);
+	/// <inheritdoc/>
+	protected override string GetDeleteQuery(
+		string table,
+		IColumn idColumn,
+		ulong id
+	) =>
+		GetDeleteQuery(table, idColumn, id, null);
 
-		/// <inheritdoc/>
-		protected override string GetDeleteQuery(
-			string table,
-			IColumn idColumn,
-			ulong id,
-			IColumn? versionColumn
-		)
-		{
-			// Begin query
-			var sql = new StringBuilder()
-				.Append($"DELETE FROM {Escape(table)} ")
-				.Append($"WHERE {Escape(idColumn)} = {id}")
-			;
+	/// <inheritdoc/>
+	protected override string GetDeleteQuery(
+		string table,
+		IColumn idColumn,
+		ulong id,
+		IColumn? versionColumn
+	)
+	{
+		// Begin query
+		var sql = new StringBuilder()
+			.Append($"DELETE FROM {Escape(table)} ")
+			.Append($"WHERE {Escape(idColumn)} = {id}")
+		;
 
-			// Add WHERE Version
-			AddVersionToWhere(sql, versionColumn);
+		// Add WHERE Version
+		AddVersionToWhere(sql, versionColumn);
 
-			// Return query
-			sql.Append(';');
-			return sql.ToString();
-		}
+		// Return query
+		sql.Append(';');
+		return sql.ToString();
 	}
 }

@@ -3,20 +3,19 @@
 
 using Xunit;
 
-namespace Jeebs.Config.WebConfig_Tests
+namespace Jeebs.Config.WebConfig_Tests;
+
+public class Key_Tests
 {
-	public class Key_Tests
+	[Fact]
+	public void Returns_Web_Key()
 	{
-		[Fact]
-		public void Returns_Web_Key()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			const string result = WebConfig.Key;
+		// Act
+		const string result = WebConfig.Key;
 
-			// Assert
-			Assert.Equal(JeebsConfig.Key + ":web", result);
-		}
+		// Assert
+		Assert.Equal(JeebsConfig.Key + ":web", result);
 	}
 }

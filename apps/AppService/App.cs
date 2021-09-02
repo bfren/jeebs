@@ -4,38 +4,37 @@
 using Jeebs;
 using Microsoft.Extensions.Hosting;
 
-namespace ServiceApp
+namespace ServiceApp;
+
+public class App : Jeebs.Apps.ServiceApp<AppService>
 {
-	public class App : Jeebs.Apps.ServiceApp<AppService>
+}
+
+public class AppService : IHostedService
+{
+	private readonly ILog log;
+
+	public AppService(ILog log)
 	{
+		this.log = log;
 	}
 
-	public class AppService : IHostedService
+	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		private readonly ILog log;
+		log.Debug("Hello, world!");
 
-		public AppService(ILog log)
+		if (Console.ReadLine() is string response)
 		{
-			this.log = log;
+			log.Debug("Response: {Response}", response);
 		}
 
-		public Task StartAsync(CancellationToken cancellationToken)
-		{
-			log.Debug("Hello, world!");
+		Console.Read();
 
-			if (Console.ReadLine() is string response)
-			{
-				log.Debug("Response: {Response}", response);
-			}
+		return Task.Delay(2000, cancellationToken);
+	}
 
-			Console.Read();
-
-			return Task.Delay(2000, cancellationToken);
-		}
-
-		public Task StopAsync(CancellationToken cancellationToken)
-		{
-			return Task.CompletedTask;
-		}
+	public Task StopAsync(CancellationToken cancellationToken)
+	{
+		return Task.CompletedTask;
 	}
 }

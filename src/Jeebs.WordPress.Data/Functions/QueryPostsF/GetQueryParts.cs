@@ -8,24 +8,23 @@ using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Querying;
 using static F.OptionF;
 
-namespace F.WordPressF.DataF
+namespace F.WordPressF.DataF;
+
+public static partial class QueryPostsF
 {
-	public static partial class QueryPostsF
-	{
-		/// <summary>
-		/// Get query parts using the specific options
-		/// </summary>
-		/// <typeparam name="TModel">Return value type</typeparam>
-		/// <param name="db">IWpDb</param>
-		/// <param name="opt">Function to return query options</param>
-		internal static Option<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
-			where TModel : IWithId<WpPostId> =>
-			Some(
-				() => opt(new Query.PostsOptions(db.Schema)),
-				e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
-			)
-			.Bind(
-				x => x.ToParts<TModel>()
-			);
-	}
+	/// <summary>
+	/// Get query parts using the specific options
+	/// </summary>
+	/// <typeparam name="TModel">Return value type</typeparam>
+	/// <param name="db">IWpDb</param>
+	/// <param name="opt">Function to return query options</param>
+	internal static Option<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
+		where TModel : IWithId<WpPostId> =>
+		Some(
+			() => opt(new Query.PostsOptions(db.Schema)),
+			e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
+		)
+		.Bind(
+			x => x.ToParts<TModel>()
+		);
 }

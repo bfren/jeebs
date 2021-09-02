@@ -5,29 +5,28 @@ using Jeebs.Data.Querying;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Querying.Options_Tests
+namespace Jeebs.WordPress.Data.Querying.Options_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_T()
 	{
-		[Fact]
-		public void Sets_T()
-		{
-			// Arrange
-			var schema = Substitute.For<IWpDbSchema>();
-			var builder = Substitute.For<IQueryPartsBuilder<TestId>>();
+		// Arrange
+		var schema = Substitute.For<IWpDbSchema>();
+		var builder = Substitute.For<IQueryPartsBuilder<TestId>>();
 
-			// Act
-			var result = new TestOptions(schema, builder);
+		// Act
+		var result = new TestOptions(schema, builder);
 
-			// Assert
-			Assert.Same(schema, result.TTest);
-		}
+		// Assert
+		Assert.Same(schema, result.TTest);
+	}
 
-		public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(ulong Value) : IStrongId;
 
-		public sealed record class TestOptions : Options<TestId>
-		{
-			public TestOptions(IWpDbSchema schema, IQueryPartsBuilder<TestId> builder) : base(schema, builder) { }
-		}
+	public sealed record class TestOptions : Options<TestId>
+	{
+		public TestOptions(IWpDbSchema schema, IQueryPartsBuilder<TestId> builder) : base(schema, builder) { }
 	}
 }

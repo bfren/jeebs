@@ -8,32 +8,31 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 using static F.OptionF;
 
-namespace Jeebs.Auth
-{
-	/// <inheritdoc cref="IAuthDbQuery"/>
-	public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
-	{
-		/// <summary>
-		/// Inject dependencies
-		/// </summary>
-		/// <param name="db">IAuthDb</param>
-		/// <param name="log">ILog</param>
-		public AuthDbQuery(IAuthDb db, ILog<AuthDbQuery> log) : base(db, log) { }
+namespace Jeebs.Auth;
 
-		/// <inheritdoc/>
-		public Task<Option<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
-			where TRole : IAuthRole =>
-			Some(userId)
-			.BindAsync(
-				x => this.QueryAsync<TRole>(builder => builder
-					.From<AuthRoleTable>()
-					.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, r => r.Id, ur => ur.RoleId)
-					.Where<AuthUserRoleTable>(ur => ur.UserId, Compare.Equal, x.Value)
-				)
+/// <inheritdoc cref="IAuthDbQuery"/>
+public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
+{
+	/// <summary>
+	/// Inject dependencies
+	/// </summary>
+	/// <param name="db">IAuthDb</param>
+	/// <param name="log">ILog</param>
+	public AuthDbQuery(IAuthDb db, ILog<AuthDbQuery> log) : base(db, log) { }
+
+	/// <inheritdoc/>
+	public Task<Option<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
+		where TRole : IAuthRole =>
+		Some(userId)
+		.BindAsync(
+			x => this.QueryAsync<TRole>(builder => builder
+				.From<AuthRoleTable>()
+				.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, r => r.Id, ur => ur.RoleId)
+				.Where<AuthUserRoleTable>(ur => ur.UserId, Compare.Equal, x.Value)
 			)
-			.MapAsync(
-				x => x.ToList(),
-				DefaultHandler
-			);
-	}
+		)
+		.MapAsync(
+			x => x.ToList(),
+			DefaultHandler
+		);
 }

@@ -3,19 +3,18 @@
 
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.Data.Querying.Exceptions
+namespace Jeebs.Data.Querying.Exceptions;
+
+/// <inheritdoc cref="QueryBuilderException{TTable}"/>
+public class JoinFromTableNotAddedException<TTable> : QueryBuilderException<TTable>
+	where TTable : ITable
 {
-	/// <inheritdoc cref="QueryBuilderException{TTable}"/>
-	public class JoinFromTableNotAddedException<TTable> : QueryBuilderException<TTable>
-		where TTable : ITable
-	{
-		/// <inheritdoc/>
-		public JoinFromTableNotAddedException() { }
+	/// <inheritdoc/>
+	public JoinFromTableNotAddedException() { }
 
-		/// <inheritdoc/>
-		public JoinFromTableNotAddedException(string message) : base(message) { }
+	/// <inheritdoc/>
+	public JoinFromTableNotAddedException(string message) : base(message) { }
 
-		/// <inheritdoc/>
-		public JoinFromTableNotAddedException(string message, Exception inner) : base(message, inner) { }
-	}
+	/// <inheritdoc/>
+	public JoinFromTableNotAddedException(string message, Exception inner) : base(message, inner) { }
 }

@@ -3,16 +3,15 @@
 
 using System.Text.RegularExpressions;
 
-namespace Jeebs
+namespace Jeebs;
+
+public static partial class StringExtensions
 {
-	public static partial class StringExtensions
-	{
-		/// <summary>
-		/// Split a CamelCase string by capitals
-		/// </summary>
-		/// <param name="this">String object</param>
-		/// <returns>String split by capital letters</returns>
-		public static string SplitByCapitals(this string @this) =>
-			Modify(@this, () => Regex.Replace(@this, "( *)([A-Z])", " $2").Trim());
-	}
+	/// <summary>
+	/// Split a CamelCase string by capitals
+	/// </summary>
+	/// <param name="this">String object</param>
+	/// <returns>String split by capital letters</returns>
+	public static string SplitByCapitals(this string @this) =>
+		Modify(@this, () => Regex.Replace(@this, "( *)([A-Z])", " $2").Trim());
 }

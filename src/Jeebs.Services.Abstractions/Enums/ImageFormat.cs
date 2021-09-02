@@ -1,36 +1,35 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Services.Drawing
+namespace Jeebs.Services.Drawing;
+
+/// <summary>
+/// Supported image formats
+/// </summary>
+public enum ImageFormat
 {
 	/// <summary>
-	/// Supported image formats
+	/// Bitmap format
 	/// </summary>
-	public enum ImageFormat
-	{
-		/// <summary>
-		/// Bitmap format
-		/// </summary>
-		Bmp,
+	Bmp,
 
-		/// <summary>
-		/// Graphics Interchange Format (format)
-		/// </summary>
-		Gif,
+	/// <summary>
+	/// Graphics Interchange Format (format)
+	/// </summary>
+	Gif,
 
-		/// <summary>
-		/// Icon
-		/// </summary>
-		Ico,
+	/// <summary>
+	/// Icon
+	/// </summary>
+	Ico,
 
-		/// <summary>
-		/// Joint Photographic Experts Group format
-		/// </summary>
-		Jpeg,
+	/// <summary>
+	/// Joint Photographic Experts Group format
+	/// </summary>
+	Jpeg,
 
-		/// <summary>
-		/// Portable Network Graphics format
-		/// </summary>
-		Png
-	}
+	/// <summary>
+	/// Portable Network Graphics format
+	/// </summary>
+	Png
 }

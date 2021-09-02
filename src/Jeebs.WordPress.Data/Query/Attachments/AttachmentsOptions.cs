@@ -1,11 +1,10 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+public static partial class Query
 {
-	public static partial class Query
-	{
-		/// <inheritdoc cref="IQueryAttachmentsOptions"/>
-		public sealed record class AttachmentsOptions : Querying.AttachmentsOptions;
-	}
+	/// <inheritdoc cref="IQueryAttachmentsOptions"/>
+	public sealed record class AttachmentsOptions : Querying.AttachmentsOptions;
 }
