@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.None_Tests;
+namespace Jeebs.Internals.None_Tests;
 
 public class AsTask_Tests
 {

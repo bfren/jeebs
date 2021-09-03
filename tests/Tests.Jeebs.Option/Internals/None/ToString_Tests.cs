@@ -4,7 +4,7 @@
 using Xunit;
 using static F.OptionF;
 
-namespace Jeebs.None_Tests;
+namespace Jeebs.Internals.None_Tests;
 
 public class ToString_Tests
 {

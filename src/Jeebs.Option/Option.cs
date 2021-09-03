@@ -51,9 +51,9 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 	/// <summary>
 	/// Return:
 	///    Value (if this is <see cref="Internals.Some{T}"/> and Value is not null)
-	///    Reason (if this is <see cref="None{T}"/> and it has a reason)
+	///    Reason (if this is <see cref="Internals.None{T}"/> and it has a reason)
 	/// </summary>
-	public override string ToString() =>
+	public sealed override string ToString() =>
 		F.OptionF.Switch(
 			this,
 			some: v =>

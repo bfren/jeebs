@@ -20,11 +20,4 @@ public sealed record class Some<T> : Option<T>
 	/// <param name="value"></param>
 	internal Some(T value) =>
 		Value = value;
-
-	/// <summary>
-	/// Return:
-	///    Value (if Value is not null)
-	/// </summary>
-	public override string ToString() =>
-		base.ToString();
 }
