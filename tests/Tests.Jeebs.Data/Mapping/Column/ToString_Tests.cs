@@ -1,11 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Reflection;
-using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Mapping.MappedColumn_Tests;
+namespace Jeebs.Data.Mapping.Column_Tests;
 
 public class ToString_Tests
 {
@@ -14,9 +12,7 @@ public class ToString_Tests
 	{
 		// Arrange
 		var name = F.Rnd.Str;
-		var prop = Substitute.For<PropertyInfo>();
-		prop.Name.Returns(F.Rnd.Str);
-		var column = new MappedColumn(F.Rnd.Str, name, prop);
+		var column = new Column(F.Rnd.Str, name, F.Rnd.Str);
 
 		// Act
 		var result = column.ToString();

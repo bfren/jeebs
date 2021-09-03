@@ -39,4 +39,10 @@ public partial record class Column(string Table, string Name, string Alias) : IC
 		public int GetHashCode(IColumn obj) =>
 			obj.Alias.GetHashCode();
 	}
+
+	/// <summary>
+	/// Return column name
+	/// </summary>
+	public sealed override string ToString() =>
+		Name;
 }

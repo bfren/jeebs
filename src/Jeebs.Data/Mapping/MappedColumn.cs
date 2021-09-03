@@ -31,10 +31,4 @@ public sealed record class MappedColumn(string Table, string Name, PropertyInfo 
 			mappedColumn.Property
 		)
 	{ }
-
-	/// <summary>
-	/// Return table name
-	/// </summary>
-	public override string ToString() =>
-		Name;
 }
