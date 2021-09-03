@@ -9,7 +9,7 @@ namespace Jeebs;
 public static class OptionExtensions_UnsafeUnwrap
 {
 	/// <summary>
-	/// Assume <paramref name="this"/> is a <see cref="Some{T}"/> and get the value -
+	/// Assume <paramref name="this"/> is a <see cref="Internals.Some{T}"/> and get the value -
 	/// useful to get values during the Arrange section of a unit test
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>

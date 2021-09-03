@@ -17,7 +17,7 @@ namespace F.Internals;
 public sealed class OptionConverter<T> : JsonConverter<Option<T>>
 {
 	/// <summary>
-	/// Read value and return as <see cref="Some{T}"/> or <see cref="Jeebs.None{T}"/>
+	/// Read value and return as <see cref="Jeebs.Internals.Some{T}"/> or <see cref="Jeebs.Internals.None{T}"/>
 	/// </summary>
 	/// <param name="reader">Utf8JsonReader</param>
 	/// <param name="typeToConvert">Option of type <typeparamref name="T"/></param>
@@ -33,7 +33,7 @@ public sealed class OptionConverter<T> : JsonConverter<Option<T>>
 		};
 
 	/// <summary>
-	/// If the option is <see cref="Some{T}"/> write the value, otherwise write a null value
+	/// If the option is <see cref="Jeebs.Internals.Some{T}"/> write the value, otherwise write a null value
 	/// </summary>
 	/// <param name="writer">Utf8JsonWriter</param>
 	/// <param name="value">Option value</param>

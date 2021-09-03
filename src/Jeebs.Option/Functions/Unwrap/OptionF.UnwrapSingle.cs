@@ -9,7 +9,7 @@ namespace F;
 public static partial class OptionF
 {
 	/// <summary>
-	/// Unwrap the value of <paramref name="option"/> - if it is <see cref="Some{T}"/>
+	/// Unwrap the value of <paramref name="option"/> - if it is <see cref="Jeebs.Internals.Some{T}"/>
 	/// and <typeparamref name="T"/> implements <see cref="IEnumerable{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>

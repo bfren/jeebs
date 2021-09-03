@@ -10,7 +10,7 @@ public static partial class OptionF
 	public static partial class Enumerable
 	{
 		/// <summary>
-		/// Filter elements to return only the values of those that are <see cref="Some{T}"/>
+		/// Filter elements to return only the values of those that are <see cref="Jeebs.Internals.Some{T}"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <param name="list">List of Option values</param>

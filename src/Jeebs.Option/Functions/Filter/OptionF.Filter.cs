@@ -8,7 +8,7 @@ namespace F;
 public static partial class OptionF
 {
 	/// <summary>
-	/// Return the current type if it is <see cref="Some{T}"/> and the predicate is true
+	/// Return the current type if it is <see cref="Jeebs.Internals.Some{T}"/> and the predicate is true
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <param name="option">Input option</param>

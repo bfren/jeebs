@@ -9,7 +9,7 @@ using static F.OptionF;
 namespace Jeebs;
 
 /// <summary>
-/// Option type - enables null-safe returning by wrapping value in <see cref="Internals.Some{T}"/> and null in <see cref="None{T}"/>
+/// Option type - enables null-safe returning by wrapping value in <see cref="Internals.Some{T}"/> and null in <see cref="Internals.None{T}"/>
 /// </summary>
 /// <typeparam name="T">Option value type</typeparam>
 public abstract record class Option<T> : IEquatable<Option<T>>
@@ -29,7 +29,7 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 		this is Some<T>;
 
 	/// <summary>
-	/// Whether or not this is <see cref="None{T}"/>
+	/// Whether or not this is <see cref="Internals.None{T}"/>
 	/// </summary>
 	[JsonIgnore]
 	public bool IsNone =>

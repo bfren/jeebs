@@ -8,7 +8,7 @@ namespace F;
 public static partial class OptionF
 {
 	/// <summary>
-	/// Unwrap the value of <paramref name="option"/> - if it is a <see cref="Some{T}"/>
+	/// Unwrap the value of <paramref name="option"/> - if it is a <see cref="Jeebs.Internals.Some{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <typeparam name="U">Single value type</typeparam>

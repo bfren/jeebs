@@ -9,7 +9,7 @@ namespace Jeebs;
 public static class Create
 {
 	/// <summary>
-	/// Create an empty <see cref="Jeebs.None{T}"/>
+	/// Create an empty <see cref="Internals.None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	public static Option<T> None<T>() =>

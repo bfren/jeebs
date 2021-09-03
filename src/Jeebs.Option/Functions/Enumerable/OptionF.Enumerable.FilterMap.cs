@@ -10,7 +10,7 @@ public static partial class OptionF
 	public static partial class Enumerable
 	{
 		/// <summary>
-		/// Filter elements to return only <see cref="Some{T}"/> and transform using <paramref name="map"/>
+		/// Filter elements to return only <see cref="Jeebs.Internals.Some{T}"/> and transform using <paramref name="map"/>
 		/// </summary>
 		/// <typeparam name="T">Option value type</typeparam>
 		/// <typeparam name="U">Next value type</typeparam>
