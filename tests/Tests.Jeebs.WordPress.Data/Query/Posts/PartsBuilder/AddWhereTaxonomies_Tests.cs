@@ -39,9 +39,9 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<Query.PostsParts
 		var id = new WpTermId(F.Rnd.Ulng);
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
-		var tt = builder.TTest.TermTaxonomy.GetName();
-		var tr = builder.TTest.TermRelationship.GetName();
-		var p = builder.TTest.Post.GetName();
+		var tt = builder.TTest.TermTaxonomy.ToString();
+		var tr = builder.TTest.TermRelationship.ToString();
+		var p = builder.TTest.Post.ToString();
 
 		// Act
 		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);
@@ -109,9 +109,9 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<Query.PostsParts
 		var id2 = new WpTermId(F.Rnd.Ulng);
 		var taxonomies = ImmutableList.Create((t0, id0), (t1, id1), (t1, id2));
 
-		var tt = builder.TTest.TermTaxonomy.GetName();
-		var tr = builder.TTest.TermRelationship.GetName();
-		var p = builder.TTest.Post.GetName();
+		var tt = builder.TTest.TermTaxonomy.ToString();
+		var tr = builder.TTest.TermRelationship.ToString();
+		var p = builder.TTest.Post.ToString();
 
 		// Act
 		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);

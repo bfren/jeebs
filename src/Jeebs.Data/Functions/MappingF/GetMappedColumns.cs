@@ -31,7 +31,7 @@ public static partial class MappingF
 				 where entityProperty.GetCustomAttribute<IgnoreAttribute>() == null
 				 select new MappedColumn
 				 (
-					 Table: x.GetName(),
+					 Table: x,
 					 Name: column,
 					 Property: entityProperty
 				 ),

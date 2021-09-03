@@ -121,14 +121,14 @@ public class TestController : Controller
 		{
 			var sql =
 				"SELECT " +
-					$"`{db.Role.GetName()}`.`{db.Role.Id}` AS '{nameof(db.Role.Id)}', " +
-					$"`{db.Role.GetName()}`.`{db.Role.Name}` AS '{nameof(db.Role.Name)}', " +
-					$"`{db.Role.GetName()}`.`{db.Role.Description}` AS '{nameof(db.Role.Description)}' " +
-				$"FROM `{db.Role.GetName()}` " +
-				$"INNER JOIN `{db.UserRole.GetName()}` " +
-					$"ON `{db.Role.GetName()}`.`{db.Role.Id}` " +
-					$"= `{db.UserRole.GetName()}`.`{db.UserRole.RoleId}` " +
-				$"WHERE `{db.UserRole.GetName()}`.`{db.UserRole.UserId}` = @P0;";
+					$"`{db.Role}`.`{db.Role.Id}` AS '{nameof(db.Role.Id)}', " +
+					$"`{db.Role}`.`{db.Role.Name}` AS '{nameof(db.Role.Name)}', " +
+					$"`{db.Role}`.`{db.Role.Description}` AS '{nameof(db.Role.Description)}' " +
+				$"FROM `{db.Role}` " +
+				$"INNER JOIN `{db.UserRole}` " +
+					$"ON `{db.Role}`.`{db.Role.Id}` " +
+					$"= `{db.UserRole}`.`{db.UserRole.RoleId}` " +
+				$"WHERE `{db.UserRole}`.`{db.UserRole.UserId}` = @P0;";
 
 			var roles = await
 				Some(
@@ -293,18 +293,18 @@ public class TestController : Controller
 		{
 			var sql =
 				"SELECT " +
-					$"`{db.User.GetName()}`.`{db.User.Id}` AS '{nameof(db.User.Id)}', " +
-					$"`{db.User.GetName()}`.`{db.User.EmailAddress}` AS '{nameof(db.User.EmailAddress)}', " +
-					$"`{db.User.GetName()}`.`{db.User.FamilyName}` AS '{nameof(db.User.FamilyName)}', " +
-					$"`{db.User.GetName()}`.`{db.User.FriendlyName}` AS '{nameof(db.User.FriendlyName)}', " +
-					$"`{db.User.GetName()}`.`{db.User.GivenName}` AS '{nameof(db.User.GivenName)}', " +
-					$"`{db.User.GetName()}`.`{db.User.IsEnabled}` AS '{nameof(db.User.IsEnabled)}', " +
-					$"`{db.User.GetName()}`.`{db.User.IsSuper}` AS '{nameof(db.User.IsSuper)}', " +
-					$"`{db.User.GetName()}`.`{db.User.LastSignedIn}` AS '{nameof(db.User.LastSignedIn)}', " +
-					$"`{db.User.GetName()}`.`{db.User.PasswordHash}` AS '{nameof(db.User.PasswordHash)}', " +
-					$"`{db.User.GetName()}`.`{db.User.Version}` AS '{nameof(db.User.Version)}' " +
-				$"FROM `{db.User.GetName()}` " +
-				$"WHERE `{db.User.GetName()}`.`{db.User.Id}` = @P0;";
+					$"`{db.User}`.`{db.User.Id}` AS '{nameof(db.User.Id)}', " +
+					$"`{db.User}`.`{db.User.EmailAddress}` AS '{nameof(db.User.EmailAddress)}', " +
+					$"`{db.User}`.`{db.User.FamilyName}` AS '{nameof(db.User.FamilyName)}', " +
+					$"`{db.User}`.`{db.User.FriendlyName}` AS '{nameof(db.User.FriendlyName)}', " +
+					$"`{db.User}`.`{db.User.GivenName}` AS '{nameof(db.User.GivenName)}', " +
+					$"`{db.User}`.`{db.User.IsEnabled}` AS '{nameof(db.User.IsEnabled)}', " +
+					$"`{db.User}`.`{db.User.IsSuper}` AS '{nameof(db.User.IsSuper)}', " +
+					$"`{db.User}`.`{db.User.LastSignedIn}` AS '{nameof(db.User.LastSignedIn)}', " +
+					$"`{db.User}`.`{db.User.PasswordHash}` AS '{nameof(db.User.PasswordHash)}', " +
+					$"`{db.User}`.`{db.User.Version}` AS '{nameof(db.User.Version)}' " +
+				$"FROM `{db.User}` " +
+				$"WHERE `{db.User}`.`{db.User.Id}` = @P0;";
 
 			await Some(
 					userId

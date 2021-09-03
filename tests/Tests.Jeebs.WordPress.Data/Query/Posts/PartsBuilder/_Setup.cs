@@ -27,7 +27,7 @@ public static class Setup
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(Post.GetName(), x.column.Table);
+				Assert.Equal(Post.ToString(), x.column.Table);
 				Assert.Equal(column, x.column.Name);
 				Assert.Equal(cmp, x.cmp);
 				Assert.Equal(value, x.value);

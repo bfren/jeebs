@@ -33,8 +33,8 @@ public static partial class QueryAttachmentsF
 				$"`p`.`{schema.Post.Url}` AS '{nameof(PostAttachment.Url)}', " +
 				$"`pm`.`{schema.PostMeta.Value}` AS '{nameof(PostAttachment.UrlPath)}', " +
 				$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostMeta.Value}`) AS '{nameof(PostAttachment.Url)}' " +
-			$"FROM `{schema.Post.GetName()}` AS `p` " +
-				$"LEFT JOIN `{schema.PostMeta.GetName()}` AS `pm` ON `p`.`{schema.Post.Id}` = `pm`.`{schema.PostMeta.PostId}` " +
+			$"FROM `{schema.Post}` AS `p` " +
+				$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`{schema.Post.Id}` = `pm`.`{schema.PostMeta.PostId}` " +
 			$"WHERE `p`.`{schema.Post.Id}` IN ({string.Join(',', fileIds.Select(x => x.Value))}) " +
 				$"AND `pm`.`{schema.PostMeta.Key}` = '{Constants.Attachment}';"
 		;

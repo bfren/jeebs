@@ -18,17 +18,17 @@ public class Constructor_Tests
 		var result = new WpDbSchema(prefix);
 
 		// Assert
-		Assert.StartsWith(prefix, result.Comment.GetName());
-		Assert.StartsWith(prefix, result.CommentMeta.GetName());
-		Assert.StartsWith(prefix, result.Link.GetName());
-		Assert.StartsWith(prefix, result.Option.GetName());
-		Assert.StartsWith(prefix, result.Post.GetName());
-		Assert.StartsWith(prefix, result.PostMeta.GetName());
-		Assert.StartsWith(prefix, result.Term.GetName());
-		Assert.StartsWith(prefix, result.TermMeta.GetName());
-		Assert.StartsWith(prefix, result.TermRelationship.GetName());
-		Assert.StartsWith(prefix, result.TermTaxonomy.GetName());
-		Assert.StartsWith(prefix, result.User.GetName());
-		Assert.StartsWith(prefix, result.UserMeta.GetName());
+		Assert.StartsWith(prefix, result.Comment.ToString());
+		Assert.StartsWith(prefix, result.CommentMeta.ToString());
+		Assert.StartsWith(prefix, result.Link.ToString());
+		Assert.StartsWith(prefix, result.Option.ToString());
+		Assert.StartsWith(prefix, result.Post.ToString());
+		Assert.StartsWith(prefix, result.PostMeta.ToString());
+		Assert.StartsWith(prefix, result.Term.ToString());
+		Assert.StartsWith(prefix, result.TermMeta.ToString());
+		Assert.StartsWith(prefix, result.TermRelationship.ToString());
+		Assert.StartsWith(prefix, result.TermTaxonomy.ToString());
+		Assert.StartsWith(prefix, result.User.ToString());
+		Assert.StartsWith(prefix, result.UserMeta.ToString());
 	}
 }

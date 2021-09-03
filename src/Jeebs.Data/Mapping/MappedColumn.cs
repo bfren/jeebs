@@ -13,6 +13,14 @@ public sealed record class MappedColumn(string Table, string Name, PropertyInfo 
 	Column(Table, Name, Property.Name), IMappedColumn
 {
 	/// <summary>
+	/// Create mapped column using table object
+	/// </summary>
+	/// <param name="Table">Table</param>
+	/// <param name="Name">Column Name</param>
+	/// <param name="Property">Entity property PropertyInfo</param>
+	public MappedColumn(ITable Table, string Name, PropertyInfo Property) : this(Table.GetName(), Name, Property) { }
+
+	/// <summary>
 	/// Create from a mapped column interface
 	/// </summary>
 	/// <param name="mappedColumn">IMappedColumn</param>

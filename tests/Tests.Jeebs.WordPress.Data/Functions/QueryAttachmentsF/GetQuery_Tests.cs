@@ -46,8 +46,8 @@ public class GetQuery_Tests
 				"`p`.`guid` AS 'Url', " +
 				"`pm`.`meta_value` AS 'UrlPath', " +
 				$"CONCAT('{virtualUploadsUrl}/', `pm`.`meta_value`) AS 'Url' " +
-			$"FROM `{schema.Post.GetName()}` AS `p` " +
-				$"LEFT JOIN `{schema.PostMeta.GetName()}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +
+			$"FROM `{schema.Post}` AS `p` " +
+				$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +
 			$"WHERE `p`.`ID` IN ({i0},{i1}) " +
 				"AND `pm`.`meta_key` = '_wp_attached_file';"
 		;

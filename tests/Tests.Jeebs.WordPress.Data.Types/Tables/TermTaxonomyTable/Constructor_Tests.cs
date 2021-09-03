@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}term_taxonomy";
 
 		// Act
-		var result = new TermTaxonomyTable(prefix).GetName();
+		var result = new TermTaxonomyTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

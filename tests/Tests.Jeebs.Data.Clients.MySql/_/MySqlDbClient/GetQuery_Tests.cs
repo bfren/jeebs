@@ -119,10 +119,10 @@ public class GetQuery_Tests
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
-		var c0 = new Column(table.GetName(), c0Name, c0Alias);
+		var c0 = new Column(table, c0Name, c0Alias);
 		var c1Name = F.Rnd.Str;
 		var c1Alias = F.Rnd.Str;
-		var c1 = new Column(table.GetName(), c1Name, c1Alias);
+		var c1 = new Column(table, c1Name, c1Alias);
 		var parts = new QueryParts(table)
 		{
 			Select = new ColumnList(new[] { c0, c1 })
@@ -145,7 +145,7 @@ public class GetQuery_Tests
 		var (client, fromTable) = MySqlDbClient_Setup.Get();
 
 		var fromName = F.Rnd.Str;
-		var from = new Column(fromTable.GetName(), fromName, F.Rnd.Str);
+		var from = new Column(fromTable, fromName, F.Rnd.Str);
 
 		var to0Table = F.Rnd.Str;
 		var to0Name = F.Rnd.Str;

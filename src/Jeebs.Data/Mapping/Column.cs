@@ -10,6 +10,14 @@ namespace Jeebs.Data.Mapping;
 public partial record class Column(string Table, string Name, string Alias) : IColumn
 {
 	/// <summary>
+	/// Create column using table object
+	/// </summary>
+	/// <param name="Table">Table</param>
+	/// <param name="Name">Column Name</param>
+	/// <param name="Alias">Column Alias</param>
+	public Column(ITable Table, string Name, string Alias) : this(Table.GetName(), Name, Alias) { }
+
+	/// <summary>
 	/// Column Alias Comparer
 	/// </summary>
 	public class AliasComparer : IEqualityComparer<IColumn>

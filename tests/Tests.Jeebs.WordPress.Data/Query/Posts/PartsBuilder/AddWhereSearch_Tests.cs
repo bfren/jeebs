@@ -104,7 +104,7 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuil
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var table = builder.TTest.Post.GetName();
+		var table = builder.TTest.Post.ToString();
 
 		// Act
 		var result = builder.AddWhereSearch(v.Parts, field, Compare.Equal, F.Rnd.Str);
@@ -148,7 +148,7 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuil
 		// Arrange
 		var (builder, v) = Setup();
 		var post = builder.TTest.Post;
-		var table = post.GetName();
+		var table = post.ToString();
 
 		// Act
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.All, Compare.Equal, F.Rnd.Str);

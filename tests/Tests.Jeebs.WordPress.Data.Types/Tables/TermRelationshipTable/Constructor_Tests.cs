@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}term_relationships";
 
 		// Act
-		var result = new TermRelationshipTable(prefix).GetName();
+		var result = new TermRelationshipTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

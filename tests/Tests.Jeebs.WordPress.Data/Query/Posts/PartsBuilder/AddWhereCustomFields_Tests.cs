@@ -49,8 +49,8 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPar
 
 		var customFields = ImmutableList.Create((field, input, value));
 
-		var p = builder.TTest.Post.GetName();
-		var pm = builder.TTest.PostMeta.GetName();
+		var p = builder.TTest.Post.ToString();
+		var pm = builder.TTest.PostMeta.ToString();
 
 		// Act
 		var result = builder.AddWhereCustomFields(v.Parts, customFields);
@@ -128,8 +128,8 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPar
 
 		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f0, Compare.Equal, v1));
 
-		var p = builder.TTest.Post.GetName();
-		var pm = builder.TTest.PostMeta.GetName();
+		var p = builder.TTest.Post.ToString();
+		var pm = builder.TTest.PostMeta.ToString();
 
 		// Act
 		var result = builder.AddWhereCustomFields(v.Parts, customFields);

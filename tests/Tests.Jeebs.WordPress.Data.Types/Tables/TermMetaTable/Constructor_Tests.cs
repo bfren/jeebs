@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}termmeta";
 
 		// Act
-		var result = new TermMetaTable(prefix).GetName();
+		var result = new TermMetaTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

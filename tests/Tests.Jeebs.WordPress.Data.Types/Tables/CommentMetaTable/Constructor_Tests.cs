@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}commentmeta";
 
 		// Act
-		var result = new CommentMetaTable(prefix).GetName();
+		var result = new CommentMetaTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

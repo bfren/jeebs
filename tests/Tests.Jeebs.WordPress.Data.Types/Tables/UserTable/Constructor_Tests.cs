@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}users";
 
 		// Act
-		var result = new UserTable(prefix).GetName();
+		var result = new UserTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

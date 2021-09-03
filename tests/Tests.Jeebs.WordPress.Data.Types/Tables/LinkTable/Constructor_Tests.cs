@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}links";
 
 		// Act
-		var result = new LinkTable(prefix).GetName();
+		var result = new LinkTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

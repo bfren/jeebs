@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}terms";
 
 		// Act
-		var result = new TermTable(prefix).GetName();
+		var result = new TermTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

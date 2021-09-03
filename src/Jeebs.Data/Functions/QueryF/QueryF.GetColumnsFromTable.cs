@@ -34,7 +34,7 @@ public static partial class QueryF
 			if (field.GetValue(table) is string column)
 			{
 				var alias = property.Name;
-				extracted.Add(new Column(table.GetName(), column, alias));
+				extracted.Add(new Column(table, column, alias));
 			}
 		}
 

@@ -20,6 +20,6 @@ public abstract record class Table : ITable
 		name;
 
 	/// <inheritdoc cref="GetName"/>
-	public override string ToString() =>
+	public sealed override string ToString() =>
 		GetName();
 }

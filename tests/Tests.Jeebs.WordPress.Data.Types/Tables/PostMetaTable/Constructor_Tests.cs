@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var expected = $"{prefix}postmeta";
 
 		// Act
-		var result = new PostMetaTable(prefix).GetName();
+		var result = new PostMetaTable(prefix).ToString();
 
 		// Assert
 		Assert.Equal(expected, result);

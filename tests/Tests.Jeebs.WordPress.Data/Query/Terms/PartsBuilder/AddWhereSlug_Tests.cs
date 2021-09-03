@@ -45,7 +45,7 @@ public class AddWhereSlug_Tests : QueryPartsBuilder_Tests<Query.TermsPartsBuilde
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(builder.TTest.Term.GetName(), x.column.Table);
+				Assert.Equal(builder.TTest.Term.ToString(), x.column.Table);
 				Assert.Equal(builder.TTest.Term.Slug, x.column.Name);
 				Assert.Equal(Compare.Equal, x.cmp);
 				Assert.Equal(slug, x.value);

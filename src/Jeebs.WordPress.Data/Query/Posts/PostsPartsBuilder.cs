@@ -23,7 +23,7 @@ public static partial class Query
 
 		/// <inheritdoc/>
 		public override IColumn IdColumn =>
-			new Column(T.Post.GetName(), T.Post.Id, nameof(T.Post.Id));
+			new Column(T.Post, T.Post.Id, nameof(T.Post.Id));
 
 		/// <summary>
 		/// Internal creation only

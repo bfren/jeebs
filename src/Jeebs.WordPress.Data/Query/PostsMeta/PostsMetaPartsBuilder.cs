@@ -20,7 +20,7 @@ public static partial class Query
 
 		/// <inheritdoc/>
 		public override IColumn IdColumn =>
-			new Column(T.PostMeta.GetName(), T.PostMeta.Id, nameof(T.PostMeta.Id));
+			new Column(T.PostMeta, T.PostMeta.Id, nameof(T.PostMeta.Id));
 
 		/// <summary>
 		/// Internal creation only
