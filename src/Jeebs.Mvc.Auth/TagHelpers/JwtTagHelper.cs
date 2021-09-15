@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Internals;
 using Microsoft.AspNetCore.Mvc.Rendering;

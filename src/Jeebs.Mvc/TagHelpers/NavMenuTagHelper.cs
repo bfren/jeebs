@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Collections.Generic;
 using System.Text.Encodings.Web;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
