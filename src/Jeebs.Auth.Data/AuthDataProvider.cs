@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
