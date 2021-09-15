@@ -1,6 +1,7 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using AppMvc.EfCore;
 using Jeebs;
 using Jeebs.Auth;
@@ -9,6 +10,9 @@ using Jeebs.Mvc.Auth;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AppMvc;
 

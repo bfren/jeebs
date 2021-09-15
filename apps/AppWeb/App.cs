@@ -1,6 +1,11 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+
 namespace AppWeb;
 
 public class App : Jeebs.Apps.WebApp
