@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Threading.Tasks;
 namespace Jeebs.OptionExtensions_Tests;
 
 public class BindAsync_Tests : Jeebs_Tests.BindAsync_Tests
