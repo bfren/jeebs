@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Collections.Generic;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 

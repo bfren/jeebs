@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Linq;
 using System.Text;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
