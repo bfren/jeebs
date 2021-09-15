@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
