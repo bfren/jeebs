@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Collections.Generic;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Enums;

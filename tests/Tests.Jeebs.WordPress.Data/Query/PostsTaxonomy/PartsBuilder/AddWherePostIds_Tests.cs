@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Linq;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Querying.QueryPartsBuilder_Tests;
