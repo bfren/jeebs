@@ -1,7 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
