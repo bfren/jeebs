@@ -1,6 +1,11 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Jeebs.Config;
 using Jeebs.Services.Twitter;
 using Jeebs.Services.Twitter.Models;
