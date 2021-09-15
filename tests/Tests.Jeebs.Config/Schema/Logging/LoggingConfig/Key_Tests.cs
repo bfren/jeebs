@@ -1,22 +1,21 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Config.LoggingConfig_Tests
+namespace Jeebs.Config.LoggingConfig_Tests;
+
+public class Key_Tests
 {
-	public class Key_Tests
+	[Fact]
+	public void Returns_Logging_Key()
 	{
-		[Fact]
-		public void Returns_Logging_Key()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			const string result = LoggingConfig.Key;
+		// Act
+		const string result = LoggingConfig.Key;
 
-			// Assert
-			Assert.Equal(JeebsConfig.Key + ":logging", result);
-		}
+		// Assert
+		Assert.Equal(JeebsConfig.Key + ":logging", result);
 	}
 }

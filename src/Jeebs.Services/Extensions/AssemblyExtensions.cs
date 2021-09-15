@@ -1,27 +1,26 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Jeebs.Services
+namespace Jeebs.Services;
+
+internal static class AssemblyExtensions
 {
-	internal static class AssemblyExtensions
+	internal static IEnumerable<Type> GetLoadableTypes(this Assembly @this)
 	{
-		internal static IEnumerable<Type> GetLoadableTypes(this Assembly @this)
+		try
 		{
-			try
-			{
-				return @this.GetTypes();
-			}
-			catch (ReflectionTypeLoadException e)
-			{
-				return from t in e.Types
-					   where t != null
-					   select t;
-			}
+			return @this.GetTypes();
+		}
+		catch (ReflectionTypeLoadException e)
+		{
+			return from t in e.Types
+				   where t != null
+				   select t;
 		}
 	}
 }

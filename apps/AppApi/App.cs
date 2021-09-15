@@ -1,10 +1,9 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace AppApi
+namespace AppApi;
+
+public sealed class App : Jeebs.Apps.ApiApp
 {
-	public sealed class App : Jeebs.Apps.ApiApp
-	{
-		public App() : base(true) { }
-	}
+	public App() : base(true) { }
 }

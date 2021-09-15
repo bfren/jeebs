@@ -1,70 +1,69 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs;
 using Xunit;
 using static F.BooleanF;
 using static F.BooleanF.Msg;
 
-namespace F.BooleanF_Tests
+namespace F.BooleanF_Tests;
+
+public class Parse_Tests
 {
-	public class Parse_Tests
+	[Theory]
+	[InlineData("true")]
+	[InlineData("TRUE")]
+	[InlineData("true,false")]
+	[InlineData("TRUE,FALSE")]
+	[InlineData("on")]
+	[InlineData("ON")]
+	[InlineData("yes")]
+	[InlineData("YES")]
+	[InlineData("1")]
+	public void String_Returns_Some_True(string input)
 	{
-		[Theory]
-		[InlineData("true")]
-		[InlineData("TRUE")]
-		[InlineData("true,false")]
-		[InlineData("TRUE,FALSE")]
-		[InlineData("on")]
-		[InlineData("ON")]
-		[InlineData("yes")]
-		[InlineData("YES")]
-		[InlineData("1")]
-		public void String_Returns_Some_True(string input)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = Parse(input);
+		// Act
+		var result = Parse(input);
 
-			// Assert
-			var some = Assert.IsType<Some<bool>>(result);
-			Assert.True(some.Value);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.True(some);
+	}
 
-		[Theory]
-		[InlineData("false")]
-		[InlineData("FALSE")]
-		[InlineData("off")]
-		[InlineData("OFF")]
-		[InlineData("no")]
-		[InlineData("NO")]
-		[InlineData("0")]
-		public void String_Returns_Some_False(string input)
-		{
-			// Arrange
+	[Theory]
+	[InlineData("false")]
+	[InlineData("FALSE")]
+	[InlineData("off")]
+	[InlineData("OFF")]
+	[InlineData("no")]
+	[InlineData("NO")]
+	[InlineData("0")]
+	public void String_Returns_Some_False(string input)
+	{
+		// Arrange
 
-			// Act
-			var result = Parse(input);
+		// Act
+		var result = Parse(input);
 
-			// Assert
-			var some = Assert.IsType<Some<bool>>(result);
-			Assert.False(some.Value);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.False(some);
+	}
 
-		[Theory]
-		[InlineData("2")]
-		[InlineData("this is not a valid boolean")]
-		public void InvalidString_Returns_None_With_UnrecognisedValueMsg(string input)
-		{
-			// Arrange
+	[Theory]
+	[InlineData("2")]
+	[InlineData("this is not a valid boolean")]
+	public void InvalidString_Returns_None_With_UnrecognisedValueMsg(string input)
+	{
+		// Arrange
 
-			// Act
-			var result = Parse(input);
+		// Act
+		var result = Parse(input);
 
-			// Assert
-			var none = Assert.IsType<None<bool>>(result);
-			Assert.IsType<UnrecognisedValueMsg>(none.Reason);
-		}
+		// Assert
+		var msg = result.AssertNone();
+		Assert.IsType<UnrecognisedValueMsg>(msg);
 	}
 }

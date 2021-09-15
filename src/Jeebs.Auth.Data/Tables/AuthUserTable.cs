@@ -1,68 +1,75 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Data.Mapping;
 
-namespace Jeebs.Auth.Data.Tables
+namespace Jeebs.Auth.Data.Tables;
+
+/// <summary>
+/// Authentication User Table
+/// </summary>
+public sealed record class AuthUserTable() : Table("auth_user")
 {
 	/// <summary>
-	/// Authentication User Table
+	/// Prefix added before all columns
 	/// </summary>
-	public sealed record AuthUserTable() : Table("auth_user")
-	{
-		/// <summary>
-		/// Prefix added before all columns
-		/// </summary>
-		public const string ColumnPrefix = "User";
+	public const string ColumnPrefix = "User";
 
-		#region From AuthUserModel
+	#region From AuthUserModel
 
-		/// <inheritdoc cref="AuthUserModel.Id"/>
-		public string Id =>
-			ColumnPrefix + nameof(Id);
+	/// <inheritdoc cref="AuthUserModel.Id"/>
+	public string Id =>
+		ColumnPrefix + nameof(Id);
 
-		/// <inheritdoc cref="AuthUserModel.EmailAddress"/>
-		public string EmailAddress =>
-			ColumnPrefix + nameof(EmailAddress);
+	/// <inheritdoc cref="AuthUserModel.EmailAddress"/>
+	public string EmailAddress =>
+		ColumnPrefix + nameof(EmailAddress);
 
-		/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
-		public string FriendlyName =>
-			ColumnPrefix + nameof(FriendlyName);
+	/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
+	public string FriendlyName =>
+		ColumnPrefix + nameof(FriendlyName);
 
-		/// <inheritdoc cref="AuthUserModel.GivenName"/>
-		public string GivenName =>
-			ColumnPrefix + nameof(GivenName);
+	/// <inheritdoc cref="AuthUserModel.GivenName"/>
+	public string GivenName =>
+		ColumnPrefix + nameof(GivenName);
 
-		/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
-		public string FamilyName =>
-			ColumnPrefix + nameof(FamilyName);
+	/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
+	public string FamilyName =>
+		ColumnPrefix + nameof(FamilyName);
 
-		/// <inheritdoc cref="AuthUserModel.IsSuper"/>
-		public string IsSuper =>
-			ColumnPrefix + nameof(IsSuper);
+	/// <inheritdoc cref="AuthUserModel.IsSuper"/>
+	public string IsSuper =>
+		ColumnPrefix + nameof(IsSuper);
 
-		#endregion
+	#endregion
 
-		#region From AuthUserEntity
+	#region From AuthUserEntity
 
-		/// <inheritdoc cref="AuthUserEntity.Version"/>
-		public string Version =>
-			ColumnPrefix + nameof(Version);
+	/// <inheritdoc cref="AuthUserEntity.Version"/>
+	public string Version =>
+		ColumnPrefix + nameof(Version);
 
-		/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
-		public string PasswordHash =>
-			ColumnPrefix + nameof(PasswordHash);
+	/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
+	public string PasswordHash =>
+		ColumnPrefix + nameof(PasswordHash);
 
-		/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
-		public string IsEnabled =>
-			ColumnPrefix + nameof(IsEnabled);
+	/// <inheritdoc cref="AuthUserEntity.TotpSecret"/>
+	public string TotpSecret =>
+		ColumnPrefix + nameof(TotpSecret);
 
-		/// <inheritdoc cref="AuthUserEntity.LastSignedIn"/>
-		public string LastSignedIn =>
-			ColumnPrefix + nameof(LastSignedIn);
+	/// <inheritdoc cref="AuthUserEntity.TotpBackupCodes"/>
+	public string TotpBackupCodes =>
+		ColumnPrefix + nameof(TotpBackupCodes);
 
-		#endregion
-	}
+	/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
+	public string IsEnabled =>
+		ColumnPrefix + nameof(IsEnabled);
+
+	/// <inheritdoc cref="AuthUserEntity.LastSignedIn"/>
+	public string LastSignedIn =>
+		ColumnPrefix + nameof(LastSignedIn);
+
+	#endregion
 }

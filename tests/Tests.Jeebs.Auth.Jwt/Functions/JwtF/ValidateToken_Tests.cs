@@ -1,5 +1,5 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Security.Claims;
@@ -10,105 +10,104 @@ using NSubstitute;
 using Xunit;
 using static F.JwtF.Msg;
 
-namespace F.JwtF_Tests
+namespace F.JwtF_Tests;
+
+public class ValidateToken_Tests
 {
-	public class ValidateToken_Tests
+	private static (JwtConfig config, string token, string user) GetToken(bool encrypt, DateTime notBefore, DateTime expires)
 	{
-		private static (JwtConfig config, string token, string user) GetToken(bool encrypt, DateTime notBefore, DateTime expires)
+		var config = encrypt switch
 		{
-			var config = encrypt switch
-			{
-				true =>
-					new JwtConfig
-					{
-						SigningKey = Rnd.StringF.Get(32),
-						EncryptingKey = Rnd.StringF.Get(64),
-						Issuer = Rnd.Str,
-						Audience = Rnd.Str
-					},
+			true =>
+				new JwtConfig
+				{
+					SigningKey = Rnd.StringF.Get(32),
+					EncryptingKey = Rnd.StringF.Get(64),
+					Issuer = Rnd.Str,
+					Audience = Rnd.Str
+				},
 
-				false =>
-					new JwtConfig
-					{
-						SigningKey = Rnd.StringF.Get(32),
-						Issuer = Rnd.Str,
-						Audience = Rnd.Str
-					}
-			};
+			false =>
+				new JwtConfig
+				{
+					SigningKey = Rnd.StringF.Get(32),
+					Issuer = Rnd.Str,
+					Audience = Rnd.Str
+				}
+		};
 
-			var name = Rnd.Str;
-			var identity = Substitute.For<IIdentity>();
-			identity.IsAuthenticated.Returns(true);
-			identity.Name.Returns(name);
-			var principal = Substitute.For<ClaimsPrincipal>();
-			principal.Identity.Returns(identity);
+		var name = Rnd.Str;
+		var identity = Substitute.For<IIdentity>();
+		identity.IsAuthenticated.Returns(true);
+		identity.Name.Returns(name);
+		var principal = Substitute.For<ClaimsPrincipal>();
+		principal.Identity.Returns(identity);
 
-			var token = JwtF.CreateToken(
-				config,
-				principal,
-				notBefore,
-				expires
-			).Unwrap(
-				() => throw new Exception()
-			);
+		var token = JwtF.CreateToken(
+			config,
+			principal,
+			notBefore,
+			expires
+		).Unwrap(
+			() => throw new Exception()
+		);
 
-			return (config, token, name);
-		}
+		return (config, token, name);
+	}
 
-		[Fact]
-		public void Not_Valid_Yet_Returns_None_With_TokenIsNotValidYetMsg()
-		{
-			// Arrange
-			var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(1));
+	[Fact]
+	public void Not_Valid_Yet_Returns_None_With_TokenIsNotValidYetMsg()
+	{
+		// Arrange
+		var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(1));
 
-			// Act
-			var result = JwtF.ValidateToken(config, token);
+		// Act
+		var result = JwtF.ValidateToken(config, token);
 
-			// Assert
-			var none = Assert.IsType<None<ClaimsPrincipal>>(result);
-			Assert.IsType<TokenIsNotValidYetMsg>(none.Reason);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<TokenIsNotValidYetMsg>(none);
+	}
 
-		[Fact]
-		public void Expired_Returns_None_With_TokenHasExpiredMsg()
-		{
-			// Arrange
-			var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(-1), DateTime.UtcNow.AddMinutes(-30));
+	[Fact]
+	public void Expired_Returns_None_With_TokenHasExpiredMsg()
+	{
+		// Arrange
+		var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(-1), DateTime.UtcNow.AddMinutes(-30));
 
-			// Act
-			var result = JwtF.ValidateToken(config, token);
+		// Act
+		var result = JwtF.ValidateToken(config, token);
 
-			// Assert
-			var none = Assert.IsType<None<ClaimsPrincipal>>(result);
-			Assert.IsType<TokenHasExpiredMsg>(none.Reason);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<TokenHasExpiredMsg>(none);
+	}
 
-		[Fact]
-		public void Valid_Token_Without_Encryption_Returns_Principal()
-		{
-			// Arrange
-			var (config, token, name) = GetToken(false, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
+	[Fact]
+	public void Valid_Token_Without_Encryption_Returns_Principal()
+	{
+		// Arrange
+		var (config, token, name) = GetToken(false, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
 
-			// Act
-			var result = JwtF.ValidateToken(config, token);
+		// Act
+		var result = JwtF.ValidateToken(config, token);
 
-			// Assert
-			var some = Assert.IsType<Some<ClaimsPrincipal>>(result);
-			Assert.Equal(name, some.Value.Identity?.Name);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Equal(name, some.Identity?.Name);
+	}
 
-		[Fact]
-		public void Valid_Token_With_Encryption_Returns_Principal()
-		{
-			// Arrange
-			var (config, token, name) = GetToken(true, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
+	[Fact]
+	public void Valid_Token_With_Encryption_Returns_Principal()
+	{
+		// Arrange
+		var (config, token, name) = GetToken(true, DateTime.UtcNow, DateTime.UtcNow.AddHours(1));
 
-			// Act
-			var result = JwtF.ValidateToken(config, token);
+		// Act
+		var result = JwtF.ValidateToken(config, token);
 
-			// Assert
-			var some = Assert.IsType<Some<ClaimsPrincipal>>(result);
-			Assert.Equal(name, some.Value.Identity?.Name);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Equal(name, some.Identity?.Name);
 	}
 }

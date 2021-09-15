@@ -1,94 +1,93 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Serilog;
 using Serilog.Events;
 
-namespace Jeebs.Logging
+namespace Jeebs.Logging;
+
+/// <inheritdoc cref="ILog{TContext}"/>
+public class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
 {
-	/// <inheritdoc cref="ILog{TContext}"/>
-	public class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
-	{
-		/// <summary>
-		/// Create logger for <typeparamref name="TContext"/>
-		/// </summary>
-		public SerilogLogger() : base(Serilog.Log.ForContext<TContext>()) { }
-	}
+	/// <summary>
+	/// Create logger for <typeparamref name="TContext"/>
+	/// </summary>
+	public SerilogLogger() : base(Serilog.Log.ForContext<TContext>()) { }
+}
 
-	/// <inheritdoc cref="ILog"/>
-	public class SerilogLogger : Log
-	{
-		/// <summary>
-		/// Add this as a prefix to messages logged to the console
-		/// </summary>
-		public static string? ConsoleMessagePrefix { get; internal set; }
+/// <inheritdoc cref="ILog"/>
+public class SerilogLogger : Log
+{
+	/// <summary>
+	/// Add this as a prefix to messages logged to the console
+	/// </summary>
+	public static string? ConsoleMessagePrefix { get; internal set; }
 
-		private readonly ILogger logger;
+	private readonly ILogger logger;
 
-		/// <summary>
-		/// Use global logger
-		/// </summary>
-		public SerilogLogger() : this(Serilog.Log.Logger) { }
+	/// <summary>
+	/// Use global logger
+	/// </summary>
+	public SerilogLogger() : this(Serilog.Log.Logger) { }
 
-		internal static string Prefix(string message) =>
-			ConsoleMessagePrefix switch
-			{
-				string app =>
-					string.Format("{0} | {1}", app, message),
+	internal static string Prefix(string message) =>
+		ConsoleMessagePrefix switch
+		{
+			string app =>
+				string.Format("{0} | {1}", app, message),
 
-				_ =>
-					message
-			};
+			_ =>
+				message
+		};
 
-		/// <summary>
-		/// Use specified logger
-		/// </summary>
-		/// <param name="logger">Serilog.ILogger</param>
-		internal SerilogLogger(ILogger logger) =>
-			this.logger = logger;
+	/// <summary>
+	/// Use specified logger
+	/// </summary>
+	/// <param name="logger">Serilog.ILogger</param>
+	internal SerilogLogger(ILogger logger) =>
+		this.logger = logger;
 
-		/// <inheritdoc/>
-		public override ILog<T> ForContext<T>() =>
-			new SerilogLogger<T>();
+	/// <inheritdoc/>
+	public override ILog<T> ForContext<T>() =>
+		new SerilogLogger<T>();
 
-		/// <inheritdoc/>
-		public override bool IsEnabled(LogLevel level) =>
-			logger.IsEnabled((LogEventLevel)level);
+	/// <inheritdoc/>
+	public override bool IsEnabled(LogLevel level) =>
+		logger.IsEnabled((LogEventLevel)level);
 
-		/// <inheritdoc/>
-		public override void Verbose(string message, params object[] args) =>
-			logger.Verbose(Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Verbose(string message, params object[] args) =>
+		logger.Verbose(Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Debug(string message, params object[] args) =>
-			logger.Debug(Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Debug(string message, params object[] args) =>
+		logger.Debug(Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Information(string message, params object[] args) =>
-			logger.Information(Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Information(string message, params object[] args) =>
+		logger.Information(Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Warning(string message, params object[] args) =>
-			logger.Warning(Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Warning(string message, params object[] args) =>
+		logger.Warning(Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Error(string message, params object[] args) =>
-			logger.Error(Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Error(string message, params object[] args) =>
+		logger.Error(Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Error(Exception ex, string message, params object[] args) =>
-			logger.Error(ex, Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Error(Exception ex, string message, params object[] args) =>
+		logger.Error(ex, Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Fatal(string message, params object[] args) =>
-			logger.Fatal(Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Fatal(string message, params object[] args) =>
+		logger.Fatal(Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Fatal(Exception ex, string message, params object[] args) =>
-			logger.Fatal(ex, Prefix(message), args);
+	/// <inheritdoc/>
+	public override void Fatal(Exception ex, string message, params object[] args) =>
+		logger.Fatal(ex, Prefix(message), args);
 
-		/// <inheritdoc/>
-		public override void Dispose() { }
-	}
+	/// <inheritdoc/>
+	public override void Dispose() { }
 }

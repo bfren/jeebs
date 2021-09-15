@@ -1,16 +1,15 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace AppApi.Controllers
+namespace AppApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class HelloController : ControllerBase
 {
-	[ApiController]
-	[Route("[controller]")]
-	public class HelloController : ControllerBase
-	{
-		[HttpGet]
-		public string Get() =>
-			"Hello, world!";
-	}
+	[HttpGet]
+	public string Get() =>
+		"Hello, world!";
 }

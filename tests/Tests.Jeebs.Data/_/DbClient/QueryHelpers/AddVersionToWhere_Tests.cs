@@ -1,73 +1,72 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text;
 using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.DbClient_Tests
+namespace Jeebs.Data.DbClient_Tests;
+
+public class AddVersionToWhere_Tests
 {
-	public class AddVersionToWhere_Tests
+	[Fact]
+	public void VersionColumn_Null_Does_Nothing()
 	{
-		[Fact]
-		public void VersionColumn_Null_Does_Nothing()
-		{
-			// Arrange
-			var client = Substitute.ForPartsOf<DbClient>();
-			var sql = new StringBuilder();
+		// Arrange
+		var client = Substitute.ForPartsOf<DbClient>();
+		var sql = new StringBuilder();
 
-			// Act
-			client.AddVersionToWhereTest(sql, null);
+		// Act
+		client.AddVersionToWhereTest(sql, null);
 
-			// Assert
-			Assert.Equal(string.Empty, sql.ToString());
-		}
+		// Assert
+		Assert.Equal(string.Empty, sql.ToString());
+	}
 
-		[Fact]
-		public void Adds_Version_To_Where()
-		{
-			// Arrange
-			var client = Substitute.ForPartsOf<DbClient>();
-			client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).Name}--");
-			client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
+	[Fact]
+	public void Adds_Version_To_Where()
+	{
+		// Arrange
+		var client = Substitute.ForPartsOf<DbClient>();
+		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).Name}--");
+		client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
-			var name = F.Rnd.Str;
-			var alias = F.Rnd.Str;
-			var version = new Column(F.Rnd.Str, name, alias);
-			var expected = $"--{name}-- = ##{alias}##";
+		var name = F.Rnd.Str;
+		var alias = F.Rnd.Str;
+		var version = new Column(F.Rnd.Str, name, alias);
+		var expected = $"--{name}-- = ##{alias}##";
 
-			var sql = new StringBuilder();
+		var sql = new StringBuilder();
 
-			// Act
-			client.AddVersionToWhereTest(sql, version);
+		// Act
+		client.AddVersionToWhereTest(sql, version);
 
-			// Assert
-			Assert.Equal(expected, sql.ToString());
-		}
+		// Assert
+		Assert.Equal(expected, sql.ToString());
+	}
 
-		[Fact]
-		public void Adds_And_Version_To_Where()
-		{
-			// Arrange
-			var client = Substitute.ForPartsOf<DbClient>();
-			client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).Name}--");
-			client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
+	[Fact]
+	public void Adds_And_Version_To_Where()
+	{
+		// Arrange
+		var client = Substitute.ForPartsOf<DbClient>();
+		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).Name}--");
+		client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
-			var name = F.Rnd.Str;
-			var alias = F.Rnd.Str;
-			var version = new Column(F.Rnd.Str, name, alias);
+		var name = F.Rnd.Str;
+		var alias = F.Rnd.Str;
+		var version = new Column(F.Rnd.Str, name, alias);
 
-			var query = F.Rnd.Str;
-			var sql = new StringBuilder(query);
+		var query = F.Rnd.Str;
+		var sql = new StringBuilder(query);
 
-			var expected = $"{query} AND --{name}-- = ##{alias}##";
+		var expected = $"{query} AND --{name}-- = ##{alias}##";
 
-			// Act
-			client.AddVersionToWhereTest(sql, version);
+		// Act
+		client.AddVersionToWhereTest(sql, version);
 
-			// Assert
-			Assert.Equal(expected, sql.ToString());
-		}
+		// Assert
+		Assert.Equal(expected, sql.ToString());
 	}
 }

@@ -72,7 +72,7 @@ var result =
 
 public static class Msg
 {
-    public sealed record DivisionFailedMsg(Exception Exception) : IExceptionMsg { }
+    public sealed record class DivisionFailedMsg(Exception Exception) : IExceptionMsg { }
 }
 ```
 

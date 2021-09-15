@@ -1,24 +1,23 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 using static Jeebs.Create.Msg;
 
-namespace Jeebs.Create_Tests
+namespace Jeebs.Create_Tests;
+
+public class None_Tests
 {
-	public class None_Tests
+	[Fact]
+	public void Creates_None_With_EmptyNoneForTestingMsg()
 	{
-		[Fact]
-		public void Creates_None_With_EmptyNoneForTestingMsg()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = Create.None<int>();
+		// Act
+		var result = Create.None<int>();
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<EmptyNoneForTestingMsg>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<EmptyNoneForTestingMsg>(none);
 	}
 }

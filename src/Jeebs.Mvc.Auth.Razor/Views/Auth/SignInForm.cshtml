@@ -1,5 +1,12 @@
 ﻿@model Jeebs.Mvc.Auth.Models.SignInModel
 
+@{
+	if (Model is null)
+	{
+		return;
+	}
+}
+
 <form method="post" action="@Url.Action("SignIn", "Auth", new { returnUrl = Model.ReturnUrl })">
 
 	<!-- Alerts -->

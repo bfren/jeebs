@@ -1,5 +1,5 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Linq.Expressions;
@@ -9,38 +9,37 @@ using NSubstitute;
 using Xunit;
 using static Jeebs.Data.Querying.QueryFluent.Msg;
 
-namespace Jeebs.Data.Querying.QueryFluent_Tests
+namespace Jeebs.Data.Querying.QueryFluent_Tests;
+
+public class QueryAsync_Tests : QueryFluent_Tests
 {
-	public class QueryAsync_Tests : QueryFluent_Tests
+	[Fact]
+	public async Task No_Predicates_Returns_None_With_NoPredicatesMsg()
 	{
-		[Fact]
-		public async Task No_Predicates_Returns_None_With_NoPredicatesMsg()
-		{
-			// Arrange
-			var (query, _) = Setup();
+		// Arrange
+		var (query, _) = Setup();
 
-			// Act
-			var result = await query.QueryAsync<int>();
+		// Act
+		var result = await query.QueryAsync<int>();
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<NoPredicatesMsg>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<NoPredicatesMsg>(none);
+	}
 
-		[Fact]
-		public async Task Calls_QueryAsync_With_Predicates()
-		{
-			// Arrange
-			var (query, v) = Setup();
-			var predicates = Substitute.For<IImmutableList<(Expression<Func<TestEntity, object>>, Compare, object)>>();
-			predicates.Count.Returns(1);
+	[Fact]
+	public async Task Calls_QueryAsync_With_Predicates()
+	{
+		// Arrange
+		var (query, v) = Setup();
+		var predicates = Substitute.For<IImmutableList<(Expression<Func<TestEntity, object>>, Compare, object)>>();
+		predicates.Count.Returns(1);
 
-			// Act
-			_ = await (query with { Predicates = predicates }).QueryAsync<int>();
+		// Act
+		_ = await (query with { Predicates = predicates }).QueryAsync<int>();
 
-			// Assert
-			var array = predicates.Received().ToArray();
-			await v.Repo.Received().QueryAsync<int>(array);
-		}
+		// Assert
+		var array = predicates.Received().ToArray();
+		await v.Repo.Received().QueryAsync<int>(array);
 	}
 }
