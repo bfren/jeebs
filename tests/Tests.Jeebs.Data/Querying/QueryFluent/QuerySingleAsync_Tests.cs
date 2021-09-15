@@ -1,7 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 using NSubstitute;
 using Xunit;
