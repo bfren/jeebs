@@ -1,6 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Linq;
 using Xunit;
 using static F.Rnd.StringF;
 
