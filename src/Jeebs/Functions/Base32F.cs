@@ -1,11 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-// C# Base32 Converter
-// Copyright (c) 2014 Oleg Ignat - licensed under https://creativecommons.org/licenses/by/2.0/
-// See https://olegignat.com/base32/
-// Modifications to make consistent with Jeebs coding style and conventions (c) bfren.uk as above
-
 using System;
 using System.Text;
 using Jeebs;
@@ -13,6 +8,12 @@ using static F.OptionF;
 
 namespace F;
 
+/// <summary>
+/// C# Base32 Converter
+/// Copyright (c) 2014 Oleg Ignat - licensed under https://creativecommons.org/licenses/by/2.0/
+/// See https://olegignat.com/base32/
+/// Modifications to make consistent with Jeebs coding style and conventions (c) bfren as above
+/// </summary>
 public static class Base32F
 {
 	/// <summary>

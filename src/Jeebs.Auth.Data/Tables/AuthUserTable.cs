@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
-using Jeebs.Auth.Data.Models;
 using Jeebs.Data.Mapping;
 
 namespace Jeebs.Auth.Data.Tables;
@@ -19,27 +18,27 @@ public sealed record class AuthUserTable() : Table("auth_user")
 
 	#region From AuthUserModel
 
-	/// <inheritdoc cref="AuthUserModel.Id"/>
+	/// <inheritdoc cref="IWithId.Id"/>
 	public string Id =>
 		ColumnPrefix + nameof(Id);
 
-	/// <inheritdoc cref="AuthUserModel.EmailAddress"/>
+	/// <inheritdoc cref="IAuthUser.EmailAddress"/>
 	public string EmailAddress =>
 		ColumnPrefix + nameof(EmailAddress);
 
-	/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
+	/// <inheritdoc cref="IAuthUser.FriendlyName"/>
 	public string FriendlyName =>
 		ColumnPrefix + nameof(FriendlyName);
 
-	/// <inheritdoc cref="AuthUserModel.GivenName"/>
+	/// <inheritdoc cref="IAuthUser.GivenName"/>
 	public string GivenName =>
 		ColumnPrefix + nameof(GivenName);
 
-	/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
+	/// <inheritdoc cref="IAuthUser.FriendlyName"/>
 	public string FamilyName =>
 		ColumnPrefix + nameof(FamilyName);
 
-	/// <inheritdoc cref="AuthUserModel.IsSuper"/>
+	/// <inheritdoc cref="IAuthUser.IsSuper"/>
 	public string IsSuper =>
 		ColumnPrefix + nameof(IsSuper);
 
