@@ -4,6 +4,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Auth.Abstractions\Jeebs.Auth.Abstractions.csproj" />
+		<ProjectReference Include="..\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj" />
 		<ProjectReference Include="..\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
 		<ProjectReference Include="..\Jeebs.Data.Querying\Jeebs.Data.Querying.csproj" />
 		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />

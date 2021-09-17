@@ -226,7 +226,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Abstr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Option.Abstractions", "src\Jeebs.Option.Abstractions\Jeebs.Option.Abstractions.csproj", "{E44357C0-3F59-4653-B059-CE8F23EDE208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Services.Drivers.Drawing.Skia", "src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj", "{1EF56A73-834A-418F-B721-77C9DA1CC70C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Drawing.Skia", "src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj", "{1EF56A73-834A-418F-B721-77C9DA1CC70C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Totp", "src\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj", "{6AA9601F-7321-48C6-8D32-B437782FB231}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Auth.Totp", "tests\Tests.Jeebs.Auth.Totp\Tests.Jeebs.Auth.Totp.csproj", "{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -501,6 +505,14 @@ Global
 		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -594,6 +606,8 @@ Global
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{E44357C0-3F59-4653-B059-CE8F23EDE208} = {64C5C4E6-C78E-44F9-8DCD-488AFC966351}
 		{1EF56A73-834A-418F-B721-77C9DA1CC70C} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
+		{6AA9601F-7321-48C6-8D32-B437782FB231} = {75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380} = {904BAF5A-95DE-49B8-A3A9-A687988E39AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
