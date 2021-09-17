@@ -20,9 +20,9 @@ Now with the imminent release of .NET 6, Jeebs v6 is born, pushing the gains of 
 
 ## License
 
-> [MIT](https://mit.bfren.uk/2013)
+> [MIT](https://mit.bfren.dev/2013)
 
 ## Copyright
 
-> Copyright (c) 2013-2021 [bfren.uk](https://bfren.uk)
+> Copyright (c) 2013-2021 [bfren](https://bfren.dev)
 > Unless otherwise stated
