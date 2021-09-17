@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Models;
+using Jeebs.Linq;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -76,8 +77,13 @@ public abstract class AuthControllerBase : Controller
 	public virtual async Task<IActionResult> SignIn(SignInModel model)
 	{
 		// Validate user
-		var validate = await Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password);
-		foreach (var user in validate)
+		var valid = await (
+			from u0 in Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password)
+			from u1 in Auth.RetrieveUserWithRolesAsync<AuthUserModel, AuthRoleModel>(model.Email)
+			select u1
+		);
+
+		foreach (var user in valid)
 		{
 			// Get user principal
 			Log.Debug("User validated.");

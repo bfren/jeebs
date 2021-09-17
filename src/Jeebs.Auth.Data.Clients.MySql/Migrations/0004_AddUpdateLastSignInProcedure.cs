@@ -17,7 +17,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE DEFINER=`ben`@`%` PROCEDURE `UpdateUserLastSignIn`(
+			CREATE DEFINER=`%`@`%` PROCEDURE `UpdateUserLastSignIn`(
 				IN `Id` BIGINT
 			)
 			LANGUAGE SQL

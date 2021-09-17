@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data.Abstractions\Jeebs.Data.Abstractions.csproj" />
+		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
 		<ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
 	</ItemGroup>
 </Project>
