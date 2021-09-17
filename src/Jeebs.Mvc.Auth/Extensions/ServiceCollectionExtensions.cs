@@ -13,11 +13,11 @@ namespace Jeebs.Mvc.Auth;
 public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Add authentication and authorisation
+	/// Add authentication
 	/// </summary>
 	/// <param name="this">IServiceCollection</param>
 	/// <param name="config">IConfiguration</param>
-	public static AuthBuilder AddAuth(this IServiceCollection @this, IConfiguration config)
+	public static AuthBuilder AddAuthentication(this IServiceCollection @this, IConfiguration config)
 	{
 		// Start fluent configuration
 		if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)

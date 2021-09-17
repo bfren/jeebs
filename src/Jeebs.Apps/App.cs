@@ -21,34 +21,23 @@ public abstract class App
 	/// <summary>
 	/// Build <see cref="IHost"/> using specified arguments
 	/// </summary>
-	/// <param name="args">Command Line Arguments</param>
+	/// <param name="args">Commandline arguments</param>
 	public virtual IHost BuildHost(string[] args) =>
-		// Create Default Host Builder
 		Host.CreateDefaultBuilder(
 			args
 		)
-
-		// Configure Host
 		.ConfigureHostConfiguration(
 			config => ConfigureHost(config)
 		)
-
-		// Configure App
 		.ConfigureAppConfiguration(
 			(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
 		)
-
-		// Configure Serilog
 		.UseSerilog(
 			(host, logger) => ConfigureSerilog(host.Configuration, logger)
 		)
-
-		// Configure Services
 		.ConfigureServices(
 			(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
 		)
-
-		// Build Host
 		.Build();
 
 	/// <summary>

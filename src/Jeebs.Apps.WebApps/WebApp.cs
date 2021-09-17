@@ -32,46 +32,29 @@ public abstract class WebApp : App
 
 	/// <inheritdoc/>
 	public override IHost BuildHost(string[] args) =>
-		// Create Default Host Builder
 		Host.CreateDefaultBuilder(
 			args
 		)
-
-		// Configure Host
 		.ConfigureHostConfiguration(
 			config => ConfigureHost(config)
 		)
-
-		// Use Web Host Defaults
 		.ConfigureWebHostDefaults(builder => builder
-
-			// App Configuration
 			.ConfigureAppConfiguration(
 				(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
 			)
-
-			// Serilog
 			.UseSerilog(
 				(host, logger) => ConfigureSerilog(host.Configuration, logger)
 			)
-
-			// Services
 			.ConfigureServices(
 				(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
 			)
-
-			// Configure
 			.Configure(
 				(host, app) => Configure(host.HostingEnvironment, app, host.Configuration)
 			)
-
-			// Alter ApplicationKey - forces app to look for Controllers in the App rather than this library
 			.UseSetting(
 				WebHostDefaults.ApplicationKey, GetType().Assembly.FullName
 			)
 		)
-
-		// Build Web Host
 		.Build();
 
 	/// <inheritdoc/>
@@ -128,7 +111,7 @@ public abstract class WebApp : App
 		// Authentication and authorisation
 		if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
 		{
-			Configure_Auth(app, config);
+			Configure_Authorisation(app, config);
 		}
 
 		// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
@@ -176,7 +159,7 @@ public abstract class WebApp : App
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void Configure_Auth(IApplicationBuilder app, IConfiguration config)
+	protected virtual void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
 	{
 		app.UseAuthorization();
 	}

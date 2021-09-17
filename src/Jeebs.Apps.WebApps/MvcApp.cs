@@ -72,6 +72,9 @@ public abstract class MvcApp : WebApp
 		// Routing
 		ConfigureServices_Routing(services);
 
+		// Authorisation
+		ConfigureServices_Authorisation(services);
+
 		// Endpoints
 		ConfigureServices_Endpoints(services);
 	}
@@ -100,6 +103,15 @@ public abstract class MvcApp : WebApp
 				opt.Providers.Add<GzipCompressionProvider>();
 				opt.Providers.Add<BrotliCompressionProvider>();
 			});
+	}
+
+	/// <summary>
+	/// Override to configure authorisation
+	/// </summary>
+	/// <param name="services">IServiceCollection</param>
+	protected virtual void ConfigureServices_Authorisation(IServiceCollection services)
+	{
+		services.AddAuthorization();
 	}
 
 	/// <summary>
@@ -207,8 +219,8 @@ public abstract class MvcApp : WebApp
 		// Routing
 		Configure_Routing(app);
 
-		// Authentication and Authorisation
-		Configure_Auth(app, config);
+		// Authorisation
+		Configure_Authorisation(app, config);
 
 		// Endpoint Routing
 		Configure_Endpoints(app);
@@ -311,13 +323,12 @@ public abstract class MvcApp : WebApp
 	}
 
 	/// <summary>
-	/// Override to configure authentication and authorisation
+	/// Override to configure authorisation
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected override void Configure_Auth(IApplicationBuilder app, IConfiguration config)
+	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
 	{
-		app.UseAuthentication();
 		app.UseAuthorization();
 	}
 

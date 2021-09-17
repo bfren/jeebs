@@ -63,7 +63,7 @@ public abstract class ApiApp : MvcApp
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_Auth(IApplicationBuilder app, IConfiguration config)
+	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
 	{
 		app.UseAuthorization();
 	}
