@@ -9,6 +9,7 @@ using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Mvc.Auth;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,7 @@ public sealed class App : Jeebs.Apps.MvcAppWithData
 	{
 		base.ConfigureServices(env, config, services);
 
-		services.AddAuth(config)
+		services.AddAuthentication(config)
 			.WithData<MySqlDbClient>()
 			.WithJwt();
 
@@ -33,6 +34,13 @@ public sealed class App : Jeebs.Apps.MvcAppWithData
 		);
 
 		services.AddTransient<IImageDriver, ImageDriver>();
+	}
+
+	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
+	{
+		app.UseAuthentication();
+
+		base.Configure_Authorisation(app, config);
 	}
 
 	public override void Ready(IServiceProvider services, ILog log)
