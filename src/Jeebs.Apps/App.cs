@@ -79,7 +79,7 @@ public abstract class App
 		// Add Jeebs config - keeps Jeebs config away from app settings
 		config
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false)
-			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: false);
+			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: true);
 
 		// Add environment-specific Jeebs config
 		config
