@@ -171,29 +171,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Querying",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppApi", "apps\AppApi\AppApi.csproj", "{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1E39E94F-9753-4AC1-87F4-B054FB00A7AD}"
-	ProjectSection(SolutionItems) = preProject
-		docs\_config.yml = docs\_config.yml
-		docs\index.md = docs\index.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "option", "option", "{B2B30FE4-7AC7-4F7D-A0C2-DC5808BCCEF9}"
-	ProjectSection(SolutionItems) = preProject
-		docs\option\bind.md = docs\option\bind.md
-		docs\option\chains.md = docs\option\chains.md
-		docs\option\map.md = docs\option\map.md
-		docs\option\option.md = docs\option\option.md
-		docs\option\return.md = docs\option\return.md
-		docs\option\sample-application.md = docs\option\sample-application.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_sass", "_sass", "{0A008B4B-9801-49ED-8FE8-5D8BD2162A15}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "custom", "custom", "{B881D1E9-DDFB-4557-BA7F-6F2CDBCE4404}"
-	ProjectSection(SolutionItems) = preProject
-		docs\_sass\custom\custom.scss = docs\_sass\custom\custom.scss
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data", "src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj", "{B10B6B18-9718-4BA4-A408-5408E60B21E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Data", "tests\Tests.Jeebs.WordPress.Data\Tests.Jeebs.WordPress.Data.csproj", "{17F8C164-3CD1-45B8-8CC5-5960A819D6EF}"
@@ -230,7 +207,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Draw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Totp", "src\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj", "{6AA9601F-7321-48C6-8D32-B437782FB231}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Auth.Totp", "tests\Tests.Jeebs.Auth.Totp\Tests.Jeebs.Auth.Totp.csproj", "{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Auth.Totp", "tests\Tests.Jeebs.Auth.Totp\Tests.Jeebs.Auth.Totp.csproj", "{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -586,9 +563,6 @@ Global
 		{55E39BC5-6EB3-4BD3-83C9-D8BDE12E8C1B} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
 		{C80906E6-7A1C-4FD4-9163-B24B144EA857} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 		{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6} = {A256449B-4234-43DD-B18F-741D69906712}
-		{B2B30FE4-7AC7-4F7D-A0C2-DC5808BCCEF9} = {1E39E94F-9753-4AC1-87F4-B054FB00A7AD}
-		{0A008B4B-9801-49ED-8FE8-5D8BD2162A15} = {1E39E94F-9753-4AC1-87F4-B054FB00A7AD}
-		{B881D1E9-DDFB-4557-BA7F-6F2CDBCE4404} = {0A008B4B-9801-49ED-8FE8-5D8BD2162A15}
 		{B10B6B18-9718-4BA4-A408-5408E60B21E8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{17F8C164-3CD1-45B8-8CC5-5960A819D6EF} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{64C5C4E6-C78E-44F9-8DCD-488AFC966351} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
