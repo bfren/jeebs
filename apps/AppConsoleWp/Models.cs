@@ -1,7 +1,6 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
 using Jeebs.WordPress.Data;
