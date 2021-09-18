@@ -6,7 +6,7 @@
 
 Libraries for use in .NET Core projects for rapid application development.
 
-Please [view the wiki](https://github.com/bfren/jeebs/wiki) for information on how to use these libraries.
+Please [view the book](https://docs.bfren.dev/jeebs) for information on how to use these libraries.
 
 ## History
 
