@@ -21,7 +21,7 @@ public static class LoggerConfigurationExtensions
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{
 		// If there are no logging providers, use default configuration
-		if (jeebs.Logging.Providers.Count == 0)
+		if (!jeebs.Logging.Console && jeebs.Logging.Providers.Count == 0)
 		{
 			return;
 		}
