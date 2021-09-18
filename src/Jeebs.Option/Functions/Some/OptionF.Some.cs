@@ -9,6 +9,10 @@ namespace F;
 
 public static partial class OptionF
 {
+	/// <inheritdoc cref="Some{T}(Func{T}, Handler)"/>
+	public static Option<T> Some<T>(T value) =>
+		new Some<T>(value);
+
 	/// <summary>
 	/// Create a <see cref="Jeebs.Internals.Some{T}"/> Option, containing <paramref name="value"/><br/>
 	/// If <paramref name="value"/> returns null, <see cref="Jeebs.Internals.None{T}"/> will be returned instead
@@ -23,7 +27,7 @@ public static partial class OptionF
 			return value() switch
 			{
 				T x =>
-					new Some<T>(x), // Some<T> is only created by Return() functions and implicit operator
+					new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
 
 				_ =>
 					None<T, Msg.NullValueMsg>()
@@ -35,10 +39,6 @@ public static partial class OptionF
 			return None<T>(handler(e));
 		}
 	}
-
-	/// <inheritdoc cref="Some{T}(Func{T}, Handler)"/>
-	public static Option<T> Some<T>(T value) =>
-		Some(() => value, DefaultHandler);
 
 	/// <summary>
 	/// Create a <see cref="Jeebs.Internals.Some{T}"/> Option, containing <paramref name="value"/>
@@ -56,13 +56,13 @@ public static partial class OptionF
 			return v switch
 			{
 				T x =>
-					new Some<T?>(x), // Some<T> is only created by Return() functions and implicit operator
+					new Some<T?>(x), // Some<T> is only created by Some() functions and implicit operator
 
 				_ =>
 					allowNull switch
 					{
 						true =>
-							new Some<T?>(v), // Some<T> is only created by Return() functions and implicit operator
+							new Some<T?>(v), // Some<T> is only created by Some() functions and implicit operator
 
 						false =>
 							None<T?, Msg.AllowNullWasFalseMsg>()

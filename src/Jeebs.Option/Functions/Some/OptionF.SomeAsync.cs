@@ -18,7 +18,7 @@ public static partial class OptionF
 			return await value() switch
 			{
 				T x =>
-					new Some<T>(x), // Some<T> is only created by Return() functions and implicit operator
+					new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
 
 				_ =>
 					None<T, Msg.NullValueMsg>()
@@ -41,13 +41,13 @@ public static partial class OptionF
 			return v switch
 			{
 				T x =>
-					new Some<T?>(x), // Some<T> is only created by Return() functions and implicit operator
+					new Some<T?>(x), // Some<T> is only created by Some() functions and implicit operator
 
 				_ =>
 					allowNull switch
 					{
 						true =>
-							new Some<T?>(v), // Some<T> is only created by Return() functions and implicit operator
+							new Some<T?>(v), // Some<T> is only created by Some() functions and implicit operator
 
 						false =>
 							None<T?, Msg.AllowNullWasFalseMsg>()

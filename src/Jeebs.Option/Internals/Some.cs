@@ -6,7 +6,7 @@ namespace Jeebs.Internals;
 /// <summary>
 /// 'Some' option - wraps value to enable safe non-null returns (see <seealso cref="None{T}"/>)
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">Option value type</typeparam>
 public sealed record class Some<T> : Option<T>
 {
 	/// <summary>
@@ -15,9 +15,9 @@ public sealed record class Some<T> : Option<T>
 	public T Value { get; private init; }
 
 	/// <summary>
-	/// <see cref="Some{T}"/> is only created by Return() functions and implicit operator
+	/// Only allow internal creation by Some() functions and implicit operator
 	/// </summary>
-	/// <param name="value"></param>
+	/// <param name="value">Value to wrap</param>
 	internal Some(T value) =>
 		Value = value;
 }

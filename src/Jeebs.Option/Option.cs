@@ -93,7 +93,7 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 		value switch
 		{
 			T =>
-				new Some<T>(value), // Some<T> is only created by Return() functions and implicit operator
+				new Some<T>(value), // Some<T> is only created by Some() functions and implicit operator
 
 			_ =>
 				None<T, Msg.NullValueMsg>()
