@@ -11,7 +11,14 @@ public static partial class OptionF
 {
 	/// <inheritdoc cref="Some{T}(Func{T}, Handler)"/>
 	public static Option<T> Some<T>(T value) =>
-		Some(() => value, DefaultHandler);
+		value switch
+		{
+			T x =>
+				new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
+
+			_ =>
+				None<T, Msg.NullValueMsg>()
+		};
 
 	/// <summary>
 	/// Create a <see cref="Jeebs.Internals.Some{T}"/> Option, containing <paramref name="value"/><br/>
@@ -31,7 +38,6 @@ public static partial class OptionF
 
 				_ =>
 					None<T, Msg.NullValueMsg>()
-
 			};
 		}
 		catch (Exception e)
