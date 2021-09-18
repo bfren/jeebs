@@ -11,7 +11,7 @@ public static partial class OptionF
 {
 	/// <inheritdoc cref="Some{T}(Func{T}, Handler)"/>
 	public static Option<T> Some<T>(T value) =>
-		new Some<T>(value);
+		Some(() => value, DefaultHandler);
 
 	/// <summary>
 	/// Create a <see cref="Jeebs.Internals.Some{T}"/> Option, containing <paramref name="value"/><br/>
