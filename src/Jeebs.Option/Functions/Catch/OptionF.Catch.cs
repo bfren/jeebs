@@ -1,29 +1,28 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Jeebs;
 
-namespace F
+namespace F;
+
+public static partial class OptionF
 {
-	public static partial class OptionF
+	/// <summary>
+	/// Catch any unhandled exceptions in the chain
+	/// </summary>
+	/// <typeparam name="T">Option value type</typeparam>
+	/// <param name="f">The chain to execute</param>
+	/// <param name="handler">Caught exception handler</param>
+	internal static Option<T> Catch<T>(Func<Option<T>> f, Handler handler)
 	{
-		/// <summary>
-		/// Catch any unhandled exceptions in the chain
-		/// </summary>
-		/// <typeparam name="T">Option value type</typeparam>
-		/// <param name="f">The chain to execute</param>
-		/// <param name="handler">Caught exception handler</param>
-		internal static Option<T> Catch<T>(Func<Option<T>> f, Handler handler)
+		try
 		{
-			try
-			{
-				return f();
-			}
-			catch (Exception e)
-			{
-				return None<T>(handler(e));
-			}
+			return f();
+		}
+		catch (Exception e)
+		{
+			return None<T>(handler(e));
 		}
 	}
 }

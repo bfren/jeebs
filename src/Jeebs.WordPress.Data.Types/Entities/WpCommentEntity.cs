@@ -1,89 +1,88 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Jeebs.WordPress.Data.Enums;
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// Comment entity
+/// </summary>
+public abstract record class WpCommentEntity : WpCommentEntityWithId
 {
 	/// <summary>
-	/// Comment entity
+	/// PostId
 	/// </summary>
-	public abstract record WpCommentEntity : WpCommentEntityWithId
-	{
-		/// <summary>
-		/// PostId
-		/// </summary>
-		public WpPostId PostId { get; init; } = new();
+	public WpPostId PostId { get; init; } = new();
 
-		/// <summary>
-		/// AuthorName
-		/// </summary>
-		public string AuthorName { get; init; } = string.Empty;
+	/// <summary>
+	/// AuthorName
+	/// </summary>
+	public string AuthorName { get; init; } = string.Empty;
 
-		/// <summary>
-		/// AuthorEmail
-		/// </summary>
-		public string AuthorEmail { get; init; } = string.Empty;
+	/// <summary>
+	/// AuthorEmail
+	/// </summary>
+	public string AuthorEmail { get; init; } = string.Empty;
 
-		/// <summary>
-		/// AuthorUrl
-		/// </summary>
-		public string AuthorUrl { get; init; } = string.Empty;
+	/// <summary>
+	/// AuthorUrl
+	/// </summary>
+	public string AuthorUrl { get; init; } = string.Empty;
 
-		/// <summary>
-		/// AuthorIp
-		/// </summary>
-		public string AuthorIp { get; init; } = string.Empty;
+	/// <summary>
+	/// AuthorIp
+	/// </summary>
+	public string AuthorIp { get; init; } = string.Empty;
 
-		/// <summary>
-		/// PublishedOn
-		/// </summary>
-		public DateTime PublishedOn { get; init; }
+	/// <summary>
+	/// PublishedOn
+	/// </summary>
+	public DateTime PublishedOn { get; init; }
 
-		/// <summary>
-		/// PublishedOnGmt
-		/// </summary>
-		public DateTime PublishedOnGmt { get; init; }
+	/// <summary>
+	/// PublishedOnGmt
+	/// </summary>
+	public DateTime PublishedOnGmt { get; init; }
 
-		/// <summary>
-		/// Content
-		/// </summary>
-		public string Content { get; init; } = string.Empty;
+	/// <summary>
+	/// Content
+	/// </summary>
+	public string Content { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Karma
-		/// </summary>
-		public long Karma { get; init; }
+	/// <summary>
+	/// Karma
+	/// </summary>
+	public long Karma { get; init; }
 
-		/// <summary>
-		/// IsApproved
-		/// </summary>
-		public bool IsApproved { get; init; }
+	/// <summary>
+	/// IsApproved
+	/// </summary>
+	public bool IsApproved { get; init; }
 
-		/// <summary>
-		/// AuthorUserAgent
-		/// </summary>
-		public string AuthorUserAgent { get; init; } = string.Empty;
+	/// <summary>
+	/// AuthorUserAgent
+	/// </summary>
+	public string AuthorUserAgent { get; init; } = string.Empty;
 
-		/// <summary>
-		/// Type
-		/// </summary>
-		public CommentType Type { get; init; } = CommentType.Blank;
+	/// <summary>
+	/// Type
+	/// </summary>
+	public CommentType Type { get; init; } = CommentType.Blank;
 
-		/// <summary>
-		/// ParentId
-		/// </summary>
-		public WpCommentId ParentId { get; init; } = new();
+	/// <summary>
+	/// ParentId
+	/// </summary>
+	public WpCommentId ParentId { get; init; } = new();
 
-		/// <summary>
-		/// AuthorId
-		/// </summary>
-		public WpUserId AuthorId { get; init; } = new();
+	/// <summary>
+	/// AuthorId
+	/// </summary>
+	public WpUserId AuthorId { get; init; } = new();
 
-		/// <summary>
-		/// AuthorIsSubscribed
-		/// </summary>
-		public bool AuthorIsSubscribed { get; init; }
-	}
+	/// <summary>
+	/// AuthorIsSubscribed
+	/// </summary>
+	public bool AuthorIsSubscribed { get; init; }
 }

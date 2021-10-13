@@ -1,69 +1,68 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 
-namespace Jeebs
+namespace Jeebs;
+
+/// <summary>
+/// Enumerated List
+/// </summary>
+/// <typeparam name="T">Enumerated value type</typeparam>
+public sealed class EnumeratedList<T> : List<T>
+	where T : Enumerated
 {
 	/// <summary>
-	/// Enumerated List
+	/// Empty constructor
 	/// </summary>
-	/// <typeparam name="T">Enumerated value type</typeparam>
-	public sealed class EnumeratedList<T> : List<T>
-		where T : Enumerated
+	public EnumeratedList() { }
+
+	/// <summary>
+	/// Construct object from list of string values
+	/// </summary>
+	/// <param name="list">List of values</param>
+	public EnumeratedList(List<string> list)
 	{
-		/// <summary>
-		/// Empty constructor
-		/// </summary>
-		public EnumeratedList() { }
-
-		/// <summary>
-		/// Construct object from list of string values
-		/// </summary>
-		/// <param name="list">List of values</param>
-		public EnumeratedList(List<string> list)
+		if (list is null)
 		{
-			if (list is null)
-			{
-				return;
-			}
+			return;
+		}
 
-			foreach (var item in list)
+		foreach (var item in list)
+		{
+			if (Activator.CreateInstance(typeof(T), item) is T obj)
 			{
-				if (Activator.CreateInstance(typeof(T), item) is T obj)
-				{
-					Add(obj);
-				}
+				Add(obj);
 			}
 		}
+	}
 
-		/// <summary>
-		/// Serialise list as JSON
-		/// </summary>
-		public Option<string> Serialise()
+	/// <summary>
+	/// Serialise list as JSON
+	/// </summary>
+	public Option<string> Serialise()
+	{
+		var list = new List<string>();
+		ForEach(e => list.Add(e));
+
+		return (list.Count > 0) switch
 		{
-			var list = new List<string>();
-			ForEach(e => list.Add(e));
+			true =>
+				F.JsonF.Serialise(list),
 
-			return (list.Count > 0) switch
-			{
-				true =>
-					F.JsonF.Serialise(list),
+			false =>
+				F.JsonF.Empty
+		};
+	}
 
-				false =>
-					F.JsonF.Empty
-			};
-		}
-
-		/// <summary>
-		/// Deserialise list from JSON
-		/// </summary>
-		/// <param name="json">JSON serialised list</param>
-		public static EnumeratedList<T> Deserialise(string json)
-		{
-			var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
-			return new EnumeratedList<T>(strings);
-		}
+	/// <summary>
+	/// Deserialise list from JSON
+	/// </summary>
+	/// <param name="json">JSON serialised list</param>
+	public static EnumeratedList<T> Deserialise(string json)
+	{
+		var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
+		return new EnumeratedList<T>(strings);
 	}
 }

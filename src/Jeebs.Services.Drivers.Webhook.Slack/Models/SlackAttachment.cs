@@ -1,48 +1,47 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Services.Drivers.Webhook.Slack.Models
+namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
+
+/// <summary>
+/// Slack attachment
+/// </summary>
+public sealed record class SlackAttachment
 {
 	/// <summary>
-	/// Slack attachment
+	/// Attachment text
 	/// </summary>
-	public sealed record SlackAttachment
-	{
-		/// <summary>
-		/// Attachment text
-		/// </summary>
-		public string Text { get; private init; }
+	public string Text { get; private init; }
 
-		/// <summary>
-		/// Attachment colour
-		/// </summary>
-		[JsonPropertyName("color")]
-		public string Colour { get; private init; }
+	/// <summary>
+	/// Attachment colour
+	/// </summary>
+	[JsonPropertyName("color")]
+	public string Colour { get; private init; }
 
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="text">Attachment text</param>
-		/// <param name="level">Message level</param>
-		public SlackAttachment(string text, NotificationLevel level) =>
-			(Text, Colour) = (text, GetColour(level));
+	/// <summary>
+	/// Create object
+	/// </summary>
+	/// <param name="text">Attachment text</param>
+	/// <param name="level">Message level</param>
+	public SlackAttachment(string text, NotificationLevel level) =>
+		(Text, Colour) = (text, GetColour(level));
 
-		private static string GetColour(NotificationLevel level) =>
-			level switch
-			{
-				NotificationLevel.Information =>
-					"good",
+	private static string GetColour(NotificationLevel level) =>
+		level switch
+		{
+			NotificationLevel.Information =>
+				"good",
 
-				NotificationLevel.Warning =>
-					"warning",
+			NotificationLevel.Warning =>
+				"warning",
 
-				NotificationLevel.Error =>
-					"danger",
+			NotificationLevel.Error =>
+				"danger",
 
-				_ =>
-					throw new Jx.Services.Webhook.UnknownMessageLevelException()
-			};
-	}
+			_ =>
+				throw new Jx.Services.Webhook.UnknownMessageLevelException()
+		};
 }

@@ -1,50 +1,49 @@
 // Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Enumerated_Tests
+namespace Jeebs.Enumerated_Tests;
+
+public class Parse_Tests
 {
-	public class Parse_Tests
+	[Fact]
+	public void ValidString_Returns_Some()
 	{
-		[Fact]
-		public void ValidString_Returns_Some()
-		{
-			// Arrange
-			var input = EnumeratedTest.Test1.ToString();
+		// Arrange
+		var input = EnumeratedTest.Test1.ToString();
 
-			// Act
-			var result = EnumeratedTest.Parse(input);
+		// Act
+		var result = EnumeratedTest.Parse(input);
 
-			// Assert
-			var success = Assert.IsType<Some<EnumeratedTest>>(result);
-			Assert.Equal(EnumeratedTest.Test1, success.Value);
-		}
-
-		[Fact]
-		public void InvalidString_Returns_None()
-		{
-			// Arrange
-			var input = F.Rnd.Str;
-
-			// Act
-			var result = EnumeratedTest.Parse(input);
-
-			// Assert
-			Assert.IsType<None<EnumeratedTest>>(result);
-		}
+		// Assert
+		var some = result.AssertSome();
+		Assert.Equal(EnumeratedTest.Test1, some);
 	}
 
-	public class EnumeratedTest : Enumerated
+	[Fact]
+	public void InvalidString_Returns_None()
 	{
-		public EnumeratedTest(string name) : base(name) { }
+		// Arrange
+		var input = F.Rnd.Str;
 
-		public static readonly EnumeratedTest Test1 = new("test1");
-		public static readonly EnumeratedTest Test2 = new("test2");
+		// Act
+		var result = EnumeratedTest.Parse(input);
 
-		public static Option<EnumeratedTest> Parse(string value)
-		{
-			return Parse(value, new[] { Test1, Test2 });
-		}
+		// Assert
+		result.AssertNone();
+	}
+}
+
+public class EnumeratedTest : Enumerated
+{
+	public EnumeratedTest(string name) : base(name) { }
+
+	public static readonly EnumeratedTest Test1 = new("test1");
+	public static readonly EnumeratedTest Test2 = new("test2");
+
+	public static Option<EnumeratedTest> Parse(string value)
+	{
+		return Parse(value, new[] { Test1, Test2 });
 	}
 }

@@ -1,104 +1,103 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 using static F.JsonF.Msg;
 using static Jeebs.Cryptography.Locked.Msg;
 
-namespace Jeebs.Cryptography.StringExtensions_Tests
+namespace Jeebs.Cryptography.StringExtensions_Tests;
+
+public partial class Decrypt_Tests
 {
-	public partial class Decrypt_Tests
+	private readonly string defaultInputStringEncryptedWithStringKey = "{\"value\":{},\"encryptedContents\":\"RKDdTvdBrxf28cMuuBF+mKkVkYEhJSgwnCnTprGtHeeIMr56\",\"salt\":\"kJ3HSzbuEssDYpGmK9ix1A==\",\"nonce\":\"ehg2foprhsqf7UTrBRpU0cjWvkK0sn/f\"}";
+	private readonly string defaultStringKey = "nXhxz39cHyPx3a";
+
+	[Theory]
+	[InlineData(null)]
+	public void Null_Input_String_Key_Returns_None(string input)
 	{
-		private readonly string defaultInputStringEncryptedWithStringKey = "{\"value\":{},\"encryptedContents\":\"RKDdTvdBrxf28cMuuBF+mKkVkYEhJSgwnCnTprGtHeeIMr56\",\"salt\":\"kJ3HSzbuEssDYpGmK9ix1A==\",\"nonce\":\"ehg2foprhsqf7UTrBRpU0cjWvkK0sn/f\"}";
-		private readonly string defaultStringKey = "nXhxz39cHyPx3a";
+		// Arrange
+		var key = F.Rnd.Str;
 
-		[Theory]
-		[InlineData(null)]
-		public void Null_Input_String_Key_Returns_None(string input)
-		{
-			// Arrange
-			var key = F.Rnd.Str;
+		// Act
+		var result = input.Decrypt<int>(key);
 
-			// Act
-			var result = input.Decrypt<int>(key);
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
+	}
 
-			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none.Reason);
-		}
+	[Fact]
+	public void Invalid_Json_Input_String_Key_Returns_None()
+	{
+		// Arrange
+		var key = F.Rnd.Str;
+		var json = F.Rnd.Str;
 
-		[Fact]
-		public void Invalid_Json_Input_String_Key_Returns_None()
-		{
-			// Arrange
-			var key = F.Rnd.Str;
-			var json = F.Rnd.Str;
+		// Act
+		var result = json.Decrypt<int>(key);
 
-			// Act
-			var result = json.Decrypt<int>(key);
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<DeserialiseExceptionMsg>(none);
+	}
 
-			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<DeserialiseExceptionMsg>(none.Reason);
-		}
+	[Fact]
+	public void Input_Contents_Invalid_String_Key_Returns_None()
+	{
+		// Arrange
 
-		[Fact]
-		public void Input_Contents_Invalid_String_Key_Returns_None()
-		{
-			// Arrange
+		// Act
+		var result = defaultInputStringEncryptedWithStringKey.Decrypt<int>(string.Empty);
 
-			// Act
-			var result = defaultInputStringEncryptedWithStringKey.Decrypt<int>(string.Empty);
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+	}
 
-			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
-		}
+	[Fact]
+	public void Incorrect_String_Key_Returns_None()
+	{
+		// Arrange
+		var key = F.Rnd.Str;
 
-		[Fact]
-		public void Incorrect_String_Key_Returns_None()
-		{
-			// Arrange
-			var key = F.Rnd.Str;
+		// Act
+		var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
 
-			// Act
-			var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+	}
 
-			// Assert
-			var none = Assert.IsAssignableFrom<None<string>>(result);
-			Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none.Reason);
-		}
+	[Fact]
+	public void Incorrect_Json_Input_String_Key_Returns_None()
+	{
+		// Arrange
+		var key = F.Rnd.Str;
+		const string json = "{\"foo\":\"bar\"}";
 
-		[Fact]
-		public void Incorrect_Json_Input_String_Key_Returns_None()
-		{
-			// Arrange
-			var key = F.Rnd.Str;
-			const string json = "{\"foo\":\"bar\"}";
+		// Act
+		var result = json.Decrypt<int>(key);
 
-			// Act
-			var result = json.Decrypt<int>(key);
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
+	}
 
-			// Assert
-			var none = Assert.IsAssignableFrom<None<int>>(result);
-			Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none.Reason);
-		}
+	[Fact]
+	public void Valid_Json_Input_Correct_String_Key_Returns_Some()
+	{
+		// Arrange
 
-		[Fact]
-		public void Valid_Json_Input_Correct_String_Key_Returns_Some()
-		{
-			// Arrange
+		// Act
+		var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(defaultStringKey);
 
-			// Act
-			var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(defaultStringKey);
+		// Assert
+		Assert.Equal(defaultInputString, result);
+	}
 
-			// Assert
-			Assert.Equal(defaultInputString, result);
-		}
-
-		public class Foo
-		{
-			public string Bar { get; set; } = string.Empty;
-		}
+	public class Foo
+	{
+		public string Bar { get; set; } = string.Empty;
 	}
 }

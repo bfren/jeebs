@@ -1,34 +1,33 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Mvc.Models.MenuItem_Tests
+namespace Jeebs.Mvc.Models.MenuItem_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Action_Is_Index()
 	{
-		[Fact]
-		public void Action_Is_Index()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = new MenuItem();
+		// Act
+		var result = new MenuItem();
 
-			// Assert
-			Assert.Equal("Index", result.Action);
-		}
+		// Assert
+		Assert.Equal("Index", result.Action);
+	}
 
-		[Fact]
-		public void IsLink_Is_True()
-		{
-			// Arrange
+	[Fact]
+	public void IsLink_Is_True()
+	{
+		// Arrange
 
-			// Act
-			var result = new MenuItem();
+		// Act
+		var result = new MenuItem();
 
-			// Assert
-			Assert.True(result.IsLink);
-		}
+		// Assert
+		Assert.True(result.IsLink);
 	}
 }

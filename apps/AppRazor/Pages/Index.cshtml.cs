@@ -1,12 +1,11 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AppRazor.Pages
+namespace AppRazor.Pages;
+
+public class IndexModel : PageModel
 {
-	public class IndexModel : PageModel
-	{
-		public void OnGet() { }
-	}
+	public void OnGet() { }
 }

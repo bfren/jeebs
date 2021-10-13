@@ -1,34 +1,33 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Config.SeqConfig_Tests
+namespace Jeebs.Config.SeqConfig_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Implements_ServiceConfig()
 	{
-		[Fact]
-		public void Implements_ServiceConfig()
-		{
-			// Arrange
-			var config = new SeqConfig();
+		// Arrange
+		var config = new SeqConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<IServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IServiceConfig>(config);
+	}
 
-		[Fact]
-		public void Implements_WebhookServiceConfig()
-		{
-			// Arrange
-			var config = new SeqConfig();
+	[Fact]
+	public void Implements_IWebhookServiceConfig()
+	{
+		// Arrange
+		var config = new SeqConfig();
 
-			// Act
+		// Act
 
-			// Assert
-			Assert.IsAssignableFrom<WebhookServiceConfig>(config);
-		}
+		// Assert
+		Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
 	}
 }
