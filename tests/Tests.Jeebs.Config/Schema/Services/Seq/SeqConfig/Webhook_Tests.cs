@@ -1,40 +1,23 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Config.SeqConfig_Tests
+namespace Jeebs.Config.SeqConfig_Tests;
+
+public class Webhook_Tests
 {
-	public class Webhook_Tests
+	[Fact]
+	public void Returns_With_Server_Value()
 	{
-		[Fact]
-		public void Set_Does_Nothing()
-		{
-			// Arrange
-			var config = new SeqConfig
-			{
-				Webhook = F.Rnd.Str
-			};
+		// Arrange
+		var server = F.Rnd.Str;
+		var config = new SeqConfig { Server = server };
 
-			// Act
-			var result = config.Webhook;
+		// Act
+		var result = config.Webhook;
 
-			// Assert
-			Assert.Equal("/api/events/raw?clef", result);
-		}
-
-		[Fact]
-		public void Returns_With_Server_Value()
-		{
-			// Arrange
-			var server = F.Rnd.Str;
-			var config = new SeqConfig { Server = server };
-
-			// Act
-			var result = config.Webhook;
-
-			// Assert
-			Assert.Equal($"{server}/api/events/raw?clef", result);
-		}
+		// Assert
+		Assert.Equal($"{server}/api/events/raw?clef", result);
 	}
 }

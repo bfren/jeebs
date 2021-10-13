@@ -1,18 +1,17 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Data;
 
-namespace AppConsoleWp.Bcg
+namespace AppConsoleWp.Bcg;
+
+/// <summary>
+/// Audio recording of sermon
+/// </summary>
+public sealed class AudioRecordingCustomField : FileCustomField
 {
 	/// <summary>
-	/// Audio recording of sermon
+	/// This is not a required field
 	/// </summary>
-	public sealed class AudioRecordingCustomField : FileCustomField
-	{
-		/// <summary>
-		/// This is not a required field
-		/// </summary>
-		public AudioRecordingCustomField() : base("audio") { }
-	}
+	public AudioRecordingCustomField() : base("audio") { }
 }

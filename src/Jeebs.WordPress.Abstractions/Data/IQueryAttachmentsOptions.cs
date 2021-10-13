@@ -1,18 +1,17 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Data.Entities;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+/// <summary>
+/// Query Attachments Options
+/// </summary>
+public interface IQueryAttachmentsOptions
 {
 	/// <summary>
-	/// Query Attachments Options
+	/// Attachment IDs
 	/// </summary>
-	public interface IQueryAttachmentsOptions
-	{
-		/// <summary>
-		/// Attachment IDs
-		/// </summary>
-		IImmutableList<WpPostId> Ids { get; init; }
-	}
+	IImmutableList<WpPostId> Ids { get; init; }
 }

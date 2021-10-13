@@ -1,21 +1,20 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Constants
+namespace Jeebs.Constants;
+
+/// <summary>
+/// Cache Profiles
+/// </summary>
+public static class CacheProfiles
 {
 	/// <summary>
-	/// Cache Profiles
+	/// None
 	/// </summary>
-	public static class CacheProfiles
-	{
-		/// <summary>
-		/// None
-		/// </summary>
-		public const string None = "None";
+	public const string None = "None";
 
-		/// <summary>
-		/// Default
-		/// </summary>
-		public const string Default = "Default";
-	}
+	/// <summary>
+	/// Default
+	/// </summary>
+	public const string Default = "Default";
 }

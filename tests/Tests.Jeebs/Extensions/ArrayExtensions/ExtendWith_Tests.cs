@@ -1,24 +1,23 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.ArrayExtensions_Tests
+namespace Jeebs.ArrayExtensions_Tests;
+
+public class ExtendWith_Tests
 {
-	public class ExtendWith_Tests
+	[Fact]
+	public void Array_ReturnsExtendedArray()
 	{
-		[Fact]
-		public void Array_ReturnsExtendedArray()
-		{
-			// Arrange
-			var array = new[] { 1, 2, 3, 4, 5 };
-			var expected = new[] { 1, 2, 3, 4, 5, 6 };
+		// Arrange
+		var array = new[] { 1, 2, 3, 4, 5 };
+		var expected = new[] { 1, 2, 3, 4, 5, 6 };
 
-			// Act
-			var result = array.ExtendWith(6);
+		// Act
+		var result = array.ExtendWith(6);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

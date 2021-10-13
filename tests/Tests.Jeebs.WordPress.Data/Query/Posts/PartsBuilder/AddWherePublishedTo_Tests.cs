@@ -1,5 +1,5 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
 using Jeebs.Data.Enums;
@@ -8,40 +8,39 @@ using Jeebs.WordPress.Data.Entities;
 using Xunit;
 using static Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests.Setup;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests
+namespace Jeebs.WordPress.Data.Query_Tests.PostsPartsBuilder_Tests;
+
+public class AddWherePublishedTo_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuilder, WpPostId>
 {
-	public class AddWherePublishedTo_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuilder, WpPostId>
+	protected override Query.PostsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
+		GetBuilder(extract);
+
+	[Fact]
+	public void To_Null_Does_Nothing()
 	{
-		protected override Query.PostsPartsBuilder GetConfiguredBuilder(IExtract extract) =>
-			GetBuilder(extract);
+		// Arrange
+		var (builder, v) = Setup();
 
-		[Fact]
-		public void To_Null_Does_Nothing()
-		{
-			// Arrange
-			var (builder, v) = Setup();
+		// Act
+		var result = builder.AddWherePublishedTo(v.Parts, null);
 
-			// Act
-			var result = builder.AddWherePublishedTo(v.Parts, null);
+		// Assert
+		var some = result.AssertSome();
+		Assert.Same(v.Parts, some);
+	}
 
-			// Assert
-			var some = result.AssertSome();
-			Assert.Same(v.Parts, some);
-		}
+	[Fact]
+	public void Adds_Published_MoreThanOrEqual_From()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+		var to = F.Rnd.DateTime;
+		var expectedTo = to.EndOfDay().ToMySqlString();
 
-		[Fact]
-		public void Adds_Published_MoreThanOrEqual_From()
-		{
-			// Arrange
-			var (builder, v) = Setup();
-			var to = F.Rnd.DateTime;
-			var expectedTo = to.EndOfDay().ToMySqlString();
+		// Act
+		var result = builder.AddWherePublishedTo(v.Parts, to);
 
-			// Act
-			var result = builder.AddWherePublishedTo(v.Parts, to);
-
-			// Assert
-			AssertWhere(v.Parts, result, Post.PublishedOn, Compare.LessThanOrEqual, expectedTo);
-		}
+		// Assert
+		AssertWhere(v.Parts, result, Post.PublishedOn, Compare.LessThanOrEqual, expectedTo);
 	}
 }

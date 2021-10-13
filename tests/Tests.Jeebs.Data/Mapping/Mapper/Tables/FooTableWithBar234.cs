@@ -1,22 +1,21 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping.Mapper_Tests
+namespace Jeebs.Data.Mapping.Mapper_Tests;
+
+public record class FooTableWithBar234 : Table
 {
-	public record FooTableWithBar234 : Table
-	{
-		public string FooId { get; } = "foo_id";
+	public string FooId { get; } = "foo_id";
 
-		public string Bar0 { get; } = "foo_bar0";
+	public string Bar0 { get; } = "foo_bar0";
 
-		public string Bar1 { get; } = "foo_bar1";
+	public string Bar1 { get; } = "foo_bar1";
 
-		public string Bar2 { get; } = "foo_bar2";
+	public string Bar2 { get; } = "foo_bar2";
 
-		public string Bar3 { get; } = "foo_bar3";
+	public string Bar3 { get; } = "foo_bar3";
 
-		public string Bar4 { get; } = "foo_bar4";
+	public string Bar4 { get; } = "foo_bar4";
 
-		public FooTableWithBar234() : base("foo_with_bar2") { }
-	}
+	public FooTableWithBar234() : base("foo_with_bar2") { }
 }

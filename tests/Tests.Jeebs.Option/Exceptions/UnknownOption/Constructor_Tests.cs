@@ -1,52 +1,51 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Jeebs.Exceptions;
 using Xunit;
 
-namespace Jeebs.OptionExceptions.UnknownOption_Tests
+namespace Jeebs.OptionExceptions.UnknownOption_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void No_Args_Creates_Default_Exception()
 	{
-		[Fact]
-		public void No_Args_Creates_Default_Exception()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = new UnknownOptionException();
+		// Act
+		var result = new UnknownOptionException();
 
-			// Assert
-			Assert.Equal($"Exception of type '{typeof(UnknownOptionException)}' was thrown.", result.Message);
-			Assert.Null(result.InnerException);
-		}
+		// Assert
+		Assert.Equal($"Exception of type '{typeof(UnknownOptionException)}' was thrown.", result.Message);
+		Assert.Null(result.InnerException);
+	}
 
-		[Fact]
-		public void With_Message_Sets_Message()
-		{
-			// Arrange
-			var message = F.Rnd.Str;
+	[Fact]
+	public void With_Message_Sets_Message()
+	{
+		// Arrange
+		var message = F.Rnd.Str;
 
-			// Act
-			var result = new UnknownOptionException(message);
+		// Act
+		var result = new UnknownOptionException(message);
 
-			// Assert
-			Assert.Equal(message, result.Message);
-			Assert.Null(result.InnerException);
-		}
+		// Assert
+		Assert.Equal(message, result.Message);
+		Assert.Null(result.InnerException);
+	}
 
-		[Fact]
-		public void With_Inner_Exception_Sets_InnerException()
-		{
-			// Arrange
-			var inner = new Exception(F.Rnd.Str);
+	[Fact]
+	public void With_Inner_Exception_Sets_InnerException()
+	{
+		// Arrange
+		var inner = new Exception(F.Rnd.Str);
 
-			// Act
-			var result = new UnknownOptionException(F.Rnd.Str, inner);
+		// Act
+		var result = new UnknownOptionException(F.Rnd.Str, inner);
 
-			// Assert
-			Assert.Same(inner, result.InnerException);
-		}
+		// Assert
+		Assert.Same(inner, result.InnerException);
 	}
 }

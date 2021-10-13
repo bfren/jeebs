@@ -1,65 +1,65 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs;
 
-namespace F.Internals
+namespace F.Internals;
+
+/// <summary>
+/// Converter for <see cref="IStrongId"/> types
+/// </summary>
+/// <typeparam name="T"><see cref="IStrongId"/> type</typeparam>
+public sealed class StrongIdConverter<T> : JsonConverter<T>
+	where T : IStrongId, new()
 {
 	/// <summary>
-	/// Converter for <see cref="Jeebs.StrongId"/> types
+	/// Read an <see cref="IStrongId"/> type value - which requires the 'name' (value) to be passed in the constructor
 	/// </summary>
-	/// <typeparam name="T">StrongId type</typeparam>
-	public sealed class StrongIdConverter<T> : JsonConverter<T>
-		where T : Jeebs.StrongId, new()
-	{
-		/// <summary>
-		/// Read an Enumerated type value - which requires the 'name' (value) to be passed in the constructor
-		/// </summary>
-		/// <param name="reader">Utf8JsonReader</param>
-		/// <param name="typeToConvert">StrongId type</param>
-		/// <param name="options">JsonSerializerOptions</param>
-		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-			new()
+	/// <param name="reader">Utf8JsonReader</param>
+	/// <param name="typeToConvert"><see cref="IStrongId"/> type</param>
+	/// <param name="options">JsonSerializerOptions</param>
+	public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+		new()
+		{
+			Value = reader.TokenType switch
 			{
-				Value = reader.TokenType switch
-				{
-					// Handle numbers
-					JsonTokenType.Number =>
-						reader.GetUInt64(),
+				// Handle numbers
+				JsonTokenType.Number =>
+					reader.GetUInt64(),
 
-					// Handle strings if strings are allowed
-					JsonTokenType.String when (options.NumberHandling & JsonNumberHandling.AllowReadingFromString) != 0 =>
-						ulong.TryParse(reader.GetString(), out ulong id) switch
-						{
-							true =>
-								id,
+				// Handle strings if strings are allowed
+				JsonTokenType.String when (options.NumberHandling & JsonNumberHandling.AllowReadingFromString) != 0 =>
+					ulong.TryParse(reader.GetString(), out ulong id) switch
+					{
+						true =>
+							id,
 
-							false =>
-								0
-						},
+						false =>
+							0
+					},
 
-					// Handle default
-					_ =>
-						reader.TrySkip() switch
-						{
-							true =>
-								0,
+				// Handle default
+				_ =>
+					reader.TrySkip() switch
+					{
+						true =>
+							0,
 
-							false =>
-								throw new JsonException($"Invalid {typeof(T)} and unable to skip reading current token.")
-						}
-				}
-			};
+						false =>
+							throw new JsonException($"Invalid {typeof(T)} and unable to skip reading current token.")
+					}
+			}
+		};
 
-		/// <summary>
-		/// Write a StrongId type value
-		/// </summary>
-		/// <param name="writer">Utf8JsonWriter</param>
-		/// <param name="value">StrongId value</param>
-		/// <param name="options">JsonSerializerOptions</param>
-		public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options) =>
-			writer.WriteStringValue(value.Value.ToString());
-	}
+	/// <summary>
+	/// Write a <see cref="IStrongId"/> type value
+	/// </summary>
+	/// <param name="writer">Utf8JsonWriter</param>
+	/// <param name="value"><see cref="IStrongId"/> value</param>
+	/// <param name="options">JsonSerializerOptions</param>
+	public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options) =>
+		writer.WriteStringValue(value.Value.ToString());
 }

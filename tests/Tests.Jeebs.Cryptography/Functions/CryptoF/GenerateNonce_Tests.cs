@@ -1,35 +1,34 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace F.CryptoF_Tests
+namespace F.CryptoF_Tests;
+
+public class GenerateNonce_Tests
 {
-	public class GenerateNonce_Tests
+	[Fact]
+	public void GenerateNonce_ReturnsUniqueValues()
 	{
-		[Fact]
-		public void GenerateNonce_ReturnsUniqueValues()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var nonce1 = CryptoF.GenerateNonce();
-			var nonce2 = CryptoF.GenerateNonce();
+		// Act
+		var nonce1 = CryptoF.GenerateNonce();
+		var nonce2 = CryptoF.GenerateNonce();
 
-			// Assert
-			Assert.NotEqual(nonce1, nonce2);
-		}
+		// Assert
+		Assert.NotEqual(nonce1, nonce2);
+	}
 
-		[Fact]
-		public void GenerateNonce_Returns24ByteArray()
-		{
-			// Arrange
+	[Fact]
+	public void GenerateNonce_Returns24ByteArray()
+	{
+		// Arrange
 
-			// Act
-			var nonce = CryptoF.GenerateNonce();
+		// Act
+		var nonce = CryptoF.GenerateNonce();
 
-			// Assert
-			Assert.Equal(24, nonce.Length);
-		}
+		// Assert
+		Assert.Equal(24, nonce.Length);
 	}
 }

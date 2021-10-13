@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Random\Jeebs.Random.csproj" />
+  </ItemGroup>
+</Project>

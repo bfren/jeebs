@@ -1,38 +1,37 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.StringExtensions_Tests
+namespace Jeebs.StringExtensions_Tests;
+
+public class SplitByCapitals_Tests
 {
-	public class SplitByCapitals_Tests
+	[Theory]
+	[InlineData(null)]
+	[InlineData("")]
+	public void NullOrEmpty_ReturnsOriginal(string input)
 	{
-		[Theory]
-		[InlineData(null)]
-		[InlineData("")]
-		public void NullOrEmpty_ReturnsOriginal(string input)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = input.SplitByCapitals();
+		// Act
+		var result = input.SplitByCapitals();
 
-			// Assert
-			Assert.Equal(input, result);
-		}
+		// Assert
+		Assert.Equal(input, result);
+	}
 
-		[Theory]
-		[InlineData("BenjaminCharlesGreen", "Benjamin Charles Green")]
-		[InlineData(" ben JaminCharlesGreen ", "ben Jamin Charles Green")]
-		public void String_ReturnsValueSplitByCapitals(string input, string expected)
-		{
-			// Arrange
+	[Theory]
+	[InlineData("BenjaminCharlesGreen", "Benjamin Charles Green")]
+	[InlineData(" ben JaminCharlesGreen ", "ben Jamin Charles Green")]
+	public void String_ReturnsValueSplitByCapitals(string input, string expected)
+	{
+		// Arrange
 
-			// Act
-			var result = input.SplitByCapitals();
+		// Act
+		var result = input.SplitByCapitals();
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

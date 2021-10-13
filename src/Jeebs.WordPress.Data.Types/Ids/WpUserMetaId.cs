@@ -1,17 +1,10 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Data.Entities
-{
-	/// <summary>
-	/// WordPress User Meta ID
-	/// </summary>
-	/// <param name="Value">ID Value</param>
-	public sealed record WpUserMetaId(ulong Value) : StrongId(Value)
-	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public WpUserMetaId() : this(0) { }
-	}
-}
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// WordPress User Meta ID
+/// </summary>
+/// <param name="Value">ID Value</param>
+public readonly record struct WpUserMetaId(ulong Value) : IStrongId;

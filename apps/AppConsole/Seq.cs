@@ -1,12 +1,11 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Services.Drivers.Webhook.Seq;
 
-namespace AppConsole
+namespace AppConsole;
+
+internal class Seq : SeqWebhookDriver
 {
-	internal class Seq : SeqWebhookDriver
-	{
-		public Seq(SeqWebhookDriverArgs args) : base("wrong", args) { }
-	}
+	public Seq(SeqWebhookDriverArgs args) : base("wrong", args) { }
 }
