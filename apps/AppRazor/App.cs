@@ -1,10 +1,9 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace AppRazor
+namespace AppRazor;
+
+public sealed class App : Jeebs.Apps.RazorApp
 {
-	public sealed class App : Jeebs.Apps.RazorApp
-	{
-		public App() : base(false) { }
-	}
+	public App() : base(false) { }
 }

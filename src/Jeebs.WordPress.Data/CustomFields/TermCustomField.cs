@@ -1,5 +1,5 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Threading.Tasks;
@@ -7,115 +7,114 @@ using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
 using static F.OptionF;
 
-namespace Jeebs.WordPress.Data
+namespace Jeebs.WordPress.Data;
+
+/// <summary>
+/// Term Taxonomy Custom Field
+/// </summary>
+public abstract class TermCustomField : CustomField<TermCustomField.Term>
 {
 	/// <summary>
-	/// Term Taxonomy Custom Field
+	/// IQueryTerms
 	/// </summary>
-	public abstract class TermCustomField : CustomField<TermCustomField.Term>
+	protected IQueryTerms QueryTerms { get; private init; }
+
+	/// <inheritdoc/>
+	protected TermCustomField(string key) : this(new Query.Terms(), key) { }
+
+	internal TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
+		QueryTerms = queryTerms;
+
+	/// <inheritdoc/>
+	public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
-		/// <summary>
-		/// IQueryTerms
-		/// </summary>
-		protected IQueryTerms QueryTerms { get; private init; }
-
-		/// <inheritdoc/>
-		protected TermCustomField(string key) : this(new Query.Terms(), key) { }
-
-		internal TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
-			QueryTerms = queryTerms;
-
-		/// <inheritdoc/>
-		public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+		// First, get the Term ID from the meta dictionary
+		// If meta doesn't contain the key and this is a required field, return failure
+		// Otherwise return success
+		if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
 		{
-			// First, get the Term ID from the meta dictionary
-			// If meta doesn't contain the key and this is a required field, return failure
-			// Otherwise return success
-			if (meta.TryGetValue(Key, out var value) && !string.IsNullOrWhiteSpace(value))
+			ValueStr = value;
+		}
+		else
+		{
+			if (isRequired)
 			{
-				ValueStr = value;
+				return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
-			else
-			{
-				if (isRequired)
+
+			return False.AsTask;
+		}
+
+		// If we're here we have a Term ID, so get it and hydrate the custom field
+		return
+			Some(
+				ValueStr
+			)
+			.Bind(
+				x => ParseTermId(GetType(), x)
+			)
+			.BindAsync(
+				x => QueryTerms.ExecuteAsync<Term>(db, w, opt => opt with { Id = x })
+			)
+			.UnwrapAsync(
+				x => x.Single<Term>(
+					tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr)
+				)
+			)
+			.MapAsync(
+				x =>
 				{
-					return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
-				}
+					ValueObj = x;
+					return true;
+				},
+				DefaultHandler
+			);
+	}
 
-				return False.AsTask;
-			}
-
-			// If we're here we have a Term ID, so get it and hydrate the custom field
-			return
-				Return(
-					ValueStr
-				)
-				.Bind(
-					x => ParseTermId(GetType(), x)
-				)
-				.BindAsync(
-					x => QueryTerms.ExecuteAsync<Term>(db, w, opt => opt with { Id = x })
-				)
-				.UnwrapAsync(
-					x => x.Single<Term>(
-						tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr)
-					)
-				)
-				.MapAsync(
-					x =>
-					{
-						ValueObj = x;
-						return true;
-					},
-					DefaultHandler
-				);
-		}
-
-		/// <summary>
-		/// Parse the Term ID
-		/// </summary>
-		/// <param name="type">Term Custom Field type</param>
-		/// <param name="value">Term ID value</param>
-		internal static Option<WpTermId> ParseTermId(Type type, string value)
+	/// <summary>
+	/// Parse the Term ID
+	/// </summary>
+	/// <param name="type">Term Custom Field type</param>
+	/// <param name="value">Term ID value</param>
+	internal static Option<WpTermId> ParseTermId(Type type, string value)
+	{
+		if (!ulong.TryParse(value, out ulong termId))
 		{
-			if (!ulong.TryParse(value, out ulong termId))
-			{
-				return None<WpTermId>(new Msg.ValueIsInvalidTermIdMsg(type, value));
-			}
-
-			return new WpTermId(termId);
+			return None<WpTermId>(new Msg.ValueIsInvalidTermIdMsg(type, value));
 		}
 
-		/// <summary>
-		/// Return Term Title
-		/// </summary>
-		protected override string GetValueAsString() =>
-			ValueObj.Title;
+		return new WpTermId(termId);
+	}
 
-		internal string GetValueAsStringTest() =>
-			GetValueAsString();
+	/// <summary>
+	/// Return Term Title
+	/// </summary>
+	protected override string GetValueAsString() =>
+		ValueObj.Title;
 
-		/// <summary>
-		/// Term class
-		/// </summary>
-		public sealed record Term : WpTermEntity { }
+	internal string GetValueAsStringTest() =>
+		GetValueAsString();
 
-		/// <summary>Messages</summary>
-		public static class Msg
-		{
-			/// <summary>Meta key not found in MetaDictionary</summary>
-			/// <param name="Type">Custom Field type</param>
-			/// <param name="Value">Meta Key</param>
-			public sealed record MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
+	/// <summary>
+	/// Term class
+	/// </summary>
+	public sealed record class Term : WpTermEntity { }
 
-			/// <summary>Multiple matching terms were found (should always be 1)</summary>
-			/// <param name="Value">Term ID</param>
-			public sealed record MultipleTermsFoundMsg(string Value) : WithValueMsg<string> { }
+	/// <summary>Messages</summary>
+	public static class Msg
+	{
+		/// <summary>Meta key not found in MetaDictionary</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string> { }
 
-			/// <summary>The value in the meta dictionary is not a valid ID</summary>
-			/// <param name="Type">Custom Field type</param>
-			/// <param name="Value">Meta Key</param>
-			public sealed record ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string> { }
-		}
+		/// <summary>Multiple matching terms were found (should always be 1)</summary>
+		/// <param name="Value">Term ID</param>
+		public sealed record class MultipleTermsFoundMsg(string Value) : WithValueMsg<string> { }
+
+		/// <summary>The value in the meta dictionary is not a valid ID</summary>
+		/// <param name="Type">Custom Field type</param>
+		/// <param name="Value">Meta Key</param>
+		public sealed record class ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string> { }
 	}
 }

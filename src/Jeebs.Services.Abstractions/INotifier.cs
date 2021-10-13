@@ -1,24 +1,23 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs
+namespace Jeebs;
+
+/// <summary>
+/// Handles notifications - like logging, but bypasses the minimum level filters
+/// </summary>
+public interface INotifier
 {
 	/// <summary>
-	/// Handles notifications - like logging, but bypasses the minimum level filters
+	/// Send a notification
 	/// </summary>
-	public interface INotifier
-	{
-		/// <summary>
-		/// Send a notification
-		/// </summary>
-		/// <param name="message">Message content</param>
-		/// <param name="level">[Optional] Notification level</param>
-		void Send(string message, NotificationLevel level = NotificationLevel.Information);
+	/// <param name="message">Message content</param>
+	/// <param name="level">[Optional] Notification level</param>
+	void Send(string message, NotificationLevel level = NotificationLevel.Information);
 
-		/// <summary>
-		/// Send a notification message
-		/// </summary>
-		/// <param name="msg">The message to send as a notification</param>
-		void Send(IMsg msg);
-	}
+	/// <summary>
+	/// Send a notification message
+	/// </summary>
+	/// <param name="msg">The message to send as a notification</param>
+	void Send(IMsg msg);
 }

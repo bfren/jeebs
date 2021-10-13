@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29209.62
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
@@ -121,8 +121,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Apps", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drawing", "src\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj", "{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Drawing.Common", "src\Jeebs.Services.Drivers.Drawing.Common\Jeebs.Services.Drivers.Drawing.Common.csproj", "{0331C1AF-1DE0-4FCF-8862-6122CC028493}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Option", "src\Jeebs.Option\Jeebs.Option.csproj", "{BE5D8A29-671B-48D1-9B2E-C28F0D546660}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Option", "tests\Tests.Jeebs.Option\Tests.Jeebs.Option.csproj", "{E7CB3D11-E324-40A7-9DF0-209E49F33EBF}"
@@ -169,32 +167,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Option.Testing", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Querying", "src\Jeebs.Data.Querying\Jeebs.Data.Querying.csproj", "{55E39BC5-6EB3-4BD3-83C9-D8BDE12E8C1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Querying", "tests\Tests.Jeebs.Data.All\Tests.Jeebs.Data.Querying\Tests.Jeebs.Data.Querying.csproj", "{C80906E6-7A1C-4FD4-9163-B24B144EA857}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Querying", "tests\Tests.Jeebs.Data.Querying\Tests.Jeebs.Data.Querying.csproj", "{C80906E6-7A1C-4FD4-9163-B24B144EA857}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppApi", "apps\AppApi\AppApi.csproj", "{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1E39E94F-9753-4AC1-87F4-B054FB00A7AD}"
-	ProjectSection(SolutionItems) = preProject
-		docs\_config.yml = docs\_config.yml
-		docs\index.md = docs\index.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "option", "option", "{B2B30FE4-7AC7-4F7D-A0C2-DC5808BCCEF9}"
-	ProjectSection(SolutionItems) = preProject
-		docs\option\bind.md = docs\option\bind.md
-		docs\option\chains.md = docs\option\chains.md
-		docs\option\map.md = docs\option\map.md
-		docs\option\option.md = docs\option\option.md
-		docs\option\return.md = docs\option\return.md
-		docs\option\sample-application.md = docs\option\sample-application.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_sass", "_sass", "{0A008B4B-9801-49ED-8FE8-5D8BD2162A15}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "custom", "custom", "{B881D1E9-DDFB-4557-BA7F-6F2CDBCE4404}"
-	ProjectSection(SolutionItems) = preProject
-		docs\_sass\custom\custom.scss = docs\_sass\custom\custom.scss
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data", "src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj", "{B10B6B18-9718-4BA4-A408-5408E60B21E8}"
 EndProject
@@ -214,9 +189,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsoleWp", "apps\AppCon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc", "tests\Tests.Jeebs.Mvc\Tests.Jeebs.Mvc.csproj", "{4D4D46ED-4332-48E4-AB7B-37D82879350A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Calendar", "src\Jeebs.Calendar\Jeebs.Mvc.Calendar.csproj", "{A8B46561-04F5-475B-AE85-63A04B5C6629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Calendar", "src\Jeebs.Calendar\Jeebs.Calendar.csproj", "{A8B46561-04F5-475B-AE85-63A04B5C6629}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc.Calendar", "tests\Tests.Jeebs.Mvc.Calendar\Tests.Jeebs.Mvc.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Calendar", "tests\Tests.Jeebs.Calendar\Tests.Jeebs.Calendar.csproj", "{51E79EBF-F2EF-427F-9F85-E38F039D2DC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Data.Types", "src\Jeebs.WordPress.Data.Types\Jeebs.WordPress.Data.Types.csproj", "{8E915008-C90F-4268-AB01-25F1D5022CD8}"
 EndProject
@@ -224,7 +199,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress.Abstraction
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Data.Types", "tests\Tests.Jeebs.WordPress.Data.Types\Tests.Jeebs.WordPress.Data.Types.csproj", "{89815535-A65E-428A-B63B-87D1793E22C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.WordPress.Abstractions", "tests\Tests.Jeebs.WordPress.Abstractions\Tests.Jeebs.WordPress.Abstractions.csproj", "{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.WordPress.Abstractions", "tests\Tests.Jeebs.WordPress.Abstractions\Tests.Jeebs.WordPress.Abstractions.csproj", "{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Option.Abstractions", "src\Jeebs.Option.Abstractions\Jeebs.Option.Abstractions.csproj", "{E44357C0-3F59-4653-B059-CE8F23EDE208}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drivers.Drawing.Skia", "src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj", "{1EF56A73-834A-418F-B721-77C9DA1CC70C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Totp", "src\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj", "{6AA9601F-7321-48C6-8D32-B437782FB231}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Auth.Totp", "tests\Tests.Jeebs.Auth.Totp\Tests.Jeebs.Auth.Totp.csproj", "{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -359,10 +342,6 @@ Global
 		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0331C1AF-1DE0-4FCF-8862-6122CC028493}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE5D8A29-671B-48D1-9B2E-C28F0D546660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE5D8A29-671B-48D1-9B2E-C28F0D546660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE5D8A29-671B-48D1-9B2E-C28F0D546660}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -495,6 +474,22 @@ Global
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44357C0-3F59-4653-B059-CE8F23EDE208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF56A73-834A-418F-B721-77C9DA1CC70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA9601F-7321-48C6-8D32-B437782FB231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -543,7 +538,6 @@ Global
 		{8E9E8643-96D5-4C57-94D3-85A5A177BB95} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
 		{7B6D82D1-BB09-4DA8-BDDC-89DB6A3B244B} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 		{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906} = {6C31552E-8082-4D9A-BA93-A6BA41A47000}
-		{0331C1AF-1DE0-4FCF-8862-6122CC028493} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
 		{BE5D8A29-671B-48D1-9B2E-C28F0D546660} = {64C5C4E6-C78E-44F9-8DCD-488AFC966351}
 		{E7CB3D11-E324-40A7-9DF0-209E49F33EBF} = {BF8740C6-55F6-489E-8ECB-6916B8440FBF}
 		{8687DA2A-88DE-4130-941B-62B80FA6D4A2} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
@@ -569,9 +563,6 @@ Global
 		{55E39BC5-6EB3-4BD3-83C9-D8BDE12E8C1B} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
 		{C80906E6-7A1C-4FD4-9163-B24B144EA857} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 		{83B54CB3-A0DE-4E4B-920D-0D80E3547DB6} = {A256449B-4234-43DD-B18F-741D69906712}
-		{B2B30FE4-7AC7-4F7D-A0C2-DC5808BCCEF9} = {1E39E94F-9753-4AC1-87F4-B054FB00A7AD}
-		{0A008B4B-9801-49ED-8FE8-5D8BD2162A15} = {1E39E94F-9753-4AC1-87F4-B054FB00A7AD}
-		{B881D1E9-DDFB-4557-BA7F-6F2CDBCE4404} = {0A008B4B-9801-49ED-8FE8-5D8BD2162A15}
 		{B10B6B18-9718-4BA4-A408-5408E60B21E8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{17F8C164-3CD1-45B8-8CC5-5960A819D6EF} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{64C5C4E6-C78E-44F9-8DCD-488AFC966351} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
@@ -581,12 +572,16 @@ Global
 		{3EDE4DCA-D279-4D90-A647-E5469D58DF18} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{8691C959-1846-44C1-8D2B-23B97F2CF1A6} = {A256449B-4234-43DD-B18F-741D69906712}
 		{4D4D46ED-4332-48E4-AB7B-37D82879350A} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
-		{A8B46561-04F5-475B-AE85-63A04B5C6629} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
-		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
+		{A8B46561-04F5-475B-AE85-63A04B5C6629} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
+		{51E79EBF-F2EF-427F-9F85-E38F039D2DC7} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{8E915008-C90F-4268-AB01-25F1D5022CD8} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{859A657E-D84F-42AB-9BBB-8EBD6EED1873} = {0B3996E1-B1FF-4037-B3FB-15E0ABE01032}
 		{89815535-A65E-428A-B63B-87D1793E22C6} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
 		{7140A86E-20E6-438A-BB8F-A0A4834CF0EA} = {0B5859A2-D126-488E-9232-9D71FCCFC777}
+		{E44357C0-3F59-4653-B059-CE8F23EDE208} = {64C5C4E6-C78E-44F9-8DCD-488AFC966351}
+		{1EF56A73-834A-418F-B721-77C9DA1CC70C} = {C6413973-B7C3-4B42-90C0-ED07334291EC}
+		{6AA9601F-7321-48C6-8D32-B437782FB231} = {75C7BFF4-500A-4B3D-970A-67AAA5B4ECC2}
+		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380} = {904BAF5A-95DE-49B8-A3A9-A687988E39AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

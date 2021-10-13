@@ -1,8 +1,6 @@
 ﻿// Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Linq;
 using AppConsoleWp;
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;

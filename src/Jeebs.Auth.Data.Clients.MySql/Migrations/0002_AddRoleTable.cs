@@ -1,39 +1,38 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using SimpleMigrations;
 
-namespace Jeebs.Auth.Data.Clients.MySql.Migrations
+namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
+
+/// <summary>
+/// Migration: Add role table
+/// </summary>
+[Migration(2, "Add role table")]
+public sealed class AddRoleTable : Migration
 {
 	/// <summary>
-	/// Migration: Add role table
+	/// Migrate up
 	/// </summary>
-	[Migration(2, "Add role table")]
-	public sealed class AddRoleTable : Migration
+	protected override void Up()
 	{
-		/// <summary>
-		/// Migrate up
-		/// </summary>
-		protected override void Up()
-		{
-			Execute(@"
-				CREATE TABLE `auth_role` (
-					`RoleId` INT(11) NOT NULL AUTO_INCREMENT,
-					`RoleName` VARCHAR(64) NOT NULL COLLATE 'utf8_general_ci',
-					`RoleDescription` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-					PRIMARY KEY (`RoleId`) USING BTREE
-				)
-				COLLATE='utf8_general_ci'
-				ENGINE=InnoDB
-			");
-		}
+		Execute(@"
+			CREATE TABLE `auth_role` (
+				`RoleId` INT(11) NOT NULL AUTO_INCREMENT,
+				`RoleName` VARCHAR(64) NOT NULL COLLATE 'utf8_general_ci',
+				`RoleDescription` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`RoleId`) USING BTREE
+			)
+			COLLATE='utf8_general_ci'
+			ENGINE=InnoDB
+		");
+	}
 
-		/// <summary>
-		/// Migrate down
-		/// </summary>
-		protected override void Down()
-		{
-			Execute("DROP TABLE `auth_role`;");
-		}
+	/// <summary>
+	/// Migrate down
+	/// </summary>
+	protected override void Down()
+	{
+		Execute("DROP TABLE `auth_role`;");
 	}
 }

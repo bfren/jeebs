@@ -1,38 +1,34 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Repository_Tests
+namespace Jeebs.Data.Repository_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Properties()
 	{
-		[Fact]
-		public void Sets_Properties()
-		{
-			// Arrange
-			var db = Substitute.For<IDb>();
-			var log = Substitute.For<ILog>();
+		// Arrange
+		var db = Substitute.For<IDb>();
+		var log = Substitute.For<ILog>();
 
-			// Act
-			var result = new TestFunc(db, log);
+		// Act
+		var result = new TestFunc(db, log);
 
-			// Assert
-			Assert.Same(db, result.DbTest);
-			Assert.Same(log, result.LogTest);
-		}
+		// Assert
+		Assert.Same(db, result.DbTest);
+		Assert.Same(log, result.LogTest);
+	}
 
-		public sealed record TestId(ulong Value) : StrongId(Value)
-		{
-			public TestId() : this(0) { }
-		}
+	public readonly record struct TestId(ulong Value) : IStrongId;
 
-		public sealed record TestEntity(TestId Id) : IWithId<TestId>;
+	public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
 
-		public sealed class TestFunc : Repository<TestEntity, TestId>
-		{
-			public TestFunc(IDb db, ILog log) : base(db, log) { }
-		}
+	public sealed class TestFunc : Repository<TestEntity, TestId>
+	{
+		public TestFunc(IDb db, ILog log) : base(db, log) { }
 	}
 }

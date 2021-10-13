@@ -1,41 +1,40 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.StringExtensions_Tests
+namespace Jeebs.StringExtensions_Tests;
+
+public class Normalise_Tests
 {
-	public class Normalise_Tests
+	[Theory]
+	[InlineData(null)]
+	[InlineData("")]
+	public void NullOrEmpty_ReturnsOriginal(string input)
 	{
-		[Theory]
-		[InlineData(null)]
-		[InlineData("")]
-		public void NullOrEmpty_ReturnsOriginal(string input)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = input.Normalise();
+		// Act
+		var result = input.Normalise();
 
-			// Assert
-			Assert.Equal(input, result);
-		}
+		// Assert
+		Assert.Equal(input, result);
+	}
 
-		[Theory]
-		[InlineData("&$G54F*FH(3)FKASD63&£asdf", "gffhfkasdasdf")]
-		[InlineData("one two three", "one-two-three")]
-		[InlineData("one-two-three", "one-two-three")]
-		[InlineData(" one  two   three    ", "one-two-three")]
-		[InlineData("1-two three", "two-three")]
-		public void String_ReturnsNormalisedValue(string input, string expcted)
-		{
-			// Arrange
+	[Theory]
+	[InlineData("&$G54F*FH(3)FKASD63&£asdf", "gffhfkasdasdf")]
+	[InlineData("one two three", "one-two-three")]
+	[InlineData("one-two-three", "one-two-three")]
+	[InlineData(" one  two   three    ", "one-two-three")]
+	[InlineData("1-two three", "two-three")]
+	public void String_ReturnsNormalisedValue(string input, string expcted)
+	{
+		// Arrange
 
-			// Act
-			var result = input.Normalise();
+		// Act
+		var result = input.Normalise();
 
-			// Assert
-			Assert.Equal(expcted, result);
-		}
+		// Assert
+		Assert.Equal(expcted, result);
 	}
 }

@@ -1,60 +1,59 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Config.TwitterConfig_Tests
+namespace Jeebs.Config.TwitterConfig_Tests;
+
+public class IsValid_Tests
 {
-	public class IsValid_Tests
+	[Theory]
+	[InlineData(null, "secret", "key", "secret")]
+	[InlineData("", "secret", "key", "secret")]
+	[InlineData(" ", "secret", "key", "secret")]
+	[InlineData("token", null, "key", "secret")]
+	[InlineData("token", "", "key", "secret")]
+	[InlineData("token", " ", "key", "secret")]
+	[InlineData("token", "secret", null, "secret")]
+	[InlineData("token", "secret", "", "secret")]
+	[InlineData("token", "secret", " ", "secret")]
+	[InlineData("token", "secret", "key", null)]
+	[InlineData("token", "secret", "key", "")]
+	[InlineData("token", "secret", "key", " ")]
+	public void Returns_False(string userToken, string userSecret, string consumerKey, string consumerSecret)
 	{
-		[Theory]
-		[InlineData(null, "secret", "key", "secret")]
-		[InlineData("", "secret", "key", "secret")]
-		[InlineData(" ", "secret", "key", "secret")]
-		[InlineData("token", null, "key", "secret")]
-		[InlineData("token", "", "key", "secret")]
-		[InlineData("token", " ", "key", "secret")]
-		[InlineData("token", "secret", null, "secret")]
-		[InlineData("token", "secret", "", "secret")]
-		[InlineData("token", "secret", " ", "secret")]
-		[InlineData("token", "secret", "key", null)]
-		[InlineData("token", "secret", "key", "")]
-		[InlineData("token", "secret", "key", " ")]
-		public void Returns_False(string userToken, string userSecret, string consumerKey, string consumerSecret)
+		// Arrange
+		var config = new TwitterConfig
 		{
-			// Arrange
-			var config = new TwitterConfig
-			{
-				UserAccessToken = userToken,
-				UserAccessSecret = userSecret,
-				ConsumerKey = consumerKey,
-				ConsumerSecret = consumerSecret
-			};
+			UserAccessToken = userToken,
+			UserAccessSecret = userSecret,
+			ConsumerKey = consumerKey,
+			ConsumerSecret = consumerSecret
+		};
 
-			// Act
-			var result = config.IsValid;
+		// Act
+		var result = config.IsValid;
 
-			// Assert
-			Assert.False(result);
-		}
+		// Assert
+		Assert.False(result);
+	}
 
-		[Fact]
-		public void Returns_True()
+	[Fact]
+	public void Returns_True()
+	{
+		// Arrange
+		var config = new TwitterConfig
 		{
-			// Arrange
-			var config = new TwitterConfig
-			{
-				UserAccessToken = F.Rnd.Str,
-				UserAccessSecret = F.Rnd.Str,
-				ConsumerKey = F.Rnd.Str,
-				ConsumerSecret = F.Rnd.Str
-			};
+			UserAccessToken = F.Rnd.Str,
+			UserAccessSecret = F.Rnd.Str,
+			ConsumerKey = F.Rnd.Str,
+			ConsumerSecret = F.Rnd.Str
+		};
 
-			// Act
-			var result = config.IsValid;
+		// Act
+		var result = config.IsValid;
 
-			// Assert
-			Assert.True(result);
-		}
+		// Assert
+		Assert.True(result);
 	}
 }

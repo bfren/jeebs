@@ -1,35 +1,34 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 
-namespace Jeebs.WordPress.Data.ContentFilters
+namespace Jeebs.WordPress.Data.ContentFilters;
+
+/// <summary>
+/// Parse Blocks
+/// </summary>
+public sealed partial class ParseBlocks : ContentFilter
 {
+	/// <inheritdoc/>
+	private ParseBlocks(Func<string, string> filter) : base(filter) { }
+
 	/// <summary>
-	/// Parse Blocks
+	/// Create filter
 	/// </summary>
-	public sealed partial class ParseBlocks : ContentFilter
-	{
-		/// <inheritdoc/>
-		private ParseBlocks(Func<string, string> filter) : base(filter) { }
+	public static ContentFilter Create() =>
+		new ParseBlocks(content =>
+		{
+			// Parse Galleries
+			content = ParseGallery(content);
 
-		/// <summary>
-		/// Create filter
-		/// </summary>
-		public static ContentFilter Create() =>
-			new ParseBlocks(content =>
-			{
-				// Parse Galleries
-				content = ParseGallery(content);
+			// Parse YouTube Videos
+			content = ParseYouTube(content);
 
-				// Parse YouTube Videos
-				content = ParseYouTube(content);
+			// Parse Vimeo Videos
+			content = ParseVimeo(content);
 
-				// Parse Vimeo Videos
-				content = ParseVimeo(content);
-
-				// Return parsed content
-				return content;
-			});
-	}
+			// Return parsed content
+			return content;
+		});
 }

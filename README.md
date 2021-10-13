@@ -6,7 +6,7 @@
 
 Libraries for use in .NET Core projects for rapid application development.
 
-Please [view the wiki](https://github.com/bfren/jeebs/wiki) for information on how to use these libraries.
+Please [view the book](https://docs.bfren.dev/jeebs) for information on how to use these libraries.
 
 ## History
 
@@ -20,9 +20,9 @@ Now with the imminent release of .NET 6, Jeebs v6 is born, pushing the gains of 
 
 ## License
 
-> [MIT](https://mit.bfren.uk/2013)
+> [MIT](https://mit.bfren.dev/2013)
 
 ## Copyright
 
-> Copyright (c) 2013-2021 [bfren.uk](https://bfren.uk)
+> Copyright (c) 2013-2021 [bfren](https://bfren.dev)
 > Unless otherwise stated

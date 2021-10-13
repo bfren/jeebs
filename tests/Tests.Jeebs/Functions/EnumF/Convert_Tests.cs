@@ -1,50 +1,49 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs;
 using Xunit;
 
-namespace F.EnumF_Tests
+namespace F.EnumF_Tests;
+
+public partial class Convert_Tests
 {
-	public partial class Convert_Tests
+	[Fact]
+	public void MatchingValue_ReturnsValue()
 	{
-		[Fact]
-		public void MatchingValue_ReturnsValue()
-		{
-			// Arrange
-			const TestB input = TestB.Test3;
+		// Arrange
+		const TestB input = TestB.Test3;
 
-			// Act
-			var result = EnumF.Convert(input).To<TestA>();
+		// Act
+		var result = EnumF.Convert(input).To<TestA>();
 
-			// Assert
-			Assert.Equal(TestA.Test1, result);
-		}
+		// Assert
+		Assert.Equal(TestA.Test1, result);
+	}
 
-		[Fact]
-		public void NoMatchingValue_Returns_None()
-		{
-			// Arrange
-			const TestB input = TestB.Test5;
+	[Fact]
+	public void NoMatchingValue_Returns_None()
+	{
+		// Arrange
+		const TestB input = TestB.Test5;
 
-			// Act
-			var result = EnumF.Convert(input).To<TestA>();
+		// Act
+		var result = EnumF.Convert(input).To<TestA>();
 
-			// Assert
-			Assert.IsType<None<TestA>>(result);
-		}
+		// Assert
+		result.AssertNone();
+	}
 
-		public enum TestA
-		{
-			Test1,
-			Test2
-		}
+	public enum TestA
+	{
+		Test1,
+		Test2
+	}
 
-		public enum TestB
-		{
-			Test3,
-			Test4,
-			Test5
-		}
+	public enum TestB
+	{
+		Test3,
+		Test4,
+		Test5
 	}
 }

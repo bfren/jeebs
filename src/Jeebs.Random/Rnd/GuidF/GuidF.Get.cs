@@ -1,22 +1,21 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 
-namespace F
+namespace F;
+
+public static partial class Rnd
 {
-	public static partial class Rnd
+	/// <summary>
+	/// Random Guid function
+	/// </summary>
+	public static partial class GuidF
 	{
 		/// <summary>
-		/// Random Guid function
+		/// Return a secure random Guid
 		/// </summary>
-		public static partial class GuidF
-		{
-			/// <summary>
-			/// Return a secure random Guid
-			/// </summary>
-			public static Guid Get() =>
-				new(ByteF.Get(16));
-		}
+		public static Guid Get() =>
+			new(ByteF.Get(16));
 	}
 }

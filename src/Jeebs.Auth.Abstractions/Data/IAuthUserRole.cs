@@ -1,21 +1,20 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Auth.Data
+namespace Jeebs.Auth.Data;
+
+/// <summary>
+/// Authentication User Role Model
+/// </summary>
+public interface IAuthUserRole : IWithId<AuthUserRoleId>
 {
 	/// <summary>
-	/// Authentication User Role Model
+	/// User ID
 	/// </summary>
-	public interface IAuthUserRole : IWithId<AuthUserRoleId>
-	{
-		/// <summary>
-		/// User ID
-		/// </summary>
-		AuthUserId UserId { get; init; }
+	AuthUserId UserId { get; init; }
 
-		/// <summary>
-		/// Role ID
-		/// </summary>
-		AuthRoleId RoleId { get; init; }
-	}
+	/// <summary>
+	/// Role ID
+	/// </summary>
+	AuthRoleId RoleId { get; init; }
 }
