@@ -41,7 +41,7 @@ jobs:
           --no-build \
           --configuration Release \
           /p:PackageOutputPath=$HOME/.nupkgs \
-          -p:PackageVersion=${{ steps.version.outputs.content }}
+          -p:PackageVersion=${{ steps.version.outputs.contents }}
     - 
       if: success()
       name: D - Push
