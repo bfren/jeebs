@@ -16,7 +16,7 @@ jobs:
       name: Prepare - Read Version
       uses: bfren/read-file@v1
       with:
-        path: ./Version
+        file: ./Version
       id: version
     - 
       name: Prepare - Setup .NET
