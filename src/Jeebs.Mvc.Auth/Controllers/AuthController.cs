@@ -70,20 +70,26 @@ public abstract class AuthControllerBase : Controller
 		View(SignInModel.Empty(returnUrl ?? Url.Action("Index")));
 
 	/// <summary>
-	/// Perform sign in
+	/// Check TOTP requirement or perform sign in
 	/// </summary>
 	/// <param name="model">SignInModel</param>
 	[HttpPost, AutoValidateAntiforgeryToken]
-	public virtual async Task<IActionResult> SignIn(SignInModel model)
+	public virtual async Task<IActionResult> SignIn(SignInModel model) =>
+		await DoSignIn(model);
+
+	/// <summary>
+	/// Perform sign in
+	/// </summary>
+	/// <param name="model"></param>
+	/// <returns></returns>
+	internal async Task<IActionResult> DoSignIn(SignInModel model)
 	{
 		// Validate user
-		var valid = await (
-			from u0 in Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password)
-			from u1 in Auth.RetrieveUserWithRolesAsync<AuthUserModel, AuthRoleModel>(model.Email)
-			select u1
-		);
+		var validatedUser = from _ in Auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password)
+							from user in Auth.RetrieveUserWithRolesAsync<AuthUserModel, AuthRoleModel>(model.Email)
+							select user;
 
-		foreach (var user in valid)
+		await foreach (var user in validatedUser)
 		{
 			// Get user principal
 			Log.Debug("User validated.");
