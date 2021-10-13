@@ -3,11 +3,21 @@
 
 using System.Linq;
 using Jeebs.Auth.Totp;
+using static F.Base32F;
 
 namespace F;
 
 public static partial class TotpF
 {
+	/// <inheritdoc cref="VerifyCode(byte[], string, TotpSettings)"/>
+	public static bool VerifyCode(string? key, string? code, TotpSettings settings) =>
+		!string.IsNullOrEmpty(key)
+		&& !string.IsNullOrEmpty(code)
+		&& FromBase32String(key).Switch(
+			some: k => VerifyCode(k, code, settings),
+			none: false
+		);
+
 	/// <summary>
 	/// Verify a code
 	/// </summary>
