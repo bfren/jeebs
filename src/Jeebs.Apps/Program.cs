@@ -14,12 +14,22 @@ namespace Jeebs.Apps;
 public abstract class Program
 {
 	/// <summary>
-	/// Entry point
+	/// Synchronous entry point
 	/// </summary>
 	/// <typeparam name="T">Host type</typeparam>
 	/// <param name="args">Command Line arguments</param>
-	/// <param name="run">[Optional] Action to run program with IServiceProvider and ILog</param>
-	public static async Task MainAsync<T>(string[] args, Action<IServiceProvider, ILog>? run = null)
+	/// <param name="run">[Optional] Action to run with IServiceProvider and ILog</param>
+	public static void Main<T>(string[] args, Action<IServiceProvider, ILog>? run = null)
+		where T : App, new() =>
+		MainAsync<T>(args, (provider, log) => { run?.Invoke(provider, log); return Task.CompletedTask; }).RunSynchronously();
+
+	/// <summary>
+	/// Asynchronous entry point
+	/// </summary>
+	/// <typeparam name="T">Host type</typeparam>
+	/// <param name="args">Command Line arguments</param>
+	/// <param name="run">[Optional] Asynchronous function to run with IServiceProvider and ILog</param>
+	public static async Task MainAsync<T>(string[] args, Func<IServiceProvider, ILog, Task>? run = null)
 		where T : App, new()
 	{
 		// Create app
@@ -34,16 +44,16 @@ public abstract class Program
 		// Ready to go
 		app.Ready(host.Services, log);
 
-		// Run default app
-		if (run is null)
+		// Run custom app
+		if (run is not null)
 		{
-			await host.RunAsync().ConfigureAwait(false);
+			await run(host.Services, log).ConfigureAwait(false);
 		}
 
-		// Run custom app
+		// Run default app
 		else
 		{
-			run(host.Services, log);
+			await host.RunAsync().ConfigureAwait(false);
 		}
 	}
 }
