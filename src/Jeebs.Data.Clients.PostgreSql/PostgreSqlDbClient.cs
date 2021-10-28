@@ -21,7 +21,7 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name) + $" AS \"{column.Alias}\"",
+				Escape(column.Name) + $" AS {column.Alias}",
 
 			false =>
 				Escape(column.Name)
@@ -32,7 +32,7 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name, column.Table) + $" AS \"{column.Alias}\"",
+				Escape(column.Name, column.Table) + $" AS {column.Alias}",
 
 			false =>
 				Escape(column.Name, column.Table)
@@ -44,7 +44,7 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	public override string Escape(string columnOrTable) =>
-		$"\"{columnOrTable}\"";
+		columnOrTable;
 
 	/// <inheritdoc/>
 	public override string Escape(string column, string table) =>
