@@ -3,6 +3,6 @@
 		<RootNamespace>Jeebs.Data.Clients.PostgreSql</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSql\Jeebs.Data.Clients.PostgreSql.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSQL\Jeebs.Data.Clients.PostgreSql.csproj" />
 	</ItemGroup>
 </Project>
