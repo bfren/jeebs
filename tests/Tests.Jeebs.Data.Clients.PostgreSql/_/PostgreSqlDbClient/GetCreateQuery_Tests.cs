@@ -31,7 +31,7 @@ public class GetCreateQuery_Tests
 		var list = new MappedColumnList(new[] { c0, c1 });
 		var client = new PostgreSqlDbClient();
 
-		var expected = $"INSERT INTO \"{table}\" (\"{c0Name}\", \"{c1Name}\") VALUES (@{c0Alias}, @{c1Alias}); " +
+		var expected = $"INSERT INTO {table} ({c0Name}, {c1Name}) VALUES (@{c0Alias}, @{c1Alias}); " +
 			"SELECT LASTVAL();";
 
 		// Act

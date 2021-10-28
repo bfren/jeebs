@@ -35,7 +35,7 @@ public class GetUpdateQuery_Tests
 
 		var id = F.Rnd.Ulng;
 
-		var expected = $"UPDATE \"{table}\" SET \"{c0Name}\" = @{c0Alias}, \"{c1Name}\" = @{c1Alias} WHERE \"{c2Name}\" = {id};";
+		var expected = $"UPDATE {table} SET {c0Name} = @{c0Alias}, {c1Name} = @{c1Alias} WHERE {c2Name} = {id};";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id);
@@ -75,7 +75,7 @@ public class GetUpdateQuery_Tests
 
 		var id = F.Rnd.Ulng;
 
-		var expected = $"UPDATE \"{table}\" SET \"{c0Name}\" = @{c0Alias}, \"{c1Name}\" = @{c1Alias}, \"{c3Name}\" = @{c3Alias} + 1 WHERE \"{c2Name}\" = {id} AND \"{c3Name}\" = @{c3Alias};";
+		var expected = $"UPDATE {table} SET {c0Name} = @{c0Alias}, {c1Name} = @{c1Alias}, {c3Name} = @{c3Alias} + 1 WHERE {c2Name} = {id} AND {c3Name} = @{c3Alias};";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id, c3);
