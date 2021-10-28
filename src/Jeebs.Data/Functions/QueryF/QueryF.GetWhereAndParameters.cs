@@ -46,7 +46,7 @@ public static partial class QueryF
 			// IN is a special case, handle ordinary cases first
 			if (cmp != Compare.In && cmp != Compare.NotIn)
 			{
-				// Auto-increment namd and get parameter value (to support StrongId)
+				// Auto-increment name and get parameter value (to support StrongId)
 				var paramName = $"P{index++}";
 				var paramValue = GetParameterValue(value);
 
