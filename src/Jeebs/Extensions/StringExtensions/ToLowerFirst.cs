@@ -12,4 +12,8 @@ public static partial class StringExtensions
 	/// <returns>String, with the first letter forced to Lowercase</returns>
 	public static string ToLowerFirst(this string @this) =>
 		Modify(@this, () => char.ToLower(@this[0]) + @this[1..]);
+
+	/// <inheritdoc cref="ToLowerFirst(string)"/>
+	public static string ToCamelCase(this string @this) =>
+		ToLowerFirst(@this);
 }

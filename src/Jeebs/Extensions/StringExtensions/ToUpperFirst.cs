@@ -12,4 +12,8 @@ public static partial class StringExtensions
 	/// <returns>String, with the first letter forced to Uppercase</returns>
 	public static string ToUpperFirst(this string @this) =>
 		Modify(@this, () => char.ToUpper(@this[0]) + @this[1..]);
+
+	/// <inheritdoc cref="ToUpperFirst(string)"/>
+	public static string ToPascalCase(this string @this) =>
+		ToUpperFirst(@this);
 }
