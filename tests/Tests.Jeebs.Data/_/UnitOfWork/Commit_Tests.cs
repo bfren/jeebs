@@ -25,7 +25,7 @@ public class Commit_Tests
 
 		// Assert
 		transaction.Received().Commit();
-		log.Received().Debug("Committing transaction.");
+		log.Received().Verbose("Committing transaction.");
 	}
 
 	[Fact]
