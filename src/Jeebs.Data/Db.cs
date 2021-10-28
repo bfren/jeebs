@@ -25,8 +25,8 @@ public abstract class Db : IDb
 	{
 		get
 		{
-			// Connect to the database
-			Log.Debug("Connecting to database.");
+			// Get a database connection
+			Log.Verbose("Getting database connection.");
 			var connection = Client.Connect(Config.ConnectionString);
 			if (connection.State != ConnectionState.Open)
 			{
@@ -34,7 +34,7 @@ public abstract class Db : IDb
 			}
 
 			// Create Unit of Work
-			Log.Debug("Starting new Unit of Work.");
+			Log.Verbose("Starting new Unit of Work.");
 			return new UnitOfWork(connection, Log.ForContext<UnitOfWork>());
 		}
 	}

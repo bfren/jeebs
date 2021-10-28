@@ -36,7 +36,7 @@ public sealed class UnitOfWork : IUnitOfWork
 
 		try
 		{
-			log.Debug("Committing transaction.");
+			log.Verbose("Committing transaction.");
 			Transaction.Commit();
 		}
 		catch (Exception ex)
