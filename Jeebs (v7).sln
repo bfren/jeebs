@@ -214,6 +214,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Data.Clients.PostgreS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Clients.PostgreSql", "tests\Tests.Jeebs.Data.Clients.PostgreSql\Tests.Jeebs.Data.Clients.PostgreSql.csproj", "{6C9CD5F3-4FBA-4B0B-987A-667FEE20D0F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppConsolePg", "apps\AppConsolePg\AppConsolePg.csproj", "{C30A9A96-0547-4BEA-86D2-8D30771B8990}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -503,6 +505,10 @@ Global
 		{6C9CD5F3-4FBA-4B0B-987A-667FEE20D0F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C9CD5F3-4FBA-4B0B-987A-667FEE20D0F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C9CD5F3-4FBA-4B0B-987A-667FEE20D0F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30A9A96-0547-4BEA-86D2-8D30771B8990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30A9A96-0547-4BEA-86D2-8D30771B8990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30A9A96-0547-4BEA-86D2-8D30771B8990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30A9A96-0547-4BEA-86D2-8D30771B8990}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -597,6 +603,7 @@ Global
 		{2B6E25C0-B60E-4FE9-8EDB-BC8E4BB55380} = {904BAF5A-95DE-49B8-A3A9-A687988E39AA}
 		{2E98CB3A-2DDA-4C7E-BF11-2528AF614DCF} = {9BE173C5-9B68-4F6D-BF76-283EA7C8C73A}
 		{6C9CD5F3-4FBA-4B0B-987A-667FEE20D0F7} = {D899A9DC-CBCF-44E8-BECE-73EB8911C6C2}
+		{C30A9A96-0547-4BEA-86D2-8D30771B8990} = {A256449B-4234-43DD-B18F-741D69906712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
