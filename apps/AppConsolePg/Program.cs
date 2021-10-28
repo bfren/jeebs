@@ -20,7 +20,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var bar = F.Rnd.Str;
 	await db
 		.ExecuteAsync(
-			"INSERT INTO \"console\".\"test\" (\"foo\", \"bar\") VALUES (@Foo, @Bar);", new { foo, bar }, CommandType.Text
+			"INSERT INTO \"console\".\"test\" (\"foo\", \"bar\") VALUES (@foo, @bar);", new { foo, bar }, CommandType.Text
 		)
 		.AuditAsync(
 			none: r => log.Message(r)
@@ -32,7 +32,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var id = 0;
 	await db
 		.QuerySingleAsync<Test>(
-			"SELECT * FROM \"console\".\"test\" WHERE \"foo\" = @Foo AND \"bar\" = @Bar;", new { foo, bar }, CommandType.Text
+			"SELECT * FROM \"console\".\"test\" WHERE \"foo\" = @foo AND \"bar\" = @bar;", new { foo, bar }, CommandType.Text
 		)
 		.AuditAsync(
 			some: x =>
@@ -49,7 +49,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var newFoo = F.Rnd.Str;
 	await db
 		.ExecuteAsync(
-			"UPDATE \"console\".\"test\" SET \"foo\" = @NewFoo WHERE \"id\" = @Id;", new { newFoo, id }, CommandType.Text
+			"UPDATE \"console\".\"test\" SET \"foo\" = @newFoo WHERE \"id\" = @id;", new { newFoo, id }, CommandType.Text
 		)
 		.AuditAsync(
 			none: r => log.Message(r)
@@ -57,7 +57,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	await db
 		.QuerySingleAsync<Test>(
-			"SELECT * FROM \"console\".\"test\" WHERE \"id\" = @Id;", new { id }, CommandType.Text
+			"SELECT * FROM \"console\".\"test\" WHERE \"id\" = @id;", new { id }, CommandType.Text
 		)
 		.AuditAsync(
 			some: x =>
