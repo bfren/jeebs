@@ -77,7 +77,7 @@ public abstract partial class DbClient : IDbClient
 
 	/// <summary>
 	/// Add version to where string for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
-	/// and <see cref="GetDeleteQuery(string, IColumn, ulong, IColumn?)"/>
+	/// and <see cref="GetDeleteQuery(string, IColumn, long, IColumn?)"/>
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>
 	/// <param name="versionColumn">[Optional] Version column</param>
