@@ -78,7 +78,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <param name="value">Term ID value</param>
 	internal static Option<WpTermId> ParseTermId(Type type, string value)
 	{
-		if (!ulong.TryParse(value, out ulong termId))
+		if (!long.TryParse(value, out long termId))
 		{
 			return None<WpTermId>(new Msg.ValueIsInvalidTermIdMsg(type, value));
 		}

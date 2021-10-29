@@ -18,9 +18,9 @@ public static class Repository_Setup
 			.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, Compare, object)[]>())
 			.Returns((F.Rnd.Str, Substitute.For<IQueryParameters>()));
 		client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
-		client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<ulong>()).Returns(F.Rnd.Str);
-		client.GetUpdateQuery<Foo, FooModel>(Arg.Any<ulong>()).Returns(F.Rnd.Str);
-		client.GetDeleteQuery<Foo>(Arg.Any<ulong>()).Returns(F.Rnd.Str);
+		client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
+		client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
+		client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(F.Rnd.Str);
 
 		var db = Substitute.For<IDb>();
 		db.Client.Returns(client);
@@ -42,5 +42,5 @@ public static class Repository_Setup
 		public FooId Id { get; init; } = new();
 	}
 
-	public readonly record struct FooId(ulong Value) : IStrongId;
+	public readonly record struct FooId(long Value) : IStrongId;
 }

@@ -19,7 +19,7 @@ public class FooWithMultipleVersionAttributes : IWithVersion
 	public FooId FooId { get; init; } = new();
 
 	[Version]
-	public ulong Version { get; init; }
+	public long Version { get; init; }
 
 	[Version]
 	public string Bar0 { get; init; } = string.Empty;

@@ -20,7 +20,7 @@ public abstract class QueryFluent_Tests
 		IRepository<TestEntity, TestId> Repo
 	);
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 
 	public sealed record class TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
 }

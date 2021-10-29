@@ -26,7 +26,7 @@ public class GetParameterValue_Tests
 	public void StrongId_Returns_StrongId_Value()
 	{
 		// Arrange
-		var value = Rnd.Ulng;
+		var value = Rnd.Lng;
 
 		// Act
 		var result = GetParameterValue(new TestId(value));
@@ -35,5 +35,5 @@ public class GetParameterValue_Tests
 		Assert.Equal(value, result);
 	}
 
-	readonly record struct TestId(ulong Value) : IStrongId;
+	readonly record struct TestId(long Value) : IStrongId;
 }

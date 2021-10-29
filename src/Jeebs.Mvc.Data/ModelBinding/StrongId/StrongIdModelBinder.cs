@@ -29,7 +29,7 @@ public sealed class StrongIdModelBinder<T> : IModelBinder
 		bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
 
 		// Get the value and attempt to parse it as a long
-		bindingContext.Result = ulong.TryParse(valueProviderResult.FirstValue, out ulong id) switch
+		bindingContext.Result = long.TryParse(valueProviderResult.FirstValue, out long id) switch
 		{
 			true =>
 				success(id),
@@ -41,7 +41,7 @@ public sealed class StrongIdModelBinder<T> : IModelBinder
 		return Task.CompletedTask;
 
 		// Set the model value using the parsed ID
-		static ModelBindingResult success(ulong id) =>
+		static ModelBindingResult success(long id) =>
 			ModelBindingResult.Success(new T { Value = id });
 	}
 }

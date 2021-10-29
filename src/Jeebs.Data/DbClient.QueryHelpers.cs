@@ -27,7 +27,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetRetrieveQuery(string, IColumnList, IColumn, ulong)"/>
+	/// Get columns for <see cref="GetRetrieveQuery(string, IColumnList, IColumn, long)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
@@ -42,7 +42,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
@@ -57,7 +57,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to column list for <see cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn?)"/>,
+	/// Add version to column list for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
 	/// <param name="set">List of Set commands</param>
@@ -71,7 +71,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to where string for <see cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn?)"/>
+	/// Add version to where string for <see cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn?)"/>
 	/// and <see cref="GetDeleteQuery(string, IColumn, ulong, IColumn?)"/>
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>

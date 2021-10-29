@@ -107,7 +107,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 	{
 		public AuthUserId Id { get; init; } = new();
 
-		public ulong Version { get; init; }
+		public long Version { get; init; }
 
 		public string FriendlyName { get; init; } = string.Empty;
 	}

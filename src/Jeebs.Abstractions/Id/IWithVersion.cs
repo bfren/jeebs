@@ -11,7 +11,7 @@ public interface IWithVersion : IWithId
 	/// <summary>
 	/// Version
 	/// </summary>
-	ulong Version { get; }
+	long Version { get; }
 }
 
 /// <inheritdoc cref="IWithVersion"/>

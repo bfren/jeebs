@@ -41,5 +41,5 @@ public class Parse_Tests
 		Assert.True(result.Value == 42);
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 }

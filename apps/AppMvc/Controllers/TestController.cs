@@ -510,7 +510,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var id = F.Rnd.Ulng;
+				var id = F.Rnd.Lng;
 
 				var roles = context.UserRoles.Join(
 					context.Roles,
@@ -541,7 +541,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var id = F.Rnd.Ulng;
+				var id = F.Rnd.Lng;
 
 				var roles = from r in context.Roles
 							join ur in context.UserRoles on r.Id equals ur.RoleId

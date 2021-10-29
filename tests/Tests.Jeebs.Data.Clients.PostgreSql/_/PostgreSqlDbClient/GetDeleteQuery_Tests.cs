@@ -24,7 +24,7 @@ public class GetDeleteQuery_Tests
 
 		var client = new PostgreSqlDbClient();
 
-		var id = F.Rnd.Ulng;
+		var id = F.Rnd.Lng;
 
 		var expected = $"DELETE FROM {table} WHERE {c0Name} = {id};";
 
@@ -55,7 +55,7 @@ public class GetDeleteQuery_Tests
 
 		var client = new PostgreSqlDbClient();
 
-		var id = F.Rnd.Ulng;
+		var id = F.Rnd.Lng;
 
 		var expected = $"DELETE FROM {table} WHERE {c0Name} = {id} AND {c1Name} = @{c1Alias};";
 

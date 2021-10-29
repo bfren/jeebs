@@ -31,7 +31,7 @@ public partial class MySqlDbClient : DbClient
 		string table,
 		IColumnList columns,
 		IColumn idColumn,
-		ulong id
+		long id
 	)
 	{
 		// Get columns
@@ -51,7 +51,7 @@ public partial class MySqlDbClient : DbClient
 		string table,
 		IColumnList columns,
 		IColumn idColumn,
-		ulong id
+		long id
 	) =>
 		GetUpdateQuery(table, columns, idColumn, id, null);
 
@@ -60,7 +60,7 @@ public partial class MySqlDbClient : DbClient
 		string table,
 		IColumnList columns,
 		IColumn idColumn,
-		ulong id,
+		long id,
 		IColumn? versionColumn
 	)
 	{
@@ -89,7 +89,7 @@ public partial class MySqlDbClient : DbClient
 	protected override string GetDeleteQuery(
 		string table,
 		IColumn idColumn,
-		ulong id
+		long id
 	) =>
 		GetDeleteQuery(table, idColumn, id, null);
 
@@ -97,7 +97,7 @@ public partial class MySqlDbClient : DbClient
 	protected override string GetDeleteQuery(
 		string table,
 		IColumn idColumn,
-		ulong id,
+		long id,
 		IColumn? versionColumn
 	)
 	{

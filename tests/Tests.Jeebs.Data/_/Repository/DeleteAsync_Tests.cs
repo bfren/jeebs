@@ -14,7 +14,7 @@ public class DeleteAsync_Tests
 	{
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
-		var value = F.Rnd.Ulng;
+		var value = F.Rnd.Lng;
 
 		// Act
 		await repo.DeleteAsync(new Repository_Setup.FooId(value));
@@ -28,7 +28,7 @@ public class DeleteAsync_Tests
 	{
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
-		var value = F.Rnd.Ulng;
+		var value = F.Rnd.Lng;
 
 		// Act
 		await repo.DeleteAsync(new Repository_Setup.FooId(value));

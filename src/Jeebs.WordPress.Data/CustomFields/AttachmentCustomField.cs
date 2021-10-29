@@ -96,7 +96,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <param name="value">Post ID value</param>
 	internal static Option<WpPostId> ParseAttachmentPostId(Type type, string value)
 	{
-		if (!ulong.TryParse(value, out ulong attachmentPostId))
+		if (!long.TryParse(value, out long attachmentPostId))
 		{
 			return None<WpPostId>(new Msg.ValueIsInvalidPostIdMsg(type, value));
 		}

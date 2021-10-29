@@ -7,4 +7,4 @@ namespace Jeebs.WordPress.Data.Entities;
 /// WordPress Term ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public readonly record struct WpTermId(ulong Value) : IStrongId;
+public readonly record struct WpTermId(long Value) : IStrongId;

@@ -7,4 +7,4 @@ namespace Jeebs.Auth.Data;
 /// User Role ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public readonly record struct AuthUserRoleId(ulong Value) : IStrongId;
+public readonly record struct AuthUserRoleId(long Value) : IStrongId;

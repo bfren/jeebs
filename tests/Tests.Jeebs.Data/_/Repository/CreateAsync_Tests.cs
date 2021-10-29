@@ -14,7 +14,7 @@ public class CreateAsync_Tests
 	{
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
-		var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Ulng) };
+		var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Lng) };
 
 		// Act
 		await repo.CreateAsync(foo);
@@ -28,7 +28,7 @@ public class CreateAsync_Tests
 	{
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
-		var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Ulng) };
+		var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Lng) };
 
 		// Act
 		await repo.CreateAsync(foo);

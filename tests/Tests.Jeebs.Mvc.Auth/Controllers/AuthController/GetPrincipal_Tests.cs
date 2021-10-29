@@ -24,7 +24,7 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestController(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new(F.Rnd.Ulng),
+			Id = new(F.Rnd.Lng),
 			EmailAddress = F.Rnd.Str,
 			FriendlyName = F.Rnd.Str,
 			IsSuper = true
@@ -65,13 +65,13 @@ public class GetPrincipal_Tests
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var controller = new AuthTestController(auth, log);
-		var role0Id = new AuthRoleId { Value = F.Rnd.Ulng };
-		var role1Id = new AuthRoleId { Value = F.Rnd.Ulng };
-		var role0 = new AuthRoleModel(new(F.Rnd.Ulng), F.Rnd.Str);
-		var role1 = new AuthRoleModel(new(F.Rnd.Ulng), F.Rnd.Str);
+		var role0Id = new AuthRoleId { Value = F.Rnd.Lng };
+		var role1Id = new AuthRoleId { Value = F.Rnd.Lng };
+		var role0 = new AuthRoleModel(new(F.Rnd.Lng), F.Rnd.Str);
+		var role1 = new AuthRoleModel(new(F.Rnd.Lng), F.Rnd.Str);
 		var user = new AuthUserModel
 		{
-			Id = new(F.Rnd.Ulng),
+			Id = new(F.Rnd.Lng),
 			EmailAddress = F.Rnd.Str,
 			FriendlyName = F.Rnd.Str,
 			IsSuper = true,
@@ -125,7 +125,7 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestControllerWithClaims(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new(F.Rnd.Ulng),
+			Id = new(F.Rnd.Lng),
 			EmailAddress = F.Rnd.Str,
 			FriendlyName = F.Rnd.Str,
 			IsSuper = true

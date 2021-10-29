@@ -13,10 +13,10 @@ public class GetPreviousAndNext_Tests
 	public void Empty_List_Returns_None_With_ListIsEmptyMsg()
 	{
 		// Arrange
-		var list = new List<ulong>();
+		var list = new List<long>();
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(Rnd.Ulng, list);
+		var (r0, r1) = GetPreviousAndNext(Rnd.Lng, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -27,10 +27,10 @@ public class GetPreviousAndNext_Tests
 	public void Single_Item_Returns_None_With_ListContainsSingleItemMsg()
 	{
 		// Arrange
-		var list = new List<ulong> { Rnd.Ulng };
+		var list = new List<long> { Rnd.Lng };
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(Rnd.Ulng, list);
+		var (r0, r1) = GetPreviousAndNext(Rnd.Lng, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -42,7 +42,7 @@ public class GetPreviousAndNext_Tests
 	{
 		// Arrange
 		var value = 10001U;
-		var list = new List<ulong> { Rnd.Ulng, Rnd.Ulng, Rnd.Ulng };
+		var list = new List<long> { Rnd.Lng, Rnd.Lng, Rnd.Lng };
 
 		// Act
 		var (r0, r1) = GetPreviousAndNext(value, list);
@@ -56,9 +56,9 @@ public class GetPreviousAndNext_Tests
 	public void First_Item_Returns_None_And_Next_Item()
 	{
 		// Arrange
-		var value = Rnd.Ulng;
-		var next = Rnd.Ulng;
-		var list = new List<ulong> { value, next, Rnd.Ulng, Rnd.Ulng };
+		var value = Rnd.Lng;
+		var next = Rnd.Lng;
+		var list = new List<long> { value, next, Rnd.Lng, Rnd.Lng };
 
 		// Act
 		var (r0, r1) = GetPreviousAndNext(value, list);
@@ -73,9 +73,9 @@ public class GetPreviousAndNext_Tests
 	public void Last_Item_Returns_Previous_Item_And_None()
 	{
 		// Arrange
-		var value = Rnd.Ulng;
-		var prev = Rnd.Ulng;
-		var list = new List<ulong> { Rnd.Ulng, Rnd.Ulng, prev, value };
+		var value = Rnd.Lng;
+		var prev = Rnd.Lng;
+		var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value };
 
 		// Act
 		var (r0, r1) = GetPreviousAndNext(value, list);
@@ -90,10 +90,10 @@ public class GetPreviousAndNext_Tests
 	public void Returns_Previous_And_Next_Items()
 	{
 		// Arrange
-		var value = Rnd.Ulng;
-		var prev = Rnd.Ulng;
-		var next = Rnd.Ulng;
-		var list = new List<ulong> { Rnd.Ulng, Rnd.Ulng, prev, value, next, Rnd.Ulng, Rnd.Ulng };
+		var value = Rnd.Lng;
+		var prev = Rnd.Lng;
+		var next = Rnd.Lng;
+		var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value, next, Rnd.Lng, Rnd.Lng };
 
 		// Act
 		var (r0, r1) = GetPreviousAndNext(value, list);

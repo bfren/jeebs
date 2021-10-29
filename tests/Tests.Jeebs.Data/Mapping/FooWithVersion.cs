@@ -8,5 +8,5 @@ namespace Jeebs.Data.Mapping;
 public record class FooWithVersion : Foo, IWithVersion
 {
 	[Version]
-	public ulong Version { get; init; }
+	public long Version { get; init; }
 }

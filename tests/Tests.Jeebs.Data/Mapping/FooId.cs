@@ -3,4 +3,4 @@
 
 namespace Jeebs.Data.Mapping;
 
-public readonly record struct FooId(ulong Value) : IStrongId;
+public readonly record struct FooId(long Value) : IStrongId;

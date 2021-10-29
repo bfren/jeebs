@@ -36,7 +36,7 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<Query.PostsParts
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = new WpTermId(F.Rnd.Ulng);
+		var id = new WpTermId(F.Rnd.Lng);
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
 		var tt = builder.TTest.TermTaxonomy.ToString();
@@ -70,7 +70,7 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<Query.PostsParts
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = new WpTermId(F.Rnd.Ulng);
+		var id = new WpTermId(F.Rnd.Lng);
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
 		// Act
@@ -103,10 +103,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<Query.PostsParts
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = new WpTermId(F.Rnd.Ulng);
+		var id0 = new WpTermId(F.Rnd.Lng);
 		var t1 = Taxonomy.NavMenu;
-		var id1 = new WpTermId(F.Rnd.Ulng);
-		var id2 = new WpTermId(F.Rnd.Ulng);
+		var id1 = new WpTermId(F.Rnd.Lng);
+		var id2 = new WpTermId(F.Rnd.Lng);
 		var taxonomies = ImmutableList.Create((t0, id0), (t1, id1), (t1, id2));
 
 		var tt = builder.TTest.TermTaxonomy.ToString();
@@ -146,10 +146,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<Query.PostsParts
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = new WpTermId(F.Rnd.Ulng);
-		var id1 = new WpTermId(F.Rnd.Ulng);
+		var id0 = new WpTermId(F.Rnd.Lng);
+		var id1 = new WpTermId(F.Rnd.Lng);
 		var t1 = Taxonomy.LinkCategory;
-		var id2 = new WpTermId(F.Rnd.Ulng);
+		var id2 = new WpTermId(F.Rnd.Lng);
 		var taxonomies = ImmutableList.Create((t0, id0), (t0, id1), (t1, id2));
 
 		// Act

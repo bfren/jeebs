@@ -17,7 +17,7 @@ public class FooWithoutVersionAttribute : IWithVersion
 	[Id]
 	public FooId FooId { get; init; } = new();
 
-	public ulong Version { get; init; }
+	public long Version { get; init; }
 
 	public string Bar0 { get; init; } = string.Empty;
 

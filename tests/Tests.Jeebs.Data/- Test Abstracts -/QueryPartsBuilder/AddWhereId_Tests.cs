@@ -31,7 +31,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test01()
 	{
 		// Arrange
-		var id = new TId { Value = F.Rnd.Ulng };
+		var id = new TId { Value = F.Rnd.Lng };
 		var (builder, v) = Setup();
 
 		// Act
@@ -55,9 +55,9 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test02()
 	{
 		// Arrange
-		var i0 = new TId { Value = F.Rnd.Ulng };
-		var i1 = new TId { Value = F.Rnd.Ulng };
-		var i2 = new TId { Value = F.Rnd.Ulng };
+		var i0 = new TId { Value = F.Rnd.Lng };
+		var i1 = new TId { Value = F.Rnd.Lng };
+		var i2 = new TId { Value = F.Rnd.Lng };
 		var ids = ImmutableList.Create(i1, i2);
 		var (builder, v) = Setup();
 
@@ -82,8 +82,8 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test03()
 	{
 		// Arrange
-		var i0 = new TId { Value = F.Rnd.Ulng };
-		var i1 = new TId { Value = F.Rnd.Ulng };
+		var i0 = new TId { Value = F.Rnd.Lng };
+		var i1 = new TId { Value = F.Rnd.Lng };
 		var ids = ImmutableList.Create(i0, i1);
 		var (builder, v) = Setup();
 
@@ -99,7 +99,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 				Assert.Equal(builder.IdColumn, x.column);
 				Assert.Equal(Compare.In, x.cmp);
 
-				var value = Assert.IsAssignableFrom<IEnumerable<ulong>>(x.value);
+				var value = Assert.IsAssignableFrom<IEnumerable<long>>(x.value);
 				Assert.Collection(value,
 					y => Assert.Equal(i0.Value, y),
 					y => Assert.Equal(i1.Value, y)

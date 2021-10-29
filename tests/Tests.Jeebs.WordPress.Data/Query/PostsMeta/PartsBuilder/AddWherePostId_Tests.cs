@@ -36,7 +36,7 @@ public class AddWherePostId_Tests : QueryPartsBuilder_Tests<Query.PostsMetaParts
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var postId = new WpPostId(F.Rnd.Ulng);
+		var postId = new WpPostId(F.Rnd.Lng);
 
 		// Act
 		var result = builder.AddWherePostId(v.Parts, postId, Substitute.For<IImmutableList<WpPostId>>());
@@ -50,8 +50,8 @@ public class AddWherePostId_Tests : QueryPartsBuilder_Tests<Query.PostsMetaParts
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = new WpPostId(F.Rnd.Ulng);
-		var id1 = new WpPostId(F.Rnd.Ulng);
+		var id0 = new WpPostId(F.Rnd.Lng);
+		var id1 = new WpPostId(F.Rnd.Lng);
 		var postIds = ImmutableList.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 

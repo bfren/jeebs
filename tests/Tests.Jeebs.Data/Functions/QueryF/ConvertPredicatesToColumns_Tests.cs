@@ -140,7 +140,7 @@ public class ConvertPredicatesToColumns_Tests
 		{
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
-		var value = Rnd.Ulng;
+		var value = Rnd.Lng;
 		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
 		{
 			(e => e.Foo, input, new TestId(value))
@@ -223,7 +223,7 @@ public class ConvertPredicatesToColumns_Tests
 		Assert.IsType<InOperatorRequiresValueToBeAListMsg>(none);
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 
 	public sealed record class TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
 }

@@ -31,7 +31,7 @@ public abstract class PartsBuilder_Tests
 	);
 }
 
-public readonly record struct TestId(ulong Value) : IStrongId;
+public readonly record struct TestId(long Value) : IStrongId;
 
 public class TestPartsBuilder : Query.PartsBuilder<TestId>
 {

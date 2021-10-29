@@ -23,7 +23,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 		var empty = new List<Attachment>().AsEnumerable().Some();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(empty);
-		var fileId = new WpPostId(Rnd.Ulng);
+		var fileId = new WpPostId(Rnd.Lng);
 
 		// Act
 		var result = await GetFilePathAsync(db, w, fileId);
@@ -41,7 +41,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 		var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Some();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(list);
-		var fileId = new WpPostId(Rnd.Ulng);
+		var fileId = new WpPostId(Rnd.Lng);
 
 		// Act
 		var result = await GetFilePathAsync(db, w, fileId);
@@ -62,7 +62,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 		// Act
-		var result = await GetFilePathAsync(db, w, new(Rnd.Ulng));
+		var result = await GetFilePathAsync(db, w, new(Rnd.Lng));
 
 		// Assert
 		var some = result.AssertSome();

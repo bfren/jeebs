@@ -14,7 +14,7 @@ public class ReadJson_Tests
 	public void Deserialise_Valid_Json_Returns_LongId_With_Value(string format)
 	{
 		// Arrange
-		var value = Rnd.Ulng;
+		var value = Rnd.Lng;
 		var json = string.Format(format, value);
 
 		// Act
@@ -32,7 +32,7 @@ public class ReadJson_Tests
 	{
 		// Arrange
 		var v0 = Rnd.Int;
-		var v1 = Rnd.Ulng;
+		var v1 = Rnd.Lng;
 		var json = $"{{ \"id\": {v0}, \"longId\": {string.Format(format, v1)} }}";
 
 		// Act
@@ -83,7 +83,7 @@ public class ReadJson_Tests
 		Assert.Equal(0U, some.LongId.Value);
 	}
 
-	public readonly record struct IdTest0(ulong Value) : IStrongId;
+	public readonly record struct IdTest0(long Value) : IStrongId;
 
 	public class LongIdWrapperTest0
 	{

@@ -15,7 +15,7 @@ public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 {
 	/// <inheritdoc/>
 	[Version]
-	public ulong Version { get; init; }
+	public long Version { get; init; }
 
 	/// <summary>
 	/// The user's encrypted password

@@ -28,11 +28,11 @@ public sealed class StrongIdConverter<T> : JsonConverter<T>
 			{
 				// Handle numbers
 				JsonTokenType.Number =>
-					reader.GetUInt64(),
+					reader.GetInt64(),
 
 				// Handle strings if strings are allowed
 				JsonTokenType.String when (options.NumberHandling & JsonNumberHandling.AllowReadingFromString) != 0 =>
-					ulong.TryParse(reader.GetString(), out ulong id) switch
+					long.TryParse(reader.GetString(), out long id) switch
 					{
 						true =>
 							id,

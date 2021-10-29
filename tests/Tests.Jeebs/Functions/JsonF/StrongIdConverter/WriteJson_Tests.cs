@@ -12,7 +12,7 @@ public class WriteJson_Tests
 	public void Serialise_Returns_Json_Value()
 	{
 		// Arrange
-		var value = Rnd.Ulng;
+		var value = Rnd.Lng;
 		var id = new TestId { Value = value };
 
 		// Act
@@ -35,5 +35,5 @@ public class WriteJson_Tests
 		Assert.Equal(JsonF.Empty, result);
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 }

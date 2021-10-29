@@ -23,7 +23,7 @@ public class Constructor_Tests
 		Assert.Same(schema, result.TTest);
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 
 	public sealed record class TestOptions : Options<TestId>
 	{

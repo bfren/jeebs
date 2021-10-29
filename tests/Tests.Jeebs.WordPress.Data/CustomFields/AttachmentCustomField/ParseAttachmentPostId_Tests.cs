@@ -28,7 +28,7 @@ public class ParseAttachmentPostId_Tests
 	{
 		// Arrange
 		var type = typeof(ParseAttachmentPostId_Tests);
-		var value = F.Rnd.Ulng;
+		var value = F.Rnd.Lng;
 
 		// Act
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value.ToString());

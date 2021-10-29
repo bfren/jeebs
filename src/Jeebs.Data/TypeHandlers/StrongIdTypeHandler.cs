@@ -19,11 +19,11 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	public override T Parse(object value) =>
 		value switch
 		{
-			ulong id =>
+			long id =>
 				new() { Value = id },
 
 			_ =>
-				ulong.TryParse(value?.ToString(), out ulong id) switch
+				long.TryParse(value?.ToString(), out long id) switch
 				{
 					true =>
 						new() { Value = id },

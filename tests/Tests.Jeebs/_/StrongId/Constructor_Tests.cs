@@ -16,8 +16,8 @@ public class Constructor_Tests
 		var id = new TestId();
 
 		// Assert
-		Assert.Equal(0U, id.Value);
+		Assert.Equal(0L, id.Value);
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 }

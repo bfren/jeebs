@@ -42,7 +42,7 @@ public class EfCoreContext : DbContext
 
 	public sealed record class EfCoreAuthRoleEntity
 	{
-		public ulong Id { get; init; }
+		public long Id { get; init; }
 
 		public string Name { get; init; } = string.Empty;
 
@@ -53,18 +53,18 @@ public class EfCoreContext : DbContext
 
 	public sealed record class EfCoreAuthUserRoleEntity
 	{
-		public ulong Id { get; init; }
+		public long Id { get; init; }
 
-		public ulong UserId { get; init; }
+		public long UserId { get; init; }
 
-		public ulong RoleId { get; init; }
+		public long RoleId { get; init; }
 
 		internal EfCoreAuthUserRoleEntity() { }
 	}
 
 	public sealed record class EfCoreAuthUserEntity
 	{
-		public ulong Id { get; init; }
+		public long Id { get; init; }
 
 		public string EmailAddress { get; init; } = string.Empty;
 
@@ -76,7 +76,7 @@ public class EfCoreContext : DbContext
 
 		public bool IsSuper { get; init; }
 
-		public ulong Version { get; init; }
+		public long Version { get; init; }
 
 		public string PasswordHash { get; init; } = string.Empty;
 

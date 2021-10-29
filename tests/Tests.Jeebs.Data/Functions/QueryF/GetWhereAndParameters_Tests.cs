@@ -120,7 +120,7 @@ public class GetWhereAndParameters_Tests
 		var column = Substitute.For<IColumn>();
 		column.Name.Returns(name);
 
-		var value = Rnd.Ulng;
+		var value = Rnd.Lng;
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
 			(column, input, new TestId(value))
@@ -175,16 +175,16 @@ public class GetWhereAndParameters_Tests
 		Test_In_With_Not_Enumerable(Compare.NotIn);
 	}
 
-	private static void Test_In_With_Enumerable(Compare cmp, Func<ulong, ulong, ulong, object> getValue)
+	private static void Test_In_With_Enumerable(Compare cmp, Func<long, long, long, object> getValue)
 	{
 		// Arrange
 		var name = Rnd.Str;
 		var column = Substitute.For<IColumn>();
 		column.Name.Returns(name);
 
-		var v0 = Rnd.Ulng;
-		var v1 = Rnd.Ulng;
-		var v2 = Rnd.Ulng;
+		var v0 = Rnd.Lng;
+		var v1 = Rnd.Lng;
+		var v2 = Rnd.Lng;
 		var value = getValue(v0, v1, v2);
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -309,5 +309,5 @@ public class GetWhereAndParameters_Tests
 			$"({string.Join('|', objects)})";
 	}
 
-	readonly record struct TestId(ulong Value) : IStrongId;
+	readonly record struct TestId(long Value) : IStrongId;
 }

@@ -14,7 +14,7 @@ public class UpdateAsync_Tests
 	{
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
-		var value = F.Rnd.Ulng;
+		var value = F.Rnd.Lng;
 		var model = new Repository_Setup.FooModel { Id = new(value) };
 
 		// Act
@@ -29,7 +29,7 @@ public class UpdateAsync_Tests
 	{
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
-		var value = F.Rnd.Ulng;
+		var value = F.Rnd.Lng;
 		var model = new Repository_Setup.FooModel { Id = new(value) };
 
 		// Act

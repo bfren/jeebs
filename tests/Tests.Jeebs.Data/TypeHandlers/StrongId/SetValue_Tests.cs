@@ -14,7 +14,7 @@ public class SetValue_Tests
 	{
 		// Arrange
 		var handler = new StrongIdTypeHandler<TestId>();
-		var value = F.Rnd.Ulng;
+		var value = F.Rnd.Lng;
 		var id = new TestId { Value = value };
 		var parameter = Substitute.For<IDbDataParameter>();
 
@@ -25,5 +25,5 @@ public class SetValue_Tests
 		Assert.Equal(parameter.Value, value);
 	}
 
-	public readonly record struct TestId(ulong Value) : IStrongId;
+	public readonly record struct TestId(long Value) : IStrongId;
 }

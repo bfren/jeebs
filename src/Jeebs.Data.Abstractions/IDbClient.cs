@@ -118,7 +118,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Option<string> GetRetrieveQuery<TEntity, TModel>(ulong id)
+	Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -127,7 +127,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Option<string> GetUpdateQuery<TEntity, TModel>(ulong id)
+	Option<string> GetUpdateQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -135,7 +135,7 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Option<string> GetDeleteQuery<TEntity>(ulong id)
+	Option<string> GetDeleteQuery<TEntity>(long id)
 		where TEntity : IWithId;
 
 	#endregion

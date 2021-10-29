@@ -25,7 +25,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetRetrieveQuery<TEntity, TModel>(ulong id)
+	public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId =>
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
@@ -37,7 +37,7 @@ public abstract partial class DbClient : IDbClient
 			e => new Msg.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(ulong)"/>
+	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(long)"/>
 	/// <param name="table">Table name</param>
 	/// <param name="columns">List of columns to select</param>
 	/// <param name="idColumn">ID column for predicate</param>
@@ -46,11 +46,11 @@ public abstract partial class DbClient : IDbClient
 		string table,
 		IColumnList columns,
 		IColumn idColumn,
-		ulong id
+		long id
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetUpdateQuery<TEntity, TModel>(ulong id)
+	public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId =>
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
@@ -70,12 +70,12 @@ public abstract partial class DbClient : IDbClient
 			e => new Msg.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetUpdateQuery(string, IColumnList, IColumn, ulong, IColumn)"/>
+	/// <inheritdoc cref="GetUpdateQuery(string, IColumnList, IColumn, long, IColumn)"/>
 	protected abstract string GetUpdateQuery(
 		string table,
 		IColumnList columns,
 		IColumn idColumn,
-		ulong id
+		long id
 	);
 
 	/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
@@ -88,12 +88,12 @@ public abstract partial class DbClient : IDbClient
 		string table,
 		IColumnList columns,
 		IColumn idColumn,
-		ulong id,
+		long id,
 		IColumn? versionColumn
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetDeleteQuery<TEntity>(ulong id)
+	public Option<string> GetDeleteQuery<TEntity>(long id)
 		where TEntity : IWithId =>
 		Mapper.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
@@ -108,11 +108,11 @@ public abstract partial class DbClient : IDbClient
 			e => new Msg.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetDeleteQuery(string, IColumn, ulong, IColumn?)"/>
+	/// <inheritdoc cref="GetDeleteQuery(string, IColumn, long, IColumn?)"/>
 	protected abstract string GetDeleteQuery(
 		string table,
 		IColumn idColumn,
-		ulong id
+		long id
 	);
 
 	/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
@@ -123,7 +123,7 @@ public abstract partial class DbClient : IDbClient
 	protected abstract string GetDeleteQuery(
 		string table,
 		IColumn idColumn,
-		ulong id,
+		long id,
 		IColumn? versionColumn
 	);
 
@@ -132,19 +132,19 @@ public abstract partial class DbClient : IDbClient
 	internal string GetCreateQueryTest(string table, IMappedColumnList columns) =>
 		GetCreateQuery(table, columns);
 
-	internal string GetRetrieveQueryTest(string table, IColumnList columns, IColumn idColumn, ulong id) =>
+	internal string GetRetrieveQueryTest(string table, IColumnList columns, IColumn idColumn, long id) =>
 		GetRetrieveQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, ulong id) =>
+	internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, long id) =>
 		GetUpdateQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, ulong id, IColumn? versionColumn) =>
+	internal string GetUpdateQueryTest(string table, IColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
-	internal string GetDeleteQueryTest(string table, IColumn idColumn, ulong id) =>
+	internal string GetDeleteQueryTest(string table, IColumn idColumn, long id) =>
 		GetDeleteQuery(table, idColumn, id);
 
-	internal string GetDeleteQueryTest(string table, IColumn idColumn, ulong id, IColumn? versionColumn) =>
+	internal string GetDeleteQueryTest(string table, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetDeleteQuery(table, idColumn, id, versionColumn);
 
 	#endregion

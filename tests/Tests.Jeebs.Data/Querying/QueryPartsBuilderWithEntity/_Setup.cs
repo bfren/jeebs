@@ -26,7 +26,7 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 	);
 }
 
-public readonly record struct TestId(ulong Value) : IStrongId;
+public readonly record struct TestId(long Value) : IStrongId;
 
 public record class TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 

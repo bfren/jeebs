@@ -53,7 +53,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var id = new TId { Value = F.Rnd.Ulng };
+		var id = new TId { Value = F.Rnd.Lng };
 		var opt = options with
 		{
 			Id = id
@@ -72,8 +72,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = new TId { Value = F.Rnd.Ulng };
-		var i1 = new TId { Value = F.Rnd.Ulng };
+		var i0 = new TId { Value = F.Rnd.Lng };
+		var i1 = new TId { Value = F.Rnd.Lng };
 		var ids = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

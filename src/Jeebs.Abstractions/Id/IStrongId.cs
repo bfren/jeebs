@@ -11,5 +11,5 @@ public interface IStrongId
 	/// <summary>
 	/// ID value
 	/// </summary>
-	ulong Value { get; init; }
+	long Value { get; init; }
 }

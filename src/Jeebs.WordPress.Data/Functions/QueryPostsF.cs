@@ -28,7 +28,7 @@ public static partial class QueryPostsF
 		/// <summary>
 		/// Enables query for multiple posts and multiple taxonomies
 		/// </summary>
-		public ulong PostId { get; init; }
+		public long PostId { get; init; }
 
 		/// <summary>
 		/// Enables query for multiple posts and multiple taxonomies

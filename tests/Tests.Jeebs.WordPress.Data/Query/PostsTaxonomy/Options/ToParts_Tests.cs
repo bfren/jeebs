@@ -103,8 +103,8 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsTaxonomyOptions, IQueryPos
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = new WpPostId(F.Rnd.Ulng);
-		var i1 = new WpPostId(F.Rnd.Ulng);
+		var i0 = new WpPostId(F.Rnd.Lng);
+		var i1 = new WpPostId(F.Rnd.Lng);
 		var postIds = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

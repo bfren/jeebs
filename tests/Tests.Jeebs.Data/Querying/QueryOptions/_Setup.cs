@@ -25,7 +25,7 @@ public static class Setup
 	}
 }
 
-public readonly record struct TestId(ulong Value) : IStrongId;
+public readonly record struct TestId(long Value) : IStrongId;
 
 public record class TestOptions : QueryOptions<TestId>
 {
