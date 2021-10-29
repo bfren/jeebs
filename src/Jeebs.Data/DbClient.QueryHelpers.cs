@@ -19,7 +19,7 @@ public abstract partial class DbClient : IDbClient
 		var par = new List<string>();
 		foreach (var column in columns)
 		{
-			if (column.Property.DoNotWriteToDb())
+			if (column.Property.IsReadonly())
 			{
 				continue;
 			}

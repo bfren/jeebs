@@ -7,12 +7,25 @@ using Jeebs.Data.Entities;
 
 namespace Jeebs.Data;
 
+/// <summary>
+/// PropertyInfo extensions: IsReadonly
+/// </summary>
 public static class PropertyInfoExtensions
 {
-	public static bool DoNotWriteToDb(this PropertyInfo @this)
+	/// <summary>
+	/// Returns true if the specified PropertyInfo has either <see cref="IdAttribute"/>, <see cref="IgnoreAttribute"/>,
+	/// <see cref="ComputedAttribute"/>, or <see cref="ReadonlyAttribute"/>
+	/// </summary>
+	/// <param name="this">PropertyInfo</param>
+	public static bool IsReadonly(this PropertyInfo @this)
 	{
+		if (!@this.CustomAttributes.Any())
+		{
+			return false;
+		}
+
 		var attr = from a in @this.GetCustomAttributes()
-				   where a is IdAttribute || a is IgnoreAttribute
+				   where a is IdAttribute || a is IgnoreAttribute || a is ComputedAttribute || a is ReadonlyAttribute
 				   select a;
 
 		return attr.Any();
