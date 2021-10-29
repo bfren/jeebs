@@ -121,15 +121,18 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var v0 = new ParamTest(7, F.Rnd.Str, F.Rnd.Str);
 	var v1 = new ParamTest(18, F.Rnd.Str, F.Rnd.Str);
 	var v2 = new ParamTest(93, F.Rnd.Str, F.Rnd.Str);
-	foreach (var v in new[] { v0, v1, v2 })
+	using (var w = db.UnitOfWork)
 	{
-		await db
-			.ExecuteAsync(
-				$"INSERT INTO {jsonTable} (value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text
-			)
-			.AuditAsync(
-				none: r => log.Message(r)
-			);
+		foreach (var v in new[] { v0, v1, v2 })
+		{
+			await db
+				.ExecuteAsync(
+					$"INSERT INTO {jsonTable} (value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
+				)
+				.AuditAsync(
+					none: r => log.Message(r)
+				);
+		}
 	}
 	Console.WriteLine();
 
@@ -146,16 +149,37 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Select values using Mapping
 	log.Debug("== Selecting values using mapping ==");
-	Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<ParamTest>());
+	Dapper.SqlMapper.AddTypeHandler(new JsonbTypeHandler<ParamTest>()); // add here so doesn't interfere with earlier tests
 
 	var mapperTest = await db
-		.QuerySingleAsync<JsonTest>(
+		.QuerySingleAsync<EntityTest>(
 			$"SELECT * FROM {jsonTable} WHERE value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 		)
 		.AuditAsync(
 			some: x => { if (x.Value.Id == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
 		);
+	Console.WriteLine();
+
+	// Insert values using repository
+	log.Debug("== Inserting values using repository ==");
+	var v3 = new ParamTest(8, F.Rnd.Str, F.Rnd.Str);
+	var v4 = new ParamTest(19, F.Rnd.Str, F.Rnd.Str);
+	var v5 = new ParamTest(94, F.Rnd.Str, F.Rnd.Str);
+	using (var w = db.UnitOfWork)
+	{
+		foreach (var v in new[] { v3, v4, v5 })
+		{
+			await repo
+				.CreateAsync(
+					new() { Id = new(), Value = v }, w.Transaction
+				)
+				.AuditAsync(
+					some: x => log.Debug("New ID: {Id}", x.Value),
+					none: r => log.Message(r)
+				);
+		}
+	}
 	Console.WriteLine();
 
 	// Drop table

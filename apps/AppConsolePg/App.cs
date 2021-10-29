@@ -16,6 +16,9 @@ internal sealed class App : Jeebs.Apps.ConsoleApp
 		base.ConfigureServices(env, config, services);
 
 		services.AddSingleton<Db>();
+		services.AddTransient<IDb>(p => p.GetRequiredService<Db>());
 		services.AddTransient<IDbClient, PostgreSqlDbClient>();
+
+		services.AddTransient<Repository>();
 	}
 }

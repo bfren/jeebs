@@ -10,5 +10,17 @@ namespace AppConsolePg;
 
 internal class Db : Jeebs.Data.Db
 {
-	public Db(IDbClient client, IOptions<DbConfig> config, ILog<Db> log) : base(client, config.Value.GetConnection("server04"), log) { }
+	public JsonTable Json { get; init; }
+
+	public Db(IDbClient client, IOptions<DbConfig> config, ILog<Db> log) : base(client, config.Value.GetConnection("server04"), log)
+	{
+		Json = new("console");
+
+		Map<EntityTest>.To(Json);
+	}
+
+	static Db()
+	{
+		AddStrongIdTypeHandlers();
+	}
 }

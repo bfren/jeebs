@@ -19,6 +19,11 @@ public abstract partial class DbClient : IDbClient
 		var par = new List<string>();
 		foreach (var column in columns)
 		{
+			if (column.Property.DoNotWriteToDb())
+			{
+				continue;
+			}
+
 			col.Add(Escape(column.Name));
 			par.Add(GetParamRef(column.Alias));
 		}
