@@ -5,6 +5,7 @@ using System.Data;
 using AppConsolePg;
 using Jeebs;
 using Jeebs.Data.Clients.PostgreSql.Parameters;
+using Jeebs.Data.TypeHandlers;
 using Microsoft.Extensions.DependencyInjection;
 
 await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
@@ -14,6 +15,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Get services
 	var db = provider.GetRequiredService<Db>();
+	var repo = provider.GetRequiredService<Repository>();
 	Console.WriteLine();
 
 	// Create table
@@ -49,7 +51,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Debug("== Retrieving data ==");
 	var id = 0;
 	await db
-		.QuerySingleAsync<Test>(
+		.QuerySingleAsync<ParamTest>(
 			$"SELECT * FROM {table} WHERE foo = @foo AND bar = @bar;", new { foo, bar }, CommandType.Text
 		)
 		.AuditAsync(
@@ -70,7 +72,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		);
 
 	await db
-		.QuerySingleAsync<Test>(
+		.QuerySingleAsync<ParamTest>(
 			$"SELECT * FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 		)
 		.AuditAsync(
@@ -114,11 +116,11 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		);
 	Console.WriteLine();
 
-	// Insert value
-	log.Debug("== Inserting values with JSON ==");
-	var v0 = new Test(7, F.Rnd.Str, F.Rnd.Str);
-	var v1 = new Test(18, F.Rnd.Str, F.Rnd.Str);
-	var v2 = new Test(93, F.Rnd.Str, F.Rnd.Str);
+	// Insert values using Jsonb
+	log.Debug("== Inserting values as Jsonb ==");
+	var v0 = new ParamTest(7, F.Rnd.Str, F.Rnd.Str);
+	var v1 = new ParamTest(18, F.Rnd.Str, F.Rnd.Str);
+	var v2 = new ParamTest(93, F.Rnd.Str, F.Rnd.Str);
 	foreach (var v in new[] { v0, v1, v2 })
 	{
 		await db
@@ -131,13 +133,27 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	}
 	Console.WriteLine();
 
-	log.Debug("== Checking JSON insert has worked ==");
-	var value = await db
+	log.Debug("== Checking Jsonb insert has worked ==");
+	var paramTest = await db
 		.QuerySingleAsync<int>(
-			$"SELECT value -> '{nameof(Test.Id).ToCamelCase()}' FROM {jsonTable} WHERE value ->> '{nameof(Test.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+			$"SELECT value -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 		)
 		.AuditAsync(
 			some: x => { if (x == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
+			none: r => log.Message(r)
+		);
+	Console.WriteLine();
+
+	// Select values using Mapping
+	log.Debug("== Selecting values using mapping ==");
+	Dapper.SqlMapper.AddTypeHandler(new JsonTypeHandler<ParamTest>());
+
+	var mapperTest = await db
+		.QuerySingleAsync<JsonTest>(
+			$"SELECT * FROM {jsonTable} WHERE value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+		)
+		.AuditAsync(
+			some: x => { if (x.Value.Id == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
 		);
 	Console.WriteLine();
@@ -153,5 +169,3 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	// Done
 	log.Debug("Done.");
 });
-
-record struct Test(int Id, string Foo, string Bar);
