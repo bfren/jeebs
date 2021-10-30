@@ -14,31 +14,35 @@ public class GetUpdateQuery_Tests
 	public void Returns_Valid_Update_Query_Without_Version()
 	{
 		// Arrange
+		var schema = F.Rnd.Str;
 		var table = F.Rnd.Str;
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
-		var c0 = new Column(table, c0Name, c0Alias);
+		var c0 = new Column($"{schema}.{table}", c0Name, c0Alias);
 
 		var c1Name = F.Rnd.Str;
 		var c1Alias = F.Rnd.Str;
-		var c1 = new Column(table, c1Name, c1Alias);
+		var c1 = new Column($"{schema}.{table}", c1Name, c1Alias);
 
 		var c2Name = F.Rnd.Str;
 		var c2Alias = F.Rnd.Str;
 		var c2Property = Substitute.ForPartsOf<PropertyInfo>();
 		c2Property.Name.Returns(c2Alias);
-		var c2 = new MappedColumn(table, c2Name, c2Property);
+		var c2 = new MappedColumn($"{schema}.{table}", c2Name, c2Property);
 
 		var list = new ColumnList(new[] { c0, c1 });
 		var client = new PostgreSqlDbClient();
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"UPDATE {table} SET {c0Name} = @{c0Alias}, {c1Name} = @{c1Alias} WHERE {c2Name} = {id};";
+		var expected = $"UPDATE \"{schema}\".\"{table}\"" +
+			$" SET \"{c0Name}\" = @{c0Alias}," +
+			$" \"{c1Name}\" = @{c1Alias}" +
+			$" WHERE \"{c2Name}\" = {id};";
 
 		// Act
-		var result = client.GetUpdateQueryTest(table, list, c2, id);
+		var result = client.GetUpdateQueryTest($"{schema}.{table}", list, c2, id);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -75,7 +79,12 @@ public class GetUpdateQuery_Tests
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"UPDATE {table} SET {c0Name} = @{c0Alias}, {c1Name} = @{c1Alias}, {c3Name} = @{c3Alias} + 1 WHERE {c2Name} = {id} AND {c3Name} = @{c3Alias};";
+		var expected = $"UPDATE \"{table}\" SET" +
+			$" \"{c0Name}\" = @{c0Alias}," +
+			$" \"{c1Name}\" = @{c1Alias}," +
+			$" \"{c3Name}\" = @{c3Alias} + 1" +
+			$" WHERE \"{c2Name}\" = {id}" +
+			$" AND \"{c3Name}\" = @{c3Alias};";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id, c3);

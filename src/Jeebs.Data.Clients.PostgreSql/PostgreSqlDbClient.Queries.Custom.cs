@@ -123,7 +123,7 @@ public partial class PostgreSqlDbClient : DbClient
 			// Add OFFSET
 			if (parts.Skip > 0)
 			{
-				sql.Append($" LIMIT {parts.Skip}, {parts.Maximum}");
+				sql.Append($" LIMIT {parts.Maximum} OFFSET {parts.Skip}");
 			}
 			else
 			{

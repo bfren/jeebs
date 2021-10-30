@@ -21,7 +21,7 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name) + $" AS {column.Alias}",
+				Escape(column.Name) + $" AS {Escape(column.Alias)}",
 
 			false =>
 				Escape(column.Name)
@@ -32,7 +32,7 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name, column.Table) + $" AS {column.Alias}",
+				Escape(column.Name, column.Table) + $" AS {Escape(column.Alias)}",
 
 			false =>
 				Escape(column.Name, column.Table)
@@ -43,12 +43,15 @@ public partial class PostgreSqlDbClient : DbClient
 		Escape(table.GetName());
 
 	/// <inheritdoc/>
-	public override string Escape(string columnOrTable) =>
-		columnOrTable;
+	public override string Escape(string columnOrTable)
+	{
+		var elements = columnOrTable.Split('.');
+		return @"""" + string.Join(@""".""", elements) + @"""";
+	}
 
 	/// <inheritdoc/>
 	public override string Escape(string column, string table) =>
-		Escape(table) + "." + Escape(column);
+		Escape($"{table}.{column}");
 
 	/// <inheritdoc/>
 	public override string GetOperator(Compare cmp) =>
