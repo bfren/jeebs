@@ -3,7 +3,7 @@
 
 using SimpleMigrations;
 
-namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
+namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 
 /// <summary>
 /// Migration: Add update last sign in procedure
@@ -17,19 +17,12 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE DEFINER=`%`@`%` PROCEDURE `UpdateUserLastSignIn`(
-				IN `Id` BIGINT
-			)
-			LANGUAGE SQL
-			NOT DETERMINISTIC
-			CONTAINS SQL
-			SQL SECURITY DEFINER
-			COMMENT ''
-			BEGIN
-
-			UPDATE `auth.user` SET `UserLastSignedIn` = NOW() WHERE `UserId` = Id;
-
-			END
+			CREATE OR REPLACE PROCEDURE ""auth"".""UpdateUserLastSignIn""(
+				id integer DEFAULT 0)
+			LANGUAGE 'sql'
+			AS $BODY$
+			UPDATE ""auth"".""user"" SET ""UserLastSignedIn"" = NOW() WHERE ""UserId"" = id;
+			$BODY$;
 		");
 	}
 
@@ -38,6 +31,6 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute("DROP PROCEDURE `UpdateUserLastSignIn`;");
+		Execute(@"DROP PROCEDURE IF EXISTS ""auth"".""UpdateUserLastSignIn""(integer);;");
 	}
 }

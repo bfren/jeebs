@@ -3,7 +3,7 @@
 
 using SimpleMigrations;
 
-namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
+namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 
 /// <summary>
 /// Migration: Add user role table
@@ -17,14 +17,14 @@ public sealed class AddUserRoleTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE `auth.user_role` (
-				`UserRoleId` INT(11) NOT NULL AUTO_INCREMENT,
-				`UserId` INT(11) NOT NULL,
-				`RoleId` INT(11) NOT NULL,
-				PRIMARY KEY (`UserRoleId`) USING BTREE
+			CREATE TABLE ""auth"".""user_role""
+			(
+				""UserRoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+				""UserId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+				""RoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+				CONSTRAINT ""UserRoleId_Key"" PRIMARY KEY(""UserRoleId"")
 			)
-			COLLATE='utf8_general_ci'
-			ENGINE=InnoDB
+			TABLESPACE pg_default
 			;
 		");
 	}
@@ -34,6 +34,6 @@ public sealed class AddUserRoleTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute("DROP TABLE `auth.user_role`;");
+		Execute(@"DROP TABLE IF EXISTS ""auth"".""user_role"";");
 	}
 }

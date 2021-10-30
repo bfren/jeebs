@@ -5,5 +5,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Auth.Abstractions\Jeebs.Auth.Abstractions.csproj" />
 		<ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
+		<ProjectReference Include="..\Jeebs.Data.Clients.PostgreSQL\Jeebs.Data.Clients.PostgreSql.csproj" />
 	</ItemGroup>
 </Project>
