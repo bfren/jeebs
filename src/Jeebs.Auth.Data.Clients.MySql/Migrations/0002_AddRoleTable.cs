@@ -17,7 +17,7 @@ public sealed class AddRoleTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE `auth.role` (
+			CREATE TABLE `Auth.Role` (
 				`RoleId` INT(11) NOT NULL AUTO_INCREMENT,
 				`RoleName` VARCHAR(64) NOT NULL COLLATE 'utf8_general_ci',
 				`RoleDescription` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
@@ -33,6 +33,6 @@ public sealed class AddRoleTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute("DROP TABLE `auth.role`;");
+		Execute("DROP TABLE `Auth.Role`;");
 	}
 }

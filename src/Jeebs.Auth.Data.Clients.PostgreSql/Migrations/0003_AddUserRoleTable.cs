@@ -17,7 +17,7 @@ public sealed class AddUserRoleTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE ""auth"".""user_role""
+			CREATE TABLE ""Auth"".""UserRole""
 			(
 				""UserRoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
 				""UserId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -34,6 +34,6 @@ public sealed class AddUserRoleTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute(@"DROP TABLE IF EXISTS ""auth"".""user_role"";");
+		Execute(@"DROP TABLE IF EXISTS ""Auth"".""UserRole"";");
 	}
 }

@@ -17,7 +17,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE DEFINER=`%`@`%` PROCEDURE `UpdateUserLastSignIn`(
+			CREATE DEFINER=`%`@`%` PROCEDURE `Auth.UpdateUserLastSignIn`(
 				IN `Id` BIGINT
 			)
 			LANGUAGE SQL
@@ -27,7 +27,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 			COMMENT ''
 			BEGIN
 
-			UPDATE `auth.user` SET `UserLastSignedIn` = NOW() WHERE `UserId` = Id;
+			UPDATE `Auth`.`User` SET `UserLastSignedIn` = NOW() WHERE `UserId` = Id;
 
 			END
 		");
@@ -38,6 +38,6 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute("DROP PROCEDURE `UpdateUserLastSignIn`;");
+		Execute("DROP PROCEDURE `Auth.UpdateUserLastSignIn`;");
 	}
 }

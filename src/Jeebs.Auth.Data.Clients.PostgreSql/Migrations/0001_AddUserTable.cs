@@ -17,7 +17,7 @@ public sealed class AddUserTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE IF NOT EXISTS auth.""user""
+			CREATE TABLE IF NOT EXISTS ""Auth"".""User""
 			(
 				""UserId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
 				""UserVersion"" integer NOT NULL DEFAULT 0,
@@ -44,6 +44,6 @@ public sealed class AddUserTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute(@"DROP TABLE IF EXISTS auth.""user"";");
+		Execute(@"DROP TABLE IF EXISTS ""Auth"".""User"";");
 	}
 }

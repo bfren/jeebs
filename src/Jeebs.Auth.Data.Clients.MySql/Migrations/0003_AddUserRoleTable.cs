@@ -17,7 +17,7 @@ public sealed class AddUserRoleTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE `auth.user_role` (
+			CREATE TABLE `Auth.UserRole` (
 				`UserRoleId` INT(11) NOT NULL AUTO_INCREMENT,
 				`UserId` INT(11) NOT NULL,
 				`RoleId` INT(11) NOT NULL,
@@ -34,6 +34,6 @@ public sealed class AddUserRoleTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute("DROP TABLE `auth.user_role`;");
+		Execute("DROP TABLE `Auth.UserRole`;");
 	}
 }

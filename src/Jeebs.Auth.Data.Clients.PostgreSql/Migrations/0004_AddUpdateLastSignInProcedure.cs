@@ -17,11 +17,11 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE OR REPLACE PROCEDURE ""auth"".""UpdateUserLastSignIn""(
+			CREATE OR REPLACE PROCEDURE ""Auth"".""UpdateUserLastSignIn""(
 				id integer DEFAULT 0)
 			LANGUAGE 'sql'
 			AS $BODY$
-			UPDATE ""auth"".""user"" SET ""UserLastSignedIn"" = NOW() WHERE ""UserId"" = id;
+			UPDATE ""Auth"".""User"" SET ""UserLastSignedIn"" = NOW() WHERE ""UserId"" = id;
 			$BODY$;
 		");
 	}
@@ -31,6 +31,6 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute(@"DROP PROCEDURE IF EXISTS ""auth"".""UpdateUserLastSignIn""(integer);;");
+		Execute(@"DROP PROCEDURE IF EXISTS ""Auth"".""UpdateUserLastSignIn""(integer);;");
 	}
 }

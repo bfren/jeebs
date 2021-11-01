@@ -17,7 +17,7 @@ public sealed class AddUserTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE `auth.user` (
+			CREATE TABLE `Auth.User` (
 				`UserId` INT(11) NOT NULL AUTO_INCREMENT,
 				`UserVersion` INT(11) NOT NULL DEFAULT '0',
 				`UserEmailAddress` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
@@ -44,6 +44,6 @@ public sealed class AddUserTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute("DROP TABLE `auth.user`;");
+		Execute("DROP TABLE `Auth.User`;");
 	}
 }

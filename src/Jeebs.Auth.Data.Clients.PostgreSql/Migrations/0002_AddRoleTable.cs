@@ -17,7 +17,7 @@ public sealed class AddRoleTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE IF NOT EXISTS ""auth"".""role""
+			CREATE TABLE IF NOT EXISTS ""Auth"".""Role""
 			(
 				""RoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
 				""RoleName"" character(64) COLLATE pg_catalog.default NOT NULL,
@@ -35,6 +35,6 @@ public sealed class AddRoleTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute(@"DROP TABLE IF EXISTS ""auth"".""role"";");
+		Execute(@"DROP TABLE IF EXISTS ""Auth"".""Role"";");
 	}
 }
