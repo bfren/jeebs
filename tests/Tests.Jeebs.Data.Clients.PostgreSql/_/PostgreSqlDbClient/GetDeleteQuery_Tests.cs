@@ -15,22 +15,23 @@ public class GetDeleteQuery_Tests
 	{
 		// Arrange
 		var schema = F.Rnd.Str;
-		var table = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
-		var c0 = new MappedColumn($"{schema}.{table}", c0Name, c0Property);
+		var c0 = new MappedColumn(table, c0Name, c0Property);
 
 		var client = new PostgreSqlDbClient();
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"DELETE FROM \"{schema}\".\"{table}\" WHERE \"{c0Name}\" = {id};";
+		var expected = $"DELETE FROM \"{schema}\".\"{name}\" WHERE \"{c0Name}\" = {id};";
 
 		// Act
-		var result = client.GetDeleteQueryTest($"{schema}.{table}", c0, id);
+		var result = client.GetDeleteQueryTest(table, c0, id);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -41,28 +42,29 @@ public class GetDeleteQuery_Tests
 	{
 		// Arrange
 		var schema = F.Rnd.Str;
-		var table = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
-		var c0 = new MappedColumn($"{schema}.{table}", c0Name, c0Property);
+		var c0 = new MappedColumn(table, c0Name, c0Property);
 
 		var c1Name = F.Rnd.Str;
 		var c1Alias = F.Rnd.Str;
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
 		c1Property.Name.Returns(c1Alias);
-		var c1 = new MappedColumn($"{schema}.{table}", c1Name, c1Property);
+		var c1 = new MappedColumn(table, c1Name, c1Property);
 
 		var client = new PostgreSqlDbClient();
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"DELETE FROM \"{schema}\".\"{table}\" WHERE \"{c0Name}\" = {id} AND \"{c1Name}\" = @{c1Alias};";
+		var expected = $"DELETE FROM \"{schema}\".\"{name}\" WHERE \"{c0Name}\" = {id} AND \"{c1Name}\" = @{c1Alias};";
 
 		// Act
-		var result = client.GetDeleteQueryTest($"{schema}.{table}", c0, id, c1);
+		var result = client.GetDeleteQueryTest(table, c0, id, c1);
 
 		// Assert
 		Assert.Equal(expected, result);

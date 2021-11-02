@@ -14,7 +14,9 @@ public class GetDeleteQuery_Tests
 	public void Returns_Valid_Delete_Query_Without_Version()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -26,7 +28,7 @@ public class GetDeleteQuery_Tests
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = {id};";
+		var expected = $"DELETE FROM `{schema}.{name}` WHERE `{c0Name}` = {id};";
 
 		// Act
 		var result = client.GetDeleteQueryTest(table, c0, id);
@@ -39,7 +41,9 @@ public class GetDeleteQuery_Tests
 	public void Returns_Valid_Delete_Query_With_Version()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -57,7 +61,7 @@ public class GetDeleteQuery_Tests
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"DELETE FROM `{table}` WHERE `{c0Name}` = {id} AND `{c1Name}` = @{c1Alias};";
+		var expected = $"DELETE FROM `{schema}.{name}` WHERE `{c0Name}` = {id} AND `{c1Name}` = @{c1Alias};";
 
 		// Act
 		var result = client.GetDeleteQueryTest(table, c0, id, c1);

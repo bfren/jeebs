@@ -14,7 +14,9 @@ public class GetUpdateQuery_Tests
 	public void Returns_Valid_Update_Query_Without_Version()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -35,7 +37,10 @@ public class GetUpdateQuery_Tests
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"UPDATE [{table}] SET [{c0Name}] = @{c0Alias}, [{c1Name}] = @{c1Alias} WHERE [{c2Name}] = {id}";
+		var expected = $"UPDATE [{schema}].[{name}] SET" +
+			$" [{c0Name}] = @{c0Alias}," +
+			$" [{c1Name}] = @{c1Alias}" +
+			$" WHERE [{c2Name}] = {id}";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id);
@@ -48,7 +53,9 @@ public class GetUpdateQuery_Tests
 	public void Returns_Valid_Update_Query_With_Version()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -75,7 +82,12 @@ public class GetUpdateQuery_Tests
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"UPDATE [{table}] SET [{c0Name}] = @{c0Alias}, [{c1Name}] = @{c1Alias}, [{c3Name}] = @{c3Alias} + 1 WHERE [{c2Name}] = {id} AND [{c3Name}] = @{c3Alias}";
+		var expected = $"UPDATE [{schema}].[{name}] SET" +
+			$" [{c0Name}] = @{c0Alias}," +
+			$" [{c1Name}] = @{c1Alias}," +
+			$" [{c3Name}] = @{c3Alias} + 1" +
+			$" WHERE [{c2Name}] = {id}" +
+			$" AND [{c3Name}] = @{c3Alias}";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id, c3);

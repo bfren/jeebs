@@ -10,7 +10,7 @@ public partial class PostgreSqlDbClient : DbClient
 {
 	/// <inheritdoc/>
 	protected override string GetCreateQuery(
-		string table,
+		ITableName table,
 		IMappedColumnList columns
 	)
 	{
@@ -28,7 +28,7 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetRetrieveQuery(
-		string table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		long id
@@ -48,7 +48,7 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		string table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		long id
@@ -57,7 +57,7 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		string table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		long id,
@@ -87,7 +87,7 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		string table,
+		ITableName table,
 		IColumn idColumn,
 		long id
 	) =>
@@ -95,7 +95,7 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		string table,
+		ITableName table,
 		IColumn idColumn,
 		long id,
 		IColumn? versionColumn

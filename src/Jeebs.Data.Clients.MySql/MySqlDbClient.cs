@@ -17,6 +17,14 @@ public partial class MySqlDbClient : DbClient
 		new MySqlConnection(connectionString);
 
 	/// <inheritdoc/>
+	public override string Escape(ITableName table) =>
+		Escape(table.GetFullName(s => s));
+
+	/// <inheritdoc/>
+	public override string Escape(ITableName table, string column) =>
+		Escape(table) + "." + Escape(column);
+
+	/// <inheritdoc/>
 	public override string Escape(IColumn column, bool withAlias = false) =>
 		withAlias switch
 		{
@@ -32,23 +40,15 @@ public partial class MySqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name, column.Table) + $" AS '{column.Alias}'",
+				Escape(column.Table, column.Name) + $" AS '{column.Alias}'",
 
 			false =>
-				Escape(column.Name, column.Table)
+				Escape(column.Table, column.Name)
 		};
 
 	/// <inheritdoc/>
-	public override string Escape(ITable table) =>
-		Escape(table.GetName());
-
-	/// <inheritdoc/>
-	public override string Escape(string columnOrTable) =>
-		$"`{columnOrTable}`";
-
-	/// <inheritdoc/>
-	public override string Escape(string column, string table) =>
-		Escape(table) + "." + Escape(column);
+	public override string Escape(string obj) =>
+		$"`{obj}`";
 
 	/// <inheritdoc/>
 	public override string GetOperator(Compare cmp) =>

@@ -14,7 +14,9 @@ public class GetRetrieveQuery_Tests
 	public void Returns_Valid_Select_Query()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -35,7 +37,11 @@ public class GetRetrieveQuery_Tests
 
 		var id = F.Rnd.Lng;
 
-		var expected = $"SELECT [{c0Name}] AS [{c0Alias}], [{c1Name}] AS [{c1Alias}] FROM [{table}] WHERE [{c2Name}] = {id}";
+		var expected = "SELECT" +
+			$" [{c0Name}] AS [{c0Alias}]," +
+			$" [{c1Name}] AS [{c1Alias}]" +
+			$" FROM [{schema}].[{name}]" +
+			$" WHERE [{c2Name}] = {id}";
 
 		// Act
 		var result = client.GetRetrieveQueryTest(table, list, c2, id);

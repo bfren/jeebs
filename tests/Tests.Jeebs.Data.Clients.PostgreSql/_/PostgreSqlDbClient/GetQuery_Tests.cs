@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Data.Clients.PostgreSql.MySqlDbClient_Tests;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -16,7 +15,9 @@ public class GetQuery_Tests
 	public void With_Predicates_Returns_Valid_Select_Query()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -45,8 +46,9 @@ public class GetQuery_Tests
 		var client = new PostgreSqlDbClient();
 
 		var expected = "SELECT" +
-			$" \"{c0Name}\" AS \"{c0Alias}\", \"{c1Name}\" AS \"{c1Alias}\"" +
-			$" FROM \"{table}\"" +
+			$" \"{c0Name}\" AS \"{c0Alias}\"," +
+			$" \"{c1Name}\" AS \"{c1Alias}\"" +
+			$" FROM \"{schema}\".\"{name}\"" +
 			$" WHERE \"{p0Column.Name}\" LIKE @P0" +
 			$" AND \"{p1Column.Name}\" >= @P1;";
 
@@ -73,23 +75,23 @@ public class GetQuery_Tests
 	public void With_Parts_Escapes_From_Table()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
-		var parts = new QueryParts(table);
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table);
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
 
 		// Assert
-		Assert.Contains(client.Escape(table.GetName()), query);
+		Assert.Contains($"\"{v.Schema}\".\"{v.Name}\"", query);
 	}
 
 	[Fact]
 	public void With_Parts_SelectCount_True_Selects_Count()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
-		var parts = new QueryParts(table) with { SelectCount = true };
-		var expected = $"SELECT COUNT(*) FROM \"{table.GetName()}\";";
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table) with { SelectCount = true };
+		var expected = $"SELECT COUNT(*) FROM \"{v.Schema}\".\"{v.Name}\";";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -102,9 +104,9 @@ public class GetQuery_Tests
 	public void With_Parts_Select_Empty_Selects_All()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
-		var parts = new QueryParts(table);
-		var expected = $"SELECT * FROM \"{table.GetName()}\";";
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table);
+		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\";";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -117,22 +119,22 @@ public class GetQuery_Tests
 	public void With_Parts_Select_List_Escapes_With_Alias_And_Joins_Columns()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
-		var c0 = new Column(table, c0Name, c0Alias);
+		var c0 = new Column(v.Table, c0Name, c0Alias);
 		var c1Name = F.Rnd.Str;
 		var c1Alias = F.Rnd.Str;
-		var c1 = new Column(table, c1Name, c1Alias);
-		var parts = new QueryParts(table)
+		var c1 = new Column(v.Table, c1Name, c1Alias);
+		var parts = new QueryParts(v.Table)
 		{
 			Select = new ColumnList(new[] { c0, c1 })
 		};
 		var expected = "SELECT" +
-			$" \"{table.GetName()}\".\"{c0Name}\" AS \"{c0Alias}\"," +
-			$" \"{table.GetName()}\".\"{c1Name}\" AS \"{c1Alias}\"" +
-			$" FROM \"{table.GetName()}\";";
+			$" \"{v.Schema}\".\"{v.Name}\".\"{c0Name}\" AS \"{c0Alias}\"," +
+			$" \"{v.Schema}\".\"{v.Name}\".\"{c1Name}\" AS \"{c1Alias}\"" +
+			$" FROM \"{v.Schema}\".\"{v.Name}\";";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -144,27 +146,29 @@ public class GetQuery_Tests
 	private static void Test_Joins(Func<QueryParts, ImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
 	{
 		// Arrange
-		var (client, fromTable) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 
 		var fromName = F.Rnd.Str;
-		var from = new Column(fromTable, fromName, F.Rnd.Str);
+		var from = new Column(v.Table, fromName, F.Rnd.Str);
 
-		var to0Table = F.Rnd.Str;
+		var to0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
 		var to0Name = F.Rnd.Str;
 		var to0 = new Column(to0Table, to0Name, F.Rnd.Str);
 
-		var to1Table = F.Rnd.Str;
+		var to1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
 		var to1Name = F.Rnd.Str;
 		var to1 = new Column(to1Table, to1Name, F.Rnd.Str);
 
 		var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
 
-		var parts = setJoin(new(fromTable), join);
+		var parts = setJoin(new(v.Table), join);
 
 		var expected = "SELECT" +
-			$" * FROM \"{fromTable.GetName()}\"" +
-			$" {joinType} JOIN \"{to0Table}\" ON \"{fromTable.GetName()}\".\"{fromName}\" = \"{to0Table}\".\"{to0Name}\"" +
-			$" {joinType} JOIN \"{to1Table}\" ON \"{to0Table}\".\"{to0Name}\" = \"{to1Table}\".\"{to1Name}\";";
+			$" * FROM \"{v.Schema}\".\"{v.Name}\"" +
+			$" {joinType} JOIN \"{to0Table.Schema}\".\"{to0Table.Name}\"" +
+			$" ON \"{v.Schema}\".\"{v.Name}\".\"{fromName}\" = \"{to0Table.Schema}\".\"{to0Table.Name}\".\"{to0Name}\"" +
+			$" {joinType} JOIN \"{to1Table.Schema}\".\"{to1Table.Name}\"" +
+			$" ON \"{to0Table.Schema}\".\"{to0Table.Name}\".\"{to0Name}\" = \"{to1Table.Schema}\".\"{to1Table.Name}\".\"{to1Name}\";";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -195,13 +199,13 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Where_Columns_With_Table_Names()
 	{
 		// Arrange
-		var (client, fromTable) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 
-		var c0Table = F.Rnd.Str;
+		var c0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
 		var c0Name = F.Rnd.Str;
 		var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
 
-		var c1Table = F.Rnd.Str;
+		var c1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
 		var c1Name = F.Rnd.Str;
 		var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
 
@@ -211,9 +215,12 @@ public class GetQuery_Tests
 			(c1, Compare.MoreThanOrEqual, F.Rnd.Int)
 		});
 
-		var parts = new QueryParts(fromTable) { Where = where };
+		var parts = new QueryParts(v.Table) { Where = where };
 
-		var expected = $"SELECT * FROM \"{fromTable.GetName()}\" WHERE \"{c0Table}\".\"{c0Name}\" LIKE @P0 AND \"{c1Table}\".\"{c1Name}\" >= @P1;";
+		var expected = "SELECT *" +
+			$" FROM \"{v.Schema}\".\"{v.Name}\"" +
+			$" WHERE \"{c0Table.Schema}\".\"{c0Table.Name}\".\"{c0Name}\" LIKE @P0" +
+			$" AND \"{c1Table.Schema}\".\"{c1Table.Name}\".\"{c1Name}\" >= @P1;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -226,7 +233,7 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Custom_Where_Clause_And_Parameters()
 	{
 		// Arrange
-		var (client, fromTable) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 
 		var w0 = F.Rnd.Str;
 		var w1 = F.Rnd.Str;
@@ -243,7 +250,7 @@ public class GetQuery_Tests
 			{ nameof(p2), p2 }
 		};
 
-		var parts = new QueryParts(fromTable)
+		var parts = new QueryParts(v.Table)
 		{
 			WhereCustom = ImmutableList.Create(new (string, IQueryParameters)[]
 			{
@@ -252,7 +259,7 @@ public class GetQuery_Tests
 			})
 		};
 
-		var expected = $"SELECT * FROM \"{fromTable.GetName()}\" WHERE ({w0}) AND ({w1});";
+		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" WHERE ({w0}) AND ({w1});";
 
 		// Act
 		var (query, param) = client.GetQuery(parts);
@@ -282,14 +289,14 @@ public class GetQuery_Tests
 	public void With_Parts_Sets_Parameters()
 	{
 		// Arrange
-		var (client, fromTable) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 
-		var c0Table = F.Rnd.Str;
+		var c0Table = new TableName(F.Rnd.Str);
 		var c0Name = F.Rnd.Str;
 		var c0Value = F.Rnd.Str;
 		var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
 
-		var c1Table = F.Rnd.Str;
+		var c1Table = new TableName(F.Rnd.Str);
 		var c1Name = F.Rnd.Str;
 		var c1Value = F.Rnd.Int;
 		var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
@@ -300,7 +307,7 @@ public class GetQuery_Tests
 			(c1, Compare.MoreThanOrEqual, c1Value)
 		});
 
-		var parts = new QueryParts(fromTable) { Where = where };
+		var parts = new QueryParts(v.Table) { Where = where };
 
 		// Act
 		var (_, param) = client.GetQuery(parts);
@@ -324,13 +331,13 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Order_By_Random()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
-		var parts = new QueryParts(table)
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table)
 		{
 			SortRandom = true
 		};
 
-		var expected = $"SELECT * FROM \"{table.GetName()}\" ORDER BY RAND();";
+		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" ORDER BY RAND();";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -343,17 +350,17 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Order_By_With_Table_Name()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 
-		var sort0Table = F.Rnd.Str;
+		var sort0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
 		var sort0Name = F.Rnd.Str;
 		var sort0 = new Column(sort0Table, sort0Name, F.Rnd.Str);
 
-		var sort1Table = F.Rnd.Str;
+		var sort1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
 		var sort1Name = F.Rnd.Str;
 		var sort1 = new Column(sort1Table, sort1Name, F.Rnd.Str);
 
-		var parts = new QueryParts(table)
+		var parts = new QueryParts(v.Table)
 		{
 			Sort = ImmutableList.Create(new (IColumn, SortOrder)[]
 			{
@@ -363,9 +370,9 @@ public class GetQuery_Tests
 		};
 
 		var expected = "SELECT" +
-			$" * FROM \"{table.GetName()}\" ORDER BY" +
-			$" \"{sort0Table}\".\"{sort0Name}\" ASC," +
-			$" \"{sort1Table}\".\"{sort1Name}\" DESC;";
+			$" * FROM \"{v.Schema}\".\"{v.Name}\" ORDER BY" +
+			$" \"{sort0Table.Schema}\".\"{sort0Table.Name}\".\"{sort0Name}\" ASC," +
+			$" \"{sort1Table.Schema}\".\"{sort1Table.Name}\".\"{sort1Name}\" DESC;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -378,10 +385,10 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Limit()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 		var max = F.Rnd.Ulng;
-		var parts = new QueryParts(table) { Maximum = max };
-		var expected = $"SELECT * FROM \"{table.GetName()}\" LIMIT {max};";
+		var parts = new QueryParts(v.Table) { Maximum = max };
+		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" LIMIT {max};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -394,11 +401,11 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Limit_And_Offset()
 	{
 		// Arrange
-		var (client, table) = PostgreSqlDbClient_Setup.Get();
+		var (client, v) = PostgreSqlDbClient_Setup.Get();
 		var skip = F.Rnd.Ulng;
 		var max = F.Rnd.Ulng;
-		var parts = new QueryParts(table) { Skip = skip, Maximum = max };
-		var expected = $"SELECT * FROM \"{table.GetName()}\" LIMIT {max} OFFSET {skip};";
+		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
+		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" LIMIT {max} OFFSET {skip};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);

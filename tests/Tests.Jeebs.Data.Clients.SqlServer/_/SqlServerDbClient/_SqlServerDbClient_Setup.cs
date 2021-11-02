@@ -6,15 +6,23 @@ using NSubstitute;
 
 namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests;
 
-public static class SqlServerClient_Setup
+public static class SqlServerDbClient_Setup
 {
-	public static (SqlServerDbClient client, ITable table) Get()
+	public static (SqlServerDbClient client, Vars v) Get()
 	{
-		var tableName = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(tableName);
 		var client = new SqlServerDbClient();
 
-		return (client, table);
+		return (client, new(table, schema, name));
 	}
+
+	public record class Vars(
+		ITable Table,
+		string Schema,
+		string Name
+	);
 }

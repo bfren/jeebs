@@ -16,7 +16,9 @@ public class GetCreateQuery_Tests
 	public void Returns_Valid_Insert_Query()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
@@ -35,7 +37,7 @@ public class GetCreateQuery_Tests
 		var list = new MappedColumnList(new[] { c0, c1 });
 		var client = new SqlServerDbClient();
 
-		var expected = $"INSERT INTO [{table}] ([{c0Name}], [{c1Name}]) VALUES (@{c0Alias}, @{c1Alias}); " +
+		var expected = $"INSERT INTO [{schema}].[{name}] ([{c0Name}], [{c1Name}]) VALUES (@{c0Alias}, @{c1Alias}); " +
 			"SELECT SCOPE_IDENTITY();";
 
 		// Act

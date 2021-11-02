@@ -14,7 +14,7 @@ public partial class MySqlDbClient : DbClient
 {
 	/// <inheritdoc/>
 	protected override (string query, IQueryParameters param) GetQuery(
-		string table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	)
@@ -57,19 +57,19 @@ public partial class MySqlDbClient : DbClient
 		// Add INNER JOIN
 		foreach (var (from, to) in parts.InnerJoin)
 		{
-			sql.Append($" INNER JOIN {Escape(to.Table)} ON {Escape(from.Name, from.Table)} = {Escape(to.Name, to.Table)}");
+			sql.Append($" INNER JOIN {Escape(to.Table)} ON {Escape(from.Table, from.Name)} = {Escape(to.Table, to.Name)}");
 		}
 
 		// Add LEFT JOIN
 		foreach (var (from, to) in parts.LeftJoin)
 		{
-			sql.Append($" LEFT JOIN {Escape(to.Table)} ON {Escape(from.Name, from.Table)} = {Escape(to.Name, to.Table)}");
+			sql.Append($" LEFT JOIN {Escape(to.Table)} ON {Escape(from.Table, from.Name)} = {Escape(to.Table, to.Name)}");
 		}
 
 		// Add RIGHT JOIN
 		foreach (var (from, to) in parts.RightJoin)
 		{
-			sql.Append($" RIGHT JOIN {Escape(to.Table)} ON {Escape(from.Name, from.Table)} = {Escape(to.Name, to.Table)}");
+			sql.Append($" RIGHT JOIN {Escape(to.Table)} ON {Escape(from.Table, from.Name)} = {Escape(to.Table, to.Name)}");
 		}
 
 		// Add WHERE
@@ -111,7 +111,7 @@ public partial class MySqlDbClient : DbClient
 			var orderBy = new List<string>();
 			foreach (var (column, order) in parts.Sort)
 			{
-				orderBy.Add($"{Escape(column.Name, column.Table)} {order.ToOperator()}");
+				orderBy.Add($"{Escape(column.Table, column.Name)} {order.ToOperator()}");
 			}
 
 			sql.Append($" ORDER BY {JoinList(orderBy, false)}");

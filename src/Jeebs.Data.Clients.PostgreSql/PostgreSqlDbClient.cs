@@ -17,11 +17,19 @@ public partial class PostgreSqlDbClient : DbClient
 		new NpgsqlConnection(connectionString);
 
 	/// <inheritdoc/>
+	public override string Escape(ITableName table) =>
+		table.GetFullName(Escape);
+
+	/// <inheritdoc/>
+	public override string Escape(ITableName table, string column) =>
+		Escape(table) + "." + Escape(column);
+
+	/// <inheritdoc/>
 	public override string Escape(IColumn column, bool withAlias = false) =>
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name) + $" AS {Escape(column.Alias)}",
+				Escape(column.Name) + " AS " + Escape(column.Alias),
 
 			false =>
 				Escape(column.Name)
@@ -32,26 +40,15 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name, column.Table) + $" AS {Escape(column.Alias)}",
+				Escape(column.Table, column.Name) + " AS " + Escape(column.Alias),
 
 			false =>
-				Escape(column.Name, column.Table)
+				Escape(column.Table, column.Name)
 		};
 
 	/// <inheritdoc/>
-	public override string Escape(ITable table) =>
-		Escape(table.GetName());
-
-	/// <inheritdoc/>
-	public override string Escape(string columnOrTable)
-	{
-		var elements = columnOrTable.Split('.');
-		return @"""" + string.Join(@""".""", elements) + @"""";
-	}
-
-	/// <inheritdoc/>
-	public override string Escape(string column, string table) =>
-		Escape($"{table}.{column}");
+	public override string Escape(string obj) =>
+		@$"""{obj}""";
 
 	/// <inheritdoc/>
 	public override string GetOperator(Compare cmp) =>

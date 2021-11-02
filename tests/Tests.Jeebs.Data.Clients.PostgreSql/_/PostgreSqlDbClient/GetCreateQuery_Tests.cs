@@ -17,30 +17,31 @@ public class GetCreateQuery_Tests
 	{
 		// Arrange
 		var schema = F.Rnd.Str;
-		var table = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
 
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
 		c0Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
-		var c0 = new MappedColumn($"{schema}.{table}", c0Name, c0Property);
+		var c0 = new MappedColumn(table, c0Name, c0Property);
 
 		var c1Name = F.Rnd.Str;
 		var c1Alias = F.Rnd.Str;
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
 		c1Property.Name.Returns(c1Alias);
 		c1Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
-		var c1 = new MappedColumn($"{schema}.{table}", c1Name, c1Property);
+		var c1 = new MappedColumn(table, c1Name, c1Property);
 
 		var list = new MappedColumnList(new[] { c0, c1 });
 		var client = new PostgreSqlDbClient();
 
-		var expected = $"INSERT INTO \"{schema}\".\"{table}\" (\"{c0Name}\", \"{c1Name}\") VALUES (@{c0Alias}, @{c1Alias}); " +
+		var expected = $"INSERT INTO \"{schema}\".\"{name}\" (\"{c0Name}\", \"{c1Name}\") VALUES (@{c0Alias}, @{c1Alias}); " +
 			"SELECT LASTVAL();";
 
 		// Act
-		var result = client.GetCreateQueryTest($"{schema}.{table}", list);
+		var result = client.GetCreateQueryTest(table, list);
 
 		// Assert
 		Assert.Equal(expected, result);
