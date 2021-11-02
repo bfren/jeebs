@@ -11,6 +11,12 @@ namespace Jeebs.Auth.Data;
 public interface IAuthDbClient : IDbClient
 {
 	/// <summary>
+	/// Nuke database (i.e. migrate to 0
+	/// </summary>
+	/// <param name="connectionString">Connection string</param>
+	void Nuke(string connectionString);
+
+	/// <summary>
 	/// Migrate to the latest version of the Authentication database
 	/// </summary>
 	/// <param name="connectionString">Connection string</param>

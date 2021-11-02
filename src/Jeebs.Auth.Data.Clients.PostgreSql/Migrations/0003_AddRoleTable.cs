@@ -6,10 +6,10 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 
 /// <summary>
-/// Migration: Add user role table
+/// Migration: Add role table
 /// </summary>
-[Migration(3, "Add user role table")]
-public sealed class AddUserRoleTable : Migration
+[Migration(3, "Add role table")]
+public sealed class AddRoleTable : Migration
 {
 	/// <summary>
 	/// Migrate up
@@ -17,12 +17,13 @@ public sealed class AddUserRoleTable : Migration
 	protected override void Up()
 	{
 		Execute(@"
-			CREATE TABLE ""Auth"".""UserRole""
+			CREATE TABLE IF NOT EXISTS ""Auth"".""Role""
 			(
-				""UserRoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-				""UserId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
 				""RoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-				CONSTRAINT ""UserRoleId_Key"" PRIMARY KEY(""UserRoleId"")
+				""RoleName"" character(64) COLLATE pg_catalog.default NOT NULL,
+				""RoleDescription"" character(128) COLLATE pg_catalog.default NOT NULL,
+				CONSTRAINT ""RoleId_Key"" PRIMARY KEY(""RoleId""),
+				CONSTRAINT ""RoleName_Unique"" UNIQUE(""RoleName"")
 			)
 			TABLESPACE pg_default
 			;
@@ -34,6 +35,6 @@ public sealed class AddUserRoleTable : Migration
 	/// </summary>
 	protected override void Down()
 	{
-		Execute(@"DROP TABLE IF EXISTS ""Auth"".""UserRole"";");
+		Execute(@"DROP TABLE IF EXISTS ""Auth"".""Role"";");
 	}
 }
