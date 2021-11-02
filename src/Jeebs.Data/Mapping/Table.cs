@@ -33,7 +33,7 @@ public abstract record class Table : ITable
 		name;
 
 	/// <summary>
-	/// See <see cref="ITableName.GetFullName()"/>
+	/// See <see cref="ITableName.GetFullName(System.Func{string, string})"/>
 	/// </summary>
 	public sealed override string ToString() =>
 		name.GetFullName(s => s);
