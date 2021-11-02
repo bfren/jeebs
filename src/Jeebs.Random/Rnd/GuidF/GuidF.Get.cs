@@ -7,9 +7,6 @@ namespace F;
 
 public static partial class Rnd
 {
-	/// <summary>
-	/// Random Guid function
-	/// </summary>
 	public static partial class GuidF
 	{
 		/// <summary>

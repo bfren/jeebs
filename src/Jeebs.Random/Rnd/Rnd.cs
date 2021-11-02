@@ -73,6 +73,9 @@ public static partial class Rnd
 	/// <summary>Random Byte functions</summary>
 	public static partial class ByteF { }
 
+	/// <summary>Random Date functions</summary>
+	public static partial class DateF { }
+
 	/// <summary>Random DateTime functions</summary>
 	public static partial class DateTimeF { }
 
@@ -89,6 +92,9 @@ public static partial class Rnd
 
 	/// <summary>Random string functions</summary>
 	public static partial class StringF { }
+
+	/// <summary>Random Time functions</summary>
+	public static partial class TimeF { }
 
 	#endregion
 }

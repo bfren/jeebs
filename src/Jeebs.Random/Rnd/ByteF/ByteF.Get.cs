@@ -8,9 +8,6 @@ namespace F;
 
 public static partial class Rnd
 {
-	/// <summary>
-	/// Byte functions
-	/// </summary>
 	public static partial class ByteF
 	{
 		/// <summary>

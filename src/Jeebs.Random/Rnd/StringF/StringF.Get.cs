@@ -9,9 +9,6 @@ namespace F;
 
 public static partial class Rnd
 {
-	/// <summary>
-	/// String functions
-	/// </summary>
 	public static partial class StringF
 	{
 		/// <summary>

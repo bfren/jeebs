@@ -7,9 +7,6 @@ namespace F;
 
 public static partial class Rnd
 {
-	/// <summary>
-	/// Maths shorthands
-	/// </summary>
 	public static partial class NumberF
 	{
 		/// <summary>
