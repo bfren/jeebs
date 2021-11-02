@@ -108,8 +108,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		.ExecuteAsync(
 			$"CREATE TABLE IF NOT EXISTS {jsonTable} " +
 			"(" +
-			"id integer NOT NULL GENERATED ALWAYS AS IDENTITY, " +
-			"value jsonb NOT NULL" +
+			"\"Id\" integer NOT NULL GENERATED ALWAYS AS IDENTITY, " +
+			"\"Value\" jsonb NOT NULL" +
 			");",
 			null,
 			CommandType.Text
@@ -127,7 +127,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			await db
 				.ExecuteAsync(
-					$"INSERT INTO {jsonTable} (value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
+					$"INSERT INTO {jsonTable} (\"Value\") VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
 				)
 				.AuditAsync(
 					none: r => log.Message(r)
@@ -139,7 +139,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Debug("== Checking Jsonb insert has worked ==");
 	var paramTest = await db
 		.QuerySingleAsync<int>(
-			$"SELECT value -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+			$"SELECT \"Value\" -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE \"Value\" ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 		)
 		.AuditAsync(
 			some: x => { if (x == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
@@ -153,7 +153,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	var mapperTest = await db
 		.QuerySingleAsync<EntityTest>(
-			$"SELECT * FROM {jsonTable} WHERE value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+			$"SELECT * FROM {jsonTable} WHERE \"Value\" ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 		)
 		.AuditAsync(
 			some: x => { if (x.Value.Id == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },

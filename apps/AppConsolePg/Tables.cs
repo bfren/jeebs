@@ -7,7 +7,7 @@ namespace AppConsolePg;
 
 public record JsonTable : Table
 {
-	public JsonTable(string schema) : base(schema + ".test_json") { }
+	public JsonTable(string schema) : base(schema, "test_json") { }
 
 	public string Id =>
 		nameof(Id);
