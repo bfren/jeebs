@@ -50,7 +50,7 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<Query.PostsTaxonomy
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(builder.TTest.TermRelationship.ToString(), x.column.Table);
+				Assert.Equal(builder.TTest.TermRelationship.GetName(), x.column.Table);
 				Assert.Equal(builder.TTest.TermRelationship.PostId, x.column.Name);
 				Assert.Equal(Compare.In, x.cmp);
 				Assert.Equal(postIdValues, x.value);

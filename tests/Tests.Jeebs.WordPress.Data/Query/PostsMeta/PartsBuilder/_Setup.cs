@@ -30,7 +30,7 @@ public static class Setup
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(PostMeta.ToString(), x.column.Table);
+				Assert.Equal(PostMeta.GetName(), x.column.Table);
 				Assert.Equal(column, x.column.Name);
 				Assert.Equal(cmp, x.cmp);
 				Assert.Equal(value, x.value);
