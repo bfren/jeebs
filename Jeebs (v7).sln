@@ -218,7 +218,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsolePg", "apps\AppCon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Data.Clients.PostgreSql", "src\Jeebs.Auth.Data.Clients.PostgreSql\Jeebs.Auth.Data.Clients.PostgreSql.csproj", "{8941676E-B295-4829-B7E0-C62BFCB41BB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppConsoleAuthDb", "apps\AppConsoleAuthDb\AppConsoleAuthDb.csproj", "{FCDF40A5-5745-4ED6-B5F7-03B7A35026FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppConsoleAuthDb", "apps\AppConsoleAuthDb\AppConsoleAuthDb.csproj", "{FCDF40A5-5745-4ED6-B5F7-03B7A35026FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
