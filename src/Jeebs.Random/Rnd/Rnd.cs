@@ -57,13 +57,13 @@ public static partial class Rnd
 	/// Generate a random 32-bit unsigned integer between 0 and 10000
 	/// </summary>
 	public static uint Uint =>
-		NumberF.GetUInt32(max: 10000);
+		NumberF.GetUInt32(max: 10000u);
 
 	/// <summary>
 	/// Generate a random 64-bit unsigned integer between 0 and 10000
 	/// </summary>
 	public static ulong Ulng =>
-		NumberF.GetUInt64(max: 10000L);
+		NumberF.GetUInt64(max: 10000UL);
 
 	#region Classes
 

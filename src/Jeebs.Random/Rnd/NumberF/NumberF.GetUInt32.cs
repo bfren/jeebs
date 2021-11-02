@@ -17,7 +17,7 @@ public static partial class Rnd
 		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
-		public static uint GetUInt32(uint min = 0, uint max = int.MaxValue)
+		public static uint GetUInt32(uint min = 0, uint max = uint.MaxValue)
 		{
 			// Check arguments
 			if (min >= max)
