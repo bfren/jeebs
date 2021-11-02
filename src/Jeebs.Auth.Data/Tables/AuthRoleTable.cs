@@ -10,7 +10,7 @@ namespace Jeebs.Auth.Data.Tables;
 /// <summary>
 /// Authentication Role Table
 /// </summary>
-public sealed record class AuthRoleTable() : Table("auth.role")
+public sealed record class AuthRoleTable() : Table("Auth", ColumnPrefix)
 {
 	/// <summary>
 	/// Prefix added before all columns
