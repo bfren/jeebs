@@ -11,7 +11,7 @@ public class Constructor_Tests
 	public void Properties_Set()
 	{
 		// Arrange
-		var table = F.Rnd.Str;
+		var table = new TableName(F.Rnd.Str);
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;
 		var column = new Column(table, name, alias);

@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
+using static F.OptionF;
 
 namespace F.DataF;
 
@@ -20,20 +21,15 @@ public static partial class QueryF
 	public static Option<IColumn> GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 		where TTable : ITable =>
 		column.GetPropertyInfo()
-		.Map<IColumn>(
-			x => new Column(table, x.Get(table), x.Name),
-			e => new Msg.UnableToGetColumnFromExpressionExceptionMsg(e)
-		);
+			.Map<IColumn>(
+				x => new Column(table, x.Get(table), x.Name),
+				DefaultHandler
+			);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
 	public static Option<IColumn> GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new() =>
-		GetColumnFromExpression(new TTable(), column);
-
-	public static partial class Msg
-	{
-		/// <summary>Something went wrong while creating a column from the expression</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class UnableToGetColumnFromExpressionExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
-	}
+		GetColumnFromExpression(
+			new TTable(), column
+		);
 }

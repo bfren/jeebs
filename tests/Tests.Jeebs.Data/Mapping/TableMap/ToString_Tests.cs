@@ -12,7 +12,7 @@ public class ToString_Tests
 	public void Returns_Name()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = new TableName(F.Rnd.Str);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(name);
 		var map = new TableMap(table, Substitute.For<IMappedColumnList>(), GetColumnNames_Tests.Get().column);
@@ -21,6 +21,6 @@ public class ToString_Tests
 		var result = map.ToString();
 
 		// Assert
-		Assert.Equal(name, result);
+		Assert.Equal(name.GetFullName(s => s), result);
 	}
 }

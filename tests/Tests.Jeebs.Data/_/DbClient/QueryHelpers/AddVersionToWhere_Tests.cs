@@ -34,7 +34,7 @@ public class AddVersionToWhere_Tests
 
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;
-		var version = new Column(F.Rnd.Str, name, alias);
+		var version = new Column(new TableName(F.Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}##";
 
 		var sql = new StringBuilder();
@@ -56,7 +56,7 @@ public class AddVersionToWhere_Tests
 
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;
-		var version = new Column(F.Rnd.Str, name, alias);
+		var version = new Column(new TableName(F.Rnd.Str), name, alias);
 
 		var query = F.Rnd.Str;
 		var sql = new StringBuilder(query);

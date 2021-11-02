@@ -20,7 +20,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="columns">List of columns to select</param>
 	/// <param name="predicates">Predicates (matched using AND)</param>
 	protected abstract (string query, IQueryParameters param) GetQuery(
-		string table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	);
@@ -51,7 +51,7 @@ public abstract partial class DbClient : IDbClient
 	#region Testing
 
 	internal (string query, IQueryParameters param) GetQueryTest(
-		string table,
+		ITableName table,
 		ColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	) =>

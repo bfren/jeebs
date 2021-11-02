@@ -13,7 +13,7 @@ public class Constructor_Tests
 	public void Properties_Set()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = new TableName(F.Rnd.Str);
 		var columns = Substitute.For<IMappedColumnList>();
 
 		var table = Substitute.For<ITable>();

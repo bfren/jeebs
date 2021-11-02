@@ -25,6 +25,25 @@ public interface IDbClient
 	#region Escaping and Joining
 
 	/// <summary>
+	/// Escape a table
+	/// </summary>
+	/// <param name="table">Table</param>
+	string Escape(ITable table);
+
+	/// <summary>
+	/// Escape a table name
+	/// </summary>
+	/// <param name="table">ITableName</param>
+	string Escape(ITableName table);
+
+	/// <summary>
+	/// Escape a column with its table
+	/// </summary>
+	/// <param name="table">ITableName</param>
+	/// <param name="column">Column name</param>
+	string Escape(ITableName table, string column);
+
+	/// <summary>
 	/// Escape a column
 	/// </summary>
 	/// <param name="column">Column</param>
@@ -39,23 +58,10 @@ public interface IDbClient
 	string EscapeWithTable(IColumn column, bool withAlias = false);
 
 	/// <summary>
-	/// Escape a table
+	/// Escape an object, usually a column or table
 	/// </summary>
-	/// <param name="table">Table</param>
-	string Escape(ITable table);
-
-	/// <summary>
-	/// Escape a column or table
-	/// </summary>
-	/// <param name="columnOrTable">Column or Table name</param>
-	string Escape(string columnOrTable);
-
-	/// <summary>
-	/// Escape a column with its table
-	/// </summary>
-	/// <param name="column">Column name</param>
-	/// <param name="table">Table name</param>
-	string Escape(string column, string table);
+	/// <param name="obj">Column or Table name</param>
+	string Escape(string obj);
 
 	/// <summary>
 	/// Convert a <see cref="Compare"/> to actual operator

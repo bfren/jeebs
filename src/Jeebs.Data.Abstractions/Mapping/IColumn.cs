@@ -11,7 +11,7 @@ public interface IColumn
 	/// <summary>
 	/// Table Name
 	/// </summary>
-	string Table { get; }
+	ITableName Table { get; }
 
 	/// <summary>
 	/// Column Name

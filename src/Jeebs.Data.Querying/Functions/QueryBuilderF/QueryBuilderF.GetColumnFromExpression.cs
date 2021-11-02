@@ -19,9 +19,9 @@ public static partial class QueryBuilderF
 	public static IColumn GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 		where TTable : ITable =>
 		QueryF.GetColumnFromExpression(table, column)
-		.Unwrap(
-			() => throw new UnableToGetColumnFromExpressionException<TTable>()
-		);
+			.Unwrap(
+				() => throw new UnableToGetColumnFromExpressionException<TTable>()
+			);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
 	public static IColumn GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)

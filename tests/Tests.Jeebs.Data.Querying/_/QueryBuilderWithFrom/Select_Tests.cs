@@ -25,15 +25,15 @@ public class Select_Tests
 		Assert.Collection(some.Select,
 			x =>
 			{
-				Assert.Equal("TestTable0", x.Table);
-				Assert.Equal("TestFoo", x.Name);
-				Assert.Equal("Foo", x.Alias);
+				Assert.Equal(nameof(TestTable0), x.Table.Name);
+				Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), x.Name);
+				Assert.Equal(nameof(TestTable0.Foo), x.Alias);
 			},
 			x =>
 			{
-				Assert.Equal("TestTable1", x.Table);
-				Assert.Equal("TestBar", x.Name);
-				Assert.Equal("Bar", x.Alias);
+				Assert.Equal(nameof(TestTable1), x.Table.Name);
+				Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), x.Name);
+				Assert.Equal(nameof(TestTable1.Bar), x.Alias);
 			}
 		);
 	}

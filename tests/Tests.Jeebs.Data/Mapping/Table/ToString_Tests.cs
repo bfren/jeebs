@@ -13,12 +13,19 @@ public class ToString_Tests
 	{
 		// Arrange
 		var name = F.Rnd.Str;
-		var table = Substitute.ForPartsOf<Table>(name);
+		var schema = F.Rnd.Str;
+		var t0 = Substitute.ForPartsOf<Table>(new TableName(schema, name));
+		var t1 = Substitute.ForPartsOf<Table>(name);
+		var t2 = Substitute.ForPartsOf<Table>(schema, name);
 
 		// Act
-		var result = table.ToString();
+		var r0 = t0.ToString();
+		var r1 = t1.ToString();
+		var r2 = t2.ToString();
 
 		// Assert
-		Assert.Equal(name, result);
+		Assert.Equal($"{schema}{TableName.SchemaSeparator}{name}", r0);
+		Assert.Equal($"{name}", r1);
+		Assert.Equal($"{schema}{TableName.SchemaSeparator}{name}", r2);
 	}
 }

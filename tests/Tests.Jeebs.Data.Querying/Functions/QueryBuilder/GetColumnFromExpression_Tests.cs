@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying.Exceptions;
 using Xunit;
@@ -17,8 +16,8 @@ public class GetColumnFromExpression_Tests
 		// Arrange
 
 		// Act
-		static void a0() => GetColumnFromExpression<BrokenTable>(t => t.Foo);
-		static void a1() => GetColumnFromExpression(new BrokenTable(), t => t.Foo);
+		static void a0() => GetColumnFromExpression<BrokenTable>(t => t.Bar);
+		static void a1() => GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
 		Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);
@@ -37,20 +36,20 @@ public class GetColumnFromExpression_Tests
 		var r1 = GetColumnFromExpression<TestTable>(t => t.Foo);
 
 		// Assert
-		Assert.Equal(tableName, r0.Table);
+		Assert.Equal(tableName, r0.Table.Name);
 		Assert.Equal(table.Foo, r0.Name);
 		Assert.Equal(nameof(table.Foo), r0.Alias);
-		Assert.Equal("TestTable", r1.Table);
+		Assert.Equal(nameof(TestTable), r1.Table.Name);
 		Assert.Equal(table.Foo, r1.Name);
 		Assert.Equal(nameof(table.Foo), r1.Alias);
 	}
 
 	public record class BrokenTable : TestTable
 	{
-		public BrokenTable() : base(F.Rnd.Str) { }
+		internal string Bar =>
+			Prefix + nameof(Bar);
 
-		public override string GetName() =>
-			throw new Exception();
+		public BrokenTable() : base(Rnd.Str) { }
 	}
 
 	public record class TestTable : Table

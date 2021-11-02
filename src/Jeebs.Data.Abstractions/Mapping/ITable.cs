@@ -9,7 +9,7 @@ namespace Jeebs.Data.Mapping;
 public interface ITable
 {
 	/// <summary>
-	/// Get table name
+	/// Get Table Name
 	/// </summary>
-	string GetName();
+	ITableName GetName();
 }

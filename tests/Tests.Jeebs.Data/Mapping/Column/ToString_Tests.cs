@@ -12,7 +12,7 @@ public class ToString_Tests
 	{
 		// Arrange
 		var name = F.Rnd.Str;
-		var column = new Column(F.Rnd.Str, name, F.Rnd.Str);
+		var column = new Column(new TableName(F.Rnd.Str), name, F.Rnd.Str);
 
 		// Act
 		var result = column.ToString();

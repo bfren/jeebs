@@ -33,7 +33,7 @@ public class GetColumnsFromTable_Tests
 
 		// Assert
 		Assert.Collection(result,
-			x => Assert.Equal((table.ToString(), table.FooId), (x.Table, x.Name)),
+			x => Assert.Equal((table.GetName(), table.FooId), (x.Table, x.Name)),
 			x => Assert.Equal(table.Bar0, x.Name),
 			x => Assert.Equal(table.Bar1, x.Name)
 		);

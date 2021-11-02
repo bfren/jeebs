@@ -6,20 +6,35 @@ namespace Jeebs.Data.Mapping;
 /// <inheritdoc cref="ITable"/>
 public abstract record class Table : ITable
 {
-	private readonly string name;
+	private readonly ITableName name;
+
+	/// <summary>
+	/// Create with <see cref="ITableName"/>
+	/// </summary>
+	/// <param name="name">ITableName</param>
+	public Table(ITableName name) =>
+		this.name = name;
 
 	/// <summary>
 	/// Create with table name
 	/// </summary>
 	/// <param name="name">Table Name</param>
-	public Table(string name) =>
-		this.name = name;
+	public Table(string name) : this(new TableName(name)) { }
+
+	/// <summary>
+	/// Create with table schema and name
+	/// </summary>
+	/// <param name="schema">Table Schema</param>
+	/// <param name="name">Table Name</param>
+	public Table(string schema, string name) : this(new TableName(schema, name)) { }
 
 	/// <inheritdoc/>
-	public virtual string GetName() =>
+	public ITableName GetName() =>
 		name;
 
-	/// <inheritdoc cref="GetName"/>
+	/// <summary>
+	/// See <see cref="ITableName.GetFullName()"/>
+	/// </summary>
 	public sealed override string ToString() =>
-		GetName();
+		name.GetFullName(s => s);
 }

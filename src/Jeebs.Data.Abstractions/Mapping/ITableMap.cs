@@ -18,7 +18,7 @@ public interface ITableMap
 	/// <summary>
 	/// Table Name
 	/// </summary>
-	string Name { get; }
+	ITableName Name { get; }
 
 	/// <summary>
 	/// Mapped Columns

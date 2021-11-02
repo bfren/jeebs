@@ -33,7 +33,7 @@ public class GetSetListForUpdateQuery_Tests
 
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;
-		var column = new Column(F.Rnd.Str, name, alias);
+		var column = new Column(new TableName(F.Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}##";
 
 		var columns = new ColumnList(new[] { column });

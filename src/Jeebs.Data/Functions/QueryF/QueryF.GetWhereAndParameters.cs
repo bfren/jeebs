@@ -37,7 +37,7 @@ public static partial class QueryF
 			var escapedColumn = includeTableName switch
 			{
 				true =>
-					client.Escape(column.Name, column.Table),
+					client.Escape(column.Table, column.Name),
 
 				false =>
 					client.Escape(column)

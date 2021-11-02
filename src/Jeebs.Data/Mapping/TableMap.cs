@@ -16,7 +16,7 @@ public sealed record class TableMap : ITableMap
 	public ITable Table { get; init; }
 
 	/// <inheritdoc/>
-	public string Name =>
+	public ITableName Name =>
 		Table.GetName();
 
 	/// <inheritdoc/>
@@ -70,11 +70,9 @@ public sealed record class TableMap : ITableMap
 			DefaultHandler
 		);
 
-	/// <summary>
-	/// Return Table Name
-	/// </summary>
+	/// <inheritdoc cref="Name"/>
 	public override string ToString() =>
-		Name;
+		Name.GetFullName(s => s);
 
 	/// <summary>Messages</summary>
 	public static class Msg

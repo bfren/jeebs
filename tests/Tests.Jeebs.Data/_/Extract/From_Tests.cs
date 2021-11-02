@@ -51,7 +51,7 @@ public class From_Tests
 		// Assert
 		var some = result.AssertSome();
 		Assert.Collection(some,
-			x => Assert.Equal((t0.ToString(), t0.FooId), (x.Table, x.Name)),
+			x => Assert.Equal((t0.GetName(), t0.FooId), (x.Table, x.Name)),
 			x => Assert.Equal(t0.Bar0, x.Name),
 			x => Assert.Equal(t1.Bar2, x.Name)
 		);
