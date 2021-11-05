@@ -57,7 +57,7 @@ public class Parse_Tests
 	}
 
 	[Fact]
-	public void Unknown_Returns_General()
+	public void Unknown_Returns_Blank()
 	{
 		// Arrange
 		var name = F.Rnd.Str;
@@ -66,7 +66,7 @@ public class Parse_Tests
 		var result = MimeType.Parse(name);
 
 		// Assert
-		Assert.Same(MimeType.General, result);
+		Assert.Same(MimeType.Blank, result);
 	}
 
 	[Fact]
