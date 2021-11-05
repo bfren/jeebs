@@ -16,7 +16,6 @@ public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>
 	/// Serialise object to JSON
 	/// </summary>
 	/// <param name="value">T value</param>
-	/// <returns>JSON</returns>
 	protected override string Format(T value) =>
 		Serialise(value).Unwrap(Empty);
 

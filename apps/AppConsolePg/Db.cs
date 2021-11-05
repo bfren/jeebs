@@ -19,8 +19,6 @@ internal class Db : Jeebs.Data.Db
 		Map<EntityTest>.To(Json);
 	}
 
-	static Db()
-	{
-		AddStrongIdTypeHandlers();
-	}
+	static Db() =>
+		AddTypeHandlers(mapper => mapper.AddStrongIdTypeHandlers());
 }

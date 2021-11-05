@@ -13,7 +13,7 @@ public class Parse_Tests
 	public void Empty_Returns_Empty_List(string input)
 	{
 		// Arrange
-		var handler = new EnumeratedListTypeHandler<Foo>();
+		var handler = new JsonEnumeratedListTypeHandler<Foo>();
 
 		// Act
 		var result = handler.Parse(input);
@@ -26,7 +26,7 @@ public class Parse_Tests
 	public void Invalid_Json_Returns_Empty_List()
 	{
 		// Arrange
-		var handler = new EnumeratedListTypeHandler<Foo>();
+		var handler = new JsonEnumeratedListTypeHandler<Foo>();
 		var json = F.Rnd.Str;
 
 		// Act
@@ -40,7 +40,7 @@ public class Parse_Tests
 	public void Incorrect_Json_Returns_Empty_List()
 	{
 		// Arrange
-		var handler = new EnumeratedListTypeHandler<Foo>();
+		var handler = new JsonEnumeratedListTypeHandler<Foo>();
 		const string? json = "{\"foo\":\"bar\"}";
 
 		// Act
@@ -54,7 +54,7 @@ public class Parse_Tests
 	public void Correct_Json_Returns_List()
 	{
 		// Arrange
-		var handler = new EnumeratedListTypeHandler<Foo>();
+		var handler = new JsonEnumeratedListTypeHandler<Foo>();
 		var itemA = new Foo(F.Rnd.Str);
 		var itemB = new Foo(F.Rnd.Str);
 		var itemC = new Foo(F.Rnd.Str);

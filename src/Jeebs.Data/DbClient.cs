@@ -33,6 +33,8 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public abstract IDbConnection Connect(string connectionString);
 
+
+
 	/// <summary>Messages</summary>
 	public static class Msg
 	{

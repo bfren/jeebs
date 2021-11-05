@@ -151,7 +151,7 @@ public class MimeType : Enumerated
 			return Blank;
 		}
 
-		// Parse and return value - if None, return General
-		return Parse(mimeType, all.ToArray()).Unwrap(() => General);
+		// Parse and return value - if None, return Blank
+		return Parse(mimeType, all.ToArray()).Unwrap(() => Blank);
 	}
 }

@@ -7,7 +7,7 @@ namespace Jeebs.Data.TypeHandlers;
 /// EnumeratedList TypeHandler
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
-public sealed class EnumeratedListTypeHandler<T> : JsonTypeHandler<EnumeratedList<T>>
+public sealed class JsonEnumeratedListTypeHandler<T> : JsonTypeHandler<EnumeratedList<T>>
 	where T : Enumerated
 {
 	/// <summary>

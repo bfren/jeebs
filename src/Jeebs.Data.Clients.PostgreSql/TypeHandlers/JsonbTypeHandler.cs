@@ -18,7 +18,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// <summary>
 	/// Parse value as JSON into object of type <typeparamref name="T"/>
 	/// </summary>
-	/// <param name="value">JSON value</param>
+	/// <param name="value">Database value</param>
 	/// <exception cref="JsonException">When deserialisation fails</exception>
 	public override T Parse(object value) =>
 		value switch
@@ -31,7 +31,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		};
 
 	/// <summary>
-	/// Serialise value and set column type as jsonb
+	/// Serialise value and set column type as <see cref="NpgsqlDbType.Jsonb"/>
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter</param>
 	/// <param name="value">Value object</param>

@@ -7,7 +7,7 @@ using Dapper;
 using NSubstitute;
 using Xunit;
 
-namespace Jeebs.Data.Db_Tests;
+namespace Jeebs.Data.DbMapper_Tests;
 
 public class AddGenericTypeHandlers_Tests
 {
@@ -16,10 +16,11 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(InvalidHandlerWithoutGenericParameter);
-		var addTypeHandler = Substitute.For<Db.AddTypeHandler>();
+		var addTypeHandler = Substitute.For<DbMapper.AddGenericTypeHandler>();
+		var mapper = new DbMapper();
 
 		// Act
-		Db.AddGenericTypeHandlers<string>(handlerType, addTypeHandler);
+		mapper.AddGenericTypeHandlers<string>(handlerType, addTypeHandler);
 
 		// Assert
 		addTypeHandler.DidNotReceive().Invoke(Arg.Any<Type>(), Arg.Any<SqlMapper.ITypeHandler>());
@@ -30,10 +31,11 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(InvalidHandlerWithGenericParameter<>);
-		var addTypeHandler = Substitute.For<Db.AddTypeHandler>();
+		var addTypeHandler = Substitute.For<DbMapper.AddGenericTypeHandler>();
+		var mapper = new DbMapper();
 
 		// Act
-		Db.AddGenericTypeHandlers<string>(handlerType, addTypeHandler);
+		mapper.AddGenericTypeHandlers<string>(handlerType, addTypeHandler);
 
 		// Assert
 		addTypeHandler.DidNotReceive().Invoke(Arg.Any<Type>(), Arg.Any<SqlMapper.ITypeHandler>());
@@ -44,10 +46,11 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(Handler<>);
-		var addTypeHandler = Substitute.For<Db.AddTypeHandler>();
+		var addTypeHandler = Substitute.For<DbMapper.AddGenericTypeHandler>();
+		var mapper = new DbMapper();
 
 		// Act
-		Db.AddGenericTypeHandlers<CustomBaseType>(handlerType, addTypeHandler);
+		mapper.AddGenericTypeHandlers<CustomBaseType>(handlerType, addTypeHandler);
 
 		// Assert
 		addTypeHandler.Received().Invoke(typeof(CustomType0), Arg.Any<SqlMapper.ITypeHandler>());

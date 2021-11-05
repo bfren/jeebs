@@ -62,5 +62,5 @@ public sealed class AuthDb : Db, IAuthDb
 	/// Add type handlers
 	/// </summary>
 	static AuthDb() =>
-		AddStrongIdTypeHandlers();
+		AddTypeHandlers(mapper => mapper.AddStrongIdTypeHandlers());
 }

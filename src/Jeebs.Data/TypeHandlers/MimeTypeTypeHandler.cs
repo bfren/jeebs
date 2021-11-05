@@ -12,7 +12,6 @@ public sealed class MimeTypeTypeHandler : EnumeratedTypeHandler<MimeType>
 	/// Parse the MimeType value
 	/// </summary>
 	/// <param name="value">Database table value</param>
-	/// <returns>MimeType object</returns>
 	public override MimeType Parse(object value) =>
 		Parse(value, MimeType.Parse, MimeType.Blank);
 }

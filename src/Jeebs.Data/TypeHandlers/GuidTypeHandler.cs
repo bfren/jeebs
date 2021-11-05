@@ -15,7 +15,6 @@ public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 	/// Parse Guid
 	/// </summary>
 	/// <param name="value">Guid value</param>
-	/// <returns>Guid</returns>
 	public override Guid Parse(object value) =>
 		value?.ToString() switch
 		{
