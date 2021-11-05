@@ -37,7 +37,7 @@ public class Parse_Tests
 	}
 
 	[Fact]
-	public void Invalid_Value_Returns_General_MimeType()
+	public void Invalid_Value_Returns_Blank_MimeType()
 	{
 		// Arrange
 		var value = F.Rnd.Str;
@@ -47,6 +47,6 @@ public class Parse_Tests
 		var result = handler.Parse(value);
 
 		// Assert
-		Assert.Same(MimeType.General, result);
+		Assert.Same(MimeType.Blank, result);
 	}
 }
