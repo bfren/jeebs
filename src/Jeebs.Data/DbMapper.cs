@@ -98,5 +98,5 @@ public sealed class DbMapper
 	/// </summary>
 	/// <param name="type">Base (abstract or interface) type to map</param>
 	/// <param name="handler">Handler type (with generic argument)</param>
-	internal delegate void AddGenericTypeHandler(Type type, SqlMapper.ITypeHandler handler);
+	public delegate void AddGenericTypeHandler(Type type, SqlMapper.ITypeHandler handler);
 }
