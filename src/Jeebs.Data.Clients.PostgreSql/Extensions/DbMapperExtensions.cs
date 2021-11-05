@@ -1,7 +1,6 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Dapper;
 using Jeebs.Data.TypeHandlers;
 
 namespace Jeebs.Data;
@@ -15,14 +14,16 @@ public static class DbMapperExtensions
 	/// Persist an EnumList to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	public static void AddEnumeratedListTypeHandler<T>()
+	/// <param name="this">DbMapper</param>
+	public static void AddJsonbEnumeratedListTypeHandler<T>(this DbMapper @this)
 		where T : Enumerated =>
-		SqlMapper.AddTypeHandler(new JsonbEnumeratedListTypeHandler<T>());
+		@this.AddTypeHandler(new JsonbEnumeratedListTypeHandler<T>());
 
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	public static void AddJsonbTypeHandler<T>() =>
-		SqlMapper.AddTypeHandler(new JsonbTypeHandler<T>());
+	/// <param name="this">DbMapper</param>
+	public static void AddJsonbTypeHandler<T>(this DbMapper @this) =>
+		@this.AddTypeHandler(new JsonbTypeHandler<T>());
 }
