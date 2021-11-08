@@ -18,11 +18,11 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	{
 		Execute(@"
 			CREATE OR REPLACE PROCEDURE ""Auth"".""UpdateUserLastSignIn""(
-				id integer DEFAULT 0
+				""Id"" integer DEFAULT 0
 			)
 			LANGUAGE 'sql'
 			AS $BODY$
-			UPDATE ""Auth"".""User"" SET ""UserLastSignedIn"" = NOW() WHERE ""UserId"" = id;
+			UPDATE ""Auth"".""User"" SET ""UserLastSignedIn"" = NOW() WHERE ""UserId"" = ""Id"";
 			$BODY$;
 		");
 	}
