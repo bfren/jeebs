@@ -1,37 +1,36 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 
-namespace Jeebs.WordPress.Data.Querying
+namespace Jeebs.WordPress.Data.Querying;
+
+/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
+public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
 {
-	/// <inheritdoc cref="IQueryPostsTaxonomyOptions"/>
-	public abstract record PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
-	{
-		/// <summary>
-		/// IQueryPostsTaxonomyPartsBuilder
-		/// </summary>
-		protected new IQueryPostsTaxonomyPartsBuilder Builder =>
-			(IQueryPostsTaxonomyPartsBuilder)base.Builder;
+	/// <summary>
+	/// IQueryPostsTaxonomyPartsBuilder
+	/// </summary>
+	protected new IQueryPostsTaxonomyPartsBuilder Builder =>
+		(IQueryPostsTaxonomyPartsBuilder)base.Builder;
 
-		/// <inheritdoc/>
-		public IImmutableList<Taxonomy> Taxonomies { get; init; } =
-			new ImmutableList<Taxonomy>();
+	/// <inheritdoc/>
+	public IImmutableList<Taxonomy> Taxonomies { get; init; } =
+		new ImmutableList<Taxonomy>();
 
-		/// <inheritdoc/>
-		public IImmutableList<WpPostId> PostIds { get; init; } =
-			new ImmutableList<WpPostId>();
+	/// <inheritdoc/>
+	public IImmutableList<WpPostId> PostIds { get; init; } =
+		new ImmutableList<WpPostId>();
 
-		/// <inheritdoc/>
-		public TaxonomySort SortBy { get; init; }
+	/// <inheritdoc/>
+	public TaxonomySort SortBy { get; init; }
 
-		/// <summary>
-		/// Allow Builder to be injected
-		/// </summary>
-		/// <param name="schema">IWpDbSchema</param>
-		/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>
-		protected PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) =>
-			Maximum = null;
-	}
+	/// <summary>
+	/// Allow Builder to be injected
+	/// </summary>
+	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>
+	protected PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) =>
+		Maximum = null;
 }

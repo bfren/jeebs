@@ -1,10 +1,6 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping
-{
-	public record FooId(ulong Value) : StrongId(Value)
-	{
-		public FooId() : this(0) { }
-	}
-}
+namespace Jeebs.Data.Mapping;
+
+public readonly record struct FooId(long Value) : IStrongId;

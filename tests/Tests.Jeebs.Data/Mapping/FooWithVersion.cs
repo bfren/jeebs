@@ -1,14 +1,12 @@
 // Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using Jeebs.Data.Entities;
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data.Mapping;
+
+public record class FooWithVersion : Foo, IWithVersion
 {
-	public record FooWithVersion : Foo, IWithVersion
-	{
-		[Version]
-		public ulong Version { get; init; }
-	}
+	[Version]
+	public long Version { get; init; }
 }

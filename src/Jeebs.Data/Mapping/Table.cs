@@ -1,26 +1,40 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data.Mapping;
+
+/// <inheritdoc cref="ITable"/>
+public abstract record class Table : ITable
 {
-	/// <inheritdoc cref="ITable"/>
-	public abstract record Table : ITable
-	{
-		private readonly string name;
+	private readonly ITableName name;
 
-		/// <summary>
-		/// Create with table name
-		/// </summary>
-		/// <param name="name">Table Name</param>
-		public Table(string name) =>
-			this.name = name;
+	/// <summary>
+	/// Create with <see cref="ITableName"/>
+	/// </summary>
+	/// <param name="name">ITableName</param>
+	public Table(ITableName name) =>
+		this.name = name;
 
-		/// <inheritdoc/>
-		public virtual string GetName() =>
-			name;
+	/// <summary>
+	/// Create with table name
+	/// </summary>
+	/// <param name="name">Table Name</param>
+	public Table(string name) : this(new TableName(name)) { }
 
-		/// <inheritdoc cref="GetName"/>
-		public override string ToString() =>
-			GetName();
-	}
+	/// <summary>
+	/// Create with table schema and name
+	/// </summary>
+	/// <param name="schema">Table Schema</param>
+	/// <param name="name">Table Name</param>
+	public Table(string schema, string name) : this(new TableName(schema, name)) { }
+
+	/// <inheritdoc/>
+	public ITableName GetName() =>
+		name;
+
+	/// <summary>
+	/// See <see cref="ITableName.GetFullName(System.Func{string, string})"/>
+	/// </summary>
+	public sealed override string ToString() =>
+		name.GetFullName(s => s);
 }

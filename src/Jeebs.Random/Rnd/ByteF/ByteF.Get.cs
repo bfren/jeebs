@@ -1,28 +1,24 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Security.Cryptography;
 
-namespace F
+namespace F;
+
+public static partial class Rnd
 {
-	public static partial class Rnd
+	public static partial class ByteF
 	{
 		/// <summary>
-		/// Byte functions
+		/// Return an array of random bytes
 		/// </summary>
-		public static partial class ByteF
+		/// <param name="length">The length of the byte array</param>
+		public static byte[] Get(int length)
 		{
-			/// <summary>
-			/// Return an array of random bytes
-			/// </summary>
-			/// <param name="length">The length of the byte array</param>
-			public static byte[] Get(int length)
-			{
-				Span<byte> b = stackalloc byte[length];
-				RandomNumberGenerator.Fill(b);
-				return b.ToArray();
-			}
+			Span<byte> b = stackalloc byte[length];
+			RandomNumberGenerator.Fill(b);
+			return b.ToArray();
 		}
 	}
 }

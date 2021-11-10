@@ -1,5 +1,5 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
 using System.Threading.Tasks;
@@ -11,36 +11,35 @@ using Xunit;
 using static F.WordPressF.DataF.QueryAttachmentsF;
 using static F.WordPressF.DataF.QueryAttachmentsF.Msg;
 
-namespace F.WordPressF.DataF.QueryAttachmentsF_Tests
+namespace F.WordPressF.DataF.QueryAttachmentsF_Tests;
+
+public class ExecuteAsync_Tests : Query_Tests
 {
-	public class ExecuteAsync_Tests : Query_Tests
+	[Fact]
+	public async Task Catches_Opt_Exception_Returns_None_With_ErrorGettingQueryAttachmentsOptionsMsg()
 	{
-		[Fact]
-		public async Task Catches_Opt_Exception_Returns_None_With_ErrorGettingQueryAttachmentsOptionsMsg()
-		{
-			// Arrange
-			var (db, w, _) = Setup();
+		// Arrange
+		var (db, w, _) = Setup();
 
-			// Act
-			var result = await ExecuteAsync<PostAttachment>(db, w, _ => throw new System.Exception());
+		// Act
+		var result = await ExecuteAsync<PostAttachment>(db, w, _ => throw new System.Exception());
 
-			// Assert
-			var none = result.AssertNone();
-			Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
-		}
+		// Assert
+		var none = result.AssertNone();
+		Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
+	}
 
-		[Fact]
-		public async Task Calls_Db_QueryAsync()
-		{
-			// Arrange
-			var (db, w, v) = Setup();
-			var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Ulng), new(Rnd.Ulng));
+	[Fact]
+	public async Task Calls_Db_QueryAsync()
+	{
+		// Arrange
+		var (db, w, v) = Setup();
+		var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Lng), new(Rnd.Lng));
 
-			// Act
-			var result = await ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));
+		// Act
+		var result = await ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));
 
-			// Assert
-			await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
-		}
+		// Assert
+		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
 	}
 }

@@ -1,5 +1,5 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Jeebs.Data.Enums;
@@ -7,399 +7,410 @@ using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
 using Xunit;
 
-namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests
+namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
+
+public class GetQuery_Tests
 {
-	public class GetQuery_Tests
+	[Fact]
+	public void With_Predicates_Returns_Valid_Select_Query()
 	{
-		[Fact]
-		public void With_Predicates_Returns_Valid_Select_Query()
+		// Arrange
+		var schema = F.Rnd.Str;
+		var name = F.Rnd.Str;
+		var table = new TableName(schema, name);
+
+		var c0Name = F.Rnd.Str;
+		var c0Alias = F.Rnd.Str;
+		var c0 = new Column(table, c0Name, c0Alias);
+
+		var c1Name = F.Rnd.Str;
+		var c1Alias = F.Rnd.Str;
+		var c1 = new Column(table, c1Name, c1Alias);
+
+		var list = new ColumnList(new[] { c0, c1 });
+
+		var p0Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
+		var p0Operator = Compare.Like;
+		var p0Value = F.Rnd.Str;
+
+		var p1Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
+		var p1Operator = Compare.MoreThanOrEqual;
+		var p1Value = F.Rnd.Int;
+
+		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
-			// Arrange
-			var table = F.Rnd.Str;
+			( p0Column, p0Operator, p0Value ),
+			( p1Column, p1Operator, p1Value )
+		});
 
-			var c0Name = F.Rnd.Str;
-			var c0Alias = F.Rnd.Str;
-			var c0 = new Column(table, c0Name, c0Alias);
+		var client = new MySqlDbClient();
 
-			var c1Name = F.Rnd.Str;
-			var c1Alias = F.Rnd.Str;
-			var c1 = new Column(table, c1Name, c1Alias);
+		var expected = "SELECT" +
+			$" `{c0Name}` AS '{c0Alias}'," +
+			$" `{c1Name}` AS '{c1Alias}'" +
+			$" FROM `{schema}.{name}`" +
+			$" WHERE `{p0Column.Name}` LIKE @P0" +
+			$" AND `{p1Column.Name}` >= @P1;";
 
-			var list = new ColumnList(new[] { c0, c1 });
+		// Act
+		var (query, param) = client.GetQueryTest(table, list, predicates);
 
-			var p0Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
-			var p0Operator = Compare.Like;
-			var p0Value = F.Rnd.Str;
-
-			var p1Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
-			var p1Operator = Compare.MoreThanOrEqual;
-			var p1Value = F.Rnd.Int;
-
-			var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
+		// Assert
+		Assert.Equal(expected, query);
+		Assert.Collection(param,
+			x =>
 			{
-				( p0Column, p0Operator, p0Value ),
-				( p1Column, p1Operator, p1Value )
-			});
-
-			var client = new MySqlDbClient();
-
-			var expected = $"SELECT `{c0Name}` AS '{c0Alias}', `{c1Name}` AS '{c1Alias}' " +
-				$"FROM `{table}` WHERE `{p0Column.Name}` LIKE @P0 AND `{p1Column.Name}` >= @P1;";
-
-			// Act
-			var (query, param) = client.GetQueryTest(table, list, predicates);
-
-			// Assert
-			Assert.Equal(expected, query);
-			Assert.Collection(param,
-				x =>
-				{
-					Assert.Equal("P0", x.Key);
-					Assert.Equal(p0Value, x.Value);
-				},
-				x =>
-				{
-					Assert.Equal("P1", x.Key);
-					Assert.Equal(p1Value, x.Value);
-				}
-			);
-		}
-
-		[Fact]
-		public void With_Parts_Escapes_From_Table()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-			var parts = new QueryParts(table);
-
-			// Act
-			var (query, _) = client.GetQuery(parts);
-
-			// Assert
-			Assert.Contains(client.Escape(table.GetName()), query);
-		}
-
-		[Fact]
-		public void With_Parts_SelectCount_True_Selects_Count()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-			var parts = new QueryParts(table) with { SelectCount = true };
-			var expected = $"SELECT COUNT(*) FROM `{table.GetName()}`;";
-
-			// Act
-			var (query, _) = client.GetQuery(parts);
-
-			// Assert
-			Assert.Equal(expected, query);
-		}
-
-		[Fact]
-		public void With_Parts_Select_Empty_Selects_All()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-			var parts = new QueryParts(table);
-			var expected = $"SELECT * FROM `{table.GetName()}`;";
-
-			// Act
-			var (query, _) = client.GetQuery(parts);
-
-			// Assert
-			Assert.Equal(expected, query);
-		}
-
-		[Fact]
-		public void With_Parts_Select_List_Escapes_With_Alias_And_Joins_Columns()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-
-			var c0Name = F.Rnd.Str;
-			var c0Alias = F.Rnd.Str;
-			var c0 = new Column(table.GetName(), c0Name, c0Alias);
-			var c1Name = F.Rnd.Str;
-			var c1Alias = F.Rnd.Str;
-			var c1 = new Column(table.GetName(), c1Name, c1Alias);
-			var parts = new QueryParts(table)
+				Assert.Equal("P0", x.Key);
+				Assert.Equal(p0Value, x.Value);
+			},
+			x =>
 			{
-				Select = new ColumnList(new[] { c0, c1 })
-			};
-			var expected = "SELECT" +
-				$" `{table.GetName()}`.`{c0Name}` AS '{c0Alias}'," +
-				$" `{table.GetName()}`.`{c1Name}` AS '{c1Alias}'" +
-				$" FROM `{table.GetName()}`;";
+				Assert.Equal("P1", x.Key);
+				Assert.Equal(p1Value, x.Value);
+			}
+		);
+	}
 
-			// Act
-			var (query, _) = client.GetQuery(parts);
+	[Fact]
+	public void With_Parts_Escapes_From_Table()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table);
 
-			// Assert
-			Assert.Equal(expected, query);
-		}
+		// Act
+		var (query, _) = client.GetQuery(parts);
 
-		private static void Test_Joins(Func<QueryParts, ImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+		// Assert
+		Assert.Contains($"`{v.Schema}.{v.Name}`", query);
+	}
+
+	[Fact]
+	public void With_Parts_SelectCount_True_Selects_Count()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table) with { SelectCount = true };
+		var expected = $"SELECT COUNT(*) FROM `{v.Schema}.{v.Name}`;";
+
+		// Act
+		var (query, _) = client.GetQuery(parts);
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Select_Empty_Selects_All()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table);
+		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}`;";
+
+		// Act
+		var (query, _) = client.GetQuery(parts);
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Select_List_Escapes_With_Alias_And_Joins_Columns()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+
+		var c0Name = F.Rnd.Str;
+		var c0Alias = F.Rnd.Str;
+		var c0 = new Column(v.Table, c0Name, c0Alias);
+		var c1Name = F.Rnd.Str;
+		var c1Alias = F.Rnd.Str;
+		var c1 = new Column(v.Table, c1Name, c1Alias);
+		var parts = new QueryParts(v.Table)
 		{
-			// Arrange
-			var (client, fromTable) = MySqlDbClient_Setup.Get();
+			Select = new ColumnList(new[] { c0, c1 })
+		};
+		var expected = "SELECT" +
+			$" `{v.Schema}.{v.Name}`.`{c0Name}` AS '{c0Alias}'," +
+			$" `{v.Schema}.{v.Name}`.`{c1Name}` AS '{c1Alias}'" +
+			$" FROM `{v.Schema}.{v.Name}`;";
 
-			var fromName = F.Rnd.Str;
-			var from = new Column(fromTable.GetName(), fromName, F.Rnd.Str);
+		// Act
+		var (query, _) = client.GetQuery(parts);
 
-			var to0Table = F.Rnd.Str;
-			var to0Name = F.Rnd.Str;
-			var to0 = new Column(to0Table, to0Name, F.Rnd.Str);
+		// Assert
+		Assert.Equal(expected, query);
+	}
 
-			var to1Table = F.Rnd.Str;
-			var to1Name = F.Rnd.Str;
-			var to1 = new Column(to1Table, to1Name, F.Rnd.Str);
+	private static void Test_Joins(Func<QueryParts, ImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
 
-			var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
+		var fromName = F.Rnd.Str;
+		var from = new Column(v.Table, fromName, F.Rnd.Str);
 
-			var parts = setJoin(new(fromTable), join);
+		var to0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
+		var to0Name = F.Rnd.Str;
+		var to0 = new Column(to0Table, to0Name, F.Rnd.Str);
 
-			var expected = $"SELECT * FROM `{fromTable.GetName()}`" +
-				$" {joinType} JOIN `{to0Table}` ON `{fromTable.GetName()}`.`{fromName}` = `{to0Table}`.`{to0Name}`" +
-				$" {joinType} JOIN `{to1Table}` ON `{to0Table}`.`{to0Name}` = `{to1Table}`.`{to1Name}`;";
+		var to1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
+		var to1Name = F.Rnd.Str;
+		var to1 = new Column(to1Table, to1Name, F.Rnd.Str);
 
-			// Act
-			var (query, _) = client.GetQuery(parts);
+		var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
 
-			// Assert
-			Assert.Equal(expected, query);
-		}
+		var parts = setJoin(new(v.Table), join);
 
-		[Fact]
-		public void With_Parts_Adds_Inner_Joins()
+		var expected = "SELECT" +
+			$" * FROM `{v.Schema}.{v.Name}`" +
+			$" {joinType} JOIN `{to0Table.Schema}.{to0Table.Name}`" +
+			$" ON `{v.Schema}.{v.Name}`.`{fromName}` = `{to0Table.Schema}.{to0Table.Name}`.`{to0Name}`" +
+			$" {joinType} JOIN `{to1Table.Schema}.{to1Table.Name}`" +
+			$" ON `{to0Table.Schema}.{to0Table.Name}`.`{to0Name}` = `{to1Table.Schema}.{to1Table.Name}`.`{to1Name}`;";
+
+		// Act
+		var (query, _) = client.GetQuery(parts);
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Adds_Inner_Joins()
+	{
+		Test_Joins((p, j) => p with { InnerJoin = j }, "INNER");
+	}
+
+	[Fact]
+	public void With_Parts_Adds_Left_Joins()
+	{
+		Test_Joins((p, j) => p with { LeftJoin = j }, "LEFT");
+	}
+
+	[Fact]
+	public void With_Parts_Adds_Right_Joins()
+	{
+		Test_Joins((p, j) => p with { RightJoin = j }, "RIGHT");
+	}
+
+	[Fact]
+	public void With_Parts_Adds_Where_Columns_With_Table_Names()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+
+		var c0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
+		var c0Name = F.Rnd.Str;
+		var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
+
+		var c1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
+		var c1Name = F.Rnd.Str;
+		var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
+
+		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
-			Test_Joins((p, j) => p with { InnerJoin = j }, "INNER");
-		}
+			(c0, Compare.Like, F.Rnd.Str),
+			(c1, Compare.MoreThanOrEqual, F.Rnd.Int)
+		});
 
-		[Fact]
-		public void With_Parts_Adds_Left_Joins()
+		var parts = new QueryParts(v.Table) { Where = where };
+
+		var expected = "SELECT *" +
+			$" FROM `{v.Schema}.{v.Name}`" +
+			$" WHERE `{c0Table.Schema}.{c0Table.Name}`.`{c0Name}` LIKE @P0" +
+			$" AND `{c1Table.Schema}.{c1Table.Name}`.`{c1Name}` >= @P1;";
+
+		// Act
+		var (query, _) = client.GetQuery(parts);
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Adds_Custom_Where_Clause_And_Parameters()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+
+		var w0 = F.Rnd.Str;
+		var w1 = F.Rnd.Str;
+		var p0 = F.Rnd.Str;
+		var p1 = F.Rnd.Str;
+		var p2 = F.Rnd.Str;
+		var parametersToAdd0 = new QueryParameters
 		{
-			Test_Joins((p, j) => p with { LeftJoin = j }, "LEFT");
-		}
-
-		[Fact]
-		public void With_Parts_Adds_Right_Joins()
+			{ nameof(p0), p0 },
+			{ nameof(p1), p1 }
+		};
+		var parametersToAdd1 = new QueryParameters
 		{
-			Test_Joins((p, j) => p with { RightJoin = j }, "RIGHT");
-		}
+			{ nameof(p2), p2 }
+		};
 
-		[Fact]
-		public void With_Parts_Adds_Where_Columns_With_Table_Names()
+		var parts = new QueryParts(v.Table)
 		{
-			// Arrange
-			var (client, fromTable) = MySqlDbClient_Setup.Get();
-
-			var c0Table = F.Rnd.Str;
-			var c0Name = F.Rnd.Str;
-			var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
-
-			var c1Table = F.Rnd.Str;
-			var c1Name = F.Rnd.Str;
-			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
-
-			var where = ImmutableList.Create(new (IColumn, Compare, object)[]
+			WhereCustom = ImmutableList.Create(new (string, IQueryParameters)[]
 			{
-				(c0, Compare.Like, F.Rnd.Str),
-				(c1, Compare.MoreThanOrEqual, F.Rnd.Int)
-			});
+				(w0, parametersToAdd0),
+				(w1, parametersToAdd1)
+			})
+		};
 
-			var parts = new QueryParts(fromTable) { Where = where };
+		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` WHERE ({w0}) AND ({w1});";
 
-			var expected = $"SELECT * FROM `{fromTable.GetName()}`" +
-				$" WHERE `{c0Table}`.`{c0Name}` LIKE @P0 AND `{c1Table}`.`{c1Name}` >= @P1;";
+		// Act
+		var (query, param) = client.GetQuery(parts);
 
-			// Act
-			var (query, _) = client.GetQuery(parts);
-
-			// Assert
-			Assert.Equal(expected, query);
-		}
-
-		[Fact]
-		public void With_Parts_Adds_Custom_Where_Clause_And_Parameters()
-		{
-			// Arrange
-			var (client, fromTable) = MySqlDbClient_Setup.Get();
-
-			var w0 = F.Rnd.Str;
-			var w1 = F.Rnd.Str;
-			var p0 = F.Rnd.Str;
-			var p1 = F.Rnd.Str;
-			var p2 = F.Rnd.Str;
-			var parametersToAdd0 = new QueryParameters
+		// Assert
+		Assert.Equal(expected, query);
+		Assert.Collection(param,
+			x =>
 			{
-				{ nameof(p0), p0 },
-				{ nameof(p1), p1 }
-			};
-			var parametersToAdd1 = new QueryParameters
+				Assert.Equal(nameof(p0), x.Key);
+				Assert.Equal(p0, x.Value);
+			},
+			x =>
 			{
-				{ nameof(p2), p2 }
-			};
-
-			var parts = new QueryParts(fromTable)
+				Assert.Equal(nameof(p1), x.Key);
+				Assert.Equal(p1, x.Value);
+			},
+			x =>
 			{
-				WhereCustom = ImmutableList.Create(new (string, IQueryParameters)[]
-				{
-					(w0, parametersToAdd0),
-					(w1, parametersToAdd1)
-				})
-			};
+				Assert.Equal(nameof(p2), x.Key);
+				Assert.Equal(p2, x.Value);
+			}
+		);
+	}
 
-			var expected = $"SELECT * FROM `{fromTable.GetName()}` WHERE ({w0}) AND ({w1});";
+	[Fact]
+	public void With_Parts_Sets_Parameters()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
 
-			// Act
-			var (query, param) = client.GetQuery(parts);
+		var c0Table = new TableName(F.Rnd.Str);
+		var c0Name = F.Rnd.Str;
+		var c0Value = F.Rnd.Str;
+		var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
 
-			// Assert
-			Assert.Equal(expected, query);
-			Assert.Collection(param,
-				x =>
-				{
-					Assert.Equal(nameof(p0), x.Key);
-					Assert.Equal(p0, x.Value);
-				},
-				x =>
-				{
-					Assert.Equal(nameof(p1), x.Key);
-					Assert.Equal(p1, x.Value);
-				},
-				x =>
-				{
-					Assert.Equal(nameof(p2), x.Key);
-					Assert.Equal(p2, x.Value);
-				}
-			);
-		}
+		var c1Table = new TableName(F.Rnd.Str);
+		var c1Name = F.Rnd.Str;
+		var c1Value = F.Rnd.Int;
+		var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
 
-		[Fact]
-		public void With_Parts_Sets_Parameters()
+		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
-			// Arrange
-			var (client, fromTable) = MySqlDbClient_Setup.Get();
+			(c0, Compare.Like, c0Value),
+			(c1, Compare.MoreThanOrEqual, c1Value)
+		});
 
-			var c0Table = F.Rnd.Str;
-			var c0Name = F.Rnd.Str;
-			var c0Value = F.Rnd.Str;
-			var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
+		var parts = new QueryParts(v.Table) { Where = where };
 
-			var c1Table = F.Rnd.Str;
-			var c1Name = F.Rnd.Str;
-			var c1Value = F.Rnd.Int;
-			var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
+		// Act
+		var (_, param) = client.GetQuery(parts);
 
-			var where = ImmutableList.Create(new (IColumn, Compare, object)[]
+		// Assert
+		Assert.Collection(param,
+			x =>
 			{
-				(c0, Compare.Like, c0Value),
-				(c1, Compare.MoreThanOrEqual, c1Value)
-			});
-
-			var parts = new QueryParts(fromTable) { Where = where };
-
-			// Act
-			var (_, param) = client.GetQuery(parts);
-
-			// Assert
-			Assert.Collection(param,
-				x =>
-				{
-					Assert.Equal("P0", x.Key);
-					Assert.Equal(c0Value, x.Value);
-				},
-				x =>
-				{
-					Assert.Equal("P1", x.Key);
-					Assert.Equal(c1Value, x.Value);
-				}
-			);
-		}
-
-		[Fact]
-		public void With_Parts_Adds_Order_By_Random()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-			var parts = new QueryParts(table)
+				Assert.Equal("P0", x.Key);
+				Assert.Equal(c0Value, x.Value);
+			},
+			x =>
 			{
-				SortRandom = true
-			};
+				Assert.Equal("P1", x.Key);
+				Assert.Equal(c1Value, x.Value);
+			}
+		);
+	}
 
-			var expected = $"SELECT * FROM `{table.GetName()}` ORDER BY RAND();";
-
-			// Act
-			var (query, _) = client.GetQuery(parts);
-
-			// Assert
-			Assert.Equal(expected, query);
-		}
-
-		[Fact]
-		public void With_Parts_Adds_Order_By_With_Table_Name()
+	[Fact]
+	public void With_Parts_Adds_Order_By_Random()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+		var parts = new QueryParts(v.Table)
 		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
+			SortRandom = true
+		};
 
-			var sort0Table = F.Rnd.Str;
-			var sort0Name = F.Rnd.Str;
-			var sort0 = new Column(sort0Table, sort0Name, F.Rnd.Str);
+		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` ORDER BY RAND();";
 
-			var sort1Table = F.Rnd.Str;
-			var sort1Name = F.Rnd.Str;
-			var sort1 = new Column(sort1Table, sort1Name, F.Rnd.Str);
+		// Act
+		var (query, _) = client.GetQuery(parts);
 
-			var parts = new QueryParts(table)
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Adds_Order_By_With_Table_Name()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+
+		var sort0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
+		var sort0Name = F.Rnd.Str;
+		var sort0 = new Column(sort0Table, sort0Name, F.Rnd.Str);
+
+		var sort1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
+		var sort1Name = F.Rnd.Str;
+		var sort1 = new Column(sort1Table, sort1Name, F.Rnd.Str);
+
+		var parts = new QueryParts(v.Table)
+		{
+			Sort = ImmutableList.Create(new (IColumn, SortOrder)[]
 			{
-				Sort = ImmutableList.Create(new (IColumn, SortOrder)[]
-				{
-					(sort0, SortOrder.Ascending),
-					(sort1, SortOrder.Descending)
-				})
-			};
+				(sort0, SortOrder.Ascending),
+				(sort1, SortOrder.Descending)
+			})
+		};
 
-			var expected = $"SELECT * FROM `{table.GetName()}` ORDER BY" +
-				$" `{sort0Table}`.`{sort0Name}` ASC," +
-				$" `{sort1Table}`.`{sort1Name}` DESC;";
+		var expected = "SELECT" +
+			$" * FROM `{v.Schema}.{v.Name}` ORDER BY" +
+			$" `{sort0Table.Schema}.{sort0Table.Name}`.`{sort0Name}` ASC," +
+			$" `{sort1Table.Schema}.{sort1Table.Name}`.`{sort1Name}` DESC;";
 
-			// Act
-			var (query, _) = client.GetQuery(parts);
+		// Act
+		var (query, _) = client.GetQuery(parts);
 
-			// Assert
-			Assert.Equal(expected, query);
-		}
+		// Assert
+		Assert.Equal(expected, query);
+	}
 
-		[Fact]
-		public void With_Parts_Adds_Limit()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-			var max = F.Rnd.Ulng;
-			var parts = new QueryParts(table) { Maximum = max };
-			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {max};";
+	[Fact]
+	public void With_Parts_Adds_Limit()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+		var max = F.Rnd.Ulng;
+		var parts = new QueryParts(v.Table) { Maximum = max };
+		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {max};";
 
-			// Act
-			var (query, _) = client.GetQuery(parts);
+		// Act
+		var (query, _) = client.GetQuery(parts);
 
-			// Assert
-			Assert.Equal(expected, query);
-		}
+		// Assert
+		Assert.Equal(expected, query);
+	}
 
-		[Fact]
-		public void With_Parts_Adds_Limit_And_Offset()
-		{
-			// Arrange
-			var (client, table) = MySqlDbClient_Setup.Get();
-			var skip = F.Rnd.Ulng;
-			var max = F.Rnd.Ulng;
-			var parts = new QueryParts(table) { Skip = skip, Maximum = max };
-			var expected = $"SELECT * FROM `{table.GetName()}` LIMIT {skip}, {max};";
+	[Fact]
+	public void With_Parts_Adds_Limit_And_Offset()
+	{
+		// Arrange
+		var (client, v) = MySqlDbClient_Setup.Get();
+		var skip = F.Rnd.Ulng;
+		var max = F.Rnd.Ulng;
+		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
+		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {skip}, {max};";
 
-			// Act
-			var (query, _) = client.GetQuery(parts);
+		// Act
+		var (query, _) = client.GetQuery(parts);
 
-			// Assert
-			Assert.Equal(expected, query);
-		}
+		// Assert
+		Assert.Equal(expected, query);
 	}
 }

@@ -1,24 +1,23 @@
 // Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Config.JeebsConfig_Tests
+namespace Jeebs.Config.JeebsConfig_Tests;
+
+public class GetKey_Tests
 {
-	public class GetKey_Tests
+	[Theory]
+	[InlineData("one:two:three", "one:two:three")]
+	[InlineData(":four", "jeebs:four")]
+	public void Key_ReturnsNormalOrJeebsKey(string input, string expected)
 	{
-		[Theory]
-		[InlineData("one:two:three", "one:two:three")]
-		[InlineData(":four", "jeebs:four")]
-		public void Key_ReturnsNormalOrJeebsKey(string input, string expected)
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = JeebsConfig.GetKey(input);
+		// Act
+		var result = JeebsConfig.GetKey(input);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

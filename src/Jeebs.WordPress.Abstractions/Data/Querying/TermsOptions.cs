@@ -1,35 +1,34 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
 
-namespace Jeebs.WordPress.Data.Querying
+namespace Jeebs.WordPress.Data.Querying;
+
+/// <inheritdoc cref="IQueryTermsOptions"/>
+public abstract record class TermsOptions : Options<WpTermId>, IQueryTermsOptions
 {
-	/// <inheritdoc cref="IQueryTermsOptions"/>
-	public abstract record TermsOptions : Options<WpTermId>, IQueryTermsOptions
-	{
-		/// <summary>
-		/// IQueryTermsPartsBuilder
-		/// </summary>
-		protected new IQueryTermsPartsBuilder Builder =>
-			(IQueryTermsPartsBuilder)base.Builder;
+	/// <summary>
+	/// IQueryTermsPartsBuilder
+	/// </summary>
+	protected new IQueryTermsPartsBuilder Builder =>
+		(IQueryTermsPartsBuilder)base.Builder;
 
-		/// <inheritdoc/>
-		public Taxonomy? Taxonomy { get; init; }
+	/// <inheritdoc/>
+	public Taxonomy? Taxonomy { get; init; }
 
-		/// <inheritdoc/>
-		public string? Slug { get; init; }
+	/// <inheritdoc/>
+	public string? Slug { get; init; }
 
-		/// <inheritdoc/>
-		public long CountAtLeast { get; init; } = 1;
+	/// <inheritdoc/>
+	public long CountAtLeast { get; init; } = 1;
 
-		/// <summary>
-		/// Allow Builder to be injected
-		/// </summary>
-		/// <param name="schema">IWpDbSchema</param>
-		/// <param name="builder">IQueryTermsPartsBuilder</param>
-		protected TermsOptions(IWpDbSchema schema, IQueryTermsPartsBuilder builder) : base(schema, builder) =>
-			Maximum = null;
-	}
+	/// <summary>
+	/// Allow Builder to be injected
+	/// </summary>
+	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="builder">IQueryTermsPartsBuilder</param>
+	protected TermsOptions(IWpDbSchema schema, IQueryTermsPartsBuilder builder) : base(schema, builder) =>
+		Maximum = null;
 }

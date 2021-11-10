@@ -1,24 +1,23 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.StrongId_Tests
+namespace Jeebs.StrongId_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void Sets_Default()
 	{
-		[Fact]
-		public void Sets_Default()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var id = new TestId();
+		// Act
+		var id = new TestId();
 
-			// Assert
-			Assert.Equal(0U, id.Value);
-		}
-
-		public record TestId() : StrongId(0);
+		// Assert
+		Assert.Equal(0L, id.Value);
 	}
+
+	public readonly record struct TestId(long Value) : IStrongId;
 }

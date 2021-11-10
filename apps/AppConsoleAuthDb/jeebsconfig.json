@@ -1,0 +1,36 @@
+{
+	"jeebs": {
+		"app": {
+			"name": "Auth Database",
+			"suite": "Jeebs"
+		},
+		"db": {
+			"default": "server04",
+			"connections": {
+				"server04-mariadb": {
+					"connectionString": ""
+				},
+				"server04-postgres": {
+					"connectionString": ""
+				}
+			}
+		},
+		"logging": {
+			"minimumLevel": "Verbose",
+			"console": true,
+			"providers": {
+				"seq.server04": {
+					"enabled": true
+				}
+			}
+		},
+		"services": {
+			"seq": {
+				"server04": {
+					"server": "",
+					"apiKey": ""
+				}
+			}
+		}
+	}
+}

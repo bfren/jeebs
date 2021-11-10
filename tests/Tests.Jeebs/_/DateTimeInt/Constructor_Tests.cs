@@ -1,107 +1,106 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Xunit;
 
-namespace Jeebs.DateTimeInt_Tests
+namespace Jeebs.DateTimeInt_Tests;
+
+public class Constructor_Tests
 {
-	public class Constructor_Tests
+	[Fact]
+	public void From_Integers_Sets_Values()
 	{
-		[Fact]
-		public void FromIntegers_CreatesObject()
-		{
-			// Arrange
-			const string expected = "200001020304";
+		// Arrange
+		const string expected = "200001020304";
 
-			// Act
-			var result = new DateTimeInt(2000, 1, 2, 3, 4).ToString();
+		// Act
+		var result = new DateTimeInt(2000, 1, 2, 3, 4);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result.ToString());
+	}
 
-		[Fact]
-		public void FromDateTime_CreatesObject()
-		{
-			// Arrange
-			const string expected = "200001020304";
-			var input = new DateTime(2000, 1, 2, 3, 4, 5);
+	[Fact]
+	public void From_DateTime_Sets_Values()
+	{
+		// Arrange
+		const string expected = "200001020304";
+		var input = new DateTime(2000, 1, 2, 3, 4, 5);
 
-			// Act
-			var result = new DateTimeInt(input).ToString();
+		// Act
+		var result = new DateTimeInt(input);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result.ToString());
+	}
 
-		[Fact]
-		public void FromValidString_CreatesObject()
-		{
-			// Arrange
-			const string input = "200001020304";
+	[Fact]
+	public void From_Valid_String_Sets_Values()
+	{
+		// Arrange
+		const string input = "200001020304";
 
-			// Act
-			var result = new DateTimeInt(input).ToString();
+		// Act
+		var result = new DateTimeInt(input);
 
-			// Assert
-			Assert.Equal(input, result);
-		}
+		// Assert
+		Assert.Equal(input, result.ToString());
+	}
 
-		[Theory]
-		[InlineData("2000")]
-		[InlineData("20000102030405")]
-		[InlineData("invalid")]
-		public void FromInvalidString_ThrowsArgumentException(string input)
-		{
-			// Arrange
+	[Theory]
+	[InlineData("2000")]
+	[InlineData("20000102030405")]
+	[InlineData("invalid")]
+	public void From_Invalid_String_Throws_ArgumentException(string input)
+	{
+		// Arrange
 
-			// Act
-			DateTimeInt result() => new(input);
+		// Act
+		object result() => new DateTimeInt(input);
 
-			// Assert
-			Assert.Throws<ArgumentException>(result);
-		}
+		// Assert
+		Assert.Throws<ArgumentException>(result);
+	}
 
-		[Theory]
-		[InlineData(null)]
-		[InlineData("")]
-		public void FromNullString_ReturnsZeroes(string input)
-		{
-			// Arrange
+	[Theory]
+	[InlineData(null)]
+	[InlineData("")]
+	public void From_Null_Or_Empty_String_Returns_Zeroes(string input)
+	{
+		// Arrange
 
-			// Act
-			var result = new DateTimeInt(input);
+		// Act
+		var result = new DateTimeInt(input);
 
-			// Assert
-			Assert.Equal("000000000000", result.ToString());
-		}
+		// Assert
+		Assert.Equal("000000000000", result.ToString());
+	}
 
-		[Fact]
-		public void FromValidLong_CreatesObject()
-		{
-			// Arrange
-			const long input = 200001020304;
+	[Fact]
+	public void From_Valid_Long_Sets_Values()
+	{
+		// Arrange
+		const long input = 200001020304;
 
-			// Act
-			var result = new DateTimeInt(input).ToString();
+		// Act
+		var result = new DateTimeInt(input);
 
-			// Assert
-			Assert.Equal(input.ToString(), result);
-		}
+		// Assert
+		Assert.Equal(input.ToString(), result.ToString());
+	}
 
-		[Theory]
-		[InlineData(2000)]
-		[InlineData(20000102030405)]
-		public void FromInvalidLong_ThrowsArgumentException(long input)
-		{
-			// Arrange
+	[Theory]
+	[InlineData(2000)]
+	[InlineData(20000102030405)]
+	public void From_Invalid_Long_Throws_ArgumentException(long input)
+	{
+		// Arrange
 
-			// Act
-			DateTimeInt result() => new(input);
+		// Act
+		object result() => new DateTimeInt(input);
 
-			// Assert
-			Assert.Throws<ArgumentException>(result);
-		}
+		// Assert
+		Assert.Throws<ArgumentException>(result);
 	}
 }

@@ -1,26 +1,25 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Mapping
+namespace Jeebs.Data.Mapping;
+
+/// <summary>
+/// Holds information about a column
+/// </summary>
+public interface IColumn
 {
 	/// <summary>
-	/// Holds information about a column
+	/// Table Name
 	/// </summary>
-	public interface IColumn
-	{
-		/// <summary>
-		/// Table Name
-		/// </summary>
-		string Table { get; }
+	ITableName Table { get; }
 
-		/// <summary>
-		/// Column Name
-		/// </summary>
-		string Name { get; }
+	/// <summary>
+	/// Column Name
+	/// </summary>
+	string Name { get; }
 
-		/// <summary>
-		/// Column Alias
-		/// </summary>
-		string Alias { get; }
-	}
+	/// <summary>
+	/// Column Alias
+	/// </summary>
+	string Alias { get; }
 }

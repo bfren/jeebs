@@ -1,40 +1,39 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace F.NumberF_Tests
+namespace F.NumberF_Tests;
+
+public class Factorial_Tests
 {
-	public class Factorial_Tests
+	[Fact]
+	public void Less_Than_Zero_Returns_Minus_One()
 	{
-		[Fact]
-		public void Less_Than_Zero_Returns_Minus_One()
-		{
-			// Arrange
+		// Arrange
 
-			// Act
-			var result = MathsF.Factorial(-1);
+		// Act
+		var result = MathsF.Factorial(-1);
 
-			// Assert
-			Assert.Equal(-1, result);
-		}
+		// Assert
+		Assert.Equal(-1, result);
+	}
 
-		[Theory]
-		[InlineData(0, 1)]
-		[InlineData(1, 1)]
-		[InlineData(2, 2)]
-		[InlineData(3, 6)]
-		[InlineData(4, 24)]
-		[InlineData(5, 120)]
-		public void Returns_Correct_Result(long input, long expected)
-		{
-			// Arrange
+	[Theory]
+	[InlineData(0, 1)]
+	[InlineData(1, 1)]
+	[InlineData(2, 2)]
+	[InlineData(3, 6)]
+	[InlineData(4, 24)]
+	[InlineData(5, 120)]
+	public void Returns_Correct_Result(long input, long expected)
+	{
+		// Arrange
 
-			// Act
-			var result = MathsF.Factorial(input);
+		// Act
+		var result = MathsF.Factorial(input);
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }

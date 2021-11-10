@@ -1,23 +1,22 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 
-namespace Jeebs.Auth.Data
+namespace Jeebs.Auth.Data;
+
+/// <summary>
+/// Adds additional Authentication functionality to the base <see cref="IDbQuery"/>
+/// </summary>
+public interface IAuthDbQuery : IDbQuery
 {
 	/// <summary>
-	/// Adds additional Authentication functionality to the base <see cref="IDbQuery"/>
+	/// Retrieve the Roles added to the specified User
 	/// </summary>
-	public interface IAuthDbQuery : IDbQuery
-	{
-		/// <summary>
-		/// Retrieve the Roles added to the specified User
-		/// </summary>
-		/// <typeparam name="TRole">Role type</typeparam>
-		/// <param name="userId">User ID</param>
-		Task<Option<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
-			where TRole : IAuthRole;
-	}
+	/// <typeparam name="TRole">Role type</typeparam>
+	/// <param name="userId">User ID</param>
+	Task<Option<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
+		where TRole : IAuthRole;
 }

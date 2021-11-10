@@ -1,50 +1,59 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Jeebs.Apps
+namespace Jeebs.Apps;
+
+/// <summary>
+/// Run a Program using <see cref="App"/>
+/// </summary>
+public abstract class Program
 {
 	/// <summary>
-	/// Run a Program using <see cref="App"/>
+	/// Synchronous entry point
 	/// </summary>
-	public abstract class Program
+	/// <typeparam name="T">Host type</typeparam>
+	/// <param name="args">Command Line arguments</param>
+	/// <param name="run">[Optional] Action to run with IServiceProvider and ILog</param>
+	public static void Main<T>(string[] args, Action<IServiceProvider, ILog>? run = null)
+		where T : App, new() =>
+		MainAsync<T>(args, (provider, log) => { run?.Invoke(provider, log); return Task.CompletedTask; }).RunSynchronously();
+
+	/// <summary>
+	/// Asynchronous entry point
+	/// </summary>
+	/// <typeparam name="T">Host type</typeparam>
+	/// <param name="args">Command Line arguments</param>
+	/// <param name="run">[Optional] Asynchronous function to run with IServiceProvider and ILog</param>
+	public static async Task MainAsync<T>(string[] args, Func<IServiceProvider, ILog, Task>? run = null)
+		where T : App, new()
 	{
-		/// <summary>
-		/// Entry point
-		/// </summary>
-		/// <typeparam name="T">Host type</typeparam>
-		/// <param name="args">Command Line arguments</param>
-		/// <param name="run">[Optional] Action to run program with IServiceProvider and ILog</param>
-		public static async Task MainAsync<T>(string[] args, Action<IServiceProvider, ILog>? run = null)
-			where T : App, new()
+		// Create app
+		var app = new T();
+
+		// Build host
+		using var host = app.BuildHost(args);
+
+		// Get log for this app
+		var log = host.Services.GetRequiredService<ILog<T>>();
+
+		// Ready to go
+		app.Ready(host.Services, log);
+
+		// Run custom app
+		if (run is not null)
 		{
-			// Create app
-			var app = new T();
+			await run(host.Services, log).ConfigureAwait(false);
+		}
 
-			// Build host
-			using var host = app.BuildHost(args);
-
-			// Get log for this app
-			var log = host.Services.GetRequiredService<ILog<T>>();
-
-			// Ready to go
-			app.Ready(host.Services, log);
-
-			// Run default app
-			if (run is null)
-			{
-				await host.RunAsync().ConfigureAwait(false);
-			}
-
-			// Run custom app
-			else
-			{
-				run(host.Services, log);
-			}
+		// Run default app
+		else
+		{
+			await host.RunAsync().ConfigureAwait(false);
 		}
 	}
 }

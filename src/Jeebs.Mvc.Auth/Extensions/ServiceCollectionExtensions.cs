@@ -1,32 +1,31 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Mvc.Auth
+namespace Jeebs.Mvc.Auth;
+
+/// <summary>
+/// Extension methods for IServiceCollection
+/// </summary>
+public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Extension methods for IServiceCollection
+	/// Add authentication
 	/// </summary>
-	public static class ServiceCollectionExtensions
+	/// <param name="this">IServiceCollection</param>
+	/// <param name="config">IConfiguration</param>
+	public static AuthBuilder AddAuthentication(this IServiceCollection @this, IConfiguration config)
 	{
-		/// <summary>
-		/// Add authentication and authorisation
-		/// </summary>
-		/// <param name="this">IServiceCollection</param>
-		/// <param name="config">IConfiguration</param>
-		public static AuthBuilder AddAuth(this IServiceCollection @this, IConfiguration config)
+		// Start fluent configuration
+		if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
 		{
-			// Start fluent configuration
-			if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
-			{
-				return new(@this, auth);
-			}
-
-			// Auth must be enable in configuration settings
-			throw new Jx.Config.AuthNotEnabledException();
+			return new(@this, auth);
 		}
+
+		// Auth must be enable in configuration settings
+		throw new AuthNotEnabledException();
 	}
 }

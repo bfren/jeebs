@@ -8,4 +8,10 @@
 			<_Parameter1>Tests.*</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="System.Text.Json" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Jeebs.Option.Abstractions\Jeebs.Option.Abstractions.csproj" />
+	</ItemGroup>
 </Project>

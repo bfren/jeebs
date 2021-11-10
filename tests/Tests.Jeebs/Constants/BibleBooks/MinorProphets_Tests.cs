@@ -1,23 +1,22 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.Constants.BibleBooks_Tests
+namespace Jeebs.Constants.BibleBooks_Tests;
+
+public class MinorProphets_Tests
 {
-	public class MinorProphets_Tests
+	[Fact]
+	public void Returns_MinorProphets_Books()
 	{
-		[Fact]
-		public void Returns_MinorProphets_Books()
-		{
-			// Arrange
-			const string? prophets = "[\"Hosea\",\"Joel\",\"Amos\",\"Obadiah\",\"Jonah\",\"Micah\",\"Nahum\",\"Habakkuk\",\"Zephaniah\",\"Haggai\",\"Zechariah\",\"Malachi\"]";
+		// Arrange
+		const string? prophets = "[\"Hosea\",\"Joel\",\"Amos\",\"Obadiah\",\"Jonah\",\"Micah\",\"Nahum\",\"Habakkuk\",\"Zephaniah\",\"Haggai\",\"Zechariah\",\"Malachi\"]";
 
-			// Act
-			var result = F.JsonF.Serialise(BibleBooks.MinorProphets);
+		// Act
+		var result = F.JsonF.Serialise(BibleBooks.MinorProphets);
 
-			// Assert
-			Assert.Equal(prophets, result);
-		}
+		// Assert
+		Assert.Equal(prophets, result);
 	}
 }

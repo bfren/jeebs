@@ -1,19 +1,18 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Entities;
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// PostMeta entity
+/// </summary>
+public abstract record class WpPostMetaEntityWithId : IWithId<WpPostMetaId>
 {
 	/// <summary>
-	/// PostMeta entity
+	/// Id
 	/// </summary>
-	public abstract record WpPostMetaEntityWithId : IWithId<WpPostMetaId>
-	{
-		/// <summary>
-		/// Id
-		/// </summary>
-		[Id]
-		public WpPostMetaId Id { get; init; } = new();
-	}
+	[Id]
+	public WpPostMetaId Id { get; init; } = new();
 }

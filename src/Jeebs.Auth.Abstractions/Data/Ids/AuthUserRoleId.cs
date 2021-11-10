@@ -1,16 +1,10 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Auth.Data
-{
-	/// <summary>
-	/// User Role ID
-	/// </summary>
-	public sealed record AuthUserRoleId(ulong Value) : StrongId(Value)
-	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public AuthUserRoleId() : this(0) { }
-	}
-}
+namespace Jeebs.Auth.Data;
+
+/// <summary>
+/// User Role ID
+/// </summary>
+/// <param name="Value">ID Value</param>
+public readonly record struct AuthUserRoleId(long Value) : IStrongId;

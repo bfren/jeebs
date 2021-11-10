@@ -1,17 +1,16 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Data.Entities
+namespace Jeebs.WordPress.Data.Entities;
+
+/// <summary>
+/// WordPress Term ID
+/// </summary>
+/// <param name="Value">ID Value</param>
+public sealed record class WpTermId(long Value) : IStrongId
 {
 	/// <summary>
-	/// WordPress Term ID
+	/// Define parameterless constructor for MVC model binding
 	/// </summary>
-	/// <param name="Value">ID Value</param>
-	public sealed record WpTermId(ulong Value) : StrongId(Value)
-	{
-		/// <summary>
-		/// Create with default value
-		/// </summary>
-		public WpTermId() : this(0) { }
-	}
+	public WpTermId() : this(0) { }
 }

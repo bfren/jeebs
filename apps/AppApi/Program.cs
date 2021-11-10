@@ -1,6 +1,8 @@
 // Jeebs Test Applications
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using AppApi;
+var (app, log) = Jeebs.Apps.Builder.Create(args);
 
-await Jeebs.Apps.Program.MainAsync<App>(args).ConfigureAwait(false);
+app.MapGet("/", () => "Hello, world!");
+
+app.Run();

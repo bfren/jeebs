@@ -1,8 +1,7 @@
 ﻿// Jeebs Rapid Application Development
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs
-{
-	/// <summary>Standard Not Found message</summary>
-	public abstract record NotFoundMsg : INotFoundMsg { }
-}
+namespace Jeebs;
+
+/// <summary>Standard Not Found message</summary>
+public abstract record class NotFoundMsg : INotFoundMsg { }

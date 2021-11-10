@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
 		<ProjectReference Include="..\Jeebs.Services.Webhook\Jeebs.Services.Webhook.csproj" />

@@ -1,23 +1,22 @@
 ﻿// Jeebs Unit Tests
-// Copyright (c) bfren.uk - licensed under https://mit.bfren.uk/2013
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Constants_Tests
+namespace Jeebs.WordPress.Data.Constants_Tests;
+
+public class FeaturedImageId_Tests
 {
-	public class FeaturedImageId_Tests
+	[Fact]
+	public void Returns_Correct_Value()
 	{
-		[Fact]
-		public void Returns_Correct_Value()
-		{
-			// Arrange
-			var expected = "_thumbnail_id";
+		// Arrange
+		var expected = "_thumbnail_id";
 
-			// Act
-			var result = Constants.FeaturedImageId;
+		// Act
+		var result = Constants.FeaturedImageId;
 
-			// Assert
-			Assert.Equal(expected, result);
-		}
+		// Assert
+		Assert.Equal(expected, result);
 	}
 }
