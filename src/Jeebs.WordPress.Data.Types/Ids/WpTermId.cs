@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Data.Entities;
 /// WordPress Term ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public readonly record struct WpTermId(long Value) : IStrongId
+public sealed record class WpTermId(long Value) : IStrongId
 {
 	/// <summary>
 	/// Define parameterless constructor for MVC model binding

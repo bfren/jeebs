@@ -147,7 +147,7 @@ public static partial class Query
 			// Add Parent ID
 			if (parentId?.Value > 0)
 			{
-				return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId.Value.Value);
+				return AddWhere(parts, T.Post, p => p.ParentId, Compare.Equal, parentId.Value);
 			}
 
 			// Return

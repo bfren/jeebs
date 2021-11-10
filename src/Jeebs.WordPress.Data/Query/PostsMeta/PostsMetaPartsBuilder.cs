@@ -42,7 +42,7 @@ public static partial class Query
 			// Add Post ID EQUAL
 			if (postId?.Value > 0)
 			{
-				return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, postId.Value.Value);
+				return AddWhere(parts, T.PostMeta, p => p.PostId, Compare.Equal, postId.Value);
 			}
 
 			// Add Post ID IN
