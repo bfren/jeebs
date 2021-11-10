@@ -7,4 +7,10 @@ namespace Jeebs.WordPress.Data.Entities;
 /// WordPress Term Taxonomy ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public readonly record struct WpTermTaxonomyId(long Value) : IStrongId;
+public readonly record struct WpTermTaxonomyId(long Value) : IStrongId
+{
+	/// <summary>
+	/// Define parameterless constructor for MVC model binding
+	/// </summary>
+	public WpTermTaxonomyId() : this(0) { }
+}

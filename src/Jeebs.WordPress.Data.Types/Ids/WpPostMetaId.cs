@@ -7,4 +7,10 @@ namespace Jeebs.WordPress.Data.Entities;
 /// WordPress Post Meta ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public readonly record struct WpPostMetaId(long Value) : IStrongId;
+public readonly record struct WpPostMetaId(long Value) : IStrongId
+{
+	/// <summary>
+	/// Define parameterless constructor for MVC model binding
+	/// </summary>
+	public WpPostMetaId() : this(0) { }
+}

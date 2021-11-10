@@ -7,4 +7,10 @@ namespace Jeebs.WordPress.Data.Entities;
 /// WordPress Option ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public readonly record struct WpOptionId(long Value) : IStrongId;
+public readonly record struct WpOptionId(long Value) : IStrongId
+{
+	/// <summary>
+	/// Define parameterless constructor for MVC model binding
+	/// </summary>
+	public WpOptionId() : this(0) { }
+}
