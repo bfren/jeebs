@@ -27,7 +27,7 @@ public static partial class OptionF
 		}
 
 		// Work out which audit function to use
-		Action audit = Switch<T, Action>(
+		var audit = Switch<T, Action>(
 			option,
 			some: v => () => some?.Invoke(v),
 			none: r => () => none?.Invoke(r)

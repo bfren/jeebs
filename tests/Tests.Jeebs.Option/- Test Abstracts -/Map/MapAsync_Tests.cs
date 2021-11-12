@@ -38,7 +38,7 @@ public abstract class MapAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Str);
 		var exception = new Exception();
-		Task<int> throwFunc(string _) => throw exception;
+		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
 		var result = await act(option, throwFunc, DefaultHandler);
@@ -56,7 +56,7 @@ public abstract class MapAsync_Tests
 		var option = Some(F.Rnd.Str);
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		Task<int> throwFunc(string _) => throw exception;
+		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
 		var result = await act(option, throwFunc, handler);

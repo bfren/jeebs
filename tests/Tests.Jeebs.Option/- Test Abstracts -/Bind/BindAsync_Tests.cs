@@ -38,7 +38,7 @@ public abstract class BindAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		Task<Option<string>> throwFunc() => throw exception;
+		var throwFunc = Task<Option<string>> () => throw exception;
 
 		// Act
 		var result = await act(option, _ => throwFunc());

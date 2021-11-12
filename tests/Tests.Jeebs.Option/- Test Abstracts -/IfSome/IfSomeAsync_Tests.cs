@@ -18,7 +18,7 @@ public abstract class IfSomeAsync_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		static Task ifSome(int _) => throw new Exception();
+		var ifSome = Task (int _) => throw new Exception();
 
 		// Act
 		var result = await act(option, ifSome);

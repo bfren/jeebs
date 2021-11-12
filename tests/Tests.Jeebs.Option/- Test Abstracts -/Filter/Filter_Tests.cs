@@ -36,7 +36,7 @@ public abstract class Filter_Tests
 		// Arrange
 		var option = Some(F.Rnd.Str);
 		var exception = new Exception();
-		bool throwFunc(string _) => throw exception;
+		var throwFunc = bool (string _) => throw exception;
 
 		// Act
 		var result = act(option, throwFunc);

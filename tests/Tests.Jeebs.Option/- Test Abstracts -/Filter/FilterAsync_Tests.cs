@@ -37,7 +37,7 @@ public abstract class FilterAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Str);
 		var exception = new Exception();
-		Task<bool> throwFunc(string _) => throw exception;
+		var throwFunc = Task<bool> (string _) => throw exception;
 
 		// Act
 		var result = await act(option, throwFunc);

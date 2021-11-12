@@ -19,7 +19,7 @@ public static partial class OptionF
 		}
 
 		// Work out which audit function to use
-		Func<Task> audit = Switch<T, Func<Task>>(
+		var audit = Switch<T, Func<Task>>(
 			option,
 			some: v => () => some?.Invoke(v) ?? Task.CompletedTask,
 			none: r => () => none?.Invoke(r) ?? Task.CompletedTask

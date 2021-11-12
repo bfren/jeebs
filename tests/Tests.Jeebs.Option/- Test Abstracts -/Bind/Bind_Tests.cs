@@ -37,7 +37,7 @@ public abstract class Bind_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		Option<string> throwFunc() => throw exception;
+		var throwFunc = Option<string> () => throw exception;
 
 		// Act
 		var result = act(option, _ => throwFunc());

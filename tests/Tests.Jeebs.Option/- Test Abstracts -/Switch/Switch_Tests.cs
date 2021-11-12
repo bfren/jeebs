@@ -20,7 +20,7 @@ public abstract class Switch_Tests
 		var option = new FakeOption();
 
 		// Act
-		void action() => act(option);
+		var action = void () => act(option);
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);
@@ -34,7 +34,7 @@ public abstract class Switch_Tests
 		var option = new FakeOption();
 
 		// Act
-		void action() => act(option);
+		var action = void () => act(option);
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);

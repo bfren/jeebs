@@ -37,7 +37,7 @@ public abstract class AuditAsync_Tests
 		var option = new FakeOption();
 
 		// Act
-		Task action() => act(option);
+		var action = Task () => act(option);
 
 		// Assert
 		await Assert.ThrowsAsync<UnknownOptionException>(action);
@@ -117,7 +117,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = True;
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -132,7 +132,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = Create.None<bool>();
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -147,7 +147,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = True;
-		static Task throwException(Option<bool> _) => throw new Exception();
+		var throwException = Task (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -162,7 +162,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = Create.None<bool>();
-		static Task throwException(Option<bool> _) => throw new Exception();
+		var throwException = Task (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -250,7 +250,7 @@ public abstract class AuditAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		void throwException(int _) => throw exception;
+		var throwException = void (int _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -266,7 +266,7 @@ public abstract class AuditAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		Task throwException(int _) => throw exception;
+		var throwException = Task (int _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -282,7 +282,7 @@ public abstract class AuditAsync_Tests
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		void throwException(IMsg _) => throw exception;
+		var throwException = void (IMsg _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -298,7 +298,7 @@ public abstract class AuditAsync_Tests
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		Task throwException(IMsg _) => throw exception;
+		var throwException = Task (IMsg _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);

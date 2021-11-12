@@ -37,7 +37,7 @@ public abstract class Map_Tests
 		// Arrange
 		var option = Some(F.Rnd.Str);
 		var exception = new Exception();
-		int throwFunc(string _) => throw exception;
+		var throwFunc = int (string _) => throw exception;
 
 		// Act
 		var result = act(option, throwFunc, DefaultHandler);
@@ -55,7 +55,7 @@ public abstract class Map_Tests
 		var option = Some(F.Rnd.Str);
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		int throwFunc(string _) => throw exception;
+		var throwFunc = int (string _) => throw exception;
 
 		// Act
 		var result = act(option, throwFunc, handler);

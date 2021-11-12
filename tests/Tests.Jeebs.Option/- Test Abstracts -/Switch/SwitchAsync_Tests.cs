@@ -21,7 +21,7 @@ public abstract class SwitchAsync_Tests
 		var option = new FakeOption();
 
 		// Act
-		async Task<string> action() => await act(option);
+		var action = async Task<string> () => await act(option);
 
 		// Assert
 		await Assert.ThrowsAsync<UnknownOptionException>(action);

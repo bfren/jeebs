@@ -84,7 +84,7 @@ public abstract class Audit_Tests
 	{
 		// Arrange
 		var some = True;
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = act(some, throwException);
@@ -99,7 +99,7 @@ public abstract class Audit_Tests
 	{
 		// Arrange
 		var none = Create.None<bool>();
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = act(none, throwException);
@@ -153,7 +153,7 @@ public abstract class Audit_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		void throwException(int _) => throw exception;
+		var throwException = void (int _) => throw new Exception();
 
 		// Act
 		var result = act(option, throwException);
@@ -169,7 +169,7 @@ public abstract class Audit_Tests
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		void throwException(IMsg _) => throw exception;
+		var throwException = void (IMsg _) => throw exception;
 
 		// Act
 		var result = act(option, throwException);

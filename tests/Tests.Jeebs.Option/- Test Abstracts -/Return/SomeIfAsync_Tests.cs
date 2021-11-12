@@ -20,7 +20,7 @@ public abstract class SomeIfAsync_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		bool throwFunc() => throw exception;
+		var throwFunc = bool () => throw exception;
 
 		// Act
 		var result = await act(throwFunc, Task.FromResult(F.Rnd.Int), handler);
@@ -37,7 +37,7 @@ public abstract class SomeIfAsync_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		bool throwFunc() => throw exception;
+		var throwFunc = bool () => throw exception;
 
 		// Act
 		var result = await act(throwFunc, () => Task.FromResult(F.Rnd.Int), handler);
@@ -54,7 +54,7 @@ public abstract class SomeIfAsync_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		Task<int> throwFunc() => throw exception;
+		var throwFunc = Task<int> () => throw exception;
 
 		// Act
 		var result = await act(() => true, throwFunc, handler);
