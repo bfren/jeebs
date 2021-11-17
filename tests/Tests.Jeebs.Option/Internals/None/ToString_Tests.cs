@@ -13,15 +13,14 @@ public class ToString_Tests
 	public void When_Not_ExceptionMsg_Returns_Reason_ToString()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var msg = new TestMsg(value);
+		var msg = new TestMsg();
 		var option = None<int>(msg);
 
 		// Act
 		var result = option.ToString();
 
 		// Assert
-		Assert.Equal($"{typeof(TestMsg)} {{ Value = {value} }}", result);
+		Assert.Equal($"{typeof(TestMsg)}", result);
 	}
 
 	[Fact]
@@ -39,7 +38,7 @@ public class ToString_Tests
 		Assert.Equal($"{typeof(TestExceptionMsg)}: {value}", result);
 	}
 
-	public record class TestMsg(string Value) : Msg;
+	public record class TestMsg : Msg;
 
 	public record class TestExceptionMsg(Exception Value) : ExceptionMsg;
 }

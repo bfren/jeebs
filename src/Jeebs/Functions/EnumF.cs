@@ -136,7 +136,7 @@ public static class EnumF
 				new object[] { Value, typeof(T) };
 		}
 
-		/// <summary><paramref name="Value"/> is not a valid value of <paramref name="Type"/></summary>
+		/// <summary><paramref name="Value"/> is not a valid value of <paramref name="EnumType"/></summary>
 		/// <param name="EnumType">Enum type</param>
 		/// <param name="Value">Enum value</param>
 		public sealed record class NotAValidEnumValueMsg(Type EnumType, string Value) : Msg
