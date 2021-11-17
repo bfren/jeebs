@@ -8,7 +8,7 @@ using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -28,7 +28,7 @@ public abstract class BindAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Exception);
+		Assert.IsType<UnknownOptionException>(msg.Value);
 	}
 
 	public abstract Task Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
@@ -98,5 +98,5 @@ public abstract class BindAsync_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

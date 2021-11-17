@@ -8,7 +8,7 @@ using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
 using Xunit;
 using static F.WordPressF.DataF.QueryPostsTaxonomyF;
-using static F.WordPressF.DataF.QueryPostsTaxonomyF.Msg;
+using static F.WordPressF.DataF.QueryPostsTaxonomyF.M;
 
 namespace F.WordPressF.DataF.QueryPostsTaxonomyF_Tests;
 

@@ -19,7 +19,7 @@ public sealed class UnableToGetMappedColumnsException : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="reason">Reason</param>
-	public UnableToGetMappedColumnsException(IMsg reason) : base(reason.ToString() ?? string.Empty) { }
+	public UnableToGetMappedColumnsException(Msg reason) : base(reason.ToString() ?? string.Empty) { }
 
 	/// <summary>
 	/// Create exception

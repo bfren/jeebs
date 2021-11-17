@@ -13,7 +13,7 @@ public abstract partial class DbClient : IDbClient
 		where TEntity : IWithId =>
 		Mapper.GetTableMapFor<TEntity>().Map(
 			x => GetCreateQuery(x.Name, x.Columns),
-			e => new Msg.ErrorGettingCrudCreateQueryExceptionMsg(e)
+			e => new M.ErrorGettingCrudCreateQueryExceptionMsg(e)
 		);
 
 	/// <inheritdoc cref="GetCreateQuery{TEntity}"/>
@@ -34,7 +34,7 @@ public abstract partial class DbClient : IDbClient
 		)
 		.Map(
 			x => GetRetrieveQuery(x.map.Name, x.columns, x.map.IdColumn, id),
-			e => new Msg.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
+			e => new M.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 		);
 
 	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(long)"/>
@@ -67,7 +67,7 @@ public abstract partial class DbClient : IDbClient
 					GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id, x.map.VersionColumn),
 
 			},
-			e => new Msg.ErrorGettingCrudUpdateQueryExceptionMsg(e)
+			e => new M.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 		);
 
 	/// <inheritdoc cref="GetUpdateQuery(ITableName, IColumnList, IColumn, long, IColumn)"/>
@@ -105,7 +105,7 @@ public abstract partial class DbClient : IDbClient
 					GetDeleteQuery(x.Name, x.IdColumn, id, x.VersionColumn),
 
 			},
-			e => new Msg.ErrorGettingCrudDeleteQueryExceptionMsg(e)
+			e => new M.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 		);
 
 	/// <inheritdoc cref="GetDeleteQuery(ITableName, IColumn, long, IColumn?)"/>

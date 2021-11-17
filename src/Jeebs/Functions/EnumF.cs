@@ -29,12 +29,12 @@ public static class EnumF
 					x,
 
 				_ =>
-					None<T>(new Msg.NotAValidEnumValueMsg<T>(value))
+					None<T>(new M.NotAValidEnumValueMsg<T>(value))
 			};
 		}
 		catch (Exception)
 		{
-			return None<T>(new Msg.NotAValidEnumValueMsg<T>(value));
+			return None<T>(new M.NotAValidEnumValueMsg<T>(value));
 		}
 	}
 
@@ -48,7 +48,7 @@ public static class EnumF
 	{
 		if (!t.IsEnum)
 		{
-			return None<object>(new Msg.NotAValidEnumMsg(t));
+			return None<object>(new M.NotAValidEnumMsg(t));
 		}
 
 		try
@@ -57,7 +57,7 @@ public static class EnumF
 		}
 		catch (Exception)
 		{
-			return None<object>(new Msg.NotAValidEnumValueMsg(t, value));
+			return None<object>(new M.NotAValidEnumValueMsg(t, value));
 		}
 	}
 
@@ -109,13 +109,13 @@ public static class EnumF
 					x,
 
 				_ =>
-					None<TTo>(new Msg.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+					None<TTo>(new M.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 			};
 		}
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
 		/// <param name="Value">Enum type</param>
@@ -124,35 +124,47 @@ public static class EnumF
 		/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="Value">Enum value</param>
-		public sealed record class NotAValidEnumValueMsg<T>(string Value) : WithValueMsg<string>
+		public sealed record class NotAValidEnumValueMsg<T>(string Value) : Msg
 			where T : struct, Enum
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"'{Value}' is not a valid value of {typeof(T)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"'{Value}' is not a valid value of {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { Value, typeof(T) };
 		}
 
 		/// <summary><paramref name="Value"/> is not a valid value of <paramref name="Type"/></summary>
-		/// <param name="Type">Enum type</param>
+		/// <param name="EnumType">Enum type</param>
 		/// <param name="Value">Enum value</param>
-		public sealed record class NotAValidEnumValueMsg(Type Type, string Value) : WithValueMsg<string>
+		public sealed record class NotAValidEnumValueMsg(Type EnumType, string Value) : Msg
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"'{Value}' is not a valid value of {Type}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"'{Value}' is not a valid value of {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { Value, EnumType };
 		}
 
 		/// <summary><paramref name="Value"/> is not in <typeparamref name="TTo"/></summary>
 		/// <typeparam name="TFrom">From Enum</typeparam>
 		/// <typeparam name="TTo">To Enum</typeparam>
 		/// <param name="Value">From Enum value</param>
-		public sealed record class ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : WithValueMsg<TFrom>
+		public sealed record class ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : Msg
 			where TFrom : struct, Enum
 			where TTo : struct, Enum
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"'{Value}' is not a valid {typeof(TTo)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"'{Value}' is not a valid {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { Value, typeof(TTo) };
 		}
 	}
 }

@@ -8,7 +8,7 @@ using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
 using Xunit;
 using static F.WordPressF.DataF.QueryPostsMetaF;
-using static F.WordPressF.DataF.QueryPostsMetaF.Msg;
+using static F.WordPressF.DataF.QueryPostsMetaF.M;
 
 namespace F.WordPressF.DataF.QueryPostsMetaF_Tests;
 

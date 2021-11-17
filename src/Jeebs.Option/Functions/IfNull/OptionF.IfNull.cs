@@ -10,7 +10,7 @@ namespace F;
 public static partial class OptionF
 {
 	/// <summary>
-	/// If <paramref name="option"/> is <see cref="Jeebs.Internals.None{T}"/> and the reason is <see cref="Msg.NullValueMsg"/>,
+	/// If <paramref name="option"/> is <see cref="Jeebs.Internals.None{T}"/> and the reason is <see cref="M.NullValueMsg"/>,
 	/// or <paramref name="option"/> is <see cref="Jeebs.Internals.Some{T}"/> and <see cref="Some{T}.Value"/> is null,
 	/// runs <paramref name="ifNull"/> - which gives you the opportunity to return a more useful 'Not Found' message
 	/// </summary>
@@ -24,7 +24,7 @@ public static partial class OptionF
 				Some<T> x when x.Value is null =>
 					ifNull(),
 
-				None<T> x when x.Reason is Msg.NullValueMsg =>
+				None<T> x when x.Reason is M.NullValueMsg =>
 					ifNull(),
 
 				_ =>
@@ -37,6 +37,6 @@ public static partial class OptionF
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <typeparam name="TMsg">Reason type</typeparam>
 	public static Option<T> IfNull<T, TMsg>(Option<T> option, Func<TMsg> ifNull)
-		where TMsg : IMsg =>
+		where TMsg : Msg =>
 		IfNull(option, () => None<T>(ifNull()));
 }

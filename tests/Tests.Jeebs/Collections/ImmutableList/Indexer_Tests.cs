@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static F.OptionF.Enumerable.Msg;
+using static F.OptionF.Enumerable.M;
 
 namespace Jeebs.ImmutableList_Tests;
 

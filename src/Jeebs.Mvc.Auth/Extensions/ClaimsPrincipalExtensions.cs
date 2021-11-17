@@ -31,15 +31,15 @@ public static class ClaimsPrincipalExtensions
 							userId,
 
 						false =>
-							None<long, Msg.InvalidUserIdMsg>()
+							None<long, M.InvalidUserIdMsg>()
 					},
 
 				_ =>
-					None<long, Msg.UnableToFindUserIdClaimMsg>()
+					None<long, M.UnableToFindUserIdClaimMsg>()
 			};
 		}
 
-		return None<long, Msg.UserIsNotAuthenticatedMsg>();
+		return None<long, M.UserIsNotAuthenticatedMsg>();
 	}
 
 	/// <summary>
@@ -60,15 +60,15 @@ public static class ClaimsPrincipalExtensions
 		&& @this.Claims.Any(c => string.Equals(c.Value, value, StringComparison.OrdinalIgnoreCase));
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>The User ID Claim was not a valid number</summary>
-		public sealed record class InvalidUserIdMsg : IMsg { }
+		public sealed record class InvalidUserIdMsg : Msg;
 
 		/// <summary>Unable to find the User ID Claim</summary>
-		public sealed record class UnableToFindUserIdClaimMsg : IMsg { }
+		public sealed record class UnableToFindUserIdClaimMsg : Msg;
 
 		/// <summary>The current User is not correctly authenticated</summary>
-		public sealed record class UserIsNotAuthenticatedMsg : IMsg { }
+		public sealed record class UserIsNotAuthenticatedMsg : Msg;
 	}
 }

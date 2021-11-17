@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static Jeebs.Mvc.Auth.Jwt.JwtHandler.Msg;
+using static Jeebs.Mvc.Auth.Jwt.JwtHandler.M;
 
 namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
 

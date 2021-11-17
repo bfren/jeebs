@@ -79,18 +79,18 @@ public static partial class QueryPostsF
 						Some(x).AsTask,
 
 					_ =>
-						None<IPagedList<TModel>, Msg.UnrecognisedPagedListTypeMsg>().AsTask
+						None<IPagedList<TModel>, M.UnrecognisedPagedListTypeMsg>().AsTask
 				}
 			);
 	}
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Unable to get posts query</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingQueryPostsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingQueryPostsOptionsMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>
-		public sealed record class UnrecognisedPagedListTypeMsg : IMsg { }
+		public sealed record class UnrecognisedPagedListTypeMsg : Msg;
 	}
 }

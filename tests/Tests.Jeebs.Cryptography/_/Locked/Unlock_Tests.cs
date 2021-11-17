@@ -3,7 +3,7 @@
 
 using Xunit;
 using static F.CryptoF;
-using static Jeebs.Cryptography.Locked.Msg;
+using static Jeebs.Cryptography.Locked.M;
 
 namespace Jeebs.Cryptography.Locked_Tests;
 

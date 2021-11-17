@@ -15,7 +15,7 @@ public class Switch_Tests : Jeebs_Tests.Switch_Tests
 	public override void Test00_Return_Void_If_Unknown_Option_Throws_UnknownOptionException()
 	{
 		var some = Substitute.For<Action<int>>();
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 		Test00(opt => Switch(opt, some, none));
 	}
 
@@ -23,7 +23,7 @@ public class Switch_Tests : Jeebs_Tests.Switch_Tests
 	public override void Test01_Return_Value_If_Unknown_Option_Throws_UnknownOptionException()
 	{
 		var some = Substitute.For<Func<int, string>>();
-		var none = Substitute.For<Func<IMsg, string>>();
+		var none = Substitute.For<Func<Msg, string>>();
 		Test01(opt => Switch(opt, some, none));
 	}
 
@@ -44,14 +44,14 @@ public class Switch_Tests : Jeebs_Tests.Switch_Tests
 	[Fact]
 	public override void Test04_Return_Void_If_Some_Runs_Some_Action_With_Value()
 	{
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 		Test04((opt, some) => Switch(opt, some, none));
 	}
 
 	[Fact]
 	public override void Test05_Return_Value_If_Some_Runs_Some_Func_With_Value()
 	{
-		var none = Substitute.For<Func<IMsg, string>>();
+		var none = Substitute.For<Func<Msg, string>>();
 		Test05((opt, some) => Switch(opt, some, none));
 	}
 }

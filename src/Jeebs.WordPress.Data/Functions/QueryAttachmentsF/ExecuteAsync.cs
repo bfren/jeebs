@@ -27,7 +27,7 @@ public static partial class QueryAttachmentsF
 		return
 			Some(
 				() => opt(new Query.AttachmentsOptions()),
-				e => new Msg.ErrorGettingQueryAttachmentsOptionsMsg(e)
+				e => new M.ErrorGettingQueryAttachmentsOptionsMsg(e)
 			)
 			.Bind(
 				x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)
@@ -37,10 +37,10 @@ public static partial class QueryAttachmentsF
 			);
 	}
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Unable to get attachments query</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingQueryAttachmentsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingQueryAttachmentsOptionsMsg(Exception Value) : ExceptionMsg;
 	}
 }

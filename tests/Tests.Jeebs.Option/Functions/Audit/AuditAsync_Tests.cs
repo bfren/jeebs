@@ -26,7 +26,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		var any = Substitute.For<Func<Option<int>, Task>>();
 		var some = Substitute.For<Func<int, Task>>();
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		await Test01(opt => AuditAsync(opt, any, null, null));
 		await Test01(opt => AuditAsync(opt, null, some, null));

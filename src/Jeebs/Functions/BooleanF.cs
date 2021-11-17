@@ -23,7 +23,7 @@ public static class BooleanF
 		var val = value?.ToString()?.ToLower();
 		if (val is null)
 		{
-			return None<bool, Msg.NullValueMsg>();
+			return None<bool, M.NullValueMsg>();
 		}
 
 		// Alternative boolean values
@@ -44,14 +44,14 @@ public static class BooleanF
 			return result;
 		}
 
-		return None<bool>(new Msg.UnrecognisedValueMsg(val));
+		return None<bool>(new M.UnrecognisedValueMsg(val));
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Null Value</summary>
-		public sealed record class NullValueMsg : IMsg { }
+		public sealed record class NullValueMsg : Msg;
 
 		/// <summary>Unrecognised boolean value</summary>
 		/// <param name="Value">Unrecognised Value</param>

@@ -24,7 +24,7 @@ public static partial class OptionF
 					Some(value, handler),
 
 				false =>
-					None<T, Msg.PredicateWasFalseMsg>()
+					None<T, M.PredicateWasFalseMsg>()
 			},
 			handler
 		);
@@ -34,9 +34,9 @@ public static partial class OptionF
 		SomeIf(predicate, () => value, handler);
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Predicate was false</summary>
-		public sealed record class PredicateWasFalseMsg : IMsg { }
+		public sealed record class PredicateWasFalseMsg : Msg;
 	}
 }

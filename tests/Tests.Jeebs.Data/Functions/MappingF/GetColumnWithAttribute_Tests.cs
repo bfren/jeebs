@@ -7,7 +7,7 @@ using Jeebs.Data.Mapping;
 using Jeebs.Data.Mapping.Mapper_Tests;
 using Xunit;
 using static F.DataF.MappingF;
-using static F.DataF.MappingF.Msg;
+using static F.DataF.MappingF.M;
 
 namespace F.DataF.MappingF_Tests;
 

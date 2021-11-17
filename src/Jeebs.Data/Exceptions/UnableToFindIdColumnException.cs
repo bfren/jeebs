@@ -19,7 +19,7 @@ public sealed class UnableToFindIdColumnException : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="reason">Reason</param>
-	public UnableToFindIdColumnException(IMsg reason) : base(reason.ToString() ?? string.Empty) { }
+	public UnableToFindIdColumnException(Msg reason) : base(reason.ToString() ?? string.Empty) { }
 
 	/// <summary>
 	/// Create exception

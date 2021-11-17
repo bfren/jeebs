@@ -7,7 +7,7 @@ using Jeebs.WordPress.Data.Querying;
 using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.TermCustomField;
-using static Jeebs.WordPress.Data.TermCustomField.Msg;
+using static Jeebs.WordPress.Data.TermCustomField.M;
 
 namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests;
 

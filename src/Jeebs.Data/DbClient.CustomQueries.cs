@@ -38,7 +38,7 @@ public abstract partial class DbClient : IDbClient
 		)
 		.Map(
 			x => GetQuery(x.map.Name, x.sel, x.whr),
-			e => new Msg.ErrorGettingGeneralRetrieveQueryExceptionMsg(e)
+			e => new M.ErrorGettingGeneralRetrieveQueryExceptionMsg(e)
 		);
 
 	/// <inheritdoc/>

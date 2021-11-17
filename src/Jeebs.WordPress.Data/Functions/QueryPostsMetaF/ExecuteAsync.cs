@@ -26,7 +26,7 @@ public static partial class QueryPostsMetaF
 		where TModel : IWithId<WpPostMetaId> =>
 		Some(
 			() => opt(new Query.PostsMetaOptions(db.Schema)),
-			e => new Msg.ErrorGettingQueryPostsMetaOptionsMsg(e)
+			e => new M.ErrorGettingQueryPostsMetaOptionsMsg(e)
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -36,10 +36,10 @@ public static partial class QueryPostsMetaF
 		);
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Unable to get posts meta query</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingQueryPostsMetaOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingQueryPostsMetaOptionsMsg(Exception Value) : ExceptionMsg;
 	}
 }

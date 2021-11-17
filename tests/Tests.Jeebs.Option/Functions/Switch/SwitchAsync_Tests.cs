@@ -16,7 +16,7 @@ public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 	public override async Task Test00_If_Unknown_Option_Throws_UnknownOptionException()
 	{
 		var some = Substitute.For<Func<int, Task<string>>>();
-		var none = Substitute.For<Func<IMsg, Task<string>>>();
+		var none = Substitute.For<Func<Msg, Task<string>>>();
 		await Test00(opt => SwitchAsync(opt, some, none));
 		await Test00(opt => SwitchAsync(opt.AsTask, some, none));
 	}
@@ -32,7 +32,7 @@ public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 	[Fact]
 	public override async Task Test02_If_Some_Runs_Some_Func_With_Value()
 	{
-		var none = Substitute.For<Func<IMsg, Task<string>>>();
+		var none = Substitute.For<Func<Msg, Task<string>>>();
 		await Test02((opt, some) => SwitchAsync(opt, some, none));
 		await Test02((opt, some) => SwitchAsync(opt.AsTask, some, none));
 	}

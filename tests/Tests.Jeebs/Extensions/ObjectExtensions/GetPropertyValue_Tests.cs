@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static Jeebs.Reflection.ObjectExtensions.Msg;
+using static Jeebs.Reflection.ObjectExtensions.M;
 
 namespace Jeebs.Reflection.ObjectExtensions_Tests;
 

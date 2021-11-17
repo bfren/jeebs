@@ -3,7 +3,7 @@
 
 using System;
 using Xunit;
-using static Jeebs.DateTimeInt.Msg;
+using static Jeebs.DateTimeInt.M;
 
 namespace Jeebs.DateTimeInt_Tests;
 

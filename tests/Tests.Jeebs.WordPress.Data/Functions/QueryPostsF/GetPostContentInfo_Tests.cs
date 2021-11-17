@@ -20,7 +20,7 @@ public class GetPostContentInfo_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<Msg.ContentPropertyNotFoundMsg<NoContentProperty>>(none);
+		Assert.IsType<M.ContentPropertyNotFoundMsg<NoContentProperty>>(none);
 	}
 
 	[Fact]
@@ -33,7 +33,7 @@ public class GetPostContentInfo_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<Msg.ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>(none);
+		Assert.IsType<M.ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>(none);
 	}
 
 	[Fact]

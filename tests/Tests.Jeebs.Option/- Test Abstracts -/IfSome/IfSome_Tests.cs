@@ -24,7 +24,7 @@ public abstract class IfSome_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<Msg.UnhandledExceptionMsg>(none);
+		Assert.IsType<M.UnhandledExceptionMsg>(none);
 	}
 
 	public abstract void Test01_None_Returns_Original_Option();

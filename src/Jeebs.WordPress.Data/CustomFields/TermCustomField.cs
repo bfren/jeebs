@@ -39,7 +39,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		{
 			if (isRequired)
 			{
-				return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
 			return False.AsTask;
@@ -58,7 +58,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 			)
 			.UnwrapAsync(
 				x => x.Single<Term>(
-					tooMany: () => new Msg.MultipleTermsFoundMsg(ValueStr)
+					tooMany: () => new M.MultipleTermsFoundMsg(ValueStr)
 				)
 			)
 			.MapAsync(
@@ -80,7 +80,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
 		if (!long.TryParse(value, out long termId))
 		{
-			return None<WpTermId>(new Msg.ValueIsInvalidTermIdMsg(type, value));
+			return None<WpTermId>(new M.ValueIsInvalidTermIdMsg(type, value));
 		}
 
 		return new WpTermId(termId);
@@ -101,7 +101,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	public sealed record class Term : WpTermEntity { }
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Meta key not found in MetaDictionary</summary>
 		/// <param name="Type">Custom Field type</param>

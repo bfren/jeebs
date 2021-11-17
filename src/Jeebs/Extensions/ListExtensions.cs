@@ -24,25 +24,25 @@ public static class ListExtensions
 	/// <param name="item">Item to match</param>
 	public static (Option<T> prev, Option<T> next) GetEitherSide<T>(this List<T> @this, T item)
 	{
-		static (Option<T>, Option<T>) invalid(IMsg reason) =>
+		static (Option<T>, Option<T>) invalid(Msg reason) =>
 			(None<T>(reason), None<T>(reason));
 
 		// There are no items
 		if (@this.Count == 0)
 		{
-			return invalid(new Msg.ListIsEmptyMsg());
+			return invalid(new M.ListIsEmptyMsg());
 		}
 
 		// There is only one item
 		if (@this.Count == 1)
 		{
-			return invalid(new Msg.ListContainsSingleItemMsg());
+			return invalid(new M.ListContainsSingleItemMsg());
 		}
 
 		// The item is not in the list
 		if (!@this.Contains(item))
 		{
-			return invalid(new Msg.ListDoesNotContainItemMsg<T>(item));
+			return invalid(new M.ListDoesNotContainItemMsg<T>(item));
 		}
 
 		// Get the index of the item
@@ -51,12 +51,12 @@ public static class ListExtensions
 		// If it is the first item, Previous should be None
 		if (index == 0)
 		{
-			return (None<T, Msg.ItemIsFirstItemMsg>(), @this[1]);
+			return (None<T, M.ItemIsFirstItemMsg>(), @this[1]);
 		}
 		// If it is the last item, Next should be None
 		else if (index == @this.Count - 1)
 		{
-			return (@this[index - 1], None<T, Msg.ItemIsLastItemMsg>());
+			return (@this[index - 1], None<T, M.ItemIsLastItemMsg>());
 		}
 		// Return the items either side of the item
 		else
@@ -105,21 +105,21 @@ public static class ListExtensions
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>List is empty</summary>
-		public sealed record class ListIsEmptyMsg : IMsg { }
+		public sealed record class ListIsEmptyMsg : Msg;
 
 		/// <summary>List contains only one item</summary>
-		public sealed record class ListContainsSingleItemMsg : IMsg { }
+		public sealed record class ListContainsSingleItemMsg : Msg;
 
 		/// <summary>List does not contain the specified item</summary>
 		public sealed record class ListDoesNotContainItemMsg<T>(T Value) : WithValueMsg<T>;
 
 		/// <summary>The specified item is the first in the list (so there is no previous item)</summary>
-		public sealed record class ItemIsFirstItemMsg : IMsg { }
+		public sealed record class ItemIsFirstItemMsg : Msg;
 
 		/// <summary>The specified item is the last in the list (so there is no next item)</summary>
-		public sealed record class ItemIsLastItemMsg : IMsg { }
+		public sealed record class ItemIsLastItemMsg : Msg;
 	}
 }

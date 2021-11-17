@@ -26,7 +26,7 @@ public static partial class QueryTermsF
 		where TModel : IWithId<WpTermId> =>
 		Some(
 			() => opt(new Query.TermsOptions(db.Schema)),
-			e => new Msg.ErrorGettingQueryTermsOptionsMsg(e)
+			e => new M.ErrorGettingQueryTermsOptionsMsg(e)
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -36,10 +36,10 @@ public static partial class QueryTermsF
 		);
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Unable to get terms query</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingQueryTermsOptionsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingQueryTermsOptionsMsg(Exception Value) : ExceptionMsg;
 	}
 }

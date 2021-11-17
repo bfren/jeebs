@@ -14,16 +14,16 @@ public static class MsgException
 	/// <typeparam name="TMsg">Message type</typeparam>
 	/// <param name="msg">Message</param>
 	public static MsgException<TMsg> Create<TMsg>(TMsg msg)
-		where TMsg : IMsg =>
+		where TMsg : Msg =>
 		new(msg);
 }
 
 /// <summary>
-/// Throw an exception with an <see cref="IMsg"/>
+/// Throw an exception with an <see cref="Msg"/>
 /// </summary>
 /// <typeparam name="TMsg">Message type</typeparam>
 public sealed class MsgException<TMsg> : Exception
-	where TMsg : IMsg
+	where TMsg : Msg
 {
 	/// <summary>
 	/// Create exception

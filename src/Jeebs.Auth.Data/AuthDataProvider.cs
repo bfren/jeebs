@@ -51,13 +51,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		// Check email
 		if (string.IsNullOrEmpty(email))
 		{
-			return None<TModel, Msg.NullOrEmptyEmailMsg>();
+			return None<TModel, M.NullOrEmptyEmailMsg>();
 		}
 
 		// Check password
 		if (string.IsNullOrEmpty(password))
 		{
-			return None<TModel, Msg.InvalidPasswordMsg>();
+			return None<TModel, M.InvalidPasswordMsg>();
 		}
 
 		// Get user for authentication
@@ -66,13 +66,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			// Verify the user is enabled
 			if (!user.IsEnabled)
 			{
-				return None<TModel>(new Msg.UserNotEnabledMsg(email));
+				return None<TModel>(new M.UserNotEnabledMsg(email));
 			}
 
 			// Verify the entered password
 			if (!user.PasswordHash.VerifyPassword(password))
 			{
-				return None<TModel, Msg.InvalidPasswordMsg>();
+				return None<TModel, M.InvalidPasswordMsg>();
 			}
 
 			// Get user model
@@ -80,7 +80,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// User not found
-		return None<TModel>(new Msg.UserNotFoundMsg(email));
+		return None<TModel>(new M.UserNotFoundMsg(email));
 	}
 
 	/// <inheritdoc/>
@@ -100,21 +100,26 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		select u with { Roles = r };
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Invalid password</summary>
-		public sealed record class InvalidPasswordMsg : IMsg { }
+		public sealed record class InvalidPasswordMsg : Msg;
 
 		/// <summary>Null or empty email address</summary>
-		public sealed record class NullOrEmptyEmailMsg : IMsg { }
+		public sealed record class NullOrEmptyEmailMsg : Msg;
 
 		/// <summary>Null or empty password</summary>
-		public sealed record class NullOrEmptyPasswordMsg : IMsg { }
+		public sealed record class NullOrEmptyPasswordMsg : Msg;
 
 		/// <summary>User not enabled</summary>
-		public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string> { }
+		public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>User not found</summary>
-		public sealed record class UserNotFoundMsg(string EmailAddress) : NotFoundMsg { }
+		public sealed record class UserNotFoundMsg(string Value) : NotFoundMsg<string>
+		{
+			/// <inheritdoc/>
+			public override string Name =>
+				"EmailAddress";
+		}
 	}
 }

@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static Jeebs.WordPress.Data.TermCustomField.Msg;
+using static Jeebs.WordPress.Data.TermCustomField.M;
 
 namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests;
 

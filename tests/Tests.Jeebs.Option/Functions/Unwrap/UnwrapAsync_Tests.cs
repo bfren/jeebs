@@ -30,6 +30,6 @@ public class UnwrapAsync_Tests : Jeebs_Tests.UnwrapAsync_Tests
 	{
 		await Test02(opt => UnwrapAsync(opt, x => x.Value(Rnd.Int)));
 		await Test02(opt => UnwrapAsync(opt, x => x.Value(Substitute.For<Func<int>>())));
-		await Test02(opt => UnwrapAsync(opt, x => x.Value(Substitute.For<Func<IMsg, int>>())));
+		await Test02(opt => UnwrapAsync(opt, x => x.Value(Substitute.For<Func<Msg, int>>())));
 	}
 }

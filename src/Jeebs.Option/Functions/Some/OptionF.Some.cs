@@ -17,7 +17,7 @@ public static partial class OptionF
 				new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
 
 			_ =>
-				None<T, Msg.NullValueMsg>()
+				None<T, M.NullValueMsg>()
 		};
 
 	/// <summary>
@@ -37,7 +37,7 @@ public static partial class OptionF
 					new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
 
 				_ =>
-					None<T, Msg.NullValueMsg>()
+					None<T, M.NullValueMsg>()
 			};
 		}
 		catch (Exception e)
@@ -71,7 +71,7 @@ public static partial class OptionF
 							new Some<T?>(v), // Some<T> is only created by Some() functions and implicit operator
 
 						false =>
-							None<T?, Msg.AllowNullWasFalseMsg>()
+							None<T?, M.AllowNullWasFalseMsg>()
 					}
 
 			};
@@ -87,12 +87,12 @@ public static partial class OptionF
 		Some(() => value, allowNull, DefaultHandler);
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Value was null when trying to wrap using Return</summary>
-		public sealed record class NullValueMsg : IMsg { }
+		public sealed record class NullValueMsg : Msg;
 
 		/// <summary>Allow null was set to false when trying to return null value</summary>
-		public sealed record class AllowNullWasFalseMsg : IMsg { }
+		public sealed record class AllowNullWasFalseMsg : Msg;
 	}
 }

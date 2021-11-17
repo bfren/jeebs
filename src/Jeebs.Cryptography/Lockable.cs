@@ -34,7 +34,7 @@ public sealed class Lockable<T> : Lockable
 				new Locked<T>(Contents, key),
 
 			_ =>
-				None<Locked<T>, Msg.InvalidKeyLengthMsg>()
+				None<Locked<T>, M.InvalidKeyLengthMsg>()
 		};
 
 	/// <summary>
@@ -58,9 +58,9 @@ public abstract class Lockable
 	internal Lockable() { }
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Encryption key is not the correct length to lock the box</summary>
-		public sealed record class InvalidKeyLengthMsg : IMsg { }
+		public sealed record class InvalidKeyLengthMsg : Msg;
 	}
 }

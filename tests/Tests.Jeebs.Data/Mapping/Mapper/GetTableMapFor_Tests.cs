@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static Jeebs.Data.Mapping.Mapper.Msg;
+using static Jeebs.Data.Mapping.Mapper.M;
 
 namespace Jeebs.Data.Mapping.Mapper_Tests;
 

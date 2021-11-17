@@ -19,5 +19,5 @@ public interface INotifier
 	/// Send a notification message
 	/// </summary>
 	/// <param name="msg">The message to send as a notification</param>
-	void Send(IMsg msg);
+	void Send(Msg msg);
 }

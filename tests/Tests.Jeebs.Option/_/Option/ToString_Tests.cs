@@ -41,19 +41,18 @@ public class ToString_Tests
 	public void None_Returns_Reason_ToString()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var msg = new TestMsg(value);
+		var msg = new TestMsg();
 		var option = None<int>(msg);
 
 		// Act
 		var result = option.ToString();
 
 		// Assert
-		Assert.Equal($"{nameof(TestMsg)}: {value}", result);
+		Assert.Equal(typeof(TestMsg).ToString(), result);
 	}
 
 	[Fact]
-	public void None_With_IExceptionMsg_Returns_Msg_Type_And_Exception_Message()
+	public void None_With_ExceptionMsg_Returns_Msg_Type_And_Exception_Message()
 	{
 		// Arrange
 		var value = F.Rnd.Str;
@@ -67,14 +66,7 @@ public class ToString_Tests
 		Assert.Equal($"{typeof(TestExceptionMsg)}: {value}", result);
 	}
 
-	public record class TestMsg(string Value) : IMsg
-	{
-		public override string ToString() =>
-			$"{nameof(TestMsg)}: {Value}";
-	}
+	public record class TestMsg : Msg;
 
-	public record class TestExceptionMsg() : IExceptionMsg
-	{
-		public Exception Exception { get; init; } = new();
-	}
+	public record class TestExceptionMsg(Exception Value) : ExceptionMsg;
 }

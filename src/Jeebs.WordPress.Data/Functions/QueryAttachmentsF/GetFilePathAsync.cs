@@ -26,31 +26,31 @@ public static partial class QueryAttachmentsF
 			)
 			.UnwrapAsync(
 				x => x.Single<Attachment>(
-					noItems: () => new Msg.AttachmentNotFoundMsg(fileId.Value),
-					tooMany: () => new Msg.MultipleAttachmentsFoundMsg(fileId.Value)
+					noItems: () => new M.AttachmentNotFoundMsg(fileId.Value),
+					tooMany: () => new M.MultipleAttachmentsFoundMsg(fileId.Value)
 				)
 			)
 			.MapAsync(
 				x => x.GetFilePath(db.WpConfig.UploadsPath),
-				e => new Msg.ErrorGettingAttachmentFilePathMsg(e, fileId.Value)
+				e => new M.ErrorGettingAttachmentFilePathMsg(e, fileId.Value)
 			);
 	}
 
 	internal record class Attachment : PostAttachment;
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Attachment not found</summary>
 		/// <param name="FileId">File (Post) ID</param>
-		public sealed record class AttachmentNotFoundMsg(long FileId) : IMsg { }
+		public sealed record class AttachmentNotFoundMsg(long FileId) : Msg;
 
 		/// <summary>Multiple Attachments found</summary>
 		/// <param name="FileId">File (Post) ID</param>
-		public sealed record class MultipleAttachmentsFoundMsg(long FileId) : IMsg { }
+		public sealed record class MultipleAttachmentsFoundMsg(long FileId) : Msg;
 
 		/// <summary>Unable to get Attachment file path</summary>
-		/// <param name="Exception">Exception object</param>
+		/// <param name="Value">Exception object</param>
 		/// <param name="FileId">File (Post) ID</param>
-		public sealed record class ErrorGettingAttachmentFilePathMsg(Exception Exception, long FileId) : ExceptionMsg(Exception);
+		public sealed record class ErrorGettingAttachmentFilePathMsg(Exception Value, long FileId) : ExceptionMsg;
 	}
 }

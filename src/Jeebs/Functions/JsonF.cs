@@ -77,7 +77,7 @@ public static class JsonF
 			T x =>
 				Some(
 					() => JsonSerializer.Serialize(x, options),
-					e => new Msg.SerialiseExceptionMsg(e)
+					e => new M.SerialiseExceptionMsg(e)
 				),
 
 			_ =>
@@ -100,7 +100,7 @@ public static class JsonF
 		// Check for null string
 		if (str is null || string.IsNullOrWhiteSpace(str))
 		{
-			return None<T, Msg.DeserialisingNullOrEmptyStringMsg>();
+			return None<T, M.DeserialisingNullOrEmptyStringMsg>();
 		}
 
 		// Attempt to deserialise JSON
@@ -112,12 +112,12 @@ public static class JsonF
 					x,
 
 				_ =>
-					None<T, Msg.DeserialisingReturnedNullMsg>() // should never get here
+					None<T, M.DeserialisingReturnedNullMsg>() // should never get here
 			};
 		}
 		catch (Exception ex)
 		{
-			return None<T>(new Msg.DeserialiseExceptionMsg(ex));
+			return None<T>(new M.DeserialiseExceptionMsg(ex));
 		}
 	}
 
@@ -126,20 +126,20 @@ public static class JsonF
 		Deserialise<T>(str, options);
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Exception caught during <see cref="JsonSerializer.Deserialize{TValue}(string, JsonSerializerOptions?)"/></summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class DeserialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class DeserialiseExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>A null or empty string cannot be deserialised</summary>
-		public sealed record class DeserialisingNullOrEmptyStringMsg : IMsg { }
+		public sealed record class DeserialisingNullOrEmptyStringMsg : Msg;
 
 		/// <summary>The object was deserialised but returned null</summary>
-		public sealed record class DeserialisingReturnedNullMsg : IMsg { }
+		public sealed record class DeserialisingReturnedNullMsg : Msg;
 
 		/// <summary>Exception caught during <see cref="JsonSerializer.Serialize{TValue}(TValue, JsonSerializerOptions?)"/></summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class SerialiseExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class SerialiseExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

@@ -29,12 +29,12 @@ public abstract class SwitchAsync_Tests
 
 	public abstract Task Test01_If_None_Runs_None_Func_With_Reason();
 
-	protected static async Task Test01(Func<Option<int>, Func<IMsg, Task<string>>, Task<string>> act)
+	protected static async Task Test01(Func<Option<int>, Func<Msg, Task<string>>, Task<string>> act)
 	{
 		// Arrange
 		var reason = new TestMsg();
 		var option = None<int>(reason);
-		var none = Substitute.For<Func<IMsg, Task<string>>>();
+		var none = Substitute.For<Func<Msg, Task<string>>>();
 
 		// Act
 		var result = await act(option, none);
@@ -61,5 +61,5 @@ public abstract class SwitchAsync_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

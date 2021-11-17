@@ -13,7 +13,7 @@ namespace F.WordPressF.DataF;
 public static partial class QueryPostsF
 {
 	/// <summary>Messages</summary>
-	public static partial class Msg { }
+	public static partial class M { }
 
 	/// <summary>
 	/// Internal Post Meta type for getting meta values

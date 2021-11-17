@@ -21,7 +21,7 @@ public static partial class OptionF
 	/// <param name="noItems">[Optional] Function to run if the Option value is a list with no items</param>
 	/// <param name="tooMany">[Optional] Function to run if the Option value is a list with more than one item</param>
 	/// <param name="notAList">[Optional] Function to run if the Option value is not a list</param>
-	public static Option<U> UnwrapSingle<T, U>(Option<T> option, Func<IMsg>? noItems, Func<IMsg>? tooMany, Func<IMsg>? notAList) =>
+	public static Option<U> UnwrapSingle<T, U>(Option<T> option, Func<Msg>? noItems, Func<Msg>? tooMany, Func<Msg>? notAList) =>
 		Catch(() =>
 			Switch(
 				option,
@@ -31,16 +31,16 @@ public static partial class OptionF
 						Some(list.Single()),
 
 					IList<U> list when list.Count == 0 =>
-						None<U>(noItems?.Invoke() ?? new Msg.UnwrapSingleNoItemsMsg()),
+						None<U>(noItems?.Invoke() ?? new M.UnwrapSingleNoItemsMsg()),
 
 					IList<U> =>
-						None<U>(tooMany?.Invoke() ?? new Msg.UnwrapSingleTooManyItemsErrorMsg()),
+						None<U>(tooMany?.Invoke() ?? new M.UnwrapSingleTooManyItemsErrorMsg()),
 
 					IList =>
-						None<U, Msg.UnwrapSingleIncorrectTypeErrorMsg>(),
+						None<U, M.UnwrapSingleIncorrectTypeErrorMsg>(),
 
 					_ =>
-						None<U>(notAList?.Invoke() ?? new Msg.UnwrapSingleNotAListMsg())
+						None<U>(notAList?.Invoke() ?? new M.UnwrapSingleNotAListMsg())
 				},
 				none: r => None<U>(r)
 			),
@@ -48,10 +48,10 @@ public static partial class OptionF
 		);
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Base UnwrapSingle error message</summary>
-		public abstract record class UnwrapSingleErrorMsg(UnwrapSingleError Error) : IMsg { }
+		public abstract record class UnwrapSingleErrorMsg(UnwrapSingleError Error) : Msg;
 
 		/// <summary>No items in the list</summary>
 		public sealed record class UnwrapSingleNoItemsMsg() : UnwrapSingleErrorMsg(UnwrapSingleError.NoItems) { }
@@ -67,7 +67,7 @@ public static partial class OptionF
 
 		/// <summary>
 		/// Possible reasons for
-		/// <see cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/> failing
+		/// <see cref="UnwrapSingle{T, U}(Option{T}, Func{Msg}?, Func{Msg}?, Func{Msg}?)"/> failing
 		/// </summary>
 		public enum UnwrapSingleError
 		{

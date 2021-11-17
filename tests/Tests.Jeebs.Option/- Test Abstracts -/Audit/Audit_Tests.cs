@@ -131,12 +131,12 @@ public abstract class Audit_Tests
 
 	public abstract void Test07_None_Runs_None_And_Returns_Original_Option();
 
-	protected static void Test07(Func<Option<int>, Action<IMsg>, Option<int>> act)
+	protected static void Test07(Func<Option<int>, Action<Msg>, Option<int>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
 		var option = None<int>(msg);
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 
 		// Act
 		var result = act(option, none);
@@ -164,12 +164,12 @@ public abstract class Audit_Tests
 
 	public abstract void Test09_None_Catches_Exception_And_Returns_Original_Option();
 
-	protected static void Test09(Func<Option<int>, Action<IMsg>, Option<int>> act)
+	protected static void Test09(Func<Option<int>, Action<Msg>, Option<int>> act)
 	{
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		var throwException = void (IMsg _) => throw exception;
+		var throwException = void (Msg _) => throw exception;
 
 		// Act
 		var result = act(option, throwException);
@@ -182,5 +182,5 @@ public abstract class Audit_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

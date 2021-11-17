@@ -33,6 +33,6 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 		ITableMap action() => builder.Map.Value;
 
 		// Assert
-		Assert.Throws<MsgException<IMsg>>(action);
+		Assert.Throws<MsgException<Msg>>(action);
 	}
 }

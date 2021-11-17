@@ -24,7 +24,7 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 	{
 		Test01(opt => Audit(opt, Substitute.For<Action<Option<int>>>(), null, null));
 		Test01(opt => Audit(opt, null, Substitute.For<Action<int>>(), null));
-		Test01(opt => Audit(opt, null, null, Substitute.For<Action<IMsg>>()));
+		Test01(opt => Audit(opt, null, null, Substitute.For<Action<Msg>>()));
 	}
 
 	#endregion

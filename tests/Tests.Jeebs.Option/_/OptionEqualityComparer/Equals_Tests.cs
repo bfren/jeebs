@@ -84,7 +84,7 @@ public class Equals_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg0 : IMsg { }
+	public record class TestMsg0 : Msg;
 
-	public record class TestMsg1 : IMsg { }
+	public record class TestMsg1 : Msg;
 }

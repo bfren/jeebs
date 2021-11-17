@@ -39,7 +39,7 @@ public abstract class ImageWrapper : IImageWrapper
 		// At least one of width and height should be greater than zero
 		if (width == 0 && height == 0)
 		{
-			return None<IImageWrapper, Msg.MaskHeightOrWidthRequiredMsg>();
+			return None<IImageWrapper, M.MaskHeightOrWidthRequiredMsg>();
 		}
 
 		// Calculate the size of the new image
@@ -56,17 +56,18 @@ public abstract class ImageWrapper : IImageWrapper
 		}
 		catch (Exception e)
 		{
-			return None<IImageWrapper>(new Msg.ApplyingImageMaskExceptionMsg(e));
+			return None<IImageWrapper>(new M.ApplyingImageMaskExceptionMsg(e));
 		}
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>A height or width is required for creating a mask</summary>
-		public sealed record class MaskHeightOrWidthRequiredMsg : IMsg { }
+		public sealed record class MaskHeightOrWidthRequiredMsg : Msg;
 
 		/// <summary>An exception occurred while applying the mask</summary>
-		public sealed record class ApplyingImageMaskExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class ApplyingImageMaskExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

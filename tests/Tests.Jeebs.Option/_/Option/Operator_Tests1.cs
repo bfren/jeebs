@@ -41,5 +41,5 @@ public partial class Operator_Tests
 		Assert.False(r1);
 	}
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

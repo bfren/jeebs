@@ -39,16 +39,16 @@ public static partial class QueryPostsF
 			)
 			.MapAsync(
 				x => GetPreviousAndNext(currentId.Value, x),
-				e => new Msg.ErrorWhileGettingPreviousAndNextPostsMsg(e)
+				e => new M.ErrorWhileGettingPreviousAndNextPostsMsg(e)
 			);
 	}
 
 	private record class PostWithId : WpPostEntityWithId;
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Error while calculating previous and next posts</summary>
-		/// <param name="Exception">Exception</param>
-		public sealed record class ErrorWhileGettingPreviousAndNextPostsMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class ErrorWhileGettingPreviousAndNextPostsMsg(Exception Value) : ExceptionMsg;
 	}
 }

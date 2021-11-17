@@ -145,5 +145,5 @@ public class SelectMany_Tests
 		Assert.IsType<InvalidIntegerMsg>(none);
 	}
 
-	public record class InvalidIntegerMsg : IMsg { }
+	public record class InvalidIntegerMsg : Msg;
 }

@@ -4,7 +4,7 @@
 using Jeebs;
 using Xunit;
 using static F.CryptoF;
-using static F.Rnd.StringF.Msg;
+using static F.Rnd.StringF.M;
 
 namespace F.CryptoF_Tests;
 

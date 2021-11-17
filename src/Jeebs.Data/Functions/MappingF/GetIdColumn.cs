@@ -28,37 +28,45 @@ public static partial class MappingF
 		)
 		.Map(
 			x => x.Where(p => p.Property.Name == nameof(IWithId.Id) && p.Property.GetCustomAttribute(typeof(IgnoreAttribute)) == null).ToList(),
-			e => new Msg.ErrorGettingIdPropertyMsg<TEntity>(e)
+			e => new M.ErrorGettingIdPropertyMsg<TEntity>(e)
 		)
 		.UnwrapSingle<IMappedColumn>(
-			noItems: () => new Msg.NoIdPropertyMsg<TEntity>()
+			noItems: () => new M.NoIdPropertyMsg<TEntity>()
 		)
 		.Map(
 			x => new MappedColumn(x),
 			DefaultHandler
 		);
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>No Id property found on entity</summary>
-		public sealed record class ErrorGettingIdPropertyMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
+		public sealed record class ErrorGettingIdPropertyMsg<TEntity>(Exception Value) : ExceptionMsg;
 
 		/// <summary>No property with specified attribute found on entity</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public sealed record class NoIdPropertyMsg<TEntity>() : IMsg
+		public sealed record class NoIdPropertyMsg<TEntity>() : Msg
 		{
-			/// <summary>Return message with class type parameters</summary>
-			public override string ToString() =>
-				$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(TEntity)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"Required {Property} or {Attribute} missing on entity {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { nameof(IWithId.Id), typeof(IdAttribute), typeof(TEntity) };
 		}
 
 		/// <summary>Too many properties with specified attribute found on entity</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public sealed record class TooManyPropertiesWithIdAttributeMsg<TEntity>() : IMsg
+		public sealed record class TooManyPropertiesWithIdAttributeMsg<TEntity>() : Msg
 		{
-			/// <summary>Return message with class type parameters</summary>
-			public override string ToString() =>
-				$"More than one {typeof(IdAttribute)} found on entity {typeof(TEntity)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"More than one {Attribute} found on entity {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { typeof(IdAttribute), typeof(TEntity) };
 		}
 	}
 }

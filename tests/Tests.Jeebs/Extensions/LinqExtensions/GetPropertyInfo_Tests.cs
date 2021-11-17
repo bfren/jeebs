@@ -5,7 +5,7 @@ using System;
 using System.Linq.Expressions;
 using Jeebs.Linq;
 using Xunit;
-using static Jeebs.Linq.LinqExpressionExtensions.Msg;
+using static Jeebs.Linq.LinqExpressionExtensions.M;
 
 namespace Jeebs.LinqExtensions_Tests;
 

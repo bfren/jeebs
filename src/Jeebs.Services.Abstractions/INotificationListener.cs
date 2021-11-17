@@ -11,6 +11,6 @@ public interface INotificationListener
 	/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
 	void Send(string message, NotificationLevel level = NotificationLevel.Information);
 
-	/// <inheritdoc cref="INotifier.Send(IMsg)"/>
-	public void Send(IMsg msg);
+	/// <inheritdoc cref="INotifier.Send(Msg)"/>
+	public void Send(Msg msg);
 }

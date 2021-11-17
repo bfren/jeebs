@@ -30,37 +30,37 @@ public static partial class OptionF
 									value,
 
 								true =>
-									None<TValue>(new Msg.NullValueMsg<TKey>(key)),
+									None<TValue>(new M.NullValueMsg<TKey>(key)),
 
 								false =>
-									None<TValue>(new Msg.KeyDoesNotExistMsg<TKey>(key))
+									None<TValue>(new M.KeyDoesNotExistMsg<TKey>(key))
 							},
 
 						_ =>
-							None<TValue, Msg.KeyCannotBeNullMsg>()
+							None<TValue, M.KeyCannotBeNullMsg>()
 					},
 
 				false =>
-					None<TValue, Msg.DictionaryIsEmptyMsg>()
+					None<TValue, M.DictionaryIsEmptyMsg>()
 
 			};
 
 		/// <summary>Messages</summary>
-		public static class Msg
+		public static class M
 		{
 			/// <summary>The dictionary is empty</summary>
-			public sealed record class DictionaryIsEmptyMsg : IMsg { }
+			public sealed record class DictionaryIsEmptyMsg : Msg;
 
 			/// <summary>The dictionary key cannot be null</summary>
-			public sealed record class KeyCannotBeNullMsg : IMsg { }
+			public sealed record class KeyCannotBeNullMsg : Msg;
 
 			/// <summary>The specified key does not exist in the dictionary</summary>
 			/// <typeparam name="TKey">Key type</typeparam>
-			public sealed record class KeyDoesNotExistMsg<TKey>(TKey Key) : IMsg { }
+			public sealed record class KeyDoesNotExistMsg<TKey>(TKey Key) : Msg;
 
 			/// <summary>The dictionary value for the specified key was null</summary>
 			/// <typeparam name="TKey">Key type</typeparam>
-			public sealed record class NullValueMsg<TKey>(TKey Key) : IMsg { }
+			public sealed record class NullValueMsg<TKey>(TKey Key) : Msg;
 		}
 	}
 }

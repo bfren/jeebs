@@ -6,7 +6,7 @@ using Jeebs;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 

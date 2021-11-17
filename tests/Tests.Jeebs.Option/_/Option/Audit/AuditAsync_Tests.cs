@@ -17,7 +17,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		var any = Substitute.For<Func<Option<int>, Task>>();
 		var some = Substitute.For<Func<int, Task>>();
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		await Test01(opt => opt.AuditAsync(any));
 		await Test01(opt => opt.AuditAsync(some));
@@ -60,7 +60,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test11_Some_Runs_Some_Func_And_Returns_Original_Option()
 	{
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		await Test11((opt, some) => opt.AuditAsync(some));
 		await Test11((opt, some) => opt.AuditAsync(some, none));
@@ -78,7 +78,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test15_Some_Runs_Some_Func_Catches_Exception_And_Returns_Original_Option()
 	{
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		await Test15((opt, some) => opt.AuditAsync(some));
 		await Test15((opt, some) => opt.AuditAsync(some, none));

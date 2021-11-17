@@ -27,7 +27,7 @@ public sealed class Notifier : INotifier
 	}
 
 	/// <inheritdoc/>
-	public void Send(IMsg msg)
+	public void Send(Msg msg)
 	{
 		foreach (var listener in listeners)
 		{

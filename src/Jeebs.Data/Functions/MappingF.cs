@@ -9,5 +9,5 @@ namespace F.DataF;
 public static partial class MappingF
 {
 	/// <summary>Messages</summary>
-	public static partial class Msg { }
+	public static partial class M { }
 }

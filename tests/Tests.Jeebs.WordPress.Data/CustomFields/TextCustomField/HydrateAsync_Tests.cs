@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using NSubstitute;
 using Xunit;
-using static Jeebs.WordPress.Data.TextCustomField.Msg;
+using static Jeebs.WordPress.Data.TextCustomField.M;
 
 namespace Jeebs.WordPress.Data.CustomFields.TextCustomField_Tests;
 

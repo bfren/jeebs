@@ -29,20 +29,20 @@ public static partial class OptionF
 								x,
 
 							_ =>
-								None<T, Msg.LastItemIsNullMsg>()
+								None<T, M.LastItemIsNullMsg>()
 						},
 
 					false =>
-						None<T, Msg.ListIsEmptyMsg>()
+						None<T, M.ListIsEmptyMsg>()
 				},
 				DefaultHandler
 			);
 
 		/// <summary>Messages</summary>
-		public static partial class Msg
+		public static partial class M
 		{
 			/// <summary>Null item found when doing LastOrDefault()</summary>
-			public sealed record class LastItemIsNullMsg : IMsg { }
+			public sealed record class LastItemIsNullMsg : Msg;
 		}
 	}
 }

@@ -9,7 +9,7 @@ using Jeebs.Internals;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -175,5 +175,5 @@ public abstract class SwitchIfAsync_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public sealed record class TestMsg : IMsg { }
+	public sealed record class TestMsg : Msg;
 }

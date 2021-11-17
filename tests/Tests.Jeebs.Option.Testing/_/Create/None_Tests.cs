@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static Jeebs.Create.Msg;
+using static Jeebs.Create.M;
 
 namespace Jeebs.Create_Tests;
 

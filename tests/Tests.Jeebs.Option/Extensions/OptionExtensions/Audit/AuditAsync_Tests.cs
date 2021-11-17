@@ -19,8 +19,8 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 		var anyF = Substitute.For<Func<Option<int>, Task>>();
 		var someA = Substitute.For<Action<int>>();
 		var someF = Substitute.For<Func<int, Task>>();
-		var noneA = Substitute.For<Action<IMsg>>();
-		var noneF = Substitute.For<Func<IMsg, Task>>();
+		var noneA = Substitute.For<Action<Msg>>();
+		var noneF = Substitute.For<Func<Msg, Task>>();
 
 		await Test01(opt => opt.AsTask.AuditAsync(anyA));
 		await Test01(opt => opt.AsTask.AuditAsync(anyF));
@@ -90,7 +90,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test10_Some_Runs_Some_Action_And_Returns_Original_Option()
 	{
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 
 		await Test10((opt, some) => opt.AsTask.AuditAsync(some));
 		await Test10((opt, some) => opt.AsTask.AuditAsync(some, none));
@@ -99,7 +99,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test11_Some_Runs_Some_Func_And_Returns_Original_Option()
 	{
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		await Test11((opt, some) => opt.AsTask.AuditAsync(some));
 		await Test11((opt, some) => opt.AsTask.AuditAsync(some, none));
@@ -126,7 +126,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test14_Some_Runs_Some_Action_Catches_Exception_And_Returns_Original_Option()
 	{
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 
 		await Test14((opt, some) => opt.AsTask.AuditAsync(some));
 		await Test14((opt, some) => opt.AsTask.AuditAsync(some, none));
@@ -135,7 +135,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test15_Some_Runs_Some_Func_Catches_Exception_And_Returns_Original_Option()
 	{
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		await Test15((opt, some) => opt.AsTask.AuditAsync(some));
 		await Test15((opt, some) => opt.AsTask.AuditAsync(some, none));

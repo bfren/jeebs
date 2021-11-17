@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Jeebs;
 using Xunit;
-using static F.JsonF.Msg;
+using static F.JsonF.M;
 
 namespace F.JsonF_Tests;
 

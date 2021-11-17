@@ -23,17 +23,17 @@ public static class CryptoF
 	public static Option<byte[]> Hash(string input, int bytes = 64) =>
 		Some(
 			() => Encoding.UTF8.GetBytes(input),
-			e => new Msg.GettingBytesForGenericHashExceptionMsg(e)
+			e => new M.GettingBytesForGenericHashExceptionMsg(e)
 		)
 		.Map(
 			x => GenericHash.Hash(x, null, bytes),
 			e => e switch
 			{
 				BytesOutOfRangeException =>
-					new Msg.HashBytesMustBeBetween16And64ExceptionMsg(e),
+					new M.HashBytesMustBeBetween16And64ExceptionMsg(e),
 
 				_ =>
-					new Msg.GenericHashExceptionMsg(e)
+					new M.GenericHashExceptionMsg(e)
 			}
 		);
 
@@ -51,7 +51,7 @@ public static class CryptoF
 	public static Option<byte[]> GenerateKey() =>
 		Some(
 			() => SecretBox.GenerateKey(),
-			e => new Msg.GeneratingKeyExceptionMsg(e)
+			e => new M.GeneratingKeyExceptionMsg(e)
 		);
 
 	/// <summary>
@@ -62,26 +62,26 @@ public static class CryptoF
 		SecretBox.GenerateNonce();
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Something went wrong while generating a key</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GeneratingKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GeneratingKeyExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Something went wrong while generating a nonce</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GeneratingNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GeneratingNonceExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>An unknown error occurred while creating the hash</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GenericHashExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GenericHashExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error converting string to byte array</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GettingBytesForGenericHashExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GettingBytesForGenericHashExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Hash bytes must be between 16 and 64</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class HashBytesMustBeBetween16And64ExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class HashBytesMustBeBetween16And64ExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

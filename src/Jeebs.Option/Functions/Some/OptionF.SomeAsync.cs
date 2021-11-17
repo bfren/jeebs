@@ -21,7 +21,7 @@ public static partial class OptionF
 					new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
 
 				_ =>
-					None<T, Msg.NullValueMsg>()
+					None<T, M.NullValueMsg>()
 
 			};
 		}
@@ -50,7 +50,7 @@ public static partial class OptionF
 							new Some<T?>(v), // Some<T> is only created by Some() functions and implicit operator
 
 						false =>
-							None<T?, Msg.AllowNullWasFalseMsg>()
+							None<T?, M.AllowNullWasFalseMsg>()
 					}
 
 			};

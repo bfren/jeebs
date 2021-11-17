@@ -16,7 +16,7 @@ public abstract class Log : ILog
 
 	/// <inheritdoc/>
 	public void Message<T>(T? msg)
-		where T : IMsg
+		where T : Msg
 	{
 		if (msg is null)
 		{
@@ -26,11 +26,11 @@ public abstract class Log : ILog
 		// Get log info
 		var (level, text, args) = msg switch
 		{
-			ILogMsg loggable =>
+			Msg m =>
 				(
-					loggable.Level,
-					loggable.Format,
-					getArgs(loggable)
+					m.Level,
+					m.FormatWithType,
+					m.ArgsWithType
 				),
 
 			_ =>
@@ -63,27 +63,10 @@ public abstract class Log : ILog
 				Fatal(text, args);
 				break;
 		}
-
-		// Get arguments from a loggable message
-		static object[] getArgs(ILogMsg msg)
-		{
-			// Get args and add message to the start of the array
-			var list = msg.Args().ToList();
-			list.Insert(0, typeof(T));
-
-			// Add Exception to the end of the array
-			if (msg is IExceptionMsg exceptionMsg)
-			{
-				list.Add(exceptionMsg.Exception);
-			}
-
-			// Convert back to an array
-			return list.ToArray();
-		}
 	}
 
 	/// <inheritdoc/>
-	public void Messages(IEnumerable<IMsg> messages)
+	public void Messages(IEnumerable<Msg> messages)
 	{
 		if (!messages.Any())
 		{

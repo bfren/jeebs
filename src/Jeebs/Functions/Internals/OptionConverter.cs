@@ -7,7 +7,6 @@ using System.Text.Json.Serialization;
 using Jeebs;
 using Jeebs.Internals;
 using static F.OptionF;
-using Msg = F.Internals.OptionConverterMsg;
 
 namespace F.Internals;
 
@@ -30,7 +29,7 @@ public sealed class OptionConverter<T> : JsonConverter<Option<T>>
 				value,
 
 			_ =>
-				None<T, Msg.DeserialisingReturnedNullMsg>() // should never get here
+				None<T, M.DeserialisingReturnedNullMsg>() // should never get here
 		};
 
 	/// <summary>
@@ -55,8 +54,8 @@ public sealed class OptionConverter<T> : JsonConverter<Option<T>>
 /// <summary>
 /// Wrapper for <see cref="OptionConverter{T}"/> messages because it has a generic constraint
 /// </summary>
-public static class OptionConverterMsg
+public static class M
 {
 	/// <summary>Deserialisation returned a null value</summary>
-	public sealed record class DeserialisingReturnedNullMsg() : IMsg { }
+	public sealed record class DeserialisingReturnedNullMsg() : Msg;
 }

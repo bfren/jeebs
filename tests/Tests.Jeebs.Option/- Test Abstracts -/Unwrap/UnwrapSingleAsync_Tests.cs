@@ -8,7 +8,7 @@ using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -27,7 +27,7 @@ public abstract class UnwrapSingleAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Exception);
+		Assert.IsType<UnknownOptionException>(msg.Value);
 	}
 
 	public abstract Task Test01_None_Returns_None();
@@ -78,12 +78,12 @@ public abstract class UnwrapSingleAsync_Tests
 
 	public abstract Task Test04_No_Items_Runs_NoItems();
 
-	protected static async Task Test04(Func<Task<Option<int[]>>, Func<IMsg>?, Task<Option<int>>> act)
+	protected static async Task Test04(Func<Task<Option<int[]>>, Func<Msg>?, Task<Option<int>>> act)
 	{
 		// Arrange
 		var empty = Array.Empty<int>();
 		var option = Some(empty);
-		var noItems = Substitute.For<Func<IMsg>>();
+		var noItems = Substitute.For<Func<Msg>>();
 
 		// Act
 		await act(option.AsTask, noItems);
@@ -110,12 +110,12 @@ public abstract class UnwrapSingleAsync_Tests
 
 	public abstract Task Test06_Too_Many_Items_Runs_TooMany();
 
-	protected static async Task Test06(Func<Task<Option<int[]>>, Func<IMsg>?, Task<Option<int>>> act)
+	protected static async Task Test06(Func<Task<Option<int[]>>, Func<Msg>?, Task<Option<int>>> act)
 	{
 		// Arrange
 		var list = new[] { F.Rnd.Int, F.Rnd.Int };
 		var option = Some(list);
-		var tooMany = Substitute.For<Func<IMsg>>();
+		var tooMany = Substitute.For<Func<Msg>>();
 
 		// Act
 		await act(option.AsTask, tooMany);
@@ -142,12 +142,12 @@ public abstract class UnwrapSingleAsync_Tests
 
 	public abstract Task Test08_Not_A_List_Runs_NotAList();
 
-	protected static async Task Test08(Func<Task<Option<int>>, Func<IMsg>?, Task<Option<int>>> act)
+	protected static async Task Test08(Func<Task<Option<int>>, Func<Msg>?, Task<Option<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
 		var option = Some(value);
-		var notAList = Substitute.For<Func<IMsg>>();
+		var notAList = Substitute.For<Func<Msg>>();
 
 		// Act
 		var result = await act(option.AsTask, notAList);
@@ -191,5 +191,5 @@ public abstract class UnwrapSingleAsync_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

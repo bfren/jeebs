@@ -16,13 +16,13 @@ namespace Jeebs.Data.Querying;
 public abstract class QueryPartsBuilder
 {
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Trying to add an empty where clause</summary>
-		public sealed record class TryingToAddEmptyClauseToWhereCustomMsg : IMsg { }
+		public sealed record class TryingToAddEmptyClauseToWhereCustomMsg : Msg;
 
 		/// <summary>Unable to add parameters to custom where</summary>
-		public sealed record class UnableToAddParametersToWhereCustomMsg : IMsg { }
+		public sealed record class UnableToAddParametersToWhereCustomMsg : Msg;
 	}
 }
 
@@ -208,14 +208,14 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			return None<QueryParts, Msg.TryingToAddEmptyClauseToWhereCustomMsg>();
+			return None<QueryParts, M.TryingToAddEmptyClauseToWhereCustomMsg>();
 		}
 
 		// Get parameters
 		var param = new QueryParameters();
 		if (!param.TryAdd(parameters))
 		{
-			return None<QueryParts, Msg.UnableToAddParametersToWhereCustomMsg>();
+			return None<QueryParts, M.UnableToAddParametersToWhereCustomMsg>();
 		}
 
 		// Add clause and return

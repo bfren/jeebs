@@ -20,7 +20,7 @@ public static class ControllerExtensions
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
 	/// <param name="code">[Optional] HTTP Status Code</param>
-	public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg reason, int? code = null)
+	public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code = null)
 	{
 		// Log error
 		@this.Log.Message(reason);

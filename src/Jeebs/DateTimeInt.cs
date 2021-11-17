@@ -92,7 +92,7 @@ public readonly record struct DateTimeInt
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				None<DateTime>(new Msg.InvalidDateTimeMsg((x.Part, this)))
+				None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
 		};
 
 	/// <summary>
@@ -231,16 +231,19 @@ public readonly record struct DateTimeInt
 	#endregion
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Unable to parse DateTime integer</summary>
 		/// <param name="Value">Invalid part and DateTimeInt</param>
-		public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) :
-			WithValueMsg<(string part, DateTimeInt dt)>()
+		public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) : Msg
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"Invalid {Value.part} - 'Y:{Value.dt.Year} M:{Value.dt.Minute} D:{Value.dt.Day} H:{Value.dt.Hour} m:{Value.dt.Minute}'.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute };
 		}
 	}
 }

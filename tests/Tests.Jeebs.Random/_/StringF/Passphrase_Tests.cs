@@ -7,7 +7,7 @@ using System.Linq;
 using Jeebs;
 using Xunit;
 using static F.Rnd.StringF;
-using static F.Rnd.StringF.Msg;
+using static F.Rnd.StringF.M;
 
 namespace F.StringF_Tests;
 

@@ -19,7 +19,7 @@ public sealed class UnableToFindVersionColumnException : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="reason">Reason</param>
-	public UnableToFindVersionColumnException(IMsg reason) : base(reason.ToString() ?? string.Empty) { }
+	public UnableToFindVersionColumnException(Msg reason) : base(reason.ToString() ?? string.Empty) { }
 
 	/// <summary>
 	/// Create exception

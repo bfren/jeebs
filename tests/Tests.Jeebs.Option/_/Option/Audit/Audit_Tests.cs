@@ -16,8 +16,8 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 	{
 		Test01(opt => opt.Audit(Substitute.For<Action<Option<int>>>()));
 		Test01(opt => opt.Audit(Substitute.For<Action<int>>()));
-		Test01(opt => opt.Audit(Substitute.For<Action<IMsg>>()));
-		Test01(opt => opt.Audit(Substitute.For<Action<int>>(), Substitute.For<Action<IMsg>>()));
+		Test01(opt => opt.Audit(Substitute.For<Action<Msg>>()));
+		Test01(opt => opt.Audit(Substitute.For<Action<int>>(), Substitute.For<Action<Msg>>()));
 	}
 
 	#endregion
@@ -56,7 +56,7 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 	public override void Test06_Some_Runs_Some_And_Returns_Original_Option()
 	{
 		Test06((opt, some) => opt.Audit(some));
-		Test06((opt, some) => opt.Audit(some, Substitute.For<Action<IMsg>>()));
+		Test06((opt, some) => opt.Audit(some, Substitute.For<Action<Msg>>()));
 	}
 
 	[Fact]
@@ -71,7 +71,7 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 	public override void Test08_Some_Catches_Exception_And_Returns_Original_Option()
 	{
 		Test08((opt, some) => opt.Audit(some));
-		Test08((opt, some) => opt.Audit(some, Substitute.For<Action<IMsg>>()));
+		Test08((opt, some) => opt.Audit(some, Substitute.For<Action<Msg>>()));
 	}
 
 	[Fact]

@@ -72,8 +72,8 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 			none: r =>
 				r.ToString() switch
 				{
-					string when r is IExceptionMsg e =>
-						$"{e.GetType()}: {e.Exception.Message}",
+					string when r is ExceptionMsg e =>
+						$"{e.GetType()}: {e.Value.Message}",
 
 					string reason =>
 						reason,
@@ -96,7 +96,7 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 				new Some<T>(value), // Some<T> is only created by Some() functions and implicit operator
 
 			_ =>
-				None<T, Msg.NullValueMsg>()
+				None<T, M.NullValueMsg>()
 		};
 
 	/// <summary>
@@ -193,36 +193,36 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 
 	#region Audit
 
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public Option<T> Audit(Action<Option<T>> any) =>
 		F.OptionF.Audit(this, any, null, null);
 
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public Option<T> Audit(Action<T> some) =>
 		F.OptionF.Audit(this, null, some, null);
 
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public Option<T> Audit(Action<IMsg> none) =>
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public Option<T> Audit(Action<Msg> none) =>
 		F.OptionF.Audit(this, null, null, none);
 
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public Option<T> Audit(Action<T> some, Action<IMsg> none) =>
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public Option<T> Audit(Action<T> some, Action<Msg> none) =>
 		F.OptionF.Audit(this, null, some, none);
 
-	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{Msg, Task}?)"/>
 	public Task<Option<T>> AuditAsync(Func<Option<T>, Task> any) =>
 		F.OptionF.AuditAsync(this, any, null, null);
 
-	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
+	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{Msg, Task}?)"/>
 	public Task<Option<T>> AuditAsync(Func<T, Task> some) =>
 		F.OptionF.AuditAsync(this, null, some, null);
 
-	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-	public Task<Option<T>> AuditAsync(Func<IMsg, Task> none) =>
+	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{Msg, Task}?)"/>
+	public Task<Option<T>> AuditAsync(Func<Msg, Task> none) =>
 		F.OptionF.AuditAsync(this, null, null, none);
 
-	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{IMsg, Task}?)"/>
-	public Task<Option<T>> AuditAsync(Func<T, Task> some, Func<IMsg, Task> none) =>
+	/// <inheritdoc cref="AuditAsync{T}(Option{T}, Func{Option{T}, Task}, Func{T, Task}?, Func{Msg, Task}?)"/>
+	public Task<Option<T>> AuditAsync(Func<T, Task> some, Func<Msg, Task> none) =>
 		F.OptionF.AuditAsync(this, null, some, none);
 
 	#endregion
@@ -263,7 +263,7 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 
 	/// <inheritdoc cref="IfNull{T, TMsg}(Option{T}, Func{TMsg})"/>
 	public Option<T> IfNull<TMsg>(Func<TMsg> ifNull)
-		where TMsg : IMsg =>
+		where TMsg : Msg =>
 		F.OptionF.IfNull(this, ifNull);
 
 	/// <inheritdoc cref="F.OptionF.IfNull{T}(Option{T}, Func{Option{T}})"/>
@@ -298,88 +298,88 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 
 	#region Switch
 
-	/// <inheritdoc cref="F.OptionF.Switch{T}(Option{T}, Action{T}, Action{IMsg})"/>
+	/// <inheritdoc cref="F.OptionF.Switch{T}(Option{T}, Action{T}, Action{Msg})"/>
 	public void Switch(Action<T> some, Action none) =>
 		F.OptionF.Switch(this, some: some, none: _ => none());
 
-	/// <inheritdoc cref="F.OptionF.Switch{T}(Option{T}, Action{T}, Action{IMsg})"/>
-	public void Switch(Action<T> some, Action<IMsg> none) =>
+	/// <inheritdoc cref="F.OptionF.Switch{T}(Option{T}, Action{T}, Action{Msg})"/>
+	public void Switch(Action<T> some, Action<Msg> none) =>
 		F.OptionF.Switch(this, some: some, none: none);
 
-	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
+	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{Msg, U})"/>
 	public U Switch<U>(Func<T, U> some, U none) =>
 		F.OptionF.Switch(this, some: some, none: _ => none);
 
-	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
+	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{Msg, U})"/>
 	public U Switch<U>(Func<T, U> some, Func<U> none) =>
 		F.OptionF.Switch(this, some: some, none: _ => none());
 
-	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{IMsg, U})"/>
-	public U Switch<U>(Func<T, U> some, Func<IMsg, U> none) =>
+	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{Msg, U})"/>
+	public U Switch<U>(Func<T, U> some, Func<Msg, U> none) =>
 		F.OptionF.Switch(this, some: some, none: none);
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, U none) =>
 		F.OptionF.SwitchAsync(this, some: some, none: _ => Task.FromResult(none));
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public Task<U> SwitchAsync<U>(Func<T, U> some, Task<U> none) =>
 		F.OptionF.SwitchAsync(this, some: v => Task.FromResult(some(v)), none: _ => none);
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Task<U> none) =>
 		F.OptionF.SwitchAsync(this, some: some, none: _ => none);
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<U> none) =>
 		F.OptionF.SwitchAsync(this, some: some, none: _ => Task.FromResult(none()));
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public Task<U> SwitchAsync<U>(Func<T, U> some, Func<Task<U>> none) =>
 		F.OptionF.SwitchAsync(this, some: v => Task.FromResult(some(v)), none: _ => none());
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<Task<U>> none) =>
 		F.OptionF.SwitchAsync(this, some: some, none: _ => none());
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-	public Task<U> SwitchAsync<U>(Func<T, U> some, Func<IMsg, Task<U>> none) =>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
+	public Task<U> SwitchAsync<U>(Func<T, U> some, Func<Msg, Task<U>> none) =>
 		F.OptionF.SwitchAsync(this, some: v => Task.FromResult(some(v)), none: none);
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<IMsg, U> none) =>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
+	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<Msg, U> none) =>
 		F.OptionF.SwitchAsync(this, some: some, none: r => Task.FromResult(none(r)));
 
-	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{IMsg, Task{U}})"/>
-	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<IMsg, Task<U>> none) =>
+	/// <inheritdoc cref="SwitchAsync{T, U}(Option{T}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
+	public Task<U> SwitchAsync<U>(Func<T, Task<U>> some, Func<Msg, Task<U>> none) =>
 		F.OptionF.SwitchAsync(this, some: some, none: none);
 
 	/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Option{T}}?, Func{T, Option{T}}?)"/>
 	public Option<T> SwitchIf(Func<T, bool> check, Func<T, Option<T>>? ifTrue = null, Func<T, Option<T>>? ifFalse = null) =>
 		F.OptionF.SwitchIf(this, check, ifTrue, ifFalse);
 
-	/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, IMsg})"/>
-	public Option<T> SwitchIf(Func<T, bool> check, Func<T, IMsg> ifFalse) =>
+	/// <inheritdoc cref="SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Msg})"/>
+	public Option<T> SwitchIf(Func<T, bool> check, Func<T, Msg> ifFalse) =>
 		F.OptionF.SwitchIf(this, check, ifFalse);
 
 	#endregion
 
 	#region Unwrap
 
-	/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
+	/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{Msg, T})"/>
 	public T Unwrap(T ifNone) =>
 		F.OptionF.Unwrap(this, ifNone: _ => ifNone);
 
-	/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
+	/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{Msg, T})"/>
 	public T Unwrap(Func<T> ifNone) =>
 		F.OptionF.Unwrap(this, ifNone: _ => ifNone());
 
-	/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{IMsg, T})"/>
-	public T Unwrap(Func<IMsg, T> ifNone) =>
+	/// <inheritdoc cref="Unwrap{T}(Option{T}, Func{Msg, T})"/>
+	public T Unwrap(Func<Msg, T> ifNone) =>
 		F.OptionF.Unwrap(this, ifNone: ifNone);
 
-	/// <inheritdoc cref="UnwrapSingle{T, U}(Option{T}, Func{IMsg}?, Func{IMsg}?, Func{IMsg}?)"/>
-	public Option<U> UnwrapSingle<U>(Func<IMsg>? noItems = null, Func<IMsg>? tooMany = null, Func<IMsg>? notAList = null) =>
+	/// <inheritdoc cref="UnwrapSingle{T, U}(Option{T}, Func{Msg}?, Func{Msg}?, Func{Msg}?)"/>
+	public Option<U> UnwrapSingle<U>(Func<Msg>? noItems = null, Func<Msg>? tooMany = null, Func<Msg>? notAList = null) =>
 		UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
 
 	#endregion

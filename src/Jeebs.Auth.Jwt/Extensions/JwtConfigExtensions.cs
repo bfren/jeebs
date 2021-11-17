@@ -29,13 +29,13 @@ public static class JwtConfigExtensions
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
 
 			_ =>
-				None<SecurityKey, Msg.NullEncryptingKeyMsg>()
+				None<SecurityKey, M.NullEncryptingKeyMsg>()
 		};
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>The Encrypting Key is null</summary>
-		public sealed record class NullEncryptingKeyMsg : IMsg { }
+		public sealed record class NullEncryptingKeyMsg : Msg;
 	}
 }

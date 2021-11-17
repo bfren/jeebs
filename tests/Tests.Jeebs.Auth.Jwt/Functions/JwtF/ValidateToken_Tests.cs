@@ -8,7 +8,7 @@ using Jeebs;
 using Jeebs.Config;
 using NSubstitute;
 using Xunit;
-using static F.JwtF.Msg;
+using static F.JwtF.M;
 
 namespace F.JwtF_Tests;
 

@@ -20,7 +20,7 @@ public static partial class OptionF
 						Some(x),
 
 					false =>
-						None<T, Msg.FilterPredicateWasFalseMsg>()
+						None<T, M.FilterPredicateWasFalseMsg>()
 				}
 		);
 

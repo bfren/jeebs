@@ -54,7 +54,7 @@ public static partial class QueryF
 				&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 			)
 			{
-				return None<IImmutableList<(IColumn, Compare, object)>, Msg.InOperatorRequiresValueToBeAListMsg>();
+				return None<IImmutableList<(IColumn, Compare, object)>, M.InOperatorRequiresValueToBeAListMsg>();
 			}
 
 			// Get parameter value (to support StrongId)
@@ -67,9 +67,9 @@ public static partial class QueryF
 		return ImmutableList.Create(items: list);
 	}
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>IN predicate means value is 'in' an array of values so the value must be a list</summary>
-		public sealed record class InOperatorRequiresValueToBeAListMsg : IMsg { }
+		public sealed record class InOperatorRequiresValueToBeAListMsg : Msg;
 	}
 }

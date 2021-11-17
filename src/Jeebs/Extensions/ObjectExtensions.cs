@@ -60,7 +60,7 @@ public static class ObjectExtensions
 			// If the types don't match, return None
 			if (typeof(T) != typeof(object) && typeof(T) != info.PropertyType)
 			{
-				return None<T>(new Msg.UnexpectedPropertyTypeMsg<T>((type, propertyName)));
+				return None<T>(new M.UnexpectedPropertyTypeMsg<T>((type, propertyName)));
 			}
 
 			// Get the value - if it's null return None
@@ -70,16 +70,16 @@ public static class ObjectExtensions
 					val,
 
 				_ =>
-					None<T>(new Msg.NullValueMsg<T>((type, propertyName)))
+					None<T>(new M.NullValueMsg<T>((type, propertyName)))
 			};
 		}
 
 		// No property with this name was found
-		return None<T>(new Msg.PropertyNotFoundMsg((type, propertyName)));
+		return None<T>(new M.PropertyNotFoundMsg((type, propertyName)));
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>See <see cref="GetPropertyValue{T}(object, string)"/> and <see cref="GetPropertyValue(object, string)"/></summary>
 		/// <param name="Value">Object type and Property name</param>

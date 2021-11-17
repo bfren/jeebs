@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Xunit;
-using static Jeebs.Data.Querying.QueryPartsBuilder.Msg;
+using static Jeebs.Data.Querying.QueryPartsBuilder.M;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests;
 

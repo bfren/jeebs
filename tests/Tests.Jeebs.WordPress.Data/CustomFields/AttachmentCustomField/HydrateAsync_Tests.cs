@@ -7,7 +7,7 @@ using Jeebs.WordPress.Data.Querying;
 using NSubstitute;
 using Xunit;
 using static Jeebs.WordPress.Data.AttachmentCustomField;
-using static Jeebs.WordPress.Data.AttachmentCustomField.Msg;
+using static Jeebs.WordPress.Data.AttachmentCustomField.M;
 
 namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests;
 
