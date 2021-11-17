@@ -3,7 +3,5 @@
 
 namespace Jeebs;
 
-/// <summary>
-/// Resource Not Found message
-/// </summary>
-public interface INotFoundMsg : IMsg { }
+/// <inheritdoc cref="INotFoundMsg"/>
+public abstract record class NotFoundMsg<T> : WithValueMsg<T>, INotFoundMsg;

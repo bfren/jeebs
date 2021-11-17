@@ -3,5 +3,7 @@
 
 namespace Jeebs;
 
-/// <summary>Standard Not Found message</summary>
-public abstract record class NotFoundMsg : INotFoundMsg { }
+/// <summary>
+/// Framework 'Not Found' message
+/// </summary>
+public interface INotFoundMsg { }

@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Abstractions</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Abstractions\Jeebs.Abstractions.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
-	</ItemGroup>
-</Project>
