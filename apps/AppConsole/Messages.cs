@@ -5,9 +5,9 @@ using Jeebs;
 
 namespace AppConsole.Messages;
 
-public record BasicMsg : Msg;
+public record Basic : Msg;
 
-public record WithGenericMsg<T> : Msg;
+public record WithGeneric<T> : Msg;
 
 public record FormattedMsg : Msg
 {
@@ -19,3 +19,5 @@ public record FormattedMsg : Msg
 }
 
 public record WithValue(string Value) : WithValueMsg<string>;
+
+public record WithException(Exception Value) : ExceptionMsg;

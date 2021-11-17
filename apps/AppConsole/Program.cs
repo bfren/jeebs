@@ -54,16 +54,20 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Test IMsg output
 	log.Information("Testing Msg");
-	log.Message(new BasicMsg());
+	log.Message(new Basic());
 
 	log.Information("Testing Msg with generic argument");
-	log.Message(new WithGenericMsg<Guid>());
+	log.Message(new WithGeneric<Guid>());
 
 	log.Information("Testing Msg with format");
 	log.Message(new FormattedMsg());
 
 	log.Information("Testing Msg with value");
 	log.Message(new WithValue(F.Rnd.Str));
+
+	log.Information("Testing Msg with exception");
+	var e = new Exception(F.Rnd.Str);
+	log.Message(new WithException(e));
 
 	// Log console
 	while (Console.ReadLine() is string output)

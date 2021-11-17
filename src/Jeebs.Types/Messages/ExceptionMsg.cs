@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging;
 
 namespace Jeebs;
 
@@ -11,6 +12,6 @@ namespace Jeebs;
 public abstract record class ExceptionMsg : WithValueMsg<Exception>
 {
 	/// <inheritdoc/>
-	public override string Name =>
-		"Exception";
+	public override LogLevel Level =>
+		LogLevel.Error;
 }
