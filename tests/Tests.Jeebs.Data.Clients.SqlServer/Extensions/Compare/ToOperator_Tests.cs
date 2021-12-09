@@ -136,7 +136,7 @@ public class ToOperator_Tests
 		var value = (Compare)input;
 
 		// Act
-		void action() => value.ToOperator();
+		var action = void () => value.ToOperator();
 
 		// Assert
 		Assert.Throws<UnrecognisedSearchOperatorException>(action);
