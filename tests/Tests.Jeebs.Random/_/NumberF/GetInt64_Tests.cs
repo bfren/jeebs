@@ -19,7 +19,7 @@ public class GetInt64_Tests
 		const long max = 2L;
 
 		// Act
-		static void action() => GetInt64(min, max);
+		var action = void () => GetInt64(min, max);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
@@ -33,7 +33,7 @@ public class GetInt64_Tests
 		const long min = long.MinValue;
 
 		// Act
-		static void action() => GetInt64(min: min);
+		var action = void () => GetInt64(min: min);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentException>(action);
