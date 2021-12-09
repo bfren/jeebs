@@ -17,7 +17,7 @@ public class GetHashCode_Tests
 		var option = new FakeOption();
 
 		// Act
-		void action() => option.GetHashCode();
+		var action = void () => option.GetHashCode();
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);

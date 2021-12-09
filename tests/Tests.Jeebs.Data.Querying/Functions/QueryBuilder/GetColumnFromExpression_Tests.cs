@@ -16,8 +16,8 @@ public class GetColumnFromExpression_Tests
 		// Arrange
 
 		// Act
-		static void a0() => GetColumnFromExpression<BrokenTable>(t => t.Bar);
-		static void a1() => GetColumnFromExpression(new BrokenTable(), t => t.Bar);
+		var a0 = void () => GetColumnFromExpression<BrokenTable>(t => t.Bar);
+		var a1 = void () => GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
 		Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);

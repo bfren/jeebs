@@ -19,7 +19,7 @@ public class Where_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		void action() => builder.Where<TestTable>(t => t.Foo, Compare.Equal, F.Rnd.Str);
+		var action = void () => builder.Where<TestTable>(t => t.Foo, Compare.Equal, F.Rnd.Str);
 
 		// Assert
 		Assert.Throws<WhereTableNotAddedException<TestTable>>(action);
