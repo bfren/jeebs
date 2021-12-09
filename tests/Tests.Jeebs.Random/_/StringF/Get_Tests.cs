@@ -33,7 +33,7 @@ public class Get_Tests
 		var action = void () => Get(length, upper: true, numbers: true, special: true);
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(result);
+		Assert.Throws<InvalidOperationException>(action);
 	}
 
 	[Fact]
