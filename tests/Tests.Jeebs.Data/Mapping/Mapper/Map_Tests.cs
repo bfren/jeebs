@@ -32,7 +32,7 @@ public class Map_Tests
 		var error = $"The definition of table '{typeof(FooTableWithoutBar0)}' is missing field '{nameof(Foo.Bar0)}'.";
 
 		// Act
-		void action() => mapper.Map<Foo>(new FooTableWithoutBar0());
+		var action = void () => mapper.Map<Foo>(new FooTableWithoutBar0());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
@@ -47,7 +47,7 @@ public class Map_Tests
 		var error = $"The definition of entity '{typeof(Foo)}' is missing property '{nameof(FooTableWithBar2.Bar2)}'.";
 
 		// Act
-		void action() => mapper.Map<Foo>(new FooTableWithBar2());
+		var action = void () => mapper.Map<Foo>(new FooTableWithBar2());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
@@ -63,7 +63,7 @@ public class Map_Tests
 			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithoutIdAttribute)}.";
 
 		// Act
-		void action() => mapper.Map<FooWithoutIdAttribute>(new FooTable());
+		var action = void () => mapper.Map<FooWithoutIdAttribute>(new FooTable());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
@@ -79,7 +79,7 @@ public class Map_Tests
 			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithMultipleIdAttributes)}.";
 
 		// Act
-		void action() => svc.Map<FooWithMultipleIdAttributes>(new FooTable());
+		var action = void () => svc.Map<FooWithMultipleIdAttributes>(new FooTable());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
@@ -95,7 +95,7 @@ public class Map_Tests
 			$"Required {typeof(VersionAttribute)} missing on entity {typeof(FooWithoutVersionAttribute)}.";
 
 		// Act
-		void action() => mapper.Map<FooWithoutVersionAttribute>(new FooWithVersionTable());
+		var action = void () => mapper.Map<FooWithoutVersionAttribute>(new FooWithVersionTable());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
@@ -111,7 +111,7 @@ public class Map_Tests
 			$"More than one {typeof(VersionAttribute)} found on entity {typeof(FooWithMultipleVersionAttributes)}.";
 
 		// Act
-		void action() => svc.Map<FooWithMultipleVersionAttributes>(new FooWithVersionTable());
+		var action = void () => svc.Map<FooWithMultipleVersionAttributes>(new FooWithVersionTable());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
