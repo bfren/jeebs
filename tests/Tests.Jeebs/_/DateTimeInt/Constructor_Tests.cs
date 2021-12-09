@@ -57,7 +57,7 @@ public class Constructor_Tests
 		// Arrange
 
 		// Act
-		object result() => new DateTimeInt(input);
+		var result = object () => new DateTimeInt(input);
 
 		// Assert
 		Assert.Throws<ArgumentException>(result);
@@ -98,7 +98,7 @@ public class Constructor_Tests
 		// Arrange
 
 		// Act
-		object result() => new DateTimeInt(input);
+		var result = object () => new DateTimeInt(input);
 
 		// Assert
 		Assert.Throws<ArgumentException>(result);

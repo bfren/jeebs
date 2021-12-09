@@ -44,7 +44,7 @@ public class StartMustBeBeforeEnd_Tests
 		var date2 = new DateTime(2000, 1, 2);
 
 		// Act
-		object incorrect() => new DateRange(date2, date1);
+		var incorrect = object () => new DateRange(date2, date1);
 
 		// Assert
 		Assert.Throws<ArgumentException>(incorrect);

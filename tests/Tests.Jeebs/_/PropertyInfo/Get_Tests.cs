@@ -30,7 +30,7 @@ public class Get_Tests
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		void result() => info.Get(foo);
+		var result = void () => info.Get(foo);
 
 		// Assert
 		Assert.Throws<InvalidOperationException>(result);
@@ -44,7 +44,7 @@ public class Get_Tests
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		void result() => info.Get(obj);
+		var result = void () => info.Get(obj);
 
 		// Assert
 		Assert.Throws<ArgumentNullException>(result);

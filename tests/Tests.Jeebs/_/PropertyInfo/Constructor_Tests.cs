@@ -14,7 +14,7 @@ public class Constructor_Tests
 		// Arrange
 
 		// Act
-		static PropertyInfo<Foo, object> result() => new(F.Rnd.Str);
+		var result = PropertyInfo<Foo, object> () => new(F.Rnd.Str);
 
 		// Assert
 		Assert.Throws<InvalidOperationException>(result);
@@ -26,7 +26,7 @@ public class Constructor_Tests
 		// Arrange
 
 		// Act
-		static PropertyInfo<Foo, int> result() => new(nameof(Foo.Bar));
+		var result = PropertyInfo<Foo, int> () => new(nameof(Foo.Bar));
 
 		// Assert
 		Assert.Throws<InvalidOperationException>(result);

@@ -15,7 +15,7 @@ public class Filter_Tests
 		var n0 = F.Rnd.Int;
 		var n1 = F.Rnd.Int;
 		var list = new object?[] { null, n0.ToString(), null, n1.ToString(), null };
-		static int? parse(object? x)
+		var parse = int? (object? x) =>
 		{
 			if (x is string y)
 			{
@@ -23,7 +23,7 @@ public class Filter_Tests
 			}
 
 			return null;
-		}
+		};
 
 		// Act
 		var result = list.Filter(parse);
@@ -43,7 +43,7 @@ public class Filter_Tests
 		var n0 = F.Rnd.Int;
 		var n1 = F.Rnd.Int;
 		var list = new int?[] { null, n0, null, n1, null };
-		static string? parse(int? x) => x?.ToString();
+		var parse = string? (int? x) => x?.ToString();
 
 		// Act
 		var result = list.Filter(parse);
