@@ -15,7 +15,7 @@ public partial class GetServiceConfig_Tests
 		var type = F.Rnd.Str;
 
 		// Act
-		void action() => config.GetServiceConfig($"{type}.{F.Rnd.Str}");
+		var action = void () => config.GetServiceConfig($"{type}.{F.Rnd.Str}");
 
 		// Assert
 		var ex = Assert.Throws<UnsupportedServiceException>(action);

@@ -18,7 +18,7 @@ public class SplitDefinition_Tests
 		// Arrange
 
 		// Act
-		void action() => ServicesConfig.SplitDefinition(definition);
+		var action = void () => ServicesConfig.SplitDefinition(definition);
 
 		// Assert
 		var ex = Assert.Throws<InvalidServiceDefinitionException>(action);
