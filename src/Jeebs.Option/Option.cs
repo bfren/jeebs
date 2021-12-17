@@ -25,6 +25,13 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 		Task.FromResult(this);
 
 	/// <summary>
+	/// Return as <see cref="Option{T}"/> wrapped in <see cref="ValueTask{TResult}"/>
+	/// </summary>
+	[JsonIgnore]
+	public ValueTask<Option<T>> AsValueTask =>
+		ValueTask.FromResult(this);
+
+	/// <summary>
 	/// Whether or not this is <see cref="Internals.Some{T}"/>
 	/// </summary>
 	[JsonIgnore]
