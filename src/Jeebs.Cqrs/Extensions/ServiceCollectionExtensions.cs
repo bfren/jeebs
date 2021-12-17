@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Cqrs;
@@ -21,19 +22,22 @@ public static class ServiceCollectionExtensions
 		services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
 		services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
 
+		// Get assemblies
+		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
 		// Add commands
 		services.Scan(selector => selector
-			.FromEntryAssembly()
+			.FromAssemblies(assemblies)
 			.AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<,>)))
-			.AsSelfWithInterfaces()
+			.AsImplementedInterfaces()
 			.WithSingletonLifetime()
 		);
 
 		// Add queries
 		services.Scan(selector => selector
-			.FromEntryAssembly()
+			.FromAssemblies(assemblies)
 			.AddClasses(filter => filter.AssignableTo(typeof(IQueryHandler<,>)))
-			.AsSelfWithInterfaces()
+			.AsImplementedInterfaces()
 			.WithSingletonLifetime()
 		);
 
