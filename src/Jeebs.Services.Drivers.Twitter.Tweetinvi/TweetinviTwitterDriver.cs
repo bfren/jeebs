@@ -88,7 +88,15 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
+	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName) =>
+		GetTweetsAsync(screenName, true, 10);
+
+	/// <inheritdoc/>
+	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies) =>
+		GetTweetsAsync(screenName, excludeReplies, 10);
+
+	/// <inheritdoc/>
+	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit)
 	{
 		return Some(screenName)
 			.BindAsync(

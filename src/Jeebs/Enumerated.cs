@@ -20,11 +20,17 @@ public abstract class Enumerated
 	private readonly string name;
 
 	/// <summary>
+	/// Set the name of this value, allowing empty values
+	/// </summary>
+	/// <param name="name">Value name</param>
+	protected Enumerated(string name) : this(name, true) { }
+
+	/// <summary>
 	/// Set the name of this value
 	/// </summary>
 	/// <param name="name">Value name</param>
 	/// <param name="allowEmpty">If <see langword="false"/>, and <paramref name="name"/> is null or empty, will throw an exception</param>
-	protected Enumerated(string name, bool allowEmpty = true)
+	protected Enumerated(string name, bool allowEmpty)
 	{
 		if (string.IsNullOrWhiteSpace(name) && !allowEmpty)
 		{

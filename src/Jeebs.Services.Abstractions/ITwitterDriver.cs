@@ -19,11 +19,17 @@ public interface ITwitterDriver<T>
 	/// <param name="screenName">Screen name</param>
 	Task<Option<Stream>> GetProfileImageStreamAsync(string screenName);
 
+	/// <inheritdoc cref="GetTweetsAsync(string, bool, int)"/>
+	Task<Option<List<T>>> GetTweetsAsync(string screenName);
+
+	/// <inheritdoc cref="GetTweetsAsync(string, bool, int)"/>
+	Task<Option<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies);
+
 	/// <summary>
 	/// Retrieve a list of Tweets
 	/// </summary>
 	/// <param name="screenName">Screen name</param>
-	/// <param name="excludeReplies">[Optional] Whether or not to exclude replies</param>
-	/// <param name="limit">[Optional] The maximum number of tweets to return</param>
-	Task<Option<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10);
+	/// <param name="excludeReplies">Whether or not to exclude replies</param>
+	/// <param name="limit">The maximum number of tweets to return</param>
+	Task<Option<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit);
 }

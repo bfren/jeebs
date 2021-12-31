@@ -90,10 +90,16 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 		);
 
 	/// <summary>
+	/// Redirect to error page with HTTP status 500
+	/// </summary>
+	protected static RedirectToActionResult RedirectToError() =>
+		RedirectToError(StatusCodes.Status500InternalServerError);
+
+	/// <summary>
 	/// Redirect to error page
 	/// </summary>
 	/// <param name="code">HTTP Status Code</param>
-	protected static RedirectToActionResult RedirectToError(int code = StatusCodes.Status500InternalServerError) =>
+	protected static RedirectToActionResult RedirectToError(int code) =>
 		new(nameof(ErrorController.Handle), "Error", new { code });
 
 	/// <summary>

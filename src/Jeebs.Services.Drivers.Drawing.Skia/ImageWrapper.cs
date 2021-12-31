@@ -27,7 +27,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 		this.image = image;
 
 	/// <inheritdoc/>
-	public override void Save(string path, ImageFormat format = ImageFormat.Jpeg)
+	public override void Save(string path, ImageFormat format)
 	{
 		var encodedFormat = format.GetEncodedImageFormat();
 		using var data = SKImage.FromEncodedData(image).Encode(encodedFormat, 80);
@@ -36,11 +36,11 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	}
 
 	/// <inheritdoc/>
-	public override byte[] ToJpegByteArray(int quality = 80) =>
+	public override byte[] ToJpegByteArray(int quality) =>
 		ToByteArray(SKEncodedImageFormat.Jpeg, quality);
 
 	/// <inheritdoc/>
-	public override byte[] ToPngByteArray(int quality = 80) =>
+	public override byte[] ToPngByteArray(int quality) =>
 		ToByteArray(SKEncodedImageFormat.Png, quality);
 
 	/// <summary>

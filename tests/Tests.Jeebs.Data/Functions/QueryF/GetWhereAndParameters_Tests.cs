@@ -296,7 +296,10 @@ public class GetWhereAndParameters_Tests
 		public override string GetOperator(Compare cmp) =>
 			"cmp";
 
-		public override string Escape(IColumn column, bool withAlias = false) =>
+		public override string Escape(IColumn column) =>
+			Escape(column, false);
+
+		public override string Escape(IColumn column, bool withAlias) =>
 			$"--{column.Name}--";
 
 		public override string Escape(ITableName table, string column) =>

@@ -44,18 +44,30 @@ public interface IDbClient
 	string Escape(ITableName table, string column);
 
 	/// <summary>
+	/// Escape a column without using an alias
+	/// </summary>
+	/// <param name="column">Column</param>
+	string Escape(IColumn column);
+
+	/// <summary>
 	/// Escape a column
 	/// </summary>
 	/// <param name="column">Column</param>
 	/// <param name="withAlias">[Optional] If true, will escape and add the column alias as well</param>
-	string Escape(IColumn column, bool withAlias = false);
+	string Escape(IColumn column, bool withAlias);
+
+	/// <summary>
+	/// Escape a column with its table name without using an alias
+	/// </summary>
+	/// <param name="column">Column</param>
+	string EscapeWithTable(IColumn column);
 
 	/// <summary>
 	/// Escape a column with its table name
 	/// </summary>
 	/// <param name="column">Column</param>
 	/// <param name="withAlias">[Optional] If true, will escape and add the column alias as well</param>
-	string EscapeWithTable(IColumn column, bool withAlias = false);
+	string EscapeWithTable(IColumn column, bool withAlias);
 
 	/// <summary>
 	/// Escape an object, usually a column or table

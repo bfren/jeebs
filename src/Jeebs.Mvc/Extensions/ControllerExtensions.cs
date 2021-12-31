@@ -19,8 +19,16 @@ public static class ControllerExtensions
 	/// </summary>
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
-	/// <param name="code">[Optional] HTTP Status Code</param>
-	public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code = null)
+	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason) =>
+		ExecuteErrorAsync(@this, reason, null);
+
+	/// <summary>
+	/// Execute an Option.None result and return the View
+	/// </summary>
+	/// <param name="this">Controller</param>
+	/// <param name="reason">None</param>
+	/// <param name="code">HTTP Status Code</param>
+	public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code)
 	{
 		// Log error
 		@this.Log.Message(reason);

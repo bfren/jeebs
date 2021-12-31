@@ -20,10 +20,18 @@ public abstract partial class DbClient : IDbClient
 	public abstract string Escape(ITableName table, string column);
 
 	/// <inheritdoc/>
-	public abstract string Escape(IColumn column, bool withAlias = false);
+	public virtual string Escape(IColumn column) =>
+		Escape(column, false);
 
 	/// <inheritdoc/>
-	public abstract string EscapeWithTable(IColumn column, bool withAlias = false);
+	public abstract string Escape(IColumn column, bool withAlias);
+
+	/// <inheritdoc/>
+	public virtual string EscapeWithTable(IColumn column) =>
+		EscapeWithTable(column, false);
+
+	/// <inheritdoc/>
+	public abstract string EscapeWithTable(IColumn column, bool withAlias);
 
 	/// <inheritdoc/>
 	public abstract string Escape(string obj);

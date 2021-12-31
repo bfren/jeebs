@@ -17,13 +17,23 @@ public static class ConfigurationExtensions
 	private static readonly MemoryCache cache = new(new MemoryCacheOptions());
 
 	/// <summary>
+	/// Return a configuration section from the cache as type T
+	/// </summary>
+	/// <typeparam name="T">Configuration settings type</typeparam>
+	/// <param name="config">IConfigurationRoot object</param>
+	/// <param name="sectionKey">Section key</param>
+	public static T GetSection<T>(this IConfiguration config, string sectionKey)
+		where T : class, new() =>
+		GetSection<T>(config, sectionKey, true);
+
+	/// <summary>
 	/// Return a configuration section as type T
 	/// </summary>
 	/// <typeparam name="T">Configuration settings type</typeparam>
 	/// <param name="config">IConfigurationRoot object</param>
 	/// <param name="sectionKey">Section key</param>
-	/// <param name="useCache">[Optional] If true the config section will be retrieved from / added to the cache</param>
-	public static T GetSection<T>(this IConfiguration config, string sectionKey, bool useCache = true)
+	/// <param name="useCache">If true the config section will be retrieved from / added to the cache</param>
+	public static T GetSection<T>(this IConfiguration config, string sectionKey, bool useCache)
 		where T : class, new()
 	{
 		return useCache switch

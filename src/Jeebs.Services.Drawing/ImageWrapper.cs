@@ -17,13 +17,25 @@ public abstract class ImageWrapper : IImageWrapper
 	public abstract int Height { get; }
 
 	/// <inheritdoc/>
-	public abstract void Save(string path, ImageFormat format = ImageFormat.Jpeg);
+	public virtual void Save(string path) =>
+		Save(path, ImageFormat.Jpeg);
 
 	/// <inheritdoc/>
-	public abstract byte[] ToJpegByteArray(int quality = 80);
+	public abstract void Save(string path, ImageFormat format);
 
 	/// <inheritdoc/>
-	public abstract byte[] ToPngByteArray(int quality = 80);
+	public virtual byte[] ToJpegByteArray() =>
+		ToJpegByteArray(80);
+
+	/// <inheritdoc/>
+	public abstract byte[] ToJpegByteArray(int quality);
+
+	/// <inheritdoc/>
+	public virtual byte[] ToPngByteArray() =>
+		ToPngByteArray(80);
+
+	/// <inheritdoc/>
+	public abstract byte[] ToPngByteArray(int quality);
 
 	/// <inheritdoc/>
 	public abstract Option<IImageWrapper> ApplyMask(int width, int height);

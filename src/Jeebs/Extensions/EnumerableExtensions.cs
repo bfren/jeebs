@@ -70,6 +70,15 @@ public static class EnumerableExtensions
 		new ImmutableList<T>(@this);
 
 	/// <summary>
+	/// Convert a collection to a paged list using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>
+	/// </summary>
+	/// <typeparam name="T">Item type</typeparam>
+	/// <param name="this">Collection</param>
+	/// <param name="page">Current page</param>
+	public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> @this, ulong page) =>
+		ToPagedList<T>(@this, page, D.ItemsPer, D.PagesPer);
+
+	/// <summary>
 	/// Convert a collection to a paged list
 	/// </summary>
 	/// <typeparam name="T">Item type</typeparam>
@@ -80,8 +89,8 @@ public static class EnumerableExtensions
 	public static IPagedList<T> ToPagedList<T>(
 		this IEnumerable<T> @this,
 		ulong page,
-		ulong itemsPer = D.ItemsPer,
-		ulong pagesPer = D.PagesPer
+		ulong itemsPer,
+		ulong pagesPer
 	)
 	{
 		// Return empty list

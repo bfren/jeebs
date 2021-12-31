@@ -62,6 +62,15 @@ public abstract class Menu
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="url">IUrlHelper</param>
+	/// <returns>Result to output as response</returns>
+	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url) =>
+		LoadItemsAsync(http, url, null);
+
+	/// <summary>
+	/// Load the specified menu items (to help with caching / preloading pages)
+	/// </summary>
+	/// <param name="http">IHttpClientFactory</param>
+	/// <param name="url">IUrlHelper</param>
 	/// <param name="list">[Optional] Menu Items</param>
 	/// <returns>Result to output as response</returns>
 	public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)

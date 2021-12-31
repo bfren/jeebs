@@ -9,7 +9,16 @@ namespace Jeebs.Data.DbQuery_Tests;
 
 public static class DbQuery_Setup
 {
-	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText = null, IQueryParameters? queryParams = null)
+	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get() =>
+		Get(null, null);
+
+	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText = null) =>
+		Get(queryText, null);
+
+	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(IQueryParameters? queryParams = null) =>
+		Get(null, queryParams);
+
+	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText, IQueryParameters? queryParams)
 	{
 		var text = queryText ?? F.Rnd.Str;
 		var param = queryParams ?? Substitute.For<IQueryParameters>();

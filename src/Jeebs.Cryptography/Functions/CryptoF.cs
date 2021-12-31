@@ -16,11 +16,18 @@ namespace F;
 public static class CryptoF
 {
 	/// <summary>
+	/// Calculate a 64-byte hash of a given input string
+	/// </summary>
+	/// <param name="input">Input string</param>
+	public static Option<byte[]> Hash(string input) =>
+		Hash(input, 64);
+
+	/// <summary>
 	/// Calculate a hash of a given input string
 	/// </summary>
 	/// <param name="input">Input string</param>
 	/// <param name="bytes">The number of bytes for the hash - must be between 16 and 64</param>
-	public static Option<byte[]> Hash(string input, int bytes = 64) =>
+	public static Option<byte[]> Hash(string input, int bytes) =>
 		Some(
 			() => Encoding.UTF8.GetBytes(input),
 			e => new M.GettingBytesForGenericHashExceptionMsg(e)
@@ -38,10 +45,16 @@ public static class CryptoF
 		);
 
 	/// <summary>
+	/// Generate a 3-word passphrase
+	/// </summary>
+	public static Option<string> GeneratePassphrase() =>
+		GeneratePassphrase(3);
+
+	/// <summary>
 	/// Generate a passphrase
 	/// </summary>
 	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
-	public static Option<string> GeneratePassphrase(int numberOfWords = 3) =>
+	public static Option<string> GeneratePassphrase(int numberOfWords) =>
 		Rnd.StringF.Passphrase(numberOfWords);
 
 	/// <summary>

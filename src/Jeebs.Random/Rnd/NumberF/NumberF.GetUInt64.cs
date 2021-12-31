@@ -10,6 +10,25 @@ public static partial class Rnd
 	public static partial class NumberF
 	{
 		/// <summary>
+		/// Returns a random integer between <see cref="0"/> and <see cref="ulong.MaxValue"/> inclusive
+		/// </summary>
+		/// <remarks>
+		/// Don't share code with <see cref="GetUInt32(uint, uint)"/> for memory allocation reasons
+		/// </remarks>
+		public static ulong GetUInt64() =>
+			GetUInt64(0, ulong.MaxValue);
+
+		/// <summary>
+		/// Returns a random integer between <see cref="0"/> and <paramref name="max"/> inclusive
+		/// </summary>
+		/// <remarks>
+		/// Don't share code with <see cref="GetUInt32(uint, uint)"/> for memory allocation reasons
+		/// </remarks>
+		/// <param name="max">Maximum acceptable value</param>
+		public static ulong GetUInt64(ulong max) =>
+			GetUInt64(0, max);
+
+		/// <summary>
 		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 		/// </summary>
 		/// <remarks>
@@ -17,7 +36,7 @@ public static partial class Rnd
 		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
-		public static ulong GetUInt64(ulong min = 0, ulong max = ulong.MaxValue)
+		public static ulong GetUInt64(ulong min, ulong max)
 		{
 			// Check arguments
 			if (min >= max)

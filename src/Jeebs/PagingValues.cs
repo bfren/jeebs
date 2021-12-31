@@ -48,15 +48,21 @@ public readonly record struct PagingValues : IPagingValues
 	public PagingValues() { }
 
 	/// <summary>
-	/// Set and calculate values
-	/// If itemsPerPage is 0, paging will not be used
-	/// If numberOfPages
+	/// Set and calculate values using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>
 	/// </summary>
 	/// <param name="items">Total number of items</param>
 	/// <param name="page">Current page</param>
-	/// <param name="itemsPer">[Optional] Number of items per page</param>
-	/// <param name="pagesPer">[Optional] Number of page numbers before using next / previous</param>
-	public PagingValues(ulong items, ulong page, ulong itemsPer = D.ItemsPer, ulong pagesPer = D.PagesPer)
+	public PagingValues(ulong items, ulong page) : this(items, page, D.ItemsPer, D.PagesPer) { }
+
+	/// <summary>
+	/// Set and calculate values
+	/// If <paramref name="itemsPer"/> is 0, paging will not be used
+	/// </summary>
+	/// <param name="items">Total number of items</param>
+	/// <param name="page">Current page</param>
+	/// <param name="itemsPer">Number of items per page</param>
+	/// <param name="pagesPer">Number of page numbers before using next / previous</param>
+	public PagingValues(ulong items, ulong page, ulong itemsPer, ulong pagesPer)
 	{
 		// If itemsPerPage is zero, use totalItems instead (i.e. no paging)
 		Items = items;
