@@ -12,10 +12,10 @@ public static class DbQuery_Setup
 	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get() =>
 		Get(null, null);
 
-	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText = null) =>
+	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText) =>
 		Get(queryText, null);
 
-	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(IQueryParameters? queryParams = null) =>
+	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(IQueryParameters? queryParams) =>
 		Get(null, queryParams);
 
 	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText, IQueryParameters? queryParams)

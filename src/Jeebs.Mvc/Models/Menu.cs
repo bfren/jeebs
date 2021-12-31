@@ -71,9 +71,9 @@ public abstract class Menu
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="url">IUrlHelper</param>
-	/// <param name="list">[Optional] Menu Items</param>
+	/// <param name="list">Menu Items</param>
 	/// <returns>Result to output as response</returns>
-	public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
+	public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list)
 	{
 		// Write to StringBuilder
 		var result = new StringBuilder();
