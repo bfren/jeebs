@@ -73,6 +73,10 @@ public static class LoggerConfigurationExtensions
 					var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
 					@this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
 					break;
+
+				default:
+					// Unsupported service
+					break;
 			}
 		}
 
