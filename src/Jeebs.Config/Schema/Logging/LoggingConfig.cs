@@ -20,7 +20,7 @@ public sealed record class LoggingConfig
 	/// <summary>
 	/// Minimum LogLevel
 	/// </summary>
-	public LogLevel MinimumLevel { get; init; }
+	public LogLevel Minimum { get; init; }
 
 	/// <summary>
 	/// If true, log to console

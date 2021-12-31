@@ -33,8 +33,12 @@ public static class LoggerConfigurationExtensions
 			SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
 		}
 
+		// Returns minimum level from nullable value or from default
+		var getMinimum = LogEventLevel (LogLevel? level) =>
+			(LogEventLevel)(level ?? jeebs.Logging.Minimum);
+
 		// Set the minimum log level
-		var overallMinimumLevel = getMinimum();
+		var overallMinimumLevel = getMinimum(null);
 		@this.MinimumLevel.Is(overallMinimumLevel);
 
 		// Check for console provider
@@ -79,9 +83,5 @@ public static class LoggerConfigurationExtensions
 					break;
 			}
 		}
-
-		// Returns minimum level from nullable value or from default
-		LogEventLevel getMinimum(LogLevel? level = null) =>
-			(LogEventLevel)(level ?? jeebs.Logging.MinimumLevel);
 	}
 }

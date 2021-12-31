@@ -5,7 +5,7 @@
 			"suite": "Jeebs"
 		},
 		"logging": {
-			"minimumLevel": "Debug",
+			"minimum": "Debug",
 			"console": true,
 			"providers": {
 				"seq.server04": {

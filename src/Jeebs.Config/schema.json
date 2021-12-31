@@ -84,7 +84,7 @@
 				"logging": {
 					"type": "object",
 					"description": "Logging configuration",
-					"required": [ "minimumLevel" ],
+					"required": [ "minimum" ],
 					"additionalProperties": false,
 					"properties": {
 						"console": {
@@ -101,8 +101,8 @@
 							"description": "[Optional] Whether or not to add a prefix to console messages (to help them stand out!)",
 							"default": true
 						},
-						"minimumLevel": {
-							"$ref": "#/definitions/logging/minimumLevel"
+						"minimum": {
+							"$ref": "#/definitions/logging/minimum"
 						},
 						"providers": {
 							"type": "object",
@@ -320,7 +320,7 @@
 			}
 		},
 		"logging": {
-			"minimumLevel": {
+			"minimum": {
 				"type": "string",
 				"description": "Microsoft compatible logging levels",
 				"enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
@@ -335,8 +335,8 @@
 						"type": "boolean",
 						"description": "Whether or not this provider is enabled"
 					},
-					"minimumLevel": {
-						"$ref": "#/definitions/logging/minimumLevel"
+					"minimum": {
+						"$ref": "#/definitions/logging/minimum"
 					}
 				}
 			}
