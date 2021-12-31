@@ -14,25 +14,25 @@ public static class JwtSecurity
 	/// <summary>
 	/// Default signing algorithm (256-bits = 32 characters)
 	/// </summary>
-	public const string SigningAlgorithm = SecurityAlgorithms.HmacSha256Signature;
+	public static readonly string SigningAlgorithm = SecurityAlgorithms.HmacSha256Signature;
 
 	/// <summary>
 	/// Minimum length of signing key (in bytes)
 	/// </summary>
-	public const int SigningKeyBytes = 32;
+	public static readonly int SigningKeyBytes = 32;
 
 	/// <summary>
 	/// Default Key Wrap algorithm
 	/// </summary>
-	public const string KeyWrapAlgorithm = JwtConstants.DirectKeyUseAlg;
+	public static readonly string KeyWrapAlgorithm = JwtConstants.DirectKeyUseAlg;
 
 	/// <summary>
 	/// Minimum length of signing key (in bytes)
 	/// </summary>
-	public const int EncryptingKeyBytes = 64;
+	public static readonly int EncryptingKeyBytes = 64;
 
 	/// <summary>
 	/// Default encrypting algorithm (512-bits = 64 characters)
 	/// </summary>
-	public const string EncryptingAlgorithm = SecurityAlgorithms.Aes256CbcHmacSha512;
+	public static readonly string EncryptingAlgorithm = SecurityAlgorithms.Aes256CbcHmacSha512;
 }

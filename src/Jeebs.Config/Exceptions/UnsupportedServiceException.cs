@@ -13,7 +13,7 @@ public class UnsupportedServiceException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public const string Format = "Unsupported service type '{0}'.";
+	public static readonly string Format = "Unsupported service type '{0}'.";
 
 	/// <summary>
 	/// Create exception

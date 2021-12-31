@@ -11,10 +11,10 @@ public static class JwtClaimTypes
 	/// <summary>
 	/// User ID claim type
 	/// </summary>
-	public const string UserId = "jeebs:user:id";
+	public static readonly string UserId = "jeebs:user:id";
 
 	/// <summary>
 	/// IsSuper claim type
 	/// </summary>
-	public const string IsSuper = "jeebs:user:isSuper";
+	public static readonly string IsSuper = "jeebs:user:isSuper";
 }

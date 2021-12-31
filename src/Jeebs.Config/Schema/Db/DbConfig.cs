@@ -13,7 +13,7 @@ public sealed record class DbConfig
 	/// <summary>
 	/// Path to database settings configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":db";
+	public static readonly string Key = JeebsConfig.Key + ":db";
 
 	/// <summary>
 	/// Default database connection name

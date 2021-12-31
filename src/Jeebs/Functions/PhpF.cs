@@ -16,32 +16,32 @@ public static class PhpF
 	/// <summary>
 	/// Array type
 	/// </summary>
-	public const char Array = 'a';
+	public static readonly char Array = 'a';
 
 	/// <summary>
 	/// Boolean type
 	/// </summary>
-	public const char Boolean = 'b';
+	public static readonly char Boolean = 'b';
 
 	/// <summary>
 	/// Double type
 	/// </summary>
-	public const char Double = 'd';
+	public static readonly char Double = 'd';
 
 	/// <summary>
 	/// Integer type
 	/// </summary>
-	public const char Integer = 'i';
+	public static readonly char Integer = 'i';
 
 	/// <summary>
 	/// String type
 	/// </summary>
-	public const char String = 's';
+	public static readonly char String = 's';
 
 	/// <summary>
 	/// Null type
 	/// </summary>
-	public const char Null = 'N';
+	public static readonly char Null = 'N';
 
 	/// <summary>
 	/// UTF8Encoding
@@ -151,22 +151,22 @@ public static class PhpF
 
 		return str[pointer] switch
 		{
-			Array =>
+			char c when c == Array =>
 				getArray(),
 
-			Boolean =>
+			char c when c == Boolean =>
 				getBoolean(),
 
-			Double =>
+			char c when c == Double =>
 				getNumber(double.Parse, 0d),
 
-			Integer =>
+			char c when c == Integer =>
 				getNumber(long.Parse, 0L),
 
-			String =>
+			char c when c == String =>
 				getString(),
 
-			Null =>
+			char c when c == Null =>
 				getNull(),
 
 			_ =>

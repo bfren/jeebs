@@ -13,7 +13,7 @@ public class InvalidServiceConfigurationException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public const string Format = "Service configuration '{0}' in {1} collection is not valid.";
+	public static readonly string Format = "Service configuration '{0}' in {1} collection is not valid.";
 
 	/// <summary>
 	/// Create exception

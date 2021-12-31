@@ -14,7 +14,7 @@ public sealed record class AuthUserRoleTable() : Table("Auth", ColumnPrefix)
 	/// <summary>
 	/// Prefix added before all columns
 	/// </summary>
-	public const string ColumnPrefix = "UserRole";
+	public static readonly string ColumnPrefix = "UserRole";
 
 	/// <inheritdoc cref="AuthUserRoleEntity.Id"/>
 	public string Id =>

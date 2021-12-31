@@ -28,7 +28,7 @@ public class ReadJson_Tests
 	public void Deserialise_Null_Returns_Object_With_Empty_Value()
 	{
 		// Arrange
-		const string? json = JsonF.Empty;
+		string? json = JsonF.Empty;
 
 		// Act
 		var result = JsonF.Deserialise<EnumeratedTest0>(json);

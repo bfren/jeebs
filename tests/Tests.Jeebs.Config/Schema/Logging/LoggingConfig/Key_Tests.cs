@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = LoggingConfig.Key;
+		var result = LoggingConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":logging", result);

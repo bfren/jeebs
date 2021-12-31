@@ -13,7 +13,7 @@ public class NamedDbConnectionNotFoundException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public const string Format = "Connection '{0}' was not found in configuration settings.";
+	public static readonly string Format = "Connection '{0}' was not found in configuration settings.";
 
 	/// <summary>
 	/// Create exception

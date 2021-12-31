@@ -51,7 +51,7 @@ public class Where_Tests
 
 	public sealed record class TestTable() : Table(nameof(TestTable))
 	{
-		public const string Prefix = "Test";
+		public static readonly string Prefix = "Test";
 
 		public string Foo { get; set; } = Prefix + nameof(Foo);
 	}

@@ -11,7 +11,7 @@ public sealed record class TableName : ITableName
 	/// <summary>
 	/// Schema Separator
 	/// </summary>
-	public const char SchemaSeparator = '.';
+	public static readonly char SchemaSeparator = '.';
 
 	/// <inheritdoc/>
 	public string? Schema { get; init; }

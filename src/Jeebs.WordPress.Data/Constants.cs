@@ -11,15 +11,15 @@ public static class Constants
 	/// <summary>
 	/// Attachment post meta key
 	/// </summary>
-	public const string Attachment = "_wp_attached_file";
+	public static readonly string Attachment = "_wp_attached_file";
 
 	/// <summary>
 	/// Attachment metadata post meta key
 	/// </summary>
-	public const string AttachmentMetadata = "_wp_attachment_metadata";
+	public static readonly string AttachmentMetadata = "_wp_attachment_metadata";
 
 	/// <summary>
 	/// Featured image thumbnail ID
 	/// </summary>
-	public const string FeaturedImageId = "_thumbnail_id";
+	public static readonly string FeaturedImageId = "_thumbnail_id";
 }

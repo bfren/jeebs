@@ -11,7 +11,7 @@ public sealed record class AuthConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = WebConfig.Key + ":auth";
+	public static readonly string Key = WebConfig.Key + ":auth";
 
 	/// <summary>
 	/// Whether or not auth is enabled

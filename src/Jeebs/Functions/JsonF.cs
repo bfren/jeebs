@@ -17,7 +17,7 @@ public static class JsonF
 	/// <summary>
 	/// Empty JSON
 	/// </summary>
-	public const string Empty = "\"\"";
+	public static readonly string Empty = "\"\"";
 
 	/// <summary>
 	/// Default JsonSerializerOptions

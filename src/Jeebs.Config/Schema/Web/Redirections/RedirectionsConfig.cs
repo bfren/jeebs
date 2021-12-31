@@ -13,5 +13,5 @@ public sealed class RedirectionsConfig : Dictionary<string, string>
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = WebConfig.Key + ":redirections";
+	public static readonly string Key = WebConfig.Key + ":redirections";
 }

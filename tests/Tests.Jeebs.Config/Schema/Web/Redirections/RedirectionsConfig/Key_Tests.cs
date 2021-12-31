@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = RedirectionsConfig.Key;
+		var result = RedirectionsConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":web:redirections", result);

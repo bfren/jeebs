@@ -13,7 +13,7 @@ public abstract class CalendarBase
 	/// <summary>
 	/// The default time zone, only used if none is specified
 	/// </summary>
-	public const string DefaultTimezone = "Europe/London";
+	public static readonly string DefaultTimezone = "Europe/London";
 
 	/// <summary>
 	/// The calendar

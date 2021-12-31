@@ -13,7 +13,7 @@ public class UnknownServiceException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public const string Format = "Unknown service '{0}' in {1} collection.";
+	public static readonly string Format = "Unknown service '{0}' in {1} collection.";
 
 	/// <summary>
 	/// Create exception

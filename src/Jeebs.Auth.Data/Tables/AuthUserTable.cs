@@ -14,7 +14,7 @@ public sealed record class AuthUserTable() : Table("Auth", ColumnPrefix)
 	/// <summary>
 	/// Prefix added before all columns
 	/// </summary>
-	public const string ColumnPrefix = "User";
+	public static readonly string ColumnPrefix = "User";
 
 	#region From AuthUserModel
 

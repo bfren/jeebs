@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = AppConfig.Key;
+		var result = AppConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":app", result);

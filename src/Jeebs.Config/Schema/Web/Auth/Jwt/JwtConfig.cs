@@ -11,7 +11,7 @@ public sealed record class JwtConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = AuthConfig.Key + ":jwt";
+	public static readonly string Key = AuthConfig.Key + ":jwt";
 
 	/// <summary>
 	/// The generated signing key (key is rotated each time the application restarts)

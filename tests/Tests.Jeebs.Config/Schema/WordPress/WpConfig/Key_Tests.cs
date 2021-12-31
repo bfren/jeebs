@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = WpConfig.Key;
+		var result = WpConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":wp", result);
