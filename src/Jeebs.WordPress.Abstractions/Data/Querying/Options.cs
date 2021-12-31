@@ -25,6 +25,6 @@ public abstract record class Options<TId> : QueryOptions<TId>
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryPartsBuilder</param>
-	internal Options(IWpDbSchema schema, IQueryPartsBuilder<TId> builder) : base(builder) =>
+	protected Options(IWpDbSchema schema, IQueryPartsBuilder<TId> builder) : base(builder) =>
 		T = schema;
 }

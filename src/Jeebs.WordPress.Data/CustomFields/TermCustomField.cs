@@ -22,7 +22,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <inheritdoc/>
 	protected TermCustomField(string key) : this(new Query.Terms(), key) { }
 
-	internal TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
+	protected TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
 		QueryTerms = queryTerms;
 
 	/// <inheritdoc/>

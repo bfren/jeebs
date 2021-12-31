@@ -23,7 +23,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <inheritdoc/>
 	protected AttachmentCustomField(string key) : this(new Query.Posts(), key) { }
 
-	internal AttachmentCustomField(IQueryPosts queryPosts, string key) : base(key, new Attachment()) =>
+	protected AttachmentCustomField(IQueryPosts queryPosts, string key) : base(key, new Attachment()) =>
 		QueryPosts = queryPosts;
 
 	/// <inheritdoc/>

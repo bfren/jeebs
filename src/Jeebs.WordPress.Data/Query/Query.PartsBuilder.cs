@@ -47,7 +47,7 @@ public static partial class Query
 		/// </summary>
 		/// <param name="extract">IExtract</param>
 		/// <param name="schema">IWpDbSchema</param>
-		internal PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, new MySqlDbClient(), schema) { }
+		protected PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, new MySqlDbClient(), schema) { }
 
 		/// <summary>
 		/// Create object
