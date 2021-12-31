@@ -73,7 +73,7 @@ public class Parse_Tests
 		);
 	}
 
-	public class Foo : Enumerated
+	public record class Foo : Enumerated
 	{
 		public Foo(string name) : base(name) { }
 	}

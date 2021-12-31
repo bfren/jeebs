@@ -48,7 +48,7 @@ public class Constructor_Tests
 		Assert.Equal(Foo.B.ToString(), result[1].ToString());
 	}
 
-	public class Foo : Enumerated
+	public record class Foo : Enumerated
 	{
 		public Foo(string name) : base(name) { }
 

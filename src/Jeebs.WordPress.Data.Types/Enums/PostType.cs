@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Enums;
 /// <summary>
 /// PostType enumeration
 /// </summary>
-public sealed class PostType : Enumerated
+public sealed record class PostType : Enumerated
 {
 	/// <summary>
 	/// Create new value

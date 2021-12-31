@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Data.Enums;
 /// <summary>
 /// CommentType enumeration
 /// </summary>
-public sealed class CommentType : Enumerated
+public sealed record class CommentType : Enumerated
 {
 	/// <summary>
 	/// Create new value

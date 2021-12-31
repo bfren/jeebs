@@ -23,7 +23,7 @@ public class SetValue_Tests
 		parameter.Received().Value = nameof(EnumeratedTest.Bar);
 	}
 
-	public sealed class EnumeratedTest : Enumerated
+	public sealed record class EnumeratedTest : Enumerated
 	{
 		public EnumeratedTest(string name) : base(name) { }
 

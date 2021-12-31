@@ -9,7 +9,7 @@ namespace Jeebs;
 /// <summary>
 /// MimeType enumeration
 /// </summary>
-public class MimeType : Enumerated
+public record class MimeType : Enumerated
 {
 	/// <summary>
 	/// Create new value

@@ -39,7 +39,7 @@ public class Parse_Tests
 		Assert.Same(EnumeratedTest.Bar, result);
 	}
 
-	public sealed class EnumeratedTest : Enumerated
+	public sealed record class EnumeratedTest : Enumerated
 	{
 		public EnumeratedTest(string name) : base(name) { }
 

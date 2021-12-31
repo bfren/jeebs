@@ -12,7 +12,7 @@ namespace Jeebs;
 /// <summary>
 /// Enables custom enumerated values
 /// </summary>
-public abstract class Enumerated
+public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<string>
 {
 	/// <summary>
 	/// The string representation ('name' in Enum terms) of this enumerated value
@@ -44,7 +44,7 @@ public abstract class Enumerated
 	/// Return the name of this value
 	/// </summary>
 	/// <returns>Name of this value</returns>
-	public override string ToString() =>
+	public sealed override string ToString() =>
 		name;
 
 	#region Static Members
@@ -168,16 +168,7 @@ public abstract class Enumerated
 	/// <param name="l">Value</param>
 	/// <param name="r">Enumerated</param>
 	public static bool operator ==(string l, Enumerated r) =>
-		l.Equals(r);
-
-	/// <summary>
-	/// Compare an enumerated type with a value type
-	/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
-	/// </summary>
-	/// <param name="l">Enumerated</param>
-	/// <param name="r">Value</param>
-	public static bool operator ==(Enumerated l, Enumerated r) =>
-		l.Equals(r);
+		r.Equals(l);
 
 	/// <summary>
 	/// Compare an enumerated type with a value type
@@ -195,16 +186,7 @@ public abstract class Enumerated
 	/// <param name="l">Value</param>
 	/// <param name="r">Enumerated</param>
 	public static bool operator !=(string l, Enumerated r) =>
-		!l.Equals(r);
-
-	/// <summary>
-	/// Compare an enumerated type with a value type
-	/// <para>The name of <paramref name="l"/> will be compared to <paramref name="r"/></para>
-	/// </summary>
-	/// <param name="l">Enumerated</param>
-	/// <param name="r">Value</param>
-	public static bool operator !=(Enumerated l, Enumerated r) =>
-		!l.Equals(r);
+		!r.Equals(l);
 
 	#endregion
 
@@ -212,30 +194,18 @@ public abstract class Enumerated
 
 	/// <summary>
 	/// Compare this <see cref="Enumerated"/> with another object
-	/// <para>If <paramref name="other"/> is <see cref="Enumerated"/>, <see cref="Equals(Enumerated)"/> will be used</para>
-	/// <para>Otherwise this will return false</para>
-	/// </summary>
-	/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
-	public override bool Equals(object? other) =>
-		other switch
-		{
-			Enumerated x =>
-				Equals(x),
-
-			string x =>
-				name == x,
-
-			_ =>
-				false
-		};
-
-	/// <summary>
-	/// Compare this <see cref="Enumerated"/> with another object
 	/// <para>Each <see cref="name"/> and type will be compared</para>
 	/// </summary>
 	/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
-	public bool Equals(Enumerated other) =>
-		(name == other.name) && (GetType().FullName == other.GetType().FullName);
+	public virtual bool Equals(Enumerated? other) =>
+		(name == other?.name) && (GetType().FullName == other.GetType().FullName);
+
+	/// <summary>
+	/// Compare this <see cref="Enumerated"/> with a string
+	/// </summary>
+	/// <param name="other">String to compare to this <see cref="Enumerated"/></param>
+	public virtual bool Equals(string? other) =>
+		name == other;
 
 	/// <summary>
 	/// Generate custom HashCode
