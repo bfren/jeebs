@@ -16,10 +16,10 @@ public sealed class VerifyPassword_Tests
 	public void VerifyPassword_NullOrEmpty_ThrowsArgumentNullException(string input)
 	{
 		// Arrange
-		var password = this.password;
+		var pwd = password;
 
 		// Act
-		var result = input.VerifyPassword(password);
+		var result = input.VerifyPassword(pwd);
 
 		// Assert
 		Assert.False(result);
@@ -29,11 +29,11 @@ public sealed class VerifyPassword_Tests
 	public void VerifyPassword_IncorrectPassword_ReturnsFalse()
 	{
 		// Arrange
-		var password = F.Rnd.StringF.Get(10);
+		var pwd = F.Rnd.StringF.Get(10);
 		var passwordHash = this.passwordHash;
 
 		// Act
-		var result = passwordHash.VerifyPassword(password);
+		var result = passwordHash.VerifyPassword(pwd);
 
 		// Assert
 		Assert.False(result);
@@ -43,11 +43,11 @@ public sealed class VerifyPassword_Tests
 	public void VerifyPassword_CorrectPassword_ReturnsTrue()
 	{
 		// Arrange
-		var password = this.password;
-		var passwordHash = this.passwordHash;
+		var pwd = password;
+		var hash = passwordHash;
 
 		// Act
-		var result = passwordHash.VerifyPassword(password);
+		var result = hash.VerifyPassword(pwd);
 
 		// Assert
 		Assert.True(result);

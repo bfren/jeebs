@@ -82,8 +82,8 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 		// Get profile image stream
 		async Task<System.IO.Stream> getStream(string uri)
 		{
-			using var client = factory.CreateClient();
-			return await client.GetStreamAsync(uri).ConfigureAwait(false);
+			using var http = factory.CreateClient();
+			return await http.GetStreamAsync(uri).ConfigureAwait(false);
 		}
 	}
 
