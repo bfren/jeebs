@@ -36,7 +36,7 @@ public class Value_Tests
 		// Act
 		for (int i = 0; i < 100; i++)
 		{
-			_ = await l.Value;
+			_ = await l.Value.ConfigureAwait(false);
 		}
 
 		// Assert

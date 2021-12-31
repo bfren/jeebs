@@ -21,7 +21,7 @@ public abstract class IfSomeAsync_Tests
 		var ifSome = Task (int _) => throw new Exception();
 
 		// Act
-		var result = await act(option, ifSome);
+		var result = await act(option, ifSome).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -37,11 +37,11 @@ public abstract class IfSomeAsync_Tests
 		var ifSome = Substitute.For<Func<int, Task>>();
 
 		// Act
-		var result = await act(option, ifSome);
+		var result = await act(option, ifSome).ConfigureAwait(false);
 
 		// Assert
 		Assert.Same(option, result);
-		await ifSome.DidNotReceiveWithAnyArgs().Invoke(default);
+		await ifSome.DidNotReceiveWithAnyArgs().Invoke(default).ConfigureAwait(false);
 	}
 
 	public abstract Task Test02_Some_Runs_IfSome_Func_And_Returns_Original_Option();
@@ -54,10 +54,10 @@ public abstract class IfSomeAsync_Tests
 		var ifSome = Substitute.For<Func<int, Task>>();
 
 		// Act
-		var result = await act(option, ifSome);
+		var result = await act(option, ifSome).ConfigureAwait(false);
 
 		// Assert
 		Assert.Same(option, result);
-		await ifSome.Received().Invoke(value);
+		await ifSome.Received().Invoke(value).ConfigureAwait(false);
 	}
 }

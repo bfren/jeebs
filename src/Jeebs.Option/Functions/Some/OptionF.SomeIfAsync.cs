@@ -28,7 +28,7 @@ public static partial class OptionF
 		CatchAsync(
 			async () =>
 			{
-				var v = await value();
+				var v = await value().ConfigureAwait(false);
 				return predicate(v) switch
 				{
 					true =>

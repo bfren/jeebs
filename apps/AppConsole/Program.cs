@@ -17,7 +17,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Debug("Services loaded");
 	log.Debug("Project {Name}", jeebs.App.Name);
 
-	log.Debug("Version: {0}", await F.VersionF.GetJeebsVersionAsync());
+	log.Debug("Version: {0}", await F.VersionF.GetJeebsVersionAsync().ConfigureAwait(false));
 
 	log.Error("Test error");
 	log.Error(new Exception("Test"), "Something went badly wrong {here}", "just now");
@@ -34,20 +34,20 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//notifier.Send("test notification");
 
 	var one = async Task<Option<int>> (int input) =>
-		await Task.FromResult(input + 1);
+		await Task.FromResult(input + 1).ConfigureAwait(false);
 
 	var two = async Task<Option<string>> (int input) =>
-		await Task.FromResult(input.ToString());
+		await Task.FromResult(input.ToString()).ConfigureAwait(false);
 
 	var three = async Task<Option<bool>> (string input) =>
-		await Task.FromResult(input == "3");
+		await Task.FromResult(input == "3").ConfigureAwait(false);
 
 	var result = from r0 in one(2)
 				 from r1 in two(r0)
 				 from r2 in three(r1)
 				 select r2;
 
-	(await result).Audit(
+	(await result.ConfigureAwait(false)).Audit(
 		some: x => log.Information("Result: {0}", x),
 		none: _ => log.Information("No result")
 	);
@@ -74,4 +74,4 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	{
 		log.Information(output);
 	}
-});
+}).ConfigureAwait(false);

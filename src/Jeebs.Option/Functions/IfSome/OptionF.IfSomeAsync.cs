@@ -16,7 +16,7 @@ public static partial class OptionF
 			{
 				if (option is Some<T> some)
 				{
-					await ifSome(some.Value);
+					await ifSome(some.Value).ConfigureAwait(false);
 				}
 
 				return option;
@@ -26,5 +26,5 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="IfSome{T}(Option{T}, Action{T})"/>
 	public static async Task<Option<T>> IfSomeAsync<T>(Task<Option<T>> option, Func<T, Task> ifSome) =>
-		await IfSomeAsync(await option, ifSome);
+		await IfSomeAsync(await option.ConfigureAwait(false), ifSome).ConfigureAwait(false);
 }

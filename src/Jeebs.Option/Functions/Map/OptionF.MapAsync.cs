@@ -14,7 +14,7 @@ public static partial class OptionF
 		CatchAsync(() =>
 			Switch(
 				option,
-				some: async v => { var x = await map(v); return Some(x); },
+				some: async v => { var x = await map(v).ConfigureAwait(false); return Some(x); },
 				none: r => None<U>(r).AsTask
 			),
 			handler
@@ -22,5 +22,5 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="Map{T, U}(Option{T}, Func{T, U}, Handler)"/>
 	public static async Task<Option<U>> MapAsync<T, U>(Task<Option<T>> option, Func<T, Task<U>> map, Handler handler) =>
-		await MapAsync(await option, map, handler);
+		await MapAsync(await option.ConfigureAwait(false), map, handler).ConfigureAwait(false);
 }

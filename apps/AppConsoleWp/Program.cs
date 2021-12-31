@@ -46,7 +46,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Search for sermons with a string term
@@ -78,7 +79,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Get sermons with taxonomies
@@ -108,7 +110,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Search for sermons with a taxonomy
@@ -146,7 +149,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Get taxonomies
@@ -174,7 +178,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Get posts with custom fields
@@ -198,7 +203,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Get sermons with custom fields
@@ -230,7 +236,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Search for sermons with custom fields
@@ -267,7 +274,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Generate Excerpts
@@ -293,7 +301,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Get attachments
@@ -323,7 +332,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			}
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Get attachment file path
@@ -335,7 +345,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	.AuditAsync(
 		some: x => log.Debug("Path: {FilePath}", x),
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	//
 	// Test paging
@@ -364,9 +375,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			log.Debug("  - Last Item: {LastItem}", x.Values.LastItem);
 		},
 		none: r => log.Message(r)
-	);
+	)
+	.ConfigureAwait(false);
 
 	// End
 	Console.WriteLine();
 	log.Debug("Complete.");
-});
+}).ConfigureAwait(false);

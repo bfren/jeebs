@@ -30,10 +30,10 @@ public static partial class OptionF
 		{
 			if (any != null)
 			{
-				await any(option);
+				await any(option).ConfigureAwait(false);
 			}
 
-			await audit();
+			await audit().ConfigureAwait(false);
 		}
 		catch (Exception e)
 		{
@@ -46,13 +46,13 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Action<Option<T>>? any, Action<T>? some, Action<Msg>? none) =>
-		await AuditAsync(await option,
+		await AuditAsync(await option.ConfigureAwait(false),
 			x => { any?.Invoke(x); return Task.CompletedTask; },
 			x => { some?.Invoke(x); return Task.CompletedTask; },
 			x => { none?.Invoke(x); return Task.CompletedTask; }
-		);
+		).ConfigureAwait(false);
 
 	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Func<Option<T>, Task>? any, Func<T, Task>? some, Func<Msg, Task>? none) =>
-		await AuditAsync(await option, any, some, none);
+		await AuditAsync(await option.ConfigureAwait(false), any, some, none).ConfigureAwait(false);
 }

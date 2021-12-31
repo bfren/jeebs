@@ -27,7 +27,7 @@ public abstract class SwitchIfAsync_Tests
 		var action = Task () => act(option.AsTask, check);
 
 		// Assert
-		await Assert.ThrowsAsync<UnknownOptionException>(action);
+		await Assert.ThrowsAsync<UnknownOptionException>(action).ConfigureAwait(false);
 	}
 
 	public abstract Task Test01_None_Returns_Original_None();
@@ -39,7 +39,7 @@ public abstract class SwitchIfAsync_Tests
 		var check = Substitute.For<Func<int, bool>>();
 
 		// Act
-		var result = await act(option.AsTask, check);
+		var result = await act(option.AsTask, check).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -55,7 +55,7 @@ public abstract class SwitchIfAsync_Tests
 		var check = bool (int _) => throw new Exception();
 
 		// Act
-		var result = await act(option.AsTask, check);
+		var result = await act(option.AsTask, check).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -72,7 +72,7 @@ public abstract class SwitchIfAsync_Tests
 		check.Invoke(Arg.Any<int>()).Returns(true);
 
 		// Act
-		var result = await act(option.AsTask, check);
+		var result = await act(option.AsTask, check).ConfigureAwait(false);
 
 		// Assert
 		Assert.Same(option, result);
@@ -88,7 +88,7 @@ public abstract class SwitchIfAsync_Tests
 		check.Invoke(Arg.Any<int>()).Returns(false);
 
 		// Act
-		var result = await act(option.AsTask, check);
+		var result = await act(option.AsTask, check).ConfigureAwait(false);
 
 		// Assert
 		Assert.Same(option, result);
@@ -105,7 +105,7 @@ public abstract class SwitchIfAsync_Tests
 		var ifTrue = None<int> (int _) => throw new Exception();
 
 		// Act
-		var result = await act(option.AsTask, check, ifTrue);
+		var result = await act(option.AsTask, check, ifTrue).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -123,7 +123,7 @@ public abstract class SwitchIfAsync_Tests
 		var ifFalse = None<int> (int _) => throw new Exception();
 
 		// Act
-		var result = await act(option.AsTask, check, ifFalse);
+		var result = await act(option.AsTask, check, ifFalse).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -144,7 +144,7 @@ public abstract class SwitchIfAsync_Tests
 		ifTrue.Invoke(v0).Returns(Some(v0 + v1));
 
 		// Act
-		var result = await act(option.AsTask, check, ifTrue);
+		var result = await act(option.AsTask, check, ifTrue).ConfigureAwait(false);
 
 		// Assert
 		ifTrue.Received().Invoke(v0);
@@ -165,7 +165,7 @@ public abstract class SwitchIfAsync_Tests
 		ifFalse.Invoke(value).Returns(None<int, TestMsg>());
 
 		// Act
-		var result = await act(option.AsTask, check, ifFalse);
+		var result = await act(option.AsTask, check, ifFalse).ConfigureAwait(false);
 
 		// Assert
 		ifFalse.Received().Invoke(value);

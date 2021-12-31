@@ -22,5 +22,5 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="Bind{T, U}(Option{T}, Func{T, Option{U}})"/>
 	public static async Task<Option<U>> BindAsync<T, U>(Task<Option<T>> option, Func<T, Task<Option<U>>> bind) =>
-		await BindAsync(await option, bind);
+		await BindAsync(await option.ConfigureAwait(false), bind).ConfigureAwait(false);
 }

@@ -66,7 +66,7 @@ public class Passphrase_Tests
 		const char sep = '|';
 
 		// Act
-		var result = Passphrase(input, separator: sep);
+		var result = Passphrase(input, sep, Rnd.Flip, Rnd.Flip);
 
 		// Assert
 		var some = result.AssertSome().Split(sep);
@@ -82,7 +82,7 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, separator: input);
+		var result = Passphrase(3, input, Rnd.Flip, Rnd.Flip);
 
 		// Assert
 		var some = result.AssertSome();
@@ -95,7 +95,7 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, upperFirst: true);
+		var result = Passphrase(3, '-', true, Rnd.Flip);
 
 		// Assert
 		var some = result.AssertSome();
@@ -108,7 +108,7 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, upperFirst: false);
+		var result = Passphrase(3, '-', false, Rnd.Flip);
 
 		// Assert
 		var some = result.AssertSome();
@@ -121,7 +121,7 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, includeNumber: true);
+		var result = Passphrase(3, '-', Rnd.Flip, true);
 
 		// Assert
 		var some = result.AssertSome();
@@ -134,7 +134,7 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, includeNumber: false);
+		var result = Passphrase(3, '-', Rnd.Flip, false);
 
 		// Assert
 		var some = result.AssertSome();
@@ -148,7 +148,7 @@ public class Passphrase_Tests
 		const char sep = '|';
 
 		// Act
-		var result = Passphrase(7776, separator: sep, upperFirst: false, includeNumber: false);
+		var result = Passphrase(7776, sep, false, false);
 
 		// Assert
 		var some = result.AssertSome().Split(sep);

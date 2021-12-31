@@ -14,7 +14,7 @@ public static partial class OptionF
 	{
 		try
 		{
-			return await f();
+			return await f().ConfigureAwait(false);
 		}
 		catch (Exception e)
 		{

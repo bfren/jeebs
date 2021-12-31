@@ -24,7 +24,7 @@ public class HydrateAsync_Tests
 		var field = new Test(Substitute.For<IQueryTerms>(), key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -43,7 +43,7 @@ public class HydrateAsync_Tests
 		var field = new Test(Substitute.For<IQueryTerms>(), F.Rnd.Str);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, false).ConfigureAwait(false);
 
 		// Assert
 		result.AssertFalse();
@@ -70,7 +70,7 @@ public class HydrateAsync_Tests
 		var field = new Test(queryTerms, key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -97,7 +97,7 @@ public class HydrateAsync_Tests
 		var field = new Test(queryTerms, key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
 
 		// Assert
 		result.AssertTrue();

@@ -27,12 +27,12 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QueryAsync<int>(value, param, input);
-		_ = await query.QueryAsync<int>(value, param, input, transaction);
+		_ = await query.QueryAsync<int>(value, param, input).ConfigureAwait(false);
+		_ = await query.QueryAsync<int>(value, param, input, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QueryAsync<int>(value, param, input, Arg.Any<IDbTransaction>());
-		await db.Received().QueryAsync<int>(value, param, input, transaction);
+		await db.Received().QueryAsync<int>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QueryAsync<int>(value, param, input, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -45,12 +45,12 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QueryAsync<int>(value, param);
-		_ = await query.QueryAsync<int>(value, param, transaction);
+		_ = await query.QueryAsync<int>(value, param).ConfigureAwait(false);
+		_ = await query.QueryAsync<int>(value, param, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-		await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction);
+		await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -63,8 +63,8 @@ public class QueryAsync_Tests
 		client.GetQuery(parts).Throws<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(parts);
-		var r1 = await query.QueryAsync<int>(parts, transaction);
+		var r0 = await query.QueryAsync<int>(parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -83,8 +83,8 @@ public class QueryAsync_Tests
 		client.GetCountQuery(parts).Throws<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts);
-		var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction);
+		var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -103,8 +103,8 @@ public class QueryAsync_Tests
 		client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts);
-		var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction);
+		var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -123,13 +123,13 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QueryAsync<int>(parts);
-		_ = await query.QueryAsync<int>(parts, transaction);
+		_ = await query.QueryAsync<int>(parts).ConfigureAwait(false);
+		_ = await query.QueryAsync<int>(parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		client.Received(2).GetQuery(parts);
-		await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-		await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction);
+		await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -142,15 +142,15 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts);
-		_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction);
+		_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts).ConfigureAwait(false);
+		_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		client.Received(2).GetCountQuery(parts);
-		await db.Received().ExecuteAsync<ulong>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-		await db.Received().ExecuteAsync<ulong>(value, param, CommandType.Text, transaction);
+		await db.Received().ExecuteAsync<ulong>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().ExecuteAsync<ulong>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 		client.Received(2).GetQuery(Arg.Any<IQueryParts>());
-		await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-		await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction);
+		await db.Received().QueryAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QueryAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 }

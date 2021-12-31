@@ -68,7 +68,8 @@ public class TestController : Controller
 				.AuditAsync(
 					some: _ => results.Append('.'),
 					none: r => results.AppendLine(r.ToString())
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -103,7 +104,8 @@ public class TestController : Controller
 				.AuditAsync(
 					some: _ => results.Append('.'),
 					none: r => results.AppendLine(r.ToString())
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -144,7 +146,8 @@ public class TestController : Controller
 				.AuditAsync(
 					some: _ => results.Append('.'),
 					none: r => results.AppendLine(r.ToString())
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -174,7 +177,7 @@ public class TestController : Controller
 					x => x.Role
 				);
 
-				if (await roles.CountAsync() == 2)
+				if (await roles.CountAsync().ConfigureAwait(false) == 2)
 				{
 					results.Append('.');
 				}
@@ -202,7 +205,7 @@ public class TestController : Controller
 							where ur.UserId == userId.Value
 							select r;
 
-				if (await roles.CountAsync() == 2)
+				if (await roles.CountAsync().ConfigureAwait(false) == 2)
 				{
 					results.Append('.');
 				}
@@ -246,7 +249,8 @@ public class TestController : Controller
 				.AuditAsync(
 					some: _ => results.Append('.'),
 					none: r => results.AppendLine(r.ToString())
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -275,7 +279,8 @@ public class TestController : Controller
 				.AuditAsync(
 					some: _ => results.Append('.'),
 					none: r => results.AppendLine(r.ToString())
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -315,7 +320,8 @@ public class TestController : Controller
 				.AuditAsync(
 					some: _ => results.Append('.'),
 					none: r => results.AppendLine(r.ToString())
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -333,7 +339,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var user = await context.Users.SingleAsync(u => u.Id == userId.Value);
+				var user = await context.Users.SingleAsync(u => u.Id == userId.Value).ConfigureAwait(false);
 
 				if (user.Id == userId.Value)
 				{
@@ -362,7 +368,7 @@ public class TestController : Controller
 							where u.Id == userId.Value
 							select u;
 
-				var user = await users.SingleAsync();
+				var user = await users.SingleAsync().ConfigureAwait(false);
 
 				if (user.Id == userId.Value)
 				{
@@ -419,7 +425,8 @@ public class TestController : Controller
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -453,7 +460,8 @@ public class TestController : Controller
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -492,7 +500,8 @@ public class TestController : Controller
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
-				);
+				)
+				.ConfigureAwait(false);
 		}
 		timer.Stop();
 		results.AppendLine(" done.");
@@ -524,7 +533,7 @@ public class TestController : Controller
 					x => x.Role
 				);
 
-				await roles.CountAsync();
+				await roles.CountAsync().ConfigureAwait(false);
 				results.Append('.');
 			}
 			timer.Stop();
@@ -548,7 +557,7 @@ public class TestController : Controller
 							where ur.UserId == id
 							select r;
 
-				await roles.CountAsync();
+				await roles.CountAsync().ConfigureAwait(false);
 				results.Append('.');
 			}
 			timer.Stop();

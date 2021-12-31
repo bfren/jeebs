@@ -19,5 +19,5 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="Switch{T, U}(Option{T}, Func{T, U}, Func{Msg, U})"/>
 	public static async Task<U> SwitchAsync<T, U>(Task<Option<T>> option, Func<T, Task<U>> some, Func<Msg, Task<U>> none) =>
-		await SwitchAsync(await option, some, none);
+		await SwitchAsync(await option.ConfigureAwait(false), some, none).ConfigureAwait(false);
 }

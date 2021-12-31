@@ -75,7 +75,7 @@ public abstract class AuthControllerBase : Controller
 	/// <param name="model">SignInModel</param>
 	[HttpPost, AutoValidateAntiforgeryToken]
 	public virtual async Task<IActionResult> SignIn(SignInModel model) =>
-		await DoSignIn(model);
+		await DoSignIn(model).ConfigureAwait(false);
 
 	/// <summary>
 	/// Perform sign in
@@ -93,7 +93,7 @@ public abstract class AuthControllerBase : Controller
 		{
 			// Get user principal
 			Log.Debug("User validated.");
-			var principal = await GetPrincipal(user, model.Password);
+			var principal = await GetPrincipal(user, model.Password).ConfigureAwait(false);
 
 			// Update last sign in
 			var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
@@ -110,7 +110,7 @@ public abstract class AuthControllerBase : Controller
 					AllowRefresh = false,
 					RedirectUri = model.ReturnUrl
 				}
-			);
+			).ConfigureAwait(false);
 
 			// Redirect to return url (or Auth/Index)
 			return Redirect(GetReturnUrl(model.ReturnUrl));
@@ -154,7 +154,7 @@ public abstract class AuthControllerBase : Controller
 		// Add custom Claims
 		if (AddClaims != null)
 		{
-			claims.AddRange(await AddClaims(user, password));
+			claims.AddRange(await AddClaims(user, password).ConfigureAwait(false));
 		}
 
 		// Create and return identity and principal objects
@@ -168,7 +168,7 @@ public abstract class AuthControllerBase : Controller
 	new public async Task<IActionResult> SignOut()
 	{
 		// Sign out
-		await HttpContext.SignOutAsync();
+		await HttpContext.SignOutAsync().ConfigureAwait(false);
 
 		// Show a friendly message to the user
 		TempData.AddInfoAlert("Goodbye!");

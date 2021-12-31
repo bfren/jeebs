@@ -70,7 +70,7 @@ public sealed class RedirectExactMiddleware : IMiddleware
 		else
 		{
 			// No redirections match so move on to the next delegate
-			await next(context);
+			await next(context).ConfigureAwait(false);
 		}
 	}
 }

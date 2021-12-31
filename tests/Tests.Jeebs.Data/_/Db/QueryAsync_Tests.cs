@@ -20,7 +20,7 @@ public class QueryAsync_Tests
 		const CommandType type = CommandType.Text;
 
 		// Act
-		_ = await db.QueryAsync<int>(query, parameters, type);
+		_ = await db.QueryAsync<int>(query, parameters, type).ConfigureAwait(false);
 
 		// Assert
 		client.Received().Connect(Arg.Any<string>());
@@ -38,8 +38,8 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await db.QueryAsync<int>(query, parameters, type);
-		_ = await db.QueryAsync<int>(query, parameters, type, transaction);
+		_ = await db.QueryAsync<int>(query, parameters, type).ConfigureAwait(false);
+		_ = await db.QueryAsync<int>(query, parameters, type, transaction).ConfigureAwait(false);
 
 		// Assert
 		log.Received(2).Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);

@@ -23,7 +23,7 @@ public abstract class MapAsync_Tests
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, map, DefaultHandler);
+		var result = await act(option, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -41,7 +41,7 @@ public abstract class MapAsync_Tests
 		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
-		var result = await act(option, throwFunc, DefaultHandler);
+		var result = await act(option, throwFunc, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -59,7 +59,7 @@ public abstract class MapAsync_Tests
 		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
-		var result = await act(option, throwFunc, handler);
+		var result = await act(option, throwFunc, handler).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -75,7 +75,7 @@ public abstract class MapAsync_Tests
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, map, DefaultHandler);
+		var result = await act(option, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -91,7 +91,7 @@ public abstract class MapAsync_Tests
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, map, DefaultHandler);
+		var result = await act(option, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -108,10 +108,10 @@ public abstract class MapAsync_Tests
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		await act(option, map, DefaultHandler);
+		await act(option, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
-		await map.Received().Invoke(value);
+		await map.Received().Invoke(value).ConfigureAwait(false);
 	}
 
 	public record class FakeOption : Option<int> { }

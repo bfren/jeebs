@@ -87,7 +87,7 @@ public abstract class Menu
 			try
 			{
 				// Load the URL and ensure it is successful
-				var response = await client.GetAsync(uri);
+				var response = await client.GetAsync(uri).ConfigureAwait(false);
 				response.EnsureSuccessStatusCode();
 
 				// Successful
@@ -111,7 +111,7 @@ public abstract class Menu
 				Write($"Loading {uri} .. ");
 
 				// Attempt to load the URL
-				await Load(uri);
+				await Load(uri).ConfigureAwait(false);
 
 				// Put the next URL on a new line
 				Write("<br/>");

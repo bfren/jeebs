@@ -44,7 +44,7 @@ public class SelectMany_Tests
 			from a in o0
 			from b in o1
 			select a + b
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var some = result.AssertSome();
@@ -71,7 +71,7 @@ public class SelectMany_Tests
 			from c in o2
 			from d in o3
 			select a + b + c + d
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var some = result.AssertSome();
@@ -115,7 +115,7 @@ public class SelectMany_Tests
 			from b in o1
 			from c in o2
 			select a + b + c
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -138,7 +138,7 @@ public class SelectMany_Tests
 			from b in o1
 			from c in o2
 			select a + b + c
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();

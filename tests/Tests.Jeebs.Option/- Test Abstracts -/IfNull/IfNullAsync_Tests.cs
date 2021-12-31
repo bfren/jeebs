@@ -24,8 +24,8 @@ public abstract class IfNullAsync_Tests
 		throws.Invoke().Throws<Exception>();
 
 		// Act
-		var r0 = await act(some, throws);
-		var r1 = await act(none, throws);
+		var r0 = await act(some, throws).ConfigureAwait(false);
+		var r1 = await act(none, throws).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -43,10 +43,10 @@ public abstract class IfNullAsync_Tests
 		var ifNull = Substitute.For<Func<Task<Option<object?>>>>();
 
 		// Act
-		await act(some, ifNull);
+		await act(some, ifNull).ConfigureAwait(false);
 
 		// Assert
-		await ifNull.Received().Invoke();
+		await ifNull.Received().Invoke().ConfigureAwait(false);
 	}
 
 	public abstract Task Test02_None_With_NullValueMsg_Runs_IfNull_Func();
@@ -58,10 +58,10 @@ public abstract class IfNullAsync_Tests
 		var ifNull = Substitute.For<Func<Task<Option<object>>>>();
 
 		// Act
-		await act(none, ifNull);
+		await act(none, ifNull).ConfigureAwait(false);
 
 		// Assert
-		await ifNull.Received().Invoke();
+		await ifNull.Received().Invoke().ConfigureAwait(false);
 	}
 
 	public abstract Task Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
@@ -75,7 +75,7 @@ public abstract class IfNullAsync_Tests
 		ifNull.Invoke().Returns(msg);
 
 		// Act
-		var result = await act(option, ifNull);
+		var result = await act(option, ifNull).ConfigureAwait(false);
 
 		// Assert
 		ifNull.Received().Invoke();
@@ -94,7 +94,7 @@ public abstract class IfNullAsync_Tests
 		ifNull.Invoke().Returns(msg);
 
 		// Act
-		var result = await act(option, ifNull);
+		var result = await act(option, ifNull).ConfigureAwait(false);
 
 		// Assert
 		ifNull.Received().Invoke();

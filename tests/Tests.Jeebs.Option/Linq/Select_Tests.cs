@@ -38,21 +38,21 @@ public class Select_Tests
 		var option = Some(value);
 
 		// Act
-		var r0 = await option.AsTask.Select(s => s ^ 2);
-		var r1 = await option.Select(s => Task.FromResult(s ^ 2));
-		var r2 = await option.AsTask.Select(s => Task.FromResult(s ^ 2));
+		var r0 = await option.AsTask.Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await option.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
+		var r2 = await option.AsTask.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
 		var r3 = await (
 			from a in option.AsTask
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r4 = await (
 			from a in option
 			select Task.FromResult(a ^ 2)
-		);
+		).ConfigureAwait(false);
 		var r5 = await (
 			from a in option.AsTask
 			select Task.FromResult(a ^ 2)
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var s0 = r0.AssertSome();
@@ -94,21 +94,21 @@ public class Select_Tests
 		var option = None<int>(new InvalidIntegerMsg());
 
 		// Act
-		var r0 = await option.AsTask.Select(s => s ^ 2);
-		var r1 = await option.Select(s => Task.FromResult(s ^ 2));
-		var r2 = await option.AsTask.Select(s => Task.FromResult(s ^ 2));
+		var r0 = await option.AsTask.Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await option.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
+		var r2 = await option.AsTask.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
 		var r3 = await (
 			from a in option.AsTask
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r4 = await (
 			from a in option
 			select Task.FromResult(a ^ 2)
-		);
+		).ConfigureAwait(false);
 		var r5 = await (
 			from a in option.AsTask
 			select Task.FromResult(a ^ 2)
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();

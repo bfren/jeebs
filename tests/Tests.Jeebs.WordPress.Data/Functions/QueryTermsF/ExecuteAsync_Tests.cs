@@ -21,7 +21,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 
 		// Act
-		var result = await ExecuteAsync<Test>(db, w, _ => throw new System.Exception());
+		var result = await ExecuteAsync<Test>(db, w, _ => throw new System.Exception()).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -35,10 +35,10 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, v) = Setup();
 
 		// Act
-		var result = await ExecuteAsync<Test>(db, w, opt => opt);
+		var result = await ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
 
 		// Assert
-		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
+		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);
 	}
 
 	public record class Test : WpTermEntity;

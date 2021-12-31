@@ -23,12 +23,12 @@ public class QuerySingleAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QuerySingleAsync<int>(value, param, input);
-		_ = await query.QuerySingleAsync<int>(value, param, input, transaction);
+		_ = await query.QuerySingleAsync<int>(value, param, input).ConfigureAwait(false);
+		_ = await query.QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>());
-		await db.Received().QuerySingleAsync<int>(value, param, input, transaction);
+		await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -41,12 +41,12 @@ public class QuerySingleAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QuerySingleAsync<int>(value, param);
-		_ = await query.QuerySingleAsync<int>(value, param, transaction);
+		_ = await query.QuerySingleAsync<int>(value, param).ConfigureAwait(false);
+		_ = await query.QuerySingleAsync<int>(value, param, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -59,12 +59,12 @@ public class QuerySingleAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QuerySingleAsync<int>(parts);
-		_ = await query.QuerySingleAsync<int>(parts, transaction);
+		_ = await query.QuerySingleAsync<int>(parts).ConfigureAwait(false);
+		_ = await query.QuerySingleAsync<int>(parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		client.Received(2).GetQuery(parts);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 }
