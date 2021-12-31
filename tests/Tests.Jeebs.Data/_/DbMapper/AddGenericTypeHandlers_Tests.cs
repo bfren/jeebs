@@ -66,7 +66,10 @@ public class AddGenericTypeHandlers_Tests
 	{
 		public object Parse(Type destinationType, object value) => new();
 
-		public void SetValue(IDbDataParameter parameter, object value) { }
+		public void SetValue(IDbDataParameter parameter, object value)
+		{
+			// Do nothing
+		}
 	}
 
 	public abstract class CustomBaseType { }

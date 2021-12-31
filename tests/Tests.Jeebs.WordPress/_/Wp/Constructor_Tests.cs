@@ -51,9 +51,15 @@ public class Constructor_Tests
 	{
 		public TestWp(IOptions<DbConfig> dbConfig, IOptions<TestWpConfig> wpConfig, ILog logForDb) : base(dbConfig, wpConfig, logForDb) { }
 
-		public override void RegisterCustomPostTypes() { }
+		public override void RegisterCustomPostTypes()
+		{
+			// Unused
+		}
 
-		public override void RegisterCustomTaxonomies() { }
+		public override void RegisterCustomTaxonomies()
+		{
+			// Unused
+		}
 	}
 
 	public sealed record class TestWpConfig : WpConfig;

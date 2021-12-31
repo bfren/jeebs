@@ -38,10 +38,16 @@ public sealed class WpUsa : Wp<
 	/// <summary>
 	/// Register custom post types
 	/// </summary>
-	public override void RegisterCustomPostTypes() { }
+	public override void RegisterCustomPostTypes()
+	{
+		// No custom post types
+	}
 
 	/// <summary>
 	/// Register custom taxonomies
 	/// </summary>
-	public override void RegisterCustomTaxonomies() { }
+	public override void RegisterCustomTaxonomies()
+	{
+		// No custom taxonomies
+	}
 }

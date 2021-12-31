@@ -51,11 +51,20 @@ public class AddSort_Tests : AddSort_Tests<Query.TermsPartsBuilder, WpTermId>
 	}
 
 	[Fact]
-	public override void Test00_SortRandom_True_Returns_New_Parts_With_SortRandom_True() { }
+	public override void Test00_SortRandom_True_Returns_New_Parts_With_SortRandom_True()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test01_SortRandom_False_With_Sort_Returns_New_Parts_With_Sort() { }
+	public override void Test01_SortRandom_False_With_Sort_Returns_New_Parts_With_Sort()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test02_SortRandom_False_And_Sort_Empty_Returns_Original_Parts() { }
+	public override void Test02_SortRandom_False_And_Sort_Empty_Returns_Original_Parts()
+	{
+		// Unused
+	}
 }
