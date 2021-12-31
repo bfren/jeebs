@@ -30,10 +30,10 @@ public sealed class VerifyPassword_Tests
 	{
 		// Arrange
 		var pwd = F.Rnd.StringF.Get(10);
-		var passwordHash = this.passwordHash;
+		var hash = passwordHash;
 
 		// Act
-		var result = passwordHash.VerifyPassword(pwd);
+		var result = hash.VerifyPassword(pwd);
 
 		// Assert
 		Assert.False(result);
