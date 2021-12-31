@@ -18,7 +18,7 @@ public static partial class OptionF
 					SomeAsync(value, handler),
 
 				false =>
-					None<T, Msg.PredicateWasFalseMsg>().AsTask
+					None<T, M.PredicateWasFalseMsg>().AsTask
 			},
 			handler
 		);
@@ -35,7 +35,7 @@ public static partial class OptionF
 						Some(v),
 
 					false =>
-						None<T, Msg.PredicateWasFalseMsg>()
+						None<T, M.PredicateWasFalseMsg>()
 				};
 			},
 			handler

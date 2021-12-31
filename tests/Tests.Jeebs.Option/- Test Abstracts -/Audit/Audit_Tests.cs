@@ -84,7 +84,7 @@ public abstract class Audit_Tests
 	{
 		// Arrange
 		var some = True;
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = act(some, throwException);
@@ -99,7 +99,7 @@ public abstract class Audit_Tests
 	{
 		// Arrange
 		var none = Create.None<bool>();
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = act(none, throwException);
@@ -131,12 +131,12 @@ public abstract class Audit_Tests
 
 	public abstract void Test07_None_Runs_None_And_Returns_Original_Option();
 
-	protected static void Test07(Func<Option<int>, Action<IMsg>, Option<int>> act)
+	protected static void Test07(Func<Option<int>, Action<Msg>, Option<int>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
 		var option = None<int>(msg);
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 
 		// Act
 		var result = act(option, none);
@@ -153,7 +153,7 @@ public abstract class Audit_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		void throwException(int _) => throw exception;
+		var throwException = void (int _) => throw new Exception();
 
 		// Act
 		var result = act(option, throwException);
@@ -164,12 +164,12 @@ public abstract class Audit_Tests
 
 	public abstract void Test09_None_Catches_Exception_And_Returns_Original_Option();
 
-	protected static void Test09(Func<Option<int>, Action<IMsg>, Option<int>> act)
+	protected static void Test09(Func<Option<int>, Action<Msg>, Option<int>> act)
 	{
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		void throwException(IMsg _) => throw exception;
+		var throwException = void (Msg _) => throw exception;
 
 		// Act
 		var result = act(option, throwException);
@@ -182,5 +182,5 @@ public abstract class Audit_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

@@ -59,7 +59,7 @@ public class ApplyContentFilters_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<Msg.ApplyContentFiltersExceptionMsg<Model>>(none);
+		Assert.IsType<M.ApplyContentFiltersExceptionMsg<Model>>(none);
 	}
 
 	[Fact]

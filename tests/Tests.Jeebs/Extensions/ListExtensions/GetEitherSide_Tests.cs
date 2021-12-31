@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Xunit;
-using static Jeebs.ListExtensions.Msg;
+using static Jeebs.ListExtensions.M;
 
 namespace Jeebs.ListExtensions_Tests;
 

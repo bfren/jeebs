@@ -19,11 +19,11 @@ public static class OptionExtensions_SwitchIfAsync
 	) =>
 		F.OptionF.SwitchIfAsync(@this, check, ifTrue, ifFalse);
 
-	/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, IMsg})"/>
+	/// <inheritdoc cref="F.OptionF.SwitchIf{T}(Option{T}, Func{T, bool}, Func{T, Msg})"/>
 	public static Task<Option<T>> SwitchIfAsync<T>(
 		this Task<Option<T>> @this,
 		Func<T, bool> check,
-		Func<T, IMsg> ifFalse
+		Func<T, Msg> ifFalse
 	) =>
 		F.OptionF.SwitchIfAsync(@this, check, ifFalse);
 }

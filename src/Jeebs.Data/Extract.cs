@@ -6,7 +6,7 @@ using System.Linq;
 using Jeebs.Data.Mapping;
 using static F.DataF.QueryF;
 using static F.OptionF;
-using Msg = Jeebs.Data.ExtractMsg;
+using M = Jeebs.Data.ExtractMsg;
 
 namespace Jeebs.Data;
 
@@ -45,15 +45,15 @@ public static class Extract<TModel>
 						   from column in GetColumnsFromTable<TModel>(table)
 						   select column;
 				},
-				e => new Msg.ErrorExtractingColumnsFromTableExceptionMsg(e)
+				e => new M.ErrorExtractingColumnsFromTableExceptionMsg(e)
 			)
 			.SwitchIf(
 				x => x.Any(),
-				_ => new Msg.NoColumnsExtractedFromTableMsg()
+				_ => new M.NoColumnsExtractedFromTableMsg()
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => new Msg.ErrorExtractingDistinctColumnsExceptionMsg(e)
+				e => new M.ErrorExtractingDistinctColumnsExceptionMsg(e)
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x),
@@ -66,13 +66,13 @@ public static class Extract<TModel>
 public static class ExtractMsg
 {
 	/// <summary>An error occurred extracting columns from a table</summary>
-	/// <param name="Exception">Exception object</param>
-	public sealed record class ErrorExtractingColumnsFromTableExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+	/// <param name="Value">Exception object</param>
+	public sealed record class ErrorExtractingColumnsFromTableExceptionMsg(Exception Value) : ExceptionMsg;
 
 	/// <summary>An error occurred getting distinct columns</summary>
-	/// <param name="Exception">Exception object</param>
-	public sealed record class ErrorExtractingDistinctColumnsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+	/// <param name="Value">Exception object</param>
+	public sealed record class ErrorExtractingDistinctColumnsExceptionMsg(Exception Value) : ExceptionMsg;
 
 	/// <summary>No matching columns were extracted from the table</summary>
-	public sealed record class NoColumnsExtractedFromTableMsg : IMsg { }
+	public sealed record class NoColumnsExtractedFromTableMsg : Msg;
 }

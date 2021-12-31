@@ -34,7 +34,7 @@ public class Parse_Tests
 		var handler = new GuidTypeHandler();
 
 		// Act
-		void action() => handler.Parse(input);
+		var action = void () => handler.Parse(input);
 
 		// Assert
 		Assert.Throws<FormatException>(action);

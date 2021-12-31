@@ -19,7 +19,7 @@ public class GetInt32_Tests
 		const int max = 2;
 
 		// Act
-		static void action() => GetInt64(min, max);
+		var action = void () => GetInt64(min, max);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
@@ -33,7 +33,7 @@ public class GetInt32_Tests
 		const int min = int.MinValue;
 
 		// Act
-		static void action() => GetInt32(min: min);
+		var action = void () => GetInt32(min: min);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentException>(action);

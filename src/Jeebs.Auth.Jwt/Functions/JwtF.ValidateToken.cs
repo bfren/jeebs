@@ -42,28 +42,28 @@ public static partial class JwtF
 		}
 		catch (SecurityTokenNotYetValidException)
 		{
-			return None<ClaimsPrincipal, Msg.TokenIsNotValidYetMsg>();
+			return None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
 		}
 		catch (Exception e) when (e.Message.Contains("IDX10223"))
 		{
-			return None<ClaimsPrincipal, Msg.TokenHasExpiredMsg>();
+			return None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
 		}
 		catch (Exception e)
 		{
-			return None<ClaimsPrincipal>(new Msg.ValidatingTokenExceptionMsg(e));
+			return None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
 		}
 	}
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>The token has expired</summary>
-		public sealed record class TokenHasExpiredMsg : IMsg { }
+		public sealed record class TokenHasExpiredMsg : Msg;
 
 		/// <summary>The token is not valid yet</summary>
-		public sealed record class TokenIsNotValidYetMsg : IMsg { }
+		public sealed record class TokenIsNotValidYetMsg : Msg;
 
 		/// <summary>Exception while validating token</summary>
-		public sealed record class ValidatingTokenExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		public sealed record class ValidatingTokenExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

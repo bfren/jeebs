@@ -6,7 +6,7 @@ using Jeebs;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -19,7 +19,7 @@ public abstract class SomeIf_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		bool throwFunc() => throw exception;
+		var throwFunc = bool () => throw exception;
 
 		// Act
 		var result = act(throwFunc, F.Rnd.Int, handler);
@@ -36,7 +36,7 @@ public abstract class SomeIf_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		bool throwFunc() => throw exception;
+		var throwFunc = bool () => throw exception;
 
 		// Act
 		var result = act(throwFunc, () => F.Rnd.Int, handler);
@@ -53,7 +53,7 @@ public abstract class SomeIf_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		int throwFunc() => throw exception;
+		var throwFunc = int () => throw exception;
 
 		// Act
 		var result = act(() => true, throwFunc, handler);

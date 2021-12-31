@@ -18,7 +18,7 @@ public static partial class OptionF
 	/// <param name="any">[Optional] Action will run for any <paramref name="option"/></param>
 	/// <param name="some">[Optional] Action will run if <paramref name="option"/> is <see cref="Jeebs.Internals.Some{T}"/></param>
 	/// <param name="none">[Optional] Action will run if <paramref name="option"/> is <see cref="Jeebs.Internals.None{T}"/></param>
-	public static Option<T> Audit<T>(Option<T> option, Action<Option<T>>? any, Action<T>? some, Action<IMsg>? none)
+	public static Option<T> Audit<T>(Option<T> option, Action<Option<T>>? any, Action<T>? some, Action<Msg>? none)
 	{
 		// Do nothing if the user gave us nothing to do!
 		if (any == null && some == null && none == null)
@@ -27,7 +27,7 @@ public static partial class OptionF
 		}
 
 		// Work out which audit function to use
-		Action audit = Switch<T, Action>(
+		var audit = Switch<T, Action>(
 			option,
 			some: v => () => some?.Invoke(v),
 			none: r => () => none?.Invoke(r)

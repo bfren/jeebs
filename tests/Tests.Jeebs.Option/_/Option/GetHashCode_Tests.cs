@@ -17,7 +17,7 @@ public class GetHashCode_Tests
 		var option = new FakeOption();
 
 		// Act
-		void action() => option.GetHashCode();
+		var action = void () => option.GetHashCode();
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);
@@ -94,7 +94,7 @@ public class GetHashCode_Tests
 	public void None_With_Same_Type_And_Same_Reason_Generates_Same_HashCode()
 	{
 		// Arrange
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.For<Msg>();
 		var n0 = None<int>(msg);
 		var n1 = None<int>(msg);
 
@@ -110,7 +110,7 @@ public class GetHashCode_Tests
 	public void None_With_Different_Type_And_Same_Reason_Generates_Different_HashCode()
 	{
 		// Arrange
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.For<Msg>();
 		var n0 = None<int>(msg);
 		var n1 = None<string>(msg);
 
@@ -126,8 +126,8 @@ public class GetHashCode_Tests
 	public void None_With_Same_Type_And_Different_Reason_Generates_Different_HashCode()
 	{
 		// Arrange
-		var m0 = Substitute.For<IMsg>();
-		var m1 = Substitute.For<IMsg>();
+		var m0 = new TestMsg0();
+		var m1 = new TestMsg1();
 		var n0 = None<int>(m0);
 		var n1 = None<int>(m1);
 
@@ -140,4 +140,8 @@ public class GetHashCode_Tests
 	}
 
 	public record class FakeOption : Option<int> { }
+
+	public record class TestMsg0 : Msg;
+
+	public record class TestMsg1 : Msg;
 }

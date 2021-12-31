@@ -6,7 +6,7 @@ using Jeebs;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -17,7 +17,7 @@ public abstract class Some_Tests
 	protected static void Test00(Func<Func<int>, Handler, Option<int>> act)
 	{
 		// Arrange
-		static int throwFunc() => throw new Exception();
+		var throwFunc = int () => throw new Exception();
 
 		// Act
 		var result = act(throwFunc, DefaultHandler);
@@ -32,7 +32,7 @@ public abstract class Some_Tests
 	protected static void Test01(Func<Func<int?>, bool, Handler, Option<int?>> act)
 	{
 		// Arrange
-		static int? throwFunc() => throw new Exception();
+		var throwFunc = int? () => throw new Exception();
 
 		// Act
 		var r0 = act(throwFunc, true, DefaultHandler);
@@ -52,7 +52,7 @@ public abstract class Some_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		int throwFunc() => throw exception;
+		var throwFunc = int () => throw exception;
 
 		// Act
 		var result = act(throwFunc, handler);
@@ -69,7 +69,7 @@ public abstract class Some_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		int? throwFunc() => throw exception;
+		var throwFunc = int? () => throw exception;
 
 		// Act
 		var r0 = act(throwFunc, true, handler);
@@ -101,7 +101,7 @@ public abstract class Some_Tests
 	protected static void Test05(Func<Func<int?>, Handler, Option<int?>> act)
 	{
 		// Arrange
-		static int? value() => null;
+		var value = int? () => null;
 
 		// Act
 		var result = act(value, DefaultHandler);
@@ -131,7 +131,7 @@ public abstract class Some_Tests
 	protected static void Test07(Func<Func<int?>, bool, Handler, Option<int?>> act)
 	{
 		// Arrange
-		static int? value() => null;
+		var value = int? () => null;
 
 		// Act
 		var result = act(value, false, DefaultHandler);
@@ -161,7 +161,7 @@ public abstract class Some_Tests
 	protected static void Test09(Func<Func<int?>, bool, Handler, Option<int?>> act)
 	{
 		// Arrange
-		static int? value() => null;
+		var value = int? () => null;
 
 		// Act
 		var result = act(value, true, DefaultHandler);
@@ -200,13 +200,13 @@ public abstract class Some_Tests
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;
-		object f0() => v0;
+		var f0 = object () => v0;
 
 		var v1 = F.Rnd.Int;
-		object f1() => v1;
+		var f1 = object () => v1;
 
 		var v2 = F.Rnd.Guid;
-		object f2() => v2;
+		var f2 = object () => v2;
 
 		// Act
 		var r0 = act(f0, DefaultHandler);
@@ -251,13 +251,13 @@ public abstract class Some_Tests
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;
-		object? f0() => v0;
+		var f0 = object? () => v0;
 
 		var v1 = F.Rnd.Int;
-		object? f1() => v1;
+		var f1 = object? () => v1;
 
 		var v2 = F.Rnd.Guid;
-		object? f2() => v2;
+		var f2 = object? () => v2;
 
 		// Act
 		var r0 = act(f0, false, DefaultHandler);

@@ -32,13 +32,13 @@ public abstract class UnwrapAsync_Tests
 
 	public abstract Task Test01_None_With_Reason_Runs_IfNone_Func_Passes_Reason_Returns_Value();
 
-	protected static async Task Test01(Func<Task<Option<int>>, Func<IMsg, int>, Task<int>> act)
+	protected static async Task Test01(Func<Task<Option<int>>, Func<Msg, int>, Task<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		var option = None<int>(msg);
-		var ifNone = Substitute.For<Func<IMsg, int>>();
+		var ifNone = Substitute.For<Func<Msg, int>>();
 		ifNone.Invoke(msg).Returns(value);
 
 		// Act

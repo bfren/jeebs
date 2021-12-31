@@ -39,18 +39,18 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log an <see cref="IMsg"/>
+	/// Log an <see cref="Msg"/>
 	/// </summary>
 	/// <typeparam name="T">The message type</typeparam>
 	/// <param name="message">Message to log</param>
 	void Message<T>(T? message)
-		where T : IMsg;
+		where T : Msg;
 
 	/// <summary>
-	/// Log a list of <see cref="IMsg"/>
+	/// Log a list of <see cref="Msg"/>
 	/// </summary>
 	/// <param name="messages">Messages to log</param>
-	void Messages(IEnumerable<IMsg> messages);
+	void Messages(IEnumerable<Msg> messages);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>

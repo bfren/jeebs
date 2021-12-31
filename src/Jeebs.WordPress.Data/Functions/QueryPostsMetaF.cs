@@ -9,5 +9,5 @@ namespace F.WordPressF.DataF;
 public static partial class QueryPostsMetaF
 {
 	/// <summary>Messages</summary>
-	public static partial class Msg { }
+	public static partial class M { }
 }

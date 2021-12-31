@@ -21,4 +21,4 @@ public class Constructor_Tests
 	}
 }
 
-public record class TestMsg : IMsg { }
+public record class TestMsg : Msg;

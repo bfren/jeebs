@@ -62,7 +62,7 @@ public sealed record class TableMap : ITableMap
 					Some(x),
 
 				false =>
-					None<IEnumerable<IMappedColumn>, Msg.NoWriteableColumnsFoundMsg>()
+					None<IEnumerable<IMappedColumn>, M.NoWriteableColumnsFoundMsg>()
 			}
 		)
 		.Map(
@@ -75,9 +75,9 @@ public sealed record class TableMap : ITableMap
 		Name.GetFullName(s => s);
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>No writeable columns found (i.e. they are all marked as Id / Ignore / Computed)</summary>
-		public sealed record class NoWriteableColumnsFoundMsg : IMsg { }
+		public sealed record class NoWriteableColumnsFoundMsg : Msg;
 	}
 }

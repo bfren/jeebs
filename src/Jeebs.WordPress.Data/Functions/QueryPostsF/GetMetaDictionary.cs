@@ -36,13 +36,13 @@ public static partial class QueryPostsF
 		// If MetaDictionary is not defined return none
 		if (!metaDictionary.Any())
 		{
-			return None<Meta<TModel>, Msg.MetaDictionaryPropertyNotFoundMsg<TModel>>();
+			return None<Meta<TModel>, M.MetaDictionaryPropertyNotFoundMsg<TModel>>();
 		}
 
 		// Throw an error if there are multiple MetaDictionaries
 		if (metaDictionary.Count() > 1)
 		{
-			return None<Meta<TModel>, Msg.MoreThanOneMetaDictionaryMsg<TModel>>();
+			return None<Meta<TModel>, M.MoreThanOneMetaDictionaryMsg<TModel>>();
 		}
 
 		return new Meta<TModel>(metaDictionary.Single());
@@ -61,14 +61,14 @@ public static partial class QueryPostsF
 		public Meta(PropertyInfo info) : base(info) { }
 	}
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>MetaDictionary property not found on <typeparamref name="T"/></summary>
 		/// <typeparam name="T">Post type</typeparam>
-		public sealed record class MetaDictionaryPropertyNotFoundMsg<T> : IMsg { }
+		public sealed record class MetaDictionaryPropertyNotFoundMsg<T> : Msg;
 
 		/// <summary>Multiple MetaDictionary properties found on <typeparamref name="T"/></summary>
 		/// <typeparam name="T">Post type</typeparam>
-		public sealed record class MoreThanOneMetaDictionaryMsg<T> : IMsg { }
+		public sealed record class MoreThanOneMetaDictionaryMsg<T> : Msg;
 	}
 }

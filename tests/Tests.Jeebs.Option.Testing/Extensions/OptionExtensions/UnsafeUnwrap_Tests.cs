@@ -29,7 +29,7 @@ public class UnsafeUnwrap_Tests
 		var option = Create.None<int>();
 
 		// Act
-		void action() => option.UnsafeUnwrap();
+		var action = void () => option.UnsafeUnwrap();
 
 		// Assert
 		Assert.Throws<UnsafeUnwrapException>(action);

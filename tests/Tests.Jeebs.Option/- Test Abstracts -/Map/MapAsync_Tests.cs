@@ -8,7 +8,7 @@ using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -28,7 +28,7 @@ public abstract class MapAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Exception);
+		Assert.IsType<UnknownOptionException>(msg.Value);
 	}
 
 	public abstract Task Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
@@ -38,7 +38,7 @@ public abstract class MapAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Str);
 		var exception = new Exception();
-		Task<int> throwFunc(string _) => throw exception;
+		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
 		var result = await act(option, throwFunc, DefaultHandler);
@@ -56,7 +56,7 @@ public abstract class MapAsync_Tests
 		var option = Some(F.Rnd.Str);
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		Task<int> throwFunc(string _) => throw exception;
+		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
 		var result = await act(option, throwFunc, handler);
@@ -116,5 +116,5 @@ public abstract class MapAsync_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

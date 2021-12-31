@@ -13,7 +13,7 @@ public class Message_Tests
 	public void Msg_Runs_Information()
 	{
 		// Arrange
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		var log = Substitute.For<Log>();
 
 		// Act
@@ -24,10 +24,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void LoggableMsg_Trace_Runs_Trace()
+	public void Msg_Trace_Runs_Trace()
 	{
 		// Arrange
-		var msg = Substitute.For<ILogMsg>();
+		var msg = Substitute.For<Msg>();
 		msg.Level.Returns(LogLevel.Verbose);
 		var log = Substitute.For<Log>();
 
@@ -39,10 +39,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void LoggableMsg_Debug_Runs_Debug()
+	public void Msg_Debug_Runs_Debug()
 	{
 		// Arrange
-		var msg = Substitute.For<ILogMsg>();
+		var msg = Substitute.For<Msg>();
 		msg.Level.Returns(LogLevel.Debug);
 		var log = Substitute.For<Log>();
 
@@ -54,10 +54,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void LoggableMsg_Information_Runs_Information()
+	public void Msg_Information_Runs_Information()
 	{
 		// Arrange
-		var msg = Substitute.For<ILogMsg>();
+		var msg = Substitute.For<Msg>();
 		msg.Level.Returns(LogLevel.Information);
 		var log = Substitute.For<Log>();
 
@@ -69,10 +69,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void LoggableMsg_Warning_Runs_Warning()
+	public void Msg_Warning_Runs_Warning()
 	{
 		// Arrange
-		var msg = Substitute.For<ILogMsg>();
+		var msg = Substitute.For<Msg>();
 		msg.Level.Returns(LogLevel.Warning);
 		var log = Substitute.For<Log>();
 
@@ -84,10 +84,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void LoggableMsg_Error_Runs_Error()
+	public void Msg_Error_Runs_Error()
 	{
 		// Arrange
-		var msg = Substitute.For<ILogMsg>();
+		var msg = Substitute.For<Msg>();
 		msg.Level.Returns(LogLevel.Error);
 		var log = Substitute.For<Log>();
 
@@ -99,10 +99,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void LoggableMsg_Critical_Runs_Critical()
+	public void Msg_Critical_Runs_Critical()
 	{
 		// Arrange
-		var msg = Substitute.For<ILogMsg>();
+		var msg = Substitute.For<Msg>();
 		msg.Level.Returns(LogLevel.Fatal);
 		var log = Substitute.For<Log>();
 

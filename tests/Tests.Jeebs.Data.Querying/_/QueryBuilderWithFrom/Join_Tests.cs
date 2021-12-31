@@ -20,7 +20,7 @@ public class Join_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		void action() => builder.Join<TestTable0, TestTable0>(QueryJoin.Inner, t => t.Foo, t => t.Foo);
+		var action = void () => builder.Join<TestTable0, TestTable0>(QueryJoin.Inner, t => t.Foo, t => t.Foo);
 
 		// Assert
 		Assert.Throws<JoinFromTableNotAddedException<TestTable0>>(action);

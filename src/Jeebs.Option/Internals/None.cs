@@ -12,12 +12,12 @@ public sealed record class None<T> : Option<T>
 	/// <summary>
 	/// A reason for the 'None' value must always be set
 	/// </summary>
-	public IMsg Reason { get; private init; }
+	public Msg Reason { get; private init; }
 
 	/// <summary>
 	/// Only allow internal creation by None() functions
 	/// </summary>
 	/// <param name="reason">Reason message for this <see cref="None{T}"/></param>
-	internal None(IMsg reason) =>
+	internal None(Msg reason) =>
 		Reason = reason;
 }

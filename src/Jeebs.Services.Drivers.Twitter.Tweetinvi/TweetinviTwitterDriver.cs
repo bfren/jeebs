@@ -52,7 +52,7 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 	private Task<Option<IUser>> GetUser(string screenName) =>
 		SomeAsync(
 			() => client.Users.GetUserAsync(screenName),
-			e => new Msg.UserNotFoundExceptionMsg(screenName, e)
+			e => new M.UserNotFoundExceptionMsg(screenName, e)
 		);
 
 	/// <inheritdoc/>
@@ -64,11 +64,11 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 			)
 			.MapAsync(
 				getUrl,
-				e => new Msg.GettingProfileImageUrlExceptionMsg(screenName, e)
+				e => new M.GettingProfileImageUrlExceptionMsg(screenName, e)
 			)
 			.MapAsync(
 				getStream,
-				e => new Msg.GettingProfileImageStreamExceptionMsg(screenName, e)
+				e => new M.GettingProfileImageStreamExceptionMsg(screenName, e)
 			);
 
 		// Get profile image URL
@@ -96,11 +96,11 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 			)
 			.MapAsync(
 				getTimeline,
-				e => new Msg.GettingTimelineExceptionMsg(screenName, e)
+				e => new M.GettingTimelineExceptionMsg(screenName, e)
 			)
 			.MapAsync(
 				convertTweets,
-				e => new Msg.ConvertingTweetsExceptionMsg(e)
+				e => new M.ConvertingTweetsExceptionMsg(e)
 			);
 
 		// Get timeline
@@ -139,35 +139,35 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Exception converting tweets</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ConvertingTweetsExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ConvertingTweetsExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Exception getting profile image stream</summary>
 		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GettingProfileImageStreamExceptionMsg(string ScreenName, Exception Value) : ExceptionMsg;
 
 		/// <summary>Exception getting profile image URL</summary>
 		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GettingProfileImageUrlExceptionMsg(string ScreenName, Exception Value) : ExceptionMsg;
 
 		/// <summary>Exception getting user timeline</summary>
 		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GettingTimelineExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GettingTimelineExceptionMsg(string ScreenName, Exception Value) : ExceptionMsg;
 
 		/// <summary>Exception getting user</summary>
 		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class GettingUserExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class GettingUserExceptionMsg(string ScreenName, Exception Value) : ExceptionMsg;
 
 		/// <summary>User not found</summary>
 		/// <param name="ScreenName">Screen Name</param>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class UserNotFoundExceptionMsg(string ScreenName, Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class UserNotFoundExceptionMsg(string ScreenName, Exception Value) : ExceptionMsg;
 	}
 }

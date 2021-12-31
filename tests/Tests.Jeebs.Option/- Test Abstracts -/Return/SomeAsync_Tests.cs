@@ -7,7 +7,7 @@ using Jeebs;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -18,7 +18,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test00(Func<Func<Task<int>>, Handler, Task<Option<int>>> act)
 	{
 		// Arrange
-		static Task<int> throwFunc() => throw new Exception();
+		var throwFunc = Task<int> () => throw new Exception();
 
 		// Act
 		var result = await act(throwFunc, DefaultHandler);
@@ -33,7 +33,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test01(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
 	{
 		// Arrange
-		static Task<int?> throwFunc() => throw new Exception();
+		var throwFunc = Task<int?> () => throw new Exception();
 
 		// Act
 		var r0 = await act(throwFunc, true, DefaultHandler);
@@ -53,7 +53,7 @@ public abstract class SomeAsync_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		Task<int> throwFunc() => throw exception;
+		var throwFunc = Task<int> () => throw exception;
 
 		// Act
 		var result = await act(throwFunc, handler);
@@ -70,7 +70,7 @@ public abstract class SomeAsync_Tests
 		// Arrange
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		Task<int?> throwFunc() => throw exception;
+		var throwFunc = Task<int?> () => throw exception;
 
 		// Act
 		var r0 = await act(throwFunc, true, handler);
@@ -87,7 +87,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test04(Func<Func<Task<int?>>, Handler, Task<Option<int?>>> act)
 	{
 		// Arrange
-		static Task<int?> value() => Task.FromResult<int?>(null);
+		var value = Task<int?> () => Task.FromResult<int?>(null);
 
 		// Act
 		var result = await act(value, DefaultHandler);
@@ -102,7 +102,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test05(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
 	{
 		// Arrange
-		static Task<int?> value() => Task.FromResult<int?>(null);
+		var value = Task<int?> () => Task.FromResult<int?>(null);
 
 		// Act
 		var result = await act(value, false, DefaultHandler);
@@ -117,7 +117,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test06(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
 	{
 		// Arrange
-		static Task<int?> value() => Task.FromResult<int?>(null);
+		var value = Task<int?> () => Task.FromResult<int?>(null);
 
 		// Act
 		var result = await act(value, true, DefaultHandler);
@@ -133,13 +133,13 @@ public abstract class SomeAsync_Tests
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;
-		Task<object> f0() => Task.FromResult<object>(v0);
+		var f0 = Task<object> () => Task.FromResult<object>(v0);
 
 		var v1 = F.Rnd.Int;
-		Task<object> f1() => Task.FromResult<object>(v1);
+		var f1 = Task<object> () => Task.FromResult<object>(v1);
 
 		var v2 = F.Rnd.Guid;
-		Task<object> f2() => Task.FromResult<object>(v2);
+		var f2 = Task<object> () => Task.FromResult<object>(v2);
 
 		// Act
 		var r0 = await act(f0, DefaultHandler);
@@ -161,13 +161,13 @@ public abstract class SomeAsync_Tests
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;
-		Task<object?> f0() => Task.FromResult<object?>(v0);
+		var f0 = Task<object?> () => Task.FromResult<object?>(v0);
 
 		var v1 = F.Rnd.Int;
-		Task<object?> f1() => Task.FromResult<object?>(v1);
+		var f1 = Task<object?> () => Task.FromResult<object?>(v1);
 
 		var v2 = F.Rnd.Guid;
-		Task<object?> f2() => Task.FromResult<object?>(v2);
+		var f2 = Task<object?> () => Task.FromResult<object?>(v2);
 
 		// Act
 		var r0 = await act(f0, false, DefaultHandler);

@@ -24,14 +24,14 @@ public static partial class OptionF
 						Some(x),
 
 					false =>
-						None<T, Msg.FilterPredicateWasFalseMsg>()
+						None<T, M.FilterPredicateWasFalseMsg>()
 				}
 		);
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Predicate was false</summary>
-		public sealed record class FilterPredicateWasFalseMsg : IMsg { }
+		public sealed record class FilterPredicateWasFalseMsg : Msg;
 	}
 }

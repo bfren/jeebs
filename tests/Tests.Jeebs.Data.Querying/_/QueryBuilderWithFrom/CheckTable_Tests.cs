@@ -19,7 +19,7 @@ public class CheckTable_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		void action() => builder.CheckTable<TestTable, TestException<TestTable>>();
+		var action = void () => builder.CheckTable<TestTable, TestException<TestTable>>();
 
 		// Assert
 		Assert.Throws<TestException<TestTable>>(action);
@@ -33,11 +33,11 @@ public class CheckTable_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		bool action()
+		var action = bool () =>
 		{
 			builder.CheckTable<TestTable, TestException<TestTable>>();
 			return true;
-		}
+		};
 
 		// Assert
 		Assert.True(action());

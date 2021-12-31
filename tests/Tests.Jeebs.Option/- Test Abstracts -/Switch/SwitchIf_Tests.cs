@@ -8,7 +8,7 @@ using Jeebs.Internals;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -23,7 +23,7 @@ public abstract class SwitchIf_Tests
 		var check = Substitute.For<Func<int, bool>>();
 
 		// Act
-		void action() => act(option, check);
+		var action = void () => act(option, check);
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);
@@ -51,7 +51,7 @@ public abstract class SwitchIf_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		static bool check(int _) => throw new Exception();
+		var check = bool (int _) => throw new Exception();
 
 		// Act
 		var result = act(option, check);
@@ -101,7 +101,7 @@ public abstract class SwitchIf_Tests
 		var option = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
 		check.Invoke(Arg.Any<int>()).Returns(true);
-		static None<int> ifTrue(int _) => throw new Exception();
+		var ifTrue = None<int> (int _) => throw new Exception();
 
 		// Act
 		var result = act(option, check, ifTrue);
@@ -119,7 +119,7 @@ public abstract class SwitchIf_Tests
 		var option = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
 		check.Invoke(Arg.Any<int>()).Returns(false);
-		static None<int> ifFalse(int _) => throw new Exception();
+		var ifFalse = None<int> (int _) => throw new Exception();
 
 		// Act
 		var result = act(option, check, ifFalse);
@@ -174,5 +174,5 @@ public abstract class SwitchIf_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public sealed record class TestMsg : IMsg { }
+	public sealed record class TestMsg : Msg;
 }

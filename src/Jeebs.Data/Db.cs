@@ -143,7 +143,7 @@ public abstract class Db : IDb
 		)
 		.MapAsync(
 			x => transaction.Connection.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
-			e => new Msg.QueryExceptionMsg(e)
+			e => new M.QueryExceptionMsg(e)
 		);
 
 	/// <inheritdoc/>
@@ -163,10 +163,10 @@ public abstract class Db : IDb
 		)
 		.MapAsync(
 			x => transaction.Connection.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
-			e => new Msg.QuerySingleExceptionMsg(e)
+			e => new M.QuerySingleExceptionMsg(e)
 		)
 		.IfNullAsync(
-			() => new Msg.QuerySingleItemNotFoundMsg()
+			() => new M.QuerySingleItemNotFoundMsg((query, parameters))
 		);
 
 	/// <inheritdoc/>
@@ -186,7 +186,7 @@ public abstract class Db : IDb
 		)
 		.MapAsync(
 			x => transaction.Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
-			e => new Msg.ExecuteExceptionMsg(e)
+			e => new M.ExecuteExceptionMsg(e)
 		)
 		.MapAsync(
 			x => x > 0,
@@ -210,7 +210,7 @@ public abstract class Db : IDb
 		)
 		.MapAsync(
 			x => transaction.Connection.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
-			e => new Msg.ExecuteScalarExceptionMsg(e)
+			e => new M.ExecuteScalarExceptionMsg(e)
 		);
 
 	#endregion
@@ -223,25 +223,32 @@ public abstract class Db : IDb
 	#endregion
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Error running QueryAsync</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class QueryExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class QueryExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error running QuerySingleAsync</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class QuerySingleExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class QuerySingleExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>The query returned no items, or more than one</summary>
-		public sealed record class QuerySingleItemNotFoundMsg : NotFoundMsg { }
+		/// <param name="Value">Query parameters</param>
+		public sealed record class QuerySingleItemNotFoundMsg((string sql, object? parameters) Value)
+			: NotFoundMsg<(string sql, object? parameters)>
+		{
+			/// <inheritdoc/>
+			public override string Name =>
+				"Query";
+		}
 
 		/// <summary>Error running ExecuteAsync</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ExecuteExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ExecuteExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error running ExecuteScalarAsync</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ExecuteScalarExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ExecuteScalarExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

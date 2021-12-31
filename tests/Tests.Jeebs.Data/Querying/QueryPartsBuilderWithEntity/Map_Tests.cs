@@ -30,9 +30,9 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 		v.Mapper.GetTableMapFor<TestEntity>().Returns(Create.None<ITableMap>());
 
 		// Act
-		ITableMap action() => builder.Map.Value;
+		var action = ITableMap () => builder.Map.Value;
 
 		// Assert
-		Assert.Throws<MsgException<IMsg>>(action);
+		Assert.Throws<MsgException<Msg>>(action);
 	}
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 using NSubstitute;
 using Xunit;
-using static Jeebs.Data.Querying.QueryFluent.Msg;
+using static Jeebs.Data.Querying.QueryFluent.M;
 
 namespace Jeebs.Data.Querying.QueryFluent_Tests;
 

@@ -27,7 +27,7 @@ public class None_Tests
 	public void Returns_None_With_Reason_Object()
 	{
 		// Arrange
-		var reason = Substitute.For<IMsg>();
+		var reason = Substitute.For<Msg>();
 
 		// Act
 		var result = None<int>(reason);
@@ -62,13 +62,10 @@ public class None_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<TestExceptionMsg>(none);
-		Assert.Same(exception, msg.Exception);
+		Assert.Same(exception, msg.Value);
 	}
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 
-	public record class TestExceptionMsg() : IExceptionMsg
-	{
-		public Exception Exception { get; init; } = new();
-	}
+	public record class TestExceptionMsg(Exception Value) : ExceptionMsg;
 }

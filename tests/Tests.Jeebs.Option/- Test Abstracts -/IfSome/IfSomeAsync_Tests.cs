@@ -18,14 +18,14 @@ public abstract class IfSomeAsync_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		static Task ifSome(int _) => throw new Exception();
+		var ifSome = Task (int _) => throw new Exception();
 
 		// Act
 		var result = await act(option, ifSome);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<Msg.UnhandledExceptionMsg>(none);
+		Assert.IsType<M.UnhandledExceptionMsg>(none);
 	}
 
 	public abstract Task Test01_None_Returns_Original_Option();

@@ -41,7 +41,7 @@ public abstract class TextCustomField : CustomField<string>
 		// Return error if the field is required
 		if (isRequired)
 		{
-			return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+			return None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 		}
 
 		// Return OK but not set
@@ -56,7 +56,7 @@ public abstract class TextCustomField : CustomField<string>
 		GetValueAsString();
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Meta key not found in MetaDictionary</summary>
 		/// <param name="Type">Custom Field type</param>

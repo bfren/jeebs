@@ -3,7 +3,7 @@
 
 using Xunit;
 using static F.DataF.MappingF;
-using static Jeebs.Data.Mapping.TableMap.Msg;
+using static Jeebs.Data.Mapping.TableMap.M;
 
 namespace Jeebs.Data.Mapping.TableMap_Tests;
 

@@ -17,15 +17,15 @@ namespace Jeebs.Data;
 public abstract class DbQuery
 {
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Error getting query from parts</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingQueryFromPartsExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error getting count query from parts</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingCountQueryFromPartsExceptionMsg(Exception Exception) : ExceptionMsg(Exception);
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingCountQueryFromPartsExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }
 
@@ -111,7 +111,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	public Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
 		Some(
 			() => Db.Client.GetCountQuery(parts),
-			e => new Msg.ErrorGettingCountQueryFromPartsExceptionMsg(e)
+			e => new M.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync<ulong>(x.query, x.param, CommandType.Text, transaction)
@@ -128,7 +128,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 						Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
 						Maximum = pagingValues.ItemsPer
 					}),
-					e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
+					e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 				)
 				.BindAsync(
 					x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
@@ -150,7 +150,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	public Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
 		Some(
 			() => Db.Client.GetQuery(parts),
-			e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
+			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)
 		.BindAsync(
 			x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
@@ -187,7 +187,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	public Task<Option<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
 		Some(
 			() => Db.Client.GetQuery(parts),
-			e => new Msg.ErrorGettingQueryFromPartsExceptionMsg(e)
+			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)
 		.BindAsync(
 			x => Db.QuerySingleAsync<T>(x.query, x.param, CommandType.Text, transaction)

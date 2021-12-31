@@ -27,6 +27,6 @@ public class Unwrap_Tests : Jeebs_Tests.Unwrap_Tests
 	public override void Test02_Some_Returns_Value()
 	{
 		Test02(opt => Unwrap(opt, Substitute.For<Func<int>>()));
-		Test02(opt => Unwrap(opt, Substitute.For<Func<IMsg, int>>()));
+		Test02(opt => Unwrap(opt, Substitute.For<Func<Msg, int>>()));
 	}
 }

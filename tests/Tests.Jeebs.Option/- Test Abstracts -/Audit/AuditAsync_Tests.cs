@@ -37,7 +37,7 @@ public abstract class AuditAsync_Tests
 		var option = new FakeOption();
 
 		// Act
-		Task action() => act(option);
+		var action = Task () => act(option);
 
 		// Assert
 		await Assert.ThrowsAsync<UnknownOptionException>(action);
@@ -117,7 +117,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = True;
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -132,7 +132,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = Create.None<bool>();
-		static void throwException(Option<bool> _) => throw new Exception();
+		var throwException = void (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -147,7 +147,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = True;
-		static Task throwException(Option<bool> _) => throw new Exception();
+		var throwException = Task (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -162,7 +162,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = Create.None<bool>();
-		static Task throwException(Option<bool> _) => throw new Exception();
+		var throwException = Task (Option<bool> _) => throw new Exception();
 
 		// Act
 		var result = await act(option, throwException);
@@ -211,12 +211,12 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test12_None_Runs_None_Action_And_Returns_Original_Option();
 
-	protected static async Task Test12(Func<Option<int>, Action<IMsg>, Task<Option<int>>> act)
+	protected static async Task Test12(Func<Option<int>, Action<Msg>, Task<Option<int>>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
 		var option = None<int>(msg);
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 
 		// Act
 		var result = await act(option, none);
@@ -228,12 +228,12 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test13_None_Runs_None_Func_And_Returns_Original_Option();
 
-	protected static async Task Test13(Func<Option<int>, Func<IMsg, Task>, Task<Option<int>>> act)
+	protected static async Task Test13(Func<Option<int>, Func<Msg, Task>, Task<Option<int>>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
 		var option = None<int>(msg);
-		var none = Substitute.For<Func<IMsg, Task>>();
+		var none = Substitute.For<Func<Msg, Task>>();
 
 		// Act
 		var result = await act(option, none);
@@ -250,7 +250,7 @@ public abstract class AuditAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		void throwException(int _) => throw exception;
+		var throwException = void (int _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -266,7 +266,7 @@ public abstract class AuditAsync_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		Task throwException(int _) => throw exception;
+		var throwException = Task (int _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -277,12 +277,12 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test16_None_Runs_None_Action_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test16(Func<Option<int>, Action<IMsg>, Task<Option<int>>> act)
+	protected static async Task Test16(Func<Option<int>, Action<Msg>, Task<Option<int>>> act)
 	{
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		void throwException(IMsg _) => throw exception;
+		var throwException = void (Msg _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -293,12 +293,12 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test17_None_Runs_None_Func_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test17(Func<Option<int>, Func<IMsg, Task>, Task<Option<int>>> act)
+	protected static async Task Test17(Func<Option<int>, Func<Msg, Task>, Task<Option<int>>> act)
 	{
 		// Arrange
 		var option = Create.None<int>();
 		var exception = new Exception();
-		Task throwException(IMsg _) => throw exception;
+		var throwException = Task (Msg _) => throw exception;
 
 		// Act
 		var result = await act(option, throwException);
@@ -311,5 +311,5 @@ public abstract class AuditAsync_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

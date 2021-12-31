@@ -4,7 +4,7 @@
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Xunit;
-using static Jeebs.Linq.LinqExpressionExtensions.Msg;
+using static Jeebs.Linq.LinqExpressionExtensions.M;
 
 namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests;
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF.Enumerable.Msg;
+using static F.OptionF.Enumerable.M;
 
 namespace Jeebs_Tests.Enumerable;
 

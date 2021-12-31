@@ -15,9 +15,9 @@ public partial class UnixEpoch_Tests
 		var expected = new DateTime(1970, 1, 1, 0, 0, 0);
 
 		// Act
-		var actual = DateTimeF.UnixEpoch();
+		var result = DateTimeF.UnixEpoch();
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
 	}
 }

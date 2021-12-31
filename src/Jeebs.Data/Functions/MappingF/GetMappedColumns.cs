@@ -37,18 +37,18 @@ public static partial class MappingF
 					 Name: column,
 					 Property: entityProperty
 				 ),
-			e => new Msg.ErrorGettingMappedColumnsMsg<TEntity>(e)
+			e => new M.ErrorGettingMappedColumnsMsg<TEntity>(e)
 		)
 		.Map(
 			x => new MappedColumnList(x),
 			DefaultHandler
 		);
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Messages</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingMappedColumnsMsg<TEntity>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingMappedColumnsMsg<TEntity>(Exception Value) : ExceptionMsg;
 	}
 }

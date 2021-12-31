@@ -19,7 +19,7 @@ public sealed class Locked<T> : Locked
 	/// <summary>
 	/// Encrypted contents
 	/// </summary>
-	public Option<byte[]> EncryptedContents { get; init; } = None<byte[], Msg.EncryptedContentsNotCreatedYetMsg>();
+	public Option<byte[]> EncryptedContents { get; init; } = None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
 
 	/// <summary>
 	/// Salt
@@ -44,7 +44,7 @@ public sealed class Locked<T> : Locked
 			)
 			.Map(
 				x => SecretBox.Create(x, Nonce, key),
-				e => new Msg.CreatingSecretBoxExceptionMsg(e)
+				e => new M.CreatingSecretBoxExceptionMsg(e)
 			);
 
 	internal Locked(T contents, string key) : this() =>
@@ -54,7 +54,7 @@ public sealed class Locked<T> : Locked
 			)
 			.Map(
 				x => SecretBox.Create(x, Nonce, HashKey(key)),
-				e => new Msg.CreatingSecretBoxExceptionMsg(e)
+				e => new M.CreatingSecretBoxExceptionMsg(e)
 			);
 
 	/// <summary>
@@ -83,27 +83,27 @@ public sealed class Locked<T> : Locked
 				}
 				catch (KeyOutOfRangeException ex)
 				{
-					return handle(new Msg.InvalidKeyExceptionMsg(ex));
+					return handle(new M.InvalidKeyExceptionMsg(ex));
 				}
 				catch (NonceOutOfRangeException ex)
 				{
-					return handle(new Msg.InvalidNonceExceptionMsg(ex));
+					return handle(new M.InvalidNonceExceptionMsg(ex));
 				}
 				catch (CryptographicException ex)
 				{
-					return handle(new Msg.IncorrectKeyOrNonceExceptionMsg(ex));
+					return handle(new M.IncorrectKeyOrNonceExceptionMsg(ex));
 				}
 				catch (Exception ex)
 				{
-					return handle(new Msg.UnlockExceptionMsg(ex));
+					return handle(new M.UnlockExceptionMsg(ex));
 				}
 			},
-			none: None<Lockable<T>, Msg.UnlockWhenEncryptedContentsIsNoneMsg>()
+			none: None<Lockable<T>, M.UnlockWhenEncryptedContentsIsNoneMsg>()
 		);
 
 		// Handle an exception
 		static Option<Lockable<T>> handle<TMsg>(TMsg ex)
-			where TMsg : IExceptionMsg =>
+			where TMsg : ExceptionMsg =>
 			None<Lockable<T>>(ex);
 	}
 
@@ -135,32 +135,32 @@ public abstract class Locked
 	internal Locked() { }
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Error creating secret box</summary>
-		/// <param name="Exception">Exception</param>
-		public sealed record class CreatingSecretBoxExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class CreatingSecretBoxExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Encrypted contents not created yet</summary>
-		public sealed record class EncryptedContentsNotCreatedYetMsg : IMsg { }
+		public sealed record class EncryptedContentsNotCreatedYetMsg : Msg;
 
 		/// <summary>Incorrect key or nonce</summary>
-		/// <param name="Exception">Exception</param>
-		public sealed record class IncorrectKeyOrNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class IncorrectKeyOrNonceExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Invalid key</summary>
-		/// <param name="Exception">Exception</param>
-		public sealed record class InvalidKeyExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class InvalidKeyExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Invalid nonce</summary>
-		/// <param name="Exception">Exception</param>
-		public sealed record class InvalidNonceExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class InvalidNonceExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Unlock exception</summary>
-		/// <param name="Exception">Exception</param>
-		public sealed record class UnlockExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception</param>
+		public sealed record class UnlockExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Trying to unlock a box without any content</summary>
-		public sealed record class UnlockWhenEncryptedContentsIsNoneMsg : IMsg { }
+		public sealed record class UnlockWhenEncryptedContentsIsNoneMsg : Msg;
 	}
 }

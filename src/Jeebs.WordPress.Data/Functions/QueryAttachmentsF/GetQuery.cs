@@ -22,7 +22,7 @@ public static partial class QueryAttachmentsF
 		// Check for empty list
 		if (fileIds.Count == 0)
 		{
-			return None<string, Msg.NoFileIdsMsg>();
+			return None<string, M.NoFileIdsMsg>();
 		}
 
 		// Build query
@@ -41,9 +41,9 @@ public static partial class QueryAttachmentsF
 		;
 	}
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>No File IDs have been passed to <see cref="GetQuery(IWpDbSchema, IImmutableList{WpPostId}, string)"/></summary>
-		public sealed record class NoFileIdsMsg : IMsg { }
+		public sealed record class NoFileIdsMsg : Msg;
 	}
 }

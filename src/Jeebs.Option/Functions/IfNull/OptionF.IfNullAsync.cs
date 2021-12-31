@@ -18,7 +18,7 @@ public static partial class OptionF
 				Some<T> x when x.Value is null =>
 					ifNull(),
 
-				None<T> x when x.Reason is Msg.NullValueMsg =>
+				None<T> x when x.Reason is M.NullValueMsg =>
 					ifNull(),
 
 				_ =>
@@ -33,6 +33,6 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="IfNull{T, TMsg}(Option{T}, Func{TMsg})"/>
 	public static async Task<Option<T>> IfNullAsync<T, TMsg>(Task<Option<T>> option, Func<TMsg> ifNull)
-		where TMsg : IMsg =>
+		where TMsg : Msg =>
 		await IfNullAsync(await option, () => None<T>(ifNull()).AsTask);
 }

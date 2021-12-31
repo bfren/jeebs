@@ -7,7 +7,7 @@ using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -27,7 +27,7 @@ public abstract class Bind_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Exception);
+		Assert.IsType<UnknownOptionException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
@@ -37,7 +37,7 @@ public abstract class Bind_Tests
 		// Arrange
 		var option = Some(F.Rnd.Int);
 		var exception = new Exception();
-		Option<string> throwFunc() => throw exception;
+		var throwFunc = Option<string> () => throw exception;
 
 		// Act
 		var result = act(option, _ => throwFunc());
@@ -97,5 +97,5 @@ public abstract class Bind_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

@@ -33,16 +33,16 @@ public static partial class QueryPostsF
 		return GetPostContentInfo<TModel>()
 			.Map(
 				x => ExecuteContentFilters(posts, x, filters),
-				e => new Msg.ApplyContentFiltersExceptionMsg<TModel>(e)
+				e => new M.ApplyContentFiltersExceptionMsg<TModel>(e)
 			);
 	}
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>An exception occured while applying content filters to posts</summary>
 		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ApplyContentFiltersExceptionMsg<T>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ApplyContentFiltersExceptionMsg<T>(Exception Value) : ExceptionMsg;
 	}
 }

@@ -30,10 +30,10 @@ public class Get_Tests
 		const int length = 3;
 
 		// Act
-		static void result() => Get(length, upper: true, numbers: true, special: true);
+		var action = void () => Get(length, upper: true, numbers: true, special: true);
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(result);
+		Assert.Throws<InvalidOperationException>(action);
 	}
 
 	[Fact]

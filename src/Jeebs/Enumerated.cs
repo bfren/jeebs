@@ -68,7 +68,7 @@ public abstract class Enumerated
 				value,
 
 			false =>
-				None<T>(new Msg.NotAValidEnumeratedValueMsg<T>(value))
+				None<T>(new M.NotAValidEnumeratedValueMsg<T>(value))
 		};
 
 	/// <summary>
@@ -94,7 +94,7 @@ public abstract class Enumerated
 				}
 
 				// If we get here the name was never matched
-				return None<T>(new Msg.NotAValidEnumeratedValueMsg<T>(name));
+				return None<T>(new M.NotAValidEnumeratedValueMsg<T>(name));
 			},
 			new ParseArgs<T>(name, values)
 		);
@@ -244,17 +244,21 @@ public abstract class Enumerated
 	#endregion
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Value does not belong to the specified Enumerated type</summary>
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="Value">Value being parsed</param>
-		public sealed record class NotAValidEnumeratedValueMsg<T>(string Value) : WithValueMsg<string>()
+		public sealed record class NotAValidEnumeratedValueMsg<T>(string Value) : Msg
 			where T : Enumerated
 		{
-			/// <summary>Return message</summary>
-			public override string ToString() =>
-				$"'{Value}' is not a valid value of {typeof(T)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"'{Value}' is not a valid value of {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { Value, typeof(T) };
 		}
 	}
 }

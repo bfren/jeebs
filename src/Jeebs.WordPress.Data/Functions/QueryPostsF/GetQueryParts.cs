@@ -22,7 +22,7 @@ public static partial class QueryPostsF
 		where TModel : IWithId<WpPostId> =>
 		Some(
 			() => opt(new Query.PostsOptions(db.Schema)),
-			e => new Msg.ErrorGettingQueryPostsOptionsMsg(e)
+			e => new M.ErrorGettingQueryPostsOptionsMsg(e)
 		)
 		.Bind(
 			x => x.ToParts<TModel>()

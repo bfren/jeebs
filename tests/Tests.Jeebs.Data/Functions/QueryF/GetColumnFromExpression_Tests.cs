@@ -5,7 +5,7 @@ using Jeebs;
 using Jeebs.Data.Mapping;
 using Xunit;
 using static F.DataF.QueryF;
-using static Jeebs.Linq.LinqExpressionExtensions.Msg;
+using static Jeebs.Linq.LinqExpressionExtensions.M;
 
 namespace F.DataF.QueryF_Tests;
 

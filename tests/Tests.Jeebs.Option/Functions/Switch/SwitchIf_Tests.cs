@@ -14,7 +14,7 @@ public class SwitchIf_Tests : Jeebs_Tests.SwitchIf_Tests
 	[Fact]
 	public override void Test00_Unknown_Option_Throws_UnknownOptionException()
 	{
-		var ifFalse = Substitute.For<Func<int, IMsg>>();
+		var ifFalse = Substitute.For<Func<int, Msg>>();
 		Test00((opt, check) => SwitchIf(opt, check, null, null));
 		Test00((opt, check) => SwitchIf(opt, check, ifFalse));
 	}
@@ -22,7 +22,7 @@ public class SwitchIf_Tests : Jeebs_Tests.SwitchIf_Tests
 	[Fact]
 	public override void Test01_None_Returns_Original_None()
 	{
-		var ifFalse = Substitute.For<Func<int, IMsg>>();
+		var ifFalse = Substitute.For<Func<int, Msg>>();
 		Test01((opt, check) => SwitchIf(opt, check, null, null));
 		Test01((opt, check) => SwitchIf(opt, check, ifFalse));
 	}
@@ -30,7 +30,7 @@ public class SwitchIf_Tests : Jeebs_Tests.SwitchIf_Tests
 	[Fact]
 	public override void Test02_Check_Func_Throws_Exception_Returns_None_With_SwitchIfFuncExceptionMsg()
 	{
-		var ifFalse = Substitute.For<Func<int, IMsg>>();
+		var ifFalse = Substitute.For<Func<int, Msg>>();
 		Test02((opt, check) => SwitchIf(opt, check, null, null));
 		Test02((opt, check) => SwitchIf(opt, check, ifFalse));
 	}

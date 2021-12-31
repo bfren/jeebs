@@ -32,33 +32,33 @@ public static partial class OptionF
 										x,
 
 									_ =>
-										None<T, Msg.NullItemMsg>()
+										None<T, M.NullItemMsg>()
 								},
 
 							{ } filtered when !filtered.Any() =>
-								None<T, Msg.NoMatchingItemsMsg>(),
+								None<T, M.NoMatchingItemsMsg>(),
 
 							_ =>
-								None<T, Msg.MultipleItemsMsg>()
+								None<T, M.MultipleItemsMsg>()
 						},
 
 					false =>
-						None<T, Msg.ListIsEmptyMsg>()
+						None<T, M.ListIsEmptyMsg>()
 				},
 				DefaultHandler
 			);
 
 		/// <summary>Messages</summary>
-		public static partial class Msg
+		public static partial class M
 		{
 			/// <summary>Multiple items found when doing SingleOrDefault()</summary>
-			public sealed record class MultipleItemsMsg : IMsg { }
+			public sealed record class MultipleItemsMsg : Msg;
 
 			/// <summary>No items found matching the predicate</summary>
-			public sealed record class NoMatchingItemsMsg : IMsg { }
+			public sealed record class NoMatchingItemsMsg : Msg;
 
 			/// <summary>Null item found when doing SingleOrDefault()</summary>
-			public sealed record class NullItemMsg : IMsg { }
+			public sealed record class NullItemMsg : Msg;
 		}
 	}
 }

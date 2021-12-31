@@ -27,9 +27,13 @@ public class ErrorController : Jeebs.Mvc.ErrorController
 		NotAllowed();
 
 	public async Task<IActionResult> Return_Error404() =>
-		await this.ExecuteErrorAsync(new NotFoundMsg());
+		await this.ExecuteErrorAsync(new NotFoundMsg(42));
 
-	public class NotFoundMsg : INotFoundMsg { }
+	public record class NotFoundMsg(int Value) : NotFoundMsg<int>
+	{
+		public override string Name =>
+			"Code";
+	}
 }
 
-public record class TestErrorMsg : IMsg { }
+public record class TestErrorMsg : Msg;

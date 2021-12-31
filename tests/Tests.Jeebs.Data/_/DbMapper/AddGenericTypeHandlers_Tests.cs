@@ -64,11 +64,9 @@ public class AddGenericTypeHandlers_Tests
 	public class Handler<T> : SqlMapper.ITypeHandler
 		where T : CustomBaseType
 	{
-		public object Parse(Type destinationType, object value) =>
-			throw new NotImplementedException();
+		public object Parse(Type destinationType, object value) => new();
 
-		public void SetValue(IDbDataParameter parameter, object value) =>
-			throw new NotImplementedException();
+		public void SetValue(IDbDataParameter parameter, object value) { }
 	}
 
 	public abstract class CustomBaseType { }

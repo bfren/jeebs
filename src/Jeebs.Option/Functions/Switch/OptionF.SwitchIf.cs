@@ -43,7 +43,7 @@ public static partial class OptionF
 			}
 			catch (Exception e)
 			{
-				return None<T>(new Msg.SwitchIfFuncExceptionMsg(e));
+				return None<T>(new M.SwitchIfFuncExceptionMsg(e));
 			}
 		}
 		else if (option is None<T> y)
@@ -65,14 +65,14 @@ public static partial class OptionF
 	/// <param name="option">Option being switched</param>
 	/// <param name="check">Function to run if <paramref name="option"/> is <see cref="Jeebs.Internals.Some{T}"/></param>
 	/// <param name="ifFalse">Function to run if <paramref name="check"/> returns false</param>
-	public static Option<T> SwitchIf<T>(Option<T> option, Func<T, bool> check, Func<T, IMsg> ifFalse) =>
+	public static Option<T> SwitchIf<T>(Option<T> option, Func<T, bool> check, Func<T, Msg> ifFalse) =>
 		SwitchIf(option, check, null, x => None<T>(ifFalse(x)));
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>An exception was caught while executing one of the SwitchIf functions</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class SwitchIfFuncExceptionMsg(Exception Exception) : IExceptionMsg { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class SwitchIfFuncExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

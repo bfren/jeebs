@@ -16,6 +16,6 @@ public static class OptionExtensions_AssertNone
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <param name="this">Option</param>
-	public static IMsg AssertNone<T>(this Option<T> @this) =>
+	public static Msg AssertNone<T>(this Option<T> @this) =>
 		Assert.IsType<None<T>>(@this).Reason;
 }

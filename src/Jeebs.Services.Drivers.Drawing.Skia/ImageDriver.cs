@@ -18,7 +18,7 @@ public sealed class ImageDriver : IImageDriver
 	{
 		if (!File.Exists(path))
 		{
-			return None<IImageWrapper>(new Msg.ImageFileNotFoundMsg(path));
+			return None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
 		}
 
 		// Create and return image object
@@ -35,9 +35,14 @@ public sealed class ImageDriver : IImageDriver
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>The image file was not found</summary>
-		public sealed record class ImageFileNotFoundMsg(string Path) : INotFoundMsg { }
+		public sealed record class ImageFileNotFoundMsg(string Value) : NotFoundMsg<string>
+		{
+			/// <inheritdoc/>
+			public override string Name =>
+				"File Path";
+		}
 	}
 }

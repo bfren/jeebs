@@ -11,7 +11,7 @@ using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
 using static F.DataF.QueryF;
-using static F.DataF.QueryF.Msg;
+using static F.DataF.QueryF.M;
 
 namespace F.DataF.QueryF_Tests;
 

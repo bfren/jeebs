@@ -16,9 +16,9 @@ public partial class FromUnix_Tests
 		var expected = new DateTime(2000, 1, 4, 15, 59, 30);
 
 		// Act
-		var actual = DateTimeF.FromUnix(unix);
+		var result = DateTimeF.FromUnix(unix);
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
 	}
 }

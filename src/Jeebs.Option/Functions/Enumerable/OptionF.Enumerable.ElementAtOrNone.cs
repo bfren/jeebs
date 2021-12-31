@@ -28,23 +28,23 @@ public static partial class OptionF
 								x,
 
 							_ =>
-								None<T, Msg.ElementAtIsNullMsg>()
+								None<T, M.ElementAtIsNullMsg>()
 						},
 
 					false =>
-						None<T, Msg.ListIsEmptyMsg>()
+						None<T, M.ListIsEmptyMsg>()
 				},
 				DefaultHandler
 			);
 
 		/// <summary>Messages</summary>
-		public static partial class Msg
+		public static partial class M
 		{
 			/// <summary>Null or no item found when doing ElementAtOrDefault()</summary>
-			public sealed record class ElementAtIsNullMsg : IMsg { }
+			public sealed record class ElementAtIsNullMsg : Msg;
 
 			/// <summary>The list is empty</summary>
-			public sealed record class ListIsEmptyMsg : IMsg { }
+			public sealed record class ListIsEmptyMsg : Msg;
 		}
 	}
 }

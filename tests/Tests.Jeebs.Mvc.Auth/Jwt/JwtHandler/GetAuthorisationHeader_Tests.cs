@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
 using Xunit;
-using static Jeebs.Mvc.Auth.Jwt.JwtHandler.Msg;
+using static Jeebs.Mvc.Auth.Jwt.JwtHandler.M;
 
 namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
 

@@ -14,7 +14,7 @@ public static partial class OptionF
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <param name="reason">Reason message</param>
-	public static None<T> None<T>(IMsg reason) =>
+	public static None<T> None<T>(Msg reason) =>
 		new(reason);
 
 	/// <summary>
@@ -23,16 +23,43 @@ public static partial class OptionF
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <typeparam name="TMsg">Reason message type</typeparam>
 	public static None<T> None<T, TMsg>()
-		where TMsg : IMsg, new() =>
+		where TMsg : Msg, new() =>
 		new(new TMsg());
 
 	/// <summary>
-	/// Create a <see cref="Jeebs.Internals.None{T}"/> Option with a Reason exception message by type
+	/// Create a <see cref="Jeebs.Internals.None{T}"/> Option with a Reason exception message by type<br/>
+	/// NB: <typeparamref name="TExceptionMsg"/> must have a constructor with precisely one argument to
+	/// receive <paramref name="ex"/> as the value, or creation will fail
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <typeparam name="TExceptionMsg">Reason exception message type</typeparam>
 	/// <param name="ex">Exception object</param>
 	public static None<T> None<T, TExceptionMsg>(Exception ex)
-		where TExceptionMsg : IExceptionMsg, new() =>
-		new(new TExceptionMsg() { Exception = ex });
+		where TExceptionMsg : ExceptionMsg
+	{
+		var none = () => None<T>(new M.GeneralExceptionMsg<TExceptionMsg>(ex));
+
+		try
+		{
+			return Activator.CreateInstance(typeof(TExceptionMsg), ex) switch
+			{
+				TExceptionMsg msg =>
+					None<T>(msg),
+
+				_ =>
+					none()
+			};
+		}
+		catch (Exception)
+		{
+			return none();
+		}
+	}
+
+	public static partial class M
+	{
+		/// <summary>Unable to create exception message</summary>
+		/// <typeparam name="TExceptionMsg">ExceptionMsg type</typeparam>
+		public sealed record class GeneralExceptionMsg<TExceptionMsg>(Exception Value) : ExceptionMsg where TExceptionMsg : ExceptionMsg;
+	}
 }

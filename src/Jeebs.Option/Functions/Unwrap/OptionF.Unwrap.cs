@@ -27,7 +27,7 @@ public static partial class OptionF
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <param name="option">Input option</param>
 	/// <param name="ifNone">Value to return if <paramref name="option"/> is a <see cref="Jeebs.Internals.None{T}"/></param>
-	public static T Unwrap<T>(Option<T> option, Func<IMsg, T> ifNone) =>
+	public static T Unwrap<T>(Option<T> option, Func<Msg, T> ifNone) =>
 		Switch(
 			option,
 			some: v => v,

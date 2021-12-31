@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppConsole;
+using AppConsole.Messages;
 using Jeebs;
 using Jeebs.Config;
 using Jeebs.Linq;
@@ -24,21 +25,21 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Fatal(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
 	var seq = provider.GetRequiredService<Seq>();
-	seq.Send("test");
+	//seq.Send("test");
 
 	var slack = provider.GetRequiredService<Slack>();
-	slack.Send("test");
+	//slack.Send("test");
 
 	var notifier = provider.GetRequiredService<INotifier>();
-	notifier.Send("test notification");
+	//notifier.Send("test notification");
 
-	async Task<Option<int>> one(int input) =>
+	var one = async Task<Option<int>> (int input) =>
 		await Task.FromResult(input + 1);
 
-	async Task<Option<string>> two(int input) =>
+	var two = async Task<Option<string>> (int input) =>
 		await Task.FromResult(input.ToString());
 
-	async Task<Option<bool>> three(string input) =>
+	var three = async Task<Option<bool>> (string input) =>
 		await Task.FromResult(input == "3");
 
 	var result = from r0 in one(2)
@@ -51,6 +52,24 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		none: _ => log.Information("No result")
 	);
 
+	// Test IMsg output
+	log.Information("Testing Msg");
+	log.Message(new Basic());
+
+	log.Information("Testing Msg with generic argument");
+	log.Message(new WithGeneric<Guid>());
+
+	log.Information("Testing Msg with format");
+	log.Message(new FormattedMsg());
+
+	log.Information("Testing Msg with value");
+	log.Message(new WithValue(F.Rnd.Str));
+
+	log.Information("Testing Msg with exception");
+	var e = new Exception(F.Rnd.Str);
+	log.Message(new WithException(e));
+
+	// Log console
 	while (Console.ReadLine() is string output)
 	{
 		log.Information(output);

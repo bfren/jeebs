@@ -15,10 +15,10 @@ namespace Jeebs.Data.Querying;
 public abstract record class QueryFluent
 {
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>No predicates were added when query execution was attempted</summary>
-		public sealed record class NoPredicatesMsg : IMsg { }
+		public sealed record class NoPredicatesMsg : Msg;
 	}
 }
 
@@ -94,7 +94,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 				repo.QueryAsync<TModel>(Predicates.ToArray()),
 
 			_ =>
-				None<IEnumerable<TModel>, Msg.NoPredicatesMsg>().AsTask
+				None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask
 		};
 
 	/// <inheritdoc/>
@@ -105,6 +105,6 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 				repo.QuerySingleAsync<TModel>(Predicates.ToArray()),
 
 			_ =>
-				None<TModel, Msg.NoPredicatesMsg>().AsTask
+				None<TModel, M.NoPredicatesMsg>().AsTask
 		};
 }

@@ -30,12 +30,12 @@ public abstract class ErrorController : Controller
 	/// <param name="code">Http Status Code</param>
 	[Route("/Error/{code:int}")]
 	public async Task<IActionResult> Handle(int code) =>
-		await this.ExecuteErrorAsync(new Msg.UnknownErrorMsg(), code);
+		await this.ExecuteErrorAsync(new M.UnknownErrorMsg(), code);
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>An unknown error has occured</summary>
-		public sealed record class UnknownErrorMsg : IMsg { }
+		public sealed record class UnknownErrorMsg : Msg;
 	}
 }

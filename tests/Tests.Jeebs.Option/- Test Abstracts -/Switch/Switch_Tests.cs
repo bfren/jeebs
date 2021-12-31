@@ -20,7 +20,7 @@ public abstract class Switch_Tests
 		var option = new FakeOption();
 
 		// Act
-		void action() => act(option);
+		var action = void () => act(option);
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);
@@ -34,7 +34,7 @@ public abstract class Switch_Tests
 		var option = new FakeOption();
 
 		// Act
-		void action() => act(option);
+		var action = void () => act(option);
 
 		// Assert
 		Assert.Throws<UnknownOptionException>(action);
@@ -42,12 +42,12 @@ public abstract class Switch_Tests
 
 	public abstract void Test02_Return_Void_If_None_Runs_None_Action_With_Reason();
 
-	protected static void Test02(Action<Option<int>, Action<IMsg>> act)
+	protected static void Test02(Action<Option<int>, Action<Msg>> act)
 	{
 		// Arrange
 		var reason = new TestMsg();
 		var option = None<int>(reason);
-		var none = Substitute.For<Action<IMsg>>();
+		var none = Substitute.For<Action<Msg>>();
 
 		// Act
 		act(option, none);
@@ -58,12 +58,12 @@ public abstract class Switch_Tests
 
 	public abstract void Test03_Return_Value_If_None_Runs_None_Func_With_Reason();
 
-	protected static void Test03(Func<Option<int>, Func<IMsg, string>, string> act)
+	protected static void Test03(Func<Option<int>, Func<Msg, string>, string> act)
 	{
 		// Arrange
 		var reason = new TestMsg();
 		var option = None<int>(reason);
-		var none = Substitute.For<Func<IMsg, string>>();
+		var none = Substitute.For<Func<Msg, string>>();
 
 		// Act
 		var result = act(option, none);
@@ -106,5 +106,5 @@ public abstract class Switch_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

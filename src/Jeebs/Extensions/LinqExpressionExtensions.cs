@@ -33,7 +33,7 @@ public static class LinqExpressionExtensions
 					Some(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
 
 				false =>
-					None<PropertyInfo<TObject, TProperty>>(new Msg.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))
+					None<PropertyInfo<TObject, TProperty>>(new M.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))
 			}
 		);
 
@@ -54,14 +54,14 @@ public static class LinqExpressionExtensions
 				memberExpression.Member,
 
 			_ =>
-				None<MemberInfo, Msg.ExpressionIsNotAMemberExpressionMsg>()
+				None<MemberInfo, M.ExpressionIsNotAMemberExpressionMsg>()
 		};
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
-		public sealed record class ExpressionIsNotAMemberExpressionMsg : IMsg { }
+		public sealed record class ExpressionIsNotAMemberExpressionMsg : Msg;
 
 		/// <summary>The specified property does not exist on the type</summary>
 		public sealed record class PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }

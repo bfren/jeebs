@@ -135,7 +135,7 @@ public static class Base32F
 		// Check the size
 		if (outputBytes.Length == 0)
 		{
-			return None<byte[], Msg.InputStringNotLongEnoughMsg>();
+			return None<byte[], M.InputStringNotLongEnoughMsg>();
 		}
 
 		// Position in the string
@@ -160,7 +160,7 @@ public static class Base32F
 			// Check if found
 			if (currentBase32Byte < 0)
 			{
-				return None<byte[]>(new Msg.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
+				return None<byte[]>(new M.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
 			}
 
 			// Calculate the number of bits we can extract out of current input character to fill missing bits in the output byte
@@ -199,18 +199,13 @@ public static class Base32F
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Input string is not long enough to construct a complete byte array</summary>
-		public sealed record class InputStringNotLongEnoughMsg : IMsg { }
+		public sealed record class InputStringNotLongEnoughMsg : Msg;
 
 		/// <summary>Input string contains a character that is not in the Base32 alphabet</summary>
 		/// <param name="Value">Invalid character</param>
-		public sealed record class CharacterNotInBase32AlphabetMsg(char Value) : WithValueMsg<char>
-		{
-			/// <inheritdoc/>
-			public override string ToString() =>
-				$"'{Value}' is not a valid character in the Base32 alphabet.";
-		}
+		public sealed record class CharacterNotInBase32AlphabetMsg(char Value) : WithValueMsg<char>;
 	}
 }

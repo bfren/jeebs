@@ -9,8 +9,8 @@ namespace F;
 
 public static partial class OptionF
 {
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static async Task<Option<T>> AuditAsync<T>(Option<T> option, Func<Option<T>, Task>? any, Func<T, Task>? some, Func<IMsg, Task>? none)
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static async Task<Option<T>> AuditAsync<T>(Option<T> option, Func<Option<T>, Task>? any, Func<T, Task>? some, Func<Msg, Task>? none)
 	{
 		// Do nothing if the user gave us nothing to do!
 		if (any == null && some == null && none == null)
@@ -19,7 +19,7 @@ public static partial class OptionF
 		}
 
 		// Work out which audit function to use
-		Func<Task> audit = Switch<T, Func<Task>>(
+		var audit = Switch<T, Func<Task>>(
 			option,
 			some: v => () => some?.Invoke(v) ?? Task.CompletedTask,
 			none: r => () => none?.Invoke(r) ?? Task.CompletedTask
@@ -44,15 +44,15 @@ public static partial class OptionF
 		return option;
 	}
 
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Action<Option<T>>? any, Action<T>? some, Action<IMsg>? none) =>
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Action<Option<T>>? any, Action<T>? some, Action<Msg>? none) =>
 		await AuditAsync(await option,
 			x => { any?.Invoke(x); return Task.CompletedTask; },
 			x => { some?.Invoke(x); return Task.CompletedTask; },
 			x => { none?.Invoke(x); return Task.CompletedTask; }
 		);
 
-	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Func<Option<T>, Task>? any, Func<T, Task>? some, Func<IMsg, Task>? none) =>
+	/// <inheritdoc cref="Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static async Task<Option<T>> AuditAsync<T>(Task<Option<T>> option, Func<Option<T>, Task>? any, Func<T, Task>? some, Func<Msg, Task>? none) =>
 		await AuditAsync(await option, any, some, none);
 }

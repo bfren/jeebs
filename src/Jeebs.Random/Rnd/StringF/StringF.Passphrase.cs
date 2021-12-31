@@ -70,19 +70,19 @@ public static partial class Rnd
 			// Number of words must be at least 2
 			if (numberOfWords < 2)
 			{
-				return None<string, Msg.NumberOfWordsMustBeAtLeastTwoMsg>();
+				return None<string, M.NumberOfWordsMustBeAtLeastTwoMsg>();
 			}
 
 			// Get word list
 			if (wordList.Length == 0)
 			{
-				return None<string, Msg.EmptyWordListMsg>();
+				return None<string, M.EmptyWordListMsg>();
 			}
 
 			// Number of words cannot be higher than the word list
 			if (numberOfWords > wordList.Length)
 			{
-				return None<string, Msg.NumberOfWordsCannotBeMoreThanWordListMsg>();
+				return None<string, M.NumberOfWordsCannotBeMoreThanWordListMsg>();
 			}
 
 			// Get the right number of words
@@ -131,16 +131,16 @@ public static partial class Rnd
 		}
 
 		/// <summary>Messages</summary>
-		public static class Msg
+		public static class M
 		{
 			/// <summary>Number of words must be at least 2</summary>
-			public sealed record class NumberOfWordsMustBeAtLeastTwoMsg : IMsg { }
+			public sealed record class NumberOfWordsMustBeAtLeastTwoMsg : Msg;
 
 			/// <summary>Number of words must be less than length of word list</summary>
-			public sealed record class NumberOfWordsCannotBeMoreThanWordListMsg : IMsg { }
+			public sealed record class NumberOfWordsCannotBeMoreThanWordListMsg : Msg;
 
 			/// <summary>The word list was empty</summary>
-			public sealed record class EmptyWordListMsg : IMsg { }
+			public sealed record class EmptyWordListMsg : Msg;
 		}
 	}
 }

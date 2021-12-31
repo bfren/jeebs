@@ -17,7 +17,7 @@ public static partial class OptionF
 	/// <param name="option">Option being switched</param>
 	/// <param name="some">Action to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 	/// <param name="none">Action to run if <see cref="Jeebs.Internals.None{T}"/></param>
-	public static void Switch<T>(Option<T> option, Action<T> some, Action<IMsg> none)
+	public static void Switch<T>(Option<T> option, Action<T> some, Action<Msg> none)
 	{
 		// No return value so unable to use switch statement
 
@@ -43,7 +43,7 @@ public static partial class OptionF
 	/// <param name="option">Option being switched</param>
 	/// <param name="some">Function to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 	/// <param name="none">Function to run if <see cref="Jeebs.Internals.None{T}"/></param>
-	public static U Switch<T, U>(Option<T> option, Func<T, U> some, Func<IMsg, U> none) =>
+	public static U Switch<T, U>(Option<T> option, Func<T, U> some, Func<Msg, U> none) =>
 		option switch
 		{
 			Some<T> x =>

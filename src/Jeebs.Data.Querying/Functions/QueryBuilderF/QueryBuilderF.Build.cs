@@ -21,17 +21,17 @@ public static partial class QueryBuilderF
 		)
 		.Map(
 			x => (QueryBuilderWithFrom)builder(x),
-			e => new Msg.QueryBuilderExceptionMsg(e)
+			e => new M.QueryBuilderExceptionMsg(e)
 		)
 		.Bind(
 			x => x.Select<TModel>()
 		);
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Error while building query</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class QueryBuilderExceptionMsg(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class QueryBuilderExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

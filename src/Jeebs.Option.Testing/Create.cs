@@ -13,12 +13,12 @@ public static class Create
 	/// </summary>
 	/// <typeparam name="T">Option value type</typeparam>
 	public static Option<T> None<T>() =>
-		F.OptionF.None<T, Msg.EmptyNoneForTestingMsg>();
+		F.OptionF.None<T, M.EmptyNoneForTestingMsg>();
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Empty None created for testing</summary>
-		public sealed record class EmptyNoneForTestingMsg : IMsg { };
+		public sealed record class EmptyNoneForTestingMsg : Msg;
 	}
 }

@@ -8,7 +8,7 @@ using Jeebs.Data.Querying;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
-using static Jeebs.Data.DbQuery.Msg;
+using static Jeebs.Data.DbQuery.M;
 
 namespace Jeebs.Data.DbQuery_Tests;
 

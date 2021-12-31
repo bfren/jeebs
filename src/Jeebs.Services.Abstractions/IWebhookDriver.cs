@@ -17,8 +17,8 @@ public interface IWebhookDriver<TConfig, TMessage>
 	/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
 	void Send(string message, NotificationLevel level = NotificationLevel.Information);
 
-	/// <inheritdoc cref="INotifier.Send(IMsg)"/>
-	void Send(IMsg msg);
+	/// <inheritdoc cref="INotifier.Send(Msg)"/>
+	void Send(Msg msg);
 
 	/// <summary>
 	/// Send a message

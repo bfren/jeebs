@@ -4,7 +4,7 @@
 using Jeebs;
 using Xunit;
 using static F.BooleanF;
-using static F.BooleanF.Msg;
+using static F.BooleanF.M;
 
 namespace F.BooleanF_Tests;
 

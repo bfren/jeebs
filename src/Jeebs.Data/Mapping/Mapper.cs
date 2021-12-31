@@ -89,7 +89,7 @@ internal sealed class Mapper : IMapper, IDisposable
 			return map;
 		}
 
-		return None<ITableMap, Msg.TryingToGetUnmappedEntityMsg<TEntity>>();
+		return None<ITableMap, M.TryingToGetUnmappedEntityMsg<TEntity>>();
 	}
 
 	#region Dispose
@@ -119,10 +119,10 @@ internal sealed class Mapper : IMapper, IDisposable
 	#endregion
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>The entity being requested has not been mapped yet</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		public sealed record class TryingToGetUnmappedEntityMsg<TEntity> : IMsg { }
+		public sealed record class TryingToGetUnmappedEntityMsg<TEntity> : Msg;
 	}
 }

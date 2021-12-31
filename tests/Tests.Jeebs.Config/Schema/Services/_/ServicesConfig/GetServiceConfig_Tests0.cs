@@ -15,7 +15,7 @@ public partial class GetServiceConfig_Tests
 		var name = F.Rnd.Str;
 
 		// Act
-		void action() => config.GetServiceConfig(x => x.Seq, name);
+		var action = void () => config.GetServiceConfig(x => x.Seq, name);
 
 		// Assert
 		var ex = Assert.Throws<UnknownServiceException>(action);
@@ -31,7 +31,7 @@ public partial class GetServiceConfig_Tests
 		config.Seq.Add(name, new SeqConfig());
 
 		// Act
-		void action() => config.GetServiceConfig(x => x.Seq, name);
+		var action = void () => config.GetServiceConfig(x => x.Seq, name);
 
 		// Assert
 		var ex = Assert.Throws<InvalidServiceConfigurationException>(action);

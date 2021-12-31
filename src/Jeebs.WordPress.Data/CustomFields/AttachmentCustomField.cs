@@ -40,7 +40,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		{
 			if (isRequired)
 			{
-				return None<bool>(new Msg.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
 			return False.AsTask;
@@ -65,7 +65,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 			)
 			.UnwrapAsync(
 				x => x.Single<Attachment>(
-					tooMany: () => new Msg.MultipleAttachmentsFoundMsg(ValueStr)
+					tooMany: () => new M.MultipleAttachmentsFoundMsg(ValueStr)
 				)
 			)
 			.MapAsync(
@@ -98,7 +98,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	{
 		if (!long.TryParse(value, out long attachmentPostId))
 		{
-			return None<WpPostId>(new Msg.ValueIsInvalidPostIdMsg(type, value));
+			return None<WpPostId>(new M.ValueIsInvalidPostIdMsg(type, value));
 		}
 
 		return new WpPostId(attachmentPostId);
@@ -117,7 +117,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	public sealed record class Attachment : PostAttachment { }
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Meta key not found in MetaDictionary</summary>
 		/// <param name="Type">Custom Field type</param>

@@ -4,8 +4,8 @@
 using System;
 using Xunit;
 using static F.CryptoF;
-using static F.JsonF.Msg;
-using static Jeebs.Cryptography.Locked.Msg;
+using static F.JsonF.M;
+using static Jeebs.Cryptography.Locked.M;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
 

@@ -46,7 +46,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(IMsg msg)
+	public virtual void Send(Msg msg)
 	{
 		// Get message content
 		var content = msg.ToString() ?? msg.GetType().ToString();
@@ -54,22 +54,22 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		// Convert to notification Message
 		var message = msg switch
 		{
-			ILogMsg x =>
-				new Message
-				{
-					Content = content,
-					Level = x.Level.ToNotificationLevel()
-				},
-
-			IExceptionMsg x =>
+			ExceptionMsg x =>
 				new Message
 				{
 					Content = content,
 					Level = NotificationLevel.Error,
 					Fields = new Dictionary<string, object>()
 					{
-						{ "Exception", x.Exception }
+						{ "Exception", x.Value }
 					}
+				},
+
+			Msg x =>
+				new Message
+				{
+					Content = content,
+					Level = x.Level.ToNotificationLevel()
 				},
 
 			_ =>

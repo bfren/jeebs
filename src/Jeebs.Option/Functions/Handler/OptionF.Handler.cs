@@ -13,17 +13,17 @@ namespace F;
 public static partial class OptionF
 {
 	/// <summary>
-	/// Exception handler delegate - takes exception and must return a message of type <see cref="IExceptionMsg"/>
+	/// Exception handler delegate - takes exception and must return a message of type <see cref="ExceptionMsg"/>
 	/// </summary>
 	/// <param name="e">Exception</param>
-	public delegate IExceptionMsg Handler(Exception e);
+	public delegate ExceptionMsg Handler(Exception e);
 
 	/// <summary>
 	/// Default exception handler,
-	/// it returns <see cref="Msg.UnhandledExceptionMsg"/>
+	/// it returns <see cref="M.UnhandledExceptionMsg"/>
 	/// </summary>
 	public static Handler DefaultHandler =>
-		e => new Msg.UnhandledExceptionMsg(e);
+		e => new M.UnhandledExceptionMsg(e);
 
 	/// <summary>
 	/// Set to log audit exceptions - otherwise they are sent to the Console
@@ -46,15 +46,15 @@ public static partial class OptionF
 	}
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Exception while creating a new object</summary>
 		/// <typeparam name="T">The type of the object being created</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class CreateNewExceptionMsg<T>(Exception Exception) : IExceptionMsg { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class CreateNewExceptionMsg<T>(Exception Value) : ExceptionMsg;
 
 		/// <summary>Unhandled exception</summary>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class UnhandledExceptionMsg(Exception Exception) : IExceptionMsg { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class UnhandledExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

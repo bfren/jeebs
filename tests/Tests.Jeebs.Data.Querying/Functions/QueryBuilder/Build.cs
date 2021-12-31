@@ -8,7 +8,7 @@ using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
 using static F.DataF.QueryBuilderF;
-using static F.DataF.QueryBuilderF.Msg;
+using static F.DataF.QueryBuilderF.M;
 
 namespace F.DataF.QueryBuilderF_Tests;
 

@@ -18,7 +18,7 @@ public class Parse_Tests
 		var handler = new JsonTypeHandler<Test>();
 
 		// Act
-		void action() => handler.Parse(input);
+		var action = void () => handler.Parse(input);
 
 		// Assert
 		Assert.Throws<JsonException>(action);
@@ -32,7 +32,7 @@ public class Parse_Tests
 		var input = F.Rnd.Str;
 
 		// Act
-		void action() => handler.Parse(input);
+		var action = void () => handler.Parse(input);
 
 		// Assert
 		Assert.Throws<JsonException>(action);

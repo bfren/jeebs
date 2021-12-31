@@ -13,7 +13,7 @@ public class SwitchIfAsync_Tests : Jeebs_Tests.SwitchIfAsync_Tests
 	[Fact]
 	public override async Task Test00_Unknown_Option_Throws_UnknownOptionException()
 	{
-		var ifFalse = Substitute.For<Func<int, IMsg>>();
+		var ifFalse = Substitute.For<Func<int, Msg>>();
 		await Test00((opt, check) => opt.SwitchIfAsync(check, null, null));
 		await Test00((opt, check) => opt.SwitchIfAsync(check, ifFalse));
 	}
@@ -21,7 +21,7 @@ public class SwitchIfAsync_Tests : Jeebs_Tests.SwitchIfAsync_Tests
 	[Fact]
 	public override async Task Test01_None_Returns_Original_None()
 	{
-		var ifFalse = Substitute.For<Func<int, IMsg>>();
+		var ifFalse = Substitute.For<Func<int, Msg>>();
 		await Test01((opt, check) => opt.SwitchIfAsync(check, null, null));
 		await Test01((opt, check) => opt.SwitchIfAsync(check, ifFalse));
 	}
@@ -29,7 +29,7 @@ public class SwitchIfAsync_Tests : Jeebs_Tests.SwitchIfAsync_Tests
 	[Fact]
 	public override async Task Test02_Check_Func_Throws_Exception_Returns_None_With_SwitchIfFuncExceptionMsg()
 	{
-		var ifFalse = Substitute.For<Func<int, IMsg>>();
+		var ifFalse = Substitute.For<Func<int, Msg>>();
 		await Test02((opt, check) => opt.SwitchIfAsync(check, null, null));
 		await Test02((opt, check) => opt.SwitchIfAsync(check, ifFalse));
 	}

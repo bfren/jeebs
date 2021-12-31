@@ -13,7 +13,7 @@ public class GetFullName_Tests
 		// Arrange
 		var name = F.Rnd.Str;
 		var table = new TableName(name);
-		static string escape(string obj) => $"<{obj}>";
+		var escape = string (string obj) => $"<{obj}>";
 
 		// Act
 		var result = table.GetFullName(escape);
@@ -29,7 +29,7 @@ public class GetFullName_Tests
 		var schema = F.Rnd.Str;
 		var name = F.Rnd.Str;
 		var table = new TableName(schema, name);
-		static string escape(string obj) => $"<{obj}>";
+		var escape = string (string obj) => $"<{obj}>";
 
 		// Act
 		var result = table.GetFullName(escape);

@@ -14,7 +14,7 @@ public class GetConnection_Tests
 		var config = new DbConfig();
 
 		// Act
-		void action() => config.GetConnection();
+		var action = void () => config.GetConnection();
 
 		// Assert
 		var ex = Assert.Throws<DefaultDbConnectionUndefinedException>(action);
@@ -28,7 +28,7 @@ public class GetConnection_Tests
 		var config = new DbConfig { Default = F.Rnd.Str };
 
 		// Act
-		void action() => config.GetConnection();
+		var action = void () => config.GetConnection();
 
 		// Assert
 		var ex = Assert.Throws<NoDbConnectionsException>(action);
@@ -44,7 +44,7 @@ public class GetConnection_Tests
 		config.Connections.Add(F.Rnd.Str, new DbConnectionConfig());
 
 		// Act
-		void action() => config.GetConnection();
+		var action = void () => config.GetConnection();
 
 		// Assert
 		var ex = Assert.Throws<NamedDbConnectionNotFoundException>(action);

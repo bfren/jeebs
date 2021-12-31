@@ -41,11 +41,11 @@ public static class DateTimeF
 			return dt;
 		}
 
-		return None<DateTime>(new Msg.InvalidDateTimeMsg(s));
+		return None<DateTime>(new M.InvalidDateTimeMsg(s));
 	}
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Unable to parse DateTime string</summary>
 		/// <param name="Value">DateTime string</param>

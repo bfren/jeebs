@@ -37,7 +37,7 @@ public static partial class QueryPostsF
 		// If content is not defined return none
 		if (!content.Any())
 		{
-			return None<PropertyInfo, Msg.ContentPropertyNotFoundMsg<TModel>>();
+			return None<PropertyInfo, M.ContentPropertyNotFoundMsg<TModel>>();
 		}
 
 		// Return single property
@@ -46,10 +46,10 @@ public static partial class QueryPostsF
 	}
 
 	/// <summary>Messages</summary>
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Content property not found on model</summary>
 		/// <typeparam name="T">Post Model type</typeparam>
-		public sealed record class ContentPropertyNotFoundMsg<T> : IMsg { }
+		public sealed record class ContentPropertyNotFoundMsg<T> : Msg;
 	}
 }

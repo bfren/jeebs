@@ -7,7 +7,7 @@ using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
 using static F.OptionF;
-using static F.OptionF.Msg;
+using static F.OptionF.M;
 
 namespace Jeebs_Tests;
 
@@ -27,7 +27,7 @@ public abstract class Map_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Exception);
+		Assert.IsType<UnknownOptionException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
@@ -37,7 +37,7 @@ public abstract class Map_Tests
 		// Arrange
 		var option = Some(F.Rnd.Str);
 		var exception = new Exception();
-		int throwFunc(string _) => throw exception;
+		var throwFunc = int (string _) => throw exception;
 
 		// Act
 		var result = act(option, throwFunc, DefaultHandler);
@@ -55,7 +55,7 @@ public abstract class Map_Tests
 		var option = Some(F.Rnd.Str);
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
-		int throwFunc(string _) => throw exception;
+		var throwFunc = int (string _) => throw exception;
 
 		// Act
 		var result = act(option, throwFunc, handler);
@@ -115,5 +115,5 @@ public abstract class Map_Tests
 
 	public record class FakeOption : Option<int> { }
 
-	public record class TestMsg : IMsg { }
+	public record class TestMsg : Msg;
 }

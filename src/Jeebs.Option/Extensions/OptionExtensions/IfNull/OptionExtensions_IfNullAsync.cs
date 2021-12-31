@@ -20,6 +20,6 @@ public static class OptionExtensions_IfNullAsync
 
 	/// <inheritdoc cref="F.OptionF.IfNullAsync{T, TMsg}(Task{Option{T}}, Func{TMsg})"/>
 	public static Task<Option<T>> IfNullAsync<T, TMsg>(this Task<Option<T>> @this, Func<TMsg> ifNull)
-		where TMsg : IMsg =>
+		where TMsg : Msg =>
 		F.OptionF.IfNullAsync(@this, ifNull);
 }

@@ -21,10 +21,10 @@ public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<string>>()));
 		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<Task<string>>>()));
 		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<Task<string>>>()));
-		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<IMsg, string>>()));
-		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<IMsg, string>>()));
-		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<IMsg, Task<string>>>()));
-		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<IMsg, Task<string>>>()));
+		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<Msg, string>>()));
+		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<Msg, string>>()));
+		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, string>>(), Substitute.For<Func<Msg, Task<string>>>()));
+		await Test00(opt => opt.AsTask.SwitchAsync(Substitute.For<Func<int, Task<string>>>(), Substitute.For<Func<Msg, Task<string>>>()));
 	}
 
 	[Fact]
@@ -48,7 +48,7 @@ public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 	[Fact]
 	public override async Task Test02_If_Some_Runs_Some_Func_With_Value()
 	{
-		var none = Substitute.For<Func<IMsg, Task<string>>>();
+		var none = Substitute.For<Func<Msg, Task<string>>>();
 		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), F.Rnd.Str));
 		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, F.Rnd.Str));
 		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Task.FromResult(F.Rnd.Str)));
@@ -57,9 +57,9 @@ public class SwitchAsync_Tests : Jeebs_Tests.SwitchAsync_Tests
 		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<string>>()));
 		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<Task<string>>>()));
 		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<Task<string>>>()));
-		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<IMsg, string>>()));
-		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<IMsg, string>>()));
-		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<IMsg, Task<string>>>()));
-		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<IMsg, Task<string>>>()));
+		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<Msg, string>>()));
+		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<Msg, string>>()));
+		await Test02((opt, some) => opt.AsTask.SwitchAsync(x => some(x).GetAwaiter().GetResult(), Substitute.For<Func<Msg, Task<string>>>()));
+		await Test02((opt, some) => opt.AsTask.SwitchAsync(some, Substitute.For<Func<Msg, Task<string>>>()));
 	}
 }

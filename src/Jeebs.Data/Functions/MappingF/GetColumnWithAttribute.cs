@@ -29,43 +29,51 @@ public static partial class MappingF
 		)
 		.Map(
 			x => x.Where(p => p.Property.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
-			e => new Msg.ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(e)
+			e => new M.ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(e)
 		)
 		.UnwrapSingle<IMappedColumn>(
-			noItems: () => new Msg.NoPropertyWithAttributeMsg<TEntity, TAttribute>(),
-			tooMany: () => new Msg.TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>()
+			noItems: () => new M.NoPropertyWithAttributeMsg<TEntity, TAttribute>(),
+			tooMany: () => new M.TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>()
 		)
 		.Map(
 			x => new MappedColumn(x),
 			DefaultHandler
 		);
 
-	public static partial class Msg
+	public static partial class M
 	{
 		/// <summary>Something went wrong while getting columns with the specified attribute</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
-		/// <param name="Exception">Exception object</param>
-		public sealed record class ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(Exception Exception) : ExceptionMsg(Exception) { }
+		/// <param name="Value">Exception object</param>
+		public sealed record class ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(Exception Value) : ExceptionMsg;
 
 		/// <summary>No property with specified attribute found on entity</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
-		public sealed record class NoPropertyWithAttributeMsg<TEntity, TAttribute>() : IMsg
+		public sealed record class NoPropertyWithAttributeMsg<TEntity, TAttribute>() : Msg
 		{
-			/// <summary>Return message with class type parameters</summary>
-			public override string ToString() =>
-				$"Required {typeof(TAttribute)} missing on entity {typeof(TEntity)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"Required {Attribute} missing on entity {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { typeof(TAttribute), typeof(TEntity) };
 		}
 
 		/// <summary>Too many properties with specified attribute found on entity</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
-		public sealed record class TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : IMsg
+		public sealed record class TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : Msg
 		{
-			/// <summary>Return message with class type parameters</summary>
-			public override string ToString() =>
-				$"More than one {typeof(TAttribute)} found on entity {typeof(TEntity)}.";
+			/// <inheritdoc/>
+			public override string Format =>
+				"More than one {Attribute} found on entity {Type}.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				new object[] { typeof(TAttribute), typeof(TEntity) };
 		}
 	}
 }

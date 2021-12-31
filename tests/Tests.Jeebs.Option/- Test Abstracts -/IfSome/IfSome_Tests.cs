@@ -17,14 +17,14 @@ public abstract class IfSome_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		static void ifSome(int _) => throw new Exception();
+		var ifSome = void (int _) => throw new Exception();
 
 		// Act
 		var result = act(option, ifSome);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<Msg.UnhandledExceptionMsg>(none);
+		Assert.IsType<M.UnhandledExceptionMsg>(none);
 	}
 
 	public abstract void Test01_None_Returns_Original_Option();

@@ -16,7 +16,7 @@ public class Set_Tests
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		void result() => info.Set(obj, F.Rnd.Str);
+		var result = void () => info.Set(obj, F.Rnd.Str);
 
 		// Assert
 		Assert.Throws<ArgumentNullException>(result);
@@ -31,7 +31,7 @@ public class Set_Tests
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		void result() => info.Set(foo, value);
+		var result = void () => info.Set(foo, value);
 
 		// Assert
 		Assert.Throws<ArgumentNullException>(result);

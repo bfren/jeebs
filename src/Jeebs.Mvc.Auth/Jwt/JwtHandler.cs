@@ -78,7 +78,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				authorisationHeader.ToString(),
 
 			_ =>
-				None<string, Msg.MissingAuthorisationHeaderMsg>()
+				None<string, M.MissingAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>
@@ -92,7 +92,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				authorisationHeader["Bearer ".Length..].Trim(),
 
 			_ =>
-				None<string, Msg.InvalidAuthorisationHeaderMsg>()
+				None<string, M.InvalidAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>
@@ -104,12 +104,12 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 		auth.ValidateToken(token);
 
 	/// <summary>Messages</summary>
-	public static class Msg
+	public static class M
 	{
 		/// <summary>Unable to find Authorization header in headers dictionary</summary>
-		public sealed record class MissingAuthorisationHeaderMsg : IMsg { }
+		public sealed record class MissingAuthorisationHeaderMsg : Msg;
 
 		/// <summary>The Authorization header was not a valid Bearer</summary>
-		public sealed record class InvalidAuthorisationHeaderMsg : IMsg { }
+		public sealed record class InvalidAuthorisationHeaderMsg : Msg;
 	}
 }

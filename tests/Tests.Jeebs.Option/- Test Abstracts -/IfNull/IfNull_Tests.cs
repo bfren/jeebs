@@ -18,7 +18,7 @@ public abstract class IfNull_Tests
 	{
 		// Arrange
 		var some = Some<object>(null, true);
-		var none = None<object?, Msg.NullValueMsg>();
+		var none = None<object?, M.NullValueMsg>();
 		var throws = Substitute.For<Func<Option<object?>>>();
 		throws.Invoke().Throws<Exception>();
 
@@ -28,9 +28,9 @@ public abstract class IfNull_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		Assert.IsType<Msg.UnhandledExceptionMsg>(n0);
+		Assert.IsType<M.UnhandledExceptionMsg>(n0);
 		var n1 = r1.AssertNone();
-		Assert.IsType<Msg.UnhandledExceptionMsg>(n1);
+		Assert.IsType<M.UnhandledExceptionMsg>(n1);
 	}
 
 	public abstract void Test01_Some_With_Null_Value_Runs_IfNull_Func();
@@ -53,7 +53,7 @@ public abstract class IfNull_Tests
 	protected static void Test02(Func<Option<object>, Func<Option<object>>, Option<object>> act)
 	{
 		// Arrange
-		var option = None<object, Msg.NullValueMsg>();
+		var option = None<object, M.NullValueMsg>();
 		var ifNull = Substitute.For<Func<Option<object>>>();
 
 		// Act
@@ -65,11 +65,11 @@ public abstract class IfNull_Tests
 
 	public abstract void Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
 
-	protected static void Test03(Func<Option<object?>, Func<IMsg>, Option<object?>> act)
+	protected static void Test03(Func<Option<object?>, Func<Msg>, Option<object?>> act)
 	{
 		// Arrange
 		var option = Some<object>(null, true);
-		var ifNull = Substitute.For<Func<IMsg>>();
+		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
 		ifNull.Invoke().Returns(msg);
 
@@ -84,11 +84,11 @@ public abstract class IfNull_Tests
 
 	public abstract void Test04_None_With_NullValueMsg_Runs_IfNull_Func_Returns_None_With_Reason();
 
-	protected static void Test04(Func<Option<object>, Func<IMsg>, Option<object>> act)
+	protected static void Test04(Func<Option<object>, Func<Msg>, Option<object>> act)
 	{
 		// Arrange
-		var option = None<object, Msg.NullValueMsg>();
-		var ifNull = Substitute.For<Func<IMsg>>();
+		var option = None<object, M.NullValueMsg>();
+		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
 		ifNull.Invoke().Returns(msg);
 
@@ -101,5 +101,5 @@ public abstract class IfNull_Tests
 		Assert.Same(msg, none);
 	}
 
-	public sealed record class TestMsg : IMsg;
+	public sealed record class TestMsg : Msg;
 }

@@ -10,7 +10,7 @@ namespace Jeebs;
 /// </summary>
 public static class OptionExtensions_AuditAsync
 {
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Option<T>> any) =>
 		F.OptionF.AuditAsync(
 			@this,
@@ -19,7 +19,7 @@ public static class OptionExtensions_AuditAsync
 			none: null
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<Option<T>, Task> any) =>
 		F.OptionF.AuditAsync(
 			@this,
@@ -28,7 +28,7 @@ public static class OptionExtensions_AuditAsync
 			none: null
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some) =>
 		F.OptionF.AuditAsync(
 			@this,
@@ -37,7 +37,7 @@ public static class OptionExtensions_AuditAsync
 			none: null
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some) =>
 		F.OptionF.AuditAsync(
 			@this,
@@ -46,8 +46,8 @@ public static class OptionExtensions_AuditAsync
 			none: null
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<IMsg> none) =>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Msg> none) =>
 		F.OptionF.AuditAsync(
 			@this,
 			any: null,
@@ -55,8 +55,8 @@ public static class OptionExtensions_AuditAsync
 			none: r => { none?.Invoke(r); return Task.CompletedTask; }
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<IMsg, Task> none) =>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<Msg, Task> none) =>
 		F.OptionF.AuditAsync(
 			@this,
 			any: null,
@@ -64,8 +64,8 @@ public static class OptionExtensions_AuditAsync
 			none: none
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some, Action<IMsg> none) =>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<T> some, Action<Msg> none) =>
 		F.OptionF.AuditAsync(
 			@this,
 			any: null,
@@ -73,8 +73,8 @@ public static class OptionExtensions_AuditAsync
 			none: r => { none?.Invoke(r); return Task.CompletedTask; }
 		);
 
-	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{IMsg}?)"/>
-	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some, Func<IMsg, Task> none) =>
+	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
+	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Func<T, Task> some, Func<Msg, Task> none) =>
 		F.OptionF.AuditAsync(
 			@this,
 			any: null,

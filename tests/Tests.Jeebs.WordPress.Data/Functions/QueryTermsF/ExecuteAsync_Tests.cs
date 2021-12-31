@@ -8,7 +8,7 @@ using Jeebs.WordPress.Data.Entities;
 using NSubstitute;
 using Xunit;
 using static F.WordPressF.DataF.QueryTermsF;
-using static F.WordPressF.DataF.QueryTermsF.Msg;
+using static F.WordPressF.DataF.QueryTermsF.M;
 
 namespace F.WordPressF.DataF.QueryTermsF_Tests;
 
