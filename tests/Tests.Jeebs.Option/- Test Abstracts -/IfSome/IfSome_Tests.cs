@@ -17,7 +17,7 @@ public abstract class IfSome_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		var ifSome = void (int _) => throw new Exception();
+		var ifSome = void (int _) => throw new Exception("Thrown.");
 
 		// Act
 		var result = act(option, ifSome);

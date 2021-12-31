@@ -49,7 +49,7 @@ public class ValidateToken_Tests
 			notBefore,
 			expires
 		).Unwrap(
-			() => throw new Exception()
+			() => throw new Exception("Error creating token.")
 		);
 
 		return (config, token, name);
