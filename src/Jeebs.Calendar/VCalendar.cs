@@ -123,6 +123,11 @@ public class VCalendar : CalendarBase
 			builder.AppendLine($"DTEND;TZID={tzid}:{Format(e.End)}");
 		}
 
+		if (e.Free)
+		{
+			builder.AppendLine("TRANSP:TRANSPARENT");
+		}
+
 		builder.AppendLine("END:VEVENT");
 		return builder.ToString();
 	}

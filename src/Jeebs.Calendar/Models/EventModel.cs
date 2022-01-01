@@ -14,11 +14,13 @@ namespace Jeebs.Calendar.Models;
 /// <param name="Summary">Event summary / title</param>
 /// <param name="Description">Event description / details</param>
 /// <param name="Location">Event location</param>
+/// <param name="Free">True if the event shouldn't block time on the calendar</param>
 public readonly record struct EventModel(
 	DateTime Start,
 	DateTime End,
 	bool IsAllDay,
 	string Summary,
 	string Description,
-	string Location
+	string Location,
+	bool Free
 );

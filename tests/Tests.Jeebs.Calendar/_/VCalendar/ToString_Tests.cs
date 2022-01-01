@@ -14,8 +14,8 @@ public class ToString_Tests
 	public void Returns_Correct_VCalendar()
 	{
 		// Arrange
-		var e0 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
-		var e1 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
+		var e0 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
+		var e1 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, true);
 		var events = ImmutableList.Create(e0, e1);
 		var lastModified = F.Rnd.DateTime;
 		var lastModifiedStr = VCalendar.Format(lastModified);
@@ -68,6 +68,7 @@ public class ToString_Tests
 			.AppendLine($"LOCATION:{e1.Location}")
 			.AppendLine($"DTSTART;TZID={tzid}:{VCalendar.Format(e1.Start)}")
 			.AppendLine($"DTEND;TZID={tzid}:{VCalendar.Format(e1.End)}")
+			.AppendLine("TRANSP:TRANSPARENT")
 			.AppendLine("END:VEVENT")
 			.AppendLine("END:VCALENDAR")
 			.ToString();
