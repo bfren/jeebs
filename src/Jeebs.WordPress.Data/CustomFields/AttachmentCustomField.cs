@@ -20,9 +20,14 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// </summary>
 	protected IQueryPosts QueryPosts { get; private init; }
 
-	/// <inheritdoc/>
+	/// <inheritdoc cref="CustomField{T}.CustomField(string, T)"/>
 	protected AttachmentCustomField(string key) : this(new Query.Posts(), key) { }
 
+	/// <summary>
+	/// Create object from posts
+	/// </summary>
+	/// <param name="queryPosts">IQueryPosts</param>
+	/// <param name="key">Meta key (for post_meta table)</param>
 	protected AttachmentCustomField(IQueryPosts queryPosts, string key) : base(key, new Attachment()) =>
 		QueryPosts = queryPosts;
 

@@ -8,10 +8,7 @@ namespace Jeebs.WordPress.Data;
 /// </summary>
 public abstract class FileCustomField : AttachmentCustomField
 {
-	/// <summary>
-	/// Create object with specified meta key
-	/// </summary>
-	/// <param name="key">Meta key (for post_meta table)</param>
+	/// <inheritdoc cref="CustomField{T}.CustomField(string, T)"/>
 	protected FileCustomField(string key) : base(key) { }
 
 	/// <inheritdoc/>

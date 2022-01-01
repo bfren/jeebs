@@ -55,6 +55,9 @@ public abstract class Lockable
 	/// </summary>
 	public static readonly int KeyLength = 32;
 
+	/// <summary>
+	/// Create object
+	/// </summary>
 	protected Lockable() { }
 
 	/// <summary>Messages</summary>

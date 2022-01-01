@@ -10,7 +10,7 @@ public static partial class Rnd
 	public static partial class NumberF
 	{
 		/// <summary>
-		/// Returns a random integer between <see cref="0"/> and <see cref="ulong.MaxValue"/> inclusive
+		/// Returns a random integer between <see langword="0"/> and <see cref="ulong.MaxValue"/> inclusive
 		/// </summary>
 		/// <remarks>
 		/// Don't share code with <see cref="GetUInt32(uint, uint)"/> for memory allocation reasons
@@ -19,7 +19,7 @@ public static partial class Rnd
 			GetUInt64(0, ulong.MaxValue);
 
 		/// <summary>
-		/// Returns a random integer between <see cref="0"/> and <paramref name="max"/> inclusive
+		/// Returns a random integer between <see langword="0"/> and <paramref name="max"/> inclusive
 		/// </summary>
 		/// <remarks>
 		/// Don't share code with <see cref="GetUInt32(uint, uint)"/> for memory allocation reasons

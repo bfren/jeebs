@@ -10,7 +10,7 @@ public static partial class Rnd
 	public static partial class NumberF
 	{
 		/// <summary>
-		/// Returns a random integer between <see cref="0"/> and <see cref="int.MaxValue"/> inclusive
+		/// Returns a random integer between <see langword="0"/> and <see cref="int.MaxValue"/> inclusive
 		/// </summary>
 		/// <remarks>
 		/// Don't share code with <see cref="GetInt32(int, int)"/> for memory allocation reasons
@@ -19,7 +19,7 @@ public static partial class Rnd
 			GetInt32(0, int.MaxValue);
 
 		/// <summary>
-		/// Returns a random integer between <see cref="0"/> and <paramref name="max"/> inclusive
+		/// Returns a random integer between <see langword="0"/> and <paramref name="max"/> inclusive
 		/// </summary>
 		/// <remarks>
 		/// Don't share code with <see cref="GetInt32(int, int)"/> for memory allocation reasons
