@@ -14,7 +14,7 @@
 			"default": "fred"
 		},
 		"logging": {
-			"minimumLevel": "Error"
+			"minimum": "Error"
 		},
 		"services": {
 			"seq": {

@@ -16,7 +16,7 @@
 			}
 		},
 		"logging": {
-			"minimumLevel": "Verbose",
+			"minimum": "Verbose",
 			"console": true,
 			"providers": {
 				"seq.server04": {

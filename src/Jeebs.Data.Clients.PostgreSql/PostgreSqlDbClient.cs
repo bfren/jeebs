@@ -25,7 +25,7 @@ public partial class PostgreSqlDbClient : DbClient
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>
-	public override string Escape(IColumn column, bool withAlias = false) =>
+	public override string Escape(IColumn column, bool withAlias) =>
 		withAlias switch
 		{
 			true =>
@@ -36,7 +36,7 @@ public partial class PostgreSqlDbClient : DbClient
 		};
 
 	/// <inheritdoc/>
-	public override string EscapeWithTable(IColumn column, bool withAlias = false) =>
+	public override string EscapeWithTable(IColumn column, bool withAlias) =>
 		withAlias switch
 		{
 			true =>

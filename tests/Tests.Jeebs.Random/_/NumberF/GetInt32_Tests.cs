@@ -33,7 +33,7 @@ public class GetInt32_Tests
 		const int min = int.MinValue;
 
 		// Act
-		var action = void () => GetInt32(min: min);
+		var action = void () => GetInt32(min: min, max: Rnd.Int);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentException>(action);

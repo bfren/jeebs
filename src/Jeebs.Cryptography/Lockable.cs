@@ -30,7 +30,7 @@ public sealed class Lockable<T> : Lockable
 	public Option<Locked<T>> Lock(byte[] key) =>
 		key.Length switch
 		{
-			KeyLength =>
+			int l when l == KeyLength =>
 				new Locked<T>(Contents, key),
 
 			_ =>
@@ -53,9 +53,12 @@ public abstract class Lockable
 	/// <summary>
 	/// Length of encryption key (if it's a byte array)
 	/// </summary>
-	public const int KeyLength = 32;
+	public static readonly int KeyLength = 32;
 
-	internal Lockable() { }
+	/// <summary>
+	/// Create object
+	/// </summary>
+	protected Lockable() { }
 
 	/// <summary>Messages</summary>
 	public static class M

@@ -82,13 +82,21 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 		// Get profile image stream
 		async Task<System.IO.Stream> getStream(string uri)
 		{
-			using var client = factory.CreateClient();
-			return await client.GetStreamAsync(uri).ConfigureAwait(false);
+			using var http = factory.CreateClient();
+			return await http.GetStreamAsync(uri).ConfigureAwait(false);
 		}
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies = true, int limit = 10)
+	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName) =>
+		GetTweetsAsync(screenName, true, 10);
+
+	/// <inheritdoc/>
+	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies) =>
+		GetTweetsAsync(screenName, excludeReplies, 10);
+
+	/// <inheritdoc/>
+	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit)
 	{
 		return Some(screenName)
 			.BindAsync(

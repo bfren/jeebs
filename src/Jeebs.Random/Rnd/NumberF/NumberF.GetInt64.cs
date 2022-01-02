@@ -10,6 +10,25 @@ public static partial class Rnd
 	public static partial class NumberF
 	{
 		/// <summary>
+		/// Returns a random integer between <see langword="0"/> and <see cref="long.MaxValue"/> inclusive
+		/// </summary>
+		/// <remarks>
+		/// Don't share code with <see cref="GetInt32(int, int)"/> for memory allocation reasons
+		/// </remarks>
+		public static long GetInt64() =>
+			GetInt64(0, long.MaxValue);
+
+		/// <summary>
+		/// Returns a random integer between <see langword="0"/> and <paramref name="max"/> inclusive
+		/// </summary>
+		/// <remarks>
+		/// Don't share code with <see cref="GetInt32(int, int)"/> for memory allocation reasons
+		/// </remarks>
+		/// <param name="max">Maximum acceptable value</param>
+		public static long GetInt64(long max) =>
+			GetInt64(0, max);
+
+		/// <summary>
 		/// Returns a random integer between <paramref name="min"/> and <paramref name="max"/> inclusive
 		/// </summary>
 		/// <remarks>
@@ -17,7 +36,7 @@ public static partial class Rnd
 		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
-		public static long GetInt64(long min = 0, long max = long.MaxValue)
+		public static long GetInt64(long min, long max)
 		{
 			// Check arguments
 			if (min >= max)

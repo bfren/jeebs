@@ -43,11 +43,15 @@ public static partial class Rnd
 		);
 
 		/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
+		public static Option<string> Passphrase(int numberOfWords) =>
+			Passphrase(numberOfWords, '-', true, true);
+
+		/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
 		public static Option<string> Passphrase(
 			int numberOfWords,
-			char separator = '-',
-			bool upperFirst = true,
-			bool includeNumber = true
+			char separator,
+			bool upperFirst,
+			bool includeNumber
 		) =>
 			Passphrase(wordList.Value, numberOfWords, separator, upperFirst, includeNumber);
 

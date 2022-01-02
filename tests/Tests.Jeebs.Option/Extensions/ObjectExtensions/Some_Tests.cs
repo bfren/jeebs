@@ -40,31 +40,58 @@ public class Some_Tests : Jeebs_Tests.Some_Tests
 	#region Unused
 
 	[Fact]
-	public override void Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg() { }
+	public override void Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg() { }
+	public override void Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler() { }
+	public override void Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler() { }
+	public override void Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test05_Null_Input_Func_Returns_None() { }
+	public override void Test05_Null_Input_Func_Returns_None()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test07_Nullable_Allow_Null_False_Null_Input_Func_Returns_None_With_AllowNullWasFalseMsg() { }
+	public override void Test07_Nullable_Allow_Null_False_Null_Input_Func_Returns_None_With_AllowNullWasFalseMsg()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test09_Nullable_Allow_Null_True_Null_Input_Func_Returns_Some_With_Null_Value() { }
+	public override void Test09_Nullable_Allow_Null_True_Null_Input_Func_Returns_Some_With_Null_Value()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test11_Not_Null_Func_Returns_Some() { }
+	public override void Test11_Not_Null_Func_Returns_Some()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test13_Nullable_Not_Null_Func_Returns_Some() { }
+	public override void Test13_Nullable_Not_Null_Func_Returns_Some()
+	{
+		// Unused
+	}
 
 	#endregion
 }

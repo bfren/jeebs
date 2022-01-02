@@ -16,9 +16,24 @@ public static class Builder
 	/// Create a configured <see cref="WebApplication"/>
 	/// </summary>
 	/// <param name="args">Commandline arguments</param>
+	public static (WebApplication, ILog) Create(string[] args) =>
+		Create(args, true, null);
+
+	/// <summary>
+	/// Create a configured <see cref="WebApplication"/>
+	/// </summary>
+	/// <param name="args">Commandline arguments</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	public static (WebApplication, ILog) Create(string[] args, bool useHsts) =>
+		Create(args, useHsts, null);
+
+	/// <summary>
+	/// Create a configured <see cref="WebApplication"/>
+	/// </summary>
+	/// <param name="args">Commandline arguments</param>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 	/// <param name="configure">[Optional] Configure builder before app is built</param>
-	public static (WebApplication, ILog) Create(string[] args, bool useHsts = true, Action<WebApplicationBuilder>? configure = null)
+	public static (WebApplication, ILog) Create(string[] args, bool useHsts, Action<WebApplicationBuilder>? configure)
 	{
 		// Create app
 		var app = new MinimalApiApp(useHsts).Create(args, configure);

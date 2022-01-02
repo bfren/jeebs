@@ -62,9 +62,18 @@ public abstract class Menu
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="url">IUrlHelper</param>
-	/// <param name="list">[Optional] Menu Items</param>
 	/// <returns>Result to output as response</returns>
-	public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list = null)
+	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url) =>
+		LoadItemsAsync(http, url, null);
+
+	/// <summary>
+	/// Load the specified menu items (to help with caching / preloading pages)
+	/// </summary>
+	/// <param name="http">IHttpClientFactory</param>
+	/// <param name="url">IUrlHelper</param>
+	/// <param name="list">Menu Items</param>
+	/// <returns>Result to output as response</returns>
+	public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list)
 	{
 		// Write to StringBuilder
 		var result = new StringBuilder();
@@ -78,7 +87,7 @@ public abstract class Menu
 			try
 			{
 				// Load the URL and ensure it is successful
-				var response = await client.GetAsync(uri);
+				var response = await client.GetAsync(uri).ConfigureAwait(false);
 				response.EnsureSuccessStatusCode();
 
 				// Successful
@@ -102,7 +111,7 @@ public abstract class Menu
 				Write($"Loading {uri} .. ");
 
 				// Attempt to load the URL
-				await Load(uri);
+				await Load(uri).ConfigureAwait(false);
 
 				// Put the next URL on a new line
 				Write("<br/>");

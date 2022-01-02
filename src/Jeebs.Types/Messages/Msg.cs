@@ -15,7 +15,7 @@ public abstract record class Msg
 	/// <summary>
 	/// Default LogLevel for messages
 	/// </summary>
-	public const LogLevel DefaultLevel = LogLevel.Information;
+	public static readonly LogLevel DefaultLevel = LogLevel.Information;
 
 	/// <summary>
 	/// Log level

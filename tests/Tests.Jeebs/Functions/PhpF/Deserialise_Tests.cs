@@ -7,7 +7,7 @@ namespace F.PhpF_Tests;
 
 public class Deserialise_Tests
 {
-	public const string serialisedArray = @"a:2:{i:1;a:2:{i:1;s:6:""Orange"";i:0;s:5:""Apple"";}i:0;s:12:""Sample Array"";}";
+	public static readonly string serialisedArray = @"a:2:{i:1;a:2:{i:1;s:6:""Orange"";i:0;s:5:""Apple"";}i:0;s:12:""Sample Array"";}";
 
 	[Theory]
 	[InlineData("b:1;", true)]

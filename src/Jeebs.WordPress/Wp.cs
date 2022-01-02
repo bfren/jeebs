@@ -71,9 +71,14 @@ public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, T
 		if (!initialised)
 		{
 			initialised = true;
-			RegisterCustomPostTypes();
-			RegisterCustomTaxonomies();
+			Init();
 		}
+	}
+
+	private void Init()
+	{
+		RegisterCustomPostTypes();
+		RegisterCustomTaxonomies();
 	}
 
 	/// <inheritdoc/>

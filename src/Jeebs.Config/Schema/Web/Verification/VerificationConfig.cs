@@ -11,7 +11,7 @@ public sealed record class VerificationConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = WebConfig.Key + ":verification";
+	public static readonly string Key = WebConfig.Key + ":verification";
 
 	/// <summary>
 	/// Google Site Verification page

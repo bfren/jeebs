@@ -18,8 +18,17 @@ public abstract class Program
 	/// </summary>
 	/// <typeparam name="T">Host type</typeparam>
 	/// <param name="args">Command Line arguments</param>
-	/// <param name="run">[Optional] Action to run with IServiceProvider and ILog</param>
-	public static void Main<T>(string[] args, Action<IServiceProvider, ILog>? run = null)
+	public static void Main<T>(string[] args)
+		where T : App, new() =>
+		Main<T>(args, null);
+
+	/// <summary>
+	/// Synchronous entry point
+	/// </summary>
+	/// <typeparam name="T">Host type</typeparam>
+	/// <param name="args">Command Line arguments</param>
+	/// <param name="run">Action to run with IServiceProvider and ILog</param>
+	public static void Main<T>(string[] args, Action<IServiceProvider, ILog>? run)
 		where T : App, new() =>
 		MainAsync<T>(args, (provider, log) => { run?.Invoke(provider, log); return Task.CompletedTask; }).RunSynchronously();
 
@@ -28,8 +37,17 @@ public abstract class Program
 	/// </summary>
 	/// <typeparam name="T">Host type</typeparam>
 	/// <param name="args">Command Line arguments</param>
-	/// <param name="run">[Optional] Asynchronous function to run with IServiceProvider and ILog</param>
-	public static async Task MainAsync<T>(string[] args, Func<IServiceProvider, ILog, Task>? run = null)
+	public static Task MainAsync<T>(string[] args)
+		where T : App, new() =>
+		MainAsync<T>(args, null);
+
+	/// <summary>
+	/// Asynchronous entry point
+	/// </summary>
+	/// <typeparam name="T">Host type</typeparam>
+	/// <param name="args">Command Line arguments</param>
+	/// <param name="run">Asynchronous function to run with IServiceProvider and ILog</param>
+	public static async Task MainAsync<T>(string[] args, Func<IServiceProvider, ILog, Task>? run)
 		where T : App, new()
 	{
 		// Create app

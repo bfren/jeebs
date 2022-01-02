@@ -14,7 +14,7 @@ public sealed record class ServicesConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":services";
+	public static readonly string Key = JeebsConfig.Key + ":services";
 
 	/// <summary>
 	/// Rocket.Chat configurations

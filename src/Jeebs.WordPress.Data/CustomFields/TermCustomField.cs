@@ -19,10 +19,15 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// </summary>
 	protected IQueryTerms QueryTerms { get; private init; }
 
-	/// <inheritdoc/>
+	/// <inheritdoc cref="CustomField{T}.CustomField(string, T)"/>
 	protected TermCustomField(string key) : this(new Query.Terms(), key) { }
 
-	internal TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
+	/// <summary>
+	/// Create object from terms
+	/// </summary>
+	/// <param name="queryTerms">IQueryTerms</param>
+	/// <param name="key">Meta key (for post_meta table)</param>
+	protected TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
 		QueryTerms = queryTerms;
 
 	/// <inheritdoc/>

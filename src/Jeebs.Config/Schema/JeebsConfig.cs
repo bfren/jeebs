@@ -13,7 +13,7 @@ public sealed record class JeebsConfig
 	/// <summary>
 	/// Path to Jeebs settings configuration section
 	/// </summary>
-	public const string Key = "jeebs";
+	public static readonly string Key = "jeebs";
 
 	/// <summary>
 	/// App congiguration

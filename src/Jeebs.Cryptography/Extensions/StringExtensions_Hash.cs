@@ -12,13 +12,20 @@ namespace Jeebs.Cryptography;
 public static class StringExtensions_Hash
 {
 	/// <summary>
+	/// Compute a 64-byte hash, returning a string of length 88
+	/// </summary>
+	/// <param name="this">String to hash</param>
+	public static Option<string> Hash(this string @this) =>
+		Hash(@this, 64);
+
+	/// <summary>
 	/// Compute a hash:<br/>
 	/// A 32 byte hash returns a string of length 44<br/>
 	/// A 64 byte hash (default) returns a string of length 88
 	/// </summary>
 	/// <param name="this">String to hash</param>
 	/// <param name="bytes">Hash length in bytes - must be between 16 and 64</param>
-	public static Option<string> Hash(this string @this, int bytes = 64) =>
+	public static Option<string> Hash(this string @this, int bytes) =>
 		@this switch
 		{
 			string input when !string.IsNullOrWhiteSpace(input) =>

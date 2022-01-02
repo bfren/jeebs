@@ -18,9 +18,9 @@ public static partial class OptionF
 	/// <typeparam name="T">Option value type</typeparam>
 	/// <typeparam name="U">Single value type</typeparam>
 	/// <param name="option">Input option</param>
-	/// <param name="noItems">[Optional] Function to run if the Option value is a list with no items</param>
-	/// <param name="tooMany">[Optional] Function to run if the Option value is a list with more than one item</param>
-	/// <param name="notAList">[Optional] Function to run if the Option value is not a list</param>
+	/// <param name="noItems">Function to run if the Option value is a list with no items</param>
+	/// <param name="tooMany">Function to run if the Option value is a list with more than one item</param>
+	/// <param name="notAList">Function to run if the Option value is not a list</param>
 	public static Option<U> UnwrapSingle<T, U>(Option<T> option, Func<Msg>? noItems, Func<Msg>? tooMany, Func<Msg>? notAList) =>
 		Catch(() =>
 			Switch(

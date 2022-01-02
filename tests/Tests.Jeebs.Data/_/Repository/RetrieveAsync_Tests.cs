@@ -17,7 +17,7 @@ public class RetrieveAsync_Tests
 		var value = F.Rnd.Lng;
 
 		// Act
-		await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value));
+		await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
 		client.Received().GetRetrieveQuery<Repository_Setup.Foo, Repository_Setup.FooModel>(value);
@@ -31,7 +31,7 @@ public class RetrieveAsync_Tests
 		var value = F.Rnd.Lng;
 
 		// Act
-		await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value));
+		await repo.RetrieveAsync<Repository_Setup.FooModel>(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());

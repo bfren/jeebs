@@ -62,6 +62,9 @@ public abstract class Log : ILog
 			case LogLevel.Fatal:
 				Fatal(text, args);
 				break;
+			default:
+				// Unsupported level
+				break;
 		}
 	}
 

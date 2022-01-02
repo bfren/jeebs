@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.Data.Enums;
 /// <summary>
 /// PostStatus enumeration
 /// </summary>
-public sealed class PostStatus : Enumerated
+public sealed record class PostStatus : Enumerated
 {
 	/// <summary>
 	/// Create new value

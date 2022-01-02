@@ -39,24 +39,24 @@ public class Where_Tests
 		var option = Some(value);
 
 		// Act
-		var r0 = await option.AsTask.Where(s => s == value).Select(s => s ^ 2);
-		var r1 = await option.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2);
-		var r2 = await option.AsTask.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2);
+		var r0 = await option.AsTask.Where(s => s == value).Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await option.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r2 = await option.AsTask.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2).ConfigureAwait(false);
 		var r3 = await (
 			from a in option.AsTask
 			where a == value
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r4 = await (
 			from a in option
 			where Task.FromResult(a == value)
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r5 = await (
 			from a in option.AsTask
 			where Task.FromResult(a == value)
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var s0 = r0.AssertSome();
@@ -99,24 +99,24 @@ public class Where_Tests
 		var option = Some(value);
 
 		// Act
-		var r0 = await option.AsTask.Where(s => s != value).Select(s => s ^ 2);
-		var r1 = await option.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2);
-		var r2 = await option.AsTask.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2);
+		var r0 = await option.AsTask.Where(s => s != value).Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await option.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r2 = await option.AsTask.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2).ConfigureAwait(false);
 		var r3 = await (
 			from a in option.AsTask
 			where a != value
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r4 = await (
 			from a in option
 			where Task.FromResult(a != value)
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r5 = await (
 			from a in option.AsTask
 			where Task.FromResult(a != value)
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		r0.AssertNone();
@@ -153,24 +153,24 @@ public class Where_Tests
 		var option = None<int>(new InvalidIntegerMsg());
 
 		// Act
-		var r0 = await option.AsTask.Where(s => s != 0).Select(s => s ^ 2);
-		var r1 = await option.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2);
-		var r2 = await option.AsTask.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2);
+		var r0 = await option.AsTask.Where(s => s != 0).Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await option.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r2 = await option.AsTask.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2).ConfigureAwait(false);
 		var r3 = await (
 			from a in option.AsTask
 			where a != 0
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r4 = await (
 			from a in option
 			where Task.FromResult(a != 0)
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 		var r5 = await (
 			from a in option.AsTask
 			where Task.FromResult(a != 0)
 			select a ^ 2
-		);
+		).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();

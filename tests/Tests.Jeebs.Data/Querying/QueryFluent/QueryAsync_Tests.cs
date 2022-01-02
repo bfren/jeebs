@@ -20,7 +20,7 @@ public class QueryAsync_Tests : QueryFluent_Tests
 		var (query, _) = Setup();
 
 		// Act
-		var result = await query.QueryAsync<int>();
+		var result = await query.QueryAsync<int>().ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -36,10 +36,10 @@ public class QueryAsync_Tests : QueryFluent_Tests
 		predicates.Count.Returns(1);
 
 		// Act
-		_ = await (query with { Predicates = predicates }).QueryAsync<int>();
+		_ = await (query with { Predicates = predicates }).QueryAsync<int>().ConfigureAwait(false);
 
 		// Assert
 		var array = predicates.Received().ToArray();
-		await v.Repo.Received().QueryAsync<int>(array);
+		await v.Repo.Received().QueryAsync<int>(array).ConfigureAwait(false);
 	}
 }

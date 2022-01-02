@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = WebConfig.Key;
+		var result = WebConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":web", result);

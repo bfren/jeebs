@@ -54,7 +54,7 @@ public class GetColumnFromExpression_Tests
 
 	public record class TestTable : Table
 	{
-		public const string Prefix =
+		public static readonly string Prefix =
 			"Bar_";
 
 		public string Foo =>

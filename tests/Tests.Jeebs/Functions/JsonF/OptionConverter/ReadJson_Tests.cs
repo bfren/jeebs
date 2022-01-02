@@ -44,7 +44,6 @@ public class ReadJson_Tests
 	}
 
 	[Theory]
-	[InlineData(JsonF.Empty)]
 	[InlineData("\"  \"")]
 	[InlineData("true")]
 	[InlineData("false")]
@@ -63,7 +62,6 @@ public class ReadJson_Tests
 	}
 
 	[Theory]
-	[InlineData(JsonF.Empty)]
 	[InlineData("\"  \"")]
 	[InlineData("true")]
 	[InlineData("false")]

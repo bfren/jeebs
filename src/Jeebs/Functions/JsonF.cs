@@ -17,7 +17,7 @@ public static class JsonF
 	/// <summary>
 	/// Empty JSON
 	/// </summary>
-	public const string Empty = "\"\"";
+	public static readonly string Empty = "\"\"";
 
 	/// <summary>
 	/// Default JsonSerializerOptions
@@ -31,7 +31,7 @@ public static class JsonF
 	{
 		options = new JsonSerializerOptions
 		{
-			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+			DefaultIgnoreCondition = JsonIgnoreCondition.Never,
 			DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
 			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 			NumberHandling = JsonNumberHandling.AllowReadingFromString
@@ -124,6 +124,20 @@ public static class JsonF
 	/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
 	public static Option<T> Deserialise<T>(string str) =>
 		Deserialise<T>(str, options);
+
+	/// <summary>
+	/// Return lower-case boolean string
+	/// </summary>
+	/// <param name="value">Value</param>
+	public static string Bool(bool value) =>
+		value switch
+		{
+			true =>
+				"true",
+
+			false =>
+				"false"
+		};
 
 	/// <summary>Messages</summary>
 	public static class M

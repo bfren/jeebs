@@ -117,7 +117,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.ExecuteAsync<ulong>(x.query, x.param, CommandType.Text, transaction)
 		)
 		.MapAsync(
-			x => new PagingValues(x, page, parts.Maximum ?? Defaults.PagingValues.ItemsPer),
+			x => new PagingValues(x, page, parts.Maximum ?? Defaults.PagingValues.ItemsPer, Defaults.PagingValues.PagesPer),
 			DefaultHandler
 		)
 		.BindAsync(

@@ -6,7 +6,7 @@ using Jeebs;
 using Jeebs.Cqrs;
 using Microsoft.AspNetCore.Mvc;
 
-var (app, log) = Jeebs.Apps.Builder.Create(args, configure: builder => builder.Services.AddCqrs());
+var (app, log) = Jeebs.Apps.Builder.Create(args, useHsts: false, configure: builder => builder.Services.AddCqrs());
 
 app.MapGet("/", () => "Hello, world!");
 app.MapGet("/hello/{name}", HandleSayHello);
@@ -24,7 +24,8 @@ static async Task<IResult> HandleSayHello(
 		)
 		.UnwrapAsync(
 			x => x.Value(ifNone: "Nothing to say.")
-		);
+		)
+		.ConfigureAwait(false);
 
 	return Results.Text(text);
 }

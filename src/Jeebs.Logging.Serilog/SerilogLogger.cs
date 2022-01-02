@@ -89,5 +89,8 @@ public class SerilogLogger : Log
 		logger.Fatal(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Dispose() { }
+	public override void Dispose()
+	{
+		// Unused
+	}
 }

@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = AzureKeyVaultConfig.Key;
+		var result = AzureKeyVaultConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":azureKeyVault", result);

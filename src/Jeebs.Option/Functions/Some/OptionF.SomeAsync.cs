@@ -15,7 +15,7 @@ public static partial class OptionF
 	{
 		try
 		{
-			return await value() switch
+			return await value().ConfigureAwait(false) switch
 			{
 				T x =>
 					new Some<T>(x), // Some<T> is only created by Some() functions and implicit operator
@@ -36,7 +36,7 @@ public static partial class OptionF
 	{
 		try
 		{
-			var v = await value();
+			var v = await value().ConfigureAwait(false);
 
 			return v switch
 			{

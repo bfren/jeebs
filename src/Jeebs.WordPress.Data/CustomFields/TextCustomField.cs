@@ -25,7 +25,7 @@ public abstract class TextCustomField : CustomField<string>
 			ValueStr = value;
 	}
 
-	/// <inheritdoc/>
+	/// <inheritdoc cref="CustomField{T}.CustomField(string, T)"/>
 	protected TextCustomField(string key) : base(key, string.Empty) { }
 
 	/// <inheritdoc/>

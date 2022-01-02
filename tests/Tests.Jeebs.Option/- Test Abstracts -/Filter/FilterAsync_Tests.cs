@@ -22,7 +22,7 @@ public abstract class FilterAsync_Tests
 		var option = new FakeOption();
 
 		// Act
-		var result = await act(option);
+		var result = await act(option).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -40,7 +40,7 @@ public abstract class FilterAsync_Tests
 		var throwFunc = Task<bool> (string _) => throw exception;
 
 		// Act
-		var result = await act(option, throwFunc);
+		var result = await act(option, throwFunc).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -58,7 +58,7 @@ public abstract class FilterAsync_Tests
 		predicate.Invoke(Arg.Any<int>()).Returns(true);
 
 		// Act
-		var result = await act(option, predicate);
+		var result = await act(option, predicate).ConfigureAwait(false);
 
 		// Assert
 		var some = result.AssertSome();
@@ -76,7 +76,7 @@ public abstract class FilterAsync_Tests
 		predicate.Invoke(Arg.Any<string>()).Returns(false);
 
 		// Act
-		var result = await act(option, predicate);
+		var result = await act(option, predicate).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -93,12 +93,12 @@ public abstract class FilterAsync_Tests
 		var predicate = Substitute.For<Func<int, Task<bool>>>();
 
 		// Act
-		var result = await act(option, predicate);
+		var result = await act(option, predicate).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
 		Assert.Same(reason, none);
-		await predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
+		await predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>()).ConfigureAwait(false);
 	}
 
 	public record class FakeOption : Option<int> { }

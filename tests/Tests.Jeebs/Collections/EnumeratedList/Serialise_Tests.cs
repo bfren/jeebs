@@ -34,7 +34,7 @@ public class Serialise_Tests
 		Assert.Equal(json, result);
 	}
 
-	public class Foo : Enumerated
+	public record class Foo : Enumerated
 	{
 		public Foo(string name) : base(name) { }
 

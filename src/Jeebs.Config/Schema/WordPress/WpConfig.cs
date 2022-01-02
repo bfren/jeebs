@@ -11,7 +11,7 @@ public record class WpConfig
 	/// <summary>
 	/// Path to WordPress settings configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":wp";
+	public static readonly string Key = JeebsConfig.Key + ":wp";
 
 	/// <summary>
 	/// Database connection name (accessed via main Jeebs DB settings section)

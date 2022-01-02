@@ -22,7 +22,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = new FakeOption();
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -38,7 +38,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = Create.None<int>();
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -53,7 +53,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = None<int>(reason);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -69,7 +69,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = Some(empty);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -86,7 +86,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var noItems = Substitute.For<Func<Msg>>();
 
 		// Act
-		await act(option.AsTask, noItems);
+		await act(option.AsTask, noItems).ConfigureAwait(false);
 
 		// Assert
 		noItems.Received().Invoke();
@@ -101,7 +101,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = Some(list);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -118,7 +118,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var tooMany = Substitute.For<Func<Msg>>();
 
 		// Act
-		await act(option.AsTask, tooMany);
+		await act(option.AsTask, tooMany).ConfigureAwait(false);
 
 		// Assert
 		tooMany.Received().Invoke();
@@ -133,7 +133,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = Some(value);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -150,7 +150,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var notAList = Substitute.For<Func<Msg>>();
 
 		// Act
-		var result = await act(option.AsTask, notAList);
+		var result = await act(option.AsTask, notAList).ConfigureAwait(false);
 
 		// Assert
 		notAList.Received().Invoke();
@@ -166,7 +166,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = Some(list);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -183,7 +183,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var option = Some(list);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		Assert.Equal(value, result);

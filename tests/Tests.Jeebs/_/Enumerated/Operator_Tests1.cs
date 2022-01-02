@@ -38,7 +38,7 @@ public partial class Operator_Tests
 		Assert.False(r1);
 	}
 
-	public class Bar : Enumerated
+	public record class Bar : Enumerated
 	{
 		public Bar(string name) : base(name) { }
 	}

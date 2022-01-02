@@ -18,10 +18,10 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test00(Func<Func<Task<int>>, Handler, Task<Option<int>>> act)
 	{
 		// Arrange
-		var throwFunc = Task<int> () => throw new Exception();
+		var throwFunc = Task<int> () => throw new Exception("Thrown.");
 
 		// Act
-		var result = await act(throwFunc, DefaultHandler);
+		var result = await act(throwFunc, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -33,11 +33,11 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test01(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
 	{
 		// Arrange
-		var throwFunc = Task<int?> () => throw new Exception();
+		var throwFunc = Task<int?> () => throw new Exception("Thrown.");
 
 		// Act
-		var r0 = await act(throwFunc, true, DefaultHandler);
-		var r1 = await act(throwFunc, false, DefaultHandler);
+		var r0 = await act(throwFunc, true, DefaultHandler).ConfigureAwait(false);
+		var r1 = await act(throwFunc, false, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -56,7 +56,7 @@ public abstract class SomeAsync_Tests
 		var throwFunc = Task<int> () => throw exception;
 
 		// Act
-		var result = await act(throwFunc, handler);
+		var result = await act(throwFunc, handler).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -73,8 +73,8 @@ public abstract class SomeAsync_Tests
 		var throwFunc = Task<int?> () => throw exception;
 
 		// Act
-		var r0 = await act(throwFunc, true, handler);
-		var r1 = await act(throwFunc, false, handler);
+		var r0 = await act(throwFunc, true, handler).ConfigureAwait(false);
+		var r1 = await act(throwFunc, false, handler).ConfigureAwait(false);
 
 		// Assert
 		r0.AssertNone();
@@ -90,7 +90,7 @@ public abstract class SomeAsync_Tests
 		var value = Task<int?> () => Task.FromResult<int?>(null);
 
 		// Act
-		var result = await act(value, DefaultHandler);
+		var result = await act(value, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -105,7 +105,7 @@ public abstract class SomeAsync_Tests
 		var value = Task<int?> () => Task.FromResult<int?>(null);
 
 		// Act
-		var result = await act(value, false, DefaultHandler);
+		var result = await act(value, false, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -120,7 +120,7 @@ public abstract class SomeAsync_Tests
 		var value = Task<int?> () => Task.FromResult<int?>(null);
 
 		// Act
-		var result = await act(value, true, DefaultHandler);
+		var result = await act(value, true, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var some = result.AssertSome();
@@ -142,9 +142,9 @@ public abstract class SomeAsync_Tests
 		var f2 = Task<object> () => Task.FromResult<object>(v2);
 
 		// Act
-		var r0 = await act(f0, DefaultHandler);
-		var r1 = await act(f1, DefaultHandler);
-		var r2 = await act(f2, DefaultHandler);
+		var r0 = await act(f0, DefaultHandler).ConfigureAwait(false);
+		var r1 = await act(f1, DefaultHandler).ConfigureAwait(false);
+		var r2 = await act(f2, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var s0 = r0.AssertSome();
@@ -170,9 +170,9 @@ public abstract class SomeAsync_Tests
 		var f2 = Task<object?> () => Task.FromResult<object?>(v2);
 
 		// Act
-		var r0 = await act(f0, false, DefaultHandler);
-		var r1 = await act(f1, false, DefaultHandler);
-		var r2 = await act(f2, false, DefaultHandler);
+		var r0 = await act(f0, false, DefaultHandler).ConfigureAwait(false);
+		var r1 = await act(f1, false, DefaultHandler).ConfigureAwait(false);
+		var r2 = await act(f2, false, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var s0 = r0.AssertSome();

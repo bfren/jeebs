@@ -14,7 +14,7 @@ public static partial class OptionF
 		BindAsync(
 			option,
 			async x =>
-				await predicate(x) switch
+				await predicate(x).ConfigureAwait(false) switch
 				{
 					true =>
 						Some(x),
@@ -26,5 +26,5 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="Filter{T}(Option{T}, Func{T, bool})"/>
 	public static async Task<Option<T>> FilterAsync<T>(Task<Option<T>> option, Func<T, Task<bool>> predicate) =>
-		await FilterAsync(await option, predicate);
+		await FilterAsync(await option.ConfigureAwait(false), predicate).ConfigureAwait(false);
 }

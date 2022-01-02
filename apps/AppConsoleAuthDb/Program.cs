@@ -8,7 +8,7 @@ using Jeebs.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
+Jeebs.Apps.Program.Main<App>(args, (provider, log) =>
 {
 	// Begin
 	log.Debug("= Auth Database Console Test =");

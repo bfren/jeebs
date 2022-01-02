@@ -13,7 +13,7 @@ public class UnsupportedAuthenticationSchemeException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public const string Format = "Unsupported authentication scheme '{0}'.";
+	public static readonly string Format = "Unsupported authentication scheme '{0}'.";
 
 	/// <summary>
 	/// Create exception

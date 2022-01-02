@@ -11,7 +11,7 @@ public sealed record class WebConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":web";
+	public static readonly string Key = JeebsConfig.Key + ":web";
 
 	/// <summary>
 	/// Authentication and Authorisation configuration

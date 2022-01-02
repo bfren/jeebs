@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Text;
+
 namespace Jeebs;
 
 public static partial class StringExtensions
@@ -11,16 +13,16 @@ public static partial class StringExtensions
 	/// <param name="this">Input string</param>
 	public static string GetAcronym(this string @this)
 	{
-		var acronym = string.Empty;
+		var acronym = new StringBuilder();
 
 		for (int i = 0; i < @this.Length; i++)
 		{
 			if (char.IsUpper(@this[i]))
 			{
-				acronym += @this[i];
+				acronym.Append(@this[i]);
 			}
 		}
 
-		return acronym;
+		return acronym.ToString();
 	}
 }

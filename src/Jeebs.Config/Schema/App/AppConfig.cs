@@ -13,7 +13,7 @@ public sealed record class AppConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":app";
+	public static readonly string Key = JeebsConfig.Key + ":app";
 
 	/// <summary>
 	/// Application Name

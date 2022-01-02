@@ -20,7 +20,7 @@ public static partial class OptionF
 		Task<Option<T>> option,
 		Func<FluentUnwrapAsync<T>, U> unwrap
 	) =>
-		unwrap(new FluentUnwrapAsync<T>(await option));
+		unwrap(new FluentUnwrapAsync<T>(await option.ConfigureAwait(false)));
 
 	/// <summary>
 	/// Fluent unwrapper

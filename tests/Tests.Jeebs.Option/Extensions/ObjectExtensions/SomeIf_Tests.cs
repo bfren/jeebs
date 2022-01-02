@@ -31,19 +31,34 @@ public class SomeIf_Tests : Jeebs_Tests.SomeIf_Tests
 	#region Unused
 
 	[Fact]
-	public override void Test01_Exception_Thrown_By_Predicate_With_Value_Func_Calls_Handler_Returns_None() { }
+	public override void Test01_Exception_Thrown_By_Predicate_With_Value_Func_Calls_Handler_Returns_None()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test02_Exception_Thrown_By_Value_Func_Calls_Handler_Returns_None() { }
+	public override void Test02_Exception_Thrown_By_Value_Func_Calls_Handler_Returns_None()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test04_Predicate_True_With_Value_Func_Returns_Some() { }
+	public override void Test04_Predicate_True_With_Value_Func_Returns_Some()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test06_Predicate_False_With_Value_Func_Returns_None_With_PredicateWasFalseMsg() { }
+	public override void Test06_Predicate_False_With_Value_Func_Returns_None_With_PredicateWasFalseMsg()
+	{
+		// Unused
+	}
 
 	[Fact]
-	public override void Test07_Predicate_False_Bypasses_Value_Func() { }
+	public override void Test07_Predicate_False_Bypasses_Value_Func()
+	{
+		// Unused
+	}
 
 	#endregion
 }

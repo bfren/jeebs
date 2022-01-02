@@ -31,7 +31,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			");",
 			null,
 			CommandType.Text
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Insert into the table
@@ -44,7 +45,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		)
 		.AuditAsync(
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Get data from the table
@@ -57,7 +59,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		.AuditAsync(
 			some: x => { if (x.Foo == foo) { log.Debug("Succeeded: {@Test}.", x); id = x.Id; } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Update data
@@ -69,7 +72,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		)
 		.AuditAsync(
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 
 	await db
 		.QuerySingleAsync<ParamTest>(
@@ -78,7 +82,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		.AuditAsync(
 			some: x => { if (x.Foo == newFoo) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Delete data
@@ -90,7 +95,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		.AuditAsync(
 			some: x => { if (x) { log.Debug("Succeeded."); } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Drop table
@@ -98,7 +104,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	await db
 		.ExecuteAsync(
 			$"DROP TABLE {table};", null, CommandType.Text
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Create table
@@ -113,7 +120,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 			");",
 			null,
 			CommandType.Text
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Insert values using Jsonb
@@ -131,7 +139,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 				)
 				.AuditAsync(
 					none: r => log.Message(r)
-				);
+				)
+				.ConfigureAwait(false);
 		}
 	}
 	Console.WriteLine();
@@ -144,7 +153,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		.AuditAsync(
 			some: x => { if (x == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Select values using Mapping
@@ -158,7 +168,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		.AuditAsync(
 			some: x => { if (x.Value.Id == 18) { log.Debug("Succeeded: {@Test}.", x); } else { log.Error("Failed."); } },
 			none: r => log.Message(r)
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Insert values using repository
@@ -177,7 +188,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 				.AuditAsync(
 					some: x => log.Debug("New ID: {Id}", x.Value),
 					none: r => log.Message(r)
-				);
+				)
+				.ConfigureAwait(false);
 		}
 	}
 	Console.WriteLine();
@@ -187,9 +199,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	await db
 		.ExecuteAsync(
 			$"DROP TABLE {jsonTable};", null, CommandType.Text
-		);
+		)
+		.ConfigureAwait(false);
 	Console.WriteLine();
 
 	// Done
 	log.Debug("Done.");
-});
+}).ConfigureAwait(false);

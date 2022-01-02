@@ -132,7 +132,10 @@ public sealed class Locked<T> : Locked
 /// </summary>
 public abstract class Locked
 {
-	internal Locked() { }
+	/// <summary>
+	/// Create object
+	/// </summary>
+	protected Locked() { }
 
 	/// <summary>Messages</summary>
 	public static class M

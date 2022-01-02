@@ -33,7 +33,7 @@ public class GetInt64_Tests
 		const long min = long.MinValue;
 
 		// Act
-		var action = void () => GetInt64(min: min);
+		var action = void () => GetInt64(min: min, max: Rnd.Lng);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentException>(action);

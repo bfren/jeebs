@@ -12,7 +12,7 @@ public sealed record class AzureKeyVaultConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":azureKeyVault";
+	public static readonly string Key = JeebsConfig.Key + ":azureKeyVault";
 
 	/// <summary>
 	/// Azure Key Vault Name

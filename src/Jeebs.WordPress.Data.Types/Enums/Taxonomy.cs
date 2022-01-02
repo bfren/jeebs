@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Data.Enums;
 /// <summary>
 /// Taxonomy enumeration
 /// </summary>
-public sealed class Taxonomy : Enumerated
+public sealed record class Taxonomy : Enumerated
 {
 	/// <summary>
 	/// Create new value

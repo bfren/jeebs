@@ -24,10 +24,10 @@ public class DispatchAsync_Tests
 		var value = F.Rnd.Int;
 
 		// Act
-		_ = await dispatcher.DispatchAsync<int, string>(value);
-		_ = await dispatcher.DispatchAsync<int, string>(value, CancellationToken.None);
+		_ = await dispatcher.DispatchAsync<int, string>(value).ConfigureAwait(false);
+		_ = await dispatcher.DispatchAsync<int, string>(value, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
-		await handler.Received(2).HandleAsync(value, CancellationToken.None);
+		await handler.Received(2).HandleAsync(value, CancellationToken.None).ConfigureAwait(false);
 	}
 }

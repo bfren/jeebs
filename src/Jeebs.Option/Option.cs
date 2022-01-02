@@ -45,8 +45,6 @@ public abstract record class Option<T> : IEquatable<Option<T>>
 	public bool IsNone =>
 		this is None<T>;
 
-	internal Option() { }
-
 	/// <summary>
 	/// Returns an enumerator to enable use in foreach blocks
 	/// </summary>

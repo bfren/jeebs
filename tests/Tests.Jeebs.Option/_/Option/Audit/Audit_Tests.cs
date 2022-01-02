@@ -86,7 +86,10 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 	#region Unused
 
 	[Fact]
-	public override void Test00_Null_Args_Returns_Original_Option() { }
+	public override void Test00_Null_Args_Returns_Original_Option()
+	{
+		// Unused
+	}
 
 	#endregion
 }

@@ -86,14 +86,14 @@ public class Join_Tests
 
 	public sealed record class TestTable0() : Table(nameof(TestTable0))
 	{
-		public const string Prefix = "Test";
+		public static readonly string Prefix = "Test";
 
 		public string Foo { get; set; } = Prefix + nameof(Foo);
 	}
 
 	public sealed record class TestTable1() : Table(nameof(TestTable1))
 	{
-		public const string Prefix = "Test";
+		public static readonly string Prefix = "Test";
 
 		public string Bar { get; set; } = Prefix + nameof(Bar);
 	}

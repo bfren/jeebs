@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = DbConfig.Key;
+		var result = DbConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":db", result);

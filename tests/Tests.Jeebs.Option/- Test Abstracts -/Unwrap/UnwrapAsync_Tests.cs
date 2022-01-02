@@ -23,7 +23,7 @@ public abstract class UnwrapAsync_Tests
 		ifNone.Invoke().Returns(value);
 
 		// Act
-		var result = await act(option.AsTask, ifNone);
+		var result = await act(option.AsTask, ifNone).ConfigureAwait(false);
 
 		// Assert
 		ifNone.Received().Invoke();
@@ -42,7 +42,7 @@ public abstract class UnwrapAsync_Tests
 		ifNone.Invoke(msg).Returns(value);
 
 		// Act
-		var result = await act(option.AsTask, ifNone);
+		var result = await act(option.AsTask, ifNone).ConfigureAwait(false);
 
 		// Assert
 		ifNone.Received().Invoke(msg);
@@ -58,7 +58,7 @@ public abstract class UnwrapAsync_Tests
 		var option = Some(value);
 
 		// Act
-		var result = await act(option.AsTask);
+		var result = await act(option.AsTask).ConfigureAwait(false);
 
 		// Assert
 		Assert.Equal(value, result);

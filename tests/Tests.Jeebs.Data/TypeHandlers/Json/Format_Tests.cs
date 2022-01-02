@@ -34,7 +34,7 @@ public class Format_Tests
 		var v0 = F.Rnd.Str;
 		var v1 = F.Rnd.Int;
 		var input = new Test { Foo = v0, Bar = v1 };
-		var expected = $"{{\"foo\":\"{v0}\",\"bar\":{v1}}}";
+		var expected = $"{{\"foo\":\"{v0}\",\"bar\":{v1},\"empty\":null}}";
 
 		// Act
 		handler.SetValue(parameter, input);

@@ -21,7 +21,7 @@ public class ToString_Tests
 		Assert.Equal(input, result);
 	}
 
-	public class Foo : Enumerated
+	public record class Foo : Enumerated
 	{
 		public Foo(string name) : base(name) { }
 	}

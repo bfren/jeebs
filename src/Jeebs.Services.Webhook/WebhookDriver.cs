@@ -42,7 +42,11 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	#region Convert to Jeebs.Services.Webhook.Models.Message and Send
 
 	/// <inheritdoc/>
-	public void Send(string message, NotificationLevel level = NotificationLevel.Information) =>
+	public void Send(string message) =>
+		Send(new Message { Content = message, Level = NotificationLevel.Information });
+
+	/// <inheritdoc/>
+	public void Send(string message, NotificationLevel level) =>
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>

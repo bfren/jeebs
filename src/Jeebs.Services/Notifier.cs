@@ -18,7 +18,11 @@ public sealed class Notifier : INotifier
 		this.listeners = listeners;
 
 	/// <inheritdoc/>
-	public void Send(string message, NotificationLevel level = NotificationLevel.Information)
+	public void Send(string message) =>
+		Send(message, NotificationLevel.Information);
+
+	/// <inheritdoc/>
+	public void Send(string message, NotificationLevel level)
 	{
 		foreach (var listener in listeners)
 		{

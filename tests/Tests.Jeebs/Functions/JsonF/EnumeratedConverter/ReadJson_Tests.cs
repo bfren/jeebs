@@ -28,7 +28,7 @@ public class ReadJson_Tests
 	public void Deserialise_Null_Returns_Object_With_Empty_Value()
 	{
 		// Arrange
-		const string? json = JsonF.Empty;
+		string? json = JsonF.Empty;
 
 		// Act
 		var result = JsonF.Deserialise<EnumeratedTest0>(json);
@@ -72,7 +72,7 @@ public class ReadJson_Tests
 		Assert.IsType<DeserialiseExceptionMsg>(none);
 	}
 
-	public class EnumeratedTest0 : Enumerated
+	public record class EnumeratedTest0 : Enumerated
 	{
 		public EnumeratedTest0(string name) : base(name) { }
 	}
@@ -84,7 +84,7 @@ public class ReadJson_Tests
 		public EnumeratedTest0 EnumeratedValue { get; set; } = new EnumeratedTest0(string.Empty);
 	}
 
-	public class EnumeratedTest1 : Enumerated
+	public record class EnumeratedTest1 : Enumerated
 	{
 		public EnumeratedTest1(string name) : base(name, false) { }
 	}

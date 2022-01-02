@@ -13,7 +13,7 @@ public sealed record class DbConfig
 	/// <summary>
 	/// Path to database settings configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":db";
+	public static readonly string Key = JeebsConfig.Key + ":db";
 
 	/// <summary>
 	/// Default database connection name
@@ -40,13 +40,22 @@ public sealed record class DbConfig
 	public Dictionary<string, DbConnectionConfig> Connections { get; init; } = new();
 
 	/// <summary>
-	/// Retrieve default Connection, unless name is set
+	/// Retrieve default Connection
+	/// </summary>
+	/// <exception cref="DefaultDbConnectionUndefinedException"></exception>
+	/// <exception cref="NoDbConnectionsException"></exception>
+	/// <exception cref="NamedDbConnectionNotFoundException"></exception>
+	public DbConnectionConfig GetConnection() =>
+		GetConnection(null);
+
+	/// <summary>
+	/// Retrieve Connection by name
 	/// </summary>
 	/// <param name="name">[Optional] Connection name</param>
 	/// <exception cref="DefaultDbConnectionUndefinedException"></exception>
 	/// <exception cref="NoDbConnectionsException"></exception>
 	/// <exception cref="NamedDbConnectionNotFoundException"></exception>
-	public DbConnectionConfig GetConnection(string? name = null)
+	public DbConnectionConfig GetConnection(string? name)
 	{
 		// If name is null or empty, use Default connection
 		string connection = string.IsNullOrWhiteSpace(name) ? Default : name;

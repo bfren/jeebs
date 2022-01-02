@@ -35,7 +35,7 @@ public class WriteJson_Tests
 		Assert.Equal(JsonF.Empty, result);
 	}
 
-	public class EnumeratedTest : Enumerated
+	public record class EnumeratedTest : Enumerated
 	{
 		public EnumeratedTest(string name) : base(name) { }
 	}

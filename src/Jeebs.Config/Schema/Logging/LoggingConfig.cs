@@ -15,12 +15,12 @@ public sealed record class LoggingConfig
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public const string Key = JeebsConfig.Key + ":logging";
+	public static readonly string Key = JeebsConfig.Key + ":logging";
 
 	/// <summary>
 	/// Minimum LogLevel
 	/// </summary>
-	public LogLevel MinimumLevel { get; init; }
+	public LogLevel Minimum { get; init; }
 
 	/// <summary>
 	/// If true, log to console

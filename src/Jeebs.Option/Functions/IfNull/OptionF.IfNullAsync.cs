@@ -29,10 +29,10 @@ public static partial class OptionF
 
 	/// <inheritdoc cref="IfNull{T}(Option{T}, Func{Option{T}})"/>
 	public static async Task<Option<T>> IfNullAsync<T>(Task<Option<T>> option, Func<Task<Option<T>>> ifNull) =>
-		await IfNullAsync(await option, ifNull);
+		await IfNullAsync(await option.ConfigureAwait(false), ifNull).ConfigureAwait(false);
 
 	/// <inheritdoc cref="IfNull{T, TMsg}(Option{T}, Func{TMsg})"/>
 	public static async Task<Option<T>> IfNullAsync<T, TMsg>(Task<Option<T>> option, Func<TMsg> ifNull)
 		where TMsg : Msg =>
-		await IfNullAsync(await option, () => None<T>(ifNull()).AsTask);
+		await IfNullAsync(await option.ConfigureAwait(false), () => None<T>(ifNull()).AsTask).ConfigureAwait(false);
 }

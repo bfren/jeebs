@@ -31,7 +31,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, F.Rnd.Str);
+		var result = await controller.GetPrincipal(user, F.Rnd.Str).ConfigureAwait(false);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -79,7 +79,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, F.Rnd.Str);
+		var result = await controller.GetPrincipal(user, F.Rnd.Str).ConfigureAwait(false);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -132,7 +132,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, F.Rnd.Str);
+		var result = await controller.GetPrincipal(user, F.Rnd.Str).ConfigureAwait(false);
 
 		// Assert
 		Assert.Equal(5, result.Claims.Count());

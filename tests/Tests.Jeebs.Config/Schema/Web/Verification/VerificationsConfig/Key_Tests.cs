@@ -13,7 +13,7 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		const string result = VerificationConfig.Key;
+		var result = VerificationConfig.Key;
 
 		// Assert
 		Assert.Equal(JeebsConfig.Key + ":web:verification", result);

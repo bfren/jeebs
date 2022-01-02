@@ -12,21 +12,21 @@ public abstract record class Table : ITable
 	/// Create with <see cref="ITableName"/>
 	/// </summary>
 	/// <param name="name">ITableName</param>
-	public Table(ITableName name) =>
+	protected Table(ITableName name) =>
 		this.name = name;
 
 	/// <summary>
 	/// Create with table name
 	/// </summary>
 	/// <param name="name">Table Name</param>
-	public Table(string name) : this(new TableName(name)) { }
+	protected Table(string name) : this(new TableName(name)) { }
 
 	/// <summary>
 	/// Create with table schema and name
 	/// </summary>
 	/// <param name="schema">Table Schema</param>
 	/// <param name="name">Table Name</param>
-	public Table(string schema, string name) : this(new TableName(schema, name)) { }
+	protected Table(string schema, string name) : this(new TableName(schema, name)) { }
 
 	/// <inheritdoc/>
 	public ITableName GetName() =>

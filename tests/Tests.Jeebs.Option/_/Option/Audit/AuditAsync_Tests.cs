@@ -19,10 +19,10 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 		var some = Substitute.For<Func<int, Task>>();
 		var none = Substitute.For<Func<Msg, Task>>();
 
-		await Test01(opt => opt.AuditAsync(any));
-		await Test01(opt => opt.AuditAsync(some));
-		await Test01(opt => opt.AuditAsync(none));
-		await Test01(opt => opt.AuditAsync(some, none));
+		await Test01(opt => opt.AuditAsync(any)).ConfigureAwait(false);
+		await Test01(opt => opt.AuditAsync(some)).ConfigureAwait(false);
+		await Test01(opt => opt.AuditAsync(none)).ConfigureAwait(false);
+		await Test01(opt => opt.AuditAsync(some, none)).ConfigureAwait(false);
 	}
 
 	#endregion
@@ -32,25 +32,25 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	[Fact]
 	public override async Task Test04_Some_Runs_Audit_Func_And_Returns_Original_Option()
 	{
-		await Test04((opt, any) => opt.AuditAsync(any));
+		await Test04((opt, any) => opt.AuditAsync(any)).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public override async Task Test05_None_Runs_Audit_Func_And_Returns_Original_Option()
 	{
-		await Test05((opt, any) => opt.AuditAsync(any));
+		await Test05((opt, any) => opt.AuditAsync(any)).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public override async Task Test08_Some_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option()
 	{
-		await Test08((opt, any) => opt.AuditAsync(any));
+		await Test08((opt, any) => opt.AuditAsync(any)).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public override async Task Test09_None_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option()
 	{
-		await Test09((opt, any) => opt.AuditAsync(any));
+		await Test09((opt, any) => opt.AuditAsync(any)).ConfigureAwait(false);
 	}
 
 	#endregion
@@ -62,8 +62,8 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		var none = Substitute.For<Func<Msg, Task>>();
 
-		await Test11((opt, some) => opt.AuditAsync(some));
-		await Test11((opt, some) => opt.AuditAsync(some, none));
+		await Test11((opt, some) => opt.AuditAsync(some)).ConfigureAwait(false);
+		await Test11((opt, some) => opt.AuditAsync(some, none)).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -71,8 +71,8 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		var some = Substitute.For<Func<int, Task>>();
 
-		await Test13((opt, none) => opt.AuditAsync(none));
-		await Test13((opt, none) => opt.AuditAsync(some, none));
+		await Test13((opt, none) => opt.AuditAsync(none)).ConfigureAwait(false);
+		await Test13((opt, none) => opt.AuditAsync(some, none)).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -80,8 +80,8 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		var none = Substitute.For<Func<Msg, Task>>();
 
-		await Test15((opt, some) => opt.AuditAsync(some));
-		await Test15((opt, some) => opt.AuditAsync(some, none));
+		await Test15((opt, some) => opt.AuditAsync(some)).ConfigureAwait(false);
+		await Test15((opt, some) => opt.AuditAsync(some, none)).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -89,8 +89,8 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 	{
 		var some = Substitute.For<Func<int, Task>>();
 
-		await Test17((opt, none) => opt.AuditAsync(none));
-		await Test17((opt, none) => opt.AuditAsync(some, none));
+		await Test17((opt, none) => opt.AuditAsync(none)).ConfigureAwait(false);
+		await Test17((opt, none) => opt.AuditAsync(some, none)).ConfigureAwait(false);
 	}
 
 	#endregion

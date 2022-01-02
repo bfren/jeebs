@@ -17,7 +17,7 @@ public class GetEvent_Tests
 		var lastModified = F.Rnd.DateTime;
 		var tzid = F.Rnd.Str;
 		var uid = F.Rnd.Str;
-		var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
+		var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{uid}")
@@ -46,7 +46,7 @@ public class GetEvent_Tests
 		var lastModified = F.Rnd.DateTime;
 		var tzid = F.Rnd.Str;
 		var uid = F.Rnd.Str;
-		var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, true, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str);
+		var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, true, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, true);
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{uid}")
@@ -57,6 +57,7 @@ public class GetEvent_Tests
 			.AppendLine($"DESCRIPTION:{e.Description}")
 			.AppendLine($"LOCATION:{e.Location}")
 			.AppendLine($"DTSTART;TZID={tzid};VALUE=DATE:{VCalendar.Format(e.Start, false)}")
+			.AppendLine("TRANSP:TRANSPARENT")
 			.AppendLine("END:VEVENT")
 			.ToString();
 

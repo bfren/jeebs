@@ -21,10 +21,10 @@ public abstract class SwitchAsync_Tests
 		var option = new FakeOption();
 
 		// Act
-		var action = async Task<string> () => await act(option);
+		var action = async Task<string> () => await act(option).ConfigureAwait(false);
 
 		// Assert
-		await Assert.ThrowsAsync<UnknownOptionException>(action);
+		await Assert.ThrowsAsync<UnknownOptionException>(action).ConfigureAwait(false);
 	}
 
 	public abstract Task Test01_If_None_Runs_None_Func_With_Reason();
@@ -37,10 +37,10 @@ public abstract class SwitchAsync_Tests
 		var none = Substitute.For<Func<Msg, Task<string>>>();
 
 		// Act
-		var result = await act(option, none);
+		var result = await act(option, none).ConfigureAwait(false);
 
 		// Assert
-		await none.Received().Invoke(reason);
+		await none.Received().Invoke(reason).ConfigureAwait(false);
 	}
 
 	public abstract Task Test02_If_Some_Runs_Some_Func_With_Value();
@@ -53,10 +53,10 @@ public abstract class SwitchAsync_Tests
 		var some = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, some);
+		var result = await act(option, some).ConfigureAwait(false);
 
 		// Assert
-		await some.Received().Invoke(value);
+		await some.Received().Invoke(value).ConfigureAwait(false);
 	}
 
 	public record class FakeOption : Option<int> { }
