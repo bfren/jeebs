@@ -24,13 +24,26 @@ public class Get_Tests
 	}
 
 	[Fact]
+	public void Invalid_Options_Throws_InvalidOperationException()
+	{
+		// Arrange
+		const int length = 3;
+
+		// Act
+		var action = void () => Get(length, options: new(false, false, false, false));
+
+		// Assert
+		Assert.Throws<InvalidOperationException>(action);
+	}
+
+	[Fact]
 	public void Invalid_Length_Throws_InvalidOperationException()
 	{
 		// Arrange
 		const int length = 3;
 
 		// Act
-		var action = void () => Get(length, upper: true, numbers: true, special: true);
+		var action = void () => Get(length, options: new(true, true, true, true));
 
 		// Assert
 		Assert.Throws<InvalidOperationException>(action);
@@ -42,55 +55,55 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(12, upper: false);
+		var result = Get(12, options:new(true, false, false, false));
 
 		// Assert
 		Assert.True(result.All(c => LowercaseChars.Contains(c)));
 	}
 
 	[Fact]
-	public void Returns_Only_Lowercase_And_Uppercase_Characters()
+	public void Returns_Only_Uppercase_Characters()
 	{
 		// Arrange
 
 		// Act
-		var result = Get(64, upper: true);
+		var result = Get(64, options: new(false, true, false, false));
 
 		// Assert
-		Assert.True(result.All(c => LowercaseChars.Contains(c) || UppercaseChars.Contains(c)));
+		Assert.True(result.All(c => UppercaseChars.Contains(c)));
 	}
 
 	[Fact]
-	public void Returns_Only_Lowercase_And_Numeric_Characters()
+	public void Returns_Only_Numeric_Characters()
 	{
 		// Arrange
 
 		// Act
-		var result = Get(64, upper: false, numbers: true);
+		var result = Get(64, options: new(false, false, true, false));
 
 		// Assert
-		Assert.True(result.All(c => LowercaseChars.Contains(c) || NumberChars.Contains(c)));
+		Assert.True(result.All(c => NumberChars.Contains(c)));
 	}
 
 	[Fact]
-	public void Returns_Only_Lowercase_And_Special_Characters()
+	public void Returns_Only_Special_Characters()
 	{
 		// Arrange
 
 		// Act
-		var result = Get(64, upper: false, special: true);
+		var result = Get(64, options: new(false, false, false, true));
 
 		// Assert
-		Assert.True(result.All(c => LowercaseChars.Contains(c) || SpecialChars.Contains(c)));
+		Assert.True(result.All(c => SpecialChars.Contains(c)));
 	}
 
 	[Fact]
-	public void ReturnsStringWithAllCharacters()
+	public void Returns_String_With_All_Characters()
 	{
 		// Arrange
 
 		// Act
-		var result = Get(64, upper: true, numbers: true, special: true);
+		var result = Get(64, options: new(true, true, true, true));
 
 		// Assert
 		Assert.False(result.All(c => LowercaseChars.Contains(c)));

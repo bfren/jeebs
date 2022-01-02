@@ -70,22 +70,36 @@ public static partial class Rnd
 		}
 
 		/// <summary>
+		/// Create a random string using default character groups - see <see cref="GetOptions.Default"/>
+		/// </summary>
+		/// <param name="length">The length of the new random string</param>
+		public static string Get(int length) =>
+			Get(length, GetOptions.Default);
+
+		/// <summary>
 		/// Create a random string using specified character groups
 		/// Lowercase letters will always be used
 		/// </summary>
 		/// <param name="length">The length of the new random string</param>
-		/// <param name="upper">If true (default) uppercase letters will be included</param>
-		/// <param name="numbers">If true numbers will be included</param>
-		/// <param name="special">If true special characters will be included</param>
-		public static string Get(
-			int length,
-			bool upper = true,
-			bool numbers = false,
-			bool special = false
-		)
+		/// <param name="opt">GetOptions</param>
+		public static string Get(int length, Func<GetOptions, GetOptions> opt) =>
+			Get(length, opt(GetOptions.Default));
+
+		/// <summary>
+		/// Create a random string using specified character groups
+		/// Lowercase letters will always be used
+		/// </summary>
+		/// <param name="length">The length of the new random string</param>
+		/// <param name="options">GetOptions</param>
+		public static string Get(int length, GetOptions options)
 		{
 			// Setup
 			var random = new List<char>();
+
+			if (!options.IsValid)
+			{
+				throw new InvalidOperationException("You must include at least one character class.");
+			}
 
 			// Function to return a random list index
 			void AppendOneOf(List<char> list)
@@ -98,25 +112,28 @@ public static partial class Rnd
 			var chars = new List<char>();
 
 			// Add lowercase characters
-			chars.AddRange(LowercaseChars);
-			AppendOneOf(LowercaseChars);
+			if (options.Lower)
+			{
+				chars.AddRange(LowercaseChars);
+				AppendOneOf(LowercaseChars);
+			}
 
 			// Add uppercase characters
-			if (upper)
+			if (options.Upper)
 			{
 				chars.AddRange(UppercaseChars);
 				AppendOneOf(UppercaseChars);
 			}
 
 			// Add numbers
-			if (numbers)
+			if (options.Numbers)
 			{
 				chars.AddRange(NumberChars);
 				AppendOneOf(NumberChars);
 			}
 
 			// Add special characters
-			if (special)
+			if (options.Special)
 			{
 				chars.AddRange(SpecialChars);
 				AppendOneOf(SpecialChars);
@@ -135,7 +152,38 @@ public static partial class Rnd
 			}
 
 			// Return random string
-			return new string(random.ToArray().Shuffle());
+			return new(random.ToArray().Shuffle());
 		}
+
+		/// <summary>
+		/// Get Options - at least one character class must be included
+		/// </summary>
+		/// <param name="Lower">If true (default) lowercase letters will be included</param>
+		/// <param name="Upper">If true (default) uppercase letters will be included</param>
+		/// <param name="Numbers">If true numbers will be included</param>
+		/// <param name="Special">If true special characters will be included</param>
+		public sealed record class GetOptions(
+			bool Lower,
+			bool Upper,
+			bool Numbers,
+			bool Special
+		)
+		{
+			/// <summary>
+			/// Returns default character classes:
+			///		<see cref="Lower"/> = true
+			///		<see cref="Upper"/> = true
+			///		<see cref="Numbers"/> = false
+			///		<see cref="Special"/> = false
+			/// </summary>
+			internal static GetOptions Default =>
+				new(true, true, false, false);
+
+			/// <summary>
+			/// Returns true if at least one character class is enabled
+			/// </summary>
+			internal bool IsValid =>
+				Lower || Upper || Numbers || Special;
+		};
 	}
 }
