@@ -25,13 +25,13 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Fatal(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
 	var seq = provider.GetRequiredService<Seq>();
-	//seq.Send("test");
+	seq.Send("test");
 
 	var slack = provider.GetRequiredService<Slack>();
-	//slack.Send("test");
+	slack.Send("test");
 
 	var notifier = provider.GetRequiredService<INotifier>();
-	//notifier.Send("test notification");
+	notifier.Send("test notification");
 
 	var one = async Task<Option<int>> (int input) =>
 		await Task.FromResult(input + 1).ConfigureAwait(false);
