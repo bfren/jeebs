@@ -18,7 +18,7 @@ a {
   border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, 
+.nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;
@@ -53,9 +53,9 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    font-size: 14px;
-    position: relative;
-    min-height: 100%;
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
