@@ -11,10 +11,10 @@ public static class CacheProfiles
 	/// <summary>
 	/// None
 	/// </summary>
-	public static readonly string None = "None";
+	public const string None = nameof(None);
 
 	/// <summary>
 	/// Default
 	/// </summary>
-	public static readonly string Default = "Default";
+	public const string Default = nameof(Default);
 }
