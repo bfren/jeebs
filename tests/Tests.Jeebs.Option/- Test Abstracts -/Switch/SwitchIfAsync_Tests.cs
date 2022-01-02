@@ -52,7 +52,7 @@ public abstract class SwitchIfAsync_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		var check = bool (int _) => throw new Exception("Thrown.");
+		var check = bool (int _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option.AsTask, check).ConfigureAwait(false);
@@ -102,7 +102,7 @@ public abstract class SwitchIfAsync_Tests
 		var option = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
 		check.Invoke(Arg.Any<int>()).Returns(true);
-		var ifTrue = None<int> (int _) => throw new Exception("Thrown.");
+		var ifTrue = None<int> (int _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option.AsTask, check, ifTrue).ConfigureAwait(false);
@@ -120,7 +120,7 @@ public abstract class SwitchIfAsync_Tests
 		var option = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
 		check.Invoke(Arg.Any<int>()).Returns(false);
-		var ifFalse = None<int> (int _) => throw new Exception("Thrown.");
+		var ifFalse = None<int> (int _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option.AsTask, check, ifFalse).ConfigureAwait(false);

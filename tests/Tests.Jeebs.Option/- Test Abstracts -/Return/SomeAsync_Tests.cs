@@ -18,7 +18,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test00(Func<Func<Task<int>>, Handler, Task<Option<int>>> act)
 	{
 		// Arrange
-		var throwFunc = Task<int> () => throw new Exception("Thrown.");
+		var throwFunc = Task<int> () => throw new OptionTestException();
 
 		// Act
 		var result = await act(throwFunc, DefaultHandler).ConfigureAwait(false);
@@ -33,7 +33,7 @@ public abstract class SomeAsync_Tests
 	protected static async Task Test01(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
 	{
 		// Arrange
-		var throwFunc = Task<int?> () => throw new Exception("Thrown.");
+		var throwFunc = Task<int?> () => throw new OptionTestException();
 
 		// Act
 		var r0 = await act(throwFunc, true, DefaultHandler).ConfigureAwait(false);
