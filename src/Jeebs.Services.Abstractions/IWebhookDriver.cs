@@ -10,7 +10,7 @@ namespace Jeebs.Services.Webhook;
 /// </summary>
 /// <typeparam name="TConfig">Service configuration</typeparam>
 /// <typeparam name="TMessage">Message type</typeparam>
-public interface IWebhookDriver<TConfig, TMessage>
+public interface IWebhookDriver<in TConfig, in TMessage>
 	where TConfig : IServiceConfig
 	where TMessage : notnull
 {

@@ -31,7 +31,7 @@ public interface IWp
 /// WordPress wrapper
 /// </summary>
 /// <typeparam name="TConfig">WpConfig type</typeparam>
-public interface IWp<TConfig> : IWp
+public interface IWp<out TConfig> : IWp
 	where TConfig : WpConfig
 {
 	/// <summary>
