@@ -1,12 +1,57 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using Jeebs.Config;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.WordPress;
+
+/// <summary>
+/// Enforces once-only registration of custom WordPress values
+/// </summary>
+public abstract class Wp
+{
+	/// <summary>
+	/// Whether or not the class has been initialised
+	/// </summary>
+	private static readonly MemoryCache initialised = new(new MemoryCacheOptions());
+
+	/// <summary>
+	/// Initialise WordPress instance - but only once per <typeparamref name="TConfig"/>
+	/// </summary>
+	/// <typeparam name="TConfig">WpConfig type</typeparam>
+	/// <param name="log">ILog</param>
+	protected void Init<TConfig>(ILog<Wp> log)
+	{
+		// If a WordPress instance of the specified configuration type hasn't been created yet,
+		// call Init() to register custom values
+		_ = initialised.GetOrCreate(typeof(TConfig).FullName, entry =>
+		{
+			// Set expiration to maximum so it never expires while the application is running
+			entry.SetAbsoluteExpiration(DateTimeOffset.MaxValue);
+
+			// Do init
+			log.Debug("Initialising {WpDb}.", entry.Key);
+
+			RegisterCustomPostTypes();
+			RegisterCustomTaxonomies();
+
+			// It doesn't matter what we return here, because whatever value we store, the
+			// factory won't be called a second time
+			return true;
+		});
+	}
+
+	/// <inheritdoc/>
+	public abstract void RegisterCustomPostTypes();
+
+	/// <inheritdoc/>
+	public abstract void RegisterCustomTaxonomies();
+}
 
 /// <inheritdoc cref="IWp{TConfig}"/>
 /// <typeparam name="TConfig">WpConfig type</typeparam>
@@ -22,7 +67,7 @@ namespace Jeebs.WordPress;
 /// <typeparam name="Ttt">WpTermTaxonomyEntity type</typeparam>
 /// <typeparam name="Tu">WpUserEntity type</typeparam>
 /// <typeparam name="Tum">WpUserMetaEntity type</typeparam>
-public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : IWp<TConfig>
+public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Wp, IWp<TConfig>
 	where TConfig : WpConfig
 	where Tc : WpCommentEntity
 	where Tcm : WpCommentMetaEntity
@@ -37,11 +82,6 @@ public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, T
 	where Tu : WpUserEntity
 	where Tum : WpUserMetaEntity
 {
-	/// <summary>
-	/// Whether or not the class has been initialised
-	/// </summary>
-	private static bool initialised;
-
 	/// <inheritdoc/>
 	public TConfig Config { get; private init; }
 
@@ -66,24 +106,7 @@ public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, T
 		// Create new database object using this instance's entity types
 		Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, logForDb);
 
-		// Don't need to lock here - if two threads try to register custom types etc,
-		// it will simply return false
-		if (!initialised)
-		{
-			initialised = true;
-			Init();
-		}
+		// Initialise
+		Init<WpConfig>(logForDb.ForContext<Wp>());
 	}
-
-	private void Init()
-	{
-		RegisterCustomPostTypes();
-		RegisterCustomTaxonomies();
-	}
-
-	/// <inheritdoc/>
-	public abstract void RegisterCustomPostTypes();
-
-	/// <inheritdoc/>
-	public abstract void RegisterCustomTaxonomies();
 }
