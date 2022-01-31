@@ -17,7 +17,7 @@ public abstract class Some_Tests
 	protected static void Test00(Func<Func<int>, Handler, Option<int>> act)
 	{
 		// Arrange
-		var throwFunc = int () => throw new Exception("Thrown.");
+		var throwFunc = int () => throw new OptionTestException();
 
 		// Act
 		var result = act(throwFunc, DefaultHandler);
@@ -32,7 +32,7 @@ public abstract class Some_Tests
 	protected static void Test01(Func<Func<int?>, bool, Handler, Option<int?>> act)
 	{
 		// Arrange
-		var throwFunc = int? () => throw new Exception("Thrown.");
+		var throwFunc = int? () => throw new OptionTestException();
 
 		// Act
 		var r0 = act(throwFunc, true, DefaultHandler);

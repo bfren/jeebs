@@ -55,12 +55,10 @@ public sealed class AuthDb : Db, IAuthDb
 	}
 
 	/// <inheritdoc/>
+	protected override void AddTypeHandlers(DbMapper mapper) =>
+		mapper.AddStrongIdTypeHandlers();
+
+	/// <inheritdoc/>
 	public void MigrateToLatest() =>
 		Client.MigrateToLatest(Config.ConnectionString);
-
-	/// <summary>
-	/// Add type handlers
-	/// </summary>
-	static AuthDb() =>
-		AddTypeHandlers(mapper => mapper.AddStrongIdTypeHandlers());
 }

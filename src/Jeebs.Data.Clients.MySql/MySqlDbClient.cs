@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace Jeebs.Data.Clients.MySql;
 

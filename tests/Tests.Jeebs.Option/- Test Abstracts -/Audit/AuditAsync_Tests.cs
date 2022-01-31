@@ -117,7 +117,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = True;
-		var throwException = void (Option<bool> _) => throw new Exception("Thrown.");
+		var throwException = void (Option<bool> _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option, throwException).ConfigureAwait(false);
@@ -132,7 +132,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = Create.None<bool>();
-		var throwException = void (Option<bool> _) => throw new Exception("Thrown.");
+		var throwException = void (Option<bool> _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option, throwException).ConfigureAwait(false);
@@ -147,7 +147,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = True;
-		var throwException = Task (Option<bool> _) => throw new Exception("Thrown.");
+		var throwException = Task (Option<bool> _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option, throwException).ConfigureAwait(false);
@@ -162,7 +162,7 @@ public abstract class AuditAsync_Tests
 	{
 		// Arrange
 		var option = Create.None<bool>();
-		var throwException = Task (Option<bool> _) => throw new Exception("Thrown.");
+		var throwException = Task (Option<bool> _) => throw new OptionTestException();
 
 		// Act
 		var result = await act(option, throwException).ConfigureAwait(false);

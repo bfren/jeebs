@@ -60,11 +60,11 @@ public class VCalendar : CalendarBase
 	internal static string GetHeader()
 	{
 		var builder = new StringBuilder();
-		builder.AppendLine("BEGIN:VCALENDAR");
-		builder.AppendLine("VERSION:2.0");
-		builder.AppendLine("PRODID:-//bfren//NONSGML Jeebs.Calendar//EN");
-		builder.AppendLine("CALSCALE:GREGORIAN");
-		builder.AppendLine("X-PUBLISHED-TTL:PT1H");
+		builder.AppendMax75("BEGIN:VCALENDAR");
+		builder.AppendMax75("VERSION:2.0");
+		builder.AppendMax75("PRODID:-//bfren//NONSGML Jeebs.Calendar//EN");
+		builder.AppendMax75("CALSCALE:GREGORIAN");
+		builder.AppendMax75("X-PUBLISHED-TTL:PT1H");
 		return builder.ToString();
 	}
 
@@ -74,23 +74,23 @@ public class VCalendar : CalendarBase
 	internal static string GetTimezoneGmt()
 	{
 		var builder = new StringBuilder();
-		builder.AppendLine("BEGIN:VTIMEZONE");
-		builder.AppendLine("TZID:Europe/London");
-		builder.AppendLine("BEGIN:STANDARD");
-		builder.AppendLine("TZNAME:GMT");
-		builder.AppendLine("DTSTART:19710101T020000");
-		builder.AppendLine("TZOFFSETFROM:+0100");
-		builder.AppendLine("TZOFFSETTO:+0000");
-		builder.AppendLine("RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU");
-		builder.AppendLine("END:STANDARD");
-		builder.AppendLine("BEGIN:DAYLIGHT");
-		builder.AppendLine("TZNAME:BST");
-		builder.AppendLine("DTSTART:19710101T010000");
-		builder.AppendLine("TZOFFSETFROM:+0000");
-		builder.AppendLine("TZOFFSETTO:+0100");
-		builder.AppendLine("RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU");
-		builder.AppendLine("END:DAYLIGHT");
-		builder.AppendLine("END:VTIMEZONE");
+		builder.AppendMax75("BEGIN:VTIMEZONE");
+		builder.AppendMax75("TZID:Europe/London");
+		builder.AppendMax75("BEGIN:STANDARD");
+		builder.AppendMax75("TZNAME:GMT");
+		builder.AppendMax75("DTSTART:19710101T020000");
+		builder.AppendMax75("TZOFFSETFROM:+0100");
+		builder.AppendMax75("TZOFFSETTO:+0000");
+		builder.AppendMax75("RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU");
+		builder.AppendMax75("END:STANDARD");
+		builder.AppendMax75("BEGIN:DAYLIGHT");
+		builder.AppendMax75("TZNAME:BST");
+		builder.AppendMax75("DTSTART:19710101T010000");
+		builder.AppendMax75("TZOFFSETFROM:+0000");
+		builder.AppendMax75("TZOFFSETTO:+0100");
+		builder.AppendMax75("RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU");
+		builder.AppendMax75("END:DAYLIGHT");
+		builder.AppendMax75("END:VTIMEZONE");
 		return builder.ToString();
 	}
 
@@ -104,31 +104,31 @@ public class VCalendar : CalendarBase
 	internal static string GetEvent(DateTime lastModified, string tzid, string uid, EventModel e)
 	{
 		var builder = new StringBuilder();
-		builder.AppendLine("BEGIN:VEVENT");
-		builder.AppendLine($"UID:{uid}");
-		builder.AppendLine($"CREATED:{Format(DateTime.Now)}");
-		builder.AppendLine($"LAST-MODIFIED:{Format(lastModified)}");
-		builder.AppendLine($"DTSTAMP:{Format(lastModified)}");
-		builder.AppendLine($"SUMMARY:{e.Summary}");
-		builder.AppendLine($"DESCRIPTION:{e.Description}");
-		builder.AppendLine($"LOCATION:{e.Location}");
+		builder.AppendMax75("BEGIN:VEVENT");
+		builder.AppendMax75($"UID:{uid}");
+		builder.AppendMax75($"CREATED:{Format(DateTime.Now)}");
+		builder.AppendMax75($"LAST-MODIFIED:{Format(lastModified)}");
+		builder.AppendMax75($"DTSTAMP:{Format(lastModified)}");
+		builder.AppendMax75($"SUMMARY:{e.Summary}");
+		builder.AppendMax75($"DESCRIPTION:{e.Description}");
+		builder.AppendMax75($"LOCATION:{e.Location}");
 
 		if (e.IsAllDay)
 		{
-			builder.AppendLine($"DTSTART;TZID={tzid};VALUE=DATE:{Format(e.Start, false)}");
+			builder.AppendMax75($"DTSTART;TZID={tzid};VALUE=DATE:{Format(e.Start, false)}");
 		}
 		else
 		{
-			builder.AppendLine($"DTSTART;TZID={tzid}:{Format(e.Start)}");
-			builder.AppendLine($"DTEND;TZID={tzid}:{Format(e.End)}");
+			builder.AppendMax75($"DTSTART;TZID={tzid}:{Format(e.Start)}");
+			builder.AppendMax75($"DTEND;TZID={tzid}:{Format(e.End)}");
 		}
 
 		if (e.Free)
 		{
-			builder.AppendLine("TRANSP:TRANSPARENT");
+			builder.AppendMax75("TRANSP:TRANSPARENT");
 		}
 
-		builder.AppendLine("END:VEVENT");
+		builder.AppendMax75("END:VEVENT");
 		return builder.ToString();
 	}
 
@@ -138,7 +138,7 @@ public class VCalendar : CalendarBase
 	internal static string GetFooter()
 	{
 		var builder = new StringBuilder();
-		builder.AppendLine("END:VCALENDAR");
+		builder.AppendMax75("END:VCALENDAR");
 		return builder.ToString();
 	}
 

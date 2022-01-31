@@ -51,7 +51,7 @@ public abstract class SwitchIf_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		var check = bool (int _) => throw new Exception("Thrown.");
+		var check = bool (int _) => throw new OptionTestException();
 
 		// Act
 		var result = act(option, check);
@@ -101,7 +101,7 @@ public abstract class SwitchIf_Tests
 		var option = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
 		check.Invoke(Arg.Any<int>()).Returns(true);
-		var ifTrue = None<int> (int _) => throw new Exception("Thrown.");
+		var ifTrue = None<int> (int _) => throw new OptionTestException();
 
 		// Act
 		var result = act(option, check, ifTrue);
@@ -119,7 +119,7 @@ public abstract class SwitchIf_Tests
 		var option = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
 		check.Invoke(Arg.Any<int>()).Returns(false);
-		var ifFalse = None<int> (int _) => throw new Exception("Thrown.");
+		var ifFalse = None<int> (int _) => throw new OptionTestException();
 
 		// Act
 		var result = act(option, check, ifFalse);

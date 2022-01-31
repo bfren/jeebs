@@ -2,7 +2,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.1" />
-		<PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.0-preview3.1" />
+		<PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />

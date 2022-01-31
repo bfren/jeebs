@@ -19,6 +19,7 @@ internal class Db : Jeebs.Data.Db
 		Map<EntityTest>.To(Json);
 	}
 
-	static Db() =>
-		AddTypeHandlers(mapper => mapper.AddStrongIdTypeHandlers());
+	/// <inheritdoc/>
+	protected override void AddTypeHandlers(DbMapper mapper) =>
+		mapper.AddStrongIdTypeHandlers();
 }

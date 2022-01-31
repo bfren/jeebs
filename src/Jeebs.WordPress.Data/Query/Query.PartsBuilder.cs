@@ -55,7 +55,7 @@ public static partial class Query
 		/// <param name="extract">IExtract</param>
 		/// <param name="client">IDbClient</param>
 		/// <param name="schema">IWpDbSchema</param>
-		internal PartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract) =>
+		protected PartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract) =>
 			(Client, T) = (client, schema);
 
 		/// <summary>
