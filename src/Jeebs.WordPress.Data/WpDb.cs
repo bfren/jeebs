@@ -90,19 +90,15 @@ public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> :
 		Map<Tum>.To(Schema.UserMeta);
 	}
 
-	/// <summary>
-	/// Add Dapper type handlers
-	/// This is in the static constructor so it only happens once per application load
-	/// </summary>
-	static WpDb() =>
-		AddTypeHandlers(mapper =>
-		{
-			mapper.ResetTypeHandlers();
-			mapper.AddTypeHandler(new CommentTypeTypeHandler());
-			mapper.AddTypeHandler(new MimeTypeTypeHandler());
-			mapper.AddTypeHandler(new PostStatusTypeHandler());
-			mapper.AddTypeHandler(new PostTypeTypeHandler());
-			mapper.AddTypeHandler(new TaxonomyTypeHandler());
-			mapper.AddStrongIdTypeHandlers();
-		});
+	/// <inheritdoc/>
+	protected override void AddTypeHandlers(DbMapper mapper)
+	{
+		mapper.ResetTypeHandlers();
+		mapper.AddTypeHandler(new CommentTypeTypeHandler());
+		mapper.AddTypeHandler(new MimeTypeTypeHandler());
+		mapper.AddTypeHandler(new PostStatusTypeHandler());
+		mapper.AddTypeHandler(new PostTypeTypeHandler());
+		mapper.AddTypeHandler(new TaxonomyTypeHandler());
+		mapper.AddStrongIdTypeHandlers();
+	}
 }
