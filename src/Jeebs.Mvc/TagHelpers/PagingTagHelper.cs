@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Jeebs.Mvc.TagHelpers;
@@ -100,7 +101,7 @@ public sealed class PagingTagHelper : TagHelper
 			if (i == Values.LowerPage && i > 1)
 			{
 				AddLink(i - 1, "<");
-				AddLink(i, i.ToString());
+				AddLink(i, i.ToString(CultureInfo.InvariantCulture));
 				continue;
 			}
 
@@ -114,7 +115,7 @@ public sealed class PagingTagHelper : TagHelper
 			// The OR condition is in case we ever want to display the current page link differently
 			if (i == Values.Page || i <= Values.Pages)
 			{
-				AddLink(i, i.ToString());
+				AddLink(i, i.ToString(CultureInfo.InvariantCulture));
 			}
 		}
 
