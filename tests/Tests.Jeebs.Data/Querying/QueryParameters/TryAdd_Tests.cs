@@ -142,6 +142,6 @@ public class TryAdd_Tests
 
 		public string Bar1 { private get; set; } = F.Rnd.Str;
 
-		internal readonly bool Bar2 = false;
+		internal readonly bool Bar2;
 	}
 }
