@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using NSubstitute;
 using Xunit;
@@ -65,8 +64,6 @@ public class GetPrincipal_Tests
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var controller = new AuthTestController(auth, log);
-		var role0Id = new AuthRoleId { Value = F.Rnd.Lng };
-		var role1Id = new AuthRoleId { Value = F.Rnd.Lng };
 		var role0 = new AuthRoleModel(new(F.Rnd.Lng), F.Rnd.Str);
 		var role1 = new AuthRoleModel(new(F.Rnd.Lng), F.Rnd.Str);
 		var user = new AuthUserModel

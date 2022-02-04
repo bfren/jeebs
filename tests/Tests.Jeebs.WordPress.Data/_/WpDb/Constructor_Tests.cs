@@ -49,7 +49,7 @@ public class Constructor_Tests
 		});
 
 		// Act
-		var _ = new WpDb<Comment, CommentMeta, Link, Option, Post, PostMeta, Term, TermMeta,
+		_ = new WpDb<Comment, CommentMeta, Link, Option, Post, PostMeta, Term, TermMeta,
 			TermRelationship, TermTaxonomy, User, UserMeta>(client, dbConfig, wpConfig, log);
 
 		// Assert

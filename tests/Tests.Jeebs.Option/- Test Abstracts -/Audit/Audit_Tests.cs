@@ -152,7 +152,6 @@ public abstract class Audit_Tests
 	{
 		// Arrange
 		var option = Some(F.Rnd.Int);
-		var exception = new Exception();
 		var throwException = void (int _) => throw new OptionTestException();
 
 		// Act

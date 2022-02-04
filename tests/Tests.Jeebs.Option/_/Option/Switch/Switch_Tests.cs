@@ -55,7 +55,6 @@ public class Switch_Tests : Jeebs_Tests.Switch_Tests
 	[Fact]
 	public override void Test05_Return_Value_If_Some_Runs_Some_Func_With_Value()
 	{
-		var none = Substitute.For<Func<Msg, string>>();
 		Test05((opt, some) => opt.Switch(some, F.Rnd.Str));
 		Test05((opt, some) => opt.Switch(some, Substitute.For<Func<string>>()));
 		Test05((opt, some) => opt.Switch(some, Substitute.For<Func<Msg, string>>()));

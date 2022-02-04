@@ -146,7 +146,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	Console.WriteLine();
 
 	log.Debug("== Checking Jsonb insert has worked ==");
-	var paramTest = await db
+	_ = await db
 		.QuerySingleAsync<int>(
 			$"SELECT \"Value\" -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE \"Value\" ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 		)
@@ -161,7 +161,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Debug("== Selecting values using mapping ==");
 	Dapper.SqlMapper.AddTypeHandler(new JsonbTypeHandler<ParamTest>()); // add here so doesn't interfere with earlier tests
 
-	var mapperTest = await db
+	_ = await db
 		.QuerySingleAsync<EntityTest>(
 			$"SELECT * FROM {jsonTable} WHERE \"Value\" ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 		)
