@@ -77,7 +77,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 
 	/// <inheritdoc/>
 	public IQueryBuilderWithFrom Join<TFrom, TTo>(
-		QueryJoin join,
+		QueryJoin type,
 		Expression<Func<TFrom, string>> from,
 		Expression<Func<TTo, string>> to
 	)
@@ -95,7 +95,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		var toColumn = GetColumnFromExpression(to);
 
 		// Add to query
-		return join switch
+		return type switch
 		{
 			QueryJoin.Inner =>
 				this with
@@ -181,10 +181,10 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	}
 
 	/// <inheritdoc/>
-	public IQueryBuilderWithFrom Maximum(ulong max) =>
-		this with { Parts = Parts with { Maximum = max } };
+	public IQueryBuilderWithFrom Maximum(ulong number) =>
+		this with { Parts = Parts with { Maximum = number } };
 
 	/// <inheritdoc/>
-	public IQueryBuilderWithFrom Skip(ulong skip) =>
-		this with { Parts = Parts with { Skip = skip } };
+	public IQueryBuilderWithFrom Skip(ulong number) =>
+		this with { Parts = Parts with { Skip = number } };
 }

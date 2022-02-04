@@ -18,11 +18,11 @@ public interface IQueryBuilderWithFrom
 	/// </summary>
 	/// <typeparam name="TFrom">Join from table type</typeparam>
 	/// <typeparam name="TTo">Join to table type</typeparam>
-	/// <param name="join">Join type</param>
+	/// <param name="type">Join type</param>
 	/// <param name="from">Join from this column</param>
 	/// <param name="to">Join to this table and column</param>
 	IQueryBuilderWithFrom Join<TFrom, TTo>(
-		QueryJoin join,
+		QueryJoin type,
 		Expression<Func<TFrom, string>> from,
 		Expression<Func<TTo, string>> to
 	)
@@ -58,12 +58,12 @@ public interface IQueryBuilderWithFrom
 	/// <summary>
 	/// Add a limit to the number of results returned by this query
 	/// </summary>
-	/// <param name="max">The maximum number of results to return</param>
-	IQueryBuilderWithFrom Maximum(ulong max);
+	/// <param name="number">The maximum number of results to return</param>
+	IQueryBuilderWithFrom Maximum(ulong number);
 
 	/// <summary>
 	/// Skip a number of results before returning
 	/// </summary>
-	/// <param name="skip">The number of results to skip</param>
-	IQueryBuilderWithFrom Skip(ulong skip);
+	/// <param name="number">The number of results to skip</param>
+	IQueryBuilderWithFrom Skip(ulong number);
 }

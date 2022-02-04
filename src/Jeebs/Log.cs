@@ -69,14 +69,14 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Messages(IEnumerable<Msg> messages)
+	public void Messages(IEnumerable<Msg> msgs)
 	{
-		if (!messages.Any())
+		if (!msgs.Any())
 		{
 			return;
 		}
 
-		foreach (var item in messages)
+		foreach (var item in msgs)
 		{
 			Message(item);
 		}
