@@ -52,11 +52,10 @@ public sealed class AuthDb : Db, IAuthDb
 		Map<AuthRoleEntity>.To(Role);
 		Map<AuthUserEntity>.To(User);
 		Map<AuthUserRoleEntity>.To(UserRole);
-	}
 
-	/// <inheritdoc/>
-	protected override void AddTypeHandlers(DbMapper mapper) =>
-		mapper.AddStrongIdTypeHandlers();
+		// Map type handlers
+		TypeMap.AddStrongIdTypeHandlers();
+	}
 
 	/// <inheritdoc/>
 	public void MigrateToLatest() =>

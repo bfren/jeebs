@@ -88,17 +88,14 @@ public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> :
 		Map<Ttt>.To(Schema.TermTaxonomy);
 		Map<Tu>.To(Schema.User);
 		Map<Tum>.To(Schema.UserMeta);
-	}
 
-	/// <inheritdoc/>
-	protected override void AddTypeHandlers(DbMapper mapper)
-	{
-		mapper.ResetTypeHandlers();
-		mapper.AddTypeHandler(new CommentTypeTypeHandler());
-		mapper.AddTypeHandler(new MimeTypeTypeHandler());
-		mapper.AddTypeHandler(new PostStatusTypeHandler());
-		mapper.AddTypeHandler(new PostTypeTypeHandler());
-		mapper.AddTypeHandler(new TaxonomyTypeHandler());
-		mapper.AddStrongIdTypeHandlers();
+		// Add type handlers
+		TypeMap.ResetTypeHandlers();
+		TypeMap.AddTypeHandler(new CommentTypeTypeHandler());
+		TypeMap.AddTypeHandler(new MimeTypeTypeHandler());
+		TypeMap.AddTypeHandler(new PostStatusTypeHandler());
+		TypeMap.AddTypeHandler(new PostTypeTypeHandler());
+		TypeMap.AddTypeHandler(new TaxonomyTypeHandler());
+		TypeMap.AddStrongIdTypeHandlers();
 	}
 }

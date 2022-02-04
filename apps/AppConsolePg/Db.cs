@@ -20,6 +20,6 @@ internal class Db : Jeebs.Data.Db
 	}
 
 	/// <inheritdoc/>
-	protected override void AddTypeHandlers(DbMapper mapper) =>
+	protected override void AddTypeHandlers(DbTypeMap mapper) =>
 		mapper.AddStrongIdTypeHandlers();
 }

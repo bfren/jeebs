@@ -18,6 +18,24 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public IDbClient Client { get; private init; }
 
+	/// <summary>
+	/// Configuration for this database connection
+	/// </summary>
+	public DbConnectionConfig Config { get; private init; }
+
+	/// <summary>
+	/// ILog (should be given a context of the implementing class)
+	/// </summary>
+	protected ILog Log { get; private init; }
+
+	internal ILog LogTest =>
+		Log;
+
+	/// <summary>
+	/// DbTypeMap
+	/// </summary>
+	protected DbTypeMap TypeMap { get; private init; }
+
 	/// <inheritdoc/>
 	public IUnitOfWork UnitOfWork
 	{
@@ -38,19 +56,6 @@ public abstract class Db : IDb
 	}
 
 	/// <summary>
-	/// Configuration for this database connection
-	/// </summary>
-	public DbConnectionConfig Config { get; private init; }
-
-	/// <summary>
-	/// ILog (should be given a context of the implementing class)
-	/// </summary>
-	protected ILog Log { get; private init; }
-
-	internal ILog LogTest =>
-		Log;
-
-	/// <summary>
 	/// Inject database client and configuration
 	/// </summary>
 	/// <param name="client">Database client</param>
@@ -67,19 +72,8 @@ public abstract class Db : IDb
 	/// <param name="client">Database client</param>
 	/// <param name="config">Database configuration</param>
 	/// <param name="log">ILog (should be given a context of the implementing class)</param>
-	protected Db(IDbClient client, DbConnectionConfig config, ILog log)
-	{
-		(Client, Config, Log) = (client, config, log);
-
-		// Register custom data type handlers
-		AddTypeHandlers(new());
-	}
-
-	/// <summary>
-	/// Add custom data type handlers
-	/// </summary>
-	/// <param name="mapper">Mapper</param>
-	protected virtual void AddTypeHandlers(DbMapper mapper) { }
+	protected Db(IDbClient client, DbConnectionConfig config, ILog log) =>
+		(Client, Config, Log, TypeMap) = (client, config, log, new());
 
 	/// <summary>
 	/// Use Verbose log by default - override to send elsewhere (or to disable entirely)

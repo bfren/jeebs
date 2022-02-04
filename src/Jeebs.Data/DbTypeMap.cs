@@ -9,18 +9,15 @@ using Jeebs.Data.TypeHandlers;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Add custom Dapper mapping
+/// Add custom type mapping
 /// </summary>
-public sealed class DbMapper
+public sealed class DbTypeMap
 {
 	/// <summary>
 	/// Only allow creation from <see cref="Db"/>
 	/// </summary>
-	internal DbMapper() { }
+	internal DbTypeMap() { }
 
-	/// <summary>
-	/// Reset Dapper type handlers
-	/// </summary>
 	public void ResetTypeHandlers() =>
 		SqlMapper.ResetTypeHandlers();
 
