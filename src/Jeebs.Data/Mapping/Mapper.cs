@@ -112,8 +112,6 @@ internal sealed class Mapper : IMapper, IDisposable
 
 		mappedEntities.Clear();
 		disposed = true;
-
-		GC.SuppressFinalize(this);
 	}
 
 	#endregion
