@@ -25,5 +25,5 @@ public abstract record class WithValueMsg<T> : Msg
 
 	/// <inheritdoc/>
 	public sealed override object[]? Args =>
-		new object[] { Value ?? new object() };
+		new[] { Value ?? new object() };
 }

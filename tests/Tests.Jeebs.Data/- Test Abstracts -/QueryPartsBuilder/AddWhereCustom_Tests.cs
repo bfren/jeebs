@@ -16,8 +16,8 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 	public static IEnumerable<string?[]> Test00_Data()
 	{
 		yield return new string?[] { null };
-		yield return new string[] { "" };
-		yield return new string[] { " " };
+		yield return new[] { "" };
+		yield return new[] { " " };
 	}
 
 	protected void Test00(string input)
