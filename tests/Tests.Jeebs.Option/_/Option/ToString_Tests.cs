@@ -34,7 +34,7 @@ public class ToString_Tests
 		var result = option.ToString();
 
 		// Assert
-		Assert.Equal("Some: " + typeof(int?).ToString(), result);
+		Assert.Equal("Some: " + typeof(int?), result);
 	}
 
 	[Fact]
