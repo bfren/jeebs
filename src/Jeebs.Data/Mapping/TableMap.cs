@@ -49,9 +49,9 @@ public sealed record class TableMap : ITableMap
 	public Option<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
 		Some(
 			() => from c in Columns
-				  where c.Property.GetCustomAttribute<IdAttribute>() == null
-				  && c.Property.GetCustomAttribute<ComputedAttribute>() == null
-				  && c.Property.GetCustomAttribute<ReadonlyAttribute>() == null
+				  where c.Property.GetCustomAttribute<IdAttribute>() is null
+				  && c.Property.GetCustomAttribute<ComputedAttribute>() is null
+				  && c.Property.GetCustomAttribute<ReadonlyAttribute>() is null
 				  select c,
 			DefaultHandler
 		)

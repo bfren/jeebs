@@ -36,7 +36,7 @@ public static partial class QueryF
 
 		static IEnumerable<PropertyInfo> get() =>
 			from p in typeof(TModel).GetProperties()
-			where p.GetCustomAttribute<IgnoreAttribute>() == null
+			where p.GetCustomAttribute<IgnoreAttribute>() is null
 			select p;
 	}
 }

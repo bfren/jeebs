@@ -27,7 +27,7 @@ public static partial class MappingF
 			columns
 		)
 		.Map(
-			x => x.Where(p => p.Property.Name == nameof(IWithId.Id) && p.Property.GetCustomAttribute(typeof(IgnoreAttribute)) == null).ToList(),
+			x => x.Where(p => p.Property.Name == nameof(IWithId.Id) && p.Property.GetCustomAttribute(typeof(IgnoreAttribute)) is null).ToList(),
 			e => new M.ErrorGettingIdPropertyMsg<TEntity>(e)
 		)
 		.UnwrapSingle<IMappedColumn>(

@@ -21,7 +21,7 @@ public static partial class OptionF
 	public static Option<T> Audit<T>(Option<T> option, Action<Option<T>>? any, Action<T>? some, Action<Msg>? none)
 	{
 		// Do nothing if the user gave us nothing to do!
-		if (any == null && some == null && none == null)
+		if (any is null && some is null && none is null)
 		{
 			return option;
 		}

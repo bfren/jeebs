@@ -259,7 +259,7 @@ public static partial class Query
 
 				// Ensure there is a search value
 				var customFieldSearch = value.ToString();
-				if (customFieldSearch == null)
+				if (customFieldSearch is null)
 				{
 					continue;
 				}

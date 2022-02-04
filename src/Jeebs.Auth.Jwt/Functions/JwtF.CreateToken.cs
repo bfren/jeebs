@@ -43,7 +43,7 @@ public static partial class JwtF
 	)
 	{
 		// Ensure there is a current user
-		if (principal.Identity == null)
+		if (principal.Identity is null)
 		{
 			return None<string, M.NullIdentityMsg>();
 		}

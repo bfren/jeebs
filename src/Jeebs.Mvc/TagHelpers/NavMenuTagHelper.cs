@@ -78,7 +78,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Return if no menu or items to output
-		if (Menu == null || Menu.Items.Count == 0)
+		if (Menu is null || Menu.Items.Count == 0)
 		{
 			output.SuppressOutput();
 			return;

@@ -94,7 +94,7 @@ public abstract class Db : IDb
 		var args = new object[] { type, query };
 
 		// Log with or without parameters
-		if (parameters == null)
+		if (parameters is null)
 		{
 			WriteToLog(message, args);
 		}

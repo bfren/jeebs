@@ -78,7 +78,7 @@ public static class ControllerExtensions
 		{
 			// Get View Engine
 			var viewEngine = @this.HttpContext.RequestServices.GetService<ICompositeViewEngine>();
-			if (viewEngine == null)
+			if (viewEngine is null)
 			{
 				return null;
 			}

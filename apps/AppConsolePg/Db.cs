@@ -17,9 +17,7 @@ internal class Db : Jeebs.Data.Db
 		Json = new("console");
 
 		Map<EntityTest>.To(Json);
-	}
 
-	/// <inheritdoc/>
-	protected override void AddTypeHandlers(DbTypeMap mapper) =>
-		mapper.AddStrongIdTypeHandlers();
+		TypeMap.AddStrongIdTypeHandlers();
+	}
 }
