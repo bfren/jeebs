@@ -26,5 +26,5 @@ Now with the advent of .NET 6, Jeebs v7 is born, taking advantage of new feature
 
 ## Copyright
 
-> Copyright (c) 2013-2021 [bfren](https://bfren.dev)
+> Copyright (c) 2013-2022 [bfren](https://bfren.dev)
 > Unless otherwise stated
