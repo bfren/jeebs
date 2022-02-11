@@ -43,7 +43,6 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var bar = F.Rnd.Str;
 		var cmp = Compare.LessThan;
 		var val = F.Rnd.Int;
 

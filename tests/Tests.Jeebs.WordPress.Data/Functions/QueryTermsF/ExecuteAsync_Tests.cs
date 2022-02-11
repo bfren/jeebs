@@ -35,7 +35,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, v) = Setup();
 
 		// Act
-		var result = await ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
+		_ = await ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
 
 		// Assert
 		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);

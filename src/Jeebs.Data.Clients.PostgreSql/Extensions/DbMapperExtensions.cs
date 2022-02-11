@@ -15,7 +15,7 @@ public static class DbMapperExtensions
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
 	/// <param name="this">DbMapper</param>
-	public static void AddJsonbEnumeratedListTypeHandler<T>(this DbMapper @this)
+	public static void AddJsonbEnumeratedListTypeHandler<T>(this DbTypeMap @this)
 		where T : Enumerated =>
 		@this.AddTypeHandler(new JsonbEnumeratedListTypeHandler<T>());
 
@@ -24,6 +24,6 @@ public static class DbMapperExtensions
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
 	/// <param name="this">DbMapper</param>
-	public static void AddJsonbTypeHandler<T>(this DbMapper @this) =>
+	public static void AddJsonbTypeHandler<T>(this DbTypeMap @this) =>
 		@this.AddTypeHandler(new JsonbTypeHandler<T>());
 }

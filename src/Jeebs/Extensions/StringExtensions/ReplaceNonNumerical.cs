@@ -17,7 +17,7 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Make sure replaceWith isn't null
-			if (replaceWith == null)
+			if (replaceWith is null)
 			{
 				replaceWith = string.Empty;
 			}

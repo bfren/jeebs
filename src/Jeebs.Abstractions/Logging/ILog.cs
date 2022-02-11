@@ -42,15 +42,15 @@ public interface ILog
 	/// Log an <see cref="Msg"/>
 	/// </summary>
 	/// <typeparam name="T">The message type</typeparam>
-	/// <param name="message">Message to log</param>
-	void Message<T>(T? message)
+	/// <param name="msg">Message to log</param>
+	void Message<T>(T? msg)
 		where T : Msg;
 
 	/// <summary>
 	/// Log a list of <see cref="Msg"/>
 	/// </summary>
-	/// <param name="messages">Messages to log</param>
-	void Messages(IEnumerable<Msg> messages);
+	/// <param name="msgs">Messages to log</param>
+	void Messages(IEnumerable<Msg> msgs);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>

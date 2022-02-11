@@ -46,7 +46,7 @@ public sealed class GenerateExcerpt : ContentFilter
 
 			// Cut out everything after <!--more--> tag
 			var alreadyCut = false;
-			if (content.IndexOf("<!--more-->") is int more && more > 0)
+			if (content.IndexOf("<!--more-->", StringComparison.InvariantCulture) is int more && more > 0)
 			{
 				content = content[..more];
 				alreadyCut = true;

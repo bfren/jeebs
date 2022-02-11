@@ -149,7 +149,7 @@ public abstract class UnwrapSingle_Tests
 		var notAList = Substitute.For<Func<Msg>>();
 
 		// Act
-		var result = act(option, notAList);
+		_ = act(option, notAList);
 
 		// Assert
 		notAList.Received().Invoke();

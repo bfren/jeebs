@@ -103,7 +103,7 @@ public static partial class Rnd
 				// Make the first letter uppercase
 				if (upperFirst)
 				{
-					word = word[0].ToString().ToUpper() + word[1..];
+					word = word[0].ToString().ToUpperInvariant() + word[1..];
 				}
 
 				// Add a number to the first word (the list will be shuffled later)

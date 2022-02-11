@@ -13,7 +13,7 @@ public static partial class OptionF
 	public static async Task<Option<T>> AuditAsync<T>(Option<T> option, Func<Option<T>, Task>? any, Func<T, Task>? some, Func<Msg, Task>? none)
 	{
 		// Do nothing if the user gave us nothing to do!
-		if (any == null && some == null && none == null)
+		if (any is null && some is null && none is null)
 		{
 			return option;
 		}

@@ -228,7 +228,7 @@ public class GetWhereAndParameters_Tests
 	[Fact]
 	public void Operator_Is_In_And_Value_Is_Array_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) });
+		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) });
 	}
 
 	[Fact]
@@ -240,7 +240,7 @@ public class GetWhereAndParameters_Tests
 	[Fact]
 	public void Operator_Is_In_And_Value_Is_IEnumerable_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.AsEnumerable());
+		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.AsEnumerable());
 	}
 
 	[Fact]
@@ -252,7 +252,7 @@ public class GetWhereAndParameters_Tests
 	[Fact]
 	public void Operator_Is_In_And_Value_Is_List_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.ToList());
+		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.ToList());
 	}
 
 	[Fact]
@@ -264,7 +264,7 @@ public class GetWhereAndParameters_Tests
 	[Fact]
 	public void Operator_Is_NotIn_And_Value_Is_Array_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) });
+		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) });
 	}
 
 	[Fact]
@@ -276,7 +276,7 @@ public class GetWhereAndParameters_Tests
 	[Fact]
 	public void Operator_Is_NotIn_And_Value_Is_IEnumerable_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.AsEnumerable());
+		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.AsEnumerable());
 	}
 
 	[Fact]
@@ -288,7 +288,7 @@ public class GetWhereAndParameters_Tests
 	[Fact]
 	public void Operator_Is_NotIn_And_Value_Is_List_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new TestId[] { new(v0), new(v1), new(v2) }.ToList());
+		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.ToList());
 	}
 
 	public abstract class TestClient : DbClient

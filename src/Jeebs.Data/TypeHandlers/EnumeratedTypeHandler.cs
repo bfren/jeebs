@@ -16,16 +16,16 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// Parse the Enumerated value
 	/// </summary>
 	/// <param name="value">Database table value</param>
-	/// <param name="parse">Function to parse <paramref name="value"/> to Enumerated value</param>
-	/// <param name="ifNull">Enumerated value to return if <paramref name="value"/> is null</param>
-	protected T Parse(object value, Func<string, T> parse, T ifNull) =>
+	/// <param name="parseValue">Function to parse <paramref name="value"/> to Enumerated value</param>
+	/// <param name="ifNullValue">Enumerated value to return if <paramref name="value"/> is null</param>
+	protected T Parse(object value, Func<string, T> parseValue, T ifNullValue) =>
 		value?.ToString() switch
 		{
 			string valueString =>
-				parse(valueString),
+				parseValue(valueString),
 
 			_ =>
-				ifNull
+				ifNullValue
 		};
 
 	/// <summary>

@@ -37,7 +37,7 @@ public abstract class SwitchAsync_Tests
 		var none = Substitute.For<Func<Msg, Task<string>>>();
 
 		// Act
-		var result = await act(option, none).ConfigureAwait(false);
+		_ = await act(option, none).ConfigureAwait(false);
 
 		// Assert
 		await none.Received().Invoke(reason).ConfigureAwait(false);
@@ -53,7 +53,7 @@ public abstract class SwitchAsync_Tests
 		var some = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, some).ConfigureAwait(false);
+		_ = await act(option, some).ConfigureAwait(false);
 
 		// Assert
 		await some.Received().Invoke(value).ConfigureAwait(false);

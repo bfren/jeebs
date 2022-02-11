@@ -18,7 +18,7 @@ public class Parse_Tests
 		var parse = Substitute.For<Func<string, EnumeratedTest>>();
 
 		// Act
-		var result = handler.ParseTest(value, parse, EnumeratedTest.Bar);
+		_ = handler.ParseTest(value, parse, EnumeratedTest.Bar);
 
 		// Assert
 		parse.Received().Invoke(value);

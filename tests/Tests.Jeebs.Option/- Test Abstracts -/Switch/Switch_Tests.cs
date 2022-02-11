@@ -66,7 +66,7 @@ public abstract class Switch_Tests
 		var none = Substitute.For<Func<Msg, string>>();
 
 		// Act
-		var result = act(option, none);
+		_ = act(option, none);
 
 		// Assert
 		none.Received().Invoke(reason);
@@ -98,7 +98,7 @@ public abstract class Switch_Tests
 		var some = Substitute.For<Func<int, string>>();
 
 		// Act
-		var result = act(option, some);
+		_ = act(option, some);
 
 		// Assert
 		some.Received().Invoke(value);

@@ -10,42 +10,37 @@ namespace Jeebs;
 public readonly record struct PagingValues : IPagingValues
 {
 	/// <inheritdoc/>
-	public ulong Items { get; init; } = 0;
+	public ulong Items { get; init; }
 
 	/// <inheritdoc/>
-	public ulong ItemsPer { get; init; } = 0;
+	public ulong ItemsPer { get; init; }
 
 	/// <inheritdoc/>
-	public ulong FirstItem { get; init; } = 0;
+	public ulong FirstItem { get; init; }
 
 	/// <inheritdoc/>
-	public ulong LastItem { get; init; } = 0;
+	public ulong LastItem { get; init; }
 
 	/// <inheritdoc/>
-	public ulong Page { get; init; } = 0;
+	public ulong Page { get; init; }
 
 	/// <inheritdoc/>
-	public ulong Pages { get; init; } = 0;
+	public ulong Pages { get; init; }
 
 	/// <inheritdoc/>
-	public ulong PagesPer { get; init; } = 0;
+	public ulong PagesPer { get; init; }
 
 	/// <inheritdoc/>
-	public ulong LowerPage { get; init; } = 0;
+	public ulong LowerPage { get; init; }
 
 	/// <inheritdoc/>
-	public ulong UpperPage { get; init; } = 0;
+	public ulong UpperPage { get; init; }
 
 	/// <inheritdoc/>
-	public int Skip { get; init; } = 0;
+	public int Skip { get; init; }
 
 	/// <inheritdoc/>
-	public int Take { get; init; } = 0;
-
-	/// <summary>
-	/// Create empty values
-	/// </summary>
-	public PagingValues() { }
+	public int Take { get; init; }
 
 	/// <summary>
 	/// Set and calculate values using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>

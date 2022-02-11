@@ -71,7 +71,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		};
 
 		// Log with or without parameters
-		if (parameters == null)
+		if (parameters is null)
 		{
 			WriteToLog(message, args);
 		}

@@ -393,7 +393,6 @@ public class TestController : Controller
 		var timer = new Stopwatch();
 		var results = new StringBuilder();
 		const int reps = 1000;
-		var userId = new AuthUserId(1);
 
 		results.AppendLine($"Running {reps} times.");
 
@@ -405,7 +404,7 @@ public class TestController : Controller
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			var roles = await
+			_ = await
 				Some(
 					F.Rnd.Lng
 				)

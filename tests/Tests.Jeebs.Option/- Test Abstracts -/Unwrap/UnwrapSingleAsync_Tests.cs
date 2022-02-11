@@ -150,7 +150,7 @@ public abstract class UnwrapSingleAsync_Tests
 		var notAList = Substitute.For<Func<Msg>>();
 
 		// Act
-		var result = await act(option.AsTask, notAList).ConfigureAwait(false);
+		_ = await act(option.AsTask, notAList).ConfigureAwait(false);
 
 		// Assert
 		notAList.Received().Invoke();

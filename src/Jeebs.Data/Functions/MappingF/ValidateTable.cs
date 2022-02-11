@@ -34,7 +34,7 @@ public static partial class MappingF
 
 		// Get the entity property names
 		var entityPropertyNames = from p in entityType.GetProperties()
-								  where p.GetCustomAttribute<IgnoreAttribute>() == null
+								  where p.GetCustomAttribute<IgnoreAttribute>() is null
 								  select p.Name;
 
 		// Compare the table columns with the entity properties
