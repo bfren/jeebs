@@ -38,13 +38,13 @@ public abstract class WebApp : App
 		.ConfigureHostConfiguration(
 			config => ConfigureHost(config)
 		)
+		.ConfigureAppConfiguration(
+			(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
+		)
+		.UseSerilog(
+			(host, logger) => ConfigureSerilog(host.Configuration, logger)
+		)
 		.ConfigureWebHostDefaults(builder => builder
-			.ConfigureAppConfiguration(
-				(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
-			)
-			.UseSerilog(
-				(host, logger) => ConfigureSerilog(host.Configuration, logger)
-			)
 			.ConfigureServices(
 				(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
 			)

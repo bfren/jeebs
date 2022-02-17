@@ -33,10 +33,7 @@ internal class MinimalApiApp : ApiApp
 		builder.Host
 			.ConfigureHostConfiguration(
 				config => ConfigureHost(config)
-			);
-
-		// Configure web host
-		builder.WebHost
+			)
 			.ConfigureAppConfiguration(
 				(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
 			)
