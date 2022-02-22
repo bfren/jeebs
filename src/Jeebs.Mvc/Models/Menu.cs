@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -19,114 +20,129 @@ public abstract class Menu
 	/// <summary>
 	/// List of top-level menu items
 	/// </summary>
-	public List<MenuItem> Items { get; set; } = new();
+	public List<MenuItem> Items { get; private init; } = new();
+
+	/// <inheritdoc cref="GetSimpleItems(IUrlHelper, Func{IUrlHelper, MenuItem, string?})"/>
+	public IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper) =>
+		GetSimpleItems(urlHelper, GetUri);
 
 	/// <summary>
 	/// Use a UrlHelper object to get simple menu items
 	/// </summary>
-	/// <param name="url">UrlHelper object</param>
-	/// <returns>List of simple menu items</returns>
-	public IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper url)
+	/// <param name="urlHelper">UrlHelper object</param>
+	/// <param name="getUri">Function to get a URI from a menu item</param>
+	internal IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper, Func<IUrlHelper, MenuItem, string?> getUri)
 	{
 		foreach (var item in Items)
 		{
-			if (GetUri(url, item) is string uri)
+			if (getUri(urlHelper, item) is string uri)
 			{
-				yield return new MenuItemSimple(Guid.NewGuid(), item.Text ?? item.Controller, uri);
+				yield return new(Guid.NewGuid(), item.Text ?? item.Controller, uri);
 			}
 		}
 	}
 
 	/// <summary>
+	/// Load the specified menu items (to help with caching / preloading pages)
+	/// </summary>
+	/// <param name="http">IHttpClientFactory</param>
+	/// <param name="urlHelper">IUrlHelper</param>
+	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper) =>
+		LoadItemsAsync(http.CreateClient(), urlHelper, null);
+
+	/// <summary>
+	/// Load the specified menu items (to help with caching / preloading pages)
+	/// </summary>
+	/// <param name="client">HttpClient</param>
+	/// <param name="urlHelper">IUrlHelper</param>
+	/// <param name="list">Menu Items</param>
+	internal async Task<Option<string>> LoadItemsAsync(HttpClient client, IUrlHelper urlHelper, List<MenuItem>? list)
+	{
+		// Use a StringBuilder to hold the response text
+		var result = new StringBuilder();
+
+		// Loop through provided list, or default list of Items
+		await Parallel.ForEachAsync(
+			source: list ?? Items,
+			parallelOptions: new() { MaxDegreeOfParallelism = 3 },
+			body: async (item, token) =>
+			{
+				// Build the URI to load it
+				if (GetUri(urlHelper, item) is string uri)
+				{
+					await LoadUriAsync(result, client, uri, token);
+				}
+
+				// Continue if there are no children
+				if (item.Children.Count == 0)
+				{
+					return;
+				}
+
+				// Load child items
+				result.AppendLine("Loading children..<br/>");
+				await LoadItemsAsync(client, urlHelper, item.Children).ConfigureAwait(false);
+				result.AppendLine(".. done<br/>");
+			}
+		);
+
+		// Return result
+		return result.ToString();
+	}
+
+	#region Static Members
+
+	/// <summary>
 	/// Return the fully-qualified URI for the specified menu item
 	/// </summary>
-	/// <param name="url">UrlHelper object</param>
+	/// <param name="urlHelper">UrlHelper</param>
 	/// <param name="item">Current menu item</param>
 	/// <returns>Menu Item URL</returns>
-	private static string? GetUri(IUrlHelper url, MenuItem item)
+	internal static string? GetUri(IUrlHelper urlHelper, MenuItem item)
 	{
-		UrlActionContext actionContext = new()
+		// Build the context
+		var actionContext = new UrlActionContext
 		{
-			Protocol = url.ActionContext.HttpContext.Request.Scheme,
-			Host = url.ActionContext.HttpContext.Request.Host.ToString(),
+			Protocol = urlHelper.ActionContext.HttpContext.Request.Scheme,
+			Host = urlHelper.ActionContext.HttpContext.Request.Host.ToString(),
 			Controller = item.Controller ?? string.Empty,
 			Action = item.Action ?? "Index",
 			Values = item.RouteValues
 		};
 
-		return url.Action(actionContext);
+		// Create action URL
+		return urlHelper.Action(actionContext);
 	}
 
 	/// <summary>
-	/// Load the specified menu items (to help with caching / preloading pages)
+	/// Load a URI asynchronously, writing output to <paramref name="result"/>
 	/// </summary>
-	/// <param name="http">IHttpClientFactory</param>
-	/// <param name="url">IUrlHelper</param>
-	/// <returns>Result to output as response</returns>
-	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url) =>
-		LoadItemsAsync(http, url, null);
-
-	/// <summary>
-	/// Load the specified menu items (to help with caching / preloading pages)
-	/// </summary>
-	/// <param name="http">IHttpClientFactory</param>
-	/// <param name="url">IUrlHelper</param>
-	/// <param name="list">Menu Items</param>
-	/// <returns>Result to output as response</returns>
-	public async Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper url, List<MenuItem>? list)
+	/// <param name="result">StringBuilder</param>
+	/// <param name="client">HttpClient</param>
+	/// <param name="uri">The URI to load</param>
+	/// <param name="token">CancellationToken</param>
+	internal static async Task LoadUriAsync(StringBuilder result, HttpClient client, string uri, CancellationToken token)
 	{
-		// Write to StringBuilder
-		var result = new StringBuilder();
-		void Write(string content) =>
-			result.Append(content);
+		// Output URI to be loaded
+		result.Append($"Loading {uri} .. ");
 
-		// Load a URI
-		var client = http.CreateClient();
-		async Task Load(string uri)
+		try
 		{
-			try
-			{
-				// Load the URL and ensure it is successful
-				var response = await client.GetAsync(uri).ConfigureAwait(false);
-				response.EnsureSuccessStatusCode();
+			// Attempt to load the URL and ensure it is successful
+			var response = await client.GetAsync(uri, token).ConfigureAwait(false);
+			response.EnsureSuccessStatusCode();
 
-				// Successful
-				Write("done");
-			}
-			catch (HttpRequestException ex)
-			{
-				Write($"failed: {ex}");
-			}
+			// Successful
+			result.Append("done");
+		}
+		catch (HttpRequestException ex)
+		{
+			result.Append($"failed: {ex}");
 		}
 
-		// Make the respose HTML
-		url.ActionContext.HttpContext.Response.ContentType = "text/html";
-
-		// Loop through provided list, or default list of Items
-		foreach (var item in list ?? Items)
-		{
-			// Build the URI to load and output it
-			if (GetUri(url, item) is string uri)
-			{
-				Write($"Loading {uri} .. ");
-
-				// Attempt to load the URL
-				await Load(uri).ConfigureAwait(false);
-
-				// Put the next URL on a new line
-				Write("<br/>");
-
-				// Load any children
-				if (item.Children is List<MenuItem> children)
-				{
-					Write("Loading children..<br/>");
-					await LoadItemsAsync(http, url, children).ConfigureAwait(false);
-					Write(".. done<br/>");
-				}
-			}
-		}
-
-		// Return result
-		return result.ToString();
+		// Put the next URL on a new line
+		result.AppendLine("<br/>");
 	}
+
+	#endregion
 }
