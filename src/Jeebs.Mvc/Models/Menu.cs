@@ -105,8 +105,8 @@ public abstract class Menu
 		{
 			Protocol = urlHelper.ActionContext.HttpContext.Request.Scheme,
 			Host = urlHelper.ActionContext.HttpContext.Request.Host.ToString(),
-			Controller = item.Controller ?? string.Empty,
-			Action = item.Action ?? "Index",
+			Controller = item.Controller,
+			Action = item.Action,
 			Values = item.RouteValues
 		};
 
