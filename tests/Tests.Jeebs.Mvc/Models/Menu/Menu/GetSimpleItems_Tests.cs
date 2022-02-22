@@ -71,25 +71,6 @@ public class GetSimpleItems_Tests
 		);
 	}
 
-	//[Fact]
-	//public void Calls_GetUri_With_Each_Item()
-	//{
-	//	// Arrange
-	//	var urlHelper = Substitute.For<IUrlHelper>();
-	//	var i0 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
-	//	var i1 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
-	//	var getUri = Substitute.For<Func<IUrlHelper, MenuItem, string?>>();
-	//	var menu = Substitute.ForPartsOf<Menu>();
-	//	menu.Items.AddRange(new[] { i0, i1 });
-
-	//	// Act
-	//	_ = menu.GetSimpleItems(urlHelper, getUri);
-
-	//	// Assert
-	//	getUri.Received().Invoke(urlHelper, i0);
-	//	getUri.Received().Invoke(urlHelper, i1);
-	//}
-
 	[Fact]
 	public void Uses_Uri_From_GetUri_As_Uri()
 	{
