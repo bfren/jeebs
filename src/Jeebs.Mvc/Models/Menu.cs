@@ -89,6 +89,7 @@ public abstract class Menu
 		/// Use a UrlHelper object to get simple menu items
 		/// </summary>
 		/// <param name="urlHelper">UrlHelper object</param>
+		/// <param name="items">Menu Items</param>
 		/// <param name="getUri">Function to get a URI from a menu item</param>
 		internal static IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper, List<MenuItem> items, GetUri getUri)
 		{
@@ -139,6 +140,7 @@ public abstract class Menu
 		/// </summary>
 		/// <param name="client">HttpClient</param>
 		/// <param name="uris">List of URIs to load</param>
+		/// <param name="loadUri">LoadUri</param>
 		internal static async Task<Option<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
 		{
 			// Use a StringBuilder to hold the response text
