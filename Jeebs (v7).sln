@@ -222,13 +222,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Types", "tests\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Cqrs", ".Cqrs", "{4AFA42A7-A772-49AD-90C9-306AAC71869A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Cqrs", "src\Jeebs.Cqrs\Jeebs.Cqrs.csproj", "{0E92981B-632B-4BB0-802C-522CE662DACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Cqrs", "src\Jeebs.Cqrs\Jeebs.Cqrs.csproj", "{0E92981B-632B-4BB0-802C-522CE662DACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Cqrs.Abstractions", "src\Jeebs.Cqrs.Abstractions\Jeebs.Cqrs.Abstractions.csproj", "{EF32AAB7-540B-47A4-8648-7ACF15602F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Cqrs.Abstractions", "src\Jeebs.Cqrs.Abstractions\Jeebs.Cqrs.Abstractions.csproj", "{EF32AAB7-540B-47A4-8648-7ACF15602F4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Cqrs", ".Cqrs", "{265AB097-34AD-4184-8237-526F27C969A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Cqrs", "tests\Tests.Jeebs.Cqrs\Tests.Jeebs.Cqrs.csproj", "{133B3E15-710E-445F-9437-BD381591FE39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Cqrs", "tests\Tests.Jeebs.Cqrs\Tests.Jeebs.Cqrs.csproj", "{133B3E15-710E-445F-9437-BD381591FE39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
