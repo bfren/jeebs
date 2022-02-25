@@ -18,87 +18,53 @@ namespace Jeebs.Mvc.Models;
 public abstract class Menu
 {
 	/// <summary>
+	/// Get a URI from a Menu Item
+	/// </summary>
+	/// <param name="urlHelper">IUrlHelper</param>
+	/// <param name="item">MenuItem</param>
+	public delegate string? GetUri(IUrlHelper urlHelper, MenuItem item);
+
+	/// <summary>
+	/// Load a URI
+	/// </summary>
+	/// <param name="result">StringBuilder result (to output)</param>
+	/// <param name="client">HttpClient</param>
+	/// <param name="uri">URI to load</param>
+	/// <param name="token">CancellationToken</param>
+	public delegate ValueTask LoadUri(StringBuilder result, HttpClient client, string uri, CancellationToken token);
+
+	/// <summary>
 	/// List of top-level menu items
 	/// </summary>
 	public List<MenuItem> Items { get; private init; } = new();
 
-	/// <inheritdoc cref="GetSimpleItems(IUrlHelper, Func{IUrlHelper, MenuItem, string?})"/>
+	/// <inheritdoc cref="F.GetSimpleItems(IUrlHelper, List{MenuItem}, GetUri)"/>
 	public IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper) =>
-		GetSimpleItems(urlHelper, GetUri);
+		F.GetSimpleItems(urlHelper, Items, GetUriFromActionContext);
 
 	/// <summary>
-	/// Use a UrlHelper object to get simple menu items
-	/// </summary>
-	/// <param name="urlHelper">UrlHelper object</param>
-	/// <param name="getUri">Function to get a URI from a menu item</param>
-	internal IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper, Func<IUrlHelper, MenuItem, string?> getUri)
-	{
-		foreach (var item in Items)
-		{
-			if (getUri(urlHelper, item) is string uri)
-			{
-				yield return new(Guid.NewGuid(), item.Text ?? item.Controller, uri);
-			}
-		}
-	}
-
-	/// <summary>
-	/// Load the specified menu items (to help with caching / preloading pages)
+	/// Load this menu's items (to speed up page loading)
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="urlHelper">IUrlHelper</param>
-	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper) =>
-		LoadItemsAsync(http.CreateClient(), urlHelper, null);
-
-	/// <summary>
-	/// Load the specified menu items (to help with caching / preloading pages)
-	/// </summary>
-	/// <param name="client">HttpClient</param>
-	/// <param name="urlHelper">IUrlHelper</param>
-	/// <param name="list">Menu Items</param>
-	internal async Task<Option<string>> LoadItemsAsync(HttpClient client, IUrlHelper urlHelper, List<MenuItem>? list)
+	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper)
 	{
-		// Use a StringBuilder to hold the response text
-		var result = new StringBuilder();
+		// Create client
+		var client = http.CreateClient();
 
-		// Loop through provided list, or default list of Items
-		await Parallel.ForEachAsync(
-			source: list ?? Items,
-			parallelOptions: new() { MaxDegreeOfParallelism = 3 },
-			body: async (item, token) =>
-			{
-				// Build the URI to load it
-				if (GetUri(urlHelper, item) is string uri)
-				{
-					await LoadUriAsync(result, client, uri, token);
-				}
+		// Get URIs
+		var uris = F.GetUris(urlHelper, Items, GetUriFromActionContext);
 
-				// Continue if there are no children
-				if (item.Children.Count == 0)
-				{
-					return;
-				}
-
-				// Load child items
-				result.AppendLine("Loading children..<br/>");
-				await LoadItemsAsync(client, urlHelper, item.Children).ConfigureAwait(false);
-				result.AppendLine(".. done<br/>");
-			}
-		);
-
-		// Return result
-		return result.ToString();
+		// Load items
+		return F.LoadUrisAsync(client, uris, F.LoadUriAsync);
 	}
 
-	#region Static Members
-
 	/// <summary>
-	/// Return the fully-qualified URI for the specified menu item
+	/// Build a URI using the <paramref name="urlHelper"/> ActionContext
 	/// </summary>
-	/// <param name="urlHelper">UrlHelper</param>
-	/// <param name="item">Current menu item</param>
-	/// <returns>Menu Item URL</returns>
-	internal static string? GetUri(IUrlHelper urlHelper, MenuItem item)
+	/// <param name="urlHelper">IUrlHelper</param>
+	/// <param name="item">MenuItem</param>
+	private static string? GetUriFromActionContext(IUrlHelper urlHelper, MenuItem item)
 	{
 		// Build the context
 		var actionContext = new UrlActionContext
@@ -115,34 +81,108 @@ public abstract class Menu
 	}
 
 	/// <summary>
-	/// Load a URI asynchronously, writing output to <paramref name="result"/>
+	/// Helper Functions
 	/// </summary>
-	/// <param name="result">StringBuilder</param>
-	/// <param name="client">HttpClient</param>
-	/// <param name="uri">The URI to load</param>
-	/// <param name="token">CancellationToken</param>
-	internal static async Task LoadUriAsync(StringBuilder result, HttpClient client, string uri, CancellationToken token)
+	internal static class F
 	{
-		// Output URI to be loaded
-		result.Append($"Loading {uri} .. ");
-
-		try
+		/// <summary>
+		/// Use a UrlHelper object to get simple menu items
+		/// </summary>
+		/// <param name="urlHelper">UrlHelper object</param>
+		/// <param name="getUri">Function to get a URI from a menu item</param>
+		internal static IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper, List<MenuItem> items, GetUri getUri)
 		{
-			// Attempt to load the URL and ensure it is successful
-			var response = await client.GetAsync(uri, token).ConfigureAwait(false);
-			response.EnsureSuccessStatusCode();
-
-			// Successful
-			result.Append("done");
+			foreach (var item in items)
+			{
+				if (getUri(urlHelper, item) is string uri)
+				{
+					yield return new(Guid.NewGuid(), item.Text ?? item.Controller, uri);
+				}
+			}
 		}
-		catch (HttpRequestException ex)
+
+		/// <summary>
+		/// Get URIs from a list of menu items
+		/// </summary>
+		/// <param name="urlHelper">IUrlHelper</param>
+		/// <param name="items">Menu Items</param>
+		/// <param name="getUri">Get URI delegate</param>
+		internal static List<string> GetUris(IUrlHelper urlHelper, List<MenuItem> items, GetUri getUri)
 		{
-			result.Append($"failed: {ex}");
+			// Holds list of URIs
+			var uris = new List<string>();
+
+			// Add each item, and any children
+			foreach (var item in items)
+			{
+				// Get parent URI
+				if (getUri(urlHelper, item) is string uri)
+				{
+					uris.Add(uri);
+				}
+
+				// Get child URIs
+				if (item.Children.Count == 0)
+				{
+					continue;
+				}
+
+				uris.AddRange(GetUris(urlHelper, item.Children, getUri));
+			}
+
+			// Return list
+			return uris;
 		}
 
-		// Put the next URL on a new line
-		result.AppendLine("<br/>");
+		/// <summary>
+		/// Load the specified URIs
+		/// </summary>
+		/// <param name="client">HttpClient</param>
+		/// <param name="uris">List of URIs to load</param>
+		internal static async Task<Option<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
+		{
+			// Use a StringBuilder to hold the response text
+			var result = new StringBuilder();
+
+			// Loop through provided list, or default list of Items
+			await Parallel.ForEachAsync(
+				source: uris,
+				parallelOptions: new() { MaxDegreeOfParallelism = 3 },
+				body: (uri, token) => loadUri(result, client, uri, token)
+			);
+
+			// Return result
+			return result.ToString();
+		}
+
+		/// <summary>
+		/// Load a URI asynchronously, writing output to <paramref name="result"/>
+		/// </summary>
+		/// <param name="result">StringBuilder</param>
+		/// <param name="client">HttpClient</param>
+		/// <param name="uri">The URI to load</param>
+		/// <param name="token">CancellationToken</param>
+		internal static async ValueTask LoadUriAsync(StringBuilder result, HttpClient client, string uri, CancellationToken token)
+		{
+			// Output URI to be loaded
+			var output = $"Loading {uri} .. ";
+
+			try
+			{
+				// Attempt to load the URL and ensure it is successful
+				var response = await client.GetAsync(uri, token).ConfigureAwait(false);
+				response.EnsureSuccessStatusCode();
+
+				// Successful
+				output += "done";
+			}
+			catch (HttpRequestException ex)
+			{
+				output += $"failed: {ex}";
+			}
+
+			// Put the next URL on a new line
+			result.Append(output).AppendLine("<br/>");
+		}
 	}
-
-	#endregion
 }
