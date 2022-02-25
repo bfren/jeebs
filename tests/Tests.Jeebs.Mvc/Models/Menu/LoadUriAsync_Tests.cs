@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -51,7 +52,7 @@ public class LoadUriAsync_Tests
 		var handler = new MockHttpMessageHandler();
 		var client = new HttpClient(handler);
 		var uri = "https://bfren.dev";
-		var expected = $"Loading {uri} .. done<br/>\r\n";
+		var expected = $"Loading {uri} .. done<br/>${Environment.NewLine}";
 
 		// Act
 		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
