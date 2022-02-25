@@ -52,7 +52,7 @@ public class LoadUriAsync_Tests
 		var handler = new MockHttpMessageHandler();
 		var client = new HttpClient(handler);
 		var uri = "https://bfren.dev";
-		var expected = $"Loading {uri} .. done<br/>${Environment.NewLine}";
+		var expected = $"Loading {uri} .. done<br/>{Environment.NewLine}";
 
 		// Act
 		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
