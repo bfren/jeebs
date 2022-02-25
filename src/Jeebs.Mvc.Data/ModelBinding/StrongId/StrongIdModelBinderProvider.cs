@@ -15,10 +15,17 @@ public sealed class StrongIdModelBinderProvider : IModelBinderProvider
 	/// If the model type implements <see cref="IStrongId"/>, create <see cref="StrongIdModelBinder{T}"/>
 	/// </summary>
 	/// <param name="context">ModelBinderProviderContext</param>
-	public IModelBinder? GetBinder(ModelBinderProviderContext context)
+	public IModelBinder? GetBinder(ModelBinderProviderContext context) =>
+		GetBinderFromModelType(context.Metadata.ModelType);
+
+	/// <summary>
+	/// Get binder from the specified model type
+	/// </summary>
+	/// <param name="modelType">Model Type</param>
+	internal static IModelBinder? GetBinderFromModelType(Type modelType)
 	{
 		// Return null if this is the wrong type
-		if (!context.Metadata.ModelType.Implements<IStrongId>())
+		if (!modelType.Implements<IStrongId>())
 		{
 			return null;
 		}
@@ -26,7 +33,7 @@ public sealed class StrongIdModelBinderProvider : IModelBinderProvider
 		// The context ModelType is the StrongId type, which we pass to the binder as a generic constraint
 		try
 		{
-			var binderType = typeof(StrongIdModelBinder<>).MakeGenericType(context.Metadata.ModelType);
+			var binderType = typeof(StrongIdModelBinder<>).MakeGenericType(modelType);
 			return Activator.CreateInstance(binderType) switch
 			{
 				IModelBinder binder =>
