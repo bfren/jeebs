@@ -35,6 +35,16 @@ public abstract class MvcApp : WebApp
 	protected readonly bool lowercaseUrls = true;
 
 	/// <summary>
+	/// If true, authorisation support will be enabled (default: disabled)
+	/// </summary>
+	protected readonly bool enableAuthorisation;
+
+	/// <summary>
+	/// If true, session support will be enabled (default: disabled)
+	/// </summary>
+	protected readonly bool enableSession;
+
+	/// <summary>
 	/// CookiePolicyOptions
 	/// </summary>
 	protected readonly CookiePolicyOptions cookiePolicyOptions = new();
@@ -75,6 +85,9 @@ public abstract class MvcApp : WebApp
 		// Authorisation
 		ConfigureServices_Authorisation(services);
 
+		// Session
+		ConfigureServices_Session(services);
+
 		// Endpoints
 		ConfigureServices_Endpoints(services);
 	}
@@ -111,7 +124,10 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServices_Authorisation(IServiceCollection services)
 	{
-		services.AddAuthorization();
+		if (enableAuthorisation)
+		{
+			services.AddAuthorization();
+		}
 	}
 
 	/// <summary>
@@ -125,6 +141,18 @@ public abstract class MvcApp : WebApp
 			opt.AppendTrailingSlash = appendTrailingSlash;
 			opt.LowercaseUrls = lowercaseUrls;
 		});
+	}
+
+	/// <summary>
+	/// Override to configure session options
+	/// </summary>
+	/// <param name="services">IServiceCollection</param>
+	protected virtual void ConfigureServices_Session(IServiceCollection services)
+	{
+		if (enableSession)
+		{
+			services.AddSession();
+		}
 	}
 
 	/// <summary>
@@ -221,6 +249,9 @@ public abstract class MvcApp : WebApp
 
 		// Authorisation
 		Configure_Authorisation(app, config);
+
+		// Session
+		Configure_Session(app);
 
 		// Endpoint Routing
 		Configure_Endpoints(app);
@@ -329,7 +360,22 @@ public abstract class MvcApp : WebApp
 	/// <param name="config">IConfiguration</param>
 	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
 	{
-		app.UseAuthorization();
+		if (enableAuthorisation)
+		{
+			app.UseAuthorization();
+		}
+	}
+
+	/// <summary>
+	/// Override to configure session
+	/// </summary>
+	/// <param name="app">IApplicationBuilder</param>
+	protected virtual void Configure_Session(IApplicationBuilder app)
+	{
+		if (enableSession)
+		{
+			app.UseSession();
+		}
 	}
 
 	/// <summary>

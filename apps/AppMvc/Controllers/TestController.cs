@@ -441,7 +441,7 @@ public class TestController : Controller
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			var roles = await
+			_ = await
 				Some(
 					F.Rnd.Lng
 				)
