@@ -11,5 +11,14 @@ tab_size = 4
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none
 
+# Place System.* using directives before other using directives
+dotnet_sort_system_directives_first = true
+
+# Require braces to be on a new line always ('Allman' style)
+csharp_new_line_before_open_brace = all
+
 # Use file-scoped namespaces
 csharp_style_namespace_declarations = file_scoped:warning
+
+# Prefer the specified ordering.
+csharp_preferred_modifier_order = public, private, protected, internal, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async:warning
