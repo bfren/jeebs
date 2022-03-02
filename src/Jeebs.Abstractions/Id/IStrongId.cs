@@ -13,3 +13,15 @@ public interface IStrongId
 	/// </summary>
 	long Value { get; init; }
 }
+
+/// <summary>
+/// Represents a strongly-typed ID
+/// </summary>
+/// <param name="Value">ID value</param>
+public abstract record class StrongId(long Value) : IStrongId
+{
+	/// <summary>
+	/// A parameterless constructor is necessary for model binding
+	/// </summary>
+	protected StrongId() : this(0L) { }
+}
