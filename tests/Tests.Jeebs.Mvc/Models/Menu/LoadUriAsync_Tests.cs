@@ -25,7 +25,7 @@ public class LoadUriAsync_Tests
 		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
 
 		// Assert
-		result.ToString().Contains("failed");
+		Assert.Contains("failed", result.ToString());
 	}
 
 	[Fact]
@@ -41,7 +41,7 @@ public class LoadUriAsync_Tests
 		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
 
 		// Assert
-		result.ToString().Contains("done");
+		Assert.Contains("done", result.ToString());
 	}
 
 	[Fact]
