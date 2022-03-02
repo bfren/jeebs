@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Jeebs.Mvc.Data</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Jeebs.Mvc.Data\Jeebs.Mvc.Data.csproj" />
+	</ItemGroup>
+</Project>

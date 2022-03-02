@@ -8,7 +8,7 @@ using static F.OptionF;
 namespace Jeebs;
 
 /// <summary>
-/// IList Extensions
+/// <see cref="List{T}"/> Extensions
 /// </summary>
 public static class ListExtensions
 {

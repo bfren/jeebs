@@ -32,16 +32,12 @@ public sealed class StrongIdModelBinder<T> : IModelBinder
 		bindingContext.Result = long.TryParse(valueProviderResult.FirstValue, out long id) switch
 		{
 			true =>
-				success(id),
+				ModelBindingResult.Success(new T { Value = id }),
 
 			false =>
-				success(0)
+				ModelBindingResult.Failed()
 		};
 
 		return Task.CompletedTask;
-
-		// Set the model value using the parsed ID
-		static ModelBindingResult success(long id) =>
-			ModelBindingResult.Success(new T { Value = id });
 	}
 }
