@@ -15,12 +15,14 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Make lowercase, and remove non-letters characters
-			var normalised = Regex.Replace(@this.ToLowerInvariant(), "[^a-z -]", "").Trim();
+			var nonNormalisedCharacters = new Regex("[^a-z -]");
+			var normalised = nonNormalisedCharacters.Replace(@this.ToLowerInvariant(), "").Trim();
 
 			// Remove hyphens from the start of the string
 			normalised = normalised.TrimStart('-');
 
 			// Replace multiple spaces and hyphens with a single hyphen
-			return Regex.Replace(normalised, "[ -]+", "-");
+			var multipleSpacesAndHyphens = new Regex("[ -]+");
+			return multipleSpacesAndHyphens.Replace(normalised, "-");
 		});
 }

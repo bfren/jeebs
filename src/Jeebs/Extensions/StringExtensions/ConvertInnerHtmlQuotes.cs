@@ -16,10 +16,8 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Convert using HTML entities
-			static string convert(string input)
-			{
-				return input.ConvertCurlyQuotes(ls: "&lsquo;", rs: "&rsquo;", ld: "&ldquo;", rd: "&rdquo;");
-			}
+			static string convert(string input) =>
+				input.ConvertCurlyQuotes(ls: "&lsquo;", rs: "&rsquo;", ld: "&ldquo;", rd: "&rdquo;");
 
 			// Match HTML tags and their attributes
 			var htmlTags = new Regex("<[^>]*>");

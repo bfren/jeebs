@@ -18,10 +18,18 @@ public static partial class StringExtensions
 	public static string ConvertCurlyQuotes(this string @this, string ls, string rs, string ld, string rd) =>
 		Modify(@this, () =>
 		{
-			var s = @this.Replace("&#34;", "\"");
-			s = s.Replace("&#39;", "'");
-			s = Regex.Replace(s, "(\\s|^)'", $"$1{ls}").Replace("'", rs);
-			return Regex.Replace(s, "(\\s|^)\"", $"$1{ld}").Replace("\"", rd);
+			// Simple replace
+			var s = @this
+				.Replace("&#34;", "\"")
+				.Replace("&#39;", "'");
+
+			// Use regular expression to replace single quotes at the end of words
+			var singleQuote = new Regex("(\\s|^)'");
+			s = singleQuote.Replace(s, $"$1{ls}").Replace("'", rs);
+
+			// Use regular expression to replace double quote at the end of words
+			var doubleQuote = new Regex("(\\s|^)\"");
+			return doubleQuote.Replace(s, $"$1{ld}").Replace("\"", rd);
 		});
 
 	/// <inheritdoc cref="ConvertCurlyQuotes(string, string, string, string, string)"/>

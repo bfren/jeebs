@@ -39,10 +39,10 @@ public class AddVersionToWhere_Tests
 		var sql = string.Empty;
 
 		// Act
-		client.AddVersionToWhereTest(sql, version);
+		var result = client.AddVersionToWhereTest(sql, version);
 
 		// Assert
-		Assert.Equal(expected, sql);
+		Assert.Equal(expected, result);
 	}
 
 	[Fact]
@@ -63,9 +63,9 @@ public class AddVersionToWhere_Tests
 		var expected = $"{query} AND --{name}-- = ##{alias}##";
 
 		// Act
-		client.AddVersionToWhereTest(sql, version);
+		var result = client.AddVersionToWhereTest(sql, version);
 
 		// Assert
-		Assert.Equal(expected, sql);
+		Assert.Equal(expected, result);
 	}
 }

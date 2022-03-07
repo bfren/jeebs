@@ -22,7 +22,8 @@ public static partial class StringExtensions
 			}
 
 			// Now replace all non-word characters
-			return Regex.Replace(@this, @"\W+", replaceWith);
+			var nonWord = new Regex(@"\W+");
+			return nonWord.Replace(@this, replaceWith);
 		});
 
 	/// <inheritdoc cref="ReplaceNonWord(string, string?)"/>
