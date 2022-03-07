@@ -64,6 +64,7 @@ public static class LinqExpressionExtensions
 		public sealed record class ExpressionIsNotAMemberExpressionMsg : Msg;
 
 		/// <summary>The specified property does not exist on the type</summary>
+		/// <typeparam name="T">Type</typeparam>
 		/// <param name="Value">Property Name</param>
 		public sealed record class PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string> { }
 	}

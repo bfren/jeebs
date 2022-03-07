@@ -10,6 +10,7 @@ namespace Jeebs.Apps;
 /// <summary>
 /// Hosted Service Application (for background tasks) - see <see cref="ConsoleApp"/>
 /// </summary>
+/// <typeparam name="T">Service type</typeparam>
 public abstract class ServiceApp<T> : ConsoleApp
 	where T : class, IHostedService
 {

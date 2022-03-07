@@ -24,6 +24,7 @@ public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, Aut
 	/// <summary>
 	/// Retrieve a user by email address
 	/// </summary>
+	/// <typeparam name="TModel">User model type</typeparam>
 	/// <param name="email">Email address</param>
 	Task<Maybe<TModel>> RetrieveAsync<TModel>(string email);
 

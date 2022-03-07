@@ -8,6 +8,9 @@ namespace Jeebs.Auth.Data;
 /// <summary>
 /// Provides Authentication database functionality
 /// </summary>
+/// <typeparam name="TUserEntity">User entity type</typeparam>
+/// <typeparam name="TRoleEntity">Role entity type</typeparam>
+/// <typeparam name="TUserRoleEntity">User Role entity type</typeparam>
 public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	where TUserEntity : IAuthUser, IWithId
 	where TRoleEntity : IAuthRole, IWithId

@@ -41,6 +41,7 @@ public static partial class MappingF
 	public static partial class M
 	{
 		/// <summary>No Id property found on entity</summary>
+		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="Value">Exception</param>
 		public sealed record class ErrorGettingIdPropertyMsg<TEntity>(Exception Value) : ExceptionMsg;
 

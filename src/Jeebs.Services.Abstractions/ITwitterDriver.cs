@@ -10,6 +10,7 @@ namespace Jeebs.Services.Twitter;
 /// <summary>
 /// Twitter Driver
 /// </summary>
+/// <typeparam name="T">Tweet type</typeparam>
 public interface ITwitterDriver<T>
 	where T : ITwitterTweet
 {

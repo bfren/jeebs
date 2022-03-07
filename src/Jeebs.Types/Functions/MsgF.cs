@@ -19,6 +19,7 @@ public static class MsgF
 	/// <para>Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables</para>
 	/// <para>(Significantly) altered to work without requiring DataBinder</para>
 	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	/// <param name="format">String to format</param>
 	/// <param name="source">Source object to use for template values</param>
 	public static string Format<T>(string format, T source)

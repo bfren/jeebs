@@ -51,8 +51,8 @@ public static class PhpF
 	/// <summary>
 	/// Serialise object
 	/// </summary>
-	/// <param name="obj">Object</param>
-	/// <returns>Serialised object</returns>
+	/// <typeparam name="T">Object type</typeparam>
+	/// <param name="obj">Object value</param>
 	public static string Serialise<T>(T obj) =>
 		Serialise(obj, new StringBuilder()).ToString();
 

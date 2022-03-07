@@ -9,6 +9,7 @@ namespace Jeebs.Data.TypeHandlers;
 /// <summary>
 /// Enumerated TypeHandler
 /// </summary>
+/// <typeparam name="T">Enumerated type</typeparam>
 public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	where T : Enumerated
 {

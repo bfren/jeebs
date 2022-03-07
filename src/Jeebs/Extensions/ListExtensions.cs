@@ -114,6 +114,7 @@ public static class ListExtensions
 		public sealed record class ListContainsSingleItemMsg : Msg;
 
 		/// <summary>List does not contain the specified item</summary>
+		/// <typeparam name="T">Value type</typeparam>
 		/// <param name="Value">Item Value</param>
 		public sealed record class ListDoesNotContainItemMsg<T>(T Value) : WithValueMsg<T>;
 

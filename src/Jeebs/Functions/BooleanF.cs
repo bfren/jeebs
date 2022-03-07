@@ -15,8 +15,8 @@ public static class BooleanF
 	/// <summary>
 	/// Parse a boolean value
 	/// </summary>
+	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value">Value to parse</param>
-	/// <returns>True / false</returns>
 	public static Maybe<bool> Parse<T>(T value)
 	{
 		// Convert to string

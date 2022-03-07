@@ -9,6 +9,7 @@ namespace Jeebs;
 /// <summary>
 /// Maybe Equality Comparer
 /// </summary>
+/// <typeparam name="T">Maybe value type</typeparam>
 public sealed class MaybeEqualityComparer<T> : IEqualityComparer<Maybe<T>>
 {
 	/// <summary>

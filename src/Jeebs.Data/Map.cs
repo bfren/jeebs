@@ -20,6 +20,7 @@ public static class Map<TEntity>
 	/// <summary>
 	/// Map entity to the specified table type
 	/// </summary>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="mapper">IMapper</param>
 	internal static ITableMap To<TTable>(IMapper mapper)
 		where TTable : Table, new() =>
@@ -28,6 +29,7 @@ public static class Map<TEntity>
 	/// <summary>
 	/// Map entity to the specified table
 	/// </summary>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
 	public static ITableMap To<TTable>(TTable table)
 		where TTable : Table =>
@@ -36,6 +38,7 @@ public static class Map<TEntity>
 	/// <summary>
 	/// Map entity to the specified table
 	/// </summary>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
 	/// <param name="mapper">IMapper</param>
 	internal static ITableMap To<TTable>(TTable table, IMapper mapper)
