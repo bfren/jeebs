@@ -10,7 +10,7 @@ namespace Jeebs.Data.Mapping;
 /// <param name="Table">Table Name</param>
 /// <param name="Name">Column Name</param>
 /// <param name="Alias">Column Alias</param>
-public partial record class Column(ITableName TblName, string ColName, string ColAlias) : IColumn
+public record class Column(ITableName TblName, string ColName, string ColAlias) : IColumn
 {
 	/// <summary>
 	/// Create column using table object
@@ -60,7 +60,6 @@ public partial record class Column(ITableName TblName, string ColName, string Co
 
 			return false;
 		}
-
 
 		/// <inheritdoc cref="GetHashCode(IColumn)"/>
 		public int GetHashCode(object obj)

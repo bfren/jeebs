@@ -6,7 +6,7 @@ using Xunit;
 
 namespace F.DateTimeF_Tests;
 
-public partial class FromUnix_Tests
+public class FromUnix_Tests
 {
 	[Fact]
 	public void UnixTimestamp_ReturnsDateTime()

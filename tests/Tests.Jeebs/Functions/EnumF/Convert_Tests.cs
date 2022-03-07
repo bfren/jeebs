@@ -6,7 +6,7 @@ using Xunit;
 
 namespace F.EnumF_Tests;
 
-public partial class Convert_Tests
+public class Convert_Tests
 {
 	[Fact]
 	public void MatchingValue_ReturnsValue()

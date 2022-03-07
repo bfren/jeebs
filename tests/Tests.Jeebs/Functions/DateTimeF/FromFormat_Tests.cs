@@ -7,7 +7,7 @@ using Xunit;
 
 namespace F.DateTimeF_Tests;
 
-public partial class FromFormat_Tests
+public class FromFormat_Tests
 {
 	[Fact]
 	public void CorrectInput_ValidFormat_ReturnsDateTime()

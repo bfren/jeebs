@@ -6,7 +6,7 @@ using Xunit;
 
 namespace F.DateTimeF_Tests;
 
-public partial class UnixEpoch_Tests
+public class UnixEpoch_Tests
 {
 	[Fact]
 	public void ReturnsUnixEpochAsDateTime()

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace F.EnumF_Tests;
 
-public partial class Parse_Tests
+public class Parse_Tests
 {
 	[Theory]
 	[InlineData(null)]
