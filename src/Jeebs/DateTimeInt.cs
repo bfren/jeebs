@@ -126,12 +126,12 @@ public readonly record struct DateTimeInt
 
 	internal (bool Valid, string Part) IsValidDateTime()
 	{
-		if (Year < 0 || Year > 9999)
+		if (Year is < 0 or > 9999)
 		{
 			return (false, nameof(Year));
 		}
 
-		if (Month < 1 || Month > 12)
+		if (Month is < 1 or > 12)
 		{
 			return (false, nameof(Month));
 		}
@@ -161,12 +161,12 @@ public readonly record struct DateTimeInt
 			}
 		}
 
-		if (Hour < 0 || Hour > 23)
+		if (Hour is < 0 or > 23)
 		{
 			return (false, nameof(Hour));
 		}
 
-		if (Minute < 0 || Minute > 59)
+		if (Minute is < 0 or > 59)
 		{
 			return (false, nameof(Minute));
 		}
