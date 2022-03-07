@@ -18,7 +18,7 @@ public sealed class JsonbEnumeratedListTypeHandler<T> : JsonbTypeHandler<Enumera
 		value switch
 		{
 			string json =>
-				EnumeratedList<T>.Deserialise(json),
+				EnumeratedList.Deserialise<T>(json),
 
 			_ =>
 				new()

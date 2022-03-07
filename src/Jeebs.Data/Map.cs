@@ -13,7 +13,9 @@ public static class Map<TEntity>
 	where TEntity : IWithId
 {
 	/// <inheritdoc/>
+#pragma warning disable CA1000 // Do not declare static members on generic types
 	public static ITableMap To<TTable>()
+#pragma warning restore CA1000 // Do not declare static members on generic types
 		where TTable : Table, new() =>
 		To<TTable>(Mapper.Instance);
 
@@ -31,7 +33,9 @@ public static class Map<TEntity>
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
+#pragma warning disable CA1000 // Do not declare static members on generic types
 	public static ITableMap To<TTable>(TTable table)
+#pragma warning restore CA1000 // Do not declare static members on generic types
 		where TTable : Table =>
 		To(table, Mapper.Instance);
 

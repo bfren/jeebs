@@ -28,7 +28,9 @@ public static class Extract<TModel>
 	/// Extract columns from specified tables
 	/// </summary>
 	/// <param name="tables">List of tables</param>
+#pragma warning disable CA1000 // Do not declare static members on generic types
 	public static Maybe<IColumnList> From(params ITable[] tables)
+#pragma warning restore CA1000 // Do not declare static members on generic types
 	{
 		// If no tables, return empty extracted list
 		if (tables.Length == 0)
@@ -39,12 +41,9 @@ public static class Extract<TModel>
 		// Extract distinct columns
 		return
 			Some(
-				() =>
-				{
-					return from table in tables
-						   from column in GetColumnsFromTable<TModel>(table)
-						   select column;
-				},
+				() => from table in tables
+					  from column in GetColumnsFromTable<TModel>(table)
+					  select column,
 				e => new M.ErrorExtractingColumnsFromTableExceptionMsg(e)
 			)
 			.SwitchIf(

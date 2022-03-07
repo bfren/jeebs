@@ -15,5 +15,5 @@ public sealed class JsonEnumeratedListTypeHandler<T> : JsonTypeHandler<Enumerate
 	/// </summary>
 	/// <param name="xml">JSON string</param>
 	protected override EnumeratedList<T> Parse(string xml) =>
-		EnumeratedList<T>.Deserialise(xml);
+		EnumeratedList.Deserialise<T>(xml);
 }

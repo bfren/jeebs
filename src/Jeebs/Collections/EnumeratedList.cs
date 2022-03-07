@@ -6,6 +6,22 @@ using System.Collections.Generic;
 
 namespace Jeebs;
 
+/// <inheritdoc cref="EnumeratedList{T}"/>
+public static class EnumeratedList
+{
+	/// <summary>
+	/// Deserialise list from JSON
+	/// </summary>
+	/// <typeparam name="T">Enumerated value type</typeparam>
+	/// <param name="json">JSON serialised list</param>
+	public static EnumeratedList<T> Deserialise<T>(string json)
+		where T : Enumerated
+	{
+		var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
+		return new EnumeratedList<T>(strings);
+	}
+}
+
 /// <summary>
 /// Enumerated List
 /// </summary>
@@ -54,15 +70,5 @@ public sealed class EnumeratedList<T> : List<T>
 			false =>
 				F.JsonF.Empty
 		};
-	}
-
-	/// <summary>
-	/// Deserialise list from JSON
-	/// </summary>
-	/// <param name="json">JSON serialised list</param>
-	public static EnumeratedList<T> Deserialise(string json)
-	{
-		var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
-		return new EnumeratedList<T>(strings);
 	}
 }

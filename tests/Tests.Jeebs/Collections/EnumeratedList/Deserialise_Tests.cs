@@ -16,7 +16,7 @@ public class Deserialise_Tests
 		// Arrange
 
 		// Act
-		var result = EnumeratedList<Foo>.Deserialise(input);
+		var result = EnumeratedList.Deserialise<Foo>(input);
 
 		// Assert
 		Assert.Empty(result);
@@ -29,7 +29,7 @@ public class Deserialise_Tests
 		var json = F.Rnd.Str;
 
 		// Act
-		var result = EnumeratedList<Foo>.Deserialise(json);
+		var result = EnumeratedList.Deserialise<Foo>(json);
 
 		// Assert
 		Assert.Empty(result);
@@ -42,7 +42,7 @@ public class Deserialise_Tests
 		const string? json = "{\"foo\":\"bar\"}";
 
 		// Act
-		var result = EnumeratedList<Foo>.Deserialise(json);
+		var result = EnumeratedList.Deserialise<Foo>(json);
 
 		// Assert
 		Assert.Empty(result);
@@ -59,7 +59,7 @@ public class Deserialise_Tests
 		var json = $"[\"{itemB}\",\"{itemD}\",\"{itemA}\",\"{itemC}\"]";
 
 		// Act
-		var result = EnumeratedList<Foo>.Deserialise(json);
+		var result = EnumeratedList.Deserialise<Foo>(json);
 
 		// Assert
 		Assert.Collection(result,

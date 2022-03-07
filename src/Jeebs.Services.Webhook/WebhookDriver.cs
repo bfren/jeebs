@@ -21,9 +21,10 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
 #pragma warning disable RCS1158 // Static member in generic type should use a type parameter.
+#pragma warning disable CA1000 // Do not declare static members on generic types
 	public static void AddRequiredServices(IServiceCollection services) =>
+#pragma warning restore CA1000 // Do not declare static members on generic types
 #pragma warning restore RCS1158 // Static member in generic type should use a type parameter.
-
 		services.AddHttpClient();
 
 	/// <summary>
