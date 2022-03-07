@@ -92,7 +92,7 @@ public static class PhpF
 		};
 
 		// Append a value to the StringBuilder
-		StringBuilder append<U>(char type, U value) =>
+		StringBuilder append<TValue>(char type, TValue value) =>
 			sb.Append($"{type}:{value};");
 
 		// Append a string to the StringBuilder

@@ -16,7 +16,7 @@ public static partial class Rnd
 		/// <summary>
 		/// Lazy property so the resource is only loaded once
 		/// </summary>
-		private static readonly Lazy<string[]> wordList = new(
+		private static readonly Lazy<string[]> WordList = new(
 			() =>
 			{
 				// Attempt to get embedded word list file
@@ -53,7 +53,7 @@ public static partial class Rnd
 			bool upperFirst,
 			bool includeNumber
 		) =>
-			Passphrase(wordList.Value, numberOfWords, separator, upperFirst, includeNumber);
+			Passphrase(WordList.Value, numberOfWords, separator, upperFirst, includeNumber);
 
 		/// <summary>
 		/// Generate a random passphrase

@@ -13,36 +13,36 @@ public static partial class MaybeF
 {
 	/// <summary>
 	/// Unwrap the value of <paramref name="maybe"/> - if it is <see cref="Jeebs.Internals.Some{T}"/>
-	/// and <typeparamref name="T"/> implements <see cref="IEnumerable{T}"/>
+	/// and <typeparamref name="TList"/> implements <see cref="IEnumerable{T}"/>
 	/// </summary>
-	/// <typeparam name="T">Maybe value type</typeparam>
-	/// <typeparam name="U">Single value type</typeparam>
+	/// <typeparam name="TList">List value type</typeparam>
+	/// <typeparam name="TSingle">Single value type</typeparam>
 	/// <param name="maybe">Input Maybe</param>
 	/// <param name="noItems">Function to run if the Maybe value is a list with no items</param>
 	/// <param name="tooMany">Function to run if the Maybe value is a list with more than one item</param>
 	/// <param name="notAList">Function to run if the Maybe value is not a list</param>
-	public static Maybe<U> UnwrapSingle<T, U>(Maybe<T> maybe, Func<Msg>? noItems, Func<Msg>? tooMany, Func<Msg>? notAList) =>
+	public static Maybe<TSingle> UnwrapSingle<TList, TSingle>(Maybe<TList> maybe, Func<Msg>? noItems, Func<Msg>? tooMany, Func<Msg>? notAList) =>
 		Catch(() =>
 			Switch(
 				maybe,
 				some: v => v switch
 				{
-					IList<U> list when list.Count == 1 =>
+					IList<TSingle> list when list.Count == 1 =>
 						Some(list.Single()),
 
-					IList<U> list when list.Count == 0 =>
-						None<U>(noItems?.Invoke() ?? new M.UnwrapSingleNoItemsMsg()),
+					IList<TSingle> list when list.Count == 0 =>
+						None<TSingle>(noItems?.Invoke() ?? new M.UnwrapSingleNoItemsMsg()),
 
-					IList<U> =>
-						None<U>(tooMany?.Invoke() ?? new M.UnwrapSingleTooManyItemsErrorMsg()),
+					IList<TSingle> =>
+						None<TSingle>(tooMany?.Invoke() ?? new M.UnwrapSingleTooManyItemsErrorMsg()),
 
 					IList =>
-						None<U, M.UnwrapSingleIncorrectTypeErrorMsg>(),
+						None<TSingle, M.UnwrapSingleIncorrectTypeErrorMsg>(),
 
 					_ =>
-						None<U>(notAList?.Invoke() ?? new M.UnwrapSingleNotAListMsg())
+						None<TSingle>(notAList?.Invoke() ?? new M.UnwrapSingleNotAListMsg())
 				},
-				none: r => None<U>(r)
+				none: r => None<TSingle>(r)
 			),
 			DefaultHandler
 		);
