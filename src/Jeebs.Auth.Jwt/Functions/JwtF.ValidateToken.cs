@@ -8,7 +8,7 @@ using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -19,7 +19,7 @@ public static partial class JwtF
 	/// </summary>
 	/// <param name="config">JwtConfig</param>
 	/// <param name="token">Token value</param>
-	public static Option<ClaimsPrincipal> ValidateToken(JwtConfig config, string token)
+	public static Maybe<ClaimsPrincipal> ValidateToken(JwtConfig config, string token)
 	{
 		try
 		{

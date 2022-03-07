@@ -6,7 +6,7 @@ using Jeebs.Data.Querying;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Querying;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -18,7 +18,7 @@ public static partial class QueryPostsF
 	/// <typeparam name="TModel">Return value type</typeparam>
 	/// <param name="db">IWpDb</param>
 	/// <param name="opt">Function to return query options</param>
-	internal static Option<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
+	internal static Maybe<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
 		where TModel : IWithId<WpPostId> =>
 		Some(
 			() => opt(new Query.PostsOptions(db.Schema)),

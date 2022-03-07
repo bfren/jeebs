@@ -21,7 +21,7 @@ public sealed class QueryDispatcher : IQueryDispatcher
 		this.provider = provider;
 
 	/// <inheritdoc/>
-	public Task<Option<TResult>> DispatchAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken)
+	public Task<Maybe<TResult>> DispatchAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken)
 	{
 		var handler = provider.GetRequiredService<IQueryHandler<TQuery, TResult>>();
 		return handler.HandleAsync(query, cancellationToken);

@@ -42,11 +42,11 @@ public interface IQueryFluent<TEntity, TId>
 	/// Execute the query and return multiple items
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
-	Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>();
+	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>();
 
 	/// <summary>
 	/// Perform the query and return a single item
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
-	Task<Option<TModel>> QuerySingleAsync<TModel>();
+	Task<Maybe<TModel>> QuerySingleAsync<TModel>();
 }

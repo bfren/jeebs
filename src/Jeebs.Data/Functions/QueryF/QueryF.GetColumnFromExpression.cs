@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Jeebs;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.DataF;
 
@@ -18,7 +18,7 @@ public static partial class QueryF
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">Table object</param>
 	/// <param name="column">Column expression</param>
-	public static Option<IColumn> GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
+	public static Maybe<IColumn> GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 		where TTable : ITable =>
 		column.GetPropertyInfo()
 			.Map<IColumn>(
@@ -27,7 +27,7 @@ public static partial class QueryF
 			);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
-	public static Option<IColumn> GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)
+	public static Maybe<IColumn> GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new() =>
 		GetColumnFromExpression(
 			new TTable(), column

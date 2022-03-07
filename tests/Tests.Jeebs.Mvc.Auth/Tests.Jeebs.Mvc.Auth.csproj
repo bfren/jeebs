@@ -4,6 +4,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Maybe.Testing.csproj" />
 	</ItemGroup>
 </Project>

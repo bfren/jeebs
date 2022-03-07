@@ -20,6 +20,6 @@ public class WriteToLog_Tests
 		entity.WriteToLogTest(message, args);
 
 		// Assert
-		log.Received().Debug(message, args);
+		log.Received().Dbg(message, args);
 	}
 }

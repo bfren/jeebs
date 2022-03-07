@@ -3,7 +3,7 @@
 
 using System.Linq;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -17,7 +17,7 @@ public static class BooleanF
 	/// </summary>
 	/// <param name="value">Value to parse</param>
 	/// <returns>True / false</returns>
-	public static Option<bool> Parse<T>(T value)
+	public static Maybe<bool> Parse<T>(T value)
 	{
 		// Convert to string
 		var val = value?.ToString()?.ToLower();

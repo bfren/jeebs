@@ -17,7 +17,7 @@ public static class StringExtensionsDecrypt
 	/// <typeparam name="T">Type of object being encrypted</typeparam>
 	/// <param name="this">JSON-serialised Box</param>
 	/// <param name="key">Encryption Key (must be 32 bytes)</param>
-	public static Option<T> Decrypt<T>(this string @this, byte[] key) =>
+	public static Maybe<T> Decrypt<T>(this string @this, byte[] key) =>
 		from l in Deserialise<Locked<T>>(@this)
 		from c in l.Unlock(key)
 		select c.Contents;
@@ -28,7 +28,7 @@ public static class StringExtensionsDecrypt
 	/// <typeparam name="T">Type of object being encrypted</typeparam>
 	/// <param name="this">JSON-serialised Box</param>
 	/// <param name="key">Encryption Key</param>
-	public static Option<T> Decrypt<T>(this string @this, string key) =>
+	public static Maybe<T> Decrypt<T>(this string @this, string key) =>
 		from l in Deserialise<Locked<T>>(@this)
 		from c in l.Unlock(key)
 		select c.Contents;

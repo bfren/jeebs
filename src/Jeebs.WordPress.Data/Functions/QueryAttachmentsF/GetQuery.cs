@@ -5,7 +5,7 @@ using System.Linq;
 using Jeebs;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -17,7 +17,7 @@ public static partial class QueryAttachmentsF
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="fileIds">Attachment IDs</param>
 	/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param>
-	internal static Option<string> GetQuery(IWpDbSchema schema, IImmutableList<WpPostId> fileIds, string virtualUploadsUrl)
+	internal static Maybe<string> GetQuery(IWpDbSchema schema, IImmutableList<WpPostId> fileIds, string virtualUploadsUrl)
 	{
 		// Check for empty list
 		if (fileIds.Count == 0)

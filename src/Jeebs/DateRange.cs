@@ -12,18 +12,18 @@ public readonly record struct DateRange : IRange<DateTime>
 	public DateTime Start { get; init; }
 
 	/// <inheritdoc/>
-	public DateTime End { get; init; }
+	public DateTime Finish { get; init; }
 
 	/// <inheritdoc/>
 	public int Length =>
-		End.Subtract(Start).Days + 1;
+		Finish.Subtract(Start).Days + 1;
 
 	/// <summary>
 	/// Create range object from a single date
 	/// </summary>
 	/// <param name="single">Range start and end</param>
 	public DateRange(DateTime single) =>
-		(Start, End) = (single.StartOfDay(), single.EndOfDay());
+		(Start, Finish) = (single.StartOfDay(), single.EndOfDay());
 
 	/// <summary>
 	/// Create range object, making sure start is before end (!)
@@ -36,7 +36,7 @@ public readonly record struct DateRange : IRange<DateTime>
 		if (start < end)
 		{
 			Start = start.StartOfDay();
-			End = end.EndOfDay();
+			Finish = end.EndOfDay();
 		}
 		else
 		{
@@ -46,15 +46,15 @@ public readonly record struct DateRange : IRange<DateTime>
 
 	/// <inheritdoc/>
 	public bool Includes(DateTime value) =>
-		Start <= value && End >= value;
+		Start <= value && Finish >= value;
 
 	/// <inheritdoc/>
 	public bool Includes(IRange<DateTime> value) =>
-		Start <= value.Start && End >= value.End;
+		Start <= value.Start && Finish >= value.Finish;
 
 	/// <inheritdoc/>
 	public bool Overlaps(IRange<DateTime> value) =>
-		value.Includes(Start) || value.Includes(End) || Includes(value);
+		value.Includes(Start) || value.Includes(Finish) || Includes(value);
 
 	#region Static Members
 

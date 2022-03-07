@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Internals.Some_Tests;
 
@@ -13,10 +13,10 @@ public class ToString_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Lng;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var result = option.ToString();
+		var result = maybe.ToString();
 
 		// Assert
 		Assert.Equal(value.ToString(), result);
@@ -27,10 +27,10 @@ public class ToString_Tests
 	{
 		// Arrange
 		int? value = null;
-		var option = Some(value, true);
+		var maybe = Some(value, true);
 
 		// Act
-		var result = option.ToString();
+		var result = maybe.ToString();
 
 		// Assert
 		Assert.Equal("Some: " + typeof(int?), result);

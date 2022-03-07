@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Jeebs;
 using Xunit;
-using static F.OptionF.Dictionary.M;
+using static F.MaybeF.Dictionary.M;
 
 namespace Jeebs_Tests.Dictionary;
 
@@ -13,7 +13,7 @@ public abstract class GetValueOrNone_Tests
 {
 	public abstract void Test00_Empty_Dictionary_Returns_None_With_ListIsEmptyMsg();
 
-	protected static void Test00(Func<IDictionary<string, int>, string, Option<int>> act)
+	protected static void Test00(Func<IDictionary<string, int>, string, Maybe<int>> act)
 	{
 		// Arrange
 		var dictionary = new Dictionary<string, int>();
@@ -28,7 +28,7 @@ public abstract class GetValueOrNone_Tests
 
 	public abstract void Test01_Null_Key_Returns_None_With_KeyCannotBeNullMsg(string input);
 
-	protected static void Test01(Func<IDictionary<string, int>, Option<int>> act)
+	protected static void Test01(Func<IDictionary<string, int>, Maybe<int>> act)
 	{
 		// Arrange
 		var dictionary = new Dictionary<string, int>
@@ -46,7 +46,7 @@ public abstract class GetValueOrNone_Tests
 
 	public abstract void Test02_Key_Does_Not_Exists_Returns_None_With_KeyDoesNotExistMsg();
 
-	protected static void Test02(Func<IDictionary<string, int>, string, Option<int>> act)
+	protected static void Test02(Func<IDictionary<string, int>, string, Maybe<int>> act)
 	{
 		// Arrange
 		var dictionary = new Dictionary<string, int>
@@ -66,7 +66,7 @@ public abstract class GetValueOrNone_Tests
 
 	public abstract void Test03_Key_Exists_Null_Item_Returns_None_With_NullValueMsg();
 
-	protected static void Test03(Func<IDictionary<int, string>, int, Option<string>> act)
+	protected static void Test03(Func<IDictionary<int, string>, int, Maybe<string>> act)
 	{
 		// Arrange
 		var key = F.Rnd.Int;
@@ -86,7 +86,7 @@ public abstract class GetValueOrNone_Tests
 
 	public abstract void Test04_Key_Exists_Valid_Item_Returns_Some_With_Value();
 
-	protected static void Test04(Func<IDictionary<int, string>, int, Option<string>> act)
+	protected static void Test04(Func<IDictionary<int, string>, int, Maybe<string>> act)
 	{
 		// Arrange
 		var key = F.Rnd.Int;

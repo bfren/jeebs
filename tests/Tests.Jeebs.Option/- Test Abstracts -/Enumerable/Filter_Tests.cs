@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests.Enumerable;
 
@@ -14,7 +14,7 @@ public abstract class Filter_Tests
 {
 	public abstract void Test00_Maps_And_Returns_Only_Some_From_List();
 
-	protected static void Test00(Func<IEnumerable<Option<int>>, IEnumerable<int>> act)
+	protected static void Test00(Func<IEnumerable<Maybe<int>>, IEnumerable<int>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Int;
@@ -37,7 +37,7 @@ public abstract class Filter_Tests
 
 	public abstract void Test01_Maps_And_Returns_Matching_Some_From_List();
 
-	protected static void Test01(Func<IEnumerable<Option<int>>, Func<int, bool>, IEnumerable<int>> act)
+	protected static void Test01(Func<IEnumerable<Maybe<int>>, Func<int, bool>, IEnumerable<int>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Int;

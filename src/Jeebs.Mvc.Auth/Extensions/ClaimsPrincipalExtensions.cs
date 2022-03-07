@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Mvc.Auth;
 
@@ -18,7 +18,7 @@ public static class ClaimsPrincipalExtensions
 	/// Returns the ID of the current user
 	/// </summary>
 	/// <param name="this">CLaimsPrincipal</param>
-	public static Option<long> GetUserId(this ClaimsPrincipal @this)
+	public static Maybe<long> GetUserId(this ClaimsPrincipal @this)
 	{
 		if (@this.Identity?.IsAuthenticated == true)
 		{

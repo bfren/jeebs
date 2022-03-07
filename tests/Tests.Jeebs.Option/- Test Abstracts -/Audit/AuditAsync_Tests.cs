@@ -7,7 +7,7 @@ using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests;
 
@@ -17,30 +17,30 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test00_Null_Args_Returns_Original_Option();
 
-	protected static async Task Test00(Func<Option<int>, Task<Option<int>>> act)
+	protected static async Task Test00(Func<Maybe<int>, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 
 		// Act
-		var result = await act(option).ConfigureAwait(false);
+		var result = await act(maybe).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
-	public abstract Task Test01_If_Unknown_Option_Throws_UnknownOptionException();
+	public abstract Task Test01_If_Unknown_Maybe_Throws_UnknownOptionException();
 
-	protected static async Task Test01(Func<Option<int>, Task<Option<int>>> act)
+	protected static async Task Test01(Func<Maybe<int>, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 
 		// Act
-		var action = Task () => act(option);
+		var action = Task () => act(maybe);
 
 		// Assert
-		await Assert.ThrowsAsync<UnknownOptionException>(action).ConfigureAwait(false);
+		await Assert.ThrowsAsync<UnknownMaybeException>(action).ConfigureAwait(false);
 	}
 
 	#endregion
@@ -49,126 +49,126 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test02_Some_Runs_Audit_Action_And_Returns_Original_Option();
 
-	protected static async Task Test02(Func<Option<bool>, Action<Option<bool>>, Task<Option<bool>>> act)
+	protected static async Task Test02(Func<Maybe<bool>, Action<Maybe<bool>>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = True;
-		var audit = Substitute.For<Action<Option<bool>>>();
+		var maybe = True;
+		var audit = Substitute.For<Action<Maybe<bool>>>();
 
 		// Act
-		var result = await act(option, audit).ConfigureAwait(false);
+		var result = await act(maybe, audit).ConfigureAwait(false);
 
 		// Assert
-		audit.Received().Invoke(option);
-		Assert.Same(option, result);
+		audit.Received().Invoke(maybe);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test03_None_Runs_Audit_Action_And_Returns_Original_Option();
 
-	protected static async Task Test03(Func<Option<bool>, Action<Option<bool>>, Task<Option<bool>>> act)
+	protected static async Task Test03(Func<Maybe<bool>, Action<Maybe<bool>>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = Create.None<bool>();
-		var audit = Substitute.For<Action<Option<bool>>>();
+		var maybe = Create.None<bool>();
+		var audit = Substitute.For<Action<Maybe<bool>>>();
 
 		// Act
-		var result = await act(option, audit).ConfigureAwait(false);
+		var result = await act(maybe, audit).ConfigureAwait(false);
 
 		// Assert
-		audit.Received().Invoke(option);
-		Assert.Same(option, result);
+		audit.Received().Invoke(maybe);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test04_Some_Runs_Audit_Func_And_Returns_Original_Option();
 
-	protected static async Task Test04(Func<Option<bool>, Func<Option<bool>, Task>, Task<Option<bool>>> act)
+	protected static async Task Test04(Func<Maybe<bool>, Func<Maybe<bool>, Task>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = True;
-		var audit = Substitute.For<Func<Option<bool>, Task>>();
+		var maybe = True;
+		var audit = Substitute.For<Func<Maybe<bool>, Task>>();
 
 		// Act
-		var result = await act(option, audit).ConfigureAwait(false);
+		var result = await act(maybe, audit).ConfigureAwait(false);
 
 		// Assert
-		await audit.Received().Invoke(option).ConfigureAwait(false);
-		Assert.Same(option, result);
+		await audit.Received().Invoke(maybe).ConfigureAwait(false);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test05_None_Runs_Audit_Func_And_Returns_Original_Option();
 
-	protected static async Task Test05(Func<Option<bool>, Func<Option<bool>, Task>, Task<Option<bool>>> act)
+	protected static async Task Test05(Func<Maybe<bool>, Func<Maybe<bool>, Task>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = Create.None<bool>();
-		var audit = Substitute.For<Func<Option<bool>, Task>>();
+		var maybe = Create.None<bool>();
+		var audit = Substitute.For<Func<Maybe<bool>, Task>>();
 
 		// Act
-		var result = await act(option, audit).ConfigureAwait(false);
+		var result = await act(maybe, audit).ConfigureAwait(false);
 
 		// Assert
-		await audit.Received().Invoke(option).ConfigureAwait(false);
-		Assert.Same(option, result);
+		await audit.Received().Invoke(maybe).ConfigureAwait(false);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test06_Some_Runs_Audit_Action_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test06(Func<Option<bool>, Action<Option<bool>>, Task<Option<bool>>> act)
+	protected static async Task Test06(Func<Maybe<bool>, Action<Maybe<bool>>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = True;
-		var throwException = void (Option<bool> _) => throw new OptionTestException();
+		var maybe = True;
+		var throwException = void (Maybe<bool> _) => throw new MaybeTestException();
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test07_None_Runs_Audit_Action_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test07(Func<Option<bool>, Action<Option<bool>>, Task<Option<bool>>> act)
+	protected static async Task Test07(Func<Maybe<bool>, Action<Maybe<bool>>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = Create.None<bool>();
-		var throwException = void (Option<bool> _) => throw new OptionTestException();
+		var maybe = Create.None<bool>();
+		var throwException = void (Maybe<bool> _) => throw new MaybeTestException();
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test08_Some_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test08(Func<Option<bool>, Func<Option<bool>, Task>, Task<Option<bool>>> act)
+	protected static async Task Test08(Func<Maybe<bool>, Func<Maybe<bool>, Task>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = True;
-		var throwException = Task (Option<bool> _) => throw new OptionTestException();
+		var maybe = True;
+		var throwException = Task (Maybe<bool> _) => throw new MaybeTestException();
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test09_None_Runs_Audit_Func_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test09(Func<Option<bool>, Func<Option<bool>, Task>, Task<Option<bool>>> act)
+	protected static async Task Test09(Func<Maybe<bool>, Func<Maybe<bool>, Task>, Task<Maybe<bool>>> act)
 	{
 		// Arrange
-		var option = Create.None<bool>();
-		var throwException = Task (Option<bool> _) => throw new OptionTestException();
+		var maybe = Create.None<bool>();
+		var throwException = Task (Maybe<bool> _) => throw new MaybeTestException();
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	#endregion
@@ -177,139 +177,139 @@ public abstract class AuditAsync_Tests
 
 	public abstract Task Test10_Some_Runs_Some_Action_And_Returns_Original_Option();
 
-	protected static async Task Test10(Func<Option<int>, Action<int>, Task<Option<int>>> act)
+	protected static async Task Test10(Func<Maybe<int>, Action<int>, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var some = Substitute.For<Action<int>>();
 
 		// Act
-		var result = await act(option, some).ConfigureAwait(false);
+		var result = await act(maybe, some).ConfigureAwait(false);
 
 		// Assert
 		some.Received().Invoke(value);
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test11_Some_Runs_Some_Func_And_Returns_Original_Option();
 
-	protected static async Task Test11(Func<Option<int>, Func<int, Task>, Task<Option<int>>> act)
+	protected static async Task Test11(Func<Maybe<int>, Func<int, Task>, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var some = Substitute.For<Func<int, Task>>();
 
 		// Act
-		var result = await act(option, some).ConfigureAwait(false);
+		var result = await act(maybe, some).ConfigureAwait(false);
 
 		// Assert
 		await some.Received().Invoke(value).ConfigureAwait(false);
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test12_None_Runs_None_Action_And_Returns_Original_Option();
 
-	protected static async Task Test12(Func<Option<int>, Action<Msg>, Task<Option<int>>> act)
+	protected static async Task Test12(Func<Maybe<int>, Action<Msg>, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
+		var maybe = None<int>(msg);
 		var none = Substitute.For<Action<Msg>>();
 
 		// Act
-		var result = await act(option, none).ConfigureAwait(false);
+		var result = await act(maybe, none).ConfigureAwait(false);
 
 		// Assert
 		none.Received().Invoke(msg);
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test13_None_Runs_None_Func_And_Returns_Original_Option();
 
-	protected static async Task Test13(Func<Option<int>, Func<Msg, Task>, Task<Option<int>>> act)
+	protected static async Task Test13(Func<Maybe<int>, Func<Msg, Task>, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
+		var maybe = None<int>(msg);
 		var none = Substitute.For<Func<Msg, Task>>();
 
 		// Act
-		var result = await act(option, none).ConfigureAwait(false);
+		var result = await act(maybe, none).ConfigureAwait(false);
 
 		// Assert
 		await none.Received().Invoke(msg).ConfigureAwait(false);
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test14_Some_Runs_Some_Action_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test14(Func<Option<int>, Action<int>, Task<Option<int>>> act)
+	protected static async Task Test14(Func<Maybe<int>, Action<int>, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Int);
+		var maybe = Some(F.Rnd.Int);
 		var exception = new Exception();
 		var throwException = void (int _) => throw exception;
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test15_Some_Runs_Some_Func_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test15(Func<Option<int>, Func<int, Task>, Task<Option<int>>> act)
+	protected static async Task Test15(Func<Maybe<int>, Func<int, Task>, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Int);
+		var maybe = Some(F.Rnd.Int);
 		var exception = new Exception();
 		var throwException = Task (int _) => throw exception;
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test16_None_Runs_None_Action_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test16(Func<Option<int>, Action<Msg>, Task<Option<int>>> act)
+	protected static async Task Test16(Func<Maybe<int>, Action<Msg>, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 		var exception = new Exception();
 		var throwException = void (Msg _) => throw exception;
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract Task Test17_None_Runs_None_Func_Catches_Exception_And_Returns_Original_Option();
 
-	protected static async Task Test17(Func<Option<int>, Func<Msg, Task>, Task<Option<int>>> act)
+	protected static async Task Test17(Func<Maybe<int>, Func<Msg, Task>, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 		var exception = new Exception();
 		var throwException = Task (Msg _) => throw exception;
 
 		// Act
-		var result = await act(option, throwException).ConfigureAwait(false);
+		var result = await act(maybe, throwException).ConfigureAwait(false);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	#endregion
 
-	public record class FakeOption : Option<int> { }
+	public record class FakeMaybe : Maybe<int> { }
 
 	public record class TestMsg : Msg;
 }

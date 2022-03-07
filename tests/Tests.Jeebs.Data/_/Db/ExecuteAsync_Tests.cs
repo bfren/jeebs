@@ -42,7 +42,7 @@ public class ExecuteAsync_Tests
 		_ = await db.ExecuteAsync(query, parameters, type, transaction).ConfigureAwait(false);
 
 		// Assert
-		log.Received(2).Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
 	}
 
 	[Fact]
@@ -60,6 +60,6 @@ public class ExecuteAsync_Tests
 		_ = await db.ExecuteAsync<int>(query, parameters, type, transaction).ConfigureAwait(false);
 
 		// Assert
-		log.Received(2).Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
 	}
 }

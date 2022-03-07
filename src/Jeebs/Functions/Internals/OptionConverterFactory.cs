@@ -9,21 +9,21 @@ using Jeebs;
 namespace F.Internals;
 
 /// <summary>
-/// Option Converter Factory
+/// Maybe Converter Factory
 /// </summary>
 public sealed class OptionConverterFactory : JsonConverterFactory
 {
 	/// <summary>
-	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Option{T}"/>
+	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Maybe{T}"/>
 	/// </summary>
 	/// <param name="typeToConvert">Type to convert</param>
 	public override bool CanConvert(Type typeToConvert) =>
-		typeToConvert.Implements(typeof(Option<>));
+		typeToConvert.Implements(typeof(Maybe<>));
 
 	/// <summary>
-	/// Creates JsonConverter for <see cref="Option{T}"/>
+	/// Creates JsonConverter for <see cref="Maybe{T}"/>
 	/// </summary>
-	/// <param name="typeToConvert">Option type</param>
+	/// <param name="typeToConvert">Maybe type</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
@@ -15,10 +15,10 @@ public abstract class SomeAsync_Tests
 {
 	public abstract Task Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static async Task Test00(Func<Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test00(Func<Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var throwFunc = Task<int> () => throw new OptionTestException();
+		var throwFunc = Task<int> () => throw new MaybeTestException();
 
 		// Act
 		var result = await act(throwFunc, DefaultHandler).ConfigureAwait(false);
@@ -30,10 +30,10 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static async Task Test01(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
+	protected static async Task Test01(Func<Func<Task<int?>>, bool, Handler, Task<Maybe<int?>>> act)
 	{
 		// Arrange
-		var throwFunc = Task<int?> () => throw new OptionTestException();
+		var throwFunc = Task<int?> () => throw new MaybeTestException();
 
 		// Act
 		var r0 = await act(throwFunc, true, DefaultHandler).ConfigureAwait(false);
@@ -48,7 +48,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler();
 
-	protected static async Task Test02(Func<Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test02(Func<Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -65,7 +65,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler();
 
-	protected static async Task Test03(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
+	protected static async Task Test03(Func<Func<Task<int?>>, bool, Handler, Task<Maybe<int?>>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -84,7 +84,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test04_Null_Input_Returns_None();
 
-	protected static async Task Test04(Func<Func<Task<int?>>, Handler, Task<Option<int?>>> act)
+	protected static async Task Test04(Func<Func<Task<int?>>, Handler, Task<Maybe<int?>>> act)
 	{
 		// Arrange
 		var value = Task<int?> () => Task.FromResult<int?>(null);
@@ -99,7 +99,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test05_Nullable_Allow_Null_False_Null_Input_Returns_None_With_AllowNullWasFalseMsg();
 
-	protected static async Task Test05(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
+	protected static async Task Test05(Func<Func<Task<int?>>, bool, Handler, Task<Maybe<int?>>> act)
 	{
 		// Arrange
 		var value = Task<int?> () => Task.FromResult<int?>(null);
@@ -114,7 +114,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test06_Nullable_Allow_Null_True_Null_Input_Returns_Some_With_Null_Value();
 
-	protected static async Task Test06(Func<Func<Task<int?>>, bool, Handler, Task<Option<int?>>> act)
+	protected static async Task Test06(Func<Func<Task<int?>>, bool, Handler, Task<Maybe<int?>>> act)
 	{
 		// Arrange
 		var value = Task<int?> () => Task.FromResult<int?>(null);
@@ -129,7 +129,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test07_Not_Null_Returns_Some();
 
-	protected static async Task Test07(Func<Func<Task<object>>, Handler, Task<Option<object>>> act)
+	protected static async Task Test07(Func<Func<Task<object>>, Handler, Task<Maybe<object>>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;
@@ -157,7 +157,7 @@ public abstract class SomeAsync_Tests
 
 	public abstract Task Test08_Nullable_Not_Null_Returns_Some();
 
-	protected static async Task Test08(Func<Func<Task<object?>>, bool, Handler, Task<Option<object?>>> act)
+	protected static async Task Test08(Func<Func<Task<object?>>, bool, Handler, Task<Maybe<object?>>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;

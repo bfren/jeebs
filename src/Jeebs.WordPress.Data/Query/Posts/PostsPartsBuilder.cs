@@ -41,15 +41,15 @@ public static partial class Query
 		internal PostsPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereType(QueryParts parts, PostType type) =>
+		public Maybe<QueryParts> AddWhereType(QueryParts parts, PostType type) =>
 			AddWhere(parts, T.Post, p => p.Type, Compare.Equal, type);
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereStatus(QueryParts parts, PostStatus status) =>
+		public Maybe<QueryParts> AddWhereStatus(QueryParts parts, PostStatus status) =>
 			AddWhere(parts, T.Post, p => p.Status, Compare.Equal, status);
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereSearch(QueryParts parts, SearchPostField fields, Compare cmp, string? text)
+		public Maybe<QueryParts> AddWhereSearch(QueryParts parts, SearchPostField fields, Compare cmp, string? text)
 		{
 			// If there isn't any search text, don't do anything
 			if (text is null)
@@ -114,10 +114,10 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWherePublishedFrom(QueryParts parts, DateTime? from)
+		public Maybe<QueryParts> AddWherePublishedFrom(QueryParts parts, DateTime? fromDate)
 		{
 			// Add From (use start of the day)
-			if (from is DateTime fromBase)
+			if (fromDate is DateTime fromBase)
 			{
 				var start = fromBase.StartOfDay().ToMySqlString();
 				return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.MoreThanOrEqual, start);
@@ -128,10 +128,10 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWherePublishedTo(QueryParts parts, DateTime? to)
+		public Maybe<QueryParts> AddWherePublishedTo(QueryParts parts, DateTime? toDate)
 		{
 			// Add To (use end of the day)
-			if (to is DateTime toBase)
+			if (toDate is DateTime toBase)
 			{
 				var end = toBase.EndOfDay().ToMySqlString();
 				return AddWhere(parts, T.Post, p => p.PublishedOn, Compare.LessThanOrEqual, end);
@@ -142,7 +142,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId)
+		public Maybe<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId)
 		{
 			// Add Parent ID
 			if (parentId?.Value > 0)
@@ -155,7 +155,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, WpTermId id)> taxonomies)
+		public Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, WpTermId id)> taxonomies)
 		{
 			// If there aren't any, don't do anything
 			if (taxonomies.Count == 0)
@@ -235,7 +235,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereCustomFields(QueryParts parts, IImmutableList<(ICustomField, Compare, object)> customFields)
+		public Maybe<QueryParts> AddWhereCustomFields(QueryParts parts, IImmutableList<(ICustomField, Compare, object)> customFields)
 		{
 			// If there aren't any, don't do anything
 			if (customFields.Count == 0)

@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static F.OptionF.Dictionary;
+using static F.MaybeF.Dictionary;
 
-namespace F.OptionF_Tests.Dictionary;
+namespace F.MaybeF_Tests.Dictionary;
 
 public class GetValueOrNone_Tests : Jeebs_Tests.Dictionary.GetValueOrNone_Tests
 {

@@ -9,7 +9,7 @@ using Jeebs.Data;
 using Jeebs.Internals;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -25,7 +25,7 @@ public static partial class QueryPostsF
 	/// <param name="posts">Posts</param>
 	/// <param name="meta">Meta property</param>
 	/// <param name="fields">Custom Fields</param>
-	internal static async Task<Option<TList>> HydrateAsync<TList, TModel>(
+	internal static async Task<Maybe<TList>> HydrateAsync<TList, TModel>(
 		IWpDb db,
 		IUnitOfWork w,
 		TList posts,

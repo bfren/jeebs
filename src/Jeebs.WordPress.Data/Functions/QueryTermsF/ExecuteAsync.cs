@@ -9,7 +9,7 @@ using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Querying;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -22,7 +22,7 @@ public static partial class QueryTermsF
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="opt">Function to return query options</param>
-	public static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
+	public static Task<Maybe<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
 		where TModel : IWithId<WpTermId> =>
 		Some(
 			() => opt(new Query.TermsOptions(db.Schema)),

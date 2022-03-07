@@ -25,8 +25,8 @@ public class IdColumn_Tests : QueryPartsBuilder_Tests<Query.PostsPartsBuilder, W
 		var result = builder.IdColumn;
 
 		// Assert
-		Assert.Equal(builder.TTest.Post.GetName(), result.Table);
-		Assert.Equal(builder.TTest.Post.Id, result.Name);
-		Assert.Equal(nameof(PostTable.Id), result.Alias);
+		Assert.Equal(builder.TTest.Post.GetName(), result.TblName);
+		Assert.Equal(builder.TTest.Post.Id, result.ColName);
+		Assert.Equal(nameof(PostTable.Id), result.ColAlias);
 	}
 }

@@ -15,7 +15,7 @@ namespace Jeebs.Data.Querying;
 public static class DbQueryExtensions
 {
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
-	public static async Task<Option<IPagedList<T>>> QueryAsync<T>(
+	public static async Task<Maybe<IPagedList<T>>> QueryAsync<T>(
 		this IDbQuery @this,
 		ulong page,
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder
@@ -33,7 +33,7 @@ public static class DbQueryExtensions
 	/// <param name="page">Page number</param>
 	/// <param name="builder">Query builder</param>
 	/// <param name="transaction">Database transaction</param>
-	public static Task<Option<IPagedList<T>>> QueryAsync<T>(
+	public static Task<Maybe<IPagedList<T>>> QueryAsync<T>(
 		this IDbQuery @this,
 		ulong page,
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
@@ -47,7 +47,7 @@ public static class DbQueryExtensions
 		);
 
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
-	public static async Task<Option<IEnumerable<T>>> QueryAsync<T>(
+	public static async Task<Maybe<IEnumerable<T>>> QueryAsync<T>(
 		this IDbQuery @this,
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder
 	)
@@ -57,7 +57,7 @@ public static class DbQueryExtensions
 	}
 
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
-	public static Task<Option<IEnumerable<T>>> QueryAsync<T>(
+	public static Task<Maybe<IEnumerable<T>>> QueryAsync<T>(
 		this IDbQuery @this,
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
 		IDbTransaction transaction
@@ -70,7 +70,7 @@ public static class DbQueryExtensions
 		);
 
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
-	public static async Task<Option<T>> QuerySingleAsync<T>(
+	public static async Task<Maybe<T>> QuerySingleAsync<T>(
 		this IDbQuery @this,
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder
 	)
@@ -80,7 +80,7 @@ public static class DbQueryExtensions
 	}
 
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
-	public static Task<Option<T>> QuerySingleAsync<T>(
+	public static Task<Maybe<T>> QuerySingleAsync<T>(
 		this IDbQuery @this,
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder,
 		IDbTransaction transaction

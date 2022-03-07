@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Data.Querying;
 
@@ -56,7 +56,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 		// Return with additional predicate
 		return this with
 		{
-			Predicates = Predicates.With((x => column.Compile().Invoke(x) ?? new object(), cmp, value))
+			Predicates = Predicates.WithItem((x => column.Compile().Invoke(x) ?? new object(), cmp, value))
 		};
 	}
 
@@ -87,7 +87,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 		};
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>() =>
+	public Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>() =>
 		Predicates.Count switch
 		{
 			> 0 =>
@@ -98,7 +98,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 		};
 
 	/// <inheritdoc/>
-	public Task<Option<TModel>> QuerySingleAsync<TModel>() =>
+	public Task<Maybe<TModel>> QuerySingleAsync<TModel>() =>
 		Predicates.Count switch
 		{
 			> 0 =>

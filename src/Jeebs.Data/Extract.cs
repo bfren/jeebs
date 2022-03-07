@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Jeebs.Data.Mapping;
 using static F.DataF.QueryF;
-using static F.OptionF;
+using static F.MaybeF;
 using M = Jeebs.Data.ExtractMsg;
 
 namespace Jeebs.Data;
@@ -28,7 +28,7 @@ public static class Extract<TModel>
 	/// Extract columns from specified tables
 	/// </summary>
 	/// <param name="tables">List of tables</param>
-	public static Option<IColumnList> From(params ITable[] tables)
+	public static Maybe<IColumnList> From(params ITable[] tables)
 	{
 		// If no tables, return empty extracted list
 		if (tables.Length == 0)

@@ -7,7 +7,7 @@ using System.Reflection;
 using Jeebs;
 using Jeebs.Data.Entities;
 using Jeebs.Data.Mapping;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.DataF;
 
@@ -21,7 +21,7 @@ public static partial class MappingF
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="table">Table object</param>
-	public static Option<MappedColumnList> GetMappedColumns<TEntity>(ITable table)
+	public static Maybe<MappedColumnList> GetMappedColumns<TEntity>(ITable table)
 		where TEntity : IWithId =>
 		Some(
 			table
@@ -35,7 +35,7 @@ public static partial class MappingF
 				 (
 					 Table: x,
 					 Name: column,
-					 Property: entityProperty
+					 PropertyInfo: entityProperty
 				 ),
 			e => new M.ErrorGettingMappedColumnsMsg<TEntity>(e)
 		)

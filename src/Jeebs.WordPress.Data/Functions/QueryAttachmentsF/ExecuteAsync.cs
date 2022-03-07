@@ -8,7 +8,7 @@ using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Querying;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -21,7 +21,7 @@ public static partial class QueryAttachmentsF
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="opt">Function to return query options</param>
-	internal static Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
+	internal static Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
 		where T : IPostAttachment
 	{
 		return

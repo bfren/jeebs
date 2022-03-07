@@ -3,7 +3,7 @@
 
 using System;
 using Jeebs.Services.Drawing.Geometry;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Services.Drawing;
 
@@ -38,7 +38,7 @@ public abstract class ImageWrapper : IImageWrapper
 	public abstract byte[] ToPngByteArray(int quality);
 
 	/// <inheritdoc/>
-	public abstract Option<IImageWrapper> ApplyMask(int width, int height);
+	public abstract Maybe<IImageWrapper> ApplyMask(int width, int height);
 
 	/// <summary>
 	/// Resize and crop an image to fill a mask of specified width and height
@@ -46,7 +46,7 @@ public abstract class ImageWrapper : IImageWrapper
 	/// <param name="width">Mask width</param>
 	/// <param name="height">Mask height</param>
 	/// <param name="apply">Function to perform the graphics manipulation</param>
-	protected Option<IImageWrapper> ApplyMask(int width, int height, Func<Size, Rectangle, IImageWrapper> apply)
+	protected Maybe<IImageWrapper> ApplyMask(int width, int height, Func<Size, Rectangle, IImageWrapper> apply)
 	{
 		// At least one of width and height should be greater than zero
 		if (width == 0 && height == 0)

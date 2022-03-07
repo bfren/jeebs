@@ -5,7 +5,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using Jeebs.Reflection;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Linq;
 
@@ -20,7 +20,7 @@ public static class LinqExpressionExtensions
 	/// <typeparam name="TObject">Object type</typeparam>
 	/// <typeparam name="TProperty">Property type</typeparam>
 	/// <param name="this">Expression to get property</param>
-	public static Option<PropertyInfo<TObject, TProperty>> GetPropertyInfo<TObject, TProperty>(
+	public static Maybe<PropertyInfo<TObject, TProperty>> GetPropertyInfo<TObject, TProperty>(
 		this Expression<Func<TObject, TProperty>> @this
 	) =>
 		GetMemberInfo(
@@ -44,7 +44,7 @@ public static class LinqExpressionExtensions
 	/// return the <see cref="UnaryExpression.Operand"/> member as <see cref="MemberInfo"/>
 	/// </summary>
 	/// <param name="expression">Expression body</param>
-	private static Option<MemberInfo> GetMemberInfo(Expression expression) =>
+	private static Maybe<MemberInfo> GetMemberInfo(Expression expression) =>
 		expression switch
 		{
 			MemberExpression memberExpression =>

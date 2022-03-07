@@ -11,15 +11,15 @@ public interface IColumn
 	/// <summary>
 	/// Table Name
 	/// </summary>
-	ITableName Table { get; }
+	ITableName TblName { get; }
 
 	/// <summary>
 	/// Column Name
 	/// </summary>
-	string Name { get; }
+	string ColName { get; }
 
 	/// <summary>
 	/// Column Alias
 	/// </summary>
-	string Alias { get; }
+	string ColAlias { get; }
 }

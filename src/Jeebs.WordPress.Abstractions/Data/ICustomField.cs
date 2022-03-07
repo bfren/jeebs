@@ -23,7 +23,7 @@ public interface ICustomField
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="meta">Meta Dictionary</param>
 	/// <param name="isRequired">Whether or not the field is required</param>
-	Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
+	Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
 }
 
 /// <inheritdoc/>

@@ -19,7 +19,7 @@ public static partial class QueryPostsF
 	/// <typeparam name="TModel">Post type</typeparam>
 	/// <param name="posts">Posts</param>
 	/// <param name="filters">Content Filters</param>
-	internal static Option<TList> ApplyContentFilters<TList, TModel>(TList posts, IContentFilter[] filters)
+	internal static Maybe<TList> ApplyContentFilters<TList, TModel>(TList posts, IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>
 	{

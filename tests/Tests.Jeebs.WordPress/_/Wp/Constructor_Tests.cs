@@ -44,10 +44,10 @@ public class Constructor_Tests
 
 		// Assert
 		Assert.Same(wpConfigValue, result.Config);
-		Assert.IsType<WpDb<E.Comment, E.CommentMeta, E.Link, E.Option, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>>(result.Db);
+		Assert.IsType<WpDb<E.Comment, E.CommentMeta, E.Link, E.Opt, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>>(result.Db);
 	}
 
-	public sealed class TestWp : Wp<TestWpConfig, E.Comment, E.CommentMeta, E.Link, E.Option, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>
+	public sealed class TestWp : Wp<TestWpConfig, E.Comment, E.CommentMeta, E.Link, E.Opt, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>
 	{
 		public TestWp(IOptions<DbConfig> dbConfig, IOptions<TestWpConfig> wpConfig, ILog logForDb) : base(dbConfig, wpConfig, logForDb) { }
 
@@ -69,7 +69,7 @@ public class Constructor_Tests
 		public sealed record class Comment : WpCommentEntity { }
 		public sealed record class CommentMeta : WpCommentMetaEntity { }
 		public sealed record class Link : WpLinkEntity { }
-		public sealed record class Option : WpOptionEntity { }
+		public sealed record class Opt : WpOptionEntity { }
 		public sealed record class Post : WpPostEntity { }
 		public sealed record class PostMeta : WpPostMetaEntity { }
 		public sealed record class Term : WpTermEntity { }

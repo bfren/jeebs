@@ -22,10 +22,10 @@ public class AuthJwtProvider : IAuthJwtProvider
 		this.config = config;
 
 	/// <inheritdoc/>
-	public Option<string> CreateToken(ClaimsPrincipal principal) =>
+	public Maybe<string> CreateToken(ClaimsPrincipal principal) =>
 		F.JwtF.CreateToken(config, principal);
 
 	/// <inheritdoc/>
-	public Option<ClaimsPrincipal> ValidateToken(string token) =>
+	public Maybe<ClaimsPrincipal> ValidateToken(string token) =>
 		F.JwtF.ValidateToken(config, token);
 }

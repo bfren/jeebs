@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config;
 using Microsoft.Extensions.Options;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Data;
 
@@ -42,7 +42,7 @@ public abstract class Db : IDb
 		get
 		{
 			// Get a database connection
-			Log.Verbose("Getting database connection.");
+			Log.Vrb("Getting database connection.");
 			var connection = Client.Connect(Config.ConnectionString);
 			if (connection.State != ConnectionState.Open)
 			{
@@ -50,7 +50,7 @@ public abstract class Db : IDb
 			}
 
 			// Create Unit of Work
-			Log.Verbose("Starting new Unit of Work.");
+			Log.Vrb("Starting new Unit of Work.");
 			return new UnitOfWork(connection, Log.ForContext<UnitOfWork>());
 		}
 	}
@@ -79,7 +79,7 @@ public abstract class Db : IDb
 	/// Use Verbose log by default - override to send elsewhere (or to disable entirely)
 	/// </summary>
 	protected virtual Action<string, object[]> WriteToLog =>
-		Log.Verbose;
+		Log.Vrb;
 
 	/// <summary>
 	/// Write query to the log
@@ -108,14 +108,14 @@ public abstract class Db : IDb
 	#region Querying
 
 	/// <inheritdoc/>
-	public async Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
+	public async Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
 		return await QueryAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -128,14 +128,14 @@ public abstract class Db : IDb
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
+	public async Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
 		return await QuerySingleAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -151,14 +151,14 @@ public abstract class Db : IDb
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type)
+	public async Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
 		return await ExecuteAsync(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -175,14 +175,14 @@ public abstract class Db : IDb
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
+	public async Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
 		return await ExecuteAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
 			(query, parameters: param ?? new object(), type)
 		)

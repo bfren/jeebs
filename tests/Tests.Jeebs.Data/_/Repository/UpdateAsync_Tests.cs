@@ -36,6 +36,6 @@ public class UpdateAsync_Tests
 		await repo.UpdateAsync(model).ConfigureAwait(false);
 
 		// Assert
-		log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

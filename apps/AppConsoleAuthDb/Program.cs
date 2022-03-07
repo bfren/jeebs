@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 Jeebs.Apps.Program.Main<App>(args, (provider, log) =>
 {
 	// Begin
-	log.Debug("= Auth Database Console Test =");
+	log.Dbg("= Auth Database Console Test =");
 
 	// Create clients
 	var postgres = new PostgreSqlDbClient();
@@ -25,12 +25,12 @@ Jeebs.Apps.Program.Main<App>(args, (provider, log) =>
 	// PostgreSql
 	var postgresConn = config.GetConnection("server04-postgres").ConnectionString;
 
-	log.Debug("== PostgreSQL ==");
+	log.Dbg("== PostgreSQL ==");
 
-	log.Debug("Nuke...");
+	log.Dbg("Nuke...");
 	postgres.Nuke(postgresConn);
 
-	log.Debug("Migrate...");
+	log.Dbg("Migrate...");
 	postgres.MigrateToLatest(postgresConn);
 
 	Console.WriteLine();
@@ -38,12 +38,12 @@ Jeebs.Apps.Program.Main<App>(args, (provider, log) =>
 	// MariaDB
 	var mariadbConn = config.GetConnection("server04-mariadb").ConnectionString;
 
-	log.Debug("== MariaDB ==");
+	log.Dbg("== MariaDB ==");
 
-	log.Debug("Nuke...");
+	log.Dbg("Nuke...");
 	mariadb.Nuke(mariadbConn);
 
-	log.Debug("Migrate...");
+	log.Dbg("Migrate...");
 	mariadb.MigrateToLatest(mariadbConn);
 
 	Console.WriteLine();

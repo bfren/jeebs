@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Reflection;
 
@@ -40,7 +40,7 @@ public static class ObjectExtensions
 	/// </summary>
 	/// <param name="this">Object</param>
 	/// <param name="propertyName">The name of the property whose value you want to return</param>
-	public static Option<object> GetPropertyValue(this object @this, string propertyName) =>
+	public static Maybe<object> GetPropertyValue(this object @this, string propertyName) =>
 		GetPropertyValue<object>(@this, propertyName);
 
 	/// <summary>
@@ -49,7 +49,7 @@ public static class ObjectExtensions
 	/// <typeparam name="T">Property type</typeparam>
 	/// <param name="this">Object</param>
 	/// <param name="propertyName">The name of the property whose value you want to return</param>
-	public static Option<T> GetPropertyValue<T>(this object @this, string propertyName)
+	public static Maybe<T> GetPropertyValue<T>(this object @this, string propertyName)
 	{
 		// Get type
 		var type = @this.GetType();

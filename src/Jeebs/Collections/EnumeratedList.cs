@@ -41,7 +41,7 @@ public sealed class EnumeratedList<T> : List<T>
 	/// <summary>
 	/// Serialise list as JSON
 	/// </summary>
-	public Option<string> Serialise()
+	public Maybe<string> Serialise()
 	{
 		var list = new List<string>();
 		ForEach(e => list.Add(e));

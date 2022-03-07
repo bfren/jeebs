@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.WordPress.Data;
 
@@ -29,7 +29,7 @@ public abstract class TextCustomField : CustomField<string>
 	protected TextCustomField(string key) : base(key, string.Empty) { }
 
 	/// <inheritdoc/>
-	public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// If meta contains the key, return it
 		if (meta.TryGetValue(Key, out string? value))

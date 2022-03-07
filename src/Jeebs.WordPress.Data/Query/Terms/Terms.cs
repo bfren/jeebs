@@ -16,7 +16,7 @@ public static partial class Query
 	public sealed class Terms : IQueryTerms
 	{
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
+		public Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
 			where T : IWithId<WpTermId>
 		{
 			return QueryTermsF.ExecuteAsync<T>(db, w, opt);

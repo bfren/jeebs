@@ -16,7 +16,7 @@ public static class ObjectExtensionsEncrypt
 	/// <typeparam name="T">Type of object being encrypted</typeparam>
 	/// <param name="this">Value to encrypt</param>
 	/// <param name="key">Encryption Key (must be 32 bytes)</param>
-	public static Option<string> Encrypt<T>(this T @this, byte[] key) =>
+	public static Maybe<string> Encrypt<T>(this T @this, byte[] key) =>
 		@this switch
 		{
 			T x =>
@@ -34,7 +34,7 @@ public static class ObjectExtensionsEncrypt
 	/// <typeparam name="T">Type of object being encrypted</typeparam>
 	/// <param name="this">Value to encrypt</param>
 	/// <param name="key">Encryption key</param>
-	public static Option<string> Encrypt<T>(this T @this, string key) =>
+	public static Maybe<string> Encrypt<T>(this T @this, string key) =>
 		@this switch
 		{
 			T x =>

@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Data;
 public interface IQueryPosts
 {
 	/// <inheritdoc cref="ExecuteAsync{T}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
-	Task<Option<IEnumerable<T>>> ExecuteAsync<T>(
+	Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(
 		IWpDb db,
 		IUnitOfWork w,
 		GetPostsOptions opt,
@@ -32,7 +32,7 @@ public interface IQueryPosts
 	/// <param name="page">Page number</param>
 	/// <param name="opt">Function to return query options</param>
 	/// <param name="filters">Optional content filters to apply</param>
-	Task<Option<IPagedList<T>>> ExecuteAsync<T>(
+	Task<Maybe<IPagedList<T>>> ExecuteAsync<T>(
 		IWpDb db,
 		IUnitOfWork w,
 		ulong page,

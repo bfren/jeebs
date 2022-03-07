@@ -47,11 +47,11 @@ public abstract class App
 	/// <param name="log">ILog</param>
 	public virtual void Ready(IServiceProvider services, ILog log)
 	{
-		// Set Option Audit log
-		F.OptionF.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
+		// Set Maybe Audit log
+		F.MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Log application is ready
-		log.Information("Application ready.");
+		log.Inf("Application ready.");
 	}
 
 	/// <summary>

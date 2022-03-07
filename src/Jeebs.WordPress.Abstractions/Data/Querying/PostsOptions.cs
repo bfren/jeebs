@@ -33,10 +33,10 @@ public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOption
 	public Compare SearchComparison { get; init; } = Compare.Like;
 
 	/// <inheritdoc/>
-	public DateTime? From { get; init; }
+	public DateTime? FromDate { get; init; }
 
 	/// <inheritdoc/>
-	public DateTime? To { get; init; }
+	public DateTime? ToDate { get; init; }
 
 	/// <inheritdoc/>
 	public WpPostId? ParentId { get; init; }

@@ -42,10 +42,10 @@ public partial class PostgreSqlDbClient : DbClient
 				"COUNT(*)",
 
 			false =>
-				(parts.Select.Count > 0) switch
+				(parts.SelectColumns.Count > 0) switch
 				{
 					true =>
-						GetSelectFromList(this, parts.Select),
+						GetSelectFromList(this, parts.SelectColumns),
 
 					false =>
 						"*"
@@ -57,19 +57,19 @@ public partial class PostgreSqlDbClient : DbClient
 		// Add INNER JOIN
 		foreach (var (from, to) in parts.InnerJoin)
 		{
-			sql.Append($" INNER JOIN {Escape(to.Table)} ON {Escape(from.Table, from.Name)} = {Escape(to.Table, to.Name)}");
+			sql.Append($" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
 		}
 
 		// Add LEFT JOIN
 		foreach (var (from, to) in parts.LeftJoin)
 		{
-			sql.Append($" LEFT JOIN {Escape(to.Table)} ON {Escape(from.Table, from.Name)} = {Escape(to.Table, to.Name)}");
+			sql.Append($" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
 		}
 
 		// Add RIGHT JOIN
 		foreach (var (from, to) in parts.RightJoin)
 		{
-			sql.Append($" RIGHT JOIN {Escape(to.Table)} ON {Escape(from.Table, from.Name)} = {Escape(to.Table, to.Name)}");
+			sql.Append($" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
 		}
 
 		// Add WHERE
@@ -111,7 +111,7 @@ public partial class PostgreSqlDbClient : DbClient
 			var orderBy = new List<string>();
 			foreach (var (column, order) in parts.Sort)
 			{
-				orderBy.Add($"{Escape(column.Table, column.Name)} {order.ToOperator()}");
+				orderBy.Add($"{Escape(column.TblName, column.ColName)} {order.ToOperator()}");
 			}
 
 			sql.Append($" ORDER BY {JoinList(orderBy, false)}");

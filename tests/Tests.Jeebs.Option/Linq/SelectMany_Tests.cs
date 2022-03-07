@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Linq;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Linq_Tests;
 

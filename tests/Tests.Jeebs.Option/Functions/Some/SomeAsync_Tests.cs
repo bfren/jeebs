@@ -3,9 +3,9 @@
 
 using System.Threading.Tasks;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
-namespace F.OptionF_Tests;
+namespace F.MaybeF_Tests;
 
 public class SomeAsync_Tests : Jeebs_Tests.SomeAsync_Tests
 {

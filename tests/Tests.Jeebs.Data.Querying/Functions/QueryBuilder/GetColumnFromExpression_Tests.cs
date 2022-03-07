@@ -36,12 +36,12 @@ public class GetColumnFromExpression_Tests
 		var r1 = GetColumnFromExpression<TestTable>(t => t.Foo);
 
 		// Assert
-		Assert.Equal(tableName, r0.Table.Name);
-		Assert.Equal(table.Foo, r0.Name);
-		Assert.Equal(nameof(table.Foo), r0.Alias);
-		Assert.Equal(nameof(TestTable), r1.Table.Name);
-		Assert.Equal(table.Foo, r1.Name);
-		Assert.Equal(nameof(table.Foo), r1.Alias);
+		Assert.Equal(tableName, r0.TblName.Name);
+		Assert.Equal(table.Foo, r0.ColName);
+		Assert.Equal(nameof(table.Foo), r0.ColAlias);
+		Assert.Equal(nameof(TestTable), r1.TblName.Name);
+		Assert.Equal(table.Foo, r1.ColName);
+		Assert.Equal(nameof(table.Foo), r1.ColAlias);
 	}
 
 	public record class BrokenTable : TestTable

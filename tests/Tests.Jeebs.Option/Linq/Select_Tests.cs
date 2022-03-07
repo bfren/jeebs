@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Linq;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Linq_Tests;
 
@@ -16,11 +16,11 @@ public class Select_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var r0 = option.Select(s => s ^ 2);
-		var r1 = from a in option
+		var r0 = maybe.Select(s => s ^ 2);
+		var r1 = from a in maybe
 				 select a ^ 2;
 
 		// Assert
@@ -35,22 +35,22 @@ public class Select_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var r0 = await option.AsTask.Select(s => s ^ 2).ConfigureAwait(false);
-		var r1 = await option.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
-		var r2 = await option.AsTask.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
+		var r0 = await maybe.AsTask.Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await maybe.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
+		var r2 = await maybe.AsTask.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
 		var r3 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r4 = await (
-			from a in option
+			from a in maybe
 			select Task.FromResult(a ^ 2)
 		).ConfigureAwait(false);
 		var r5 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			select Task.FromResult(a ^ 2)
 		).ConfigureAwait(false);
 
@@ -73,11 +73,11 @@ public class Select_Tests
 	public void Select_With_None_Returns_None()
 	{
 		// Arrange
-		var option = None<int>(new InvalidIntegerMsg());
+		var maybe = None<int>(new InvalidIntegerMsg());
 
 		// Act
-		var r0 = option.Select(s => s ^ 2);
-		var r1 = from a in option
+		var r0 = maybe.Select(s => s ^ 2);
+		var r1 = from a in maybe
 				 select a ^ 2;
 
 		// Assert
@@ -91,22 +91,22 @@ public class Select_Tests
 	public async Task Async_Select_With_None_Returns_None()
 	{
 		// Arrange
-		var option = None<int>(new InvalidIntegerMsg());
+		var maybe = None<int>(new InvalidIntegerMsg());
 
 		// Act
-		var r0 = await option.AsTask.Select(s => s ^ 2).ConfigureAwait(false);
-		var r1 = await option.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
-		var r2 = await option.AsTask.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
+		var r0 = await maybe.AsTask.Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await maybe.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
+		var r2 = await maybe.AsTask.Select(s => Task.FromResult(s ^ 2)).ConfigureAwait(false);
 		var r3 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r4 = await (
-			from a in option
+			from a in maybe
 			select Task.FromResult(a ^ 2)
 		).ConfigureAwait(false);
 		var r5 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			select Task.FromResult(a ^ 2)
 		).ConfigureAwait(false);
 

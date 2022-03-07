@@ -20,7 +20,7 @@ public static partial class QueryPostsF
 	/// <param name="posts">Posts</param>
 	/// <param name="postsMeta">Posts Meta</param>
 	/// <param name="metaDict">Meta Dictionary property for <typeparamref name="TModel"/></param>
-	internal static Option<TList> SetMeta<TList, TModel>(TList posts, List<PostMeta> postsMeta, Meta<TModel> metaDict)
+	internal static Maybe<TList> SetMeta<TList, TModel>(TList posts, List<PostMeta> postsMeta, Meta<TModel> metaDict)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>
 	{

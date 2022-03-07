@@ -2,34 +2,34 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using static F.OptionF;
+using static F.MaybeF;
 
-namespace F.OptionF_Tests;
+namespace F.MaybeF_Tests;
 
 public class BindAsync_Tests : Jeebs_Tests.BindAsync_Tests
 {
-	public override async Task Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg()
+	public override async Task Test00_If_Unknown_Maybe_Returns_None_With_UnhandledExceptionMsg()
 	{
-		await Test00((opt, bind) => BindAsync(opt, bind)).ConfigureAwait(false);
+		await Test00((mbe, bind) => BindAsync(mbe, bind)).ConfigureAwait(false);
 	}
 
 	public override async Task Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg()
 	{
-		await Test01((opt, bind) => BindAsync(opt, bind)).ConfigureAwait(false);
+		await Test01((mbe, bind) => BindAsync(mbe, bind)).ConfigureAwait(false);
 	}
 
 	public override async Task Test02_If_None_Gets_None()
 	{
-		await Test02((opt, bind) => BindAsync(opt, bind)).ConfigureAwait(false);
+		await Test02((mbe, bind) => BindAsync(mbe, bind)).ConfigureAwait(false);
 	}
 
 	public override async Task Test03_If_None_With_Reason_Gets_None_With_Same_Reason()
 	{
-		await Test03((opt, bind) => BindAsync(opt, bind)).ConfigureAwait(false);
+		await Test03((mbe, bind) => BindAsync(mbe, bind)).ConfigureAwait(false);
 	}
 
 	public override async Task Test04_If_Some_Runs_Bind_Function()
 	{
-		await Test04((opt, bind) => BindAsync(opt, bind)).ConfigureAwait(false);
+		await Test04((mbe, bind) => BindAsync(mbe, bind)).ConfigureAwait(false);
 	}
 }

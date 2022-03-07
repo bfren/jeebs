@@ -58,5 +58,5 @@ public interface IImageWrapper
 	/// </summary>
 	/// <param name="width">Mask width</param>
 	/// <param name="height">Mask height</param>
-	Option<IImageWrapper> ApplyMask(int width, int height);
+	Maybe<IImageWrapper> ApplyMask(int width, int height);
 }

@@ -2,27 +2,27 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
-namespace F.OptionF_Tests;
+namespace F.MaybeF_Tests;
 
 public class IfSome_Tests : Jeebs_Tests.IfSome_Tests
 {
 	[Fact]
 	public override void Test00_Exception_In_IfSome_Action_Returns_None_With_UnhandledExceptionMsg()
 	{
-		Test00((opt, ifSome) => IfSome(opt, ifSome));
+		Test00((mbe, ifSome) => IfSome(mbe, ifSome));
 	}
 
 	[Fact]
 	public override void Test01_None_Returns_Original_Option()
 	{
-		Test01((opt, ifSome) => IfSome(opt, ifSome));
+		Test01((mbe, ifSome) => IfSome(mbe, ifSome));
 	}
 
 	[Fact]
 	public override void Test02_Some_Runs_IfSome_Action_And_Returns_Original_Option()
 	{
-		Test02((opt, ifSome) => IfSome(opt, ifSome));
+		Test02((mbe, ifSome) => IfSome(mbe, ifSome));
 	}
 }

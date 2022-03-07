@@ -14,9 +14,9 @@ public interface IRange<T>
 	T Start { get; }
 
 	/// <summary>
-	/// Range end
+	/// Range finish
 	/// </summary>
-	T End { get; }
+	T Finish { get; }
 
 	/// <summary>
 	/// The length of the range

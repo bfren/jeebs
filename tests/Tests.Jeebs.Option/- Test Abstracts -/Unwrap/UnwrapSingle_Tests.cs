@@ -6,38 +6,38 @@ using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
 public abstract class UnwrapSingle_Tests
 {
-	public abstract void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg();
+	public abstract void Test00_If_Unknown_Maybe_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test00(Func<Option<int>, Option<int>> act)
+	protected static void Test00(Func<Maybe<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Value);
+		Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_None_Returns_None();
 
-	protected static void Test01(Func<Option<int>, Option<int>> act)
+	protected static void Test01(Func<Maybe<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		result.AssertNone();
@@ -45,14 +45,14 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test02_None_With_Reason_Returns_None_With_Reason();
 
-	protected static void Test02(Func<Option<int>, Option<int>> act)
+	protected static void Test02(Func<Maybe<int>, Maybe<int>> act)
 	{
 		// Arrange
 		var reason = new TestMsg();
-		var option = None<int>(reason);
+		var maybe = None<int>(reason);
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		var none = result.AssertNone();
@@ -61,14 +61,14 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test03_No_Items_Returns_None_With_UnwrapSingleNoItemsMsg();
 
-	protected static void Test03(Func<Option<int[]>, Option<int>> act)
+	protected static void Test03(Func<Maybe<int[]>, Maybe<int>> act)
 	{
 		// Arrange
 		var empty = Array.Empty<int>();
-		var option = Some(empty);
+		var maybe = Some(empty);
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		var none = result.AssertNone();
@@ -77,15 +77,15 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test04_No_Items_Runs_NoItems();
 
-	protected static void Test04(Func<Option<int[]>, Func<Msg>?, Option<int>> act)
+	protected static void Test04(Func<Maybe<int[]>, Func<Msg>?, Maybe<int>> act)
 	{
 		// Arrange
 		var empty = Array.Empty<int>();
-		var option = Some(empty);
+		var maybe = Some(empty);
 		var noItems = Substitute.For<Func<Msg>>();
 
 		// Act
-		act(option, noItems);
+		act(maybe, noItems);
 
 		// Assert
 		noItems.Received().Invoke();
@@ -93,14 +93,14 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test05_Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg();
 
-	protected static void Test05(Func<Option<int[]>, Option<int>> act)
+	protected static void Test05(Func<Maybe<int[]>, Maybe<int>> act)
 	{
 		// Arrange
 		var list = new[] { F.Rnd.Int, F.Rnd.Int };
-		var option = Some(list);
+		var maybe = Some(list);
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		var none = result.AssertNone();
@@ -109,15 +109,15 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test06_Too_Many_Items_Runs_TooMany();
 
-	protected static void Test06(Func<Option<int[]>, Func<Msg>?, Option<int>> act)
+	protected static void Test06(Func<Maybe<int[]>, Func<Msg>?, Maybe<int>> act)
 	{
 		// Arrange
 		var list = new[] { F.Rnd.Int, F.Rnd.Int };
-		var option = Some(list);
+		var maybe = Some(list);
 		var tooMany = Substitute.For<Func<Msg>>();
 
 		// Act
-		act(option, tooMany);
+		act(maybe, tooMany);
 
 		// Assert
 		tooMany.Received().Invoke();
@@ -125,14 +125,14 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test07_Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg();
 
-	protected static void Test07(Func<Option<int>, Option<int>> act)
+	protected static void Test07(Func<Maybe<int>, Maybe<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		var none = result.AssertNone();
@@ -141,15 +141,15 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test08_Not_A_List_Runs_NotAList();
 
-	protected static void Test08(Func<Option<int>, Func<Msg>?, Option<int>> act)
+	protected static void Test08(Func<Maybe<int>, Func<Msg>?, Maybe<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var notAList = Substitute.For<Func<Msg>>();
 
 		// Act
-		_ = act(option, notAList);
+		_ = act(maybe, notAList);
 
 		// Assert
 		notAList.Received().Invoke();
@@ -157,15 +157,15 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test09_Incorrect_Type_Returns_None_With_UnwrapSingleIncorrectTypeErrorMsg();
 
-	protected static void Test09(Func<Option<int[]>, Option<string>> act)
+	protected static void Test09(Func<Maybe<int[]>, Maybe<string>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
 		var list = new[] { value };
-		var option = Some(list);
+		var maybe = Some(list);
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		var none = result.AssertNone();
@@ -174,21 +174,21 @@ public abstract class UnwrapSingle_Tests
 
 	public abstract void Test10_List_With_Single_Item_Returns_Single();
 
-	protected static void Test10(Func<Option<int[]>, Option<int>> act)
+	protected static void Test10(Func<Maybe<int[]>, Maybe<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
 		var list = new[] { value };
-		var option = Some(list);
+		var maybe = Some(list);
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
 		Assert.Equal(value, result);
 	}
 
-	public record class FakeOption : Option<int> { }
+	public record class FakeMaybe : Maybe<int> { }
 
 	public record class TestMsg : Msg;
 }

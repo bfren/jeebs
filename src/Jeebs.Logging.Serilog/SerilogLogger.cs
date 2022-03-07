@@ -57,35 +57,35 @@ public class SerilogLogger : Log
 		logger.IsEnabled((LogEventLevel)level);
 
 	/// <inheritdoc/>
-	public override void Verbose(string message, params object[] args) =>
+	public override void Vrb(string message, params object[] args) =>
 		logger.Verbose(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Debug(string message, params object[] args) =>
+	public override void Dbg(string message, params object[] args) =>
 		logger.Debug(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Information(string message, params object[] args) =>
+	public override void Inf(string message, params object[] args) =>
 		logger.Information(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Warning(string message, params object[] args) =>
+	public override void Wrn(string message, params object[] args) =>
 		logger.Warning(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Error(string message, params object[] args) =>
+	public override void Err(string message, params object[] args) =>
 		logger.Error(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Error(Exception ex, string message, params object[] args) =>
+	public override void Err(Exception ex, string message, params object[] args) =>
 		logger.Error(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Fatal(string message, params object[] args) =>
+	public override void Die(string message, params object[] args) =>
 		logger.Fatal(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Fatal(Exception ex, string message, params object[] args) =>
+	public override void Die(Exception ex, string message, params object[] args) =>
 		logger.Fatal(ex, Prefix(message), args);
 
 	/// <inheritdoc/>

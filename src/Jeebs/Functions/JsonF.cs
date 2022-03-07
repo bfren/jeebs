@@ -5,7 +5,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -71,7 +71,7 @@ public static class JsonF
 	/// <param name="obj">The object to serialise</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	/// <returns>Json String of serialised object</returns>
-	public static Option<string> Serialise<T>(T obj, JsonSerializerOptions options) =>
+	public static Maybe<string> Serialise<T>(T obj, JsonSerializerOptions options) =>
 		obj switch
 		{
 			T x =>
@@ -85,7 +85,7 @@ public static class JsonF
 		};
 
 	/// <inheritdoc cref="Serialise{T}(T, JsonSerializerOptions)"/>
-	public static Option<string> Serialise<T>(T obj) =>
+	public static Maybe<string> Serialise<T>(T obj) =>
 		Serialise(obj, options);
 
 	/// <summary>
@@ -95,7 +95,7 @@ public static class JsonF
 	/// <param name="str">The string to deserialise</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	/// <returns>Deserialised object of given type</returns>
-	public static Option<T> Deserialise<T>(string str, JsonSerializerOptions options)
+	public static Maybe<T> Deserialise<T>(string str, JsonSerializerOptions options)
 	{
 		// Check for null string
 		if (str is null || string.IsNullOrWhiteSpace(str))
@@ -122,7 +122,7 @@ public static class JsonF
 	}
 
 	/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
-	public static Option<T> Deserialise<T>(string str) =>
+	public static Maybe<T> Deserialise<T>(string str) =>
 		Deserialise<T>(str, options);
 
 	/// <summary>

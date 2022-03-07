@@ -25,7 +25,7 @@ public static partial class Query
 			Maximum = null;
 
 		/// <inheritdoc/>
-		protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+		protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
 			base.Build(
 				parts
 			)

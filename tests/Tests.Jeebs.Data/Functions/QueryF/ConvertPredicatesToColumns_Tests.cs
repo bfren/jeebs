@@ -37,7 +37,7 @@ public class ConvertPredicatesToColumns_Tests
 		var result = ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 		// Assert
-		Assert.DoesNotContain(result, x => x.column.Name == nameof(TestEntity.Bar));
+		Assert.DoesNotContain(result, x => x.column.ColName == nameof(TestEntity.Bar));
 	}
 
 	[Fact]
@@ -59,7 +59,7 @@ public class ConvertPredicatesToColumns_Tests
 
 		// Assert
 		Assert.Collection(result,
-			x => Assert.Equal(nameof(TestEntity.Foo), x.column.Name)
+			x => Assert.Equal(nameof(TestEntity.Foo), x.column.ColName)
 		);
 	}
 

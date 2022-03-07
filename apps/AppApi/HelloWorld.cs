@@ -3,13 +3,13 @@
 
 using Jeebs;
 using Jeebs.Cqrs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace AppApi;
 
 public class SayHelloHandler : IQueryHandler<SayHelloQuery, string>
 {
-	public Task<Option<string>> HandleAsync(SayHelloQuery query, CancellationToken cancellationToken) =>
+	public Task<Maybe<string>> HandleAsync(SayHelloQuery query, CancellationToken cancellationToken) =>
 		Some($"Hello, {query.Name}!").AsTask;
 }
 

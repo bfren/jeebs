@@ -19,8 +19,8 @@ public class Constructor_Tests
 		// Act
 
 		// Assert
-		Assert.Equal(table, column.Table);
-		Assert.Equal(name, column.Name);
-		Assert.Equal(alias, column.Alias);
+		Assert.Equal(table, column.TblName);
+		Assert.Equal(name, column.ColName);
+		Assert.Equal(alias, column.ColAlias);
 	}
 }

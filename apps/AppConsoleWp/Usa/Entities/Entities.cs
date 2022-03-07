@@ -8,7 +8,7 @@ namespace AppConsoleWp.Usa.Entities;
 public sealed record class Comment : WpCommentEntity { }
 public sealed record class CommentMeta : WpCommentMetaEntity { }
 public sealed record class Link : WpLinkEntity { }
-public sealed record class Option : WpOptionEntity { }
+public sealed record class Opt : WpOptionEntity { }
 public sealed record class Post : WpPostEntity { }
 public sealed record class PostMeta : WpPostMetaEntity { }
 public sealed record class Term : WpTermEntity { }

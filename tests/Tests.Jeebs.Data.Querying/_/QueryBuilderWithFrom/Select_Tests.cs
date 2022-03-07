@@ -22,18 +22,18 @@ public class Select_Tests
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.Select,
+		Assert.Collection(some.SelectColumns,
 			x =>
 			{
-				Assert.Equal(nameof(TestTable0), x.Table.Name);
-				Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), x.Name);
-				Assert.Equal(nameof(TestTable0.Foo), x.Alias);
+				Assert.Equal(nameof(TestTable0), x.TblName.Name);
+				Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), x.ColName);
+				Assert.Equal(nameof(TestTable0.Foo), x.ColAlias);
 			},
 			x =>
 			{
-				Assert.Equal(nameof(TestTable1), x.Table.Name);
-				Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), x.Name);
-				Assert.Equal(nameof(TestTable1.Bar), x.Alias);
+				Assert.Equal(nameof(TestTable1), x.TblName.Name);
+				Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), x.ColName);
+				Assert.Equal(nameof(TestTable1.Bar), x.ColAlias);
 			}
 		);
 	}

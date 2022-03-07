@@ -39,7 +39,7 @@ public interface IRepository<TEntity, TId>
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND)</param>
-	Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);
 
@@ -48,7 +48,7 @@ public interface IRepository<TEntity, TId>
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND)</param>
-	Task<Option<TModel>> QuerySingleAsync<TModel>(
+	Task<Maybe<TModel>> QuerySingleAsync<TModel>(
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);
 
@@ -57,17 +57,17 @@ public interface IRepository<TEntity, TId>
 	#region CRUD Queries
 
 	/// <inheritdoc cref="CreateAsync(TEntity, IDbTransaction)"/>
-	Task<Option<TId>> CreateAsync(TEntity entity);
+	Task<Maybe<TId>> CreateAsync(TEntity entity);
 
 	/// <summary>
 	/// Create an entity
 	/// </summary>
 	/// <param name="entity">Entity to create</param>
 	/// <param name="transaction">Database transaction</param>
-	Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction transaction);
+	Task<Maybe<TId>> CreateAsync(TEntity entity, IDbTransaction transaction);
 
 	/// <inheritdoc cref="RetrieveAsync{TModel}(TId, IDbTransaction)"/>
-	Task<Option<TModel>> RetrieveAsync<TModel>(TId id);
+	Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id);
 
 	/// <summary>
 	/// Retrieve an entity
@@ -75,10 +75,10 @@ public interface IRepository<TEntity, TId>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="id">Entity ID</param>
 	/// <param name="transaction">Database transaction</param>
-	Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction);
+	Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction);
 
 	/// <inheritdoc cref="UpdateAsync{TModel}(TModel, IDbTransaction)"/>
-	Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+	Task<Maybe<bool>> UpdateAsync<TModel>(TModel model)
 		where TModel : IWithId;
 
 	/// <summary>
@@ -87,18 +87,18 @@ public interface IRepository<TEntity, TId>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="model">Model with updated values</param>
 	/// <param name="transaction">Database transaction</param>
-	Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
+	Task<Maybe<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId;
 
 	/// <inheritdoc cref="DeleteAsync(TId, IDbTransaction)"/>
-	Task<Option<bool>> DeleteAsync(TId id);
+	Task<Maybe<bool>> DeleteAsync(TId id);
 
 	/// <summary>
 	/// Delete an entity
 	/// </summary>
 	/// <param name="id">Entity ID</param>
 	/// <param name="transaction">Database transaction</param>
-	Task<Option<bool>> DeleteAsync(TId id, IDbTransaction transaction);
+	Task<Maybe<bool>> DeleteAsync(TId id, IDbTransaction transaction);
 
 	#endregion
 }

@@ -30,7 +30,7 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(bar, x.column.Name);
+				Assert.Equal(bar, x.column.ColName);
 				Assert.Equal(cmp, x.cmp);
 				Assert.Equal(val, x.value);
 			}

@@ -14,7 +14,7 @@ namespace Jeebs.Cqrs;
 public interface ICommandHandler<TCommand, TResult>
 {
 	/// <inheritdoc cref="HandleAsync(TCommand, CancellationToken)"/>
-	ValueTask<Option<TResult>> HandleAsync(TCommand query) =>
+	ValueTask<Maybe<TResult>> HandleAsync(TCommand query) =>
 		HandleAsync(query, CancellationToken.None);
 
 	/// <summary>
@@ -22,5 +22,5 @@ public interface ICommandHandler<TCommand, TResult>
 	/// </summary>
 	/// <param name="query">Command object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	ValueTask<Option<TResult>> HandleAsync(TCommand query, CancellationToken cancellationToken);
+	ValueTask<Maybe<TResult>> HandleAsync(TCommand query, CancellationToken cancellationToken);
 }

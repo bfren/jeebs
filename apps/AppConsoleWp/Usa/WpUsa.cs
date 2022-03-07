@@ -16,7 +16,7 @@ public sealed class WpUsa : Wp<
 	Entities.Comment,
 	Entities.CommentMeta,
 	Entities.Link,
-	Entities.Option,
+	Entities.Opt,
 	Entities.Post,
 	Entities.PostMeta,
 	Entities.Term,

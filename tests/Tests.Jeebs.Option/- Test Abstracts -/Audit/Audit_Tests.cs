@@ -6,7 +6,7 @@ using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests;
 
@@ -16,30 +16,30 @@ public abstract class Audit_Tests
 
 	public abstract void Test00_Null_Args_Returns_Original_Option();
 
-	protected static void Test00(Func<Option<int>, Option<int>> act)
+	protected static void Test00(Func<Maybe<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 
 		// Act
-		var result = act(option);
+		var result = act(maybe);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
-	public abstract void Test01_If_Unknown_Option_Throws_UnknownOptionException();
+	public abstract void Test01_If_Unknown_Maybe_Throws_UnknownOptionException();
 
-	protected static void Test01(Func<Option<int>, Option<int>> act)
+	protected static void Test01(Func<Maybe<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 
 		// Act
-		void result() => act(option);
+		void result() => act(maybe);
 
 		// Assert
-		Assert.Throws<UnknownOptionException>(result);
+		Assert.Throws<UnknownMaybeException>(result);
 	}
 
 	#endregion
@@ -48,43 +48,43 @@ public abstract class Audit_Tests
 
 	public abstract void Test02_Some_Runs_Audit_And_Returns_Original_Option();
 
-	protected static void Test02(Func<Option<bool>, Action<Option<bool>>, Option<bool>> act)
+	protected static void Test02(Func<Maybe<bool>, Action<Maybe<bool>>, Maybe<bool>> act)
 	{
 		// Arrange
-		var option = True;
-		var audit = Substitute.For<Action<Option<bool>>>();
+		var maybe = True;
+		var audit = Substitute.For<Action<Maybe<bool>>>();
 
 		// Act
-		var result = act(option, audit);
+		var result = act(maybe, audit);
 
 		// Assert
-		audit.Received().Invoke(option);
-		Assert.Same(option, result);
+		audit.Received().Invoke(maybe);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract void Test03_None_Runs_Audit_And_Returns_Original_Option();
 
-	protected static void Test03(Func<Option<bool>, Action<Option<bool>>, Option<bool>> act)
+	protected static void Test03(Func<Maybe<bool>, Action<Maybe<bool>>, Maybe<bool>> act)
 	{
 		// Arrange
-		var option = Create.None<bool>();
-		var audit = Substitute.For<Action<Option<bool>>>();
+		var maybe = Create.None<bool>();
+		var audit = Substitute.For<Action<Maybe<bool>>>();
 
 		// Act
-		var result = act(option, audit);
+		var result = act(maybe, audit);
 
 		// Assert
-		audit.Received().Invoke(option);
-		Assert.Same(option, result);
+		audit.Received().Invoke(maybe);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract void Test04_Some_Catches_Exception_And_Returns_Original_Option();
 
-	protected static void Test04(Func<Option<bool>, Action<Option<bool>>, Option<bool>> act)
+	protected static void Test04(Func<Maybe<bool>, Action<Maybe<bool>>, Maybe<bool>> act)
 	{
 		// Arrange
 		var some = True;
-		var throwException = void (Option<bool> _) => throw new OptionTestException();
+		var throwException = void (Maybe<bool> _) => throw new MaybeTestException();
 
 		// Act
 		var result = act(some, throwException);
@@ -95,11 +95,11 @@ public abstract class Audit_Tests
 
 	public abstract void Test05_None_Catches_Exception_And_Returns_Original_Option();
 
-	protected static void Test05(Func<Option<bool>, Action<Option<bool>>, Option<bool>> act)
+	protected static void Test05(Func<Maybe<bool>, Action<Maybe<bool>>, Maybe<bool>> act)
 	{
 		// Arrange
 		var none = Create.None<bool>();
-		var throwException = void (Option<bool> _) => throw new OptionTestException();
+		var throwException = void (Maybe<bool> _) => throw new MaybeTestException();
 
 		// Act
 		var result = act(none, throwException);
@@ -114,72 +114,72 @@ public abstract class Audit_Tests
 
 	public abstract void Test06_Some_Runs_Some_And_Returns_Original_Option();
 
-	protected static void Test06(Func<Option<int>, Action<int>, Option<int>> act)
+	protected static void Test06(Func<Maybe<int>, Action<int>, Maybe<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var some = Substitute.For<Action<int>>();
 
 		// Act
-		var result = act(option, some);
+		var result = act(maybe, some);
 
 		// Assert
 		some.Received().Invoke(value);
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract void Test07_None_Runs_None_And_Returns_Original_Option();
 
-	protected static void Test07(Func<Option<int>, Action<Msg>, Option<int>> act)
+	protected static void Test07(Func<Maybe<int>, Action<Msg>, Maybe<int>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
+		var maybe = None<int>(msg);
 		var none = Substitute.For<Action<Msg>>();
 
 		// Act
-		var result = act(option, none);
+		var result = act(maybe, none);
 
 		// Assert
 		none.Received().Invoke(msg);
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract void Test08_Some_Catches_Exception_And_Returns_Original_Option();
 
-	protected static void Test08(Func<Option<int>, Action<int>, Option<int>> act)
+	protected static void Test08(Func<Maybe<int>, Action<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Int);
-		var throwException = void (int _) => throw new OptionTestException();
+		var maybe = Some(F.Rnd.Int);
+		var throwException = void (int _) => throw new MaybeTestException();
 
 		// Act
-		var result = act(option, throwException);
+		var result = act(maybe, throwException);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	public abstract void Test09_None_Catches_Exception_And_Returns_Original_Option();
 
-	protected static void Test09(Func<Option<int>, Action<Msg>, Option<int>> act)
+	protected static void Test09(Func<Maybe<int>, Action<Msg>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 		var exception = new Exception();
 		var throwException = void (Msg _) => throw exception;
 
 		// Act
-		var result = act(option, throwException);
+		var result = act(maybe, throwException);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 	}
 
 	#endregion
 
-	public record class FakeOption : Option<int> { }
+	public record class FakeMaybe : Maybe<int> { }
 
 	public record class TestMsg : Msg;
 }

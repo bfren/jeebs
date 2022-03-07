@@ -13,5 +13,5 @@ public interface IMappedColumn : IColumn
 	/// <summary>
 	/// Entity Property
 	/// </summary>
-	PropertyInfo Property { get; }
+	PropertyInfo PropertyInfo { get; }
 }

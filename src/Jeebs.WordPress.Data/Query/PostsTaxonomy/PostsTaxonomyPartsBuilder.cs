@@ -44,7 +44,7 @@ public static partial class Query
 			Extract.From<TModel>(Table, T.TermRelationship, T.TermTaxonomy);
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies)
+		public Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies)
 		{
 			// Add Taxonomies
 			if (taxonomies.Count > 0)
@@ -57,7 +57,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds)
+		public Maybe<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds)
 		{
 			// Add Post IDs
 			if (postIds.Count > 0)
@@ -71,7 +71,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddSort(
+		public Maybe<QueryParts> AddSort(
 			QueryParts parts,
 			bool sortRandom,
 			IImmutableList<(IColumn, SortOrder)> sort,

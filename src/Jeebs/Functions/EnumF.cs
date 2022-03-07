@@ -3,7 +3,7 @@
 
 using System;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -18,7 +18,7 @@ public static class EnumF
 	/// <typeparam name="T">Enum type</typeparam>
 	/// <param name="value">The value to parse</param>
 	/// <returns>Parsed value</returns>
-	public static Option<T> Parse<T>(string value)
+	public static Maybe<T> Parse<T>(string value)
 		where T : struct, Enum
 	{
 		try
@@ -44,7 +44,7 @@ public static class EnumF
 	/// <param name="t">Enum type</param>
 	/// <param name="value">The value to parse</param>
 	/// <returns>Parsed value</returns>
-	public static Option<object> Parse(Type t, string value)
+	public static Maybe<object> Parse(Type t, string value)
 	{
 		if (!t.IsEnum)
 		{
@@ -94,7 +94,7 @@ public static class EnumF
 		/// </summary>
 		/// <typeparam name="TTo">Convert To type</typeparam>
 		/// <returns>Converted object</returns>
-		public Option<TTo> To<TTo>()
+		public Maybe<TTo> To<TTo>()
 			where TTo : struct, Enum
 		{
 			// Convert to long so we can get the value of the receiving enum

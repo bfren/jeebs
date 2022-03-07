@@ -15,7 +15,7 @@ namespace Jeebs.Mvc;
 public static class ControllerExtensions
 {
 	/// <summary>
-	/// Execute an Option.None result and return the View
+	/// Execute a Maybe.None result and return the View
 	/// </summary>
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
@@ -23,7 +23,7 @@ public static class ControllerExtensions
 		ExecuteErrorAsync(@this, reason, null);
 
 	/// <summary>
-	/// Execute an Option.None result and return the View
+	/// Execute a Maybe.None result and return the View
 	/// </summary>
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
@@ -31,7 +31,7 @@ public static class ControllerExtensions
 	public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code)
 	{
 		// Log error
-		@this.Log.Message(reason);
+		@this.Log.Msg(reason);
 
 		// Check for 404
 		var status = code switch
@@ -52,16 +52,16 @@ public static class ControllerExtensions
 
 		// Look for a view
 		var viewName = $"Error{status}";
-		@this.Log.Verbose("Search for View {ViewName}", viewName);
+		@this.Log.Vrb("Search for View {ViewName}", viewName);
 		if ((findView(viewName) ?? findView("Default")) is string view)
 		{
-			@this.Log.Verbose("Found view {view}", view);
+			@this.Log.Vrb("Found view {view}", view);
 			return @this.View(view, reason);
 		}
 
 		// If response has stared we can't do anything
 		var unableToFindViews = $"Unable to find views '{viewName}' or 'Default'.";
-		@this.Log.Warning(unableToFindViews);
+		@this.Log.Wrn(unableToFindViews);
 
 		if (!@this.Response.HasStarted)
 		{

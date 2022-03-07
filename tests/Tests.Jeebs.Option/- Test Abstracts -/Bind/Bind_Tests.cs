@@ -6,41 +6,41 @@ using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
 public abstract class Bind_Tests
 {
-	public abstract void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg();
+	public abstract void Test00_If_Unknown_Maybe_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test00(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
+	protected static void Test00(Func<Maybe<int>, Func<int, Maybe<string>>, Maybe<string>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
-		var bind = Substitute.For<Func<int, Option<string>>>();
+		var maybe = new FakeMaybe();
+		var bind = Substitute.For<Func<int, Maybe<string>>>();
 
 		// Act
-		var result = act(option, bind);
+		var result = act(maybe, bind);
 
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Value);
+		Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test01(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
+	protected static void Test01(Func<Maybe<int>, Func<int, Maybe<string>>, Maybe<string>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Int);
+		var maybe = Some(F.Rnd.Int);
 		var exception = new Exception();
-		var throwFunc = Option<string> () => throw exception;
+		var throwFunc = Maybe<string> () => throw exception;
 
 		// Act
-		var result = act(option, _ => throwFunc());
+		var result = act(maybe, _ => throwFunc());
 
 		// Assert
 		var none = result.AssertNone();
@@ -49,14 +49,14 @@ public abstract class Bind_Tests
 
 	public abstract void Test02_If_None_Gets_None();
 
-	protected static void Test02(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
+	protected static void Test02(Func<Maybe<int>, Func<int, Maybe<string>>, Maybe<string>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
-		var bind = Substitute.For<Func<int, Option<string>>>();
+		var maybe = Create.None<int>();
+		var bind = Substitute.For<Func<int, Maybe<string>>>();
 
 		// Act
-		var result = act(option, bind);
+		var result = act(maybe, bind);
 
 		// Assert
 		result.AssertNone();
@@ -64,15 +64,15 @@ public abstract class Bind_Tests
 
 	public abstract void Test03_If_None_With_Reason_Gets_None_With_Same_Reason();
 
-	protected static void Test03(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
+	protected static void Test03(Func<Maybe<int>, Func<int, Maybe<string>>, Maybe<string>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
-		var bind = Substitute.For<Func<int, Option<string>>>();
+		var maybe = None<int>(msg);
+		var bind = Substitute.For<Func<int, Maybe<string>>>();
 
 		// Act
-		var result = act(option, bind);
+		var result = act(maybe, bind);
 
 		// Assert
 		var none = result.AssertNone();
@@ -81,21 +81,21 @@ public abstract class Bind_Tests
 
 	public abstract void Test04_If_Some_Runs_Bind_Function();
 
-	protected static void Test04(Func<Option<int>, Func<int, Option<string>>, Option<string>> act)
+	protected static void Test04(Func<Maybe<int>, Func<int, Maybe<string>>, Maybe<string>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
-		var bind = Substitute.For<Func<int, Option<string>>>();
+		var maybe = Some(value);
+		var bind = Substitute.For<Func<int, Maybe<string>>>();
 
 		// Act
-		act(option, bind);
+		act(maybe, bind);
 
 		// Assert
 		bind.Received().Invoke(value);
 	}
 
-	public record class FakeOption : Option<int> { }
+	public record class FakeMaybe : Maybe<int> { }
 
 	public record class TestMsg : Msg;
 }

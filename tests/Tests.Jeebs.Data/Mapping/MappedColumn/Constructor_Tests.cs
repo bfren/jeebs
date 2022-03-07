@@ -23,9 +23,9 @@ public class Constructor_Tests
 		var result = new MappedColumn(table, name, prop);
 
 		// Assert
-		Assert.Equal(table, result.Table);
-		Assert.Equal(name, result.Name);
-		Assert.Equal(alias, result.Alias);
-		Assert.Equal(prop, result.Property);
+		Assert.Equal(table, result.TblName);
+		Assert.Equal(name, result.ColName);
+		Assert.Equal(alias, result.ColAlias);
+		Assert.Equal(prop, result.PropertyInfo);
 	}
 }

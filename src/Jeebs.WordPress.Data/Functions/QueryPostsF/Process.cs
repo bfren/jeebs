@@ -7,7 +7,7 @@ using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -22,7 +22,7 @@ public static partial class QueryPostsF
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="posts">Posts</param>
 	/// <param name="filters">Optional content filters</param>
-	internal static Task<Option<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
+	internal static Task<Maybe<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>
 	{

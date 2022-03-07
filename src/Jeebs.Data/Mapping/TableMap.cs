@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Data.Mapping;
 
@@ -39,19 +39,19 @@ public sealed record class TableMap : ITableMap
 
 	/// <inheritdoc/>
 	public IEnumerable<string> GetColumnNames() =>
-		Columns.Select(mc => mc.Name);
+		Columns.Select(mc => mc.ColName);
 
 	/// <inheritdoc/>
 	public IEnumerable<string> GetColumnAliases(bool includeIdAlias) =>
-		Columns.Select(mc => mc.Alias).Where(a => includeIdAlias || a != IdColumn.Alias);
+		Columns.Select(mc => mc.ColAlias).Where(a => includeIdAlias || a != IdColumn.ColAlias);
 
 	/// <inheritdoc/>
-	public Option<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
+	public Maybe<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
 		Some(
 			() => from c in Columns
-				  where c.Property.GetCustomAttribute<IdAttribute>() is null
-				  && c.Property.GetCustomAttribute<ComputedAttribute>() is null
-				  && c.Property.GetCustomAttribute<ReadonlyAttribute>() is null
+				  where c.PropertyInfo.GetCustomAttribute<IdAttribute>() is null
+				  && c.PropertyInfo.GetCustomAttribute<ComputedAttribute>() is null
+				  && c.PropertyInfo.GetCustomAttribute<ReadonlyAttribute>() is null
 				  select c,
 			DefaultHandler
 		)
@@ -66,7 +66,7 @@ public sealed record class TableMap : ITableMap
 			}
 		)
 		.Map(
-			x => (x.Select(w => w.Name).ToList(), x.Select(w => w.Alias).ToList()),
+			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList()),
 			DefaultHandler
 		);
 

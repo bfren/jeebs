@@ -6,7 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using Jeebs.Linq;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Auth;
 
@@ -45,7 +45,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		(User, Role, UserRole, Query) = (user, role, userRole, query);
 
 	/// <inheritdoc/>
-	public async Task<Option<TModel>> ValidateUserAsync<TModel>(string email, string password)
+	public async Task<Maybe<TModel>> ValidateUserAsync<TModel>(string email, string password)
 		where TModel : IAuthUser
 	{
 		// Check email
@@ -84,7 +84,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
+	public Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole =>
 		from u in User.RetrieveAsync<TUser>(id)
@@ -92,7 +92,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		select u with { Roles = r };
 
 	/// <inheritdoc/>
-	public Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
+	public Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole =>
 		from u in User.RetrieveAsync<TUser>(email)

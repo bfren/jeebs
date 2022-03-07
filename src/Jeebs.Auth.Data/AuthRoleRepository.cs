@@ -23,6 +23,6 @@ public sealed class AuthRoleRepository : Repository<AuthRoleEntity, AuthRoleId>,
 	public AuthRoleRepository(IAuthDb db, ILog<AuthRoleRepository> log) : base(db, log) { }
 
 	/// <inheritdoc/>
-	public Task<Option<AuthRoleId>> CreateAsync(string name) =>
+	public Task<Maybe<AuthRoleId>> CreateAsync(string name) =>
 		CreateAsync(new AuthRoleEntity { Name = name });
 }

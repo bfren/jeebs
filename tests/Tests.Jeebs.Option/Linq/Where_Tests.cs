@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Linq;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Linq_Tests;
 
@@ -16,11 +16,11 @@ public class Where_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var r0 = option.Where(s => s == value).Select(s => s ^ 2);
-		var r1 = from a in option
+		var r0 = maybe.Where(s => s == value).Select(s => s ^ 2);
+		var r1 = from a in maybe
 				 where a == value
 				 select a ^ 2;
 
@@ -36,24 +36,24 @@ public class Where_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var r0 = await option.AsTask.Where(s => s == value).Select(s => s ^ 2).ConfigureAwait(false);
-		var r1 = await option.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2).ConfigureAwait(false);
-		var r2 = await option.AsTask.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r0 = await maybe.AsTask.Where(s => s == value).Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await maybe.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r2 = await maybe.AsTask.Where(s => Task.FromResult(s == value)).Select(s => s ^ 2).ConfigureAwait(false);
 		var r3 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			where a == value
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r4 = await (
-			from a in option
+			from a in maybe
 			where Task.FromResult(a == value)
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r5 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			where Task.FromResult(a == value)
 			select a ^ 2
 		).ConfigureAwait(false);
@@ -78,11 +78,11 @@ public class Where_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var r0 = option.Where(s => s != value).Select(s => s ^ 2);
-		var r1 = from a in option
+		var r0 = maybe.Where(s => s != value).Select(s => s ^ 2);
+		var r1 = from a in maybe
 				 where a != value
 				 select a ^ 2;
 
@@ -96,24 +96,24 @@ public class Where_Tests
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 
 		// Act
-		var r0 = await option.AsTask.Where(s => s != value).Select(s => s ^ 2).ConfigureAwait(false);
-		var r1 = await option.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2).ConfigureAwait(false);
-		var r2 = await option.AsTask.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r0 = await maybe.AsTask.Where(s => s != value).Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await maybe.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r2 = await maybe.AsTask.Where(s => Task.FromResult(s != value)).Select(s => s ^ 2).ConfigureAwait(false);
 		var r3 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			where a != value
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r4 = await (
-			from a in option
+			from a in maybe
 			where Task.FromResult(a != value)
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r5 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			where Task.FromResult(a != value)
 			select a ^ 2
 		).ConfigureAwait(false);
@@ -131,11 +131,11 @@ public class Where_Tests
 	public void Where_With_None_Returns_None()
 	{
 		// Arrange
-		var option = None<int>(new InvalidIntegerMsg());
+		var maybe = None<int>(new InvalidIntegerMsg());
 
 		// Act
-		var r0 = option.Where(s => s == 0).Select(s => s ^ 2);
-		var r1 = from a in option
+		var r0 = maybe.Where(s => s == 0).Select(s => s ^ 2);
+		var r1 = from a in maybe
 				 where a == 0
 				 select a ^ 2;
 
@@ -150,24 +150,24 @@ public class Where_Tests
 	public async Task Async_Where_With_None_Returns_None()
 	{
 		// Arrange
-		var option = None<int>(new InvalidIntegerMsg());
+		var maybe = None<int>(new InvalidIntegerMsg());
 
 		// Act
-		var r0 = await option.AsTask.Where(s => s != 0).Select(s => s ^ 2).ConfigureAwait(false);
-		var r1 = await option.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2).ConfigureAwait(false);
-		var r2 = await option.AsTask.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r0 = await maybe.AsTask.Where(s => s != 0).Select(s => s ^ 2).ConfigureAwait(false);
+		var r1 = await maybe.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2).ConfigureAwait(false);
+		var r2 = await maybe.AsTask.Where(s => Task.FromResult(s != 0)).Select(s => s ^ 2).ConfigureAwait(false);
 		var r3 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			where a != 0
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r4 = await (
-			from a in option
+			from a in maybe
 			where Task.FromResult(a != 0)
 			select a ^ 2
 		).ConfigureAwait(false);
 		var r5 = await (
-			from a in option.AsTask
+			from a in maybe.AsTask
 			where Task.FromResult(a != 0)
 			select a ^ 2
 		).ConfigureAwait(false);

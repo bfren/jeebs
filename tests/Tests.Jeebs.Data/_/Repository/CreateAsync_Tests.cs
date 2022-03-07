@@ -34,6 +34,6 @@ public class CreateAsync_Tests
 		await repo.CreateAsync(foo).ConfigureAwait(false);
 
 		// Assert
-		log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

@@ -6,23 +6,23 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
 using Jeebs.Internals;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.Internals;
 
 /// <summary>
-/// Convert an <see cref="Option{T}"/> to and from JSON
+/// Convert an <see cref="Maybe{T}"/> to and from JSON
 /// </summary>
-/// <typeparam name="T">Option value type</typeparam>
-public sealed class OptionConverter<T> : JsonConverter<Option<T>>
+/// <typeparam name="T">Maybe value type</typeparam>
+public sealed class OptionConverter<T> : JsonConverter<Maybe<T>>
 {
 	/// <summary>
 	/// Read value and return as <see cref="Jeebs.Internals.Some{T}"/> or <see cref="Jeebs.Internals.None{T}"/>
 	/// </summary>
 	/// <param name="reader">Utf8JsonReader</param>
-	/// <param name="typeToConvert">Option of type <typeparamref name="T"/></param>
+	/// <param name="typeToConvert">Maybe of type <typeparamref name="T"/></param>
 	/// <param name="options">JsonSerializerOptions</param>
-	public override Option<T>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+	public override Maybe<T>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 		JsonSerializer.Deserialize<T>(ref reader, options) switch
 		{
 			T value =>
@@ -33,12 +33,12 @@ public sealed class OptionConverter<T> : JsonConverter<Option<T>>
 		};
 
 	/// <summary>
-	/// If the option is <see cref="Jeebs.Internals.Some{T}"/> write the value, otherwise write a null value
+	/// If the Maybe is <see cref="Jeebs.Internals.Some{T}"/> write the value, otherwise write a null value
 	/// </summary>
 	/// <param name="writer">Utf8JsonWriter</param>
-	/// <param name="value">Option value</param>
+	/// <param name="value">Maybe value</param>
 	/// <param name="options">JsonSerializerOptions</param>
-	public override void Write(Utf8JsonWriter writer, Option<T> value, JsonSerializerOptions options)
+	public override void Write(Utf8JsonWriter writer, Maybe<T> value, JsonSerializerOptions options)
 	{
 		if (value is Some<T> some)
 		{

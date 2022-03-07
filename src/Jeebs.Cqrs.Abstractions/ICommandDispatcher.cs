@@ -12,7 +12,7 @@ namespace Jeebs.Cqrs;
 public interface ICommandDispatcher
 {
 	/// <inheritdoc cref="DispatchAsync{TCommand, TResult}(TCommand, CancellationToken)"/>
-	ValueTask<Option<TResult>> DispatchAsync<TCommand, TResult>(TCommand query) =>
+	ValueTask<Maybe<TResult>> DispatchAsync<TCommand, TResult>(TCommand query) =>
 		DispatchAsync<TCommand, TResult>(query, CancellationToken.None);
 
 	/// <summary>
@@ -22,5 +22,5 @@ public interface ICommandDispatcher
 	/// <typeparam name="TResult">Command result</typeparam>
 	/// <param name="query">Command object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	ValueTask<Option<TResult>> DispatchAsync<TCommand, TResult>(TCommand query, CancellationToken cancellationToken);
+	ValueTask<Maybe<TResult>> DispatchAsync<TCommand, TResult>(TCommand query, CancellationToken cancellationToken);
 }

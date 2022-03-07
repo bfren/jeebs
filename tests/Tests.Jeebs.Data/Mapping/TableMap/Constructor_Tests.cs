@@ -21,7 +21,7 @@ public class Constructor_Tests
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(F.Rnd.Str);
 		var idColumn = Substitute.For<IMappedColumn>();
-		idColumn.Property.Returns(prop);
+		idColumn.PropertyInfo.Returns(prop);
 
 		// Act
 		var map = new TableMap(table, columns, idColumn);

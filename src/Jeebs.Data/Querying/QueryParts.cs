@@ -13,7 +13,7 @@ public sealed record class QueryParts(ITable From) : IQueryParts
 	public bool SelectCount { get; init; }
 
 	/// <inheritdoc/>
-	public IColumnList Select { get; init; } =
+	public IColumnList SelectColumns { get; init; } =
 		new ColumnList();
 
 	/// <inheritdoc/>
@@ -56,7 +56,7 @@ public sealed record class QueryParts(ITable From) : IQueryParts
 	public QueryParts(IQueryParts parts) : this(parts.From)
 	{
 		SelectCount = parts.SelectCount;
-		Select = parts.Select;
+		SelectColumns = parts.SelectColumns;
 		InnerJoin = parts.InnerJoin;
 		LeftJoin = parts.LeftJoin;
 		RightJoin = parts.RightJoin;

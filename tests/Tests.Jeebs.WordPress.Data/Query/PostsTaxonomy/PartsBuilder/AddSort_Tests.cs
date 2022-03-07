@@ -35,9 +35,9 @@ public class AddSort_Tests : AddSort_Tests<Query.PostsTaxonomyPartsBuilder, WpTe
 		Assert.Collection(some.Sort,
 			x =>
 			{
-				Assert.Equal(builder.TTest.Term.GetName(), x.column.Table);
-				Assert.Equal(builder.TTest.Term.Title, x.column.Name);
-				Assert.Equal(nameof(TermTable.Title), x.column.Alias);
+				Assert.Equal(builder.TTest.Term.GetName(), x.column.TblName);
+				Assert.Equal(builder.TTest.Term.Title, x.column.ColName);
+				Assert.Equal(nameof(TermTable.Title), x.column.ColAlias);
 				Assert.Equal(SortOrder.Ascending, x.order);
 			}
 		);
@@ -59,16 +59,16 @@ public class AddSort_Tests : AddSort_Tests<Query.PostsTaxonomyPartsBuilder, WpTe
 		Assert.Collection(some.Sort,
 			x =>
 			{
-				Assert.Equal(builder.TTest.TermTaxonomy.GetName(), x.column.Table);
-				Assert.Equal(builder.TTest.TermTaxonomy.Count, x.column.Name);
-				Assert.Equal(nameof(TermTaxonomyTable.Count), x.column.Alias);
+				Assert.Equal(builder.TTest.TermTaxonomy.GetName(), x.column.TblName);
+				Assert.Equal(builder.TTest.TermTaxonomy.Count, x.column.ColName);
+				Assert.Equal(nameof(TermTaxonomyTable.Count), x.column.ColAlias);
 				Assert.Equal(SortOrder.Descending, x.order);
 			},
 			x =>
 			{
-				Assert.Equal(builder.TTest.Term.GetName(), x.column.Table);
-				Assert.Equal(builder.TTest.Term.Title, x.column.Name);
-				Assert.Equal(nameof(TermTable.Title), x.column.Alias);
+				Assert.Equal(builder.TTest.Term.GetName(), x.column.TblName);
+				Assert.Equal(builder.TTest.Term.Title, x.column.ColName);
+				Assert.Equal(nameof(TermTable.Title), x.column.ColAlias);
 				Assert.Equal(SortOrder.Ascending, x.order);
 			}
 		);

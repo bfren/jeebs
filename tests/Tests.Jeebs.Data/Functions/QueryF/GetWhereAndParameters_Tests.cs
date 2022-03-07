@@ -22,7 +22,7 @@ public class GetWhereAndParameters_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var column = Substitute.For<IColumn>();
-		column.Name.Returns(name);
+		column.ColName.Returns(name);
 
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -47,8 +47,8 @@ public class GetWhereAndParameters_Tests
 		var columnName = Rnd.Str;
 		var tableName = new TableName(Rnd.Str);
 		var column = Substitute.For<IColumn>();
-		column.Name.Returns(columnName);
-		column.Table.Returns(tableName);
+		column.ColName.Returns(columnName);
+		column.TblName.Returns(tableName);
 
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -79,7 +79,7 @@ public class GetWhereAndParameters_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var column = Substitute.For<IColumn>();
-		column.Name.Returns(name);
+		column.ColName.Returns(name);
 
 		var value = Rnd.Int;
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
@@ -118,7 +118,7 @@ public class GetWhereAndParameters_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var column = Substitute.For<IColumn>();
-		column.Name.Returns(name);
+		column.ColName.Returns(name);
 
 		var value = Rnd.Lng;
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
@@ -180,7 +180,7 @@ public class GetWhereAndParameters_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var column = Substitute.For<IColumn>();
-		column.Name.Returns(name);
+		column.ColName.Returns(name);
 
 		var v0 = Rnd.Lng;
 		var v1 = Rnd.Lng;
@@ -300,7 +300,7 @@ public class GetWhereAndParameters_Tests
 			Escape(column, false);
 
 		public override string Escape(IColumn column, bool withAlias) =>
-			$"--{column.Name}--";
+			$"--{column.ColName}--";
 
 		public override string Escape(ITableName table, string column) =>
 			$"--{table}|{column}--";

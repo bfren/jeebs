@@ -38,12 +38,12 @@ public static class Builder
 		// Create app
 		var app = new MinimalApiApp(useHsts).Create(args, configure);
 
-		// Set Option Audit log
+		// Set Maybe Audit log
 		var log = app.Services.GetRequiredService<ILog<MinimalApiApp>>();
-		F.OptionF.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
+		F.MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Ready to go
-		log.Information("Application configured.");
+		log.Inf("Application configured.");
 		return (app, log);
 	}
 }

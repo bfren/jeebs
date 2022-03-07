@@ -40,9 +40,9 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	/// Select matching columns based on the specified model
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	internal Option<IQueryParts> Select<TModel>() =>
+	internal Maybe<IQueryParts> Select<TModel>() =>
 		from cols in Extract<TModel>.From(Tables.ToArray())
-		select (IQueryParts)(Parts with { Select = cols });
+		select (IQueryParts)(Parts with { SelectColumns = cols });
 
 	/// <summary>
 	/// Verify that a table has been added to the list of tables
@@ -78,8 +78,8 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	/// <inheritdoc/>
 	public IQueryBuilderWithFrom Join<TFrom, TTo>(
 		QueryJoin type,
-		Expression<Func<TFrom, string>> from,
-		Expression<Func<TTo, string>> to
+		Expression<Func<TFrom, string>> fromColumn,
+		Expression<Func<TTo, string>> toColumn
 	)
 		where TFrom : ITable, new()
 		where TTo : ITable, new()
@@ -91,8 +91,8 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		AddTable<TTo>();
 
 		// Get columns
-		var fromColumn = GetColumnFromExpression(from);
-		var toColumn = GetColumnFromExpression(to);
+		var from = GetColumnFromExpression(fromColumn);
+		var to = GetColumnFromExpression(toColumn);
 
 		// Add to query
 		return type switch
@@ -102,7 +102,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 				{
 					Parts = Parts with
 					{
-						InnerJoin = Parts.InnerJoin.With((fromColumn, toColumn))
+						InnerJoin = Parts.InnerJoin.WithItem((from, to))
 					}
 				},
 
@@ -111,7 +111,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 				{
 					Parts = Parts with
 					{
-						LeftJoin = Parts.LeftJoin.With((fromColumn, toColumn))
+						LeftJoin = Parts.LeftJoin.WithItem((from, to))
 					}
 				},
 
@@ -120,7 +120,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 				{
 					Parts = Parts with
 					{
-						RightJoin = Parts.RightJoin.With((fromColumn, toColumn))
+						RightJoin = Parts.RightJoin.WithItem((from, to))
 					}
 				},
 
@@ -141,7 +141,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		{
 			Parts = Parts with
 			{
-				Where = Parts.Where.With((GetColumnFromExpression(column), cmp, value))
+				Where = Parts.Where.WithItem((GetColumnFromExpression(column), cmp, value))
 			}
 		};
 	}
@@ -158,7 +158,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		{
 			Parts = Parts with
 			{
-				Sort = Parts.Sort.With((GetColumnFromExpression(column), SortOrder.Ascending))
+				Sort = Parts.Sort.WithItem((GetColumnFromExpression(column), SortOrder.Ascending))
 			}
 		};
 	}
@@ -175,7 +175,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		{
 			Parts = Parts with
 			{
-				Sort = Parts.Sort.With((GetColumnFromExpression(column), SortOrder.Descending))
+				Sort = Parts.Sort.WithItem((GetColumnFromExpression(column), SortOrder.Descending))
 			}
 		};
 	}

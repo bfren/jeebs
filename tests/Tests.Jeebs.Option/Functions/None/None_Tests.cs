@@ -5,9 +5,9 @@ using System;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
-namespace F.OptionF_Tests;
+namespace F.MaybeF_Tests;
 
 public class None_Tests
 {

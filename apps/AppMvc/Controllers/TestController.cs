@@ -13,7 +13,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Querying;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace AppMvc.Controllers;
 

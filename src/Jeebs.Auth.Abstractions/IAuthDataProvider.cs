@@ -39,7 +39,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	/// <typeparam name="TModel">Create Auth User Model type</typeparam>
 	/// <param name="email">Email address</param>
 	/// <param name="password">Password entered by the user</param>
-	Task<Option<TModel>> ValidateUserAsync<TModel>(string email, string password)
+	Task<Maybe<TModel>> ValidateUserAsync<TModel>(string email, string password)
 		where TModel : IAuthUser;
 
 	/// <summary>
@@ -48,7 +48,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	/// <typeparam name="TUser">User Model type</typeparam>
 	/// <typeparam name="TRole">Role Model type</typeparam>
 	/// <param name="id">User ID</param>
-	Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
+	Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole;
 
@@ -58,7 +58,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	/// <typeparam name="TUser">User Model type</typeparam>
 	/// <typeparam name="TRole">Role Model type</typeparam>
 	/// <param name="email">User email address</param>
-	Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
+	Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole;
 }

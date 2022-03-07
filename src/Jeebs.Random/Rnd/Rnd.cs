@@ -44,7 +44,7 @@ public static partial class Rnd
 	/// <summary>
 	/// Generate a random passphrase with five dictionary words, a number, and one uppercase letter
 	/// </summary>
-	public static Option<string> Pass =>
+	public static Maybe<string> Pass =>
 		StringF.Passphrase(5);
 
 	/// <summary>

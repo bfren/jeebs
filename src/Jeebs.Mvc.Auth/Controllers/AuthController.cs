@@ -92,12 +92,12 @@ public abstract class AuthControllerBase : Controller
 		await foreach (var user in validatedUser)
 		{
 			// Get user principal
-			Log.Debug("User validated.");
+			Log.Dbg("User validated.");
 			var principal = await GetPrincipal(user, model.Password).ConfigureAwait(false);
 
 			// Update last sign in
 			var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
-			updated.Audit(none: r => Log.Message(r));
+			updated.Audit(none: r => Log.Msg(r));
 
 			// Add SignIn to HttpContext using Cookie scheme
 			await HttpContext.SignInAsync(
@@ -117,7 +117,7 @@ public abstract class AuthControllerBase : Controller
 		}
 
 		// Log error and add alert for user
-		Log.Debug("Unknown username or password: {Email}.", model.Email);
+		Log.Dbg("Unknown username or password: {Email}.", model.Email);
 		TempData.AddErrorAlert("Unknown username or password.");
 
 		// Return to sign in page

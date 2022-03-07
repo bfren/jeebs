@@ -5,8 +5,8 @@ using System;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
@@ -14,10 +14,10 @@ public abstract class Some_Tests
 {
 	public abstract void Test00_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test00(Func<Func<int>, Handler, Option<int>> act)
+	protected static void Test00(Func<Func<int>, Handler, Maybe<int>> act)
 	{
 		// Arrange
-		var throwFunc = int () => throw new OptionTestException();
+		var throwFunc = int () => throw new MaybeTestException();
 
 		// Act
 		var result = act(throwFunc, DefaultHandler);
@@ -29,10 +29,10 @@ public abstract class Some_Tests
 
 	public abstract void Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test01(Func<Func<int?>, bool, Handler, Option<int?>> act)
+	protected static void Test01(Func<Func<int?>, bool, Handler, Maybe<int?>> act)
 	{
 		// Arrange
-		var throwFunc = int? () => throw new OptionTestException();
+		var throwFunc = int? () => throw new MaybeTestException();
 
 		// Act
 		var r0 = act(throwFunc, true, DefaultHandler);
@@ -47,7 +47,7 @@ public abstract class Some_Tests
 
 	public abstract void Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler();
 
-	protected static void Test02(Func<Func<int>, Handler, Option<int>> act)
+	protected static void Test02(Func<Func<int>, Handler, Maybe<int>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -64,7 +64,7 @@ public abstract class Some_Tests
 
 	public abstract void Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler();
 
-	protected static void Test03(Func<Func<int?>, bool, Handler, Option<int?>> act)
+	protected static void Test03(Func<Func<int?>, bool, Handler, Maybe<int?>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -83,7 +83,7 @@ public abstract class Some_Tests
 
 	public abstract void Test04_Null_Input_Value_Returns_None();
 
-	protected static void Test04(Func<int?, Option<int?>> act)
+	protected static void Test04(Func<int?, Maybe<int?>> act)
 	{
 		// Arrange
 		int? value = null;
@@ -98,7 +98,7 @@ public abstract class Some_Tests
 
 	public abstract void Test05_Null_Input_Func_Returns_None();
 
-	protected static void Test05(Func<Func<int?>, Handler, Option<int?>> act)
+	protected static void Test05(Func<Func<int?>, Handler, Maybe<int?>> act)
 	{
 		// Arrange
 		var value = int? () => null;
@@ -113,7 +113,7 @@ public abstract class Some_Tests
 
 	public abstract void Test06_Nullable_Allow_Null_False_Null_Input_Value_Returns_None_With_AllowNullWasFalseMsg();
 
-	protected static void Test06(Func<int?, bool, Option<int?>> act)
+	protected static void Test06(Func<int?, bool, Maybe<int?>> act)
 	{
 		// Arrange
 		int? value = null;
@@ -128,7 +128,7 @@ public abstract class Some_Tests
 
 	public abstract void Test07_Nullable_Allow_Null_False_Null_Input_Func_Returns_None_With_AllowNullWasFalseMsg();
 
-	protected static void Test07(Func<Func<int?>, bool, Handler, Option<int?>> act)
+	protected static void Test07(Func<Func<int?>, bool, Handler, Maybe<int?>> act)
 	{
 		// Arrange
 		var value = int? () => null;
@@ -143,7 +143,7 @@ public abstract class Some_Tests
 
 	public abstract void Test08_Nullable_Allow_Null_True_Null_Input_Value_Returns_Some_With_Null_Value();
 
-	protected static void Test08(Func<int?, bool, Option<int?>> act)
+	protected static void Test08(Func<int?, bool, Maybe<int?>> act)
 	{
 		// Arrange
 		int? value = null;
@@ -158,7 +158,7 @@ public abstract class Some_Tests
 
 	public abstract void Test09_Nullable_Allow_Null_True_Null_Input_Func_Returns_Some_With_Null_Value();
 
-	protected static void Test09(Func<Func<int?>, bool, Handler, Option<int?>> act)
+	protected static void Test09(Func<Func<int?>, bool, Handler, Maybe<int?>> act)
 	{
 		// Arrange
 		var value = int? () => null;
@@ -173,7 +173,7 @@ public abstract class Some_Tests
 
 	public abstract void Test10_Not_Null_Value_Returns_Some();
 
-	protected static void Test10(Func<object, Option<object>> act)
+	protected static void Test10(Func<object, Maybe<object>> act)
 	{
 		// Arrange
 		object v0 = F.Rnd.Str;
@@ -196,7 +196,7 @@ public abstract class Some_Tests
 
 	public abstract void Test11_Not_Null_Func_Returns_Some();
 
-	protected static void Test11(Func<Func<object>, Handler, Option<object>> act)
+	protected static void Test11(Func<Func<object>, Handler, Maybe<object>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;
@@ -224,7 +224,7 @@ public abstract class Some_Tests
 
 	public abstract void Test12_Nullable_Not_Null_Value_Returns_Some();
 
-	protected static void Test12(Func<object?, bool, Option<object?>> act)
+	protected static void Test12(Func<object?, bool, Maybe<object?>> act)
 	{
 		// Arrange
 		object? v0 = F.Rnd.Str;
@@ -247,7 +247,7 @@ public abstract class Some_Tests
 
 	public abstract void Test13_Nullable_Not_Null_Func_Returns_Some();
 
-	protected static void Test13(Func<Func<object?>, bool, Handler, Option<object?>> act)
+	protected static void Test13(Func<Func<object?>, bool, Handler, Maybe<object?>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Str;

@@ -15,7 +15,7 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Message<T>(T? msg)
+	public void Msg<T>(T? msg)
 		where T : Msg
 	{
 		if (msg is null)
@@ -45,22 +45,22 @@ public abstract class Log : ILog
 		switch (level)
 		{
 			case LogLevel.Verbose:
-				Verbose(text, args);
+				Vrb(text, args);
 				break;
 			case LogLevel.Debug:
-				Debug(text, args);
+				Dbg(text, args);
 				break;
 			case LogLevel.Information:
-				Information(text, args);
+				Inf(text, args);
 				break;
 			case LogLevel.Warning:
-				Warning(text, args);
+				Wrn(text, args);
 				break;
 			case LogLevel.Error:
-				Error(text, args);
+				Err(text, args);
 				break;
 			case LogLevel.Fatal:
-				Fatal(text, args);
+				Die(text, args);
 				break;
 			default:
 				// Unsupported level
@@ -69,7 +69,7 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Messages(IEnumerable<Msg> msgs)
+	public void Msg(IEnumerable<Msg> msgs)
 	{
 		if (!msgs.Any())
 		{
@@ -78,7 +78,7 @@ public abstract class Log : ILog
 
 		foreach (var item in msgs)
 		{
-			Message(item);
+			Msg(item);
 		}
 	}
 
@@ -90,28 +90,28 @@ public abstract class Log : ILog
 		IsEnabled((LogLevel)level);
 
 	/// <inheritdoc/>
-	public abstract void Verbose(string message, params object[] args);
+	public abstract void Vrb(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Debug(string message, params object[] args);
+	public abstract void Dbg(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Information(string message, params object[] args);
+	public abstract void Inf(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Warning(string message, params object[] args);
+	public abstract void Wrn(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Error(string message, params object[] args);
+	public abstract void Err(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Error(Exception ex, string message, params object[] args);
+	public abstract void Err(Exception ex, string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Fatal(string message, params object[] args);
+	public abstract void Die(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Fatal(Exception ex, string message, params object[] args);
+	public abstract void Die(Exception ex, string message, params object[] args);
 
 	/// <inheritdoc/>
 	public abstract void Dispose();

@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 {
 	// Begin
-	log.Debug("= WordPress Console Test =");
+	log.Dbg("= WordPress Console Test =");
 
 	// Get services
 	var bcg = provider.GetRequiredService<WpBcg>();
@@ -26,7 +26,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Three Random Posts ==");
+	log.Dbg("== Three Random Posts ==");
 	await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 	{
 		SortRandom = true,
@@ -37,15 +37,15 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No posts found.");
+				log.Err("No posts found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Dbg("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -55,7 +55,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	const string term = "holiness";
 	Console.WriteLine();
-	log.Debug("== Search for Sermons with '{Term}' ==", term);
+	log.Dbg("== Search for Sermons with '{Term}' ==", term);
 	await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
@@ -68,17 +68,17 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No sermons found.");
+				log.Err("No sermons found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}", item.Id.Value);
-				log.Debug("  - Title: {Title}", item.Title);
-				log.Debug("  - Published: {Published:dd/MM/yyyy}", item.PublishedOn);
+				log.Dbg("Sermon {Id:0000}", item.Id.Value);
+				log.Dbg("  - Title: {Title}", item.Title);
+				log.Dbg("  - Published: {Published:dd/MM/yyyy}", item.PublishedOn);
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -87,7 +87,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Sermons with Taxonomy properties ==");
+	log.Dbg("== Get Sermons with Taxonomy properties ==");
 	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
@@ -99,17 +99,17 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No sermons found.");
+				log.Err("No sermons found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
-				log.Debug("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
-				log.Debug("  - Series: {Series}", string.Join(", ", item.Series.Select(b => b.Title)));
+				log.Dbg("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Dbg("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
+				log.Dbg("  - Series: {Series}", string.Join(", ", item.Series.Select(b => b.Title)));
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -121,7 +121,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var book0 = new WpTermId(423U);
 	var book1 = new WpTermId(628U);
 	Console.WriteLine();
-	log.Debug("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
+	log.Dbg("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
 	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
@@ -133,22 +133,22 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No sermons found.");
+				log.Err("No sermons found.");
 			}
 
 			if (x.Count() > 1)
 			{
-				log.Error("Too many sermons found.");
+				log.Err("Too many sermons found.");
 				return;
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
-				log.Debug("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
+				log.Dbg("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Dbg("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -158,7 +158,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	const long countAtLeast = 3;
-	log.Debug("== Get Category taxonomy with at least {CountAtLeast} posts ==", countAtLeast);
+	log.Dbg("== Get Category taxonomy with at least {CountAtLeast} posts ==", countAtLeast);
 	await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 	{
 		Taxonomy = Taxonomy.PostCategory,
@@ -169,15 +169,15 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No terms found.");
+				log.Err("No terms found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Term {Id:00}: {Title} ({Count})", item.Id.Value, item.Title, item.Count);
+				log.Dbg("Term {Id:00}: {Title} ({Count})", item.Id.Value, item.Title, item.Count);
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -186,23 +186,23 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Posts with Custom Fields ==");
+	log.Dbg("== Get Posts with Custom Fields ==");
 	await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 	.AuditAsync(
 		some: x =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No posts found.");
+				log.Err("No posts found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
-				log.Debug("  - Image: {Image}", item.FeaturedImage.ValueObj);
+				log.Dbg("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Dbg("  - Image: {Image}", item.FeaturedImage.ValueObj);
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -211,7 +211,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Sermons with Custom Fields ==");
+	log.Dbg("== Get Sermons with Custom Fields ==");
 	await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
@@ -222,20 +222,20 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No sermons found.");
+				log.Err("No sermons found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
-				log.Debug("  - Passage: {Passage}", item.Passage.ValueObj);
-				log.Debug("  - PDF: {Pdf}", item.Pdf?.ValueObj.UrlPath ?? "none");
-				log.Debug("  - Audio: {Audio}", item.Audio?.ValueObj.UrlPath ?? "none");
-				log.Debug("  - First Preached: {First}", item.FirstPreached.ValueObj.Title);
-				log.Debug("  - Image: {Image}", item.Image?.ValueObj.UrlPath ?? "none");
+				log.Dbg("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Dbg("  - Passage: {Passage}", item.Passage.ValueObj);
+				log.Dbg("  - PDF: {Pdf}", item.Pdf?.ValueObj.UrlPath ?? "none");
+				log.Dbg("  - Audio: {Audio}", item.Audio?.ValueObj.UrlPath ?? "none");
+				log.Dbg("  - First Preached: {First}", item.FirstPreached.ValueObj.Title);
+				log.Dbg("  - Image: {Image}", item.Image?.ValueObj.UrlPath ?? "none");
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -246,7 +246,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	Console.WriteLine();
 	ICustomField field = WpBcg.CustomFields.FirstPreached;
 	object first = 422L;
-	log.Debug("== Get Sermons where First Preached is {First} ==", first);
+	log.Dbg("== Get Sermons where First Preached is {First} ==", first);
 	await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
@@ -257,23 +257,23 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No sermons found.");
+				log.Err("No sermons found.");
 			}
 
 			if (x.Count() > 2)
 			{
-				log.Error("Too many sermons found.");
+				log.Err("Too many sermons found.");
 				return;
 			}
 
 			foreach (var item in x)
 			{
 				var obj = item.FirstPreached.ValueObj;
-				log.Debug("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
-				log.Debug("  - {FirstId:0000}: {FirstTitle}", obj.Id.Value, obj.Title);
+				log.Dbg("Sermon {Id:0000}: {Title}", item.Id.Value, item.Title);
+				log.Dbg("  - {FirstId:0000}: {FirstTitle}", obj.Id.Value, obj.Title);
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -282,7 +282,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Posts with generated excerpt ==");
+	log.Dbg("== Get Posts with generated excerpt ==");
 	await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
 	{
 		SortRandom = true
@@ -292,15 +292,15 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No posts found.");
+				log.Err("No posts found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Post {Id:0000}: {@Content}", item.Id.Value, item.Content);
+				log.Dbg("Post {Id:0000}: {@Content}", item.Id.Value, item.Content);
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -309,7 +309,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Attachments ==");
+	log.Dbg("== Get Attachments ==");
 	await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 	{
 		Ids = ImmutableList.Create<WpPostId>(new(802L), new(862L), new(2377L))
@@ -319,19 +319,19 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No attachments found.");
+				log.Err("No attachments found.");
 			}
 
 			foreach (var item in x)
 			{
-				log.Debug("Attachment {Id:0000}: {Description}", item.Id.Value, item.Title);
-				log.Debug("  - Description: {Description}", item.Description);
-				log.Debug("  - Url: {Url}", item.Url);
-				log.Debug("  - UrlPath: {UrlPath}", item.UrlPath);
-				log.Debug("  - FilePath: {FilePath}", item.GetFilePath(bcg.Db.WpConfig.UploadsPath));
+				log.Dbg("Attachment {Id:0000}: {Description}", item.Id.Value, item.Title);
+				log.Dbg("  - Description: {Description}", item.Description);
+				log.Dbg("  - Url: {Url}", item.Url);
+				log.Dbg("  - UrlPath: {UrlPath}", item.UrlPath);
+				log.Dbg("  - FilePath: {FilePath}", item.GetFilePath(bcg.Db.WpConfig.UploadsPath));
 			}
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -340,11 +340,11 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Get Attachment file path ==");
+	log.Dbg("== Get Attachment file path ==");
 	await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
 	.AuditAsync(
-		some: x => log.Debug("Path: {FilePath}", x),
-		none: r => log.Message(r)
+		some: x => log.Dbg("Path: {FilePath}", x),
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
@@ -353,7 +353,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	//
 
 	Console.WriteLine();
-	log.Debug("== Test Paging Values ==");
+	log.Dbg("== Test Paging Values ==");
 	await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 	{
 		SortRandom = true,
@@ -364,21 +364,21 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		{
 			if (!x.Any())
 			{
-				log.Error("No posts found.");
+				log.Err("No posts found.");
 			}
 
-			log.Debug("Pages: {NumberOfPages}", x.Values.Pages);
-			log.Debug("  - Items: {Items}", x.Values.Items);
-			log.Debug("  - First Page: {FirstPage}", x.Values.LowerPage);
-			log.Debug("  - Last Page: {LastPage}", x.Values.UpperPage);
-			log.Debug("  - First Item: {FirstItem}", x.Values.FirstItem);
-			log.Debug("  - Last Item: {LastItem}", x.Values.LastItem);
+			log.Dbg("Pages: {NumberOfPages}", x.Values.Pages);
+			log.Dbg("  - Items: {Items}", x.Values.Items);
+			log.Dbg("  - First Page: {FirstPage}", x.Values.LowerPage);
+			log.Dbg("  - Last Page: {LastPage}", x.Values.UpperPage);
+			log.Dbg("  - First Item: {FirstItem}", x.Values.FirstItem);
+			log.Dbg("  - Last Item: {LastItem}", x.Values.LastItem);
 		},
-		none: r => log.Message(r)
+		none: r => log.Msg(r)
 	)
 	.ConfigureAwait(false);
 
 	// End
 	Console.WriteLine();
-	log.Debug("Complete.");
+	log.Dbg("Complete.");
 }).ConfigureAwait(false);

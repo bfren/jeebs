@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -23,7 +23,7 @@ public static partial class QueryPostsF
 	/// Get Post Content property for specified model
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	internal static Option<PropertyInfo> GetPostContent<TModel>()
+	internal static Maybe<PropertyInfo> GetPostContent<TModel>()
 	{
 		// Get from or Add to the cache
 		var content = contentCache.GetOrAdd(

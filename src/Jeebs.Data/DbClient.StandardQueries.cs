@@ -9,7 +9,7 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <inheritdoc/>
-	public Option<string> GetCreateQuery<TEntity>()
+	public Maybe<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId =>
 		Mapper.GetTableMapFor<TEntity>().Map(
 			x => GetCreateQuery(x.Name, x.Columns),
@@ -25,7 +25,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
+	public Maybe<string> GetRetrieveQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId =>
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
@@ -50,7 +50,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
+	public Maybe<string> GetUpdateQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId =>
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
@@ -93,7 +93,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetDeleteQuery<TEntity>(long id)
+	public Maybe<string> GetDeleteQuery<TEntity>(long id)
 		where TEntity : IWithId =>
 		Mapper.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch

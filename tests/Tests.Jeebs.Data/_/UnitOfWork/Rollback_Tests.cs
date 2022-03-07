@@ -25,7 +25,7 @@ public class Rollback_Tests
 
 		// Assert
 		transaction.Received().Rollback();
-		log.Received().Debug("Rolling back transaction.");
+		log.Received().Dbg("Rolling back transaction.");
 	}
 
 	[Fact]
@@ -81,6 +81,6 @@ public class Rollback_Tests
 		unitOfWork.Rollback();
 
 		// Assert
-		log.Received().Error(exception, "Error rolling back transaction.");
+		log.Received().Err(exception, "Error rolling back transaction.");
 	}
 }

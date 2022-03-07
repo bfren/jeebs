@@ -6,7 +6,7 @@ using Jeebs;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests;
 
@@ -14,12 +14,12 @@ public abstract class IfNull_Tests
 {
 	public abstract void Test00_Exception_In_IfNull_Func_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test00(Func<Option<object?>, Func<Option<object?>>, Option<object?>> act)
+	protected static void Test00(Func<Maybe<object?>, Func<Maybe<object?>>, Maybe<object?>> act)
 	{
 		// Arrange
 		var some = Some<object>(null, true);
 		var none = None<object?, M.NullValueMsg>();
-		var throws = Substitute.For<Func<Option<object?>>>();
+		var throws = Substitute.For<Func<Maybe<object?>>>();
 		throws.Invoke().Throws<Exception>();
 
 		// Act
@@ -35,14 +35,14 @@ public abstract class IfNull_Tests
 
 	public abstract void Test01_Some_With_Null_Value_Runs_IfNull_Func();
 
-	protected static void Test01(Func<Option<object?>, Func<Option<object?>>, Option<object?>> act)
+	protected static void Test01(Func<Maybe<object?>, Func<Maybe<object?>>, Maybe<object?>> act)
 	{
 		// Arrange
-		var option = Some<object>(null, true);
-		var ifNull = Substitute.For<Func<Option<object?>>>();
+		var maybe = Some<object>(null, true);
+		var ifNull = Substitute.For<Func<Maybe<object?>>>();
 
 		// Act
-		act(option, ifNull);
+		act(maybe, ifNull);
 
 		// Assert
 		ifNull.Received().Invoke();
@@ -50,14 +50,14 @@ public abstract class IfNull_Tests
 
 	public abstract void Test02_None_With_NullValueMsg_Runs_IfNull_Func();
 
-	protected static void Test02(Func<Option<object>, Func<Option<object>>, Option<object>> act)
+	protected static void Test02(Func<Maybe<object>, Func<Maybe<object>>, Maybe<object>> act)
 	{
 		// Arrange
-		var option = None<object, M.NullValueMsg>();
-		var ifNull = Substitute.For<Func<Option<object>>>();
+		var maybe = None<object, M.NullValueMsg>();
+		var ifNull = Substitute.For<Func<Maybe<object>>>();
 
 		// Act
-		act(option, ifNull);
+		act(maybe, ifNull);
 
 		// Assert
 		ifNull.Received().Invoke();
@@ -65,16 +65,16 @@ public abstract class IfNull_Tests
 
 	public abstract void Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
 
-	protected static void Test03(Func<Option<object?>, Func<Msg>, Option<object?>> act)
+	protected static void Test03(Func<Maybe<object?>, Func<Msg>, Maybe<object?>> act)
 	{
 		// Arrange
-		var option = Some<object>(null, true);
+		var maybe = Some<object>(null, true);
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
 		ifNull.Invoke().Returns(msg);
 
 		// Act
-		var result = act(option, ifNull);
+		var result = act(maybe, ifNull);
 
 		// Assert
 		ifNull.Received().Invoke();
@@ -84,16 +84,16 @@ public abstract class IfNull_Tests
 
 	public abstract void Test04_None_With_NullValueMsg_Runs_IfNull_Func_Returns_None_With_Reason();
 
-	protected static void Test04(Func<Option<object>, Func<Msg>, Option<object>> act)
+	protected static void Test04(Func<Maybe<object>, Func<Msg>, Maybe<object>> act)
 	{
 		// Arrange
-		var option = None<object, M.NullValueMsg>();
+		var maybe = None<object, M.NullValueMsg>();
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
 		ifNull.Invoke().Returns(msg);
 
 		// Act
-		var result = act(option, ifNull);
+		var result = act(maybe, ifNull);
 
 		// Assert
 		ifNull.Received().Invoke();

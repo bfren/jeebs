@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Xunit;
-using static F.OptionF.Enumerable;
+using static F.MaybeF.Enumerable;
 
-namespace F.OptionF_Tests.Enumerable;
+namespace F.MaybeF_Tests.Enumerable;
 
 public class ElementAtOrNone_Tests : Jeebs_Tests.Enumerable.ElementAtOrNone_Tests
 {

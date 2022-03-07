@@ -50,7 +50,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <param name="message">Log message</param>
 	/// <param name="args">Log message arguments</param>
 	internal virtual void WriteToLog(string message, object[] args) =>
-		Log.Debug(message, args);
+		Log.Dbg(message, args);
 
 	/// <summary>
 	/// Log the query for a function
@@ -93,7 +93,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	#region Custom Queries
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
+	public virtual async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	)
 	{
@@ -112,7 +112,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
+	public virtual Task<Maybe<TModel>> QuerySingleAsync<TModel>(
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	) =>
 		QueryAsync<TModel>(
@@ -127,14 +127,14 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	#region CRUD Queries
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<TId>> CreateAsync(TEntity entity)
+	public virtual async Task<Maybe<TId>> CreateAsync(TEntity entity)
 	{
 		using var w = Db.UnitOfWork;
 		return await CreateAsync(entity, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
+	public virtual Task<Maybe<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
 		Db.Client.GetCreateQuery<TEntity>()
 		.Audit(
 			some: x => LogFunc(nameof(CreateAsync), x, entity)
@@ -144,14 +144,14 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<TModel>> RetrieveAsync<TModel>(TId id)
+	public virtual async Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id)
 	{
 		using var w = Db.UnitOfWork;
 		return await RetrieveAsync<TModel>(id, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
+	public virtual Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
 		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 		.Audit(
 			some: x => LogFunc(nameof(RetrieveAsync), x, id)
@@ -161,7 +161,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+	public virtual async Task<Maybe<bool>> UpdateAsync<TModel>(TModel model)
 		where TModel : IWithId
 	{
 		using var w = Db.UnitOfWork;
@@ -169,7 +169,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
+	public virtual Task<Maybe<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId =>
 		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 		.Audit(
@@ -180,14 +180,14 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<bool>> DeleteAsync(TId id)
+	public virtual async Task<Maybe<bool>> DeleteAsync(TId id)
 	{
 		using var w = Db.UnitOfWork;
 		return await DeleteAsync(id, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<bool>> DeleteAsync(TId id, IDbTransaction transaction) =>
+	public virtual Task<Maybe<bool>> DeleteAsync(TId id, IDbTransaction transaction) =>
 		Db.Client.GetDeleteQuery<TEntity>(id.Value)
 		.Audit(
 			some: x => LogFunc(nameof(DeleteAsync), x, id)

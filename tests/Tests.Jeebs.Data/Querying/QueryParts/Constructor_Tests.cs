@@ -31,7 +31,7 @@ public class Constructor_Tests
 		var parts = new QueryParts(table)
 		{
 			SelectCount = F.Rnd.Flip,
-			Select = Substitute.For<IColumnList>(),
+			SelectColumns = Substitute.For<IColumnList>(),
 			InnerJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 			LeftJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 			RightJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
@@ -49,7 +49,7 @@ public class Constructor_Tests
 		// Assert
 		Assert.Equal(parts.SelectCount, result.SelectCount);
 		Assert.Same(parts.From, result.From);
-		Assert.Same(parts.Select, result.Select);
+		Assert.Same(parts.SelectColumns, result.SelectColumns);
 		Assert.Same(parts.InnerJoin, result.InnerJoin);
 		Assert.Same(parts.LeftJoin, result.LeftJoin);
 		Assert.Same(parts.RightJoin, result.RightJoin);

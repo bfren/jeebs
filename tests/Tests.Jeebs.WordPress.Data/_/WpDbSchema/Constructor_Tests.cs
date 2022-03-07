@@ -21,7 +21,7 @@ public class Constructor_Tests
 		Assert.StartsWith(prefix, result.Comment.ToString());
 		Assert.StartsWith(prefix, result.CommentMeta.ToString());
 		Assert.StartsWith(prefix, result.Link.ToString());
-		Assert.StartsWith(prefix, result.Option.ToString());
+		Assert.StartsWith(prefix, result.Opt.ToString());
 		Assert.StartsWith(prefix, result.Post.ToString());
 		Assert.StartsWith(prefix, result.PostMeta.ToString());
 		Assert.StartsWith(prefix, result.Term.ToString());

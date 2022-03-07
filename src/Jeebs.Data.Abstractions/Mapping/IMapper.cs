@@ -20,6 +20,6 @@ public interface IMapper
 	/// Get table map for <typeparamref name="TEntity"/>
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	Option<ITableMap> GetTableMapFor<TEntity>()
+	Maybe<ITableMap> GetTableMapFor<TEntity>()
 		where TEntity : IWithId;
 }

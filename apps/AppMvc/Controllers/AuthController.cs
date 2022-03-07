@@ -8,7 +8,7 @@ using Jeebs.Auth.Data.Models;
 using Jeebs.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace AppMvc.Controllers;
 

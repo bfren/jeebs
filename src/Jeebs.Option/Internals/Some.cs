@@ -4,13 +4,13 @@
 namespace Jeebs.Internals;
 
 /// <summary>
-/// 'Some' option - wraps value to enable safe non-null returns (see <seealso cref="None{T}"/>)
+/// 'Some' Maybe - wraps value to enable safe non-null returns (see <seealso cref="None{T}"/>)
 /// </summary>
-/// <typeparam name="T">Option value type</typeparam>
-public sealed record class Some<T> : Option<T>
+/// <typeparam name="T">Maybe value type</typeparam>
+public sealed record class Some<T> : Maybe<T>
 {
 	/// <summary>
-	/// Option Value - nullability will match the nullability of <typeparamref name="T"/>
+	/// Maybe value - nullability will match the nullability of <typeparamref name="T"/>
 	/// </summary>
 	public T Value { get; private init; }
 

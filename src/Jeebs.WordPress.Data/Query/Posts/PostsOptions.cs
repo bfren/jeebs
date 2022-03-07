@@ -24,7 +24,7 @@ public static partial class Query
 		internal PostsOptions(IWpDbSchema schema, IQueryPostsPartsBuilder builder) : base(schema, builder) { }
 
 		/// <inheritdoc/>
-		protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+		protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
 			base.Build(
 				parts
 			)
@@ -39,12 +39,12 @@ public static partial class Query
 				ifFalse: x => Builder.AddWhereSearch(x, SearchFields, SearchComparison, SearchText)
 			)
 			.SwitchIf(
-				_ => From is not null,
-				ifTrue: x => Builder.AddWherePublishedFrom(x, From)
+				_ => FromDate is not null,
+				ifTrue: x => Builder.AddWherePublishedFrom(x, FromDate)
 			)
 			.SwitchIf(
-				_ => To is not null,
-				ifTrue: x => Builder.AddWherePublishedTo(x, To)
+				_ => ToDate is not null,
+				ifTrue: x => Builder.AddWherePublishedTo(x, ToDate)
 			)
 			.SwitchIf(
 				_ => ParentId is not null,

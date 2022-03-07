@@ -1,7 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -27,7 +27,7 @@ public sealed class Lockable<T> : Lockable
 	/// Lock object
 	/// </summary>
 	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
-	public Option<Locked<T>> Lock(byte[] key) =>
+	public Maybe<Locked<T>> Lock(byte[] key) =>
 		key.Length switch
 		{
 			int l when l == KeyLength =>

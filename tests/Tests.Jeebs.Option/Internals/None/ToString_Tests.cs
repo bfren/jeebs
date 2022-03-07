@@ -3,7 +3,7 @@
 
 using System;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Internals.None_Tests;
 
@@ -14,10 +14,10 @@ public class ToString_Tests
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
+		var maybe = None<int>(msg);
 
 		// Act
-		var result = option.ToString();
+		var result = maybe.ToString();
 
 		// Assert
 		Assert.Equal($"{typeof(TestMsg)}", result);
@@ -29,10 +29,10 @@ public class ToString_Tests
 		// Arrange
 		var value = F.Rnd.Str;
 		var exception = new Exception(value);
-		var option = None<int, TestExceptionMsg>(exception);
+		var maybe = None<int, TestExceptionMsg>(exception);
 
 		// Act
-		var result = option.ToString();
+		var result = maybe.ToString();
 
 		// Assert
 		Assert.Equal($"{typeof(TestExceptionMsg)}: {value}", result);

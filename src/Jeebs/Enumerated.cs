@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using Jeebs.Internals;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs;
 
@@ -66,7 +66,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
 	/// <param name="value">Enum value</param>
-	internal static Option<T> Check<T>(string name, T value)
+	internal static Maybe<T> Check<T>(string name, T value)
 		where T : Enumerated =>
 		string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
 		{
@@ -84,9 +84,9 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="name">Enum name</param>
 	/// <param name="values">Enum values to check name against</param>
 	/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
-	protected static Option<T> Parse<T>(string name, T[] values)
+	protected static Maybe<T> Parse<T>(string name, T[] values)
 		where T : Enumerated =>
-		(Option<T>)cache.GetOrAdd(
+		(Maybe<T>)cache.GetOrAdd(
 			$"{typeof(T)}-{name}",
 			(_, args) =>
 			{

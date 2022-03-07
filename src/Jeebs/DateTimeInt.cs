@@ -3,7 +3,7 @@
 
 using System;
 using System.Linq;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs;
 
@@ -85,7 +85,7 @@ public readonly record struct DateTimeInt
 	/// <summary>
 	/// Get the current DateTime
 	/// </summary>
-	public Option<DateTime> ToDateTime() =>
+	public Maybe<DateTime> ToDateTime() =>
 		IsValidDateTime() switch
 		{
 			{ } x when x.Valid =>

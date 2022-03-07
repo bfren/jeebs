@@ -42,6 +42,6 @@ public class QueryAsync_Tests
 		_ = await db.QueryAsync<int>(query, parameters, type, transaction).ConfigureAwait(false);
 
 		// Assert
-		log.Received(2).Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
 	}
 }

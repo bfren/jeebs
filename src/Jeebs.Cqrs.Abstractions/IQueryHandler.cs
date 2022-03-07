@@ -14,7 +14,7 @@ namespace Jeebs.Cqrs;
 public interface IQueryHandler<TQuery, TResult>
 {
 	/// <inheritdoc cref="HandleAsync(TQuery, CancellationToken)"/>
-	Task<Option<TResult>> HandleAsync(TQuery query) =>
+	Task<Maybe<TResult>> HandleAsync(TQuery query) =>
 		HandleAsync(query, CancellationToken.None);
 
 	/// <summary>
@@ -22,5 +22,5 @@ public interface IQueryHandler<TQuery, TResult>
 	/// </summary>
 	/// <param name="query">Query object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	Task<Option<TResult>> HandleAsync(TQuery query, CancellationToken cancellationToken);
+	Task<Maybe<TResult>> HandleAsync(TQuery query, CancellationToken cancellationToken);
 }

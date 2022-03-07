@@ -6,41 +6,41 @@ using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
 public abstract class Map_Tests
 {
-	public abstract void Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg();
+	public abstract void Test00_If_Unknown_Maybe_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test00(Func<Option<int>, Func<int, string>, Handler, Option<string>> act)
+	protected static void Test00(Func<Maybe<int>, Func<int, string>, Handler, Maybe<string>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 		var map = Substitute.For<Func<int, string>>();
 
 		// Act
-		var result = act(option, map, DefaultHandler);
+		var result = act(maybe, map, DefaultHandler);
 
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Value);
+		Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test01(Func<Option<string>, Func<string, int>, Handler, Option<int>> act)
+	protected static void Test01(Func<Maybe<string>, Func<string, int>, Handler, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Str);
+		var maybe = Some(F.Rnd.Str);
 		var exception = new Exception();
 		var throwFunc = int (string _) => throw exception;
 
 		// Act
-		var result = act(option, throwFunc, DefaultHandler);
+		var result = act(maybe, throwFunc, DefaultHandler);
 
 		// Assert
 		var none = result.AssertNone();
@@ -49,16 +49,16 @@ public abstract class Map_Tests
 
 	public abstract void Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None();
 
-	protected static void Test02(Func<Option<string>, Func<string, int>, Handler, Option<int>> act)
+	protected static void Test02(Func<Maybe<string>, Func<string, int>, Handler, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Str);
+		var maybe = Some(F.Rnd.Str);
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
 		var throwFunc = int (string _) => throw exception;
 
 		// Act
-		var result = act(option, throwFunc, handler);
+		var result = act(maybe, throwFunc, handler);
 
 		// Assert
 		result.AssertNone();
@@ -67,14 +67,14 @@ public abstract class Map_Tests
 
 	public abstract void Test03_If_None_Returns_None();
 
-	protected static void Test03(Func<Option<int>, Func<int, string>, Handler, Option<string>> act)
+	protected static void Test03(Func<Maybe<int>, Func<int, string>, Handler, Maybe<string>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 		var map = Substitute.For<Func<int, string>>();
 
 		// Act
-		var result = act(option, map, DefaultHandler);
+		var result = act(maybe, map, DefaultHandler);
 
 		// Assert
 		result.AssertNone();
@@ -82,15 +82,15 @@ public abstract class Map_Tests
 
 	public abstract void Test04_If_None_With_Reason_Returns_None_With_Same_Reason();
 
-	protected static void Test04(Func<Option<int>, Func<int, string>, Handler, Option<string>> act)
+	protected static void Test04(Func<Maybe<int>, Func<int, string>, Handler, Maybe<string>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
+		var maybe = None<int>(msg);
 		var map = Substitute.For<Func<int, string>>();
 
 		// Act
-		var result = act(option, map, DefaultHandler);
+		var result = act(maybe, map, DefaultHandler);
 
 		// Assert
 		var none = result.AssertNone();
@@ -99,21 +99,21 @@ public abstract class Map_Tests
 
 	public abstract void Test05_If_Some_Runs_Map_Function();
 
-	protected static void Test05(Func<Option<int>, Func<int, string>, Handler, Option<string>> act)
+	protected static void Test05(Func<Maybe<int>, Func<int, string>, Handler, Maybe<string>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var map = Substitute.For<Func<int, string>>();
 
 		// Act
-		act(option, map, DefaultHandler);
+		act(maybe, map, DefaultHandler);
 
 		// Assert
 		map.Received().Invoke(value);
 	}
 
-	public record class FakeOption : Option<int> { }
+	public record class FakeMaybe : Maybe<int> { }
 
 	public record class TestMsg : Msg;
 }

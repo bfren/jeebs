@@ -29,10 +29,10 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name) + " AS " + Escape(column.Alias),
+				Escape(column.ColName) + " AS " + Escape(column.ColAlias),
 
 			false =>
-				Escape(column.Name)
+				Escape(column.ColName)
 		};
 
 	/// <inheritdoc/>
@@ -40,10 +40,10 @@ public partial class PostgreSqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Table, column.Name) + " AS " + Escape(column.Alias),
+				Escape(column.TblName, column.ColName) + " AS " + Escape(column.ColAlias),
 
 			false =>
-				Escape(column.Table, column.Name)
+				Escape(column.TblName, column.ColName)
 		};
 
 	/// <inheritdoc/>

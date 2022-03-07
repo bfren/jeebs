@@ -42,10 +42,10 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Do something, process the result and return errors if necessary, or perform the success function
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
-	/// <param name="option">Option value</param>
+	/// <param name="maybe">Maybe value</param>
 	/// <param name="success">Function to run when the result is successful</param>
-	protected Task<IActionResult> ProcessOptionAsync<T>(Option<T> option, Func<T, Task<IActionResult>> success) =>
-		option.SwitchAsync(
+	protected Task<IActionResult> ProcessOptionAsync<T>(Maybe<T> maybe, Func<T, Task<IActionResult>> success) =>
+		maybe.SwitchAsync(
 			some: value =>
 				success(value),
 			none: reason =>
@@ -56,10 +56,10 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Do something, process the result and return errors if necessary, or perform the success function
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
-	/// <param name="option">Option value</param>
+	/// <param name="maybe">Maybe value</param>
 	/// <param name="success">Function to run when the result is successful</param>
-	protected Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, IActionResult> success) =>
-		option.SwitchAsync(
+	protected Task<IActionResult> ProcessOptionAsync<T>(Task<Maybe<T>> maybe, Func<T, IActionResult> success) =>
+		maybe.SwitchAsync(
 			some: value =>
 				success(value),
 			none: reason =>
@@ -70,19 +70,19 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Do something, process the result and return errors if necessary, or perform the success function
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
-	/// <param name="option">Option value</param>
+	/// <param name="maybe">Maybe value</param>
 	/// <param name="success">Function to run when the result is successful</param>
-	protected Task<IActionResult> ProcessOptionAsync<T>(Task<Option<T>> option, Func<T, Task<IActionResult>> success) =>
-		option.SwitchAsync(
+	protected Task<IActionResult> ProcessOptionAsync<T>(Task<Maybe<T>> maybe, Func<T, Task<IActionResult>> success) =>
+		maybe.SwitchAsync(
 			some: value =>
 				success(value),
 			none: reason =>
 				this.ExecuteErrorAsync(reason)
 		);
 
-	/// <inheritdoc cref="ProcessOptionAsync{T}(Option{T}, Func{T, Task{IActionResult}})"/>
-	protected IActionResult ProcessOption<T>(Option<T> option, Func<T, IActionResult> success) =>
-		option.Switch(
+	/// <inheritdoc cref="ProcessOptionAsync{T}(Maybe{T}, Func{T, Task{IActionResult}})"/>
+	protected IActionResult ProcessOption<T>(Maybe<T> maybe, Func<T, IActionResult> success) =>
+		maybe.Switch(
 			some: value =>
 				success(value),
 			none: reason =>

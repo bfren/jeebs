@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs;
 using Jeebs.Data.Mapping;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.DataF;
 
@@ -21,14 +21,14 @@ public static partial class MappingF
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TAttribute">Attribute type</typeparam>
 	/// <param name="columns">List of mapped columns</param>
-	public static Option<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
+	public static Maybe<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
 		where TEntity : IWithId
 		where TAttribute : Attribute =>
 		Some(
 			columns
 		)
 		.Map(
-			x => x.Where(p => p.Property.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
+			x => x.Where(p => p.PropertyInfo.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
 			e => new M.ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(e)
 		)
 		.UnwrapSingle<IMappedColumn>(

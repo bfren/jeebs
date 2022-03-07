@@ -17,7 +17,7 @@ public class With_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
-		var result = list.With(i2);
+		var result = list.WithItem(i2);
 
 		// Assert
 		Assert.Collection(result,
@@ -37,7 +37,7 @@ public class With_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
-		var result = list.With(i2);
+		var result = list.WithItem(i2);
 		i0 = F.Rnd.Str;
 		i1 = F.Rnd.Str;
 		i2 = F.Rnd.Str;

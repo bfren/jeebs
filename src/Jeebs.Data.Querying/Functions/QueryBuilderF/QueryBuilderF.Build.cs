@@ -4,7 +4,7 @@
 using System;
 using Jeebs;
 using Jeebs.Data.Querying;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.DataF;
 
@@ -15,7 +15,7 @@ public static partial class QueryBuilderF
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="builder">Query builder</param>
-	public static Option<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
+	public static Maybe<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
 		Some(
 			new QueryBuilder()
 		)

@@ -17,13 +17,13 @@ public interface ITwitterDriver<T>
 	/// Get the full-size profile image URL for a user
 	/// </summary>
 	/// <param name="screenName">Screen name</param>
-	Task<Option<Stream>> GetProfileImageStreamAsync(string screenName);
+	Task<Maybe<Stream>> GetProfileImageStreamAsync(string screenName);
 
 	/// <inheritdoc cref="GetTweetsAsync(string, bool, int)"/>
-	Task<Option<List<T>>> GetTweetsAsync(string screenName);
+	Task<Maybe<List<T>>> GetTweetsAsync(string screenName);
 
 	/// <inheritdoc cref="GetTweetsAsync(string, bool, int)"/>
-	Task<Option<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies);
+	Task<Maybe<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies);
 
 	/// <summary>
 	/// Retrieve a list of Tweets
@@ -31,5 +31,5 @@ public interface ITwitterDriver<T>
 	/// <param name="screenName">Screen name</param>
 	/// <param name="excludeReplies">Whether or not to exclude replies</param>
 	/// <param name="limit">The maximum number of tweets to return</param>
-	Task<Option<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit);
+	Task<Maybe<List<T>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit);
 }

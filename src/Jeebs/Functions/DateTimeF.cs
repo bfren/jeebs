@@ -4,7 +4,7 @@
 using System;
 using System.Globalization;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -34,7 +34,7 @@ public static class DateTimeF
 	/// <param name="s">Input string</param>
 	/// <param name="format">DateTime format</param>
 	/// <returns>DateTime object, or null if the input string cannot be parsed</returns>
-	public static Option<DateTime> FromFormat(string s, string format)
+	public static Maybe<DateTime> FromFormat(string s, string format)
 	{
 		if (DateTime.TryParseExact(s, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
 		{

@@ -9,7 +9,7 @@ using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Querying;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -22,7 +22,7 @@ public static partial class QueryPostsF
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="currentId">Current Post ID</param>
 	/// <param name="opt">Function to return query options</param>
-	internal static Task<Option<(WpPostId? prev, WpPostId? next)>> GetPreviousAndNextAsync(
+	internal static Task<Maybe<(WpPostId? prev, WpPostId? next)>> GetPreviousAndNextAsync(
 		IWpDb db,
 		IUnitOfWork w,
 		WpPostId currentId,

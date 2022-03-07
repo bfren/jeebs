@@ -26,7 +26,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
+	public Maybe<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
 		(Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	)
 		where TEntity : IWithId =>

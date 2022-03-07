@@ -17,5 +17,5 @@ public interface IAuthRoleRepository<TRoleEntity> : IRepository<TRoleEntity, Aut
 	/// Create a new Role
 	/// </summary>
 	/// <param name="name">Role name</param>
-	Task<Option<AuthRoleId>> CreateAsync(string name);
+	Task<Maybe<AuthRoleId>> CreateAsync(string name);
 }

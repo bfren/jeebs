@@ -26,7 +26,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	public AuthUserRepository(IAuthDb db, ILog<AuthUserRepository> log) : base(db, log) { }
 
 	/// <inheritdoc/>
-	public Task<Option<AuthUserId>> CreateAsync(string email, string password, string? friendlyName)
+	public Task<Maybe<AuthUserId>> CreateAsync(string email, string password, string? friendlyName)
 	{
 		var user = new AuthUserEntity
 		{
@@ -44,12 +44,12 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<TModel>> RetrieveAsync<TModel>(string email) =>
+	public Task<Maybe<TModel>> RetrieveAsync<TModel>(string email) =>
 		QuerySingleAsync<TModel>(
 			(u => u.EmailAddress, Compare.Equal, email)
 		);
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId) =>
+	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId) =>
 		Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
 }

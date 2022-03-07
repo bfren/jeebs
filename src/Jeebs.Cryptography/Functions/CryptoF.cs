@@ -6,7 +6,7 @@ using System.Text;
 using Jeebs;
 using Sodium;
 using Sodium.Exceptions;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -19,7 +19,7 @@ public static class CryptoF
 	/// Calculate a 64-byte hash of a given input string
 	/// </summary>
 	/// <param name="input">Input string</param>
-	public static Option<byte[]> Hash(string input) =>
+	public static Maybe<byte[]> Hash(string input) =>
 		Hash(input, 64);
 
 	/// <summary>
@@ -27,7 +27,7 @@ public static class CryptoF
 	/// </summary>
 	/// <param name="input">Input string</param>
 	/// <param name="bytes">The number of bytes for the hash - must be between 16 and 64</param>
-	public static Option<byte[]> Hash(string input, int bytes) =>
+	public static Maybe<byte[]> Hash(string input, int bytes) =>
 		Some(
 			() => Encoding.UTF8.GetBytes(input),
 			e => new M.GettingBytesForGenericHashExceptionMsg(e)
@@ -47,21 +47,21 @@ public static class CryptoF
 	/// <summary>
 	/// Generate a 3-word passphrase
 	/// </summary>
-	public static Option<string> GeneratePassphrase() =>
+	public static Maybe<string> GeneratePassphrase() =>
 		GeneratePassphrase(3);
 
 	/// <summary>
 	/// Generate a passphrase
 	/// </summary>
 	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
-	public static Option<string> GeneratePassphrase(int numberOfWords) =>
+	public static Maybe<string> GeneratePassphrase(int numberOfWords) =>
 		Rnd.StringF.Passphrase(numberOfWords);
 
 	/// <summary>
 	/// Generate a 32 byte key to use for encryption
 	/// </summary>
 	/// <returns>32 byte key</returns>
-	public static Option<byte[]> GenerateKey() =>
+	public static Maybe<byte[]> GenerateKey() =>
 		Some(
 			() => SecretBox.GenerateKey(),
 			e => new M.GeneratingKeyExceptionMsg(e)

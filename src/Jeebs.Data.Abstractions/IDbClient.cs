@@ -104,7 +104,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND)</param>
-	Option<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
+	Maybe<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
 		(Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	)
 		where TEntity : IWithId;
@@ -127,7 +127,7 @@ public interface IDbClient
 	/// Return a query to create an entity
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	Option<string> GetCreateQuery<TEntity>()
+	Maybe<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -136,7 +136,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
+	Maybe<string> GetRetrieveQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -145,7 +145,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Option<string> GetUpdateQuery<TEntity, TModel>(long id)
+	Maybe<string> GetUpdateQuery<TEntity, TModel>(long id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -153,7 +153,7 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Option<string> GetDeleteQuery<TEntity>(long id)
+	Maybe<string> GetDeleteQuery<TEntity>(long id)
 		where TEntity : IWithId;
 
 	#endregion

@@ -4,7 +4,7 @@
 using System.Text;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Auth;
 
@@ -22,7 +22,7 @@ public static class JwtConfigExtensions
 	/// <summary>
 	/// Get Encrypting Key
 	/// </summary>
-	public static Option<SecurityKey> GetEncryptingKey(this JwtConfig @this) =>
+	public static Maybe<SecurityKey> GetEncryptingKey(this JwtConfig @this) =>
 		@this.EncryptingKey switch
 		{
 			string key =>

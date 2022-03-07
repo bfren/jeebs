@@ -39,58 +39,58 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log an <see cref="Msg"/>
+	/// Log an <see cref="Jeebs.Msg"/>
 	/// </summary>
 	/// <typeparam name="T">The message type</typeparam>
 	/// <param name="msg">Message to log</param>
-	void Message<T>(T? msg)
+	void Msg<T>(T? msg)
 		where T : Msg;
 
 	/// <summary>
-	/// Log a list of <see cref="Msg"/>
+	/// Log a list of <see cref="Jeebs.Msg"/>
 	/// </summary>
 	/// <param name="msgs">Messages to log</param>
-	void Messages(IEnumerable<Msg> msgs);
+	void Msg(IEnumerable<Msg> msgs);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Verbose(string message, params object[] args);
+	void Vrb(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Debug"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Debug(string message, params object[] args);
+	void Dbg(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Information"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Information(string message, params object[] args);
+	void Inf(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Warning"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Warning(string message, params object[] args);
+	void Wrn(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Error(string message, params object[] args);
+	void Err(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
 	/// <param name="ex">Exception</param>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Error(Exception ex, string message, params object[] args);
+	void Err(Exception ex, string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Fatal(string message, params object[] args);
+	void Die(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
 	/// <param name="ex">Exception</param>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Fatal(Exception ex, string message, params object[] args);
+	void Die(Exception ex, string message, params object[] args);
 }

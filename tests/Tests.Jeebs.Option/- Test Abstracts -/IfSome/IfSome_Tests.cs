@@ -5,7 +5,7 @@ using System;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests;
 
@@ -13,14 +13,14 @@ public abstract class IfSome_Tests
 {
 	public abstract void Test00_Exception_In_IfSome_Action_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static void Test00(Func<Option<int>, Action<int>, Option<int>> act)
+	protected static void Test00(Func<Maybe<int>, Action<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Int);
-		var ifSome = void (int _) => throw new OptionTestException();
+		var maybe = Some(F.Rnd.Int);
+		var ifSome = void (int _) => throw new MaybeTestException();
 
 		// Act
-		var result = act(option, ifSome);
+		var result = act(maybe, ifSome);
 
 		// Assert
 		var none = result.AssertNone();
@@ -29,34 +29,34 @@ public abstract class IfSome_Tests
 
 	public abstract void Test01_None_Returns_Original_Option();
 
-	protected static void Test01(Func<Option<int>, Action<int>, Option<int>> act)
+	protected static void Test01(Func<Maybe<int>, Action<int>, Maybe<int>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 		var ifSome = Substitute.For<Action<int>>();
 
 		// Act
-		var result = act(option, ifSome);
+		var result = act(maybe, ifSome);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 		ifSome.DidNotReceiveWithAnyArgs().Invoke(default);
 	}
 
 	public abstract void Test02_Some_Runs_IfSome_Action_And_Returns_Original_Option();
 
-	protected static void Test02(Func<Option<int>, Action<int>, Option<int>> act)
+	protected static void Test02(Func<Maybe<int>, Action<int>, Maybe<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var ifSome = Substitute.For<Action<int>>();
 
 		// Act
-		var result = act(option, ifSome);
+		var result = act(maybe, ifSome);
 
 		// Assert
-		Assert.Same(option, result);
+		Assert.Same(maybe, result);
 		ifSome.Received().Invoke(value);
 	}
 }

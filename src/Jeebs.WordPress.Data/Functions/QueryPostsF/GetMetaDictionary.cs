@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs;
 using Jeebs.WordPress.Data;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -23,7 +23,7 @@ public static partial class QueryPostsF
 	/// Get the Meta Dictionary Info for <typeparamref name="TModel"/>
 	/// </summary>
 	/// <typeparam name="TModel">Post Model type</typeparam>
-	internal static Option<Meta<TModel>> GetMetaDictionary<TModel>()
+	internal static Maybe<Meta<TModel>> GetMetaDictionary<TModel>()
 	{
 		// Get from or Add to the cache
 		var metaDictionary = metaDictionaryCache.GetOrAdd(

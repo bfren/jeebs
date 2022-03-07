@@ -19,7 +19,7 @@ public class ReadJson_Tests
 		var expected = new Test(valueStr, valueInt);
 
 		// Act
-		var result = JsonF.Deserialise<Option<Test>>(json);
+		var result = JsonF.Deserialise<Maybe<Test>>(json);
 
 		// Assert
 		var some = result.AssertSome();
@@ -54,7 +54,7 @@ public class ReadJson_Tests
 		// Arrange
 
 		// Act
-		var result = JsonF.Deserialise<Option<Test>>(input);
+		var result = JsonF.Deserialise<Maybe<Test>>(input);
 
 		// Assert
 		var none = result.AssertNone();
@@ -67,7 +67,7 @@ public class ReadJson_Tests
 	[InlineData("false")]
 	[InlineData("[0,1,2]")]
 	[InlineData("{\"bar\":\"foo\"}")]
-	public void Deserialise_Object_With_Option_Property_Null_Or_Invalid_Value_Returns_None_With_DeserialisingValueExceptionMsg(string input)
+	public void Deserialise_Object_With_Maybe_Property_Null_Or_Invalid_Value_Returns_None_With_DeserialisingValueExceptionMsg(string input)
 	{
 		// Arrange
 		var json = $"{{\"test\":{input}}}";
@@ -82,5 +82,5 @@ public class ReadJson_Tests
 
 	public record class Test(string Foo, int Bar);
 
-	public record class Wrapper(Option<Test> Test);
+	public record class Wrapper(Maybe<Test> Test);
 }

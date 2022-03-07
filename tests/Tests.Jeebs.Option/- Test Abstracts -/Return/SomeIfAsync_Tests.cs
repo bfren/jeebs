@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
@@ -15,7 +15,7 @@ public abstract class SomeIfAsync_Tests
 {
 	public abstract Task Test00_Exception_Thrown_By_Predicate_With_Value_Calls_Handler_Returns_None();
 
-	protected static async Task Test00(Func<Func<bool>, Task<int>, Handler, Task<Option<int>>> act)
+	protected static async Task Test00(Func<Func<bool>, Task<int>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -32,7 +32,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test01_Exception_Thrown_By_Predicate_With_Value_Func_Calls_Handler_Returns_None();
 
-	protected static async Task Test01(Func<Func<bool>, Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test01(Func<Func<bool>, Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -49,7 +49,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test02_Exception_Thrown_By_Value_Func_Calls_Handler_Returns_None();
 
-	protected static async Task Test02(Func<Func<bool>, Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test02(Func<Func<bool>, Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var handler = Substitute.For<Handler>();
@@ -66,7 +66,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test03_Predicate_True_With_Value_Returns_Some();
 
-	protected static async Task Test03(Func<Func<bool>, Task<int>, Handler, Task<Option<int>>> act)
+	protected static async Task Test03(Func<Func<bool>, Task<int>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
@@ -81,7 +81,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test04_Predicate_True_With_Value_Func_Returns_Some();
 
-	protected static async Task Test04(Func<Func<bool>, Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test04(Func<Func<bool>, Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
@@ -96,7 +96,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test05_Predicate_False_With_Value_Returns_None_With_PredicateWasFalseMsg();
 
-	protected static async Task Test05(Func<Func<bool>, Task<int>, Handler, Task<Option<int>>> act)
+	protected static async Task Test05(Func<Func<bool>, Task<int>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
@@ -111,7 +111,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test06_Predicate_False_With_Value_Func_Returns_None_With_PredicateWasFalseMsg();
 
-	protected static async Task Test06(Func<Func<bool>, Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test06(Func<Func<bool>, Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
@@ -126,7 +126,7 @@ public abstract class SomeIfAsync_Tests
 
 	public abstract Task Test07_Predicate_False_Bypasses_Value_Func();
 
-	protected static async Task Test07(Func<Func<bool>, Func<Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test07(Func<Func<bool>, Func<Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
 		var getValue = Substitute.For<Func<Task<int>>>();

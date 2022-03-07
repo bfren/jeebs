@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Mvc.Auth.Jwt;
 
@@ -45,7 +45,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				},
 				none: reason =>
 				{
-					Log.Message(reason);
+					Log.Msg(reason);
 					context.Fail();
 				}
 			);
@@ -58,7 +58,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// Attempt to get the authorised ClaimsPrincipal
 	/// </summary>
 	/// <param name="ctx">AuthorizationFilterContext</param>
-	private static Option<ClaimsPrincipal> GetAuthorisedPrincipal(AuthorizationFilterContext ctx) =>
+	private static Maybe<ClaimsPrincipal> GetAuthorisedPrincipal(AuthorizationFilterContext ctx) =>
 		from authorisationHeader in
 			GetAuthorisationHeader(ctx.HttpContext.Request.Headers)
 		from token in
@@ -71,7 +71,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// Retrieve the authorisation header (if it exists)
 	/// </summary>
 	/// <param name="headers">Dictionary of header values</param>
-	internal static Option<string> GetAuthorisationHeader(IDictionary<string, StringValues> headers) =>
+	internal static Maybe<string> GetAuthorisationHeader(IDictionary<string, StringValues> headers) =>
 		headers.TryGetValue("Authorization", out var authorisationHeader) switch
 		{
 			true when !string.IsNullOrEmpty(authorisationHeader) =>
@@ -85,7 +85,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// Extract the token from the authorisation header
 	/// </summary>
 	/// <param name="authorisationHeader">Authorisation header</param>
-	internal static Option<string> GetToken(string authorisationHeader) =>
+	internal static Maybe<string> GetToken(string authorisationHeader) =>
 		authorisationHeader.StartsWith("Bearer ") switch
 		{
 			true =>
@@ -100,7 +100,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// </summary>
 	/// <param name="auth">IJwtAuthProvider</param>
 	/// <param name="token">Token value</param>
-	internal static Option<ClaimsPrincipal> GetPrincipal(IAuthJwtProvider auth, string token) =>
+	internal static Maybe<ClaimsPrincipal> GetPrincipal(IAuthJwtProvider auth, string token) =>
 		auth.ValidateToken(token);
 
 	/// <summary>Messages</summary>

@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Data.Querying;
 
@@ -44,7 +44,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 		Builder = builder;
 
 	/// <inheritdoc/>
-	public Option<IQueryParts> ToParts<TModel>() =>
+	public Maybe<IQueryParts> ToParts<TModel>() =>
 		Build(
 			Builder.Create<TModel>(Maximum, Skip)
 		)
@@ -57,7 +57,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 	/// Build QueryParts
 	/// </summary>
 	/// <param name="parts">Initial QueryParts</param>
-	protected virtual Option<QueryParts> Build(Option<QueryParts> parts) =>
+	protected virtual Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
 		parts.SwitchIf(
 			_ => Id?.Value > 0 || Ids.Count > 0,
 			x => Builder.AddWhereId(x, Id, Ids)

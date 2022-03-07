@@ -9,7 +9,7 @@ namespace Jeebs.Data.Mapping;
 /// <param name="Table">Table Name</param>
 /// <param name="Name">Column Name</param>
 /// <param name="Alias">Column Alias</param>
-public partial record class Column(ITableName Table, string Name, string Alias) : IColumn
+public partial record class Column(ITableName TblName, string ColName, string ColAlias) : IColumn
 {
 	/// <summary>
 	/// Create column using table object
@@ -31,7 +31,7 @@ public partial record class Column(ITableName Table, string Name, string Alias) 
 		/// <param name="y">IColumn 2</param>
 		/// <returns>True if the aliases of the two columns are identical</returns>
 		public bool Equals(IColumn? x, IColumn? y) =>
-			x?.Alias == y?.Alias;
+			x?.ColAlias == y?.ColAlias;
 
 		/// <summary>
 		/// Return object's hash code
@@ -39,12 +39,12 @@ public partial record class Column(ITableName Table, string Name, string Alias) 
 		/// <param name="obj">IColumn</param>
 		/// <returns>Hash code</returns>
 		public int GetHashCode(IColumn obj) =>
-			obj.Alias.GetHashCode();
+			obj.ColAlias.GetHashCode();
 	}
 
 	/// <summary>
 	/// Return column name
 	/// </summary>
 	public sealed override string ToString() =>
-		Name;
+		ColName;
 }

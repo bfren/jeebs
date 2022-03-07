@@ -19,6 +19,6 @@ public class UpTo_Tests
 
 		// Assert
 		Assert.Equal(DateTime.MinValue.StartOfDay(), range.Start);
-		Assert.Equal(date.EndOfDay(), range.End);
+		Assert.Equal(date.EndOfDay(), range.Finish);
 	}
 }

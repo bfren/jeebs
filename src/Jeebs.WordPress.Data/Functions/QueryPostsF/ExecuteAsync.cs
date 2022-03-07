@@ -10,14 +10,14 @@ using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Querying;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
 public static partial class QueryPostsF
 {
 	/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
-	internal static Task<Option<IEnumerable<TModel>>> ExecuteAsync<TModel>(
+	internal static Task<Maybe<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 		IWpDb db,
 		IUnitOfWork w,
 		GetPostsOptions opt,
@@ -53,7 +53,7 @@ public static partial class QueryPostsF
 	/// <param name="page">Page number</param>
 	/// <param name="opt">Function to return query options</param>
 	/// <param name="filters">Optional content filters to apply</param>
-	internal static Task<Option<IPagedList<TModel>>> ExecuteAsync<TModel>(
+	internal static Task<Maybe<IPagedList<TModel>>> ExecuteAsync<TModel>(
 		IWpDb db,
 		IUnitOfWork w,
 		ulong page,

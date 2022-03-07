@@ -42,7 +42,7 @@ public record class EnumeratedTest : Enumerated
 	public static readonly EnumeratedTest Test1 = new("test1");
 	public static readonly EnumeratedTest Test2 = new("test2");
 
-	public static Option<EnumeratedTest> Parse(string value)
+	public static Maybe<EnumeratedTest> Parse(string value)
 	{
 		return Parse(value, new[] { Test1, Test2 });
 	}

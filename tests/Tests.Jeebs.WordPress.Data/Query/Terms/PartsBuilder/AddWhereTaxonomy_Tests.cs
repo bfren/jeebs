@@ -46,8 +46,8 @@ public class AddWhereTaxonomy_Tests : QueryPartsBuilder_Tests<Query.TermsPartsBu
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(builder.TTest.TermTaxonomy.GetName(), x.column.Table);
-				Assert.Equal(builder.TTest.TermTaxonomy.Taxonomy, x.column.Name);
+				Assert.Equal(builder.TTest.TermTaxonomy.GetName(), x.column.TblName);
+				Assert.Equal(builder.TTest.TermTaxonomy.Taxonomy, x.column.ColName);
 				Assert.Equal(Compare.Equal, x.cmp);
 				Assert.Equal(taxonomy, x.value);
 			}

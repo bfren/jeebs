@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.WordPress.Data;
 
@@ -31,7 +31,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		QueryTerms = queryTerms;
 
 	/// <inheritdoc/>
-	public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Term ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -81,7 +81,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// </summary>
 	/// <param name="type">Term Custom Field type</param>
 	/// <param name="value">Term ID value</param>
-	internal static Option<WpTermId> ParseTermId(Type type, string value)
+	internal static Maybe<WpTermId> ParseTermId(Type type, string value)
 	{
 		if (!long.TryParse(value, out long termId))
 		{

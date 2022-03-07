@@ -7,7 +7,7 @@ using Jeebs;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests;
 
@@ -15,12 +15,12 @@ public abstract class IfNullAsync_Tests
 {
 	public abstract Task Test00_Exception_In_NullValue_Func_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static async Task Test00(Func<Option<object?>, Func<Task<Option<object?>>>, Task<Option<object?>>> act)
+	protected static async Task Test00(Func<Maybe<object?>, Func<Task<Maybe<object?>>>, Task<Maybe<object?>>> act)
 	{
 		// Arrange
 		var some = Some<object>(null, true);
 		var none = None<object?, M.NullValueMsg>();
-		var throws = Substitute.For<Func<Task<Option<object?>>>>();
+		var throws = Substitute.For<Func<Task<Maybe<object?>>>>();
 		throws.Invoke().Throws<Exception>();
 
 		// Act
@@ -36,11 +36,11 @@ public abstract class IfNullAsync_Tests
 
 	public abstract Task Test01_Some_With_Null_Value_Runs_IfNull_Func();
 
-	protected static async Task Test01(Func<Option<object?>, Func<Task<Option<object?>>>, Task<Option<object?>>> act)
+	protected static async Task Test01(Func<Maybe<object?>, Func<Task<Maybe<object?>>>, Task<Maybe<object?>>> act)
 	{
 		// Arrange
 		var some = Some<object>(null, true);
-		var ifNull = Substitute.For<Func<Task<Option<object?>>>>();
+		var ifNull = Substitute.For<Func<Task<Maybe<object?>>>>();
 
 		// Act
 		await act(some, ifNull).ConfigureAwait(false);
@@ -51,11 +51,11 @@ public abstract class IfNullAsync_Tests
 
 	public abstract Task Test02_None_With_NullValueMsg_Runs_IfNull_Func();
 
-	protected static async Task Test02(Func<Option<object>, Func<Task<Option<object>>>, Task<Option<object>>> act)
+	protected static async Task Test02(Func<Maybe<object>, Func<Task<Maybe<object>>>, Task<Maybe<object>>> act)
 	{
 		// Arrange
 		var none = None<object, M.NullValueMsg>();
-		var ifNull = Substitute.For<Func<Task<Option<object>>>>();
+		var ifNull = Substitute.For<Func<Task<Maybe<object>>>>();
 
 		// Act
 		await act(none, ifNull).ConfigureAwait(false);
@@ -66,16 +66,16 @@ public abstract class IfNullAsync_Tests
 
 	public abstract Task Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
 
-	protected static async Task Test03(Func<Option<object?>, Func<Msg>, Task<Option<object?>>> act)
+	protected static async Task Test03(Func<Maybe<object?>, Func<Msg>, Task<Maybe<object?>>> act)
 	{
 		// Arrange
-		var option = Some<object>(null, true);
+		var maybe = Some<object>(null, true);
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
 		ifNull.Invoke().Returns(msg);
 
 		// Act
-		var result = await act(option, ifNull).ConfigureAwait(false);
+		var result = await act(maybe, ifNull).ConfigureAwait(false);
 
 		// Assert
 		ifNull.Received().Invoke();
@@ -85,16 +85,16 @@ public abstract class IfNullAsync_Tests
 
 	public abstract Task Test04_None_With_NullValueMsg_Runs_IfNull_Func_Returns_None_With_Reason();
 
-	protected static async Task Test04(Func<Option<object>, Func<Msg>, Task<Option<object>>> act)
+	protected static async Task Test04(Func<Maybe<object>, Func<Msg>, Task<Maybe<object>>> act)
 	{
 		// Arrange
-		var option = None<object, M.NullValueMsg>();
+		var maybe = None<object, M.NullValueMsg>();
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
 		ifNull.Invoke().Returns(msg);
 
 		// Act
-		var result = await act(option, ifNull).ConfigureAwait(false);
+		var result = await act(maybe, ifNull).ConfigureAwait(false);
 
 		// Assert
 		ifNull.Received().Invoke();

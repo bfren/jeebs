@@ -35,7 +35,7 @@ public abstract class Wp
 			entry.SetAbsoluteExpiration(DateTimeOffset.MaxValue);
 
 			// Do init
-			log.Debug("Initialising {WpDb}.", entry.Key);
+			log.Dbg("Initialising {WpDb}.", entry.Key);
 
 			RegisterCustomPostTypes();
 			RegisterCustomTaxonomies();

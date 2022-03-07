@@ -44,6 +44,6 @@ public class QueryAsync_Tests
 		await repo.QueryAsync<Repository_Setup.FooModel>(predicates).ConfigureAwait(false);
 
 		// Assert
-		log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

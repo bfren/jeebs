@@ -119,7 +119,7 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsOptions, IQueryPostsPartsB
 		var from = F.Rnd.DateTime;
 		var opt = options with
 		{
-			From = from
+			FromDate = from
 		};
 
 		// Act
@@ -150,7 +150,7 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsOptions, IQueryPostsPartsB
 		var to = F.Rnd.DateTime;
 		var opt = options with
 		{
-			To = to
+			ToDate = to
 		};
 
 		// Act

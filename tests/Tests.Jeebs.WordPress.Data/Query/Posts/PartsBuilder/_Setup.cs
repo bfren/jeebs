@@ -21,15 +21,15 @@ public static class Setup
 	public static Query.PostsPartsBuilder GetBuilder(IExtract extract) =>
 		new(extract, schema);
 
-	public static void AssertWhere(QueryParts parts, Option<QueryParts> result, string column, Compare cmp, object value)
+	public static void AssertWhere(QueryParts parts, Maybe<QueryParts> result, string column, Compare cmp, object value)
 	{
 		var some = result.AssertSome();
 		Assert.NotSame(parts, some);
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(Post.GetName(), x.column.Table);
-				Assert.Equal(column, x.column.Name);
+				Assert.Equal(Post.GetName(), x.column.TblName);
+				Assert.Equal(column, x.column.ColName);
 				Assert.Equal(cmp, x.cmp);
 				Assert.Equal(value, x.value);
 			}

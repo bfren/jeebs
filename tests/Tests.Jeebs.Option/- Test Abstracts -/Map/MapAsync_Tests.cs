@@ -7,41 +7,41 @@ using Jeebs;
 using Jeebs.Exceptions;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
 namespace Jeebs_Tests;
 
 public abstract class MapAsync_Tests
 {
-	public abstract Task Test00_If_Unknown_Option_Returns_None_With_UnhandledExceptionMsg();
+	public abstract Task Test00_If_Unknown_Maybe_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static async Task Test00(Func<Option<int>, Func<int, Task<string>>, Handler, Task<Option<string>>> act)
+	protected static async Task Test00(Func<Maybe<int>, Func<int, Task<string>>, Handler, Task<Maybe<string>>> act)
 	{
 		// Arrange
-		var option = new FakeOption();
+		var maybe = new FakeMaybe();
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, map, DefaultHandler).ConfigureAwait(false);
+		var result = await act(maybe, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownOptionException>(msg.Value);
+		Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract Task Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
 
-	protected static async Task Test01(Func<Option<string>, Func<string, Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test01(Func<Maybe<string>, Func<string, Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Str);
+		var maybe = Some(F.Rnd.Str);
 		var exception = new Exception();
 		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
-		var result = await act(option, throwFunc, DefaultHandler).ConfigureAwait(false);
+		var result = await act(maybe, throwFunc, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -50,16 +50,16 @@ public abstract class MapAsync_Tests
 
 	public abstract Task Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None();
 
-	protected static async Task Test02(Func<Option<string>, Func<string, Task<int>>, Handler, Task<Option<int>>> act)
+	protected static async Task Test02(Func<Maybe<string>, Func<string, Task<int>>, Handler, Task<Maybe<int>>> act)
 	{
 		// Arrange
-		var option = Some(F.Rnd.Str);
+		var maybe = Some(F.Rnd.Str);
 		var handler = Substitute.For<Handler>();
 		var exception = new Exception();
 		var throwFunc = Task<int> (string _) => throw exception;
 
 		// Act
-		var result = await act(option, throwFunc, handler).ConfigureAwait(false);
+		var result = await act(maybe, throwFunc, handler).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -68,14 +68,14 @@ public abstract class MapAsync_Tests
 
 	public abstract Task Test03_If_None_Returns_None();
 
-	protected static async Task Test03(Func<Option<int>, Func<int, Task<string>>, Handler, Task<Option<string>>> act)
+	protected static async Task Test03(Func<Maybe<int>, Func<int, Task<string>>, Handler, Task<Maybe<string>>> act)
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, map, DefaultHandler).ConfigureAwait(false);
+		var result = await act(maybe, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		result.AssertNone();
@@ -83,15 +83,15 @@ public abstract class MapAsync_Tests
 
 	public abstract Task Test04_If_None_With_Reason_Returns_None_With_Same_Reason();
 
-	protected static async Task Test04(Func<Option<int>, Func<int, Task<string>>, Handler, Task<Option<string>>> act)
+	protected static async Task Test04(Func<Maybe<int>, Func<int, Task<string>>, Handler, Task<Maybe<string>>> act)
 	{
 		// Arrange
 		var msg = new TestMsg();
-		var option = None<int>(msg);
+		var maybe = None<int>(msg);
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		var result = await act(option, map, DefaultHandler).ConfigureAwait(false);
+		var result = await act(maybe, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -100,21 +100,21 @@ public abstract class MapAsync_Tests
 
 	public abstract Task Test05_If_Some_Runs_Map_Function();
 
-	protected static async Task Test05(Func<Option<int>, Func<int, Task<string>>, Handler, Task<Option<string>>> act)
+	protected static async Task Test05(Func<Maybe<int>, Func<int, Task<string>>, Handler, Task<Maybe<string>>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;
-		var option = Some(value);
+		var maybe = Some(value);
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		await act(option, map, DefaultHandler).ConfigureAwait(false);
+		await act(maybe, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
 		await map.Received().Invoke(value).ConfigureAwait(false);
 	}
 
-	public record class FakeOption : Option<int> { }
+	public record class FakeMaybe : Maybe<int> { }
 
 	public record class TestMsg : Msg;
 }

@@ -34,11 +34,11 @@ public abstract class AddLeftJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Tests
 		Assert.Collection(some.LeftJoin,
 			x =>
 			{
-				Assert.Equal(t0Name, x.from.Table);
-				Assert.Equal(t0Column, x.from.Name);
+				Assert.Equal(t0Name, x.from.TblName);
+				Assert.Equal(t0Column, x.from.ColName);
 
-				Assert.Equal(t1Name, x.to.Table);
-				Assert.Equal(t1Column, x.to.Name);
+				Assert.Equal(t1Name, x.to.TblName);
+				Assert.Equal(t1Column, x.to.ColName);
 			}
 		);
 	}

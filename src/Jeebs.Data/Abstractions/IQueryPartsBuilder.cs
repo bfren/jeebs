@@ -50,19 +50,19 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="fromSelector">From column</param>
 	/// <param name="toTable">To table - should be a new table not already added to the query</param>
 	/// <param name="toSelector">To column</param>
-	Option<QueryParts> AddInnerJoin<TFrom, TTo>(QueryParts parts,
+	Maybe<QueryParts> AddInnerJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
 		where TTo : ITable;
 
 	/// <inheritdoc cref="AddInnerJoin"/>
-	Option<QueryParts> AddLeftJoin<TFrom, TTo>(QueryParts parts,
+	Maybe<QueryParts> AddLeftJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
 		where TTo : ITable;
 
 	/// <inheritdoc cref="AddInnerJoin"/>
-	Option<QueryParts> AddRightJoin<TFrom, TTo>(QueryParts parts,
+	Maybe<QueryParts> AddRightJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
 		where TTo : ITable;
@@ -73,7 +73,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="id">Single ID</param>
 	/// <param name="ids">List of IDs</param>
-	Option<QueryParts> AddWhereId(QueryParts parts,
+	Maybe<QueryParts> AddWhereId(QueryParts parts,
 		TId? id, IImmutableList<TId> ids);
 
 	/// <summary>
@@ -82,7 +82,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="sortRandom">If true, will sort results randomly</param>
 	/// <param name="sort">Sort columns</param>
-	Option<QueryParts> AddSort(QueryParts parts,
+	Maybe<QueryParts> AddSort(QueryParts parts,
 		bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort);
 
 	/// <summary>
@@ -94,7 +94,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="column">Column selector</param>
 	/// <param name="cmp">Compare operator</param>
 	/// <param name="value">Search value</param>
-	Option<QueryParts> AddWhere<TTable>(QueryParts parts,
+	Maybe<QueryParts> AddWhere<TTable>(QueryParts parts,
 		TTable table, Expression<Func<TTable, string>> column, Compare cmp, object value)
 		where TTable : ITable;
 
@@ -104,6 +104,6 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="clause">Clause text</param>
 	/// <param name="parameters">Clause parameters</param>
-	Option<QueryParts> AddWhereCustom(QueryParts parts,
+	Maybe<QueryParts> AddWhereCustom(QueryParts parts,
 		string clause, object parameters);
 }

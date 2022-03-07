@@ -19,17 +19,17 @@ public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, Aut
 	/// <param name="email">Email address</param>
 	/// <param name="password">Password (will be hashed)</param>
 	/// <param name="friendlyName">[Optional] Friendly name</param>
-	Task<Option<AuthUserId>> CreateAsync(string email, string password, string? friendlyName);
+	Task<Maybe<AuthUserId>> CreateAsync(string email, string password, string? friendlyName);
 
 	/// <summary>
 	/// Retrieve a user by email address
 	/// </summary>
 	/// <param name="email">Email address</param>
-	Task<Option<TModel>> RetrieveAsync<TModel>(string email);
+	Task<Maybe<TModel>> RetrieveAsync<TModel>(string email);
 
 	/// <summary>
 	/// Update the user's last sign in to now
 	/// </summary>
 	/// <param name="userId">User ID</param>
-	Task<Option<bool>> UpdateLastSignInAsync(AuthUserId userId);
+	Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId);
 }

@@ -18,7 +18,7 @@ public static partial class QueryAttachmentsF
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="fileId">File (Post) ID</param>
-	internal static Task<Option<string>> GetFilePathAsync(IWpDb db, IUnitOfWork w, WpPostId fileId)
+	internal static Task<Maybe<string>> GetFilePathAsync(IWpDb db, IUnitOfWork w, WpPostId fileId)
 	{
 		return
 			ExecuteAsync<Attachment>(

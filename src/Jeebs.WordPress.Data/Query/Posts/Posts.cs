@@ -16,7 +16,7 @@ public static partial class Query
 	public sealed class Posts : IQueryPosts
 	{
 		/// <inheritdoc/>
-		public Task<Option<IEnumerable<T>>> ExecuteAsync<T>(
+		public Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(
 			IWpDb db,
 			IUnitOfWork w,
 			GetPostsOptions opt,
@@ -28,7 +28,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Task<Option<IPagedList<T>>> ExecuteAsync<T>(
+		public Task<Maybe<IPagedList<T>>> ExecuteAsync<T>(
 			IWpDb db,
 			IUnitOfWork w,
 			ulong page,

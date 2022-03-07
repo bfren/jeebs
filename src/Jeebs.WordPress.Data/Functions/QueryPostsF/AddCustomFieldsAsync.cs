@@ -8,7 +8,7 @@ using Jeebs;
 using Jeebs.Data;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -22,7 +22,7 @@ public static partial class QueryPostsF
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="posts">Posts</param>
-	internal static Task<Option<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
+	internal static Task<Maybe<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>
 	{

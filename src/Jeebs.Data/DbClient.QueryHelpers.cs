@@ -19,13 +19,13 @@ public abstract partial class DbClient : IDbClient
 		var par = new List<string>();
 		foreach (var column in columns)
 		{
-			if (column.Property.IsReadonly())
+			if (column.PropertyInfo.IsReadonly())
 			{
 				continue;
 			}
 
-			col.Add(Escape(column.Name));
-			par.Add(GetParamRef(column.Alias));
+			col.Add(Escape(column.ColName));
+			par.Add(GetParamRef(column.ColAlias));
 		}
 
 		return (col, par);
@@ -55,7 +55,7 @@ public abstract partial class DbClient : IDbClient
 		var col = new List<string>();
 		foreach (var column in columns)
 		{
-			col.Add($"{Escape(column)} = {GetParamRef(column.Alias)}");
+			col.Add($"{Escape(column)} = {GetParamRef(column.ColAlias)}");
 		}
 
 		return col;
@@ -65,13 +65,13 @@ public abstract partial class DbClient : IDbClient
 	/// Add version to column list for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, long, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
-	/// <param name="set">List of Set commands</param>
+	/// <param name="setList">List of Set commands</param>
 	/// <param name="versionColumn">[Optional] Version column</param>
-	protected virtual void AddVersionToSetList(List<string> set, IColumn? versionColumn)
+	protected virtual void AddVersionToSetList(List<string> setList, IColumn? versionColumn)
 	{
 		if (versionColumn is not null)
 		{
-			set.Add($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)} + 1");
+			setList.Add($"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)} + 1");
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract partial class DbClient : IDbClient
 				sql.Append(" AND ");
 			}
 
-			sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)}");
+			sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)}");
 		}
 	}
 

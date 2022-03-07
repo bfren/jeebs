@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using Jeebs.Data.Entities;
 using Jeebs.Data.Exceptions;
 using static F.DataF.MappingF;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Data.Mapping;
 
@@ -62,7 +62,7 @@ internal sealed class Mapper : IMapper, IDisposable
 				)
 			) with
 			{
-				Alias = nameof(IWithId.Id)
+				ColAlias = nameof(IWithId.Id)
 			};
 
 			// Create Table Map
@@ -81,7 +81,7 @@ internal sealed class Mapper : IMapper, IDisposable
 		});
 
 	/// <inheritdoc/>
-	public Option<ITableMap> GetTableMapFor<TEntity>()
+	public Maybe<ITableMap> GetTableMapFor<TEntity>()
 		where TEntity : IWithId
 	{
 		if (mappedEntities.TryGetValue(typeof(TEntity), out var map))

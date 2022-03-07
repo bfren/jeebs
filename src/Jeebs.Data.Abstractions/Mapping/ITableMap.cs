@@ -50,5 +50,5 @@ public interface ITableMap
 	/// Get all column names and aliases for writeable columns
 	/// (i.e. not marked as Id / Computed / Readonly)
 	/// </summary>
-	Option<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases();
+	Maybe<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases();
 }

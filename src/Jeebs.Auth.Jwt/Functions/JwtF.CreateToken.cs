@@ -9,7 +9,7 @@ using Jeebs.Auth;
 using Jeebs.Auth.Constants;
 using Jeebs.Config;
 using Microsoft.IdentityModel.Tokens;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -24,7 +24,7 @@ public static partial class JwtF
 	/// </summary>
 	/// <param name="config">JwtConfig</param>
 	/// <param name="principal">ClaimsPrincipal</param>
-	public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
+	public static Maybe<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
 		CreateToken(config, principal, DateTime.UtcNow, DateTime.UtcNow.AddHours(config.ValidForHours));
 
 	/// <summary>
@@ -35,7 +35,7 @@ public static partial class JwtF
 	/// <param name="principal">ClaimsPrincipal</param>
 	/// <param name="notBefore">The earliest date / time from which this token is valid</param>
 	/// <param name="expires">The latest date / time before which this token is valid</param>
-	internal static Option<string> CreateToken(
+	internal static Maybe<string> CreateToken(
 		JwtConfig config,
 		ClaimsPrincipal principal,
 		DateTime notBefore,

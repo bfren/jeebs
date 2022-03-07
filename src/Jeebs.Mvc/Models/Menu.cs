@@ -47,7 +47,7 @@ public abstract class Menu
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="urlHelper">IUrlHelper</param>
-	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper)
+	public Task<Maybe<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper)
 	{
 		// Create client
 		var client = http.CreateClient();
@@ -141,7 +141,7 @@ public abstract class Menu
 		/// <param name="client">HttpClient</param>
 		/// <param name="uris">List of URIs to load</param>
 		/// <param name="loadUri">LoadUri</param>
-		internal static async Task<Option<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
+		internal static async Task<Maybe<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
 		{
 			// Use a StringBuilder to hold the response text
 			var result = new StringBuilder();

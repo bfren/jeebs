@@ -11,9 +11,9 @@ public static class Create
 	/// <summary>
 	/// Create an empty <see cref="Internals.None{T}"/>
 	/// </summary>
-	/// <typeparam name="T">Option value type</typeparam>
-	public static Option<T> None<T>() =>
-		F.OptionF.None<T, M.EmptyNoneForTestingMsg>();
+	/// <typeparam name="T">Maybe value type</typeparam>
+	public static Maybe<T> None<T>() =>
+		F.MaybeF.None<T, M.EmptyNoneForTestingMsg>();
 
 	/// <summary>Messages</summary>
 	public static class M

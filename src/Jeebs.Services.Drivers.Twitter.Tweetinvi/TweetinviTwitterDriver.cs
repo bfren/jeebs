@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Services.Drivers.Twitter.Tweetinvi;
 
@@ -49,14 +49,14 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 		);
 	}
 
-	private Task<Option<IUser>> GetUser(string screenName) =>
+	private Task<Maybe<IUser>> GetUser(string screenName) =>
 		SomeAsync(
 			() => client.Users.GetUserAsync(screenName),
 			e => new M.UserNotFoundExceptionMsg(screenName, e)
 		);
 
 	/// <inheritdoc/>
-	public Task<Option<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
+	public Task<Maybe<System.IO.Stream>> GetProfileImageStreamAsync(string screenName)
 	{
 		return Some(screenName)
 			.BindAsync(
@@ -75,7 +75,7 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 		string getUrl(IUser user)
 		{
 			var url = user.ProfileImageUrlFullSize.Replace("http://", "https://");
-			Log.Debug("Twitter profile image: '{0}'", url);
+			Log.Dbg("Twitter profile image: '{0}'", url);
 			return url;
 		}
 
@@ -88,15 +88,15 @@ public abstract class TweetinviTwitterDriver : Driver<TwitterConfig>, ITwitterDr
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName) =>
+	public Task<Maybe<List<TweetModel>>> GetTweetsAsync(string screenName) =>
 		GetTweetsAsync(screenName, true, 10);
 
 	/// <inheritdoc/>
-	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies) =>
+	public Task<Maybe<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies) =>
 		GetTweetsAsync(screenName, excludeReplies, 10);
 
 	/// <inheritdoc/>
-	public Task<Option<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit)
+	public Task<Maybe<List<TweetModel>>> GetTweetsAsync(string screenName, bool excludeReplies, int limit)
 	{
 		return Some(screenName)
 			.BindAsync(

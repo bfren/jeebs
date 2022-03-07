@@ -49,8 +49,8 @@ public class GetQuery_Tests
 			$" `{c0Name}` AS '{c0Alias}'," +
 			$" `{c1Name}` AS '{c1Alias}'" +
 			$" FROM `{schema}.{name}`" +
-			$" WHERE `{p0Column.Name}` LIKE @P0" +
-			$" AND `{p1Column.Name}` >= @P1;";
+			$" WHERE `{p0Column.ColName}` LIKE @P0" +
+			$" AND `{p1Column.ColName}` >= @P1;";
 
 		// Act
 		var (query, param) = client.GetQueryTest(table, list, predicates);
@@ -129,7 +129,7 @@ public class GetQuery_Tests
 		var c1 = new Column(v.Table, c1Name, c1Alias);
 		var parts = new QueryParts(v.Table)
 		{
-			Select = new ColumnList(new[] { c0, c1 })
+			SelectColumns = new ColumnList(new[] { c0, c1 })
 		};
 		var expected = "SELECT" +
 			$" `{v.Schema}.{v.Name}`.`{c0Name}` AS '{c0Alias}'," +

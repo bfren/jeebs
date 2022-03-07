@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Data.Entities;
 using Jeebs.WordPress.Data.Enums;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.WordPress.Data;
 
@@ -32,7 +32,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		QueryPosts = queryPosts;
 
 	/// <inheritdoc/>
-	public override Task<Option<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Attachment Post ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -99,7 +99,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// </summary>
 	/// <param name="type">AttachmentCustomField type</param>
 	/// <param name="value">Post ID value</param>
-	internal static Option<WpPostId> ParseAttachmentPostId(Type type, string value)
+	internal static Maybe<WpPostId> ParseAttachmentPostId(Type type, string value)
 	{
 		if (!long.TryParse(value, out long attachmentPostId))
 		{

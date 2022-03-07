@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Sodium;
 using Sodium.Exceptions;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -19,7 +19,7 @@ public sealed class Locked<T> : Locked
 	/// <summary>
 	/// Encrypted contents
 	/// </summary>
-	public Option<byte[]> EncryptedContents { get; init; } = None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
+	public Maybe<byte[]> EncryptedContents { get; init; } = None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
 
 	/// <summary>
 	/// Salt
@@ -61,7 +61,7 @@ public sealed class Locked<T> : Locked
 	/// Unlock this LockedBox
 	/// </summary>
 	/// <param name="key">Encryption Key</param>
-	public Option<Lockable<T>> Unlock(byte[] key)
+	public Maybe<Lockable<T>> Unlock(byte[] key)
 	{
 		return EncryptedContents.Switch(
 			some: x =>
@@ -102,7 +102,7 @@ public sealed class Locked<T> : Locked
 		);
 
 		// Handle an exception
-		static Option<Lockable<T>> handle<TMsg>(TMsg ex)
+		static Maybe<Lockable<T>> handle<TMsg>(TMsg ex)
 			where TMsg : ExceptionMsg =>
 			None<Lockable<T>>(ex);
 	}
@@ -111,13 +111,13 @@ public sealed class Locked<T> : Locked
 	/// Unlock this LockedBox
 	/// </summary>
 	/// <param name="key">Encryption Key</param>
-	public Option<Lockable<T>> Unlock(string key) =>
+	public Maybe<Lockable<T>> Unlock(string key) =>
 		Unlock(HashKey(key));
 
 	/// <summary>
 	/// Serialise this LockedBox as JSON
 	/// </summary>
-	public Option<string> Serialise() =>
+	public Maybe<string> Serialise() =>
 		EncryptedContents.Switch(
 			some: _ => F.JsonF.Serialise(this),
 			none: Some(F.JsonF.Empty)

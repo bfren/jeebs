@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -118,7 +118,7 @@ public static class Base32F
 	/// Convert base32 string to array of bytes
 	/// </summary>
 	/// <param name="base32String">Base32 string to convert - must be at least two characters</param>
-	public static Option<byte[]> FromBase32String(string base32String)
+	public static Maybe<byte[]> FromBase32String(string base32String)
 	{
 		// Check if string is empty
 		if (string.IsNullOrEmpty(base32String))

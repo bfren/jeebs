@@ -4,10 +4,10 @@
 namespace Jeebs.Internals;
 
 /// <summary>
-/// 'None' option - used to replace null returns (see <seealso cref="Some{T}"/>)
+/// 'None' Maybe - used to replace null returns (see <seealso cref="Some{T}"/>)
 /// </summary>
-/// <typeparam name="T">Option value type</typeparam>
-public sealed record class None<T> : Option<T>
+/// <typeparam name="T">Maybe value type</typeparam>
+public sealed record class None<T> : Maybe<T>
 {
 	/// <summary>
 	/// A reason for the 'None' value must always be set

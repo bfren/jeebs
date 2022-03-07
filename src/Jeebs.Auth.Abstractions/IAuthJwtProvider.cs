@@ -14,11 +14,11 @@ public interface IAuthJwtProvider
 	/// Generate a new JSON Web Token for the specified user
 	/// </summary>
 	/// <param name="principal">IPrincipal</param>
-	Option<string> CreateToken(ClaimsPrincipal principal);
+	Maybe<string> CreateToken(ClaimsPrincipal principal);
 
 	/// <summary>
 	/// Validate a JSON Web Token
 	/// </summary>
 	/// <param name="token">JSON Web Token</param>
-	Option<ClaimsPrincipal> ValidateToken(string token);
+	Maybe<ClaimsPrincipal> ValidateToken(string token);
 }

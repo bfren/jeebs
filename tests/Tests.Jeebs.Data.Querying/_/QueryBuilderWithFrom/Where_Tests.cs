@@ -40,9 +40,9 @@ public class Where_Tests
 		Assert.Collection(result.Parts.Where,
 			x =>
 			{
-				Assert.Equal(nameof(TestTable), x.column.Table.Name);
-				Assert.Equal(TestTable.Prefix + nameof(TestTable0.Foo), x.column.Name);
-				Assert.Equal(nameof(TestTable.Foo), x.column.Alias);
+				Assert.Equal(nameof(TestTable), x.column.TblName.Name);
+				Assert.Equal(TestTable.Prefix + nameof(TestTable0.Foo), x.column.ColName);
+				Assert.Equal(nameof(TestTable.Foo), x.column.ColAlias);
 				Assert.Equal(Compare.Like, x.cmp);
 				Assert.Equal(value, x.value);
 			}

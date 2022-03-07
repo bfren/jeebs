@@ -21,11 +21,11 @@ public class AppService : IHostedService
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		log.Debug("Hello, world!");
+		log.Dbg("Hello, world!");
 
 		if (Console.ReadLine() is string response)
 		{
-			log.Debug("Response: {Response}", response);
+			log.Dbg("Response: {Response}", response);
 		}
 
 		Console.Read();

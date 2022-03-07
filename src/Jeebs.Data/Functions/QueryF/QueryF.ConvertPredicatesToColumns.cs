@@ -10,7 +10,7 @@ using Jeebs;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.DataF;
 
@@ -22,7 +22,7 @@ public static partial class QueryF
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="columns">Mapped entity columns</param>
 	/// <param name="predicates">Predicates (matched using AND)</param>
-	public static Option<IImmutableList<(IColumn column, Compare cmp, object value)>> ConvertPredicatesToColumns<TEntity>(
+	public static Maybe<IImmutableList<(IColumn column, Compare cmp, object value)>> ConvertPredicatesToColumns<TEntity>(
 		IMappedColumnList columns,
 		(Expression<Func<TEntity, object>> column, Compare cmp, object value)[] predicates
 	)
@@ -43,7 +43,7 @@ public static partial class QueryF
 			}
 
 			// Retrieve column using alias
-			var column = columns.SingleOrDefault(c => c.Alias == alias);
+			var column = columns.SingleOrDefault(c => c.ColAlias == alias);
 			if (column is null)
 			{
 				continue;

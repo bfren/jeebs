@@ -19,7 +19,7 @@ public class StartMustBeBeforeEnd_Tests
 
 		// Assert
 		Assert.Equal(date.StartOfDay(), range.Start);
-		Assert.Equal(date.EndOfDay(), range.End);
+		Assert.Equal(date.EndOfDay(), range.Finish);
 	}
 
 	[Fact]

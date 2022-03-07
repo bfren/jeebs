@@ -17,7 +17,7 @@ public class Without_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1, i2 });
 
 		// Act
-		var result = list.Without(i2);
+		var result = list.WithoutItem(i2);
 
 		// Assert
 		Assert.Collection(result,
@@ -36,7 +36,7 @@ public class Without_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1, i2 });
 
 		// Act
-		var result = list.Without(i2);
+		var result = list.WithoutItem(i2);
 		i0 = F.Rnd.Str;
 		i1 = F.Rnd.Str;
 

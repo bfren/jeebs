@@ -2,6 +2,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data.Abstractions\Jeebs.Data.Abstractions.csproj" />
 		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
-		<ProjectReference Include="..\Jeebs.Option\Jeebs.Option.csproj" />
+		<ProjectReference Include="..\Jeebs.Option\Jeebs.Maybe.csproj" />
 	</ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ public sealed class WpDbSchema : IWpDbSchema
 	public LinkTable Link { get; private init; }
 
 	/// <inheritdoc/>
-	public OptionTable Option { get; private init; }
+	public OptionTable Opt { get; private init; }
 
 	/// <inheritdoc/>
 	public PostTable Post { get; private init; }
@@ -53,7 +53,7 @@ public sealed class WpDbSchema : IWpDbSchema
 		Comment = new CommentTable(prefix);
 		CommentMeta = new CommentMetaTable(prefix);
 		Link = new LinkTable(prefix);
-		Option = new OptionTable(prefix);
+		Opt = new OptionTable(prefix);
 		Post = new PostTable(prefix);
 		PostMeta = new PostMetaTable(prefix);
 		Term = new TermTable(prefix);

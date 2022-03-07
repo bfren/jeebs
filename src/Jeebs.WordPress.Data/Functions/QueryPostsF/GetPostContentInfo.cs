@@ -3,7 +3,7 @@
 
 using System.Reflection;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.WordPressF.DataF;
 
@@ -13,7 +13,7 @@ public static partial class QueryPostsF
 	/// Get <see cref="PropertyInfo{TObject, TProperty}"/> object for <typeparamref name="TModel"/> content property
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	internal static Option<Content<TModel>> GetPostContentInfo<TModel>()
+	internal static Maybe<Content<TModel>> GetPostContentInfo<TModel>()
 	{
 		return GetPostContent<TModel>().Map(x => new Content<TModel>(x), DefaultHandler);
 	}

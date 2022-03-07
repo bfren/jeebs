@@ -4,7 +4,7 @@
 using System.IO;
 using Jeebs.Services.Drawing;
 using SkiaSharp;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
@@ -14,7 +14,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia;
 public sealed class ImageDriver : IImageDriver
 {
 	/// <inheritdoc/>
-	public Option<IImageWrapper> FromFile(string path)
+	public Maybe<IImageWrapper> FromFile(string path)
 	{
 		if (!File.Exists(path))
 		{

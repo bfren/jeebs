@@ -24,7 +24,7 @@ public interface IQueryParts
 	/// <summary>
 	/// Select columns (if empty will select all columns)
 	/// </summary>
-	IColumnList Select { get; init; }
+	IColumnList SelectColumns { get; init; }
 
 	/// <summary>
 	/// Inner Joins

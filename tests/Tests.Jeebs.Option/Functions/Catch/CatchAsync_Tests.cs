@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
-using static F.OptionF.M;
+using static F.MaybeF;
+using static F.MaybeF.M;
 
-namespace F.OptionF_Tests;
+namespace F.MaybeF_Tests;
 
 public class CatchAsync_Tests
 {

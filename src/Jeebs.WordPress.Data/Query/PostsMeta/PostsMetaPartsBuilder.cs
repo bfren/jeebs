@@ -37,7 +37,7 @@ public static partial class Query
 		internal PostsMetaPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds)
+		public Maybe<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds)
 		{
 			// Add Post ID EQUAL
 			if (postId?.Value > 0)
@@ -57,7 +57,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereKey(QueryParts parts, string? key)
+		public Maybe<QueryParts> AddWhereKey(QueryParts parts, string? key)
 		{
 			// Add Key
 			if (!string.IsNullOrEmpty(key))

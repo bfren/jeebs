@@ -56,12 +56,12 @@ public class Join_Tests
 		Assert.Collection(getJoin(result.Parts),
 			x =>
 			{
-				Assert.Equal(nameof(TestTable0), x.from.Table.Name);
-				Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), x.from.Name);
-				Assert.Equal(nameof(TestTable0.Foo), x.from.Alias);
-				Assert.Equal(nameof(TestTable1), x.to.Table.Name);
-				Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), x.to.Name);
-				Assert.Equal(nameof(TestTable1.Bar), x.to.Alias);
+				Assert.Equal(nameof(TestTable0), x.from.TblName.Name);
+				Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), x.from.ColName);
+				Assert.Equal(nameof(TestTable0.Foo), x.from.ColAlias);
+				Assert.Equal(nameof(TestTable1), x.to.TblName.Name);
+				Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), x.to.ColName);
+				Assert.Equal(nameof(TestTable1.Bar), x.to.ColAlias);
 			}
 		);
 	}

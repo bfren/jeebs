@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Jeebs;
 using NSubstitute;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs_Tests.Enumerable;
 
@@ -14,7 +14,7 @@ public abstract class FilterMap_Tests
 {
 	public abstract void Test00_Maps_And_Returns_Only_Some_From_List();
 
-	protected static void Test00(Func<IEnumerable<Option<int>>, Func<int, string>, IEnumerable<string>> act)
+	protected static void Test00(Func<IEnumerable<Maybe<int>>, Func<int, string>, IEnumerable<string>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Int;
@@ -40,7 +40,7 @@ public abstract class FilterMap_Tests
 
 	public abstract void Test01_Maps_And_Returns_Only_Some_From_List();
 
-	protected static void Test01(Func<IEnumerable<Option<int>>, Func<int, Option<string>>, IEnumerable<Option<string>>> act)
+	protected static void Test01(Func<IEnumerable<Maybe<int>>, Func<int, Maybe<string>>, IEnumerable<Maybe<string>>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Int;
@@ -50,7 +50,7 @@ public abstract class FilterMap_Tests
 		var o2 = Create.None<int>();
 		var o3 = Create.None<int>();
 		var list = new[] { o0, o1, o2, o3 };
-		var map = Substitute.For<Func<int, Option<string>>>();
+		var map = Substitute.For<Func<int, Maybe<string>>>();
 		map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
 
 		// Act
@@ -74,7 +74,7 @@ public abstract class FilterMap_Tests
 
 	public abstract void Test02_Returns_Matching_Some_From_List();
 
-	protected static void Test02(Func<IEnumerable<Option<int>>, Func<int, string>, Func<int, bool>, IEnumerable<string>> act)
+	protected static void Test02(Func<IEnumerable<Maybe<int>>, Func<int, string>, Func<int, bool>, IEnumerable<string>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Int;
@@ -103,7 +103,7 @@ public abstract class FilterMap_Tests
 
 	public abstract void Test03_Returns_Matching_Some_From_List();
 
-	protected static void Test03(Func<IEnumerable<Option<int>>, Func<int, Option<string>>, Func<int, bool>, IEnumerable<Option<string>>> act)
+	protected static void Test03(Func<IEnumerable<Maybe<int>>, Func<int, Maybe<string>>, Func<int, bool>, IEnumerable<Maybe<string>>> act)
 	{
 		// Arrange
 		var v0 = F.Rnd.Int;
@@ -114,7 +114,7 @@ public abstract class FilterMap_Tests
 		var o3 = Create.None<int>();
 		var list = new[] { o0, o1, o2, o3 };
 
-		var map = Substitute.For<Func<int, Option<string>>>();
+		var map = Substitute.For<Func<int, Maybe<string>>>();
 		map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
 
 		var predicate = Substitute.For<Func<int, bool>>();

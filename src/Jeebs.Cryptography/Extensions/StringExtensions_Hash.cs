@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -15,7 +15,7 @@ public static class StringExtensionsHash
 	/// Compute a 64-byte hash, returning a string of length 88
 	/// </summary>
 	/// <param name="this">String to hash</param>
-	public static Option<string> Hash(this string @this) =>
+	public static Maybe<string> Hash(this string @this) =>
 		Hash(@this, 64);
 
 	/// <summary>
@@ -25,7 +25,7 @@ public static class StringExtensionsHash
 	/// </summary>
 	/// <param name="this">String to hash</param>
 	/// <param name="bytes">Hash length in bytes - must be between 16 and 64</param>
-	public static Option<string> Hash(this string @this, int bytes) =>
+	public static Maybe<string> Hash(this string @this, int bytes) =>
 		@this switch
 		{
 			string input when !string.IsNullOrWhiteSpace(input) =>

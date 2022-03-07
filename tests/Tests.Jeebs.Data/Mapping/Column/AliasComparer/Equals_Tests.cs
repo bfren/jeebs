@@ -15,12 +15,12 @@ public class Equals_Tests
 		var alias = F.Rnd.Str;
 
 		var c0 = Substitute.For<IColumn>();
-		c0.Name.Returns(F.Rnd.Str);
-		c0.Alias.Returns(alias);
+		c0.ColName.Returns(F.Rnd.Str);
+		c0.ColAlias.Returns(alias);
 
 		var c1 = Substitute.For<IColumn>();
-		c1.Name.Returns(F.Rnd.Str);
-		c1.Alias.Returns(alias);
+		c1.ColName.Returns(F.Rnd.Str);
+		c1.ColAlias.Returns(alias);
 
 		var comparer = new Column.AliasComparer();
 
@@ -37,10 +37,10 @@ public class Equals_Tests
 	{
 		// Arrange
 		var c0 = Substitute.For<IColumn>();
-		c0.Alias.Returns(F.Rnd.Str);
+		c0.ColAlias.Returns(F.Rnd.Str);
 
 		var c1 = Substitute.For<IColumn>();
-		c1.Alias.Returns(F.Rnd.Str);
+		c1.ColAlias.Returns(F.Rnd.Str);
 
 		var comparer = new Column.AliasComparer();
 

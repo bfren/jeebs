@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Jeebs;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F;
 
@@ -43,11 +43,11 @@ public static partial class Rnd
 		);
 
 		/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
-		public static Option<string> Passphrase(int numberOfWords) =>
+		public static Maybe<string> Passphrase(int numberOfWords) =>
 			Passphrase(numberOfWords, '-', true, true);
 
 		/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
-		public static Option<string> Passphrase(
+		public static Maybe<string> Passphrase(
 			int numberOfWords,
 			char separator,
 			bool upperFirst,
@@ -63,7 +63,7 @@ public static partial class Rnd
 		/// <param name="separator">[Optional] Word separator</param>
 		/// <param name="upperFirst">[Optional] Whether or not to make the first letter of each word upper case</param>
 		/// <param name="includeNumber">[Optional] Whether or not to include a number with one of the words</param>
-		internal static Option<string> Passphrase(
+		internal static Maybe<string> Passphrase(
 			string[] wordList,
 			int numberOfWords,
 			char separator = '-',

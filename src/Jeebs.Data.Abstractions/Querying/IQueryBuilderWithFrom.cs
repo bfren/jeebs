@@ -19,12 +19,12 @@ public interface IQueryBuilderWithFrom
 	/// <typeparam name="TFrom">Join from table type</typeparam>
 	/// <typeparam name="TTo">Join to table type</typeparam>
 	/// <param name="type">Join type</param>
-	/// <param name="from">Join from this column</param>
-	/// <param name="to">Join to this table and column</param>
+	/// <param name="fromColumn">Join from this column</param>
+	/// <param name="toColumn">Join to this table and column</param>
 	IQueryBuilderWithFrom Join<TFrom, TTo>(
 		QueryJoin type,
-		Expression<Func<TFrom, string>> from,
-		Expression<Func<TTo, string>> to
+		Expression<Func<TFrom, string>> fromColumn,
+		Expression<Func<TTo, string>> toColumn
 	)
 		where TFrom : ITable, new()
 		where TTo : ITable, new();

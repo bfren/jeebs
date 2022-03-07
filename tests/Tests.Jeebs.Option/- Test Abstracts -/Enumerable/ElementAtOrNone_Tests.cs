@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Jeebs;
 using Xunit;
-using static F.OptionF.Enumerable.M;
+using static F.MaybeF.Enumerable.M;
 
 namespace Jeebs_Tests.Enumerable;
 
@@ -13,7 +13,7 @@ public abstract class ElementAtOrNone_Tests
 {
 	public abstract void Test00_Empty_List_Returns_None_With_ListIsEmptyMsg();
 
-	protected static void Test00(Func<IEnumerable<int>, int, Option<int>> act)
+	protected static void Test00(Func<IEnumerable<int>, int, Maybe<int>> act)
 	{
 		// Arrange
 		var list = Array.Empty<int>();
@@ -28,7 +28,7 @@ public abstract class ElementAtOrNone_Tests
 
 	public abstract void Test01_No_Value_At_Index_Returns_None_With_ElementAtIsNullMsg();
 
-	protected static void Test01(Func<IEnumerable<int?>, int, Option<int?>> act)
+	protected static void Test01(Func<IEnumerable<int?>, int, Maybe<int?>> act)
 	{
 		// Arrange
 		var list = new int?[] { F.Rnd.Int, F.Rnd.Int, F.Rnd.Int };
@@ -43,7 +43,7 @@ public abstract class ElementAtOrNone_Tests
 
 	public abstract void Test02_Value_At_Index_Returns_Some_With_Value();
 
-	protected static void Test02(Func<IEnumerable<int>, int, Option<int>> act)
+	protected static void Test02(Func<IEnumerable<int>, int, Maybe<int>> act)
 	{
 		// Arrange
 		var value = F.Rnd.Int;

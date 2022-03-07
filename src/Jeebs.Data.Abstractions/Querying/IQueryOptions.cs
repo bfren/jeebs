@@ -39,5 +39,5 @@ public interface IQueryOptions<TId>
 	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query
 	/// </summary>
 	/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
-	Option<IQueryParts> ToParts<TModel>();
+	Maybe<IQueryParts> ToParts<TModel>();
 }

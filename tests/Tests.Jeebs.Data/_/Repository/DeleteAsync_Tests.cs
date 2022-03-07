@@ -34,6 +34,6 @@ public class DeleteAsync_Tests
 		await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
-		log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

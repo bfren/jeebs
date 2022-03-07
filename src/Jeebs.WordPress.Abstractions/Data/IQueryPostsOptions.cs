@@ -42,12 +42,12 @@ public interface IQueryPostsOptions : IQueryOptions<WpPostId>
 	/// <summary>
 	/// Search Post published from
 	/// </summary>
-	DateTime? From { get; init; }
+	DateTime? FromDate { get; init; }
 
 	/// <summary>
 	/// Search Post published to
 	/// </summary>
-	DateTime? To { get; init; }
+	DateTime? ToDate { get; init; }
 
 	/// <summary>
 	/// Parent ID

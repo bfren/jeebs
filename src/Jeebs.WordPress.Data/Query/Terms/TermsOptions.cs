@@ -24,7 +24,7 @@ public static partial class Query
 		internal TermsOptions(IWpDbSchema schema, IQueryTermsPartsBuilder builder) : base(schema, builder) { }
 
 		/// <inheritdoc/>
-		protected override Option<QueryParts> Build(Option<QueryParts> parts) =>
+		protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
 			base.Build(
 				parts
 			)

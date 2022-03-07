@@ -67,7 +67,7 @@ public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> :
 	{
 		// Log WordPress config
 		WpConfig = wpConfig.Value;
-		log.Verbose("WordPress Config: {@WpConfig}", WpConfig);
+		log.Vrb("WordPress Config: {@WpConfig}", WpConfig);
 
 		// Create query object
 		Query = new WpDbQuery(this, log.ForContext<IWpDbQuery>());
@@ -79,7 +79,7 @@ public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> :
 		Map<Tc>.To(Schema.Comment);
 		Map<Tcm>.To(Schema.CommentMeta);
 		Map<Tl>.To(Schema.Link);
-		Map<To>.To(Schema.Option);
+		Map<To>.To(Schema.Opt);
 		Map<Tp>.To(Schema.Post);
 		Map<Tpm>.To(Schema.PostMeta);
 		Map<Tt>.To(Schema.Term);

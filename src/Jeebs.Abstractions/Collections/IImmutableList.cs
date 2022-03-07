@@ -16,7 +16,7 @@ public interface IImmutableList<T> : IEnumerable<T>
 	/// Get the item at the specified index
 	/// </summary>
 	/// <param name="index">Item index</param>
-	Option<T> this[int index] { get; }
+	Maybe<T> this[int index] { get; }
 
 	/// <summary>
 	/// Return the number of items in this <see cref="IImmutableList{T}"/>
@@ -41,26 +41,26 @@ public interface IImmutableList<T> : IEnumerable<T>
 	/// <summary>
 	/// Create a new <see cref="IImmutableList{T}"/> with the specified item added to the end
 	/// </summary>
-	/// <param name="add">Item to add</param>
-	IImmutableList<T> With(T add);
+	/// <param name="itemToAdd">Item to add</param>
+	IImmutableList<T> WithItem(T itemToAdd);
 
 	/// <summary>
 	/// Create a new <see cref="IImmutableList{T}"/> without the specified item
 	/// </summary>
-	/// <param name="remove">Item to remove</param>
-	IImmutableList<T> Without(T remove);
+	/// <param name="itemToRemove">Item to remove</param>
+	IImmutableList<T> WithoutItem(T itemToRemove);
 
 	/// <summary>
 	/// Create a new <see cref="IImmutableList{T}"/> with the specified items added to the end
 	/// </summary>
-	/// <param name="add">Collection of items to add</param>
-	IImmutableList<T> WithRange(params T[] add);
+	/// <param name="itemsToAdd">Collection of items to add</param>
+	IImmutableList<T> WithRange(params T[] itemsToAdd);
 
 	/// <summary>
 	/// Create a new <see cref="IImmutableList{T}"/> with the specified items removed
 	/// </summary>
-	/// <param name="remove">Collection of items to remove</param>
-	IImmutableList<T> WithoutRange(params T[] remove);
+	/// <param name="itemsToRemove">Collection of items to remove</param>
+	IImmutableList<T> WithoutRange(params T[] itemsToRemove);
 
 	/// <summary>
 	/// Create a new <see cref="IImmutableList{T}"/> with one item replaced by another

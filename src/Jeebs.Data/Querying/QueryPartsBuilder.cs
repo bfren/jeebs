@@ -8,7 +8,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Linq;
 using static F.DataF.QueryF;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs.Data.Querying;
 
@@ -60,7 +60,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	public QueryParts Create<TModel>(ulong? maximum, ulong skip) =>
 		new(Table)
 		{
-			Select = GetColumns<TModel>(),
+			SelectColumns = GetColumns<TModel>(),
 			Maximum = maximum,
 			Skip = skip
 		};
@@ -80,7 +80,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	/// <param name="toTable">To table - should be a new table not already added to the query</param>
 	/// <param name="toSelector">To column</param>
 	/// <param name="withJoin">Function to add the Join to the correct list</param>
-	protected internal Option<QueryParts> AddJoin<TFrom, TTo>(
+	protected internal Maybe<QueryParts> AddJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -97,7 +97,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddInnerJoin<TFrom, TTo>(
+	public virtual Maybe<QueryParts> AddInnerJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -108,12 +108,12 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		where TTo : ITable
 	{
 		return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
-			parts with { InnerJoin = parts.InnerJoin.With((colFrom, colTo)) }
+			parts with { InnerJoin = parts.InnerJoin.WithItem((colFrom, colTo)) }
 		);
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddLeftJoin<TFrom, TTo>(
+	public virtual Maybe<QueryParts> AddLeftJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -124,12 +124,12 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		where TTo : ITable
 	{
 		return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
-			parts with { LeftJoin = parts.LeftJoin.With((colFrom, colTo)) }
+			parts with { LeftJoin = parts.LeftJoin.WithItem((colFrom, colTo)) }
 		);
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddRightJoin<TFrom, TTo>(
+	public virtual Maybe<QueryParts> AddRightJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -140,24 +140,24 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		where TTo : ITable
 	{
 		return AddJoin(parts, fromTable, fromSelector, toTable, toSelector, (parts, colFrom, colTo) =>
-			parts with { RightJoin = parts.RightJoin.With((colFrom, colTo)) }
+			parts with { RightJoin = parts.RightJoin.WithItem((colFrom, colTo)) }
 		);
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
+	public virtual Maybe<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
 	{
 		// Add Id EQUAL
 		if (id?.Value > 0)
 		{
-			return parts with { Where = parts.Where.With((IdColumn, Compare.Equal, id.Value)) };
+			return parts with { Where = parts.Where.WithItem((IdColumn, Compare.Equal, id.Value)) };
 		}
 
 		// Add Id IN
 		else if (ids.Count > 0)
 		{
 			var idValues = ids.Select(x => x.Value);
-			return parts with { Where = parts.Where.With((IdColumn, Compare.In, idValues)) };
+			return parts with { Where = parts.Where.WithItem((IdColumn, Compare.In, idValues)) };
 		}
 
 		// Return
@@ -165,7 +165,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
+	public virtual Maybe<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
 	{
 		// Add random sort
 		if (sortRandom)
@@ -184,7 +184,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddWhere<TTable>(
+	public virtual Maybe<QueryParts> AddWhere<TTable>(
 		QueryParts parts,
 		TTable table,
 		Expression<Func<TTable, string>> column,
@@ -197,13 +197,13 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 			table, column
 		)
 		.Map(
-			x => parts with { Where = parts.Where.With((x, cmp, value)) },
+			x => parts with { Where = parts.Where.WithItem((x, cmp, value)) },
 			DefaultHandler
 		);
 	}
 
 	/// <inheritdoc/>
-	public virtual Option<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
+	public virtual Maybe<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
 	{
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
@@ -219,6 +219,6 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		}
 
 		// Add clause and return
-		return parts with { WhereCustom = parts.WhereCustom.With((clause, param)) };
+		return parts with { WhereCustom = parts.WhereCustom.WithItem((clause, param)) };
 	}
 }

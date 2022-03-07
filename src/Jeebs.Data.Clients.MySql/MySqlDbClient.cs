@@ -29,10 +29,10 @@ public partial class MySqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name) + $" AS '{column.Alias}'",
+				Escape(column.ColName) + $" AS '{column.ColAlias}'",
 
 			false =>
-				Escape(column.Name)
+				Escape(column.ColName)
 		};
 
 	/// <inheritdoc/>
@@ -40,10 +40,10 @@ public partial class MySqlDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Table, column.Name) + $" AS '{column.Alias}'",
+				Escape(column.TblName, column.ColName) + $" AS '{column.ColAlias}'",
 
 			false =>
-				Escape(column.Table, column.Name)
+				Escape(column.TblName, column.ColName)
 		};
 
 	/// <inheritdoc/>

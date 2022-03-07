@@ -49,7 +49,7 @@ public class Constructor_Tests
 		});
 
 		// Act
-		_ = new WpDb<Comment, CommentMeta, Link, Option, Post, PostMeta, Term, TermMeta,
+		_ = new WpDb<Comment, CommentMeta, Link, Opt, Post, PostMeta, Term, TermMeta,
 			TermRelationship, TermTaxonomy, User, UserMeta>(client, dbConfig, wpConfig, log);
 
 		// Assert
@@ -62,7 +62,7 @@ public class Constructor_Tests
 		var s2 = Mapper.Instance.GetTableMapFor<Link>().AssertSome();
 		Assert.IsAssignableFrom<LinkTable>(s2.Table);
 
-		var s3 = Mapper.Instance.GetTableMapFor<Option>().AssertSome();
+		var s3 = Mapper.Instance.GetTableMapFor<Opt>().AssertSome();
 		Assert.IsAssignableFrom<OptionTable>(s3.Table);
 
 		var s4 = Mapper.Instance.GetTableMapFor<Post>().AssertSome();
@@ -93,7 +93,7 @@ public class Constructor_Tests
 	public sealed record class Comment : WpCommentEntity { }
 	public sealed record class CommentMeta : WpCommentMetaEntity { }
 	public sealed record class Link : WpLinkEntity { }
-	public sealed record class Option : WpOptionEntity { }
+	public sealed record class Opt : WpOptionEntity { }
 	public sealed record class Post : WpPostEntity { }
 	public sealed record class PostMeta : WpPostMetaEntity { }
 	public sealed record class Term : WpTermEntity { }

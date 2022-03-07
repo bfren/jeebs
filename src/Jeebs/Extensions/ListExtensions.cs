@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace Jeebs;
 
@@ -22,9 +22,9 @@ public static class ListExtensions
 	/// <typeparam name="T">Item type</typeparam>
 	/// <param name="this">List of items</param>
 	/// <param name="item">Item to match</param>
-	public static (Option<T> prev, Option<T> next) GetEitherSide<T>(this List<T> @this, T item)
+	public static (Maybe<T> prev, Maybe<T> next) GetEitherSide<T>(this List<T> @this, T item)
 	{
-		static (Option<T>, Option<T>) invalid(Msg reason) =>
+		static (Maybe<T>, Maybe<T>) invalid(Msg reason) =>
 			(None<T>(reason), None<T>(reason));
 
 		// There are no items

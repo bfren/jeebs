@@ -53,7 +53,7 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 	internal Sys.ImmutableList<T> List { get; init; }
 
 	/// <inheritdoc/>
-	public Option<T> this[int index] =>
+	public Maybe<T> this[int index] =>
 		List.ElementAtOrNone(index);
 
 	/// <inheritdoc/>
@@ -87,20 +87,20 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 		List.ToList();
 
 	/// <inheritdoc/>
-	public IImmutableList<T> With(T add) =>
-		this with { List = List.Add(add) };
+	public IImmutableList<T> WithItem(T itemToAdd) =>
+		this with { List = List.Add(itemToAdd) };
 
 	/// <inheritdoc/>
-	public IImmutableList<T> Without(T remove) =>
-		this with { List = List.Remove(remove) };
+	public IImmutableList<T> WithoutItem(T itemToRemove) =>
+		this with { List = List.Remove(itemToRemove) };
 
 	/// <inheritdoc/>
-	public IImmutableList<T> WithRange(params T[] add) =>
-		this with { List = List.AddRange(add) };
+	public IImmutableList<T> WithRange(params T[] itemsToAdd) =>
+		this with { List = List.AddRange(itemsToAdd) };
 
 	/// <inheritdoc/>
-	public IImmutableList<T> WithoutRange(params T[] remove) =>
-		this with { List = List.RemoveRange(remove) };
+	public IImmutableList<T> WithoutRange(params T[] itemsToRemove) =>
+		this with { List = List.RemoveRange(itemsToRemove) };
 
 	/// <inheritdoc/>
 	public IImmutableList<T> Replace(T remove, T add) =>

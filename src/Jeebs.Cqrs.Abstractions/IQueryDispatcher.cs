@@ -12,7 +12,7 @@ namespace Jeebs.Cqrs;
 public interface IQueryDispatcher
 {
 	/// <inheritdoc cref="DispatchAsync{TQuery, TResult}(TQuery, CancellationToken)"/>
-	Task<Option<TResult>> DispatchAsync<TQuery, TResult>(TQuery query) =>
+	Task<Maybe<TResult>> DispatchAsync<TQuery, TResult>(TQuery query) =>
 		DispatchAsync<TQuery, TResult>(query, CancellationToken.None);
 
 	/// <summary>
@@ -22,5 +22,5 @@ public interface IQueryDispatcher
 	/// <typeparam name="TResult">Query result</typeparam>
 	/// <param name="query">Query object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	Task<Option<TResult>> DispatchAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken);
+	Task<Maybe<TResult>> DispatchAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken);
 }

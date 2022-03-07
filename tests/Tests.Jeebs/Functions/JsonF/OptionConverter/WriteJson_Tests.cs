@@ -3,7 +3,7 @@
 
 using Jeebs;
 using Xunit;
-using static F.OptionF;
+using static F.MaybeF;
 
 namespace F.JsonF_Tests.OptionConverter_Tests;
 
@@ -16,11 +16,11 @@ public class WriteJson_Tests
 		var valueStr = Rnd.Str;
 		var valueInt = Rnd.Int;
 		var value = new Test(valueStr, valueInt);
-		var option = Some(value);
+		var maybe = Some(value);
 		var json = $"{{\"foo\":\"{valueStr}\",\"bar\":{valueInt}}}";
 
 		// Act
-		var result = JsonF.Serialise(option);
+		var result = JsonF.Serialise(maybe);
 
 		// Assert
 		var some = result.AssertSome();
@@ -31,10 +31,10 @@ public class WriteJson_Tests
 	public void Serialise_None_Returns_Empty_Json()
 	{
 		// Arrange
-		var option = Create.None<int>();
+		var maybe = Create.None<int>();
 
 		// Act
-		var result = JsonF.Serialise(option);
+		var result = JsonF.Serialise(maybe);
 
 		// Assert
 		var some = result.AssertSome();

@@ -47,8 +47,8 @@ public class AddWhereCount_Tests : QueryPartsBuilder_Tests<Query.TermsPartsBuild
 		Assert.Collection(some.Where,
 			x =>
 			{
-				Assert.Equal(builder.TTest.TermTaxonomy.GetName(), x.column.Table);
-				Assert.Equal(builder.TTest.TermTaxonomy.Count, x.column.Name);
+				Assert.Equal(builder.TTest.TermTaxonomy.GetName(), x.column.TblName);
+				Assert.Equal(builder.TTest.TermTaxonomy.Count, x.column.ColName);
 				Assert.Equal(Compare.MoreThanOrEqual, x.cmp);
 				Assert.Equal(count, x.value);
 			}

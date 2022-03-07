@@ -28,7 +28,7 @@ public interface IWpDbSchema
 	/// <summary>
 	/// Option Table
 	/// </summary>
-	OptionTable Option { get; }
+	OptionTable Opt { get; }
 
 	/// <summary>
 	/// Post Table

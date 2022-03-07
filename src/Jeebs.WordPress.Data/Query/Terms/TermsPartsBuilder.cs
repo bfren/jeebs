@@ -43,7 +43,7 @@ public static partial class Query
 			Extract.From<TModel>(Table, T.TermTaxonomy);
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
+		public Maybe<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
 		{
 			// Add Taxonomy
 			if (taxonomy is not null)
@@ -56,7 +56,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereSlug(QueryParts parts, string? slug)
+		public Maybe<QueryParts> AddWhereSlug(QueryParts parts, string? slug)
 		{
 			// Add Slug
 			if (!string.IsNullOrEmpty(slug))
@@ -69,7 +69,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public Option<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast)
+		public Maybe<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast)
 		{
 			// Add Count
 			if (countAtLeast > 0)
@@ -82,7 +82,7 @@ public static partial class Query
 		}
 
 		/// <inheritdoc/>
-		public override Option<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort) =>
+		public override Maybe<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort) =>
 			from title in GetColumnFromExpression(T.Term, t => t.Title)
 			from count in GetColumnFromExpression(T.TermTaxonomy, tx => tx.Count)
 			select parts with

@@ -19,6 +19,6 @@ public class From_Tests
 
 		// Assert
 		Assert.Equal(date, range.Start);
-		Assert.Equal(DateTime.MaxValue.EndOfDay(), range.End);
+		Assert.Equal(DateTime.MaxValue.EndOfDay(), range.Finish);
 	}
 }

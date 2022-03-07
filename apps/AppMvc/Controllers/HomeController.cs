@@ -12,7 +12,7 @@ public class HomeController : Jeebs.Mvc.Controller
 
 	public IActionResult Index()
 	{
-		Log.Information("Hello, world!");
+		Log.Inf("Hello, world!");
 		return View();
 	}
 
