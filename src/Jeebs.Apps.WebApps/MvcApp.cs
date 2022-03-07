@@ -96,18 +96,13 @@ public abstract class MvcApp : WebApp
 	/// Override to configure response caching
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services)
-	{
-		_ = services.AddResponseCaching();
-	}
+	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services) => _ = services.AddResponseCaching();
 
 	/// <summary>
 	/// Override to configure response compression
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services)
-	{
-		_ = services
+	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services) => _ = services
 			.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.Configure<BrotliCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.AddResponseCompression(opt =>
@@ -116,7 +111,6 @@ public abstract class MvcApp : WebApp
 				opt.Providers.Add<GzipCompressionProvider>();
 				opt.Providers.Add<BrotliCompressionProvider>();
 			});
-	}
 
 	/// <summary>
 	/// Override to configure authorisation
@@ -134,14 +128,11 @@ public abstract class MvcApp : WebApp
 	/// Override to configure routing
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesRouting(IServiceCollection services)
-	{
-		_ = services.AddRouting(opt =>
-		  {
-			  opt.AppendTrailingSlash = AppendTrailingSlash;
-			  opt.LowercaseUrls = LowercaseUrls;
-		  });
-	}
+	protected virtual void ConfigureServicesRouting(IServiceCollection services) => _ = services.AddRouting(opt =>
+																					  {
+																						  opt.AppendTrailingSlash = AppendTrailingSlash;
+																						  opt.LowercaseUrls = LowercaseUrls;
+																					  });
 
 	/// <summary>
 	/// Override to configure session options
@@ -159,13 +150,10 @@ public abstract class MvcApp : WebApp
 	/// Override to configure endpoints - default is MVC
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesEndpoints(IServiceCollection services)
-	{
-		_ = services
+	protected virtual void ConfigureServicesEndpoints(IServiceCollection services) => _ = services
 			.AddControllersWithViews(ConfigureServicesMvcOptions)
 			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
 			.AddJsonOptions(ConfigureServicesEndpointsJson);
-	}
 
 	/// <summary>
 	/// Override to configure MVC options
@@ -273,10 +261,8 @@ public abstract class MvcApp : WebApp
 	/// Override to configure response compression
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureResponseCompression(IApplicationBuilder app)
-	{
+	protected virtual void ConfigureResponseCompression(IApplicationBuilder app) =>
 		_ = app.UseResponseCompression();
-	}
 
 	/// <summary>
 	/// Override to configure static files - they must be enabled BEFORE any MVC routing
@@ -314,19 +300,15 @@ public abstract class MvcApp : WebApp
 	/// Override to configure cookie policy
 	/// </summary>
 	/// <param name="app"></param>
-	protected virtual void ConfigureCookiePolicy(IApplicationBuilder app)
-	{
+	protected virtual void ConfigureCookiePolicy(IApplicationBuilder app) =>
 		_ = app.UseCookiePolicy(CookiePolicyOptions);
-	}
 
 	/// <summary>
 	/// Override to configure response caching
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureResponseCaching(IApplicationBuilder app)
-	{
+	protected virtual void ConfigureResponseCaching(IApplicationBuilder app) =>
 		_ = app.UseResponseCaching();
-	}
 
 	/// <summary>
 	/// Override to configure redirections
@@ -348,10 +330,8 @@ public abstract class MvcApp : WebApp
 	/// Override to configure routing
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureRouting(IApplicationBuilder app)
-	{
+	protected virtual void ConfigureRouting(IApplicationBuilder app) =>
 		_ = app.UseRouting();
-	}
 
 	/// <summary>
 	/// Override to configure authorisation
@@ -382,16 +362,11 @@ public abstract class MvcApp : WebApp
 	/// Override to configure endpoints
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureEndpoints(IApplicationBuilder app)
-	{
-		_ = app.UseEndpoints(endpoints =>
-		  {
-			  _ = endpoints.MapControllerRoute(
-				  name: "default",
-				  pattern: "{controller=Home}/{action=Index}/{id?}"
-			  );
-		  });
-	}
+	protected virtual void ConfigureEndpoints(IApplicationBuilder app) =>
+		app.UseEndpoints(endpoints => endpoints.MapControllerRoute(
+			name: "default",
+			pattern: "{controller=Home}/{action=Index}/{id?}"
+		));
 
 	#endregion Configure
 }
