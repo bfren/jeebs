@@ -125,10 +125,11 @@ public static partial class Rnd
 			// Get a random array index that hasn't been used before
 			int getUniqueIndex()
 			{
-				var index = 0;
-
+				int index;
 				do
-				{ index = NumberF.GetInt32(0, wordList.Length - 1); }
+				{
+					index = NumberF.GetInt32(0, wordList.Length - 1);
+				}
 				while (used.Contains(index));
 
 				return index;
