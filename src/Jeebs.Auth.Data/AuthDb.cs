@@ -14,7 +14,7 @@ namespace Jeebs.Auth;
 public sealed class AuthDb : Db, IAuthDb
 {
 	/// <inheritdoc/>
-	new public IAuthDbClient Client { get; private init; }
+	public new IAuthDbClient Client { get; private init; }
 
 	/// <summary>
 	/// Role Table

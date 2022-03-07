@@ -13,7 +13,7 @@ public interface IAuthDb : IDb
 	/// <summary>
 	/// Authentication Database Client
 	/// </summary>
-	new public IAuthDbClient Client { get; }
+	public new IAuthDbClient Client { get; }
 
 	/// <summary>
 	/// Migrate to the latest version of the Authentication database

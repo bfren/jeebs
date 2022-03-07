@@ -22,7 +22,7 @@ public abstract class AuthController : AuthControllerBase
 	/// <summary>
 	/// AuthDataProvider
 	/// </summary>
-	new protected AuthDataProvider Auth { get; private init; }
+	protected new AuthDataProvider Auth { get; private init; }
 
 	/// <summary>
 	/// Inject dependencies
@@ -165,7 +165,7 @@ public abstract class AuthControllerBase : Controller
 	/// <summary>
 	/// Perform sign out
 	/// </summary>
-	new public async Task<IActionResult> SignOut()
+	public new async Task<IActionResult> SignOut()
 	{
 		// Sign out
 		await HttpContext.SignOutAsync().ConfigureAwait(false);

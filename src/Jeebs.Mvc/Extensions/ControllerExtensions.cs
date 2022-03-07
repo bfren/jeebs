@@ -28,7 +28,7 @@ public static class ControllerExtensions
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
 	/// <param name="code">HTTP Status Code</param>
-	public async static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code)
+	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code)
 	{
 		// Log error
 		@this.Log.Msg(reason);

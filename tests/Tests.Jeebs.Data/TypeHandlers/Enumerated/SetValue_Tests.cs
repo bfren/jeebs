@@ -27,8 +27,8 @@ public class SetValue_Tests
 	{
 		public EnumeratedTest(string name) : base(name) { }
 
-		public readonly static EnumeratedTest Foo = new(nameof(Foo));
+		public static readonly EnumeratedTest Foo = new(nameof(Foo));
 
-		public readonly static EnumeratedTest Bar = new(nameof(Bar));
+		public static readonly EnumeratedTest Bar = new(nameof(Bar));
 	}
 }

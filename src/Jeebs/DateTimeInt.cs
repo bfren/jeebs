@@ -174,7 +174,7 @@ public readonly record struct DateTimeInt
 		return (true, string.Empty);
 	}
 
-	static internal bool IsLeapYear(int year)
+	internal static bool IsLeapYear(int year)
 	{
 		if (year % 400 == 0)
 		{

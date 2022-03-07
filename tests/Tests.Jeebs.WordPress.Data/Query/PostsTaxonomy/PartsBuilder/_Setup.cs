@@ -7,7 +7,7 @@ namespace Jeebs.WordPress.Data.Query_Tests.PostsTaxonomyPartsBuilder_Tests;
 
 public static class Setup
 {
-	private readonly static WpDbSchema schema =
+	private static readonly WpDbSchema schema =
 		new(F.Rnd.Str);
 
 	public static Query.PostsTaxonomyPartsBuilder GetBuilder(IExtract extract) =>
