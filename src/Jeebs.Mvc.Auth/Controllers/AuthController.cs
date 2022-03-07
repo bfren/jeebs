@@ -81,7 +81,6 @@ public abstract class AuthControllerBase : Controller
 	/// Perform sign in
 	/// </summary>
 	/// <param name="model"></param>
-	/// <returns></returns>
 	internal async Task<IActionResult> DoSignIn(SignInModel model)
 	{
 		// Validate user

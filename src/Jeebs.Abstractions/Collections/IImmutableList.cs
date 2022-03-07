@@ -67,7 +67,6 @@ public interface IImmutableList<T> : IEnumerable<T>
 	/// </summary>
 	/// <param name="remove">Item to remove</param>
 	/// <param name="add">Item to add</param>
-	/// <returns></returns>
 	IImmutableList<T> Replace(T remove, T add);
 
 	/// <summary>
