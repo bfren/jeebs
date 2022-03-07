@@ -11,50 +11,50 @@ namespace Jeebs;
 public static class OptionExtensionsSwitchAsync
 {
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, U> some, U none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> some, TReturn none) =>
 		F.MaybeF.SwitchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => Task.FromResult(none));
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> some, U none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> some, TReturn none) =>
 		F.MaybeF.SwitchAsync(@this, some: some, none: _ => Task.FromResult(none));
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, U> some, Task<U> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> some, Task<TReturn> none) =>
 		F.MaybeF.SwitchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => none);
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> some, Task<U> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> some, Task<TReturn> none) =>
 		F.MaybeF.SwitchAsync(@this, some: some, none: _ => none);
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, U> some, Func<U> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> some, Func<TReturn> none) =>
 		F.MaybeF.SwitchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => Task.FromResult(none()));
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> some, Func<U> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> some, Func<TReturn> none) =>
 		F.MaybeF.SwitchAsync(@this, some: some, none: _ => Task.FromResult(none()));
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, U> some, Func<Task<U>> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> some, Func<Task<TReturn>> none) =>
 		F.MaybeF.SwitchAsync(@this, some: v => Task.FromResult(some(v)), none: _ => none());
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> some, Func<Task<U>> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> some, Func<Task<TReturn>> none) =>
 		F.MaybeF.SwitchAsync(@this, some: some, none: _ => none());
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, U> some, Func<Msg, U> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> some, Func<Msg, TReturn> none) =>
 		F.MaybeF.SwitchAsync(@this, some: v => Task.FromResult(some(v)), none: r => Task.FromResult(none(r)));
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> some, Func<Msg, U> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> some, Func<Msg, TReturn> none) =>
 		F.MaybeF.SwitchAsync(@this, some: some, none: r => Task.FromResult(none(r)));
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, U> some, Func<Msg, Task<U>> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> some, Func<Msg, Task<TReturn>> none) =>
 		F.MaybeF.SwitchAsync(@this, some: v => Task.FromResult(some(v)), none: none);
 
 	/// <inheritdoc cref="F.MaybeF.SwitchAsync{T, U}(Task{Maybe{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
-	public static Task<U> SwitchAsync<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> some, Func<Msg, Task<U>> none) =>
+	public static Task<TReturn> SwitchAsync<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> some, Func<Msg, Task<TReturn>> none) =>
 		F.MaybeF.SwitchAsync(@this, some: some, none: none);
 }

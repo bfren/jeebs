@@ -55,38 +55,38 @@ public abstract class Wp
 
 /// <inheritdoc cref="IWp{TConfig}"/>
 /// <typeparam name="TConfig">WpConfig type</typeparam>
-/// <typeparam name="Tc">WpCommentEntity type</typeparam>
-/// <typeparam name="Tcm">WpCommentMetaEntity type</typeparam>
-/// <typeparam name="Tl">WpLinkEntity type</typeparam>
-/// <typeparam name="To">WpOptionEntity type</typeparam>
-/// <typeparam name="Tp">WpPostEntity type</typeparam>
-/// <typeparam name="Tpm">WpPostMetaEntity type</typeparam>
-/// <typeparam name="Tt">WpTermEntity type</typeparam>
-/// <typeparam name="Ttm">WpTermMetaEntity type</typeparam>
-/// <typeparam name="Ttr">WpTermRelationshipEntity type</typeparam>
-/// <typeparam name="Ttt">WpTermTaxonomyEntity type</typeparam>
-/// <typeparam name="Tu">WpUserEntity type</typeparam>
-/// <typeparam name="Tum">WpUserMetaEntity type</typeparam>
-public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Wp, IWp<TConfig>
+/// <typeparam name="TC">WpCommentEntity type</typeparam>
+/// <typeparam name="TCm">WpCommentMetaEntity type</typeparam>
+/// <typeparam name="TL">WpLinkEntity type</typeparam>
+/// <typeparam name="TO">WpOptionEntity type</typeparam>
+/// <typeparam name="TP">WpPostEntity type</typeparam>
+/// <typeparam name="TPm">WpPostMetaEntity type</typeparam>
+/// <typeparam name="TT">WpTermEntity type</typeparam>
+/// <typeparam name="TTm">WpTermMetaEntity type</typeparam>
+/// <typeparam name="TTr">WpTermRelationshipEntity type</typeparam>
+/// <typeparam name="TTt">WpTermTaxonomyEntity type</typeparam>
+/// <typeparam name="TU">WpUserEntity type</typeparam>
+/// <typeparam name="TUm">WpUserMetaEntity type</typeparam>
+public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> : Wp, IWp<TConfig>
 	where TConfig : WpConfig
-	where Tc : WpCommentEntity
-	where Tcm : WpCommentMetaEntity
-	where Tl : WpLinkEntity
-	where To : WpOptionEntity
-	where Tp : WpPostEntity
-	where Tpm : WpPostMetaEntity
-	where Tt : WpTermEntity
-	where Ttm : WpTermMetaEntity
-	where Ttr : WpTermRelationshipEntity
-	where Ttt : WpTermTaxonomyEntity
-	where Tu : WpUserEntity
-	where Tum : WpUserMetaEntity
+	where TC : WpCommentEntity
+	where TCm : WpCommentMetaEntity
+	where TL : WpLinkEntity
+	where TO : WpOptionEntity
+	where TP : WpPostEntity
+	where TPm : WpPostMetaEntity
+	where TT : WpTermEntity
+	where TTm : WpTermMetaEntity
+	where TTr : WpTermRelationshipEntity
+	where TTt : WpTermTaxonomyEntity
+	where TU : WpUserEntity
+	where TUm : WpUserMetaEntity
 {
 	/// <inheritdoc/>
 	public TConfig Config { get; private init; }
 
 	/// <inheritdoc cref="IWp.Db"/>
-	public WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> Db { get; private init; }
+	public WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> Db { get; private init; }
 
 	/// <inheritdoc/>
 	IWpDb IWp.Db =>
@@ -104,7 +104,7 @@ public abstract class Wp<TConfig, Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, T
 		Config = wpConfig.Value;
 
 		// Create new database object using this instance's entity types
-		Db = new WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum>(dbConfig, wpConfig, logForDb);
+		Db = new WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm>(dbConfig, wpConfig, logForDb);
 
 		// Initialise
 		Init<WpConfig>(logForDb.ForContext<Wp>());

@@ -40,12 +40,12 @@ public static partial class MaybeF
 	/// Run a function depending on whether <paramref name="maybe"/> is a <see cref="Jeebs.Internals.Some{T}"/> or <see cref="Jeebs.Internals.None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Maybe value type</typeparam>
-	/// <typeparam name="U">Next value type</typeparam>
+	/// <typeparam name="TReturn">Next value type</typeparam>
 	/// <param name="maybe">Maybe being switched</param>
 	/// <param name="some">Function to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 	/// <param name="none">Function to run if <see cref="Jeebs.Internals.None{T}"/></param>
 	/// <exception cref="UnknownMaybeException"></exception>
-	public static U Switch<T, U>(Maybe<T> maybe, Func<T, U> some, Func<Msg, U> none) =>
+	public static TReturn Switch<T, TReturn>(Maybe<T> maybe, Func<T, TReturn> some, Func<Msg, TReturn> none) =>
 		maybe switch
 		{
 			Some<T> x =>

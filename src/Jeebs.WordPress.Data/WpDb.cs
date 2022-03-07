@@ -16,31 +16,31 @@ namespace Jeebs.WordPress.Data;
 /// It should be registered with a DI container as a singleton to avoid the (expensive) table creation
 /// each time the instance is required
 /// </remarks>
-/// <typeparam name="Tc">WpCommentEntity</typeparam>
-/// <typeparam name="Tcm">WpCommentMetaEntity</typeparam>
-/// <typeparam name="Tl">WpLinkEntity</typeparam>
-/// <typeparam name="To">WpOptionEntity</typeparam>
-/// <typeparam name="Tp">WpPostEntity</typeparam>
-/// <typeparam name="Tpm">WpPostMetaEntity</typeparam>
-/// <typeparam name="Tt">WpTermEntity</typeparam>
-/// <typeparam name="Ttm">WpTermMetaEntity</typeparam>
-/// <typeparam name="Ttr">WpTermRelationshipEntity</typeparam>
-/// <typeparam name="Ttt">WpTermTaxonomyEntity</typeparam>
-/// <typeparam name="Tu">WpUserEntity</typeparam>
-/// <typeparam name="Tum">WpUserMetaEntity</typeparam>
-public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> : Db, IWpDb
-	where Tc : WpCommentEntity
-	where Tcm : WpCommentMetaEntity
-	where Tl : WpLinkEntity
-	where To : WpOptionEntity
-	where Tp : WpPostEntity
-	where Tpm : WpPostMetaEntity
-	where Tt : WpTermEntity
-	where Ttm : WpTermMetaEntity
-	where Ttr : WpTermRelationshipEntity
-	where Ttt : WpTermTaxonomyEntity
-	where Tu : WpUserEntity
-	where Tum : WpUserMetaEntity
+/// <typeparam name="TC">WpCommentEntity</typeparam>
+/// <typeparam name="TCm">WpCommentMetaEntity</typeparam>
+/// <typeparam name="TL">WpLinkEntity</typeparam>
+/// <typeparam name="TO">WpOptionEntity</typeparam>
+/// <typeparam name="TP">WpPostEntity</typeparam>
+/// <typeparam name="TPm">WpPostMetaEntity</typeparam>
+/// <typeparam name="TT">WpTermEntity</typeparam>
+/// <typeparam name="TTm">WpTermMetaEntity</typeparam>
+/// <typeparam name="TTr">WpTermRelationshipEntity</typeparam>
+/// <typeparam name="TTt">WpTermTaxonomyEntity</typeparam>
+/// <typeparam name="TU">WpUserEntity</typeparam>
+/// <typeparam name="TUm">WpUserMetaEntity</typeparam>
+public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> : Db, IWpDb
+	where TC : WpCommentEntity
+	where TCm : WpCommentMetaEntity
+	where TL : WpLinkEntity
+	where TO : WpOptionEntity
+	where TP : WpPostEntity
+	where TPm : WpPostMetaEntity
+	where TT : WpTermEntity
+	where TTm : WpTermMetaEntity
+	where TTr : WpTermRelationshipEntity
+	where TTt : WpTermTaxonomyEntity
+	where TU : WpUserEntity
+	where TUm : WpUserMetaEntity
 {
 	/// <inheritdoc/>
 	public WpConfig WpConfig { get; private init; }
@@ -76,18 +76,18 @@ public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> :
 		Schema = new WpDbSchema(WpConfig.TablePrefix);
 
 		// Map entities to tables
-		_ = Map<Tc>.To(Schema.Comment);
-		_ = Map<Tcm>.To(Schema.CommentMeta);
-		_ = Map<Tl>.To(Schema.Link);
-		_ = Map<To>.To(Schema.Opt);
-		_ = Map<Tp>.To(Schema.Post);
-		_ = Map<Tpm>.To(Schema.PostMeta);
-		_ = Map<Tt>.To(Schema.Term);
-		_ = Map<Ttm>.To(Schema.TermMeta);
-		_ = Map<Ttr>.To(Schema.TermRelationship);
-		_ = Map<Ttt>.To(Schema.TermTaxonomy);
-		_ = Map<Tu>.To(Schema.User);
-		_ = Map<Tum>.To(Schema.UserMeta);
+		_ = Map<TC>.To(Schema.Comment);
+		_ = Map<TCm>.To(Schema.CommentMeta);
+		_ = Map<TL>.To(Schema.Link);
+		_ = Map<TO>.To(Schema.Opt);
+		_ = Map<TP>.To(Schema.Post);
+		_ = Map<TPm>.To(Schema.PostMeta);
+		_ = Map<TT>.To(Schema.Term);
+		_ = Map<TTm>.To(Schema.TermMeta);
+		_ = Map<TTr>.To(Schema.TermRelationship);
+		_ = Map<TTt>.To(Schema.TermTaxonomy);
+		_ = Map<TU>.To(Schema.User);
+		_ = Map<TUm>.To(Schema.UserMeta);
 
 		// Add type handlers
 		TypeMap.ResetTypeHandlers();

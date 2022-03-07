@@ -17,15 +17,15 @@ public static class EnumerableExtensions
 	/// Filter out null items (and empty / whitespace strings) from a list
 	/// </summary>
 	/// <typeparam name="T">Input value type</typeparam>
-	/// <typeparam name="U">Output value type</typeparam>
+	/// <typeparam name="TReturn">Output value type</typeparam>
 	/// <param name="this">List</param>
 	/// <param name="map">Mapping function</param>
-	public static IEnumerable<U> Filter<T, U>(this IEnumerable<T> @this, Func<T, U?> map)
-		where U : class
+	public static IEnumerable<TReturn> Filter<T, TReturn>(this IEnumerable<T> @this, Func<T, TReturn?> map)
+		where TReturn : class
 	{
 		foreach (var x in @this)
 		{
-			if (map(x) is U y)
+			if (map(x) is TReturn y)
 			{
 				if (y is string z)
 				{
@@ -46,15 +46,15 @@ public static class EnumerableExtensions
 	/// Filter out null items from a list
 	/// </summary>
 	/// <typeparam name="T">Input value type</typeparam>
-	/// <typeparam name="U">Output value type</typeparam>
+	/// <typeparam name="TReturn">Output value type</typeparam>
 	/// <param name="this">List</param>
 	/// <param name="map">Mapping function</param>
-	public static IEnumerable<U> Filter<T, U>(this IEnumerable<T> @this, Func<T, U?> map)
-		where U : struct
+	public static IEnumerable<TReturn> Filter<T, TReturn>(this IEnumerable<T> @this, Func<T, TReturn?> map)
+		where TReturn : struct
 	{
 		foreach (var x in @this)
 		{
-			if (map(x) is U y)
+			if (map(x) is TReturn y)
 			{
 				yield return y;
 			}

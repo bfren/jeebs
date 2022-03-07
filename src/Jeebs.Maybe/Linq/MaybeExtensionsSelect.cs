@@ -17,25 +17,25 @@ public static partial class OptionExtensions
 	/// select x</code>
 	/// </summary>
 	/// <typeparam name="T">Maybe type</typeparam>
-	/// <typeparam name="U">Return type</typeparam>
+	/// <typeparam name="TReturn">Return type</typeparam>
 	/// <param name="this">Maybe</param>
 	/// <param name="f">Return map function</param>
-	public static Maybe<U> Select<T, U>(this Maybe<T> @this, Func<T, U> f) =>
+	public static Maybe<TReturn> Select<T, TReturn>(this Maybe<T> @this, Func<T, TReturn> f) =>
 		F.MaybeF.Map(@this, f, F.MaybeF.DefaultHandler);
 
 	/// <inheritdoc cref="Select{T, U}(Maybe{T}, Func{T, U})"/>
-	public static Task<Maybe<U>> Select<T, U>(this Maybe<T> @this, Func<T, Task<U>> f) =>
+	public static Task<Maybe<TReturn>> Select<T, TReturn>(this Maybe<T> @this, Func<T, Task<TReturn>> f) =>
 		F.MaybeF.MapAsync(@this, f, F.MaybeF.DefaultHandler);
 
 	/// <inheritdoc cref="Select{T, U}(Maybe{T}, Func{T, U})"/>
 	/// <param name="this">Maybe (awaitable)</param>
 	/// <param name="f">Return map function</param>
-	public static Task<Maybe<U>> Select<T, U>(this Task<Maybe<T>> @this, Func<T, U> f) =>
+	public static Task<Maybe<TReturn>> Select<T, TReturn>(this Task<Maybe<T>> @this, Func<T, TReturn> f) =>
 		F.MaybeF.MapAsync(@this, x => Task.FromResult(f(x)), F.MaybeF.DefaultHandler);
 
 	/// <inheritdoc cref="Select{T, U}(Maybe{T}, Func{T, U})"/>
 	/// <param name="this">Maybe (awaitable)</param>
 	/// <param name="f">Return map function</param>
-	public static Task<Maybe<U>> Select<T, U>(this Task<Maybe<T>> @this, Func<T, Task<U>> f) =>
+	public static Task<Maybe<TReturn>> Select<T, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<TReturn>> f) =>
 		F.MaybeF.MapAsync(@this, f, F.MaybeF.DefaultHandler);
 }

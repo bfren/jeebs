@@ -18,12 +18,12 @@ public static partial class OptionExtensions
 	/// select y</code>
 	/// </summary>
 	/// <typeparam name="T">Maybe type</typeparam>
-	/// <typeparam name="U">Interim type</typeparam>
-	/// <typeparam name="V">Return type</typeparam>
+	/// <typeparam name="TInner">Interim type</typeparam>
+	/// <typeparam name="TReturn">Return type</typeparam>
 	/// <param name="this">Maybe</param>
 	/// <param name="f">Interim bind function</param>
 	/// <param name="g">Return map function</param>
-	public static Maybe<V> SelectMany<T, U, V>(this Maybe<T> @this, Func<T, Maybe<U>> f, Func<T, U, V> g) =>
+	public static Maybe<TReturn> SelectMany<T, TInner, TReturn>(this Maybe<T> @this, Func<T, Maybe<TInner>> f, Func<T, TInner, TReturn> g) =>
 		F.MaybeF.Bind(@this,
 			x =>
 				f(x)
@@ -31,7 +31,7 @@ public static partial class OptionExtensions
 		);
 
 	/// <inheritdoc cref="SelectMany{T, U, V}(Maybe{T}, Func{T, Maybe{U}}, Func{T, U, V})"/>
-	public static Task<Maybe<V>> SelectMany<T, U, V>(this Maybe<T> @this, Func<T, Task<Maybe<U>>> f, Func<T, U, V> g) =>
+	public static Task<Maybe<TReturn>> SelectMany<T, TInner, TReturn>(this Maybe<T> @this, Func<T, Task<Maybe<TInner>>> f, Func<T, TInner, TReturn> g) =>
 		F.MaybeF.BindAsync(@this,
 			x =>
 				f(x)
@@ -42,7 +42,7 @@ public static partial class OptionExtensions
 	/// <param name="this">Maybe (awaitable)</param>
 	/// <param name="f">Interim bind function</param>
 	/// <param name="g">Return map function</param>
-	public static Task<Maybe<V>> SelectMany<T, U, V>(this Task<Maybe<T>> @this, Func<T, Maybe<U>> f, Func<T, U, V> g) =>
+	public static Task<Maybe<TReturn>> SelectMany<T, TInner, TReturn>(this Task<Maybe<T>> @this, Func<T, Maybe<TInner>> f, Func<T, TInner, TReturn> g) =>
 		F.MaybeF.BindAsync(@this,
 			x =>
 				Task.FromResult(
@@ -55,7 +55,7 @@ public static partial class OptionExtensions
 	/// <param name="this">Maybe (awaitable)</param>
 	/// <param name="f">Interim bind function</param>
 	/// <param name="g">Return map function</param>
-	public static Task<Maybe<V>> SelectMany<T, U, V>(this Task<Maybe<T>> @this, Func<T, Task<Maybe<U>>> f, Func<T, U, V> g) =>
+	public static Task<Maybe<TReturn>> SelectMany<T, TInner, TReturn>(this Task<Maybe<T>> @this, Func<T, Task<Maybe<TInner>>> f, Func<T, TInner, TReturn> g) =>
 		F.MaybeF.BindAsync(@this,
 			x =>
 				f(x)
