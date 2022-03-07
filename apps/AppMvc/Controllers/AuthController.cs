@@ -68,7 +68,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 				DefaultHandler
 			)
 			.UnwrapAsync(
-				x => x.Value(() => throw new System.Exception())
+				x => x.Value(() => throw new Exception())
 			)
 			.ConfigureAwait(false);
 

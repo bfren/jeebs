@@ -280,11 +280,11 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 
 	#region IfSome
 
-	/// <inheritdoc cref="F.MaybeF.IfSome{T}(Maybe{T}, Action{T})"/>
+	/// <inheritdoc cref="IfSome{T}(Maybe{T}, Action{T})"/>
 	public Maybe<T> IfSome(Action<T> ifSome) =>
 		F.MaybeF.IfSome(this, ifSome);
 
-	/// <inheritdoc cref="F.MaybeF.IfSome{T}(Maybe{T}, Action{T})"/>
+	/// <inheritdoc cref="IfSome{T}(Maybe{T}, Action{T})"/>
 	public Task<Maybe<T>> IfSomeAsync(Func<T, Task> ifSome) =>
 		F.MaybeF.IfSomeAsync(this, ifSome);
 

@@ -76,7 +76,7 @@ public static class EnumerableExtensions
 	/// <param name="this">Collection</param>
 	/// <param name="page">Current page</param>
 	public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> @this, ulong page) =>
-		ToPagedList<T>(@this, page, D.ItemsPer, D.PagesPer);
+		ToPagedList(@this, page, D.ItemsPer, D.PagesPer);
 
 	/// <summary>
 	/// Convert a collection to a paged list
