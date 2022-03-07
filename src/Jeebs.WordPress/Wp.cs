@@ -18,18 +18,17 @@ public abstract class Wp
 	/// <summary>
 	/// Whether or not the class has been initialised
 	/// </summary>
-	private static readonly MemoryCache initialised = new(new MemoryCacheOptions());
+	private static MemoryCache Initialised { get; } = new(new MemoryCacheOptions());
 
 	/// <summary>
 	/// Initialise WordPress instance - but only once per <typeparamref name="TConfig"/>
 	/// </summary>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
 	/// <param name="log">ILog</param>
-	protected void Init<TConfig>(ILog<Wp> log)
-	{
+	protected void Init<TConfig>(ILog<Wp> log) =>
 		// If a WordPress instance of the specified configuration type hasn't been created yet,
 		// call Init() to register custom values
-		_ = initialised.GetOrCreate(typeof(TConfig).FullName, entry =>
+		Initialised.GetOrCreate(typeof(TConfig).FullName, entry =>
 		{
 			// Set expiration to maximum so it never expires while the application is running
 			_ = entry.SetAbsoluteExpiration(DateTimeOffset.MaxValue);
@@ -44,7 +43,6 @@ public abstract class Wp
 			// factory won't be called a second time
 			return true;
 		});
-	}
 
 	/// <inheritdoc/>
 	public abstract void RegisterCustomPostTypes();
