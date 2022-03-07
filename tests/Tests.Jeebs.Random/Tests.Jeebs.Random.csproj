@@ -3,7 +3,7 @@
 		<RootNamespace>F</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Maybe.Testing.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Maybe.Testing\Jeebs.Maybe.Testing.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Random\Jeebs.Random.csproj" />
 	</ItemGroup>
 </Project>

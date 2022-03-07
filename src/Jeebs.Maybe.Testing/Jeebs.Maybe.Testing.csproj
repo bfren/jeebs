@@ -6,6 +6,6 @@
 		<PackageReference Include="xunit.assert" Version="2.4.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Option\Jeebs.Maybe.csproj" />
+		<ProjectReference Include="..\Jeebs.Maybe\Jeebs.Maybe.csproj" />
 	</ItemGroup>
 </Project>

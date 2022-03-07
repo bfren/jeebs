@@ -5,6 +5,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Config\Jeebs.Config.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Maybe.Testing.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Maybe.Testing\Jeebs.Maybe.Testing.csproj" />
 	</ItemGroup>
 </Project>

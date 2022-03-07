@@ -232,6 +232,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Cqrs", "tests\T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Mvc.Data", "tests\Tests.Jeebs.Mvc.Data\Tests.Jeebs.Mvc.Data.csproj", "{B03A8637-AAA1-41C1-8241-2BE8246A2B70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Data.Types", "src\Jeebs.Data.Types\Jeebs.Data.Types.csproj", "{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -704,6 +706,12 @@ Global
 		{B03A8637-AAA1-41C1-8241-2BE8246A2B70}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B03A8637-AAA1-41C1-8241-2BE8246A2B70}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
 		{B03A8637-AAA1-41C1-8241-2BE8246A2B70}.Staging|Any CPU.Build.0 = Debug|Any CPU
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD}.Staging|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -807,6 +815,7 @@ Global
 		{265AB097-34AD-4184-8237-526F27C969A3} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{133B3E15-710E-445F-9437-BD381591FE39} = {265AB097-34AD-4184-8237-526F27C969A3}
 		{B03A8637-AAA1-41C1-8241-2BE8246A2B70} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
+		{77EE7E51-78CE-4B3B-BE91-3A34A0C093AD} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}

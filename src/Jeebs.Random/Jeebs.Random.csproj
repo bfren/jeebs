@@ -13,6 +13,6 @@
 		<EmbeddedResource Include="$(LongWordListPath)" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Option\Jeebs.Maybe.csproj" />
+		<ProjectReference Include="..\Jeebs.Maybe\Jeebs.Maybe.csproj" />
 	</ItemGroup>
 </Project>

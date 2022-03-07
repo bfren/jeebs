@@ -3,8 +3,8 @@
 		<RootNamespace>Jeebs</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Maybe.Testing.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Option\Jeebs.Maybe.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Maybe.Testing\Jeebs.Maybe.Testing.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Maybe\Jeebs.Maybe.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>
