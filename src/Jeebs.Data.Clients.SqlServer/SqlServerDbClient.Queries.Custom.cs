@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Text;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -52,24 +51,24 @@ public partial class SqlServerDbClient : DbClient
 				}
 		};
 
-		var sql = new StringBuilder($"SELECT {select} FROM {Escape(parts.From)}");
+		var sql = $"SELECT {select} FROM {Escape(parts.From)}";
 
 		// Add INNER JOIN
 		foreach (var (from, to) in parts.InnerJoin)
 		{
-			_ = sql.Append($" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			sql += $" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add LEFT JOIN
 		foreach (var (from, to) in parts.LeftJoin)
 		{
-			_ = sql.Append($" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			sql += $" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add RIGHT JOIN
 		foreach (var (from, to) in parts.RightJoin)
 		{
-			_ = sql.Append($" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			sql += $" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add WHERE
@@ -97,14 +96,14 @@ public partial class SqlServerDbClient : DbClient
 			// If there's anything to add, 
 			if (where.Count > 0)
 			{
-				_ = sql.Append($" WHERE {string.Join(" AND ", where)}");
+				sql += $" WHERE {string.Join(" AND ", where)}";
 			}
 		}
 
 		// Add ORDER BY
 		if (parts.SortRandom)
 		{
-			_ = sql.Append(" ORDER BY NEWID()");
+			sql += " ORDER BY NEWID()";
 		}
 		else if (parts.Sort.Count > 0)
 		{
@@ -114,20 +113,17 @@ public partial class SqlServerDbClient : DbClient
 				orderBy.Add($"{Escape(column.TblName, column.ColName)} {order.ToOperator()}");
 			}
 
-			_ = sql.Append($" ORDER BY {JoinList(orderBy, false)}");
+			sql += $" ORDER BY {JoinList(orderBy, false)}";
 		}
 
 		// Add OFFSET and FETCH
 		if (parts.Maximum > 0)
 		{
-			_ = sql.Append($" OFFSET {parts.Skip} ROWS");
-			_ = sql.Append($" FETCH NEXT {parts.Maximum} ROWS ONLY");
+			sql += $" OFFSET {parts.Skip} ROWS";
+			sql += $" FETCH NEXT {parts.Maximum} ROWS ONLY";
 		}
 
 		// Return query string
-		return (
-			sql.ToString(),
-			parameters
-		);
+		return (sql, parameters);
 	}
 }

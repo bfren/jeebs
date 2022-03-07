@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
@@ -133,7 +134,7 @@ public abstract class AuthControllerBase : Controller
 		// Create claims object
 		var claims = new List<Claim>
 		{
-			new (JwtClaimTypes.UserId, user.Id.Value.ToString(), ClaimValueTypes.Integer32),
+			new (JwtClaimTypes.UserId, user.Id.Value.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer32),
 			new (ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
 			new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 		};

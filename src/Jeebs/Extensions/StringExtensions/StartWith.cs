@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
+
 namespace Jeebs;
 
 public static partial class StringExtensions
@@ -12,5 +14,5 @@ public static partial class StringExtensions
 	/// <param name="character">The character to start the string with</param>
 	/// <returns>The input string starting with a single 'character'</returns>
 	public static string StartWith(this string @this, char character) =>
-		Modify(@this, () => string.Format("{0}{1}", character, @this.TrimStart(character)));
+		Modify(@this, () => string.Format(CultureInfo.InvariantCulture, "{0}{1}", character, @this.TrimStart(character)));
 }

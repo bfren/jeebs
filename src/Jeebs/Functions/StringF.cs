@@ -1,6 +1,8 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
+
 namespace F;
 
 /// <summary>
@@ -20,7 +22,7 @@ public static class StringF
 		obj switch
 		{
 			T t =>
-				string.Format(format, t),
+				string.Format(CultureInfo.InvariantCulture, format, t),
 
 			_ =>
 				ifNull

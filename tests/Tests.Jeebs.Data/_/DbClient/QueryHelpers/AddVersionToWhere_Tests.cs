@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Text;
 using Jeebs.Data.Mapping;
 using NSubstitute;
 using Xunit;
@@ -15,13 +14,13 @@ public class AddVersionToWhere_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		var sql = new StringBuilder();
+		var sql = string.Empty;
 
 		// Act
 		client.AddVersionToWhereTest(sql, null);
 
 		// Assert
-		Assert.Equal(string.Empty, sql.ToString());
+		Assert.Equal(string.Empty, sql);
 	}
 
 	[Fact]
@@ -37,13 +36,13 @@ public class AddVersionToWhere_Tests
 		var version = new Column(new TableName(F.Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}##";
 
-		var sql = new StringBuilder();
+		var sql = string.Empty;
 
 		// Act
 		client.AddVersionToWhereTest(sql, version);
 
 		// Assert
-		Assert.Equal(expected, sql.ToString());
+		Assert.Equal(expected, sql);
 	}
 
 	[Fact]
@@ -59,7 +58,7 @@ public class AddVersionToWhere_Tests
 		var version = new Column(new TableName(F.Rnd.Str), name, alias);
 
 		var query = F.Rnd.Str;
-		var sql = new StringBuilder(query);
+		var sql = query;
 
 		var expected = $"{query} AND --{name}-- = ##{alias}##";
 
@@ -67,6 +66,6 @@ public class AddVersionToWhere_Tests
 		client.AddVersionToWhereTest(sql, version);
 
 		// Assert
-		Assert.Equal(expected, sql.ToString());
+		Assert.Equal(expected, sql);
 	}
 }

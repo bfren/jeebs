@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 
 namespace Jeebs.Config;
 
@@ -24,7 +25,7 @@ public class InvalidServiceDefinitionException : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="definition"></param>
-	public InvalidServiceDefinitionException(string definition) : base(string.Format(Format, definition)) { }
+	public InvalidServiceDefinitionException(string definition) : base(string.Format(CultureInfo.InvariantCulture, Format, definition)) { }
 
 	/// <summary>
 	/// Create exception

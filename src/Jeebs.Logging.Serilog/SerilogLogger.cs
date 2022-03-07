@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using Serilog;
 using Serilog.Events;
 
@@ -35,7 +36,7 @@ public class SerilogLogger : Log
 		ConsoleMessagePrefix switch
 		{
 			string app =>
-				string.Format("{0} | {1}", app, message),
+				string.Format(CultureInfo.InvariantCulture, "{0} | {1}", app, message),
 
 			_ =>
 				message

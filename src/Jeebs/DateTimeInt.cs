@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Linq;
 using static F.MaybeF;
 
@@ -79,7 +80,7 @@ public readonly record struct DateTimeInt
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(format));
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(format, CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>
@@ -106,7 +107,7 @@ public readonly record struct DateTimeInt
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				0.ToString(format)
+				0.ToString(format, CultureInfo.InvariantCulture)
 		};
 
 	/// <summary>
@@ -117,7 +118,7 @@ public readonly record struct DateTimeInt
 		IsValidDateTime().Valid switch
 		{
 			true =>
-				long.Parse(ToString()),
+				long.Parse(ToString(), CultureInfo.InvariantCulture),
 
 			false =>
 				0
@@ -220,11 +221,11 @@ public readonly record struct DateTimeInt
 		}
 
 		return (
-			year: int.Parse(value[0..4]),
-			month: int.Parse(value[4..6]),
-			day: int.Parse(value[6..8]),
-			hour: int.Parse(value[8..10]),
-			minute: int.Parse(value[10..])
+			year: int.Parse(value[0..4], CultureInfo.InvariantCulture),
+			month: int.Parse(value[4..6], CultureInfo.InvariantCulture),
+			day: int.Parse(value[6..8], CultureInfo.InvariantCulture),
+			hour: int.Parse(value[8..10], CultureInfo.InvariantCulture),
+			minute: int.Parse(value[10..], CultureInfo.InvariantCulture)
 		);
 	}
 

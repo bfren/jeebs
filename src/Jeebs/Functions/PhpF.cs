@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace F;
@@ -93,17 +94,17 @@ public static class PhpF
 
 		// Append a value to the StringBuilder
 		StringBuilder append<TValue>(char type, TValue value) =>
-			sb.Append($"{type}:{value};");
+			sb.Append(CultureInfo.InvariantCulture, $"{type}:{value};");
 
 		// Append a string to the StringBuilder
 		StringBuilder appendString(string str) =>
-			sb.Append($"{StringChar}:{UTF8.GetByteCount(str)}:\"{str}\";");
+			sb.Append(CultureInfo.InvariantCulture, $"{StringChar}:{UTF8.GetByteCount(str)}:\"{str}\";");
 
 		// Append a Hashtable to the StringBuilder
 		// Enables arrays of different key / value pairs
 		StringBuilder appendHashtable(Hashtable hashtable)
 		{
-			_ = sb.Append($"{ArrayChar}:{hashtable.Count}:{{");
+			_ = sb.Append(CultureInfo.InvariantCulture, $"{ArrayChar}:{hashtable.Count}:{{");
 			foreach (DictionaryEntry item in hashtable)
 			{
 				_ = Serialise(item.Key, sb);
@@ -232,7 +233,7 @@ public static class PhpF
 			var colon0 = str.IndexOf(':', pointer) + 1;
 			var colon1 = str.IndexOf(':', colon0);
 			var num = str[colon0..colon1]; // the number of items in the array
-			var len = int.Parse(num);
+			var len = int.Parse(num, CultureInfo.InvariantCulture);
 			pointer += 4 + num.Length;
 
 			// Get each key and value, and add them to a hashtable

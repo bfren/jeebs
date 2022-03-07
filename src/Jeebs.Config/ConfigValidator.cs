@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Jeebs.Config.Properties;
@@ -45,7 +46,7 @@ public static class ConfigValidator
 		if (!config.IsValid(schema, out IList<string> errors))
 		{
 			var sb = new StringBuilder();
-			_ = sb.AppendLine($"Invalid Jeebs configuration file: {path}.");
+			_ = sb.AppendLine(CultureInfo.InvariantCulture, $"Invalid Jeebs configuration file: {path}.");
 			foreach (var item in errors)
 			{
 				_ = sb.AppendLine(item);

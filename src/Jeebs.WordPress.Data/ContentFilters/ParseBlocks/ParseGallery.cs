@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using System.Text.RegularExpressions;
 using static F.JsonF;
 
@@ -31,12 +32,11 @@ public sealed partial class ParseBlocks
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[1].Value;
 			_ = Deserialise<GalleryParsed>(info).IfSome(gallery =>
-			  {
 				  content = content.Replace(
 					  match.Value,
-					  string.Format(format, F.Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)
-				  );
-			  });
+					  string.Format(CultureInfo.InvariantCulture, format, F.Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)
+				  )
+			  );
 		}
 
 		// Return parsed content

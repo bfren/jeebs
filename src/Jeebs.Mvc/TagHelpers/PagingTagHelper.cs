@@ -135,7 +135,7 @@ public sealed class PagingTagHelper : TagHelper
 			var css = page == Values.Page ? LinkOnClass : "";
 
 			// Build link - we can't use TagBuilder as it encodes the URL which is already encoded
-			var a = $"<{LinkHtmlTag} class=\"{css}\"><a href=\"{string.Format(href, page)}\">{text}</a></{LinkHtmlTag}>";
+			var a = $"<{LinkHtmlTag} class=\"{css}\"><a href=\"{string.Format(CultureInfo.InvariantCulture, href, page)}\">{text}</a></{LinkHtmlTag}>";
 
 			// Add to the wrapper
 			_ = output.Content.AppendHtml(a);

@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using System.Text;
 
 namespace Jeebs;
@@ -22,7 +23,7 @@ public static partial class StringExtensions
 			var encoded = new StringBuilder();
 			foreach (var b in a)
 			{
-				_ = encoded.AppendFormat("&#{0};", b);
+				_ = encoded.AppendFormat(CultureInfo.InvariantCulture, "&#{0};", b);
 			}
 
 			return encoded.ToString();

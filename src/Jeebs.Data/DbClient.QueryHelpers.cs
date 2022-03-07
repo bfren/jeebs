@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Text;
 using Jeebs.Data.Mapping;
 
 namespace Jeebs.Data;
@@ -81,17 +80,19 @@ public abstract partial class DbClient : IDbClient
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>
 	/// <param name="versionColumn">[Optional] Version column</param>
-	protected virtual void AddVersionToWhere(StringBuilder sql, IColumn? versionColumn)
+	protected virtual string AddVersionToWhere(string sql, IColumn? versionColumn)
 	{
 		if (versionColumn is not null)
 		{
 			if (sql.Length > 0)
 			{
-				_ = sql.Append(" AND ");
+				sql += " AND ";
 			}
 
-			_ = sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)}");
+			sql += $"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)}";
 		}
+
+		return sql;
 	}
 
 	#region Testing
@@ -108,7 +109,7 @@ public abstract partial class DbClient : IDbClient
 	internal void AddVersionToSetListTest(List<string> columns, IColumn? versionColumn) =>
 		AddVersionToSetList(columns, versionColumn);
 
-	internal void AddVersionToWhereTest(StringBuilder sql, IColumn? versionColumn) =>
+	internal string AddVersionToWhereTest(string sql, IColumn? versionColumn) =>
 		AddVersionToWhere(sql, versionColumn);
 
 	#endregion Testing

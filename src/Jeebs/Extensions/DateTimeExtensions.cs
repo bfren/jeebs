@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 
 namespace Jeebs;
 
@@ -72,5 +73,5 @@ public static class DateTimeExtensions
 	/// <param name="this">DateTime object</param>
 	/// <returns>Standard Formatted string</returns>
 	public static string ToStandardString(this DateTime @this) =>
-		@this.ToString("HH:mm dd/MM/yyyy");
+		@this.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture);
 }

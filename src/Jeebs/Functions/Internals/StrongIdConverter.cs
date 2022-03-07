@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs;
@@ -61,5 +62,5 @@ public sealed class StrongIdConverter<T> : JsonConverter<T>
 	/// <param name="value"><see cref="IStrongId"/> value</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options) =>
-		writer.WriteStringValue(value.Value.ToString());
+		writer.WriteStringValue(value.Value.ToString(CultureInfo.InvariantCulture));
 }

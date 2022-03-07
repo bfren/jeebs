@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Jeebs.Data;
@@ -73,7 +74,7 @@ public static partial class Query
 			// Search title
 			if ((fields & SearchPostField.Title) != 0)
 			{
-				_ = clause.Append($"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
+				_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
 			}
 
 			// Search slug
@@ -84,7 +85,7 @@ public static partial class Query
 					_ = clause.Append(" OR ");
 				}
 
-				_ = clause.Append($"{__(T.Post, p => p.Slug)} {comparison} @{nameof(search)}");
+				_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Post, p => p.Slug)} {comparison} @{nameof(search)}");
 			}
 
 			// Search content
@@ -95,7 +96,7 @@ public static partial class Query
 					_ = clause.Append(" OR ");
 				}
 
-				_ = clause.Append($"{__(T.Post, p => p.Content)} {comparison} @{nameof(search)}");
+				_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Post, p => p.Content)} {comparison} @{nameof(search)}");
 			}
 
 			// Search excerpt
@@ -106,7 +107,7 @@ public static partial class Query
 					_ = clause.Append(" OR ");
 				}
 
-				_ = clause.Append($"{__(T.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
+				_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
 			}
 
 			// Return
@@ -224,7 +225,7 @@ public static partial class Query
 				_ = subQuery.Append(')');
 
 				// Add to sub-query, matching the number of terms
-				_ = taxonomyWhere.Append($"({subQuery}) = {taxonomy.Ids.Count}");
+				_ = taxonomyWhere.Append(CultureInfo.InvariantCulture, $"({subQuery}) = {taxonomy.Ids.Count}");
 
 				// Increase taxonomy name index
 				taxonomyNameIndex++;
@@ -287,7 +288,7 @@ public static partial class Query
 				);
 
 				// Add sub query to where
-				_ = customFieldWhere.Append($"({subQuery}) = 1");
+				_ = customFieldWhere.Append(CultureInfo.InvariantCulture, $"({subQuery}) = 1");
 
 				// Increase custom field index
 				customFieldIndex++;

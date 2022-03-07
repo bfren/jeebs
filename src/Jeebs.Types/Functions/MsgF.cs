@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace F;
@@ -79,6 +80,6 @@ public static class MsgF
 				+ new string('}', endGroup.Captures.Count);
 		});
 
-		return string.Format(rewrittenFormat, values.ToArray());
+		return string.Format(CultureInfo.InvariantCulture, rewrittenFormat, values.ToArray());
 	}
 }

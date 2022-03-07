@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Text;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Mapping;
 using Jeebs.Data.Querying;
@@ -52,24 +51,24 @@ public partial class PostgreSqlDbClient : DbClient
 				}
 		};
 
-		var sql = new StringBuilder($"SELECT {select} FROM {Escape(parts.From)}");
+		var sql = $"SELECT {select} FROM {Escape(parts.From)}";
 
 		// Add INNER JOIN
 		foreach (var (from, to) in parts.InnerJoin)
 		{
-			_ = sql.Append($" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			sql += $" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add LEFT JOIN
 		foreach (var (from, to) in parts.LeftJoin)
 		{
-			_ = sql.Append($" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			sql += $" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add RIGHT JOIN
 		foreach (var (from, to) in parts.RightJoin)
 		{
-			_ = sql.Append($" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			sql += $" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add WHERE
@@ -97,14 +96,14 @@ public partial class PostgreSqlDbClient : DbClient
 			// If there's anything to add, 
 			if (where.Count > 0)
 			{
-				_ = sql.Append($" WHERE {string.Join(" AND ", where)}");
+				sql += $" WHERE {string.Join(" AND ", where)}";
 			}
 		}
 
 		// Add ORDER BY
 		if (parts.SortRandom)
 		{
-			_ = sql.Append(" ORDER BY RAND()");
+			sql += " ORDER BY RAND()";
 		}
 		else if (parts.Sort.Count > 0)
 		{
@@ -114,7 +113,7 @@ public partial class PostgreSqlDbClient : DbClient
 				orderBy.Add($"{Escape(column.TblName, column.ColName)} {order.ToOperator()}");
 			}
 
-			_ = sql.Append($" ORDER BY {JoinList(orderBy, false)}");
+			sql += $" ORDER BY {JoinList(orderBy, false)}";
 		}
 
 		// Add LIMIT
@@ -123,21 +122,15 @@ public partial class PostgreSqlDbClient : DbClient
 			// Add OFFSET
 			if (parts.Skip > 0)
 			{
-				_ = sql.Append($" LIMIT {parts.Maximum} OFFSET {parts.Skip}");
+				sql += $" LIMIT {parts.Maximum} OFFSET {parts.Skip}";
 			}
 			else
 			{
-				_ = sql.Append($" LIMIT {parts.Maximum}");
+				sql += $" LIMIT {parts.Maximum}";
 			}
 		}
 
-		// Append semi-colon
-		_ = sql.Append(';');
-
 		// Return query string
-		return (
-			sql.ToString(),
-			parameters
-		);
+		return ($"{sql};", parameters);
 	}
 }

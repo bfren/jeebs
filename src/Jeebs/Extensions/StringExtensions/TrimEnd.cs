@@ -14,5 +14,12 @@ public static partial class StringExtensions
 	/// <param name="value">Value to trim</param>
 	/// <returns>String, with <paramref name="value"/> trimmed from the end</returns>
 	public static string TrimEnd(this string @this, string value) =>
-		@this.EndsWith(value) ? @this.Remove(@this.LastIndexOf(value, StringComparison.InvariantCulture)) : @this;
+		@this.EndsWith(value, StringComparison.InvariantCulture) switch
+		{
+			true =>
+				@this.Remove(@this.LastIndexOf(value, StringComparison.InvariantCulture)),
+
+			false =>
+				@this
+		};
 }

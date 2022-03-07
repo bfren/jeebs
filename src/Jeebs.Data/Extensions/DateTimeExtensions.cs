@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 
 namespace Jeebs.Data;
 
@@ -16,5 +17,5 @@ public static class DateTimeExtensions
 	/// <param name="this">DateTime object</param>
 	/// <returns>MySql Formatted string</returns>
 	public static string ToMySqlString(this DateTime @this) =>
-		@this.ToString("yyyy-MM-dd HH:mm:ss");
+		@this.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 }

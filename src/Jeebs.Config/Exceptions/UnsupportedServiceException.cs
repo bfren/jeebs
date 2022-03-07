@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 
 namespace Jeebs.Config;
 
@@ -24,7 +25,7 @@ public class UnsupportedServiceException : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="type">Service type</param>
-	public UnsupportedServiceException(string type) : base(string.Format(Format, type)) { }
+	public UnsupportedServiceException(string type) : base(string.Format(CultureInfo.InvariantCulture, Format, type)) { }
 
 	/// <summary>
 	/// Create exception

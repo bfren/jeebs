@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 
 namespace Jeebs.Config;
 
@@ -38,5 +39,5 @@ public class InvalidServiceConfigurationException : Exception
 	/// </summary>
 	/// <param name="name"></param>
 	/// <param name="type"></param>
-	public InvalidServiceConfigurationException(string name, Type type) : this(string.Format(Format, name, type)) { }
+	public InvalidServiceConfigurationException(string name, Type type) : this(string.Format(CultureInfo.InvariantCulture, Format, name, type)) { }
 }

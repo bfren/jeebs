@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Text;
 using Jeebs.Calendar.Models;
 using static F.CalendarF;
@@ -148,7 +149,7 @@ public class VCalendar : CalendarBase
 	/// <param name="dt">Date Time</param>
 	/// <param name="withTime">If true will include the time</param>
 	internal static string Format(DateTime dt, bool withTime = true) =>
-		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd");
+		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd", CultureInfo.InvariantCulture);
 
 	/// <summary>
 	/// Get Timezone information
