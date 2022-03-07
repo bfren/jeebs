@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Collections;
 using System.Collections.Generic;
 using Jeebs.Internals;
 
@@ -10,7 +11,7 @@ namespace Jeebs;
 /// Maybe Equality Comparer
 /// </summary>
 /// <typeparam name="T">Maybe value type</typeparam>
-public sealed class MaybeEqualityComparer<T> : IEqualityComparer<Maybe<T>>
+public sealed class MaybeEqualityComparer<T> : IEqualityComparer<Maybe<T>>, IEqualityComparer
 {
 	/// <summary>
 	/// Compare two <see cref="Maybe{T}"/> objects
@@ -36,4 +37,41 @@ public sealed class MaybeEqualityComparer<T> : IEqualityComparer<Maybe<T>>
 	/// <inheritdoc cref="Maybe{T}.GetHashCode"/>
 	public int GetHashCode(Maybe<T> obj) =>
 		obj.GetHashCode();
+
+	/// <inheritdoc cref="Equals(Maybe{T}?, Maybe{T}?)"/>
+	public new bool Equals(object? x, object? y)
+	{
+		if (x == y)
+		{
+			return true;
+		}
+
+		if (x == null || y == null)
+		{
+			return false;
+		}
+
+		if (x is Maybe<T> a && y is Maybe<T> b)
+		{
+			return Equals(a, b);
+		}
+
+		return false;
+	}
+
+	/// <inheritdoc cref="Maybe{T}.GetHashCode"/>
+	public int GetHashCode(object obj)
+	{
+		if (obj == null)
+		{
+			return 0;
+		}
+
+		if (obj is Maybe<T> x)
+		{
+			return GetHashCode(x);
+		}
+
+		throw new System.ArgumentException("", nameof(obj));
+	}
 }
