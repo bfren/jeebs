@@ -17,7 +17,7 @@ public static partial class StringExtensions
 			(maxLength > 0 && @this.Length > maxLength) switch
 			{
 				true =>
-					@this.Substring(0, maxLength) + continuation,
+					@this[..maxLength] + continuation,
 
 				false =>
 					@this
