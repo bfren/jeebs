@@ -15,22 +15,22 @@ public abstract class Driver<TConfig> : IDriver<TConfig>
 	/// <summary>
 	/// Driver name
 	/// </summary>
-	protected readonly string Name;
+	protected string Name { get; private init; }
 
 	/// <summary>
 	/// ILog
 	/// </summary>
-	protected readonly ILog Log;
+	protected ILog Log { get; private init; }
 
 	/// <summary>
 	/// Jeebs configuration
 	/// </summary>
-	protected readonly JeebsConfig JeebsConfig;
+	protected JeebsConfig JeebsConfig { get; private init; }
 
 	/// <summary>
 	/// Service configuration
 	/// </summary>
-	protected readonly TConfig ServiceConfig;
+	protected TConfig ServiceConfig { get; private init; }
 
 	/// <summary>
 	/// Create object

@@ -27,37 +27,37 @@ public abstract class MvcApp : WebApp
 	/// <summary>
 	/// If true, routing will be set to append a trailing slash
 	/// </summary>
-	protected readonly bool appendTrailingSlash = true;
+	protected bool AppendTrailingSlash { get; init; } = true;
 
 	/// <summary>
 	/// If true, routing will force URLs to be lowercase
 	/// </summary>
-	protected readonly bool lowercaseUrls = true;
+	protected bool LowercaseUrls { get; init; } = true;
 
 	/// <summary>
 	/// If true, authorisation support will be enabled (default: disabled)
 	/// </summary>
-	protected readonly bool enableAuthorisation;
+	protected bool EnableAuthorisation { get; init; }
 
 	/// <summary>
 	/// If true, session support will be enabled (default: disabled)
 	/// </summary>
-	protected readonly bool enableSession;
+	protected bool EnableSession { get; init; }
 
 	/// <summary>
 	/// CookiePolicyOptions
 	/// </summary>
-	protected readonly CookiePolicyOptions cookiePolicyOptions = new();
+	protected CookiePolicyOptions CookiePolicyOptions { get; init; } = new();
 
 	/// <summary>
 	/// [Optional] JsonSerializerOptions
 	/// </summary>
-	protected readonly JsonSerializerOptions? jsonSerialiserOptions;
+	protected JsonSerializerOptions? JsonSerialiserOptions { get; init; }
 
 	/// <summary>
 	/// Whether or not static files have been enabled
 	/// </summary>
-	protected bool staticFilesAreEnabled;
+	protected bool StaticFilesAreEnabled { get; private set; }
 
 	/// <summary>
 	/// Create object
@@ -124,7 +124,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServicesAuthorisation(IServiceCollection services)
 	{
-		if (enableAuthorisation)
+		if (EnableAuthorisation)
 		{
 			_ = services.AddAuthorization();
 		}
@@ -138,8 +138,8 @@ public abstract class MvcApp : WebApp
 	{
 		_ = services.AddRouting(opt =>
 		  {
-			  opt.AppendTrailingSlash = appendTrailingSlash;
-			  opt.LowercaseUrls = lowercaseUrls;
+			  opt.AppendTrailingSlash = AppendTrailingSlash;
+			  opt.LowercaseUrls = LowercaseUrls;
 		  });
 	}
 
@@ -149,7 +149,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServicesSession(IServiceCollection services)
 	{
-		if (enableSession)
+		if (EnableSession)
 		{
 			_ = services.AddSession();
 		}
@@ -193,16 +193,16 @@ public abstract class MvcApp : WebApp
 		var defaultOptions = F.JsonF.CopyOptions();
 
 		// Set options
-		opt.JsonSerializerOptions.DefaultIgnoreCondition = (jsonSerialiserOptions ?? defaultOptions).DefaultIgnoreCondition;
-		opt.JsonSerializerOptions.PropertyNamingPolicy = (jsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
-		opt.JsonSerializerOptions.DictionaryKeyPolicy = (jsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
-		opt.JsonSerializerOptions.NumberHandling = (jsonSerialiserOptions ?? defaultOptions).NumberHandling;
+		opt.JsonSerializerOptions.DefaultIgnoreCondition = (JsonSerialiserOptions ?? defaultOptions).DefaultIgnoreCondition;
+		opt.JsonSerializerOptions.PropertyNamingPolicy = (JsonSerialiserOptions ?? defaultOptions).PropertyNamingPolicy;
+		opt.JsonSerializerOptions.DictionaryKeyPolicy = (JsonSerialiserOptions ?? defaultOptions).DictionaryKeyPolicy;
+		opt.JsonSerializerOptions.NumberHandling = (JsonSerialiserOptions ?? defaultOptions).NumberHandling;
 
 		// Set converters
 		opt.JsonSerializerOptions.Converters.Clear();
-		if (jsonSerialiserOptions?.Converters.Count > 0)
+		if (JsonSerialiserOptions?.Converters.Count > 0)
 		{
-			add(jsonSerialiserOptions.Converters);
+			add(JsonSerialiserOptions.Converters);
 		}
 		else
 		{
@@ -286,7 +286,7 @@ public abstract class MvcApp : WebApp
 	protected virtual void ConfigureStaticFiles(IHostEnvironment env, IApplicationBuilder app)
 	{
 		// Check whether or not they have already been enabled
-		if (staticFilesAreEnabled)
+		if (StaticFilesAreEnabled)
 		{
 			return;
 		}
@@ -307,7 +307,7 @@ public abstract class MvcApp : WebApp
 			});
 		}
 
-		staticFilesAreEnabled = true;
+		StaticFilesAreEnabled = true;
 	}
 
 	/// <summary>
@@ -316,7 +316,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="app"></param>
 	protected virtual void ConfigureCookiePolicy(IApplicationBuilder app)
 	{
-		_ = app.UseCookiePolicy(cookiePolicyOptions);
+		_ = app.UseCookiePolicy(CookiePolicyOptions);
 	}
 
 	/// <summary>
@@ -360,7 +360,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="config">IConfiguration</param>
 	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
-		if (enableAuthorisation)
+		if (EnableAuthorisation)
 		{
 			_ = app.UseAuthorization();
 		}
@@ -372,7 +372,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="app">IApplicationBuilder</param>
 	protected virtual void ConfigureSession(IApplicationBuilder app)
 	{
-		if (enableSession)
+		if (EnableSession)
 		{
 			_ = app.UseSession();
 		}

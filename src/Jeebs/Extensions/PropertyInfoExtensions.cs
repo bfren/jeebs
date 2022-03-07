@@ -29,7 +29,11 @@ namespace System.Runtime.CompilerServices
 		/// <summary>
 		/// Nullable Flags
 		/// </summary>
+#pragma warning disable CA1051 // Do not declare visible instance fields
+#pragma warning disable IDE1006 // Naming Styles
 		public readonly byte[] NullableFlags;
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
 		/// <summary>
 		/// Create object
