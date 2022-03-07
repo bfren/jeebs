@@ -13,12 +13,12 @@ public static partial class MaybeF
 	/// Unwrap the value of <paramref name="maybe"/> - if it is a <see cref="Jeebs.Internals.Some{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Maybe value type</typeparam>
-	/// <typeparam name="U">Single value type</typeparam>
+	/// <typeparam name="TSingle">Single value type</typeparam>
 	/// <param name="maybe">Input Maybe</param>
 	/// <param name="unwrap">Fluent unwrap function</param>
-	public static async Task<U> UnwrapAsync<T, U>(
+	public static async Task<TSingle> UnwrapAsync<T, TSingle>(
 		Task<Maybe<T>> maybe,
-		Func<FluentUnwrapAsync<T>, U> unwrap
+		Func<FluentUnwrapAsync<T>, TSingle> unwrap
 	) =>
 		unwrap(new FluentUnwrapAsync<T>(await maybe.ConfigureAwait(false)));
 
@@ -46,7 +46,7 @@ public static partial class MaybeF
 			Unwrap(maybe, ifNone);
 
 		/// <inheritdoc cref="UnwrapSingle{T, U}(Maybe{T}, Func{Msg}?, Func{Msg}?, Func{Msg}?)"/>
-		public Maybe<U> SingleValue<U>(Func<Msg>? noItems = null, Func<Msg>? tooMany = null, Func<Msg>? notAList = null) =>
-			UnwrapSingle<T, U>(maybe, noItems, tooMany, notAList);
+		public Maybe<TSingle> SingleValue<TSingle>(Func<Msg>? noItems = null, Func<Msg>? tooMany = null, Func<Msg>? notAList = null) =>
+			UnwrapSingle<T, TSingle>(maybe, noItems, tooMany, notAList);
 	}
 }

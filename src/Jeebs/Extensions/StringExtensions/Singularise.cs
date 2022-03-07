@@ -13,7 +13,7 @@ public static partial class StringExtensions
 	/// Rules for converting plural words into singular words
 	/// This comes from http://lotsacode.wordpress.com/2010/03/05/singularization-pluralization-in-c/
 	/// </summary>
-	private static readonly IDictionary<string, string> singularisations = new Dictionary<string, string>
+	private static readonly IDictionary<string, string> Singularisations = new Dictionary<string, string>
 	{
 		{ "people", "person" },
 		{ "oxen", "ox" },
@@ -50,7 +50,7 @@ public static partial class StringExtensions
 		}
 
 		var singular = @this;
-		foreach (var item in singularisations)
+		foreach (var item in Singularisations)
 		{
 			if (Regex.IsMatch(@this, item.Key))
 			{

@@ -50,35 +50,35 @@ public sealed record class Taxonomy : Enumerated
 	/// List of all taxonomies
 	/// Must be static so it is thread safe
 	/// </summary>
-	private static readonly HashSet<Taxonomy> all;
+	private static HashSet<Taxonomy> All { get; }
 
 	internal static HashSet<Taxonomy> AllTest() =>
-		all;
+		All;
 
 	/// <summary>
 	/// Populate list of taxonomies
 	/// </summary>
 	static Taxonomy() =>
-		all = new HashSet<Taxonomy>(new[] { PostCategory, PostTag, LinkCategory, NavMenu });
+		All = new HashSet<Taxonomy>(new[] { PostCategory, PostTag, LinkCategory, NavMenu });
 
 	/// <summary>
 	/// Add a custom taxonomy
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to add</param>
 	public static bool AddCustomTaxonomy(Taxonomy taxonomy) =>
-		all.Add(taxonomy);
+		All.Add(taxonomy);
 
 	/// <summary>
 	/// Parse Taxonomy value name
 	/// </summary>
 	/// <param name="name">Value name</param>
 	public static Taxonomy Parse(string name) =>
-		Parse(name, all.ToArray()).Unwrap(() => Blank);
+		Parse(name, All.ToArray()).Unwrap(() => Blank);
 
 	/// <summary>
 	/// Returns whether or not the specified taxonomy has been registered
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to check</param>
 	public static bool IsRegistered(Taxonomy taxonomy) =>
-		IsRegistered(taxonomy.ToString(), all.ToArray());
+		IsRegistered(taxonomy.ToString(), All.ToArray());
 }

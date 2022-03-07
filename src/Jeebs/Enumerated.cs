@@ -52,13 +52,13 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Thread-safe parser cache
 	/// </summary>
-	private static readonly ConcurrentDictionary<string, object> cache;
+	private static ConcurrentDictionary<string, object> Cache { get; }
 
 	/// <summary>
 	/// Create cache object
 	/// </summary>
 	static Enumerated() =>
-		cache = new ConcurrentDictionary<string, object>();
+		Cache = new ConcurrentDictionary<string, object>();
 
 	/// <summary>
 	/// Check whether or not the specified name matches the given value
@@ -85,7 +85,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="values">Enum values to check name against</param>
 	protected static Maybe<T> Parse<T>(string name, T[] values)
 		where T : Enumerated =>
-		(Maybe<T>)cache.GetOrAdd(
+		(Maybe<T>)Cache.GetOrAdd(
 			$"{typeof(T)}-{name}",
 			(_, args) =>
 			{
@@ -124,12 +124,12 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		/// <summary>
 		/// Enum name to parse
 		/// </summary>
-		public readonly string Name;
+		public string Name { get; private init; }
 
 		/// <summary>
 		/// Enum values to test Name against
 		/// </summary>
-		public readonly T[] Values;
+		public T[] Values { get; private init; }
 
 		/// <summary>
 		/// Create object

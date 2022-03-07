@@ -14,7 +14,7 @@ public static partial class StringExtensions
 	/// This comes from https://mattgrande.wordpress.com/2009/10/28/pluralization-helper-for-c/
 	/// and https://github.com/mattgrande/Grande.Pluralizer/blob/master/Grande.Pluralization/Pluralizer.cs
 	/// </summary>
-	private static readonly IDictionary<string, string> pluralisations = new Dictionary<string, string>
+	private static readonly IDictionary<string, string> Pluralisations = new Dictionary<string, string>
 	{
 		{ "person", "people" },
 		{ "ox$", "oxen" },
@@ -57,7 +57,7 @@ public static partial class StringExtensions
 		}
 
 		var plural = @this;
-		foreach (var pluralisation in pluralisations)
+		foreach (var pluralisation in Pluralisations)
 		{
 			if (Regex.IsMatch(@this, pluralisation.Key))
 			{

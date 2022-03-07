@@ -13,7 +13,7 @@ namespace Jeebs;
 /// </summary>
 public readonly record struct DateTimeInt
 {
-	private const string format = "000000000000";
+	private const string Format = "000000000000";
 
 	/// <summary>
 	/// Year
@@ -80,7 +80,7 @@ public readonly record struct DateTimeInt
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(format, CultureInfo.InvariantCulture));
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(Format, CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>
@@ -107,7 +107,7 @@ public readonly record struct DateTimeInt
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				0.ToString(format, CultureInfo.InvariantCulture)
+				0.ToString(Format, CultureInfo.InvariantCulture)
 		};
 
 	/// <summary>

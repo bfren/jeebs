@@ -17,19 +17,19 @@ public static class JsonF
 	/// <summary>
 	/// Empty JSON
 	/// </summary>
-	public static readonly string Empty = "\"\"";
+	public static string Empty { get; } = "\"\"";
 
 	/// <summary>
 	/// Default JsonSerializerOptions
 	/// </summary>
-	private static readonly JsonSerializerOptions options;
+	private static JsonSerializerOptions Options { get; }
 
 	/// <summary>
 	/// Define default settings
 	/// </summary>
 	static JsonF()
 	{
-		options = new JsonSerializerOptions
+		Options = new JsonSerializerOptions
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.Never,
 			DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
@@ -37,10 +37,10 @@ public static class JsonF
 			NumberHandling = JsonNumberHandling.AllowReadingFromString
 		};
 
-		options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-		options.Converters.Add(new Internals.EnumeratedConverterFactory());
-		options.Converters.Add(new Internals.OptionConverterFactory());
-		options.Converters.Add(new Internals.StrongIdConverterFactory());
+		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+		Options.Converters.Add(new Internals.EnumeratedConverterFactory());
+		Options.Converters.Add(new Internals.OptionConverterFactory());
+		Options.Converters.Add(new Internals.StrongIdConverterFactory());
 	}
 
 	/// <summary>
@@ -50,13 +50,13 @@ public static class JsonF
 	{
 		var copy = new JsonSerializerOptions
 		{
-			DefaultIgnoreCondition = options.DefaultIgnoreCondition,
-			DictionaryKeyPolicy = options.DictionaryKeyPolicy,
-			PropertyNamingPolicy = options.PropertyNamingPolicy,
-			NumberHandling = options.NumberHandling
+			DefaultIgnoreCondition = Options.DefaultIgnoreCondition,
+			DictionaryKeyPolicy = Options.DictionaryKeyPolicy,
+			PropertyNamingPolicy = Options.PropertyNamingPolicy,
+			NumberHandling = Options.NumberHandling
 		};
 
-		foreach (var item in options.Converters)
+		foreach (var item in Options.Converters)
 		{
 			copy.Converters.Add(item);
 		}
@@ -85,7 +85,7 @@ public static class JsonF
 
 	/// <inheritdoc cref="Serialise{T}(T, JsonSerializerOptions)"/>
 	public static Maybe<string> Serialise<T>(T obj) =>
-		Serialise(obj, options);
+		Serialise(obj, Options);
 
 	/// <summary>
 	/// Use JsonSerializer to deserialise a given string into a given object type
@@ -121,7 +121,7 @@ public static class JsonF
 
 	/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
 	public static Maybe<T> Deserialise<T>(string str) =>
-		Deserialise<T>(str, options);
+		Deserialise<T>(str, Options);
 
 	/// <summary>
 	/// Return lower-case boolean string

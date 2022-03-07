@@ -55,28 +55,28 @@ public sealed record class PostType : Enumerated
 	/// List of all post types
 	/// Must be static so it is thread safe
 	/// </summary>
-	private static readonly HashSet<PostType> all;
+	private static HashSet<PostType> All { get; }
 
 	internal static HashSet<PostType> AllTest() =>
-		all;
+		All;
 
 	/// <summary>
 	/// Populate set of post types
 	/// </summary>
 	static PostType() =>
-		all = new HashSet<PostType>(new[] { Post, Page, Revision, Attachment, MenuItem, AdvancedCustomField });
+		All = new HashSet<PostType>(new[] { Post, Page, Revision, Attachment, MenuItem, AdvancedCustomField });
 
 	/// <summary>
 	/// Add a custom post type
 	/// </summary>
 	/// <param name="type">PostType to add</param>
 	public static bool AddCustomPostType(PostType type) =>
-		all.Add(type);
+		All.Add(type);
 
 	/// <summary>
 	/// Parse PostType value name
 	/// </summary>
 	/// <param name="name">Value name</param>
 	public static PostType Parse(string name) =>
-		Parse(name, all.ToArray()).Unwrap(() => Post);
+		Parse(name, All.ToArray()).Unwrap(() => Post);
 }

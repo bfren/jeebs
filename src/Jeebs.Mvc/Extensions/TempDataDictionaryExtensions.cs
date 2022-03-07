@@ -12,21 +12,21 @@ namespace Jeebs.Mvc;
 /// </summary>
 public static class TempDataDictionaryExtensions
 {
-	private const string alertsKey = "JeebsAlerts";
+	private const string AlertsKey = "JeebsAlerts";
 
 	/// <summary>
 	/// Returns whether or not the TempDataDictionary has any pending alerts
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	public static bool HasAlerts(this ITempDataDictionary @this) =>
-		@this.Peek(alertsKey) != null;
+		@this.Peek(AlertsKey) != null;
 
 	/// <summary>
 	/// Get all alerts
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	public static List<Alert> GetAlerts(this ITempDataDictionary @this) =>
-		@this.TryGetValue(alertsKey, out var value) switch
+		@this.TryGetValue(AlertsKey, out var value) switch
 		{
 			true when value is string alerts =>
 				F.JsonF.Deserialise<List<Alert>>(alerts).Unwrap(() => new List<Alert>()),
@@ -78,6 +78,6 @@ public static class TempDataDictionaryExtensions
 		var alerts = GetAlerts(tempData);
 		alerts.Insert(0, new Alert(messageType, message));
 
-		tempData.Add(alertsKey, F.JsonF.Serialise(alerts).Unwrap(F.JsonF.Empty));
+		tempData.Add(AlertsKey, F.JsonF.Serialise(alerts).Unwrap(F.JsonF.Empty));
 	}
 }
