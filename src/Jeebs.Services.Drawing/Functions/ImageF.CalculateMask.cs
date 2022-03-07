@@ -27,7 +27,6 @@ public static partial class ImageF
 	/// <param name="imgHeight">Original image height</param>
 	/// <param name="maskWidth">Mask width</param>
 	/// <param name="maskHeight">Mask height</param>
-	/// <returns>Rectangle to grab the correct portion of the original image, to be resized</returns>
 	public static Rectangle CalculateMask(double imgWidth, double imgHeight, double maskWidth, double maskHeight)
 	{
 		// Calculation variables

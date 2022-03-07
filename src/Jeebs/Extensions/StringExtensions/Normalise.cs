@@ -11,7 +11,6 @@ public static partial class StringExtensions
 	/// Normalise a string by making it lowercase, stripping all non-letters and replacing spaces with -
 	/// </summary>
 	/// <param name="this">String to perform operation on</param>
-	/// <returns>Normalised string</returns>
 	public static string Normalise(this string @this) =>
 		Modify(@this, () =>
 		{

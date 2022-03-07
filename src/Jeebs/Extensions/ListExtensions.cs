@@ -83,7 +83,6 @@ public static class ListExtensions
 	/// <typeparam name="T">Object Type</typeparam>
 	/// <param name="this">The list of Bible Books</param>
 	/// <param name="getName">Function to return name of Bible Book</param>
-	/// <returns>Sorted list of Bible Books</returns>
 	public static void SortBibleBooks<T>(this List<T> @this, Func<T, string> getName)
 	{
 		// If empty list, do nothing

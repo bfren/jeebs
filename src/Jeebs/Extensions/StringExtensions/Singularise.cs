@@ -42,7 +42,6 @@ public static partial class StringExtensions
 	/// 'Singularise' a string
 	/// </summary>
 	/// <param name="this">The string to singularise</param>
-	/// <returns>Singularised string</returns>
 	public static string Singularise(this string @this)
 	{
 		if (UnPluralisables.All.Contains(@this.ToLowerInvariant()))

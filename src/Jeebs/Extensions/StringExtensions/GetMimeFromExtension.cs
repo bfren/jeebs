@@ -9,7 +9,6 @@ public static partial class StringExtensions
 	/// Parse the Mime Type of a filename using its extension
 	/// </summary>
 	/// <param name="this">String object</param>
-	/// <returns>Mime Type, or 'application/octet-stream' if it cannot be detected</returns>
 	public static string GetMimeFromExtension(this string @this) =>
 		Modify(@this, () =>
 		{

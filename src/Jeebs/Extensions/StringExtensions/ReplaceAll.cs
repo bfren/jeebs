@@ -11,7 +11,6 @@ public static partial class StringExtensions
 	/// <param name="this">String to perform operation on</param>
 	/// <param name="replace">Array of strings to replace</param>
 	/// <param name="with">String to replace occurrences with</param>
-	/// <returns>String with all strings in the array replaced</returns>
 	public static string ReplaceAll(this string @this, string[] replace, string with) =>
 		Modify(@this, () =>
 		{

@@ -58,7 +58,6 @@ public class PropertyInfo<TObject, TProperty>
 	/// Get the value of the property from the specified object
 	/// </summary>
 	/// <param name="obj">Object</param>
-	/// <returns>Property value</returns>
 	/// <exception cref="ArgumentNullException"></exception>
 	/// <exception cref="InvalidOperationException"></exception>
 	public TProperty Get(TObject obj)

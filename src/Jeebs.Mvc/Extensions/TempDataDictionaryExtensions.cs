@@ -18,7 +18,6 @@ public static class TempDataDictionaryExtensions
 	/// Returns whether or not the TempDataDictionary has any pending alerts
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
-	/// <returns>True if the TempDataDictionary has any pending alerts</returns>
 	public static bool HasAlerts(this ITempDataDictionary @this) =>
 		@this.Peek(alertsKey) != null;
 
@@ -26,7 +25,6 @@ public static class TempDataDictionaryExtensions
 	/// Get all alerts
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
-	/// <returns>List of alerts</returns>
 	public static List<Alert> GetAlerts(this ITempDataDictionary @this) =>
 		@this.TryGetValue(alertsKey, out var value) switch
 		{

@@ -15,7 +15,6 @@ public sealed class PostTypeTypeHandler : EnumeratedTypeHandler<PostType>
 	/// Parse the PostType value
 	/// </summary>
 	/// <param name="value">Database table value</param>
-	/// <returns>PostType object</returns>
 	public override PostType Parse(object value) =>
 		Parse(value, PostType.Parse, PostType.Post);
 }

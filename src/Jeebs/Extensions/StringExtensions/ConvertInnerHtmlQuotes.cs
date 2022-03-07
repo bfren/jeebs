@@ -12,7 +12,6 @@ public static partial class StringExtensions
 	/// Convert straight quotes to curly quotes, but not inside HTML tags / attributes
 	/// </summary>
 	/// <param name="this">Input string</param>
-	/// <returns>IHtmlContent with curly quotes</returns>
 	public static string ConvertInnerHtmlQuotes(this string @this) =>
 		Modify(@this, () =>
 		{

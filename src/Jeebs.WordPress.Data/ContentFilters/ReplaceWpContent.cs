@@ -18,7 +18,6 @@ public sealed class ReplaceWpContent : ContentFilter
 	/// </summary>
 	/// <param name="from">Search URL</param>
 	/// <param name="to">Replacement URL</param>
-	/// <returns>IContentFilter</returns>
 	public static ContentFilter Create(string from, string to) =>
 		new ReplaceWpContent(content => content.Replace(from, to));
 }

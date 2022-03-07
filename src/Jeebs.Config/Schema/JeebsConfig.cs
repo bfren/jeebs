@@ -54,7 +54,6 @@ public sealed record class JeebsConfig
 	/// If key starts with ':', add Jeebs config prefix
 	/// </summary>
 	/// <param name="key">Section key</param>
-	/// <returns>Full config key</returns>
 	public static string GetKey(string key) =>
 		key.StartsWith(":") ? Key + key : key;
 }

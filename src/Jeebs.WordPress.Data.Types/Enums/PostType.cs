@@ -70,7 +70,6 @@ public sealed record class PostType : Enumerated
 	/// Add a custom post type
 	/// </summary>
 	/// <param name="type">PostType to add</param>
-	/// <returns>False if the post type already exists</returns>
 	public static bool AddCustomPostType(PostType type) =>
 		all.Add(type);
 
@@ -78,7 +77,6 @@ public sealed record class PostType : Enumerated
 	/// Parse PostType value name
 	/// </summary>
 	/// <param name="name">Value name</param>
-	/// <returns>PostType object</returns>
 	public static PostType Parse(string name) =>
 		Parse(name, all.ToArray()).Unwrap(() => Post);
 }

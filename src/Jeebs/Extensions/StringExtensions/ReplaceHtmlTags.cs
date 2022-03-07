@@ -12,7 +12,6 @@ public static partial class StringExtensions
 	/// </summary>
 	/// <param name="this">The input string</param>
 	/// <param name="replaceWith">String to replace HTML tags with</param>
-	/// <returns>Input string with all HTML tags removed</returns>
 	public static string ReplaceHtmlTags(this string @this, string? replaceWith) =>
 		Modify(@this, () =>
 		{

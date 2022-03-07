@@ -44,7 +44,6 @@ public static partial class StringExtensions
 	/// </summary>
 	/// <param name="this">The string to pluralise</param>
 	/// <param name="count">The number of items</param>
-	/// <returns>Pluralised string</returns>
 	public static string Pluralise(this string @this, long count)
 	{
 		if (count == 1)

@@ -28,14 +28,12 @@ public interface ILog
 	/// Whether or not the log will write for the specified Level
 	/// </summary>
 	/// <param name="level">LogLevel</param>
-	/// <returns>True if the log will write at this level</returns>
 	bool IsEnabled(LogLevel level);
 
 	/// <summary>
 	/// Whether or not the log will write for the specified Level
 	/// </summary>
 	/// <param name="level">LogLevel</param>
-	/// <returns>True if the log will write at this level</returns>
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>

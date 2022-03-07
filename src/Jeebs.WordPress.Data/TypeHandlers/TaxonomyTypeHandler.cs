@@ -15,7 +15,6 @@ public sealed class TaxonomyTypeHandler : EnumeratedTypeHandler<Taxonomy>
 	/// Parse the Taxonomy value
 	/// </summary>
 	/// <param name="value">Database table value</param>
-	/// <returns>Taxonomy object</returns>
 	public override Taxonomy Parse(object value) =>
 		Parse(value, Taxonomy.Parse, Taxonomy.Blank);
 }

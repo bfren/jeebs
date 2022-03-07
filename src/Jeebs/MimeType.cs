@@ -135,7 +135,6 @@ public record class MimeType : Enumerated
 	/// Add a custom mime types
 	/// </summary>
 	/// <param name="mimeType">Mime types to add</param>
-	/// <returns>False if the mime type already exists</returns>
 	public static bool AddCustomMimeType(MimeType mimeType) =>
 		all.Add(mimeType);
 

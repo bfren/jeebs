@@ -136,7 +136,6 @@ public static class PhpF
 	/// Deserialise object
 	/// </summary>
 	/// <param name="str">Serialised string</param>
-	/// <returns>Deserialised object</returns>
 	public static object Deserialise(string str)
 	{
 		pointer = 0;

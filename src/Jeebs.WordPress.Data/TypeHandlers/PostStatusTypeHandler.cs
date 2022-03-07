@@ -15,7 +15,6 @@ public sealed class PostStatusTypeHandler : EnumeratedTypeHandler<PostStatus>
 	/// Parse the PostStatus value
 	/// </summary>
 	/// <param name="value">Database table value</param>
-	/// <returns>PostStatus object</returns>
 	public override PostStatus Parse(object value) =>
 		Parse(value, PostStatus.Parse, PostStatus.Draft);
 }

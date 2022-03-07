@@ -16,7 +16,6 @@ public static class ArrayExtensions
 	/// <typeparam name="T">Type</typeparam>
 	/// <param name="this">Original array</param>
 	/// <param name="additionalItems">Additional items</param>
-	/// <returns>Extended array</returns>
 	public static T[] ExtendWith<T>(this T[] @this, params T[] additionalItems)
 	{
 		if (additionalItems is null || additionalItems.Length == 0)

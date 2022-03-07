@@ -12,7 +12,6 @@ public static partial class StringExtensions
 	/// </summary>
 	/// <param name="this">The input string</param>
 	/// <param name="replaceWith">String to replace non-numerical characters with</param>
-	/// <returns>Input string with all non-numerical characters removed</returns>
 	public static string ReplaceNonNumerical(this string @this, string? replaceWith) =>
 		Modify(@this, () =>
 		{

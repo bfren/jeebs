@@ -11,7 +11,6 @@ public static partial class StringExtensions
 	/// Converts a string to Title Case (ignoring acronyms)
 	/// </summary>
 	/// <param name="this">String object</param>
-	/// <returns>String converted to Title Case</returns>
 	public static string ToTitleCase(this string @this) =>
 		Modify(@this, () =>
 		{

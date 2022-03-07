@@ -15,7 +15,6 @@ public static class DateTimeExtensions
 	/// Return midnight on the specified day
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>Start of the specified day</returns>
 	public static DateTime StartOfDay(this DateTime @this) =>
 		new(@this.Year, @this.Month, @this.Day, 0, 0, 0);
 
@@ -23,7 +22,6 @@ public static class DateTimeExtensions
 	/// Return one second to midnight on the specified day
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>End of the specified day</returns>
 	public static DateTime EndOfDay(this DateTime @this) =>
 		new(@this.Year, @this.Month, @this.Day, 23, 59, 59);
 
@@ -31,7 +29,6 @@ public static class DateTimeExtensions
 	/// Return midnight on the first day of the week for the specified date
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>First day of the specified week</returns>
 	public static DateTime FirstDayOfWeek(this DateTime @this)
 	{
 		// Get the day of the week and subtract from the current day
@@ -43,7 +40,6 @@ public static class DateTimeExtensions
 	/// Return one minute to midnight on the last day of the week for the specified date
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>Last day of the specified week</returns>
 	public static DateTime LastDayOfWeek(this DateTime @this)
 	{
 		// Get the day of the week and subtract from the current day
@@ -55,7 +51,6 @@ public static class DateTimeExtensions
 	/// Return midnight on the first day of the month for the specified date
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>First day of the month, at midnight</returns>
 	public static DateTime FirstDayOfMonth(this DateTime @this) =>
 		new(@this.Year, @this.Month, 1, 0, 0, 0);
 
@@ -63,7 +58,6 @@ public static class DateTimeExtensions
 	/// Return one minute to midnight on the last day of the month for the specified date
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>Last day of the month, at one minute to midnight</returns>
 	public static DateTime LastDayOfMonth(this DateTime @this) =>
 		new DateTime(@this.Year, @this.Month, 1, 23, 59, 59).AddMonths(1).AddDays(-1);
 
@@ -71,7 +65,6 @@ public static class DateTimeExtensions
 	/// Return a standard format date/time value (HH:mm dd/MM/yyyy)
 	/// </summary>
 	/// <param name="this">DateTime object</param>
-	/// <returns>Standard Formatted string</returns>
 	public static string ToStandardString(this DateTime @this) =>
 		@this.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture);
 }

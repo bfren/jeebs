@@ -12,7 +12,6 @@ public static partial class StringExtensions
 	/// </summary>
 	/// <param name="this">String to perform operation on</param>
 	/// <param name="replaceWith">String to replace unwanted characters with</param>
-	/// <returns>String with unwanted characters replaced</returns>
 	public static string ReplaceNonWord(this string @this, string? replaceWith) =>
 		Modify(@this, () =>
 		{

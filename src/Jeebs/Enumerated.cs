@@ -83,7 +83,6 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
 	/// <param name="values">Enum values to check name against</param>
-	/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
 	protected static Maybe<T> Parse<T>(string name, T[] values)
 		where T : Enumerated =>
 		(Maybe<T>)cache.GetOrAdd(

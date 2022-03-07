@@ -70,7 +70,6 @@ public static class JsonF
 	/// <typeparam name="T">Object Type to be serialised</typeparam>
 	/// <param name="obj">The object to serialise</param>
 	/// <param name="options">JsonSerializerOptions</param>
-	/// <returns>Json String of serialised object</returns>
 	public static Maybe<string> Serialise<T>(T obj, JsonSerializerOptions options) =>
 		obj switch
 		{
@@ -94,7 +93,6 @@ public static class JsonF
 	/// <typeparam name="T">The type of the object to return</typeparam>
 	/// <param name="str">The string to deserialise</param>
 	/// <param name="options">JsonSerializerOptions</param>
-	/// <returns>Deserialised object of given type</returns>
 	public static Maybe<T> Deserialise<T>(string str, JsonSerializerOptions options)
 	{
 		// Check for null string

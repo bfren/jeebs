@@ -60,7 +60,6 @@ public static class CryptoF
 	/// <summary>
 	/// Generate a 32 byte key to use for encryption
 	/// </summary>
-	/// <returns>32 byte key</returns>
 	public static Maybe<byte[]> GenerateKey() =>
 		Some(
 			() => SecretBox.GenerateKey(),
@@ -70,7 +69,6 @@ public static class CryptoF
 	/// <summary>
 	/// Generate a 24 byte nonce to use for encryption
 	/// </summary>
-	/// <returns>24 byte nonce</returns>
 	public static byte[] GenerateNonce() =>
 		SecretBox.GenerateNonce();
 

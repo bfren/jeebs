@@ -32,7 +32,6 @@ public sealed record class CommentType : Enumerated
 	/// Parse CommentType value name
 	/// </summary>
 	/// <param name="name">Value name</param>
-	/// <returns>CommentType object</returns>
 	public static CommentType Parse(string name) =>
 		Parse(name, values: new[] { Blank, Pingback }).Unwrap(() => Blank);
 }

@@ -65,7 +65,6 @@ public sealed record class Taxonomy : Enumerated
 	/// Add a custom taxonomy
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to add</param>
-	/// <returns>False if the taxonomy already exists</returns>
 	public static bool AddCustomTaxonomy(Taxonomy taxonomy) =>
 		all.Add(taxonomy);
 
@@ -73,7 +72,6 @@ public sealed record class Taxonomy : Enumerated
 	/// Parse Taxonomy value name
 	/// </summary>
 	/// <param name="name">Value name</param>
-	/// <returns>Taxonomy object</returns>
 	public static Taxonomy Parse(string name) =>
 		Parse(name, all.ToArray()).Unwrap(() => Blank);
 

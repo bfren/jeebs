@@ -62,7 +62,6 @@ public readonly record struct DateRange : IRange<DateTime>
 	/// Open-started Date Range object ending at end date
 	/// </summary>
 	/// <param name="end">End date</param>
-	/// <returns>DateRange object</returns>
 	public static DateRange UpTo(DateTime end) =>
 		new(DateTime.MinValue, end);
 
@@ -70,7 +69,6 @@ public readonly record struct DateRange : IRange<DateTime>
 	/// Open-ended Date Range beginning at start date
 	/// </summary>
 	/// <param name="start">Start date</param>
-	/// <returns>DateRange object</returns>
 	public static DateRange From(DateTime start) =>
 		new(start, DateTime.MaxValue);
 

@@ -15,7 +15,6 @@ public sealed class CommentTypeTypeHandler : EnumeratedTypeHandler<CommentType>
 	/// Parse the CommentType value
 	/// </summary>
 	/// <param name="value">Database table value</param>
-	/// <returns>CommentType object</returns>
 	public override CommentType Parse(object value) =>
 		Parse(value, CommentType.Parse, CommentType.Blank);
 }

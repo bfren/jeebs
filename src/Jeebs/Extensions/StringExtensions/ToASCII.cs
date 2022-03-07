@@ -13,7 +13,6 @@ public static partial class StringExtensions
 	/// Warning: this only works with ASCII 'Printable' characters (32->126), NOT 'Extended' characters
 	/// </summary>
 	/// <param name="this">The input string</param>
-	/// <returns>ASCII-encoded String</returns>
 	public static string ToASCII(this string @this) =>
 		Modify(@this, () =>
 		{

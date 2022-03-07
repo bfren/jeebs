@@ -15,7 +15,6 @@ public static class StringExtensionsVerifyPassword
 	/// </summary>
 	/// <param name="this">Password hash</param>
 	/// <param name="password">Password to verify</param>
-	/// <returns>Whether or not the password is valid</returns>
 	public static bool VerifyPassword(this string @this, string password)
 	{
 		if (string.IsNullOrEmpty(@this))

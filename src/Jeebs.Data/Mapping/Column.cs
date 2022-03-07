@@ -29,7 +29,6 @@ public partial record class Column(ITableName TblName, string ColName, string Co
 		/// </summary>
 		/// <param name="x">IColumn 1</param>
 		/// <param name="y">IColumn 2</param>
-		/// <returns>True if the aliases of the two columns are identical</returns>
 		public bool Equals(IColumn? x, IColumn? y) =>
 			x?.ColAlias == y?.ColAlias;
 
@@ -37,7 +36,6 @@ public partial record class Column(ITableName TblName, string ColName, string Co
 		/// Return object's hash code
 		/// </summary>
 		/// <param name="obj">IColumn</param>
-		/// <returns>Hash code</returns>
 		public int GetHashCode(IColumn obj) =>
 			obj.ColAlias.GetHashCode();
 	}

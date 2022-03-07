@@ -15,7 +15,6 @@ public static partial class StringExtensions
 	/// <param name="rs">Right single quote mark</param>
 	/// <param name="ld">Left double quote mark</param>
 	/// <param name="rd">Right double quote mark</param>
-	/// <returns>Input string with straight quotes converted to curly quotes</returns>
 	public static string ConvertCurlyQuotes(this string @this, string ls, string rs, string ld, string rd) =>
 		Modify(@this, () =>
 		{

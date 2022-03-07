@@ -18,7 +18,6 @@ public static class EnumF
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
 	/// <param name="value">The value to parse</param>
-	/// <returns>Parsed value</returns>
 	public static Maybe<T> Parse<T>(string value)
 		where T : struct, Enum
 	{
@@ -44,7 +43,6 @@ public static class EnumF
 	/// </summary>
 	/// <param name="t">Enum type</param>
 	/// <param name="value">The value to parse</param>
-	/// <returns>Parsed value</returns>
 	public static Maybe<object> Parse(Type t, string value)
 	{
 		if (!t.IsEnum)
@@ -69,7 +67,6 @@ public static class EnumF
 	/// </summary>
 	/// <typeparam name="TFrom">Enum type</typeparam>
 	/// <param name="value">The value to parse</param>
-	/// <returns>Parsed value</returns>
 	public static FluentConvert<TFrom> Convert<TFrom>(TFrom value)
 		where TFrom : struct, Enum =>
 		new(value);
@@ -94,7 +91,6 @@ public static class EnumF
 		/// Convert value to specified type
 		/// </summary>
 		/// <typeparam name="TTo">Convert To type</typeparam>
-		/// <returns>Converted object</returns>
 		public Maybe<TTo> To<TTo>()
 			where TTo : struct, Enum
 		{
