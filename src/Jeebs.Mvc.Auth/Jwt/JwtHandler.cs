@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -86,7 +87,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// </summary>
 	/// <param name="authorisationHeader">Authorisation header</param>
 	internal static Maybe<string> GetToken(string authorisationHeader) =>
-		authorisationHeader.StartsWith("Bearer ") switch
+		authorisationHeader.StartsWith("Bearer ", StringComparison.InvariantCulture) switch
 		{
 			true =>
 				authorisationHeader["Bearer ".Length..].Trim(),

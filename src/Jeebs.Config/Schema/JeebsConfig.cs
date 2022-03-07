@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 
 namespace Jeebs.Config;
@@ -55,5 +56,5 @@ public sealed record class JeebsConfig
 	/// </summary>
 	/// <param name="key">Section key</param>
 	public static string GetKey(string key) =>
-		key.StartsWith(":") ? Key + key : key;
+		key.StartsWith(":", StringComparison.InvariantCulture) ? Key + key : key;
 }
