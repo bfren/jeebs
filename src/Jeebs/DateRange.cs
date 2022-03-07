@@ -74,5 +74,5 @@ public readonly record struct DateRange : IRange<DateTime>
 	public static DateRange From(DateTime start) =>
 		new(start, DateTime.MaxValue);
 
-	#endregion
+	#endregion Static Members
 }

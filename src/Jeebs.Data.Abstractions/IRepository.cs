@@ -30,7 +30,7 @@ public interface IRepository<TEntity, TId>
 	/// </summary>
 	IQueryFluent<TEntity, TId> StartFluentQuery();
 
-	#endregion
+	#endregion Fluent Queries
 
 	#region Custom Queries
 
@@ -52,7 +52,7 @@ public interface IRepository<TEntity, TId>
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);
 
-	#endregion
+	#endregion Custom Queries
 
 	#region CRUD Queries
 
@@ -100,5 +100,5 @@ public interface IRepository<TEntity, TId>
 	/// <param name="transaction">Database transaction</param>
 	Task<Maybe<bool>> DeleteAsync(TId id, IDbTransaction transaction);
 
-	#endregion
+	#endregion CRUD Queries
 }

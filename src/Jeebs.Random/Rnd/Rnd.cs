@@ -96,5 +96,5 @@ public static partial class Rnd
 	/// <summary>Random Time functions</summary>
 	public static partial class TimeF { }
 
-	#endregion
+	#endregion Classes
 }

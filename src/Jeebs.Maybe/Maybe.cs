@@ -156,7 +156,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 			none: _ => true
 		);
 
-	#endregion
+	#endregion Operators
 
 	#region Equals
 
@@ -194,7 +194,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 				throw new UnknownMaybeException() // as Maybe<T> is internal implementation only this should never happen...
 		};
 
-	#endregion
+	#endregion Equals
 
 	#region Audit
 
@@ -230,7 +230,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Task<Maybe<T>> AuditAsync(Func<T, Task> some, Func<Msg, Task> none) =>
 		F.MaybeF.AuditAsync(this, null, some, none);
 
-	#endregion
+	#endregion Audit
 
 	#region Bind
 
@@ -242,7 +242,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Task<Maybe<U>> BindAsync<U>(Func<T, Task<Maybe<U>>> bind) =>
 		F.MaybeF.BindAsync(this, bind);
 
-	#endregion
+	#endregion Bind
 
 	#region Filter
 
@@ -258,7 +258,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Task<Maybe<T>> FilterAsync(Func<T, Task<bool>> predicate) =>
 		F.MaybeF.FilterAsync(this, predicate);
 
-	#endregion
+	#endregion Filter
 
 	#region IfNull
 
@@ -275,7 +275,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Task<Maybe<T>> IfNullAsync(Func<Task<Maybe<T>>> ifNull) =>
 		F.MaybeF.IfNullAsync(this, ifNull);
 
-	#endregion
+	#endregion IfNull
 
 	#region IfSome
 
@@ -287,7 +287,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Task<Maybe<T>> IfSomeAsync(Func<T, Task> ifSome) =>
 		F.MaybeF.IfSomeAsync(this, ifSome);
 
-	#endregion
+	#endregion IfSome
 
 	#region Map
 
@@ -299,7 +299,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Task<Maybe<U>> MapAsync<U>(Func<T, Task<U>> map, Handler handler) =>
 		F.MaybeF.MapAsync(this, map, handler);
 
-	#endregion
+	#endregion Map
 
 	#region Switch
 
@@ -367,7 +367,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Maybe<T> SwitchIf(Func<T, bool> check, Func<T, Msg> ifFalse) =>
 		F.MaybeF.SwitchIf(this, check, ifFalse);
 
-	#endregion
+	#endregion Switch
 
 	#region Unwrap
 
@@ -387,5 +387,5 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	public Maybe<U> UnwrapSingle<U>(Func<Msg>? noItems = null, Func<Msg>? tooMany = null, Func<Msg>? notAList = null) =>
 		UnwrapSingle<T, U>(this, noItems, tooMany, notAList);
 
-	#endregion
+	#endregion Unwrap
 }

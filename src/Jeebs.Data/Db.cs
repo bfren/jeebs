@@ -194,14 +194,14 @@ public abstract class Db : IDb
 			e => new M.ExecuteScalarExceptionMsg(e)
 		);
 
-	#endregion
+	#endregion Querying
 
 	#region Testing
 
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
 
-	#endregion
+	#endregion Testing
 
 	/// <summary>Messages</summary>
 	public static class M

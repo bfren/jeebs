@@ -141,7 +141,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 			(Name, Values) = (name, values);
 	}
 
-	#endregion
+	#endregion Static Members
 
 	#region Operators
 
@@ -188,7 +188,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	public static bool operator !=(string l, Enumerated r) =>
 		!r.Equals(l);
 
-	#endregion
+	#endregion Operators
 
 	#region Overrides
 
@@ -217,7 +217,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	public int GetHashCode(IEqualityComparer comparer) =>
 		GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
-	#endregion
+	#endregion Overrides
 
 	/// <summary>Messages</summary>
 	public static class M

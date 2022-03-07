@@ -26,7 +26,7 @@ internal sealed class Mapper : IMapper, IDisposable
 	/// </summary>
 	private static readonly Lazy<IMapper> instance = new(() => new Mapper(), true);
 
-	#endregion
+	#endregion Static
 
 	/// <summary>
 	/// Mapped entities
@@ -114,7 +114,7 @@ internal sealed class Mapper : IMapper, IDisposable
 		disposed = true;
 	}
 
-	#endregion
+	#endregion Dispose
 
 	/// <summary>Messages</summary>
 	public static class M

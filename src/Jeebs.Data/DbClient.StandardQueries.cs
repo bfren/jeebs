@@ -147,5 +147,5 @@ public abstract partial class DbClient : IDbClient
 	internal string GetDeleteQueryTest(ITableName table, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetDeleteQuery(table, idColumn, id, versionColumn);
 
-	#endregion
+	#endregion Testing
 }

@@ -43,7 +43,7 @@ public abstract class AuditAsync_Tests
 		_ = await Assert.ThrowsAsync<UnknownMaybeException>(action).ConfigureAwait(false);
 	}
 
-	#endregion
+	#endregion General
 
 	#region Any
 
@@ -171,7 +171,7 @@ public abstract class AuditAsync_Tests
 		Assert.Same(maybe, result);
 	}
 
-	#endregion
+	#endregion Any
 
 	#region Some / None
 
@@ -307,7 +307,7 @@ public abstract class AuditAsync_Tests
 		Assert.Same(maybe, result);
 	}
 
-	#endregion
+	#endregion Some / None
 
 	public record class FakeMaybe : Maybe<int> { }
 

@@ -41,7 +41,7 @@ public sealed record class PostStatus : Enumerated
 	/// </summary>
 	public static readonly PostStatus AutoDraft = new("auto-draft");
 
-	#endregion
+	#endregion Default Post Statuses
 
 	/// <summary>
 	/// Parse PostStatus value name

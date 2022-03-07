@@ -228,7 +228,7 @@ public readonly record struct DateTimeInt
 		);
 	}
 
-	#endregion
+	#endregion Static
 
 	/// <summary>Messages</summary>
 	public static class M

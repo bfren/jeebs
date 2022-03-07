@@ -34,7 +34,7 @@ public abstract class ApiApp : MvcApp
 		// do nothing
 	}
 
-	#endregion
+	#endregion ConfigureServices
 
 	#region Configure
 
@@ -74,5 +74,5 @@ public abstract class ApiApp : MvcApp
 		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
 	}
 
-	#endregion
+	#endregion Configure
 }

@@ -114,7 +114,7 @@ public record class MimeType : Enumerated
 	/// </summary>
 	public static readonly MimeType Zip = new("application/zip");
 
-	#endregion
+	#endregion Default Mime Types
 
 	/// <summary>
 	/// List of all mime types

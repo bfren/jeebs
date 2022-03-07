@@ -48,7 +48,7 @@ public interface IDbQuery
 	/// <inheritdoc cref="QueryAsync{T}(ulong, IQueryParts, IDbTransaction)"/>
 	Task<Maybe<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction);
 
-	#endregion
+	#endregion QueryAsync
 
 	#region QuerySingleAsync
 
@@ -70,7 +70,7 @@ public interface IDbQuery
 	/// <inheritdoc cref="QueryAsync{T}(IQueryParts, IDbTransaction)"/>
 	Task<Maybe<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction);
 
-	#endregion
+	#endregion QuerySingleAsync
 
 	#region ExecuteAsync
 
@@ -98,5 +98,5 @@ public interface IDbQuery
 	/// <inheritdoc cref="IDb.ExecuteAsync{TReturn}(string, object?, CommandType, IDbTransaction)"/>
 	Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, IDbTransaction transaction);
 
-	#endregion
+	#endregion ExecuteAsync
 }

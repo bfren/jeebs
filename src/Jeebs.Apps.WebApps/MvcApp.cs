@@ -219,7 +219,7 @@ public abstract class MvcApp : WebApp
 		}
 	}
 
-	#endregion
+	#endregion ConfigureServices
 
 	#region Configure
 
@@ -393,5 +393,5 @@ public abstract class MvcApp : WebApp
 		  });
 	}
 
-	#endregion
+	#endregion Configure
 }

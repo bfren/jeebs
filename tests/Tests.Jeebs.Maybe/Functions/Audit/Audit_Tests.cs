@@ -27,7 +27,7 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 		Test01(mbe => Audit(mbe, null, null, Substitute.For<Action<Msg>>()));
 	}
 
-	#endregion
+	#endregion General
 
 	#region Any
 
@@ -55,7 +55,7 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 		Test05((mbe, any) => Audit(mbe, any, null, null));
 	}
 
-	#endregion
+	#endregion Any
 
 	#region Some / None
 
@@ -83,5 +83,5 @@ public class Audit_Tests : Jeebs_Tests.Audit_Tests
 		Test09((mbe, none) => Audit(mbe, null, null, none));
 	}
 
-	#endregion
+	#endregion Some / None
 }

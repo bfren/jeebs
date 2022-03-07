@@ -57,5 +57,5 @@ public abstract partial class DbClient : IDbClient
 	) =>
 		GetQuery(table, columns, predicates);
 
-	#endregion
+	#endregion Testing
 }

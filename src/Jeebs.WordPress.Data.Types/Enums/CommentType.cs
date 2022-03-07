@@ -26,7 +26,7 @@ public sealed record class CommentType : Enumerated
 	/// </summary>
 	public static readonly CommentType Pingback = new("pingback");
 
-	#endregion
+	#endregion Default Comment Types
 
 	/// <summary>
 	/// Parse CommentType value name

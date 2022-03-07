@@ -49,7 +49,7 @@ public sealed record class PostType : Enumerated
 	/// </summary>
 	public static readonly PostType AdvancedCustomField = new("acf");
 
-	#endregion
+	#endregion Default Post Types
 
 	/// <summary>
 	/// List of all post types

@@ -42,7 +42,7 @@ public sealed record class AuthUserTable() : Table("Auth", ColumnPrefix)
 	public string IsSuper =>
 		ColumnPrefix + nameof(IsSuper);
 
-	#endregion
+	#endregion From AuthUserModel
 
 	#region From AuthUserEntity
 
@@ -70,5 +70,5 @@ public sealed record class AuthUserTable() : Table("Auth", ColumnPrefix)
 	public string LastSignedIn =>
 		ColumnPrefix + nameof(LastSignedIn);
 
-	#endregion
+	#endregion From AuthUserEntity
 }

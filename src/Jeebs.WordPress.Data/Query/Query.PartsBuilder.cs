@@ -98,6 +98,6 @@ public static partial class Query
 			where TTable : ITable =>
 			__(table, selector);
 
-		#endregion
+		#endregion Testing
 	}
 }

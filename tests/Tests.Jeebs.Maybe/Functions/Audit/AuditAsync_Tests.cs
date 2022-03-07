@@ -38,7 +38,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 		await Test01(mbe => AuditAsync(mbe.AsTask, any, some, none)).ConfigureAwait(false);
 	}
 
-	#endregion
+	#endregion General
 
 	#region Any
 
@@ -94,7 +94,7 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 		await Test05((none, any) => AuditAsync(none.AsTask, any, null, null)).ConfigureAwait(false);
 	}
 
-	#endregion
+	#endregion Any
 
 	#region Some / None
 	[Fact]
@@ -149,5 +149,5 @@ public class AuditAsync_Tests : Jeebs_Tests.AuditAsync_Tests
 		await Test17((mbe, none) => AuditAsync(mbe.AsTask, null, null, none)).ConfigureAwait(false);
 	}
 
-	#endregion
+	#endregion Some / None
 }

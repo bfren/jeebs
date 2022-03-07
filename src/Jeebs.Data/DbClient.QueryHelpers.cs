@@ -111,5 +111,5 @@ public abstract partial class DbClient : IDbClient
 	internal void AddVersionToWhereTest(StringBuilder sql, IColumn? versionColumn) =>
 		AddVersionToWhere(sql, versionColumn);
 
-	#endregion
+	#endregion Testing
 }

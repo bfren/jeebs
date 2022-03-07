@@ -44,7 +44,7 @@ public sealed record class Taxonomy : Enumerated
 	/// </summary>
 	public static readonly Taxonomy NavMenu = new("nav_menu");
 
-	#endregion
+	#endregion Default Taxonomies
 
 	/// <summary>
 	/// List of all taxonomies

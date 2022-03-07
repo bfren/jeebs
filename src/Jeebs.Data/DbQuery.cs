@@ -156,7 +156,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
 		);
 
-	#endregion
+	#endregion QueryAsync
 
 	#region QuerySingleAsync
 
@@ -193,7 +193,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.QuerySingleAsync<T>(x.query, x.param, CommandType.Text, transaction)
 		);
 
-	#endregion
+	#endregion QuerySingleAsync
 
 	#region ExecuteAsync
 
@@ -229,7 +229,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, IDbTransaction transaction) =>
 		Db.ExecuteAsync<T>(query, param, CommandType.Text, transaction);
 
-	#endregion
+	#endregion ExecuteAsync
 
 	#region Testing
 
@@ -237,5 +237,5 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		where TTable : ITable =>
 		__(table, column);
 
-	#endregion
+	#endregion Testing
 }

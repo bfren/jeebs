@@ -42,7 +42,7 @@ public abstract class Audit_Tests
 		_ = Assert.Throws<UnknownMaybeException>(result);
 	}
 
-	#endregion
+	#endregion General
 
 	#region Any
 
@@ -108,7 +108,7 @@ public abstract class Audit_Tests
 		Assert.Same(none, result);
 	}
 
-	#endregion
+	#endregion Any
 
 	#region Some / None
 
@@ -177,7 +177,7 @@ public abstract class Audit_Tests
 		Assert.Same(maybe, result);
 	}
 
-	#endregion
+	#endregion Some / None
 
 	public record class FakeMaybe : Maybe<int> { }
 

@@ -88,7 +88,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual IQueryFluent<TEntity, TId> StartFluentQuery() =>
 		new QueryFluent<TEntity, TId>(this);
 
-	#endregion
+	#endregion Fluent Queries
 
 	#region Custom Queries
 
@@ -122,7 +122,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 			x => x.Single<TModel>()
 		);
 
-	#endregion
+	#endregion Custom Queries
 
 	#region CRUD Queries
 
@@ -196,12 +196,12 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 			x => Db.ExecuteAsync(x, null, CommandType.Text, transaction)
 		);
 
-	#endregion
+	#endregion CRUD Queries
 
 	#region Testing
 
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
 
-	#endregion
+	#endregion Testing
 }

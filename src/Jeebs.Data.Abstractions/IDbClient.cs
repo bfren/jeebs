@@ -94,7 +94,7 @@ public interface IDbClient
 	/// <param name="wrap">If true, the list will be wrapped (usually in parentheses)</param>
 	string JoinList(List<string> objects, bool wrap);
 
-	#endregion
+	#endregion Escaping and Joining
 
 	#region Custom Queries
 
@@ -121,7 +121,7 @@ public interface IDbClient
 	/// <param name="parts">IQueryParts</param>
 	(string query, IQueryParameters param) GetQuery(IQueryParts parts);
 
-	#endregion
+	#endregion Custom Queries
 
 	#region CRUD Queries
 
@@ -158,5 +158,5 @@ public interface IDbClient
 	Maybe<string> GetDeleteQuery<TEntity>(long id)
 		where TEntity : IWithId;
 
-	#endregion
+	#endregion CRUD Queries
 }

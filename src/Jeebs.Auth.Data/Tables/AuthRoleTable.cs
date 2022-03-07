@@ -27,7 +27,7 @@ public sealed record class AuthRoleTable() : Table("Auth", ColumnPrefix)
 	public string Name =>
 		ColumnPrefix + nameof(Name);
 
-	#endregion
+	#endregion From AuthRoleModel
 
 	#region From AuthRoleEntity
 
@@ -35,5 +35,5 @@ public sealed record class AuthRoleTable() : Table("Auth", ColumnPrefix)
 	public string Description =>
 		ColumnPrefix + nameof(Description);
 
-	#endregion
+	#endregion From AuthRoleEntity
 }
