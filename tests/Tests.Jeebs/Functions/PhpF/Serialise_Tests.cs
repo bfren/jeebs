@@ -67,6 +67,6 @@ public class Serialise_Tests
 		var result = PhpF.Serialise(input);
 
 		// Assert
-		Assert.Equal($"{PhpF.Null};", result);
+		Assert.Equal($"{PhpF.NullChar};", result);
 	}
 }

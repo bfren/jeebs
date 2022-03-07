@@ -16,37 +16,37 @@ public static class PhpF
 	/// <summary>
 	/// Array type
 	/// </summary>
-	public static readonly char Array = 'a';
+	public static readonly char ArrayChar = 'a';
 
 	/// <summary>
 	/// Boolean type
 	/// </summary>
-	public static readonly char Boolean = 'b';
+	public static readonly char BooleanChar = 'b';
 
 	/// <summary>
 	/// Double type
 	/// </summary>
-	public static readonly char Double = 'd';
+	public static readonly char DoubleChar = 'd';
 
 	/// <summary>
 	/// Integer type
 	/// </summary>
-	public static readonly char Integer = 'i';
+	public static readonly char IntegerChar = 'i';
 
 	/// <summary>
 	/// String type
 	/// </summary>
-	public static readonly char String = 's';
+	public static readonly char StringChar = 's';
 
 	/// <summary>
 	/// Null type
 	/// </summary>
-	public static readonly char Null = 'N';
+	public static readonly char NullChar = 'N';
 
 	/// <summary>
 	/// UTF8Encoding
 	/// </summary>
-	private static readonly Encoding enc = new UTF8Encoding();
+	private static readonly Encoding UTF8 = new UTF8Encoding();
 
 	/// <summary>
 	/// Serialise object
@@ -64,19 +64,19 @@ public static class PhpF
 				appendString(x),
 
 			bool x =>
-				append(Boolean, x ? "1" : "0"),
+				append(BooleanChar, x ? "1" : "0"),
 
 			int x =>
-				append(Integer, x),
+				append(IntegerChar, x),
 
 			long x =>
-				append(Integer, x),
+				append(IntegerChar, x),
 
 			float x =>
-				append(Double, x),
+				append(DoubleChar, x),
 
 			double x =>
-				append(Double, x),
+				append(DoubleChar, x),
 
 			IList x =>
 				appendList(x),
@@ -88,7 +88,7 @@ public static class PhpF
 				sb,
 
 			_ =>
-				sb.Append(Null).Append(';')
+				sb.Append(NullChar).Append(';')
 		};
 
 		// Append a value to the StringBuilder
@@ -97,13 +97,13 @@ public static class PhpF
 
 		// Append a string to the StringBuilder
 		StringBuilder appendString(string str) =>
-			sb.Append($"{String}:{enc.GetByteCount(str)}:\"{str}\";");
+			sb.Append($"{StringChar}:{UTF8.GetByteCount(str)}:\"{str}\";");
 
 		// Append a Hashtable to the StringBuilder
 		// Enables arrays of different key / value pairs
 		StringBuilder appendHashtable(Hashtable hashtable)
 		{
-			sb.Append($"{Array}:{hashtable.Count}:{{");
+			sb.Append($"{ArrayChar}:{hashtable.Count}:{{");
 			foreach (DictionaryEntry item in hashtable)
 			{
 				Serialise(item.Key, sb);
@@ -151,22 +151,22 @@ public static class PhpF
 
 		return str[pointer] switch
 		{
-			char c when c == Array =>
+			char c when c == ArrayChar =>
 				getArray(),
 
-			char c when c == Boolean =>
+			char c when c == BooleanChar =>
 				getBoolean(),
 
-			char c when c == Double =>
+			char c when c == DoubleChar =>
 				getNumber(double.Parse, 0d),
 
-			char c when c == Integer =>
+			char c when c == IntegerChar =>
 				getNumber(long.Parse, 0L),
 
-			char c when c == String =>
+			char c when c == StringChar =>
 				getString(),
 
-			char c when c == Null =>
+			char c when c == NullChar =>
 				getNull(),
 
 			_ =>
