@@ -109,7 +109,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 
 	public sealed record class UpdateUserModel : IWithId<AuthUserId>, IWithVersion
 	{
-		public AuthUserId Id { get; init; } = new();
+		public AuthUserId Id { get; init; }
 
 		public long Version { get; init; }
 

@@ -19,12 +19,12 @@ public sealed record class AuthUserRoleEntity : IWithId<AuthUserRoleId>, IAuthUs
 	/// <summary>
 	/// User ID
 	/// </summary>
-	public AuthUserId UserId { get; init; } = new();
+	public AuthUserId UserId { get; init; }
 
 	/// <summary>
 	/// Role ID
 	/// </summary>
-	public AuthRoleId RoleId { get; init; } = new();
+	public AuthRoleId RoleId { get; init; }
 
 	internal AuthUserRoleEntity() { }
 }

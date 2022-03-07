@@ -14,7 +14,7 @@ public class FooWithoutIdAttribute : IWithId
 		init => FooId = new(value.Value);
 	}
 
-	public FooId FooId { get; init; } = new();
+	public FooId FooId { get; init; }
 
 	public string Bar0 { get; init; } = string.Empty;
 

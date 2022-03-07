@@ -87,6 +87,6 @@ public class ReadJson_Tests
 	{
 		public int Id { get; set; }
 
-		public IdTest0 LongId { get; set; } = new();
+		public IdTest0 LongId { get; set; }
 	}
 }

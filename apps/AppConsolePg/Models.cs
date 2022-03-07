@@ -15,5 +15,5 @@ record class EntityTest : IWithId<EntityTestId>
 	[Id]
 	public EntityTestId Id { get; init; } = new();
 
-	public ParamTest Value { get; init; } = new();
+	public ParamTest Value { get; init; }
 }

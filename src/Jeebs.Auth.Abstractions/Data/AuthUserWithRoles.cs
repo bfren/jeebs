@@ -11,7 +11,7 @@ public abstract record class AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole
 	where TRole : IAuthRole
 {
 	/// <inheritdoc/>
-	public AuthUserId Id { get; init; } = new();
+	public AuthUserId Id { get; init; }
 
 	/// <inheritdoc/>
 	public string EmailAddress { get; init; } = string.Empty;
