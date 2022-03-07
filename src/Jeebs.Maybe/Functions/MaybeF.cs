@@ -14,7 +14,7 @@ public static partial class MaybeF
 	/// <summary>
 	/// Functions for interacting with <see cref="IDictionary{TKey, TValue}"/>
 	/// </summary>
-	public static partial class Dictionary { }
+	public static partial class Dict { }
 
 	/// <summary>
 	/// Functions for interacting with <see cref="IEnumerable{T}"/>

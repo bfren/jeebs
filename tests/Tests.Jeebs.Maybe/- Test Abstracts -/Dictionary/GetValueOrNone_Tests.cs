@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Jeebs;
 using Xunit;
-using static F.MaybeF.Dictionary.M;
+using static F.MaybeF.Dict.M;
 
 namespace Jeebs_Tests.Dictionary;
 

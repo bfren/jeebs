@@ -8,7 +8,7 @@ namespace F;
 
 public static partial class MaybeF
 {
-	public static partial class Dictionary
+	public static partial class Dict
 	{
 		/// <summary>
 		/// Return the value or <see cref="Jeebs.Internals.None{T}"/>

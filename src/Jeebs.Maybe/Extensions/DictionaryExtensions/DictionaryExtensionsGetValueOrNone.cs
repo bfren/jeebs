@@ -10,7 +10,7 @@ namespace Jeebs.Linq;
 /// </summary>
 public static class DictionaryExtensionsGetValueOrNone
 {
-	/// <inheritdoc cref="F.MaybeF.Dictionary.GetValueOrNone{TKey, TValue}(IDictionary{TKey, TValue}, TKey)"/>
+	/// <inheritdoc cref="F.MaybeF.Dict.GetValueOrNone{TKey, TValue}(IDictionary{TKey, TValue}, TKey)"/>
 	public static Maybe<TValue> GetValueOrNone<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key) =>
-		F.MaybeF.Dictionary.GetValueOrNone(@this, key);
+		F.MaybeF.Dict.GetValueOrNone(@this, key);
 }
