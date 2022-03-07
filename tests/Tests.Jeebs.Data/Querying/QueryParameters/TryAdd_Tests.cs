@@ -15,7 +15,7 @@ public class TryAdd_Tests
     public void Ignores_Null_And_Primitive_Types(object input)
     {
         // Arrange
-        var parameters = new QueryParameters();
+        var parameters = new QueryParametersDictionary();
 
         // Act
         var result = parameters.TryAdd(input);
@@ -30,12 +30,12 @@ public class TryAdd_Tests
     {
         // Arrange
         var p0 = F.Rnd.Str;
-        var parameterToAdd = new QueryParameters
+        var parameterToAdd = new QueryParametersDictionary
         {
             { nameof(p0), p0 }
         };
 
-        var parameters = new QueryParameters();
+        var parameters = new QueryParametersDictionary();
 		_ = parameters.TryAdd(parameterToAdd);
 
         // Act
@@ -55,14 +55,14 @@ public class TryAdd_Tests
         var p0 = F.Rnd.Str;
         var p1 = F.Rnd.Str;
         var p2 = F.Rnd.Str;
-        var parametersToAdd = new QueryParameters
+        var parametersToAdd = new QueryParametersDictionary
         {
             { nameof(p0), p0 },
             { nameof(p1), p1 },
             { nameof(p2), p2 }
         };
 
-        var parameters = new QueryParameters();
+        var parameters = new QueryParametersDictionary();
 
         // Act
         var result = parameters.TryAdd(parametersToAdd);
@@ -83,7 +83,7 @@ public class TryAdd_Tests
         var p0 = F.Rnd.Str;
         var parameterToAdd = new { p0 };
 
-        var parameters = new QueryParameters();
+        var parameters = new QueryParametersDictionary();
 		_ = parameters.TryAdd(parameterToAdd);
 
         // Act
@@ -105,7 +105,7 @@ public class TryAdd_Tests
         var p2 = F.Rnd.Str;
         var parametersToAdd = new { p0, p1, p2 };
 
-        var parameters = new QueryParameters();
+        var parameters = new QueryParametersDictionary();
 
         // Act
         var result = parameters.TryAdd(parametersToAdd);
@@ -123,7 +123,7 @@ public class TryAdd_Tests
     public void Adds_Type_With_Public_Properties_To_Dictionary()
     {
         // Arrange
-        var parameters = new QueryParameters();
+        var parameters = new QueryParametersDictionary();
         var foo = new Foo();
 
         // Act

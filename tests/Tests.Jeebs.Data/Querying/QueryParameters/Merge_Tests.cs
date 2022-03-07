@@ -14,14 +14,14 @@ public class Merge_Tests
 		var p0 = F.Rnd.Str;
 		var p1 = F.Rnd.Str;
 		var p2 = F.Rnd.Str;
-		var parametersToAdd = new QueryParameters
+		var parametersToAdd = new QueryParametersDictionary
 		{
 			{ nameof(p0), p0 },
 			{ nameof(p1), p1 },
 			{ nameof(p2), p2 }
 		};
 
-		var parameters = new QueryParameters();
+		var parameters = new QueryParametersDictionary();
 
 		// Act
 		var result = parameters.Merge(parametersToAdd);
@@ -40,12 +40,12 @@ public class Merge_Tests
 	{
 		// Arrange
 		var p0 = F.Rnd.Str;
-		var parameterToAdd = new QueryParameters
+		var parameterToAdd = new QueryParametersDictionary
 		{
 			{ nameof(p0), p0 }
 		};
 
-		var parameters = new QueryParameters();
+		var parameters = new QueryParametersDictionary();
 		_ = parameters.TryAdd(parameterToAdd);
 
 		// Act

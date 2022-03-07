@@ -19,14 +19,14 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="table">Table name</param>
 	/// <param name="columns">List of columns to select</param>
 	/// <param name="predicates">Predicates (matched using AND)</param>
-	protected abstract (string query, IQueryParameters param) GetQuery(
+	protected abstract (string query, IQueryParametersDictionary param) GetQuery(
 		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	);
 
 	/// <inheritdoc/>
-	public Maybe<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
+	public Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
 		(Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	)
 		where TEntity : IWithId =>
@@ -42,15 +42,15 @@ public abstract partial class DbClient : IDbClient
 		);
 
 	/// <inheritdoc/>
-	public (string query, IQueryParameters param) GetCountQuery(IQueryParts parts) =>
+	public (string query, IQueryParametersDictionary param) GetCountQuery(IQueryParts parts) =>
 		GetQuery(new QueryParts(parts) with { SelectCount = true });
 
 	/// <inheritdoc/>
-	public abstract (string query, IQueryParameters param) GetQuery(IQueryParts parts);
+	public abstract (string query, IQueryParametersDictionary param) GetQuery(IQueryParts parts);
 
 	#region Testing
 
-	internal (string query, IQueryParameters param) GetQueryTest(
+	internal (string query, IQueryParametersDictionary param) GetQueryTest(
 		ITableName table,
 		ColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates

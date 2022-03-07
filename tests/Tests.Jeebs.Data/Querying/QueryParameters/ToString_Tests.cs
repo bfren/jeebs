@@ -11,7 +11,7 @@ public class ToString_Tests
 	public void Returns_Json()
 	{
 		// Arrange
-		var param = new QueryParameters();
+		var param = new QueryParametersDictionary();
 		var p0 = F.Rnd.Str;
 		var p1 = F.Rnd.Int;
 		_ = param.TryAdd(new { p0, p1 });

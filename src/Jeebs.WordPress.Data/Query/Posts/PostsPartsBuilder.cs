@@ -167,7 +167,7 @@ public static partial class Query
 			// Setup variables
 			var taxonomyWhere = new StringBuilder();
 			var taxonomyNameIndex = 0;
-			var taxonomyParameters = new QueryParameters();
+			var taxonomyParameters = new QueryParametersDictionary();
 
 			// Group taxonomies by taxonomy name
 			var grouped = from t in taxonomies
@@ -247,7 +247,7 @@ public static partial class Query
 			// Setup variables
 			var customFieldWhere = new StringBuilder();
 			var customFieldIndex = 0;
-			var customFieldParameters = new QueryParameters();
+			var customFieldParameters = new QueryParametersDictionary();
 
 			// Add each custom field
 			foreach (var (field, cmp, value) in customFields)

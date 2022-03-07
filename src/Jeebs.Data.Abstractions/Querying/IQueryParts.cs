@@ -55,7 +55,7 @@ public interface IQueryParts
 	/// (avoid using P0/P1/P2 etc, as these are used automatically for clauses added using
 	/// <see cref="Where"/>)
 	/// </remarks>
-	IImmutableList<(string clause, IQueryParameters parameters)> WhereCustom { get; init; }
+	IImmutableList<(string clause, IQueryParametersDictionary parameters)> WhereCustom { get; init; }
 
 	/// <summary>
 	/// Sort columns

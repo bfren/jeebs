@@ -8,13 +8,13 @@ namespace Jeebs.Data.Querying;
 /// <summary>
 /// Shorthand to make working with query parameters easier
 /// </summary>
-public interface IQueryParameters : IDictionary<string, object>
+public interface IQueryParametersDictionary : IDictionary<string, object>
 {
 	/// <summary>
-	/// Merge another <see cref="IQueryParameters"/> into this one
+	/// Merge another <see cref="IQueryParametersDictionary"/> into this one
 	/// </summary>
 	/// <param name="parameters">Parameters to merge</param>
-	bool Merge(IQueryParameters parameters);
+	bool Merge(IQueryParametersDictionary parameters);
 
 	/// <summary>
 	/// Add an anonymous object of parameters to the dictionary

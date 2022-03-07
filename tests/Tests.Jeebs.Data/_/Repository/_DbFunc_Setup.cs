@@ -16,7 +16,7 @@ public static class Repository_Setup
 		var client = Substitute.For<IDbClient>();
 		_ = client
 			.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, Compare, object)[]>())
-			.Returns((F.Rnd.Str, Substitute.For<IQueryParameters>()));
+			.Returns((F.Rnd.Str, Substitute.For<IQueryParametersDictionary>()));
 		_ = client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
 		_ = client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
 		_ = client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);

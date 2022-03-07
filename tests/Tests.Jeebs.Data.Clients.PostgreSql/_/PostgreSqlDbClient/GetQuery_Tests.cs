@@ -240,19 +240,19 @@ public class GetQuery_Tests
 		var p0 = F.Rnd.Str;
 		var p1 = F.Rnd.Str;
 		var p2 = F.Rnd.Str;
-		var parametersToAdd0 = new QueryParameters
+		var parametersToAdd0 = new QueryParametersDictionary
 		{
 			{ nameof(p0), p0 },
 			{ nameof(p1), p1 }
 		};
-		var parametersToAdd1 = new QueryParameters
+		var parametersToAdd1 = new QueryParametersDictionary
 		{
 			{ nameof(p2), p2 }
 		};
 
 		var parts = new QueryParts(v.Table)
 		{
-			WhereCustom = ImmutableList.Create(new (string, IQueryParameters)[]
+			WhereCustom = ImmutableList.Create(new (string, IQueryParametersDictionary)[]
 			{
 				(w0, parametersToAdd0),
 				(w1, parametersToAdd1)

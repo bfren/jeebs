@@ -212,7 +212,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		}
 
 		// Get parameters
-		var param = new QueryParameters();
+		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
 			return None<QueryParts, M.UnableToAddParametersToWhereCustomMsg>();

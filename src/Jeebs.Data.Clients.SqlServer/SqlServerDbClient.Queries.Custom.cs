@@ -12,7 +12,7 @@ namespace Jeebs.Data.Clients.SqlServer;
 public partial class SqlServerDbClient : DbClient
 {
 	/// <inheritdoc/>
-	protected override (string query, IQueryParameters param) GetQuery(
+	protected override (string query, IQueryParametersDictionary param) GetQuery(
 		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
@@ -32,7 +32,7 @@ public partial class SqlServerDbClient : DbClient
 	}
 
 	/// <inheritdoc/>
-	public override (string query, IQueryParameters param) GetQuery(IQueryParts parts)
+	public override (string query, IQueryParametersDictionary param) GetQuery(IQueryParts parts)
 	{
 		// Start query
 		var select = parts.SelectCount switch
@@ -72,7 +72,7 @@ public partial class SqlServerDbClient : DbClient
 		}
 
 		// Add WHERE
-		IQueryParameters parameters = new QueryParameters();
+		IQueryParametersDictionary parameters = new QueryParametersDictionary();
 		if (parts.Where.Count > 0 || parts.WhereCustom.Count > 0)
 		{
 			// This will be appended to the SQL query

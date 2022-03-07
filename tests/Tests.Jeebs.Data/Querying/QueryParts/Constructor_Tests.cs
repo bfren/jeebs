@@ -36,7 +36,7 @@ public class Constructor_Tests
 			LeftJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 			RightJoin = Substitute.For<IImmutableList<(IColumn, IColumn)>>(),
 			Where = Substitute.For<IImmutableList<(IColumn, Compare, object)>>(),
-			WhereCustom = Substitute.For<IImmutableList<(string, IQueryParameters)>>(),
+			WhereCustom = Substitute.For<IImmutableList<(string, IQueryParametersDictionary)>>(),
 			Sort = Substitute.For<IImmutableList<(IColumn, SortOrder)>>(),
 			SortRandom = F.Rnd.Flip,
 			Maximum = F.Rnd.Ulng,

@@ -9,11 +9,11 @@ using Jeebs.Reflection;
 
 namespace Jeebs.Data.Querying;
 
-/// <inheritdoc cref="IQueryParameters"/>
-public sealed class QueryParameters : Dictionary<string, object>, IQueryParameters
+/// <inheritdoc cref="IQueryParametersDictionary"/>
+public sealed class QueryParametersDictionary : Dictionary<string, object>, IQueryParametersDictionary
 {
 	/// <inheritdoc/>
-	public bool Merge(IQueryParameters parameters)
+	public bool Merge(IQueryParametersDictionary parameters)
 	{
 		foreach (var p in parameters)
 		{
@@ -37,7 +37,7 @@ public sealed class QueryParameters : Dictionary<string, object>, IQueryParamete
 			return false;
 		}
 		// Merge another IQueryParameters with this one 
-		else if (parameters is IQueryParameters queryParameters)
+		else if (parameters is IQueryParametersDictionary queryParameters)
 		{
 			return Merge(queryParameters);
 		}

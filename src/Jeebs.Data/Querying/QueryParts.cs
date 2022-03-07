@@ -33,8 +33,8 @@ public sealed record class QueryParts(ITable From) : IQueryParts
 		new ImmutableList<(IColumn column, Compare cmp, object value)>();
 
 	/// <inheritdoc/>
-	public IImmutableList<(string clause, IQueryParameters parameters)> WhereCustom { get; init; } =
-		new ImmutableList<(string clause, IQueryParameters parameters)>();
+	public IImmutableList<(string clause, IQueryParametersDictionary parameters)> WhereCustom { get; init; } =
+		new ImmutableList<(string clause, IQueryParametersDictionary parameters)>();
 
 	/// <inheritdoc/>
 	public IImmutableList<(IColumn column, SortOrder order)> Sort { get; init; } =

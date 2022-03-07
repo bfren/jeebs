@@ -19,7 +19,7 @@ public static partial class QueryF
 	/// <param name="client">IDbClient</param>
 	/// <param name="predicates">List of predicates</param>
 	/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
-	public static (IImmutableList<string> where, IQueryParameters param) GetWhereAndParameters(
+	public static (IImmutableList<string> where, IQueryParametersDictionary param) GetWhereAndParameters(
 		IDbClient client,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates,
 		bool includeTableName
@@ -27,7 +27,7 @@ public static partial class QueryF
 	{
 		// Create empty lists
 		var where = new List<string>();
-		var param = new QueryParameters();
+		var param = new QueryParametersDictionary();
 		var index = 0;
 
 		// Loop through predicates and add each one

@@ -104,7 +104,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND)</param>
-	Maybe<(string query, IQueryParameters param)> GetQuery<TEntity, TModel>(
+	Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
 		(Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	)
 		where TEntity : IWithId;
@@ -113,13 +113,13 @@ public interface IDbClient
 	/// Return a query to retrieve how many entities match the specified query parts
 	/// </summary>
 	/// <param name="parts">IQueryParts</param>
-	(string query, IQueryParameters param) GetCountQuery(IQueryParts parts);
+	(string query, IQueryParametersDictionary param) GetCountQuery(IQueryParts parts);
 
 	/// <summary>
 	/// Return a query to retrieve a list of entities using the specified query parts
 	/// </summary>
 	/// <param name="parts">IQueryParts</param>
-	(string query, IQueryParameters param) GetQuery(IQueryParts parts);
+	(string query, IQueryParametersDictionary param) GetQuery(IQueryParts parts);
 
 	#endregion Custom Queries
 
