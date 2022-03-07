@@ -39,7 +39,7 @@ public static class BooleanF
 		{
 			return false;
 		}
-		else if (bool.TryParse(val, out bool result))
+		else if (bool.TryParse(val, out var result))
 		{
 			return result;
 		}

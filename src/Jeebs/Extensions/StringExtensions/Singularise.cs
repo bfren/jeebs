@@ -50,7 +50,7 @@ public static partial class StringExtensions
 			return @this;
 		}
 
-		string singular = @this;
+		var singular = @this;
 		foreach (var item in singularisations)
 		{
 			if (Regex.IsMatch(@this, item.Key))

@@ -33,10 +33,10 @@ public static partial class ImageF
 		// Calculation variables
 		double x = 0;
 		double y = 0;
-		double w = imgWidth;
-		double h = imgHeight;
-		double ratioX = imgWidth / maskWidth;
-		double ratioY = imgHeight / maskHeight;
+		var w = imgWidth;
+		var h = imgHeight;
+		var ratioX = imgWidth / maskWidth;
+		var ratioY = imgHeight / maskHeight;
 
 		// Calculate the widths / starting co-ordinates
 		if (ratioX > ratioY)

@@ -92,7 +92,7 @@ public static partial class Rnd
 			// Get the right number of words
 			var used = new List<int>();
 			var words = new List<string>();
-			for (int i = 0; i < numberOfWords; i++)
+			for (var i = 0; i < numberOfWords; i++)
 			{
 				// Get the index of a word that hasn't been used yet
 				var index = getUniqueIndex();
@@ -127,7 +127,8 @@ public static partial class Rnd
 			{
 				var index = 0;
 
-				do { index = NumberF.GetInt32(0, wordList.Length - 1); }
+				do
+				{ index = NumberF.GetInt32(0, wordList.Length - 1); }
 				while (used.Contains(index));
 
 				return index;

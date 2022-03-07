@@ -58,7 +58,7 @@ public sealed record class DbConfig
 	public DbConnectionConfig GetConnection(string? name)
 	{
 		// If name is null or empty, use Default connection
-		string connection = string.IsNullOrWhiteSpace(name) ? Default : name;
+		var connection = string.IsNullOrWhiteSpace(name) ? Default : name;
 		if (string.IsNullOrEmpty(connection))
 		{
 			throw new DefaultDbConnectionUndefinedException("Default database connection is not defined.");

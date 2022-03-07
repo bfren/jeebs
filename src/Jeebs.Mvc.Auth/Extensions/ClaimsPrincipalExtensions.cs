@@ -25,7 +25,7 @@ public static class ClaimsPrincipalExtensions
 			return @this.Claims.SingleOrDefault(c => c.Type == JwtClaimTypes.UserId) switch
 			{
 				Claim idClaim =>
-					long.TryParse(idClaim.Value, out long userId) switch
+					long.TryParse(idClaim.Value, out var userId) switch
 					{
 						true =>
 							userId,

@@ -42,19 +42,19 @@ public static partial class Rnd
 		static StringF()
 		{
 			LowercaseChars = new List<char>();
-			for (int i = 97; i <= 122; i++)
+			for (var i = 97; i <= 122; i++)
 			{
 				LowercaseChars.Add(Convert.ToChar(i));
 			}
 
 			UppercaseChars = new List<char>();
-			for (int i = 65; i <= 90; i++)
+			for (var i = 65; i <= 90; i++)
 			{
 				UppercaseChars.Add(Convert.ToChar(i));
 			}
 
 			NumberChars = new List<char>();
-			for (int i = 48; i <= 57; i++)
+			for (var i = 48; i <= 57; i++)
 			{
 				NumberChars.Add(Convert.ToChar(i));
 			}

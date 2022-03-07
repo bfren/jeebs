@@ -34,7 +34,7 @@ public static class DateTimeExtensions
 	public static DateTime FirstDayOfWeek(this DateTime @this)
 	{
 		// Get the day of the week and subtract from the current day
-		int dayOfWeek = (int)@this.DayOfWeek;
+		var dayOfWeek = (int)@this.DayOfWeek;
 		return @this.AddDays(dayOfWeek * -1).StartOfDay();
 	}
 
@@ -46,7 +46,7 @@ public static class DateTimeExtensions
 	public static DateTime LastDayOfWeek(this DateTime @this)
 	{
 		// Get the day of the week and subtract from the current day
-		int dayOfWeek = (int)@this.DayOfWeek;
+		var dayOfWeek = (int)@this.DayOfWeek;
 		return @this.AddDays(6 - dayOfWeek).EndOfDay();
 	}
 

@@ -17,10 +17,10 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Get ASCII encoding and convert byte by byte
-			byte[] a = Encoding.ASCII.GetBytes(@this);
+			var a = Encoding.ASCII.GetBytes(@this);
 
 			var encoded = new StringBuilder();
-			foreach (byte b in a)
+			foreach (var b in a)
 			{
 				encoded.AppendFormat("&#{0};", b);
 			}

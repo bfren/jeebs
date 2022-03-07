@@ -83,7 +83,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <param name="value">Term ID value</param>
 	internal static Maybe<WpTermId> ParseTermId(Type type, string value)
 	{
-		if (!long.TryParse(value, out long termId))
+		if (!long.TryParse(value, out var termId))
 		{
 			return None<WpTermId>(new M.ValueIsInvalidTermIdMsg(type, value));
 		}

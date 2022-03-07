@@ -15,7 +15,7 @@ public static partial class StringExtensions
 	{
 		var acronym = new StringBuilder();
 
-		for (int i = 0; i < @this.Length; i++)
+		for (var i = 0; i < @this.Length; i++)
 		{
 			if (char.IsUpper(@this[i]))
 			{

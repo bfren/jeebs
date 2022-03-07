@@ -36,7 +36,7 @@ public static class DateTimeF
 	/// <returns>DateTime object, or null if the input string cannot be parsed</returns>
 	public static Maybe<DateTime> FromFormat(string s, string format)
 	{
-		if (DateTime.TryParseExact(s, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dt))
+		if (DateTime.TryParseExact(s, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
 		{
 			return dt;
 		}

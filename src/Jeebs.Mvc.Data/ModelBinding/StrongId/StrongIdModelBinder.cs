@@ -29,7 +29,7 @@ public sealed class StrongIdModelBinder<T> : IModelBinder
 		bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
 
 		// Get the value and attempt to parse it as a long
-		bindingContext.Result = long.TryParse(valueProviderResult.FirstValue, out long id) switch
+		bindingContext.Result = long.TryParse(valueProviderResult.FirstValue, out var id) switch
 		{
 			true =>
 				ModelBindingResult.Success(new T { Value = id }),

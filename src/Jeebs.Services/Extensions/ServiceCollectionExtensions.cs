@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddDrivers(this IServiceCollection @this)
 	{
 		// Get drivers and add them to the service collection
-		bool foundListeners = false;
+		var foundListeners = false;
 		foreach (var t in GetImplementations(typeof(IDriver<>)))
 		{
 			@this.AddSingleton(t);

@@ -22,7 +22,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Current page number
 	/// </summary>
 	public ulong Page =>
-		ulong.TryParse(Request.Query["p"], out ulong p) switch
+		ulong.TryParse(Request.Query["p"], out var p) switch
 		{
 			true =>
 				p,

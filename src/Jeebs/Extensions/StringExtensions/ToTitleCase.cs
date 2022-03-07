@@ -13,7 +13,7 @@ public static partial class StringExtensions
 	public static string ToTitleCase(this string @this) =>
 		Modify(@this, () =>
 		{
-			char[] array = @this.ToCharArray();
+			var array = @this.ToCharArray();
 
 			// Handle the first letter in the string.
 			if (array.Length >= 1 && char.IsLower(array[0]))
@@ -23,7 +23,7 @@ public static partial class StringExtensions
 
 			// Scan through the letters, checking for spaces.
 			// ... Uppercase the lowercase letters following spaces.
-			for (int i = 1; i < array.Length; i++)
+			for (var i = 1; i < array.Length; i++)
 			{
 				if (array[i - 1] == ' ' && char.IsLower(array[i]))
 				{

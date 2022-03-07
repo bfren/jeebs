@@ -32,7 +32,7 @@ public sealed class StrongIdConverter<T> : JsonConverter<T>
 
 				// Handle strings if strings are allowed
 				JsonTokenType.String when (options.NumberHandling & JsonNumberHandling.AllowReadingFromString) != 0 =>
-					long.TryParse(reader.GetString(), out long id) switch
+					long.TryParse(reader.GetString(), out var id) switch
 					{
 						true =>
 							id,

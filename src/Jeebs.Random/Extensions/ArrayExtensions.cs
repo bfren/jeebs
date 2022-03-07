@@ -21,9 +21,9 @@ public static class ArrayExtensions
 		// Don't alter the original array
 		var shuffled = @this.ToArray();
 
-		for (int i = shuffled.Length; i > 1; i--)
+		for (var i = shuffled.Length; i > 1; i--)
 		{
-			int j = F.Rnd.NumberF.GetInt32(max: i - 1);
+			var j = F.Rnd.NumberF.GetInt32(max: i - 1);
 			var tmp = shuffled[j];
 			shuffled[j] = shuffled[i - 1];
 			shuffled[i - 1] = tmp;

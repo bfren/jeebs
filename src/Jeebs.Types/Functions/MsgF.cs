@@ -40,8 +40,8 @@ public static class MsgF
 		);
 
 		var values = new List<object>();
-		int replaceIndex = 0; // keeps track of replace loop so we can match named template values with an array source
-		string rewrittenFormat = r.Replace(format, (Match m) =>
+		var replaceIndex = 0; // keeps track of replace loop so we can match named template values with an array source
+		var rewrittenFormat = r.Replace(format, (Match m) =>
 		{
 			var startGroup = m.Groups["start"];
 			var templateGroup = m.Groups["template"];

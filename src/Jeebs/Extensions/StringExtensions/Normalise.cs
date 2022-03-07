@@ -16,7 +16,7 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Make lowercase, and remove non-letters characters
-			string normalised = Regex.Replace(@this.ToLowerInvariant(), "[^a-z -]", "").Trim();
+			var normalised = Regex.Replace(@this.ToLowerInvariant(), "[^a-z -]", "").Trim();
 
 			// Remove hyphens from the start of the string
 			normalised = normalised.TrimStart('-');

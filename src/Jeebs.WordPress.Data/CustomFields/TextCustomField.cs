@@ -32,7 +32,7 @@ public abstract class TextCustomField : CustomField<string>
 	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// If meta contains the key, return it
-		if (meta.TryGetValue(Key, out string? value))
+		if (meta.TryGetValue(Key, out var value))
 		{
 			ValueStr = value;
 			return True.AsTask;

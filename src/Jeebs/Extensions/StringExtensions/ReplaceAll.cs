@@ -16,8 +16,8 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Copy string and replace values
-			string r = @this;
-			foreach (string t in replace)
+			var r = @this;
+			foreach (var t in replace)
 			{
 				r = r.Replace(t, with);
 			}

@@ -101,7 +101,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <param name="value">Post ID value</param>
 	internal static Maybe<WpPostId> ParseAttachmentPostId(Type type, string value)
 	{
-		if (!long.TryParse(value, out long attachmentPostId))
+		if (!long.TryParse(value, out var attachmentPostId))
 		{
 			return None<WpPostId>(new M.ValueIsInvalidPostIdMsg(type, value));
 		}

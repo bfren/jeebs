@@ -23,7 +23,7 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 				new() { Value = id },
 
 			{ } =>
-				long.TryParse(value.ToString(), out long id) switch
+				long.TryParse(value.ToString(), out var id) switch
 				{
 					true =>
 						new() { Value = id },

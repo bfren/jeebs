@@ -23,7 +23,7 @@ public static class MathsF
 		}
 
 		var result = 1L;
-		for (long i = x; i > 1; i--)
+		for (var i = x; i > 1; i--)
 		{
 			result *= i;
 		}

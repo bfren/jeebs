@@ -14,7 +14,7 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Get the index of the last period
-			int lastPeriod = @this.LastIndexOf('.');
+			var lastPeriod = @this.LastIndexOf('.');
 			if (lastPeriod == -1)
 			{
 				return @this;

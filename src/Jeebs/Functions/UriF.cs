@@ -17,7 +17,7 @@ public static class UriF
 	/// <param name="requireHttps">Set to false if you want to match HTTP URIs</param>
 	public static bool IsHttp(string input, bool requireHttps) =>
 		!string.IsNullOrEmpty(input)
-		&& Uri.TryCreate(input, UriKind.Absolute, out Uri? uri)
+		&& Uri.TryCreate(input, UriKind.Absolute, out var uri)
 		&& (uri.Scheme == Uri.UriSchemeHttps
 			|| (!requireHttps && uri.Scheme == Uri.UriSchemeHttp)
 		);

@@ -116,7 +116,7 @@ public static class PhpF
 		StringBuilder appendList(IList list)
 		{
 			var htb = new Hashtable();
-			for (int i = 0; i < list.Count; i++)
+			for (var i = 0; i < list.Count; i++)
 			{
 				htb.Add(i, list[i]);
 			}
@@ -183,7 +183,7 @@ public static class PhpF
 		// Get boolean
 		bool getBoolean()
 		{
-			char b = str[pointer + 2];
+			var b = str[pointer + 2];
 			pointer += 4;
 			return b == '1';
 		}
@@ -237,10 +237,10 @@ public static class PhpF
 
 			// Get each key and value, and add them to a hashtable
 			var table = new AssocArray();
-			for (int i = 0; i < len; i++)
+			for (var i = 0; i < len; i++)
 			{
 				var (key, value) = (PrivateDeserialise(str), PrivateDeserialise(str));
-				if (int.TryParse(key.ToString(), out int k))
+				if (int.TryParse(key.ToString(), out var k))
 				{
 					table.Add(k, value);
 				}

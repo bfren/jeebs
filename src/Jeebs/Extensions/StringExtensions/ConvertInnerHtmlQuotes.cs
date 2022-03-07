@@ -26,15 +26,15 @@ public static partial class StringExtensions
 			var htmlTags = new Regex("<[^>]*>");
 
 			// Get the first match
-			Match match = htmlTags.Match(@this);
+			var match = htmlTags.Match(@this);
 
 			// Loop through each HTML tag, replacing the quotes in the text in between
-			int lastIndex = 0;
+			var lastIndex = 0;
 			var builder = new StringBuilder();
 			while (match.Success)
 			{
 				// Replace text between this match and the previous one
-				string textBetween = @this[lastIndex..match.Index];
+				var textBetween = @this[lastIndex..match.Index];
 				builder.Append(convert(textBetween));
 
 				// Add the text in this section unchanged
@@ -46,7 +46,7 @@ public static partial class StringExtensions
 			}
 
 			// Replace any remaining quotes
-			string remaining = @this[lastIndex..];
+			var remaining = @this[lastIndex..];
 			builder.Append(convert(remaining));
 
 			// Return result string
