@@ -109,6 +109,7 @@ public class AuthBuilder
 	/// <summary>
 	/// Enable JSON Web Token authentication and authorisation
 	/// </summary>
+	/// <exception cref="InvalidJwtConfigurationException"></exception>
 	public AuthBuilder WithJwt()
 	{
 		// Ensure JWT configuration is valid

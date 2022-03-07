@@ -178,6 +178,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 	/// <summary>
 	/// Generate custom HashCode
 	/// </summary>
+	/// <exception cref="UnknownMaybeException"></exception>
 	public override int GetHashCode() =>
 		this switch
 		{

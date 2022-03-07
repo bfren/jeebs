@@ -22,6 +22,7 @@ public sealed class StrongIdConverter<T> : JsonConverter<T>
 	/// <param name="reader">Utf8JsonReader</param>
 	/// <param name="typeToConvert"><see cref="IStrongId"/> type</param>
 	/// <param name="options">JsonSerializerOptions</param>
+	/// <exception cref="JsonException"></exception>
 	public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 		new()
 		{

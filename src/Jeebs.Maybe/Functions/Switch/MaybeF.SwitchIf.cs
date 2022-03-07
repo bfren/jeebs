@@ -21,6 +21,7 @@ public static partial class MaybeF
 	/// <param name="check">Function to run if <paramref name="maybe"/> is <see cref="Jeebs.Internals.Some{T}"/></param>
 	/// <param name="ifTrue">Function to run if <paramref name="check"/> returns true</param>
 	/// <param name="ifFalse">Function to run if <paramref name="check"/> returns false</param>
+	/// <exception cref="UnknownMaybeException"></exception>
 	public static Maybe<T> SwitchIf<T>(
 		Maybe<T> maybe,
 		Func<T, bool> check,

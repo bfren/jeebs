@@ -25,6 +25,7 @@ public sealed class StrongIdConverterFactory : JsonConverterFactory
 	/// </summary>
 	/// <param name="typeToConvert"><see cref="IStrongId"/> type</param>
 	/// <param name="options">JsonSerializerOptions</param>
+	/// <exception cref="JsonException"></exception>
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		var converterType = typeof(StrongIdConverter<>).MakeGenericType(typeToConvert);

@@ -59,6 +59,8 @@ public class PropertyInfo<TObject, TProperty>
 	/// </summary>
 	/// <param name="obj">Object</param>
 	/// <returns>Property value</returns>
+	/// <exception cref="ArgumentNullException"></exception>
+	/// <exception cref="InvalidOperationException"></exception>
 	public TProperty Get(TObject obj)
 	{
 		if (obj is null)
@@ -79,6 +81,7 @@ public class PropertyInfo<TObject, TProperty>
 	/// </summary>
 	/// <param name="obj">Object</param>
 	/// <param name="value">Value</param>
+	/// <exception cref="ArgumentNullException"></exception>
 	public void Set(TObject obj, TProperty value)
 	{
 		if (obj is null)

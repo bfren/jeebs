@@ -24,6 +24,7 @@ public sealed class EnumeratedConverterFactory : JsonConverterFactory
 	/// </summary>
 	/// <param name="typeToConvert">Enum type</param>
 	/// <param name="options">JsonSerializerOptions</param>
+	/// <exception cref="JsonException"></exception>
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		var converterType = typeof(EnumeratedConverter<>).MakeGenericType(typeToConvert);

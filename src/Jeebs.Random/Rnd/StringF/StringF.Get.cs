@@ -91,6 +91,7 @@ public static partial class Rnd
 		/// </summary>
 		/// <param name="length">The length of the new random string</param>
 		/// <param name="options">GetOptions</param>
+		/// <exception cref="InvalidOperationException"></exception>
 		public static string Get(int length, GetOptions options)
 		{
 			// Setup

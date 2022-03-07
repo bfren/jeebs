@@ -36,6 +36,7 @@ public static partial class Rnd
 		/// </remarks>
 		/// <param name="min">Minimum acceptable value</param>
 		/// <param name="max">Maximum acceptable value</param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		public static uint GetUInt32(uint min, uint max)
 		{
 			// Check arguments

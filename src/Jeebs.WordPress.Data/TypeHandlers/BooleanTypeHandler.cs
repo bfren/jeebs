@@ -42,6 +42,7 @@ public sealed class BooleanTypeHandler : Dapper.SqlMapper.TypeHandler<bool>
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter object</param>
 	/// <param name="value">True / False</param>
+	/// <exception cref="InvalidOperationException"></exception>
 	public override void SetValue(IDbDataParameter parameter, bool value)
 	{
 		if (oneZero.Contains(parameter.SourceColumn))

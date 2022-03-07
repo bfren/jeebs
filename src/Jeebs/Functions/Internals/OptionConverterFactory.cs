@@ -25,6 +25,7 @@ public sealed class OptionConverterFactory : JsonConverterFactory
 	/// </summary>
 	/// <param name="typeToConvert">Maybe type</param>
 	/// <param name="options">JsonSerializerOptions</param>
+	/// <exception cref="JsonException"></exception>
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		// Get converter type

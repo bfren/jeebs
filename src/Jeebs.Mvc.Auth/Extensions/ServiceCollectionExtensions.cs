@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
 	/// </summary>
 	/// <param name="this">IServiceCollection</param>
 	/// <param name="config">IConfiguration</param>
+	/// <exception cref="AuthNotEnabledException"></exception>
 	public static AuthBuilder AddAuthentication(this IServiceCollection @this, IConfiguration config)
 	{
 		// Start fluent configuration

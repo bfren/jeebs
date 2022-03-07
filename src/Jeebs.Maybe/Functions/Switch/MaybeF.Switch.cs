@@ -17,6 +17,7 @@ public static partial class MaybeF
 	/// <param name="maybe">Maybe being switched</param>
 	/// <param name="some">Action to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 	/// <param name="none">Action to run if <see cref="Jeebs.Internals.None{T}"/></param>
+	/// <exception cref="UnknownMaybeException"></exception>
 	public static void Switch<T>(Maybe<T> maybe, Action<T> some, Action<Msg> none)
 	{
 		// No return value so unable to use switch statement
@@ -43,6 +44,7 @@ public static partial class MaybeF
 	/// <param name="maybe">Maybe being switched</param>
 	/// <param name="some">Function to run if <see cref="Jeebs.Internals.Some{T}"/> - receives value <typeparamref name="T"/> as input</param>
 	/// <param name="none">Function to run if <see cref="Jeebs.Internals.None{T}"/></param>
+	/// <exception cref="UnknownMaybeException"></exception>
 	public static U Switch<T, U>(Maybe<T> maybe, Func<T, U> some, Func<Msg, U> none) =>
 		maybe switch
 		{

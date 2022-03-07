@@ -16,6 +16,7 @@ public static class CompareExtensions
 	/// Default value is "="
 	/// </summary>
 	/// <param name="this">Compare</param>
+	/// <exception cref="UnrecognisedSearchOperatorException"></exception>
 	public static string ToOperator(this Compare @this) =>
 		@this switch
 		{

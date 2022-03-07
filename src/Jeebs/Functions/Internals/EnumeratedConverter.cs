@@ -20,6 +20,7 @@ internal class EnumeratedConverter<T> : JsonConverter<T>
 	/// <param name="reader">Utf8JsonReader</param>
 	/// <param name="typeToConvert">Enumerated type</param>
 	/// <param name="options">JsonSerializerOptions</param>
+	/// <exception cref="JsonException"></exception>
 	public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 		Activator.CreateInstance(typeToConvert, args: reader.GetString()) switch
 		{
