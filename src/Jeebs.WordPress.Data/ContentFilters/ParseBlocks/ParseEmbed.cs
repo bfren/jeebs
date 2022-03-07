@@ -62,7 +62,7 @@ public sealed partial class ParseBlocks
 	/// </summary>
 	internal enum EmbedType
 	{
-		Video
+		Video = 0
 	}
 
 	/// <summary>
@@ -70,6 +70,6 @@ public sealed partial class ParseBlocks
 	/// </summary>
 	internal enum Provider
 	{
-		Vimeo
+		Vimeo = 0
 	}
 }

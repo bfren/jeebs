@@ -63,14 +63,14 @@ public partial class Parse_Tests
 
 	public enum TestA
 	{
-		Test1,
-		Test2
+		Test1 = 0,
+		Test2 = 1
 	}
 
 	public enum TestB
 	{
-		Test3,
-		Test4,
-		Test5
+		Test3 = 0,
+		Test4 = 1,
+		Test5 = 2
 	}
 }

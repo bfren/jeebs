@@ -11,15 +11,15 @@ public enum QueryJoin
 	/// <summary>
 	/// INNER join
 	/// </summary>
-	Inner,
+	Inner = 0,
 
 	/// <summary>
 	/// LEFT join
 	/// </summary>
-	Left,
+	Left = 1,
 
 	/// <summary>
 	/// RIGHT join
 	/// </summary>
-	Right
+	Right = 2
 }

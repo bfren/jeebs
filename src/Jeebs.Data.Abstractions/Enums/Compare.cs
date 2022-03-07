@@ -11,45 +11,45 @@ public enum Compare
 	/// <summary>
 	/// Equal
 	/// </summary>
-	Equal,
+	Equal = 0,
 
 	/// <summary>
 	/// Not Equal
 	/// </summary>
-	NotEqual,
+	NotEqual = 1,
 
 	/// <summary>
 	/// Like
 	/// </summary>
-	Like,
+	Like = 2,
 
 	/// <summary>
 	/// Less Than
 	/// </summary>
-	LessThan,
+	LessThan = 3,
 
 	/// <summary>
 	/// Less Than or Equal
 	/// </summary>
-	LessThanOrEqual,
+	LessThanOrEqual = 4,
 
 	/// <summary>
 	/// More Than
 	/// </summary>
-	MoreThan,
+	MoreThan = 5,
 
 	/// <summary>
 	/// More Than or Equal
 	/// </summary>
-	MoreThanOrEqual,
+	MoreThanOrEqual = 6,
 
 	/// <summary>
 	/// In
 	/// </summary>
-	In,
+	In = 7,
 
 	/// <summary>
 	/// Not In
 	/// </summary>
-	NotIn
+	NotIn = 8
 }

@@ -11,20 +11,20 @@ public enum AlertType
 	/// <summary>
 	/// Info
 	/// </summary>
-	Info,
+	Info = 0,
 
 	/// <summary>
 	/// Success
 	/// </summary>
-	Success,
+	Success = 1,
 
 	/// <summary>
 	/// Error
 	/// </summary>
-	Error,
+	Error = 2,
 
 	/// <summary>
 	/// Warning
 	/// </summary>
-	Warning
+	Warning = 3
 }

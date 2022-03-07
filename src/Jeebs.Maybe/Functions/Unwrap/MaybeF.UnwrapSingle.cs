@@ -73,16 +73,16 @@ public static partial class MaybeF
 		public enum UnwrapSingleError
 		{
 			/// <inheritdoc cref="UnwrapSingleNoItemsMsg"/>
-			NoItems,
+			NoItems = 0,
 
 			/// <inheritdoc cref="UnwrapSingleTooManyItemsErrorMsg"/>
-			TooManyItems,
+			TooManyItems = 1,
 
 			/// <inheritdoc cref="UnwrapSingleIncorrectTypeErrorMsg"/>
-			IncorrectType,
+			IncorrectType = 2,
 
 			/// <inheritdoc cref="UnwrapSingleNotAListMsg"/>
-			NotAList
+			NotAList = 3
 		}
 	}
 }

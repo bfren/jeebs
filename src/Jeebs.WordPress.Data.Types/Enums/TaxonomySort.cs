@@ -11,10 +11,10 @@ public enum TaxonomySort
 	/// <summary>
 	/// Sort by Taxonomy Term
 	/// </summary>
-	TitleAscending,
+	TitleAscending = 0,
 
 	/// <summary>
 	/// Sort by Taxonomy Count
 	/// </summary>
-	CountDescending
+	CountDescending = 1
 }

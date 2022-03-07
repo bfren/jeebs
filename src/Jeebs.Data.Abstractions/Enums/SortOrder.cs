@@ -11,10 +11,10 @@ public enum SortOrder
 	/// <summary>
 	/// Ascending order
 	/// </summary>
-	Ascending,
+	Ascending = 0,
 
 	/// <summary>
 	/// Descending order
 	/// </summary>
-	Descending
+	Descending = 1
 }

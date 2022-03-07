@@ -11,15 +11,15 @@ public enum NotificationLevel
 	/// <summary>
 	/// Information, or 'Green' message
 	/// </summary>
-	Information,
+	Information = 0,
 
 	/// <summary>
 	/// Warning, or 'Amber' message
 	/// </summary>
-	Warning,
+	Warning = 1,
 
 	/// <summary>
 	/// Error, or 'Red' message
 	/// </summary>
-	Error
+	Error = 2
 }

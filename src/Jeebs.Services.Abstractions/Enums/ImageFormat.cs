@@ -11,25 +11,25 @@ public enum ImageFormat
 	/// <summary>
 	/// Bitmap format
 	/// </summary>
-	Bmp,
+	Bmp = 0,
 
 	/// <summary>
 	/// Graphics Interchange Format (format)
 	/// </summary>
-	Gif,
+	Gif = 1,
 
 	/// <summary>
 	/// Icon
 	/// </summary>
-	Ico,
+	Ico = 2,
 
 	/// <summary>
 	/// Joint Photographic Experts Group format
 	/// </summary>
-	Jpeg,
+	Jpeg = 3,
 
 	/// <summary>
 	/// Portable Network Graphics format
 	/// </summary>
-	Png
+	Png = 4
 }

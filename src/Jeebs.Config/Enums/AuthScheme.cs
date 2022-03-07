@@ -11,5 +11,5 @@ public enum AuthScheme
 	/// <summary>
 	/// Cookies authentication
 	/// </summary>
-	Cookies
+	Cookies = 0
 }
