@@ -69,7 +69,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 				})
 			)
 			.UnwrapAsync(
-				x => x.Single<Attachment>(
+				x => x.SingleValue<Attachment>(
 					tooMany: () => new M.MultipleAttachmentsFoundMsg(ValueStr)
 				)
 			)

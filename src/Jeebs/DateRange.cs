@@ -21,9 +21,9 @@ public readonly record struct DateRange : IRange<DateTime>
 	/// <summary>
 	/// Create range object from a single date
 	/// </summary>
-	/// <param name="single">Range start and end</param>
-	public DateRange(DateTime single) =>
-		(Start, Finish) = (single.StartOfDay(), single.EndOfDay());
+	/// <param name="startAndEnd">Range start and end</param>
+	public DateRange(DateTime startAndEnd) =>
+		(Start, Finish) = (startAndEnd.StartOfDay(), startAndEnd.EndOfDay());
 
 	/// <summary>
 	/// Create range object, making sure start is before end (!)

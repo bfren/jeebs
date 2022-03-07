@@ -25,7 +25,7 @@ public static partial class QueryAttachmentsF
 				db, w, opt => opt with { Ids = ImmutableList.Create(fileId) }
 			)
 			.UnwrapAsync(
-				x => x.Single<Attachment>(
+				x => x.SingleValue<Attachment>(
 					noItems: () => new M.AttachmentNotFoundMsg(fileId.Value),
 					tooMany: () => new M.MultipleAttachmentsFoundMsg(fileId.Value)
 				)

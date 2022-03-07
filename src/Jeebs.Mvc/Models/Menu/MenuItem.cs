@@ -14,7 +14,7 @@ public record class MenuItem
 	/// <summary>
 	/// Each menu item needs a unique identifier
 	/// </summary>
-	public Guid Guid { get; init; } = F.Rnd.Guid;
+	public Guid Id { get; init; } = F.Rnd.Guid;
 
 	/// <summary>
 	/// The text to display in the link

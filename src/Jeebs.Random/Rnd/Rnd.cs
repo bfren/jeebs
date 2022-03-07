@@ -26,14 +26,18 @@ public static partial class Rnd
 	/// <summary>
 	/// Generate a random Guid
 	/// </summary>
+#pragma warning disable CA1720 // Identifier contains type name
 	public static Guid Guid =>
 		GuidF.Get();
+#pragma warning restore CA1720 // Identifier contains type name
 
 	/// <summary>
 	/// Generate a random 32-bit integer between 0 and 10000
 	/// </summary>
+#pragma warning disable CA1720 // Identifier contains type name
 	public static int Int =>
 		NumberF.GetInt32(max: 10000);
+#pragma warning restore CA1720 // Identifier contains type name
 
 	/// <summary>
 	/// Generate a random 64-bit integer between 0 and 10000
@@ -56,8 +60,10 @@ public static partial class Rnd
 	/// <summary>
 	/// Generate a random 32-bit unsigned integer between 0 and 10000
 	/// </summary>
+#pragma warning disable CA1720 // Identifier contains type name
 	public static uint Uint =>
 		NumberF.GetUInt32(max: 10000u);
+#pragma warning restore CA1720 // Identifier contains type name
 
 	/// <summary>
 	/// Generate a random 64-bit unsigned integer between 0 and 10000

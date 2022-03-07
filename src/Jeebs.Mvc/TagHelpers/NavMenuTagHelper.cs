@@ -123,7 +123,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 				link.AddCssClass(LinkClass);
 
 				// Add GUID
-				link.MergeAttribute("id", $"link-{menuItem.Guid}");
+				link.MergeAttribute("id", $"link-{menuItem.Id}");
 
 				// Check whether or not this is an active link / section
 				if (isActive(menuItem))

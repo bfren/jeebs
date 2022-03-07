@@ -46,7 +46,7 @@ public static partial class MaybeF
 			Unwrap(maybe, ifNone);
 
 		/// <inheritdoc cref="UnwrapSingle{T, U}(Maybe{T}, Func{Msg}?, Func{Msg}?, Func{Msg}?)"/>
-		public Maybe<U> Single<U>(Func<Msg>? noItems = null, Func<Msg>? tooMany = null, Func<Msg>? notAList = null) =>
+		public Maybe<U> SingleValue<U>(Func<Msg>? noItems = null, Func<Msg>? tooMany = null, Func<Msg>? notAList = null) =>
 			UnwrapSingle<T, U>(maybe, noItems, tooMany, notAList);
 	}
 }

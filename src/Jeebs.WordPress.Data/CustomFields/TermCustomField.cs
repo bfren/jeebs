@@ -62,7 +62,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 				x => QueryTerms.ExecuteAsync<Term>(db, w, opt => opt with { Id = x })
 			)
 			.UnwrapAsync(
-				x => x.Single<Term>(
+				x => x.SingleValue<Term>(
 					tooMany: () => new M.MultipleTermsFoundMsg(ValueStr)
 				)
 			)

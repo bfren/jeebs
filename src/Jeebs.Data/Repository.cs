@@ -119,7 +119,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 			predicates
 		)
 		.UnwrapAsync(
-			x => x.Single<TModel>()
+			x => x.SingleValue<TModel>()
 		);
 
 	#endregion Custom Queries
