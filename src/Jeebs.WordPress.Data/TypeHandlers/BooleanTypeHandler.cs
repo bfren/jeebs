@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace Jeebs.WordPress.Data.TypeHandlers;
@@ -34,7 +35,7 @@ public sealed class BooleanTypeHandler : Dapper.SqlMapper.TypeHandler<bool>
 	/// <param name="value">Database value</param>
 	/// <returns>True / False</returns>
 	public override bool Parse(object value) =>
-		new[] { "1", "y", "yes" }.Contains(value?.ToString()?.ToLower());
+		new[] { "1", "y", "yes" }.Contains(value?.ToString()?.ToLower(CultureInfo.InvariantCulture));
 
 	/// <summary>
 	/// Set the value based on the column name

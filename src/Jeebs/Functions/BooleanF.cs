@@ -1,6 +1,7 @@
 ﻿// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using System.Linq;
 using Jeebs;
 using static F.MaybeF;
@@ -20,7 +21,7 @@ public static class BooleanF
 	public static Maybe<bool> Parse<T>(T value)
 	{
 		// Convert to string
-		var val = value?.ToString()?.ToLower();
+		var val = value?.ToString()?.ToLower(CultureInfo.InvariantCulture);
 		if (val is null)
 		{
 			return None<bool, M.NullValueMsg>();

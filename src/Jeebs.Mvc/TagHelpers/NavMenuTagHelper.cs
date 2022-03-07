@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Encodings.Web;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
@@ -85,14 +86,14 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 		}
 
 		// Setup objects
-		var currentController = ViewContext.ControllerName().ToLower();
-		var currentAction = ViewContext.ActionName().ToLower();
+		var currentController = ViewContext.ControllerName().ToLower(CultureInfo.InvariantCulture);
+		var currentAction = ViewContext.ActionName().ToLower(CultureInfo.InvariantCulture);
 		var urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
 
 		// Build the menu
 		BuildMenu(
 			Menu.Items,
-			mi => mi.Controller.ToLower() == currentController,
+			mi => mi.Controller.ToLower(CultureInfo.InvariantCulture) == currentController,
 			mi => mi.Controller,
 			el => output.Content.AppendHtml(el)
 		);
@@ -156,7 +157,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 					// Build child menu
 					BuildMenu(
 						menuItem.Children,
-						mi => mi.Action.ToLower() == currentAction,
+						mi => mi.Action.ToLower(CultureInfo.InvariantCulture) == currentAction,
 						mi => mi.Action,
 						el => childMenu.InnerHtml.AppendHtml(el)
 					);
