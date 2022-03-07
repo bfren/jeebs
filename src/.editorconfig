@@ -442,3 +442,6 @@ dotnet_naming_rule.parameters_rule.severity             = warning
 
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none
+
+# IDE0072: Add missing cases
+dotnet_diagnostic.IDE0072.severity = none
