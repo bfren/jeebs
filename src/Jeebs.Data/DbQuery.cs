@@ -68,7 +68,9 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// <param name="table">Table object</param>
 	/// <param name="column">Column selector</param>
 #pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 	protected string __<TTable>(TTable table, Expression<Func<TTable, string>> column)
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
 		where TTable : ITable =>
 		GetColumnFromExpression(

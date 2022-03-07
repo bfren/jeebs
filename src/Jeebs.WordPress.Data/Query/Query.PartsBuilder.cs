@@ -64,9 +64,11 @@ public static partial class Query
 		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="table">Table object</param>
 #pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 		protected string __<TTable>(TTable table)
-			where TTable : ITable
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
+			where TTable : ITable
 		{
 			return Client.Escape(table);
 		}
@@ -78,9 +80,11 @@ public static partial class Query
 		/// <param name="table">Table object</param>
 		/// <param name="selector">Column selector</param>
 #pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 		protected string __<TTable>(TTable table, Expression<Func<TTable, string>> selector)
-			where TTable : ITable
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
+			where TTable : ITable
 		{
 			return GetColumnFromExpression(table, selector).Switch(
 				some: column => Client.EscapeWithTable(column),
