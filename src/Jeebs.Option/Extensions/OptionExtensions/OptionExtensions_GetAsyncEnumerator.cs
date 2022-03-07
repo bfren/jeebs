@@ -10,7 +10,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: GetAsyncEnumerator
 /// </summary>
-public static class OptionExtensions_GetAsyncEnumerator
+public static class OptionExtensionsGetAsyncEnumerator
 {
 	/// <inheritdoc cref="Option{T}.GetEnumerator"/>
 	public static async IAsyncEnumerator<T> GetAsyncEnumerator<T>(this Task<Option<T>> @this)

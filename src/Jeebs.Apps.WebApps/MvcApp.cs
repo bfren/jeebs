@@ -74,29 +74,29 @@ public abstract class MvcApp : WebApp
 		base.ConfigureServices(env, config, services);
 
 		// Response Caching
-		ConfigureServices_ResponseCaching(services);
+		ConfigureServicesResponseCaching(services);
 
 		// Response Compression
-		ConfigureServices_ResponseCompression(services);
+		ConfigureServicesResponseCompression(services);
 
 		// Routing
-		ConfigureServices_Routing(services);
+		ConfigureServicesRouting(services);
 
 		// Authorisation
-		ConfigureServices_Authorisation(services);
+		ConfigureServicesAuthorisation(services);
 
 		// Session
-		ConfigureServices_Session(services);
+		ConfigureServicesSession(services);
 
 		// Endpoints
-		ConfigureServices_Endpoints(services);
+		ConfigureServicesEndpoints(services);
 	}
 
 	/// <summary>
 	/// Override to configure response caching
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices_ResponseCaching(IServiceCollection services)
+	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services)
 	{
 		services.AddResponseCaching();
 	}
@@ -105,7 +105,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure response compression
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices_ResponseCompression(IServiceCollection services)
+	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services)
 	{
 		services
 			.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
@@ -122,7 +122,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure authorisation
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices_Authorisation(IServiceCollection services)
+	protected virtual void ConfigureServicesAuthorisation(IServiceCollection services)
 	{
 		if (enableAuthorisation)
 		{
@@ -134,7 +134,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure routing
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices_Routing(IServiceCollection services)
+	protected virtual void ConfigureServicesRouting(IServiceCollection services)
 	{
 		services.AddRouting(opt =>
 		{
@@ -147,7 +147,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure session options
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices_Session(IServiceCollection services)
+	protected virtual void ConfigureServicesSession(IServiceCollection services)
 	{
 		if (enableSession)
 		{
@@ -159,19 +159,19 @@ public abstract class MvcApp : WebApp
 	/// Override to configure endpoints - default is MVC
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices_Endpoints(IServiceCollection services)
+	protected virtual void ConfigureServicesEndpoints(IServiceCollection services)
 	{
 		services
-			.AddControllersWithViews(ConfigureServices_MvcOptions)
-			.AddRazorRuntimeCompilation(ConfigureServices_RuntimeCompilation)
-			.AddJsonOptions(ConfigureServices_EndpointsJson);
+			.AddControllersWithViews(ConfigureServicesMvcOptions)
+			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
+			.AddJsonOptions(ConfigureServicesEndpointsJson);
 	}
 
 	/// <summary>
 	/// Override to configure MVC options
 	/// </summary>
 	/// <param name="opt">MvcOptions</param>
-	public virtual void ConfigureServices_MvcOptions(MvcOptions opt)
+	public virtual void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
 		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
@@ -181,13 +181,13 @@ public abstract class MvcApp : WebApp
 	/// Override to configure Razor Runtime Compilation
 	/// </summary>
 	/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
-	public virtual void ConfigureServices_RuntimeCompilation(MvcRazorRuntimeCompilationOptions opt) { }
+	public virtual void ConfigureServicesRuntimeCompilation(MvcRazorRuntimeCompilationOptions opt) { }
 
 	/// <summary>
 	/// Override to configure endpoints JSON
 	/// </summary>
 	/// <param name="opt">JsonOptions</param>
-	public virtual void ConfigureServices_EndpointsJson(JsonOptions opt)
+	public virtual void ConfigureServicesEndpointsJson(JsonOptions opt)
 	{
 		// Get default options
 		var defaultOptions = F.JsonF.CopyOptions();
@@ -230,40 +230,40 @@ public abstract class MvcApp : WebApp
 		base.Configure(env, app, config);
 
 		// Compression
-		Configure_ResponseCompression(app);
+		ConfigureResponseCompression(app);
 
 		// Static Files
-		Configure_StaticFiles(env, app);
+		ConfigureStaticFiles(env, app);
 
 		// Cookie Policy
-		Configure_CookiePolicy(app);
+		ConfigureCookiePolicy(app);
 
 		// Response Caching
-		Configure_ResponseCaching(app);
+		ConfigureResponseCaching(app);
 
 		// Redirections
-		Configure_Redirections(app, config);
+		ConfigureRedirections(app, config);
 
 		// Routing
-		Configure_Routing(app);
+		ConfigureRouting(app);
 
 		// Authorisation
-		Configure_Authorisation(app, config);
+		ConfigureAuthorisation(app, config);
 
 		// Session
-		Configure_Session(app);
+		ConfigureSession(app);
 
 		// Endpoint Routing
-		Configure_Endpoints(app);
+		ConfigureEndpoints(app);
 	}
 
 	/// <summary>
 	/// Override to send all errors to the Error Controller
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected override void Configure_ProductionExceptionHandling(IApplicationBuilder app)
+	protected override void ConfigureProductionExceptionHandling(IApplicationBuilder app)
 	{
-		base.Configure_ProductionExceptionHandling(app);
+		base.ConfigureProductionExceptionHandling(app);
 
 		// Use Error Controller to handle all other errors
 		app.UseStatusCodePagesWithReExecute("/Error/{0}");
@@ -273,7 +273,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure response compression
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_ResponseCompression(IApplicationBuilder app)
+	protected virtual void ConfigureResponseCompression(IApplicationBuilder app)
 	{
 		app.UseResponseCompression();
 	}
@@ -283,7 +283,7 @@ public abstract class MvcApp : WebApp
 	/// </summary>
 	/// <param name="env">IHostEnvironment</param>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_StaticFiles(IHostEnvironment env, IApplicationBuilder app)
+	protected virtual void ConfigureStaticFiles(IHostEnvironment env, IApplicationBuilder app)
 	{
 		// Check whether or not they have already been enabled
 		if (staticFilesAreEnabled)
@@ -314,7 +314,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure cookie policy
 	/// </summary>
 	/// <param name="app"></param>
-	protected virtual void Configure_CookiePolicy(IApplicationBuilder app)
+	protected virtual void ConfigureCookiePolicy(IApplicationBuilder app)
 	{
 		app.UseCookiePolicy(cookiePolicyOptions);
 	}
@@ -323,7 +323,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure response caching
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_ResponseCaching(IApplicationBuilder app)
+	protected virtual void ConfigureResponseCaching(IApplicationBuilder app)
 	{
 		app.UseResponseCaching();
 	}
@@ -333,7 +333,7 @@ public abstract class MvcApp : WebApp
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void Configure_Redirections(IApplicationBuilder app, IConfiguration config)
+	protected virtual void ConfigureRedirections(IApplicationBuilder app, IConfiguration config)
 	{
 		if (
 			config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig redirections
@@ -348,7 +348,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure routing
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_Routing(IApplicationBuilder app)
+	protected virtual void ConfigureRouting(IApplicationBuilder app)
 	{
 		app.UseRouting();
 	}
@@ -358,7 +358,7 @@ public abstract class MvcApp : WebApp
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
 		if (enableAuthorisation)
 		{
@@ -370,7 +370,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure session
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_Session(IApplicationBuilder app)
+	protected virtual void ConfigureSession(IApplicationBuilder app)
 	{
 		if (enableSession)
 		{
@@ -382,7 +382,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure endpoints
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_Endpoints(IApplicationBuilder app)
+	protected virtual void ConfigureEndpoints(IApplicationBuilder app)
 	{
 		app.UseEndpoints(endpoints =>
 		{

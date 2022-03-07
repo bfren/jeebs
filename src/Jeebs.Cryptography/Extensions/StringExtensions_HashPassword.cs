@@ -8,7 +8,7 @@ namespace Jeebs.Cryptography;
 /// <summary>
 /// String Extensions: HashPassword
 /// </summary>
-public static class StringExtensions_HashPassword
+public static class StringExtensionsHashPassword
 {
 	/// <summary>
 	/// Hash a password using argon2id - returns hash containing the salt (of length 128 bytes)

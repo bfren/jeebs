@@ -9,7 +9,7 @@ namespace Jeebs.Linq;
 /// <summary>
 /// Enumerable Extensions: FilterMap
 /// </summary>
-public static class EnumerableExtensions_FilterMap
+public static class EnumerableExtensionsFilterMap
 {
 	/// <inheritdoc cref="F.OptionF.Enumerable.FilterMap{T, U}(IEnumerable{Option{T}}, Func{T, U}, Func{T, bool}?)"/>
 	public static IEnumerable<U> FilterMap<T, U>(this IEnumerable<Option<T>> @this, Func<T, U> map) =>

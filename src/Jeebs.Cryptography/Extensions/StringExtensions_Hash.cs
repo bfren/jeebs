@@ -9,7 +9,7 @@ namespace Jeebs.Cryptography;
 /// <summary>
 /// String Extensions: Hash
 /// </summary>
-public static class StringExtensions_Hash
+public static class StringExtensionsHash
 {
 	/// <summary>
 	/// Compute a 64-byte hash, returning a string of length 88

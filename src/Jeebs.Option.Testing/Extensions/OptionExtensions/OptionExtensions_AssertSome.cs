@@ -9,7 +9,7 @@ namespace Jeebs;
 /// <summary>
 /// Option Extensions: AssertSome
 /// </summary>
-public static class OptionExtensions_AssertSome
+public static class OptionExtensionsAssertSome
 {
 	/// <summary>
 	/// Assert that <paramref name="this"/> is <see cref="Some{T}"/> and return the wrapped value

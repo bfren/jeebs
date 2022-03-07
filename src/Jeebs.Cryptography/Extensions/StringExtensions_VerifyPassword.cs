@@ -8,7 +8,7 @@ namespace Jeebs.Cryptography;
 /// <summary>
 /// String Extensions: VerifyPassword
 /// </summary>
-public static class StringExtensions_VerifyPassword
+public static class StringExtensionsVerifyPassword
 {
 	/// <summary>
 	/// Verify a password hashed using argon2id

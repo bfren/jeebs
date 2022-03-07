@@ -8,7 +8,7 @@ namespace Jeebs;
 /// <summary>
 /// Option Extensions: AssertBoolean
 /// </summary>
-public static class OptionExtensions_AssertBoolean
+public static class OptionExtensionsAssertBoolean
 {
 	/// <summary>
 	/// Assert that <paramref name="this"/> is <see cref="Internals.Some{T}"/> and the value is false

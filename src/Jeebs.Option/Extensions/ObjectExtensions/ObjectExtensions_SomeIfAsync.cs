@@ -10,7 +10,7 @@ namespace Jeebs;
 /// <summary>
 /// Object Extensions: ReturnIfAsync
 /// </summary>
-public static class ObjectExtensions_SomeIfAsync
+public static class ObjectExtensionsSomeIfAsync
 {
 	/// <inheritdoc cref="F.OptionF.SomeIfAsync{T}(Func{bool}, Func{Task{T}}, Handler)"/>
 	public static Task<Option<T>> SomeIfAsync<T>(this Func<Task<T>> @this, Func<bool> predicate, Handler handler) =>

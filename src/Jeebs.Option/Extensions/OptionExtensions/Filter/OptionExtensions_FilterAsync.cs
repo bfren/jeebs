@@ -8,7 +8,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: FilterAsync
 /// </summary>
-public static class OptionExtensions_FilterAsync
+public static class OptionExtensionsFilterAsync
 {
 	/// <inheritdoc cref="F.OptionF.FilterAsync{T}(Option{T}, Func{T, Task{bool}})"/>
 	public static Task<Option<T>> FilterAsync<T>(this Task<Option<T>> @this, Func<T, bool> predicate) =>

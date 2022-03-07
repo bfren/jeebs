@@ -60,13 +60,13 @@ internal class MinimalApiApp : ApiApp
 		Create(args, null);
 
 	/// <inheritdoc/>
-	protected override void ConfigureServices_Endpoints(IServiceCollection services)
+	protected override void ConfigureServicesEndpoints(IServiceCollection services)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_Endpoints(IApplicationBuilder app)
+	protected override void ConfigureEndpoints(IApplicationBuilder app)
 	{
 		// do nothing
 	}

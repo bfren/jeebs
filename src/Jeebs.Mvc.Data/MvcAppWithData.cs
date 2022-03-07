@@ -18,9 +18,9 @@ public abstract class MvcAppWithData : MvcApp
 	protected MvcAppWithData(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	public override void ConfigureServices_MvcOptions(MvcOptions opt)
+	public override void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
-		base.ConfigureServices_MvcOptions(opt);
+		base.ConfigureServicesMvcOptions(opt);
 
 		// Add custom model binders
 		opt.ModelBinderProviders.Insert(0, new StrongIdModelBinderProvider());

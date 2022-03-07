@@ -9,7 +9,7 @@ namespace Jeebs;
 /// <summary>
 /// Object Extensions: ReturnIf
 /// </summary>
-public static class ObjectExtensions_SomeIf
+public static class ObjectExtensionsSomeIf
 {
 	/// <inheritdoc cref="F.OptionF.SomeIf{T}(Func{bool}, Func{T}, Handler)"/>
 	public static Option<T> SomeIf<T>(this T @this, Func<bool> predicate, Handler handler) =>

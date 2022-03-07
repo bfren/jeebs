@@ -31,11 +31,11 @@ public sealed class App : Jeebs.Apps.MvcAppWithData
 		services.AddTransient<IImageDriver, ImageDriver>();
 	}
 
-	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
 		app.UseAuthentication();
 
-		base.Configure_Authorisation(app, config);
+		base.ConfigureAuthorisation(app, config);
 	}
 
 	public override void Ready(IServiceProvider services, ILog log)

@@ -92,7 +92,7 @@ public abstract class WebApp : App
 		app.UseMiddleware<LoggerMiddleware>();
 
 		// Site Verification
-		Configure_SiteVerification(app, config);
+		ConfigureSiteVerification(app, config);
 
 		if (env.IsDevelopment())
 		{
@@ -102,16 +102,16 @@ public abstract class WebApp : App
 		else
 		{
 			// Pretty exception page
-			Configure_ProductionExceptionHandling(app);
+			ConfigureProductionExceptionHandling(app);
 
 			// Add security headers
-			Configure_SecurityHeaders(app);
+			ConfigureSecurityHeaders(app);
 		}
 
 		// Authentication and authorisation
 		if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
 		{
-			Configure_Authorisation(app, config);
+			ConfigureAuthorisation(app, config);
 		}
 
 		// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
@@ -122,7 +122,7 @@ public abstract class WebApp : App
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void Configure_SiteVerification(IApplicationBuilder app, IConfiguration config)
+	protected virtual void ConfigureSiteVerification(IApplicationBuilder app, IConfiguration config)
 	{
 		if (
 			config.GetSection<VerificationConfig>(VerificationConfig.Key) is VerificationConfig verification
@@ -137,7 +137,7 @@ public abstract class WebApp : App
 	/// Override to configure production exception handling
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_ProductionExceptionHandling(IApplicationBuilder app)
+	protected virtual void ConfigureProductionExceptionHandling(IApplicationBuilder app)
 	{
 		app.UseExceptionHandler("/Error");
 	}
@@ -146,7 +146,7 @@ public abstract class WebApp : App
 	/// Override to configure security headers
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void Configure_SecurityHeaders(IApplicationBuilder app)
+	protected virtual void ConfigureSecurityHeaders(IApplicationBuilder app)
 	{
 		if (useHsts) // check for Development Environment happens in Configure()
 		{
@@ -159,7 +159,7 @@ public abstract class WebApp : App
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
+	protected virtual void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
 		app.UseAuthorization();
 	}

@@ -10,7 +10,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: MapAsync
 /// </summary>
-public static class OptionExtensions_MapAsync
+public static class OptionExtensionsMapAsync
 {
 	/// <inheritdoc cref="F.OptionF.MapAsync{T, U}(Option{T}, Func{T, Task{U}}, Handler)"/>
 	public static Task<Option<U>> MapAsync<T, U>(this Task<Option<T>> @this, Func<T, U> map, Handler handler) =>

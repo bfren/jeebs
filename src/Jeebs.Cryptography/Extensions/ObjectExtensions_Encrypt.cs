@@ -8,7 +8,7 @@ namespace Jeebs.Cryptography;
 /// <summary>
 /// Encryption Extensions
 /// </summary>
-public static class ObjectExtensions_Encrypt
+public static class ObjectExtensionsEncrypt
 {
 	/// <summary>
 	/// Encrypt an object using the specified key and return it serialised as JSON

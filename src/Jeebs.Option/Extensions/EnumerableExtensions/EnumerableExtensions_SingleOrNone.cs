@@ -9,7 +9,7 @@ namespace Jeebs.Linq;
 /// <summary>
 /// Enumerable Extensions: SingleOrNone
 /// </summary>
-public static class EnumerableExtensions_SingleOrNone
+public static class EnumerableExtensionsSingleOrNone
 {
 	/// <inheritdoc cref="F.OptionF.Enumerable.SingleOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 	public static Option<T> SingleOrNone<T>(this IEnumerable<T> @this) =>

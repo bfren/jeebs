@@ -8,7 +8,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: AuditAsync
 /// </summary>
-public static class OptionExtensions_AuditAsync
+public static class OptionExtensionsAuditAsync
 {
 	/// <inheritdoc cref="F.OptionF.Audit{T}(Option{T}, Action{Option{T}}, Action{T}?, Action{Msg}?)"/>
 	public static Task<Option<T>> AuditAsync<T>(this Task<Option<T>> @this, Action<Option<T>> any) =>

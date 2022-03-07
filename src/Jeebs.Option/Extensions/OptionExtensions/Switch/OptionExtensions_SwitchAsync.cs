@@ -8,7 +8,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: SwitchAsync
 /// </summary>
-public static class OptionExtensions_SwitchAsync
+public static class OptionExtensionsSwitchAsync
 {
 	/// <inheritdoc cref="F.OptionF.SwitchAsync{T, U}(Task{Option{T}}, Func{T, Task{U}}, Func{Msg, Task{U}})"/>
 	public static Task<U> SwitchAsync<T, U>(this Task<Option<T>> @this, Func<T, U> some, U none) =>

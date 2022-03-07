@@ -9,7 +9,7 @@ namespace Jeebs.Cryptography;
 /// <summary>
 /// Decryption Extensions
 /// </summary>
-public static class StringExtensions_Decrypt
+public static class StringExtensionsDecrypt
 {
 	/// <summary>
 	/// Decrypt a string using the specified key

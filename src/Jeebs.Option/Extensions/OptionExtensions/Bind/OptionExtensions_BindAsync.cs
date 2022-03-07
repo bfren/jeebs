@@ -8,7 +8,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: BindAsync
 /// </summary>
-public static class OptionExtensions_BindAsync
+public static class OptionExtensionsBindAsync
 {
 	/// <inheritdoc cref="F.OptionF.BindAsync{T, U}(Option{T}, Func{T, Task{Option{U}}})"/>
 	public static Task<Option<U>> BindAsync<T, U>(this Task<Option<T>> @this, Func<T, Option<U>> bind) =>

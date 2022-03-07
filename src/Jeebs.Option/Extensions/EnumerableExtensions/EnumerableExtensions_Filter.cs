@@ -9,7 +9,7 @@ namespace Jeebs.Linq;
 /// <summary>
 /// Enumerable Extensions: Filter
 /// </summary>
-public static class EnumerableExtensions_Filter
+public static class EnumerableExtensionsFilter
 {
 	/// <inheritdoc cref="F.OptionF.Enumerable.Filter{T}(IEnumerable{Option{T}}, Func{T, bool}?)"/>
 	public static IEnumerable<T> Filter<T>(this IEnumerable<Option<T>> @this) =>

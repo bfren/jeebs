@@ -9,7 +9,7 @@ namespace Jeebs.Linq;
 /// <summary>
 /// Enumerable Extensions: FirstOrNone
 /// </summary>
-public static class EnumerableExtensions_FirstOrNone
+public static class EnumerableExtensionsFirstOrNone
 {
 	/// <inheritdoc cref="F.OptionF.Enumerable.FirstOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 	public static Option<T> FirstOrNone<T>(this IEnumerable<T> @this) =>

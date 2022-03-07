@@ -11,22 +11,22 @@ public class ErrorController : Jeebs.Mvc.ErrorController
 {
 	public ErrorController(ILog log) : base(log) { }
 
-	public IActionResult Throw_Exception() =>
+	public IActionResult ThrowException() =>
 		throw new Exception("Something");
 
-	public async Task<IActionResult> Return_Error() =>
+	public async Task<IActionResult> ReturnError() =>
 		await this.ExecuteErrorAsync(new TestErrorMsg()).ConfigureAwait(false);
 
-	public IActionResult Return_NotFound() =>
+	public IActionResult ReturnNotFound() =>
 		NotFound();
 
-	public IActionResult Return_Unauthorised() =>
+	public IActionResult ReturnUnauthorised() =>
 		Unauthorized();
 
-	public IActionResult Return_Forbidden() =>
+	public IActionResult ReturnForbidden() =>
 		NotAllowed();
 
-	public async Task<IActionResult> Return_Error404() =>
+	public async Task<IActionResult> ReturnError404() =>
 		await this.ExecuteErrorAsync(new NotFoundMsg(42)).ConfigureAwait(false);
 
 	public record class NotFoundMsg(int Value) : NotFoundMsg<int>

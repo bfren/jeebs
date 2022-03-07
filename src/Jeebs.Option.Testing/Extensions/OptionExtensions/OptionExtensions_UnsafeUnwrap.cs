@@ -6,7 +6,7 @@ namespace Jeebs;
 /// <summary>
 /// Option Extensions: UnsafeUnwrap
 /// </summary>
-public static class OptionExtensions_UnsafeUnwrap
+public static class OptionExtensionsUnsafeUnwrap
 {
 	/// <summary>
 	/// Assume <paramref name="this"/> is a <see cref="Internals.Some{T}"/> and get the value -
@@ -19,7 +19,7 @@ public static class OptionExtensions_UnsafeUnwrap
 }
 
 /// <summary>
-/// Thrown when <see cref="OptionExtensions_UnsafeUnwrap.UnsafeUnwrap{T}(Option{T})"/> fails
+/// Thrown when <see cref="OptionExtensionsUnsafeUnwrap.UnsafeUnwrap{T}(Option{T})"/> fails
 /// </summary>
 public class UnsafeUnwrapException : System.Exception
 {

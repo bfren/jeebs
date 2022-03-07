@@ -8,7 +8,7 @@ namespace Jeebs.Linq;
 /// <summary>
 /// Enumerable Extensions: ElementAtOrNone
 /// </summary>
-public static class EnumerableExtensions_ElementAtOrNone
+public static class EnumerableExtensionsElementAtOrNone
 {
 	/// <inheritdoc cref="F.OptionF.Enumerable.ElementAtOrNone{T}(IEnumerable{T}, int)"/>
 	public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> @this, int index) =>

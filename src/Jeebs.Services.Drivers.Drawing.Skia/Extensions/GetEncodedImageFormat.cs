@@ -10,7 +10,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia;
 /// <summary>
 /// ImageFormat extensions: GetEncodedImageFormat
 /// </summary>
-public static class ImageFormat_Extensions
+public static class ImageFormatExtensions
 {
 	/// <summary>
 	/// Return the <see cref="SKEncodedImageFormat"/> equivalent of an <see cref="ImageFormat"/>

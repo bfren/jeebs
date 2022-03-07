@@ -10,7 +10,7 @@ namespace Jeebs;
 /// <summary>
 /// Object Extensions: ReturnAsync
 /// </summary>
-public static class ObjectExtensions_SomeAsync
+public static class ObjectExtensionsSomeAsync
 {
 	/// <inheritdoc cref="F.OptionF.SomeAsync{T}(Func{Task{T}}, Handler)"/>
 	public static Task<Option<T>> SomeAsync<T>(this Func<Task<T>> @this, Handler handler) =>

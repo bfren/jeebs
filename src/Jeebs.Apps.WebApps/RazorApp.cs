@@ -19,22 +19,22 @@ public abstract class RazorApp : MvcApp
 	protected RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	protected override void ConfigureServices_Endpoints(IServiceCollection services)
+	protected override void ConfigureServicesEndpoints(IServiceCollection services)
 	{
 		services
-			.AddRazorPages(ConfigureServices_RazorPagesOptions)
-			.AddRazorRuntimeCompilation(ConfigureServices_RuntimeCompilation)
-			.AddJsonOptions(ConfigureServices_EndpointsJson);
+			.AddRazorPages(ConfigureServicesRazorPagesOptions)
+			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
+			.AddJsonOptions(ConfigureServicesEndpointsJson);
 	}
 
 	/// <summary>
 	/// Override to configure Razor Pages options
 	/// </summary>
 	/// <param name="opt">RazorPagesOptions</param>
-	public virtual void ConfigureServices_RazorPagesOptions(RazorPagesOptions opt) { }
+	public virtual void ConfigureServicesRazorPagesOptions(RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>
-	protected override void Configure_Endpoints(IApplicationBuilder app)
+	protected override void ConfigureEndpoints(IApplicationBuilder app)
 	{
 		app.UseEndpoints(endpoints => endpoints.MapRazorPages());
 	}

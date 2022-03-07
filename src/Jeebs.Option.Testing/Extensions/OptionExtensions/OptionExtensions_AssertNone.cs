@@ -9,7 +9,7 @@ namespace Jeebs;
 /// <summary>
 /// Option Extensions: AssertNone
 /// </summary>
-public static class OptionExtensions_AssertNone
+public static class OptionExtensionsAssertNone
 {
 	/// <summary>
 	/// Assert that <paramref name="this"/> is <see cref="None{T}"/> and return the Reason

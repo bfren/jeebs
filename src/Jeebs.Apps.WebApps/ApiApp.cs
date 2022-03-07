@@ -23,13 +23,13 @@ public abstract class ApiApp : MvcApp
 	#region ConfigureServices
 
 	/// <inheritdoc/>
-	protected override void ConfigureServices_Endpoints(IServiceCollection services)
+	protected override void ConfigureServicesEndpoints(IServiceCollection services)
 	{
-		services.AddControllers(ConfigureServices_MvcOptions);
+		services.AddControllers(ConfigureServicesMvcOptions);
 	}
 
 	/// <inheritdoc/>
-	public override void ConfigureServices_MvcOptions(MvcOptions opt)
+	public override void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
 		// do nothing
 	}
@@ -39,37 +39,37 @@ public abstract class ApiApp : MvcApp
 	#region Configure
 
 	/// <inheritdoc/>
-	protected override void Configure_ProductionExceptionHandling(IApplicationBuilder app)
+	protected override void ConfigureProductionExceptionHandling(IApplicationBuilder app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_StaticFiles(IHostEnvironment env, IApplicationBuilder app)
+	protected override void ConfigureStaticFiles(IHostEnvironment env, IApplicationBuilder app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_CookiePolicy(IApplicationBuilder app)
+	protected override void ConfigureCookiePolicy(IApplicationBuilder app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_Redirections(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureRedirections(IApplicationBuilder app, IConfiguration config)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
 		app.UseAuthorization();
 	}
 
 	/// <inheritdoc/>
-	protected override void Configure_Endpoints(IApplicationBuilder app)
+	protected override void ConfigureEndpoints(IApplicationBuilder app)
 	{
 		app.UseEndpoints(endpoints => endpoints.MapControllers());
 	}

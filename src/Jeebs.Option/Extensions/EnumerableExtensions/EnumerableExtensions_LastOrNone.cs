@@ -9,7 +9,7 @@ namespace Jeebs.Linq;
 /// <summary>
 /// Enumerable Extensions: LastOrNone
 /// </summary>
-public static class EnumerableExtensions_LastOrNone
+public static class EnumerableExtensionsLastOrNone
 {
 	/// <inheritdoc cref="F.OptionF.Enumerable.LastOrNone{T}(IEnumerable{T}, Func{T, bool}?)"/>
 	public static Option<T> LastOrNone<T>(this IEnumerable<T> @this) =>

@@ -6,7 +6,7 @@ namespace Jeebs;
 /// <summary>
 /// Object Extensions: Return
 /// </summary>
-public static class ObjectExtensions_Some
+public static class ObjectExtensionsSome
 {
 	/// <inheritdoc cref="F.OptionF.Some{T}(T, bool)"/>
 	public static Option<T> Some<T>(this T @this) =>

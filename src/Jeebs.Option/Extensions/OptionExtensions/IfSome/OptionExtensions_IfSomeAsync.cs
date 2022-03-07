@@ -8,7 +8,7 @@ namespace Jeebs;
 /// <summary>
 /// <see cref="Option{T}"/> Extensions: IfSomeAsync
 /// </summary>
-public static class OptionExtensions_IfSomeAsync
+public static class OptionExtensionsIfSomeAsync
 {
 	/// <inheritdoc cref="F.OptionF.IfSomeAsync{T}(Task{Option{T}}, Func{T, Task})"/>
 	public static Task<Option<T>> IfSomeAsync<T>(this Task<Option<T>> @this, Action<T> ifSome) =>
