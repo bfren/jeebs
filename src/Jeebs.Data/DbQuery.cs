@@ -81,7 +81,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			DefaultHandler
 		)
 		.Unwrap(
-			r => throw new Exception(r.ToString())
+			r => r.ToString()
 		);
 
 	#region QueryAsync
