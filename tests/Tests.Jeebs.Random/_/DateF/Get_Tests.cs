@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.Rnd.DateTimeF;
+using static F.Rnd.DateF;
 
-namespace F.DateTimeF_Tests;
+namespace F.DateF_Tests;
 
-public class GetDate_Tests
+public class Get_Tests
 {
 	private static void Never_Returns_Number_Out_Of_Bounds(Func<DateOnly, int> value, int min, int max)
 	{
@@ -20,7 +20,7 @@ public class GetDate_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			var d = GetDate();
+			var d = Get();
 			numbers.Add(value(d));
 		}
 

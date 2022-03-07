@@ -7,16 +7,16 @@ namespace F;
 
 public static partial class Rnd
 {
-	public static partial class DateTimeF
+	public static partial class DateF
 	{
 		/// <summary>
-		/// Return a random Time
+		/// Return a random Date
 		/// </summary>
-		public static TimeOnly GetTime() =>
+		public static DateOnly Get() =>
 			new(
-				hour: NumberF.GetInt32(0, 23),
-				minute: NumberF.GetInt32(0, 59),
-				second: NumberF.GetInt32(0, 59)
+				year: NumberF.GetInt32(1, 9999),
+				month: NumberF.GetInt32(1, 12),
+				day: NumberF.GetInt32(1, 28)
 			);
 	}
 }
