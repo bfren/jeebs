@@ -72,6 +72,6 @@ public sealed class MaybeEqualityComparer<T> : IEqualityComparer<Maybe<T>>, IEqu
 			return GetHashCode(x);
 		}
 
-		throw new System.ArgumentException("", nameof(obj));
+		return obj.GetHashCode();
 	}
 }
