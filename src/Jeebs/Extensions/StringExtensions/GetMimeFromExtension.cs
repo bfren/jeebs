@@ -20,7 +20,7 @@ public static partial class StringExtensions
 			}
 
 			// Get the extension and switch to get the mime type
-			return (@this[(lastPeriod + 1)..].ToLowerInvariant()) switch
+			return @this[(lastPeriod + 1)..].ToLowerInvariant() switch
 			{
 				"bmp" =>
 					MimeType.Bmp.ToString(),

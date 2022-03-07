@@ -103,7 +103,7 @@ public static class Base32F
 		if (outputBase32BytePosition > 0)
 		{
 			// Move to the right bits
-			outputBase32Byte <<= (OutByteSize - outputBase32BytePosition);
+			outputBase32Byte <<= OutByteSize - outputBase32BytePosition;
 
 			// Drop the overflow bits
 			outputBase32Byte &= 0x1F;  // 0x1F = 00011111 in binary
