@@ -60,6 +60,7 @@ public static partial class MaybeF
 	{
 		/// <summary>Unable to create exception message</summary>
 		/// <typeparam name="TExceptionMsg">ExceptionMsg type</typeparam>
+		/// <param name="Value"Exception></param>
 		public sealed record class GeneralExceptionMsg<TExceptionMsg>(Exception Value) : ExceptionMsg where TExceptionMsg : ExceptionMsg;
 	}
 }

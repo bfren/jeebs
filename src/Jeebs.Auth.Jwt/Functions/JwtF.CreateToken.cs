@@ -117,6 +117,7 @@ public static partial class JwtF
 		public sealed record class ConfigInvalidMsg : Msg;
 
 		/// <summary>Exception when creating JwtSecurityToken</summary>
+		/// <param name="Value">Exception</param>
 		public sealed record class CreatingJwtSecurityTokenExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>The Encrypting Key is not long enough</summary>

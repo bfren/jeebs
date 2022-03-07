@@ -51,6 +51,7 @@ public static partial class MaybeF
 	public static partial class M
 	{
 		/// <summary>Base UnwrapSingle error message</summary>
+		/// <param name="Error">UnwrapSingleError</param>
 		public abstract record class UnwrapSingleErrorMsg(UnwrapSingleError Error) : Msg;
 
 		/// <summary>No items in the list</summary>

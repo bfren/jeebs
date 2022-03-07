@@ -56,10 +56,12 @@ public static partial class MaybeF
 
 			/// <summary>The specified key does not exist in the dictionary</summary>
 			/// <typeparam name="TKey">Key type</typeparam>
+			/// <param name="Key">Dictionary key</param>
 			public sealed record class KeyDoesNotExistMsg<TKey>(TKey Key) : Msg;
 
 			/// <summary>The dictionary value for the specified key was null</summary>
 			/// <typeparam name="TKey">Key type</typeparam>
+			/// <param name="Key">Dictionary key</param>
 			public sealed record class NullValueMsg<TKey>(TKey Key) : Msg;
 		}
 	}

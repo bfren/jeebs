@@ -180,6 +180,7 @@ public abstract class AuthControllerBase : Controller
 	/// <summary>
 	/// Show access denied page
 	/// </summary>
+	/// <param name="returnUrl">Return URL</param>
 	public IActionResult Denied(string? returnUrl) =>
 		View(new DeniedModel(returnUrl));
 

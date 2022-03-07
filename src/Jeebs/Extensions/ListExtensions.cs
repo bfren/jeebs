@@ -114,6 +114,7 @@ public static class ListExtensions
 		public sealed record class ListContainsSingleItemMsg : Msg;
 
 		/// <summary>List does not contain the specified item</summary>
+		/// <param name="Value">Item Value</param>
 		public sealed record class ListDoesNotContainItemMsg<T>(T Value) : WithValueMsg<T>;
 
 		/// <summary>The specified item is the first in the list (so there is no previous item)</summary>

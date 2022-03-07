@@ -41,6 +41,7 @@ public static partial class MappingF
 	public static partial class M
 	{
 		/// <summary>No Id property found on entity</summary>
+		/// <param name="Value">Exception</param>
 		public sealed record class ErrorGettingIdPropertyMsg<TEntity>(Exception Value) : ExceptionMsg;
 
 		/// <summary>No property with specified attribute found on entity</summary>

@@ -112,9 +112,11 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		public sealed record class NullOrEmptyPasswordMsg : Msg;
 
 		/// <summary>User not enabled</summary>
+		/// <param name="Value">Email address</param>
 		public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>User not found</summary>
+		/// <param name="Value">Email address</param>
 		public sealed record class UserNotFoundMsg(string Value) : NotFoundMsg<string>
 		{
 			/// <inheritdoc/>

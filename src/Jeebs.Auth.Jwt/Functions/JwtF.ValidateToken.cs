@@ -64,6 +64,7 @@ public static partial class JwtF
 		public sealed record class TokenIsNotValidYetMsg : Msg;
 
 		/// <summary>Exception while validating token</summary>
+		/// <param name="Value">Exception</param>
 		public sealed record class ValidatingTokenExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

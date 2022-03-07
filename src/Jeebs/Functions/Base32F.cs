@@ -34,6 +34,7 @@ public static class Base32F
 	/// <summary>
 	/// Convert byte array to Base32 format
 	/// </summary>
+	/// <param name="bytes">Byte array</param>
 	public static string ToBase32String(byte[] bytes)
 	{
 		// Check if byte array is null

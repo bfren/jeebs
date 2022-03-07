@@ -11,6 +11,7 @@ public sealed record class MenuItemText : MenuItem
 	/// <summary>
 	/// Set IsLink to be false
 	/// </summary>
+	/// <param name="text">Menu item text</param>
 	public MenuItemText(string text)
 	{
 		IsLink = false;
