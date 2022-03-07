@@ -37,7 +37,7 @@ public class Parse_Tests
 		var action = void () => handler.Parse(input);
 
 		// Assert
-		Assert.Throws<FormatException>(action);
+		_ = Assert.Throws<FormatException>(action);
 	}
 
 	[Fact]

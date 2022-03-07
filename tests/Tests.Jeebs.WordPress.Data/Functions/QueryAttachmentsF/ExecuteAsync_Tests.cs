@@ -26,7 +26,7 @@ public class ExecuteAsync_Tests : Query_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
+		_ = Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
 	}
 
 	[Fact]
@@ -40,6 +40,6 @@ public class ExecuteAsync_Tests : Query_Tests
 		_ = await ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction).ConfigureAwait(false);
+		_ = await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction).ConfigureAwait(false);
 	}
 }

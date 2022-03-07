@@ -22,6 +22,6 @@ public class Execute_Tests
 		_ = contentFilter.Execute(content);
 
 		// Assert
-		filter.Received().Invoke(content);
+		_ = filter.Received().Invoke(content);
 	}
 }

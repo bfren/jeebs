@@ -35,10 +35,10 @@ public static partial class StringExtensions
 			{
 				// Replace text between this match and the previous one
 				var textBetween = @this[lastIndex..match.Index];
-				builder.Append(convert(textBetween));
+				_ = builder.Append(convert(textBetween));
 
 				// Add the text in this section unchanged
-				builder.Append(match.Value);
+				_ = builder.Append(match.Value);
 
 				// Move to the next section
 				lastIndex = match.Index + match.Length;
@@ -47,7 +47,7 @@ public static partial class StringExtensions
 
 			// Replace any remaining quotes
 			var remaining = @this[lastIndex..];
-			builder.Append(convert(remaining));
+			_ = builder.Append(convert(remaining));
 
 			// Return result string
 			return builder.ToString();

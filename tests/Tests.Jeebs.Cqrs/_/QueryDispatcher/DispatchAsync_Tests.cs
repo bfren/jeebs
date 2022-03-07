@@ -17,7 +17,7 @@ public class DispatchAsync_Tests
 		// Arrange
 		var handler = Substitute.For<IQueryHandler<int, string>>();
 		var collection = new ServiceCollection();
-		collection.AddScoped(_ => handler);
+		_ = collection.AddScoped(_ => handler);
 		var provider = collection.BuildServiceProvider();
 
 		IQueryDispatcher dispatcher = new QueryDispatcher(provider);
@@ -28,6 +28,6 @@ public class DispatchAsync_Tests
 		_ = await dispatcher.DispatchAsync<int, string>(value, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
-		await handler.Received(2).HandleAsync(value, CancellationToken.None).ConfigureAwait(false);
+		_ = await handler.Received(2).HandleAsync(value, CancellationToken.None).ConfigureAwait(false);
 	}
 }

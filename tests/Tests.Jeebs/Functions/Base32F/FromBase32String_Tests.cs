@@ -32,7 +32,7 @@ public class FromBase32String_Tests
 
 		// Assert
 		var msg = result.AssertNone();
-		Assert.IsType<M.InputStringNotLongEnoughMsg>(msg);
+		_ = Assert.IsType<M.InputStringNotLongEnoughMsg>(msg);
 	}
 
 	[Theory]

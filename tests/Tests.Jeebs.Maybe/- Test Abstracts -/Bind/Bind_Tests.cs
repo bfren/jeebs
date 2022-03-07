@@ -27,7 +27,7 @@ public abstract class Bind_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
@@ -44,7 +44,7 @@ public abstract class Bind_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract void Test02_If_None_Gets_None();
@@ -59,7 +59,7 @@ public abstract class Bind_Tests
 		var result = act(maybe, bind);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 
 	public abstract void Test03_If_None_With_Reason_Gets_None_With_Same_Reason();
@@ -89,10 +89,10 @@ public abstract class Bind_Tests
 		var bind = Substitute.For<Func<int, Maybe<string>>>();
 
 		// Act
-		act(maybe, bind);
+		_ = act(maybe, bind);
 
 		// Assert
-		bind.Received().Invoke(value);
+		_ = bind.Received().Invoke(value);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

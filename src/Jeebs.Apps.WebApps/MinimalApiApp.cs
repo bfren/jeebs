@@ -30,7 +30,7 @@ internal class MinimalApiApp : ApiApp
 		var builder = WebApplication.CreateBuilder(args);
 
 		// Configure host
-		builder.Host
+		_ = builder.Host
 			.ConfigureHostConfiguration(
 				config => ConfigureHost(config)
 			)

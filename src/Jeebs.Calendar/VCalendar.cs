@@ -34,21 +34,21 @@ public class VCalendar : CalendarBase
 	{
 		// Add Header
 		var builder = new StringBuilder();
-		builder.Append(GetHeader());
+		_ = builder.Append(GetHeader());
 
 		// Add Timezone
-		builder.Append(GetTimezone());
+		_ = builder.Append(GetTimezone());
 
 		// Add Events
 		var counter = 0;
 		foreach (var e in calendar.Events)
 		{
 			var uid = GenerateEventUid(counter++, calendar.LastModified, domain);
-			builder.Append(GetEvent(calendar.LastModified, tzid, uid, e));
+			_ = builder.Append(GetEvent(calendar.LastModified, tzid, uid, e));
 		}
 
 		// Add Footer
-		builder.Append(GetFooter());
+		_ = builder.Append(GetFooter());
 
 		// Return VCalendar string
 		return builder.ToString();

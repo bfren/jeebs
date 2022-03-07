@@ -23,8 +23,8 @@ public class ExecuteAsync_Tests
 		_ = await db.ExecuteAsync(query, parameters, type).ConfigureAwait(false);
 
 		// Assert
-		client.Received().Connect(Arg.Any<string>());
-		connection.Received().BeginTransaction();
+		_ = client.Received().Connect(Arg.Any<string>());
+		_ = connection.Received().BeginTransaction();
 	}
 
 	[Fact]

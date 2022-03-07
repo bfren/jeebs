@@ -51,7 +51,7 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<PropertyDoesNotExistOnTypeMsg<TestTable>>(none);
+		_ = Assert.IsType<PropertyDoesNotExistOnTypeMsg<TestTable>>(none);
 	}
 
 	public sealed record class TestTable(string Foo, string Bar) : Table(F.Rnd.Str);

@@ -25,7 +25,7 @@ public abstract class FilterMap_Tests
 		var o3 = Create.None<int>();
 		var list = new[] { o0, o1, o2, o3 };
 		var map = Substitute.For<Func<int, string>>();
-		map.Invoke(Arg.Any<int>()).Returns(x => x.ArgAt<int>(0).ToString());
+		_ = map.Invoke(Arg.Any<int>()).Returns(x => x.ArgAt<int>(0).ToString());
 
 		// Act
 		var result = act(list, map);
@@ -35,7 +35,7 @@ public abstract class FilterMap_Tests
 			x => Assert.Equal(v0.ToString(), x),
 			x => Assert.Equal(v1.ToString(), x)
 		);
-		map.ReceivedWithAnyArgs(2).Invoke(Arg.Any<int>());
+		_ = map.ReceivedWithAnyArgs(2).Invoke(Arg.Any<int>());
 	}
 
 	public abstract void Test01_Maps_And_Returns_Only_Some_From_List();
@@ -51,7 +51,7 @@ public abstract class FilterMap_Tests
 		var o3 = Create.None<int>();
 		var list = new[] { o0, o1, o2, o3 };
 		var map = Substitute.For<Func<int, Maybe<string>>>();
-		map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
+		_ = map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
 
 		// Act
 		var result = act(list, map);
@@ -69,7 +69,7 @@ public abstract class FilterMap_Tests
 				Assert.Equal(v1.ToString(), s1);
 			}
 		);
-		map.ReceivedWithAnyArgs(2).Invoke(Arg.Any<int>());
+		_ = map.ReceivedWithAnyArgs(2).Invoke(Arg.Any<int>());
 	}
 
 	public abstract void Test02_Returns_Matching_Some_From_List();
@@ -86,10 +86,10 @@ public abstract class FilterMap_Tests
 		var list = new[] { o0, o1, o2, o3 };
 
 		var map = Substitute.For<Func<int, string>>();
-		map.Invoke(Arg.Any<int>()).Returns(x => x.ArgAt<int>(0).ToString());
+		_ = map.Invoke(Arg.Any<int>()).Returns(x => x.ArgAt<int>(0).ToString());
 
 		var predicate = Substitute.For<Func<int, bool>>();
-		predicate.Invoke(v1).Returns(true);
+		_ = predicate.Invoke(v1).Returns(true);
 
 		// Act
 		var r0 = act(list, map, predicate);
@@ -98,7 +98,7 @@ public abstract class FilterMap_Tests
 		Assert.Collection(r0,
 			x => Assert.Equal(v1.ToString(), x)
 		);
-		map.ReceivedWithAnyArgs(1).Invoke(Arg.Any<int>());
+		_ = map.ReceivedWithAnyArgs(1).Invoke(Arg.Any<int>());
 	}
 
 	public abstract void Test03_Returns_Matching_Some_From_List();
@@ -115,10 +115,10 @@ public abstract class FilterMap_Tests
 		var list = new[] { o0, o1, o2, o3 };
 
 		var map = Substitute.For<Func<int, Maybe<string>>>();
-		map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
+		_ = map.Invoke(Arg.Any<int>()).Returns(x => Some(x.ArgAt<int>(0).ToString()));
 
 		var predicate = Substitute.For<Func<int, bool>>();
-		predicate.Invoke(v1).Returns(true);
+		_ = predicate.Invoke(v1).Returns(true);
 
 		// Act
 		var r0 = act(list, map, predicate);
@@ -127,6 +127,6 @@ public abstract class FilterMap_Tests
 		Assert.Collection(r0,
 			x => Assert.Equal(v1.ToString(), x)
 		);
-		map.ReceivedWithAnyArgs(1).Invoke(Arg.Any<int>());
+		_ = map.ReceivedWithAnyArgs(1).Invoke(Arg.Any<int>());
 	}
 }

@@ -33,7 +33,7 @@ public class Get_Tests
 		var result = void () => info.Get(foo);
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(result);
+		_ = Assert.Throws<InvalidOperationException>(result);
 	}
 
 	[Theory]
@@ -47,7 +47,7 @@ public class Get_Tests
 		var result = void () => info.Get(obj);
 
 		// Assert
-		Assert.Throws<ArgumentNullException>(result);
+		_ = Assert.Throws<ArgumentNullException>(result);
 	}
 
 	public sealed class Foo

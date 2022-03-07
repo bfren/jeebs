@@ -29,7 +29,7 @@ public class GetRetrieveQuery_Tests
 		var c2Name = F.Rnd.Str;
 		var c2Alias = F.Rnd.Str;
 		var c2Property = Substitute.ForPartsOf<PropertyInfo>();
-		c2Property.Name.Returns(c2Alias);
+		_ = c2Property.Name.Returns(c2Alias);
 		var c2 = new MappedColumn(table, c2Name, c2Property);
 
 		var list = new ColumnList(new[] { c0, c1 });

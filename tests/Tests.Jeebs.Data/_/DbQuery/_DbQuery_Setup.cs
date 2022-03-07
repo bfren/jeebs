@@ -24,13 +24,13 @@ public static class DbQuery_Setup
 		var param = queryParams ?? Substitute.For<IQueryParameters>();
 
 		var client = Substitute.For<IDbClient>();
-		client.GetCountQuery(Arg.Any<IQueryParts>()).Returns((text, param));
-		client.GetQuery(Arg.Any<IQueryParts>()).Returns((text, param));
+		_ = client.GetCountQuery(Arg.Any<IQueryParts>()).Returns((text, param));
+		_ = client.GetQuery(Arg.Any<IQueryParts>()).Returns((text, param));
 
 		var db = Substitute.For<IDb>();
-		db.Client.Returns(client);
-		db.ExecuteAsync(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(true);
-		db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(1U);
+		_ = db.Client.Returns(client);
+		_ = db.ExecuteAsync(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(true);
+		_ = db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(1U);
 
 		var log = Substitute.For<ILog>();
 		var query = Substitute.ForPartsOf<DbQuery<IDb>>(db, log);

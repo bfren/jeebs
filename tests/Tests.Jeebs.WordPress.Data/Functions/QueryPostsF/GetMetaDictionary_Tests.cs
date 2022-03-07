@@ -20,7 +20,7 @@ public class GetMetaDictionary_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<M.MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>(none);
+		_ = Assert.IsType<M.MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>(none);
 	}
 
 	[Fact]
@@ -33,7 +33,7 @@ public class GetMetaDictionary_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<M.MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>(none);
+		_ = Assert.IsType<M.MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>(none);
 	}
 
 	[Fact]

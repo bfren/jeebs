@@ -28,7 +28,7 @@ public abstract class MapAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract Task Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
@@ -45,7 +45,7 @@ public abstract class MapAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract Task Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None();
@@ -62,8 +62,8 @@ public abstract class MapAsync_Tests
 		var result = await act(maybe, throwFunc, handler).ConfigureAwait(false);
 
 		// Assert
-		result.AssertNone();
-		handler.Received().Invoke(exception);
+		_ = result.AssertNone();
+		_ = handler.Received().Invoke(exception);
 	}
 
 	public abstract Task Test03_If_None_Returns_None();
@@ -78,7 +78,7 @@ public abstract class MapAsync_Tests
 		var result = await act(maybe, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 
 	public abstract Task Test04_If_None_With_Reason_Returns_None_With_Same_Reason();
@@ -108,10 +108,10 @@ public abstract class MapAsync_Tests
 		var map = Substitute.For<Func<int, Task<string>>>();
 
 		// Act
-		await act(maybe, map, DefaultHandler).ConfigureAwait(false);
+		_ = await act(maybe, map, DefaultHandler).ConfigureAwait(false);
 
 		// Assert
-		await map.Received().Invoke(value).ConfigureAwait(false);
+		_ = await map.Received().Invoke(value).ConfigureAwait(false);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

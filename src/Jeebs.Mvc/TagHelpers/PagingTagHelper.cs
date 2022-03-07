@@ -138,7 +138,7 @@ public sealed class PagingTagHelper : TagHelper
 			var a = $"<{LinkHtmlTag} class=\"{css}\"><a href=\"{string.Format(href, page)}\">{text}</a></{LinkHtmlTag}>";
 
 			// Add to the wrapper
-			output.Content.AppendHtml(a);
+			_ = output.Content.AppendHtml(a);
 		}
 	}
 }

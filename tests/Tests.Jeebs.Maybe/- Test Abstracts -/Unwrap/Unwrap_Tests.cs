@@ -19,13 +19,13 @@ public abstract class Unwrap_Tests
 		var value = F.Rnd.Int;
 		var maybe = Create.None<int>();
 		var ifNone = Substitute.For<Func<int>>();
-		ifNone.Invoke().Returns(value);
+		_ = ifNone.Invoke().Returns(value);
 
 		// Act
 		var result = act(maybe, ifNone);
 
 		// Assert
-		ifNone.Received().Invoke();
+		_ = ifNone.Received().Invoke();
 		Assert.Equal(value, result);
 	}
 
@@ -38,13 +38,13 @@ public abstract class Unwrap_Tests
 		var msg = Substitute.ForPartsOf<Msg>();
 		var maybe = None<int>(msg);
 		var ifNone = Substitute.For<Func<Msg, int>>();
-		ifNone.Invoke(msg).Returns(value);
+		_ = ifNone.Invoke(msg).Returns(value);
 
 		// Act
 		var result = act(maybe, ifNone);
 
 		// Assert
-		ifNone.Received().Invoke(msg);
+		_ = ifNone.Received().Invoke(msg);
 		Assert.Equal(value, result);
 	}
 

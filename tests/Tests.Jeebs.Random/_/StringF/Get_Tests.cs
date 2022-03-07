@@ -33,7 +33,7 @@ public class Get_Tests
 		var action = void () => Get(length, options: new(false, false, false, false));
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(action);
+		_ = Assert.Throws<InvalidOperationException>(action);
 	}
 
 	[Fact]
@@ -46,7 +46,7 @@ public class Get_Tests
 		var action = void () => Get(length, options: new(true, true, true, true));
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(action);
+		_ = Assert.Throws<InvalidOperationException>(action);
 	}
 
 	[Fact]

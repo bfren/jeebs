@@ -81,7 +81,7 @@ public partial class MySqlDbClient : DbClient
 		AddVersionToWhere(sql, versionColumn);
 
 		// Return query
-		sql.Append(';');
+		_ = sql.Append(';');
 		return sql.ToString();
 	}
 
@@ -111,7 +111,7 @@ public partial class MySqlDbClient : DbClient
 		AddVersionToWhere(sql, versionColumn);
 
 		// Return query
-		sql.Append(';');
+		_ = sql.Append(';');
 		return sql.ToString();
 	}
 }

@@ -31,8 +31,8 @@ public class GetBinderFromModelType_Tests
 		var result = StrongIdModelBinderProvider.GetBinderFromModelType(type);
 
 		// Assert
-		Assert.IsAssignableFrom<IModelBinder>(result);
-		Assert.IsType<StrongIdModelBinder<IdType>>(result);
+		_ = Assert.IsAssignableFrom<IModelBinder>(result);
+		_ = Assert.IsType<StrongIdModelBinder<IdType>>(result);
 	}
 
 	public sealed record class RandomType;

@@ -20,7 +20,7 @@ public abstract class IfNull_Tests
 		var some = Some<object>(null, true);
 		var none = None<object?, M.NullValueMsg>();
 		var throws = Substitute.For<Func<Maybe<object?>>>();
-		throws.Invoke().Throws<Exception>();
+		_ = throws.Invoke().Throws<Exception>();
 
 		// Act
 		var r0 = act(some, throws);
@@ -28,9 +28,9 @@ public abstract class IfNull_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		Assert.IsType<M.UnhandledExceptionMsg>(n0);
+		_ = Assert.IsType<M.UnhandledExceptionMsg>(n0);
 		var n1 = r1.AssertNone();
-		Assert.IsType<M.UnhandledExceptionMsg>(n1);
+		_ = Assert.IsType<M.UnhandledExceptionMsg>(n1);
 	}
 
 	public abstract void Test01_Some_With_Null_Value_Runs_IfNull_Func();
@@ -42,10 +42,10 @@ public abstract class IfNull_Tests
 		var ifNull = Substitute.For<Func<Maybe<object?>>>();
 
 		// Act
-		act(maybe, ifNull);
+		_ = act(maybe, ifNull);
 
 		// Assert
-		ifNull.Received().Invoke();
+		_ = ifNull.Received().Invoke();
 	}
 
 	public abstract void Test02_None_With_NullValueMsg_Runs_IfNull_Func();
@@ -57,10 +57,10 @@ public abstract class IfNull_Tests
 		var ifNull = Substitute.For<Func<Maybe<object>>>();
 
 		// Act
-		act(maybe, ifNull);
+		_ = act(maybe, ifNull);
 
 		// Assert
-		ifNull.Received().Invoke();
+		_ = ifNull.Received().Invoke();
 	}
 
 	public abstract void Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
@@ -71,13 +71,13 @@ public abstract class IfNull_Tests
 		var maybe = Some<object>(null, true);
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
-		ifNull.Invoke().Returns(msg);
+		_ = ifNull.Invoke().Returns(msg);
 
 		// Act
 		var result = act(maybe, ifNull);
 
 		// Assert
-		ifNull.Received().Invoke();
+		_ = ifNull.Received().Invoke();
 		var none = result.AssertNone();
 		Assert.Same(msg, none);
 	}
@@ -90,13 +90,13 @@ public abstract class IfNull_Tests
 		var maybe = None<object, M.NullValueMsg>();
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
-		ifNull.Invoke().Returns(msg);
+		_ = ifNull.Invoke().Returns(msg);
 
 		// Act
 		var result = act(maybe, ifNull);
 
 		// Assert
-		ifNull.Received().Invoke();
+		_ = ifNull.Received().Invoke();
 		var none = result.AssertNone();
 		Assert.Same(msg, none);
 	}

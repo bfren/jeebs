@@ -28,7 +28,7 @@ public class AppService : IHostedService
 			log.Dbg("Response: {Response}", response);
 		}
 
-		Console.Read();
+		_ = Console.Read();
 
 		return Task.Delay(2000, cancellationToken);
 	}

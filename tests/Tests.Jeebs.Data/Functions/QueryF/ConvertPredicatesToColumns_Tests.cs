@@ -220,7 +220,7 @@ public class ConvertPredicatesToColumns_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<InOperatorRequiresValueToBeAListMsg>(none);
+		_ = Assert.IsType<InOperatorRequiresValueToBeAListMsg>(none);
 	}
 
 	public readonly record struct TestId(long Value) : IStrongId;

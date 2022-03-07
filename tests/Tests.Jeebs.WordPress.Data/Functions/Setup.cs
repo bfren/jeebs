@@ -19,13 +19,13 @@ public abstract class Query_Tests
 		var config = new WpConfig { UploadsPath = uploadsPath };
 
 		var db = Substitute.For<IWpDb>();
-		db.Schema.Returns(schema);
-		db.WpConfig.Returns(config);
+		_ = db.Schema.Returns(schema);
+		_ = db.WpConfig.Returns(config);
 
 		var transaction = Substitute.For<IDbTransaction>();
 
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		unitOfWork.Transaction.Returns(transaction);
+		_ = unitOfWork.Transaction.Returns(transaction);
 
 		return (db, unitOfWork, new(schema, config, uploadsPath, transaction));
 	}

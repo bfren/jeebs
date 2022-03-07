@@ -61,7 +61,7 @@ public abstract class App
 	protected virtual void ConfigureHost(IConfigurationBuilder config)
 	{
 		// Set base path to be directory of running assembly
-		config.SetBasePath(Directory.GetCurrentDirectory());
+		_ = config.SetBasePath(Directory.GetCurrentDirectory());
 	}
 
 	/// <summary>
@@ -74,20 +74,20 @@ public abstract class App
 	{
 		// Validate main configuration file
 		var path = $"{env.ContentRootPath}/jeebsconfig.json";
-		ConfigValidator.Validate(path);
+		_ = ConfigValidator.Validate(path);
 
 		// Add Jeebs config - keeps Jeebs config away from app settings
-		config
+		_ = config
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false)
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: true);
 
 		// Add environment-specific Jeebs config
-		config
+		_ = config
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true)
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.{env.EnvironmentName}.json", optional: true);
 
 		// Add Environment Variables
-		config.AddEnvironmentVariables();
+		_ = config.AddEnvironmentVariables();
 
 		// Check for Azure Key Vault section
 		var vault = config.Build().GetSection<AzureKeyVaultConfig>(AzureKeyVaultConfig.Key, false);
@@ -95,14 +95,14 @@ public abstract class App
 		// If the config is valid, add Azure Key Vault to IConfigurationBuilder
 		if (vault.IsValid)
 		{
-			config.AddAzureKeyVault(
+			_ = config.AddAzureKeyVault(
 				new Uri($"https://{vault.Name}.vault.azure.net/"),
 				new ClientSecretCredential(vault.TenantId, vault.ClientId, vault.ClientSecret)
 			);
 		}
 
 		// Add command line arguments
-		config.AddCommandLine(args);
+		_ = config.AddCommandLine(args);
 	}
 
 	/// <summary>
@@ -126,7 +126,7 @@ public abstract class App
 	protected virtual void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 	{
 		// Add Jeebs config classes
-		services
+		_ = services
 			.Configure<AppConfig>(config.GetSection(AppConfig.Key))
 			.Configure<AuthConfig>(config.GetSection(AuthConfig.Key))
 			.Configure<AzureKeyVaultConfig>(config.GetSection(AzureKeyVaultConfig.Key))
@@ -140,7 +140,7 @@ public abstract class App
 			.Configure<WebConfig>(config.GetSection(WebConfig.Key));
 
 		// Register Serilog Logger
-		services.AddSingleton<ILog, SerilogLogger>();
-		services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
+		_ = services.AddSingleton<ILog, SerilogLogger>();
+		_ = services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
 	}
 }

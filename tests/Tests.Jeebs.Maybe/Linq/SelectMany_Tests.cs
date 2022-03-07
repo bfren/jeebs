@@ -96,7 +96,7 @@ public class SelectMany_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(none);
+		_ = Assert.IsType<InvalidIntegerMsg>(none);
 	}
 
 	[Fact]
@@ -119,7 +119,7 @@ public class SelectMany_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(none);
+		_ = Assert.IsType<InvalidIntegerMsg>(none);
 	}
 
 	[Fact]
@@ -142,7 +142,7 @@ public class SelectMany_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(none);
+		_ = Assert.IsType<InvalidIntegerMsg>(none);
 	}
 
 	public record class InvalidIntegerMsg : Msg;

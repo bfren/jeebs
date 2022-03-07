@@ -26,7 +26,7 @@ public abstract class Filter_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
@@ -43,7 +43,7 @@ public abstract class Filter_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract void Test02_When_Some_And_Predicate_True_Returns_Value();
@@ -54,7 +54,7 @@ public abstract class Filter_Tests
 		var value = F.Rnd.Int;
 		var maybe = Some(value);
 		var predicate = Substitute.For<Func<int, bool>>();
-		predicate.Invoke(Arg.Any<int>()).Returns(true);
+		_ = predicate.Invoke(Arg.Any<int>()).Returns(true);
 
 		// Act
 		var result = act(maybe, predicate);
@@ -72,14 +72,14 @@ public abstract class Filter_Tests
 		var value = F.Rnd.Str;
 		var maybe = Some(value);
 		var predicate = Substitute.For<Func<string, bool>>();
-		predicate.Invoke(Arg.Any<string>()).Returns(false);
+		_ = predicate.Invoke(Arg.Any<string>()).Returns(false);
 
 		// Act
 		var result = act(maybe, predicate);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<FilterPredicateWasFalseMsg>(none);
+		_ = Assert.IsType<FilterPredicateWasFalseMsg>(none);
 	}
 
 	public abstract void Test04_When_None_Returns_None_With_Original_Reason();
@@ -97,7 +97,7 @@ public abstract class Filter_Tests
 		// Assert
 		var none = result.AssertNone();
 		Assert.Same(reason, none);
-		predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
+		_ = predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>());
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

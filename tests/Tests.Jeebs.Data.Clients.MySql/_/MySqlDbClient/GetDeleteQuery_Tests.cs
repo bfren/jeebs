@@ -21,7 +21,7 @@ public class GetDeleteQuery_Tests
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
-		c0Property.Name.Returns(c0Alias);
+		_ = c0Property.Name.Returns(c0Alias);
 		var c0 = new MappedColumn(table, c0Name, c0Property);
 
 		var client = new MySqlDbClient();
@@ -48,13 +48,13 @@ public class GetDeleteQuery_Tests
 		var c0Name = F.Rnd.Str;
 		var c0Alias = F.Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
-		c0Property.Name.Returns(c0Alias);
+		_ = c0Property.Name.Returns(c0Alias);
 		var c0 = new MappedColumn(table, c0Name, c0Property);
 
 		var c1Name = F.Rnd.Str;
 		var c1Alias = F.Rnd.Str;
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
-		c1Property.Name.Returns(c1Alias);
+		_ = c1Property.Name.Returns(c1Alias);
 		var c1 = new MappedColumn(table, c1Name, c1Property);
 
 		var client = new MySqlDbClient();

@@ -13,7 +13,7 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 		var mapper = Substitute.For<IMapper>();
 
 		var map = Substitute.For<ITableMap>();
-		mapper.GetTableMapFor<TestEntity>().Returns(map.Some());
+		_ = mapper.GetTableMapFor<TestEntity>().Returns(map.Some());
 
 		var builder = Substitute.ForPartsOf<TestBuilder>(mapper);
 

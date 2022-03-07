@@ -16,7 +16,7 @@ public class GetValueAsString_Tests
 		var title = F.Rnd.Str;
 		var term = new Term { Title = title };
 		var field = Substitute.ForPartsOf<TermCustomField>(F.Rnd.Str);
-		field.ValueObj.Returns(term);
+		_ = field.ValueObj.Returns(term);
 
 		// Act
 		var result = field.GetValueAsStringTest();

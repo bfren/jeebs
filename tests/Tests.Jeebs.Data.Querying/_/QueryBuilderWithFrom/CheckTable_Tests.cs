@@ -22,7 +22,7 @@ public class CheckTable_Tests
 		var action = void () => builder.CheckTable<TestTable, TestException<TestTable>>();
 
 		// Assert
-		Assert.Throws<TestException<TestTable>>(action);
+		_ = Assert.Throws<TestException<TestTable>>(action);
 	}
 
 	[Fact]

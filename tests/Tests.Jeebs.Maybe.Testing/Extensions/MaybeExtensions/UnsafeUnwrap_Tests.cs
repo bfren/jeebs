@@ -32,6 +32,6 @@ public class UnsafeUnwrap_Tests
 		var action = void () => maybe.UnsafeUnwrap();
 
 		// Assert
-		Assert.Throws<UnsafeUnwrapException>(action);
+		_ = Assert.Throws<UnsafeUnwrapException>(action);
 	}
 }

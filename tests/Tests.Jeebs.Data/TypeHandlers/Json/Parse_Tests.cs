@@ -21,7 +21,7 @@ public class Parse_Tests
 		var action = void () => handler.Parse(input);
 
 		// Assert
-		Assert.Throws<JsonException>(action);
+		_ = Assert.Throws<JsonException>(action);
 	}
 
 	[Fact]
@@ -35,7 +35,7 @@ public class Parse_Tests
 		var action = void () => handler.Parse(input);
 
 		// Assert
-		Assert.Throws<JsonException>(action);
+		_ = Assert.Throws<JsonException>(action);
 	}
 
 	[Fact]

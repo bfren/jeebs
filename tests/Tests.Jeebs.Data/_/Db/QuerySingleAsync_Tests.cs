@@ -23,8 +23,8 @@ public class QuerySingleAsync_Tests
 		_ = await db.QuerySingleAsync<int>(query, parameters, type).ConfigureAwait(false);
 
 		// Assert
-		client.Received().Connect(Arg.Any<string>());
-		connection.Received().BeginTransaction();
+		_ = client.Received().Connect(Arg.Any<string>());
+		_ = connection.Received().BeginTransaction();
 	}
 
 	[Fact]

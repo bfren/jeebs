@@ -38,10 +38,10 @@ public class ValidateToken_Tests
 
 		var name = Rnd.Str;
 		var identity = Substitute.For<IIdentity>();
-		identity.IsAuthenticated.Returns(true);
-		identity.Name.Returns(name);
+		_ = identity.IsAuthenticated.Returns(true);
+		_ = identity.Name.Returns(name);
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(identity);
+		_ = principal.Identity.Returns(identity);
 
 		var token = JwtF.CreateToken(
 			config,
@@ -66,7 +66,7 @@ public class ValidateToken_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<TokenIsNotValidYetMsg>(none);
+		_ = Assert.IsType<TokenIsNotValidYetMsg>(none);
 	}
 
 	[Fact]
@@ -80,7 +80,7 @@ public class ValidateToken_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<TokenHasExpiredMsg>(none);
+		_ = Assert.IsType<TokenHasExpiredMsg>(none);
 	}
 
 	[Fact]

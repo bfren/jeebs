@@ -23,7 +23,7 @@ public abstract class ElementAtOrNone_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<ListIsEmptyMsg>(none);
+		_ = Assert.IsType<ListIsEmptyMsg>(none);
 	}
 
 	public abstract void Test01_No_Value_At_Index_Returns_None_With_ElementAtIsNullMsg();
@@ -38,7 +38,7 @@ public abstract class ElementAtOrNone_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<ElementAtIsNullMsg>(none);
+		_ = Assert.IsType<ElementAtIsNullMsg>(none);
 	}
 
 	public abstract void Test02_Value_At_Index_Returns_Some_With_Value();

@@ -21,7 +21,7 @@ public class Parse_Tests
 		_ = handler.ParseTest(value, parse, EnumeratedTest.Bar);
 
 		// Assert
-		parse.Received().Invoke(value);
+		_ = parse.Received().Invoke(value);
 	}
 
 	[Theory]

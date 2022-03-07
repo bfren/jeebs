@@ -17,7 +17,7 @@ public class Constructor_Tests
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
-		prop.Name.Returns(alias);
+		_ = prop.Name.Returns(alias);
 
 		// Act
 		var result = new MappedColumn(table, name, prop);

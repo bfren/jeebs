@@ -24,7 +24,7 @@ public abstract class FirstOrNone_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<ListIsEmptyMsg>(none);
+		_ = Assert.IsType<ListIsEmptyMsg>(none);
 	}
 
 	public abstract void Test01_No_Matching_Items_Returns_None_With_FirstItemIsNullMsg();
@@ -34,14 +34,14 @@ public abstract class FirstOrNone_Tests
 		// Arrange
 		var list = new int?[] { F.Rnd.Int, F.Rnd.Int, F.Rnd.Int };
 		var predicate = Substitute.For<Func<int?, bool>>();
-		predicate.Invoke(Arg.Any<int?>()).Returns(false);
+		_ = predicate.Invoke(Arg.Any<int?>()).Returns(false);
 
 		// Act
 		var result = act(list, predicate);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<FirstItemIsNullMsg>(none);
+		_ = Assert.IsType<FirstItemIsNullMsg>(none);
 	}
 
 	public abstract void Test02_Returns_First_Element();
@@ -68,7 +68,7 @@ public abstract class FirstOrNone_Tests
 		var value = F.Rnd.Int;
 		var list = new[] { F.Rnd.Int, value, F.Rnd.Int };
 		var predicate = Substitute.For<Func<int, bool>>();
-		predicate.Invoke(value).Returns(true);
+		_ = predicate.Invoke(value).Returns(true);
 
 		// Act
 		var result = act(list, predicate);

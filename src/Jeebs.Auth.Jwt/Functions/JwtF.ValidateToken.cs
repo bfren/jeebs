@@ -32,7 +32,7 @@ public static partial class JwtF
 				IssuerSigningKey = config.GetSigningKey()
 			};
 
-			config.GetEncryptingKey().IfSome(encryptingKey => parameters.TokenDecryptionKey = encryptingKey);
+			_ = config.GetEncryptingKey().IfSome(encryptingKey => parameters.TokenDecryptionKey = encryptingKey);
 
 			// Create handler to validate token
 			var handler = new JwtSecurityTokenHandler();

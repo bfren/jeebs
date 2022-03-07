@@ -97,7 +97,7 @@ public abstract class AuthControllerBase : Controller
 
 			// Update last sign in
 			var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
-			updated.Audit(none: r => Log.Msg(r));
+			_ = updated.Audit(none: r => Log.Msg(r));
 
 			// Add SignIn to HttpContext using Cookie scheme
 			await HttpContext.SignInAsync(

@@ -20,6 +20,6 @@ public abstract class ServiceApp<T> : ConsoleApp
 		base.ConfigureServices(env, config, services);
 
 		// Add Hosted Service
-		services.AddHostedService<T>();
+		_ = services.AddHostedService<T>();
 	}
 }

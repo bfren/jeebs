@@ -25,7 +25,7 @@ public class ExecuteAsync_Tests : Query_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<ErrorGettingQueryTermsOptionsMsg>(none);
+		_ = Assert.IsType<ErrorGettingQueryTermsOptionsMsg>(none);
 	}
 
 	[Fact]
@@ -38,7 +38,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		_ = await ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
 
 		// Assert
-		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);
+		_ = await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);
 	}
 
 	public record class Test : WpTermEntity;

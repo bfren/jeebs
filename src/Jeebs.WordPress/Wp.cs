@@ -32,7 +32,7 @@ public abstract class Wp
 		_ = initialised.GetOrCreate(typeof(TConfig).FullName, entry =>
 		{
 			// Set expiration to maximum so it never expires while the application is running
-			entry.SetAbsoluteExpiration(DateTimeOffset.MaxValue);
+			_ = entry.SetAbsoluteExpiration(DateTimeOffset.MaxValue);
 
 			// Do init
 			log.Dbg("Initialising {WpDb}.", entry.Key);

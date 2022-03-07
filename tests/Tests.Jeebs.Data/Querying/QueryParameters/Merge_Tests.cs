@@ -46,7 +46,7 @@ public class Merge_Tests
 		};
 
 		var parameters = new QueryParameters();
-		parameters.TryAdd(parameterToAdd);
+		_ = parameters.TryAdd(parameterToAdd);
 
 		// Act
 		var result = parameters.Merge(parameterToAdd);

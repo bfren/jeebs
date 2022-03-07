@@ -22,7 +22,7 @@ public class GetPropertyInfo_Tests
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.IsType<PropertyInfo<Test, int>>(some);
+		_ = Assert.IsType<PropertyInfo<Test, int>>(some);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetPropertyInfo_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<PropertyDoesNotExistOnTypeMsg<Test>>(none);
+		_ = Assert.IsType<PropertyDoesNotExistOnTypeMsg<Test>>(none);
 	}
 
 	public class Test

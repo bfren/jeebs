@@ -64,19 +64,19 @@ public abstract class WebApp : App
 		base.ConfigureServices(env, config, services);
 
 		// Register middleware
-		services.AddScoped<LoggerMiddleware>();
-		services.AddScoped<RedirectExactMiddleware>();
-		services.AddScoped<SiteVerificationMiddleware>();
+		_ = services.AddScoped<LoggerMiddleware>();
+		_ = services.AddScoped<RedirectExactMiddleware>();
+		_ = services.AddScoped<SiteVerificationMiddleware>();
 
 		// Specify HSTS options
 		if (!env.IsDevelopment() && useHsts)
 		{
-			services.AddHsts(opt =>
-			{
-				opt.Preload = true;
-				opt.IncludeSubDomains = true;
-				opt.MaxAge = TimeSpan.FromDays(60);
-			});
+			_ = services.AddHsts(opt =>
+			  {
+				  opt.Preload = true;
+				  opt.IncludeSubDomains = true;
+				  opt.MaxAge = TimeSpan.FromDays(60);
+			  });
 		}
 	}
 
@@ -89,7 +89,7 @@ public abstract class WebApp : App
 	protected virtual void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
 	{
 		// Logging
-		app.UseMiddleware<LoggerMiddleware>();
+		_ = app.UseMiddleware<LoggerMiddleware>();
 
 		// Site Verification
 		ConfigureSiteVerification(app, config);
@@ -97,7 +97,7 @@ public abstract class WebApp : App
 		if (env.IsDevelopment())
 		{
 			// Useful exception page
-			app.UseDeveloperExceptionPage();
+			_ = app.UseDeveloperExceptionPage();
 		}
 		else
 		{
@@ -129,7 +129,7 @@ public abstract class WebApp : App
 			&& verification.Any
 		)
 		{
-			app.UseMiddleware<SiteVerificationMiddleware>();
+			_ = app.UseMiddleware<SiteVerificationMiddleware>();
 		}
 	}
 
@@ -139,7 +139,7 @@ public abstract class WebApp : App
 	/// <param name="app">IApplicationBuilder</param>
 	protected virtual void ConfigureProductionExceptionHandling(IApplicationBuilder app)
 	{
-		app.UseExceptionHandler("/Error");
+		_ = app.UseExceptionHandler("/Error");
 	}
 
 	/// <summary>
@@ -150,7 +150,7 @@ public abstract class WebApp : App
 	{
 		if (useHsts) // check for Development Environment happens in Configure()
 		{
-			app.UseHsts();
+			_ = app.UseHsts();
 		}
 	}
 
@@ -161,6 +161,6 @@ public abstract class WebApp : App
 	/// <param name="config">IConfiguration</param>
 	protected virtual void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
-		app.UseAuthorization();
+		_ = app.UseAuthorization();
 	}
 }

@@ -30,7 +30,7 @@ public class SetValue_Tests
 		// Arrange
 		var handler = new BooleanTypeHandler();
 		var parameter = Substitute.For<IDbDataParameter>();
-		parameter.SourceColumn.Returns(column);
+		_ = parameter.SourceColumn.Returns(column);
 
 		// Act
 		handler.SetValue(parameter, value);
@@ -48,12 +48,12 @@ public class SetValue_Tests
 		var handler = new BooleanTypeHandler();
 		var column = F.Rnd.Str;
 		var parameter = Substitute.For<IDbDataParameter>();
-		parameter.SourceColumn.Returns(column);
+		_ = parameter.SourceColumn.Returns(column);
 
 		// Act
 		var action = void () => handler.SetValue(parameter, input);
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(action);
+		_ = Assert.Throws<InvalidOperationException>(action);
 	}
 }

@@ -25,7 +25,7 @@ public abstract class SomeAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract Task Test01_Nullable_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
@@ -41,9 +41,9 @@ public abstract class SomeAsync_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(n0);
+		_ = Assert.IsType<UnhandledExceptionMsg>(n0);
 		var n1 = r1.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(n1);
+		_ = Assert.IsType<UnhandledExceptionMsg>(n1);
 	}
 
 	public abstract Task Test02_Exception_Thrown_With_Handler_Returns_None_Calls_Handler();
@@ -59,8 +59,8 @@ public abstract class SomeAsync_Tests
 		var result = await act(throwFunc, handler).ConfigureAwait(false);
 
 		// Assert
-		result.AssertNone();
-		handler.Received().Invoke(exception);
+		_ = result.AssertNone();
+		_ = handler.Received().Invoke(exception);
 	}
 
 	public abstract Task Test03_Nullable_Exception_Thrown_With_Handler_Returns_None_Calls_Handler();
@@ -77,9 +77,9 @@ public abstract class SomeAsync_Tests
 		var r1 = await act(throwFunc, false, handler).ConfigureAwait(false);
 
 		// Assert
-		r0.AssertNone();
-		r1.AssertNone();
-		handler.Received(2).Invoke(exception);
+		_ = r0.AssertNone();
+		_ = r1.AssertNone();
+		_ = handler.Received(2).Invoke(exception);
 	}
 
 	public abstract Task Test04_Null_Input_Returns_None();
@@ -94,7 +94,7 @@ public abstract class SomeAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NullValueMsg>(none);
+		_ = Assert.IsType<NullValueMsg>(none);
 	}
 
 	public abstract Task Test05_Nullable_Allow_Null_False_Null_Input_Returns_None_With_AllowNullWasFalseMsg();
@@ -109,7 +109,7 @@ public abstract class SomeAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<AllowNullWasFalseMsg>(none);
+		_ = Assert.IsType<AllowNullWasFalseMsg>(none);
 	}
 
 	public abstract Task Test06_Nullable_Allow_Null_True_Null_Input_Returns_Some_With_Null_Value();

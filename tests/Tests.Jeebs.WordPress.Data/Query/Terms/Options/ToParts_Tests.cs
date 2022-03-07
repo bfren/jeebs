@@ -32,10 +32,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		var termId = t.Term.Id;
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddInnerJoin(
+		_ = builder.Received().AddInnerJoin(
 			Qp,
 			t.Term,
 			Arg.Is<Expression<Func<TermTable, string>>>(x => termId == x.Compile().Invoke(t.Term)),
@@ -51,10 +51,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		var (options, builder) = Setup();
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomy(Qp, default);
+		_ = builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomy(Qp, default);
 	}
 
 	[Fact]
@@ -69,10 +69,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWhereTaxonomy(Qp, taxonomy);
+		_ = builder.Received().AddWhereTaxonomy(Qp, taxonomy);
 	}
 
 	[Fact]
@@ -82,10 +82,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		var (options, builder) = Setup();
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceiveWithAnyArgs().AddWhereSlug(Qp, default);
+		_ = builder.DidNotReceiveWithAnyArgs().AddWhereSlug(Qp, default);
 	}
 
 	[Fact]
@@ -100,10 +100,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWhereSlug(Qp, slug);
+		_ = builder.Received().AddWhereSlug(Qp, slug);
 	}
 
 	[Theory]
@@ -119,10 +119,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceiveWithAnyArgs().AddWhereCount(Qp, default);
+		_ = builder.DidNotReceiveWithAnyArgs().AddWhereCount(Qp, default);
 	}
 
 	[Fact]
@@ -137,10 +137,10 @@ public class ToParts_Tests : ToParts_Tests<Query.TermsOptions, IQueryTermsPartsB
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWhereCount(Qp, count);
+		_ = builder.Received().AddWhereCount(Qp, count);
 	}
 
 	[Fact]

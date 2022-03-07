@@ -20,8 +20,8 @@ public class GetColumnFromExpression_Tests
 		var a1 = void () => GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
-		Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);
-		Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a1);
+		_ = Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);
+		_ = Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a1);
 	}
 
 	[Fact]

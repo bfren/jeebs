@@ -50,7 +50,7 @@ public class Parse_Tests
 		// Arrange
 		var name = F.Rnd.Str;
 		var type = new PostType(name);
-		PostType.AddCustomPostType(type);
+		_ = PostType.AddCustomPostType(type);
 
 		// Act
 		var result = PostType.Parse(name);

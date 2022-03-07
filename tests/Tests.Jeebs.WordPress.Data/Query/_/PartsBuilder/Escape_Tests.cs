@@ -19,7 +19,7 @@ public class Escape_Tests : PartsBuilder_Tests
 		_ = builder.EscapeTest(v.Table);
 
 		// Assert
-		v.Client.Received().Escape(v.Table);
+		_ = v.Client.Received().Escape(v.Table);
 	}
 
 	[Fact]
@@ -32,6 +32,6 @@ public class Escape_Tests : PartsBuilder_Tests
 		_ = options.EscapeTest(v.Table, t => t.Id);
 
 		// Assert
-		v.Client.Received().EscapeWithTable(Arg.Any<IColumn>());
+		_ = v.Client.Received().EscapeWithTable(Arg.Any<IColumn>());
 	}
 }

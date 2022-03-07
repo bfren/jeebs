@@ -19,7 +19,7 @@ public class GetToken_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<InvalidAuthorisationHeaderMsg>(none);
+		_ = Assert.IsType<InvalidAuthorisationHeaderMsg>(none);
 	}
 
 	[Fact]

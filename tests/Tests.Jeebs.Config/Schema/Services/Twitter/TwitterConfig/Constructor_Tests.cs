@@ -16,6 +16,6 @@ public class Constructor_Tests
 		// Act
 
 		// Assert
-		Assert.IsAssignableFrom<IServiceConfig>(config);
+		_ = Assert.IsAssignableFrom<IServiceConfig>(config);
 	}
 }

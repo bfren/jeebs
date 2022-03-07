@@ -15,7 +15,7 @@ public class Table_Tests : QueryPartsBuilderWithEntity_Tests
 		// Arrange
 		var (builder, v) = Setup();
 		var table = Substitute.For<ITable>();
-		v.Map.Table.Returns(table);
+		_ = v.Map.Table.Returns(table);
 
 		// Act
 		var result = builder.Table;

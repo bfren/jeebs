@@ -27,10 +27,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().Create<TestModel>(max, skip);
+		_ = builder.Received().Create<TestModel>(max, skip);
 	}
 
 	public abstract void Test01_Id_Null_Ids_Empty_Does_Not_Call_Builder_AddWhereId();
@@ -41,10 +41,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		var (options, builder) = Setup();
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceiveWithAnyArgs().AddWhereId(Qp, default, Arg.Any<IImmutableList<TId>>());
+		_ = builder.DidNotReceiveWithAnyArgs().AddWhereId(Qp, default, Arg.Any<IImmutableList<TId>>());
 	}
 
 	public abstract void Test02_Id_Not_Null_Calls_Builder_AddWhereId();
@@ -60,10 +60,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWhereId(Qp, id, Arg.Any<IImmutableList<TId>>());
+		_ = builder.Received().AddWhereId(Qp, id, Arg.Any<IImmutableList<TId>>());
 	}
 
 	public abstract void Test03_Ids_Not_Empty_Calls_Builder_AddWhereId();
@@ -81,10 +81,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWhereId(Qp, default, ids);
+		_ = builder.Received().AddWhereId(Qp, default, ids);
 	}
 
 	public abstract void Test04_SortRandom_False_Sort_Empty_Does_Not_Call_Builder_AddSort();
@@ -95,10 +95,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		var (options, builder) = Setup();
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceive().AddSort(Qp, Arg.Any<bool>(), Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
+		_ = builder.DidNotReceive().AddSort(Qp, Arg.Any<bool>(), Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
 	}
 
 	public abstract void Test05_SortRandom_True_Calls_Builder_AddSort();
@@ -113,10 +113,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddSort(Qp, true, Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
+		_ = builder.Received().AddSort(Qp, true, Arg.Any<IImmutableList<(IColumn, SortOrder)>>());
 	}
 
 	public abstract void Test06_Sort_Not_Empty_Calls_Builder_AddSort();
@@ -135,10 +135,10 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddSort(Qp, false, sort);
+		_ = builder.Received().AddSort(Qp, false, sort);
 	}
 }
 

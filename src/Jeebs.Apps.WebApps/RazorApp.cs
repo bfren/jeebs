@@ -21,7 +21,7 @@ public abstract class RazorApp : MvcApp
 	/// <inheritdoc/>
 	protected override void ConfigureServicesEndpoints(IServiceCollection services)
 	{
-		services
+		_ = services
 			.AddRazorPages(ConfigureServicesRazorPagesOptions)
 			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
 			.AddJsonOptions(ConfigureServicesEndpointsJson);
@@ -36,6 +36,6 @@ public abstract class RazorApp : MvcApp
 	/// <inheritdoc/>
 	protected override void ConfigureEndpoints(IApplicationBuilder app)
 	{
-		app.UseEndpoints(endpoints => endpoints.MapRazorPages());
+		_ = app.UseEndpoints(endpoints => endpoints.MapRazorPages());
 	}
 }

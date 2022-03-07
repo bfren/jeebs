@@ -36,7 +36,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 			IsEnabled = true
 		};
 
-		StartFluentQuery()
+		_ = StartFluentQuery()
 			.Where(x => x.FamilyName, Compare.Equal, "")
 			.QueryAsync<int>();
 

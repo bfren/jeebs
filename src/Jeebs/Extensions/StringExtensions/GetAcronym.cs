@@ -19,7 +19,7 @@ public static partial class StringExtensions
 		{
 			if (char.IsUpper(@this[i]))
 			{
-				acronym.Append(@this[i]);
+				_ = acronym.Append(@this[i]);
 			}
 		}
 

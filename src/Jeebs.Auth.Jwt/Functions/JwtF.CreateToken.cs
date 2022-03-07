@@ -87,12 +87,12 @@ public static partial class JwtF
 				SigningCredentials = new SigningCredentials(config.GetSigningKey(), JwtSecurity.SigningAlgorithm)
 			};
 
-			config.GetEncryptingKey().IfSome(encryptingKey2 =>
-				descriptor.EncryptingCredentials = new EncryptingCredentials(
-					encryptingKey2,
-					JwtSecurity.KeyWrapAlgorithm,
-					JwtSecurity.EncryptingAlgorithm
-				)
+			_ = config.GetEncryptingKey().IfSome(encryptingKey2 =>
+				  descriptor.EncryptingCredentials = new EncryptingCredentials(
+					  encryptingKey2,
+					  JwtSecurity.KeyWrapAlgorithm,
+					  JwtSecurity.EncryptingAlgorithm
+				  )
 			);
 
 			// Create handler to create and write token

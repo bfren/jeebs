@@ -139,6 +139,6 @@ public class ToOperator_Tests
 		var action = void () => value.ToOperator();
 
 		// Assert
-		Assert.Throws<UnrecognisedSearchOperatorException>(action);
+		_ = Assert.Throws<UnrecognisedSearchOperatorException>(action);
 	}
 }

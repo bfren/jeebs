@@ -19,12 +19,12 @@ public class QuerySingleAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		await query.QuerySingleAsync<TestModel>(x => x.From<TestTable>()).ConfigureAwait(false);
-		await query.QuerySingleAsync<TestModel>(x => x.From<TestTable>(), transaction).ConfigureAwait(false);
+		_ = await query.QuerySingleAsync<TestModel>(x => x.From<TestTable>()).ConfigureAwait(false);
+		_ = await query.QuerySingleAsync<TestModel>(x => x.From<TestTable>(), transaction).ConfigureAwait(false);
 
 		// Assert
-		await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), transaction).ConfigureAwait(false);
+		_ = await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), transaction).ConfigureAwait(false);
 	}
 
 	public sealed record class TestTable() : Table(F.Rnd.Str)

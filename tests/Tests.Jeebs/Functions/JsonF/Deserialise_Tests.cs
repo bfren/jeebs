@@ -24,7 +24,7 @@ public class Deserialise_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
+		_ = Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
 	}
 
 	[Fact]
@@ -38,7 +38,7 @@ public class Deserialise_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<DeserialiseExceptionMsg>(none);
+		_ = Assert.IsType<DeserialiseExceptionMsg>(none);
 	}
 
 	[Fact]

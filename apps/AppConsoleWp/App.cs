@@ -27,7 +27,7 @@ internal sealed class App : Jeebs.Apps.ConsoleApp
 		base.ConfigureServices(env, config, services);
 
 		// Add WordPress
-		services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(config);
-		services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(config);
+		_ = services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(config);
+		_ = services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(config);
 	}
 }

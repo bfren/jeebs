@@ -17,7 +17,7 @@ public class Constructor_Tests
 		var result = PropertyInfo<Foo, object> () => new(F.Rnd.Str);
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(result);
+		_ = Assert.Throws<InvalidOperationException>(result);
 	}
 
 	[Fact]
@@ -29,7 +29,7 @@ public class Constructor_Tests
 		var result = PropertyInfo<Foo, int> () => new(nameof(Foo.Bar));
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(result);
+		_ = Assert.Throws<InvalidOperationException>(result);
 	}
 
 	public sealed class Foo

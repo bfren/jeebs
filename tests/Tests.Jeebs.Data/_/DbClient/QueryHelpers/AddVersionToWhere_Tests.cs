@@ -29,8 +29,8 @@ public class AddVersionToWhere_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
-		client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
+		_ = client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
+		_ = client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;
@@ -51,8 +51,8 @@ public class AddVersionToWhere_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
-		client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
+		_ = client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
+		_ = client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
 		var name = F.Rnd.Str;
 		var alias = F.Rnd.Str;

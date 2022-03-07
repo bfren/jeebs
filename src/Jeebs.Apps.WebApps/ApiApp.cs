@@ -25,7 +25,7 @@ public abstract class ApiApp : MvcApp
 	/// <inheritdoc/>
 	protected override void ConfigureServicesEndpoints(IServiceCollection services)
 	{
-		services.AddControllers(ConfigureServicesMvcOptions);
+		_ = services.AddControllers(ConfigureServicesMvcOptions);
 	}
 
 	/// <inheritdoc/>
@@ -65,13 +65,13 @@ public abstract class ApiApp : MvcApp
 	/// <inheritdoc/>
 	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
-		app.UseAuthorization();
+		_ = app.UseAuthorization();
 	}
 
 	/// <inheritdoc/>
 	protected override void ConfigureEndpoints(IApplicationBuilder app)
 	{
-		app.UseEndpoints(endpoints => endpoints.MapControllers());
+		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
 	}
 
 	#endregion

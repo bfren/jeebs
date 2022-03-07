@@ -46,7 +46,7 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPar
 		object value = F.Rnd.Str;
 
 		var field = Substitute.For<ICustomField>();
-		field.Key.Returns(key);
+		_ = field.Key.Returns(key);
 
 		var customFields = ImmutableList.Create((field, input, value));
 
@@ -83,7 +83,7 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPar
 		object value = F.Rnd.Str;
 
 		var field = Substitute.For<ICustomField>();
-		field.Key.Returns(key);
+		_ = field.Key.Returns(key);
 
 		var customFields = ImmutableList.Create((field, Compare.Equal, value));
 
@@ -120,12 +120,12 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPar
 		var k0 = F.Rnd.Str;
 		object v0 = F.Rnd.Str;
 		var f0 = Substitute.For<ICustomField>();
-		f0.Key.Returns(k0);
+		_ = f0.Key.Returns(k0);
 
 		var k1 = F.Rnd.Str;
 		object v1 = F.Rnd.Str;
 		var f1 = Substitute.For<ICustomField>();
-		f1.Key.Returns(k1);
+		_ = f1.Key.Returns(k1);
 
 		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f0, Compare.Equal, v1));
 
@@ -166,12 +166,12 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<Query.PostsPar
 		var k0 = F.Rnd.Str;
 		object v0 = F.Rnd.Str;
 		var f0 = Substitute.For<ICustomField>();
-		f0.Key.Returns(k0);
+		_ = f0.Key.Returns(k0);
 
 		var k1 = F.Rnd.Str;
 		object v1 = F.Rnd.Str;
 		var f1 = Substitute.For<ICustomField>();
-		f1.Key.Returns(k1);
+		_ = f1.Key.Returns(k1);
 
 		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f1, Compare.Equal, v1));
 

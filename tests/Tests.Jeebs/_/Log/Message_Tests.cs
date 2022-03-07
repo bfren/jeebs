@@ -28,7 +28,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
-		msg.Level.Returns(LogLevel.Verbose);
+		_ = msg.Level.Returns(LogLevel.Verbose);
 		var log = Substitute.For<Log>();
 
 		// Act
@@ -43,7 +43,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
-		msg.Level.Returns(LogLevel.Debug);
+		_ = msg.Level.Returns(LogLevel.Debug);
 		var log = Substitute.For<Log>();
 
 		// Act
@@ -58,7 +58,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
-		msg.Level.Returns(LogLevel.Information);
+		_ = msg.Level.Returns(LogLevel.Information);
 		var log = Substitute.For<Log>();
 
 		// Act
@@ -73,7 +73,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
-		msg.Level.Returns(LogLevel.Warning);
+		_ = msg.Level.Returns(LogLevel.Warning);
 		var log = Substitute.For<Log>();
 
 		// Act
@@ -88,7 +88,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
-		msg.Level.Returns(LogLevel.Error);
+		_ = msg.Level.Returns(LogLevel.Error);
 		var log = Substitute.For<Log>();
 
 		// Act
@@ -103,7 +103,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
-		msg.Level.Returns(LogLevel.Fatal);
+		_ = msg.Level.Returns(LogLevel.Fatal);
 		var log = Substitute.For<Log>();
 
 		// Act

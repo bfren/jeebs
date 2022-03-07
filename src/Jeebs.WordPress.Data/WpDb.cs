@@ -76,18 +76,18 @@ public sealed class WpDb<Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum> :
 		Schema = new WpDbSchema(WpConfig.TablePrefix);
 
 		// Map entities to tables
-		Map<Tc>.To(Schema.Comment);
-		Map<Tcm>.To(Schema.CommentMeta);
-		Map<Tl>.To(Schema.Link);
-		Map<To>.To(Schema.Opt);
-		Map<Tp>.To(Schema.Post);
-		Map<Tpm>.To(Schema.PostMeta);
-		Map<Tt>.To(Schema.Term);
-		Map<Ttm>.To(Schema.TermMeta);
-		Map<Ttr>.To(Schema.TermRelationship);
-		Map<Ttt>.To(Schema.TermTaxonomy);
-		Map<Tu>.To(Schema.User);
-		Map<Tum>.To(Schema.UserMeta);
+		_ = Map<Tc>.To(Schema.Comment);
+		_ = Map<Tcm>.To(Schema.CommentMeta);
+		_ = Map<Tl>.To(Schema.Link);
+		_ = Map<To>.To(Schema.Opt);
+		_ = Map<Tp>.To(Schema.Post);
+		_ = Map<Tpm>.To(Schema.PostMeta);
+		_ = Map<Tt>.To(Schema.Term);
+		_ = Map<Ttm>.To(Schema.TermMeta);
+		_ = Map<Ttr>.To(Schema.TermRelationship);
+		_ = Map<Ttt>.To(Schema.TermTaxonomy);
+		_ = Map<Tu>.To(Schema.User);
+		_ = Map<Tum>.To(Schema.UserMeta);
 
 		// Add type handlers
 		TypeMap.ResetTypeHandlers();

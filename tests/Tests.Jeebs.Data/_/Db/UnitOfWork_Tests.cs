@@ -18,7 +18,7 @@ public class UnitOfWork_Tests
 		_ = db.UnitOfWork;
 
 		// Assert
-		client.Received().Connect(Arg.Any<string>());
+		_ = client.Received().Connect(Arg.Any<string>());
 	}
 
 	[Fact]
@@ -31,6 +31,6 @@ public class UnitOfWork_Tests
 		_ = db.UnitOfWork;
 
 		// Assert
-		connection.Received().BeginTransaction();
+		_ = connection.Received().BeginTransaction();
 	}
 }

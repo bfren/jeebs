@@ -25,6 +25,6 @@ public class Table_Tests : QueryPartsBuilder_Tests<Query.TermsPartsBuilder, WpTe
 		var result = builder.Table;
 
 		// Assert
-		Assert.IsType<TermTable>(result);
+		_ = Assert.IsType<TermTable>(result);
 	}
 }

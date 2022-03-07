@@ -92,7 +92,7 @@ public static class Base32F
 				outputBase32Byte &= 0x1F;  // 0x1F = 00011111 in binary
 
 				// Add current Base32 byte and convert it to character
-				builder.Append(Base32Alphabet[outputBase32Byte]);
+				_ = builder.Append(Base32Alphabet[outputBase32Byte]);
 
 				// Move to the next byte
 				outputBase32BytePosition = 0;
@@ -109,7 +109,7 @@ public static class Base32F
 			outputBase32Byte &= 0x1F;  // 0x1F = 00011111 in binary
 
 			// Add current Base32 byte and convert it to character
-			builder.Append(Base32Alphabet[outputBase32Byte]);
+			_ = builder.Append(Base32Alphabet[outputBase32Byte]);
 		}
 
 		return builder.ToString();

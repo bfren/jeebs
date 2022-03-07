@@ -141,10 +141,10 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 				link.Attributes.Add("href", urlHelper.Action(urlActionContext));
 
 				// Add link text - if not set use getText() function
-				link.InnerHtml.Append(menuItem.Text ?? getText(menuItem));
+				_ = link.InnerHtml.Append(menuItem.Text ?? getText(menuItem));
 
 				// Add the link to the list item
-				item.InnerHtml.AppendHtml(link);
+				_ = item.InnerHtml.AppendHtml(link);
 
 				// Check for child menu
 				if (IncludeChildren && menuItem.Children.Count > 0)
@@ -162,7 +162,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 					);
 
 					// Add child menu to item
-					item.InnerHtml.AppendHtml(childMenu);
+					_ = item.InnerHtml.AppendHtml(childMenu);
 				}
 
 				// Append item

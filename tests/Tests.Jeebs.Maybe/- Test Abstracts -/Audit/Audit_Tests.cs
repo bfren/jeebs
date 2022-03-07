@@ -39,7 +39,7 @@ public abstract class Audit_Tests
 		void result() => act(maybe);
 
 		// Assert
-		Assert.Throws<UnknownMaybeException>(result);
+		_ = Assert.Throws<UnknownMaybeException>(result);
 	}
 
 	#endregion

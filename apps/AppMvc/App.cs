@@ -20,20 +20,20 @@ public sealed class App : Jeebs.Apps.MvcAppWithData
 	{
 		base.ConfigureServices(env, config, services);
 
-		services.AddAuthentication(config)
+		_ = services.AddAuthentication(config)
 			.WithData<MySqlDbClient>()
 			.WithJwt();
 
-		services.AddDbContext<EfCoreContext>(
+		_ = services.AddDbContext<EfCoreContext>(
 			options => options.UseMySQL("server=192.168.1.104;port=18793;user id=test;password=test;database=test;convert zero datetime=True;sslmode=none")
 		);
 
-		services.AddTransient<IImageDriver, ImageDriver>();
+		_ = services.AddTransient<IImageDriver, ImageDriver>();
 	}
 
 	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
 	{
-		app.UseAuthentication();
+		_ = app.UseAuthentication();
 
 		base.ConfigureAuthorisation(app, config);
 	}

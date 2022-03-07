@@ -23,7 +23,7 @@ public class GetColumnsFromList_Tests
 
 		// Assert
 		Assert.Empty(result);
-		client.DidNotReceiveWithAnyArgs().Escape(Arg.Any<IColumn>(), true);
+		_ = client.DidNotReceiveWithAnyArgs().Escape(Arg.Any<IColumn>(), true);
 	}
 
 	[Fact]
@@ -39,8 +39,8 @@ public class GetColumnsFromList_Tests
 		var result = GetColumnsFromList(client, columns);
 
 		// Assert
-		client.Received(1).Escape(c0, true);
-		client.Received(1).Escape(c1, true);
+		_ = client.Received(1).Escape(c0, true);
+		_ = client.Received(1).Escape(c1, true);
 		Assert.Equal(2, result.Count);
 	}
 }

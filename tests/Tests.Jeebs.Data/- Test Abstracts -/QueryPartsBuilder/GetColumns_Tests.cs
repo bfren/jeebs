@@ -18,9 +18,9 @@ public abstract class GetColumns_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 		var (builder, v) = Setup();
 
 		// Act
-		builder.GetColumns<TModel>();
+		_ = builder.GetColumns<TModel>();
 
 		// Assert
-		v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
+		_ = v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
 	}
 }

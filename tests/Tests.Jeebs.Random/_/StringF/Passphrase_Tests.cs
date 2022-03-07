@@ -26,7 +26,7 @@ public class Passphrase_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
+		_ = Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
 	}
 
 	[Fact]
@@ -40,7 +40,7 @@ public class Passphrase_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<EmptyWordListMsg>(none);
+		_ = Assert.IsType<EmptyWordListMsg>(none);
 	}
 
 	[Fact]
@@ -53,7 +53,7 @@ public class Passphrase_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NumberOfWordsCannotBeMoreThanWordListMsg>(none);
+		_ = Assert.IsType<NumberOfWordsCannotBeMoreThanWordListMsg>(none);
 	}
 
 	[Theory]

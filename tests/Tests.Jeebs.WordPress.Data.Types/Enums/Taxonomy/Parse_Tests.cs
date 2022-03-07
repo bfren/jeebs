@@ -49,7 +49,7 @@ public class Parse_Tests
 		// Arrange
 		var name = F.Rnd.Str;
 		var type = new Taxonomy(name);
-		Taxonomy.AddCustomTaxonomy(type);
+		_ = Taxonomy.AddCustomTaxonomy(type);
 
 		// Act
 		var result = Taxonomy.Parse(name);

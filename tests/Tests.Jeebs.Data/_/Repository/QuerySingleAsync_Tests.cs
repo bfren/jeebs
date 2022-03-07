@@ -24,10 +24,10 @@ public class QuerySingleAsync_Tests
 		}.ToArray();
 
 		// Act
-		await repo.QuerySingleAsync<Repository_Setup.FooModel>(predicates).ConfigureAwait(false);
+		_ = await repo.QuerySingleAsync<Repository_Setup.FooModel>(predicates).ConfigureAwait(false);
 
 		// Assert
-		client.Received().GetQuery<Repository_Setup.Foo, Repository_Setup.FooModel>(predicates);
+		_ = client.Received().GetQuery<Repository_Setup.Foo, Repository_Setup.FooModel>(predicates);
 	}
 
 	[Fact]
@@ -41,7 +41,7 @@ public class QuerySingleAsync_Tests
 		}.ToArray();
 
 		// Act
-		await repo.QuerySingleAsync<Repository_Setup.FooModel>(predicates).ConfigureAwait(false);
+		_ = await repo.QuerySingleAsync<Repository_Setup.FooModel>(predicates).ConfigureAwait(false);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());

@@ -48,7 +48,7 @@ public abstract class Filter_Tests
 		var o3 = Create.None<int>();
 		var list = new[] { o0, o1, o2, o3 };
 		var predicate = Substitute.For<Func<int, bool>>();
-		predicate.Invoke(v1).Returns(true);
+		_ = predicate.Invoke(v1).Returns(true);
 
 		// Act
 		var result = act(list, predicate);

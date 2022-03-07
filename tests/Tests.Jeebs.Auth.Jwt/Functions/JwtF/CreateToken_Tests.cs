@@ -19,14 +19,14 @@ public class CreateToken_Tests
 		// Arrange
 		var config = new JwtConfig();
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(_ => null);
+		_ = principal.Identity.Returns(_ => null);
 
 		// Act
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NullIdentityMsg>(none);
+		_ = Assert.IsType<NullIdentityMsg>(none);
 	}
 
 	[Fact]
@@ -41,7 +41,7 @@ public class CreateToken_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<IdentityNotAuthenticatedMsg>(none);
+		_ = Assert.IsType<IdentityNotAuthenticatedMsg>(none);
 	}
 
 	[Fact]
@@ -50,16 +50,16 @@ public class CreateToken_Tests
 		// Arrange
 		var config = new JwtConfig();
 		var identity = Substitute.For<IIdentity>();
-		identity.IsAuthenticated.Returns(true);
+		_ = identity.IsAuthenticated.Returns(true);
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(identity);
+		_ = principal.Identity.Returns(identity);
 
 		// Act
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<ConfigInvalidMsg>(none);
+		_ = Assert.IsType<ConfigInvalidMsg>(none);
 	}
 
 	[Fact]
@@ -73,16 +73,16 @@ public class CreateToken_Tests
 			Audience = Rnd.Str
 		};
 		var identity = Substitute.For<IIdentity>();
-		identity.IsAuthenticated.Returns(true);
+		_ = identity.IsAuthenticated.Returns(true);
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(identity);
+		_ = principal.Identity.Returns(identity);
 
 		// Act
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<SigningKeyNotLongEnoughMsg>(none);
+		_ = Assert.IsType<SigningKeyNotLongEnoughMsg>(none);
 	}
 
 	[Fact]
@@ -97,16 +97,16 @@ public class CreateToken_Tests
 			Audience = Rnd.Str
 		};
 		var identity = Substitute.For<IIdentity>();
-		identity.IsAuthenticated.Returns(true);
+		_ = identity.IsAuthenticated.Returns(true);
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(identity);
+		_ = principal.Identity.Returns(identity);
 
 		// Act
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<EncryptingKeyNotLongEnoughMsg>(none);
+		_ = Assert.IsType<EncryptingKeyNotLongEnoughMsg>(none);
 	}
 
 	[Fact]
@@ -120,15 +120,15 @@ public class CreateToken_Tests
 			Audience = Rnd.Str
 		};
 		var identity = Substitute.For<IIdentity>();
-		identity.IsAuthenticated.Returns(true);
+		_ = identity.IsAuthenticated.Returns(true);
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(identity);
+		_ = principal.Identity.Returns(identity);
 
 		// Act
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		result.AssertSome();
+		_ = result.AssertSome();
 	}
 
 	[Fact]
@@ -143,14 +143,14 @@ public class CreateToken_Tests
 			Audience = Rnd.Str
 		};
 		var identity = Substitute.For<IIdentity>();
-		identity.IsAuthenticated.Returns(true);
+		_ = identity.IsAuthenticated.Returns(true);
 		var principal = Substitute.For<ClaimsPrincipal>();
-		principal.Identity.Returns(identity);
+		_ = principal.Identity.Returns(identity);
 
 		// Act
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		result.AssertSome();
+		_ = result.AssertSome();
 	}
 }

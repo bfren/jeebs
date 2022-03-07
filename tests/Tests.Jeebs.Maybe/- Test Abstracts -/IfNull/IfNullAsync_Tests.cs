@@ -21,7 +21,7 @@ public abstract class IfNullAsync_Tests
 		var some = Some<object>(null, true);
 		var none = None<object?, M.NullValueMsg>();
 		var throws = Substitute.For<Func<Task<Maybe<object?>>>>();
-		throws.Invoke().Throws<Exception>();
+		_ = throws.Invoke().Throws<Exception>();
 
 		// Act
 		var r0 = await act(some, throws).ConfigureAwait(false);
@@ -29,9 +29,9 @@ public abstract class IfNullAsync_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		Assert.IsType<M.UnhandledExceptionMsg>(n0);
+		_ = Assert.IsType<M.UnhandledExceptionMsg>(n0);
 		var n1 = r1.AssertNone();
-		Assert.IsType<M.UnhandledExceptionMsg>(n1);
+		_ = Assert.IsType<M.UnhandledExceptionMsg>(n1);
 	}
 
 	public abstract Task Test01_Some_With_Null_Value_Runs_IfNull_Func();
@@ -43,10 +43,10 @@ public abstract class IfNullAsync_Tests
 		var ifNull = Substitute.For<Func<Task<Maybe<object?>>>>();
 
 		// Act
-		await act(some, ifNull).ConfigureAwait(false);
+		_ = await act(some, ifNull).ConfigureAwait(false);
 
 		// Assert
-		await ifNull.Received().Invoke().ConfigureAwait(false);
+		_ = await ifNull.Received().Invoke().ConfigureAwait(false);
 	}
 
 	public abstract Task Test02_None_With_NullValueMsg_Runs_IfNull_Func();
@@ -58,10 +58,10 @@ public abstract class IfNullAsync_Tests
 		var ifNull = Substitute.For<Func<Task<Maybe<object>>>>();
 
 		// Act
-		await act(none, ifNull).ConfigureAwait(false);
+		_ = await act(none, ifNull).ConfigureAwait(false);
 
 		// Assert
-		await ifNull.Received().Invoke().ConfigureAwait(false);
+		_ = await ifNull.Received().Invoke().ConfigureAwait(false);
 	}
 
 	public abstract Task Test03_Some_With_Null_Value_Runs_IfNull_Func_Returns_None_With_Reason();
@@ -72,13 +72,13 @@ public abstract class IfNullAsync_Tests
 		var maybe = Some<object>(null, true);
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
-		ifNull.Invoke().Returns(msg);
+		_ = ifNull.Invoke().Returns(msg);
 
 		// Act
 		var result = await act(maybe, ifNull).ConfigureAwait(false);
 
 		// Assert
-		ifNull.Received().Invoke();
+		_ = ifNull.Received().Invoke();
 		var none = result.AssertNone();
 		Assert.Same(msg, none);
 	}
@@ -91,13 +91,13 @@ public abstract class IfNullAsync_Tests
 		var maybe = None<object, M.NullValueMsg>();
 		var ifNull = Substitute.For<Func<Msg>>();
 		var msg = new TestMsg();
-		ifNull.Invoke().Returns(msg);
+		_ = ifNull.Invoke().Returns(msg);
 
 		// Act
 		var result = await act(maybe, ifNull).ConfigureAwait(false);
 
 		// Assert
-		ifNull.Received().Invoke();
+		_ = ifNull.Received().Invoke();
 		var none = result.AssertNone();
 		Assert.Same(msg, none);
 	}

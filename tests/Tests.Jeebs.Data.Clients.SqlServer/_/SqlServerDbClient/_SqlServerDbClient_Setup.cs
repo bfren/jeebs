@@ -14,7 +14,7 @@ public static class SqlServerDbClient_Setup
 		var name = F.Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
-		table.GetName().Returns(tableName);
+		_ = table.GetName().Returns(tableName);
 		var client = new SqlServerDbClient();
 
 		return (client, new(table, schema, name));

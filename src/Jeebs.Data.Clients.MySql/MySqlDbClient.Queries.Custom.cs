@@ -57,19 +57,19 @@ public partial class MySqlDbClient : DbClient
 		// Add INNER JOIN
 		foreach (var (from, to) in parts.InnerJoin)
 		{
-			sql.Append($" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			_ = sql.Append($" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
 		}
 
 		// Add LEFT JOIN
 		foreach (var (from, to) in parts.LeftJoin)
 		{
-			sql.Append($" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			_ = sql.Append($" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
 		}
 
 		// Add RIGHT JOIN
 		foreach (var (from, to) in parts.RightJoin)
 		{
-			sql.Append($" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
+			_ = sql.Append($" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}");
 		}
 
 		// Add WHERE
@@ -84,27 +84,27 @@ public partial class MySqlDbClient : DbClient
 			{
 				var (whereSimple, param) = GetWhereAndParameters(this, parts.Where, true);
 				where.AddRange(whereSimple);
-				parameters.Merge(param);
+				_ = parameters.Merge(param);
 			}
 
 			// Add custom WHERE
 			foreach (var (whereCustom, param) in parts.WhereCustom)
 			{
 				where.Add($"({whereCustom})");
-				parameters.Merge(param);
+				_ = parameters.Merge(param);
 			}
 
 			// If there's anything to add, 
 			if (where.Count > 0)
 			{
-				sql.Append($" WHERE {string.Join(" AND ", where)}");
+				_ = sql.Append($" WHERE {string.Join(" AND ", where)}");
 			}
 		}
 
 		// Add ORDER BY
 		if (parts.SortRandom)
 		{
-			sql.Append(" ORDER BY RAND()");
+			_ = sql.Append(" ORDER BY RAND()");
 		}
 		else if (parts.Sort.Count > 0)
 		{
@@ -114,7 +114,7 @@ public partial class MySqlDbClient : DbClient
 				orderBy.Add($"{Escape(column.TblName, column.ColName)} {order.ToOperator()}");
 			}
 
-			sql.Append($" ORDER BY {JoinList(orderBy, false)}");
+			_ = sql.Append($" ORDER BY {JoinList(orderBy, false)}");
 		}
 
 		// Add LIMIT
@@ -123,16 +123,16 @@ public partial class MySqlDbClient : DbClient
 			// Add OFFSET
 			if (parts.Skip > 0)
 			{
-				sql.Append($" LIMIT {parts.Skip}, {parts.Maximum}");
+				_ = sql.Append($" LIMIT {parts.Skip}, {parts.Maximum}");
 			}
 			else
 			{
-				sql.Append($" LIMIT {parts.Maximum}");
+				_ = sql.Append($" LIMIT {parts.Maximum}");
 			}
 		}
 
 		// Append semi-colon
-		sql.Append(';');
+		_ = sql.Append(';');
 
 		// Return query string
 		return (

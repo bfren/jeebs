@@ -17,10 +17,10 @@ public class DeleteAsync_Tests
 		var value = F.Rnd.Lng;
 
 		// Act
-		await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
+		_ = await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
-		client.Received().GetDeleteQuery<Repository_Setup.Foo>(value);
+		_ = client.Received().GetDeleteQuery<Repository_Setup.Foo>(value);
 	}
 
 	[Fact]
@@ -31,7 +31,7 @@ public class DeleteAsync_Tests
 		var value = F.Rnd.Lng;
 
 		// Act
-		await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
+		_ = await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());

@@ -19,7 +19,7 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 		_ = builder.Map.Value;
 
 		// Assert
-		v.Mapper.Received().GetTableMapFor<TestEntity>();
+		_ = v.Mapper.Received().GetTableMapFor<TestEntity>();
 	}
 
 	[Fact]
@@ -27,12 +27,12 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		v.Mapper.GetTableMapFor<TestEntity>().Returns(Create.None<ITableMap>());
+		_ = v.Mapper.GetTableMapFor<TestEntity>().Returns(Create.None<ITableMap>());
 
 		// Act
 		var action = ITableMap () => builder.Map.Value;
 
 		// Assert
-		Assert.Throws<MsgException<Msg>>(action);
+		_ = Assert.Throws<MsgException<Msg>>(action);
 	}
 }

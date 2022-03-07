@@ -24,8 +24,8 @@ public class GetSelectFromList_Tests
 
 		// Assert
 		Assert.Equal(string.Empty, result);
-		client.DidNotReceiveWithAnyArgs().EscapeWithTable(Arg.Any<IColumn>(), true);
-		client.DidNotReceiveWithAnyArgs().JoinList(Arg.Any<List<string>>(), false);
+		_ = client.DidNotReceiveWithAnyArgs().EscapeWithTable(Arg.Any<IColumn>(), true);
+		_ = client.DidNotReceiveWithAnyArgs().JoinList(Arg.Any<List<string>>(), false);
 	}
 
 	[Fact]
@@ -41,8 +41,8 @@ public class GetSelectFromList_Tests
 		_ = GetSelectFromList(client, columns);
 
 		// Assert
-		client.Received(1).EscapeWithTable(c0, true);
-		client.Received(1).EscapeWithTable(c1, true);
-		client.ReceivedWithAnyArgs(1).JoinList(Arg.Any<List<string>>(), false);
+		_ = client.Received(1).EscapeWithTable(c0, true);
+		_ = client.Received(1).EscapeWithTable(c1, true);
+		_ = client.ReceivedWithAnyArgs(1).JoinList(Arg.Any<List<string>>(), false);
 	}
 }

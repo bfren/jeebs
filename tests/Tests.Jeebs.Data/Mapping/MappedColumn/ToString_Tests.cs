@@ -15,7 +15,7 @@ public class ToString_Tests
 		// Arrange
 		var name = F.Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
-		prop.Name.Returns(F.Rnd.Str);
+		_ = prop.Name.Returns(F.Rnd.Str);
 		var column = new MappedColumn(new TableName(F.Rnd.Str), name, prop);
 
 		// Act

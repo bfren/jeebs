@@ -35,17 +35,17 @@ public class GetColumnsForCreateQuery_Tests
 
 		var alias = F.Rnd.Str;
 		var propertyInfo = Substitute.For<PropertyInfo>();
-		propertyInfo.Name.Returns(alias);
+		_ = propertyInfo.Name.Returns(alias);
 
 		var column = new MappedColumn(new TableName(F.Rnd.Str), name, propertyInfo);
 
 		var list = new MappedColumnList(new[] { column });
 
 		// Act
-		client.GetColumnsForCreateQueryTest(list);
+		_ = client.GetColumnsForCreateQueryTest(list);
 
 		// Assert
-		client.Received().Escape(name);
-		client.Received().GetParamRef(alias);
+		_ = client.Received().Escape(name);
+		_ = client.Received().GetParamRef(alias);
 	}
 }

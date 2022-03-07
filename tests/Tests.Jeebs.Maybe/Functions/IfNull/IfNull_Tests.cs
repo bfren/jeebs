@@ -12,7 +12,7 @@ public class IfNull_Tests : Jeebs_Tests.IfNull_Tests
 	public override void Test00_Exception_In_IfNull_Func_Returns_None_With_UnhandledExceptionMsg()
 	{
 		Test00((mbe, ifNull) => IfNull(mbe, ifNull));
-		Test00((mbe, ifNull) => IfNull(mbe, () => { ifNull(); return new TestMsg(); }));
+		Test00((mbe, ifNull) => IfNull(mbe, () => { _ = ifNull(); return new TestMsg(); }));
 	}
 
 	[Fact]

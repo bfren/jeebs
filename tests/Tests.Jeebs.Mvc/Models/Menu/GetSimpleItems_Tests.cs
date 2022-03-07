@@ -33,7 +33,7 @@ public class GetSimpleItems_Tests
 		var i1 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
 		var items = new[] { i0, i1 }.ToList();
 		var getUri = Substitute.For<Menu.GetUri>();
-		getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(F.Rnd.Str);
+		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(F.Rnd.Str);
 
 		// Act
 		var result = Menu.F.GetSimpleItems(urlHelper, items, getUri);
@@ -54,7 +54,7 @@ public class GetSimpleItems_Tests
 		var i1 = new MenuItem { Controller = F.Rnd.Str };
 		var items = new[] { i0, i1 }.ToList();
 		var getUri = Substitute.For<Menu.GetUri>();
-		getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(F.Rnd.Str);
+		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(F.Rnd.Str);
 
 		// Act
 		var result = Menu.F.GetSimpleItems(urlHelper, items, getUri);
@@ -76,7 +76,7 @@ public class GetSimpleItems_Tests
 		var items = new[] { i0, i1 }.ToList();
 		var uri = F.Rnd.Str;
 		var getUri = Substitute.For<Menu.GetUri>();
-		getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(uri);
+		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(uri);
 
 		// Act
 		var result = Menu.F.GetSimpleItems(urlHelper, items, getUri);

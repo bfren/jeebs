@@ -19,26 +19,26 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddCqrs(this IServiceCollection services)
 	{
 		// Add dispatchers
-		services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
-		services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
+		_ = services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
+		_ = services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
 
 		// Get assemblies
 		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
 		// Add commands
-		services.Scan(selector => selector
-			.FromAssemblies(assemblies)
-			.AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<,>)))
-			.AsImplementedInterfaces()
-			.WithSingletonLifetime()
+		_ = services.Scan(selector => selector
+			  .FromAssemblies(assemblies)
+			  .AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<,>)))
+			  .AsImplementedInterfaces()
+			  .WithSingletonLifetime()
 		);
 
 		// Add queries
-		services.Scan(selector => selector
-			.FromAssemblies(assemblies)
-			.AddClasses(filter => filter.AssignableTo(typeof(IQueryHandler<,>)))
-			.AsImplementedInterfaces()
-			.WithSingletonLifetime()
+		_ = services.Scan(selector => selector
+			  .FromAssemblies(assemblies)
+			  .AddClasses(filter => filter.AssignableTo(typeof(IQueryHandler<,>)))
+			  .AsImplementedInterfaces()
+			  .WithSingletonLifetime()
 		);
 
 		// Return

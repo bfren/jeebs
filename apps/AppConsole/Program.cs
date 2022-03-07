@@ -47,7 +47,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 				 from r2 in three(r1)
 				 select r2;
 
-	(await result.ConfigureAwait(false)).Audit(
+	_ = (await result.ConfigureAwait(false)).Audit(
 		some: x => log.Inf("Result: {0}", x),
 		none: _ => log.Inf("No result")
 	);

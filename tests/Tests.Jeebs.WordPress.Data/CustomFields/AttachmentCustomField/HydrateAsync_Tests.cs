@@ -65,7 +65,7 @@ public class HydrateAsync_Tests
 		var meta = new MetaDictionary { { key, value.ToString() } };
 
 		var queryPosts = Substitute.For<IQueryPosts>();
-		queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
+		_ = queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
 		var field = new TestCustomField(queryPosts, key);
 
@@ -92,7 +92,7 @@ public class HydrateAsync_Tests
 		var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 		var queryPosts = Substitute.For<IQueryPosts>();
-		queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
+		_ = queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
 		var field = new TestCustomField(queryPosts, key);
 
@@ -122,7 +122,7 @@ public class HydrateAsync_Tests
 		var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 		var queryPosts = Substitute.For<IQueryPosts>();
-		queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
+		_ = queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
 
 		var field = new TestCustomField(queryPosts, key);
 

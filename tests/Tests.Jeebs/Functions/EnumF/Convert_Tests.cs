@@ -31,7 +31,7 @@ public partial class Convert_Tests
 		var result = EnumF.Convert(input).To<TestA>();
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 
 	public enum TestA

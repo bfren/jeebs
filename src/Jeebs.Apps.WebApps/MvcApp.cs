@@ -98,7 +98,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services)
 	{
-		services.AddResponseCaching();
+		_ = services.AddResponseCaching();
 	}
 
 	/// <summary>
@@ -107,7 +107,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services)
 	{
-		services
+		_ = services
 			.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.Configure<BrotliCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.AddResponseCompression(opt =>
@@ -126,7 +126,7 @@ public abstract class MvcApp : WebApp
 	{
 		if (enableAuthorisation)
 		{
-			services.AddAuthorization();
+			_ = services.AddAuthorization();
 		}
 	}
 
@@ -136,11 +136,11 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServicesRouting(IServiceCollection services)
 	{
-		services.AddRouting(opt =>
-		{
-			opt.AppendTrailingSlash = appendTrailingSlash;
-			opt.LowercaseUrls = lowercaseUrls;
-		});
+		_ = services.AddRouting(opt =>
+		  {
+			  opt.AppendTrailingSlash = appendTrailingSlash;
+			  opt.LowercaseUrls = lowercaseUrls;
+		  });
 	}
 
 	/// <summary>
@@ -151,7 +151,7 @@ public abstract class MvcApp : WebApp
 	{
 		if (enableSession)
 		{
-			services.AddSession();
+			_ = services.AddSession();
 		}
 	}
 
@@ -161,7 +161,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="services">IServiceCollection</param>
 	protected virtual void ConfigureServicesEndpoints(IServiceCollection services)
 	{
-		services
+		_ = services
 			.AddControllersWithViews(ConfigureServicesMvcOptions)
 			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
 			.AddJsonOptions(ConfigureServicesEndpointsJson);
@@ -266,7 +266,7 @@ public abstract class MvcApp : WebApp
 		base.ConfigureProductionExceptionHandling(app);
 
 		// Use Error Controller to handle all other errors
-		app.UseStatusCodePagesWithReExecute("/Error/{0}");
+		_ = app.UseStatusCodePagesWithReExecute("/Error/{0}");
 	}
 
 	/// <summary>
@@ -275,7 +275,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="app">IApplicationBuilder</param>
 	protected virtual void ConfigureResponseCompression(IApplicationBuilder app)
 	{
-		app.UseResponseCompression();
+		_ = app.UseResponseCompression();
 	}
 
 	/// <summary>
@@ -294,13 +294,13 @@ public abstract class MvcApp : WebApp
 		// Enable static files with default options
 		if (env.IsDevelopment())
 		{
-			app.UseStaticFiles();
+			_ = app.UseStaticFiles();
 		}
 
 		// Set static file cache to 365 days on production
 		else
 		{
-			app.UseStaticFiles(new StaticFileOptions
+			_ = app.UseStaticFiles(new StaticFileOptions
 			{
 				OnPrepareResponse = ctx =>
 					ctx.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={60 * 60 * 24 * 365}"
@@ -316,7 +316,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="app"></param>
 	protected virtual void ConfigureCookiePolicy(IApplicationBuilder app)
 	{
-		app.UseCookiePolicy(cookiePolicyOptions);
+		_ = app.UseCookiePolicy(cookiePolicyOptions);
 	}
 
 	/// <summary>
@@ -325,7 +325,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="app">IApplicationBuilder</param>
 	protected virtual void ConfigureResponseCaching(IApplicationBuilder app)
 	{
-		app.UseResponseCaching();
+		_ = app.UseResponseCaching();
 	}
 
 	/// <summary>
@@ -340,7 +340,7 @@ public abstract class MvcApp : WebApp
 			&& redirections.Count > 0
 		)
 		{
-			app.UseMiddleware<RedirectExactMiddleware>();
+			_ = app.UseMiddleware<RedirectExactMiddleware>();
 		}
 	}
 
@@ -350,7 +350,7 @@ public abstract class MvcApp : WebApp
 	/// <param name="app">IApplicationBuilder</param>
 	protected virtual void ConfigureRouting(IApplicationBuilder app)
 	{
-		app.UseRouting();
+		_ = app.UseRouting();
 	}
 
 	/// <summary>
@@ -362,7 +362,7 @@ public abstract class MvcApp : WebApp
 	{
 		if (enableAuthorisation)
 		{
-			app.UseAuthorization();
+			_ = app.UseAuthorization();
 		}
 	}
 
@@ -374,7 +374,7 @@ public abstract class MvcApp : WebApp
 	{
 		if (enableSession)
 		{
-			app.UseSession();
+			_ = app.UseSession();
 		}
 	}
 
@@ -384,13 +384,13 @@ public abstract class MvcApp : WebApp
 	/// <param name="app">IApplicationBuilder</param>
 	protected virtual void ConfigureEndpoints(IApplicationBuilder app)
 	{
-		app.UseEndpoints(endpoints =>
-		{
-			endpoints.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}"
-			);
-		});
+		_ = app.UseEndpoints(endpoints =>
+		  {
+			  _ = endpoints.MapControllerRoute(
+				  name: "default",
+				  pattern: "{controller=Home}/{action=Index}/{id?}"
+			  );
+		  });
 	}
 
 	#endregion

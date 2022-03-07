@@ -51,11 +51,11 @@ public class AuthBuilder
 		// Add cookie info
 		if (config.Scheme == AuthScheme.Cookies)
 		{
-			builder.AddCookie(opt =>
-			{
-				opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
-				opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
-			});
+			_ = builder.AddCookie(opt =>
+			  {
+				  opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
+				  opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
+			  });
 		}
 	}
 
@@ -69,29 +69,29 @@ public class AuthBuilder
 		CheckProvider();
 
 		// Add AuthDb
-		services.AddSingleton<AuthDb>();
-		services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
-		services.AddSingleton<IAuthDbClient, TDbClient>();
+		_ = services.AddSingleton<AuthDb>();
+		_ = services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
+		_ = services.AddSingleton<IAuthDbClient, TDbClient>();
 
-		services.AddScoped<AuthDbQuery>();
-		services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
+		_ = services.AddScoped<AuthDbQuery>();
+		_ = services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
 
 		// Add AuthFunc
-		services.AddScoped<AuthUserRepository>();
-		services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
-		services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
+		_ = services.AddScoped<AuthUserRepository>();
+		_ = services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
+		_ = services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
 
-		services.AddScoped<AuthRoleRepository>();
-		services.AddScoped<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
-		services.AddScoped<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
+		_ = services.AddScoped<AuthRoleRepository>();
+		_ = services.AddScoped<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
+		_ = services.AddScoped<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
 
-		services.AddScoped<AuthUserRoleRepository>();
-		services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
-		services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
+		_ = services.AddScoped<AuthUserRoleRepository>();
+		_ = services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
+		_ = services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
 
 		// Add AuthProvider
-		services.AddScoped<AuthDataProvider>();
-		services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
+		_ = services.AddScoped<AuthDataProvider>();
+		_ = services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
 
 		return this;
 	}
@@ -118,24 +118,24 @@ public class AuthBuilder
 		}
 
 		// Add services
-		services.AddScoped<IAuthJwtProvider, AuthJwtProvider>();
-		services.AddSingleton<IAuthorizationHandler, JwtHandler>();
+		_ = services.AddScoped<IAuthJwtProvider, AuthJwtProvider>();
+		_ = services.AddSingleton<IAuthorizationHandler, JwtHandler>();
 
 		// Add authorisation policy
-		services.AddAuthorization(opt =>
-		{
-			opt.AddPolicy("Token", policy =>
-			{
-				policy
-					.AddRequirements(new JwtRequirement())
-					.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-			});
+		_ = services.AddAuthorization(opt =>
+		  {
+			  opt.AddPolicy("Token", policy =>
+			  {
+				  _ = policy
+					  .AddRequirements(new JwtRequirement())
+					  .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+			  });
 
-			opt.InvokeHandlersAfterFailure = false;
-		});
+			  opt.InvokeHandlersAfterFailure = false;
+		  });
 
 		// Add bearer token
-		builder.AddJwtBearer();
+		_ = builder.AddJwtBearer();
 
 		// Return builder
 		return this;

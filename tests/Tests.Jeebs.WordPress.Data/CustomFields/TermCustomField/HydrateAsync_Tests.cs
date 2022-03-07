@@ -65,7 +65,7 @@ public class HydrateAsync_Tests
 		var meta = new MetaDictionary { { key, value.ToString() } };
 
 		var queryTerms = Substitute.For<IQueryTerms>();
-		queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);
+		_ = queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);
 
 		var field = new Test(queryTerms, key);
 
@@ -92,7 +92,7 @@ public class HydrateAsync_Tests
 		var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
 
 		var queryTerms = Substitute.For<IQueryTerms>();
-		queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);
+		_ = queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);
 
 		var field = new Test(queryTerms, key);
 

@@ -54,6 +54,6 @@ public class Catch_Tests
 
 		// Assert
 		_ = result.AssertNone();
-		handler.Received().Invoke(exception);
+		_ = handler.Received().Invoke(exception);
 	}
 }

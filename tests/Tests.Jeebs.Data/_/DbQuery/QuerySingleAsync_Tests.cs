@@ -27,8 +27,8 @@ public class QuerySingleAsync_Tests
 		_ = await query.QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
+		_ = await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -45,8 +45,8 @@ public class QuerySingleAsync_Tests
 		_ = await query.QuerySingleAsync<int>(value, param, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		_ = await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -63,8 +63,8 @@ public class QuerySingleAsync_Tests
 		_ = await query.QuerySingleAsync<int>(parts, transaction).ConfigureAwait(false);
 
 		// Assert
-		client.Received(2).GetQuery(parts);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		_ = client.Received(2).GetQuery(parts);
+		_ = await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 }

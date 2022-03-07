@@ -13,7 +13,7 @@ public class IfNullAsync_Tests : Jeebs_Tests.IfNullAsync_Tests
 	{
 		await Test00((mbe, ifNull) => mbe.AsTask.IfNullAsync(ifNull)).ConfigureAwait(false);
 		await Test00((mbe, ifNull) => mbe.AsTask.IfNullAsync(() => ifNull().GetAwaiter().GetResult())).ConfigureAwait(false);
-		await Test00((mbe, ifNull) => mbe.AsTask.IfNullAsync(() => { ifNull(); return new TestMsg(); })).ConfigureAwait(false);
+		await Test00((mbe, ifNull) => mbe.AsTask.IfNullAsync(() => { _ = ifNull(); return new TestMsg(); })).ConfigureAwait(false);
 	}
 
 	[Fact]

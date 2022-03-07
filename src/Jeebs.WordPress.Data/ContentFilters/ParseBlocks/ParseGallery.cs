@@ -30,13 +30,13 @@ public sealed partial class ParseBlocks
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[1].Value;
-			Deserialise<GalleryParsed>(info).IfSome(gallery =>
-			{
-				content = content.Replace(
-					match.Value,
-					string.Format(format, F.Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)
-				);
-			});
+			_ = Deserialise<GalleryParsed>(info).IfSome(gallery =>
+			  {
+				  content = content.Replace(
+					  match.Value,
+					  string.Format(format, F.Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)
+				  );
+			  });
 		}
 
 		// Return parsed content

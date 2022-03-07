@@ -13,6 +13,6 @@ public class App : Jeebs.Apps.ConsoleApp
 	protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
 	{
 		base.ConfigureServices(env, config, services);
-		services.AddDrivers();
+		_ = services.AddDrivers();
 	}
 }

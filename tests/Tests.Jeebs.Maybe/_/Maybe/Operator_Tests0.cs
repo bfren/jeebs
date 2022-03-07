@@ -34,6 +34,6 @@ public partial class Operator_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NullValueMsg>(none);
+		_ = Assert.IsType<NullValueMsg>(none);
 	}
 }

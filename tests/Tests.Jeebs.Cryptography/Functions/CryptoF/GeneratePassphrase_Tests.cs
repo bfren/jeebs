@@ -23,7 +23,7 @@ public class GeneratePassphrase_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
+		_ = Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
 	}
 
 	[Theory]

@@ -26,7 +26,7 @@ public abstract class UnwrapSingle_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_None_Returns_None();
@@ -40,7 +40,7 @@ public abstract class UnwrapSingle_Tests
 		var result = act(maybe);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 
 	public abstract void Test02_None_With_Reason_Returns_None_With_Reason();
@@ -72,7 +72,7 @@ public abstract class UnwrapSingle_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnwrapSingleNoItemsMsg>(none);
+		_ = Assert.IsType<UnwrapSingleNoItemsMsg>(none);
 	}
 
 	public abstract void Test04_No_Items_Runs_NoItems();
@@ -85,10 +85,10 @@ public abstract class UnwrapSingle_Tests
 		var noItems = Substitute.For<Func<Msg>>();
 
 		// Act
-		act(maybe, noItems);
+		_ = act(maybe, noItems);
 
 		// Assert
-		noItems.Received().Invoke();
+		_ = noItems.Received().Invoke();
 	}
 
 	public abstract void Test05_Too_Many_Items_Returns_None_With_UnwrapSingleTooManyItemsErrorMsg();
@@ -104,7 +104,7 @@ public abstract class UnwrapSingle_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none);
+		_ = Assert.IsType<UnwrapSingleTooManyItemsErrorMsg>(none);
 	}
 
 	public abstract void Test06_Too_Many_Items_Runs_TooMany();
@@ -117,10 +117,10 @@ public abstract class UnwrapSingle_Tests
 		var tooMany = Substitute.For<Func<Msg>>();
 
 		// Act
-		act(maybe, tooMany);
+		_ = act(maybe, tooMany);
 
 		// Assert
-		tooMany.Received().Invoke();
+		_ = tooMany.Received().Invoke();
 	}
 
 	public abstract void Test07_Not_A_List_Returns_None_With_UnwrapSingleNotAListMsg();
@@ -136,7 +136,7 @@ public abstract class UnwrapSingle_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnwrapSingleNotAListMsg>(none);
+		_ = Assert.IsType<UnwrapSingleNotAListMsg>(none);
 	}
 
 	public abstract void Test08_Not_A_List_Runs_NotAList();
@@ -152,7 +152,7 @@ public abstract class UnwrapSingle_Tests
 		_ = act(maybe, notAList);
 
 		// Assert
-		notAList.Received().Invoke();
+		_ = notAList.Received().Invoke();
 	}
 
 	public abstract void Test09_Incorrect_Type_Returns_None_With_UnwrapSingleIncorrectTypeErrorMsg();
@@ -169,7 +169,7 @@ public abstract class UnwrapSingle_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnwrapSingleIncorrectTypeErrorMsg>(none);
+		_ = Assert.IsType<UnwrapSingleIncorrectTypeErrorMsg>(none);
 	}
 
 	public abstract void Test10_List_With_Single_Item_Returns_Single();

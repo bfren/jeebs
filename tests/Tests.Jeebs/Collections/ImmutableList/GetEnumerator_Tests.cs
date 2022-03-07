@@ -21,6 +21,6 @@ public class GetEnumerator_Tests
 		var result = list.GetEnumerator();
 
 		// Assert
-		Assert.IsAssignableFrom<IEnumerator<Guid>>(result);
+		_ = Assert.IsAssignableFrom<IEnumerator<Guid>>(result);
 	}
 }

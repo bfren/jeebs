@@ -27,7 +27,7 @@ public abstract class SwitchIfAsync_Tests
 		var action = Task () => act(maybe.AsTask, check);
 
 		// Assert
-		await Assert.ThrowsAsync<UnknownMaybeException>(action).ConfigureAwait(false);
+		_ = await Assert.ThrowsAsync<UnknownMaybeException>(action).ConfigureAwait(false);
 	}
 
 	public abstract Task Test01_None_Returns_Original_None();
@@ -42,7 +42,7 @@ public abstract class SwitchIfAsync_Tests
 		var result = await act(maybe.AsTask, check).ConfigureAwait(false);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 		Assert.Same(maybe, result);
 	}
 
@@ -59,7 +59,7 @@ public abstract class SwitchIfAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<SwitchIfFuncExceptionMsg>(none);
+		_ = Assert.IsType<SwitchIfFuncExceptionMsg>(none);
 	}
 
 	public abstract Task Test03_Check_Returns_True_And_IfTrue_Is_Null_Returns_Original_Option();
@@ -69,7 +69,7 @@ public abstract class SwitchIfAsync_Tests
 		// Arrange
 		var maybe = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
-		check.Invoke(Arg.Any<int>()).Returns(true);
+		_ = check.Invoke(Arg.Any<int>()).Returns(true);
 
 		// Act
 		var result = await act(maybe.AsTask, check).ConfigureAwait(false);
@@ -85,7 +85,7 @@ public abstract class SwitchIfAsync_Tests
 		// Arrange
 		var maybe = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
-		check.Invoke(Arg.Any<int>()).Returns(false);
+		_ = check.Invoke(Arg.Any<int>()).Returns(false);
 
 		// Act
 		var result = await act(maybe.AsTask, check).ConfigureAwait(false);
@@ -101,7 +101,7 @@ public abstract class SwitchIfAsync_Tests
 		// Arrange
 		var maybe = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
-		check.Invoke(Arg.Any<int>()).Returns(true);
+		_ = check.Invoke(Arg.Any<int>()).Returns(true);
 		var ifTrue = None<int> (int _) => throw new MaybeTestException();
 
 		// Act
@@ -109,7 +109,7 @@ public abstract class SwitchIfAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<SwitchIfFuncExceptionMsg>(none);
+		_ = Assert.IsType<SwitchIfFuncExceptionMsg>(none);
 	}
 
 	public abstract Task Test06_Check_Returns_False_And_IfFalse_Throws_Exception_Returns_None_With_SwitchIfFuncExceptionMsg();
@@ -119,7 +119,7 @@ public abstract class SwitchIfAsync_Tests
 		// Arrange
 		var maybe = Some(F.Rnd.Int);
 		var check = Substitute.For<Func<int, bool>>();
-		check.Invoke(Arg.Any<int>()).Returns(false);
+		_ = check.Invoke(Arg.Any<int>()).Returns(false);
 		var ifFalse = None<int> (int _) => throw new MaybeTestException();
 
 		// Act
@@ -127,7 +127,7 @@ public abstract class SwitchIfAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<SwitchIfFuncExceptionMsg>(none);
+		_ = Assert.IsType<SwitchIfFuncExceptionMsg>(none);
 	}
 
 	public abstract Task Test07_Check_Returns_True_Runs_IfTrue_Returns_Value();
@@ -139,15 +139,15 @@ public abstract class SwitchIfAsync_Tests
 		var v1 = F.Rnd.Int;
 		var maybe = Some(v0);
 		var check = Substitute.For<Func<int, bool>>();
-		check.Invoke(v0).Returns(true);
+		_ = check.Invoke(v0).Returns(true);
 		var ifTrue = Substitute.For<Func<int, Maybe<int>>>();
-		ifTrue.Invoke(v0).Returns(Some(v0 + v1));
+		_ = ifTrue.Invoke(v0).Returns(Some(v0 + v1));
 
 		// Act
 		var result = await act(maybe.AsTask, check, ifTrue).ConfigureAwait(false);
 
 		// Assert
-		ifTrue.Received().Invoke(v0);
+		_ = ifTrue.Received().Invoke(v0);
 		var some = result.AssertSome();
 		Assert.Equal(v0 + v1, some);
 	}
@@ -160,17 +160,17 @@ public abstract class SwitchIfAsync_Tests
 		var value = F.Rnd.Int;
 		var maybe = Some(value);
 		var check = Substitute.For<Func<int, bool>>();
-		check.Invoke(value).Returns(false);
+		_ = check.Invoke(value).Returns(false);
 		var ifFalse = Substitute.For<Func<int, None<int>>>();
-		ifFalse.Invoke(value).Returns(None<int, TestMsg>());
+		_ = ifFalse.Invoke(value).Returns(None<int, TestMsg>());
 
 		// Act
 		var result = await act(maybe.AsTask, check, ifFalse).ConfigureAwait(false);
 
 		// Assert
-		ifFalse.Received().Invoke(value);
+		_ = ifFalse.Received().Invoke(value);
 		var none = result.AssertNone();
-		Assert.IsType<TestMsg>(none);
+		_ = Assert.IsType<TestMsg>(none);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

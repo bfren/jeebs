@@ -27,7 +27,7 @@ public abstract class Map_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract void Test01_Exception_Thrown_Without_Handler_Returns_None_With_UnhandledExceptionMsg();
@@ -44,7 +44,7 @@ public abstract class Map_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract void Test02_Exception_Thrown_With_Handler_Calls_Handler_Returns_None();
@@ -61,8 +61,8 @@ public abstract class Map_Tests
 		var result = act(maybe, throwFunc, handler);
 
 		// Assert
-		result.AssertNone();
-		handler.Received().Invoke(exception);
+		_ = result.AssertNone();
+		_ = handler.Received().Invoke(exception);
 	}
 
 	public abstract void Test03_If_None_Returns_None();
@@ -77,7 +77,7 @@ public abstract class Map_Tests
 		var result = act(maybe, map, DefaultHandler);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 
 	public abstract void Test04_If_None_With_Reason_Returns_None_With_Same_Reason();
@@ -107,10 +107,10 @@ public abstract class Map_Tests
 		var map = Substitute.For<Func<int, string>>();
 
 		// Act
-		act(maybe, map, DefaultHandler);
+		_ = act(maybe, map, DefaultHandler);
 
 		// Assert
-		map.Received().Invoke(value);
+		_ = map.Received().Invoke(value);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

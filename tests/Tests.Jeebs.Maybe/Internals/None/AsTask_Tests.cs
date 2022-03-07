@@ -18,6 +18,6 @@ public class AsTask_Tests
 		var result = none.AsTask;
 
 		// Assert
-		Assert.IsType<Task<Maybe<int>>>(result);
+		_ = Assert.IsType<Task<Maybe<int>>>(result);
 	}
 }

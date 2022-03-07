@@ -32,9 +32,9 @@ public class GetColumnsForRetrieveQuery_Tests
 		var list = new ColumnList(new[] { column });
 
 		// Act
-		client.GetColumnsForRetrieveQueryTest(list);
+		_ = client.GetColumnsForRetrieveQueryTest(list);
 
 		// Assert
-		client.Received().Escape(column, true);
+		_ = client.Received().Escape(column, true);
 	}
 }

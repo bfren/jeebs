@@ -31,7 +31,7 @@ public class Parse_Tests
 		var result = EnumeratedTest.Parse(input);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 }
 

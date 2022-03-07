@@ -103,11 +103,11 @@ public static class PhpF
 		// Enables arrays of different key / value pairs
 		StringBuilder appendHashtable(Hashtable hashtable)
 		{
-			sb.Append($"{ArrayChar}:{hashtable.Count}:{{");
+			_ = sb.Append($"{ArrayChar}:{hashtable.Count}:{{");
 			foreach (DictionaryEntry item in hashtable)
 			{
-				Serialise(item.Key, sb);
-				Serialise(item.Value, sb);
+				_ = Serialise(item.Key, sb);
+				_ = Serialise(item.Value, sb);
 			}
 			return sb.Append('}');
 		}

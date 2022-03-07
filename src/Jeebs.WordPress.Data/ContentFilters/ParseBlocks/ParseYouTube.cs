@@ -31,20 +31,20 @@ public sealed partial class ParseBlocks
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[2].Value;
-			Deserialise<YouTubeParsed>(info).IfSome(youTube =>
-			{
+			_ = Deserialise<YouTubeParsed>(info).IfSome(youTube =>
+			  {
 				// Get URI
 				var uri = new Uri(youTube.Url);
 
 				// Get Video ID and replace content using output format
 				if (GetYouTubeVideoId(uri) is string videoId)
-				{
-					content = content.Replace(
-						match.Value,
-						string.Format(format, F.Rnd.StringF.Get(10), videoId, uri)
-					);
-				}
-			});
+				  {
+					  content = content.Replace(
+						  match.Value,
+						  string.Format(format, F.Rnd.StringF.Get(10), videoId, uri)
+					  );
+				  }
+			  });
 		}
 
 		// Return parsed content

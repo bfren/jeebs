@@ -82,9 +82,9 @@ public class Select_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n0);
+		_ = Assert.IsType<InvalidIntegerMsg>(n0);
 		var n1 = r1.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n1);
+		_ = Assert.IsType<InvalidIntegerMsg>(n1);
 	}
 
 	[Fact]
@@ -112,17 +112,17 @@ public class Select_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n0);
+		_ = Assert.IsType<InvalidIntegerMsg>(n0);
 		var n1 = r1.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n1);
+		_ = Assert.IsType<InvalidIntegerMsg>(n1);
 		var n2 = r2.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n2);
+		_ = Assert.IsType<InvalidIntegerMsg>(n2);
 		var n3 = r3.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n3);
+		_ = Assert.IsType<InvalidIntegerMsg>(n3);
 		var n4 = r4.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n4);
+		_ = Assert.IsType<InvalidIntegerMsg>(n4);
 		var n5 = r5.AssertNone();
-		Assert.IsType<InvalidIntegerMsg>(n5);
+		_ = Assert.IsType<InvalidIntegerMsg>(n5);
 	}
 
 	public record class InvalidIntegerMsg : Msg;

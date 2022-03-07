@@ -23,10 +23,10 @@ public class GetColumns_Tests : GetColumns_Tests<Query.PostsTaxonomyPartsBuilder
 		var (builder, v) = Setup();
 
 		// Act
-		builder.GetColumns<WpPostEntity>();
+		_ = builder.GetColumns<WpPostEntity>();
 
 		// Assert
-		v.Extract.Received().From<WpPostEntity>(
+		_ = v.Extract.Received().From<WpPostEntity>(
 			Arg.Any<TermTable>(),
 			Arg.Any<TermRelationshipTable>(),
 			Arg.Any<TermTaxonomyTable>()

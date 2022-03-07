@@ -27,7 +27,7 @@ public static class LoggerConfigurationExtensions
 		}
 
 		// Set the full application name
-		@this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), jeebs.App.FullName);
+		_ = @this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), jeebs.App.FullName);
 		if (jeebs.Logging.AddPrefixToConsoleMessages)
 		{
 			SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
@@ -39,12 +39,12 @@ public static class LoggerConfigurationExtensions
 
 		// Set the minimum log level
 		var overallMinimumLevel = getMinimum(null);
-		@this.MinimumLevel.Is(overallMinimumLevel);
+		_ = @this.MinimumLevel.Is(overallMinimumLevel);
 
 		// Check for console provider
 		if (jeebs.Logging.Console)
 		{
-			@this.WriteTo.Console(
+			_ = @this.WriteTo.Console(
 				restrictedToMinimumLevel: overallMinimumLevel,
 				outputTemplate: jeebs.Logging.ConsoleOutputTemplate
 			);
@@ -70,12 +70,12 @@ public static class LoggerConfigurationExtensions
 			{
 				case "seq":
 					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
-					@this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
+					_ = @this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
 					break;
 
 				case "slack":
 					var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
-					@this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
+					_ = @this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
 					break;
 
 				default:

@@ -27,7 +27,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Three Random Posts ==");
-	await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 	{
 		SortRandom = true,
 		Maximum = 3
@@ -56,7 +56,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	const string term = "holiness";
 	Console.WriteLine();
 	log.Dbg("== Search for Sermons with '{Term}' ==", term);
-	await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		SearchText = term,
@@ -88,7 +88,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Get Sermons with Taxonomy properties ==");
-	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		SortRandom = true,
@@ -122,7 +122,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	var book1 = new WpTermId(628U);
 	Console.WriteLine();
 	log.Dbg("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
-	await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		Taxonomies = new[] { (taxonomy, book0), (taxonomy, book1) }.ToImmutableList(),
@@ -159,7 +159,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	Console.WriteLine();
 	const long countAtLeast = 3;
 	log.Dbg("== Get Category taxonomy with at least {CountAtLeast} posts ==", countAtLeast);
-	await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
+	_ = await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 	{
 		Taxonomy = Taxonomy.PostCategory,
 		CountAtLeast = countAtLeast
@@ -187,7 +187,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Get Posts with Custom Fields ==");
-	await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
+	_ = await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 	.AuditAsync(
 		some: x =>
 		{
@@ -212,7 +212,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Get Sermons with Custom Fields ==");
-	await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		Ids = ImmutableList.Create<WpPostId>(new(924L), new(1867L), new(2020L))
@@ -247,7 +247,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	ICustomField field = WpBcg.CustomFields.FirstPreached;
 	object first = 422L;
 	log.Dbg("== Get Sermons where First Preached is {First} ==", first);
-	await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	{
 		Type = WpBcg.PostTypes.Sermon,
 		CustomFields = ImmutableList.Create(new[] { (field, Compare.Equal, first) })
@@ -283,7 +283,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Get Posts with generated excerpt ==");
-	await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
 	{
 		SortRandom = true
 	}, GenerateExcerpt.Create())
@@ -310,7 +310,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Get Attachments ==");
-	await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
+	_ = await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 	{
 		Ids = ImmutableList.Create<WpPostId>(new(802L), new(862L), new(2377L))
 	})
@@ -341,7 +341,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Get Attachment file path ==");
-	await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
+	_ = await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
 	.AuditAsync(
 		some: x => log.Dbg("Path: {FilePath}", x),
 		none: r => log.Msg(r)
@@ -354,7 +354,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	Console.WriteLine();
 	log.Dbg("== Test Paging Values ==");
-	await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
+	_ = await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 	{
 		SortRandom = true,
 		Maximum = 15

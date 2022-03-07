@@ -66,6 +66,6 @@ public sealed class EmailTagHelper : UrlResolutionTagHelper
 		output.TagName = "a";
 		output.TagMode = TagMode.StartTagAndEndTag;
 		output.Attributes.Add("href", hrefEncoded);
-		output.Content.SetHtmlContent(displayEncoded);
+		_ = output.Content.SetHtmlContent(displayEncoded);
 	}
 }

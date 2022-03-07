@@ -87,10 +87,10 @@ public abstract partial class DbClient : IDbClient
 		{
 			if (sql.Length > 0)
 			{
-				sql.Append(" AND ");
+				_ = sql.Append(" AND ");
 			}
 
-			sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)}");
+			_ = sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)}");
 		}
 	}
 

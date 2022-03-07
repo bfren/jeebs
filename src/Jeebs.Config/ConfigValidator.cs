@@ -45,10 +45,10 @@ public static class ConfigValidator
 		if (!config.IsValid(schema, out IList<string> errors))
 		{
 			var sb = new StringBuilder();
-			sb.AppendLine($"Invalid Jeebs configuration file: {path}.");
+			_ = sb.AppendLine($"Invalid Jeebs configuration file: {path}.");
 			foreach (var item in errors)
 			{
-				sb.AppendLine(item);
+				_ = sb.AppendLine(item);
 			}
 
 			throw new ConfigurationSchemaValidationFailedException(sb.ToString());

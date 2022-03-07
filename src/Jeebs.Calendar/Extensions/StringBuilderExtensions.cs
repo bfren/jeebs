@@ -25,7 +25,7 @@ internal static class StringBuilderExtensions
 		// If text is short enough, simply append it
 		if (text.Length < max)
 		{
-			@this.AppendLine(text);
+			_ = @this.AppendLine(text);
 			return;
 		}
 
@@ -42,16 +42,16 @@ internal static class StringBuilderExtensions
 			// a single whitespace character - either space or tab
 			if (first)
 			{
-				@this.AppendLine(next);
+				_ = @this.AppendLine(next);
 				first = false;
 			}
 			else
 			{
-				@this.AppendLine(" " + next);
+				_ = @this.AppendLine(" " + next);
 			}
 		} while (remaining.Length > max);
 
 		// Append remaining text
-		@this.AppendLine(" " + remaining);
+		_ = @this.AppendLine(" " + remaining);
 	}
 }

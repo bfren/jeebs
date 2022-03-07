@@ -36,7 +36,7 @@ public class TryAdd_Tests
         };
 
         var parameters = new QueryParameters();
-        parameters.TryAdd(parameterToAdd);
+		_ = parameters.TryAdd(parameterToAdd);
 
         // Act
         var result = parameters.TryAdd(parameterToAdd);
@@ -84,7 +84,7 @@ public class TryAdd_Tests
         var parameterToAdd = new { p0 };
 
         var parameters = new QueryParameters();
-        parameters.TryAdd(parameterToAdd);
+		_ = parameters.TryAdd(parameterToAdd);
 
         // Act
         var result = parameters.TryAdd(parameterToAdd);

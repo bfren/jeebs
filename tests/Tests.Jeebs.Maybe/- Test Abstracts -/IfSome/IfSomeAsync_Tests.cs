@@ -25,7 +25,7 @@ public abstract class IfSomeAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<M.UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<M.UnhandledExceptionMsg>(none);
 	}
 
 	public abstract Task Test01_None_Returns_Original_Option();

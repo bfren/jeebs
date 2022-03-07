@@ -21,7 +21,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	// Create table
 	log.Dbg("== Creating table ==");
 	const string table = "console.test";
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"CREATE TABLE IF NOT EXISTS {table} " +
 			"(" +
@@ -39,7 +39,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Dbg(" == Inserting data ==");
 	var foo = F.Rnd.Str;
 	var bar = F.Rnd.Str;
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"INSERT INTO {table} (foo, bar) VALUES (@foo, @bar);", new { foo, bar }, CommandType.Text
 		)
@@ -52,7 +52,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	// Get data from the table
 	log.Dbg("== Retrieving data ==");
 	var id = 0;
-	await db
+	_ = await db
 		.QuerySingleAsync<ParamTest>(
 			$"SELECT * FROM {table} WHERE foo = @foo AND bar = @bar;", new { foo, bar }, CommandType.Text
 		)
@@ -66,7 +66,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	// Update data
 	log.Dbg("== Updating data ==");
 	var newFoo = F.Rnd.Str;
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"UPDATE {table} SET foo = @newFoo WHERE id = @id;", new { newFoo, id }, CommandType.Text
 		)
@@ -75,7 +75,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 		)
 		.ConfigureAwait(false);
 
-	await db
+	_ = await db
 		.QuerySingleAsync<ParamTest>(
 			$"SELECT * FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 		)
@@ -88,7 +88,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Delete data
 	log.Dbg("== Deleting data ==");
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"DELETE FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 		)
@@ -101,7 +101,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Drop table
 	log.Dbg("== Dropping table == ");
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"DROP TABLE {table};", null, CommandType.Text
 		)
@@ -111,7 +111,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	// Create table
 	log.Dbg("== Creating table with JSON ==");
 	const string jsonTable = "console.test_json";
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"CREATE TABLE IF NOT EXISTS {jsonTable} " +
 			"(" +
@@ -133,7 +133,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	{
 		foreach (var v in new[] { v0, v1, v2 })
 		{
-			await db
+			_ = await db
 				.ExecuteAsync(
 					$"INSERT INTO {jsonTable} (\"Value\") VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
 				)
@@ -181,7 +181,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	{
 		foreach (var v in new[] { v3, v4, v5 })
 		{
-			await repo
+			_ = await repo
 				.CreateAsync(
 					new() { Id = new(), Value = v }, w.Transaction
 				)
@@ -196,7 +196,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Drop table
 	log.Dbg("== Dropping table == ");
-	await db
+	_ = await db
 		.ExecuteAsync(
 			$"DROP TABLE {jsonTable};", null, CommandType.Text
 		)

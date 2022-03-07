@@ -50,5 +50,5 @@ Jeebs.Apps.Program.Main<App>(args, (provider, log) =>
 
 	// Done
 	Console.WriteLine("Done.");
-	Console.Read();
+	_ = Console.Read();
 });

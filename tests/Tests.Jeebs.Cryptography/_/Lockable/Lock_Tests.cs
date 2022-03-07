@@ -20,7 +20,7 @@ public class Lock_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<InvalidKeyLengthMsg>(none);
+		_ = Assert.IsType<InvalidKeyLengthMsg>(none);
 	}
 
 	[Fact]

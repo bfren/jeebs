@@ -16,7 +16,7 @@ public class Commit_Tests
 		// Arrange
 		var transaction = Substitute.For<IDbTransaction>();
 		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		_ = connection.BeginTransaction().Returns(transaction);
 		var log = Substitute.For<ILog>();
 		var unitOfWork = new UnitOfWork(connection, log);
 
@@ -34,7 +34,7 @@ public class Commit_Tests
 		// Arrange
 		var transaction = Substitute.For<IDbTransaction>();
 		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		_ = connection.BeginTransaction().Returns(transaction);
 		var log = Substitute.For<ILog>();
 		var unitOfWork = new UnitOfWork(connection, log);
 
@@ -53,7 +53,7 @@ public class Commit_Tests
 		// Arrange
 		var transaction = Substitute.For<IDbTransaction>();
 		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		_ = connection.BeginTransaction().Returns(transaction);
 		var log = Substitute.For<ILog>();
 		var unitOfWork = new UnitOfWork(connection, log);
 
@@ -71,7 +71,7 @@ public class Commit_Tests
 		// Arrange
 		var transaction = Substitute.For<IDbTransaction>();
 		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		_ = connection.BeginTransaction().Returns(transaction);
 		var exception = new Exception();
 		transaction.When(t => t.Commit()).Throw(exception);
 		var log = Substitute.For<ILog>();

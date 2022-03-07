@@ -73,7 +73,7 @@ public static partial class Query
 			// Search title
 			if ((fields & SearchPostField.Title) != 0)
 			{
-				clause.Append($"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
+				_ = clause.Append($"{__(T.Post, p => p.Title)} {comparison} @{nameof(search)}");
 			}
 
 			// Search slug
@@ -81,10 +81,10 @@ public static partial class Query
 			{
 				if (clause.Length > 0)
 				{
-					clause.Append(" OR ");
+					_ = clause.Append(" OR ");
 				}
 
-				clause.Append($"{__(T.Post, p => p.Slug)} {comparison} @{nameof(search)}");
+				_ = clause.Append($"{__(T.Post, p => p.Slug)} {comparison} @{nameof(search)}");
 			}
 
 			// Search content
@@ -92,10 +92,10 @@ public static partial class Query
 			{
 				if (clause.Length > 0)
 				{
-					clause.Append(" OR ");
+					_ = clause.Append(" OR ");
 				}
 
-				clause.Append($"{__(T.Post, p => p.Content)} {comparison} @{nameof(search)}");
+				_ = clause.Append($"{__(T.Post, p => p.Content)} {comparison} @{nameof(search)}");
 			}
 
 			// Search excerpt
@@ -103,10 +103,10 @@ public static partial class Query
 			{
 				if (clause.Length > 0)
 				{
-					clause.Append(" OR ");
+					_ = clause.Append(" OR ");
 				}
 
-				clause.Append($"{__(T.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
+				_ = clause.Append($"{__(T.Post, p => p.Excerpt)} {comparison} @{nameof(search)}");
 			}
 
 			// Return
@@ -183,7 +183,7 @@ public static partial class Query
 				// Add AND if this is not the first conditional clause
 				if (taxonomyWhere.Length > 0)
 				{
-					taxonomyWhere.Append(" AND ");
+					_ = taxonomyWhere.Append(" AND ");
 				}
 
 				// Name of the taxonomy parameter
@@ -207,13 +207,13 @@ public static partial class Query
 					// Add a comma if this is not the first term
 					if (taxonomyIdIndex > 0)
 					{
-						subQuery.Append(", ");
+						_ = subQuery.Append(", ");
 					}
 
 					// Add the term parameter and reference
 					var taxonomyIdParameter = $"{taxonomyNameParameter}_{taxonomyIdIndex}";
 
-					subQuery.Append(taxonomyIdParameter);
+					_ = subQuery.Append(taxonomyIdParameter);
 					taxonomyParameters.Add(taxonomyIdParameter, taxonomyId);
 
 					// Increase taxonomy term index
@@ -221,10 +221,10 @@ public static partial class Query
 				}
 
 				// Close IN function
-				subQuery.Append(')');
+				_ = subQuery.Append(')');
 
 				// Add to sub-query, matching the number of terms
-				taxonomyWhere.Append($"({subQuery}) = {taxonomy.Ids.Count}");
+				_ = taxonomyWhere.Append($"({subQuery}) = {taxonomy.Ids.Count}");
 
 				// Increase taxonomy name index
 				taxonomyNameIndex++;
@@ -254,7 +254,7 @@ public static partial class Query
 				// Add AND if this is not the first conditional clause
 				if (customFieldWhere.Length > 0)
 				{
-					customFieldWhere.Append(" AND ");
+					_ = customFieldWhere.Append(" AND ");
 				}
 
 				// Ensure there is a search value
@@ -287,7 +287,7 @@ public static partial class Query
 				);
 
 				// Add sub query to where
-				customFieldWhere.Append($"({subQuery}) = 1");
+				_ = customFieldWhere.Append($"({subQuery}) = 1");
 
 				// Increase custom field index
 				customFieldIndex++;

@@ -27,7 +27,7 @@ public abstract class FilterAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract Task Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
@@ -44,7 +44,7 @@ public abstract class FilterAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract Task Test02_When_Some_And_Predicate_True_Returns_Value();
@@ -55,7 +55,7 @@ public abstract class FilterAsync_Tests
 		var value = F.Rnd.Int;
 		var maybe = Some(value);
 		var predicate = Substitute.For<Func<int, Task<bool>>>();
-		predicate.Invoke(Arg.Any<int>()).Returns(true);
+		_ = predicate.Invoke(Arg.Any<int>()).Returns(true);
 
 		// Act
 		var result = await act(maybe, predicate).ConfigureAwait(false);
@@ -73,14 +73,14 @@ public abstract class FilterAsync_Tests
 		var value = F.Rnd.Str;
 		var maybe = Some(value);
 		var predicate = Substitute.For<Func<string, Task<bool>>>();
-		predicate.Invoke(Arg.Any<string>()).Returns(false);
+		_ = predicate.Invoke(Arg.Any<string>()).Returns(false);
 
 		// Act
 		var result = await act(maybe, predicate).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<FilterPredicateWasFalseMsg>(none);
+		_ = Assert.IsType<FilterPredicateWasFalseMsg>(none);
 	}
 
 	public abstract Task Test04_When_None_Returns_None_With_Original_Reason();
@@ -98,7 +98,7 @@ public abstract class FilterAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		Assert.Same(reason, none);
-		await predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>()).ConfigureAwait(false);
+		_ = await predicate.DidNotReceiveWithAnyArgs().Invoke(Arg.Any<int>()).ConfigureAwait(false);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

@@ -22,7 +22,7 @@ public static partial class StringExtensions
 			var encoded = new StringBuilder();
 			foreach (var b in a)
 			{
-				encoded.AppendFormat("&#{0};", b);
+				_ = encoded.AppendFormat("&#{0};", b);
 			}
 
 			return encoded.ToString();

@@ -17,11 +17,11 @@ public class Constructor_Tests
 		var columns = Substitute.For<IMappedColumnList>();
 
 		var table = Substitute.For<ITable>();
-		table.GetName().Returns(name);
+		_ = table.GetName().Returns(name);
 		var prop = Substitute.For<PropertyInfo>();
-		prop.Name.Returns(F.Rnd.Str);
+		_ = prop.Name.Returns(F.Rnd.Str);
 		var idColumn = Substitute.For<IMappedColumn>();
-		idColumn.PropertyInfo.Returns(prop);
+		_ = idColumn.PropertyInfo.Returns(prop);
 
 		// Act
 		var map = new TableMap(table, columns, idColumn);

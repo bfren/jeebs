@@ -25,7 +25,7 @@ public class GetQuery_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<NoFileIdsMsg>(none);
+		_ = Assert.IsType<NoFileIdsMsg>(none);
 	}
 
 	[Fact]

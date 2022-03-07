@@ -21,7 +21,7 @@ public class GetAuthorisationHeader_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<MissingAuthorisationHeaderMsg>(none);
+		_ = Assert.IsType<MissingAuthorisationHeaderMsg>(none);
 	}
 
 	[Fact]

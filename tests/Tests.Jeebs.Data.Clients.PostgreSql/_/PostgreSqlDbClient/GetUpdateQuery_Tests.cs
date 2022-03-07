@@ -29,7 +29,7 @@ public class GetUpdateQuery_Tests
 		var c2Name = F.Rnd.Str;
 		var c2Alias = F.Rnd.Str;
 		var c2Property = Substitute.ForPartsOf<PropertyInfo>();
-		c2Property.Name.Returns(c2Alias);
+		_ = c2Property.Name.Returns(c2Alias);
 		var c2 = new MappedColumn(table, c2Name, c2Property);
 
 		var list = new ColumnList(new[] { c0, c1 });
@@ -68,13 +68,13 @@ public class GetUpdateQuery_Tests
 		var c2Name = F.Rnd.Str;
 		var c2Alias = F.Rnd.Str;
 		var c2Property = Substitute.ForPartsOf<PropertyInfo>();
-		c2Property.Name.Returns(c2Alias);
+		_ = c2Property.Name.Returns(c2Alias);
 		var c2 = new MappedColumn(table, c2Name, c2Property);
 
 		var c3Name = F.Rnd.Str;
 		var c3Alias = F.Rnd.Str;
 		var c3Property = Substitute.ForPartsOf<PropertyInfo>();
-		c3Property.Name.Returns(c3Alias);
+		_ = c3Property.Name.Returns(c3Alias);
 		var c3 = new MappedColumn(table, c3Name, c3Property);
 
 		var list = new ColumnList(new[] { c0, c1 });

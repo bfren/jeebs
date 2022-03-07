@@ -17,14 +17,14 @@ public class BindModelAsync_Tests
 		var modelName = F.Rnd.Str;
 
 		var provider = Substitute.For<IValueProvider>();
-		provider.GetValue(modelName).Returns(ValueProviderResult.None);
+		_ = provider.GetValue(modelName).Returns(ValueProviderResult.None);
 
 		var bindingResult = new ModelBindingResult();
 
 		var context = Substitute.ForPartsOf<ModelBindingContext>();
-		context.ModelName.Returns(modelName);
+		_ = context.ModelName.Returns(modelName);
 		context.Result = bindingResult;
-		context.ValueProvider.Returns(provider);
+		_ = context.ValueProvider.Returns(provider);
 
 		var binder = new StrongIdModelBinder<IdType>();
 
@@ -43,14 +43,14 @@ public class BindModelAsync_Tests
 		var modelValue = new ValueProviderResult(F.Rnd.Str);
 
 		var provider = Substitute.For<IValueProvider>();
-		provider.GetValue(modelName).Returns(modelValue);
+		_ = provider.GetValue(modelName).Returns(modelValue);
 
 		var state = Substitute.ForPartsOf<ModelStateDictionary>();
 
 		var context = Substitute.ForPartsOf<ModelBindingContext>();
-		context.ModelName.Returns(modelName);
-		context.ModelState.Returns(state);
-		context.ValueProvider.Returns(provider);
+		_ = context.ModelName.Returns(modelName);
+		_ = context.ModelState.Returns(state);
+		_ = context.ValueProvider.Returns(provider);
 
 		var binder = new StrongIdModelBinder<IdType>();
 
@@ -69,14 +69,14 @@ public class BindModelAsync_Tests
 		var modelValue = new ValueProviderResult(F.Rnd.Str);
 
 		var provider = Substitute.For<IValueProvider>();
-		provider.GetValue(modelName).Returns(modelValue);
+		_ = provider.GetValue(modelName).Returns(modelValue);
 
 		var state = Substitute.ForPartsOf<ModelStateDictionary>();
 
 		var context = Substitute.ForPartsOf<ModelBindingContext>();
-		context.ModelName.Returns(modelName);
-		context.ModelState.Returns(state);
-		context.ValueProvider.Returns(provider);
+		_ = context.ModelName.Returns(modelName);
+		_ = context.ModelState.Returns(state);
+		_ = context.ValueProvider.Returns(provider);
 
 		var binder = new StrongIdModelBinder<IdType>();
 
@@ -96,14 +96,14 @@ public class BindModelAsync_Tests
 		var modelValue = new ValueProviderResult(id.ToString());
 
 		var provider = Substitute.For<IValueProvider>();
-		provider.GetValue(modelName).Returns(modelValue);
+		_ = provider.GetValue(modelName).Returns(modelValue);
 
 		var state = Substitute.ForPartsOf<ModelStateDictionary>();
 
 		var context = Substitute.ForPartsOf<ModelBindingContext>();
-		context.ModelName.Returns(modelName);
-		context.ModelState.Returns(state);
-		context.ValueProvider.Returns(provider);
+		_ = context.ModelName.Returns(modelName);
+		_ = context.ModelState.Returns(state);
+		_ = context.ValueProvider.Returns(provider);
 
 		var binder = new StrongIdModelBinder<IdType>();
 

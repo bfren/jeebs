@@ -28,7 +28,7 @@ public abstract class BindAsync_Tests
 		// Assert
 		var none = result.AssertNone();
 		var msg = Assert.IsType<UnhandledExceptionMsg>(none);
-		Assert.IsType<UnknownMaybeException>(msg.Value);
+		_ = Assert.IsType<UnknownMaybeException>(msg.Value);
 	}
 
 	public abstract Task Test01_Exception_Thrown_Returns_None_With_UnhandledExceptionMsg();
@@ -45,7 +45,7 @@ public abstract class BindAsync_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		Assert.IsType<UnhandledExceptionMsg>(none);
+		_ = Assert.IsType<UnhandledExceptionMsg>(none);
 	}
 
 	public abstract Task Test02_If_None_Gets_None();
@@ -60,7 +60,7 @@ public abstract class BindAsync_Tests
 		var result = await act(maybe, bind).ConfigureAwait(false);
 
 		// Assert
-		result.AssertNone();
+		_ = result.AssertNone();
 	}
 
 	public abstract Task Test03_If_None_With_Reason_Gets_None_With_Same_Reason();
@@ -90,10 +90,10 @@ public abstract class BindAsync_Tests
 		var bind = Substitute.For<Func<int, Task<Maybe<string>>>>();
 
 		// Act
-		await act(maybe, bind).ConfigureAwait(false);
+		_ = await act(maybe, bind).ConfigureAwait(false);
 
 		// Assert
-		await bind.Received().Invoke(value).ConfigureAwait(false);
+		_ = await bind.Received().Invoke(value).ConfigureAwait(false);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

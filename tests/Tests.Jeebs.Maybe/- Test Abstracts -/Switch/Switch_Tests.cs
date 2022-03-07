@@ -23,7 +23,7 @@ public abstract class Switch_Tests
 		var action = void () => act(maybe);
 
 		// Assert
-		Assert.Throws<UnknownMaybeException>(action);
+		_ = Assert.Throws<UnknownMaybeException>(action);
 	}
 
 	public abstract void Test01_Return_Value_If_Unknown_Maybe_Throws_UnknownOptionException();
@@ -37,7 +37,7 @@ public abstract class Switch_Tests
 		var action = void () => act(maybe);
 
 		// Assert
-		Assert.Throws<UnknownMaybeException>(action);
+		_ = Assert.Throws<UnknownMaybeException>(action);
 	}
 
 	public abstract void Test02_Return_Void_If_None_Runs_None_Action_With_Reason();
@@ -69,7 +69,7 @@ public abstract class Switch_Tests
 		_ = act(maybe, none);
 
 		// Assert
-		none.Received().Invoke(reason);
+		_ = none.Received().Invoke(reason);
 	}
 
 	public abstract void Test04_Return_Void_If_Some_Runs_Some_Action_With_Value();
@@ -101,7 +101,7 @@ public abstract class Switch_Tests
 		_ = act(maybe, some);
 
 		// Assert
-		some.Received().Invoke(value);
+		_ = some.Received().Invoke(value);
 	}
 
 	public record class FakeMaybe : Maybe<int> { }

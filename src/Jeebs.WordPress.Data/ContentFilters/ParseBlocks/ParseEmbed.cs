@@ -31,18 +31,18 @@ public sealed partial class ParseBlocks
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[1].Value;
-			Deserialise<EmbedParsed>(info).IfSome(embed =>
-			{
+			_ = Deserialise<EmbedParsed>(info).IfSome(embed =>
+			  {
 				// Only replace matching embed types
 				if (embed.Type == type && embed.ProviderNameSlug == provider)
-				{
+				  {
 					// Replace content using child Format() method
 					content = content.Replace(
-						match.Value,
-						format(F.Rnd.StringF.Get(10), embed)
-					);
-				}
-			});
+						  match.Value,
+						  format(F.Rnd.StringF.Get(10), embed)
+					  );
+				  }
+			  });
 		}
 
 		// Return parsed content

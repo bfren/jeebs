@@ -173,7 +173,7 @@ public abstract class Menu
 			{
 				// Attempt to load the URL and ensure it is successful
 				var response = await client.GetAsync(uri, token).ConfigureAwait(false);
-				response.EnsureSuccessStatusCode();
+				_ = response.EnsureSuccessStatusCode();
 
 				// Successful
 				output += "done";
@@ -184,7 +184,7 @@ public abstract class Menu
 			}
 
 			// Put the next URL on a new line
-			result.Append(output).AppendLine("<br/>");
+			_ = result.Append(output).AppendLine("<br/>");
 		}
 	}
 }

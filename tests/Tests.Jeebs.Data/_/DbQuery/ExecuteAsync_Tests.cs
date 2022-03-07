@@ -29,10 +29,10 @@ public class ExecuteAsync_Tests
 		_ = await query.ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().ExecuteAsync(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().ExecuteAsync(value, param, input, transaction).ConfigureAwait(false);
-		await db.Received().ExecuteAsync<long>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync(value, param, input, transaction).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync<long>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -51,9 +51,9 @@ public class ExecuteAsync_Tests
 		_ = await query.ExecuteAsync<long>(value, param, transaction).ConfigureAwait(false);
 
 		// Assert
-		await db.Received().ExecuteAsync(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().ExecuteAsync(value, param, CommandType.Text, transaction).ConfigureAwait(false);
-		await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		_ = await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 }

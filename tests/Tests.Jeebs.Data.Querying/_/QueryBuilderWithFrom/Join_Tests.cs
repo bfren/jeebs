@@ -23,7 +23,7 @@ public class Join_Tests
 		var action = void () => builder.Join<TestTable0, TestTable0>(QueryJoin.Inner, t => t.Foo, t => t.Foo);
 
 		// Assert
-		Assert.Throws<JoinFromTableNotAddedException<TestTable0>>(action);
+		_ = Assert.Throws<JoinFromTableNotAddedException<TestTable0>>(action);
 	}
 
 	[Fact]
@@ -34,7 +34,7 @@ public class Join_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		builder.Join<TestTable0, TestTable1>(QueryJoin.Inner, t => t.Foo, t => t.Bar);
+		_ = builder.Join<TestTable0, TestTable1>(QueryJoin.Inner, t => t.Foo, t => t.Bar);
 
 		// Assert
 		Assert.Collection(builder.Tables,

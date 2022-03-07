@@ -19,7 +19,7 @@ public class Constructor_Tests
 		var dbConfig = Substitute.For<IOptions<DbConfig>>();
 
 		var name = F.Rnd.Str;
-		dbConfig.Value.Returns(new DbConfig
+		_ = dbConfig.Value.Returns(new DbConfig
 		{
 			Default = name,
 			Connections = new()
@@ -30,21 +30,21 @@ public class Constructor_Tests
 
 		var log = Substitute.For<ILog>();
 		var logForQuery = Substitute.For<ILog<IWpDbQuery>>();
-		log.ForContext<IWpDbQuery>().Returns(logForQuery);
+		_ = log.ForContext<IWpDbQuery>().Returns(logForQuery);
 
 		var wpConfig = Substitute.For<IOptions<TestWpConfig>>();
 		var wpConfigValue = new TestWpConfig
 		{
 			TablePrefix = F.Rnd.Str
 		};
-		wpConfig.Value.Returns(wpConfigValue);
+		_ = wpConfig.Value.Returns(wpConfigValue);
 
 		// Act
 		var result = new TestWp(dbConfig, wpConfig, log);
 
 		// Assert
 		Assert.Same(wpConfigValue, result.Config);
-		Assert.IsType<WpDb<E.Comment, E.CommentMeta, E.Link, E.Opt, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>>(result.Db);
+		_ = Assert.IsType<WpDb<E.Comment, E.CommentMeta, E.Link, E.Opt, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>>(result.Db);
 	}
 
 	public sealed class TestWp : Wp<TestWpConfig, E.Comment, E.CommentMeta, E.Link, E.Opt, E.Post, E.PostMeta, E.Term, E.TermMeta, E.TermRelationship, E.TermTaxonomy, E.User, E.UserMeta>

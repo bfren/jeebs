@@ -15,7 +15,7 @@ public class Select_Tests
 		// Arrange
 		var table = new TestTable0();
 		var builder = new QueryBuilderWithFrom(table);
-		builder.Join<TestTable0, TestTable1>(QueryJoin.Inner, t => t.Foo, t => t.Bar);
+		_ = builder.Join<TestTable0, TestTable1>(QueryJoin.Inner, t => t.Foo, t => t.Bar);
 
 		// Act
 		var result = builder.Select<TestModel>();

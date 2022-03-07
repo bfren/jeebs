@@ -49,9 +49,9 @@ public sealed class AuthDb : Db, IAuthDb
 		UserRole = new();
 
 		// Map entities to tables
-		Map<AuthRoleEntity>.To(Role);
-		Map<AuthUserEntity>.To(User);
-		Map<AuthUserRoleEntity>.To(UserRole);
+		_ = Map<AuthRoleEntity>.To(Role);
+		_ = Map<AuthUserEntity>.To(User);
+		_ = Map<AuthUserRoleEntity>.To(UserRole);
 
 		// Map type handlers
 		TypeMap.AddStrongIdTypeHandlers();

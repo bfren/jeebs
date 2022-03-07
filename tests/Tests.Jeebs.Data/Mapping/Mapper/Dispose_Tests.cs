@@ -12,12 +12,12 @@ public class Dispose_Tests
 	{
 		// Arrange
 		var svc = new Mapper();
-		svc.Map<Foo>(new FooTable());
+		_ = svc.Map<Foo>(new FooTable());
 
 		// Act
 		svc.Dispose();
 
 		// Assert
-		svc.GetTableMapFor<Foo>().AssertNone();
+		_ = svc.GetTableMapFor<Foo>().AssertNone();
 	}
 }

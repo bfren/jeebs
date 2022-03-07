@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
 		var foundListeners = false;
 		foreach (var t in GetImplementations(typeof(IDriver<>)))
 		{
-			@this.AddSingleton(t);
+			_ = @this.AddSingleton(t);
 
 			// Add required services
 			const BindingFlags flags = BindingFlags.NonPublic
@@ -34,13 +34,13 @@ public static class ServiceCollectionExtensions
 
 			if (t.GetMethod("AddRequiredServices", flags) is MethodInfo addRequiredServices)
 			{
-				addRequiredServices.Invoke(null, new object[] { @this });
+				_ = addRequiredServices.Invoke(null, new object[] { @this });
 			}
 
 			// Add as a listener
 			if (t.Implements<INotificationListener>())
 			{
-				@this.AddTransient(typeof(INotificationListener), t);
+				_ = @this.AddTransient(typeof(INotificationListener), t);
 				foundListeners = true;
 			}
 		}
@@ -48,13 +48,13 @@ public static class ServiceCollectionExtensions
 		// If listeres were added, add the notifier
 		if (foundListeners)
 		{
-			@this.AddSingleton<INotifier, Notifier>();
+			_ = @this.AddSingleton<INotifier, Notifier>();
 		}
 
 		// Get driver args and add them to the service collection
 		foreach (var t in GetImplementations(typeof(IDriverArgs<>)))
 		{
-			@this.AddTransient(t);
+			_ = @this.AddTransient(t);
 		}
 
 		// Return service collection

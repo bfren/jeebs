@@ -26,10 +26,10 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsMetaOptions, IQueryPostsMe
 		var (options, builder) = Setup();
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceiveWithAnyArgs().AddWherePostId(Qp, default, Arg.Any<IImmutableList<WpPostId>>());
+		_ = builder.DidNotReceiveWithAnyArgs().AddWherePostId(Qp, default, Arg.Any<IImmutableList<WpPostId>>());
 	}
 
 	[Fact]
@@ -44,10 +44,10 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsMetaOptions, IQueryPostsMe
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWherePostId(Qp, postId, Arg.Any<IImmutableList<WpPostId>>());
+		_ = builder.Received().AddWherePostId(Qp, postId, Arg.Any<IImmutableList<WpPostId>>());
 	}
 
 	[Fact]
@@ -64,10 +64,10 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsMetaOptions, IQueryPostsMe
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWherePostId(Qp, null, postIds);
+		_ = builder.Received().AddWherePostId(Qp, null, postIds);
 	}
 
 	[Fact]
@@ -77,10 +77,10 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsMetaOptions, IQueryPostsMe
 		var (options, builder) = Setup();
 
 		// Act
-		options.ToParts<TestModel>();
+		_ = options.ToParts<TestModel>();
 
 		// Assert
-		builder.DidNotReceiveWithAnyArgs().AddWhereKey(Qp, default);
+		_ = builder.DidNotReceiveWithAnyArgs().AddWhereKey(Qp, default);
 	}
 
 	[Fact]
@@ -95,10 +95,10 @@ public class ToParts_Tests : ToParts_Tests<Query.PostsMetaOptions, IQueryPostsMe
 		};
 
 		// Act
-		opt.ToParts<TestModel>();
+		_ = opt.ToParts<TestModel>();
 
 		// Assert
-		builder.Received().AddWhereKey(Qp, key);
+		_ = builder.Received().AddWhereKey(Qp, key);
 	}
 
 	[Fact]
