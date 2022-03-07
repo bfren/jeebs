@@ -185,7 +185,7 @@ public abstract record class Maybe<T> : IEquatable<Maybe<T>>
 			Some<T> x when x.Value is T y =>
 				typeof(Some<>).GetHashCode() ^ typeof(T).GetHashCode() ^ y.GetHashCode(),
 
-			Some<T> _ =>
+			Some<T> =>
 				typeof(Some<>).GetHashCode() ^ typeof(T).GetHashCode(),
 
 			None<T> x =>
