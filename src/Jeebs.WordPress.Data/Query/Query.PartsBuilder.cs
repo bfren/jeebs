@@ -68,10 +68,8 @@ public static partial class Query
 		protected string __<TTable>(TTable table)
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
-			where TTable : ITable
-		{
-			return Client.Escape(table);
-		}
+			where TTable : ITable =>
+			Client.Escape(table);
 
 		/// <summary>
 		/// Get and escape a column using a Linq Expression selector
@@ -84,13 +82,11 @@ public static partial class Query
 		protected string __<TTable>(TTable table, Expression<Func<TTable, string>> selector)
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
-			where TTable : ITable
-		{
-			return GetColumnFromExpression(table, selector).Switch(
+			where TTable : ITable =>
+			GetColumnFromExpression(table, selector).Switch(
 				some: column => Client.EscapeWithTable(column),
-				none: () => throw new Exception("Unable to get column.")
+				none: r => throw MsgError.CreateException(r)
 			);
-		}
 
 		#region Testing
 

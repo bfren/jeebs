@@ -6,14 +6,14 @@ using System;
 namespace Jeebs;
 
 /// <inheritdoc cref="MsgException{TMsg}"/>
-public static class MsgException
+public static class MsgError
 {
 	/// <summary>
 	/// Create <see cref="MsgException{TMsg}"/>
 	/// </summary>
 	/// <typeparam name="TMsg">Message type</typeparam>
 	/// <param name="msg">Message</param>
-	public static MsgException<TMsg> Create<TMsg>(TMsg msg)
+	public static MsgException<TMsg> CreateException<TMsg>(TMsg msg)
 		where TMsg : Msg =>
 		new(msg);
 }
