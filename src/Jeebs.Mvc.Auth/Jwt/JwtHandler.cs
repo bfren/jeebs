@@ -31,22 +31,22 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// <summary>
 	/// Handle Requirement
 	/// </summary>
-	/// <param name="handlerContext">AuthorizationHandlerContext</param>
+	/// <param name="context">AuthorizationHandlerContext</param>
 	/// <param name="requirement">JwtRequirement</param>
-	protected override Task HandleRequirementAsync(AuthorizationHandlerContext handlerContext, JwtRequirement requirement)
+	protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, JwtRequirement requirement)
 	{
-		if (handlerContext.Resource is AuthorizationFilterContext filterContext)
+		if (context.Resource is AuthorizationFilterContext filterContext)
 		{
 			GetAuthorisedPrincipal(filterContext).Switch(
 				some: principal =>
 				{
 					filterContext.HttpContext.User = principal;
-					handlerContext.Succeed(requirement);
+					context.Succeed(requirement);
 				},
 				none: reason =>
 				{
 					Log.Message(reason);
-					handlerContext.Fail();
+					context.Fail();
 				}
 			);
 		}

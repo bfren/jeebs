@@ -15,14 +15,14 @@ public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>
 	/// <summary>
 	/// Serialise object to JSON
 	/// </summary>
-	/// <param name="value">T value</param>
-	protected override string Format(T value) =>
-		Serialise(value).Unwrap(Empty);
+	/// <param name="xml">T value</param>
+	protected override string Format(T xml) =>
+		Serialise(xml).Unwrap(Empty);
 
 	/// <summary>
 	/// Deserialise JSON string
 	/// </summary>
-	/// <param name="json">JSON string</param>
-	protected override T Parse(string json) =>
-		Deserialise<T>(json).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}."));
+	/// <param name="xml">JSON string</param>
+	protected override T Parse(string xml) =>
+		Deserialise<T>(xml).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}."));
 }

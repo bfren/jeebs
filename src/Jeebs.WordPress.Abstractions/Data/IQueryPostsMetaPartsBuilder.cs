@@ -21,6 +21,6 @@ public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
 	/// Add Where Post Status
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
-	/// <param name="Key">Meta Key</param>
-	Option<QueryParts> AddWhereKey(QueryParts parts, string? Key);
+	/// <param name="key">Meta Key</param>
+	Option<QueryParts> AddWhereKey(QueryParts parts, string? key);
 }

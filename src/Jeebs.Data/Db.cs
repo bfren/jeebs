@@ -108,16 +108,16 @@ public abstract class Db : IDb
 	#region Querying
 
 	/// <inheritdoc/>
-	public async Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters, CommandType type)
+	public async Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
-		return await QueryAsync<T>(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
+	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
-			(query, parameters: parameters ?? new object(), type)
+			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
 			some: LogQuery
@@ -128,16 +128,16 @@ public abstract class Db : IDb
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<T>> QuerySingleAsync<T>(string query, object? parameters, CommandType type)
+	public async Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
-		return await QuerySingleAsync<T>(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		return await QuerySingleAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
+	public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
-			(query, parameters: parameters ?? new object(), type)
+			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
 			some: LogQuery
@@ -147,20 +147,20 @@ public abstract class Db : IDb
 			e => new M.QuerySingleExceptionMsg(e)
 		)
 		.IfNullAsync(
-			() => new M.QuerySingleItemNotFoundMsg((query, parameters))
+			() => new M.QuerySingleItemNotFoundMsg((query, param))
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type)
+	public async Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
-		return await ExecuteAsync(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> ExecuteAsync(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
+	public Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
-			(query, parameters: parameters ?? new object(), type)
+			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
 			some: LogQuery
@@ -175,16 +175,16 @@ public abstract class Db : IDb
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<T>> ExecuteAsync<T>(string query, object? parameters, CommandType type)
+	public async Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = UnitOfWork;
-		return await ExecuteAsync<T>(query, parameters, type, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<T>> ExecuteAsync<T>(string query, object? parameters, CommandType type, IDbTransaction transaction) =>
+	public Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Some(
-			(query, parameters: parameters ?? new object(), type)
+			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
 			some: LogQuery
