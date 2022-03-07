@@ -122,9 +122,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Apps", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Services.Drawing", "src\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj", "{7D68FB33-1BBF-428A-BF9B-ABFFDDE25906}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Maybe", "src\Jeebs.Option\Jeebs.Maybe.csproj", "{BE5D8A29-671B-48D1-9B2E-C28F0D546660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Maybe", "src\Jeebs.Maybe\Jeebs.Maybe.csproj", "{BE5D8A29-671B-48D1-9B2E-C28F0D546660}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Maybe", "tests\Tests.Jeebs.Option\Tests.Jeebs.Maybe.csproj", "{E7CB3D11-E324-40A7-9DF0-209E49F33EBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Maybe", "tests\Tests.Jeebs.Maybe\Tests.Jeebs.Maybe.csproj", "{E7CB3D11-E324-40A7-9DF0-209E49F33EBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Mvc", ".Mvc", "{8687DA2A-88DE-4130-941B-62B80FA6D4A2}"
 EndProject
@@ -162,7 +162,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Random", "src\Jeebs.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Random", "tests\Tests.Jeebs.Random\Tests.Jeebs.Random.csproj", "{AF5EC097-34FF-428B-AFFC-F16F21E2EB6B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Maybe.Testing", "src\Jeebs.Option.Testing\Jeebs.Maybe.Testing.csproj", "{2E8EC447-8CE4-4B12-9F84-9F817C42A1BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Maybe.Testing", "src\Jeebs.Maybe.Testing\Jeebs.Maybe.Testing.csproj", "{2E8EC447-8CE4-4B12-9F84-9F817C42A1BA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Querying", "src\Jeebs.Data.Querying\Jeebs.Data.Querying.csproj", "{55E39BC5-6EB3-4BD3-83C9-D8BDE12E8C1B}"
 EndProject
@@ -178,7 +178,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Maybe", ".Maybe", "{64C5C4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Maybe", ".Maybe", "{BF8740C6-55F6-489E-8ECB-6916B8440FBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Maybe.Testing", "tests\Tests.Jeebs.Option.Testing\Tests.Jeebs.Maybe.Testing.csproj", "{564E7800-3BBC-4187-AD0E-6D48956A11E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Maybe.Testing", "tests\Tests.Jeebs.Maybe.Testing\Tests.Jeebs.Maybe.Testing.csproj", "{564E7800-3BBC-4187-AD0E-6D48956A11E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.WordPress", "src\Jeebs.WordPress\Jeebs.WordPress.csproj", "{3B61328D-81EB-45DE-B4F3-562D8FAEE044}"
 EndProject
