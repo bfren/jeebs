@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -58,11 +58,9 @@ public abstract class App
 	/// Configure Host
 	/// </summary>
 	/// <param name="config">IConfigurationBuilder</param>
-	protected virtual void ConfigureHost(IConfigurationBuilder config)
-	{
+	protected virtual void ConfigureHost(IConfigurationBuilder config) =>
 		// Set base path to be directory of running assembly
 		_ = config.SetBasePath(Directory.GetCurrentDirectory());
-	}
 
 	/// <summary>
 	/// Configure App

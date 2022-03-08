@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.AspNetCore.Builder;
@@ -19,13 +19,11 @@ public abstract class RazorApp : MvcApp
 	protected RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	protected override void ConfigureServicesEndpoints(IServiceCollection services)
-	{
+	protected override void ConfigureServicesEndpoints(IServiceCollection services) =>
 		_ = services
 			.AddRazorPages(ConfigureServicesRazorPagesOptions)
 			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
 			.AddJsonOptions(ConfigureServicesEndpointsJson);
-	}
 
 	/// <summary>
 	/// Override to configure Razor Pages options
@@ -34,8 +32,6 @@ public abstract class RazorApp : MvcApp
 	public virtual void ConfigureServicesRazorPagesOptions(RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>
-	protected override void ConfigureEndpoints(IApplicationBuilder app)
-	{
+	protected override void ConfigureEndpoints(IApplicationBuilder app) =>
 		_ = app.UseEndpoints(endpoints => endpoints.MapRazorPages());
-	}
 }
