@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.1" />
 		<PackageReference Include="Azure.Identity" Version="1.5.0" />
@@ -14,6 +14,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
 		<ProjectReference Include="..\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj" />
-		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

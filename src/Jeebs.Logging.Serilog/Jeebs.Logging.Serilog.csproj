@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="Serilog" Version="2.10.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
@@ -10,6 +10,5 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
-		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>
