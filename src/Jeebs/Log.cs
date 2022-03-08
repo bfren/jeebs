@@ -60,7 +60,7 @@ public abstract class Log : ILog
 				Err(text, args);
 				break;
 			case LogLevel.Fatal:
-				Die(text, args);
+				Ftl(text, args);
 				break;
 			default:
 				// Unsupported level
@@ -108,10 +108,10 @@ public abstract class Log : ILog
 	public abstract void Err(Exception ex, string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Die(string message, params object[] args);
+	public abstract void Ftl(string message, params object[] args);
 
 	/// <inheritdoc/>
-	public abstract void Die(Exception ex, string message, params object[] args);
+	public abstract void Ftl(Exception ex, string message, params object[] args);
 
 	/// <inheritdoc/>
 	public abstract void Dispose();

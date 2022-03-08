@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Mvc.Data.ModelBinding;
@@ -18,7 +18,7 @@ public abstract class MvcAppWithData : MvcApp
 	protected MvcAppWithData(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	public override void ConfigureServicesMvcOptions(MvcOptions opt)
+	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
 		base.ConfigureServicesMvcOptions(opt);
 

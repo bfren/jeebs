@@ -22,7 +22,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Err("Test error");
 	log.Err(new Exception("Test"), "Something went badly wrong {here}", "just now");
 
-	log.Die(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
+	log.Ftl(new Exception("Fatal"), "Something went fatally wrong {here}", "just now");
 
 	var seq = provider.GetRequiredService<Seq>();
 	seq.Send("test");

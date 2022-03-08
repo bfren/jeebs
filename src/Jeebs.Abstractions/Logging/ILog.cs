@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -84,11 +84,11 @@ public interface ILog
 	/// <inheritdoc cref="LogLevel.Fatal"/>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Die(string message, params object[] args);
+	void Ftl(string message, params object[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
 	/// <param name="ex">Exception</param>
 	/// <param name="message">Message</param>
 	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Die(Exception ex, string message, params object[] args);
+	void Ftl(Exception ex, string message, params object[] args);
 }
