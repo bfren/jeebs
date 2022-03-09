@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
-
 namespace Jeebs.Data.TypeHandlers.Guid_Tests;
 
 public class Parse_Tests
@@ -44,7 +41,7 @@ public class Parse_Tests
 	public void Valid_Guid_String_Returns_Guid()
 	{
 		// Arrange
-		var value = F.Rnd.Guid;
+		var value = Rnd.Guid;
 		var handler = new GuidTypeHandler();
 
 		// Act

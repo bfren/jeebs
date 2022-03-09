@@ -1,11 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Data;
 using Dapper;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.DbTypeMap_Tests;
 

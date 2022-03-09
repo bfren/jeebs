@@ -2,9 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using System.Threading.Tasks;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.DbQuery_Tests;
 
@@ -18,8 +15,8 @@ public class ExecuteAsync_Tests
 	{
 		// Arrange
 		var (db, _, _, query) = DbQuery_Setup.Get();
-		var value = F.Rnd.Str;
-		var param = F.Rnd.Int;
+		var value = Rnd.Str;
+		var param = Rnd.Int;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
@@ -40,8 +37,8 @@ public class ExecuteAsync_Tests
 	{
 		// Arrange
 		var (db, _, _, query) = DbQuery_Setup.Get();
-		var value = F.Rnd.Str;
-		var param = F.Rnd.Int;
+		var value = Rnd.Str;
+		var param = Rnd.Int;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act

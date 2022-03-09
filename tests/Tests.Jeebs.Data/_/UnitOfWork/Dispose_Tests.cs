@@ -2,8 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using NSubstitute;
-using Xunit;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.UnitOfWork_Tests;
 

@@ -2,11 +2,11 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using Xunit;
+using Jeebs.Data.Map;
+using Jeebs.Id;
 using static Jeebs.Linq.LinqExpressionExtensions.M;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
@@ -18,12 +18,12 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var bar = F.Rnd.Str;
+		var bar = Rnd.Str;
 		var cmp = Compare.LessThan;
-		var val = F.Rnd.Int;
+		var val = Rnd.Int;
 
 		// Act
-		var result = builder.AddWhere<TestTable>(v.Parts, new(F.Rnd.Str, bar), c => c.Bar, cmp, val);
+		var result = builder.AddWhere<TestTable>(v.Parts, new(Rnd.Str, bar), c => c.Bar, cmp, val);
 
 		// Assert
 		var some = result.AssertSome();
@@ -44,15 +44,15 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 		// Arrange
 		var (builder, v) = Setup();
 		var cmp = Compare.LessThan;
-		var val = F.Rnd.Int;
+		var val = Rnd.Int;
 
 		// Act
-		var result = builder.AddWhere<TestTable>(v.Parts, new(F.Rnd.Str, F.Rnd.Str), _ => F.Rnd.Str, cmp, val);
+		var result = builder.AddWhere<TestTable>(v.Parts, new(Rnd.Str, Rnd.Str), _ => Rnd.Str, cmp, val);
 
 		// Assert
 		var none = result.AssertNone();
 		_ = Assert.IsType<PropertyDoesNotExistOnTypeMsg<TestTable>>(none);
 	}
 
-	public sealed record class TestTable(string Foo, string Bar) : Table(F.Rnd.Str);
+	public sealed record class TestTable(string Foo, string Bar) : Table(Rnd.Str);
 }

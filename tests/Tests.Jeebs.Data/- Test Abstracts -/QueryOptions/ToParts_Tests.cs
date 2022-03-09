@@ -1,11 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using NSubstitute;
+using Jeebs.Data.Map;
+using Jeebs.Id;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests;
+namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
@@ -18,8 +19,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var max = F.Rnd.Ulng;
-		var skip = F.Rnd.Ulng;
+		var max = Rnd.Ulng;
+		var skip = Rnd.Ulng;
 		var opt = options with
 		{
 			Maximum = max,
@@ -53,7 +54,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var id = new TId { Value = F.Rnd.Lng };
+		var id = new TId { Value = Rnd.Lng };
 		var opt = options with
 		{
 			Id = id
@@ -72,8 +73,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = new TId { Value = F.Rnd.Lng };
-		var i1 = new TId { Value = F.Rnd.Lng };
+		var i0 = new TId { Value = Rnd.Lng };
+		var i1 = new TId { Value = Rnd.Lng };
 		var ids = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

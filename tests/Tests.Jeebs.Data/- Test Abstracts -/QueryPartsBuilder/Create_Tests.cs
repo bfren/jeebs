@@ -1,11 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
+using Jeebs.Id;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
@@ -19,7 +18,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(null, F.Rnd.Ulng);
+		var result = builder.Create<TModel>(null, Rnd.Ulng);
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -34,7 +33,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(null, F.Rnd.Ulng);
+		var result = builder.Create<TModel>(null, Rnd.Ulng);
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -46,11 +45,11 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 	protected void Test02()
 	{
 		// Arrange
-		var maximum = F.Rnd.Ulng;
+		var maximum = Rnd.Ulng;
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(maximum, F.Rnd.Ulng);
+		var result = builder.Create<TModel>(maximum, Rnd.Ulng);
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -62,7 +61,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 	protected void Test03()
 	{
 		// Arrange
-		var skip = F.Rnd.Ulng;
+		var skip = Rnd.Ulng;
 		var (builder, v) = Setup();
 
 		// Act
