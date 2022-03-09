@@ -1,4 +1,0 @@
-[*.cs]
-
-# RCS1224: Make method an extension method.
-dotnet_diagnostic.RCS1224.severity = none
