@@ -1,10 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-
 namespace Jeebs.Random.Rnd_Tests.BooleanF_Tests;
 
 public class Get_Tests

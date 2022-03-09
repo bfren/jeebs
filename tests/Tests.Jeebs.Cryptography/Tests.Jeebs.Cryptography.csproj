@@ -3,9 +3,6 @@
 		<RootNamespace>Jeebs.Cryptography</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="Maybe.Testing" Version="8.0.0-beta.1" />
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
 	</ItemGroup>

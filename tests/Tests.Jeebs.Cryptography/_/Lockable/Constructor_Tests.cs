@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Random;
-using Xunit;
-
 namespace Jeebs.Cryptography.Lockable_Tests;
 
 public class Constructor_Tests
