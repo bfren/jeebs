@@ -1,11 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.IO;
 using System.Threading.Tasks;
-using Jeebs;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// Version functions
@@ -15,7 +14,7 @@ public static class VersionF
 	/// <summary>
 	/// Lazy property to avoid multiple reflection calls
 	/// </summary>
-	private static readonly LazyAsync<string> version = new(
+	private static LazyAsync<string> Version { get; } = new(
 		async () =>
 		{
 			// Attempt to get embedded Version file
@@ -38,5 +37,5 @@ public static class VersionF
 	/// Get Jeebs Version, or return the package version if the resource cannot be found
 	/// </summary>
 	public static Task<string> GetJeebsVersionAsync() =>
-		version.Value;
+		Version.Value;
 }

@@ -1,14 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Jeebs.Linq;
+using Maybe;
+using Maybe.Linq;
 using Sys = System.Collections.Immutable;
 
-namespace Jeebs;
+namespace Jeebs.Collections;
 
 /// <summary>
 /// Alternative methods for creating an <see cref="ImmutableList{T}"/>

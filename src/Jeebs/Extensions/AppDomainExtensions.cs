@@ -1,11 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Jeebs;
+namespace Jeebs.Extensions;
 
 /// <summary>
 /// AppDomain Extensions
@@ -17,7 +17,7 @@ public static class AppDomainExtensions
 	/// </summary>
 	/// <typeparam name="T">Property Type</typeparam>
 	/// <param name="this">AppDomain</param>
-	public static List<Type> GetTypesOfPropertiesImplenting<T>(this AppDomain @this)
+	public static List<Type> GetTypesOfPropertiesImplementing<T>(this AppDomain @this)
 	{
 		var types = from a in @this.GetAssemblies()
 					from t in a.GetTypes()

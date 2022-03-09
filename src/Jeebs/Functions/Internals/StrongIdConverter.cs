@@ -1,13 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs;
+using Jeebs.StrongId;
 
-namespace F.Internals;
+namespace Jeebs.Functions.Internals;
 
 /// <summary>
 /// Converter for <see cref="IStrongId"/> types

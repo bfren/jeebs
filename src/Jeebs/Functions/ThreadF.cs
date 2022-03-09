@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// Thread functions

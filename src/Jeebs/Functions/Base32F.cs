@@ -1,12 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Text;
-using Jeebs;
-using static F.MaybeF;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// C# Base32 Converter
@@ -136,7 +137,7 @@ public static class Base32F
 		// Check the size
 		if (outputBytes.Length == 0)
 		{
-			return None<byte[], M.InputStringNotLongEnoughMsg>();
+			return MaybeF.None<byte[], M.InputStringNotLongEnoughMsg>();
 		}
 
 		// Position in the string
@@ -161,7 +162,7 @@ public static class Base32F
 			// Check if found
 			if (currentBase32Byte < 0)
 			{
-				return None<byte[]>(new M.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
+				return MaybeF.None<byte[]>(new M.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
 			}
 
 			// Calculate the number of bits we can extract out of current input character to fill missing bits in the output byte

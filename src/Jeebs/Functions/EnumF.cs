@@ -1,12 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Globalization;
-using Jeebs;
-using static F.MaybeF;
+using Maybe;
+using Maybe.Functions;
+using Jeebs.Messages;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// Enum functions
@@ -29,12 +30,12 @@ public static class EnumF
 					x,
 
 				_ =>
-					None<T>(new M.NotAValidEnumValueMsg<T>(value))
+					MaybeF.None<T>(new M.NotAValidEnumValueMsg<T>(value))
 			};
 		}
 		catch (Exception)
 		{
-			return None<T>(new M.NotAValidEnumValueMsg<T>(value));
+			return MaybeF.None<T>(new M.NotAValidEnumValueMsg<T>(value));
 		}
 	}
 
@@ -47,7 +48,7 @@ public static class EnumF
 	{
 		if (!t.IsEnum)
 		{
-			return None<object>(new M.NotAValidEnumMsg(t));
+			return MaybeF.None<object>(new M.NotAValidEnumMsg(t));
 		}
 
 		try
@@ -56,7 +57,7 @@ public static class EnumF
 		}
 		catch (Exception)
 		{
-			return None<object>(new M.NotAValidEnumValueMsg(t, value));
+			return MaybeF.None<object>(new M.NotAValidEnumValueMsg(t, value));
 		}
 	}
 
@@ -106,7 +107,7 @@ public static class EnumF
 					x,
 
 				_ =>
-					None<TTo>(new M.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+					MaybeF.None<TTo>(new M.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 			};
 		}
 	}
