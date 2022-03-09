@@ -1,11 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Xunit;
-using static F.Base32F;
+using static Jeebs.Functions.Base32F.M;
 
-namespace F.Base32F_Tests;
+namespace Jeebs.Functions.Base32F_Tests;
 
 public class FromBase32String_Tests
 {
@@ -15,7 +13,7 @@ public class FromBase32String_Tests
 		// Arrange
 
 		// Act
-		var result = FromBase32String(string.Empty).UnsafeUnwrap();
+		var result = Base32F.FromBase32String(string.Empty).UnsafeUnwrap();
 
 		// Assert
 		Assert.Empty(result);
@@ -28,11 +26,11 @@ public class FromBase32String_Tests
 		// Arrange
 
 		// Act
-		var result = FromBase32String(input);
+		var result = Base32F.FromBase32String(input);
 
 		// Assert
 		var msg = result.AssertNone();
-		_ = Assert.IsType<M.InputStringNotLongEnoughMsg>(msg);
+		_ = Assert.IsType<InputStringNotLongEnoughMsg>(msg);
 	}
 
 	[Theory]
@@ -46,11 +44,11 @@ public class FromBase32String_Tests
 		var str = Rnd.Str + input;
 
 		// Act
-		var result = FromBase32String(str);
+		var result = Base32F.FromBase32String(str);
 
 		// Assert
 		var none = result.AssertNone();
-		var msg = Assert.IsType<M.CharacterNotInBase32AlphabetMsg>(none);
+		var msg = Assert.IsType<CharacterNotInBase32AlphabetMsg>(none);
 		Assert.Equal(input, msg.Value);
 	}
 
@@ -61,7 +59,7 @@ public class FromBase32String_Tests
 		var str = "5C5NHZDVBT4RWPBK";
 
 		// Act
-		var result = FromBase32String(str).UnsafeUnwrap();
+		var result = Base32F.FromBase32String(str).UnsafeUnwrap();
 
 		// Assert
 		Assert.Equal(10, result.Length);
@@ -71,11 +69,11 @@ public class FromBase32String_Tests
 	public void Works_Both_Ways()
 	{
 		// Arrange
-		var expected = FromBase32String("5C5NHZDVBT4RWPBK").UnsafeUnwrap();
-		var str = ToBase32String(expected);
+		var expected = Base32F.FromBase32String("5C5NHZDVBT4RWPBK").UnsafeUnwrap();
+		var str = Base32F.ToBase32String(expected);
 
 		// Act
-		var result = FromBase32String(str).UnsafeUnwrap();
+		var result = Base32F.FromBase32String(str).UnsafeUnwrap();
 
 		// Assert
 		Assert.Equal(expected, result);

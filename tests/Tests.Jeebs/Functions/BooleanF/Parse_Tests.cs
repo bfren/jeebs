@@ -1,12 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Xunit;
-using static F.BooleanF;
-using static F.BooleanF.M;
+using static Jeebs.Functions.BooleanF.M;
 
-namespace F.BooleanF_Tests;
+namespace Jeebs.Functions.BooleanF_Tests;
 
 public class Parse_Tests
 {
@@ -25,7 +22,7 @@ public class Parse_Tests
 		// Arrange
 
 		// Act
-		var result = Parse(input);
+		var result = BooleanF.Parse(input);
 
 		// Assert
 		var some = result.AssertSome();
@@ -45,7 +42,7 @@ public class Parse_Tests
 		// Arrange
 
 		// Act
-		var result = Parse(input);
+		var result = BooleanF.Parse(input);
 
 		// Assert
 		var some = result.AssertSome();
@@ -60,7 +57,7 @@ public class Parse_Tests
 		// Arrange
 
 		// Act
-		var result = Parse(input);
+		var result = BooleanF.Parse(input);
 
 		// Assert
 		var msg = result.AssertNone();

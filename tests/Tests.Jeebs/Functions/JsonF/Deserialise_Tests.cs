@@ -1,12 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using Jeebs;
-using Xunit;
-using static F.JsonF.M;
+using static Jeebs.Functions.JsonF.M;
 
-namespace F.JsonF_Tests;
+namespace Jeebs.Functions.JsonF_Tests;
 
 public class Deserialise_Tests
 {

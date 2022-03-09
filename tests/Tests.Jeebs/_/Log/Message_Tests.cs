@@ -2,8 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
-using NSubstitute;
-using Xunit;
+using Jeebs.Messages;
 
 namespace Jeebs.Log_Tests;
 

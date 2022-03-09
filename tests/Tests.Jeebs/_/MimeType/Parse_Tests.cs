@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.MimeType_Tests;
 
 public class Parse_Tests
@@ -60,7 +58,7 @@ public class Parse_Tests
 	public void Unknown_Returns_Blank()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 
 		// Act
 		var result = MimeType.Parse(name);
@@ -73,7 +71,7 @@ public class Parse_Tests
 	public void Returns_Custom_MimeType()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new MimeType(name);
 		_ = MimeType.AddCustomMimeType(type);
 

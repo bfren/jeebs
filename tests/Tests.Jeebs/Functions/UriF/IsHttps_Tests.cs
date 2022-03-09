@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace F.UriF_Tests;
+namespace Jeebs.Functions.UriF_Tests;
 
 public class IsHttps_Tests
 {

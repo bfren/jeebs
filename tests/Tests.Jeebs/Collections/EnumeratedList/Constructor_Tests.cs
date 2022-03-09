@@ -1,11 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-
-namespace Jeebs.EnumeratedList_Tests;
+namespace Jeebs.Collections.EnumeratedList_Tests;
 
 public class Constructor_Tests
 {

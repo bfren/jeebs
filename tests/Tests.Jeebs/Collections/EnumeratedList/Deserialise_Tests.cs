@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace Jeebs.EnumeratedList_Tests;
+namespace Jeebs.Collections.EnumeratedList_Tests;
 
 public class Deserialise_Tests
 {
@@ -26,7 +24,7 @@ public class Deserialise_Tests
 	public void Invalid_Json_Returns_Empty_List()
 	{
 		// Arrange
-		var json = F.Rnd.Str;
+		var json = Rnd.Str;
 
 		// Act
 		var result = EnumeratedList.Deserialise<Foo>(json);
@@ -52,10 +50,10 @@ public class Deserialise_Tests
 	public void Correct_Json_Returns_List()
 	{
 		// Arrange
-		var itemA = new Foo(F.Rnd.Str);
-		var itemB = new Foo(F.Rnd.Str);
-		var itemC = new Foo(F.Rnd.Str);
-		var itemD = new Foo(F.Rnd.Str);
+		var itemA = new Foo(Rnd.Str);
+		var itemB = new Foo(Rnd.Str);
+		var itemC = new Foo(Rnd.Str);
+		var itemD = new Foo(Rnd.Str);
 		var json = $"[\"{itemB}\",\"{itemD}\",\"{itemA}\",\"{itemC}\"]";
 
 		// Act

@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Xunit;
+using Jeebs.Id;
 
-namespace F.JsonF_Tests.StrongIdConverter_Tests;
+namespace Jeebs.Functions.Internals.StrongIdConverter_Tests;
 
 public class ReadJson_Tests
 {

@@ -1,10 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Xunit;
-
-namespace F.EnumF_Tests;
+namespace Jeebs.Functions.EnumF_Tests;
 
 public class Convert_Tests
 {

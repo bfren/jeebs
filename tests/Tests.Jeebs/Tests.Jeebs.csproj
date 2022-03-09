@@ -3,7 +3,9 @@
 		<RootNamespace>Jeebs</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Maybe.Testing\Jeebs.Maybe.Testing.csproj" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

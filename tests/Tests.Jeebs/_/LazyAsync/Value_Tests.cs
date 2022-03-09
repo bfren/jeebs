@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
-using Xunit;
-
 namespace Jeebs.LazyAsync_Tests;
 
 public class Value_Tests
@@ -12,7 +9,7 @@ public class Value_Tests
 	public void Returns_Task()
 	{
 		// Arrange
-		var task = new Task<int>(() => F.Rnd.Int);
+		var task = new Task<int>(() => Rnd.Int);
 		var l0 = new LazyAsync<int>(task);
 		var l1 = new LazyAsync<int>(() => task);
 

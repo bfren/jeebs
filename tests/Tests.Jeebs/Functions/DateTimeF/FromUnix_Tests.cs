@@ -1,10 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
-
-namespace F.DateTimeF_Tests;
+namespace Jeebs.Functions.DateTimeF_Tests;
 
 public class FromUnix_Tests
 {

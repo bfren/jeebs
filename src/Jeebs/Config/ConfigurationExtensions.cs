@@ -46,6 +46,6 @@ public static class ConfigurationExtensions
 		};
 
 		static T getSection(IConfiguration config, string sectionKey) =>
-			config.GetSection<T>(JeebsConfig.GetKey(sectionKey));
+			config.GetSection(JeebsConfig.GetKey(sectionKey)).Get<T>();
 	}
 }

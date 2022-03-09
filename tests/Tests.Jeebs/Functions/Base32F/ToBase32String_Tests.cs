@@ -1,12 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Jeebs;
-using Xunit;
-using static F.Base32F;
-
-namespace F.Base32F_Tests;
+namespace Jeebs.Functions.Base32F_Tests;
 
 public class ToBase32String_Tests
 {
@@ -17,7 +12,7 @@ public class ToBase32String_Tests
 		var bytes = Array.Empty<byte>();
 
 		// Act
-		var result = ToBase32String(bytes);
+		var result = Base32F.ToBase32String(bytes);
 
 		// Assert
 		Assert.Equal(string.Empty, result);
@@ -30,7 +25,7 @@ public class ToBase32String_Tests
 		var bytes = Rnd.ByteF.Get(10);
 
 		// Act
-		var result = ToBase32String(bytes);
+		var result = Base32F.ToBase32String(bytes);
 
 		// Assert
 		Assert.Equal(16, result.Length);
@@ -41,10 +36,10 @@ public class ToBase32String_Tests
 	{
 		// Arrange
 		var expected = "5C5NHZDVBT4RWPBK";
-		var bytes = FromBase32String(expected).UnsafeUnwrap();
+		var bytes = Base32F.FromBase32String(expected).UnsafeUnwrap();
 
 		// Act
-		var result = ToBase32String(bytes);
+		var result = Base32F.ToBase32String(bytes);
 
 		// Assert
 		Assert.Equal(expected, result);

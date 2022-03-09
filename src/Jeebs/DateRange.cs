@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Extensions;
+namespace Jeebs;
 
 /// <inheritdoc cref="IRange{T}"/>
 public readonly record struct DateRange : IRange<DateTime>

@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace F.NumberF_Tests;
+namespace Jeebs.Functions.MathsF_Tests;
 
 public class Factorial_Tests
 {

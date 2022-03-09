@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace F.JsonF_Tests;
+namespace Jeebs.Functions.JsonF_Tests;
 
 public class Bool_Tests
 {

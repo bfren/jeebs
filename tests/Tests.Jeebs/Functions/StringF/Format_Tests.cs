@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace F.StringF_Tests;
+namespace Jeebs.Functions.StringF_Tests;
 
 public class Format_Tests
 {
@@ -16,7 +14,7 @@ public class Format_Tests
 		var value = Rnd.Str;
 
 		// Act
-		var r0 = StringF.Format(format, obj);
+		var r0 = StringF.Format(format, obj, null);
 		var r1 = StringF.Format(format, obj, value);
 
 		// Assert
@@ -32,7 +30,7 @@ public class Format_Tests
 		var value = Rnd.Str;
 
 		// Act
-		var result = StringF.Format(format, value);
+		var result = StringF.Format(format, value, null);
 
 		// Assert
 		Assert.Equal(string.Format(format, value), result);

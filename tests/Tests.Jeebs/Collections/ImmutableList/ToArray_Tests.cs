@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using Jeebs.Collections;
 
-namespace Jeebs.ImmutableList_Tests;
+namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class ToArray_Tests
 {
@@ -11,8 +11,8 @@ public class ToArray_Tests
 	public void Returns_Array()
 	{
 		// Arrange
-		var i0 = F.Rnd.Int;
-		var i1 = F.Rnd.Int;
+		var i0 = Rnd.Int;
+		var i1 = Rnd.Int;
 		var list = new ImmutableList<int>(new[] { i0, i1 });
 
 		// Act
@@ -30,14 +30,14 @@ public class ToArray_Tests
 	public void Returns_Copy()
 	{
 		// Arrange
-		var i0 = F.Rnd.Str;
-		var i1 = F.Rnd.Str;
+		var i0 = Rnd.Str;
+		var i1 = Rnd.Str;
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
 		var copy = list.ToArray();
-		i0 = F.Rnd.Str;
-		i1 = F.Rnd.Str;
+		i0 = Rnd.Str;
+		i1 = Rnd.Str;
 
 		// Assert
 		Assert.Collection(copy,

@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.MimeType_Tests;
 
 public class AddCustomMimeType_Tests
@@ -11,7 +9,7 @@ public class AddCustomMimeType_Tests
 	public void Adds_Custom_MimeType_To_HashSet()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new MimeType(name);
 
 		// Act
@@ -28,7 +26,7 @@ public class AddCustomMimeType_Tests
 	public void Does_Not_Add_Custom_MimeType_Twice()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new MimeType(name);
 		_ = MimeType.AddCustomMimeType(type);
 

@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace F.PhpF_Tests;
+namespace Jeebs.Functions.PhpF_Tests;
 
 public class Deserialise_Tests
 {
