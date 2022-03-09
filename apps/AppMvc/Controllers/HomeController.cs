@@ -1,12 +1,12 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MvcApp.Controllers;
 
-public class HomeController : Jeebs.Mvc.Controller
+public class HomeController : Jeebs.Mvc.Controllers.Controller
 {
 	public HomeController(ILog<HomeController> log) : base(log) { }
 

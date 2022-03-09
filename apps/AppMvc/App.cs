@@ -2,17 +2,18 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppMvc.EfCore;
-using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Clients.MySql;
+using Jeebs.Logging;
 using Jeebs.Mvc.Auth;
+using Jeebs.Mvc.Data;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppMvc;
 
-public sealed class App : Jeebs.Apps.MvcAppWithData
+public sealed class App : MvcAppWithData
 {
 	public App() : base(false) { }
 

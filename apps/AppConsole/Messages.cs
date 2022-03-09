@@ -1,7 +1,8 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
+using Jeebs.Messages;
+using Jeebs.Random;
 
 namespace AppConsole.Messages;
 
@@ -15,7 +16,7 @@ public record FormattedMsg : Msg
 		"Values {One} and {Two}";
 
 	public override object[]? Args =>
-		new object[] { F.Rnd.Int, F.Rnd.Guid };
+		new object[] { Rnd.Int, Rnd.Guid };
 }
 
 public record WithValue(string Value) : WithValueMsg<string>;

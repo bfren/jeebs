@@ -3,9 +3,11 @@
 
 using System.Data;
 using AppConsolePg;
-using Jeebs;
 using Jeebs.Data.Clients.PostgreSql.Parameters;
-using Jeebs.Data.TypeHandlers;
+using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
+using Jeebs.Extensions;
+using Jeebs.Random;
+using Maybe;
 using Microsoft.Extensions.DependencyInjection;
 
 await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
@@ -37,8 +39,8 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Insert into the table
 	log.Dbg(" == Inserting data ==");
-	var foo = F.Rnd.Str;
-	var bar = F.Rnd.Str;
+	var foo = Rnd.Str;
+	var bar = Rnd.Str;
 	_ = await db
 		.ExecuteAsync(
 			$"INSERT INTO {table} (foo, bar) VALUES (@foo, @bar);", new { foo, bar }, CommandType.Text
@@ -65,7 +67,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Update data
 	log.Dbg("== Updating data ==");
-	var newFoo = F.Rnd.Str;
+	var newFoo = Rnd.Str;
 	_ = await db
 		.ExecuteAsync(
 			$"UPDATE {table} SET foo = @newFoo WHERE id = @id;", new { newFoo, id }, CommandType.Text
@@ -126,9 +128,9 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Insert values using Jsonb
 	log.Dbg("== Inserting values as Jsonb ==");
-	var v0 = new ParamTest(7, F.Rnd.Str, F.Rnd.Str);
-	var v1 = new ParamTest(18, F.Rnd.Str, F.Rnd.Str);
-	var v2 = new ParamTest(93, F.Rnd.Str, F.Rnd.Str);
+	var v0 = new ParamTest(7, Rnd.Str, Rnd.Str);
+	var v1 = new ParamTest(18, Rnd.Str, Rnd.Str);
+	var v2 = new ParamTest(93, Rnd.Str, Rnd.Str);
 	using (var w = db.UnitOfWork)
 	{
 		foreach (var v in new[] { v0, v1, v2 })
@@ -174,9 +176,9 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 
 	// Insert values using repository
 	log.Dbg("== Inserting values using repository ==");
-	var v3 = new ParamTest(8, F.Rnd.Str, F.Rnd.Str);
-	var v4 = new ParamTest(19, F.Rnd.Str, F.Rnd.Str);
-	var v5 = new ParamTest(94, F.Rnd.Str, F.Rnd.Str);
+	var v3 = new ParamTest(8, Rnd.Str, Rnd.Str);
+	var v4 = new ParamTest(19, Rnd.Str, Rnd.Str);
+	var v5 = new ParamTest(94, Rnd.Str, Rnd.Str);
 	using (var w = db.UnitOfWork)
 	{
 		foreach (var v in new[] { v3, v4, v5 })

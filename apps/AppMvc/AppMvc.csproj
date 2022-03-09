@@ -7,7 +7,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Data.Querying\Jeebs.Data.Querying.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth.Razor\Jeebs.Mvc.Auth.Razor.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Data\Jeebs.Mvc.Data.csproj" />
