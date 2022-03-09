@@ -3,6 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Jeebs.Random;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Xunit;
@@ -21,7 +22,7 @@ public class DispatchAsync_Tests
 		var provider = collection.BuildServiceProvider();
 
 		ICommandDispatcher dispatcher = new CommandDispatcher(provider);
-		var value = F.Rnd.Int;
+		var value = Rnd.Int;
 
 		// Act
 		_ = await dispatcher.DispatchAsync<int, string>(value).ConfigureAwait(false);
