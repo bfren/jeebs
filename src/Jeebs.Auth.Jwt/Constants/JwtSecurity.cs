@@ -1,10 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Jeebs.Auth.Constants;
+namespace Jeebs.Auth.Jwt.Constants;
 
 /// <summary>
 /// Default JSON Web Token security algorithms and key lengths

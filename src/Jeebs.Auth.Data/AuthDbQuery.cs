@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -8,8 +8,10 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
-using static F.MaybeF;
+using Jeebs.Data.Query;
+using Jeebs.Logging;
+using Maybe;
+using Maybe.Functions;
 
 namespace Jeebs.Auth;
 
@@ -26,7 +28,7 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 	/// <inheritdoc/>
 	public Task<Maybe<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
 		where TRole : IAuthRole =>
-		Some(userId)
+		MaybeF.Some(userId)
 		.BindAsync(
 			x => this.QueryAsync<TRole>(builder => builder
 				.From<AuthRoleTable>()
@@ -36,6 +38,6 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 		)
 		.MapAsync(
 			x => x.ToList(),
-			DefaultHandler
+			MaybeF.DefaultHandler
 		);
 }

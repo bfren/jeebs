@@ -1,11 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
-using Jeebs.Config;
+using Jeebs.Config.Db;
 using Jeebs.Data;
+using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth;

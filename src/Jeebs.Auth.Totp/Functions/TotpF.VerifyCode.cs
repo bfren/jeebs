@@ -1,11 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Linq;
-using Jeebs.Auth.Totp;
-using static F.Base32F;
+using Jeebs.Functions;
 
-namespace F;
+namespace Jeebs.Auth.Totp.Functions;
 
 public static partial class TotpF
 {
@@ -13,7 +12,7 @@ public static partial class TotpF
 	public static bool VerifyCode(string? key, string? code, TotpSettings settings) =>
 		!string.IsNullOrEmpty(key)
 		&& !string.IsNullOrEmpty(code)
-		&& FromBase32String(key).Switch(
+		&& Base32F.FromBase32String(key).Switch(
 			some: k => VerifyCode(k, code, settings),
 			none: false
 		);

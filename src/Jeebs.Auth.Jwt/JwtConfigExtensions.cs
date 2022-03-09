@@ -1,12 +1,14 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text;
-using Jeebs.Config;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
 using Microsoft.IdentityModel.Tokens;
-using static F.MaybeF;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Jwt;
 
 /// <summary>
 /// JwtConfig extension methods
@@ -31,7 +33,7 @@ public static class JwtConfigExtensions
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
 
 			_ =>
-				None<SecurityKey, M.NullEncryptingKeyMsg>()
+				MaybeF.None<SecurityKey, M.NullEncryptingKeyMsg>()
 		};
 
 	/// <summary>Messages</summary>
