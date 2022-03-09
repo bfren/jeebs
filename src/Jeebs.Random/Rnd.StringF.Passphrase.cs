@@ -18,7 +18,7 @@ public static partial class Rnd
 			() =>
 			{
 				// Attempt to get embedded word list file
-				var wordListResource = typeof(Rnd).Assembly.GetManifestResourceStream("F.eff-long-word-list.txt");
+				var wordListResource = new MemoryStream(Properties.Resources.eff_long_word_list);
 
 				// Return empty array if the resource can't be found
 				if (wordListResource is null)
