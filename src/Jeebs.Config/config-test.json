@@ -1,0 +1,42 @@
+{
+	"$schema": "schema.json#",
+	"jeebs": {
+		"app": {
+			"name": "",
+			"suite": ""
+		},
+		"db": {
+			"connections": {
+				"fred": {
+					"connectionString": ""
+				}
+			},
+			"default": "fred"
+		},
+		"logging": {
+			"minimum": "Error"
+		},
+		"services": {
+			"seq": {
+				"home": {
+					"apiKey": "",
+					"server": ""
+				}
+			}
+		},
+		"web": {
+			"redirections": {
+				"one-to": "/Fred"
+			},
+			"verification": {
+				"google": "abcdef1234567890"
+			}
+		},
+		"wp": {
+			"fred": {
+				"db": "fred",
+				"tablePrefix": "bcg_main"
+			}
+		}
+	}
+}
