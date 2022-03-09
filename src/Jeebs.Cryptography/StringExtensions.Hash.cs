@@ -1,15 +1,14 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using static F.MaybeF;
+using Jeebs.Cryptography.Functions;
+using Maybe;
+using Maybe.Functions;
 
 namespace Jeebs.Cryptography;
 
-/// <summary>
-/// String Extensions: Hash
-/// </summary>
-public static class StringExtensionsHash
+public static partial class StringExtensions
 {
 	/// <summary>
 	/// Compute a 64-byte hash, returning a string of length 88
@@ -29,10 +28,10 @@ public static class StringExtensionsHash
 		@this switch
 		{
 			string input when !string.IsNullOrWhiteSpace(input) =>
-				F.CryptoF.Hash(@this, bytes)
+				CryptoF.Hash(@this, bytes)
 					.Map(
 						x => Convert.ToBase64String(x),
-						DefaultHandler
+						MaybeF.DefaultHandler
 					),
 
 			_ =>

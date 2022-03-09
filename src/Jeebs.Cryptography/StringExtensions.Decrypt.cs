@@ -1,15 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Linq;
-using static F.JsonF;
+using Jeebs.Functions;
+using Maybe;
+using Maybe.Linq;
 
 namespace Jeebs.Cryptography;
 
-/// <summary>
-/// Decryption Extensions
-/// </summary>
-public static class StringExtensionsDecrypt
+public static partial class StringExtensions
 {
 	/// <summary>
 	/// Decrypt a string using the specified key
@@ -18,7 +16,7 @@ public static class StringExtensionsDecrypt
 	/// <param name="this">JSON-serialised Box</param>
 	/// <param name="key">Encryption Key (must be 32 bytes)</param>
 	public static Maybe<T> Decrypt<T>(this string @this, byte[] key) =>
-		from l in Deserialise<Locked<T>>(@this)
+		from l in JsonF.Deserialise<Locked<T>>(@this)
 		from c in l.Unlock(key)
 		select c.Contents;
 
@@ -29,7 +27,7 @@ public static class StringExtensionsDecrypt
 	/// <param name="this">JSON-serialised Box</param>
 	/// <param name="key">Encryption Key</param>
 	public static Maybe<T> Decrypt<T>(this string @this, string key) =>
-		from l in Deserialise<Locked<T>>(@this)
+		from l in JsonF.Deserialise<Locked<T>>(@this)
 		from c in l.Unlock(key)
 		select c.Contents;
 

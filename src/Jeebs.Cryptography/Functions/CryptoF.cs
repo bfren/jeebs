@@ -1,14 +1,16 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Text;
-using Jeebs;
+using Jeebs.Messages;
+using Jeebs.Random;
+using Maybe;
+using Maybe.Functions;
 using Sodium;
 using Sodium.Exceptions;
-using static F.MaybeF;
 
-namespace F;
+namespace Jeebs.Cryptography.Functions;
 
 /// <summary>
 /// Cryptography functions
@@ -28,7 +30,7 @@ public static class CryptoF
 	/// <param name="input">Input string</param>
 	/// <param name="bytes">The number of bytes for the hash - must be between 16 and 64</param>
 	public static Maybe<byte[]> Hash(string input, int bytes) =>
-		Some(
+		MaybeF.Some(
 			() => Encoding.UTF8.GetBytes(input),
 			e => new M.GettingBytesForGenericHashExceptionMsg(e)
 		)
@@ -55,13 +57,20 @@ public static class CryptoF
 	/// </summary>
 	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
 	public static Maybe<string> GeneratePassphrase(int numberOfWords) =>
-		Rnd.StringF.Passphrase(numberOfWords);
+		Rnd.StringF.Passphrase(numberOfWords) switch
+		{
+			string pass =>
+				MaybeF.Some(pass),
+
+			_ =>
+				MaybeF.None<string, M.NullPassphraseMsg>()
+		};
 
 	/// <summary>
 	/// Generate a 32 byte key to use for encryption
 	/// </summary>
 	public static Maybe<byte[]> GenerateKey() =>
-		Some(
+		MaybeF.Some(
 			() => SecretBox.GenerateKey(),
 			e => new M.GeneratingKeyExceptionMsg(e)
 		);
@@ -75,6 +84,9 @@ public static class CryptoF
 	/// <summary>Messages</summary>
 	public static class M
 	{
+		/// <summary>Generated passphrase was null</summary>
+		public sealed record class NullPassphraseMsg : Msg;
+
 		/// <summary>Something went wrong while generating a key</summary>
 		/// <param name="Value">Exception object</param>
 		public sealed record class GeneratingKeyExceptionMsg(Exception Value) : ExceptionMsg;

@@ -1,12 +1,16 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using Jeebs.Cryptography.Functions;
+using Jeebs.Functions;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
 using Sodium;
 using Sodium.Exceptions;
-using static F.MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -19,7 +23,7 @@ public sealed class Locked<T> : Locked
 	/// <summary>
 	/// Encrypted contents
 	/// </summary>
-	public Maybe<byte[]> EncryptedContents { get; init; } = None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
+	public Maybe<byte[]> EncryptedContents { get; init; } = MaybeF.None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
 
 	/// <summary>
 	/// Salt
@@ -35,10 +39,10 @@ public sealed class Locked<T> : Locked
 	/// Create new Locked box with random salt and nonce
 	/// </summary>
 	public Locked() =>
-		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), F.CryptoF.GenerateNonce());
+		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), CryptoF.GenerateNonce());
 
 	internal Locked(T contents, byte[] key) : this() =>
-		EncryptedContents = F.JsonF
+		EncryptedContents = JsonF
 			.Serialise(
 				contents
 			)
@@ -48,7 +52,7 @@ public sealed class Locked<T> : Locked
 			);
 
 	internal Locked(T contents, string key) : this() =>
-		EncryptedContents = F.JsonF
+		EncryptedContents = JsonF
 			.Serialise(
 				contents
 			)
@@ -72,13 +76,13 @@ public sealed class Locked<T> : Locked
 					var secret = SecretBox.Open(x, Nonce, key);
 
 					// Deserialise contents and return
-					return F.JsonF
+					return JsonF
 						.Deserialise<T>(
 							Encoding.UTF8.GetString(secret)
 						)
 						.Map(
 							x => new Lockable<T>(x),
-							DefaultHandler
+							MaybeF.DefaultHandler
 						);
 				}
 				catch (KeyOutOfRangeException ex)
@@ -98,13 +102,13 @@ public sealed class Locked<T> : Locked
 					return handle(new M.UnlockExceptionMsg(ex));
 				}
 			},
-			none: None<Lockable<T>, M.UnlockWhenEncryptedContentsIsNoneMsg>()
+			none: MaybeF.None<Lockable<T>, M.UnlockWhenEncryptedContentsIsNoneMsg>()
 		);
 
 		// Handle an exception
 		static Maybe<Lockable<T>> handle<TMsg>(TMsg ex)
-			where TMsg : ExceptionMsg =>
-			None<Lockable<T>>(ex);
+			where TMsg : IExceptionMsg =>
+			 MaybeF.None<Lockable<T>>(ex);
 	}
 
 	/// <summary>
@@ -119,8 +123,8 @@ public sealed class Locked<T> : Locked
 	/// </summary>
 	public Maybe<string> Serialise() =>
 		EncryptedContents.Switch(
-			some: _ => F.JsonF.Serialise(this),
-			none: Some(F.JsonF.Empty)
+			some: _ => JsonF.Serialise(this),
+			none: MaybeF.Some(JsonF.Empty)
 		);
 
 	private byte[] HashKey(string key) =>

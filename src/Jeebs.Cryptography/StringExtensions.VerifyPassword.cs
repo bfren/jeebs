@@ -1,14 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Sodium;
 
 namespace Jeebs.Cryptography;
 
-/// <summary>
-/// String Extensions: VerifyPassword
-/// </summary>
-public static class StringExtensionsVerifyPassword
+public static partial class StringExtensions
 {
 	/// <summary>
 	/// Verify a password hashed using argon2id

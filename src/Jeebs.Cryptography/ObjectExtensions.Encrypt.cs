@@ -1,14 +1,16 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Linq;
+using Jeebs.Functions;
+using Maybe;
+using Maybe.Linq;
 
 namespace Jeebs.Cryptography;
 
 /// <summary>
-/// Encryption Extensions
+/// <see cref="object"/> Extensions
 /// </summary>
-public static class ObjectExtensionsEncrypt
+public static class ObjectExtensions
 {
 	/// <summary>
 	/// Encrypt an object using the specified key and return it serialised as JSON
@@ -25,7 +27,7 @@ public static class ObjectExtensionsEncrypt
 				select s,
 
 			_ =>
-				F.JsonF.Empty
+				JsonF.Empty
 		};
 
 	/// <summary>
@@ -42,6 +44,6 @@ public static class ObjectExtensionsEncrypt
 				select s,
 
 			_ =>
-				F.JsonF.Empty
+				JsonF.Empty
 		};
 }
