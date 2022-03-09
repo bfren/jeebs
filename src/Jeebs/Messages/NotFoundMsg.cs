@@ -4,4 +4,5 @@
 namespace Jeebs.Messages;
 
 /// <inheritdoc cref="INotFoundMsg"/>
-public abstract record class NotFoundMsg<T> : WithValueMsg<T>, INotFoundMsg<T>;
+/// <typeparam name="T">Value type</typeparam>
+public abstract record class NotFoundMsg<T> : WithValueMsg<T>, INotFoundMsg;

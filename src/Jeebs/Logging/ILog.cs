@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Messages;
+using Maybe;
 
 namespace Jeebs.Logging;
 
@@ -37,12 +38,12 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log an <see cref="IMsg"/>
+	/// Log an <see cref="IReason"/>
 	/// </summary>
-	/// <typeparam name="T">The message type</typeparam>
-	/// <param name="msg">Message to log</param>
-	void Msg<T>(T? msg)
-		where T : IMsg;
+	/// <typeparam name="T">The Reason message type</typeparam>
+	/// <param name="reason">Reason message to log</param>
+	void Msg<T>(T? reason)
+		where T : IReason;
 
 	/// <summary>
 	/// Log a list of <see cref="IMsg"/>

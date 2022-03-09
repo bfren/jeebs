@@ -4,7 +4,6 @@
 namespace Jeebs.Messages;
 
 /// <summary>
-/// Framework 'Not Found' message with a value
+/// Framework 'Not Found' message
 /// </summary>
-/// <typeparam name="T">Value type</typeparam>
-public interface INotFoundMsg<T> : IWithValueMsg<T> { }
+public interface INotFoundMsg { }

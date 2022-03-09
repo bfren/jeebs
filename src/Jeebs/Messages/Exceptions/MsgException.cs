@@ -2,16 +2,15 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Maybe;
 
 namespace Jeebs.Messages.Exceptions;
 
 /// <summary>
-/// Throw an exception with an <see cref="IReason"/>
+/// Throw an exception with an <see cref="IMsg"/>
 /// </summary>
-/// <typeparam name="TReason">Reason type</typeparam>
-public sealed class MsgException<TReason> : Exception
-	where TReason : IReason
+/// <typeparam name="TMsg">Reason type</typeparam>
+public sealed class MsgException<TMsg> : Exception
+	where TMsg : IMsg
 {
 	/// <summary>
 	/// Create exception
@@ -21,8 +20,8 @@ public sealed class MsgException<TReason> : Exception
 	/// <summary>
 	/// Create exception
 	/// </summary>
-	/// <param name="reason"></param>
-	public MsgException(TReason reason) : base(reason.ToString()) { }
+	/// <param name="msg"></param>
+	public MsgException(TMsg msg) : base(msg.ToString()) { }
 
 	/// <summary>
 	/// Create exception

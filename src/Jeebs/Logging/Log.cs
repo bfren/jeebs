@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Jeebs.Messages;
+using Maybe;
 
 namespace Jeebs.Logging;
 
@@ -15,13 +16,13 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Msg<T>(T? msg)
-		where T : IMsg
+	public void Msg<T>(T? reason)
+		where T : IReason
 	{
 		// Get log info
-		var (level, text, args) = msg switch
+		var (level, text, args) = reason switch
 		{
-			T =>
+			IMsg msg =>
 				(
 					msg.Level,
 					msg.FormatWithType,
