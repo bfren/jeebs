@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Entities;
-using Jeebs.StrongId;
+using Jeebs.Id;
 
 namespace Jeebs.Data.Map.Functions;
 

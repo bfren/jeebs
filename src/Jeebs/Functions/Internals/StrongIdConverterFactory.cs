@@ -4,7 +4,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs.StrongId;
+using Jeebs.Id;
 
 namespace Jeebs.Functions.Internals;
 

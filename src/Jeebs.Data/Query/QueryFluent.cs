@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 

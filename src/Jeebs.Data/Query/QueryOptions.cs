@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 

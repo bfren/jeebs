@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Map;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 
 namespace Jeebs.Data.Query;
 

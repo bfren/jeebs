@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Jeebs.Mvc.Data.ModelBinding;

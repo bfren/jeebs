@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Entities;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 

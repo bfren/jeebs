@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 
 namespace Jeebs.Data;

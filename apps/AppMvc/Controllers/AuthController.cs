@@ -6,7 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Logging;
 using Jeebs.Random;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 using Maybe.Linq;

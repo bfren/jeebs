@@ -11,7 +11,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Linq;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 

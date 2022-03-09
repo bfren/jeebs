@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Linq;
 

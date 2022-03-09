@@ -7,7 +7,7 @@ using Jeebs.Data.Entities;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.Map.Functions;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 

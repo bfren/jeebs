@@ -9,7 +9,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Functions;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 using Maybe.Linq;

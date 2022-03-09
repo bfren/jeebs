@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Messages;
-using Jeebs.StrongId;
+using Jeebs.Id;
 using Maybe;
 using Maybe.Functions;
 

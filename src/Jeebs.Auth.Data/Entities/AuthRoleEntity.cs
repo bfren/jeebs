@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Models;
-using Jeebs.StrongId;
+using Jeebs.Id;
 
 namespace Jeebs.Auth.Data.Entities;
 
