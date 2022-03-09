@@ -1,7 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
+using Jeebs.Functions;
+using Jeebs.Mvc.Enums;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -29,7 +31,7 @@ public static class TempDataDictionaryExtensions
 		@this.TryGetValue(AlertsKey, out var value) switch
 		{
 			true when value is string alerts =>
-				F.JsonF.Deserialise<List<Alert>>(alerts).Unwrap(() => new List<Alert>()),
+				JsonF.Deserialise<List<Alert>>(alerts).Unwrap(() => new List<Alert>()),
 
 			_ =>
 				new List<Alert>()
@@ -78,6 +80,6 @@ public static class TempDataDictionaryExtensions
 		var alerts = GetAlerts(tempData);
 		alerts.Insert(0, new Alert(messageType, message));
 
-		tempData.Add(AlertsKey, F.JsonF.Serialise(alerts).Unwrap(F.JsonF.Empty));
+		tempData.Add(AlertsKey, JsonF.Serialise(alerts).Unwrap(JsonF.Empty));
 	}
 }

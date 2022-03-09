@@ -1,11 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Linq;
 using System.Security.Claims;
-using Jeebs.Auth;
-using static F.MaybeF;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
 
 namespace Jeebs.Mvc.Auth;
 
@@ -31,15 +33,15 @@ public static class ClaimsPrincipalExtensions
 							userId,
 
 						false =>
-							None<long, M.InvalidUserIdMsg>()
+							MaybeF.None<long, M.InvalidUserIdMsg>()
 					},
 
 				_ =>
-					None<long, M.UnableToFindUserIdClaimMsg>()
+					MaybeF.None<long, M.UnableToFindUserIdClaimMsg>()
 			};
 		}
 
-		return None<long, M.UserIsNotAuthenticatedMsg>();
+		return MaybeF.None<long, M.UserIsNotAuthenticatedMsg>();
 	}
 
 	/// <summary>

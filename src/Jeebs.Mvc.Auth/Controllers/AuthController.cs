@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -8,8 +8,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Linq;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Auth.Jwt.Functions;
 using Jeebs.Mvc.Auth.Models;
+using Maybe;
+using Maybe.Linq;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -29,14 +32,14 @@ public abstract class AuthController : AuthControllerBase
 	/// </summary>
 	/// <param name="auth">AuthDataProvider</param>
 	/// <param name="log">ILog</param>
-	protected AuthController(AuthDataProvider auth, ILog log) : base(auth, log) =>
+	protected AuthController(AuthDataProvider auth, Logging.ILog log) : base(auth, log) =>
 		Auth = auth;
 }
 
 /// <summary>
 /// Implement this controller to add support for user authentication
 /// </summary>
-public abstract class AuthControllerBase : Controller
+public abstract class AuthControllerBase : Mvc.Controllers.Controller
 {
 	/// <summary>
 	/// Returns custom claims for a given user
@@ -60,7 +63,7 @@ public abstract class AuthControllerBase : Controller
 	/// </summary>
 	/// <param name="auth">IAuthDataProvider</param>
 	/// <param name="log">ILog</param>
-	protected AuthControllerBase(IAuthDataProvider auth, ILog log) : base(log) =>
+	protected AuthControllerBase(IAuthDataProvider auth, Logging.ILog log) : base(log) =>
 		Auth = auth;
 
 	/// <summary>
@@ -190,8 +193,8 @@ public abstract class AuthControllerBase : Controller
 	public IActionResult JwtKeys() =>
 		Json(new
 		{
-			signingKey = F.JwtF.GenerateSigningKey(),
-			encryptingKey = F.JwtF.GenerateEncryptingKey()
+			signingKey = JwtF.GenerateSigningKey(),
+			encryptingKey = JwtF.GenerateEncryptingKey()
 		});
 
 	/// <summary>

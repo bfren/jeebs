@@ -1,13 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
+using Jeebs.Messages;
+using Maybe;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Mvc;
+namespace Jeebs.Mvc.Controllers;
 
 /// <summary>
 /// Controller extension methods
@@ -19,7 +21,7 @@ public static class ControllerExtensions
 	/// </summary>
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
-	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason) =>
+	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IReason reason) =>
 		ExecuteErrorAsync(@this, reason, null);
 
 	/// <summary>
@@ -28,10 +30,13 @@ public static class ControllerExtensions
 	/// <param name="this">Controller</param>
 	/// <param name="reason">None</param>
 	/// <param name="code">HTTP Status Code</param>
-	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, Msg reason, int? code)
+	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, IReason reason, int? code)
 	{
 		// Log error
-		@this.Log.Msg(reason);
+		if (reason is IMsg msg)
+		{
+			@this.Log.Msg(msg);
+		}
 
 		// Check for 404
 		var status = code switch

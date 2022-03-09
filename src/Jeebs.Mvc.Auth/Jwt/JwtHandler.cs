@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using Jeebs.Linq;
+using Jeebs.Logging;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
+using Maybe.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-using static F.MaybeF;
 
 namespace Jeebs.Mvc.Auth.Jwt;
 
@@ -79,7 +82,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				authorisationHeader.ToString(),
 
 			_ =>
-				None<string, M.MissingAuthorisationHeaderMsg>()
+				MaybeF.None<string, M.MissingAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>
@@ -93,7 +96,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				authorisationHeader["Bearer ".Length..].Trim(),
 
 			_ =>
-				None<string, M.InvalidAuthorisationHeaderMsg>()
+				MaybeF.None<string, M.InvalidAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>

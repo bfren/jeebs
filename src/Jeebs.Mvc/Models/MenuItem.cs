@@ -1,8 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
+using Jeebs.Random;
 
 namespace Jeebs.Mvc.Models;
 
@@ -14,7 +15,7 @@ public record class MenuItem
 	/// <summary>
 	/// Each menu item needs a unique identifier
 	/// </summary>
-	public Guid Id { get; init; } = F.Rnd.Guid;
+	public Guid Id { get; init; } = Rnd.Guid;
 
 	/// <summary>
 	/// The text to display in the link
