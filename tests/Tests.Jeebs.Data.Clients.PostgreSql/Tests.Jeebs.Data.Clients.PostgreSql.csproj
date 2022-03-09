@@ -1,9 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>Jeebs.Data.Clients.PostgreSql</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSql\Jeebs.Data.Clients.PostgreSql.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Maybe.Testing\Jeebs.Maybe.Testing.csproj" />
 	</ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 {
@@ -17,7 +17,7 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 			var result = Jsonb.Create(value);
 
 			// Assert
-			Assert.Equal(F.JsonF.Empty, result.ToString());
+			Assert.Equal(JsonF.Empty, result.ToString());
 		}
 
 		[Theory]
@@ -39,8 +39,8 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 		public void Object_Creates_With_Json()
 		{
 			// Arrange
-			var value = new Test(F.Rnd.Str, F.Rnd.Int);
-			var json = F.JsonF.Serialise(value).UnsafeUnwrap();
+			var value = new Test(Rnd.Str, Rnd.Int);
+			var json = JsonF.Serialise(value).UnsafeUnwrap();
 
 			// Act
 			var result = Jsonb.Create(value);

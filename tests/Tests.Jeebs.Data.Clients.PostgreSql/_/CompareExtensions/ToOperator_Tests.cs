@@ -3,9 +3,8 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Exceptions;
-using Xunit;
 
-namespace Jeebs.Data.Clients.MySql.CompareExtensions_Tests;
+namespace Jeebs.Data.Clients.PostgreSql.CompareExtensions_Tests;
 
 public class ToOperator_Tests
 {

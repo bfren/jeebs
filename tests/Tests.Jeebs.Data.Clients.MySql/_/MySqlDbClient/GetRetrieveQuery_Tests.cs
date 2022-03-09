@@ -2,9 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
@@ -14,20 +12,20 @@ public class GetRetrieveQuery_Tests
 	public void Returns_Valid_Select_Query()
 	{
 		// Arrange
-		var schema = F.Rnd.Str;
-		var name = F.Rnd.Str;
+		var schema = Rnd.Str;
+		var name = Rnd.Str;
 		var table = new TableName(schema, name);
 
-		var c0Name = F.Rnd.Str;
-		var c0Alias = F.Rnd.Str;
+		var c0Name = Rnd.Str;
+		var c0Alias = Rnd.Str;
 		var c0 = new Column(table, c0Name, c0Alias);
 
-		var c1Name = F.Rnd.Str;
-		var c1Alias = F.Rnd.Str;
+		var c1Name = Rnd.Str;
+		var c1Alias = Rnd.Str;
 		var c1 = new Column(table, c1Name, c1Alias);
 
-		var c2Name = F.Rnd.Str;
-		var c2Alias = F.Rnd.Str;
+		var c2Name = Rnd.Str;
+		var c2Alias = Rnd.Str;
 		var c2Property = Substitute.ForPartsOf<PropertyInfo>();
 		_ = c2Property.Name.Returns(c2Alias);
 		var c2 = new MappedColumn(table, c2Name, c2Property);
@@ -35,7 +33,7 @@ public class GetRetrieveQuery_Tests
 		var list = new ColumnList(new[] { c0, c1 });
 		var client = new MySqlDbClient();
 
-		var id = F.Rnd.Lng;
+		var id = Rnd.Lng;
 
 		var expected = "SELECT" +
 			$" `{c0Name}` AS '{c0Alias}'," +

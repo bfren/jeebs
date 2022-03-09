@@ -3,8 +3,6 @@
 
 using System.Data;
 using Npgsql;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 {
@@ -14,8 +12,8 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 		public void Adds_Parameter_As_Jsonb()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var name = F.Rnd.Str;
+			var value = Rnd.Str;
+			var name = Rnd.Str;
 			var param = new Jsonb(value);
 
 			var collection = Substitute.For<IDataParameterCollection>();
@@ -33,8 +31,8 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 		public void Adds_Value()
 		{
 			// Arrange
-			var value = F.Rnd.Str;
-			var name = F.Rnd.Str;
+			var value = Rnd.Str;
+			var name = Rnd.Str;
 			var param = new Jsonb(value);
 
 			var collection = Substitute.For<IDataParameterCollection>();
