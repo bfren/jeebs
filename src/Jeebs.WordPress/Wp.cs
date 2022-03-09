@@ -1,8 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Config;
+using Jeebs.Config.Db;
+using Jeebs.Config.WordPress;
+using Jeebs.Logging;
 using Jeebs.WordPress.Data;
 using Jeebs.WordPress.Data.Entities;
 using Microsoft.Extensions.Caching.Memory;
