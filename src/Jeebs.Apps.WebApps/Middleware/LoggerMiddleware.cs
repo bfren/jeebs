@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -19,12 +19,12 @@ public sealed class LoggerMiddleware : IMiddleware
 	/// <summary>
 	/// ILogger
 	/// </summary>
-	private readonly ILogger logger = Serilog.Log.ForContext<LoggerMiddleware>();
+	private readonly ILogger logger = Log.ForContext<LoggerMiddleware>();
 
 	/// <summary>
 	/// Log message template
 	/// </summary>
-	private const string messageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
+	private const string MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
 
 	/// <summary>
 	/// Invoke Middleware
@@ -52,13 +52,13 @@ public sealed class LoggerMiddleware : IMiddleware
 			// Get log level based on HTTP status - 500 or over is an HTTP error
 			var level = status switch
 			{
-				int x when x >= 100 && x <= 299 =>
+				int x when x is >= 100 and <= 299 =>
 					LogEventLevel.Verbose,
 
-				int x when x >= 300 && x <= 399 =>
+				int x when x is >= 300 and <= 399 =>
 					LogEventLevel.Debug,
 
-				int x when x >= 400 && x <= 499 =>
+				int x when x is >= 400 and <= 499 =>
 					LogEventLevel.Information,
 
 				_ =>
@@ -66,12 +66,12 @@ public sealed class LoggerMiddleware : IMiddleware
 			};
 
 			// Write event to log
-			logger.Write(level, messageTemplate, context.Request.Method, GetPath(context), status, stopwatch.Elapsed.TotalSeconds);
+			logger.Write(level, MessageTemplate, context.Request.Method, GetPath(context), status, stopwatch.Elapsed.TotalSeconds);
 		}
 		catch (Exception ex)
 		{
 			// Log error
-			logger.Error(ex, messageTemplate, context.Request.Method, GetPath(context), 500, stopwatch.Elapsed.TotalSeconds);
+			logger.Error(ex, MessageTemplate, context.Request.Method, GetPath(context), 500, stopwatch.Elapsed.TotalSeconds);
 		}
 	}
 

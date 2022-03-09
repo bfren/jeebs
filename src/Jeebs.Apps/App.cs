@@ -5,7 +5,19 @@ using System;
 using System.IO;
 using Azure.Identity;
 using Jeebs.Config;
+using Jeebs.Config.App;
+using Jeebs.Config.AzureKeyVault;
+using Jeebs.Config.Db;
+using Jeebs.Config.Logging;
+using Jeebs.Config.Services;
+using Jeebs.Config.Web;
+using Jeebs.Config.Web.Auth;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Config.Web.Redirections;
+using Jeebs.Config.Web.Verification;
 using Jeebs.Logging;
+using Jeebs.Logging.Serilog;
+using Maybe.Functions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,7 +60,7 @@ public abstract class App
 	public virtual void Ready(IServiceProvider services, ILog log)
 	{
 		// Set Maybe Audit log
-		F.MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
+		MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Log application is ready
 		log.Inf("Application ready.");

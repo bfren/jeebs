@@ -1,7 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging;
+using Maybe.Functions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,7 +42,7 @@ public static class Builder
 
 		// Set Maybe Audit log
 		var log = app.Services.GetRequiredService<ILog<MinimalApiApp>>();
-		F.MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
+		MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Ready to go
 		log.Inf("Application configured.");

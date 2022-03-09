@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Threading.Tasks;
-using Jeebs.Config;
+using Jeebs.Config.Web.Verification;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -17,7 +17,7 @@ public sealed class SiteVerificationMiddleware : IMiddleware
 {
 	private readonly VerificationConfig config;
 
-	private readonly ILogger logger = Serilog.Log.ForContext<SiteVerificationMiddleware>();
+	private readonly ILogger logger = Log.ForContext<SiteVerificationMiddleware>();
 
 	/// <summary>
 	/// Set Site Verification configuration
