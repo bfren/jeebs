@@ -1,14 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
+using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying.Exceptions;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query.Exceptions;
 
-namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
 
 public class Join_Tests
 {

@@ -1,12 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying.Exceptions;
-using Xunit;
-using static F.DataF.QueryBuilderF;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query.Exceptions;
 
-namespace F.DataF.QueryBuilderF_Tests;
+namespace Jeebs.Data.Query.Functions.QueryBuilderF_Tests;
 
 public class GetColumnFromExpression_Tests
 {
@@ -16,8 +14,8 @@ public class GetColumnFromExpression_Tests
 		// Arrange
 
 		// Act
-		var a0 = void () => GetColumnFromExpression<BrokenTable>(t => t.Bar);
-		var a1 = void () => GetColumnFromExpression(new BrokenTable(), t => t.Bar);
+		var a0 = void () => QueryBuilderF.GetColumnFromExpression<BrokenTable>(t => t.Bar);
+		var a1 = void () => QueryBuilderF.GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
 		_ = Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);
@@ -32,8 +30,8 @@ public class GetColumnFromExpression_Tests
 		var table = new TestTable(tableName);
 
 		// Act
-		var r0 = GetColumnFromExpression(table, t => t.Foo);
-		var r1 = GetColumnFromExpression<TestTable>(t => t.Foo);
+		var r0 = QueryBuilderF.GetColumnFromExpression(table, t => t.Foo);
+		var r1 = QueryBuilderF.GetColumnFromExpression<TestTable>(t => t.Foo);
 
 		// Assert
 		Assert.Equal(tableName, r0.TblName.Name);

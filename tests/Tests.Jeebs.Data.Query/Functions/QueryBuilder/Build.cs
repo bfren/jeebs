@@ -1,16 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Jeebs;
-using Jeebs.Data.Querying;
-using NSubstitute;
 using NSubstitute.ExceptionExtensions;
-using Xunit;
-using static F.DataF.QueryBuilderF;
-using static F.DataF.QueryBuilderF.M;
+using static Jeebs.Data.Query.Functions.QueryBuilderF.M;
 
-namespace F.DataF.QueryBuilderF_Tests;
+namespace Jeebs.Data.Query.Functions.QueryBuilderF_Tests;
 
 public class Build_Tests
 {
@@ -22,7 +16,7 @@ public class Build_Tests
 		_ = builder.Invoke(Arg.Any<IQueryBuilder>()).Throws<Exception>();
 
 		// Act
-		var result = Build<int>(builder);
+		var result = QueryBuilderF.Build<int>(builder);
 
 		// Assert
 		var none = result.AssertNone();

@@ -2,10 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using Xunit;
+using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
 
 public class Select_Tests
 {

@@ -2,12 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using System.Threading.Tasks;
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Querying.DbQueryExtensions_Tests;
+namespace Jeebs.Data.Query.DbQueryExtensions_Tests;
 
 public class QuerySingleAsync_Tests
 {
@@ -27,7 +24,7 @@ public class QuerySingleAsync_Tests
 		_ = await query.ReceivedWithAnyArgs().QuerySingleAsync<TestModel>(Arg.Any<IQueryParts>(), transaction).ConfigureAwait(false);
 	}
 
-	public sealed record class TestTable() : Table(F.Rnd.Str)
+	public sealed record class TestTable() : Table(Rnd.Str)
 	{
 		public string Foo { get; set; } = nameof(Foo);
 	}

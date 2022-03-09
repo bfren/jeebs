@@ -1,11 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
 
 public class AddTable_Tests
 {
@@ -42,5 +40,5 @@ public class AddTable_Tests
 		);
 	}
 
-	public sealed record class TestTable() : Table(F.Rnd.Str);
+	public sealed record class TestTable() : Table(Rnd.Str);
 }

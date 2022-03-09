@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using Xunit;
+using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Querying.QueryBuilder_Tests;
+namespace Jeebs.Data.Query.QueryBuilder_Tests;
 
 public class From_Tests
 {
@@ -41,5 +40,5 @@ public class From_Tests
 		);
 	}
 
-	public sealed record class TestTable() : Table(F.Rnd.Str);
+	public sealed record class TestTable() : Table(Rnd.Str);
 }

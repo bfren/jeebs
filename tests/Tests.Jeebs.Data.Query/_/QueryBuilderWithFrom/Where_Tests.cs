@@ -2,12 +2,10 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying.Exceptions;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query.Exceptions;
 
-namespace Jeebs.Data.Querying.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
 
 public class Where_Tests
 {
@@ -19,7 +17,7 @@ public class Where_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		var action = void () => builder.Where<TestTable>(t => t.Foo, Compare.Equal, F.Rnd.Str);
+		var action = void () => builder.Where<TestTable>(t => t.Foo, Compare.Equal, Rnd.Str);
 
 		// Assert
 		_ = Assert.Throws<WhereTableNotAddedException<TestTable>>(action);
@@ -31,7 +29,7 @@ public class Where_Tests
 		// Arrange
 		var table = new TestTable();
 		var builder = new QueryBuilderWithFrom(table);
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 
 		// Act
 		var result = (QueryBuilderWithFrom)builder.Where<TestTable>(t => t.Foo, Compare.Like, value);
