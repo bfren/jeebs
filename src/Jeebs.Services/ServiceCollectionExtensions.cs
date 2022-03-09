@@ -1,10 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Jeebs.Services.Extensions;
+using Jeebs.Services.Notify;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Services;
@@ -45,7 +47,7 @@ public static class ServiceCollectionExtensions
 			}
 		}
 
-		// If listeres were added, add the notifier
+		// If listeners were added, add the notifier
 		if (foundListeners)
 		{
 			_ = @this.AddSingleton<INotifier, Notifier>();

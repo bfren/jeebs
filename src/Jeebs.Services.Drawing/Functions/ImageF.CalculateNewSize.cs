@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Services.Drawing.Geometry;
 
-namespace F;
+namespace Jeebs.Services.Drawing.Functions;
 
 /// <summary>
 /// Image functions

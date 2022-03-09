@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 
-namespace Jeebs.Services.Drivers.Drawing.Skia.Exceptions;
+namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
 /// See <see cref="ImageFormatExtensions.GetEncodedImageFormat(Services.Drawing.ImageFormat)"/>

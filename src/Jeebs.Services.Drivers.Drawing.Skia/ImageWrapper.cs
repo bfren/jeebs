@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.IO;
 using Jeebs.Services.Drawing;
+using Maybe;
 using SkiaSharp;
 
 namespace Jeebs.Services.Drivers.Drawing.Skia;

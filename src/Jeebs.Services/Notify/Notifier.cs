@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
+using Jeebs.Messages;
 
-namespace Jeebs;
+namespace Jeebs.Services.Notify;
 
 /// <inheritdoc/>
 public sealed class Notifier : INotifier
@@ -31,7 +32,7 @@ public sealed class Notifier : INotifier
 	}
 
 	/// <inheritdoc/>
-	public void Send(Msg msg)
+	public void Send(IMsg msg)
 	{
 		foreach (var listener in listeners)
 		{

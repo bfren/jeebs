@@ -1,7 +1,7 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Config;
+using Jeebs.Config.Services.Slack;
 using Jeebs.Services.Drivers.Webhook.Slack.Models;
 using Jeebs.Services.Webhook;
 

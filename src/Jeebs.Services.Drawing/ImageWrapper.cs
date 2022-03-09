@@ -1,9 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Messages;
+using Jeebs.Services.Drawing.Functions;
 using Jeebs.Services.Drawing.Geometry;
-using static F.MaybeF;
+using Maybe;
+using Maybe.Functions;
 
 namespace Jeebs.Services.Drawing;
 
@@ -51,24 +54,24 @@ public abstract class ImageWrapper : IImageWrapper
 		// At least one of width and height should be greater than zero
 		if (width == 0 && height == 0)
 		{
-			return None<IImageWrapper, M.MaskHeightOrWidthRequiredMsg>();
+			return MaybeF.None<IImageWrapper, M.MaskHeightOrWidthRequiredMsg>();
 		}
 
 		// Calculate the size of the new image
-		var size = F.ImageF.CalculateNewSize(Width, Height, width, height);
+		var size = ImageF.CalculateNewSize(Width, Height, width, height);
 
 		// Calculate the mask to apply to the original image
-		var mask = F.ImageF.CalculateMask(Width, Height, size.Width, size.Height);
+		var mask = ImageF.CalculateMask(Width, Height, size.Width, size.Height);
 
 		// Use implementation to return masked and resized image
 		try
 		{
 			var resized = apply(size, mask);
-			return Some(resized);
+			return MaybeF.Some(resized);
 		}
 		catch (Exception e)
 		{
-			return None<IImageWrapper>(new M.ApplyingImageMaskExceptionMsg(e));
+			return MaybeF.None<IImageWrapper>(new M.ApplyingImageMaskExceptionMsg(e));
 		}
 	}
 
