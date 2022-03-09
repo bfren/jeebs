@@ -1,12 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
-using Xunit;
+using static Jeebs.Mvc.Models.Menu;
 
-namespace Jeebs.Mvc.Models.Menu_Tests;
+namespace Jeebs.Mvc.Models.Menu_Tests.MenuF_Tests;
 
 public class GetSimpleItems_Tests
 {
@@ -18,7 +16,7 @@ public class GetSimpleItems_Tests
 		var getUri = Substitute.For<Menu.GetUri>();
 
 		// Act
-		var result = Menu.F.GetSimpleItems(urlHelper, new(), getUri);
+		var result = MenuF.GetSimpleItems(urlHelper, new(), getUri);
 
 		// Assert
 		Assert.Empty(result);
@@ -29,14 +27,14 @@ public class GetSimpleItems_Tests
 	{
 		// Arrange
 		var urlHelper = Substitute.For<IUrlHelper>();
-		var i0 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
-		var i1 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
+		var i0 = new MenuItem { Text = Rnd.Str, Controller = Rnd.Str };
+		var i1 = new MenuItem { Text = Rnd.Str, Controller = Rnd.Str };
 		var items = new[] { i0, i1 }.ToList();
 		var getUri = Substitute.For<Menu.GetUri>();
-		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(F.Rnd.Str);
+		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(Rnd.Str);
 
 		// Act
-		var result = Menu.F.GetSimpleItems(urlHelper, items, getUri);
+		var result = MenuF.GetSimpleItems(urlHelper, items, getUri);
 
 		// Assert
 		Assert.Collection(result,
@@ -50,14 +48,14 @@ public class GetSimpleItems_Tests
 	{
 		// Arrange
 		var urlHelper = Substitute.For<IUrlHelper>();
-		var i0 = new MenuItem { Controller = F.Rnd.Str };
-		var i1 = new MenuItem { Controller = F.Rnd.Str };
+		var i0 = new MenuItem { Controller = Rnd.Str };
+		var i1 = new MenuItem { Controller = Rnd.Str };
 		var items = new[] { i0, i1 }.ToList();
 		var getUri = Substitute.For<Menu.GetUri>();
-		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(F.Rnd.Str);
+		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(Rnd.Str);
 
 		// Act
-		var result = Menu.F.GetSimpleItems(urlHelper, items, getUri);
+		var result = MenuF.GetSimpleItems(urlHelper, items, getUri);
 
 		// Assert
 		Assert.Collection(result,
@@ -71,15 +69,15 @@ public class GetSimpleItems_Tests
 	{
 		// Arrange
 		var urlHelper = Substitute.For<IUrlHelper>();
-		var i0 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
-		var i1 = new MenuItem { Text = F.Rnd.Str, Controller = F.Rnd.Str };
+		var i0 = new MenuItem { Text = Rnd.Str, Controller = Rnd.Str };
+		var i1 = new MenuItem { Text = Rnd.Str, Controller = Rnd.Str };
 		var items = new[] { i0, i1 }.ToList();
-		var uri = F.Rnd.Str;
+		var uri = Rnd.Str;
 		var getUri = Substitute.For<Menu.GetUri>();
 		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(uri);
 
 		// Act
-		var result = Menu.F.GetSimpleItems(urlHelper, items, getUri);
+		var result = MenuF.GetSimpleItems(urlHelper, items, getUri);
 
 		// Assert
 		Assert.Collection(result,

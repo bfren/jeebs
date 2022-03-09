@@ -1,10 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
+using Jeebs.Id;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Mvc.Data.ModelBinding.StrongIdModelBinder_Tests;
 
@@ -14,7 +12,7 @@ public class BindModelAsync_Tests
 	public async Task ValueProvider_Result_Is_None_Returns_Original_ModelBindingResult()
 	{
 		// Arrange
-		var modelName = F.Rnd.Str;
+		var modelName = Rnd.Str;
 
 		var provider = Substitute.For<IValueProvider>();
 		_ = provider.GetValue(modelName).Returns(ValueProviderResult.None);
@@ -39,8 +37,8 @@ public class BindModelAsync_Tests
 	public async Task Sets_Model_Value_Using_ValueProvider_Result()
 	{
 		// Arrange
-		var modelName = F.Rnd.Str;
-		var modelValue = new ValueProviderResult(F.Rnd.Str);
+		var modelName = Rnd.Str;
+		var modelValue = new ValueProviderResult(Rnd.Str);
 
 		var provider = Substitute.For<IValueProvider>();
 		_ = provider.GetValue(modelName).Returns(modelValue);
@@ -65,8 +63,8 @@ public class BindModelAsync_Tests
 	public async Task ValueProvider_Result_Is_Not_Valid_Id_Sets_Result_Failed()
 	{
 		// Arrange
-		var modelName = F.Rnd.Str;
-		var modelValue = new ValueProviderResult(F.Rnd.Str);
+		var modelName = Rnd.Str;
+		var modelValue = new ValueProviderResult(Rnd.Str);
 
 		var provider = Substitute.For<IValueProvider>();
 		_ = provider.GetValue(modelName).Returns(modelValue);
@@ -91,8 +89,8 @@ public class BindModelAsync_Tests
 	public async Task ValueProvider_Result_Is_Valid_ULong_Sets_Result_Success_With_Id_Value()
 	{
 		// Arrange
-		var modelName = F.Rnd.Str;
-		var id = F.Rnd.Lng;
+		var modelName = Rnd.Str;
+		var id = Rnd.Lng;
 		var modelValue = new ValueProviderResult(id.ToString());
 
 		var provider = Substitute.For<IValueProvider>();

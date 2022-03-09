@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.Mvc.Models.MenuItem_Tests;
 
 public class AddChild_Tests
@@ -14,7 +12,7 @@ public class AddChild_Tests
 	{
 		// Arrange
 		var menu = new MenuItem();
-		var action = F.Rnd.Str;
+		var action = Rnd.Str;
 
 		// Act
 		menu.AddChild(action, input);
@@ -32,7 +30,7 @@ public class AddChild_Tests
 	public void Sets_Child_Properties()
 	{
 		// Arrange
-		var controller = F.Rnd.Str;
+		var controller = Rnd.Str;
 		var routeValues = new object();
 		var menu = new MenuItem
 		{
@@ -40,9 +38,9 @@ public class AddChild_Tests
 			RouteValues = routeValues
 		};
 
-		var action = F.Rnd.Str;
-		var text = F.Rnd.Str;
-		var description = F.Rnd.Str;
+		var action = Rnd.Str;
+		var text = Rnd.Str;
+		var description = Rnd.Str;
 
 		// Act
 		menu.AddChild(action, text, description);

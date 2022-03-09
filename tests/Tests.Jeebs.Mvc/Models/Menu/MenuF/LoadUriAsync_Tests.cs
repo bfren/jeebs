@@ -1,14 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Net.Http;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
+using static Jeebs.Mvc.Models.Menu;
 
-namespace Jeebs.Mvc.Models.Menu_Tests;
+namespace Jeebs.Mvc.Models.Menu_Tests.MenuF_Tests;
 
 public class LoadUriAsync_Tests
 {
@@ -22,7 +18,7 @@ public class LoadUriAsync_Tests
 		var uri = "https://bfren.dev";
 
 		// Act
-		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
+		await MenuF.LoadUriAsync(result, client, uri, CancellationToken.None);
 
 		// Assert
 		Assert.Contains("failed", result.ToString());
@@ -38,7 +34,7 @@ public class LoadUriAsync_Tests
 		var uri = "https://bfren.dev";
 
 		// Act
-		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
+		await MenuF.LoadUriAsync(result, client, uri, CancellationToken.None);
 
 		// Assert
 		Assert.Contains("done", result.ToString());
@@ -55,7 +51,7 @@ public class LoadUriAsync_Tests
 		var expected = $"Loading {uri} .. done<br/>{Environment.NewLine}";
 
 		// Act
-		await Menu.F.LoadUriAsync(result, client, uri, CancellationToken.None);
+		await MenuF.LoadUriAsync(result, client, uri, CancellationToken.None);
 
 		// Assert
 		Assert.Equal(expected, result.ToString());

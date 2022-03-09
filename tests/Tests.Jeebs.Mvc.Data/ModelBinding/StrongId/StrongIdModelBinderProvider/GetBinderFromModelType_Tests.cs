@@ -1,8 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Id;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Xunit;
 
 namespace Jeebs.Mvc.Data.ModelBinding.StrongIdModelBinderProvider_Tests;
 

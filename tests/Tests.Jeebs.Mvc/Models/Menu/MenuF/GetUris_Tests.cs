@@ -1,12 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
-using Xunit;
+using static Jeebs.Mvc.Models.Menu;
 
-namespace Jeebs.Mvc.Models.Menu_Tests;
+namespace Jeebs.Mvc.Models.Menu_Tests.MenuF_Tests;
 
 public class GetUris_Tests
 {
@@ -18,7 +16,7 @@ public class GetUris_Tests
 		var getUri = Substitute.For<Menu.GetUri>();
 
 		// Act
-		var result = Menu.F.GetUris(urlHelper, new(), getUri);
+		var result = MenuF.GetUris(urlHelper, new(), getUri);
 
 		// Assert
 		Assert.Empty(result);
@@ -36,7 +34,7 @@ public class GetUris_Tests
 		var getUri = Substitute.For<Menu.GetUri>();
 
 		// Act
-		var result = Menu.F.GetUris(urlHelper, items, getUri);
+		var result = MenuF.GetUris(urlHelper, items, getUri);
 
 		// Assert
 		Assert.NotEmpty(result);
@@ -49,19 +47,19 @@ public class GetUris_Tests
 	{
 		// Arrange
 		var urlHelper = Substitute.For<IUrlHelper>();
-		var c0 = new MenuItem { Text = F.Rnd.Str };
-		var c1 = new MenuItem { Text = F.Rnd.Str };
-		var c2 = new MenuItem { Text = F.Rnd.Str };
-		var c3 = new MenuItem { Text = F.Rnd.Str };
-		var c4 = new MenuItem { Text = F.Rnd.Str };
-		var p0 = new MenuItem { Text = F.Rnd.Str, Children = new(new[] { c0, c1, c2 }) };
-		var p1 = new MenuItem { Text = F.Rnd.Str, Children = new(new[] { c3, c4 }) };
+		var c0 = new MenuItem { Text = Rnd.Str };
+		var c1 = new MenuItem { Text = Rnd.Str };
+		var c2 = new MenuItem { Text = Rnd.Str };
+		var c3 = new MenuItem { Text = Rnd.Str };
+		var c4 = new MenuItem { Text = Rnd.Str };
+		var p0 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c0, c1, c2 }) };
+		var p1 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c3, c4 }) };
 		var items = new[] { p0, p1 }.ToList();
 		var getUri = Substitute.For<Menu.GetUri>();
 		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(x => x.ArgAt<MenuItem>(1).Text);
 
 		// Act
-		var result = Menu.F.GetUris(urlHelper, items, getUri);
+		var result = MenuF.GetUris(urlHelper, items, getUri);
 
 		// Assert
 		Assert.Collection(result,

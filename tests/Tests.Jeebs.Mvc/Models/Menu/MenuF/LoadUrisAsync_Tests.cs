@@ -1,15 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using NSubstitute;
-using Xunit;
+using static Jeebs.Mvc.Models.Menu;
 
-namespace Jeebs.Mvc.Models.Menu_Tests;
+namespace Jeebs.Mvc.Models.Menu_Tests.MenuF_Tests;
 
 public class LoadUrisAsync_Tests
 {
@@ -22,7 +17,7 @@ public class LoadUrisAsync_Tests
 		var loadUri = Substitute.For<Menu.LoadUri>();
 
 		// Act
-		var result = await Menu.F.LoadUrisAsync(client, new(), loadUri);
+		var result = await MenuF.LoadUrisAsync(client, new(), loadUri);
 
 		// Assert
 		var some = result.AssertSome();
@@ -35,14 +30,14 @@ public class LoadUrisAsync_Tests
 		// Arrange
 		var handler = new MockHttpMessageHandler();
 		var client = new HttpClient(handler);
-		var u0 = F.Rnd.Str;
-		var u1 = F.Rnd.Str;
-		var u2 = F.Rnd.Str;
+		var u0 = Rnd.Str;
+		var u1 = Rnd.Str;
+		var u2 = Rnd.Str;
 		var uris = new[] { u0, u1, u2 }.ToList();
 		var loadUri = Substitute.For<Menu.LoadUri>();
 
 		// Act
-		_ = await Menu.F.LoadUrisAsync(client, uris, loadUri);
+		_ = await MenuF.LoadUrisAsync(client, uris, loadUri);
 
 		// Assert
 		await loadUri.Received(1).Invoke(Arg.Any<StringBuilder>(), client, u0, Arg.Any<CancellationToken>());
