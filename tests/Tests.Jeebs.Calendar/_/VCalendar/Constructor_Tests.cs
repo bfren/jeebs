@@ -2,6 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Calendar.Models;
+using Jeebs.Collections;
+using Jeebs.Random;
 using NSubstitute;
 using Xunit;
 
@@ -14,13 +16,13 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var events = Substitute.For<IImmutableList<EventModel>>();
-		var calendar = new CalendarModel(events, F.Rnd.DateTime);
+		var calendar = new CalendarModel(events, Rnd.DateTime);
 
 		// Act
 		var result = new VCalendar(calendar);
 
 		// Assert
-		Assert.Equal(CalendarBase.DefaultTimezone, result.tzid);
+		Assert.Equal(CalendarBase.DefaultTimezone, result.TzId);
 	}
 
 	[Fact]
@@ -28,14 +30,14 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var events = Substitute.For<IImmutableList<EventModel>>();
-		var calendar = new CalendarModel(events, F.Rnd.DateTime);
-		var tzid = F.Rnd.Str;
+		var calendar = new CalendarModel(events, Rnd.DateTime);
+		var tzid = Rnd.Str;
 
 		// Act
 		var result = new VCalendar(calendar, tzid);
 
 		// Assert
-		Assert.Equal(tzid, result.tzid);
+		Assert.Equal(tzid, result.TzId);
 	}
 
 	[Fact]
@@ -43,12 +45,12 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var events = Substitute.For<IImmutableList<EventModel>>();
-		var calendar = new CalendarModel(events, F.Rnd.DateTime);
+		var calendar = new CalendarModel(events, Rnd.DateTime);
 
 		// Act
 		var result = new VCalendar(calendar);
 
 		// Assert
-		Assert.Equal(calendar, result.calendar);
+		Assert.Equal(calendar, result.Calendar);
 	}
 }

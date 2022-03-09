@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Random;
 using Xunit;
 
-namespace F.CalendarF_Tests;
+namespace Jeebs.Calendar.Functions.CalendarF_Tests;
 
 public class GenerateEventUid_Tests
 {

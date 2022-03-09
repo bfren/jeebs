@@ -4,5 +4,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Calendar\Jeebs.Calendar.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Random\Jeebs.Random.csproj" />
 	</ItemGroup>
 </Project>
