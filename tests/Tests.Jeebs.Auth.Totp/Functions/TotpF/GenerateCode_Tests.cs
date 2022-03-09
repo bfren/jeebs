@@ -1,11 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Auth.Totp;
+using Jeebs.Random;
 using Xunit;
-using static F.TotpF;
 
-namespace F.TotpF_Tests;
+namespace Jeebs.Auth.Totp.Functions.TotpF_Tests;
 
 public class GenerateCode_Tests
 {
@@ -16,11 +15,11 @@ public class GenerateCode_Tests
 		var key = Rnd.ByteF.Get(8);
 		var period = Rnd.Int;
 		var settings = TotpSettings.Default with { PeriodSeconds = period };
-		var interval = GetCurrentInterval(period);
-		var expected = GenerateCode(key, interval, TotpSettings.Default.CodeLength);
+		var interval = TotpF.GetCurrentInterval(period);
+		var expected = TotpF.GenerateCode(key, interval, TotpSettings.Default.CodeLength);
 
 		// Act
-		var result = GenerateCode(key, settings);
+		var result = TotpF.GenerateCode(key, settings);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -34,11 +33,11 @@ public class GenerateCode_Tests
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
 		var settings = TotpSettings.Default with { CodeLength = length };
-		var interval = GetCurrentInterval(TotpSettings.Default.PeriodSeconds);
-		var expected = GenerateCode(key, interval, length);
+		var interval = TotpF.GetCurrentInterval(TotpSettings.Default.PeriodSeconds);
+		var expected = TotpF.GenerateCode(key, interval, length);
 
 		// Act
-		var result = GenerateCode(key, settings);
+		var result = TotpF.GenerateCode(key, settings);
 
 		// Assert
 		Assert.Equal(expected, result);

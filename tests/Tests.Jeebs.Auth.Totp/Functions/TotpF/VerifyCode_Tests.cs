@@ -1,11 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Auth.Totp;
+using Jeebs.Random;
 using Xunit;
-using static F.TotpF;
 
-namespace F.TotpF_Tests;
+namespace Jeebs.Auth.Totp.Functions.TotpF_Tests;
 
 public class VerifyCode_Tests
 {
@@ -14,10 +13,10 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		var code = GenerateCode(key, TotpSettings.Default);
+		var code = TotpF.GenerateCode(key, TotpSettings.Default);
 
 		// Act
-		var result = VerifyCode(Rnd.ByteF.Get(8), code, TotpSettings.Default);
+		var result = TotpF.VerifyCode(Rnd.ByteF.Get(8), code, TotpSettings.Default);
 
 		// Assert
 		Assert.False(result);
@@ -28,10 +27,10 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		_ = GenerateCode(key, TotpSettings.Default);
+		_ = TotpF.GenerateCode(key, TotpSettings.Default);
 
 		// Act
-		var result = VerifyCode(key, Rnd.Str, TotpSettings.Default);
+		var result = TotpF.VerifyCode(key, Rnd.Str, TotpSettings.Default);
 
 		// Assert
 		Assert.False(result);
@@ -42,11 +41,11 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		var interval = GetCurrentInterval(30) - 1;
-		var code = GenerateCode(key, interval, 6);
+		var interval = TotpF.GetCurrentInterval(30) - 1;
+		var code = TotpF.GenerateCode(key, interval, 6);
 
 		// Act
-		var result = VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = false });
+		var result = TotpF.VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = false });
 
 		// Assert
 		Assert.False(result);
@@ -57,11 +56,11 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		var interval = GetCurrentInterval(30) + 1;
-		var code = GenerateCode(key, interval, 6);
+		var interval = TotpF.GetCurrentInterval(30) + 1;
+		var code = TotpF.GenerateCode(key, interval, 6);
 
 		// Act
-		var result = VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = false });
+		var result = TotpF.VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = false });
 
 		// Assert
 		Assert.False(result);
@@ -72,10 +71,10 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		var code = GenerateCode(key, TotpSettings.Default);
+		var code = TotpF.GenerateCode(key, TotpSettings.Default);
 
 		// Act
-		var result = VerifyCode(key, code, TotpSettings.Default);
+		var result = TotpF.VerifyCode(key, code, TotpSettings.Default);
 
 		// Assert
 		Assert.True(result);
@@ -86,11 +85,11 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		var interval = GetCurrentInterval(30) - 1;
-		var code = GenerateCode(key, interval, 6);
+		var interval = TotpF.GetCurrentInterval(30) - 1;
+		var code = TotpF.GenerateCode(key, interval, 6);
 
 		// Act
-		var result = VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = true });
+		var result = TotpF.VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = true });
 
 		// Assert
 		Assert.True(result);
@@ -101,11 +100,11 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		var interval = GetCurrentInterval(30) + 1;
-		var code = GenerateCode(key, interval, 6);
+		var interval = TotpF.GetCurrentInterval(30) + 1;
+		var code = TotpF.GenerateCode(key, interval, 6);
 
 		// Act
-		var result = VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = true });
+		var result = TotpF.VerifyCode(key, code, TotpSettings.Default with { IntervalTolerance = true });
 
 		// Assert
 		Assert.True(result);

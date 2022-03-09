@@ -2,10 +2,10 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Security.Cryptography;
+using Jeebs.Random;
 using Xunit;
-using static F.TotpF;
 
-namespace F.TotpF_Tests;
+namespace Jeebs.Auth.Totp.Functions.TotpF_Tests;
 
 public class ComputeHash_Tests
 {
@@ -18,7 +18,7 @@ public class ComputeHash_Tests
 		var expected = new HMACSHA256(key).ComputeHash(counter);
 
 		// Act
-		var result = ComputeHash(key, counter);
+		var result = TotpF.ComputeHash(key, counter);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -33,8 +33,8 @@ public class ComputeHash_Tests
 		var counter = Rnd.ByteF.Get(8);
 
 		// Act
-		var r0 = ComputeHash(key, counter);
-		var r1 = ComputeHash(key, counter);
+		var r0 = TotpF.ComputeHash(key, counter);
+		var r1 = TotpF.ComputeHash(key, counter);
 
 		// Assert
 		Assert.Equal(r0, r1);
@@ -49,8 +49,8 @@ public class ComputeHash_Tests
 		var counter = Rnd.ByteF.Get(8);
 
 		// Act
-		var r0 = ComputeHash(k0, counter);
-		var r1 = ComputeHash(k1, counter);
+		var r0 = TotpF.ComputeHash(k0, counter);
+		var r1 = TotpF.ComputeHash(k1, counter);
 
 		// Assert
 		Assert.NotEqual(r0, r1);
@@ -65,8 +65,8 @@ public class ComputeHash_Tests
 		var c1 = Rnd.ByteF.Get(8);
 
 		// Act
-		var r0 = ComputeHash(key, c0);
-		var r1 = ComputeHash(key, c1);
+		var r0 = TotpF.ComputeHash(key, c0);
+		var r1 = TotpF.ComputeHash(key, c1);
 
 		// Assert
 		Assert.NotEqual(r0, r1);

@@ -4,13 +4,14 @@
 using System;
 using System.Security.Claims;
 using System.Security.Principal;
-using Jeebs;
-using Jeebs.Config;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Random;
+using Maybe.Testing;
 using NSubstitute;
 using Xunit;
-using static F.JwtF.M;
+using static Jeebs.Auth.Jwt.Functions.JwtF.M;
 
-namespace F.JwtF_Tests;
+namespace Jeebs.Auth.Jwt.Functions.JwtF_Tests;
 
 public class ValidateToken_Tests
 {
