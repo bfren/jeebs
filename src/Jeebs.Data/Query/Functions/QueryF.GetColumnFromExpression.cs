@@ -4,7 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Map;
-using Jeebs.Linq;
+using Jeebs.Reflection;
 using Maybe;
 using Maybe.Functions;
 

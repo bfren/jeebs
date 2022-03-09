@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Entities;
 using Jeebs.Data.Map;
-using static Jeebs.Data.M;
+using static Jeebs.Data.Extract.M;
 
 namespace Jeebs.Data.Extract_Tests;
 
