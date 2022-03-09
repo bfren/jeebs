@@ -1,8 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text.Json;
-using static F.JsonF;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.TypeHandlers;
 
@@ -17,12 +17,12 @@ public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>
 	/// </summary>
 	/// <param name="xml">T value</param>
 	protected override string Format(T xml) =>
-		Serialise(xml).Unwrap(Empty);
+		JsonF.Serialise(xml).Unwrap(JsonF.Empty);
 
 	/// <summary>
 	/// Deserialise JSON string
 	/// </summary>
 	/// <param name="xml">JSON string</param>
 	protected override T Parse(string xml) =>
-		Deserialise<T>(xml).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}."));
+		JsonF.Deserialise<T>(xml).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}."));
 }

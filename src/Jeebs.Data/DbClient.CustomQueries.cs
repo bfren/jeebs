@@ -1,13 +1,16 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Linq.Expressions;
+using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying;
-using Jeebs.Linq;
-using static F.DataF.QueryF;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query;
+using Jeebs.Data.Query.Functions;
+using Jeebs.StrongId;
+using Maybe;
+using Maybe.Linq;
 
 namespace Jeebs.Data;
 
@@ -33,7 +36,7 @@ public abstract partial class DbClient : IDbClient
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
 			from sel in Extract<TModel>.From(map.Table)
-			from whr in ConvertPredicatesToColumns(map.Columns, predicates)
+			from whr in QueryF.ConvertPredicatesToColumns(map.Columns, predicates)
 			select (map, sel, whr)
 		)
 		.Map(

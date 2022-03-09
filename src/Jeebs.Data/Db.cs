@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
-using Jeebs.Config;
+using Jeebs.Config.Db;
+using Jeebs.Logging;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
 using Microsoft.Extensions.Options;
-using static F.MaybeF;
 
 namespace Jeebs.Data;
 
@@ -116,7 +119,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		Some(
+		MaybeF.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
@@ -136,7 +139,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		Some(
+		MaybeF.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
@@ -159,7 +162,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		Some(
+		MaybeF.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
@@ -171,7 +174,7 @@ public abstract class Db : IDb
 		)
 		.MapAsync(
 			x => x > 0,
-			DefaultHandler
+			MaybeF.DefaultHandler
 		);
 
 	/// <inheritdoc/>
@@ -183,7 +186,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		Some(
+		MaybeF.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(

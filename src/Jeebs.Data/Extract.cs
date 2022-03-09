@@ -1,11 +1,14 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Linq;
-using Jeebs.Data.Mapping;
-using static F.DataF.QueryF;
-using static F.MaybeF;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query.Functions;
+using Jeebs.Messages;
+using Maybe;
+using Maybe.Functions;
+using Maybe.Linq;
 using M = Jeebs.Data.ExtractMsg;
 
 namespace Jeebs.Data;
@@ -40,9 +43,9 @@ public static class Extract<TModel>
 
 		// Extract distinct columns
 		return
-			Some(
+			MaybeF.Some(
 				() => from table in tables
-					  from column in GetColumnsFromTable<TModel>(table)
+					  from column in QueryF.GetColumnsFromTable<TModel>(table)
 					  select column,
 				e => new M.ErrorExtractingColumnsFromTableExceptionMsg(e)
 			)
@@ -56,7 +59,7 @@ public static class Extract<TModel>
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x),
-				DefaultHandler
+				MaybeF.DefaultHandler
 			);
 	}
 }

@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -7,7 +7,10 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
+using Jeebs.Data.Query;
+using Jeebs.Logging;
+using Jeebs.StrongId;
+using Maybe;
 
 namespace Jeebs.Data;
 

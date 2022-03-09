@@ -1,12 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Maybe;
 
 namespace Jeebs.Data.Exceptions;
 
 /// <summary>
-/// See <see cref="Mapping.Mapper.Map{TEntity}(Mapping.ITable)"/>
+/// See <see cref="Map.Mapper.Map{TEntity}(Map.ITable)"/>
 /// </summary>
 public sealed class UnableToFindVersionColumnException : Exception
 {
@@ -19,7 +20,7 @@ public sealed class UnableToFindVersionColumnException : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="reason">Reason</param>
-	public UnableToFindVersionColumnException(Msg reason) : base(reason.ToString() ?? string.Empty) { }
+	public UnableToFindVersionColumnException(IReason reason) : base(reason.ToString() ?? string.Empty) { }
 
 	/// <summary>
 	/// Create exception

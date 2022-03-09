@@ -1,13 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
 using System.Text.Json;
+using Jeebs.Functions;
 using Npgsql;
 using NpgsqlTypes;
-using static F.JsonF;
 
-namespace Jeebs.Data.TypeHandlers;
+namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
 /// <summary>
 /// Jsonb Type Handler to map JSON as jsonb so it is queryable
@@ -24,7 +24,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		value switch
 		{
 			string json =>
-				Deserialise<T>(json).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}: {value}.")),
+				JsonF.Deserialise<T>(json).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}: {value}.")),
 
 			_ =>
 				throw new JsonException($"Invalid JSON: {value}.")
@@ -42,6 +42,6 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 			npgsqlParameter.NpgsqlDbType = NpgsqlDbType.Jsonb;
 		}
 
-		parameter.Value = Serialise(value).Unwrap(Empty);
+		parameter.Value = JsonF.Serialise(value).Unwrap(JsonF.Empty);
 	}
 }

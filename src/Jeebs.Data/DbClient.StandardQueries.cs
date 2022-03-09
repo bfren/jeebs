@@ -1,8 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using Jeebs.Linq;
+using Jeebs.Data.Map;
+using Jeebs.StrongId;
+using Maybe;
+using Maybe.Linq;
 
 namespace Jeebs.Data;
 
