@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -27,18 +27,18 @@ public static class ServiceCollectionExtensions
 
 		// Add commands
 		_ = services.Scan(selector => selector
-			  .FromAssemblies(assemblies)
-			  .AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<,>)))
-			  .AsImplementedInterfaces()
-			  .WithSingletonLifetime()
+			.FromAssemblies(assemblies)
+			.AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<,>)))
+			.AsImplementedInterfaces()
+			.WithSingletonLifetime()
 		);
 
 		// Add queries
 		_ = services.Scan(selector => selector
-			  .FromAssemblies(assemblies)
-			  .AddClasses(filter => filter.AssignableTo(typeof(IQueryHandler<,>)))
-			  .AsImplementedInterfaces()
-			  .WithSingletonLifetime()
+			.FromAssemblies(assemblies)
+			.AddClasses(filter => filter.AssignableTo(typeof(IQueryHandler<,>)))
+			.AsImplementedInterfaces()
+			.WithSingletonLifetime()
 		);
 
 		// Return

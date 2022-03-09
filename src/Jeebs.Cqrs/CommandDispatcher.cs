@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Maybe;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Cqrs;
@@ -27,4 +28,3 @@ public sealed class CommandDispatcher : ICommandDispatcher
 		return handler.HandleAsync(query, cancellationToken);
 	}
 }
-
