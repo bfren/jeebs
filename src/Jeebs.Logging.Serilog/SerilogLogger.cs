@@ -1,12 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Globalization;
-using Serilog;
-using Serilog.Events;
+using S = Serilog;
+using SE = Serilog.Events;
 
-namespace Jeebs.Logging;
+namespace Jeebs.Logging.Serilog;
 
 /// <inheritdoc cref="ILog{TContext}"/>
 public class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
@@ -14,7 +14,7 @@ public class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
 	/// <summary>
 	/// Create logger for <typeparamref name="TContext"/>
 	/// </summary>
-	public SerilogLogger() : base(Serilog.Log.ForContext<TContext>()) { }
+	public SerilogLogger() : base(S.Log.ForContext<TContext>()) { }
 }
 
 /// <inheritdoc cref="ILog"/>
@@ -25,12 +25,12 @@ public class SerilogLogger : Log
 	/// </summary>
 	public static string? ConsoleMessagePrefix { get; internal set; }
 
-	private readonly ILogger logger;
+	private readonly S.ILogger logger;
 
 	/// <summary>
 	/// Use global logger
 	/// </summary>
-	public SerilogLogger() : this(Serilog.Log.Logger) { }
+	public SerilogLogger() : this(S.Log.Logger) { }
 
 	internal static string Prefix(string message) =>
 		ConsoleMessagePrefix switch
@@ -46,7 +46,7 @@ public class SerilogLogger : Log
 	/// Use specified logger
 	/// </summary>
 	/// <param name="logger">Serilog.ILogger</param>
-	internal SerilogLogger(ILogger logger) =>
+	internal SerilogLogger(S.ILogger logger) =>
 		this.logger = logger;
 
 	/// <inheritdoc/>
@@ -55,7 +55,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override bool IsEnabled(LogLevel level) =>
-		logger.IsEnabled((LogEventLevel)level);
+		logger.IsEnabled((SE.LogEventLevel)level);
 
 	/// <inheritdoc/>
 	public override void Vrb(string message, params object[] args) =>

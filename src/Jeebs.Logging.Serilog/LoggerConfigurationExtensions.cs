@@ -1,12 +1,14 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config;
+using Jeebs.Config.Services;
+using Jeebs.Extensions;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Slack;
 
-namespace Jeebs.Logging;
+namespace Jeebs.Logging.Serilog;
 
 /// <summary>
 /// LoggerConfiguration extension methods
