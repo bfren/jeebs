@@ -4,8 +4,6 @@
 using Jeebs.Calendar.Models;
 using Jeebs.Collections;
 using Jeebs.Functions;
-using Jeebs.Random;
-using Xunit;
 
 namespace Jeebs.Calendar.JsonCalendar_Tests;
 

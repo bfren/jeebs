@@ -3,9 +3,6 @@
 
 using Jeebs.Calendar.Models;
 using Jeebs.Collections;
-using Jeebs.Random;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Calendar.JsonCalendar_Tests;
 
