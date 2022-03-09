@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.WordPress;
-using Jeebs.WordPress.Data;
+using Jeebs.WordPress;
 
 namespace Jeebs.WordPress;
 
