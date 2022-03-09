@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace F.CryptoF_Tests;
+namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
 public class GenerateNonce_Tests
 {

@@ -1,8 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Functions;
 using Xunit;
-using static F.JsonF;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests;
 
@@ -20,7 +20,7 @@ public partial class Encrypt_Tests
 		var result = input.Encrypt(defaultStringKey);
 
 		// Assert
-		Assert.Equal(Empty, result);
+		Assert.Equal(JsonF.Empty, result);
 	}
 
 	[Fact]
@@ -41,7 +41,7 @@ public partial class Encrypt_Tests
 		// Arrange
 
 		// Act
-		var json = Serialise(defaultInputObject);
+		var json = JsonF.Serialise(defaultInputObject);
 		var result = defaultInputObject.Encrypt(defaultStringKey);
 
 		// Assert

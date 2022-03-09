@@ -1,12 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
+using Jeebs.Cryptography.Functions;
+using Maybe.Testing;
 using Xunit;
-using static F.CryptoF;
-using static F.Rnd.StringF.M;
+using static Jeebs.Cryptography.Functions.CryptoF.M;
 
-namespace F.CryptoF_Tests;
+namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
 public class GeneratePassphrase_Tests
 {
@@ -14,16 +14,16 @@ public class GeneratePassphrase_Tests
 	[InlineData(-1)]
 	[InlineData(0)]
 	[InlineData(1)]
-	public void NumberOfWords_Less_Than_Two_Returns_None_With_NumberOfWordsMustBeAtLeastTwoMsg(int input)
+	public void NumberOfWords_Less_Than_Two_Returns_None_With_NullPassphraseMsg(int input)
 	{
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase(input);
+		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
+		_ = Assert.IsType<NullPassphraseMsg>(none);
 	}
 
 	[Theory]
@@ -35,7 +35,7 @@ public class GeneratePassphrase_Tests
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase(input);
+		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
 		var some = result.AssertSome().Split('-');
@@ -48,7 +48,7 @@ public class GeneratePassphrase_Tests
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase();
+		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
 		var some = result.AssertSome().Split('-');
@@ -61,7 +61,7 @@ public class GeneratePassphrase_Tests
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase();
+		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
 		var some = result.AssertSome();
@@ -74,7 +74,7 @@ public class GeneratePassphrase_Tests
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase();
+		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
 		var some = result.AssertSome();

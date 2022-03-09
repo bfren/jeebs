@@ -2,10 +2,12 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Cryptography.Functions;
+using Jeebs.Random;
+using Maybe.Testing;
 using Xunit;
-using static F.CryptoF;
-using static F.JsonF.M;
 using static Jeebs.Cryptography.Locked.M;
+using static Jeebs.Functions.JsonF.M;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
 
@@ -20,7 +22,7 @@ public partial class Decrypt_Tests
 	public void Null_Input_Byte_Key_Returns_None(string input)
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 
 		// Act
 		var result = input.Decrypt<int>(key);
@@ -34,8 +36,8 @@ public partial class Decrypt_Tests
 	public void Invalid_Json_Input_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
-		var json = F.Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var json = Rnd.Str;
 
 		// Act
 		var result = json.Decrypt<int>(key);
@@ -62,7 +64,7 @@ public partial class Decrypt_Tests
 	public void Incorrect_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 
 		// Act
 		var result = defaultInputStringEncryptedWithByteKey.Decrypt<string>(key);
@@ -76,7 +78,7 @@ public partial class Decrypt_Tests
 	public void Incorrect_Json_Input_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 		const string json = "{\"foo\":\"bar\"}";
 
 		// Act

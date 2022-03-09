@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Random;
 using Xunit;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
@@ -29,7 +30,7 @@ public sealed class VerifyPassword_Tests
 	public void VerifyPassword_IncorrectPassword_ReturnsFalse()
 	{
 		// Arrange
-		var pwd = F.Rnd.StringF.Get(10);
+		var pwd = Rnd.StringF.Get(10);
 		var hash = passwordHash;
 
 		// Act

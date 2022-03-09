@@ -1,9 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Cryptography.Functions;
+using Jeebs.Functions;
+using Maybe.Testing;
 using Xunit;
-using static F.CryptoF;
-using static F.JsonF;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests;
 
@@ -17,21 +18,21 @@ public partial class Encrypt_Tests
 	public void Null_Input_Byte_Key_Returns_Empty(string input)
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 
 		// Act
 		var result = input.Encrypt(key);
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Equal(Empty, some);
+		Assert.Equal(JsonF.Empty, some);
 	}
 
 	[Fact]
 	public void String_Input_Byte_Key_Returns_Encrypted_Json()
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 
 		// Act
 		var result = defaultInputString.Encrypt(key);
@@ -45,8 +46,8 @@ public partial class Encrypt_Tests
 	public void Object_Input_Byte_Key_Returns_Encrypted_Json()
 	{
 		// Arrange
-		var key = GenerateKey().UnsafeUnwrap();
-		var json = Serialise(defaultInputObject);
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var json = JsonF.Serialise(defaultInputObject);
 
 		// Act
 		var result = defaultInputObject.Encrypt(key);
