@@ -4,7 +4,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace F;
+namespace Jeebs.Random;
 
 public static partial class Rnd
 {

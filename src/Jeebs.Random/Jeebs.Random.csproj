@@ -12,7 +12,4 @@
 	<ItemGroup Label="Embed Long Word List">
 		<EmbeddedResource Include="$(LongWordListPath)" />
 	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Maybe\Jeebs.Maybe.csproj" />
-	</ItemGroup>
 </Project>

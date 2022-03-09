@@ -3,7 +3,7 @@
 
 using System;
 
-namespace F;
+namespace Jeebs.Random;
 
 public static partial class Rnd
 {

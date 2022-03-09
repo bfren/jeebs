@@ -1,13 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Jeebs;
-using static F.MaybeF;
 
-namespace F;
+namespace Jeebs.Random;
 
 public static partial class Rnd
 {
@@ -43,11 +41,11 @@ public static partial class Rnd
 		);
 
 		/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
-		public static Maybe<string> Passphrase(int numberOfWords) =>
+		public static string? Passphrase(int numberOfWords) =>
 			Passphrase(numberOfWords, '-', true, true);
 
 		/// <inheritdoc cref="Passphrase(string[], int, char, bool, bool)"/>
-		public static Maybe<string> Passphrase(
+		public static string? Passphrase(
 			int numberOfWords,
 			char separator,
 			bool upperFirst,
@@ -63,7 +61,7 @@ public static partial class Rnd
 		/// <param name="separator">[Optional] Word separator</param>
 		/// <param name="upperFirst">[Optional] Whether or not to make the first letter of each word upper case</param>
 		/// <param name="includeNumber">[Optional] Whether or not to include a number with one of the words</param>
-		internal static Maybe<string> Passphrase(
+		internal static string? Passphrase(
 			string[] wordList,
 			int numberOfWords,
 			char separator = '-',
@@ -74,19 +72,19 @@ public static partial class Rnd
 			// Number of words must be at least 2
 			if (numberOfWords < 2)
 			{
-				return None<string, M.NumberOfWordsMustBeAtLeastTwoMsg>();
+				return null;
 			}
 
 			// Get word list
 			if (wordList.Length == 0)
 			{
-				return None<string, M.EmptyWordListMsg>();
+				return null;
 			}
 
 			// Number of words cannot be higher than the word list
 			if (numberOfWords > wordList.Length)
 			{
-				return None<string, M.NumberOfWordsCannotBeMoreThanWordListMsg>();
+				return null;
 			}
 
 			// Get the right number of words
@@ -134,19 +132,6 @@ public static partial class Rnd
 
 				return index;
 			}
-		}
-
-		/// <summary>Messages</summary>
-		public static class M
-		{
-			/// <summary>Number of words must be at least 2</summary>
-			public sealed record class NumberOfWordsMustBeAtLeastTwoMsg : Msg;
-
-			/// <summary>Number of words must be less than length of word list</summary>
-			public sealed record class NumberOfWordsCannotBeMoreThanWordListMsg : Msg;
-
-			/// <summary>The word list was empty</summary>
-			public sealed record class EmptyWordListMsg : Msg;
 		}
 	}
 }

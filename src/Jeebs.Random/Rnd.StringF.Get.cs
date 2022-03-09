@@ -1,11 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
-using Jeebs;
 
-namespace F;
+namespace Jeebs.Random;
 
 public static partial class Rnd
 {
@@ -185,6 +184,6 @@ public static partial class Rnd
 			/// </summary>
 			internal bool IsValid =>
 				Lower || Upper || Numbers || Special;
-		};
+		}
 	}
 }

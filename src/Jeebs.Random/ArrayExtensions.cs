@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Linq;
 
-namespace Jeebs;
+namespace Jeebs.Random;
 
 /// <summary>
 /// Array Extensions
@@ -23,10 +23,8 @@ public static class ArrayExtensions
 
 		for (var i = shuffled.Length; i > 1; i--)
 		{
-			var j = F.Rnd.NumberF.GetInt32(max: i - 1);
-			var tmp = shuffled[j];
-			shuffled[j] = shuffled[i - 1];
-			shuffled[i - 1] = tmp;
+			var j = Rnd.NumberF.GetInt32(max: i - 1);
+			(shuffled[i - 1], shuffled[j]) = (shuffled[j], shuffled[i - 1]);
 		}
 
 		return shuffled;

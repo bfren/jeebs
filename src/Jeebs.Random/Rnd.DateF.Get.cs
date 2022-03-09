@@ -3,23 +3,20 @@
 
 using System;
 
-namespace F;
+namespace Jeebs.Random;
 
 public static partial class Rnd
 {
-	public static partial class DateTimeF
+	public static partial class DateF
 	{
 		/// <summary>
-		/// Return a random DateTime
+		/// Return a random Date
 		/// </summary>
-		public static DateTime Get() =>
+		public static DateOnly Get() =>
 			new(
 				year: NumberF.GetInt32(1, 9999),
 				month: NumberF.GetInt32(1, 12),
-				day: NumberF.GetInt32(1, 28),
-				hour: NumberF.GetInt32(0, 23),
-				minute: NumberF.GetInt32(0, 59),
-				second: NumberF.GetInt32(0, 59)
+				day: NumberF.GetInt32(1, 28)
 			);
 	}
 }

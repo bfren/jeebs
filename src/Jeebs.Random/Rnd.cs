@@ -1,10 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs;
 
-namespace F;
+namespace Jeebs.Random;
 
 /// <summary>
 /// Random generator functions - very useful for testing
@@ -48,7 +47,7 @@ public static partial class Rnd
 	/// <summary>
 	/// Generate a random passphrase with five dictionary words, a number, and one uppercase letter
 	/// </summary>
-	public static Maybe<string> Pass =>
+	public static string? Pass =>
 		StringF.Passphrase(5);
 
 	/// <summary>
