@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.Rnd.NumberF;
 
-namespace F.NumberF_Tests;
+namespace Jeebs.Random.Rnd_Tests.NumberF_Tests;
 
 public class GetInt32_Tests
 {
@@ -19,7 +18,7 @@ public class GetInt32_Tests
 		const int max = 2;
 
 		// Act
-		var action = void () => GetInt64(min, max);
+		var action = void () => Rnd.NumberF.GetInt64(min, max);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
@@ -33,7 +32,7 @@ public class GetInt32_Tests
 		const int min = int.MinValue;
 
 		// Act
-		var action = void () => GetInt32(min: min, max: Rnd.Int);
+		var action = void () => Rnd.NumberF.GetInt32(min: min, max: Rnd.Int);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentException>(action);
@@ -52,7 +51,7 @@ public class GetInt32_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(GetInt32(min, max));
+			numbers.Add(Rnd.NumberF.GetInt32(min, max));
 		}
 
 		// Assert
@@ -70,7 +69,7 @@ public class GetInt32_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(GetInt32());
+			numbers.Add(Rnd.NumberF.GetInt32());
 		}
 
 		var unique = numbers.Distinct();

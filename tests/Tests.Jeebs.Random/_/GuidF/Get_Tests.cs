@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.Rnd.GuidF;
 
-namespace F.GuidF_Tests;
+namespace Jeebs.Random.Rnd_Tests.GuidF_Tests;
 
 public class Get_Tests
 {
@@ -21,7 +20,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(Get());
+			numbers.Add(Rnd.GuidF.Get());
 		}
 
 		var unique = numbers.Distinct();

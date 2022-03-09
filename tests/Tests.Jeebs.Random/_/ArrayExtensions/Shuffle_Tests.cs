@@ -4,7 +4,7 @@
 using System.Linq;
 using Xunit;
 
-namespace Jeebs.ArrayExtensions_Tests;
+namespace Jeebs.Random.ArrayExtensions_Tests;
 
 public class Shuffle_Tests
 {

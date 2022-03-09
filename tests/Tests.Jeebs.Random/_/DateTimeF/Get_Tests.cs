@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.Rnd.DateTimeF;
 
-namespace F.DateTimeF_Tests;
+namespace Jeebs.Random.Rnd_Tests.DateTimeF_Tests;
 
 public class Get_Tests
 {
@@ -20,7 +19,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			var dt = Get();
+			var dt = Rnd.DateTimeF.Get();
 			numbers.Add(value(dt));
 		}
 

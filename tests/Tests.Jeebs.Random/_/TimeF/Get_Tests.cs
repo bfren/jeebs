@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.Rnd.TimeF;
 
-namespace F.TimeF_Tests;
+namespace Jeebs.Random.Rnd_Tests.TimeF_Tests;
 
 public class Get_Tests
 {
@@ -20,7 +19,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			var t = Get();
+			var t = Rnd.TimeF.Get();
 			numbers.Add(value(t));
 		}
 

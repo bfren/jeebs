@@ -4,9 +4,8 @@
 using System;
 using System.Linq;
 using Xunit;
-using static F.Rnd.StringF;
 
-namespace F.StringF_Tests;
+namespace Jeebs.Random.Rnd_Tests.StringF_Tests;
 
 public class Get_Tests
 {
@@ -17,7 +16,7 @@ public class Get_Tests
 		const int length = 10;
 
 		// Act
-		var result = Get(length);
+		var result = Rnd.StringF.Get(length);
 
 		// Assert
 		Assert.Equal(length, result.Length);
@@ -30,7 +29,7 @@ public class Get_Tests
 		const int length = 3;
 
 		// Act
-		var action = void () => Get(length, options: new(false, false, false, false));
+		var action = void () => Rnd.StringF.Get(length, options: new(false, false, false, false));
 
 		// Assert
 		_ = Assert.Throws<InvalidOperationException>(action);
@@ -43,7 +42,7 @@ public class Get_Tests
 		const int length = 3;
 
 		// Act
-		var action = void () => Get(length, options: new(true, true, true, true));
+		var action = void () => Rnd.StringF.Get(length, options: new(true, true, true, true));
 
 		// Assert
 		_ = Assert.Throws<InvalidOperationException>(action);
@@ -55,10 +54,10 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(12, options:new(true, false, false, false));
+		var result = Rnd.StringF.Get(12, options: new(true, false, false, false));
 
 		// Assert
-		Assert.True(result.All(c => LowercaseChars.Contains(c)));
+		Assert.True(result.All(c => Rnd.StringF.LowercaseChars.Contains(c)));
 	}
 
 	[Fact]
@@ -67,10 +66,10 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(64, options: new(false, true, false, false));
+		var result = Rnd.StringF.Get(64, options: new(false, true, false, false));
 
 		// Assert
-		Assert.True(result.All(c => UppercaseChars.Contains(c)));
+		Assert.True(result.All(c => Rnd.StringF.UppercaseChars.Contains(c)));
 	}
 
 	[Fact]
@@ -79,10 +78,10 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(64, options: new(false, false, true, false));
+		var result = Rnd.StringF.Get(64, options: new(false, false, true, false));
 
 		// Assert
-		Assert.True(result.All(c => NumberChars.Contains(c)));
+		Assert.True(result.All(c => Rnd.StringF.NumberChars.Contains(c)));
 	}
 
 	[Fact]
@@ -91,10 +90,10 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(64, options: new(false, false, false, true));
+		var result = Rnd.StringF.Get(64, options: new(false, false, false, true));
 
 		// Assert
-		Assert.True(result.All(c => SpecialChars.Contains(c)));
+		Assert.True(result.All(c => Rnd.StringF.SpecialChars.Contains(c)));
 	}
 
 	[Fact]
@@ -103,13 +102,13 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(64, options: new(true, true, true, true));
+		var result = Rnd.StringF.Get(64, options: new(true, true, true, true));
 
 		// Assert
-		Assert.False(result.All(c => LowercaseChars.Contains(c)));
-		Assert.False(result.All(c => UppercaseChars.Contains(c)));
-		Assert.False(result.All(c => NumberChars.Contains(c)));
-		Assert.False(result.All(c => SpecialChars.Contains(c)));
-		Assert.True(result.All(c => AllChars.Contains(c)));
+		Assert.False(result.All(c => Rnd.StringF.LowercaseChars.Contains(c)));
+		Assert.False(result.All(c => Rnd.StringF.UppercaseChars.Contains(c)));
+		Assert.False(result.All(c => Rnd.StringF.NumberChars.Contains(c)));
+		Assert.False(result.All(c => Rnd.StringF.SpecialChars.Contains(c)));
+		Assert.True(result.All(c => Rnd.StringF.AllChars.Contains(c)));
 	}
 }

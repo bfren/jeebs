@@ -4,9 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static F.Rnd.ByteF;
 
-namespace F.ByteF_Tests;
+namespace Jeebs.Random.Rnd_Tests.ByteF_Tests;
 
 public class Get_Tests
 {
@@ -22,7 +21,7 @@ public class Get_Tests
 		// Arrange
 
 		// Act
-		var result = Get(length);
+		var result = Rnd.ByteF.Get(length);
 
 		// Assert
 		Assert.Equal(length, result.Length);
@@ -38,7 +37,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(Get(4));
+			numbers.Add(Rnd.ByteF.Get(4));
 		}
 
 		var unique = numbers.Distinct();
