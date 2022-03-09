@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Calendar.Models;
@@ -18,18 +18,18 @@ public abstract class CalendarBase
 	/// <summary>
 	/// The calendar
 	/// </summary>
-	internal readonly CalendarModel calendar;
+	internal CalendarModel Calendar { get; private init; }
 
 	/// <summary>
 	/// The calendar's timezone (default: see <see cref="DefaultTimezone"/>)
 	/// </summary>
-	internal readonly string tzid;
+	internal string TzId { get; private init; }
 
 	/// <summary>
 	/// Create object
 	/// </summary>
 	/// <param name="calendar">Calendar</param>
-	/// <param name="tzid">Timezone</param>
-	protected CalendarBase(CalendarModel calendar, string tzid) =>
-		(this.calendar, this.tzid) = (calendar, tzid);
+	/// <param name="tzId">Timezone</param>
+	protected CalendarBase(CalendarModel calendar, string tzId) =>
+		(Calendar, TzId) = (calendar, tzId);
 }
