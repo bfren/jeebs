@@ -3,7 +3,6 @@
 		<RootNamespace>Jeebs.WordPress</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj" />
 	  <ProjectReference Include="..\..\src\Jeebs.WordPress\Jeebs.WordPress.csproj" />
 	</ItemGroup>
 </Project>
