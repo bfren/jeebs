@@ -1,10 +1,9 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.Config;
+using Jeebs.Config.Db;
 using Jeebs.WordPress;
-using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Options;
 
 namespace AppConsoleWp.Bcg;
@@ -34,7 +33,7 @@ public sealed class WpBcg : Wp<
 	/// <param name="dbConfig">DbConfig</param>
 	/// <param name="wpConfig">WpBcgConfig</param>
 	/// <param name="log">ILog</param>
-	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
+	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, Jeebs.Logging.ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>
 	/// Register custom post types
