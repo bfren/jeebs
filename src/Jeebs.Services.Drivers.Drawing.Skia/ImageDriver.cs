@@ -1,10 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.IO;
+using Jeebs.Messages;
 using Jeebs.Services.Drawing;
+using MaybeF;
 using SkiaSharp;
-using static F.MaybeF;
 
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
@@ -18,7 +19,7 @@ public sealed class ImageDriver : IImageDriver
 	{
 		if (!File.Exists(path))
 		{
-			return None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
+			return F.None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
 		}
 
 		// Create and return image object

@@ -3,7 +3,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
+		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
 		<ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
 	</ItemGroup>
 </Project>

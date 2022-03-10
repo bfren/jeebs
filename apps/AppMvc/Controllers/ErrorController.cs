@@ -1,13 +1,14 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.Mvc;
+using Jeebs.Logging;
+using Jeebs.Messages;
+using Jeebs.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppMvc.Controllers;
 
-public class ErrorController : Jeebs.Mvc.ErrorController
+public class ErrorController : Jeebs.Mvc.Controllers.ErrorController
 {
 	public ErrorController(ILog log) : base(log) { }
 

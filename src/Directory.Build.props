@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-	
+
 	<!-- Standard Configuration -->
 	<PropertyGroup Label="Framework and Language">
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	
+
 	<!-- Enable Internal Testing -->
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>Tests.$(AssemblyName)</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
-	
+
 	<!-- Get Paths to Files -->
 	<PropertyGroup>
 		<LicenceFile>LICENSE</LicenceFile>
@@ -28,34 +28,34 @@
 		<VersionFile>Version</VersionFile>
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
-	
+
 	<!-- Import Licence -->
 	<ItemGroup Label="Licence">
 		<None Include="$(LicencePath)" Pack="true" PackagePath=""/>
 	</ItemGroup>
-	
+
 	<!-- Get Version -->
 	<PropertyGroup>
 		<JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)'))</JeebsVersion>
 	</PropertyGroup>
-	
+
 	<!-- Package Configuration -->
 	<PropertyGroup Label="Package">
 		<Authors>bfren</Authors>
 		<Company>bfren</Company>
-		<Copyright>Copyright © bfren.uk 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
+		<Copyright>Copyright © bfren.dev 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
 		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/bfren/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
-	
+
 	<!-- Documentation -->
 	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	
+
 	<!-- [Optional] Create Local Packages -->
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
 

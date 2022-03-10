@@ -1,13 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
+using Jeebs.Functions;
+using Jeebs.Messages;
+using Jeebs.Services.Notify;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
-using static F.ThreadF;
 
 namespace Jeebs.Services.Webhook;
 
@@ -51,7 +53,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(Msg msg)
+	public virtual void Send(IMsg msg)
 	{
 		// Get message content
 		var content = msg.ToString() ?? msg.GetType().ToString();
@@ -59,7 +61,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		// Convert to notification Message
 		var message = msg switch
 		{
-			ExceptionMsg x =>
+			IExceptionMsg x =>
 				new Message
 				{
 					Content = content,
@@ -70,7 +72,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 					}
 				},
 
-			Msg x =>
+			IMsg x =>
 				new Message
 				{
 					Content = content,
@@ -118,7 +120,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// </summary>
 	/// <param name="request"></param>
 	protected void Send(HttpRequestMessage request) =>
-		FireAndForget(async () =>
+		ThreadF.FireAndForget(async () =>
 		{
 			try
 			{

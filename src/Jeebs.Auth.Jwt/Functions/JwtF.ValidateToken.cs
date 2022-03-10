@@ -1,16 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Jeebs;
-using Jeebs.Auth;
-using Jeebs.Config;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Messages;
+using MaybeF;
 using Microsoft.IdentityModel.Tokens;
-using static F.MaybeF;
 
-namespace F;
+namespace Jeebs.Auth.Jwt.Functions;
 
 public static partial class JwtF
 {
@@ -42,19 +41,18 @@ public static partial class JwtF
 		}
 		catch (SecurityTokenNotYetValidException)
 		{
-			return None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
+			return F.None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
 		}
 		catch (Exception e) when (e.Message.Contains("IDX10223"))
 		{
-			return None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
+			return F.None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
 		}
 		catch (Exception e)
 		{
-			return None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
+			return F.None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
 		}
 	}
 
-	/// <summary>Messages</summary>
 	public static partial class M
 	{
 		/// <summary>The token has expired</summary>

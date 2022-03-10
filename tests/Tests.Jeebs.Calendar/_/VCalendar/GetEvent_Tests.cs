@@ -1,10 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Text;
 using Jeebs.Calendar.Models;
-using Xunit;
 
 namespace Jeebs.Calendar.VCalendar_Tests;
 
@@ -14,10 +12,10 @@ public class GetEvent_Tests
 	public void Returns_Correct_Event_Definition()
 	{
 		// Arrange
-		var lastModified = F.Rnd.DateTime;
-		var tzid = F.Rnd.Str;
-		var uid = F.Rnd.Str;
-		var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
+		var lastModified = Rnd.DateTime;
+		var tzid = Rnd.Str;
+		var uid = Rnd.Str;
+		var e = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{uid}")
@@ -43,10 +41,10 @@ public class GetEvent_Tests
 	public void Returns_Correct_AllDay_Event_Definition()
 	{
 		// Arrange
-		var lastModified = F.Rnd.DateTime;
-		var tzid = F.Rnd.Str;
-		var uid = F.Rnd.Str;
-		var e = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, true, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, true);
+		var lastModified = Rnd.DateTime;
+		var tzid = Rnd.Str;
+		var uid = Rnd.Str;
+		var e = new EventModel(Rnd.DateTime, Rnd.DateTime, true, Rnd.Str, Rnd.Str, Rnd.Str, true);
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{uid}")

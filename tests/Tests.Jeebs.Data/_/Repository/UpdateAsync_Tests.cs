@@ -1,10 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
-using NSubstitute;
-using Xunit;
-
 namespace Jeebs.Data.Repository_Tests;
 
 public class UpdateAsync_Tests
@@ -14,7 +10,7 @@ public class UpdateAsync_Tests
 	{
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
-		var value = F.Rnd.Lng;
+		var value = Rnd.Lng;
 		var model = new Repository_Setup.FooModel { Id = new(value) };
 
 		// Act
@@ -29,7 +25,7 @@ public class UpdateAsync_Tests
 	{
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
-		var value = F.Rnd.Lng;
+		var value = Rnd.Lng;
 		var model = new Repository_Setup.FooModel { Id = new(value) };
 
 		// Act

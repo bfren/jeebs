@@ -1,8 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using NSubstitute;
-using Xunit;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.DbQuery_Tests;
 

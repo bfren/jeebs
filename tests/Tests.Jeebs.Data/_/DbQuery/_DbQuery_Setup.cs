@@ -2,8 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Data.Querying;
-using NSubstitute;
+using Jeebs.Data.Query;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.DbQuery_Tests;
 
@@ -20,7 +20,7 @@ public static class DbQuery_Setup
 
 	public static (IDb db, IDbClient client, ILog log, DbQuery<IDb> query) Get(string? queryText, IQueryParametersDictionary? queryParams)
 	{
-		var text = queryText ?? F.Rnd.Str;
+		var text = queryText ?? Rnd.Str;
 		var param = queryParams ?? Substitute.For<IQueryParametersDictionary>();
 
 		var client = Substitute.For<IDbClient>();

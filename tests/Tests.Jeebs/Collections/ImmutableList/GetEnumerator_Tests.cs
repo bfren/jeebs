@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
-using Xunit;
-
-namespace Jeebs.ImmutableList_Tests;
+namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class GetEnumerator_Tests
 {
@@ -13,8 +9,8 @@ public class GetEnumerator_Tests
 	public void Returns_Enumerator()
 	{
 		// Arrange
-		var i0 = F.Rnd.Guid;
-		var i1 = F.Rnd.Guid;
+		var i0 = Rnd.Guid;
+		var i1 = Rnd.Guid;
 		var list = ImmutableList.Create(new[] { i0, i1 });
 
 		// Act

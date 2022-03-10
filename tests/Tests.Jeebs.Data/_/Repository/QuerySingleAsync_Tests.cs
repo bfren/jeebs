@@ -1,13 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Jeebs.Data.Enums;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.Repository_Tests;
 
@@ -20,7 +15,7 @@ public class QuerySingleAsync_Tests
 		var (client, _, repo) = Repository_Setup.Get();
 		var predicates = new List<(Expression<Func<Repository_Setup.Foo, object>>, Compare, object)>
 		{
-			(f => f.Id, Compare.NotEqual, F.Rnd.Int)
+			(f => f.Id, Compare.NotEqual, Rnd.Int)
 		}.ToArray();
 
 		// Act
@@ -37,7 +32,7 @@ public class QuerySingleAsync_Tests
 		var (_, log, repo) = Repository_Setup.Get();
 		var predicates = new List<(Expression<Func<Repository_Setup.Foo, object>>, Compare, object)>
 		{
-			(f => f.Id, Compare.NotEqual, F.Rnd.Int)
+			(f => f.Id, Compare.NotEqual, Rnd.Int)
 		}.ToArray();
 
 		// Act

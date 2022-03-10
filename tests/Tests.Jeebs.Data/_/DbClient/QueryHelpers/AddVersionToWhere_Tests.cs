@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.DbClient_Tests;
 
@@ -31,9 +29,9 @@ public class AddVersionToWhere_Tests
 		_ = client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
 		_ = client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
-		var name = F.Rnd.Str;
-		var alias = F.Rnd.Str;
-		var version = new Column(new TableName(F.Rnd.Str), name, alias);
+		var name = Rnd.Str;
+		var alias = Rnd.Str;
+		var version = new Column(new TableName(Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}##";
 
 		var sql = string.Empty;
@@ -53,11 +51,11 @@ public class AddVersionToWhere_Tests
 		_ = client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
 		_ = client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
-		var name = F.Rnd.Str;
-		var alias = F.Rnd.Str;
-		var version = new Column(new TableName(F.Rnd.Str), name, alias);
+		var name = Rnd.Str;
+		var alias = Rnd.Str;
+		var version = new Column(new TableName(Rnd.Str), name, alias);
 
-		var query = F.Rnd.Str;
+		var query = Rnd.Str;
 		var sql = query;
 
 		var expected = $"{query} AND --{name}-- = ##{alias}##";

@@ -1,0 +1,118 @@
+﻿// Jeebs Unit Tests
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using Jeebs.StringExtensions_Tests;
+
+namespace Jeebs.WordPress.ContentFilters.GenerateExcerpt_Tests;
+
+public class Execute_Tests
+{
+	[Theory]
+	[InlineData("")]
+	[InlineData(" arg=\"one\"")]
+	public void Removes_Square_Brackets_With_Content(string options)
+	{
+		// Arrange
+		var shortcode = Rnd.Str;
+		var content = Rnd.Str;
+		var input = $"[{shortcode}{options}]{content}{Environment.NewLine}[/{shortcode}]";
+
+		// Act
+		var result = GenerateExcerpt.Create().Execute(input);
+
+		// Assert
+		Assert.Equal(string.Empty, result);
+	}
+
+	[Theory]
+	[InlineData("")]
+	[InlineData(" arg=\"one\"")]
+	public void Removes_Square_Brackets_Without_Content(string options)
+	{
+		// Arrange
+		var shortcode = Rnd.Str;
+		var input = $"[{shortcode}{Environment.NewLine}{options}]";
+
+		// Act
+		var result = GenerateExcerpt.Create().Execute(input);
+
+		// Assert
+		Assert.Equal(string.Empty, result);
+	}
+
+	[Theory]
+	[InlineData("\n")]
+	[InlineData("\r")]
+	public void Removes_New_Lines(string newline)
+	{
+		// Arrange
+		var t0 = Rnd.Str;
+		var t1 = Rnd.Str;
+		var input = t0 + newline + t1;
+
+		// Act
+		var result = GenerateExcerpt.Create().Execute(input);
+
+		// Assert
+		Assert.Equal($"{t0} {t1}", result);
+	}
+
+	[Fact]
+	public void With_More_Cuts_At_More()
+	{
+		// Arrange
+		var t0 = Rnd.Str;
+		var t1 = Rnd.Str;
+		var input = $"{t0}<!--more-->{t1}";
+
+		// Act
+		var result = GenerateExcerpt.Create().Execute(input);
+
+		// Assert
+		Assert.Equal(t0, result);
+	}
+
+	[Theory]
+	[MemberData(nameof(ReplaceHtmlTags_Tests.String_Returns_Value_With_Html_Tags_Replaced_Data), MemberType = typeof(ReplaceHtmlTags_Tests))]
+	public void Removes_Html_Tags(string input, string expected)
+	{
+		// Arrange
+
+		// Act
+		var result = GenerateExcerpt.Create().Execute(input);
+
+		// Assert
+		Assert.Equal(expected, result);
+	}
+
+	[Fact]
+	public void Removes_Multiple_Spaces_And_Trims()
+	{
+		// Arrange
+		var t0 = Rnd.Str;
+		var t1 = Rnd.Str;
+		var input = $"  {t0}     {t1}  ";
+
+		// Act
+		var result = GenerateExcerpt.Create().Execute(input);
+
+		// Assert
+		Assert.Equal($"{t0} {t1}", result);
+	}
+
+	[Fact]
+	public void Cuts_To_Maximum_Length()
+	{
+		// Arrange
+		var max = Rnd.Int;
+		var length = max * 2;
+		var input = Rnd.StringF.Get(length);
+		var expected = input[..max] + "..";
+
+		// Act
+		var result = GenerateExcerpt.Create(max).Execute(input);
+
+		// Assert
+		Assert.Equal(expected, result);
+	}
+}

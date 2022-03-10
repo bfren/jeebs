@@ -1,17 +1,16 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Jeebs;
-using Jeebs.Auth;
-using Jeebs.Auth.Constants;
-using Jeebs.Config;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Messages;
+using MaybeF;
 using Microsoft.IdentityModel.Tokens;
-using static F.MaybeF;
 
-namespace F;
+namespace Jeebs.Auth.Jwt.Functions;
 
 /// <summary>
 /// JSON Web Tokens functions
@@ -45,32 +44,32 @@ public static partial class JwtF
 		// Ensure there is a current user
 		if (principal.Identity is null)
 		{
-			return None<string, M.NullIdentityMsg>();
+			return F.None<string, M.NullIdentityMsg>();
 		}
 
 		// Ensure the current user is authenticated
 		var identity = principal.Identity;
 		if (!identity.IsAuthenticated)
 		{
-			return None<string, M.IdentityNotAuthenticatedMsg>();
+			return F.None<string, M.IdentityNotAuthenticatedMsg>();
 		}
 
 		// Ensure the JwtConfig is valid
 		if (!config.IsValid)
 		{
-			return None<string, M.ConfigInvalidMsg>();
+			return F.None<string, M.ConfigInvalidMsg>();
 		}
 
 		// Ensure the signing key is a valid length
 		if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 		{
-			return None<string, M.SigningKeyNotLongEnoughMsg>();
+			return F.None<string, M.SigningKeyNotLongEnoughMsg>();
 		}
 
 		// Ensure the encrypting key is a valid length
 		if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 		{
-			return None<string, M.EncryptingKeyNotLongEnoughMsg>();
+			return F.None<string, M.EncryptingKeyNotLongEnoughMsg>();
 		}
 
 		try
@@ -102,15 +101,14 @@ public static partial class JwtF
 		}
 		catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 		{
-			return None<string, M.KeyNotLongEnoughMsg>();
+			return F.None<string, M.KeyNotLongEnoughMsg>();
 		}
 		catch (Exception e)
 		{
-			return None<string>(new M.CreatingJwtSecurityTokenExceptionMsg(e));
+			return F.None<string>(new M.CreatingJwtSecurityTokenExceptionMsg(e));
 		}
 	}
 
-	/// <summary>Messages</summary>
 	public static partial class M
 	{
 		/// <summary>JwtConfig invalid</summary>

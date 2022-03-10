@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Cqrs.QueryDispatcher_Tests;
 
@@ -21,7 +17,7 @@ public class DispatchAsync_Tests
 		var provider = collection.BuildServiceProvider();
 
 		IQueryDispatcher dispatcher = new QueryDispatcher(provider);
-		var value = F.Rnd.Int;
+		var value = Rnd.Int;
 
 		// Act
 		_ = await dispatcher.DispatchAsync<int, string>(value).ConfigureAwait(false);

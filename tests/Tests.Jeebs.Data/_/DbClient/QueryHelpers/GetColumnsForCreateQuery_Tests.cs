@@ -2,9 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.DbClient_Tests;
 
@@ -31,13 +29,13 @@ public class GetColumnsForCreateQuery_Tests
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
 
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 
-		var alias = F.Rnd.Str;
+		var alias = Rnd.Str;
 		var propertyInfo = Substitute.For<PropertyInfo>();
 		_ = propertyInfo.Name.Returns(alias);
 
-		var column = new MappedColumn(new TableName(F.Rnd.Str), name, propertyInfo);
+		var column = new MappedColumn(new TableName(Rnd.Str), name, propertyInfo);
 
 		var list = new MappedColumnList(new[] { column });
 

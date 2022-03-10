@@ -1,9 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
-using static F.CryptoF;
+using Jeebs.Cryptography.Functions;
+using Jeebs.Functions;
 
 namespace Jeebs.Cryptography.Locked_Tests;
 
@@ -20,15 +19,15 @@ public class Serialise_Tests
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Equal(F.JsonF.Empty, some);
+		Assert.Equal(JsonF.Empty, some);
 	}
 
 	[Fact]
 	public void Returns_Json()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 		var box = new Locked<string>(value, key);
 		var json = string.Format("{{\"encryptedContents\":\"{0}\",\"salt\":\"{1}\",\"nonce\":\"{2}\"}}",
 			Convert.ToBase64String(box.EncryptedContents.UnsafeUnwrap()),

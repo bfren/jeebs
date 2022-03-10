@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-using static F.MaybeF.Enumerable.M;
+using static MaybeF.F.EnumerableF.R;
 
-namespace Jeebs.ImmutableList_Tests;
+namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class Indexer_Tests
 {
@@ -12,9 +11,9 @@ public class Indexer_Tests
 	public void Exists_Returns_Some_With_Value()
 	{
 		// Arrange
-		var i0 = F.Rnd.Str;
-		var i1 = F.Rnd.Str;
-		var i2 = F.Rnd.Str;
+		var i0 = Rnd.Str;
+		var i1 = Rnd.Str;
+		var i2 = Rnd.Str;
 		var list = ImmutableList.Create(new[] { i0, i1, i2 });
 
 		// Act
@@ -29,8 +28,8 @@ public class Indexer_Tests
 	public void Does_Not_Exist_Returns_None_With_ElementAtIsNullMsg()
 	{
 		// Arrange
-		var i0 = F.Rnd.Str;
-		var i1 = F.Rnd.Str;
+		var i0 = Rnd.Str;
+		var i1 = Rnd.Str;
 		var list = ImmutableList.Create(new[] { i0, i1 });
 
 		// Act
@@ -38,7 +37,7 @@ public class Indexer_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ElementAtIsNullMsg>(none);
+		_ = Assert.IsType<ElementAtIsNullReason>(none);
 	}
 
 	[Fact]
@@ -48,26 +47,26 @@ public class Indexer_Tests
 		var list = new ImmutableList<int>();
 
 		// Act
-		var result = list[F.Rnd.Int];
+		var result = list[Rnd.Int];
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ListIsEmptyMsg>(none);
+		_ = Assert.IsType<ListIsEmptyReason>(none);
 	}
 
 	[Fact]
 	public void Element_Is_Read_Only()
 	{
 		// Arrange
-		var i0 = F.Rnd.Str;
-		var i1 = F.Rnd.Str;
+		var i0 = Rnd.Str;
+		var i1 = Rnd.Str;
 		var list = ImmutableList.Create(new[] { i0, i1 });
 
 		// Act
 		for (int i = 0; i < list.Count; i++)
 		{
 			var item = list[i];
-			item = F.Rnd.Str;
+			item = Rnd.Str;
 		}
 
 		// Assert

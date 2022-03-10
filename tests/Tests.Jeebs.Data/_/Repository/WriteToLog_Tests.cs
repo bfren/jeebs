@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using NSubstitute;
-using Xunit;
-
 namespace Jeebs.Data.Repository_Tests;
 
 public class WriteToLog_Tests
@@ -13,8 +10,8 @@ public class WriteToLog_Tests
 	{
 		// Arrange
 		var (_, log, entity) = Repository_Setup.Get();
-		var message = F.Rnd.Str;
-		var args = new object[] { F.Rnd.Int, F.Rnd.Int };
+		var message = Rnd.Str;
+		var args = new object[] { Rnd.Int, Rnd.Int };
 
 		// Act
 		entity.WriteToLogTest(message, args);

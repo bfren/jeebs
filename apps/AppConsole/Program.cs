@@ -3,9 +3,12 @@
 
 using AppConsole;
 using AppConsole.Messages;
-using Jeebs;
 using Jeebs.Config;
-using Jeebs.Linq;
+using Jeebs.Functions;
+using Jeebs.Random;
+using Jeebs.Services.Notify;
+using MaybeF;
+using MaybeF.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -17,7 +20,7 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Dbg("Services loaded");
 	log.Dbg("Project {Name}", jeebs.App.Name);
 
-	log.Dbg("Version: {0}", await F.VersionF.GetJeebsVersionAsync().ConfigureAwait(false));
+	log.Dbg("Version: {0}", await VersionF.GetJeebsVersionAsync().ConfigureAwait(false));
 
 	log.Err("Test error");
 	log.Err(new Exception("Test"), "Something went badly wrong {here}", "just now");
@@ -63,10 +66,10 @@ await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>
 	log.Msg(new FormattedMsg());
 
 	log.Inf("Testing Msg with value");
-	log.Msg(new WithValue(F.Rnd.Str));
+	log.Msg(new WithValue(Rnd.Str));
 
 	log.Inf("Testing Msg with exception");
-	var e = new Exception(F.Rnd.Str);
+	var e = new Exception(Rnd.Str);
 	log.Msg(new WithException(e));
 
 	// Log console

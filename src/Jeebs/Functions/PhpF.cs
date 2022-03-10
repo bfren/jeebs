@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// PHP functions

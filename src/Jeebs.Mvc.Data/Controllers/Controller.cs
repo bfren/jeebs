@@ -1,9 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
+using Jeebs.Logging;
+using Jeebs.Mvc.Controllers;
 
-namespace Jeebs.Mvc;
+namespace Jeebs.Mvc.Data.Controllers;
 
 /// <summary>
 /// Controller class for interacting with data

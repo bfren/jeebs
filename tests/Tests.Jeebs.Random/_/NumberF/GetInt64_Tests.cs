@@ -1,13 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using static F.Rnd.NumberF;
-
-namespace F.NumberF_Tests;
+namespace Jeebs.Random.Rnd_Tests.NumberF_Tests;
 
 public class GetInt64_Tests
 {
@@ -19,7 +13,7 @@ public class GetInt64_Tests
 		const long max = 2L;
 
 		// Act
-		var action = void () => GetInt64(min, max);
+		var action = void () => Rnd.NumberF.GetInt64(min, max);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentOutOfRangeException>(action);
@@ -33,7 +27,7 @@ public class GetInt64_Tests
 		const long min = long.MinValue;
 
 		// Act
-		var action = void () => GetInt64(min: min, max: Rnd.Lng);
+		var action = void () => Rnd.NumberF.GetInt64(min: min, max: Rnd.Lng);
 
 		// Assert
 		var ex = Assert.Throws<ArgumentException>(action);
@@ -52,7 +46,7 @@ public class GetInt64_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(GetInt64(min, max));
+			numbers.Add(Rnd.NumberF.GetInt64(min, max));
 		}
 
 		// Assert
@@ -70,7 +64,7 @@ public class GetInt64_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(GetInt64());
+			numbers.Add(Rnd.NumberF.GetInt64());
 		}
 
 		var unique = numbers.Distinct();

@@ -4,7 +4,7 @@
 using AppConsoleAuthDb;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Auth.Data.Clients.PostgreSql;
-using Jeebs.Config;
+using Jeebs.Config.Db;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 

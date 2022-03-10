@@ -1,11 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
+using Jeebs.Data.Map;
+using Jeebs.Id;
+using MaybeF.Extensions;
 using NSubstitute.Extensions;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests;
+namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
@@ -23,8 +24,8 @@ public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	{
 		var parts = new QueryParts(table)
 		{
-			Maximum = F.Rnd.Ulng,
-			Skip = F.Rnd.Ulng
+			Maximum = Rnd.Ulng,
+			Skip = Rnd.Ulng
 		};
 
 		var builder = Substitute.For<TBuilder>();

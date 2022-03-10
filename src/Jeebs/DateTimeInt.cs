@@ -1,10 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Globalization;
 using System.Linq;
-using static F.MaybeF;
+using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs;
 
@@ -93,7 +94,7 @@ public readonly record struct DateTimeInt
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
+				F.None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
 		};
 
 	/// <summary>

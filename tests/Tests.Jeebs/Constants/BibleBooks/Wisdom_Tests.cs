@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using Jeebs.Functions;
 
 namespace Jeebs.Constants.BibleBooks_Tests;
 
@@ -14,7 +14,7 @@ public class Wisdom_Tests
 		const string? wisdom = "[\"Job\",\"Psalms\",\"Proverbs\",\"Ecclesiastes\",\"Song of Songs\"]";
 
 		// Act
-		var result = F.JsonF.Serialise(BibleBooks.Wisdom);
+		var result = JsonF.Serialise(BibleBooks.Wisdom);
 
 		// Assert
 		Assert.Equal(wisdom, result);

@@ -23,6 +23,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Random\Jeebs.Random.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Seq\Jeebs.Services.Drivers.Webhook.Seq.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
 	</ItemGroup>

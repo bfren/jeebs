@@ -1,12 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Globalization;
 using System.Linq;
-using Jeebs;
-using static F.MaybeF;
+using Jeebs.Messages;
+using MaybeF;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// Boolean functions
@@ -24,7 +24,7 @@ public static class BooleanF
 		var val = value?.ToString()?.ToLower(CultureInfo.InvariantCulture);
 		if (val is null)
 		{
-			return None<bool, M.NullValueMsg>();
+			return F.None<bool, M.NullValueMsg>();
 		}
 
 		// Alternative boolean values
@@ -45,7 +45,7 @@ public static class BooleanF
 			return result;
 		}
 
-		return None<bool>(new M.UnrecognisedValueMsg(val));
+		return F.None<bool>(new M.UnrecognisedValueMsg(val));
 	}
 
 	/// <summary>Messages</summary>

@@ -1,7 +1,7 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Mvc;
+namespace Jeebs.Mvc.Enums;
 
 /// <summary>
 /// Alert Types

@@ -1,10 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
+using Jeebs.Functions;
+using MaybeF;
 
-namespace Jeebs;
+namespace Jeebs.Collections;
 
 /// <inheritdoc cref="EnumeratedList{T}"/>
 public static class EnumeratedList
@@ -17,7 +19,7 @@ public static class EnumeratedList
 	public static EnumeratedList<T> Deserialise<T>(string json)
 		where T : Enumerated
 	{
-		var strings = F.JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
+		var strings = JsonF.Deserialise<List<string>>(json).Unwrap(() => new List<string>());
 		return new EnumeratedList<T>(strings);
 	}
 }
@@ -65,10 +67,10 @@ public sealed class EnumeratedList<T> : List<T>
 		return (list.Count > 0) switch
 		{
 			true =>
-				F.JsonF.Serialise(list),
+				JsonF.Serialise(list),
 
 			false =>
-				F.JsonF.Empty
+				JsonF.Empty
 		};
 	}
 }

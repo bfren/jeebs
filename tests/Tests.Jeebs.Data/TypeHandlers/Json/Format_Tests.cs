@@ -1,10 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Data;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.TypeHandlers.Json_Tests;
 
@@ -31,8 +28,8 @@ public class Format_Tests
 		// Arrange
 		var handler = new JsonTypeHandler<Test>();
 		var parameter = Substitute.For<IDbDataParameter>();
-		var v0 = F.Rnd.Str;
-		var v1 = F.Rnd.Int;
+		var v0 = Rnd.Str;
+		var v1 = Rnd.Int;
 		var input = new Test { Foo = v0, Bar = v1 };
 		var expected = $"{{\"foo\":\"{v0}\",\"bar\":{v1},\"empty\":null}}";
 

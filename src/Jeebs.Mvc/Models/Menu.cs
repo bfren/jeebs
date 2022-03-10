@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 
@@ -38,9 +39,9 @@ public abstract class Menu
 	/// </summary>
 	public List<MenuItem> Items { get; private init; } = new();
 
-	/// <inheritdoc cref="F.GetSimpleItems(IUrlHelper, List{MenuItem}, GetUri)"/>
+	/// <inheritdoc cref="MenuF.GetSimpleItems(IUrlHelper, List{MenuItem}, GetUri)"/>
 	public IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper) =>
-		F.GetSimpleItems(urlHelper, Items, GetUriFromActionContext);
+		MenuF.GetSimpleItems(urlHelper, Items, GetUriFromActionContext);
 
 	/// <summary>
 	/// Load this menu's items (to speed up page loading)
@@ -53,10 +54,10 @@ public abstract class Menu
 		var client = http.CreateClient();
 
 		// Get URIs
-		var uris = F.GetUris(urlHelper, Items, GetUriFromActionContext);
+		var uris = MenuF.GetUris(urlHelper, Items, GetUriFromActionContext);
 
 		// Load items
-		return F.LoadUrisAsync(client, uris, F.LoadUriAsync);
+		return MenuF.LoadUrisAsync(client, uris, MenuF.LoadUriAsync);
 	}
 
 	/// <summary>
@@ -83,7 +84,7 @@ public abstract class Menu
 	/// <summary>
 	/// Helper Functions
 	/// </summary>
-	internal static class F
+	internal static class MenuF
 	{
 		/// <summary>
 		/// Use a UrlHelper object to get simple menu items

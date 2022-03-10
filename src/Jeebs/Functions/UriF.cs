@@ -3,7 +3,7 @@
 
 using System;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// URI functions

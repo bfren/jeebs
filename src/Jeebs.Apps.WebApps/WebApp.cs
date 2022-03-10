@@ -4,6 +4,8 @@
 using System;
 using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Config;
+using Jeebs.Config.Web.Auth;
+using Jeebs.Config.Web.Verification;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

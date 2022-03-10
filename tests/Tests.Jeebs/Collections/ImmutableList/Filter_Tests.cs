@@ -1,10 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Linq;
-using Xunit;
-
-namespace Jeebs.ImmutableList_Tests;
+namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class Filter_Tests
 {
@@ -12,11 +9,11 @@ public class Filter_Tests
 	public void Returns_Items_Matching_Predicate()
 	{
 		// Arrange
-		var prefix = F.Rnd.Str;
-		var i0 = prefix + F.Rnd.Str;
-		var i1 = F.Rnd.Str;
-		var i2 = prefix + F.Rnd.Str;
-		var i3 = F.Rnd.Str;
+		var prefix = Rnd.Str;
+		var i0 = prefix + Rnd.Str;
+		var i1 = Rnd.Str;
+		var i2 = prefix + Rnd.Str;
+		var i3 = Rnd.Str;
 		var list = ImmutableList.Create(i0, i1, i2, i3);
 
 		// Act

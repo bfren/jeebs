@@ -4,16 +4,16 @@
 using System.Diagnostics;
 using System.Text;
 using AppMvc.EfCore;
-using Jeebs;
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
+using Jeebs.Data.Query;
+using Jeebs.Random;
+using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static F.MaybeF;
 
 namespace AppMvc.Controllers;
 
@@ -48,7 +48,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			var roles = await
-				Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -63,7 +63,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					roles => roles.ToList(),
-					DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					some: _ => results.Append('.'),
@@ -86,12 +86,11 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			var roles = await
-				Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
-					x => query
-						.QueryAsync<AuthRoleEntity>(builder => builder
+					x => query.QueryAsync<AuthRoleEntity>(builder => builder
 						.From<AuthRoleTable>()
 						.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, t => t.Id, t => t.RoleId)
 						.Where<AuthUserRoleTable>(t => t.UserId, Compare.Equal, x.Value)
@@ -99,7 +98,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					some: _ => results.Append('.'),
@@ -133,7 +132,7 @@ public class TestController : Controller
 				$"WHERE `{db.UserRole}`.`{db.UserRole.UserId}` = @P0;";
 
 			var roles = await
-				Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -141,7 +140,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					some: _ => results.Append('.'),
@@ -240,7 +239,8 @@ public class TestController : Controller
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await Some(
+			_ = await
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -266,12 +266,12 @@ public class TestController : Controller
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await Some(
+			_ = await
+				F.Some(
 					userId
 				)
 				.BindAsync(
-					x => query
-						.QuerySingleAsync<AuthUserEntity>(builder => builder
+					x => query.QuerySingleAsync<AuthUserEntity>(builder => builder
 						.From<AuthUserTable>()
 						.Where<AuthUserTable>(t => t.Id, Compare.Equal, x.Value)
 					)
@@ -311,7 +311,8 @@ public class TestController : Controller
 				$"FROM `{db.User}` " +
 				$"WHERE `{db.User}`.`{db.User.Id}` = @P0;";
 
-			_ = await Some(
+			_ = await
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -405,8 +406,8 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			_ = await
-				Some(
-					F.Rnd.Lng
+				F.Some(
+					Rnd.Lng
 				)
 				.BindAsync(
 					userId => provider.UserRole.QueryAsync<AuthUserRoleEntity>(
@@ -420,7 +421,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					roles => roles.ToList(),
-					DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
@@ -442,12 +443,11 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			_ = await
-				Some(
-					F.Rnd.Lng
+				F.Some(
+					Rnd.Lng
 				)
 				.BindAsync(
-					x => query
-						.QueryAsync<AuthRoleEntity>(builder => builder
+					x => query.QueryAsync<AuthRoleEntity>(builder => builder
 						.From<AuthRoleTable>()
 						.Join<AuthRoleTable, AuthUserRoleTable>(QueryJoin.Inner, t => t.Id, t => t.RoleId)
 						.Where<AuthUserRoleTable>(t => t.UserId, Compare.Equal, x)
@@ -455,7 +455,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
@@ -487,15 +487,15 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			var roles = await
-				Some(
-					F.Rnd.Lng
+				F.Some(
+					Rnd.Lng
 				)
 				.BindAsync(
 					x => query.QueryAsync<AuthRoleEntity>(sql, new { P0 = x })
 				)
 				.MapAsync(
 					x => x.ToList(),
-					DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
@@ -518,7 +518,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var id = F.Rnd.Lng;
+				var id = Rnd.Lng;
 
 				var roles = context.UserRoles.Join(
 					context.Roles,
@@ -549,7 +549,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var id = F.Rnd.Lng;
+				var id = Rnd.Lng;
 
 				var roles = from r in context.Roles
 							join ur in context.UserRoles on r.Id equals ur.RoleId

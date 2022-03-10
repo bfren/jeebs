@@ -3,6 +3,9 @@
 # Add file header
 file_header_template = Jeebs Unit Tests\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+# Use file-scoped namespaces
+csharp_style_namespace_declarations = file_scoped:warning
+
 # RCS1021: Convert lambda expression body to expression-body.
 dotnet_diagnostic.RCS1021.severity = none
 

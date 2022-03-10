@@ -25,7 +25,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSql\Jeebs.Data.Clients.PostgreSql.csproj" />
 	</ItemGroup>
 </Project>

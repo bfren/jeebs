@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using Jeebs.Functions;
 
-namespace Jeebs.EnumeratedList_Tests;
+namespace Jeebs.Collections.EnumeratedList_Tests;
 
 public class Serialise_Tests
 {
@@ -17,7 +17,7 @@ public class Serialise_Tests
 		var result = list.Serialise();
 
 		// Assert
-		Assert.Equal(F.JsonF.Empty, result);
+		Assert.Equal(JsonF.Empty, result);
 	}
 
 	[Fact]
@@ -38,8 +38,8 @@ public class Serialise_Tests
 	{
 		public Foo(string name) : base(name) { }
 
-		public static readonly Foo A = new(F.Rnd.Str);
+		public static readonly Foo A = new(Rnd.Str);
 
-		public static readonly Foo B = new(F.Rnd.Str);
+		public static readonly Foo B = new(Rnd.Str);
 	}
 }

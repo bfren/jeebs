@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.Calendar.VCalendar_Tests;
 
 public class Format_Tests
@@ -11,7 +9,7 @@ public class Format_Tests
 	public void Returns_Date_With_Time()
 	{
 		// Arrange
-		var dt = F.Rnd.DateTime;
+		var dt = Rnd.DateTime;
 		var expected = dt.ToString(@"yyyyMMdd\THHmmss");
 
 		// Act
@@ -25,7 +23,7 @@ public class Format_Tests
 	public void Returns_Date_Without_Time()
 	{
 		// Arrange
-		var dt = F.Rnd.DateTime;
+		var dt = Rnd.DateTime;
 		var expected = dt.ToString("yyyyMMdd");
 
 		// Act

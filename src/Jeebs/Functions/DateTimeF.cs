@@ -1,12 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Globalization;
-using Jeebs;
-using static F.MaybeF;
+using Jeebs.Messages;
+using MaybeF;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// DateTime functions
@@ -38,7 +38,7 @@ public static class DateTimeF
 			return dt;
 		}
 
-		return None<DateTime>(new M.InvalidDateTimeMsg(s));
+		return F.None<DateTime>(new M.InvalidDateTimeMsg(s));
 	}
 
 	/// <summary>Messages</summary>

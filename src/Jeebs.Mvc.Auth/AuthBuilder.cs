@@ -1,10 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
-using Jeebs.Config;
+using Jeebs.Config.Web.Auth;
+using Jeebs.Config.Web.Auth.Jwt;
 using Jeebs.Mvc.Auth.Exceptions;
 using Jeebs.Mvc.Auth.Jwt;
 using Microsoft.AspNetCore.Authentication;
@@ -45,7 +46,7 @@ public class AuthBuilder
 				CookieAuthenticationDefaults.AuthenticationScheme,
 
 			_ =>
-				throw new UnsupportedAuthenticationSchemeException(config.Scheme?.ToString() ?? "unknown")
+				throw new UnsupportedAuthSchemeException(config.Scheme?.ToString() ?? "unknown")
 		});
 
 		// Add cookie info
@@ -126,11 +127,9 @@ public class AuthBuilder
 		_ = services.AddAuthorization(opt =>
 		  {
 			  opt.AddPolicy("Token", policy =>
-			  {
-				  _ = policy
-					  .AddRequirements(new JwtRequirement())
-					  .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-			  });
+				_ = policy
+					.AddRequirements(new JwtRequirement())
+					.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
 
 			  opt.InvokeHandlersAfterFailure = false;
 		  });

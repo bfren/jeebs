@@ -1,10 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
+using Jeebs.Extensions;
+using Jeebs.Id;
 
 namespace Jeebs.Data;
 
@@ -46,7 +48,7 @@ public sealed class DbTypeMap
 		SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 	/// <summary>
-	/// Persist an <see cref="EnumeratedList{T}"/> to the database by encoding it as JSON
+	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
 	public void AddJsonEnumeratedListTypeHandler<T>()
@@ -83,7 +85,7 @@ public sealed class DbTypeMap
 			return;
 		}
 
-		AppDomain.CurrentDomain.GetTypesOfPropertiesImplenting<T>().ForEach(t =>
+		AppDomain.CurrentDomain.GetTypesOfPropertiesImplementing<T>().ForEach(t =>
 		{
 			var genericHandlerType = handlerType.MakeGenericType(t);
 			if (Activator.CreateInstance(genericHandlerType) is SqlMapper.ITypeHandler handler)

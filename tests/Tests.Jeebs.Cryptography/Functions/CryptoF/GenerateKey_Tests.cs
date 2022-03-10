@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Xunit;
-using static F.CryptoF;
-
-namespace F.CryptoF_Tests;
+namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
 public sealed class GenerateKey_Tests
 {
@@ -15,8 +11,8 @@ public sealed class GenerateKey_Tests
 		// Arrange
 
 		// Act
-		var r0 = GenerateKey();
-		var r1 = GenerateKey();
+		var r0 = CryptoF.GenerateKey();
+		var r1 = CryptoF.GenerateKey();
 
 		// Assert
 		var s0 = r0.AssertSome();
@@ -30,7 +26,7 @@ public sealed class GenerateKey_Tests
 		// Arrange
 
 		// Act
-		var result = GenerateKey();
+		var result = CryptoF.GenerateKey();
 
 		// Assert
 		var some = result.AssertSome();

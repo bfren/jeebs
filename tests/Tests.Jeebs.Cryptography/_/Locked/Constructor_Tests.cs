@@ -1,8 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-using static F.CryptoF;
+using Jeebs.Cryptography.Functions;
 
 namespace Jeebs.Cryptography.Locked_Tests;
 
@@ -25,8 +24,8 @@ public class Constructor_Tests
 	public void Byte_Key_Fills_With_Encrypted_Contents()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 
 		// Act
 		var result = new Locked<string>(value, key);
@@ -42,8 +41,8 @@ public class Constructor_Tests
 	public void String_Key_Fills_With_Encrypted_Contents()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = F.Rnd.Str;
+		var value = Rnd.Str;
+		var key = Rnd.Str;
 
 		// Act
 		var result = new Locked<string>(value, key);

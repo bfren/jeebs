@@ -1,8 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using Jeebs.Config;
+using Jeebs.Config.Web.Redirections;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -16,7 +16,7 @@ public sealed class RedirectExactMiddleware : IMiddleware
 {
 	private readonly RedirectionsConfig config;
 
-	private readonly ILogger logger = Serilog.Log.ForContext<RedirectExactMiddleware>();
+	private readonly ILogger logger = Log.ForContext<RedirectExactMiddleware>();
 
 	/// <summary>
 	/// Construct object

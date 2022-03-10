@@ -1,8 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-using static F.CryptoF;
+using Jeebs.Cryptography.Functions;
 using static Jeebs.Cryptography.Locked.M;
 
 namespace Jeebs.Cryptography.Locked_Tests;
@@ -14,7 +13,7 @@ public class Unlock_Tests
 	{
 		// Arrange
 		var box = new Locked<int>();
-		var key = GenerateKey().UnsafeUnwrap();
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 
 		// Act
 		var result = box.Unlock(key);
@@ -28,12 +27,12 @@ public class Unlock_Tests
 	public void Invalid_Key_Returns_None_With_InvalidKeyExceptionMsg()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 		var box = new Locked<string>(value, key);
 
 		// Act
-		var result = box.Unlock(F.Rnd.ByteF.Get(16));
+		var result = box.Unlock(Rnd.ByteF.Get(16));
 
 		// Assert
 		var none = result.AssertNone();
@@ -44,11 +43,11 @@ public class Unlock_Tests
 	public void Invalid_Nonce_Returns_None_With_InvalidNonceExceptionMsg()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 		var box = new Locked<string>(value, key)
 		{
-			Nonce = F.Rnd.ByteF.Get(8)
+			Nonce = Rnd.ByteF.Get(8)
 		};
 
 		// Act
@@ -63,9 +62,9 @@ public class Unlock_Tests
 	public void Incorrect_Key_Returns_None_With_IncorrectKeyOrNonceMsg()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
-		var incorrectKey = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var incorrectKey = CryptoF.GenerateKey().UnsafeUnwrap();
 		var box = new Locked<string>(value, key);
 
 		// Act
@@ -80,11 +79,11 @@ public class Unlock_Tests
 	public void Incorrect_Nonce_Returns_None_With_IncorrectKeyOrNonceMsg()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 		var box = new Locked<string>(value, key)
 		{
-			Nonce = GenerateNonce()
+			Nonce = CryptoF.GenerateNonce()
 		};
 
 		// Act
@@ -99,8 +98,8 @@ public class Unlock_Tests
 	public void Byte_Key_Returns_Lockable()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = GenerateKey().UnsafeUnwrap();
+		var value = Rnd.Str;
+		var key = CryptoF.GenerateKey().UnsafeUnwrap();
 		var box = new Locked<string>(value, key);
 
 		// Act
@@ -115,8 +114,8 @@ public class Unlock_Tests
 	public void String_Key_Returns_Lockable()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var key = F.Rnd.Str;
+		var value = Rnd.Str;
+		var key = Rnd.Str;
 		var box = new Locked<string>(value, key);
 
 		// Act

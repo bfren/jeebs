@@ -1,10 +1,11 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Apps;
 using Jeebs.Mvc.Data.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jeebs.Apps;
+namespace Jeebs.Mvc.Data;
 
 /// <summary>
 /// MVC Application bootstrapped using IHost - with Data access enabled

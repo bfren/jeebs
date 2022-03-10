@@ -1,13 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Auth.Constants;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Random;
 
-namespace F;
+namespace Jeebs.Auth.Jwt.Functions;
 
-/// <summary>
-/// JSON Web Tokens functions
-/// </summary>
 public static partial class JwtF
 {
 	private static string GenerateKey(int bytes) =>

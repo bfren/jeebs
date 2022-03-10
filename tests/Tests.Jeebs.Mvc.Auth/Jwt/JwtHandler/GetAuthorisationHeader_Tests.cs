@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
-using Xunit;
 using static Jeebs.Mvc.Auth.Jwt.JwtHandler.M;
 
 namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
@@ -28,7 +26,7 @@ public class GetAuthorisationHeader_Tests
 	public void Returns_Authorization_Header()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var headers = new Dictionary<string, StringValues>
 		{
 			{ "Authorization", value }

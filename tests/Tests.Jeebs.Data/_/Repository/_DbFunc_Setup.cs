@@ -1,11 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
-using NSubstitute;
+using Jeebs.Data.Query;
+using Jeebs.Id;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.Repository_Tests;
 
@@ -16,11 +16,11 @@ public static class Repository_Setup
 		var client = Substitute.For<IDbClient>();
 		_ = client
 			.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, Compare, object)[]>())
-			.Returns((F.Rnd.Str, Substitute.For<IQueryParametersDictionary>()));
-		_ = client.GetCreateQuery<Foo>().Returns(F.Rnd.Str);
-		_ = client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
-		_ = client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(F.Rnd.Str);
-		_ = client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(F.Rnd.Str);
+			.Returns((Rnd.Str, Substitute.For<IQueryParametersDictionary>()));
+		_ = client.GetCreateQuery<Foo>().Returns(Rnd.Str);
+		_ = client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
+		_ = client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
+		_ = client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(Rnd.Str);
 
 		var db = Substitute.For<IDb>();
 		_ = db.Client.Returns(client);

@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.WordPress</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Jeebs.WordPress.Abstractions\Jeebs.WordPress.Abstractions.csproj" />
-	</ItemGroup>
-</Project>

@@ -1,12 +1,14 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Threading.Tasks;
+using Jeebs.Logging;
+using MaybeF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jeebs.Mvc;
+namespace Jeebs.Mvc.Controllers;
 
 /// <summary>
 /// Controller class

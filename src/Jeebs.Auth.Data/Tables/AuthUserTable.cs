@@ -1,8 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
-using Jeebs.Data.Mapping;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Auth.Data.Tables;
 
@@ -18,7 +18,7 @@ public sealed record class AuthUserTable() : Table("Auth", ColumnPrefix)
 
 	#region From AuthUserModel
 
-	/// <inheritdoc cref="IWithId.Id"/>
+	/// <inheritdoc cref="Id.IWithId.Id"/>
 	public string Id =>
 		ColumnPrefix + nameof(Id);
 

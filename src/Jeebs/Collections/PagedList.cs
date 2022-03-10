@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
 
-namespace Jeebs;
+namespace Jeebs.Collections;
 
 /// <inheritdoc cref="IPagedList{T}"/>
 public sealed record class PagedList<T> : ImmutableList<T>, IPagedList<T>

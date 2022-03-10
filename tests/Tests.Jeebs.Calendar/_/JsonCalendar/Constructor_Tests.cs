@@ -2,8 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Calendar.Models;
-using NSubstitute;
-using Xunit;
+using Jeebs.Collections;
 
 namespace Jeebs.Calendar.JsonCalendar_Tests;
 
@@ -13,7 +12,7 @@ public class Constructor_Tests
 	public void Sets_LastModified_Using_Calendar_LastModified()
 	{
 		// Arrange
-		var lastModified = F.Rnd.DateTime;
+		var lastModified = Rnd.DateTime;
 		var calendar = new CalendarModel
 		{
 			Events = Substitute.For<IImmutableList<EventModel>>(),
@@ -34,7 +33,7 @@ public class Constructor_Tests
 		var calendar = new CalendarModel
 		{
 			Events = Substitute.For<IImmutableList<EventModel>>(),
-			LastModified = F.Rnd.DateTime
+			LastModified = Rnd.DateTime
 		};
 
 		// Act
@@ -48,11 +47,11 @@ public class Constructor_Tests
 	public void With_Tzid_Sets_Timezone()
 	{
 		// Arrange
-		var tzid = F.Rnd.Str;
+		var tzid = Rnd.Str;
 		var calendar = new CalendarModel
 		{
 			Events = Substitute.For<IImmutableList<EventModel>>(),
-			LastModified = F.Rnd.DateTime
+			LastModified = Rnd.DateTime
 		};
 
 		// Act
@@ -66,11 +65,11 @@ public class Constructor_Tests
 	public void Adds_Events_With_Incrementing_Uid()
 	{
 		// Arrange
-		var e0 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
-		var e1 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
-		var e2 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
+		var e0 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
+		var e1 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
+		var e2 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
 		var events = ImmutableList.Create(e0, e1, e2);
-		var calendar = new CalendarModel(events, F.Rnd.DateTime);
+		var calendar = new CalendarModel(events, Rnd.DateTime);
 
 		// Act
 		var result = new JsonCalendar(calendar);

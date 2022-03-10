@@ -1,11 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Jeebs.Config.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -21,7 +20,7 @@ public static class ConfigValidator
 	/// Validate a Jeebs config file against the schema
 	/// </summary>
 	/// <exception cref="FileNotFoundException"></exception>
-	/// <exception cref="ConfigurationSchemaValidationFailedException"></exception>
+	/// <exception cref="ConfigSchemaValidationFailedException"></exception>
 	/// <param name="path">Absolute path to Jeebs configuration file</param>
 	public static string Validate(string path)
 	{
@@ -37,7 +36,7 @@ public static class ConfigValidator
 		var config = JToken.ReadFrom(configReader);
 
 		// Read schema file
-		using var schemaStream = new MemoryStream(Resources.schema);
+		using var schemaStream = new MemoryStream(Properties.Resources.schema);
 		using var schemaFile = new StreamReader(schemaStream);
 		using var schemaReader = new JsonTextReader(schemaFile);
 		var schema = JSchema.Load(schemaReader);
@@ -52,7 +51,7 @@ public static class ConfigValidator
 				_ = sb.AppendLine(item);
 			}
 
-			throw new ConfigurationSchemaValidationFailedException(sb.ToString());
+			throw new ConfigSchemaValidationFailedException(sb.ToString());
 		}
 
 		// Return original path on success

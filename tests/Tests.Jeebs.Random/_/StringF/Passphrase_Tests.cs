@@ -1,15 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Jeebs;
-using Xunit;
-using static F.Rnd.StringF;
-using static F.Rnd.StringF.M;
-
-namespace F.StringF_Tests;
+namespace Jeebs.Random.Rnd_Tests.StringF_Tests;
 
 public class Passphrase_Tests
 {
@@ -17,43 +9,40 @@ public class Passphrase_Tests
 	[InlineData(-1)]
 	[InlineData(0)]
 	[InlineData(1)]
-	public void NumberOfWords_Less_Than_Two_Returns_None_With_NumberOfWordsMustBeAtLeastTwoMsg(int input)
+	public void NumberOfWords_Less_Than_Two_Returns_Null(int input)
 	{
 		// Arrange
 
 		// Act
-		var result = Passphrase(input);
+		var result = Rnd.StringF.Passphrase(input);
 
 		// Assert
-		var none = result.AssertNone();
-		_ = Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
+		Assert.Null(result);
 	}
 
 	[Fact]
-	public void Empty_Word_List_Returns_None_With_EmptyWordListMsg()
+	public void Empty_Word_List_Returns_Null()
 	{
 		// Arrange
 		var empty = Array.Empty<string>();
 
 		// Act
-		var result = Passphrase(empty, 3);
+		var result = Rnd.StringF.Passphrase(empty, 3);
 
 		// Assert
-		var none = result.AssertNone();
-		_ = Assert.IsType<EmptyWordListMsg>(none);
+		Assert.Null(result);
 	}
 
 	[Fact]
-	public void NumberOfWords_Higher_Than_Word_List_Count_Returns_None_With_NumberOfWordsCannotBeMoreThanWordListMsg()
+	public void NumberOfWords_Higher_Than_Word_List_Count_Returns_Null()
 	{
 		// Arrange
 
 		// Act
-		var result = Passphrase(7777);
+		var result = Rnd.StringF.Passphrase(7777);
 
 		// Assert
-		var none = result.AssertNone();
-		_ = Assert.IsType<NumberOfWordsCannotBeMoreThanWordListMsg>(none);
+		Assert.Null(result);
 	}
 
 	[Theory]
@@ -66,10 +55,10 @@ public class Passphrase_Tests
 		const char sep = '|';
 
 		// Act
-		var result = Passphrase(input, sep, Rnd.Flip, Rnd.Flip);
+		var result = Rnd.StringF.Passphrase(input, sep, Rnd.Flip, Rnd.Flip);
 
 		// Assert
-		var some = result.AssertSome().Split(sep);
+		var some = result!.Split(sep);
 		Assert.Equal(input, some.Length);
 	}
 
@@ -82,11 +71,10 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, input, Rnd.Flip, Rnd.Flip);
+		var result = Rnd.StringF.Passphrase(3, input, Rnd.Flip, Rnd.Flip);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Contains(input, some);
+		Assert.Contains(input, result);
 	}
 
 	[Fact]
@@ -95,11 +83,10 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, '-', true, Rnd.Flip);
+		var result = Rnd.StringF.Passphrase(3, '-', true, Rnd.Flip);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotEqual(some, some.ToLower());
+		Assert.NotEqual(result!, result!.ToLower());
 	}
 
 	[Fact]
@@ -108,11 +95,10 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, '-', false, Rnd.Flip);
+		var result = Rnd.StringF.Passphrase(3, '-', false, Rnd.Flip);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(some, some.ToLower());
+		Assert.Equal(result!, result!.ToLower());
 	}
 
 	[Fact]
@@ -121,11 +107,10 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, '-', Rnd.Flip, true);
+		var result = Rnd.StringF.Passphrase(3, '-', Rnd.Flip, true);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Contains(some, x => char.IsNumber(x));
+		Assert.Contains(result!, x => char.IsNumber(x));
 	}
 
 	[Fact]
@@ -134,11 +119,10 @@ public class Passphrase_Tests
 		// Arrange
 
 		// Act
-		var result = Passphrase(3, '-', Rnd.Flip, false);
+		var result = Rnd.StringF.Passphrase(3, '-', Rnd.Flip, false);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.DoesNotContain(some, x => char.IsNumber(x));
+		Assert.DoesNotContain(result!, x => char.IsNumber(x));
 	}
 
 	[Fact]
@@ -148,10 +132,10 @@ public class Passphrase_Tests
 		const char sep = '|';
 
 		// Act
-		var result = Passphrase(7776, sep, false, false);
+		var result = Rnd.StringF.Passphrase(7776, sep, false, false);
 
 		// Assert
-		var some = result.AssertSome().Split(sep);
+		var some = result!.Split(sep);
 		Assert.Equal(some.Length, some.Distinct().Count());
 	}
 
@@ -165,7 +149,7 @@ public class Passphrase_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			phrases.Add(Passphrase(2).UnsafeUnwrap());
+			phrases.Add(Rnd.StringF.Passphrase(2)!);
 		}
 
 		var unique = phrases.Distinct();

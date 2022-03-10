@@ -1,5 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Maybe\Jeebs.Maybe.csproj" />
-  </ItemGroup>
-</Project>

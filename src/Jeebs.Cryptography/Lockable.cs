@@ -1,7 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static F.MaybeF;
+using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -34,7 +35,7 @@ public sealed class Lockable<T> : Lockable
 				new Locked<T>(Contents, key),
 
 			_ =>
-				None<Locked<T>, M.InvalidKeyLengthMsg>()
+				F.None<Locked<T>, M.InvalidKeyLengthMsg>()
 		};
 
 	/// <summary>

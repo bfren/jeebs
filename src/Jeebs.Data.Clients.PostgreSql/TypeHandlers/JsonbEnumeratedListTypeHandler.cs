@@ -1,7 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.TypeHandlers;
+using Jeebs.Collections;
+
+namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
 /// <summary>
 /// EnumeratedList TypeHandler

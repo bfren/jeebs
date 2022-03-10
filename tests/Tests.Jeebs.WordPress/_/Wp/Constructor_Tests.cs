@@ -1,12 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Config;
-using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
+using Jeebs.Config.Db;
+using Jeebs.Config.WordPress;
+using Jeebs.Logging;
+using Jeebs.WordPress.Entities;
 using Microsoft.Extensions.Options;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.WordPress.Wp_Tests;
 
@@ -18,7 +17,7 @@ public class Constructor_Tests
 		// Arrange
 		var dbConfig = Substitute.For<IOptions<DbConfig>>();
 
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		_ = dbConfig.Value.Returns(new DbConfig
 		{
 			Default = name,
@@ -35,7 +34,7 @@ public class Constructor_Tests
 		var wpConfig = Substitute.For<IOptions<TestWpConfig>>();
 		var wpConfigValue = new TestWpConfig
 		{
-			TablePrefix = F.Rnd.Str
+			TablePrefix = Rnd.Str
 		};
 		_ = wpConfig.Value.Returns(wpConfigValue);
 

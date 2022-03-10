@@ -4,7 +4,6 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
-		<ProjectReference Include="..\Jeebs.Services.Abstractions\Jeebs.Services.Abstractions.csproj" />
+	  <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

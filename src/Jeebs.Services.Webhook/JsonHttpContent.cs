@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Net.Http;
 using System.Text;
-using static F.JsonF;
+using Jeebs.Functions;
 
 namespace Jeebs.Services.Webhook;
 
@@ -23,5 +23,5 @@ public class JsonHttpContent : StringContent
 	/// </summary>
 	/// <param name="obj">Content to be encoded</param>
 	/// <param name="type">Content-type</param>
-	public JsonHttpContent(object obj, string type) : base(Serialise(obj).Unwrap(string.Empty), Encoding.UTF8, type) { }
+	public JsonHttpContent(object obj, string type) : base(JsonF.Serialise(obj).Unwrap(string.Empty), Encoding.UTF8, type) { }
 }

@@ -2,8 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using NSubstitute;
-using Xunit;
+using Jeebs.Id;
 
 namespace Jeebs.Data.TypeHandlers.StrongId_Tests;
 
@@ -14,7 +13,7 @@ public class SetValue_Tests
 	{
 		// Arrange
 		var handler = new StrongIdTypeHandler<TestId>();
-		var value = F.Rnd.Lng;
+		var value = Rnd.Lng;
 		var id = new TestId { Value = value };
 		var parameter = Substitute.For<IDbDataParameter>();
 

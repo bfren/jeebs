@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,10 +6,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying;
-using static F.DataF.QueryF;
-using static F.MaybeF;
+using Jeebs.Collections;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query;
+using Jeebs.Data.Query.Functions;
+using Jeebs.Logging;
+using Jeebs.Messages;
+using MaybeF;
+using Defaults = Jeebs.Collections.Defaults.PagingValues;
 
 namespace Jeebs.Data;
 
@@ -73,12 +77,12 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
 		where TTable : ITable =>
-		GetColumnFromExpression(
+		QueryF.GetColumnFromExpression(
 			table, column
 		)
 		.Map(
 			x => Db.Client.Escape(x, true),
-			DefaultHandler
+			F.DefaultHandler
 		)
 		.Unwrap(
 			r => throw MsgError.CreateException(r)
@@ -111,7 +115,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Maybe<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
-		Some(
+		F.Some(
 			() => Db.Client.GetCountQuery(parts),
 			e => new M.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 		)
@@ -119,12 +123,12 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.ExecuteAsync<ulong>(x.query, x.param, CommandType.Text, transaction)
 		)
 		.MapAsync(
-			x => new PagingValues(x, page, parts.Maximum ?? Defaults.PagingValues.ItemsPer, Defaults.PagingValues.PagesPer),
-			DefaultHandler
+			x => new PagingValues(x, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
+			F.DefaultHandler
 		)
 		.BindAsync(
 			pagingValues =>
-				Some(
+				F.Some(
 					() => Db.Client.GetQuery(new QueryParts(parts) with
 					{
 						Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
@@ -137,7 +141,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 				)
 				.MapAsync(
 					x => (IPagedList<T>)new PagedList<T>(pagingValues, x),
-					DefaultHandler
+					F.DefaultHandler
 				)
 		);
 
@@ -150,7 +154,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		Some(
+		F.Some(
 			() => Db.Client.GetQuery(parts),
 			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)
@@ -187,7 +191,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Maybe<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		Some(
+		F.Some(
 			() => Db.Client.GetQuery(parts),
 			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)

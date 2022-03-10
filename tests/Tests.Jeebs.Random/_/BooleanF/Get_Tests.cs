@@ -1,12 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using static F.Rnd.BooleanF;
-
-namespace F.BooleanF_Tests;
+namespace Jeebs.Random.Rnd_Tests.BooleanF_Tests;
 
 public class Get_Tests
 {
@@ -20,7 +15,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			results.Add(Get());
+			results.Add(Rnd.BooleanF.Get());
 		}
 
 		// Assert

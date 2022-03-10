@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using Jeebs.Extensions;
 
 namespace Jeebs.StringExtensions_Tests;
 

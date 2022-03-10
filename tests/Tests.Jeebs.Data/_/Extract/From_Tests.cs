@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Entities;
-using Jeebs.Data.Mapping;
-using Xunit;
-using static Jeebs.Data.ExtractMsg;
+using Jeebs.Data.Attributes;
+using Jeebs.Data.Map;
+using static Jeebs.Data.Extract.M;
 
 namespace Jeebs.Data.Extract_Tests;
 

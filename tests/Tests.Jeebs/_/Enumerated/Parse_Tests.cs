@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using MaybeF;
 
 namespace Jeebs.Enumerated_Tests;
 
@@ -25,7 +25,7 @@ public class Parse_Tests
 	public void InvalidString_Returns_None()
 	{
 		// Arrange
-		var input = F.Rnd.Str;
+		var input = Rnd.Str;
 
 		// Act
 		var result = EnumeratedTest.Parse(input);

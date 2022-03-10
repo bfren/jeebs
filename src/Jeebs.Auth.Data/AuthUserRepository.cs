@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -8,6 +8,8 @@ using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Logging;
+using MaybeF;
 
 namespace Jeebs.Auth;
 

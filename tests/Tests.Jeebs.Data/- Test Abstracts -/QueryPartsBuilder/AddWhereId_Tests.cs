@@ -1,11 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
+using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Xunit;
+using Jeebs.Id;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
@@ -31,7 +31,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test01()
 	{
 		// Arrange
-		var id = new TId { Value = F.Rnd.Lng };
+		var id = new TId { Value = Rnd.Lng };
 		var (builder, v) = Setup();
 
 		// Act
@@ -55,9 +55,9 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test02()
 	{
 		// Arrange
-		var i0 = new TId { Value = F.Rnd.Lng };
-		var i1 = new TId { Value = F.Rnd.Lng };
-		var i2 = new TId { Value = F.Rnd.Lng };
+		var i0 = new TId { Value = Rnd.Lng };
+		var i1 = new TId { Value = Rnd.Lng };
+		var i2 = new TId { Value = Rnd.Lng };
 		var ids = ImmutableList.Create(i1, i2);
 		var (builder, v) = Setup();
 
@@ -82,8 +82,8 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test03()
 	{
 		// Arrange
-		var i0 = new TId { Value = F.Rnd.Lng };
-		var i1 = new TId { Value = F.Rnd.Lng };
+		var i0 = new TId { Value = Rnd.Lng };
+		var i1 = new TId { Value = Rnd.Lng };
 		var ids = ImmutableList.Create(i0, i1);
 		var (builder, v) = Setup();
 

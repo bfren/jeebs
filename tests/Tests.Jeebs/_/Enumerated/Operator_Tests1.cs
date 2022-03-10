@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.Enumerated_Tests;
 
 public partial class Operator_Tests
@@ -11,7 +9,7 @@ public partial class Operator_Tests
 	public void Equals_When_Equal_Returns_True()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var foo = new Foo(value);
 
 		// Act
@@ -25,7 +23,7 @@ public partial class Operator_Tests
 	public void Equals_When_Not_Equal_Returns_False()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var foo = new Foo(value);
 		var bar = new Bar(value);
 

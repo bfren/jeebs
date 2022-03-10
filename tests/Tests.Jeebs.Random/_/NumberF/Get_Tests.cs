@@ -1,12 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using static F.Rnd.NumberF;
-
-namespace F.NumberF_Tests;
+namespace Jeebs.Random.Rnd_Tests.NumberF_Tests;
 
 public class Get_Tests
 {
@@ -20,7 +15,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(Get());
+			numbers.Add(Rnd.NumberF.Get());
 		}
 
 		// Assert
@@ -38,7 +33,7 @@ public class Get_Tests
 		// Act
 		for (int i = 0; i < iterations; i++)
 		{
-			numbers.Add(Get());
+			numbers.Add(Rnd.NumberF.Get());
 		}
 
 		var unique = numbers.Distinct();

@@ -1,11 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Globalization;
 using System.Text;
+using Jeebs.Calendar.Extensions;
+using Jeebs.Calendar.Functions;
 using Jeebs.Calendar.Models;
-using static F.CalendarF;
 
 namespace Jeebs.Calendar;
 
@@ -42,10 +43,10 @@ public class VCalendar : CalendarBase
 
 		// Add Events
 		var counter = 0;
-		foreach (var e in calendar.Events)
+		foreach (var e in Calendar.Events)
 		{
-			var uid = GenerateEventUid(counter++, calendar.LastModified, domain);
-			_ = builder.Append(GetEvent(calendar.LastModified, tzid, uid, e));
+			var uid = CalendarF.GenerateEventUid(counter++, Calendar.LastModified, domain);
+			_ = builder.Append(GetEvent(Calendar.LastModified, TzId, uid, e));
 		}
 
 		// Add Footer

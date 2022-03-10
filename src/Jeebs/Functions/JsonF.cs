@@ -1,13 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs;
-using static F.MaybeF;
+using Jeebs.Messages;
+using MaybeF;
 
-namespace F;
+namespace Jeebs.Functions;
 
 /// <summary>
 /// JSON functions
@@ -39,7 +39,7 @@ public static class JsonF
 
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 		Options.Converters.Add(new Internals.EnumeratedConverterFactory());
-		Options.Converters.Add(new Internals.OptionConverterFactory());
+		Options.Converters.Add(new Internals.MaybeConverterFactory());
 		Options.Converters.Add(new Internals.StrongIdConverterFactory());
 	}
 
@@ -74,7 +74,7 @@ public static class JsonF
 		obj switch
 		{
 			T x =>
-				Some(
+				F.Some(
 					() => JsonSerializer.Serialize(x, options),
 					e => new M.SerialiseExceptionMsg(e)
 				),
@@ -98,7 +98,7 @@ public static class JsonF
 		// Check for null string
 		if (str is null || string.IsNullOrWhiteSpace(str))
 		{
-			return None<T, M.DeserialisingNullOrEmptyStringMsg>();
+			return F.None<T, M.DeserialisingNullOrEmptyStringMsg>();
 		}
 
 		// Attempt to deserialise JSON
@@ -110,12 +110,12 @@ public static class JsonF
 					x,
 
 				_ =>
-					None<T, M.DeserialisingReturnedNullMsg>() // should never get here
+					F.None<T, M.DeserialisingReturnedNullMsg>() // should never get here
 			};
 		}
 		catch (Exception ex)
 		{
-			return None<T>(new M.DeserialiseExceptionMsg(ex));
+			return F.None<T>(new M.DeserialiseExceptionMsg(ex));
 		}
 	}
 

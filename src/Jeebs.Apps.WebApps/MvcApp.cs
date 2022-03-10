@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs.Apps.WebApps.Constants;
 using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Config;
-using Jeebs.Constants;
+using Jeebs.Config.Web.Redirections;
+using Jeebs.Functions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
@@ -182,7 +184,7 @@ public abstract class MvcApp : WebApp
 	protected virtual void ConfigureServicesEndpointsJson(JsonOptions opt)
 	{
 		// Get default options
-		var defaultOptions = F.JsonF.CopyOptions();
+		var defaultOptions = JsonF.CopyOptions();
 
 		// Set options
 		opt.JsonSerializerOptions.DefaultIgnoreCondition = (JsonSerialiserOptions ?? defaultOptions).DefaultIgnoreCondition;

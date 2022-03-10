@@ -1,13 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Data;
-using System.Threading.Tasks;
-using Jeebs.Data.Querying;
-using NSubstitute;
+using Jeebs.Data.Query;
 using NSubstitute.ExceptionExtensions;
-using Xunit;
 using static Jeebs.Data.DbQuery.M;
 
 namespace Jeebs.Data.DbQuery_Tests;
@@ -22,8 +18,8 @@ public class QueryAsync_Tests
 	{
 		// Arrange
 		var (db, _, _, query) = DbQuery_Setup.Get();
-		var value = F.Rnd.Str;
-		var param = F.Rnd.Int;
+		var value = Rnd.Str;
+		var param = Rnd.Int;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
@@ -40,8 +36,8 @@ public class QueryAsync_Tests
 	{
 		// Arrange
 		var (db, _, _, query) = DbQuery_Setup.Get();
-		var value = F.Rnd.Str;
-		var param = F.Rnd.Int;
+		var value = Rnd.Str;
+		var param = Rnd.Int;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
@@ -83,8 +79,8 @@ public class QueryAsync_Tests
 		_ = client.GetCountQuery(parts).Throws<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts).ConfigureAwait(false);
-		var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		var r0 = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -103,8 +99,8 @@ public class QueryAsync_Tests
 		_ = client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(F.Rnd.Ulng, parts).ConfigureAwait(false);
-		var r1 = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		var r0 = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -117,7 +113,7 @@ public class QueryAsync_Tests
 	public async Task With_Parts_Calls_Client_GetQuery_And_Db_QueryAsync()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var (parts, param) = DbQuery_Setup.GetParts();
 		var (db, client, _, query) = DbQuery_Setup.Get(value, param);
 		var transaction = Substitute.For<IDbTransaction>();
@@ -136,14 +132,14 @@ public class QueryAsync_Tests
 	public async Task With_Parts_And_Page_Calls_Client_GetCountQuery_And_Client_GetQuery_And_Db_QueryAsync()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var (parts, param) = DbQuery_Setup.GetParts();
 		var (db, client, _, query) = DbQuery_Setup.Get(value, param);
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts).ConfigureAwait(false);
-		_ = await query.QueryAsync<int>(F.Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		_ = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
+		_ = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		_ = client.Received(2).GetCountQuery(parts);
