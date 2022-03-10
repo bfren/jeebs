@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Messages;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Logging;
 

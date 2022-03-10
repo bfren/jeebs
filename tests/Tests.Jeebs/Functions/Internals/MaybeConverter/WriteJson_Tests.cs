@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Functions.Internals.MaybeConverter_Tests;
 
@@ -14,7 +14,7 @@ public class WriteJson_Tests
 		var valueStr = Rnd.Str;
 		var valueInt = Rnd.Int;
 		var value = new Test(valueStr, valueInt);
-		var maybe = MaybeF.Some(value);
+		var maybe = F.Some(value);
 		var json = $"{{\"foo\":\"{valueStr}\",\"bar\":{valueInt}}}";
 
 		// Act

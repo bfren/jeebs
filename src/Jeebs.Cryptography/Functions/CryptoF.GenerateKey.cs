@@ -3,8 +3,7 @@
 
 using System;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Sodium;
 
 namespace Jeebs.Cryptography.Functions;
@@ -15,7 +14,7 @@ public static partial class CryptoF
 	/// Generate a 32 byte key to use for encryption
 	/// </summary>
 	public static Maybe<byte[]> GenerateKey() =>
-		MaybeF.Some(
+		F.Some(
 			() => SecretBox.GenerateKey(),
 			e => new M.GeneratingKeyExceptionMsg(e)
 		);

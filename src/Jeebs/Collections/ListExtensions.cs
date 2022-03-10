@@ -4,8 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Collections;
 
@@ -27,7 +26,7 @@ public static class ListExtensions
 	public static (Maybe<T> prev, Maybe<T> next) GetEitherSide<T>(this List<T> @this, T item)
 	{
 		static (Maybe<T>, Maybe<T>) invalid(Msg reason) =>
-			(MaybeF.None<T>(reason), MaybeF.None<T>(reason));
+			(F.None<T>(reason), F.None<T>(reason));
 
 		// There are no items
 		if (@this.Count == 0)
@@ -53,12 +52,12 @@ public static class ListExtensions
 		// If it is the first item, Previous should be None
 		if (index == 0)
 		{
-			return (MaybeF.None<T, M.ItemIsFirstItemMsg>(), @this[1]);
+			return (F.None<T, M.ItemIsFirstItemMsg>(), @this[1]);
 		}
 		// If it is the last item, Next should be None
 		else if (index == @this.Count - 1)
 		{
-			return (@this[index - 1], MaybeF.None<T, M.ItemIsLastItemMsg>());
+			return (@this[index - 1], F.None<T, M.ItemIsLastItemMsg>());
 		}
 		// Return the items either side of the item
 		else

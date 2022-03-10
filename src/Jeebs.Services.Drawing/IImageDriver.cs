@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.IO;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Services.Drawing;
 

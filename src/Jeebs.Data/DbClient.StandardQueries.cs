@@ -3,8 +3,8 @@
 
 using Jeebs.Data.Map;
 using Jeebs.Id;
-using Maybe;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 
 namespace Jeebs.Data;
 

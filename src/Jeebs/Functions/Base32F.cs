@@ -4,8 +4,7 @@
 using System;
 using System.Text;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Functions;
 
@@ -137,7 +136,7 @@ public static class Base32F
 		// Check the size
 		if (outputBytes.Length == 0)
 		{
-			return MaybeF.None<byte[], M.InputStringNotLongEnoughMsg>();
+			return F.None<byte[], M.InputStringNotLongEnoughMsg>();
 		}
 
 		// Position in the string
@@ -162,7 +161,7 @@ public static class Base32F
 			// Check if found
 			if (currentBase32Byte < 0)
 			{
-				return MaybeF.None<byte[]>(new M.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
+				return F.None<byte[]>(new M.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
 			}
 
 			// Calculate the number of bits we can extract out of current input character to fill missing bits in the output byte

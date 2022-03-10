@@ -5,8 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.CustomFields;
 
@@ -37,17 +36,17 @@ public abstract class TextCustomField : CustomField<string>
 		if (meta.TryGetValue(Key, out var value))
 		{
 			ValueStr = value;
-			return MaybeF.True.AsTask;
+			return F.True.AsTask;
 		}
 
 		// Return error if the field is required
 		if (isRequired)
 		{
-			return MaybeF.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+			return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 		}
 
 		// Return OK but not set
-		return MaybeF.False.AsTask;
+		return F.False.AsTask;
 	}
 
 	/// <inheritdoc/>

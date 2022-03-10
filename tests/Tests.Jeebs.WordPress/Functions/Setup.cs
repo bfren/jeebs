@@ -4,7 +4,6 @@
 using System.Data;
 using Jeebs.Config.WordPress;
 using Jeebs.Data;
-using Jeebs.WordPress;
 
 namespace Jeebs.WordPress.Functions;
 

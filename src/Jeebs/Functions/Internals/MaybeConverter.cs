@@ -5,9 +5,8 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Internals;
+using MaybeF;
+using MaybeF.Internals;
 
 namespace Jeebs.Functions.Internals;
 
@@ -30,7 +29,7 @@ public sealed class MaybeConverter<T> : JsonConverter<Maybe<T>>
 				value,
 
 			_ =>
-				MaybeF.None<T, M.DeserialisingReturnedNullMsg>() // should never get here
+				F.None<T, M.DeserialisingReturnedNullMsg>() // should never get here
 		};
 
 	/// <summary>

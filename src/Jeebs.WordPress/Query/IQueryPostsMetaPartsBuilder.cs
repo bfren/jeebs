@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.WordPress.Query;
 

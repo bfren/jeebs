@@ -9,8 +9,7 @@ using Dapper;
 using Jeebs.Config.Db;
 using Jeebs.Logging;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Data;
@@ -119,7 +118,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
@@ -139,7 +138,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
@@ -162,7 +161,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
@@ -174,7 +173,7 @@ public abstract class Db : IDb
 		)
 		.MapAsync(
 			x => x > 0,
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		);
 
 	/// <inheritdoc/>
@@ -186,7 +185,7 @@ public abstract class Db : IDb
 
 	/// <inheritdoc/>
 	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(

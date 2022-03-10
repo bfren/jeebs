@@ -12,8 +12,7 @@ using Jeebs.Data.Map;
 using Jeebs.Id;
 using Jeebs.Messages;
 using Jeebs.Reflection;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Data.Query.Functions;
 
@@ -57,7 +56,7 @@ public static partial class QueryF
 				&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 			)
 			{
-				return MaybeF.None<IImmutableList<(IColumn, Compare, object)>, M.InOperatorRequiresValueToBeAListMsg>();
+				return F.None<IImmutableList<(IColumn, Compare, object)>, M.InOperatorRequiresValueToBeAListMsg>();
 			}
 
 			// Get parameter value (to support StrongId)

@@ -12,8 +12,7 @@ using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
 using Jeebs.Logging;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Defaults = Jeebs.Collections.Defaults.PagingValues;
 
 namespace Jeebs.Data;
@@ -83,7 +82,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		)
 		.Map(
 			x => Db.Client.Escape(x, true),
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		)
 		.Unwrap(
 			r => throw MsgError.CreateException(r)
@@ -116,7 +115,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Maybe<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			() => Db.Client.GetCountQuery(parts),
 			e => new M.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 		)
@@ -125,11 +124,11 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		)
 		.MapAsync(
 			x => new PagingValues(x, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		)
 		.BindAsync(
 			pagingValues =>
-				MaybeF.Some(
+				F.Some(
 					() => Db.Client.GetQuery(new QueryParts(parts) with
 					{
 						Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
@@ -142,7 +141,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 				)
 				.MapAsync(
 					x => (IPagedList<T>)new PagedList<T>(pagingValues, x),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 		);
 
@@ -155,7 +154,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			() => Db.Client.GetQuery(parts),
 			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)
@@ -192,7 +191,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Maybe<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		MaybeF.Some(
+		F.Some(
 			() => Db.Client.GetQuery(parts),
 			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)

@@ -7,7 +7,7 @@ using Jeebs.Data.Clients.PostgreSql.Parameters;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 using Jeebs.Extensions;
 using Jeebs.Random;
-using Maybe;
+using MaybeF;
 using Microsoft.Extensions.DependencyInjection;
 
 await Jeebs.Apps.Program.MainAsync<App>(args, async (provider, log) =>

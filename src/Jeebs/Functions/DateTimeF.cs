@@ -3,9 +3,8 @@
 
 using System;
 using System.Globalization;
-using Maybe;
-using Maybe.Functions;
 using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Functions;
 
@@ -39,7 +38,7 @@ public static class DateTimeF
 			return dt;
 		}
 
-		return MaybeF.None<DateTime>(new M.InvalidDateTimeMsg(s));
+		return F.None<DateTime>(new M.InvalidDateTimeMsg(s));
 	}
 
 	/// <summary>Messages</summary>

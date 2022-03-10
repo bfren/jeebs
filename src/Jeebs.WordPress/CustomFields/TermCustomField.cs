@@ -8,8 +8,7 @@ using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.CustomFields;
 
@@ -48,15 +47,15 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		{
 			if (isRequired)
 			{
-				return MaybeF.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
-			return MaybeF.False.AsTask;
+			return F.False.AsTask;
 		}
 
 		// If we're here we have a Term ID, so get it and hydrate the custom field
 		return
-			MaybeF.Some(
+			F.Some(
 				ValueStr
 			)
 			.Bind(
@@ -76,7 +75,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 					ValueObj = x;
 					return true;
 				},
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			);
 	}
 
@@ -89,7 +88,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	{
 		if (!long.TryParse(value, out var termId))
 		{
-			return MaybeF.None<WpTermId>(new M.ValueIsInvalidTermIdMsg(type, value));
+			return F.None<WpTermId>(new M.ValueIsInvalidTermIdMsg(type, value));
 		}
 
 		return new WpTermId(termId);

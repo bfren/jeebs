@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Internals;
+using MaybeF;
+using MaybeF.Internals;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -56,7 +55,7 @@ public static partial class QueryPostsF
 					// If it failed and it's required, return None
 					if (result is None<bool> none && required)
 					{
-						return MaybeF.None<TList>(none.Reason);
+						return F.None<TList>(none.Reason);
 					}
 
 					// Set the value

@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe.Internals;
+using MaybeF.Internals;
 
 namespace Jeebs.WordPress.Functions;
 

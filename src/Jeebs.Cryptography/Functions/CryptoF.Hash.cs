@@ -4,8 +4,7 @@
 using System;
 using System.Text;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Sodium;
 using Sodium.Exceptions;
 
@@ -26,7 +25,7 @@ public static partial class CryptoF
 	/// <param name="input">Input string</param>
 	/// <param name="bytes">The number of bytes for the hash - must be between 16 and 64</param>
 	public static Maybe<byte[]> Hash(string input, int bytes) =>
-		MaybeF.Some(
+		F.Some(
 			() => Encoding.UTF8.GetBytes(input),
 			e => new M.GettingBytesForGenericHashExceptionMsg(e)
 		)

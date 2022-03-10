@@ -10,7 +10,7 @@ using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Functions;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.WordPress;
 

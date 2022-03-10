@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Collections;
 

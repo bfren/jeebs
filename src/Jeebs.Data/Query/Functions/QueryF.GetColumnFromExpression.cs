@@ -5,8 +5,7 @@ using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Map;
 using Jeebs.Reflection;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Data.Query.Functions;
 
@@ -23,7 +22,7 @@ public static partial class QueryF
 		column.GetPropertyInfo()
 			.Map<IColumn>(
 				x => new Column(table, x.Get(table), x.Name),
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>

@@ -17,7 +17,6 @@ using Jeebs.Config.Web.Redirections;
 using Jeebs.Config.Web.Verification;
 using Jeebs.Logging;
 using Jeebs.Logging.Serilog;
-using Maybe.Functions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -60,7 +59,7 @@ public abstract class App
 	public virtual void Ready(IServiceProvider services, ILog log)
 	{
 		// Set Maybe Audit log
-		MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
+		MaybeF.F.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Log application is ready
 		log.Inf("Application ready.");

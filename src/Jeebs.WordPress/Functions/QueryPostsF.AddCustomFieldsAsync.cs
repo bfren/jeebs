@@ -6,8 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -28,14 +27,14 @@ public static partial class QueryPostsF
 		// If there are no posts, do nothing
 		if (!posts.Any())
 		{
-			return MaybeF.Some(posts).AsTask;
+			return F.Some(posts).AsTask;
 		}
 
 		// Only proceed if there are custom fields, and a meta property for this model
 		var fields = GetCustomFields<TModel>();
 		if (fields.Count == 0)
 		{
-			return MaybeF.Some(posts).AsTask;
+			return F.Some(posts).AsTask;
 		}
 
 		// Get terms and add them to the posts

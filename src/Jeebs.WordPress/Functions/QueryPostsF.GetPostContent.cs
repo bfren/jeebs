@@ -8,8 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -38,7 +37,7 @@ public static partial class QueryPostsF
 		// If content is not defined return none
 		if (!content.Any())
 		{
-			return MaybeF.None<PropertyInfo, M.ContentPropertyNotFoundMsg<TModel>>();
+			return F.None<PropertyInfo, M.ContentPropertyNotFoundMsg<TModel>>();
 		}
 
 		// Return single property

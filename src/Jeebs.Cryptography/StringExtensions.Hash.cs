@@ -3,8 +3,7 @@
 
 using System;
 using Jeebs.Cryptography.Functions;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -31,7 +30,7 @@ public static partial class StringExtensions
 				CryptoF.Hash(@this, bytes)
 					.Map(
 						x => Convert.ToBase64String(x),
-						MaybeF.DefaultHandler
+						F.DefaultHandler
 					),
 
 			_ =>

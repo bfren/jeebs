@@ -3,7 +3,7 @@
 
 using System.Data;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe.Extensions;
+using MaybeF.Extensions;
 using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
 using Attachment = Jeebs.WordPress.Functions.QueryAttachmentsF.Attachment;
 

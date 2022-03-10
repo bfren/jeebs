@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.WordPress.Constants_Tests;
 
 public class Attachment_Tests

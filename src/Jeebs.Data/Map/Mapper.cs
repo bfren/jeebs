@@ -6,10 +6,9 @@ using System.Collections.Concurrent;
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.Map.Functions;
-using Jeebs.Messages;
 using Jeebs.Id;
-using Maybe;
-using Maybe.Functions;
+using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Data.Map;
 
@@ -92,7 +91,7 @@ internal sealed class Mapper : IMapper, IDisposable
 			return map;
 		}
 
-		return MaybeF.None<ITableMap, M.TryingToGetUnmappedEntityMsg<TEntity>>();
+		return F.None<ITableMap, M.TryingToGetUnmappedEntityMsg<TEntity>>();
 	}
 
 	#region Dispose

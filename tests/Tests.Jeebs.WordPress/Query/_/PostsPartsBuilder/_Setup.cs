@@ -5,7 +5,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Tables;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
 

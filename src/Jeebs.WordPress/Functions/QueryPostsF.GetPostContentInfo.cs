@@ -3,8 +3,7 @@
 
 using System.Reflection;
 using Jeebs.Reflection;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -15,7 +14,7 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	internal static Maybe<Content<TModel>> GetPostContentInfo<TModel>() =>
-		GetPostContent<TModel>().Map(x => new Content<TModel>(x), MaybeF.DefaultHandler);
+		GetPostContent<TModel>().Map(x => new Content<TModel>(x), F.DefaultHandler);
 
 	internal class Content<TModel> : PropertyInfo<TModel, string>
 	{

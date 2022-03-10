@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Enums;
-using Xunit;
 
 namespace Jeebs.WordPress.TermList_Tests;
 

@@ -3,7 +3,6 @@
 
 using System;
 using Jeebs.Logging;
-using Maybe.Functions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -42,7 +41,7 @@ public static class Builder
 
 		// Set Maybe Audit log
 		var log = app.Services.GetRequiredService<ILog<MinimalApiApp>>();
-		MaybeF.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
+		MaybeF.F.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Ready to go
 		log.Inf("Application configured.");

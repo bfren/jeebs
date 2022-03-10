@@ -3,9 +3,8 @@
 
 using System;
 using System.Globalization;
-using Maybe;
-using Maybe.Functions;
 using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Functions;
 
@@ -30,12 +29,12 @@ public static class EnumF
 					x,
 
 				_ =>
-					MaybeF.None<T>(new M.NotAValidEnumValueMsg<T>(value))
+					F.None<T>(new M.NotAValidEnumValueMsg<T>(value))
 			};
 		}
 		catch (Exception)
 		{
-			return MaybeF.None<T>(new M.NotAValidEnumValueMsg<T>(value));
+			return F.None<T>(new M.NotAValidEnumValueMsg<T>(value));
 		}
 	}
 
@@ -48,7 +47,7 @@ public static class EnumF
 	{
 		if (!t.IsEnum)
 		{
-			return MaybeF.None<object>(new M.NotAValidEnumMsg(t));
+			return F.None<object>(new M.NotAValidEnumMsg(t));
 		}
 
 		try
@@ -57,7 +56,7 @@ public static class EnumF
 		}
 		catch (Exception)
 		{
-			return MaybeF.None<object>(new M.NotAValidEnumValueMsg(t, value));
+			return F.None<object>(new M.NotAValidEnumValueMsg(t, value));
 		}
 	}
 
@@ -107,7 +106,7 @@ public static class EnumF
 					x,
 
 				_ =>
-					MaybeF.None<TTo>(new M.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+					F.None<TTo>(new M.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
 			};
 		}
 	}

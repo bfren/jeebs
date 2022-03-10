@@ -9,8 +9,7 @@ using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Query;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.CustomFields;
 
@@ -49,15 +48,15 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		{
 			if (isRequired)
 			{
-				return MaybeF.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
 			}
 
-			return MaybeF.False.AsTask;
+			return F.False.AsTask;
 		}
 
 		// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 		return
-			MaybeF.Some(
+			F.Some(
 				ValueStr
 			)
 			.Bind(
@@ -94,7 +93,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 
 					return true;
 				},
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			);
 	}
 
@@ -107,7 +106,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	{
 		if (!long.TryParse(value, out var attachmentPostId))
 		{
-			return MaybeF.None<WpPostId>(new M.ValueIsInvalidPostIdMsg(type, value));
+			return F.None<WpPostId>(new M.ValueIsInvalidPostIdMsg(type, value));
 		}
 
 		return new WpPostId(attachmentPostId);

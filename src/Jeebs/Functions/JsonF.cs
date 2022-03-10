@@ -4,9 +4,8 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Maybe;
-using Maybe.Functions;
 using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Functions;
 
@@ -75,7 +74,7 @@ public static class JsonF
 		obj switch
 		{
 			T x =>
-				MaybeF.Some(
+				F.Some(
 					() => JsonSerializer.Serialize(x, options),
 					e => new M.SerialiseExceptionMsg(e)
 				),
@@ -99,7 +98,7 @@ public static class JsonF
 		// Check for null string
 		if (str is null || string.IsNullOrWhiteSpace(str))
 		{
-			return MaybeF.None<T, M.DeserialisingNullOrEmptyStringMsg>();
+			return F.None<T, M.DeserialisingNullOrEmptyStringMsg>();
 		}
 
 		// Attempt to deserialise JSON
@@ -111,12 +110,12 @@ public static class JsonF
 					x,
 
 				_ =>
-					MaybeF.None<T, M.DeserialisingReturnedNullMsg>() // should never get here
+					F.None<T, M.DeserialisingReturnedNullMsg>() // should never get here
 			};
 		}
 		catch (Exception ex)
 		{
-			return MaybeF.None<T>(new M.DeserialiseExceptionMsg(ex));
+			return F.None<T>(new M.DeserialiseExceptionMsg(ex));
 		}
 	}
 

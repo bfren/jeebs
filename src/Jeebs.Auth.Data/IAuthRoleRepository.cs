@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Id;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Auth.Data;
 

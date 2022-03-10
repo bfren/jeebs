@@ -6,8 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Jeebs.Config.Web.Auth.Jwt;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Jeebs.Auth.Jwt.Functions;
@@ -42,15 +41,15 @@ public static partial class JwtF
 		}
 		catch (SecurityTokenNotYetValidException)
 		{
-			return MaybeF.None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
+			return F.None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
 		}
 		catch (Exception e) when (e.Message.Contains("IDX10223"))
 		{
-			return MaybeF.None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
+			return F.None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
 		}
 		catch (Exception e)
 		{
-			return MaybeF.None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
+			return F.None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
 		}
 	}
 

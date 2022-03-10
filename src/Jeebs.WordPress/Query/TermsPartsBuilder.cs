@@ -9,8 +9,8 @@ using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
-using Maybe;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 
 namespace Jeebs.WordPress.Query;
 

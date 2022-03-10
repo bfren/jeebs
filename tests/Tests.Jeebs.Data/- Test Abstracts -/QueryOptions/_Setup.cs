@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 using Jeebs.Id;
-using Maybe.Extensions;
+using MaybeF.Extensions;
 using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Query.QueryOptions_Tests;

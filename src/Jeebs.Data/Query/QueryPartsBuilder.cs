@@ -8,11 +8,10 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Functions;
-using Jeebs.Messages;
 using Jeebs.Id;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Linq;
+using Jeebs.Messages;
+using MaybeF;
+using MaybeF.Linq;
 
 namespace Jeebs.Data.Query;
 
@@ -193,7 +192,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		)
 		.Map(
 			x => parts with { Where = parts.Where.WithItem((x, cmp, value)) },
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		);
 
 	/// <inheritdoc/>
@@ -202,14 +201,14 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			return MaybeF.None<QueryParts, M.TryingToAddEmptyClauseToWhereCustomMsg>();
+			return F.None<QueryParts, M.TryingToAddEmptyClauseToWhereCustomMsg>();
 		}
 
 		// Get parameters
 		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
-			return MaybeF.None<QueryParts, M.UnableToAddParametersToWhereCustomMsg>();
+			return F.None<QueryParts, M.UnableToAddParametersToWhereCustomMsg>();
 		}
 
 		// Add clause and return

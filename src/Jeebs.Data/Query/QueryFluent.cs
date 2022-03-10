@@ -8,10 +8,9 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Messages;
 using Jeebs.Id;
-using Maybe;
-using Maybe.Functions;
+using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Data.Query;
 
@@ -98,7 +97,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 				repo.QueryAsync<TModel>(Predicates.ToArray()),
 
 			_ =>
-				MaybeF.None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask
+				F.None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask
 		};
 
 	/// <inheritdoc/>
@@ -109,6 +108,6 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 				repo.QuerySingleAsync<TModel>(Predicates.ToArray()),
 
 			_ =>
-				MaybeF.None<TModel, M.NoPredicatesMsg>().AsTask
+				F.None<TModel, M.NoPredicatesMsg>().AsTask
 		};
 }

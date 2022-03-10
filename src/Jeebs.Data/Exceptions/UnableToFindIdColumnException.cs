@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Data.Exceptions;
 

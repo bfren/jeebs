@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.WordPress.Query;
 

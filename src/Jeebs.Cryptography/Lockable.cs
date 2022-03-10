@@ -2,8 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Cryptography;
 
@@ -36,7 +35,7 @@ public sealed class Lockable<T> : Lockable
 				new Locked<T>(Contents, key),
 
 			_ =>
-				MaybeF.None<Locked<T>, M.InvalidKeyLengthMsg>()
+				F.None<Locked<T>, M.InvalidKeyLengthMsg>()
 		};
 
 	/// <summary>

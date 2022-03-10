@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Logging;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,7 +81,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				authorisationHeader.ToString(),
 
 			_ =>
-				MaybeF.None<string, M.MissingAuthorisationHeaderMsg>()
+				F.None<string, M.MissingAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>
@@ -96,7 +95,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 				authorisationHeader["Bearer ".Length..].Trim(),
 
 			_ =>
-				MaybeF.None<string, M.InvalidAuthorisationHeaderMsg>()
+				F.None<string, M.InvalidAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>

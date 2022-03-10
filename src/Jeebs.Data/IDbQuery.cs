@@ -6,7 +6,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Query;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Data;
 

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -30,7 +29,7 @@ public static partial class QueryPostsF
 		// If there are no posts, do nothing
 		if (!posts.Any())
 		{
-			return MaybeF.Some(posts).AsTask;
+			return F.Some(posts).AsTask;
 		}
 
 		// Get Meta values
@@ -43,7 +42,7 @@ public static partial class QueryPostsF
 					})
 					from withMeta in SetMeta(posts, postMeta.ToList(), x)
 					select posts,
-				none: MaybeF.Some(posts)
+				none: F.Some(posts)
 			);
 	}
 }

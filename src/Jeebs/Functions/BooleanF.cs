@@ -3,9 +3,8 @@
 
 using System.Globalization;
 using System.Linq;
-using Maybe;
-using Maybe.Functions;
 using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Functions;
 
@@ -25,7 +24,7 @@ public static class BooleanF
 		var val = value?.ToString()?.ToLower(CultureInfo.InvariantCulture);
 		if (val is null)
 		{
-			return MaybeF.None<bool, M.NullValueMsg>();
+			return F.None<bool, M.NullValueMsg>();
 		}
 
 		// Alternative boolean values
@@ -46,7 +45,7 @@ public static class BooleanF
 			return result;
 		}
 
-		return MaybeF.None<bool>(new M.UnrecognisedValueMsg(val));
+		return F.None<bool>(new M.UnrecognisedValueMsg(val));
 	}
 
 	/// <summary>Messages</summary>

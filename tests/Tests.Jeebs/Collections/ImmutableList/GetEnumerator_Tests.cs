@@ -1,8 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Collections;
-
 namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class GetEnumerator_Tests

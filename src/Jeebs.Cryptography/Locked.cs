@@ -7,8 +7,7 @@ using System.Text;
 using Jeebs.Cryptography.Functions;
 using Jeebs.Functions;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Sodium;
 using Sodium.Exceptions;
 
@@ -23,7 +22,7 @@ public sealed class Locked<T> : Locked
 	/// <summary>
 	/// Encrypted contents
 	/// </summary>
-	public Maybe<byte[]> EncryptedContents { get; init; } = MaybeF.None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
+	public Maybe<byte[]> EncryptedContents { get; init; } = F.None<byte[], M.EncryptedContentsNotCreatedYetMsg>();
 
 	/// <summary>
 	/// Salt
@@ -82,7 +81,7 @@ public sealed class Locked<T> : Locked
 						)
 						.Map(
 							x => new Lockable<T>(x),
-							MaybeF.DefaultHandler
+							F.DefaultHandler
 						);
 				}
 				catch (KeyOutOfRangeException ex)
@@ -102,13 +101,13 @@ public sealed class Locked<T> : Locked
 					return handle(new M.UnlockExceptionMsg(ex));
 				}
 			},
-			none: MaybeF.None<Lockable<T>, M.UnlockWhenEncryptedContentsIsNoneMsg>()
+			none: F.None<Lockable<T>, M.UnlockWhenEncryptedContentsIsNoneMsg>()
 		);
 
 		// Handle an exception
 		static Maybe<Lockable<T>> handle<TMsg>(TMsg ex)
 			where TMsg : IExceptionMsg =>
-			 MaybeF.None<Lockable<T>>(ex);
+			 F.None<Lockable<T>>(ex);
 	}
 
 	/// <summary>
@@ -124,7 +123,7 @@ public sealed class Locked<T> : Locked
 	public Maybe<string> Serialise() =>
 		EncryptedContents.Switch(
 			some: _ => JsonF.Serialise(this),
-			none: MaybeF.Some(JsonF.Empty)
+			none: F.Some(JsonF.Empty)
 		);
 
 	private byte[] HashKey(string key) =>

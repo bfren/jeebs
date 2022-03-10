@@ -11,8 +11,7 @@ using Jeebs.Messages;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -39,7 +38,7 @@ public static partial class QueryPostsF
 					Process<IEnumerable<TModel>, TModel>(db, w, x, filters),
 
 				_ =>
-					MaybeF.Some(x).AsTask
+					F.Some(x).AsTask
 			}
 		);
 
@@ -73,10 +72,10 @@ public static partial class QueryPostsF
 					Process<IPagedList<TModel>, TModel>(db, w, x, filters),
 
 				PagedList<TModel> =>
-					MaybeF.Some(x).AsTask,
+					F.Some(x).AsTask,
 
 				_ =>
-					MaybeF.None<IPagedList<TModel>, M.UnrecognisedPagedListTypeMsg>().AsTask
+					F.None<IPagedList<TModel>, M.UnrecognisedPagedListTypeMsg>().AsTask
 			}
 		);
 

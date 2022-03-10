@@ -7,8 +7,7 @@ using System.Security.Claims;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Config.Web.Auth.Jwt;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Jeebs.Auth.Jwt.Functions;
@@ -45,32 +44,32 @@ public static partial class JwtF
 		// Ensure there is a current user
 		if (principal.Identity is null)
 		{
-			return MaybeF.None<string, M.NullIdentityMsg>();
+			return F.None<string, M.NullIdentityMsg>();
 		}
 
 		// Ensure the current user is authenticated
 		var identity = principal.Identity;
 		if (!identity.IsAuthenticated)
 		{
-			return MaybeF.None<string, M.IdentityNotAuthenticatedMsg>();
+			return F.None<string, M.IdentityNotAuthenticatedMsg>();
 		}
 
 		// Ensure the JwtConfig is valid
 		if (!config.IsValid)
 		{
-			return MaybeF.None<string, M.ConfigInvalidMsg>();
+			return F.None<string, M.ConfigInvalidMsg>();
 		}
 
 		// Ensure the signing key is a valid length
 		if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 		{
-			return MaybeF.None<string, M.SigningKeyNotLongEnoughMsg>();
+			return F.None<string, M.SigningKeyNotLongEnoughMsg>();
 		}
 
 		// Ensure the encrypting key is a valid length
 		if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 		{
-			return MaybeF.None<string, M.EncryptingKeyNotLongEnoughMsg>();
+			return F.None<string, M.EncryptingKeyNotLongEnoughMsg>();
 		}
 
 		try
@@ -102,11 +101,11 @@ public static partial class JwtF
 		}
 		catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 		{
-			return MaybeF.None<string, M.KeyNotLongEnoughMsg>();
+			return F.None<string, M.KeyNotLongEnoughMsg>();
 		}
 		catch (Exception e)
 		{
-			return MaybeF.None<string>(new M.CreatingJwtSecurityTokenExceptionMsg(e));
+			return F.None<string>(new M.CreatingJwtSecurityTokenExceptionMsg(e));
 		}
 	}
 

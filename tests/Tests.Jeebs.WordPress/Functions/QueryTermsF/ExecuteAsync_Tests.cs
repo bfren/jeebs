@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Functions;
 using static Jeebs.WordPress.Functions.QueryTermsF.M;
 
 namespace Jeebs.WordPress.Functions.QueryTermsF_Tests;

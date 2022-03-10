@@ -8,8 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Messages;
 using Jeebs.Reflection;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -37,13 +36,13 @@ public static partial class QueryPostsF
 		// If MetaDictionary is not defined return none
 		if (!metaDictionary.Any())
 		{
-			return MaybeF.None<Meta<TModel>, M.MetaDictionaryPropertyNotFoundMsg<TModel>>();
+			return F.None<Meta<TModel>, M.MetaDictionaryPropertyNotFoundMsg<TModel>>();
 		}
 
 		// Throw an error if there are multiple MetaDictionaries
 		if (metaDictionary.Count() > 1)
 		{
-			return MaybeF.None<Meta<TModel>, M.MoreThanOneMetaDictionaryMsg<TModel>>();
+			return F.None<Meta<TModel>, M.MoreThanOneMetaDictionaryMsg<TModel>>();
 		}
 
 		return new Meta<TModel>(metaDictionary.Single());

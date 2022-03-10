@@ -3,8 +3,7 @@
 
 using System;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Data.Query.Functions;
 
@@ -16,7 +15,7 @@ public static partial class QueryBuilderF
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="builder">Query builder</param>
 	public static Maybe<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
-		MaybeF.Some(
+		F.Some(
 			new QueryBuilder()
 		)
 		.Map(

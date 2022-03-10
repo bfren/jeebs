@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Jeebs.Messages;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Logging;
 

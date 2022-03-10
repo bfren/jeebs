@@ -6,9 +6,8 @@ using System.Linq;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Functions;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 
 namespace Jeebs.Data;
 
@@ -57,7 +56,7 @@ public static class Extract<TModel>
 
 		// Extract distinct columns
 		return
-			MaybeF.Some(
+			F.Some(
 				() => from table in tables
 					  from column in QueryF.GetColumnsFromTable<TModel>(table)
 					  select column,
@@ -73,7 +72,7 @@ public static class Extract<TModel>
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x),
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			);
 	}
 }

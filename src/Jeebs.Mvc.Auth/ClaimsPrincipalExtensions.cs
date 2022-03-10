@@ -6,8 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Mvc.Auth;
 
@@ -33,15 +32,15 @@ public static class ClaimsPrincipalExtensions
 							userId,
 
 						false =>
-							MaybeF.None<long, M.InvalidUserIdMsg>()
+							F.None<long, M.InvalidUserIdMsg>()
 					},
 
 				_ =>
-					MaybeF.None<long, M.UnableToFindUserIdClaimMsg>()
+					F.None<long, M.UnableToFindUserIdClaimMsg>()
 			};
 		}
 
-		return MaybeF.None<long, M.UserIsNotAuthenticatedMsg>();
+		return F.None<long, M.UserIsNotAuthenticatedMsg>();
 	}
 
 	/// <summary>

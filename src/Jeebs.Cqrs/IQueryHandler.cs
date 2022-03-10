@@ -3,7 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Cqrs;
 

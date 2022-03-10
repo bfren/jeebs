@@ -4,12 +4,11 @@
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
+using Jeebs.Id;
 using Jeebs.Logging;
 using Jeebs.Random;
-using Jeebs.Id;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,7 +52,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.MapAsync(
 				x => View(x),
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(() => View("Unknown"))
@@ -68,7 +67,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.MapAsync(
 				_ => RedirectToAction("ShowUser", new { id = model.Id.Value }),
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(() => throw new Exception())
@@ -82,14 +81,14 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.SwitchAsync(
 				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = Rnd.Str }).ConfigureAwait(false),
-				none: r => MaybeF.None<bool>(r).AsTask
+				none: r => F.None<bool>(r).AsTask
 			)
 			.BindAsync(
 				_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId(1))
 			)
 			.MapAsync(
 				x => Content(x.ToString()),
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(Content("Ooops"))
@@ -103,7 +102,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.MapAsync(
 				x => View("ShowUser", x),
-				MaybeF.DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(() => View("Unknown"))

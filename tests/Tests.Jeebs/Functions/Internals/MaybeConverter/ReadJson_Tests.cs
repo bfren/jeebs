@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Maybe;
+using MaybeF;
 using static Jeebs.Functions.JsonF.M;
 
 namespace Jeebs.Functions.Internals.MaybeConverter_Tests;

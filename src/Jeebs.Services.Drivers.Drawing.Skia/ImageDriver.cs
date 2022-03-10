@@ -4,8 +4,7 @@
 using System.IO;
 using Jeebs.Messages;
 using Jeebs.Services.Drawing;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using SkiaSharp;
 
 namespace Jeebs.Services.Drivers.Drawing.Skia;
@@ -20,7 +19,7 @@ public sealed class ImageDriver : IImageDriver
 	{
 		if (!File.Exists(path))
 		{
-			return MaybeF.None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
+			return F.None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
 		}
 
 		// Create and return image object

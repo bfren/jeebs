@@ -9,8 +9,7 @@ using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -34,7 +33,7 @@ public static partial class QueryPostsF
 		)
 		.MapAsync(
 			x => x.Select(p => p.Id.Value).ToList(),
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		)
 		.MapAsync(
 			x => GetPreviousAndNext(currentId.Value, x),

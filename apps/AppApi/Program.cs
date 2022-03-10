@@ -3,7 +3,7 @@
 
 using AppApi;
 using Jeebs.Cqrs;
-using Maybe;
+using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 
 var (app, log) = Jeebs.Apps.Builder.Create(args, useHsts: false, configure: builder => builder.Services.AddCqrs());

@@ -6,8 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Data.Map;
 
@@ -49,27 +48,27 @@ public sealed record class TableMap : ITableMap
 
 	/// <inheritdoc/>
 	public Maybe<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
-		MaybeF.Some(
+		F.Some(
 			() => from c in Columns
 				  where c.PropertyInfo.GetCustomAttribute<IdAttribute>() is null
 				  && c.PropertyInfo.GetCustomAttribute<ComputedAttribute>() is null
 				  && c.PropertyInfo.GetCustomAttribute<ReadonlyAttribute>() is null
 				  select c,
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		)
 		.Bind(
 			x => x.Any() switch
 			{
 				true =>
-					MaybeF.Some(x),
+					F.Some(x),
 
 				false =>
-					MaybeF.None<IEnumerable<IMappedColumn>, M.NoWriteableColumnsFoundMsg>()
+					F.None<IEnumerable<IMappedColumn>, M.NoWriteableColumnsFoundMsg>()
 			}
 		)
 		.Map(
 			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList()),
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		);
 
 	/// <inheritdoc cref="Name"/>

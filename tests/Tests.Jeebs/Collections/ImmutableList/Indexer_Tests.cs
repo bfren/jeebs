@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Maybe.Functions.MaybeF.EnumerableF.R;
+using static MaybeF.F.EnumerableF.R;
 
 namespace Jeebs.Collections.ImmutableList_Tests;
 

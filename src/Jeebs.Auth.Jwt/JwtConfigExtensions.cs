@@ -4,8 +4,7 @@
 using System.Text;
 using Jeebs.Config.Web.Auth.Jwt;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Jeebs.Auth.Jwt;
@@ -33,7 +32,7 @@ public static class JwtConfigExtensions
 				new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
 
 			_ =>
-				MaybeF.None<SecurityKey, M.NullEncryptingKeyMsg>()
+				F.None<SecurityKey, M.NullEncryptingKeyMsg>()
 		};
 
 	/// <summary>Messages</summary>

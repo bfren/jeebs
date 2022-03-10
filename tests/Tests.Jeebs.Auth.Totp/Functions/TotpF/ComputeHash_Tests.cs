@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Security.Cryptography;
-using Jeebs.Random;
-using Xunit;
 
 namespace Jeebs.Auth.Totp.Functions.TotpF_Tests;
 

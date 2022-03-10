@@ -3,8 +3,7 @@
 
 using Jeebs.Messages;
 using Jeebs.Random;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Cryptography.Functions;
 
@@ -24,10 +23,10 @@ public static partial class CryptoF
 		Rnd.StringF.Passphrase(numberOfWords) switch
 		{
 			string pass =>
-				MaybeF.Some(pass),
+				F.Some(pass),
 
 			_ =>
-				MaybeF.None<string, M.NullPassphraseMsg>()
+				F.None<string, M.NullPassphraseMsg>()
 		};
 
 	public static partial class M

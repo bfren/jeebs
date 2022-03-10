@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Services.Drawing;
-using Maybe.Linq;
+using MaybeF.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppMvc.Controllers;

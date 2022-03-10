@@ -6,7 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Data;
 using Jeebs.Logging;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Auth;
 

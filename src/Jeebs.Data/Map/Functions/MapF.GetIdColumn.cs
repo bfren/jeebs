@@ -5,10 +5,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
-using Jeebs.Messages;
 using Jeebs.Id;
-using Maybe;
-using Maybe.Functions;
+using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Data.Map.Functions;
 
@@ -24,7 +23,7 @@ public static partial class MapF
 	/// <param name="columns">List of mapped columns</param>
 	public static Maybe<MappedColumn> GetIdColumn<TEntity>(MappedColumnList columns)
 		where TEntity : IWithId =>
-		MaybeF.Some(
+		F.Some(
 			columns
 		)
 		.Map(
@@ -36,7 +35,7 @@ public static partial class MapF
 		)
 		.Map(
 			x => new MappedColumn(x),
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		);
 
 	public static partial class M

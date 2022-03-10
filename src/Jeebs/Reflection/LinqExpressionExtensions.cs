@@ -5,8 +5,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Reflection;
 
@@ -31,10 +30,10 @@ public static class LinqExpressionExtensions
 			x => typeof(TObject).HasProperty(x.Name) switch
 			{
 				true =>
-					MaybeF.Some(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
+					F.Some(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
 
 				false =>
-					MaybeF.None<PropertyInfo<TObject, TProperty>>(new M.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))
+					F.None<PropertyInfo<TObject, TProperty>>(new M.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))
 			}
 		);
 
@@ -55,7 +54,7 @@ public static class LinqExpressionExtensions
 				memberExpression.Member,
 
 			_ =>
-				MaybeF.None<MemberInfo, M.ExpressionIsNotAMemberExpressionMsg>()
+				F.None<MemberInfo, M.ExpressionIsNotAMemberExpressionMsg>()
 		};
 
 	/// <summary>Messages</summary>

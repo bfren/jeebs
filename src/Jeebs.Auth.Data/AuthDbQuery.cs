@@ -10,8 +10,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Auth;
 
@@ -28,7 +27,7 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 	/// <inheritdoc/>
 	public Task<Maybe<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
 		where TRole : IAuthRole =>
-		MaybeF.Some(userId)
+		F.Some(userId)
 		.BindAsync(
 			x => this.QueryAsync<TRole>(builder => builder
 				.From<AuthRoleTable>()
@@ -38,6 +37,6 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 		)
 		.MapAsync(
 			x => x.ToList(),
-			MaybeF.DefaultHandler
+			F.DefaultHandler
 		);
 }

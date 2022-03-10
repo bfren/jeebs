@@ -4,9 +4,8 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Maybe;
-using Maybe.Functions;
 using Jeebs.Messages;
+using MaybeF;
 
 namespace Jeebs.Reflection;
 
@@ -62,7 +61,7 @@ public static class ObjectExtensions
 			// If the types don't match, return None
 			if (typeof(T) != typeof(object) && typeof(T) != info.PropertyType)
 			{
-				return MaybeF.None<T>(new M.UnexpectedPropertyTypeMsg<T>((type, propertyName)));
+				return F.None<T>(new M.UnexpectedPropertyTypeMsg<T>((type, propertyName)));
 			}
 
 			// Get the value - if it's null return None
@@ -72,12 +71,12 @@ public static class ObjectExtensions
 					val,
 
 				_ =>
-					MaybeF.None<T>(new M.NullValueMsg<T>((type, propertyName)))
+					F.None<T>(new M.NullValueMsg<T>((type, propertyName)))
 			};
 		}
 
 		// No property with this name was found
-		return MaybeF.None<T>(new M.PropertyNotFoundMsg((type, propertyName)));
+		return F.None<T>(new M.PropertyNotFoundMsg((type, propertyName)));
 	}
 
 	/// <summary>Messages</summary>

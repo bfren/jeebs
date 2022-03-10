@@ -6,9 +6,8 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using Jeebs.Messages;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 
 namespace Jeebs.Auth;
 
@@ -53,13 +52,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		// Check email
 		if (string.IsNullOrEmpty(email))
 		{
-			return MaybeF.None<TModel, M.NullOrEmptyEmailMsg>();
+			return F.None<TModel, M.NullOrEmptyEmailMsg>();
 		}
 
 		// Check password
 		if (string.IsNullOrEmpty(password))
 		{
-			return MaybeF.None<TModel, M.InvalidPasswordMsg>();
+			return F.None<TModel, M.InvalidPasswordMsg>();
 		}
 
 		// Get user for authentication
@@ -68,13 +67,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			// Verify the user is enabled
 			if (!user.IsEnabled)
 			{
-				return MaybeF.None<TModel>(new M.UserNotEnabledMsg(email));
+				return F.None<TModel>(new M.UserNotEnabledMsg(email));
 			}
 
 			// Verify the entered password
 			if (!user.PasswordHash.VerifyPassword(password))
 			{
-				return MaybeF.None<TModel, M.InvalidPasswordMsg>();
+				return F.None<TModel, M.InvalidPasswordMsg>();
 			}
 
 			// Get user model
@@ -82,7 +81,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// User not found
-		return MaybeF.None<TModel>(new M.UserNotFoundMsg(email));
+		return F.None<TModel>(new M.UserNotFoundMsg(email));
 	}
 
 	/// <inheritdoc/>

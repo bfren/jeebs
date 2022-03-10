@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -25,7 +24,7 @@ public static partial class QueryPostsF
 	internal static Task<Maybe<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 		where TModel : Id.IWithId<WpPostId> =>
-		MaybeF.Some(
+		F.Some(
 			posts
 		)
 		.BindAsync(

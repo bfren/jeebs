@@ -4,10 +4,9 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using Maybe;
-using Maybe.Functions;
-using Maybe.Internals;
 using Jeebs.Messages;
+using MaybeF;
+using MaybeF.Internals;
 
 namespace Jeebs;
 
@@ -76,7 +75,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				value,
 
 			false =>
-				MaybeF.None<T>(new M.NotAValidEnumeratedValueMsg<T>(value))
+				F.None<T>(new M.NotAValidEnumeratedValueMsg<T>(value))
 		};
 
 	/// <summary>
@@ -101,7 +100,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				}
 
 				// If we get here the name was never matched
-				return MaybeF.None<T>(new M.NotAValidEnumeratedValueMsg<T>(name));
+				return F.None<T>(new M.NotAValidEnumeratedValueMsg<T>(name));
 			},
 			new ParseArgs<T>(name, values)
 		);

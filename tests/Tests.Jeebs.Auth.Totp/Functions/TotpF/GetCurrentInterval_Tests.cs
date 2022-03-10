@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
-
 namespace Jeebs.Auth.Totp.Functions.TotpF_Tests;
 
 public class GetCurrentInterval_Tests

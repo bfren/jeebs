@@ -7,8 +7,8 @@ using Jeebs.Config;
 using Jeebs.Functions;
 using Jeebs.Random;
 using Jeebs.Services.Notify;
-using Maybe;
-using Maybe.Linq;
+using MaybeF;
+using MaybeF.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 

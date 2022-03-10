@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Functions;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Collections;
 

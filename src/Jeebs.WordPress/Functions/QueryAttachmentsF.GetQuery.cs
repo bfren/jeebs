@@ -7,8 +7,7 @@ using Jeebs.Extensions;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -25,7 +24,7 @@ public static partial class QueryAttachmentsF
 		// Check for empty list
 		if (fileIds.Count == 0)
 		{
-			return MaybeF.None<string, M.NoFileIdsMsg>();
+			return F.None<string, M.NoFileIdsMsg>();
 		}
 
 		// Build query

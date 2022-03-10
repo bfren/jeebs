@@ -11,8 +11,7 @@ using Jeebs.Auth.Data.Tables;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Random;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,7 +48,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			var roles = await
-				MaybeF.Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -64,7 +63,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					roles => roles.ToList(),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					some: _ => results.Append('.'),
@@ -87,7 +86,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			var roles = await
-				MaybeF.Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -99,7 +98,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					some: _ => results.Append('.'),
@@ -133,7 +132,7 @@ public class TestController : Controller
 				$"WHERE `{db.UserRole}`.`{db.UserRole.UserId}` = @P0;";
 
 			var roles = await
-				MaybeF.Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -141,7 +140,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					some: _ => results.Append('.'),
@@ -241,7 +240,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			_ = await
-				MaybeF.Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -268,7 +267,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			_ = await
-				MaybeF.Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -313,7 +312,7 @@ public class TestController : Controller
 				$"WHERE `{db.User}`.`{db.User.Id}` = @P0;";
 
 			_ = await
-				MaybeF.Some(
+				F.Some(
 					userId
 				)
 				.BindAsync(
@@ -407,7 +406,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			_ = await
-				MaybeF.Some(
+				F.Some(
 					Rnd.Lng
 				)
 				.BindAsync(
@@ -422,7 +421,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					roles => roles.ToList(),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
@@ -444,7 +443,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			_ = await
-				MaybeF.Some(
+				F.Some(
 					Rnd.Lng
 				)
 				.BindAsync(
@@ -456,7 +455,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')
@@ -488,7 +487,7 @@ public class TestController : Controller
 		for (int i = 0; i < reps; i++)
 		{
 			var roles = await
-				MaybeF.Some(
+				F.Some(
 					Rnd.Lng
 				)
 				.BindAsync(
@@ -496,7 +495,7 @@ public class TestController : Controller
 				)
 				.MapAsync(
 					x => x.ToList(),
-					MaybeF.DefaultHandler
+					F.DefaultHandler
 				)
 				.AuditAsync(
 					any: _ => results.Append('.')

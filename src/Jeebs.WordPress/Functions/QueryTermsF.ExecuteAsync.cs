@@ -8,8 +8,7 @@ using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -24,7 +23,7 @@ public static partial class QueryTermsF
 	/// <param name="opt">Function to return query options</param>
 	public static Task<Maybe<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
 		where TModel : Id.IWithId<WpTermId> =>
-		MaybeF.Some(
+		F.Some(
 			() => opt(new Query.TermsOptions(db.Schema)),
 			e => new M.ErrorGettingQueryTermsOptionsMsg(e)
 		)

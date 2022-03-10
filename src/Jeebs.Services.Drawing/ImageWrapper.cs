@@ -5,8 +5,7 @@ using System;
 using Jeebs.Messages;
 using Jeebs.Services.Drawing.Functions;
 using Jeebs.Services.Drawing.Geometry;
-using Maybe;
-using Maybe.Functions;
+using MaybeF;
 
 namespace Jeebs.Services.Drawing;
 
@@ -54,7 +53,7 @@ public abstract class ImageWrapper : IImageWrapper
 		// At least one of width and height should be greater than zero
 		if (width == 0 && height == 0)
 		{
-			return MaybeF.None<IImageWrapper, M.MaskHeightOrWidthRequiredMsg>();
+			return F.None<IImageWrapper, M.MaskHeightOrWidthRequiredMsg>();
 		}
 
 		// Calculate the size of the new image
@@ -67,11 +66,11 @@ public abstract class ImageWrapper : IImageWrapper
 		try
 		{
 			var resized = apply(size, mask);
-			return MaybeF.Some(resized);
+			return F.Some(resized);
 		}
 		catch (Exception e)
 		{
-			return MaybeF.None<IImageWrapper>(new M.ApplyingImageMaskExceptionMsg(e));
+			return F.None<IImageWrapper>(new M.ApplyingImageMaskExceptionMsg(e));
 		}
 	}
 

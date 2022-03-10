@@ -3,8 +3,8 @@
 
 using System;
 using Jeebs.Data.Map;
-using Jeebs.Messages;
 using Jeebs.Id;
+using Jeebs.Messages;
 
 namespace Jeebs.Data.Query;
 

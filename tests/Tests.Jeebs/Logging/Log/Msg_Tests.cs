@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Messages;
-using Maybe;
+using MaybeF;
 
 namespace Jeebs.Logging.Log_Tests;
 
