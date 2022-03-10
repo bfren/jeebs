@@ -6,6 +6,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
+		<RestoreSources>https://api.nuget.org/v3/index.json;https://nuget.pkg.github.com/bfren/index.json</RestoreSources>
 	</PropertyGroup>
 	
 	<!-- Enable Internal Testing -->
