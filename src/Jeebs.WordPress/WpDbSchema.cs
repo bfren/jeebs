@@ -9,40 +9,40 @@ namespace Jeebs.WordPress;
 public sealed class WpDbSchema : IWpDbSchema
 {
 	/// <inheritdoc/>
-	public CommentTable Comment { get; private init; }
+	public CommentsTable Comments { get; private init; }
 
 	/// <inheritdoc/>
-	public CommentMetaTable CommentMeta { get; private init; }
+	public CommentsMetaTable CommentsMeta { get; private init; }
 
 	/// <inheritdoc/>
-	public LinkTable Link { get; private init; }
+	public LinksTable Links { get; private init; }
 
 	/// <inheritdoc/>
-	public OptionTable Opt { get; private init; }
+	public OptionsTable Options { get; private init; }
 
 	/// <inheritdoc/>
-	public PostTable Post { get; private init; }
+	public PostsTable Posts { get; private init; }
 
 	/// <inheritdoc/>
-	public PostMetaTable PostMeta { get; private init; }
+	public PostsMetaTable PostsMeta { get; private init; }
 
 	/// <inheritdoc/>
-	public TermTable Term { get; private init; }
+	public TermsTable Terms { get; private init; }
 
 	/// <inheritdoc/>
-	public TermMetaTable TermMeta { get; private init; }
+	public TermsMetaTable TermsMeta { get; private init; }
 
 	/// <inheritdoc/>
-	public TermRelationshipTable TermRelationship { get; private init; }
+	public TermRelationshipsTable TermRelationships { get; private init; }
 
 	/// <inheritdoc/>
-	public TermTaxonomyTable TermTaxonomy { get; private init; }
+	public TermTaxonomiesTable TermTaxonomies { get; private init; }
 
 	/// <inheritdoc/>
-	public UserTable User { get; private init; }
+	public UsersTable Users { get; private init; }
 
 	/// <inheritdoc/>
-	public UserMetaTable UserMeta { get; private init; }
+	public UsersMetaTable UsersMeta { get; private init; }
 
 	/// <summary>
 	/// Create table objects
@@ -50,17 +50,17 @@ public sealed class WpDbSchema : IWpDbSchema
 	/// <param name="prefix">Table prefix</param>
 	public WpDbSchema(string prefix)
 	{
-		Comment = new CommentTable(prefix);
-		CommentMeta = new CommentMetaTable(prefix);
-		Link = new LinkTable(prefix);
-		Opt = new OptionTable(prefix);
-		Post = new PostTable(prefix);
-		PostMeta = new PostMetaTable(prefix);
-		Term = new TermTable(prefix);
-		TermMeta = new TermMetaTable(prefix);
-		TermRelationship = new TermRelationshipTable(prefix);
-		TermTaxonomy = new TermTaxonomyTable(prefix);
-		User = new UserTable(prefix);
-		UserMeta = new UserMetaTable(prefix);
+		Comments = new CommentsTable(prefix);
+		CommentsMeta = new CommentsMetaTable(prefix);
+		Links = new LinksTable(prefix);
+		Options = new OptionsTable(prefix);
+		Posts = new PostsTable(prefix);
+		PostsMeta = new PostsMetaTable(prefix);
+		Terms = new TermsTable(prefix);
+		TermsMeta = new TermsMetaTable(prefix);
+		TermRelationships = new TermRelationshipsTable(prefix);
+		TermTaxonomies = new TermTaxonomiesTable(prefix);
+		Users = new UsersTable(prefix);
+		UsersMeta = new UsersMetaTable(prefix);
 	}
 }

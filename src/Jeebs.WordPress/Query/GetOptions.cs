@@ -1,7 +1,7 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Querying;
+namespace Jeebs.WordPress.Query;
 
 /// <summary>
 /// Get default AttachmentsOptions and modify

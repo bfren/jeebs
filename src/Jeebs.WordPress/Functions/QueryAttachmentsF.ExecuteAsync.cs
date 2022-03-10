@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Querying;
+using Jeebs.WordPress.Query;
 using Maybe;
 using Maybe.Functions;
 
@@ -25,7 +25,7 @@ public static partial class QueryAttachmentsF
 	internal static Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
 		where T : IPostAttachment =>
 		MaybeF.Some(
-			() => opt(new Query.AttachmentsOptions()),
+			() => opt(new AttachmentsOptions()),
 			e => new M.ErrorGettingQueryAttachmentsOptionsMsg(e)
 		)
 		.Bind(

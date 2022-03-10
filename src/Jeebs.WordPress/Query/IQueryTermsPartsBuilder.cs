@@ -6,7 +6,7 @@ using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
 using Maybe;
 
-namespace Jeebs.WordPress;
+namespace Jeebs.WordPress.Query;
 
 /// <inheritdoc cref="IQueryPartsBuilder{TId}"/>
 public interface IQueryTermsPartsBuilder : IQueryPartsBuilder<WpTermId>

@@ -31,16 +31,16 @@ public static partial class QueryAttachmentsF
 		// Build query
 		return
 			"SELECT " +
-				$"`p`.`{schema.Post.Id}` AS '{nameof(PostAttachment.Id)}', " +
-				$"`p`.`{schema.Post.Title}` AS '{nameof(PostAttachment.Title)}', " +
-				$"`p`.`{schema.Post.Excerpt}` AS '{nameof(PostAttachment.Description)}', " +
-				$"`p`.`{schema.Post.Url}` AS '{nameof(PostAttachment.Url)}', " +
-				$"`pm`.`{schema.PostMeta.Value}` AS '{nameof(PostAttachment.UrlPath)}', " +
-				$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostMeta.Value}`) AS '{nameof(PostAttachment.Url)}' " +
-			$"FROM `{schema.Post}` AS `p` " +
-				$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`{schema.Post.Id}` = `pm`.`{schema.PostMeta.PostId}` " +
-			$"WHERE `p`.`{schema.Post.Id}` IN ({string.Join(',', fileIds.Select(x => x.Value))}) " +
-				$"AND `pm`.`{schema.PostMeta.Key}` = '{Constants.Attachment}';"
+				$"`p`.`{schema.Posts.Id}` AS '{nameof(PostAttachment.Id)}', " +
+				$"`p`.`{schema.Posts.Title}` AS '{nameof(PostAttachment.Title)}', " +
+				$"`p`.`{schema.Posts.Excerpt}` AS '{nameof(PostAttachment.Description)}', " +
+				$"`p`.`{schema.Posts.Url}` AS '{nameof(PostAttachment.Url)}', " +
+				$"`pm`.`{schema.PostsMeta.Value}` AS '{nameof(PostAttachment.UrlPath)}', " +
+				$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostsMeta.Value}`) AS '{nameof(PostAttachment.Url)}' " +
+			$"FROM `{schema.Posts}` AS `p` " +
+				$"LEFT JOIN `{schema.PostsMeta}` AS `pm` ON `p`.`{schema.Posts.Id}` = `pm`.`{schema.PostsMeta.PostId}` " +
+			$"WHERE `p`.`{schema.Posts.Id}` IN ({string.Join(',', fileIds.Select(x => x.Value))}) " +
+				$"AND `pm`.`{schema.PostsMeta.Key}` = '{Constants.Attachment}';"
 		;
 	}
 

@@ -8,6 +8,7 @@ using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
+using Jeebs.WordPress.Query;
 using Maybe;
 using Maybe.Functions;
 
@@ -24,7 +25,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	protected IQueryPosts QueryPosts { get; private init; }
 
 	/// <inheritdoc cref="CustomField{T}.CustomField(string, T)"/>
-	protected AttachmentCustomField(string key) : this(new Query.Posts(), key) { }
+	protected AttachmentCustomField(string key) : this(new Posts(), key) { }
 
 	/// <summary>
 	/// Create object from posts

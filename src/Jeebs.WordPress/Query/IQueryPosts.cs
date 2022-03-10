@@ -7,10 +7,9 @@ using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
-using Jeebs.WordPress.Querying;
 using Maybe;
 
-namespace Jeebs.WordPress;
+namespace Jeebs.WordPress.Query;
 
 /// <summary>
 /// Query Posts - to enable testing of static functions

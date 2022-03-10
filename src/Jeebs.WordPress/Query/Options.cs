@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Query;
 
-namespace Jeebs.WordPress.Querying;
+namespace Jeebs.WordPress.Query;
 
 /// <summary>
 /// WordPress Query Options

@@ -5,7 +5,6 @@ using System;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
 using Jeebs.Logging;
-using Jeebs.WordPress;
 using Jeebs.WordPress.Entities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;

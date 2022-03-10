@@ -6,7 +6,7 @@ using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 
-namespace Jeebs.WordPress;
+namespace Jeebs.WordPress.Query;
 
 /// <inheritdoc cref="IQueryPartsBuilder{TId}"/>
 public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>

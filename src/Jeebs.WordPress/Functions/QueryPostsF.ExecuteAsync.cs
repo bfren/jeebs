@@ -10,7 +10,7 @@ using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
-using Jeebs.WordPress.Querying;
+using Jeebs.WordPress.Query;
 using Maybe;
 using Maybe.Functions;
 

@@ -7,6 +7,7 @@ using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Query;
 using Maybe;
 using Maybe.Functions;
 
@@ -23,7 +24,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	protected IQueryTerms QueryTerms { get; private init; }
 
 	/// <inheritdoc cref="CustomField{T}.CustomField(string, T)"/>
-	protected TermCustomField(string key) : this(new Query.Terms(), key) { }
+	protected TermCustomField(string key) : this(new Terms(), key) { }
 
 	/// <summary>
 	/// Create object from terms

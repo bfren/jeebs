@@ -22,7 +22,7 @@ public interface IWpDbQuery : IDbQuery
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
-	Task<Maybe<IEnumerable<T>>> AttachmentsAsync<T>(Querying.GetAttachmentsOptions opt)
+	Task<Maybe<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
 		where T : IPostAttachment;
 
 	/// <summary>
@@ -37,7 +37,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
 	/// <param name="filters">Optional content filters to apply</param>
-	Task<Maybe<IEnumerable<T>>> PostsAsync<T>(Querying.GetPostsOptions opt, params IContentFilter[] filters)
+	Task<Maybe<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
 		where T : Id.IWithId<WpPostId>;
 
 	/// <summary>
@@ -47,7 +47,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <param name="page">Page number</param>
 	/// <param name="opt">Function to return query options</param>
 	/// <param name="filters">Optional content filters to apply</param>
-	Task<Maybe<IPagedList<T>>> PostsAsync<T>(ulong page, Querying.GetPostsOptions opt, params IContentFilter[] filters)
+	Task<Maybe<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
 		where T : Id.IWithId<WpPostId>;
 
 	/// <summary>
@@ -55,14 +55,14 @@ public interface IWpDbQuery : IDbQuery
 	/// </summary>
 	/// <param name="id">Current Post ID</param>
 	/// <param name="opt">Function to return query options</param>
-	Task<Maybe<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Querying.GetPostsOptions opt);
+	Task<Maybe<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt);
 
 	/// <summary>
 	/// Get Posts Meta matching the specified options
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
-	Task<Maybe<IEnumerable<T>>> PostsMetaAsync<T>(Querying.GetPostsMetaOptions opt)
+	Task<Maybe<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
 		where T : Id.IWithId<WpPostMetaId>;
 
 	/// <summary>
@@ -70,7 +70,7 @@ public interface IWpDbQuery : IDbQuery
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
-	Task<Maybe<IEnumerable<T>>> PostsTaxonomyAsync<T>(Querying.GetPostsTaxonomyOptions opt)
+	Task<Maybe<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
 		where T : Id.IWithId<WpTermId>;
 
 	/// <summary>
@@ -78,6 +78,6 @@ public interface IWpDbQuery : IDbQuery
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
-	Task<Maybe<IEnumerable<T>>> TermsAsync<T>(Querying.GetTermsOptions opt)
+	Task<Maybe<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
 		where T : Id.IWithId<WpTermId>;
 }

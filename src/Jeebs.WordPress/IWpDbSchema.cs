@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Tables;
@@ -13,60 +13,60 @@ public interface IWpDbSchema
 	/// <summary>
 	/// Comment Table
 	/// </summary>
-	CommentTable Comment { get; }
+	CommentsTable Comments { get; }
 
 	/// <summary>
 	/// Comment Meta Table
 	/// </summary>
-	CommentMetaTable CommentMeta { get; }
+	CommentsMetaTable CommentsMeta { get; }
 
 	/// <summary>
 	/// Link Table
 	/// </summary>
-	LinkTable Link { get; }
+	LinksTable Links { get; }
 
 	/// <summary>
 	/// Option Table
 	/// </summary>
-	OptionTable Opt { get; }
+	OptionsTable Options { get; }
 
 	/// <summary>
 	/// Post Table
 	/// </summary>
-	PostTable Post { get; }
+	PostsTable Posts { get; }
 
 	/// <summary>
 	/// Post Meta Table
 	/// </summary>
-	PostMetaTable PostMeta { get; }
+	PostsMetaTable PostsMeta { get; }
 
 	/// <summary>
 	/// Term Table
 	/// </summary>
-	TermTable Term { get; }
+	TermsTable Terms { get; }
 
 	/// <summary>
 	/// Term Meta Table
 	/// </summary>
-	TermMetaTable TermMeta { get; }
+	TermsMetaTable TermsMeta { get; }
 
 	/// <summary>
 	/// Term Relationship Table
 	/// </summary>
-	TermRelationshipTable TermRelationship { get; }
+	TermRelationshipsTable TermRelationships { get; }
 
 	/// <summary>
 	/// Term Taxonomy Table
 	/// </summary>
-	TermTaxonomyTable TermTaxonomy { get; }
+	TermTaxonomiesTable TermTaxonomies { get; }
 
 	/// <summary>
 	/// User Table
 	/// </summary>
-	UserTable User { get; }
+	UsersTable Users { get; }
 
 	/// <summary>
 	/// User Meta Table
 	/// </summary>
-	UserMetaTable UserMeta { get; }
+	UsersMetaTable UsersMeta { get; }
 }
