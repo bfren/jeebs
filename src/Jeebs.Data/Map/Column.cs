@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Map;
 
 /// <inheritdoc cref="IColumn"/>
-/// <param name="Table">Table Name</param>
-/// <param name="Name">Column Name</param>
-/// <param name="Alias">Column Alias</param>
+/// <param name="TblName">Table Name</param>
+/// <param name="ColName">Column Name</param>
+/// <param name="ColAlias">Column Alias</param>
 public record class Column(ITableName TblName, string ColName, string ColAlias) : IColumn
 {
 	/// <summary>

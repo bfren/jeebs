@@ -8,7 +8,7 @@ namespace Jeebs.Data.Map;
 /// <inheritdoc cref="IMappedColumn"/>
 /// <param name="Table">Table name</param>
 /// <param name="Name">Column Name</param>
-/// <param name="Property">Entity property PropertyInfo</param>
+/// <param name="PropertyInfo">Entity property PropertyInfo</param>
 public sealed record class MappedColumn(ITableName Table, string Name, PropertyInfo PropertyInfo) :
 	Column(Table, Name, PropertyInfo.Name), IMappedColumn
 {

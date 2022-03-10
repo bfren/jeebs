@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Exceptions;
 
 /// <summary>
-/// Thrown by <see cref="Db(IDbClient, Microsoft.Extensions.Options.IOptions{Config.DbConfig}, ILog, string)"/>
+/// Thrown by <see cref="Db(IDbClient, Config.Db.DbConnectionConfig, Logging.ILog)"/>
 /// </summary>
 public sealed class UnableToConnectToDatabaseException : Exception
 {

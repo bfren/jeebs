@@ -14,7 +14,7 @@ namespace Jeebs.Collections;
 public static class ListExtensions
 {
 	/// <summary>
-	/// Return the items either side of <paramref name="item"/> - or <see cref="Maybe.Internals.None{T}"/>
+	/// Return the items either side of <paramref name="item"/> - or <see cref="MaybeF.Internals.None{T}"/>
 	/// </summary>
 	/// <remarks>
 	/// NB: if there are multiple items matching <paramref name="item"/>, the first will be used

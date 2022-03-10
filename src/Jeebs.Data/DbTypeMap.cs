@@ -48,7 +48,7 @@ public sealed class DbTypeMap
 		SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 	/// <summary>
-	/// Persist an <see cref="EnumeratedList{T}"/> to the database by encoding it as JSON
+	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
 	public void AddJsonEnumeratedListTypeHandler<T>()
