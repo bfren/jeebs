@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -14,7 +14,7 @@ public abstract record class WpCommentEntity : WpCommentEntityWithId
 	/// <summary>
 	/// PostId
 	/// </summary>
-	public WpPostId PostId { get; init; } = new();
+	public StrongIds.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
 	/// AuthorName
@@ -74,12 +74,12 @@ public abstract record class WpCommentEntity : WpCommentEntityWithId
 	/// <summary>
 	/// ParentId
 	/// </summary>
-	public WpCommentId ParentId { get; init; } = new();
+	public StrongIds.WpCommentId ParentId { get; init; } = new();
 
 	/// <summary>
 	/// AuthorId
 	/// </summary>
-	public WpUserId AuthorId { get; init; } = new();
+	public StrongIds.WpUserId AuthorId { get; init; } = new();
 
 	/// <summary>
 	/// AuthorIsSubscribed

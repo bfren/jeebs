@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Enums;
@@ -13,7 +13,7 @@ public abstract record class WpTermTaxonomyEntity : WpTermTaxonomyEntityWithId
 	/// <summary>
 	/// TermId
 	/// </summary>
-	public WpTermId TermId { get; init; } = new();
+	public StrongIds.WpTermId TermId { get; init; } = new();
 
 	/// <summary>
 	/// Taxonomy
@@ -28,7 +28,7 @@ public abstract record class WpTermTaxonomyEntity : WpTermTaxonomyEntityWithId
 	/// <summary>
 	/// ParentId
 	/// </summary>
-	public WpTermId ParentId { get; init; } = new();
+	public StrongIds.WpTermId ParentId { get; init; } = new();
 
 	/// <summary>
 	/// Count

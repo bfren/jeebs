@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data;
-using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 using Maybe.Functions;
 using Maybe.Linq;

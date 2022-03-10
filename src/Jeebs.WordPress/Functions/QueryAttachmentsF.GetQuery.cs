@@ -6,6 +6,7 @@ using Jeebs.Collections;
 using Jeebs.Extensions;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 using Maybe.Functions;
 

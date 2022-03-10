@@ -1,16 +1,16 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Entities;
+namespace Jeebs.WordPress.Entities.StrongIds;
 
 /// <summary>
-/// WordPress Term Taxonomy ID
+/// WordPress Post Meta ID
 /// </summary>
 /// <param name="Value">ID Value</param>
-public sealed record class WpTermTaxonomyId(long Value) : Id.IStrongId
+public sealed record class WpPostMetaId(long Value) : Id.IStrongId
 {
 	/// <summary>
 	/// Define parameterless constructor for MVC model binding
 	/// </summary>
-	public WpTermTaxonomyId() : this(0) { }
+	public WpPostMetaId() : this(0) { }
 }

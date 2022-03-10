@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
-using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Functions;
 using Jeebs.WordPress.Querying;
 using Maybe;

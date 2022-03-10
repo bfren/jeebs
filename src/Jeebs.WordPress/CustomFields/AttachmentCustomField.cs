@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
 using Maybe;
 using Maybe.Functions;

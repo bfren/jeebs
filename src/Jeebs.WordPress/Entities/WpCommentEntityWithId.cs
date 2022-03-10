@@ -1,6 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.WordPress.Entities.StrongIds;
+
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>

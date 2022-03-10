@@ -7,7 +7,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 
 namespace Jeebs.WordPress;

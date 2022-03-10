@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Jeebs.Messages;
 using Jeebs.WordPress.ContentFilters;
-using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 
 namespace Jeebs.WordPress.Functions;

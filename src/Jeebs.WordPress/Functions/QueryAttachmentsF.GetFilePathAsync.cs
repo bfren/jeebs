@@ -7,6 +7,7 @@ using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 
 namespace Jeebs.WordPress.Functions;

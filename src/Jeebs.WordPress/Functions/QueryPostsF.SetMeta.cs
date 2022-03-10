@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 
 namespace Jeebs.WordPress.Functions;

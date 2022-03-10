@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Maybe;
 using Maybe.Functions;
 using Maybe.Internals;

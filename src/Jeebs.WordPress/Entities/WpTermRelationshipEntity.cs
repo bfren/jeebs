@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Entities;
 /// <summary>
 /// TermRelationship entity
 /// </summary>
-public abstract record class WpTermRelationshipEntity : Id.IWithId
+public abstract record class WpTermRelationshipEntity : IWithId
 {
 	/// <summary>
 	/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table
@@ -23,12 +23,12 @@ public abstract record class WpTermRelationshipEntity : Id.IWithId
 	/// PostId
 	/// </summary>
 	[Id]
-	public WpPostId PostId { get; init; } = new();
+	public StrongIds.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
 	/// TermTaxonomyId
 	/// </summary>
-	public WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
+	public StrongIds.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
 
 	/// <summary>
 	/// SortOrder

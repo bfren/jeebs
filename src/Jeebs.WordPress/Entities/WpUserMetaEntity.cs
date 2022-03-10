@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.WordPress.Entities;
@@ -11,7 +11,7 @@ public abstract record class WpUserMetaEntity : WpUserMetaEntityWithId
 	/// <summary>
 	/// UserId
 	/// </summary>
-	public WpUserId UserId { get; init; } = new();
+	public StrongIds.WpUserId UserId { get; init; } = new();
 
 	/// <summary>
 	/// Key
