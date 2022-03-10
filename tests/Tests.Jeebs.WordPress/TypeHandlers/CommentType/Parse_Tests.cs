@@ -1,11 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.WordPress.Data.Enums;
-using Xunit;
-using Base = Jeebs.WordPress.Data.Enums.CommentType_Tests.Parse_Tests;
+using Jeebs.WordPress.Enums;
+using Base = Jeebs.WordPress.Enums.CommentType_Tests.Parse_Tests;
 
-namespace Jeebs.WordPress.Data.TypeHandlers.CommentTypeTypeHandler_Tests;
+namespace Jeebs.WordPress.TypeHandlers.CommentTypeTypeHandler_Tests;
 
 public class Parse_Tests
 {
@@ -41,7 +40,7 @@ public class Parse_Tests
 	public void Invalid_Value_Returns_Blank_CommentType()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var handler = new CommentTypeTypeHandler();
 
 		// Act

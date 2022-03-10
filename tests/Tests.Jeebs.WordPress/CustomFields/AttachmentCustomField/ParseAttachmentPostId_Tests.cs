@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-using static Jeebs.WordPress.Data.AttachmentCustomField.M;
+using static Jeebs.WordPress.CustomFields.AttachmentCustomField.M;
 
-namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.AttachmentCustomField_Tests;
 
 public class ParseAttachmentPostId_Tests
 {
@@ -13,7 +12,7 @@ public class ParseAttachmentPostId_Tests
 	{
 		// Arrange
 		var type = typeof(ParseAttachmentPostId_Tests);
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 
 		// Act
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value);
@@ -28,7 +27,7 @@ public class ParseAttachmentPostId_Tests
 	{
 		// Arrange
 		var type = typeof(ParseAttachmentPostId_Tests);
-		var value = F.Rnd.Lng;
+		var value = Rnd.Lng;
 
 		// Act
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value.ToString());

@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.CommentType_Tests;
+namespace Jeebs.WordPress.Enums.CommentType_Tests;
 
 public class Parse_Tests
 {
@@ -31,7 +31,7 @@ public class Parse_Tests
 	public void Unknown_Returns_Blank()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 
 		// Act
 		var result = CommentType.Parse(name);

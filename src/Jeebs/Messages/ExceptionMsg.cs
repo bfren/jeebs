@@ -17,5 +17,5 @@ public abstract record class ExceptionMsg : WithValueMsg<Exception>, IExceptionM
 	/// <summary>
 	/// Override Name with 'Exception'
 	/// </summary>
-	public override string Name { get; init; } = "Exception";
+	public override string Name { get; init; } = nameof(Exception);
 }

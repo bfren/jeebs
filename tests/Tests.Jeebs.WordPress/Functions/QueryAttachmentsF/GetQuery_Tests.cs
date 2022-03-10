@@ -1,15 +1,11 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
-using NSubstitute;
-using Xunit;
-using static F.WordPressF.DataF.QueryAttachmentsF;
-using static F.WordPressF.DataF.QueryAttachmentsF.M;
+using Jeebs.Collections;
+using Jeebs.WordPress.Entities.StrongIds;
+using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
 
-namespace F.WordPressF.DataF.QueryAttachmentsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
 
 public class GetQuery_Tests
 {
@@ -21,7 +17,7 @@ public class GetQuery_Tests
 		var fileIds = ImmutableList.Empty<WpPostId>();
 
 		// Act
-		var result = GetQuery(schema, fileIds, Rnd.Str);
+		var result = QueryAttachmentsF.GetQuery(schema, fileIds, Rnd.Str);
 
 		// Assert
 		var none = result.AssertNone();
@@ -46,14 +42,14 @@ public class GetQuery_Tests
 				"`p`.`guid` AS 'Url', " +
 				"`pm`.`meta_value` AS 'UrlPath', " +
 				$"CONCAT('{virtualUploadsUrl}/', `pm`.`meta_value`) AS 'Url' " +
-			$"FROM `{schema.Post}` AS `p` " +
-				$"LEFT JOIN `{schema.PostMeta}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +
+			$"FROM `{schema.Posts}` AS `p` " +
+				$"LEFT JOIN `{schema.PostsMeta}` AS `pm` ON `p`.`ID` = `pm`.`post_id` " +
 			$"WHERE `p`.`ID` IN ({i0},{i1}) " +
 				"AND `pm`.`meta_key` = '_wp_attached_file';"
 		;
 
 		// Act
-		var result = GetQuery(schema, fileIds, virtualUploadsUrl);
+		var result = QueryAttachmentsF.GetQuery(schema, fileIds, virtualUploadsUrl);
 
 		// Assert
 		var some = result.AssertSome();

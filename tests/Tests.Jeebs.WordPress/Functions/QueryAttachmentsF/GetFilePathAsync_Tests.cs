@@ -1,18 +1,13 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Jeebs;
-using Jeebs.WordPress.Data.Entities;
-using NSubstitute;
-using Xunit;
-using static F.WordPressF.DataF.QueryAttachmentsF;
-using static F.WordPressF.DataF.QueryAttachmentsF.M;
+using Jeebs.WordPress.Entities.StrongIds;
+using Maybe.Extensions;
+using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
+using Attachment = Jeebs.WordPress.Functions.QueryAttachmentsF.Attachment;
 
-namespace F.WordPressF.DataF.QueryAttachmentsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
 
 public class GetFilePathAsync_Tests : Query_Tests
 {
@@ -26,7 +21,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var fileId = new WpPostId(Rnd.Lng);
 
 		// Act
-		var result = await GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -44,7 +39,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var fileId = new WpPostId(Rnd.Lng);
 
 		// Act
-		var result = await GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -62,7 +57,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		_ = db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 		// Act
-		var result = await GetFilePathAsync(db, w, new(Rnd.Lng)).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, new(Rnd.Lng)).ConfigureAwait(false);
 
 		// Assert
 		var some = result.AssertSome();

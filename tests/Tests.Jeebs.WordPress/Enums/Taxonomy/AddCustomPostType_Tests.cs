@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.Taxonomy_Tests;
+namespace Jeebs.WordPress.Enums.Taxonomy_Tests;
 
 public class AddCustomTaxonomy_Tests
 {
@@ -11,7 +11,7 @@ public class AddCustomTaxonomy_Tests
 	public void Adds_Custom_Taxonomy_To_HashSet()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new Taxonomy(name);
 
 		// Act
@@ -28,7 +28,7 @@ public class AddCustomTaxonomy_Tests
 	public void Does_Not_Add_Custom_Taxonomy_Twice()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new Taxonomy(name);
 		_ = Taxonomy.AddCustomTaxonomy(type);
 

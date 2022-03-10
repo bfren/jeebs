@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.Taxonomy_Tests;
+namespace Jeebs.WordPress.Enums.Taxonomy_Tests;
 
 public class Parse_Tests
 {
@@ -34,7 +34,7 @@ public class Parse_Tests
 	public void Unknown_Returns_Blank()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 
 		// Act
 		var result = Taxonomy.Parse(name);
@@ -47,7 +47,7 @@ public class Parse_Tests
 	public void Returns_Custom_Taxonomy()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new Taxonomy(name);
 		_ = Taxonomy.AddCustomTaxonomy(type);
 

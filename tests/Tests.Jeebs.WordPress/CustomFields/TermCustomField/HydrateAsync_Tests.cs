@@ -1,15 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.WordPress.Data.Querying;
-using NSubstitute;
-using Xunit;
-using static Jeebs.WordPress.Data.TermCustomField;
-using static Jeebs.WordPress.Data.TermCustomField.M;
+using Jeebs.WordPress.Query;
+using static Jeebs.WordPress.CustomFields.TermCustomField.M;
+using Term = Jeebs.WordPress.CustomFields.TermCustomField.Term;
 
-namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.TermCustomField_Tests;
 
 public class HydrateAsync_Tests
 {
@@ -19,8 +16,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-		var key = F.Rnd.Str;
+		var meta = new MetaDictionary { { Rnd.Str, Rnd.Str } };
+		var key = Rnd.Str;
 		var field = new Test(Substitute.For<IQueryTerms>(), key);
 
 		// Act
@@ -39,8 +36,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-		var field = new Test(Substitute.For<IQueryTerms>(), F.Rnd.Str);
+		var meta = new MetaDictionary { { Rnd.Str, Rnd.Str } };
+		var field = new Test(Substitute.For<IQueryTerms>(), Rnd.Str);
 
 		// Act
 		var result = await field.HydrateAsync(db, unitOfWork, meta, false).ConfigureAwait(false);
@@ -60,8 +57,8 @@ public class HydrateAsync_Tests
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
 
-		var key = F.Rnd.Str;
-		var value = F.Rnd.Lng;
+		var key = Rnd.Str;
+		var value = Rnd.Lng;
 		var meta = new MetaDictionary { { key, value.ToString() } };
 
 		var queryTerms = Substitute.For<IQueryTerms>();
@@ -88,8 +85,8 @@ public class HydrateAsync_Tests
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
 
-		var key = F.Rnd.Str;
-		var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
+		var key = Rnd.Str;
+		var meta = new MetaDictionary { { key, Rnd.Lng.ToString() } };
 
 		var queryTerms = Substitute.For<IQueryTerms>();
 		_ = queryTerms.ExecuteAsync<Term>(db, unitOfWork, Arg.Any<GetTermsOptions>()).Returns(terms);

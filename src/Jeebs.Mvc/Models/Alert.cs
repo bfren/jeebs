@@ -10,4 +10,4 @@ namespace Jeebs.Mvc.Models;
 /// </summary>
 /// <param name="Type">Alert type</param>
 /// <param name="Text">Alert text</param>
-public sealed record class Alert(AlertType Type, string Text);
+public readonly record struct Alert(AlertType Type, string Text);

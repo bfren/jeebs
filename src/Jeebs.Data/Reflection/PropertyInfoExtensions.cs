@@ -3,7 +3,7 @@
 
 using System.Linq;
 using System.Reflection;
-using Jeebs.Data.Entities;
+using Jeebs.Data.Attributes;
 
 namespace Jeebs.Data.Reflection;
 

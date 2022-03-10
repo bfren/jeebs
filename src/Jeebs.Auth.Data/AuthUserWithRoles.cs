@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using Jeebs.Data.Entities;
+using Jeebs.Data.Attributes;
 
 namespace Jeebs.Auth.Data;
 

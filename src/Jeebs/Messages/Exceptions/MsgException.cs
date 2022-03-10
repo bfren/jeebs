@@ -21,7 +21,7 @@ public sealed class MsgException<TMsg> : Exception
 	/// Create exception
 	/// </summary>
 	/// <param name="msg"></param>
-	public MsgException(TMsg msg) : base(msg.ToString()) { }
+	public MsgException(TMsg msg) : base(msg switch { ReasonMsg reason => reason.Value.ToString(), _ => msg.ToString() }) { }
 
 	/// <summary>
 	/// Create exception

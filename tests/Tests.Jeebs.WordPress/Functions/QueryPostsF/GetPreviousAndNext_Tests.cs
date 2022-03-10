@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
-
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class GetPreviousAndNext_Tests
 {
@@ -16,7 +12,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<long>();
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(Rnd.Lng, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.Lng, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -30,7 +26,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<long> { Rnd.Lng };
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(Rnd.Lng, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.Lng, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -45,7 +41,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<long> { Rnd.Lng, Rnd.Lng, Rnd.Lng };
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(value, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -61,7 +57,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<long> { value, next, Rnd.Lng, Rnd.Lng };
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(value, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -78,7 +74,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value };
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(value, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
 
 		// Assert
 		Assert.NotNull(r0);
@@ -96,7 +92,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value, next, Rnd.Lng, Rnd.Lng };
 
 		// Act
-		var (r0, r1) = GetPreviousAndNext(value, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
 
 		// Assert
 		Assert.NotNull(r0);

@@ -1,15 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.WordPress.Data.Querying;
-using NSubstitute;
-using Xunit;
-using static Jeebs.WordPress.Data.AttachmentCustomField;
-using static Jeebs.WordPress.Data.AttachmentCustomField.M;
+using Jeebs.WordPress.Query;
+using static Jeebs.WordPress.CustomFields.AttachmentCustomField.M;
+using Attachment = Jeebs.WordPress.CustomFields.AttachmentCustomField.Attachment;
 
-namespace Jeebs.WordPress.Data.CustomFields.AttachmentCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.AttachmentCustomField_Tests;
 
 public class HydrateAsync_Tests
 {
@@ -19,8 +16,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-		var key = F.Rnd.Str;
+		var meta = new MetaDictionary { { Rnd.Str, Rnd.Str } };
+		var key = Rnd.Str;
 		var field = new TestCustomField(Substitute.For<IQueryPosts>(), key);
 
 		// Act
@@ -39,8 +36,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-		var field = new TestCustomField(Substitute.For<IQueryPosts>(), F.Rnd.Str);
+		var meta = new MetaDictionary { { Rnd.Str, Rnd.Str } };
+		var field = new TestCustomField(Substitute.For<IQueryPosts>(), Rnd.Str);
 
 		// Act
 		var result = await field.HydrateAsync(db, unitOfWork, meta, false).ConfigureAwait(false);
@@ -60,8 +57,8 @@ public class HydrateAsync_Tests
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
 
-		var key = F.Rnd.Str;
-		var value = F.Rnd.Lng;
+		var key = Rnd.Str;
+		var value = Rnd.Lng;
 		var meta = new MetaDictionary { { key, value.ToString() } };
 
 		var queryPosts = Substitute.For<IQueryPosts>();
@@ -88,8 +85,8 @@ public class HydrateAsync_Tests
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
 
-		var key = F.Rnd.Str;
-		var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
+		var key = Rnd.Str;
+		var meta = new MetaDictionary { { key, Rnd.Lng.ToString() } };
 
 		var queryPosts = Substitute.For<IQueryPosts>();
 		_ = queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);
@@ -109,17 +106,17 @@ public class HydrateAsync_Tests
 	{
 		// Arrange
 		var attachment = new Attachment();
-		var urlPath = F.Rnd.Str;
+		var urlPath = Rnd.Str;
 		attachment.Meta.Add(Constants.Attachment, urlPath);
-		var info = F.Rnd.Str;
+		var info = Rnd.Str;
 		attachment.Meta.Add(Constants.AttachmentMetadata, "s:6:\"" + info + "\";");
 		var attachments = new[] { attachment };
 
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
 
-		var key = F.Rnd.Str;
-		var meta = new MetaDictionary { { key, F.Rnd.Lng.ToString() } };
+		var key = Rnd.Str;
+		var meta = new MetaDictionary { { key, Rnd.Lng.ToString() } };
 
 		var queryPosts = Substitute.For<IQueryPosts>();
 		_ = queryPosts.ExecuteAsync<Attachment>(db, unitOfWork, Arg.Any<GetPostsOptions>()).Returns(attachments);

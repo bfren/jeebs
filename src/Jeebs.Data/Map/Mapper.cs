@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
-using Jeebs.Data.Entities;
+using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.Map.Functions;
 using Jeebs.Messages;

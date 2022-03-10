@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.PostType_Tests;
+namespace Jeebs.WordPress.Enums.PostType_Tests;
 
 public class AddCustomPostType_Tests
 {
@@ -11,7 +11,7 @@ public class AddCustomPostType_Tests
 	public void Adds_Custom_PostType_To_HashSet()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new PostType(name);
 
 		// Act
@@ -28,7 +28,7 @@ public class AddCustomPostType_Tests
 	public void Does_Not_Add_Custom_PostType_Twice()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new PostType(name);
 		_ = PostType.AddCustomPostType(type);
 

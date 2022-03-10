@@ -1,13 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
 using Jeebs.Data;
-using NSubstitute;
-using Xunit;
-using static Jeebs.WordPress.Data.TextCustomField.M;
+using static Jeebs.WordPress.CustomFields.TextCustomField.M;
 
-namespace Jeebs.WordPress.Data.CustomFields.TextCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.TextCustomField_Tests;
 
 public class HydrateAsync_Tests
 {
@@ -19,8 +16,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var key = F.Rnd.Str;
-		var value = F.Rnd.Str;
+		var key = Rnd.Str;
+		var value = Rnd.Str;
 		var meta = new MetaDictionary { { key, value } };
 		var field = new Test(key);
 
@@ -38,8 +35,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-		var key = F.Rnd.Str;
+		var meta = new MetaDictionary { { Rnd.Str, Rnd.Str } };
+		var key = Rnd.Str;
 		var field = new Test(key);
 
 		// Act
@@ -58,8 +55,8 @@ public class HydrateAsync_Tests
 		// Arrange
 		var db = Substitute.For<IWpDb>();
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var meta = new MetaDictionary { { F.Rnd.Str, F.Rnd.Str } };
-		var field = new Test(F.Rnd.Str);
+		var meta = new MetaDictionary { { Rnd.Str, Rnd.Str } };
+		var field = new Test(Rnd.Str);
 
 		// Act
 		var result = await field.HydrateAsync(db, unitOfWork, meta, false).ConfigureAwait(false);

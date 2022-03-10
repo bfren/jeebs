@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.Taxonomy_Tests;
+namespace Jeebs.WordPress.Enums.Taxonomy_Tests;
 
 public class IsRegistered_Tests
 {
@@ -11,7 +11,7 @@ public class IsRegistered_Tests
 	public void Returns_True_If_Added()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new Taxonomy(name);
 		_ = Taxonomy.AddCustomTaxonomy(type);
 
@@ -26,7 +26,7 @@ public class IsRegistered_Tests
 	public void Returns_False_If_Not_Added()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new Taxonomy(name);
 
 		// Act

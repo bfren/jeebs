@@ -1,17 +1,14 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
-using Jeebs;
-using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
-using NSubstitute;
+using Jeebs.Id;
+using Jeebs.WordPress.ContentFilters;
+using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Functions;
 using NSubstitute.ExceptionExtensions;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
+using static Jeebs.WordPress.Functions.QueryPostsF.M;
 
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class ApplyContentFilters_Tests
 {
@@ -23,7 +20,7 @@ public class ApplyContentFilters_Tests
 		var filters = new[] { Substitute.For<IContentFilter>() };
 
 		// Act
-		var result = ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
+		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
 		var some = result.AssertSome();
@@ -38,7 +35,7 @@ public class ApplyContentFilters_Tests
 		var filters = Array.Empty<IContentFilter>();
 
 		// Act
-		var result = ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
+		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
 		var some = result.AssertSome();
@@ -55,11 +52,11 @@ public class ApplyContentFilters_Tests
 		var filters = new[] { filter };
 
 		// Act
-		var result = ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
+		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<M.ApplyContentFiltersExceptionMsg<Model>>(none);
+		_ = Assert.IsType<ApplyContentFiltersExceptionMsg<Model>>(none);
 	}
 
 	[Fact]
@@ -81,7 +78,7 @@ public class ApplyContentFilters_Tests
 		var filters = new[] { f0, f1 };
 
 		// Act
-		_ = ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
+		_ = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
 		_ = f0.Received(1).Execute(c0);

@@ -1,12 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.WordPress.Data.Entities;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
+using Jeebs.WordPress.Entities;
+using static Jeebs.WordPress.Functions.QueryPostsF.M;
 
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class GetPostContentInfo_Tests
 {
@@ -16,11 +14,11 @@ public class GetPostContentInfo_Tests
 		// Arrange
 
 		// Act
-		var result = GetPostContentInfo<NoContentProperty>();
+		var result = QueryPostsF.GetPostContentInfo<NoContentProperty>();
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<M.ContentPropertyNotFoundMsg<NoContentProperty>>(none);
+		_ = Assert.IsType<ContentPropertyNotFoundMsg<NoContentProperty>>(none);
 	}
 
 	[Fact]
@@ -29,11 +27,11 @@ public class GetPostContentInfo_Tests
 		// Arrange
 
 		// Act
-		var result = GetPostContentInfo<WithContentPropertyWrongType>();
+		var result = QueryPostsF.GetPostContentInfo<WithContentPropertyWrongType>();
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<M.ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>(none);
+		_ = Assert.IsType<ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>(none);
 	}
 
 	[Fact]
@@ -42,7 +40,7 @@ public class GetPostContentInfo_Tests
 		// Arrange
 
 		// Act
-		var result = GetPostContentInfo<WithContentProperty>();
+		var result = QueryPostsF.GetPostContentInfo<WithContentProperty>();
 
 		// Assert
 		var some = result.AssertSome();

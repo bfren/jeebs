@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
+using Jeebs.Id;
 
-namespace Jeebs.WordPress.Data.Entities;
+namespace Jeebs.WordPress.Entities;
 
 public abstract class Id_Tests<TEntity, TId>
 	where TEntity : IWithId<TId>, new()
@@ -15,7 +14,7 @@ public abstract class Id_Tests<TEntity, TId>
 	protected void Test00(Func<long, TEntity> create)
 	{
 		// Arrange
-		var value = F.Rnd.Lng;
+		var value = Rnd.Lng;
 		var entity = create(value);
 
 		// Act

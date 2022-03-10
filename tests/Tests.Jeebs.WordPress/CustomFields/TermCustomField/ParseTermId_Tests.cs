@@ -1,10 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-using static Jeebs.WordPress.Data.TermCustomField.M;
+using static Jeebs.WordPress.CustomFields.TermCustomField.M;
 
-namespace Jeebs.WordPress.Data.CustomFields.TermCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.TermCustomField_Tests;
 
 public class ParseTermId_Tests
 {
@@ -13,7 +12,7 @@ public class ParseTermId_Tests
 	{
 		// Arrange
 		var type = typeof(ParseTermId_Tests);
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 
 		// Act
 		var result = TermCustomField.ParseTermId(type, value);
@@ -28,7 +27,7 @@ public class ParseTermId_Tests
 	{
 		// Arrange
 		var type = typeof(ParseTermId_Tests);
-		var value = F.Rnd.Lng;
+		var value = Rnd.Lng;
 
 		// Act
 		var result = TermCustomField.ParseTermId(type, value.ToString());

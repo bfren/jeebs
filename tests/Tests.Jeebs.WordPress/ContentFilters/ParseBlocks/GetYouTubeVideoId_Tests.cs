@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
-using Xunit;
-
-namespace Jeebs.WordPress.Data.ContentFilters.ParseBlocks_Tests;
+namespace Jeebs.WordPress.ContentFilters.ParseBlocks_Tests;
 
 public class GetYouTubeVideoId_Tests
 {
@@ -57,7 +53,7 @@ public class GetYouTubeVideoId_Tests
 	public void Incorrect_Url_Returns_Null()
 	{
 		// Arrange
-		var uri = new Uri($"https://{F.Rnd.Str}.com");
+		var uri = new Uri($"https://{Rnd.Str}.com");
 
 		// Act
 		var result = ParseBlocks.GetYouTubeVideoId(uri);

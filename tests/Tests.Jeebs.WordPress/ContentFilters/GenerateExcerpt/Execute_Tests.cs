@@ -1,11 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using Jeebs.StringExtensions_Tests;
-using Xunit;
 
-namespace Jeebs.WordPress.Data.ContentFilters.GenerateExcerpt_Tests;
+namespace Jeebs.WordPress.ContentFilters.GenerateExcerpt_Tests;
 
 public class Execute_Tests
 {
@@ -15,8 +13,8 @@ public class Execute_Tests
 	public void Removes_Square_Brackets_With_Content(string options)
 	{
 		// Arrange
-		var shortcode = F.Rnd.Str;
-		var content = F.Rnd.Str;
+		var shortcode = Rnd.Str;
+		var content = Rnd.Str;
 		var input = $"[{shortcode}{options}]{content}{Environment.NewLine}[/{shortcode}]";
 
 		// Act
@@ -32,7 +30,7 @@ public class Execute_Tests
 	public void Removes_Square_Brackets_Without_Content(string options)
 	{
 		// Arrange
-		var shortcode = F.Rnd.Str;
+		var shortcode = Rnd.Str;
 		var input = $"[{shortcode}{Environment.NewLine}{options}]";
 
 		// Act
@@ -48,8 +46,8 @@ public class Execute_Tests
 	public void Removes_New_Lines(string newline)
 	{
 		// Arrange
-		var t0 = F.Rnd.Str;
-		var t1 = F.Rnd.Str;
+		var t0 = Rnd.Str;
+		var t1 = Rnd.Str;
 		var input = t0 + newline + t1;
 
 		// Act
@@ -63,8 +61,8 @@ public class Execute_Tests
 	public void With_More_Cuts_At_More()
 	{
 		// Arrange
-		var t0 = F.Rnd.Str;
-		var t1 = F.Rnd.Str;
+		var t0 = Rnd.Str;
+		var t1 = Rnd.Str;
 		var input = $"{t0}<!--more-->{t1}";
 
 		// Act
@@ -91,8 +89,8 @@ public class Execute_Tests
 	public void Removes_Multiple_Spaces_And_Trims()
 	{
 		// Arrange
-		var t0 = F.Rnd.Str;
-		var t1 = F.Rnd.Str;
+		var t0 = Rnd.Str;
+		var t1 = Rnd.Str;
 		var input = $"  {t0}     {t1}  ";
 
 		// Act
@@ -106,9 +104,9 @@ public class Execute_Tests
 	public void Cuts_To_Maximum_Length()
 	{
 		// Arrange
-		var max = F.Rnd.Int;
+		var max = Rnd.Int;
 		var length = max * 2;
-		var input = F.Rnd.StringF.Get(length);
+		var input = Rnd.StringF.Get(length);
 		var expected = input[..max] + "..";
 
 		// Act

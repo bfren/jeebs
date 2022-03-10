@@ -1,11 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests;
+namespace Jeebs.WordPress.Query.PartsBuilder_Tests;
 
 public class Escape_Tests : PartsBuilder_Tests
 {

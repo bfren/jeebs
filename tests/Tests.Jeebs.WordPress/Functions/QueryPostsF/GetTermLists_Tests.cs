@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.WordPress.Data;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
-
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class GetTermLists_Tests
 {
@@ -15,7 +11,7 @@ public class GetTermLists_Tests
 		// Arrange
 
 		// Act
-		var result = GetTermLists<NoTermLists>();
+		var result = QueryPostsF.GetTermLists<NoTermLists>();
 
 		// Assert
 		Assert.Empty(result);
@@ -27,7 +23,7 @@ public class GetTermLists_Tests
 		// Arrange
 
 		// Act
-		var result = GetTermLists<WithTermLists>();
+		var result = QueryPostsF.GetTermLists<WithTermLists>();
 
 		// Assert
 		Assert.Collection(result,

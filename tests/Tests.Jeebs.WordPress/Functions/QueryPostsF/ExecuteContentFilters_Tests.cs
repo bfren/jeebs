@@ -1,15 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
-using Jeebs;
-using Jeebs.WordPress.Data;
-using NSubstitute;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
+using Jeebs.WordPress.ContentFilters;
 
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class ExecuteContentFilters_Tests
 {
@@ -18,11 +12,11 @@ public class ExecuteContentFilters_Tests
 	{
 		// Arrange
 		var posts = Substitute.For<IEnumerable<Model>>();
-		var content = GetPostContentInfo<Model>().UnsafeUnwrap();
+		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
 		var filters = new[] { Substitute.For<IContentFilter>() };
 
 		// Act
-		var result = ExecuteContentFilters(posts, content, filters);
+		var result = QueryPostsF.ExecuteContentFilters(posts, content, filters);
 
 		// Assert
 		Assert.Same(posts, result);
@@ -33,11 +27,11 @@ public class ExecuteContentFilters_Tests
 	{
 		// Arrange
 		var posts = new[] { new Model(Rnd.Str) };
-		var content = GetPostContentInfo<Model>().UnsafeUnwrap();
+		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
 		var filters = Array.Empty<IContentFilter>();
 
 		// Act
-		var result = ExecuteContentFilters(posts, content, filters);
+		var result = QueryPostsF.ExecuteContentFilters(posts, content, filters);
 
 		// Assert
 		Assert.Same(posts, result);
@@ -53,7 +47,7 @@ public class ExecuteContentFilters_Tests
 		var p1 = new Model(c1);
 		var posts = new[] { p0, p1 };
 
-		var content = GetPostContentInfo<Model>().UnsafeUnwrap();
+		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
 
 		var f0 = Substitute.For<IContentFilter>();
 		_ = f0.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
@@ -64,7 +58,7 @@ public class ExecuteContentFilters_Tests
 		var filters = new[] { f0, f1 };
 
 		// Act
-		_ = ExecuteContentFilters(posts, content, filters);
+		_ = QueryPostsF.ExecuteContentFilters(posts, content, filters);
 
 		// Assert
 		_ = f0.Received(1).Execute(c0);

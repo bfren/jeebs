@@ -1,11 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.WordPress.Data;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
+using Jeebs.WordPress.CustomFields;
 
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class GetCustomFields_Tests
 {
@@ -15,7 +13,7 @@ public class GetCustomFields_Tests
 		// Arrange
 
 		// Act
-		var result = GetCustomFields<NoCustomFields>();
+		var result = QueryPostsF.GetCustomFields<NoCustomFields>();
 
 		// Assert
 		Assert.Empty(result);
@@ -27,7 +25,7 @@ public class GetCustomFields_Tests
 		// Arrange
 
 		// Act
-		var result = GetCustomFields<WithCustomFields>();
+		var result = QueryPostsF.GetCustomFields<WithCustomFields>();
 
 		// Assert
 		Assert.Collection(result,
@@ -50,11 +48,11 @@ public class GetCustomFields_Tests
 
 	public sealed class CustomField0 : TextCustomField
 	{
-		public CustomField0() : base(F.Rnd.Str) { }
+		public CustomField0() : base(Rnd.Str) { }
 	}
 
 	public sealed class CustomField1 : AttachmentCustomField
 	{
-		public CustomField1() : base(F.Rnd.Str) { }
+		public CustomField1() : base(Rnd.Str) { }
 	}
 }

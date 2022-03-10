@@ -2,18 +2,16 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs;
-using Jeebs.Config;
+using Jeebs.Config.Db;
+using Jeebs.Config.WordPress;
 using Jeebs.Data;
-using Jeebs.Data.Mapping;
-using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
-using Jeebs.WordPress.Data.Tables;
+using Jeebs.Data.Map;
+using Jeebs.Logging;
+using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Tables;
 using Microsoft.Extensions.Options;
-using NSubstitute;
-using Xunit;
 
-namespace Tests.Jeebs.WordPress.Data.WpDb_Tests;
+namespace Jeebs.WordPress.WpDb_Tests;
 
 public class Constructor_Tests
 {
@@ -28,7 +26,7 @@ public class Constructor_Tests
 
 		var dbConfig = Substitute.For<IOptions<DbConfig>>();
 
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		_ = dbConfig.Value.Returns(new DbConfig
 		{
 			Default = name,
@@ -45,7 +43,7 @@ public class Constructor_Tests
 		var wpConfig = Substitute.For<IOptions<WpConfig>>();
 		_ = wpConfig.Value.Returns(new WpConfig
 		{
-			TablePrefix = F.Rnd.Str
+			TablePrefix = Rnd.Str
 		});
 
 		// Act
@@ -54,40 +52,40 @@ public class Constructor_Tests
 
 		// Assert
 		var s0 = Mapper.Instance.GetTableMapFor<Comment>().AssertSome();
-		_ = Assert.IsAssignableFrom<CommentTable>(s0.Table);
+		_ = Assert.IsAssignableFrom<CommentsTable>(s0.Table);
 
 		var s1 = Mapper.Instance.GetTableMapFor<CommentMeta>().AssertSome();
-		_ = Assert.IsAssignableFrom<CommentMetaTable>(s1.Table);
+		_ = Assert.IsAssignableFrom<CommentsMetaTable>(s1.Table);
 
 		var s2 = Mapper.Instance.GetTableMapFor<Link>().AssertSome();
-		_ = Assert.IsAssignableFrom<LinkTable>(s2.Table);
+		_ = Assert.IsAssignableFrom<LinksTable>(s2.Table);
 
 		var s3 = Mapper.Instance.GetTableMapFor<Opt>().AssertSome();
-		_ = Assert.IsAssignableFrom<OptionTable>(s3.Table);
+		_ = Assert.IsAssignableFrom<OptionsTable>(s3.Table);
 
 		var s4 = Mapper.Instance.GetTableMapFor<Post>().AssertSome();
-		_ = Assert.IsAssignableFrom<PostTable>(s4.Table);
+		_ = Assert.IsAssignableFrom<PostsTable>(s4.Table);
 
 		var s5 = Mapper.Instance.GetTableMapFor<PostMeta>().AssertSome();
-		_ = Assert.IsAssignableFrom<PostMetaTable>(s5.Table);
+		_ = Assert.IsAssignableFrom<PostsMetaTable>(s5.Table);
 
 		var s6 = Mapper.Instance.GetTableMapFor<Term>().AssertSome();
-		_ = Assert.IsAssignableFrom<TermTable>(s6.Table);
+		_ = Assert.IsAssignableFrom<TermsTable>(s6.Table);
 
 		var s7 = Mapper.Instance.GetTableMapFor<TermMeta>().AssertSome();
-		_ = Assert.IsAssignableFrom<TermMetaTable>(s7.Table);
+		_ = Assert.IsAssignableFrom<TermsMetaTable>(s7.Table);
 
 		var s8 = Mapper.Instance.GetTableMapFor<TermRelationship>().AssertSome();
-		_ = Assert.IsAssignableFrom<TermRelationshipTable>(s8.Table);
+		_ = Assert.IsAssignableFrom<TermRelationshipsTable>(s8.Table);
 
 		var s9 = Mapper.Instance.GetTableMapFor<TermTaxonomy>().AssertSome();
-		_ = Assert.IsAssignableFrom<TermTaxonomyTable>(s9.Table);
+		_ = Assert.IsAssignableFrom<TermTaxonomiesTable>(s9.Table);
 
 		var s10 = Mapper.Instance.GetTableMapFor<User>().AssertSome();
-		_ = Assert.IsAssignableFrom<UserTable>(s10.Table);
+		_ = Assert.IsAssignableFrom<UsersTable>(s10.Table);
 
 		var s11 = Mapper.Instance.GetTableMapFor<UserMeta>().AssertSome();
-		_ = Assert.IsAssignableFrom<UserMetaTable>(s11.Table);
+		_ = Assert.IsAssignableFrom<UsersMetaTable>(s11.Table);
 	}
 
 	public sealed record class Comment : WpCommentEntity { }

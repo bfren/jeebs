@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.MetaDictionary_Tests;
+namespace Jeebs.WordPress.MetaDictionary_Tests;
 
 public class Constructor_Tests
 {
@@ -12,11 +12,11 @@ public class Constructor_Tests
 	public void Concatenates_Duplicate_Items()
 	{
 		// Arrange
-		var k0 = F.Rnd.Str;
-		var k1 = F.Rnd.Str;
-		var v0 = F.Rnd.Str;
-		var v1 = F.Rnd.Str;
-		var v2 = F.Rnd.Str;
+		var k0 = Rnd.Str;
+		var k1 = Rnd.Str;
+		var v0 = Rnd.Str;
+		var v1 = Rnd.Str;
+		var v2 = Rnd.Str;
 
 		// Act
 		var result = new MetaDictionary(new KeyValuePair<string, string>[]

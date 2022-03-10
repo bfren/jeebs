@@ -2,10 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
-using NSubstitute;
-using Xunit;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests;
+namespace Jeebs.WordPress.Query.PartsBuilder_Tests;
 
 public class Constructor_Tests
 {

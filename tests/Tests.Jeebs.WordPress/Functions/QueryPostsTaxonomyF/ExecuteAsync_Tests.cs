@@ -1,16 +1,12 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
-using Jeebs;
-using Jeebs.Data.Querying;
-using Jeebs.WordPress.Data.Entities;
-using NSubstitute;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsTaxonomyF;
-using static F.WordPressF.DataF.QueryPostsTaxonomyF.M;
+using Jeebs.Data.Query;
+using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Functions;
+using static Jeebs.WordPress.Functions.QueryPostsTaxonomyF.M;
 
-namespace F.WordPressF.DataF.QueryPostsTaxonomyF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsTaxonomyF_Tests;
 
 public class ExecuteAsync_Tests : Query_Tests
 {
@@ -21,7 +17,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 
 		// Act
-		var result = await ExecuteAsync<Test>(db, w, _ => throw new System.Exception()).ConfigureAwait(false);
+		var result = await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, _ => throw new Exception()).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -35,7 +31,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, v) = Setup();
 
 		// Act
-		_ = await ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
+		_ = await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
 
 		// Assert
 		_ = await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Data.Entities;
+using Jeebs.Data.Attributes;
 using Jeebs.Id;
 
 namespace Jeebs.Auth.Data.Entities;

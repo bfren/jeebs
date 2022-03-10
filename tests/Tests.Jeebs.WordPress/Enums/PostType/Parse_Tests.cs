@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.PostType_Tests;
+namespace Jeebs.WordPress.Enums.PostType_Tests;
 
 public class Parse_Tests
 {
@@ -35,7 +35,7 @@ public class Parse_Tests
 	public void Unknown_Returns_Post()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 
 		// Act
 		var result = PostType.Parse(name);
@@ -48,7 +48,7 @@ public class Parse_Tests
 	public void Returns_Custom_PostType()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 		var type = new PostType(name);
 		_ = PostType.AddCustomPostType(type);
 

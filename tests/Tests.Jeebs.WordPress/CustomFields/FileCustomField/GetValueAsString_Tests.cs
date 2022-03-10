@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace Jeebs.WordPress.Data.CustomFields.FileCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.FileCustomField_Tests;
 
 public class GetValueAsString_Tests
 {
@@ -11,8 +9,8 @@ public class GetValueAsString_Tests
 	public void Returns_File_UrlPath()
 	{
 		// Arrange
-		var urlPath = F.Rnd.Str;
-		var field = new Test(F.Rnd.Str, urlPath);
+		var urlPath = Rnd.Str;
+		var field = new Test(Rnd.Str, urlPath);
 
 		// Act
 		var result = field.GetValueAsStringTest();

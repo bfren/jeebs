@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Jeebs.Data.Entities;
+using Jeebs.Data.Attributes;
 using Jeebs.Messages;
 using Jeebs.Id;
 using Maybe;

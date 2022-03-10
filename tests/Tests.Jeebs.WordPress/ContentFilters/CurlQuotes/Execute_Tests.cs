@@ -2,9 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.StringExtensions_Tests;
-using Xunit;
 
-namespace Jeebs.WordPress.Data.ContentFilters.CurlQuotes_Tests;
+namespace Jeebs.WordPress.ContentFilters.CurlQuotes_Tests;
 
 public class Execute_Tests
 {

@@ -2,12 +2,11 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Config;
+using Jeebs.Config.WordPress;
 using Jeebs.Data;
-using Jeebs.WordPress.Data;
-using NSubstitute;
+using Jeebs.WordPress;
 
-namespace F.WordPressF.DataF;
+namespace Jeebs.WordPress.Functions;
 
 public abstract class Query_Tests
 {

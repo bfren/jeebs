@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace Jeebs.WordPress.Data.CustomFields.TextCustomField_Tests;
+namespace Jeebs.WordPress.CustomFields.TextCustomField_Tests;
 
 public class GetValueAsString_Tests
 {
@@ -11,8 +9,8 @@ public class GetValueAsString_Tests
 	public void Returns_ValueObj()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
-		var field = new Test(F.Rnd.Str, value);
+		var value = Rnd.Str;
+		var field = new Test(Rnd.Str, value);
 
 		// Act
 		var result = field.GetValueAsStringTest();

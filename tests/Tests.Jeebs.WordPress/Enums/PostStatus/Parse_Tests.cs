@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.PostStatus_Tests;
+namespace Jeebs.WordPress.Enums.PostStatus_Tests;
 
 public class Parse_Tests
 {
@@ -34,7 +34,7 @@ public class Parse_Tests
 	public void Unknown_Returns_Draft()
 	{
 		// Arrange
-		var name = F.Rnd.Str;
+		var name = Rnd.Str;
 
 		// Act
 		var result = PostStatus.Parse(name);

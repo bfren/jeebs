@@ -2,16 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using System.Threading.Tasks;
-using Jeebs;
-using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
-using NSubstitute;
-using Xunit;
-using static F.WordPressF.DataF.QueryAttachmentsF;
-using static F.WordPressF.DataF.QueryAttachmentsF.M;
+using Jeebs.Collections;
+using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Functions;
+using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
 
-namespace F.WordPressF.DataF.QueryAttachmentsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
 
 public class ExecuteAsync_Tests : Query_Tests
 {
@@ -22,7 +19,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 
 		// Act
-		var result = await ExecuteAsync<PostAttachment>(db, w, _ => throw new System.Exception()).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, _ => throw new Exception()).ConfigureAwait(false);
 
 		// Assert
 		var none = result.AssertNone();
@@ -37,7 +34,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Lng), new(Rnd.Lng));
 
 		// Act
-		_ = await ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);
+		_ = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);
 
 		// Assert
 		_ = await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction).ConfigureAwait(false);

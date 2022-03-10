@@ -14,7 +14,7 @@ namespace Jeebs.Mvc;
 /// </summary>
 public static class TempDataDictionaryExtensions
 {
-	private const string AlertsKey = "JeebsAlerts";
+	internal const string AlertsKey = "JeebsAlerts";
 
 	/// <summary>
 	/// Returns whether or not the TempDataDictionary has any pending alerts

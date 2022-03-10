@@ -7,14 +7,14 @@ namespace Jeebs.Messages;
 public abstract record class WithValueMsg<T> : Msg, IWithValueMsg<T>
 {
 	/// <inheritdoc/>
-	public virtual string Name { get; init; } = "Value";
+	public virtual string Name { get; init; } = nameof(Value);
 
 	/// <inheritdoc/>
 	public abstract T Value { get; init; }
 
 	/// <inheritdoc/>
 	public sealed override string Format =>
-		"{{ " + Name + " = {Value} }}";
+		$"{Name} = {{Value}}";
 
 	/// <inheritdoc/>
 	public sealed override object[]? Args =>

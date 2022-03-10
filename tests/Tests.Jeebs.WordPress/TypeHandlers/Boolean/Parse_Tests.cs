@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace Jeebs.WordPress.Data.TypeHandlers.BooleanTypeHandler_Tests;
+namespace Jeebs.WordPress.TypeHandlers.BooleanTypeHandler_Tests;
 
 public class Parse_Tests
 {

@@ -1,12 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.WordPress.Data;
-using Xunit;
-using static F.WordPressF.DataF.QueryPostsF;
+using static Jeebs.WordPress.Functions.QueryPostsF.M;
 
-namespace F.WordPressF.DataF.QueryPostsF_Tests;
+namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class GetMetaDictionary_Tests
 {
@@ -16,11 +13,11 @@ public class GetMetaDictionary_Tests
 		// Arrange
 
 		// Act
-		var result = GetMetaDictionary<NoMetaDictionaryProperties>();
+		var result = QueryPostsF.GetMetaDictionary<NoMetaDictionaryProperties>();
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<M.MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>(none);
+		_ = Assert.IsType<MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>(none);
 	}
 
 	[Fact]
@@ -29,11 +26,11 @@ public class GetMetaDictionary_Tests
 		// Arrange
 
 		// Act
-		var result = GetMetaDictionary<MoreThanOneMetaDictionaryProperty>();
+		var result = QueryPostsF.GetMetaDictionary<MoreThanOneMetaDictionaryProperty>();
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<M.MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>(none);
+		_ = Assert.IsType<MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>(none);
 	}
 
 	[Fact]
@@ -42,7 +39,7 @@ public class GetMetaDictionary_Tests
 		// Arrange
 
 		// Act
-		var result = GetMetaDictionary<SingleMetaDictionaryProperty>();
+		var result = QueryPostsF.GetMetaDictionary<SingleMetaDictionaryProperty>();
 
 		// Assert
 		var some = result.AssertSome();

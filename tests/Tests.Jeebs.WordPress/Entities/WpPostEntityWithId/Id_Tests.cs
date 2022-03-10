@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
+using Jeebs.WordPress.Entities.StrongIds;
 
-namespace Jeebs.WordPress.Data.Entities.WpPostEntityWithId_Tests;
+namespace Jeebs.WordPress.Entities.WpPostEntityWithId_Tests;
 
 public class Id_Tests : Id_Tests<Id_Tests.Test, WpPostId>
 {

@@ -23,7 +23,7 @@ internal static class StringBuilderExtensions
 		const int max = 74;
 
 		// If text is short enough, simply append it
-		if (text.Length < max)
+		if (text.Length <= max)
 		{
 			_ = @this.AppendLine(text);
 			return;

@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Constants_Tests;
+namespace Jeebs.WordPress.Constants_Tests;
 
 public class Attachment_Tests
 {

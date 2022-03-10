@@ -1,12 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Data;
-using NSubstitute;
-using Xunit;
 
-namespace Jeebs.WordPress.Data.TypeHandlers.BooleanTypeHandler_Tests;
+namespace Jeebs.WordPress.TypeHandlers.BooleanTypeHandler_Tests;
 
 public class SetValue_Tests
 {
@@ -46,7 +43,7 @@ public class SetValue_Tests
 	{
 		// Arrange
 		var handler = new BooleanTypeHandler();
-		var column = F.Rnd.Str;
+		var column = Rnd.Str;
 		var parameter = Substitute.For<IDbDataParameter>();
 		_ = parameter.SourceColumn.Returns(column);
 

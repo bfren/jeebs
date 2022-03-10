@@ -3,7 +3,7 @@
 
 using Xunit;
 
-namespace Jeebs.WordPress.Data.Enums.SearchPostFields_Tests;
+namespace Jeebs.WordPress.Enums.SearchPostFields_Tests;
 
 public class All_Tests
 {

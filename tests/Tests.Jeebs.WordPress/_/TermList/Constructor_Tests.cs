@@ -1,10 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Enums;
 using Xunit;
 
-namespace Jeebs.WordPress.Data.TermList_Tests;
+namespace Jeebs.WordPress.TermList_Tests;
 
 public class Constructor_Tests
 {

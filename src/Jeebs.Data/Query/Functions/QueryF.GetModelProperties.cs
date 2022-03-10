@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jeebs.Data.Entities;
+using Jeebs.Data.Attributes;
 
 namespace Jeebs.Data.Query.Functions;
 

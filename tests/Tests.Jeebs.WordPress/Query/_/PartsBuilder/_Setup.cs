@@ -2,10 +2,10 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
-using Jeebs.Data.Mapping;
-using NSubstitute;
+using Jeebs.Data.Map;
+using Jeebs.Id;
 
-namespace Jeebs.WordPress.Data.Query_Tests.PartsBuilder_Tests;
+namespace Jeebs.WordPress.Query.PartsBuilder_Tests;
 
 public abstract class PartsBuilder_Tests
 {
@@ -19,7 +19,7 @@ public abstract class PartsBuilder_Tests
 
 		var builder = new TestPartsBuilder(extract, client, schema);
 
-		var table = new TestTable(new TableName(F.Rnd.Str), F.Rnd.Str, F.Rnd.Str);
+		var table = new TestTable(new TableName(Rnd.Str), Rnd.Str, Rnd.Str);
 
 		return (builder, new(client, schema, table));
 	}
@@ -33,7 +33,7 @@ public abstract class PartsBuilder_Tests
 
 public readonly record struct TestId(long Value) : IStrongId;
 
-public class TestPartsBuilder : Query.PartsBuilder<TestId>
+public class TestPartsBuilder : PartsBuilder<TestId>
 {
 	public TestPartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract, client, schema)
 	{
