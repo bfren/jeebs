@@ -82,11 +82,11 @@ public class SerilogLogger : Log
 		logger.Error(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Die(string message, params object[] args) =>
+	public override void Ftl(string message, params object[] args) =>
 		logger.Fatal(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Die(Exception ex, string message, params object[] args) =>
+	public override void Ftl(Exception ex, string message, params object[] args) =>
 		logger.Fatal(ex, Prefix(message), args);
 
 	/// <inheritdoc/>

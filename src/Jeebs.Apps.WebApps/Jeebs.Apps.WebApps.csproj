@@ -7,6 +7,5 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Apps\Jeebs.Apps.csproj" />
-		<ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
 	</ItemGroup>
 </Project>

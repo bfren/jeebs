@@ -1,6 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Services.Abstractions\Jeebs.Services.Abstractions.csproj" />
-		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
+		<ProjectReference Include="..\Jeebs.Services\Jeebs.Services.csproj" />
 	</ItemGroup>
 </Project>

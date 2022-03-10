@@ -110,6 +110,6 @@ public class Message_Tests
 		log.Msg(msg);
 
 		// Assert
-		log.Received().Die(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Ftl(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }
