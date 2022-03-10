@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -96,13 +96,15 @@ public abstract class MvcApp : WebApp
 	/// Override to configure response caching
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services) => _ = services.AddResponseCaching();
+	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services) =>
+		_ = services.AddResponseCaching();
 
 	/// <summary>
 	/// Override to configure response compression
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services) => _ = services
+	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services) =>
+		_ = services
 			.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.Configure<BrotliCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.AddResponseCompression(opt =>
@@ -128,11 +130,12 @@ public abstract class MvcApp : WebApp
 	/// Override to configure routing
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesRouting(IServiceCollection services) => _ = services.AddRouting(opt =>
-																					  {
-																						  opt.AppendTrailingSlash = AppendTrailingSlash;
-																						  opt.LowercaseUrls = LowercaseUrls;
-																					  });
+	protected virtual void ConfigureServicesRouting(IServiceCollection services) =>
+		_ = services.AddRouting(opt =>
+		{
+			opt.AppendTrailingSlash = AppendTrailingSlash;
+			opt.LowercaseUrls = LowercaseUrls;
+		});
 
 	/// <summary>
 	/// Override to configure session options
@@ -150,7 +153,8 @@ public abstract class MvcApp : WebApp
 	/// Override to configure endpoints - default is MVC
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesEndpoints(IServiceCollection services) => _ = services
+	protected virtual void ConfigureServicesEndpoints(IServiceCollection services) =>
+		_ = services
 			.AddControllersWithViews(ConfigureServicesMvcOptions)
 			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
 			.AddJsonOptions(ConfigureServicesEndpointsJson);
@@ -159,7 +163,7 @@ public abstract class MvcApp : WebApp
 	/// Override to configure MVC options
 	/// </summary>
 	/// <param name="opt">MvcOptions</param>
-	public virtual void ConfigureServicesMvcOptions(MvcOptions opt)
+	protected virtual void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
 		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
@@ -169,13 +173,13 @@ public abstract class MvcApp : WebApp
 	/// Override to configure Razor Runtime Compilation
 	/// </summary>
 	/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
-	public virtual void ConfigureServicesRuntimeCompilation(MvcRazorRuntimeCompilationOptions opt) { }
+	protected virtual void ConfigureServicesRuntimeCompilation(MvcRazorRuntimeCompilationOptions opt) { }
 
 	/// <summary>
 	/// Override to configure endpoints JSON
 	/// </summary>
 	/// <param name="opt">JsonOptions</param>
-	public virtual void ConfigureServicesEndpointsJson(JsonOptions opt)
+	protected virtual void ConfigureServicesEndpointsJson(JsonOptions opt)
 	{
 		// Get default options
 		var defaultOptions = F.JsonF.CopyOptions();

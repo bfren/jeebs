@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.AspNetCore.Builder;
@@ -18,18 +18,17 @@ public abstract class ApiApp : MvcApp
 	/// Create object
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-	protected ApiApp(bool useHsts) : base(useHsts) { }
+	protected ApiApp(bool useHsts) : base(useHsts) =>
+		EnableAuthorisation = true;
 
 	#region ConfigureServices
 
 	/// <inheritdoc/>
-	protected override void ConfigureServicesEndpoints(IServiceCollection services)
-	{
+	protected override void ConfigureServicesEndpoints(IServiceCollection services) =>
 		_ = services.AddControllers(ConfigureServicesMvcOptions);
-	}
 
 	/// <inheritdoc/>
-	public override void ConfigureServicesMvcOptions(MvcOptions opt)
+	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
 		// do nothing
 	}
@@ -63,16 +62,8 @@ public abstract class ApiApp : MvcApp
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
-	{
-		_ = app.UseAuthorization();
-	}
-
-	/// <inheritdoc/>
-	protected override void ConfigureEndpoints(IApplicationBuilder app)
-	{
+	protected override void ConfigureEndpoints(IApplicationBuilder app) =>
 		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
-	}
 
 	#endregion Configure
 }

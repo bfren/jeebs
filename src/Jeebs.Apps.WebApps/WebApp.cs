@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -137,10 +137,8 @@ public abstract class WebApp : App
 	/// Override to configure production exception handling
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureProductionExceptionHandling(IApplicationBuilder app)
-	{
+	protected virtual void ConfigureProductionExceptionHandling(IApplicationBuilder app) =>
 		_ = app.UseExceptionHandler("/Error");
-	}
 
 	/// <summary>
 	/// Override to configure security headers
@@ -159,8 +157,6 @@ public abstract class WebApp : App
 	/// </summary>
 	/// <param name="app">IApplicationBuilder</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
-	{
+	protected virtual void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config) =>
 		_ = app.UseAuthorization();
-	}
 }
