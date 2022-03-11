@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.WordPress.Entities.StrongIds;
-using MaybeF.Internals;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -20,8 +19,8 @@ public static partial class QueryPostsF
 		var (prev, next) = ids.GetEitherSide(currentId);
 
 		return (
-			prev is Some<long> x ? new WpPostId(x.Value) : null,
-			next is Some<long> y ? new WpPostId(y.Value) : null
+			prev.IsSome(out var x) ? new WpPostId(x) : null,
+			next.IsSome(out var y) ? new WpPostId(y) : null
 		);
 	}
 }

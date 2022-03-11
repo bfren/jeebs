@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs.Messages;
 using MaybeF;
-using MaybeF.Internals;
 
 namespace Jeebs.Functions.Internals;
 
@@ -17,7 +16,7 @@ namespace Jeebs.Functions.Internals;
 public sealed class MaybeConverter<T> : JsonConverter<Maybe<T>>
 {
 	/// <summary>
-	/// Read value and return as <see cref="Some{T}"/> or <see cref="None{T}"/>
+	/// Read value and return as <see cref="MaybeF.Internals.Some{T}"/> or <see cref="MaybeF.Internals.None{T}"/>
 	/// </summary>
 	/// <param name="reader">Utf8JsonReader</param>
 	/// <param name="typeToConvert">Maybe of type <typeparamref name="T"/></param>
@@ -33,16 +32,16 @@ public sealed class MaybeConverter<T> : JsonConverter<Maybe<T>>
 		};
 
 	/// <summary>
-	/// If the Maybe is <see cref="Some{T}"/> write the value, otherwise write a null value
+	/// If the Maybe is <see cref="MaybeF.Internals.Some{T}"/> write the value, otherwise write a null value
 	/// </summary>
 	/// <param name="writer">Utf8JsonWriter</param>
 	/// <param name="value">Maybe value</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	public override void Write(Utf8JsonWriter writer, Maybe<T> value, JsonSerializerOptions options)
 	{
-		if (value is Some<T> some)
+		if (value.IsSome(out var obj))
 		{
-			JsonSerializer.Serialize(writer, some.Value, options);
+			JsonSerializer.Serialize(writer, obj, options);
 		}
 		else
 		{

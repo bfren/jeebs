@@ -8,7 +8,6 @@ using Jeebs.Data;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.StrongIds;
 using MaybeF;
-using MaybeF.Internals;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -53,13 +52,13 @@ public static partial class QueryPostsF
 					var result = await customField.HydrateAsync(db, w, metaDict, required).ConfigureAwait(false);
 
 					// If it failed and it's required, return None
-					if (result is None<bool> none && required)
+					if (result.IsNone(out var reason) && required)
 					{
-						return F.None<TList>(none.Reason);
+						return F.None<TList>(reason);
 					}
 
 					// Set the value
-					if (result is Some<bool> some && some.Value)
+					if (result.IsSome(out var set) && set)
 					{
 						info.SetValue(post, customField);
 					}
