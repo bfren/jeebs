@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<PackageReference Include="Rnd" Version="8.0.2" />
 		<PackageReference Include="Sodium.Core" Version="1.2.3" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
-		<ProjectReference Include="..\Jeebs.Random\Jeebs.Random.csproj" />
 	</ItemGroup>
 </Project>

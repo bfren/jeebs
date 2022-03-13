@@ -47,6 +47,7 @@
 		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>https://github.com/bfren/jeebs</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/bfren/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>

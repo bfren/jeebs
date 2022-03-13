@@ -3,10 +3,10 @@
 		<RootNamespace>Jeebs.Auth</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Rnd" Version="8.0.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Random\Jeebs.Random.csproj" />
 		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

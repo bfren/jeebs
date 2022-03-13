@@ -3,7 +3,9 @@
 		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Rnd" Version="8.0.2" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
-		<ProjectReference Include="..\Jeebs.Random\Jeebs.Random.csproj" />
 	</ItemGroup>
 </Project>
