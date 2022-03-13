@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Cryptography.Functions.CryptoF.M;
+using static RndF.Rnd.StringF.R;
 
 namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
@@ -11,7 +11,7 @@ public class GeneratePassphrase_Tests
 	[InlineData(-1)]
 	[InlineData(0)]
 	[InlineData(1)]
-	public void NumberOfWords_Less_Than_Two_Returns_None_With_NullPassphraseMsg(int input)
+	public void NumberOfWords_Less_Than_Two_Returns_None_With_NumberOfWordsMustBeAtLeastTwoMsg(int input)
 	{
 		// Arrange
 
@@ -20,7 +20,7 @@ public class GeneratePassphrase_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<NullPassphraseMsg>(none);
+		Assert.IsType<NumberOfWordsMustBeAtLeastTwoReason>(none);
 	}
 
 	[Theory]

@@ -1,9 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Messages;
-using Jeebs.Random;
 using MaybeF;
+using RndF;
 
 namespace Jeebs.Cryptography.Functions;
 
@@ -20,18 +19,5 @@ public static partial class CryptoF
 	/// </summary>
 	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 2)</param>
 	public static Maybe<string> GeneratePassphrase(int numberOfWords) =>
-		Rnd.StringF.Passphrase(numberOfWords) switch
-		{
-			string pass =>
-				F.Some(pass),
-
-			_ =>
-				F.None<string, M.NullPassphraseMsg>()
-		};
-
-	public static partial class M
-	{
-		/// <summary>Generated passphrase was null</summary>
-		public sealed record class NullPassphraseMsg : Msg;
-	}
+		Rnd.StringF.Passphrase(numberOfWords);
 }

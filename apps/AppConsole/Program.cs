@@ -5,7 +5,7 @@ using AppConsole;
 using AppConsole.Messages;
 using Jeebs.Config;
 using Jeebs.Functions;
-using Jeebs.Random;
+using RndF;
 using Jeebs.Services.Notify;
 using MaybeF;
 using MaybeF.Linq;

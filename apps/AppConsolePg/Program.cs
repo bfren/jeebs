@@ -6,7 +6,7 @@ using AppConsolePg;
 using Jeebs.Data.Clients.PostgreSql.Parameters;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 using Jeebs.Extensions;
-using Jeebs.Random;
+using RndF;
 using MaybeF;
 using Microsoft.Extensions.DependencyInjection;
 

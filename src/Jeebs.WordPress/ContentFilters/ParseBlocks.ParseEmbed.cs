@@ -4,7 +4,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Jeebs.Functions;
-using Jeebs.Random;
+using RndF;
 
 namespace Jeebs.WordPress.ContentFilters;
 

@@ -10,7 +10,7 @@ using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
-using Jeebs.Random;
+using RndF;
 using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

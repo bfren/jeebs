@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Jwt.Constants;
-using Jeebs.Random;
+using RndF;
 
 namespace Jeebs.Auth.Jwt.Functions;
 

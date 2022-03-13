@@ -6,7 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Id;
 using Jeebs.Logging;
-using Jeebs.Random;
+using RndF;
 using MaybeF;
 using MaybeF.Linq;
 using Microsoft.AspNetCore.Authorization;
