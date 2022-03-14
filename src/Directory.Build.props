@@ -25,13 +25,18 @@
 		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)'))</LocalPackPath>
 	</PropertyGroup>
 	<PropertyGroup>
+		<ReadmeFile>README.md</ReadmeFile>
+		<ReadmePath>$([MSBuild]::GetPathOfFileAbove('$(ReadmeFile)', '$(MSBuildProjectDirectory)'))</ReadmePath>
+	</PropertyGroup>
+	<PropertyGroup>
 		<VersionFile>Version</VersionFile>
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
 
-	<!-- Import Licence -->
-	<ItemGroup Label="Licence">
-		<None Include="$(LicencePath)" Pack="true" PackagePath=""/>
+	<!-- Import files -->
+	<ItemGroup Label="Licence" Condition="'$(Configuration)'=='Release'">
+		<None Include="$(LicencePath)" Pack="true" PackagePath="/"/>
+		<None Include="$(ReadmePath)" Pack="true" PackagePath="/"/>
 	</ItemGroup>
 
 	<!-- Get Version -->
@@ -42,12 +47,13 @@
 	<!-- Package Configuration -->
 	<PropertyGroup Label="Package">
 		<Authors>bfren</Authors>
-		<Company>bfren</Company>
+		<Company>bfren.dev</Company>
 		<Copyright>Copyright © bfren.dev 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
 		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageLicenseFile>$(LicenceFile)</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/bfren/jeebs</PackageProjectUrl>
+		<PackageReadmeFile>$(ReadmeFile)</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/bfren/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
