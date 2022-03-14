@@ -1,7 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Auth</RootNamespace>
-	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Rnd" Version="8.0.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
