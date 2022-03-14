@@ -63,7 +63,20 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
-	<!-- [Optional] Create Local Packages -->
+	<!--
+		[Optional]
+		Create Local Packages
+		Use 'DispatchToInnerBuilds' target to run after builds are completed for all frameworks
+			1. Import local repo
+			2. Create package
+			3. Publish package to local repository
+			4. Cleanup
+	-->
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
+	<Target Name="PackAndPushToLocalNuget" AfterTargets="DispatchToInnerBuilds" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
+		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build --configuration Release"/>
+		<Exec Command="nuget init &quot;$(ProjectDir)bin\Release&quot; &quot;$(LocalNugetRepository)&quot;"/>
+		<Exec Command="del &quot;$(ProjectDir)bin\Release\*.nupkg&quot;"/>
+	</Target>
 
 </Project>
