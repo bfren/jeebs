@@ -29,11 +29,11 @@ jobs:
     -
       name: A - Restore
       run: |
-        dotnet restore ./Pack.csproj
+        dotnet restore ./Test.csproj
     -
       name: B - Build
       run: |
-        dotnet build ./Pack.csproj \
+        dotnet build ./Test.csproj \
           --no-restore \
           --configuration Release
     -
