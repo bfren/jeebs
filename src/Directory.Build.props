@@ -34,13 +34,13 @@
 	</PropertyGroup>
 
 	<!-- Import files -->
-	<ItemGroup Label="Licence" Condition="'$(Configuration)'=='Release'">
+	<ItemGroup Label="Files" Condition="'$(Configuration)'=='Release'">
 		<None Include="$(LicencePath)" Pack="true" PackagePath="/"/>
 		<None Include="$(ReadmePath)" Pack="true" PackagePath="/"/>
 	</ItemGroup>
 
 	<!-- Get Version -->
-	<PropertyGroup>
+	<PropertyGroup Label="Version">
 		<JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)'))</JeebsVersion>
 	</PropertyGroup>
 
