@@ -1,8 +1,8 @@
 # Jeebs
 
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/bfren/jeebs?include_prereleases) ![GitHub](https://img.shields.io/github/license/bfren/jeebs)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/bfren/jeebs?include_prereleases&label=Version) ![Nuget](https://img.shields.io/nuget/dt/Jeebs?label=Downloads) ![GitHub](https://img.shields.io/github/license/bfren/jeebs?label=Licence)
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bfren/jeebs/Publish) ![Publish](https://github.com/bfren/jeebs/workflows/Publish/badge.svg)
+[![Test](https://github.com/bfren/jeebs/actions/workflows/test.yml/badge.svg)](https://github.com/bfren/jeebs/actions/workflows/test.yml) ![Publish](https://github.com/bfren/jeebs/workflows/Publish/badge.svg)
 
 Libraries for use in .NET Core projects for rapid application development.
 
@@ -18,7 +18,9 @@ Jeebs v5 came from a) rewriting the entire codebase to make use of improvements 
 
 Jeebs v6 brought a full rewrite of the WordPress library to take advantage of the new (improved for v6) Data libraries, a new Calendar library, some nifty new functions, many (many) more unit tests.
 
-Now with the advent of .NET 6, Jeebs v7 is born, taking advantage of new features and optimisations, including support for the new minimal API, file-scoped namespaces, record structs, sealed `ToString()` methods, a new SkiaSharp driver (as System.Drawing was deprecated), and a breaking change renaming `Return<T>()` methods to `Some<T>()` to better reflect F#.
+Jeebs v7 took advantage of new features and optimisations in .NET 6, including support for the new minimal API, file-scoped namespaces, record structs, sealed `ToString()` methods, a new SkiaSharp driver (as System.Drawing was deprecated).
+
+Jeebs v8 targets .NET 6 and .NET 7, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
 
 ## License
 

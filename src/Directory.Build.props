@@ -3,7 +3,7 @@
 
 	<!-- Standard Configuration -->
 	<PropertyGroup Label="Framework and Language">
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
@@ -25,29 +25,35 @@
 		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)'))</LocalPackPath>
 	</PropertyGroup>
 	<PropertyGroup>
+		<ReadmeFile>README.md</ReadmeFile>
+		<ReadmePath>$([MSBuild]::GetPathOfFileAbove('$(ReadmeFile)', '$(MSBuildProjectDirectory)'))</ReadmePath>
+	</PropertyGroup>
+	<PropertyGroup>
 		<VersionFile>Version</VersionFile>
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
 
-	<!-- Import Licence -->
-	<ItemGroup Label="Licence">
-		<None Include="$(LicencePath)" Pack="true" PackagePath=""/>
+	<!-- Import files -->
+	<ItemGroup Label="Files" Condition="'$(Configuration)'=='Release'">
+		<None Include="$(LicencePath)" Pack="true" PackagePath="/"/>
+		<None Include="$(ReadmePath)" Pack="true" PackagePath="/"/>
 	</ItemGroup>
 
 	<!-- Get Version -->
-	<PropertyGroup>
+	<PropertyGroup Label="Version">
 		<JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)'))</JeebsVersion>
 	</PropertyGroup>
 
 	<!-- Package Configuration -->
 	<PropertyGroup Label="Package">
 		<Authors>bfren</Authors>
-		<Company>bfren</Company>
+		<Company>bfren.dev</Company>
 		<Copyright>Copyright © bfren.dev 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
 		<Version>$(JeebsVersion)</Version>
 		<Description>$(MSBuildProjectName) library</Description>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageLicenseFile>$(LicenceFile)</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/bfren/jeebs</PackageProjectUrl>
+		<PackageReadmeFile>$(ReadmeFile)</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/bfren/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
@@ -57,7 +63,20 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
-	<!-- [Optional] Create Local Packages -->
+	<!--
+		[Optional]
+		Create Local Packages
+		Use 'DispatchToInnerBuilds' target to run after builds are completed for all frameworks
+			1. Import local repo
+			2. Create package
+			3. Publish package to local repository
+			4. Cleanup
+	-->
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
+	<Target Name="PackAndPushToLocalNuget" AfterTargets="DispatchToInnerBuilds" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
+		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build --configuration Release"/>
+		<Exec Command="nuget init &quot;$(ProjectDir)bin\Release&quot; &quot;$(LocalNugetRepository)&quot;"/>
+		<Exec Command="del &quot;$(ProjectDir)bin\Release\*.nupkg&quot;"/>
+	</Target>
 
 </Project>

@@ -60,7 +60,7 @@ public class GetSection_Tests
 		var b1 = Rnd.Int;
 
 		var builder = new ConfigurationBuilder();
-		_ = builder.AddInMemoryCollection(new Dictionary<string, string>
+		_ = builder.AddInMemoryCollection(new Dictionary<string, string?>
 		{
 			{ $"{key}:{nameof(Foo.Bar0)}", b0 },
 			{ $"{key}:{nameof(Foo.Bar1)}", b1.ToString() }
