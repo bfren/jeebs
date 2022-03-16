@@ -9,11 +9,14 @@
 		"editor.renderWhitespace": "all",
 		"files.trimTrailingWhitespace": true,
 		"files.exclude": {
-			"**/.git": true,
+			"**/*.csproj.user": true,
 			"**/.DS_Store": true,
+			"**/.git": true,
+			"**/bin/**": true,
+			"**/obj/**": true,
 			".vs/**": true,
 			".vscode/**": true,
-			"docs/**": true
+			"docs/**": true,
 		},
 	}
 }

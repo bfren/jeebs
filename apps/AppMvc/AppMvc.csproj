@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.1.22076.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0-preview.1.22076.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.2.22153.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0-preview.2.22153.1" />
 		<PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>

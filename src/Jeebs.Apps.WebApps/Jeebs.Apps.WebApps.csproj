@@ -3,7 +3,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.0-preview.1.22109.13" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.0-preview.2.22153.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Apps\Jeebs.Apps.csproj" />
