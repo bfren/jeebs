@@ -30,11 +30,7 @@ public class CheckTable_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		var action = bool () =>
-		{
-			builder.CheckTable<TestTable, TestException<TestTable>>();
-			return true;
-		};
+		var action = bool () => { builder.CheckTable<TestTable, TestException<TestTable>>(); return true; };
 
 		// Assert
 		Assert.True(action());
