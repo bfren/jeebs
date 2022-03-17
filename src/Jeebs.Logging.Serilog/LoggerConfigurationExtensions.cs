@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Jeebs.Config;
 using Jeebs.Config.Services;
 using Jeebs.Extensions;
@@ -24,8 +25,9 @@ public static class LoggerConfigurationExtensions
 	/// <param name="jeebs">JeebsConfig</param>
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{
-		// If there are no logging hooks, use default configuration
-		if (jeebs.Logging.Hooks.Count == 0)
+		// Get enabled hooks
+		var enabledHooks = jeebs.Logging.Hooks.Where(h => h.Value.Enabled).ToList();
+		if (enabledHooks.Count == 0)
 		{
 			return;
 		}
@@ -38,8 +40,7 @@ public static class LoggerConfigurationExtensions
 			(LogEventLevel)(level ?? jeebs.Logging.Minimum);
 
 		// Set the minimum log level
-		var overallMinimumLevel = getMinimum(null);
-		_ = @this.MinimumLevel.Is(overallMinimumLevel);
+		_ = @this.MinimumLevel.Is(getMinimum(null));
 
 		// Get all logging hooks
 		var hooks = new Dictionary<string, ILoggingHook>();
@@ -52,25 +53,19 @@ public static class LoggerConfigurationExtensions
 			}
 		});
 
-		// Add logging providers
-		foreach (var (service, providerConfig) in jeebs.Logging.Hooks)
+		// Add logging hooks
+		foreach (var (service, hookConfig) in enabledHooks)
 		{
-			// Don't do anything if this provider is not enabled (!)
-			if (!providerConfig.Enabled)
-			{
-				continue;
-			}
-
 			// Get service info
 			var (serviceType, serviceName) = ServicesConfig.SplitDefinition(service);
 
-			// Get provider minimum
-			var providerMinimumLevel = getMinimum(providerConfig.Minimum);
+			// Get hook minimum - will override @this.MinimumLevel if it's a higher value
+			var hookMinimumLevel = getMinimum(hookConfig.Minimum);
 
-			// Register provider
-			if (hooks.TryGetValue(serviceType, out var provider))
+			// Configure hook
+			if (hooks.TryGetValue(serviceType, out var hook))
 			{
-				provider.Configure(@this, jeebs, serviceName, providerMinimumLevel);
+				hook.Configure(@this, jeebs, serviceName, hookMinimumLevel);
 			}
 		}
 	}
