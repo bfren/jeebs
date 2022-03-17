@@ -1,25 +1,27 @@
 {
-	"jeebs": {
-		"app": {
-			"name": "Razor",
-			"suite": "Jeebs"
-		},
-		"logging": {
-			"minimum": "Verbose",
-			"console": true,
-			"providers": {
-				"seq.server04": {
-					"enabled": true
-				}
-			}
-		},
-		"services": {
-			"seq": {
-				"server04": {
-					"server": "",
-					"apiKey": ""
-				}
-			}
-		}
-	}
+  "jeebs": {
+    "app": {
+      "name": "Razor",
+      "suite": "Jeebs"
+    },
+    "logging": {
+      "minimum": "Verbose",
+      "hooks": {
+        "console.serilog": {
+          "enabled": true
+        },
+        "seq.server04": {
+          "enabled": true
+        }
+      }
+    },
+    "services": {
+      "seq": {
+        "server04": {
+          "server": "",
+          "apiKey": ""
+        }
+      }
+    }
+  }
 }
