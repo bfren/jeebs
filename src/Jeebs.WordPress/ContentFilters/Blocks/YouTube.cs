@@ -7,15 +7,18 @@ using System.Text.RegularExpressions;
 using Jeebs.Functions;
 using RndF;
 
-namespace Jeebs.WordPress.ContentFilters;
+namespace Jeebs.WordPress.ContentFilters.Blocks;
 
-public sealed partial class ParseBlocks
+/// <summary>
+/// Parse YouTube blocks
+/// </summary>
+internal static class YouTube
 {
 	/// <summary>
 	/// Parse embedded YouTube videos
 	/// </summary>
 	/// <param name="content">Post content</param>
-	internal static string ParseYouTube(string content)
+	internal static string Parse(string content)
 	{
 		// Get YouTube info
 		const string pattern = "<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->";
@@ -39,7 +42,7 @@ public sealed partial class ParseBlocks
 				var uri = new Uri(youTube.Url);
 
 				// Get Video ID and replace content using output format
-				if (GetYouTubeVideoId(uri) is string videoId)
+				if (GetVideoId(uri) is string videoId)
 				{
 					content = content.Replace(
 						match.Value,
@@ -58,7 +61,7 @@ public sealed partial class ParseBlocks
 	/// Regex comes from https://stackoverflow.com/a/27728417/8199362
 	/// </summary>
 	/// <param name="uri">URI</param>
-	internal static string? GetYouTubeVideoId(Uri uri)
+	internal static string? GetVideoId(Uri uri)
 	{
 		var regex = new Regex(@"^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*");
 		var m = regex.Match(uri.AbsoluteUri);

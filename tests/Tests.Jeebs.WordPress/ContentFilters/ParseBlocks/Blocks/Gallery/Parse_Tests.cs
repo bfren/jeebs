@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.ContentFilters.ParseBlocks_Tests;
+namespace Jeebs.WordPress.ContentFilters.Blocks.Gallery_Tests;
 
-public class ParseGallery_Tests
+public class Parse_Tests
 {
 	public static IEnumerable<object[]> Parses_Gallery_Ids_Data()
 	{
@@ -23,7 +23,7 @@ public class ParseGallery_Tests
 		var expected = $"class=\"hide image-gallery\" data-ids=\"{string.Join(',', ids)}\" data-cols=\"{cols}\"></div>";
 
 		// Act
-		var result = ParseBlocks.ParseGallery(input);
+		var result = Gallery.Parse(input);
 
 		// Assert
 		Assert.Contains(expected, result);
