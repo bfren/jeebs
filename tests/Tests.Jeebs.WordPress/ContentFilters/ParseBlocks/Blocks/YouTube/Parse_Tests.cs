@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.ContentFilters.ParseBlocks_Tests;
+namespace Jeebs.WordPress.ContentFilters.Blocks.YouTube_Tests;
 
-public class ParseYouTube_Tests
+public class Parse_Tests
 {
 	public static IEnumerable<object[]> Parses_YouTube_Id_Data()
 	{
@@ -30,7 +30,7 @@ public class ParseYouTube_Tests
 		var expected = $"class=\"hide video-youtube\" data-v=\"{id}\">{uri}</div>";
 
 		// Act
-		var result = ParseBlocks.ParseYouTube(input);
+		var result = YouTube.Parse(input);
 
 		// Assert
 		Assert.Contains(expected, result);

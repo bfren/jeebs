@@ -6,15 +6,18 @@ using System.Text.RegularExpressions;
 using Jeebs.Functions;
 using RndF;
 
-namespace Jeebs.WordPress.ContentFilters;
+namespace Jeebs.WordPress.ContentFilters.Blocks;
 
-public sealed partial class ParseBlocks
+/// <summary>
+/// Parse Gallery block
+/// </summary>
+internal static class Gallery
 {
 	/// <summary>
 	/// Parse WordPress photo gallery
 	/// </summary>
 	/// <param name="content">Post content</param>
-	internal static string ParseGallery(string content)
+	internal static string Parse(string content)
 	{
 		// Get Gallery info
 		const string pattern = "<!-- wp:gallery ({.*?}) -->(.*?)<!-- /wp:gallery -->";

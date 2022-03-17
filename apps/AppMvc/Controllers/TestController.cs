@@ -164,7 +164,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				_ = context.Roles.Join(
+				var roles = context.Roles.Join(
 					context.UserRoles,
 					r => r.Id,
 					ur => ur.RoleId,
@@ -199,10 +199,10 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				_ = from r in context.Roles
-					join ur in context.UserRoles on r.Id equals ur.RoleId
-					where ur.UserId == userId.Value
-					select r;
+				var roles = from r in context.Roles
+							join ur in context.UserRoles on r.Id equals ur.RoleId
+							where ur.UserId == userId.Value
+							select r;
 
 				if (await roles.CountAsync().ConfigureAwait(false) == 2)
 				{
