@@ -16,12 +16,12 @@ public class Constructor_Tests
 		var v2 = Rnd.Str;
 
 		// Act
-		var result = new MetaDictionary(new KeyValuePair<string, string>[]
+		var result = new MetaDictionary
 		{
-			new(k0, v0),
-			new(k0, v1),
-			new(k1, v2)
-		});
+			{ k0, v0 },
+			{ k0, v1 },
+			{ k1, v2 }
+		};
 
 		// Assert
 		Assert.Collection(result,
