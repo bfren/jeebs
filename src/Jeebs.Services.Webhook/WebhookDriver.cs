@@ -15,7 +15,7 @@ namespace Jeebs.Services.Webhook;
 
 /// <inheritdoc cref="IWebhookDriver{TConfig, TMessage}"/>
 public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebhookDriver<TConfig, TMessage>
-	where TConfig : IWebhookServiceConfig
+	where TConfig : IWebhookServiceConfig, new()
 	where TMessage : notnull
 {
 	/// <summary>
