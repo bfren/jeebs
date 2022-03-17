@@ -38,10 +38,10 @@ public static class ConfigurationExtensions
 	{
 		return useCache switch
 		{
-			true =>
-				Cache.GetOrCreate(typeof(T).FullName, _ => getSection(config, sectionKey)),
+			true when Cache.GetOrCreate(typeof(T).FullName ?? typeof(T).Name, _ => getSection(config, sectionKey)) is T section =>
+				section,
 
-			false =>
+			_ =>
 				getSection(config, sectionKey)
 		};
 

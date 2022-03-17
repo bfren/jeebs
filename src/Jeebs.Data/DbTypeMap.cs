@@ -5,7 +5,7 @@ using System;
 using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
-using Jeebs.Extensions;
+using Jeebs.Functions;
 using Jeebs.Id;
 
 namespace Jeebs.Data;
@@ -85,7 +85,7 @@ public sealed class DbTypeMap
 			return;
 		}
 
-		AppDomain.CurrentDomain.GetTypesOfPropertiesImplementing<T>().ForEach(t =>
+		TypeF.GetPropertyTypesImplementing<T>().ForEach(t =>
 		{
 			var genericHandlerType = handlerType.MakeGenericType(t);
 			if (Activator.CreateInstance(genericHandlerType) is SqlMapper.ITypeHandler handler)
