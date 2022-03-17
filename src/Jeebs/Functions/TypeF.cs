@@ -19,15 +19,32 @@ public static class TypeF
 	/// excludes Microsoft.* and System.* assemblies
 	/// See https://dotnetcoretutorials.com/2020/07/03/getting-assemblies-is-harder-than-you-think-in-c/
 	/// </summary>
-	internal static Lazy<List<AssemblyName>> Assemblies { get; } = new(
-		() => Directory
-			.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
-			.Select(f => AssemblyName.GetAssemblyName(f))
-			.Where(n =>
-				!n.FullName.StartsWith("Microsoft.", StringComparison.InvariantCultureIgnoreCase) &&
-				!n.FullName.StartsWith("System.", StringComparison.InvariantCultureIgnoreCase)
-			)
-			.ToList(),
+	internal static Lazy<List<AssemblyName>> AllAssemblyNames { get; } = new(
+		() =>
+		{
+			var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
+			var names = new List<AssemblyName>();
+			foreach (var file in files)
+			{
+				try
+				{
+					var name = AssemblyName.GetAssemblyName(file);
+					var startsWith = bool (string ns) =>
+						name.FullName.StartsWith(ns, StringComparison.InvariantCultureIgnoreCase);
+
+					if (!startsWith("Microsoft.") && !startsWith("System."))
+					{
+						names.Add(name);
+					}
+				}
+				catch
+				{
+					// Ignore errors - these assemblies cannot be loaded
+				}
+			}
+
+			return names;
+		},
 		true
 	);
 
@@ -35,11 +52,27 @@ public static class TypeF
 	/// Return list of all public class types in all loaded assemblies -
 	/// excludes Microsoft.* and System.* types
 	/// </summary>
-	internal static IEnumerable<Type> AllTypes =>
-		from a in Assemblies.Value.Select(n => Assembly.Load(n))
-		from t in a.GetTypes()
-		where t.IsClass && t.IsPublic
-		select t;
+	internal static Lazy<IEnumerable<Type>> AllTypes { get; } = new(
+		() =>
+		{
+			var types = new List<Type>();
+			foreach (var name in AllAssemblyNames.Value)
+			{
+				try
+				{
+					var assembly = Assembly.Load(name);
+					types.AddRange(assembly.GetTypes());
+				}
+				catch
+				{
+					// Ignore errors - these types cannot be loaded
+				}
+			}
+
+			return types;
+		},
+		true
+	);
 
 	/// <summary>
 	/// Get distinct types that implement type <typeparamref name="T"/>
@@ -54,7 +87,7 @@ public static class TypeF
 	/// <param name="type">Base Type</param>
 	public static List<Type> GetTypesImplementing(Type type)
 	{
-		var types = from t in AllTypes
+		var types = from t in AllTypes.Value
 					where type.IsAssignableFrom(t)
 					&& !t.IsAbstract
 					&& !t.IsInterface
@@ -76,7 +109,7 @@ public static class TypeF
 	/// <param name="type">Property Type</param>
 	public static List<Type> GetPropertyTypesImplementing(Type type)
 	{
-		var types = from t in AllTypes
+		var types = from t in AllTypes.Value
 					from p in t.GetProperties()
 					where type.IsAssignableFrom(p.PropertyType)
 					&& !p.PropertyType.IsAbstract
