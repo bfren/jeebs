@@ -47,7 +47,7 @@ public class TestController : Controller
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			var roles = await
+			_ = await
 				F.Some(
 					userId
 				)
@@ -85,7 +85,7 @@ public class TestController : Controller
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			var roles = await
+			_ = await
 				F.Some(
 					userId
 				)
@@ -131,7 +131,7 @@ public class TestController : Controller
 					$"= `{db.UserRole}`.`{db.UserRole.RoleId}` " +
 				$"WHERE `{db.UserRole}`.`{db.UserRole.UserId}` = @P0;";
 
-			var roles = await
+			_ = await
 				F.Some(
 					userId
 				)
@@ -164,7 +164,7 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var roles = context.Roles.Join(
+				_ = context.Roles.Join(
 					context.UserRoles,
 					r => r.Id,
 					ur => ur.RoleId,
@@ -199,10 +199,10 @@ public class TestController : Controller
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
-				var roles = from r in context.Roles
-							join ur in context.UserRoles on r.Id equals ur.RoleId
-							where ur.UserId == userId.Value
-							select r;
+				_ = from r in context.Roles
+					join ur in context.UserRoles on r.Id equals ur.RoleId
+					where ur.UserId == userId.Value
+					select r;
 
 				if (await roles.CountAsync().ConfigureAwait(false) == 2)
 				{
