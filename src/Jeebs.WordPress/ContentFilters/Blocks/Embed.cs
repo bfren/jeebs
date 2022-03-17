@@ -6,9 +6,12 @@ using System.Text.RegularExpressions;
 using Jeebs.Functions;
 using RndF;
 
-namespace Jeebs.WordPress.ContentFilters;
+namespace Jeebs.WordPress.ContentFilters.Blocks;
 
-public sealed partial class ParseBlocks
+/// <summary>
+/// Parse embed blocks
+/// </summary>
+internal static class Embed
 {
 	/// <summary>
 	/// Parse a generic embedded object
@@ -17,7 +20,7 @@ public sealed partial class ParseBlocks
 	/// <param name="type">EmbedType</param>
 	/// <param name="provider">Provider</param>
 	/// <param name="format">Function to parse matched content</param>
-	internal static string ParseEmbed(string content, EmbedType type, Provider provider, Func<string, EmbedParsed, string> format)
+	internal static string Parse(string content, EmbedType type, Provider provider, Func<string, EmbedParsed, string> format)
 	{
 		// Get Embedded info
 		const string pattern = "<!-- wp:embed ({.*?}) -->(.*?)<!-- /wp:embed -->";

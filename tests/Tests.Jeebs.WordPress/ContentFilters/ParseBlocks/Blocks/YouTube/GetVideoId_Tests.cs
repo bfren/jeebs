@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.ContentFilters.ParseBlocks_Tests;
+namespace Jeebs.WordPress.ContentFilters.Blocks.YouTube_Tests;
 
-public class GetYouTubeVideoId_Tests
+public class GetVideoId_Tests
 {
 	/// <summary>
 	/// Test URLs from https://stackoverflow.com/a/27728417/8199362
@@ -43,7 +43,7 @@ public class GetYouTubeVideoId_Tests
 		var uri = new Uri(input);
 
 		// Act
-		var result = ParseBlocks.GetYouTubeVideoId(uri);
+		var result = YouTube.GetVideoId(uri);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -56,7 +56,7 @@ public class GetYouTubeVideoId_Tests
 		var uri = new Uri($"https://{Rnd.Str}.com");
 
 		// Act
-		var result = ParseBlocks.GetYouTubeVideoId(uri);
+		var result = YouTube.GetVideoId(uri);
 
 		// Assert
 		Assert.Null(result);

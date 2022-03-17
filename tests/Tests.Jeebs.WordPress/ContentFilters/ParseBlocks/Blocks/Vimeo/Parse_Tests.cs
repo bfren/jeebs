@@ -1,9 +1,9 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.ContentFilters.ParseBlocks_Tests;
+namespace Jeebs.WordPress.ContentFilters.Blocks.Vimeo_Tests;
 
-public class ParseVimeo_Tests
+public class Parse_Tests
 {
 	public static IEnumerable<object[]> Parses_Vimeo_Url_Data()
 	{
@@ -28,7 +28,7 @@ public class ParseVimeo_Tests
 		var expected = $"class=\"hide video-vimeo\" data-url=\"{url}\">{url}</div>";
 
 		// Act
-		var result = ParseBlocks.ParseVimeo(input);
+		var result = Vimeo.Parse(input);
 
 		// Assert
 		Assert.Contains(expected, result);
