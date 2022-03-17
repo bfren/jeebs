@@ -18,14 +18,14 @@ public static class StringF
 	/// otherwise, return <paramref name="ifNull"/>
 	/// </summary>
 	/// <typeparam name="T">Object type</typeparam>
-	/// <param name="format">Format string</param>
+	/// <param name="formatString">Format string</param>
 	/// <param name="obj">Object (nullable)</param>
 	/// <param name="ifNull">Value to return if null</param>
-	public static string? Format<T>(string format, T obj, string? ifNull) =>
+	public static string? Format<T>(string formatString, T obj, string? ifNull) =>
 		obj switch
 		{
 			T t =>
-				string.Format(CultureInfo.InvariantCulture, format, t),
+				string.Format(CultureInfo.InvariantCulture, formatString, t),
 
 			_ =>
 				ifNull
@@ -39,18 +39,18 @@ public static class StringF
 	/// <para>(Significantly) altered to work without requiring DataBinder</para>
 	/// </summary>
 	/// <typeparam name="T">Source type</typeparam>
-	/// <param name="format">String to format</param>
+	/// <param name="formatString">String to format</param>
 	/// <param name="source">Source object to use for template values</param>
-	public static string Format<T>(string format, T source)
+	public static string Format<T>(string formatString, T source)
 	{
 		// Return original if source is null or if it is an empty array
 		if (source is null)
 		{
-			return format;
+			return formatString;
 		}
 		else if (source is Array arr && arr.Length == 0)
 		{
-			return format;
+			return formatString;
 		}
 
 		// Thanks James Newton-King!
@@ -61,7 +61,7 @@ public static class StringF
 
 		var values = new List<object>();
 		var replaceIndex = 0; // keeps track of replace loop so we can match named template values with an array source
-		var rewrittenFormat = r.Replace(format, (Match m) =>
+		var rewrittenFormat = r.Replace(formatString, (Match m) =>
 		{
 			var startGroup = m.Groups["start"];
 			var templateGroup = m.Groups["template"];

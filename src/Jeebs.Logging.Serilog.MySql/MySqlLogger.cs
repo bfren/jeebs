@@ -48,6 +48,14 @@ public sealed class MySqlLogger : IMySqlConnectorLogger
 		return requestedLevel >= Minimum && Logger.IsEnabled(requestedLevel);
 	}
 
+	/// <inheritdoc cref="Log(MySqlConnectorLogLevel, string, object?[]?, Exception?)"/>
+	public void Log(MySqlConnectorLogLevel level, string message) =>
+		Log(level, message, null, null);
+
+	/// <inheritdoc cref="Log(MySqlConnectorLogLevel, string, object?[]?, Exception?)"/>
+	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args) =>
+		Log(level, message, args, null);
+
 	/// <summary>
 	/// Send a message to the log
 	/// </summary>
@@ -55,7 +63,7 @@ public sealed class MySqlLogger : IMySqlConnectorLogger
 	/// <param name="message">Log message</param>
 	/// <param name="args">[Optional] Message arguments</param>
 	/// <param name="exception">[Optional] Exception</param>
-	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args = null, Exception? exception = null)
+	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args, Exception? exception)
 	{
 		var requestedLevel = GetLevel(level);
 		if (requestedLevel < Minimum)

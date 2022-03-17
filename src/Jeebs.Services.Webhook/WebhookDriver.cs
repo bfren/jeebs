@@ -66,7 +66,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 				{
 					Content = content,
 					Level = NotificationLevel.Error,
-					Fields = new Dictionary<string, object>()
+					Fields = new Dictionary<string, object>
 					{
 						{ "Exception", x.Value }
 					}
