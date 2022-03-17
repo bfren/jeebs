@@ -11,7 +11,7 @@ namespace Jeebs.Services;
 /// </summary>
 /// <typeparam name="TConfig">Service configuration type</typeparam>
 public abstract class Driver<TConfig> : IDriver<TConfig>
-	where TConfig : IServiceConfig
+	where TConfig : IServiceConfig, new()
 {
 	/// <summary>
 	/// Driver name

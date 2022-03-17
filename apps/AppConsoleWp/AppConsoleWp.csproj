@@ -20,12 +20,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Logging.Serilog.MySql\Jeebs.Logging.Serilog.MySql.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Services\Jeebs.Services.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.WordPress\Jeebs.WordPress.csproj" />
 	</ItemGroup>
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties jeebsconfig_1json__JsonSchema="..\..\src\Jeebs.Config\schema.json" />
-		</VisualStudio>
-	</ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="..\..\src\Jeebs.Config\schema.json" /></VisualStudio></ProjectExtensions>
 </Project>

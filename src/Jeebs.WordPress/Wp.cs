@@ -29,7 +29,7 @@ public abstract class Wp
 	protected void Init<TConfig>(ILog<Wp> log) =>
 		// If a WordPress instance of the specified configuration type hasn't been created yet,
 		// call Init() to register custom values
-		Initialised.GetOrCreate(typeof(TConfig).FullName, entry =>
+		Initialised.GetOrCreate(typeof(TConfig).FullName ?? typeof(TConfig).Name, entry =>
 		{
 			// Set expiration to maximum so it never expires while the application is running
 			_ = entry.SetAbsoluteExpiration(DateTimeOffset.MaxValue);

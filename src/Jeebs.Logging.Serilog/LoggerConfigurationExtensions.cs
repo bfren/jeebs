@@ -1,12 +1,15 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Jeebs.Config;
 using Jeebs.Config.Services;
 using Jeebs.Extensions;
+using Jeebs.Functions;
 using Serilog;
 using Serilog.Events;
-using Serilog.Sinks.Slack;
 
 namespace Jeebs.Logging.Serilog;
 
@@ -22,67 +25,47 @@ public static class LoggerConfigurationExtensions
 	/// <param name="jeebs">JeebsConfig</param>
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{
-		// If there are no logging providers, use default configuration
-		if (!jeebs.Logging.Console && jeebs.Logging.Providers.Count == 0)
+		// Get enabled hooks
+		var enabledHooks = jeebs.Logging.Hooks.Where(h => h.Value.Enabled).ToList();
+		if (enabledHooks.Count == 0)
 		{
 			return;
 		}
 
 		// Set the full application name
 		_ = @this.Enrich.WithProperty(JeebsConfig.Key.ToUpperFirst() + nameof(JeebsConfig.App), jeebs.App.FullName);
-		if (jeebs.Logging.AddPrefixToConsoleMessages)
-		{
-			SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
-		}
 
 		// Returns minimum level from nullable value or from default
 		var getMinimum = LogEventLevel (LogLevel? level) =>
 			(LogEventLevel)(level ?? jeebs.Logging.Minimum);
 
 		// Set the minimum log level
-		var overallMinimumLevel = getMinimum(null);
-		_ = @this.MinimumLevel.Is(overallMinimumLevel);
+		_ = @this.MinimumLevel.Is(getMinimum(null));
 
-		// Check for console provider
-		if (jeebs.Logging.Console)
+		// Get all logging hooks
+		var hooks = new Dictionary<string, ILoggingHook>();
+		TypeF.GetTypesImplementing<ILoggingHook>().ForEach(t =>
 		{
-			_ = @this.WriteTo.Console(
-				restrictedToMinimumLevel: overallMinimumLevel,
-				outputTemplate: jeebs.Logging.ConsoleOutputTemplate
-			);
-		}
-
-		// Add providers
-		foreach (var (service, providerConfig) in jeebs.Logging.Providers)
-		{
-			// Don't do anything if this provider is not enabled (!)
-			if (!providerConfig.Enabled)
+			var i = Activator.CreateInstance(t);
+			if (i is ILoggingHook h)
 			{
-				continue;
+				hooks.Add(h.Type, h);
 			}
+		});
 
+		// Add logging hooks
+		foreach (var (service, hookConfig) in enabledHooks)
+		{
 			// Get service info
 			var (serviceType, serviceName) = ServicesConfig.SplitDefinition(service);
 
-			// Get provider minimum
-			var providerMinimumLevel = getMinimum(providerConfig.MinimumLevel);
+			// Get hook minimum - will override @this.MinimumLevel if it's a higher value
+			var hookMinimumLevel = getMinimum(hookConfig.Minimum);
 
-			// Get service config
-			switch (serviceType)
+			// Configure hook
+			if (hooks.TryGetValue(serviceType, out var hook))
 			{
-				case "seq":
-					var seq = jeebs.Services.GetServiceConfig(c => c.Seq, serviceName);
-					_ = @this.WriteTo.Async(a => a.Seq(seq.Server, apiKey: seq.ApiKey, restrictedToMinimumLevel: providerMinimumLevel));
-					break;
-
-				case "slack":
-					var slack = jeebs.Services.GetServiceConfig(c => c.Slack, serviceName);
-					_ = @this.WriteTo.Async(a => a.Slack(slack.Webhook, restrictedToMinimumLevel: providerMinimumLevel));
-					break;
-
-				default:
-					// Unsupported service
-					break;
+				hook.Configure(@this, jeebs, serviceName, hookMinimumLevel);
 			}
 		}
 	}

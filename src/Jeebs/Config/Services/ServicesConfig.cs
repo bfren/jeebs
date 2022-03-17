@@ -17,6 +17,11 @@ public sealed record class ServicesConfig
 	public static readonly string Key = JeebsConfig.Key + ":services";
 
 	/// <summary>
+	/// Console configurations
+	/// </summary>
+	public Dictionary<string, Console.ConsoleConfig> Console { get; init; } = new();
+
+	/// <summary>
 	/// Seq configurations
 	/// </summary>
 	public Dictionary<string, Seq.SeqConfig> Seq { get; init; } = new();
@@ -35,6 +40,9 @@ public sealed record class ServicesConfig
 	public IServiceConfig GetServiceConfig(string definition) =>
 		SplitDefinition(definition) switch
 		{
+			("console", string name) =>
+				GetServiceConfig(c => c.Console, name),
+
 			("seq", string name) =>
 				GetServiceConfig(c => c.Seq, name),
 
@@ -55,12 +63,12 @@ public sealed record class ServicesConfig
 	/// <param name="getCollection">The service collection to use</param>
 	/// <param name="name">The name of the service to get</param>
 	public TConfig GetServiceConfig<TConfig>(Func<ServicesConfig, Dictionary<string, TConfig>> getCollection, string name)
-		where TConfig : IServiceConfig
+		where TConfig : IServiceConfig, new()
 	{
 		var services = getCollection(this);
 		if (!services.ContainsKey(name))
 		{
-			throw new UnknownServiceException(name, typeof(TConfig));
+			return new TConfig();
 		}
 
 		var config = services[name];

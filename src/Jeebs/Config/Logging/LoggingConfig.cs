@@ -17,27 +17,12 @@ public sealed record class LoggingConfig
 	public static readonly string Key = JeebsConfig.Key + ":logging";
 
 	/// <summary>
-	/// Minimum LogLevel
+	/// Overall Minimum LogLevel - no log event below this will be logged
 	/// </summary>
 	public LogLevel Minimum { get; init; }
 
 	/// <summary>
-	/// If true, log to console
+	/// List of hooks - dictionary key is a service name
 	/// </summary>
-	public bool Console { get; init; }
-
-	/// <summary>
-	/// Set to override default output template for console messages
-	/// </summary>
-	public string ConsoleOutputTemplate { get; init; } = "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}";
-
-	/// <summary>
-	/// If true the application name will be added before all console messages
-	/// </summary>
-	public bool AddPrefixToConsoleMessages { get; init; } = true;
-
-	/// <summary>
-	/// List of providers - dictionary key is a service name
-	/// </summary>
-	public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();
+	public Dictionary<string, LoggingHookConfig> Hooks { get; init; } = new();
 }
