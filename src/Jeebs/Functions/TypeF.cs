@@ -15,23 +15,30 @@ namespace Jeebs.Functions;
 public static class TypeF
 {
 	/// <summary>
-	/// Return list of all loaded assembly names
+	/// Return list of all loaded assembly names -
+	/// excludes Microsoft.* and System.* assemblies
 	/// See https://dotnetcoretutorials.com/2020/07/03/getting-assemblies-is-harder-than-you-think-in-c/
 	/// </summary>
 	internal static Lazy<List<AssemblyName>> Assemblies { get; } = new(
 		() => Directory
 			.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
 			.Select(f => AssemblyName.GetAssemblyName(f))
+			.Where(n =>
+				!n.FullName.StartsWith("Microsoft.", StringComparison.InvariantCultureIgnoreCase) &&
+				!n.FullName.StartsWith("System.", StringComparison.InvariantCultureIgnoreCase)
+			)
 			.ToList(),
 		true
 	);
 
 	/// <summary>
-	/// Return list of all types in all loaded assemblies
+	/// Return list of all public class types in all loaded assemblies -
+	/// excludes Microsoft.* and System.* types
 	/// </summary>
 	internal static IEnumerable<Type> AllTypes =>
 		from a in Assemblies.Value.Select(n => Assembly.Load(n))
 		from t in a.GetTypes()
+		where t.IsClass && t.IsPublic
 		select t;
 
 	/// <summary>
