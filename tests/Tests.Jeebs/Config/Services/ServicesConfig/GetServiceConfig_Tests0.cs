@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Config.Services.Console;
 using Jeebs.Config.Services.Seq;
 
 namespace Jeebs.Config.Services.ServicesConfig_Tests;
@@ -8,18 +9,19 @@ namespace Jeebs.Config.Services.ServicesConfig_Tests;
 public partial class GetServiceConfig_Tests
 {
 	[Fact]
-	public void Service_Does_Not_Exist_Throws_UnknownServiceException()
+	public void Service_Does_Not_Exist_Returns_Default_Instance()
 	{
 		// Arrange
 		var config = new ServicesConfig();
 		var name = Rnd.Str;
+		var defaultConfig = new ConsoleConfig();
 
 		// Act
-		var action = void () => config.GetServiceConfig(x => x.Seq, name);
+		var result = config.GetServiceConfig(x => x.Console, name);
 
 		// Assert
-		var ex = Assert.Throws<UnknownServiceException>(action);
-		Assert.Equal(string.Format(UnknownServiceException.Format, name, typeof(SeqConfig)), ex.Message);
+		Assert.Equal(defaultConfig.AddPrefix, result.AddPrefix);
+		Assert.Equal(defaultConfig.Template, result.Template);
 	}
 
 	[Fact]
