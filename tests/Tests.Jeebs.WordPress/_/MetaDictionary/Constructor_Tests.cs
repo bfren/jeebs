@@ -14,14 +14,10 @@ public class Constructor_Tests
 		var v0 = Rnd.Str;
 		var v1 = Rnd.Str;
 		var v2 = Rnd.Str;
+		var items = new KeyValuePair<string, string>[] { new(k0, v0), new(k0, v1), new(k1, v2) };
 
 		// Act
-		var result = new MetaDictionary
-		{
-			{ k0, v0 },
-			{ k0, v1 },
-			{ k1, v2 }
-		};
+		var result = new MetaDictionary(items);
 
 		// Assert
 		Assert.Collection(result,
