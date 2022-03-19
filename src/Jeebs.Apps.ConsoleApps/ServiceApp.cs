@@ -1,11 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Jeebs.Apps;
+namespace Jeebs.Apps.ConsoleApps;
 
 /// <summary>
 /// Hosted Service Application (for background tasks) - see <see cref="ConsoleApp"/>
@@ -15,10 +14,9 @@ public abstract class ServiceApp<T> : ConsoleApp
 	where T : class, IHostedService
 {
 	/// <inheritdoc/>
-	protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
+	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
-		// Base
-		base.ConfigureServices(env, config, services);
+		base.ConfigureServices(ctx, services);
 
 		// Add Hosted Service
 		_ = services.AddHostedService<T>();

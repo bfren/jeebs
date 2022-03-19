@@ -6,19 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps;
+namespace Jeebs.Apps.WebApps;
 
 /// <summary>
 /// API Application - see <see cref="MvcApp"/>
 /// </summary>
-public abstract class ApiApp : MvcApp
+public class ApiApp : MvcApp
 {
 	/// <summary>
-	/// Create object
+	/// Create API application with HSTS enabled
+	/// </summary>
+	public ApiApp() : this(true) { }
+
+	/// <summary>
+	/// Create API application
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-	protected ApiApp(bool useHsts) : base(useHsts) =>
+	public ApiApp(bool useHsts) : base(useHsts) =>
 		EnableAuthorisation = true;
 
 	#region ConfigureServices
@@ -38,31 +44,31 @@ public abstract class ApiApp : MvcApp
 	#region Configure
 
 	/// <inheritdoc/>
-	protected override void ConfigureProductionExceptionHandling(IApplicationBuilder app)
+	protected override void ConfigureProductionExceptionHandling(MS.WebApplication app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureStaticFiles(IHostEnvironment env, IApplicationBuilder app)
+	protected override void ConfigureStaticFiles(IHostEnvironment env, MS.WebApplication app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureCookiePolicy(IApplicationBuilder app)
+	protected override void ConfigureCookiePolicy(MS.WebApplication app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureRedirections(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureRedirections(MS.WebApplication app, IConfiguration config)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureEndpoints(IApplicationBuilder app) =>
+	protected override void ConfigureEndpoints(MS.WebApplication app) =>
 		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 	#endregion Configure

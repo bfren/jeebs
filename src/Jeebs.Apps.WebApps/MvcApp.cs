@@ -18,13 +18,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
+using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps;
+namespace Jeebs.Apps.WebApps;
 
 /// <summary>
 /// MVC Web Application - see <see cref="WebApp"/>
 /// </summary>
-public abstract class MvcApp : WebApp
+public class MvcApp : WebApp
 {
 	/// <summary>
 	/// If true, routing will be set to append a trailing slash
@@ -62,18 +63,23 @@ public abstract class MvcApp : WebApp
 	protected bool StaticFilesAreEnabled { get; private set; }
 
 	/// <summary>
-	/// Create object
+	/// Create MVC application with HSTS enabled
+	/// </summary>
+	public MvcApp() : this(true) { }
+
+	/// <summary>
+	/// Create MVC application
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-	protected MvcApp(bool useHsts) : base(useHsts) { }
+	public MvcApp(bool useHsts) : base(useHsts) { }
 
 	#region ConfigureServices
 
 	/// <inheritdoc/>
-	protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
+	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
 		// Base
-		base.ConfigureServices(env, config, services);
+		base.ConfigureServices(ctx, services);
 
 		// Response Caching
 		ConfigureServicesResponseCaching(services);
@@ -218,16 +224,13 @@ public abstract class MvcApp : WebApp
 	#region Configure
 
 	/// <inheritdoc/>
-	protected override void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
+	public override void Configure(MS.WebApplication app)
 	{
-		// Base
-		base.Configure(env, app, config);
-
 		// Compression
 		ConfigureResponseCompression(app);
 
 		// Static Files
-		ConfigureStaticFiles(env, app);
+		ConfigureStaticFiles(app.Environment, app);
 
 		// Cookie Policy
 		ConfigureCookiePolicy(app);
@@ -236,13 +239,13 @@ public abstract class MvcApp : WebApp
 		ConfigureResponseCaching(app);
 
 		// Redirections
-		ConfigureRedirections(app, config);
+		ConfigureRedirections(app, app.Configuration);
 
 		// Routing
 		ConfigureRouting(app);
 
 		// Authorisation
-		ConfigureAuthorisation(app, config);
+		ConfigureAuthorisation(app, app.Configuration);
 
 		// Session
 		ConfigureSession(app);
@@ -254,8 +257,8 @@ public abstract class MvcApp : WebApp
 	/// <summary>
 	/// Override to send all errors to the Error Controller
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
-	protected override void ConfigureProductionExceptionHandling(IApplicationBuilder app)
+	/// <param name="app">WebApplication</param>
+	protected override void ConfigureProductionExceptionHandling(MS.WebApplication app)
 	{
 		base.ConfigureProductionExceptionHandling(app);
 
@@ -266,16 +269,16 @@ public abstract class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure response compression
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureResponseCompression(IApplicationBuilder app) =>
+	/// <param name="app">WebApplication</param>
+	protected virtual void ConfigureResponseCompression(MS.WebApplication app) =>
 		_ = app.UseResponseCompression();
 
 	/// <summary>
 	/// Override to configure static files - they must be enabled BEFORE any MVC routing
 	/// </summary>
 	/// <param name="env">IHostEnvironment</param>
-	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureStaticFiles(IHostEnvironment env, IApplicationBuilder app)
+	/// <param name="app">WebApplication</param>
+	protected virtual void ConfigureStaticFiles(IHostEnvironment env, MS.WebApplication app)
 	{
 		// Check whether or not they have already been enabled
 		if (StaticFilesAreEnabled)
@@ -306,22 +309,22 @@ public abstract class MvcApp : WebApp
 	/// Override to configure cookie policy
 	/// </summary>
 	/// <param name="app"></param>
-	protected virtual void ConfigureCookiePolicy(IApplicationBuilder app) =>
+	protected virtual void ConfigureCookiePolicy(MS.WebApplication app) =>
 		_ = app.UseCookiePolicy(CookiePolicyOptions);
 
 	/// <summary>
 	/// Override to configure response caching
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureResponseCaching(IApplicationBuilder app) =>
+	/// <param name="app">WebApplication</param>
+	protected virtual void ConfigureResponseCaching(MS.WebApplication app) =>
 		_ = app.UseResponseCaching();
 
 	/// <summary>
 	/// Override to configure redirections
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
+	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void ConfigureRedirections(IApplicationBuilder app, IConfiguration config)
+	protected virtual void ConfigureRedirections(MS.WebApplication app, IConfiguration config)
 	{
 		if (
 			config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig redirections
@@ -335,16 +338,16 @@ public abstract class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure routing
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureRouting(IApplicationBuilder app) =>
+	/// <param name="app">WebApplication</param>
+	protected virtual void ConfigureRouting(MS.WebApplication app) =>
 		_ = app.UseRouting();
 
 	/// <summary>
 	/// Override to configure authorisation
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
+	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureAuthorisation(MS.WebApplication app, IConfiguration config)
 	{
 		if (EnableAuthorisation)
 		{
@@ -355,8 +358,8 @@ public abstract class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure session
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureSession(IApplicationBuilder app)
+	/// <param name="app">WebApplication</param>
+	protected virtual void ConfigureSession(MS.WebApplication app)
 	{
 		if (EnableSession)
 		{
@@ -367,8 +370,8 @@ public abstract class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure endpoints
 	/// </summary>
-	/// <param name="app">IApplicationBuilder</param>
-	protected virtual void ConfigureEndpoints(IApplicationBuilder app) =>
+	/// <param name="app">WebApplication</param>
+	protected virtual void ConfigureEndpoints(MS.WebApplication app) =>
 		app.UseEndpoints(endpoints => endpoints.MapControllerRoute(
 			name: "default",
 			pattern: "{controller=Home}/{action=Index}/{id?}"

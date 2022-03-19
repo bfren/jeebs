@@ -1,7 +1,7 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Apps;
+namespace Jeebs.Apps.ConsoleApps;
 
 /// <summary>
 /// Console Application - see <see cref="App"/>

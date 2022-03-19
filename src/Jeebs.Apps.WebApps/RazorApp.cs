@@ -4,19 +4,25 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
+using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps;
+namespace Jeebs.Apps.WebApps;
 
 /// <summary>
 /// Razor Pages Web Application - see <see cref="MvcApp"/>
 /// </summary>
-public abstract class RazorApp : MvcApp
+public class RazorApp : MvcApp
 {
 	/// <summary>
-	/// Create object
+	/// Create Razor application with HSTS enabled
+	/// </summary>
+	public RazorApp() : this(true) { }
+
+	/// <summary>
+	/// Create Razor application
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-	protected RazorApp(bool useHsts) : base(useHsts) { }
+	public RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
 	protected override void ConfigureServicesEndpoints(IServiceCollection services) =>
@@ -32,6 +38,6 @@ public abstract class RazorApp : MvcApp
 	public virtual void ConfigureServicesRazorPagesOptions(RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>
-	protected override void ConfigureEndpoints(IApplicationBuilder app) =>
+	protected override void ConfigureEndpoints(MS.WebApplication app) =>
 		_ = app.UseEndpoints(endpoints => endpoints.MapRazorPages());
 }
