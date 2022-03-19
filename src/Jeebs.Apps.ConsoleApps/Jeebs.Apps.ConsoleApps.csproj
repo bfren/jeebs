@@ -1,16 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0-preview.2.*" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.2.*" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0-preview.2.*" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0-preview.2.*" />
-	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Apps\Jeebs.Apps.csproj" />
 	</ItemGroup>
