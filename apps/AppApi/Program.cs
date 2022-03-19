@@ -6,7 +6,9 @@ using Jeebs.Cqrs;
 using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 
-var (app, log) = Jeebs.Apps.Builder.Create(args, useHsts: false, configure: builder => builder.Services.AddCqrs());
+var app = Jeebs.Apps.WebApps.WebApplication.Create(args,
+	(_, services) => services.AddCqrs()
+);
 
 app.MapGet("/", () => "Hello, world!");
 app.MapGet("/hello/{name}", HandleSayHello);

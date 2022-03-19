@@ -3,4 +3,4 @@
 
 using AppRazor;
 
-await Jeebs.Apps.Program.MainAsync<App>(args).ConfigureAwait(false);
+Jeebs.Apps.WebApps.WebApplication.Create<App>(args).Run();

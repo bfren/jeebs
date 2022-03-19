@@ -3,13 +3,13 @@
 
 namespace AppWeb;
 
-public class App : Jeebs.Apps.WebApp
+public class App : Jeebs.Apps.WebApps.WebApp
 {
 	public App() : base(false) { }
 
-	protected override void Configure(IHostEnvironment env, IApplicationBuilder app, IConfiguration config)
+	public override void Configure(WebApplication app)
 	{
-		base.Configure(env, app, config);
+		base.Configure(app);
 
 		app.Run(async ctx => await ctx.Response.WriteAsync("Hello, world!").ConfigureAwait(false));
 	}

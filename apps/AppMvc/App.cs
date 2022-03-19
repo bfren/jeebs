@@ -17,11 +17,11 @@ public sealed class App : MvcAppWithData
 {
 	public App() : base(false) { }
 
-	protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
+	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
-		base.ConfigureServices(env, config, services);
+		base.ConfigureServices(ctx, services);
 
-		_ = services.AddAuthentication(config)
+		_ = services.AddAuthentication(ctx.Configuration)
 			.WithData<MySqlDbClient>()
 			.WithJwt();
 
@@ -32,10 +32,9 @@ public sealed class App : MvcAppWithData
 		_ = services.AddTransient<IImageDriver, ImageDriver>();
 	}
 
-	protected override void ConfigureAuthorisation(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureAuthorisation(WebApplication app, IConfiguration config)
 	{
 		_ = app.UseAuthentication();
-
 		base.ConfigureAuthorisation(app, config);
 	}
 
