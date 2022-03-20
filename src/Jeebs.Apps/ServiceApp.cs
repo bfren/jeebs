@@ -4,13 +4,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Jeebs.Apps.ConsoleApps;
+namespace Jeebs.Apps;
 
 /// <summary>
-/// Hosted Service Application (for background tasks) - see <see cref="ConsoleApp"/>
+/// Hosted Service Application (for background tasks) - see <see cref="App"/>
 /// </summary>
 /// <typeparam name="T">Service type</typeparam>
-public abstract class ServiceApp<T> : ConsoleApp
+public class ServiceApp<T> : App
 	where T : class, IHostedService
 {
 	/// <inheritdoc/>
