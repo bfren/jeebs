@@ -30,9 +30,6 @@
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
 	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
-	</ItemGroup>
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties jeebsconfig_1json__JsonSchema="..\..\src\Jeebs.Config\schema.json" />
