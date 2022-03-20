@@ -11,7 +11,7 @@ namespace Jeebs.Apps;
 /// </summary>
 public static class Host
 {
-	/// <inheritdoc cref="CreateBuilder{T}(string[]"/>
+	/// <inheritdoc cref="CreateBuilder{T}(string[])"/>
 	public static IHostBuilder CreateBuilder(string[] args) =>
 		CreateBuilder<App>(args);
 
@@ -19,7 +19,7 @@ public static class Host
 	/// Create <see cref="IHostBuilder"/> with default Jeebs configuration
 	/// </summary>
 	/// <remarks>
-	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder"/><br/>
+	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>
 	///   - Jeebs configuration is loaded from JSON files and (optionally) Azure Key Vault<br/>
 	///   - Options classes are bound to configuration<br/>
 	///   - Default services are registered with the DI container<br/>

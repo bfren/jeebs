@@ -14,8 +14,6 @@ namespace Jeebs.Apps.WebApps;
 /// </summary>
 public static class WebApplication
 {
-	public delegate void ConfigureServices(HostBuilderContext ctx, IServiceCollection services);
-
 	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	public static MS.WebApplication Create(string[] args) =>
 		Create<WebApp>(args, (_, _) => { });
@@ -33,7 +31,7 @@ public static class WebApplication
 	/// Create <see cref="MS.WebApplication"/> with default Jeebs configuration
 	/// </summary>
 	/// <remarks>
-	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder"/><br/>
+	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>
 	///   - Jeebs configuration is loaded from JSON files and (optionally) Azure Key Vault<br/>
 	///   - Options classes are bound to configuration<br/>
 	///   - Default services are registered with the DI container<br/>
