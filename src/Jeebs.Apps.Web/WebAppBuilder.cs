@@ -10,18 +10,17 @@ using Serilog;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Uses .NET 6 web hosting model, with default options
+/// Create a new <see cref="WebApplication"/> with default Jeebs configuration
 /// </summary>
 internal static class WebAppBuilder
 {
-	/// <summary>
-	/// Create <see cref="WebApplication"/> with default Jeebs configuration
-	/// </summary>
+	/// <inheritdoc cref="WebAppBuilder"/>
 	/// <remarks>
 	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>
 	///   - Jeebs configuration is loaded from JSON files and (optionally) Azure Key Vault<br/>
 	///   - Options classes are bound to configuration<br/>
-	///   - Default services are registered with the DI container<br/>
+	///   - Application services are registered with the DI container<br/>
+	///   - Custom services are registered using <paramref name="configureServices"/><br/>
 	///   - Logging is enabled using Serilog<br/>
 	///   - <see cref="WebApplication"/> is built<br/>
 	///   - <see cref="WebApplication"/> is configured
@@ -37,8 +36,8 @@ internal static class WebAppBuilder
 		var builder = WebApplication.CreateBuilder(args);
 
 		// Configure host
-		_ = builder
-			.Host.ConfigureHostConfiguration(app.ConfigureHost)
+		_ = builder.Host
+			.ConfigureHostConfiguration(app.ConfigureHost)
 			.ConfigureAppConfiguration(app.ConfigureApp)
 			.ConfigureServices(app.ConfigureServices)
 			.ConfigureServices(configureServices)
