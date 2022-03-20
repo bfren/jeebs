@@ -4,7 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// Application supporting minimal API syntax

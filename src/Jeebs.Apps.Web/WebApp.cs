@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Auth;
 using Jeebs.Config.Web.Verification;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// Web Application - see <see cref="App"/>

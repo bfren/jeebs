@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// Uses .NET 6 web hosting model, with default options

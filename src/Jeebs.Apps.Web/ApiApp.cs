@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// API Application - see <see cref="MvcApp"/>

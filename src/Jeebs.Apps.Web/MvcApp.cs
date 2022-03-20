@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs.Apps.WebApps.Constants;
-using Jeebs.Apps.WebApps.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Redirections;
 using Jeebs.Functions;
@@ -20,7 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// MVC Web Application - see <see cref="WebApp"/>
