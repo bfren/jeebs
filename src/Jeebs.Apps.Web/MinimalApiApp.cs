@@ -1,10 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Jeebs.Apps.Web;
 
@@ -13,19 +11,6 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class MinimalApiApp : ApiApp
 {
-	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args) =>
-		WebAppBuilder.Create<MinimalApiApp>(args, (_, _) => { });
-
-	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
-		WebAppBuilder.Create<MinimalApiApp>(args, configureServices);
-
-	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create<T>(string[] args)
-		where T : MinimalApiApp, new() =>
-		WebAppBuilder.Create<T>(args, (_, _) => { });
-
 	/// <summary>
 	/// Create Minimal API application with HSTS enabled
 	/// </summary>
