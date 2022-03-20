@@ -9,7 +9,7 @@ using MaybeF;
 namespace Jeebs.Functions.Internals;
 
 /// <summary>
-/// Maybe Converter Factory
+/// <see cref="Maybe{T}"/> JSON converter factory
 /// </summary>
 public sealed class MaybeConverterFactory : JsonConverterFactory
 {

@@ -9,7 +9,7 @@ using Jeebs.Id;
 namespace Jeebs.Functions.Internals;
 
 /// <summary>
-/// <see cref="IStrongId"/> Converter Factory
+/// <see cref="IStrongId"/> JSON converter factory
 /// </summary>
 public sealed class StrongIdConverterFactory : JsonConverterFactory
 {

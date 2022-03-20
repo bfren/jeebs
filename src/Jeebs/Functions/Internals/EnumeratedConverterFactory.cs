@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Functions.Internals;
 
 /// <summary>
-/// Enumerated Converter Factory
+/// <see cref="EnumeratedConverter{T}"/> JSON converter factory
 /// </summary>
 public sealed class EnumeratedConverterFactory : JsonConverterFactory
 {

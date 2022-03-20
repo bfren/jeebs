@@ -10,7 +10,7 @@ using MaybeF;
 namespace Jeebs.Functions.Internals;
 
 /// <summary>
-/// Convert an <see cref="Maybe{T}"/> to and from JSON
+/// <see cref="Maybe{T}"/> JSON converter
 /// </summary>
 /// <typeparam name="T">Maybe value type</typeparam>
 public sealed class MaybeConverter<T> : JsonConverter<Maybe<T>>

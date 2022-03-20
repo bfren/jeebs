@@ -51,5 +51,5 @@ public class JsonCalendar : CalendarBase
 
 	/// <inheritdoc/>
 	public override string ToString() =>
-		JsonF.Serialise(new { calendar = this }).Unwrap("{\"calendar\":{}}");
+		JsonF.Serialise(new { calendar = this }).Unwrap(/*lang=json,strict*/ "{\"calendar\":{}}");
 }

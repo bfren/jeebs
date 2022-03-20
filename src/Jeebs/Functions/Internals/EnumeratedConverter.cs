@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Functions.Internals;
 
 /// <summary>
-/// Converter for Enumerated types
+/// <see cref="Enumerated"/> JSON converter
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
 internal class EnumeratedConverter<T> : JsonConverter<T>

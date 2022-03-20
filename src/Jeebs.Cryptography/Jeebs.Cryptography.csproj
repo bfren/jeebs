@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="Rnd" Version="8.1.0-beta.220320.1" />
+		<PackageReference Include="Rnd" Version="8.1.0-beta.220320.2" />
 		<PackageReference Include="Sodium.Core" Version="1.2.3" />
 	</ItemGroup>
 	<ItemGroup>
