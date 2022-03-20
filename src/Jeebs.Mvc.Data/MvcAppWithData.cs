@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Apps.WebApps;
+using Jeebs.Apps.Web;
 using Jeebs.Mvc.Data.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 

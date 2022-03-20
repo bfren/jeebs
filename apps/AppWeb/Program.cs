@@ -3,4 +3,4 @@
 
 using AppWeb;
 
-Jeebs.Apps.WebApps.WebApplication.Create<App>(args).Run();
+Jeebs.Apps.Web.WebApp.Create<App>(args).Run();

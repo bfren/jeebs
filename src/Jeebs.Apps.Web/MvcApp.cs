@@ -1,10 +1,13 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Jeebs.Apps.Web.Constants;
+using Jeebs.Apps.Web.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Redirections;
 using Jeebs.Functions;
@@ -16,7 +19,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using MS = Microsoft.AspNetCore.Builder;
 
 namespace Jeebs.Apps.Web;
 
@@ -25,6 +27,19 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class MvcApp : WebApp
 {
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new WebApplication Create(string[] args) =>
+		WebAppBuilder.Create<MvcApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Create<MvcApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new WebApplication Create<T>(string[] args)
+		where T : MvcApp, new() =>
+		WebAppBuilder.Create<T>(args, (_, _) => { });
+
 	/// <summary>
 	/// If true, routing will be set to append a trailing slash
 	/// </summary>
@@ -222,7 +237,7 @@ public class MvcApp : WebApp
 	#region Configure
 
 	/// <inheritdoc/>
-	public override void Configure(MS.WebApplication app)
+	public override void Configure(WebApplication app)
 	{
 		// Compression
 		ConfigureResponseCompression(app);
@@ -256,7 +271,7 @@ public class MvcApp : WebApp
 	/// Override to send all errors to the Error Controller
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected override void ConfigureProductionExceptionHandling(MS.WebApplication app)
+	protected override void ConfigureProductionExceptionHandling(WebApplication app)
 	{
 		base.ConfigureProductionExceptionHandling(app);
 
@@ -268,7 +283,7 @@ public class MvcApp : WebApp
 	/// Override to configure response compression
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureResponseCompression(MS.WebApplication app) =>
+	protected virtual void ConfigureResponseCompression(WebApplication app) =>
 		_ = app.UseResponseCompression();
 
 	/// <summary>
@@ -276,7 +291,7 @@ public class MvcApp : WebApp
 	/// </summary>
 	/// <param name="env">IHostEnvironment</param>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureStaticFiles(IHostEnvironment env, MS.WebApplication app)
+	protected virtual void ConfigureStaticFiles(IHostEnvironment env, WebApplication app)
 	{
 		// Check whether or not they have already been enabled
 		if (StaticFilesAreEnabled)
@@ -307,14 +322,14 @@ public class MvcApp : WebApp
 	/// Override to configure cookie policy
 	/// </summary>
 	/// <param name="app"></param>
-	protected virtual void ConfigureCookiePolicy(MS.WebApplication app) =>
+	protected virtual void ConfigureCookiePolicy(WebApplication app) =>
 		_ = app.UseCookiePolicy(CookiePolicyOptions);
 
 	/// <summary>
 	/// Override to configure response caching
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureResponseCaching(MS.WebApplication app) =>
+	protected virtual void ConfigureResponseCaching(WebApplication app) =>
 		_ = app.UseResponseCaching();
 
 	/// <summary>
@@ -322,7 +337,7 @@ public class MvcApp : WebApp
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void ConfigureRedirections(MS.WebApplication app, IConfiguration config)
+	protected virtual void ConfigureRedirections(WebApplication app, IConfiguration config)
 	{
 		if (
 			config.GetSection<RedirectionsConfig>(RedirectionsConfig.Key) is RedirectionsConfig redirections
@@ -337,7 +352,7 @@ public class MvcApp : WebApp
 	/// Override to configure routing
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureRouting(MS.WebApplication app) =>
+	protected virtual void ConfigureRouting(WebApplication app) =>
 		_ = app.UseRouting();
 
 	/// <summary>
@@ -345,7 +360,7 @@ public class MvcApp : WebApp
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected override void ConfigureAuthorisation(MS.WebApplication app, IConfiguration config)
+	protected override void ConfigureAuthorisation(WebApplication app, IConfiguration config)
 	{
 		if (EnableAuthorisation)
 		{
@@ -357,7 +372,7 @@ public class MvcApp : WebApp
 	/// Override to configure session
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureSession(MS.WebApplication app)
+	protected virtual void ConfigureSession(WebApplication app)
 	{
 		if (EnableSession)
 		{
@@ -369,7 +384,7 @@ public class MvcApp : WebApp
 	/// Override to configure endpoints
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureEndpoints(MS.WebApplication app) =>
+	protected virtual void ConfigureEndpoints(WebApplication app) =>
 		app.UseEndpoints(endpoints => endpoints.MapControllerRoute(
 			name: "default",
 			pattern: "{controller=Home}/{action=Index}/{id?}"

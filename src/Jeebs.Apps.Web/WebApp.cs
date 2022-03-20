@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Apps.Web.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Auth;
 using Jeebs.Config.Web.Verification;
@@ -10,7 +11,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MS = Microsoft.AspNetCore.Builder;
 
 namespace Jeebs.Apps.Web;
 
@@ -19,6 +19,19 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class WebApp : App
 {
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static WebApplication Create(string[] args) =>
+		WebAppBuilder.Create<WebApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Create<WebApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static WebApplication Create<T>(string[] args)
+		where T : WebApp, new() =>
+		WebAppBuilder.Create<T>(args, (_, _) => { });
+
 	/// <summary>
 	/// Whether or not to use HSTS
 	/// </summary>
@@ -63,7 +76,7 @@ public class WebApp : App
 	/// Configure a WebApplication
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	public virtual void Configure(MS.WebApplication app)
+	public virtual void Configure(WebApplication app)
 	{
 		// Shorthands
 		var config = app.Configuration;
@@ -103,7 +116,7 @@ public class WebApp : App
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void ConfigureSiteVerification(MS.WebApplication app, IConfiguration config)
+	protected virtual void ConfigureSiteVerification(WebApplication app, IConfiguration config)
 	{
 		if (
 			config.GetSection<VerificationConfig>(VerificationConfig.Key) is VerificationConfig verification
@@ -118,14 +131,14 @@ public class WebApp : App
 	/// Override to configure production exception handling
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureProductionExceptionHandling(MS.WebApplication app) =>
+	protected virtual void ConfigureProductionExceptionHandling(WebApplication app) =>
 		_ = app.UseExceptionHandler("/Error");
 
 	/// <summary>
 	/// Override to configure security headers
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-	protected virtual void ConfigureSecurityHeaders(MS.WebApplication app)
+	protected virtual void ConfigureSecurityHeaders(WebApplication app)
 	{
 		if (useHsts) // check for Development Environment happens in Configure()
 		{
@@ -138,6 +151,6 @@ public class WebApp : App
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void ConfigureAuthorisation(MS.WebApplication app, IConfiguration config) =>
+	protected virtual void ConfigureAuthorisation(WebApplication app, IConfiguration config) =>
 		_ = app.UseAuthorization();
 }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace AppConsolePg;
 
-internal sealed class App : Jeebs.Apps.ConsoleApps.ConsoleApp
+internal sealed class App : Jeebs.Apps.App
 {
 	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{

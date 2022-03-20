@@ -24,6 +24,7 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSql\Jeebs.Data.Clients.PostgreSql.csproj" />
 	</ItemGroup>
 </Project>
