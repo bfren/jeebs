@@ -21,6 +21,9 @@
         "console.serilog": {
           "enabled": true
         },
+        "mysql.serilog": {
+          "enabled": true
+        },
         "seq.server04": {
           "enabled": true
         }
