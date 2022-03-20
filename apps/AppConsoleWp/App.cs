@@ -12,7 +12,7 @@ namespace AppConsoleWp;
 /// <summary>
 /// WordPress Console Application
 /// </summary>
-internal sealed class App : Jeebs.Apps.ConsoleApps.ConsoleApp
+internal sealed class App : Jeebs.Apps.App
 {
 	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{

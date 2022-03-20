@@ -1,10 +1,10 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// Application supporting minimal API syntax
@@ -29,7 +29,7 @@ public class MinimalApiApp : ApiApp
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureEndpoints(MS.WebApplication app)
+	protected override void ConfigureEndpoints(WebApplication app)
 	{
 		// do nothing
 	}

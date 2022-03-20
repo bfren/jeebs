@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Serilog;
 using Serilog.Events;
 
-namespace Jeebs.Apps.WebApps.Middleware;
+namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
 /// Logger Middleware

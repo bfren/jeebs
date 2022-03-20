@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Serilog;
 
-namespace Jeebs.Apps.WebApps.Middleware;
+namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
 /// Redirect Exact Middleware

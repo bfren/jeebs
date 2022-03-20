@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Apps.WebApps.Constants;
+namespace Jeebs.Apps.Web.Constants;
 
 /// <summary>
 /// Cache Profiles

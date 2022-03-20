@@ -1,20 +1,33 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MS = Microsoft.AspNetCore.Builder;
 
-namespace Jeebs.Apps.WebApps;
+namespace Jeebs.Apps.Web;
 
 /// <summary>
 /// API Application - see <see cref="MvcApp"/>
 /// </summary>
 public class ApiApp : MvcApp
 {
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new WebApplication Create(string[] args) =>
+		WebAppBuilder.Create<ApiApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Create<ApiApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new WebApplication Create<T>(string[] args)
+		where T : ApiApp, new() =>
+		WebAppBuilder.Create<T>(args, (_, _) => { });
+
 	/// <summary>
 	/// Create API application with HSTS enabled
 	/// </summary>
@@ -44,31 +57,31 @@ public class ApiApp : MvcApp
 	#region Configure
 
 	/// <inheritdoc/>
-	protected override void ConfigureProductionExceptionHandling(MS.WebApplication app)
+	protected override void ConfigureProductionExceptionHandling(WebApplication app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureStaticFiles(IHostEnvironment env, MS.WebApplication app)
+	protected override void ConfigureStaticFiles(IHostEnvironment env, WebApplication app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureCookiePolicy(MS.WebApplication app)
+	protected override void ConfigureCookiePolicy(WebApplication app)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureRedirections(MS.WebApplication app, IConfiguration config)
+	protected override void ConfigureRedirections(WebApplication app, IConfiguration config)
 	{
 		// do nothing
 	}
 
 	/// <inheritdoc/>
-	protected override void ConfigureEndpoints(MS.WebApplication app) =>
+	protected override void ConfigureEndpoints(WebApplication app) =>
 		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 	#endregion Configure
