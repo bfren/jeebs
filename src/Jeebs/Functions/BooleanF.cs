@@ -40,12 +40,11 @@ public static class BooleanF
 		{
 			return false;
 		}
-		else if (bool.TryParse(val, out var result))
-		{
-			return result;
-		}
 
-		return F.None<bool>(new M.UnrecognisedValueMsg(val));
+		return F.ParseBool(val).Switch(
+			some: x => F.Some(x),
+			none: _ => F.None<bool>(new M.UnrecognisedValueMsg(val))
+		);
 	}
 
 	/// <summary>Messages</summary>

@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Id;
+using MaybeF;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Jeebs.Mvc.Data.ModelBinding;
@@ -30,14 +31,10 @@ public sealed class StrongIdModelBinder<T> : IModelBinder
 		bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
 
 		// Get the value and attempt to parse it as a long
-		bindingContext.Result = long.TryParse(valueProviderResult.FirstValue, out var id) switch
-		{
-			true =>
-				ModelBindingResult.Success(new T { Value = id }),
-
-			false =>
-				ModelBindingResult.Failed()
-		};
+		bindingContext.Result = F.ParseInt64(valueProviderResult.FirstValue).Switch(
+			some: x => ModelBindingResult.Success(new T { Value = x }),
+			none: _ => ModelBindingResult.Failed()
+		);
 
 		return Task.CompletedTask;
 	}

@@ -3,6 +3,7 @@
 
 using System.Data;
 using Jeebs.Id;
+using MaybeF;
 
 namespace Jeebs.Data.TypeHandlers;
 
@@ -24,14 +25,10 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 				new() { Value = id },
 
 			{ } =>
-				long.TryParse(value.ToString(), out var id) switch
-				{
-					true =>
-						new() { Value = id },
-
-					false =>
-						new()
-				},
+				F.ParseInt64(value.ToString()).Switch(
+					some: x => new T() { Value = x },
+					none: _ => new T()
+				),
 
 			_ =>
 				new()

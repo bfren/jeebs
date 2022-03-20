@@ -26,14 +26,10 @@ public static class ClaimsPrincipalExtensions
 			return @this.Claims.SingleOrDefault(c => c.Type == JwtClaimTypes.UserId) switch
 			{
 				Claim idClaim =>
-					long.TryParse(idClaim.Value, out var userId) switch
-					{
-						true =>
-							userId,
-
-						false =>
-							F.None<long, M.InvalidUserIdMsg>()
-					},
+					F.ParseInt64(idClaim.Value).Switch(
+						some: x => F.Some(x),
+						none: _ => F.None<long, M.InvalidUserIdMsg>()
+					),
 
 				_ =>
 					F.None<long, M.UnableToFindUserIdClaimMsg>()

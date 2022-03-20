@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs.Id;
+using MaybeF;
 
 namespace Jeebs.Functions.Internals;
 
@@ -34,14 +35,10 @@ public sealed class StrongIdConverter<T> : JsonConverter<T>
 
 				// Handle strings if strings are allowed
 				JsonTokenType.String when (options.NumberHandling & JsonNumberHandling.AllowReadingFromString) != 0 =>
-					long.TryParse(reader.GetString(), out var id) switch
-					{
-						true =>
-							id,
-
-						false =>
-							0
-					},
+					F.ParseInt64(reader.GetString()).Switch(
+						some: x => x,
+						none: _ => 0
+					),
 
 				// Handle default
 				_ =>

@@ -4,6 +4,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using MaybeF;
 
 namespace Jeebs.Functions.Internals;
 
@@ -19,14 +20,10 @@ public sealed class DateTimeConverter : JsonConverter<DateTime>
 	/// <param name="typeToConvert">Type</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-		DateTime.TryParse(reader.GetString(), out var result) switch
-		{
-			true =>
-				result.ToUniversalTime(),
-
-			false =>
-				DateTime.MinValue.ToUniversalTime()
-		};
+		F.ParseDateTime(reader.GetString()).Switch(
+			some: x => x.ToUniversalTime(),
+			none: _ => DateTime.MinValue.ToUniversalTime()
+		);
 
 	/// <summary>
 	/// Convert to UTC and then to a sortable ('s') formatted string

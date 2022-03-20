@@ -24,14 +24,10 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Current page number
 	/// </summary>
 	public ulong Page =>
-		ulong.TryParse(Request.Query["p"], out var p) switch
-		{
-			true =>
-				p,
-
-			false =>
-				1
-		};
+		F.ParseUInt64(Request.Query["p"]).Switch<ulong>(
+			some: x => x,
+			none: _ => 1
+		);
 
 	/// <summary>
 	/// Create object

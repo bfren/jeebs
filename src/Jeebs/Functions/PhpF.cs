@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using MaybeF;
 
 namespace Jeebs.Functions;
 
@@ -240,14 +241,10 @@ public static class PhpF
 			for (var i = 0; i < len; i++)
 			{
 				var (key, value) = (PrivateDeserialise(str), PrivateDeserialise(str));
-				if (int.TryParse(key.ToString(), out var k))
-				{
-					table.Add(k, value);
-				}
-				else
-				{
-					table.Add(key, value);
-				}
+				F.ParseInt32(key.ToString()).Switch(
+					some: x => table.Add(x, value),
+					none: _ => table.Add(key, value)
+				);
 			}
 
 			pointer++;
