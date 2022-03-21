@@ -9,8 +9,6 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Exceptions;
 using Jeebs.Data.Query.Functions;
-using MaybeF;
-using MaybeF.Linq;
 
 namespace Jeebs.Data.Query;
 

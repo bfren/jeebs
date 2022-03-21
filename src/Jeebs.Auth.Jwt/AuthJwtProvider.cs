@@ -4,7 +4,6 @@
 using System.Security.Claims;
 using Jeebs.Auth.Jwt.Functions;
 using Jeebs.Config.Web.Auth.Jwt;
-using MaybeF;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth;

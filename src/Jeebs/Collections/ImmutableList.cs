@@ -5,8 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MaybeF;
-using MaybeF.Linq;
 using Sys = System.Collections.Immutable;
 
 namespace Jeebs.Collections;

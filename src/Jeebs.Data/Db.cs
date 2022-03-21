@@ -9,7 +9,6 @@ using Dapper;
 using Jeebs.Config.Db;
 using Jeebs.Logging;
 using Jeebs.Messages;
-using MaybeF;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Data;
