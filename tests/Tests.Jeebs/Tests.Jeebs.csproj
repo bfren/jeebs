@@ -8,4 +8,11 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
+	<PropertyGroup>
+		<VersionFile>Version</VersionFile>
+		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="$(VersionPath)"/>
+	</ItemGroup>
 </Project>

@@ -26,17 +26,25 @@ public class Value_Tests
 	public async Task Executes_Once()
 	{
 		// Arrange
-		var counter = 0;
-		var t = () => Task.FromResult(++counter);
-		var l = new LazyAsync<int>(t);
+		var lazyCounter = 0;
+		var taskCounter = 0;
+		var times = 10;
+		var l = () => Task.FromResult(++lazyCounter);
+		var t = () => Task.FromResult(++taskCounter);
+		var a = new LazyAsync<int>(l);
 
 		// Act
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < times; i++)
 		{
-			_ = await l.Value.ConfigureAwait(false);
+			await a.Value.ConfigureAwait(false); // should run task once
+		}
+		for (int i = 0; i < times; i++)
+		{
+			await t().ConfigureAwait(false); // should run task each time
 		}
 
 		// Assert
-		Assert.Equal(1, counter);
+		Assert.Equal(1, lazyCounter);
+		Assert.Equal(times, taskCounter);
 	}
 }
