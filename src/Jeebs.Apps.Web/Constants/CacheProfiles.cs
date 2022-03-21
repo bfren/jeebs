@@ -9,12 +9,18 @@ namespace Jeebs.Apps.Web.Constants;
 public static class CacheProfiles
 {
 	/// <summary>
-	/// None
+	/// Specifies no caching
 	/// </summary>
-	public static string None { get; } = nameof(None);
+	/// <remarks>
+	/// It is a constant so it can be used in the <see cref="Microsoft.AspNetCore.Mvc.CacheProfile"/> attribute
+	/// </remarks>
+	public const string None = nameof(None);
 
 	/// <summary>
-	/// Default
+	/// Specifies default caching profile
 	/// </summary>
-	public static string Default { get; } = nameof(Default);
+	/// <remarks>
+	/// It is a constant so it can be used in the <see cref="Microsoft.AspNetCore.Mvc.CacheProfile"/> attribute
+	/// </remarks>
+	public const string Default = nameof(Default);
 }
