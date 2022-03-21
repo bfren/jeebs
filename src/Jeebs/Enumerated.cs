@@ -5,8 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using Jeebs.Messages;
-using MaybeF;
-using MaybeF.Internals;
 
 namespace Jeebs;
 
@@ -93,7 +91,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				// Check all given values against name
 				foreach (var item in args.Values)
 				{
-					if (Check(args.Name, item) is Some<T> s)
+					if (Check(args.Name, item) is MaybeF.Internals.Some<T> s)
 					{
 						return s;
 					}
@@ -113,7 +111,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="values">Enum values to check name against</param>
 	protected static bool IsRegistered<T>(string name, T[] values)
 		where T : Enumerated =>
-		Parse(name, values) is Some<T>;
+		Parse(name, values).IsSome(out var _);
 
 	/// <summary>
 	/// Parse Arguments

@@ -11,8 +11,6 @@ using Jeebs.Auth.Data.Models;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Auth.Jwt.Functions;
 using Jeebs.Mvc.Auth.Models;
-using MaybeF;
-using MaybeF.Linq;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;

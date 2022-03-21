@@ -10,7 +10,6 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
-using MaybeF;
 
 namespace Jeebs.Auth;
 

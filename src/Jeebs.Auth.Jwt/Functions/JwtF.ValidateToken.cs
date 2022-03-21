@@ -6,7 +6,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Jeebs.Config.Web.Auth.Jwt;
 using Jeebs.Messages;
-using MaybeF;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Jeebs.Auth.Jwt.Functions;

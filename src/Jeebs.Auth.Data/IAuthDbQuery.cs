@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using MaybeF;
 
 namespace Jeebs.Auth.Data;
 

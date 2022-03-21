@@ -5,7 +5,6 @@ using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Map;
 using Jeebs.Reflection;
-using MaybeF;
 
 namespace Jeebs.Data.Query.Functions;
 

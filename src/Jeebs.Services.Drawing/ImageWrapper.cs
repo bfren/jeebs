@@ -5,7 +5,6 @@ using System;
 using Jeebs.Messages;
 using Jeebs.Services.Drawing.Functions;
 using Jeebs.Services.Drawing.Geometry;
-using MaybeF;
 
 namespace Jeebs.Services.Drawing;
 
