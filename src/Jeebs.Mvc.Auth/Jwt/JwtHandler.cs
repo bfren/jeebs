@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Jeebs.Auth;
 using Jeebs.Logging;
 using Jeebs.Messages;
-using MaybeF;
-using MaybeF.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;

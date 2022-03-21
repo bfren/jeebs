@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Jeebs.Id;
-using MaybeF;
 
 namespace Jeebs.Auth.Data;
 

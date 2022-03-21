@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
 using Jeebs.Messages;
-using MaybeF;
 
 namespace Jeebs.Data.Map;
 

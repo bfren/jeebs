@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Messages;
-using MaybeF;
 
 namespace Jeebs.Mvc.Auth;
 

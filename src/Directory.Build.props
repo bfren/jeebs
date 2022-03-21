@@ -8,6 +8,15 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<!-- Common Packages -->
+	<ItemGroup>
+		<PackageReference Include="MaybeF" Version="8.1.0-beta.220321.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Using Include="MaybeF"/>
+		<Using Include="MaybeF.Linq"/>
+	</ItemGroup>
+
 	<!-- Enable Internal Testing -->
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
