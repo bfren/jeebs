@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Auth;
 
 /// <inheritdoc cref="IAuthJwtProvider"/>
-public class AuthJwtProvider : IAuthJwtProvider
+public sealed class AuthJwtProvider : IAuthJwtProvider
 {
 	private readonly JwtConfig config;
 

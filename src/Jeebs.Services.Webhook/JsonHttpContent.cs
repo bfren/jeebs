@@ -10,7 +10,7 @@ namespace Jeebs.Services.Webhook;
 /// <summary>
 /// JSON-encoded HTTP content
 /// </summary>
-public class JsonHttpContent : StringContent
+public sealed class JsonHttpContent : StringContent
 {
 	/// <summary>
 	/// Encode object as JSON and set media type to 'application/json'

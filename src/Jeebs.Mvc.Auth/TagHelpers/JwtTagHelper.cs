@@ -13,7 +13,7 @@ namespace Jeebs.Mvc.Auth.TagHelpers;
 /// JSON Web Token TagHelper
 /// </summary>
 [HtmlTargetElement("jwt", TagStructure = TagStructure.WithoutEndTag)]
-public class JwtTagHelper : TagHelper
+public sealed class JwtTagHelper : TagHelper
 {
 	/// <summary>
 	/// ViewContext object

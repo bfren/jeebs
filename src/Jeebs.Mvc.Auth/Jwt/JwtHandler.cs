@@ -18,7 +18,7 @@ namespace Jeebs.Mvc.Auth.Jwt;
 /// <summary>
 /// JWT Authorisation Handler - extracts and validates JWT from the authorisation header
 /// </summary>
-public class JwtHandler : AuthorizationHandler<JwtRequirement>
+public sealed class JwtHandler : AuthorizationHandler<JwtRequirement>
 {
 	private ILog Log { get; init; }
 

@@ -11,7 +11,7 @@ namespace Jeebs.Functions.Internals;
 /// <see cref="Enumerated"/> JSON converter
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
-internal class EnumeratedConverter<T> : JsonConverter<T>
+internal sealed class EnumeratedConverter<T> : JsonConverter<T>
 	where T : Enumerated
 {
 	/// <summary>

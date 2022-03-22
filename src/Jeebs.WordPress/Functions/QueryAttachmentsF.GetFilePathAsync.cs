@@ -34,7 +34,7 @@ public static partial class QueryAttachmentsF
 			e => new M.ErrorGettingAttachmentFilePathMsg(e, fileId.Value)
 		);
 
-	internal record class Attachment : PostAttachment;
+	internal sealed record class Attachment : PostAttachment;
 
 	public static partial class M
 	{
