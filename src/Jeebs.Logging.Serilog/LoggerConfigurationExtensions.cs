@@ -27,8 +27,11 @@ public static class LoggerConfigurationExtensions
 	{
 		// Get enabled hooks
 		var enabledHooks = jeebs.Logging.Hooks.Where(h => h.Value.Enabled).ToList();
+
+		// If no hooks are enabled, add basic console logging
 		if (enabledHooks.Count == 0)
 		{
+			_ = @this.WriteTo.Console();
 			return;
 		}
 
