@@ -172,6 +172,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Config", "src\Jeebs.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog.MySql", "src\Jeebs.Logging.Serilog.MySql\Jeebs.Logging.Serilog.MySql.csproj", "{FDF777A7-A6BB-4CCC-88F5-4961C9015BAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppBasic", "apps\AppBasic\AppBasic.csproj", "{41C9ED43-99B1-4706-A31E-8DEB890F62D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -484,6 +486,12 @@ Global
 		{FDF777A7-A6BB-4CCC-88F5-4961C9015BAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FDF777A7-A6BB-4CCC-88F5-4961C9015BAF}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
 		{FDF777A7-A6BB-4CCC-88F5-4961C9015BAF}.Staging|Any CPU.Build.0 = Debug|Any CPU
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1}.Staging|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -557,6 +565,7 @@ Global
 		{B03A8637-AAA1-41C1-8241-2BE8246A2B70} = {DB1C9D5F-BD41-4BEE-8D12-543728ADB33E}
 		{24414B12-BBB8-43C1-9A04-DE03D2F13E7B} = {3B7FCEFA-5DFE-455A-B96E-78ADA70DABE6}
 		{FDF777A7-A6BB-4CCC-88F5-4961C9015BAF} = {BD8813AD-C9E3-4B05-A9E0-F044D53AE06F}
+		{41C9ED43-99B1-4706-A31E-8DEB890F62D1} = {A256449B-4234-43DD-B18F-741D69906712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
