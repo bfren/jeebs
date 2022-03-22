@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -27,7 +28,7 @@ public static class Host
 		CreateBuilder<T>(args, (_, _) => { });
 
 	/// <summary>
-	/// Create <see cref="IHostBuilder"/> with default Jeebs configuration
+	/// Create an <see cref="IHostBuilder"/> with default Jeebs configuration
 	/// </summary>
 	/// <remarks>
 	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>
@@ -53,5 +54,30 @@ public static class Host
 			.ConfigureServices(app.ConfigureServices)
 			.ConfigureServices(configureServices)
 			.UseSerilog(app.ConfigureSerilog);
+	}
+
+	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static (IHost, ILog<App>) Create(string[] args) =>
+		Create<App>(args, (_, _) => { });
+
+	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static (IHost, ILog<App>) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		Create<App>(args, configureServices);
+
+	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static (IHost, ILog<T>) Create<T>(string[] args)
+		where T : App, new() =>
+		Create<T>(args, (_, _) => { });
+
+	/// <summary>
+	/// Build an <see cref="IHost"/> with default Jeebs configuration
+	/// </summary>
+	/// <inheritdoc cref="CreateBuilder{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	internal static (IHost, ILog<T>) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
+		where T : App, new()
+	{
+		var app = CreateBuilder<T>(args, configureServices).Build();
+		var log = app.Services.GetRequiredService<ILog<T>>();
+		return (app, log);
 	}
 }
