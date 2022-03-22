@@ -10,7 +10,7 @@
 
 	<!-- Common Packages -->
 	<ItemGroup>
-		<PackageReference Include="MaybeF" Version="8.1.0" />
+		<PackageReference Include="MaybeF" Version="8.1.0"/>
 	</ItemGroup>
 	<ItemGroup>
 		<Using Include="MaybeF"/>
@@ -42,7 +42,7 @@
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
 
-	<!-- Import files -->
+	<!-- Import Files -->
 	<ItemGroup Label="Files" Condition="'$(Configuration)'=='Release'">
 		<None Include="$(LicencePath)" Pack="true" PackagePath="/"/>
 		<None Include="$(ReadmePath)" Pack="true" PackagePath="/"/>
