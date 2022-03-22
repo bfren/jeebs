@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.IO;
 using Azure.Identity;
 using Jeebs.Config;
 using Jeebs.Config.App;
@@ -60,11 +61,14 @@ public class App
 
 		// Validate main configuration file
 		var path = $"{env.ContentRootPath}/jeebsconfig.json";
-		_ = ConfigValidator.Validate(path);
+		if (File.Exists(path))
+		{
+			_ = ConfigValidator.Validate(path);
+		}
 
 		// Add Jeebs config - keeps Jeebs config away from app settings
 		_ = config
-			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false)
+			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: true)
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: true);
 
 		// Add environment-specific Jeebs config
