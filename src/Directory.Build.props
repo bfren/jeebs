@@ -42,7 +42,7 @@
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
 
-	<!-- Import files -->
+	<!-- Import Files -->
 	<ItemGroup Label="Files" Condition="'$(Configuration)'=='Release'">
 		<None Include="$(LicencePath)" Pack="true" PackagePath="/"/>
 		<None Include="$(ReadmePath)" Pack="true" PackagePath="/"/>

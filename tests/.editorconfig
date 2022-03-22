@@ -3,6 +3,8 @@
 # Add file header
 file_header_template = Jeebs Unit Tests\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+insert_final_newline = true
+
 # CA1304: Specify CultureInfo
 dotnet_diagnostic.CA1304.severity = none
 
