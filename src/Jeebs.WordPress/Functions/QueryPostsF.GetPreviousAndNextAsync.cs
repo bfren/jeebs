@@ -39,7 +39,7 @@ public static partial class QueryPostsF
 			e => new M.ErrorWhileGettingPreviousAndNextPostsMsg(e)
 		);
 
-	private record class PostWithId : WpPostEntityWithId;
+	private sealed record class PostWithId : WpPostEntityWithId;
 
 	public static partial class M
 	{

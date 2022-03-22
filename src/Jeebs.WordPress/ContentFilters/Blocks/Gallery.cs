@@ -52,5 +52,5 @@ internal static class Gallery
 	/// </summary>
 	/// <param name="Ids">Image IDs</param>
 	/// <param name="Columns">The number of columns to display</param>
-	private record class GalleryParsed(int[] Ids, int Columns);
+	private sealed record class GalleryParsed(int[] Ids, int Columns);
 }

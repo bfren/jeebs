@@ -23,7 +23,7 @@ public record class Column(ITableName TblName, string ColName, string ColAlias) 
 	/// <summary>
 	/// Column Alias Comparer
 	/// </summary>
-	public class AliasComparer : IEqualityComparer<IColumn>, IEqualityComparer
+	public sealed class AliasComparer : IEqualityComparer<IColumn>, IEqualityComparer
 	{
 		/// <summary>
 		/// Returns true if the two aliases are identical

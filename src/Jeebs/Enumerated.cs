@@ -117,7 +117,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// Parse Arguments
 	/// </summary>
 	/// <typeparam name="T">Enum Type</typeparam>
-	private class ParseArgs<T>
+	private sealed class ParseArgs<T>
 		where T : Enumerated
 	{
 		/// <summary>

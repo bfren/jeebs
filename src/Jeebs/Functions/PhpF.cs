@@ -254,5 +254,5 @@ public static class PhpF
 	/// <summary>
 	/// Alias for use in deserialising associative arrays
 	/// </summary>
-	public class AssocArray : Dictionary<object, object> { }
+	public sealed class AssocArray : Dictionary<object, object> { }
 }

@@ -15,7 +15,7 @@ public static partial class QueryPostsF
 	internal static Maybe<Content<TModel>> GetPostContentInfo<TModel>() =>
 		GetPostContent<TModel>().Map(x => new Content<TModel>(x), F.DefaultHandler);
 
-	internal class Content<TModel> : PropertyInfo<TModel, string>
+	internal sealed class Content<TModel> : PropertyInfo<TModel, string>
 	{
 		internal Content(PropertyInfo info) : base(info) { }
 	}

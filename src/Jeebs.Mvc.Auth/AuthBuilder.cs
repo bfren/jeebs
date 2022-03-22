@@ -20,7 +20,7 @@ namespace Jeebs.Mvc.Auth;
 /// <summary>
 /// Fluently configure authentication and authorisation
 /// </summary>
-public class AuthBuilder
+public sealed class AuthBuilder
 {
 	private readonly IServiceCollection services;
 

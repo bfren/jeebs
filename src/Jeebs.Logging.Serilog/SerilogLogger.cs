@@ -9,7 +9,7 @@ using SE = Serilog.Events;
 namespace Jeebs.Logging.Serilog;
 
 /// <inheritdoc cref="ILog{TContext}"/>
-public class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
+public sealed class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
 {
 	/// <summary>
 	/// Create logger for <typeparamref name="TContext"/>
