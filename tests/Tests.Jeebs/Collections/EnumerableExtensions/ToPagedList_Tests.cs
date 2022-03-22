@@ -30,7 +30,7 @@ public class ToPagedList_Tests
 		var list = new List<string>(items);
 
 		// Act
-		var newList = list.ToPagedList(3, 5, Collections.Defaults.PagingValues.PagesPer);
+		var newList = list.ToPagedList(3, 5, Defaults.PagingValues.PagesPer);
 
 		// Assert
 		Assert.Equal(3U, newList.Values.Page);
