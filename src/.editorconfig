@@ -1,3 +1,3 @@
 ﻿[*.{cs,csx,cake,vb,vbx}]
 
-file_header_template = Jeebs: Rapid Application Development\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
+file_header_template = Jeebs Rapid Application Development\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
