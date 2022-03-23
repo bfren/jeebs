@@ -32,7 +32,7 @@ var usa = app.Services.GetRequiredService<WpUsa>();
 
 Console.WriteLine();
 log.Dbg("== Three Random Posts ==");
-_ = await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
+await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 {
 	SortRandom = true,
 	Maximum = 3
@@ -61,7 +61,7 @@ _ = await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 const string term = "holiness";
 Console.WriteLine();
 log.Dbg("== Search for Sermons with '{Term}' ==", term);
-_ = await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
+await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
 	SearchText = term,
@@ -93,7 +93,7 @@ _ = await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 
 Console.WriteLine();
 log.Dbg("== Get Sermons with Taxonomy properties ==");
-_ = await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
+await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
 	SortRandom = true,
@@ -127,7 +127,7 @@ var book0 = new WpTermId(423U);
 var book1 = new WpTermId(628U);
 Console.WriteLine();
 log.Dbg("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
-_ = await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
+await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
 	Taxonomies = new[] { (taxonomy, book0), (taxonomy, book1) }.ToImmutableList(),
@@ -164,7 +164,7 @@ _ = await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 Console.WriteLine();
 const long countAtLeast = 3;
 log.Dbg("== Get Category taxonomy with at least {CountAtLeast} posts ==", countAtLeast);
-_ = await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
+await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 {
 	Taxonomy = Taxonomy.PostCategory,
 	CountAtLeast = countAtLeast
@@ -192,7 +192,7 @@ _ = await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 
 Console.WriteLine();
 log.Dbg("== Get Posts with Custom Fields ==");
-_ = await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
+await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 .AuditAsync(
 	some: x =>
 	{
@@ -217,7 +217,7 @@ _ = await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 
 Console.WriteLine();
 log.Dbg("== Get Sermons with Custom Fields ==");
-_ = await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
+await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
 	Ids = ImmutableList.Create<WpPostId>(new(924L), new(1867L), new(2020L))
@@ -252,7 +252,7 @@ Console.WriteLine();
 ICustomField field = WpBcg.CustomFields.FirstPreached;
 object first = 422L;
 log.Dbg("== Get Sermons where First Preached is {First} ==", first);
-_ = await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
+await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
 	CustomFields = ImmutableList.Create(new[] { (field, Compare.Equal, first) })
@@ -288,7 +288,7 @@ _ = await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 
 Console.WriteLine();
 log.Dbg("== Get Posts with generated excerpt ==");
-_ = await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
+await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
 {
 	SortRandom = true
 }, GenerateExcerpt.Create())
@@ -315,7 +315,7 @@ _ = await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
 
 Console.WriteLine();
 log.Dbg("== Get Attachments ==");
-_ = await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
+await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 {
 	Ids = ImmutableList.Create<WpPostId>(new(802L), new(862L), new(2377L))
 })
@@ -346,7 +346,7 @@ _ = await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 
 Console.WriteLine();
 log.Dbg("== Get Attachment file path ==");
-_ = await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
+await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
 .AuditAsync(
 	some: x => log.Dbg("Path: {FilePath}", x),
 	none: r => log.Msg(r)
@@ -359,7 +359,7 @@ _ = await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
 
 Console.WriteLine();
 log.Dbg("== Test Paging Values ==");
-_ = await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
+await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 {
 	SortRandom = true,
 	Maximum = 15

@@ -40,7 +40,7 @@ public sealed class WpBcg : Wp<
 	/// </summary>
 	public override void RegisterCustomPostTypes()
 	{
-		_ = PostType.AddCustomPostType(PostTypes.Sermon);
+		PostType.AddCustomPostType(PostTypes.Sermon);
 	}
 
 	/// <summary>
@@ -48,11 +48,11 @@ public sealed class WpBcg : Wp<
 	/// </summary>
 	public override void RegisterCustomTaxonomies()
 	{
-		_ = Taxonomy.AddCustomTaxonomy(Taxonomies.BibleBook);
-		_ = Taxonomy.AddCustomTaxonomy(Taxonomies.PlacePreached);
-		_ = Taxonomy.AddCustomTaxonomy(Taxonomies.Section);
-		_ = Taxonomy.AddCustomTaxonomy(Taxonomies.Series);
-		_ = Taxonomy.AddCustomTaxonomy(Taxonomies.Theme);
+		Taxonomy.AddCustomTaxonomy(Taxonomies.BibleBook);
+		Taxonomy.AddCustomTaxonomy(Taxonomies.PlacePreached);
+		Taxonomy.AddCustomTaxonomy(Taxonomies.Section);
+		Taxonomy.AddCustomTaxonomy(Taxonomies.Series);
+		Taxonomy.AddCustomTaxonomy(Taxonomies.Theme);
 	}
 
 	/// <summary>

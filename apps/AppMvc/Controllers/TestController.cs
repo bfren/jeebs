@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Diagnostics;
@@ -37,17 +37,17 @@ public class TestController : Controller
 		const int reps = 1;
 		var userId = new AuthUserId(1);
 
-		_ = results.AppendLine($"Running {reps} times.");
+		results.AppendLine($"Running {reps} times.");
 
 		//
 		// Query 1: separate queries
 		//
 
-		_ = results.AppendLine("Separate queries:");
+		results.AppendLine("Separate queries:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					userId
 				)
@@ -72,20 +72,20 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Separate queries took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Separate queries took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		//
 		// Query 2: query with builder
 		//
 
 		timer.Reset();
-		_ = results.AppendLine("Query builder:");
+		results.AppendLine("Query builder:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					userId
 				)
@@ -107,16 +107,16 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Query builder took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Query builder took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		//
 		// Query 3: manual query
 		//
 
 		timer.Reset();
-		_ = results.AppendLine("Manual query:");
+		results.AppendLine("Manual query:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
@@ -131,7 +131,7 @@ public class TestController : Controller
 					$"= `{db.UserRole}`.`{db.UserRole.RoleId}` " +
 				$"WHERE `{db.UserRole}`.`{db.UserRole.UserId}` = @P0;";
 
-			_ = await
+			await
 				F.Some(
 					userId
 				)
@@ -149,9 +149,9 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Manual query took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Manual query took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		if (true)
 		{
@@ -160,7 +160,7 @@ public class TestController : Controller
 			//
 
 			timer.Reset();
-			_ = results.AppendLine("Entity Framework:");
+			results.AppendLine("Entity Framework:");
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
@@ -178,24 +178,24 @@ public class TestController : Controller
 
 				if (await roles.CountAsync().ConfigureAwait(false) == 2)
 				{
-					_ = results.Append('.');
+					results.Append('.');
 				}
 				else
 				{
-					_ = results.AppendLine("Error.");
+					results.AppendLine("Error.");
 				}
 			}
 			timer.Stop();
-			_ = results.AppendLine(" done.");
-			_ = results.AppendFormat("Entity Framework took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-			_ = results.AppendLine();
+			results.AppendLine(" done.");
+			results.AppendFormat("Entity Framework took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+			results.AppendLine();
 
 			//
 			// Query 5: EF Core Linq
 			//
 
 			timer.Reset();
-			_ = results.AppendLine("Entity Framework Linq:");
+			results.AppendLine("Entity Framework Linq:");
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
@@ -206,17 +206,17 @@ public class TestController : Controller
 
 				if (await roles.CountAsync().ConfigureAwait(false) == 2)
 				{
-					_ = results.Append('.');
+					results.Append('.');
 				}
 				else
 				{
-					_ = results.AppendLine("Error.");
+					results.AppendLine("Error.");
 				}
 			}
 			timer.Stop();
-			_ = results.AppendLine(" done.");
-			_ = results.AppendFormat("Entity Framework Linq took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-			_ = results.AppendLine();
+			results.AppendLine(" done.");
+			results.AppendFormat("Entity Framework Linq took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+			results.AppendLine();
 		}
 
 		return Content(results.ToString());
@@ -229,17 +229,17 @@ public class TestController : Controller
 		const int reps = 1;
 		var userId = new AuthUserId(1);
 
-		_ = results.AppendLine($"Running {reps} times.");
+		results.AppendLine($"Running {reps} times.");
 
 		//
 		// Query 1: separate queries
 		//
 
-		_ = results.AppendLine("Separate queries:");
+		results.AppendLine("Separate queries:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					userId
 				)
@@ -253,20 +253,20 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Separate queries took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Separate queries took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		//
 		// Query 2: query with builder
 		//
 
 		timer.Reset();
-		_ = results.AppendLine("Query builder:");
+		results.AppendLine("Query builder:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					userId
 				)
@@ -283,16 +283,16 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Query builder took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Query builder took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		//
 		// Query 3: manual query
 		//
 
 		timer.Reset();
-		_ = results.AppendLine("Manual query:");
+		results.AppendLine("Manual query:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
@@ -311,7 +311,7 @@ public class TestController : Controller
 				$"FROM `{db.User}` " +
 				$"WHERE `{db.User}`.`{db.User.Id}` = @P0;";
 
-			_ = await
+			await
 				F.Some(
 					userId
 				)
@@ -325,9 +325,9 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Manual query took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Manual query took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		if (true)
 		{
@@ -336,7 +336,7 @@ public class TestController : Controller
 			//
 
 			timer.Reset();
-			_ = results.AppendLine("Entity Framework:");
+			results.AppendLine("Entity Framework:");
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
@@ -344,24 +344,24 @@ public class TestController : Controller
 
 				if (user.Id == userId.Value)
 				{
-					_ = results.Append('.');
+					results.Append('.');
 				}
 				else
 				{
-					_ = results.AppendLine("Error.");
+					results.AppendLine("Error.");
 				}
 			}
 			timer.Stop();
-			_ = results.AppendLine(" done.");
-			_ = results.AppendFormat("Entity Framework took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-			_ = results.AppendLine();
+			results.AppendLine(" done.");
+			results.AppendFormat("Entity Framework took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+			results.AppendLine();
 
 			//
 			// Query 5: EF Core Linq
 			//
 
 			timer.Reset();
-			_ = results.AppendLine("Entity Framework Linq:");
+			results.AppendLine("Entity Framework Linq:");
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
@@ -373,17 +373,17 @@ public class TestController : Controller
 
 				if (user.Id == userId.Value)
 				{
-					_ = results.Append('.');
+					results.Append('.');
 				}
 				else
 				{
-					_ = results.AppendLine("Error.");
+					results.AppendLine("Error.");
 				}
 			}
 			timer.Stop();
-			_ = results.AppendLine(" done.");
-			_ = results.AppendFormat("Entity Framework Linq took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-			_ = results.AppendLine();
+			results.AppendLine(" done.");
+			results.AppendFormat("Entity Framework Linq took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+			results.AppendLine();
 		}
 
 		return Content(results.ToString());
@@ -395,17 +395,17 @@ public class TestController : Controller
 		var results = new StringBuilder();
 		const int reps = 1000;
 
-		_ = results.AppendLine($"Running {reps} times.");
+		results.AppendLine($"Running {reps} times.");
 
 		//
 		// Query 1: separate queries
 		//
 
-		_ = results.AppendLine("Separate queries:");
+		results.AppendLine("Separate queries:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					Rnd.Lng
 				)
@@ -429,20 +429,20 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Separate queries took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Separate queries took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		//
 		// Query 2: query with builder
 		//
 
 		timer.Reset();
-		_ = results.AppendLine("Query builder:");
+		results.AppendLine("Query builder:");
 		timer.Start();
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					Rnd.Lng
 				)
@@ -463,16 +463,16 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Query builder took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Query builder took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		//
 		// Query 3: manual query
 		//
 
 		timer.Reset();
-		_ = results.AppendLine("Manual query:");
+		results.AppendLine("Manual query:");
 		timer.Start();
 		const string sql =
 			"SELECT " +
@@ -486,7 +486,7 @@ public class TestController : Controller
 			"WHERE `auth_user_role`.`UserId` = @P0;";
 		for (int i = 0; i < reps; i++)
 		{
-			_ = await
+			await
 				F.Some(
 					Rnd.Lng
 				)
@@ -503,9 +503,9 @@ public class TestController : Controller
 				.ConfigureAwait(false);
 		}
 		timer.Stop();
-		_ = results.AppendLine(" done.");
-		_ = results.AppendFormat("Manual query took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-		_ = results.AppendLine();
+		results.AppendLine(" done.");
+		results.AppendFormat("Manual query took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+		results.AppendLine();
 
 		if (true)
 		{
@@ -514,7 +514,7 @@ public class TestController : Controller
 			//
 
 			timer.Reset();
-			_ = results.AppendLine("Entity Framework:");
+			results.AppendLine("Entity Framework:");
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
@@ -532,20 +532,20 @@ public class TestController : Controller
 					x => x.Role
 				);
 
-				_ = await roles.CountAsync().ConfigureAwait(false);
-				_ = results.Append('.');
+				await roles.CountAsync().ConfigureAwait(false);
+				results.Append('.');
 			}
 			timer.Stop();
-			_ = results.AppendLine(" done.");
-			_ = results.AppendFormat("Entity Framework took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-			_ = results.AppendLine();
+			results.AppendLine(" done.");
+			results.AppendFormat("Entity Framework took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+			results.AppendLine();
 
 			//
 			// Query 5: EF Core Linq
 			//
 
 			timer.Reset();
-			_ = results.AppendLine("Entity Framework Linq:");
+			results.AppendLine("Entity Framework Linq:");
 			timer.Start();
 			for (int i = 0; i < reps; i++)
 			{
@@ -556,13 +556,13 @@ public class TestController : Controller
 							where ur.UserId == id
 							select r;
 
-				_ = await roles.CountAsync().ConfigureAwait(false);
-				_ = results.Append('.');
+				await roles.CountAsync().ConfigureAwait(false);
+				results.Append('.');
 			}
 			timer.Stop();
-			_ = results.AppendLine(" done.");
-			_ = results.AppendFormat("Entity Framework Linq took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
-			_ = results.AppendLine();
+			results.AppendLine(" done.");
+			results.AppendFormat("Entity Framework Linq took {0:0.000}s.", TimeSpan.FromTicks(timer.ElapsedTicks).TotalSeconds);
+			results.AppendLine();
 		}
 
 		return Content(results.ToString());
