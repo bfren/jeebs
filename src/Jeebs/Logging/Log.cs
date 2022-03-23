@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Jeebs.Messages;
 
 namespace Jeebs.Logging;
@@ -64,9 +62,9 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Msg(IEnumerable<IMsg> msgs)
+	public void Msgs(params IReason[] msgs)
 	{
-		if (!msgs.Any())
+		if (msgs.Length == 0)
 		{
 			return;
 		}

@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Collections.Generic;
-using Jeebs.Messages;
 
 namespace Jeebs.Logging;
 
@@ -45,10 +43,10 @@ public interface ILog
 		where T : IReason;
 
 	/// <summary>
-	/// Log a list of <see cref="IMsg"/>
+	/// Log a list of <see cref="IReason"/>
 	/// </summary>
 	/// <param name="msgs">Messages to log</param>
-	void Msg(IEnumerable<IMsg> msgs);
+	void Msgs(params IReason[] msgs);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>
