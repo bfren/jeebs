@@ -53,4 +53,4 @@ Console.WriteLine();
 
 // Done
 Console.WriteLine("Done.");
-_ = Console.Read();
+Console.Read();

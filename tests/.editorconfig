@@ -5,6 +5,9 @@ file_header_template = Jeebs Unit Tests\nCopyright (c) bfren - licensed under ht
 
 insert_final_newline = true
 
+# CA1000: Do not declare static members on generic types
+dotnet_diagnostic.CA1000.severity = none
+
 # CA1304: Specify CultureInfo
 dotnet_diagnostic.CA1304.severity = none
 

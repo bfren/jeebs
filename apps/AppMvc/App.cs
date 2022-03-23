@@ -21,20 +21,20 @@ public sealed class App : MvcAppWithData
 	{
 		base.ConfigureServices(ctx, services);
 
-		_ = services.AddAuthentication(ctx.Configuration)
+		services.AddAuthentication(ctx.Configuration)
 			.WithData<MySqlDbClient>()
 			.WithJwt();
 
-		_ = services.AddDbContext<EfCoreContext>(
+		services.AddDbContext<EfCoreContext>(
 			options => options.UseMySQL("server=192.168.1.104;port=18793;user id=test;password=test;database=test;convert zero datetime=True;sslmode=none")
 		);
 
-		_ = services.AddTransient<IImageDriver, ImageDriver>();
+		services.AddTransient<IImageDriver, ImageDriver>();
 	}
 
 	protected override void ConfigureAuthorisation(WebApplication app, IConfiguration config)
 	{
-		_ = app.UseAuthentication();
+		app.UseAuthentication();
 		base.ConfigureAuthorisation(app, config);
 	}
 

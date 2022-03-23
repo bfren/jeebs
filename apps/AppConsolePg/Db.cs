@@ -16,7 +16,7 @@ internal class Db : Jeebs.Data.Db
 	{
 		Json = new("console");
 
-		_ = Map<EntityTest>.To(Json);
+		Map<EntityTest>.To(Json);
 
 		TypeMap.AddStrongIdTypeHandlers();
 	}
