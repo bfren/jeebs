@@ -14,13 +14,16 @@ namespace Jeebs.Auth.Data;
 public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, AuthUserId>
 	where TUserEntity : IAuthUser, IWithId
 {
+	/// <inheritdoc cref="CreateAsync(string, string, string)"/>
+	Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword);
+
 	/// <summary>
 	/// Create a new User
 	/// </summary>
-	/// <param name="email">Email address</param>
-	/// <param name="password">Password (will be hashed)</param>
-	/// <param name="friendlyName">[Optional] Friendly name</param>
-	Task<Maybe<AuthUserId>> CreateAsync(string email, string password, string? friendlyName);
+	/// <param name="email">Email address (used for login)</param>
+	/// <param name="plainTextPassword">Password (will be hashed)</param>
+	/// <param name="friendlyName">[Optional] The user's actual name</param>
+	Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName);
 
 	/// <summary>
 	/// Retrieve a user by email address
