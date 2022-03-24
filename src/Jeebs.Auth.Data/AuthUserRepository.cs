@@ -3,7 +3,6 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using Jeebs.Data;
@@ -11,7 +10,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Logging;
 using Jeebs.Messages;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthUserRepository{TRoleEntity}"/>
 public interface IAuthUserRepository : IAuthUserRepository<AuthUserEntity>
@@ -30,20 +29,34 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 
 	/// <inheritdoc/>
 	public Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword) =>
-		CreateAsync(email, plainTextPassword, null);
+		CreateAsync(email, plainTextPassword, friendlyName: null);
 
 	/// <inheritdoc/>
-	public Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName) =>
-		RetrieveAsync<AuthUserEntity>(email)
+	public Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, IDbTransaction transaction) =>
+		CreateAsync(email, plainTextPassword, null, transaction);
+
+	/// <inheritdoc/>
+	public async Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName)
+	{
+		using var w = Db.UnitOfWork;
+		return await CreateAsync(email, plainTextPassword, friendlyName, w.Transaction);
+	}
+
+	/// <inheritdoc/>
+	public Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName, IDbTransaction transaction) =>
+		RetrieveAsync<AuthUserEntity>(email, transaction)
 			.SwitchAsync(
 				some: _ => F.None<AuthUserId>(new M.UserAlreadyExistsMsg(email)),
-				none: _ => CreateAsync(new()
-				{
-					EmailAddress = email,
-					PasswordHash = plainTextPassword.HashPassword(),
-					FriendlyName = friendlyName,
-					IsEnabled = true
-				})
+				none: _ => CreateAsync(
+					new()
+					{
+						EmailAddress = email,
+						PasswordHash = plainTextPassword.HashPassword(),
+						FriendlyName = friendlyName,
+						IsEnabled = true
+					},
+					transaction
+				)
 			);
 
 	/// <inheritdoc/>
@@ -53,8 +66,22 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 		);
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId) =>
-		Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure);
+	public Task<Maybe<TModel>> RetrieveAsync<TModel>(string email, IDbTransaction transaction) =>
+		QuerySingleAsync<TModel>(
+			transaction,
+			(u => u.EmailAddress, Compare.Equal, email)
+		);
+
+	/// <inheritdoc/>
+	public async Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId)
+	{
+		using var w = Db.UnitOfWork;
+		return await UpdateLastSignInAsync(userId, w.Transaction);
+	}
+
+	/// <inheritdoc/>
+	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction) =>
+		Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure, transaction);
 
 	/// <summary>Messages</summary>
 	public static class M

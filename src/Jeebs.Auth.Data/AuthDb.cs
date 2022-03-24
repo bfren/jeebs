@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Auth.Data;
+using System.Collections.Generic;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Config.Db;
@@ -9,7 +9,7 @@ using Jeebs.Data;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDb"/>
 public sealed class AuthDb : Db, IAuthDb
@@ -61,6 +61,7 @@ public sealed class AuthDb : Db, IAuthDb
 
 		// Map type handlers
 		TypeMap.AddStrongIdTypeHandlers();
+		TypeMap.AddJsonTypeHandler<List<string>>();
 	}
 
 	/// <inheritdoc/>

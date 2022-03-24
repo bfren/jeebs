@@ -1,8 +1,9 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
 using AppConsolePg;
+using Jeebs.Auth.Data;
 using Jeebs.Data.Clients.PostgreSql.Parameters;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 using Jeebs.Extensions;
@@ -22,6 +23,8 @@ log.Dbg("= PostgreSQL Console Test =");
 // Get services
 var db = app.Services.GetRequiredService<Db>();
 var repo = app.Services.GetRequiredService<Repository>();
+var authDb = app.Services.GetRequiredService<IAuthDb>();
+var auth = app.Services.GetRequiredService<IAuthDataProvider>();
 Console.WriteLine();
 
 // Create table
@@ -208,6 +211,33 @@ await db
 	)
 	.ConfigureAwait(false);
 Console.WriteLine();
+
+// Migrate auth tablse
+log.Dbg("== Migrate Auth ==");
+authDb.MigrateToLatest();
+
+// Insert user
+log.Dbg("== Insert User ==");
+var email = Rnd.Str;
+await auth.User
+	.CreateAsync(email, Rnd.Str)
+	.AuditAsync(
+		some: x => log.Dbg("New User ID: {UserId}", x.Value),
+		none: r => log.Msg(r)
+	);
+
+// Don't insert duplicate user
+log.Dbg("== Don't insert duplicate user ==");
+await auth.User
+	.CreateAsync(email, Rnd.Str)
+	.AuditAsync(
+		some: _ => log.Err("Should not have inserted duplicate user!"),
+		none: r => log.Msg(r)
+	);
+
+// Clean up users
+log.Dbg("== Cleaning up user entities ==");
+await authDb.ExecuteAsync("TRUNCATE TABLE \"auth\".\"User\";", null, CommandType.Text);
 
 // Done
 log.Dbg("Done.");
