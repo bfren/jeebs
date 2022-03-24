@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ public abstract record class AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole
 	where TRole : IAuthRole
 {
 	/// <inheritdoc/>
+	[Id]
 	public AuthUserId Id { get; init; }
 
 	/// <inheritdoc/>
