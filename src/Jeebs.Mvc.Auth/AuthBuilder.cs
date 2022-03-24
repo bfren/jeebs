@@ -69,7 +69,7 @@ public sealed class AuthBuilder
 	{
 		CheckProvider();
 
-		// Add AuthDb
+		// Add Auth database
 		_ = services.AddSingleton<AuthDb>();
 		_ = services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
 		_ = services.AddSingleton<IAuthDbClient, TDbClient>();
@@ -77,7 +77,7 @@ public sealed class AuthBuilder
 		_ = services.AddScoped<AuthDbQuery>();
 		_ = services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
 
-		// Add AuthFunc
+		// Add Auth repositories
 		_ = services.AddScoped<AuthUserRepository>();
 		_ = services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
 		_ = services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
@@ -90,7 +90,7 @@ public sealed class AuthBuilder
 		_ = services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
 		_ = services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
 
-		// Add AuthProvider
+		// Add Auth provider
 		_ = services.AddScoped<AuthDataProvider>();
 		_ = services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
 
