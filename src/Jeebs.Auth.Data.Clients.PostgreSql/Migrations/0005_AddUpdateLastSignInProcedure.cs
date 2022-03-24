@@ -25,7 +25,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 		)
 		LANGUAGE 'sql'
 		AS $BODY$
-		UPDATE ""{AuthDb.Schema}"".""{AuthUserTable.Name}""
+		UPDATE ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
 		SET ""{Col(u => u.LastSignedIn)}"" = NOW()
 		WHERE ""{Col(u => u.Id)}"" = ""Id"";
 		$BODY$

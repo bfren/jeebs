@@ -20,7 +20,7 @@ public sealed class AddUserRoleTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE `{AuthDb.Schema}.{AuthUserRoleTable.Name}` (
+		CREATE TABLE `{AuthDb.Schema}.{AuthUserRoleTable.TableName}` (
 			`{Col(ur => ur.Id)}` INT(11) NOT NULL AUTO_INCREMENT,
 			`{Col(ur => ur.UserId)}` INT(11) NOT NULL,
 			`{Col(ur => ur.RoleId)}` INT(11) NOT NULL,
@@ -35,7 +35,7 @@ public sealed class AddUserRoleTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE `{AuthDb.Schema}.{AuthUserRoleTable.Name}`
+		DROP TABLE `{AuthDb.Schema}.{AuthUserRoleTable.TableName}`
 		;
 	");
 }

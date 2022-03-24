@@ -20,7 +20,7 @@ public sealed class AddUserTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE `{AuthDb.Schema}.{AuthUserTable.Name}` (
+		CREATE TABLE `{AuthDb.Schema}.{AuthUserTable.TableName}` (
 			`{Col(u => u.Id)}` INT(11) NOT NULL AUTO_INCREMENT,
 			`{Col(u => u.Version)}` INT(11) NOT NULL DEFAULT '0',
 			`{Col(u => u.EmailAddress)}` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
@@ -45,7 +45,7 @@ public sealed class AddUserTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE `{AuthDb.Schema}.{AuthUserTable.Name}`
+		DROP TABLE `{AuthDb.Schema}.{AuthUserTable.TableName}`
 		;
 	");
 }

@@ -9,38 +9,38 @@ namespace Jeebs.Auth.Data.Tables;
 /// <summary>
 /// Authentication User Table
 /// </summary>
-public sealed record class AuthUserTable() : Table(AuthDb.Schema, Name)
+public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 {
 	/// <summary>
 	/// Table name will be added as a prefix to all column names
 	/// </summary>
-	public static readonly string Name = "User";
+	public static readonly string TableName = "User";
 
 	#region From AuthUserModel
 
 	/// <inheritdoc cref="Id.IWithId.Id"/>
 	public string Id =>
-		Name + nameof(Id);
+		TableName + nameof(Id);
 
 	/// <inheritdoc cref="IAuthUser.EmailAddress"/>
 	public string EmailAddress =>
-		Name + nameof(EmailAddress);
+		TableName + nameof(EmailAddress);
 
 	/// <inheritdoc cref="IAuthUser.FriendlyName"/>
 	public string FriendlyName =>
-		Name + nameof(FriendlyName);
+		TableName + nameof(FriendlyName);
 
 	/// <inheritdoc cref="IAuthUser.GivenName"/>
 	public string GivenName =>
-		Name + nameof(GivenName);
+		TableName + nameof(GivenName);
 
 	/// <inheritdoc cref="IAuthUser.FriendlyName"/>
 	public string FamilyName =>
-		Name + nameof(FamilyName);
+		TableName + nameof(FamilyName);
 
 	/// <inheritdoc cref="IAuthUser.IsSuper"/>
 	public string IsSuper =>
-		Name + nameof(IsSuper);
+		TableName + nameof(IsSuper);
 
 	#endregion From AuthUserModel
 
@@ -48,27 +48,27 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, Name)
 
 	/// <inheritdoc cref="AuthUserEntity.Version"/>
 	public string Version =>
-		Name + nameof(Version);
+		TableName + nameof(Version);
 
 	/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
 	public string PasswordHash =>
-		Name + nameof(PasswordHash);
+		TableName + nameof(PasswordHash);
 
 	/// <inheritdoc cref="AuthUserEntity.TotpSecret"/>
 	public string TotpSecret =>
-		Name + nameof(TotpSecret);
+		TableName + nameof(TotpSecret);
 
 	/// <inheritdoc cref="AuthUserEntity.TotpBackupCodes"/>
 	public string TotpBackupCodes =>
-		Name + nameof(TotpBackupCodes);
+		TableName + nameof(TotpBackupCodes);
 
 	/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
 	public string IsEnabled =>
-		Name + nameof(IsEnabled);
+		TableName + nameof(IsEnabled);
 
 	/// <inheritdoc cref="AuthUserEntity.LastSignedIn"/>
 	public string LastSignedIn =>
-		Name + nameof(LastSignedIn);
+		TableName + nameof(LastSignedIn);
 
 	#endregion From AuthUserEntity
 }

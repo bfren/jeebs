@@ -20,7 +20,7 @@ public sealed class AddUserTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE IF NOT EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.Name}""
+		CREATE TABLE IF NOT EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
 		(
 			""{Col(u => u.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
 			""{Col(u => u.Version)}"" integer NOT NULL DEFAULT 0,
@@ -45,7 +45,7 @@ public sealed class AddUserTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.Name}""
+		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
 		;
 	");
 }

@@ -20,7 +20,7 @@ public sealed class AddUserRoleTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE ""{AuthDb.Schema}"".""{AuthUserRoleTable.Name}""
+		CREATE TABLE ""{AuthDb.Schema}"".""{AuthUserRoleTable.TableName}""
 		(
 			""{Col(ur => ur.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
 			""{Col(ur => ur.UserId)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -35,7 +35,7 @@ public sealed class AddUserRoleTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserRoleTable.Name}""
+		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserRoleTable.TableName}""
 		;
 	");
 }
