@@ -113,7 +113,7 @@ public interface IRepository<TEntity, TId>
 	Task<Maybe<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId;
 
-	/// <inheritdoc cref="DeleteAsync(TModel, IDbTransaction)"/>
+	/// <inheritdoc cref="DeleteAsync{TModel}(TModel, IDbTransaction)"/>
 	Task<Maybe<bool>> DeleteAsync<TModel>(TModel model)
 		where TModel : IWithId;
 

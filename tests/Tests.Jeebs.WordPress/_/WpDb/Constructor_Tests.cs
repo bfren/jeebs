@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -47,7 +47,7 @@ public class Constructor_Tests
 		});
 
 		// Act
-		new WpDb<Comment, CommentMeta, Link, Opt, Post, PostMeta, Term, TermMeta,
+		_ = new WpDb<Comment, CommentMeta, Link, Opt, Post, PostMeta, Term, TermMeta,
 			TermRelationship, TermTaxonomy, User, UserMeta>(client, dbConfig, wpConfig, log);
 
 		// Assert
