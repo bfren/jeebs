@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Cqrs;
@@ -12,4 +12,4 @@ public class SayHelloHandler : IQueryHandler<SayHelloQuery, string>
 		F.Some($"Hello, {query.Name}!").AsTask;
 }
 
-public record struct SayHelloQuery(string Name);
+public record struct SayHelloQuery(string Name) : IQuery<string>;

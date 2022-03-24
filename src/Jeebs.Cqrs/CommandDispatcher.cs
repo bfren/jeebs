@@ -21,9 +21,10 @@ public sealed class CommandDispatcher : ICommandDispatcher
 		this.provider = provider;
 
 	/// <inheritdoc/>
-	public ValueTask<Maybe<TResult>> DispatchAsync<TCommand, TResult>(TCommand query, CancellationToken cancellationToken)
+	public Task<Maybe<bool>> DispatchAsync<TCommand>(TCommand query, CancellationToken cancellationToken)
+		where TCommand : ICommand
 	{
-		var handler = provider.GetRequiredService<ICommandHandler<TCommand, TResult>>();
+		var handler = provider.GetRequiredService<ICommandHandler<TCommand>>();
 		return handler.HandleAsync(query, cancellationToken);
 	}
 }
