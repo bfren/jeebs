@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppMvc.EfCore;
@@ -22,7 +22,7 @@ public sealed class App : MvcAppWithData
 		base.ConfigureServices(ctx, services);
 
 		services.AddAuthentication(ctx.Configuration)
-			.WithData<MySqlDbClient>()
+			.WithData<MySqlDbClient>(true)
 			.WithJwt();
 
 		services.AddDbContext<EfCoreContext>(

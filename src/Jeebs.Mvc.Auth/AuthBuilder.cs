@@ -6,6 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Config.Web.Auth;
 using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Data;
 using Jeebs.Mvc.Auth.Exceptions;
 using Jeebs.Mvc.Auth.Jwt;
 using Microsoft.AspNetCore.Authentication;
@@ -64,20 +65,28 @@ public sealed class AuthBuilder
 	/// Enable custom data authentication and authorisation
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
-	public AuthBuilder WithData<TDbClient>()
+	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>
+	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)
 		where TDbClient : class, IAuthDbClient
 	{
 		CheckProvider();
 
-		// Add Auth database
+		// Register Auth database classes
 		_ = services.AddSingleton<AuthDb>();
 		_ = services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
-		_ = services.AddSingleton<IAuthDbClient, TDbClient>();
+		_ = services.AddSingleton<TDbClient>();
+		_ = services.AddSingleton<IAuthDbClient>(s => s.GetRequiredService<TDbClient>());
 
 		_ = services.AddScoped<AuthDbQuery>();
-		_ = services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
+		_ = services.AddScoped<IAuthDbQuery, AuthDbQuery>();
 
-		// Add Auth repositories
+		// Share auth database with main database
+		if (useAuthDbClientAsMain)
+		{
+			_ = services.AddSingleton<IDbClient>(s => s.GetRequiredService<TDbClient>());
+		}
+
+		// Register Auth repositories
 		_ = services.AddScoped<AuthUserRepository>();
 		_ = services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
 		_ = services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
@@ -90,7 +99,7 @@ public sealed class AuthBuilder
 		_ = services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
 		_ = services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
 
-		// Add Auth provider
+		// Register Auth provider
 		_ = services.AddScoped<AuthDataProvider>();
 		_ = services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
 
