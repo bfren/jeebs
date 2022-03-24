@@ -13,18 +13,18 @@ public class DispatchAsync_Tests
 		// Arrange
 		var handler = Substitute.For<ICommandHandler<Command>>();
 		var collection = new ServiceCollection();
-		_ = collection.AddScoped(_ => handler);
+		collection.AddScoped(_ => handler);
 		var provider = collection.BuildServiceProvider();
 
 		ICommandDispatcher dispatcher = new CommandDispatcher(provider);
 		var command = new Command();
 
 		// Act
-		_ = await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-		_ = await dispatcher.DispatchAsync(command, CancellationToken.None).ConfigureAwait(false);
+		await dispatcher.DispatchAsync(command).ConfigureAwait(false);
+		await dispatcher.DispatchAsync(command, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
-		_ = await handler.Received(2).HandleAsync(command, CancellationToken.None).ConfigureAwait(false);
+		await handler.Received(2).HandleAsync(command, CancellationToken.None).ConfigureAwait(false);
 	}
 
 	public sealed record class Command : ICommand;

@@ -14,7 +14,7 @@ public class Constructor_Tests
 		// Act
 
 		// Assert
-		_ = Assert.IsAssignableFrom<IServiceConfig>(config);
+		Assert.IsAssignableFrom<IServiceConfig>(config);
 	}
 
 	[Fact]
@@ -26,6 +26,6 @@ public class Constructor_Tests
 		// Act
 
 		// Assert
-		_ = Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
+		Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
 	}
 }

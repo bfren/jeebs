@@ -13,10 +13,10 @@ public class CreateAsync_Tests
 		var foo = new Repository_Setup.Foo { Id = new(Rnd.Lng) };
 
 		// Act
-		_ = await repo.CreateAsync(foo).ConfigureAwait(false);
+		await repo.CreateAsync(foo).ConfigureAwait(false);
 
 		// Assert
-		_ = client.Received().GetCreateQuery<Repository_Setup.Foo>();
+		client.Received().GetCreateQuery<Repository_Setup.Foo>();
 	}
 
 	[Fact]
@@ -27,7 +27,7 @@ public class CreateAsync_Tests
 		var foo = new Repository_Setup.Foo { Id = new(Rnd.Lng) };
 
 		// Act
-		_ = await repo.CreateAsync(foo).ConfigureAwait(false);
+		await repo.CreateAsync(foo).ConfigureAwait(false);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());

@@ -19,7 +19,7 @@ public class Format_Tests
 		handler.SetValue(parameter, input);
 
 		// Assert
-		_ = Assert.IsType<DBNull>(parameter.Value);
+		Assert.IsType<DBNull>(parameter.Value);
 	}
 
 	[Fact]

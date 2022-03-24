@@ -14,16 +14,16 @@ public static class Repository_Setup
 	public static (IDbClient client, ILog log, Repository<Foo, FooId> repo) Get()
 	{
 		var client = Substitute.For<IDbClient>();
-		_ = client
+		client
 			.GetQuery<Foo, FooModel>(Arg.Any<(Expression<Func<Foo, object>>, Compare, object)[]>())
 			.Returns((Rnd.Str, Substitute.For<IQueryParametersDictionary>()));
-		_ = client.GetCreateQuery<Foo>().Returns(Rnd.Str);
-		_ = client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
-		_ = client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
-		_ = client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(Rnd.Str);
+		client.GetCreateQuery<Foo>().Returns(Rnd.Str);
+		client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
+		client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
+		client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(Rnd.Str);
 
 		var db = Substitute.For<IDb>();
-		_ = db.Client.Returns(client);
+		db.Client.Returns(client);
 
 		var log = Substitute.For<ILog>();
 

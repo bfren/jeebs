@@ -33,10 +33,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereType(Qp, type);
+		builder.Received().AddWhereType(Qp, type);
 	}
 
 	[Fact]
@@ -51,10 +51,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereStatus(Qp, status);
+		builder.Received().AddWhereStatus(Qp, status);
 	}
 
 	[Theory]
@@ -70,10 +70,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceiveWithAnyArgs().AddWhereSearch(Qp, default, default, default);
+		builder.DidNotReceiveWithAnyArgs().AddWhereSearch(Qp, default, default, default);
 	}
 
 	[Fact]
@@ -92,10 +92,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereSearch(Qp, fields, cmp, text);
+		builder.Received().AddWhereSearch(Qp, fields, cmp, text);
 	}
 
 	[Fact]
@@ -105,10 +105,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceiveWithAnyArgs().AddWherePublishedFrom(Qp, default);
+		builder.DidNotReceiveWithAnyArgs().AddWherePublishedFrom(Qp, default);
 	}
 
 	[Fact]
@@ -123,10 +123,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWherePublishedFrom(Qp, from);
+		builder.Received().AddWherePublishedFrom(Qp, from);
 	}
 
 	[Fact]
@@ -136,10 +136,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceiveWithAnyArgs().AddWherePublishedTo(Qp, default);
+		builder.DidNotReceiveWithAnyArgs().AddWherePublishedTo(Qp, default);
 	}
 
 	[Fact]
@@ -154,10 +154,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWherePublishedTo(Qp, to);
+		builder.Received().AddWherePublishedTo(Qp, to);
 	}
 
 	[Fact]
@@ -167,10 +167,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceiveWithAnyArgs().AddWhereParentId(Qp, default);
+		builder.DidNotReceiveWithAnyArgs().AddWhereParentId(Qp, default);
 	}
 
 	[Fact]
@@ -185,10 +185,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereParentId(Qp, parentId);
+		builder.Received().AddWhereParentId(Qp, parentId);
 	}
 
 	[Fact]
@@ -198,10 +198,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<(Taxonomy, WpTermId)>>());
+		builder.DidNotReceiveWithAnyArgs().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<(Taxonomy, WpTermId)>>());
 	}
 
 	[Fact]
@@ -218,10 +218,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereTaxonomies(Qp, taxonomies);
+		builder.Received().AddWhereTaxonomies(Qp, taxonomies);
 	}
 
 	[Fact]
@@ -231,10 +231,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceiveWithAnyArgs().AddWhereCustomFields(Qp, Arg.Any<IImmutableList<(ICustomField, Compare, object)>>());
+		builder.DidNotReceiveWithAnyArgs().AddWhereCustomFields(Qp, Arg.Any<IImmutableList<(ICustomField, Compare, object)>>());
 	}
 
 	[Fact]
@@ -251,10 +251,10 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereCustomFields(Qp, fields);
+		builder.Received().AddWhereCustomFields(Qp, fields);
 	}
 
 	[Fact]

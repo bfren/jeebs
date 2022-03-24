@@ -47,7 +47,7 @@ public class ApplyContentFilters_Tests
 		// Arrange
 		var posts = new[] { new Model(new(Rnd.Lng), Rnd.Str) };
 		var filter = Substitute.For<IContentFilter>();
-		_ = filter.Execute(Arg.Any<string>()).Throws(new Exception());
+		filter.Execute(Arg.Any<string>()).Throws(new Exception());
 		var filters = new[] { filter };
 
 		// Act
@@ -55,7 +55,7 @@ public class ApplyContentFilters_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ApplyContentFiltersExceptionMsg<Model>>(none);
+		Assert.IsType<ApplyContentFiltersExceptionMsg<Model>>(none);
 	}
 
 	[Fact]
@@ -69,21 +69,21 @@ public class ApplyContentFilters_Tests
 		var posts = new[] { p0, p1 };
 
 		var f0 = Substitute.For<IContentFilter>();
-		_ = f0.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
+		f0.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
 
 		var f1 = Substitute.For<IContentFilter>();
-		_ = f1.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
+		f1.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
 
 		var filters = new[] { f0, f1 };
 
 		// Act
-		_ = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
+		QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
-		_ = f0.Received(1).Execute(c0);
-		_ = f1.Received(1).Execute(c0);
-		_ = f0.Received(1).Execute(c1);
-		_ = f1.Received(1).Execute(c1);
+		f0.Received(1).Execute(c0);
+		f1.Received(1).Execute(c0);
+		f0.Received(1).Execute(c1);
+		f1.Received(1).Execute(c1);
 	}
 
 	public sealed record class Model(WpPostId Id, string Content) : IWithId<WpPostId>;

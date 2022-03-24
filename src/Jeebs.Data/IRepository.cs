@@ -35,7 +35,11 @@ public interface IRepository<TEntity, TId>
 
 	#region Custom Queries
 
-	/// <inheritdoc cref="QueryAsync{TModel}(IDbTransaction, (Expression{Func{TEntity, object}}, Compare, object)[])"/>
+	/// <summary>
+	/// Retrieve items matching all <paramref name="predicates"/>
+	/// </summary>
+	/// <typeparam name="TModel">Model type</typeparam>
+	/// <param name="predicates">Predicates (matched using AND)</param>
 	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);
@@ -51,7 +55,11 @@ public interface IRepository<TEntity, TId>
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);
 
-	/// <inheritdoc cref="QuerySingleAsync{TModel}(IDbTransaction, (Expression{Func{TEntity, object}}, Compare, object)[])"/>
+	/// <summary>
+	/// Retrieve a single item matching all <paramref name="predicates"/>
+	/// </summary>
+	/// <typeparam name="TModel">Model type</typeparam>
+	/// <param name="predicates">Predicates (matched using AND)</param>
 	Task<Maybe<TModel>> QuerySingleAsync<TModel>(
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);

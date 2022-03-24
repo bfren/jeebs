@@ -33,17 +33,17 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 		var termTaxonomyId = t.TermTaxonomies.Id;
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddInnerJoin(
+		builder.Received().AddInnerJoin(
 			Qp,
 			t.Terms,
 			Arg.Is<Expression<Func<TermsTable, string>>>(x => termId == x.Compile().Invoke(t.Terms)),
 			t.TermTaxonomies,
 			Arg.Is<Expression<Func<TermTaxonomiesTable, string>>>(x => termId == x.Compile().Invoke(t.TermTaxonomies))
 		);
-		_ = builder.Received().AddInnerJoin(
+		builder.Received().AddInnerJoin(
 			Qp,
 			t.TermTaxonomies,
 			Arg.Is<Expression<Func<TermTaxonomiesTable, string>>>(x => termTaxonomyId == x.Compile().Invoke(t.TermTaxonomies)),
@@ -59,10 +59,10 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceive().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<Taxonomy>>());
+		builder.DidNotReceive().AddWhereTaxonomies(Qp, Arg.Any<IImmutableList<Taxonomy>>());
 	}
 
 	[Fact]
@@ -77,10 +77,10 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWhereTaxonomies(Qp, taxonomies);
+		builder.Received().AddWhereTaxonomies(Qp, taxonomies);
 	}
 
 	[Fact]
@@ -90,10 +90,10 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 		var (options, builder) = Setup();
 
 		// Act
-		_ = options.ToParts<TestModel>();
+		options.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.DidNotReceive().AddWherePostIds(Qp, Arg.Any<IImmutableList<WpPostId>>());
+		builder.DidNotReceive().AddWherePostIds(Qp, Arg.Any<IImmutableList<WpPostId>>());
 	}
 
 	[Fact]
@@ -110,10 +110,10 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.Received().AddWherePostIds(Qp, postIds);
+		builder.Received().AddWherePostIds(Qp, postIds);
 	}
 
 	[Fact]
@@ -128,10 +128,10 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 		};
 
 		// Act
-		_ = opt.ToParts<TestModel>();
+		opt.ToParts<TestModel>();
 
 		// Assert
-		_ = builder.ReceivedWithAnyArgs().AddSort(Qp, default, Arg.Any<IImmutableList<(IColumn, SortOrder)>>(), sortBy);
+		builder.ReceivedWithAnyArgs().AddSort(Qp, default, Arg.Any<IImmutableList<(IColumn, SortOrder)>>(), sortBy);
 	}
 
 	[Fact]

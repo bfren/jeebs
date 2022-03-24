@@ -29,7 +29,7 @@ public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 		};
 
 		var builder = Substitute.For<TBuilder>();
-		_ = builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(parts);
+		builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(parts);
 		builder.ReturnsForAll(parts.Some());
 
 		return builder;

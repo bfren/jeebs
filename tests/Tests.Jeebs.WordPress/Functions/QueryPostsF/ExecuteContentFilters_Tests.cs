@@ -50,21 +50,21 @@ public class ExecuteContentFilters_Tests
 		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
 
 		var f0 = Substitute.For<IContentFilter>();
-		_ = f0.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
+		f0.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
 
 		var f1 = Substitute.For<IContentFilter>();
-		_ = f1.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
+		f1.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));
 
 		var filters = new[] { f0, f1 };
 
 		// Act
-		_ = QueryPostsF.ExecuteContentFilters(posts, content, filters);
+		QueryPostsF.ExecuteContentFilters(posts, content, filters);
 
 		// Assert
-		_ = f0.Received(1).Execute(c0);
-		_ = f1.Received(1).Execute(c0);
-		_ = f0.Received(1).Execute(c1);
-		_ = f1.Received(1).Execute(c1);
+		f0.Received(1).Execute(c0);
+		f1.Received(1).Execute(c0);
+		f0.Received(1).Execute(c1);
+		f1.Received(1).Execute(c1);
 	}
 
 	public sealed record class Model(string Content);

@@ -14,10 +14,10 @@ public class Escape_Tests : PartsBuilder_Tests
 		var (builder, v) = Setup();
 
 		// Act
-		_ = builder.EscapeTest(v.Table);
+		builder.EscapeTest(v.Table);
 
 		// Assert
-		_ = v.Client.Received().Escape(v.Table);
+		v.Client.Received().Escape(v.Table);
 	}
 
 	[Fact]
@@ -27,9 +27,9 @@ public class Escape_Tests : PartsBuilder_Tests
 		var (options, v) = Setup();
 
 		// Act
-		_ = options.EscapeTest(v.Table, t => t.Id);
+		options.EscapeTest(v.Table, t => t.Id);
 
 		// Assert
-		_ = v.Client.Received().EscapeWithTable(Arg.Any<IColumn>());
+		v.Client.Received().EscapeWithTable(Arg.Any<IColumn>());
 	}
 }

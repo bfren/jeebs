@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Db_Tests;
@@ -15,7 +15,7 @@ public class UnitOfWork_Tests
 		_ = db.UnitOfWork;
 
 		// Assert
-		_ = client.Received().Connect(Arg.Any<string>());
+		client.Received().Connect(Arg.Any<string>());
 	}
 
 	[Fact]
@@ -28,6 +28,6 @@ public class UnitOfWork_Tests
 		_ = db.UnitOfWork;
 
 		// Assert
-		_ = connection.Received().BeginTransaction();
+		connection.Received().BeginTransaction();
 	}
 }

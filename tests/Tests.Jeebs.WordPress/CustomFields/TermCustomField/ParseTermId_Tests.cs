@@ -19,7 +19,7 @@ public class ParseTermId_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ValueIsInvalidTermIdMsg>(none);
+		Assert.IsType<ValueIsInvalidTermIdMsg>(none);
 	}
 
 	[Fact]

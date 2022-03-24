@@ -57,7 +57,7 @@ public class ReadJson_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<DeserialiseExceptionMsg>(none);
+		Assert.IsType<DeserialiseExceptionMsg>(none);
 	}
 
 	[Theory]
@@ -76,7 +76,7 @@ public class ReadJson_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<DeserialiseExceptionMsg>(none);
+		Assert.IsType<DeserialiseExceptionMsg>(none);
 	}
 
 	public record class Test(string Foo, int Bar);

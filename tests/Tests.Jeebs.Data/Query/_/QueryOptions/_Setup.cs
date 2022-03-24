@@ -13,7 +13,7 @@ public static class Setup
 		var table = Substitute.For<ITable>();
 
 		var builder = Substitute.For<ITestBuilder>();
-		_ = builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(x =>
+		builder.Create<TestModel>(Arg.Any<ulong?>(), Arg.Any<ulong>()).Returns(x =>
 			  new QueryParts(table)
 			  {
 				  Maximum = x.ArgAt<ulong?>(0),

@@ -28,7 +28,7 @@ public class AddCustomMimeType_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var type = new MimeType(name);
-		_ = MimeType.AddCustomMimeType(type);
+		MimeType.AddCustomMimeType(type);
 
 		// Act
 		var result = MimeType.AddCustomMimeType(type);

@@ -29,7 +29,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<TryingToAddEmptyClauseToWhereCustomMsg>(none);
+		Assert.IsType<TryingToAddEmptyClauseToWhereCustomMsg>(none);
 	}
 
 	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input);
@@ -53,7 +53,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<UnableToAddParametersToWhereCustomMsg>(none);
+		Assert.IsType<UnableToAddParametersToWhereCustomMsg>(none);
 	}
 
 	public abstract void Test02_Returns_New_Parts_With_Clause_And_Parameters();

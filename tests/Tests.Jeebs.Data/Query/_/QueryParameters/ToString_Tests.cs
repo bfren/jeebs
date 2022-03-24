@@ -12,7 +12,7 @@ public class ToString_Tests
 		var param = new QueryParametersDictionary();
 		var p0 = Rnd.Str;
 		var p1 = Rnd.Int;
-		_ = param.TryAdd(new { p0, p1 });
+		param.TryAdd(new { p0, p1 });
 
 		// Act
 		var result = param.ToString();

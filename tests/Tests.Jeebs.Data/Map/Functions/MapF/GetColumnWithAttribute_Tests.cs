@@ -20,7 +20,7 @@ public class GetColumnWithAttribute_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<NoPropertyWithAttributeMsg<FooWithoutIdAttribute, IdAttribute>>(none);
+		Assert.IsType<NoPropertyWithAttributeMsg<FooWithoutIdAttribute, IdAttribute>>(none);
 	}
 
 	[Fact]
@@ -34,6 +34,6 @@ public class GetColumnWithAttribute_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<TooManyPropertiesWithAttributeMsg<FooWithMultipleIdAttributes, IdAttribute>>(none);
+		Assert.IsType<TooManyPropertiesWithAttributeMsg<FooWithMultipleIdAttributes, IdAttribute>>(none);
 	}
 }

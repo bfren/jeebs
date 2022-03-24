@@ -20,16 +20,16 @@ public class ExecuteAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.ExecuteAsync(value, param, input).ConfigureAwait(false);
-		_ = await query.ExecuteAsync(value, param, input, transaction).ConfigureAwait(false);
-		_ = await query.ExecuteAsync<long>(value, param, input).ConfigureAwait(false);
-		_ = await query.ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
+		await query.ExecuteAsync(value, param, input).ConfigureAwait(false);
+		await query.ExecuteAsync(value, param, input, transaction).ConfigureAwait(false);
+		await query.ExecuteAsync<long>(value, param, input).ConfigureAwait(false);
+		await query.ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
 
 		// Assert
-		_ = await db.Received().ExecuteAsync(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		_ = await db.Received().ExecuteAsync(value, param, input, transaction).ConfigureAwait(false);
-		_ = await db.Received().ExecuteAsync<long>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		_ = await db.Received().ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
+		await db.Received().ExecuteAsync(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().ExecuteAsync(value, param, input, transaction).ConfigureAwait(false);
+		await db.Received().ExecuteAsync<long>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().ExecuteAsync<long>(value, param, input, transaction).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -42,15 +42,15 @@ public class ExecuteAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.ExecuteAsync(value, param).ConfigureAwait(false);
-		_ = await query.ExecuteAsync(value, param, transaction).ConfigureAwait(false);
-		_ = await query.ExecuteAsync<long>(value, param).ConfigureAwait(false);
-		_ = await query.ExecuteAsync<long>(value, param, transaction).ConfigureAwait(false);
+		await query.ExecuteAsync(value, param).ConfigureAwait(false);
+		await query.ExecuteAsync(value, param, transaction).ConfigureAwait(false);
+		await query.ExecuteAsync<long>(value, param).ConfigureAwait(false);
+		await query.ExecuteAsync<long>(value, param, transaction).ConfigureAwait(false);
 
 		// Assert
-		_ = await db.Received().ExecuteAsync(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		_ = await db.Received().ExecuteAsync(value, param, CommandType.Text, transaction).ConfigureAwait(false);
-		_ = await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		_ = await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		await db.Received().ExecuteAsync(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().ExecuteAsync(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
+		await db.Received().ExecuteAsync<long>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
 	}
 }

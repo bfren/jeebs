@@ -11,7 +11,7 @@ public class ToString_Tests
 		// Arrange
 		var name = new TableName(Rnd.Str);
 		var table = Substitute.For<ITable>();
-		_ = table.GetName().Returns(name);
+		table.GetName().Returns(name);
 		var map = new TableMap(table, Substitute.For<IMappedColumnList>(), GetColumnNames_Tests.Get().column);
 
 		// Act

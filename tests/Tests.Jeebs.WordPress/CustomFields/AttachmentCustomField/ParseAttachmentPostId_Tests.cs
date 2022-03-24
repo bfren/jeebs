@@ -19,7 +19,7 @@ public class ParseAttachmentPostId_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ValueIsInvalidPostIdMsg>(none);
+		Assert.IsType<ValueIsInvalidPostIdMsg>(none);
 	}
 
 	[Fact]

@@ -18,7 +18,7 @@ public class GetTableMapFor_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<TryingToGetUnmappedEntityMsg<Foo>>(none);
+		Assert.IsType<TryingToGetUnmappedEntityMsg<Foo>>(none);
 	}
 
 	[Fact]

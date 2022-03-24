@@ -24,6 +24,6 @@ public class Table_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsBuilder, Wp
 		var result = builder.Table;
 
 		// Assert
-		_ = Assert.IsType<TermsTable>(result);
+		Assert.IsType<TermsTable>(result);
 	}
 }

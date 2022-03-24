@@ -57,7 +57,7 @@ public class Constructor_Tests
 		var result = object () => new DateTimeInt(input);
 
 		// Assert
-		_ = Assert.Throws<ArgumentException>(result);
+		Assert.Throws<ArgumentException>(result);
 	}
 
 	[Theory]
@@ -98,6 +98,6 @@ public class Constructor_Tests
 		var result = object () => new DateTimeInt(input);
 
 		// Assert
-		_ = Assert.Throws<ArgumentException>(result);
+		Assert.Throws<ArgumentException>(result);
 	}
 }

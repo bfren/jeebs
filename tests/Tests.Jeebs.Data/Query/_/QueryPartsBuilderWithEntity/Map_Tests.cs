@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -19,7 +19,7 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 		_ = builder.Map.Value;
 
 		// Assert
-		_ = v.Mapper.Received().GetTableMapFor<TestEntity>();
+		v.Mapper.Received().GetTableMapFor<TestEntity>();
 	}
 
 	[Fact]
@@ -27,12 +27,12 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		_ = v.Mapper.GetTableMapFor<TestEntity>().Returns(Create.None<ITableMap>());
+		v.Mapper.GetTableMapFor<TestEntity>().Returns(Create.None<ITableMap>());
 
 		// Act
 		var action = ITableMap () => builder.Map.Value;
 
 		// Assert
-		_ = Assert.Throws<MsgException<ReasonMsg>>(action);
+		Assert.Throws<MsgException<ReasonMsg>>(action);
 	}
 }

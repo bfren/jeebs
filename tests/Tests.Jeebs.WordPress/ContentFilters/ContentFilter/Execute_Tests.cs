@@ -15,9 +15,9 @@ public class Execute_Tests
 		var contentFilter = Substitute.ForPartsOf<ContentFilter>(filter);
 
 		// Act
-		_ = contentFilter.Execute(content);
+		contentFilter.Execute(content);
 
 		// Assert
-		_ = filter.Received().Invoke(content);
+		filter.Received().Invoke(content);
 	}
 }

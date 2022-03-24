@@ -37,7 +37,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
-		_ = v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
+		v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
 	}
 
 	public abstract void Test02_Returns_With_Maximum();

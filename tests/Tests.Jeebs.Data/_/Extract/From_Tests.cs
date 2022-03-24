@@ -33,7 +33,7 @@ public class From_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<NoColumnsExtractedFromTableMsg>(none);
+		Assert.IsType<NoColumnsExtractedFromTableMsg>(none);
 	}
 
 	[Fact]

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Collections.ImmutableList_Tests;
@@ -17,7 +17,7 @@ public class ToArray_Tests
 		var result = list.ToArray();
 
 		// Assert
-		_ = Assert.IsType<int[]>(result);
+		Assert.IsType<int[]>(result);
 		Assert.Collection(result,
 			x => Assert.Equal(i0, x),
 			x => Assert.Equal(i1, x)

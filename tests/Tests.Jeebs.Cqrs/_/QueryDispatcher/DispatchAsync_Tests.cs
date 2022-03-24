@@ -13,18 +13,18 @@ public class DispatchAsync_Tests
 		// Arrange
 		var handler = Substitute.For<IQueryHandler<Query, string>>();
 		var collection = new ServiceCollection();
-		_ = collection.AddScoped(_ => handler);
+		collection.AddScoped(_ => handler);
 		var provider = collection.BuildServiceProvider();
 
 		IQueryDispatcher dispatcher = new QueryDispatcher(provider);
 		var query = new Query();
 
 		// Act
-		_ = await dispatcher.DispatchAsync<Query, string>(query).ConfigureAwait(false);
-		_ = await dispatcher.DispatchAsync<Query, string>(query, CancellationToken.None).ConfigureAwait(false);
+		await dispatcher.DispatchAsync<Query, string>(query).ConfigureAwait(false);
+		await dispatcher.DispatchAsync<Query, string>(query, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
-		_ = await handler.Received(2).HandleAsync(query, CancellationToken.None).ConfigureAwait(false);
+		await handler.Received(2).HandleAsync(query, CancellationToken.None).ConfigureAwait(false);
 	}
 
 	public sealed record class Query : IQuery<string>;

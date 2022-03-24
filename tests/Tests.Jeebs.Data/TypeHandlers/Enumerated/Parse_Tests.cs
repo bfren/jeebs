@@ -14,10 +14,10 @@ public class Parse_Tests
 		var parse = Substitute.For<Func<string, EnumeratedTest>>();
 
 		// Act
-		_ = handler.ParseTest(value, parse, EnumeratedTest.Bar);
+		handler.ParseTest(value, parse, EnumeratedTest.Bar);
 
 		// Assert
-		_ = parse.Received().Invoke(value);
+		parse.Received().Invoke(value);
 	}
 
 	[Theory]

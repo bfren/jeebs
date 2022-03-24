@@ -22,7 +22,7 @@ public class ExecuteAsync_Tests : Query_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
+		Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
 	}
 
 	[Fact]
@@ -33,9 +33,9 @@ public class ExecuteAsync_Tests : Query_Tests
 		var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Lng), new(Rnd.Lng));
 
 		// Act
-		_ = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);
+		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);
 
 		// Assert
-		_ = await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction).ConfigureAwait(false);
+		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction).ConfigureAwait(false);
 	}
 }

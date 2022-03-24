@@ -13,7 +13,7 @@ public class IdColumn_Tests : QueryPartsBuilderWithEntity_Tests
 		// Arrange
 		var (builder, v) = Setup();
 		var idColumn = Substitute.For<IMappedColumn>();
-		_ = v.Map.IdColumn.Returns(idColumn);
+		v.Map.IdColumn.Returns(idColumn);
 
 		// Act
 		var result = builder.IdColumn;

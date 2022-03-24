@@ -61,6 +61,6 @@ public class Parse_Tests
 
 		// Assert
 		var msg = result.AssertNone();
-		_ = Assert.IsType<UnrecognisedValueMsg>(msg);
+		Assert.IsType<UnrecognisedValueMsg>(msg);
 	}
 }

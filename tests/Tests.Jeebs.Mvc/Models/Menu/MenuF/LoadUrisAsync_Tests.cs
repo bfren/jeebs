@@ -37,7 +37,7 @@ public class LoadUrisAsync_Tests
 		var loadUri = Substitute.For<Menu.LoadUri>();
 
 		// Act
-		_ = await MenuF.LoadUrisAsync(client, uris, loadUri);
+		await MenuF.LoadUrisAsync(client, uris, loadUri);
 
 		// Assert
 		await loadUri.Received(1).Invoke(Arg.Any<StringBuilder>(), client, u0, Arg.Any<CancellationToken>());

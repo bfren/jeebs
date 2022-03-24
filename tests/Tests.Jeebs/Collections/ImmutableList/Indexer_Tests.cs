@@ -37,7 +37,7 @@ public class Indexer_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ElementAtIsNullReason>(none);
+		Assert.IsType<ElementAtIsNullReason>(none);
 	}
 
 	[Fact]
@@ -51,7 +51,7 @@ public class Indexer_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ListIsEmptyReason>(none);
+		Assert.IsType<ListIsEmptyReason>(none);
 	}
 
 	[Fact]

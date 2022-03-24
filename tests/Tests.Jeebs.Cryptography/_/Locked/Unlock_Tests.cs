@@ -20,7 +20,7 @@ public class Unlock_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
+		Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class Unlock_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<InvalidKeyExceptionMsg>(none);
+		Assert.IsType<InvalidKeyExceptionMsg>(none);
 	}
 
 	[Fact]
@@ -55,7 +55,7 @@ public class Unlock_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<InvalidNonceExceptionMsg>(none);
+		Assert.IsType<InvalidNonceExceptionMsg>(none);
 	}
 
 	[Fact]
@@ -72,7 +72,7 @@ public class Unlock_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 	}
 
 	[Fact]
@@ -91,7 +91,7 @@ public class Unlock_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 	}
 
 	[Fact]

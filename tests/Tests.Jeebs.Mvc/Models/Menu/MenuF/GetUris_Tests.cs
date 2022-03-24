@@ -20,7 +20,7 @@ public class GetUris_Tests
 
 		// Assert
 		Assert.Empty(result);
-		_ = getUri.DidNotReceiveWithAnyArgs().Invoke(urlHelper, Arg.Any<MenuItem>());
+		getUri.DidNotReceiveWithAnyArgs().Invoke(urlHelper, Arg.Any<MenuItem>());
 	}
 
 	[Fact]
@@ -38,8 +38,8 @@ public class GetUris_Tests
 
 		// Assert
 		Assert.NotEmpty(result);
-		_ = getUri.Received(1).Invoke(urlHelper, i0);
-		_ = getUri.Received(1).Invoke(urlHelper, i1);
+		getUri.Received(1).Invoke(urlHelper, i0);
+		getUri.Received(1).Invoke(urlHelper, i1);
 	}
 
 	[Fact]
@@ -56,7 +56,7 @@ public class GetUris_Tests
 		var p1 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c3, c4 }) };
 		var items = new[] { p0, p1 }.ToList();
 		var getUri = Substitute.For<Menu.GetUri>();
-		_ = getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(x => x.ArgAt<MenuItem>(1).Text);
+		getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(x => x.ArgAt<MenuItem>(1).Text);
 
 		// Act
 		var result = MenuF.GetUris(urlHelper, items, getUri);
@@ -71,6 +71,6 @@ public class GetUris_Tests
 			x => Assert.Equal(c3.Text, x),
 			x => Assert.Equal(c4.Text, x)
 		);
-		_ = getUri.ReceivedWithAnyArgs(7).Invoke(urlHelper, Arg.Any<MenuItem>());
+		getUri.ReceivedWithAnyArgs(7).Invoke(urlHelper, Arg.Any<MenuItem>());
 	}
 }
