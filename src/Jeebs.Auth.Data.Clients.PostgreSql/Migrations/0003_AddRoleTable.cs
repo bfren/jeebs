@@ -1,6 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using Jeebs.Auth.Data.Tables;
 using SimpleMigrations;
 
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
@@ -11,30 +13,30 @@ namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 [Migration(3, "Add role table")]
 public sealed class AddRoleTable : Migration
 {
+	private string Col(Func<AuthRoleTable, string> selector) =>
+		selector(new());
+
 	/// <summary>
 	/// Migrate up
 	/// </summary>
-	protected override void Up()
-	{
-		Execute(@"
-			CREATE TABLE IF NOT EXISTS ""Auth"".""Role""
-			(
-				""RoleId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-				""RoleName"" character(64) COLLATE pg_catalog.default NOT NULL,
-				""RoleDescription"" character(128) COLLATE pg_catalog.default NOT NULL,
-				CONSTRAINT ""RoleId_Key"" PRIMARY KEY(""RoleId""),
-				CONSTRAINT ""RoleName_Unique"" UNIQUE(""RoleName"")
-			)
-			TABLESPACE pg_default
-			;
-		");
-	}
+	protected override void Up() => Execute($@"
+		CREATE TABLE IF NOT EXISTS ""{AuthDb.Schema}"".""{AuthRoleTable.TableName}""
+		(
+			""{Col(r => r.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			""{Col(r => r.Name)}"" character(64) COLLATE pg_catalog.default NOT NULL,
+			""{Col(r => r.Description)}"" character(128) COLLATE pg_catalog.default NOT NULL,
+			CONSTRAINT ""{Col(r => r.Id)}_Key"" PRIMARY KEY(""{Col(r => r.Id)}""),
+			CONSTRAINT ""{Col(r => r.Name)}_Unique"" UNIQUE(""{Col(r => r.Name)}"")
+		)
+		TABLESPACE pg_default
+		;
+	");
 
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down()
-	{
-		Execute(@"DROP TABLE IF EXISTS ""Auth"".""Role"";");
-	}
+	protected override void Down() => Execute($@"
+		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthRoleTable.TableName}""
+		;
+	");
 }

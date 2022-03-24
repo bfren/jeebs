@@ -18,7 +18,7 @@ public sealed class PostgreSqlDbClient : Jeebs.Data.Clients.PostgreSql.PostgreSq
 		using var db = new NpgsqlConnection(connectionString);
 
 		// Get migration objects
-		var provider = new PostgresqlDatabaseProvider(db);
+		var provider = new PostgresqlDatabaseProvider(db) { SchemaName = AuthDb.Schema };
 		var migrator = new SimpleMigrator(typeof(PostgreSqlDbClient).Assembly, provider, new ConsoleLogger());
 
 		// Get all the migrations

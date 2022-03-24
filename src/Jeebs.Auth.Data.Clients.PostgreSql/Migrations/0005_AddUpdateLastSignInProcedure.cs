@@ -1,6 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using Jeebs.Auth.Data.Tables;
 using SimpleMigrations;
 
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
@@ -11,27 +13,30 @@ namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 [Migration(5, "Add update last user sign in procedure")]
 public sealed class AddUpdateLastSignInProcedure : Migration
 {
+	private string Col(Func<AuthUserTable, string> selector) =>
+		selector(new());
+
 	/// <summary>
 	/// Migrate up
 	/// </summary>
-	protected override void Up()
-	{
-		Execute(@"
-			CREATE OR REPLACE PROCEDURE ""Auth"".""UpdateUserLastSignIn""(
-				""Id"" integer DEFAULT 0
-			)
-			LANGUAGE 'sql'
-			AS $BODY$
-			UPDATE ""Auth"".""User"" SET ""UserLastSignedIn"" = NOW() WHERE ""UserId"" = ""Id"";
-			$BODY$;
-		");
-	}
+	protected override void Up() => Execute($@"
+		CREATE OR REPLACE PROCEDURE ""{AuthDb.Schema}"".""UpdateUserLastSignIn""(
+			""Id"" integer DEFAULT 0
+		)
+		LANGUAGE 'sql'
+		AS $BODY$
+		UPDATE ""{AuthDb.Schema}"".""{AuthUserTable.Name}""
+		SET ""{Col(u => u.LastSignedIn)}"" = NOW()
+		WHERE ""{Col(u => u.Id)}"" = ""Id"";
+		$BODY$
+		;
+	");
 
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down()
-	{
-		Execute(@"DROP PROCEDURE IF EXISTS ""Auth"".""UpdateUserLastSignIn""(integer);");
-	}
+	protected override void Down() => Execute($@"
+		DROP PROCEDURE IF EXISTS ""{AuthDb.Schema}"".""UpdateUserLastSignIn""(integer)
+		;
+	");
 }

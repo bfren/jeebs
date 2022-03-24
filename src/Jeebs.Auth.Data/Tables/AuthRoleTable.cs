@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
@@ -10,22 +10,22 @@ namespace Jeebs.Auth.Data.Tables;
 /// <summary>
 /// Authentication Role Table
 /// </summary>
-public sealed record class AuthRoleTable() : Table("Auth", ColumnPrefix)
+public sealed record class AuthRoleTable() : Table(AuthDb.Schema, TableName)
 {
 	/// <summary>
-	/// Prefix added before all columns
+	/// Table name will be added as a prefix to all column names
 	/// </summary>
-	public static readonly string ColumnPrefix = "Role";
+	public static readonly string TableName = "Role";
 
 	#region From AuthRoleModel
 
 	/// <inheritdoc cref="AuthRoleModel.Id"/>
 	public string Id =>
-		ColumnPrefix + nameof(Id);
+		TableName + nameof(Id);
 
 	/// <inheritdoc cref="AuthRoleModel.Name"/>
 	public string Name =>
-		ColumnPrefix + nameof(Name);
+		TableName + nameof(Name);
 
 	#endregion From AuthRoleModel
 
@@ -33,7 +33,7 @@ public sealed record class AuthRoleTable() : Table("Auth", ColumnPrefix)
 
 	/// <inheritdoc cref="AuthRoleEntity.Description"/>
 	public string Description =>
-		ColumnPrefix + nameof(Description);
+		TableName + nameof(Description);
 
 	#endregion From AuthRoleEntity
 }

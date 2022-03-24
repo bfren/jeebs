@@ -14,6 +14,11 @@ namespace Jeebs.Auth;
 /// <inheritdoc cref="IAuthDb"/>
 public sealed class AuthDb : Db, IAuthDb
 {
+	/// <summary>
+	/// Schema name
+	/// </summary>
+	public static string Schema { get; } = "auth";
+
 	/// <inheritdoc/>
 	public new IAuthDbClient Client { get; private init; }
 
