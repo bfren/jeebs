@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,25 +6,25 @@ using System;
 namespace Jeebs.Mvc.Auth.Exceptions;
 
 /// <summary>
-/// See <see cref="AuthBuilder.CheckProvider"/>
+/// See <see cref="AuthBuilder.WithData{TDbClient}(bool)"/>
 /// </summary>
-public class AuthProviderAlreadyAddedException : Exception
+public class AuthDataAlreadyAddedException : Exception
 {
 	/// <summary>
 	/// Create exception
 	/// </summary>
-	public AuthProviderAlreadyAddedException() { }
+	public AuthDataAlreadyAddedException() { }
 
 	/// <summary>
 	/// Create exception
 	/// </summary>
 	/// <param name="message"></param>
-	public AuthProviderAlreadyAddedException(string message) : base(message) { }
+	public AuthDataAlreadyAddedException(string message) : base(message) { }
 
 	/// <summary>
 	/// Create exception
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>
-	public AuthProviderAlreadyAddedException(string message, Exception inner) : base(message, inner) { }
+	public AuthDataAlreadyAddedException(string message, Exception inner) : base(message, inner) { }
 }

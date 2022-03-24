@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using MySqlConnector;
 using SimpleMigrations;
+using SimpleMigrations.Console;
 using SimpleMigrations.DatabaseProvider;
 
 namespace Jeebs.Auth.Data.Clients.MySql;
@@ -17,8 +18,8 @@ public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAut
 		using var db = new MySqlConnection(connectionString);
 
 		// Get migration objects
-		var provider = new MysqlDatabaseProvider(db);
-		var migrator = new SimpleMigrator(typeof(MySqlDbClient).Assembly, provider);
+		var provider = new MysqlDatabaseProvider(db) { TableName = $"{AuthDb.Schema}.versioninfo" };
+		var migrator = new SimpleMigrator(typeof(MySqlDbClient).Assembly, provider, new ConsoleLogger());
 
 		// Get all the migrations
 		migrator.Load();

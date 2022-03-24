@@ -100,24 +100,41 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	)
 	{
 		using var w = Db.UnitOfWork;
-		return await
-			Db.Client.GetQuery<TEntity, TModel>(
+		return await QueryAsync<TModel>(w.Transaction, predicates);
+	}
+
+	/// <inheritdoc/>
+	public virtual Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
+		IDbTransaction transaction,
+		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
+	) =>
+		Db.Client
+			.GetQuery<TEntity, TModel>(
 				predicates
 			)
 			.Audit(
 				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
 			)
 			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, w.Transaction)
-			)
-			.ConfigureAwait(false);
+				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+			);
+
+	/// <inheritdoc/>
+	public virtual async Task<Maybe<TModel>> QuerySingleAsync<TModel>(
+		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
+	)
+	{
+		using var w = Db.UnitOfWork;
+		return await QuerySingleAsync<TModel>(w.Transaction, predicates);
 	}
 
 	/// <inheritdoc/>
 	public virtual Task<Maybe<TModel>> QuerySingleAsync<TModel>(
+		IDbTransaction transaction,
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	) =>
 		QueryAsync<TModel>(
+			transaction,
 			predicates
 		)
 		.UnwrapAsync(

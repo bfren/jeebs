@@ -1,8 +1,9 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Clients.PostgreSql;
 using Jeebs.Data;
-using Jeebs.Data.Clients.PostgreSql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -16,7 +17,8 @@ internal sealed class App : Jeebs.Apps.App
 
 		services.AddSingleton<Db>();
 		services.AddTransient<IDb>(p => p.GetRequiredService<Db>());
-		services.AddTransient<IDbClient, PostgreSqlDbClient>();
+
+		services.AddAuthData<PostgreSqlDbClient>(true);
 
 		services.AddTransient<Repository>();
 	}

@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDbQuery"/>
 public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery

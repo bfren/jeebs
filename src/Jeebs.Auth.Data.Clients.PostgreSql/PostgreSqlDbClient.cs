@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Npgsql;
 using SimpleMigrations;
+using SimpleMigrations.Console;
 using SimpleMigrations.DatabaseProvider;
 
 namespace Jeebs.Auth.Data.Clients.PostgreSql;
@@ -17,8 +18,8 @@ public sealed class PostgreSqlDbClient : Jeebs.Data.Clients.PostgreSql.PostgreSq
 		using var db = new NpgsqlConnection(connectionString);
 
 		// Get migration objects
-		var provider = new PostgresqlDatabaseProvider(db);
-		var migrator = new SimpleMigrator(typeof(PostgreSqlDbClient).Assembly, provider);
+		var provider = new PostgresqlDatabaseProvider(db) { SchemaName = AuthDb.Schema };
+		var migrator = new SimpleMigrator(typeof(PostgreSqlDbClient).Assembly, provider, new ConsoleLogger());
 
 		// Get all the migrations
 		migrator.Load();

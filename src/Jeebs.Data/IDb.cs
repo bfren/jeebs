@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Jeebs.Config.Db;
 
 namespace Jeebs.Data;
 
@@ -16,6 +17,11 @@ public interface IDb
 	/// Database Client
 	/// </summary>
 	IDbClient Client { get; }
+
+	/// <summary>
+	/// Configuration for this database connection
+	/// </summary>
+	DbConnectionConfig Config { get; }
 
 	/// <summary>
 	/// Start a new unit of work

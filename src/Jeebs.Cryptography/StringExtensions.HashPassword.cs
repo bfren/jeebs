@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Linq;
 using Sodium;
 
 namespace Jeebs.Cryptography;
@@ -13,11 +14,19 @@ public static partial class StringExtensions
 	/// <param name="this">Password to hash</param>
 	public static string HashPassword(this string @this)
 	{
-		if (string.IsNullOrEmpty(@this))
+		// Return empty string
+		if (string.IsNullOrWhiteSpace(@this))
 		{
 			return string.Empty;
 		}
 
-		return PasswordHash.ArgonHashString(@this, PasswordHash.StrengthArgon.Moderate);
+		// Hash string and then remove null characters
+		var hash = PasswordHash
+			.ArgonHashString(@this, PasswordHash.StrengthArgon.Moderate)
+			.Where(c => c != char.MinValue)
+			.ToArray();
+
+		// Return as a string
+		return new(hash);
 	}
 }

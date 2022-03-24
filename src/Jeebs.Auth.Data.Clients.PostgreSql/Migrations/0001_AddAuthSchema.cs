@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using SimpleMigrations;
@@ -14,19 +14,16 @@ public sealed class AddAuthSchema : Migration
 	/// <summary>
 	/// Migrate up
 	/// </summary>
-	protected override void Up()
-	{
-		Execute(@"
-			CREATE SCHEMA IF NOT EXISTS ""Auth""
-			;
-		");
-	}
+	protected override void Up() => Execute($@"
+		CREATE SCHEMA IF NOT EXISTS ""{AuthDb.Schema}""
+		;
+	");
 
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down()
-	{
-		Execute(@"DROP SCHEMA IF EXISTS ""Auth"";");
-	}
+	protected override void Down() => Execute($@"
+		DROP SCHEMA IF EXISTS ""{AuthDb.Schema}""
+		;
+	");
 }

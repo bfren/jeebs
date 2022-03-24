@@ -2,12 +2,11 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Data;
 using Jeebs.Logging;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthUserRoleRepository{TUserRoleEntity}"/>
 public interface IAuthUserRoleRepository : IAuthUserRoleRepository<AuthUserRoleEntity>

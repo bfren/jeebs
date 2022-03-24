@@ -1,6 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using Jeebs.Auth.Data.Tables;
 using SimpleMigrations;
 
 namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
@@ -11,39 +13,39 @@ namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
 [Migration(1, "Add user table")]
 public sealed class AddUserTable : Migration
 {
+	private string Col(Func<AuthUserTable, string> selector) =>
+		selector(new());
+
 	/// <summary>
 	/// Migrate up
 	/// </summary>
-	protected override void Up()
-	{
-		Execute(@"
-			CREATE TABLE `Auth.User` (
-				`UserId` INT(11) NOT NULL AUTO_INCREMENT,
-				`UserVersion` INT(11) NOT NULL DEFAULT '0',
-				`UserEmailAddress` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
-				`UserPasswordHash` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
-				`UserTotpSecret` VARCHAR(64) NULL COLLATE 'utf8_general_ci',
-				`UserTotpBackupCodes` VARCHAR(132) NULL COLLATE 'utf8_general_ci',
-				`UserFriendlyName` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-				`UserGivenName` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-				`UserFamilyName` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-				`UserIsEnabled` BIT(1) NOT NULL DEFAULT b'0',
-				`UserIsSuper` BIT(1) NOT NULL DEFAULT b'0',
-				`UserLastSignedIn` DATETIME NULL DEFAULT NULL,
-				PRIMARY KEY (`UserId`) USING BTREE,
-				UNIQUE INDEX `UserEmailAddress` (`UserEmailAddress`) USING BTREE
-			)
-			COLLATE='utf8_general_ci'
-			ENGINE=InnoDB
-			;
-		");
-	}
+	protected override void Up() => Execute($@"
+		CREATE TABLE `{AuthDb.Schema}.{AuthUserTable.TableName}` (
+			`{Col(u => u.Id)}` INT(11) NOT NULL AUTO_INCREMENT,
+			`{Col(u => u.Version)}` INT(11) NOT NULL DEFAULT '0',
+			`{Col(u => u.EmailAddress)}` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.PasswordHash)}` VARCHAR(128) NOT NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.TotpSecret)}` VARCHAR(64) NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.TotpBackupCodes)}` VARCHAR(132) NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.FriendlyName)}` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.GivenName)}` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.FamilyName)}` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+			`{Col(u => u.IsEnabled)}` BIT(1) NOT NULL DEFAULT b'0',
+			`{Col(u => u.IsSuper)}` BIT(1) NOT NULL DEFAULT b'0',
+			`{Col(u => u.LastSignedIn)}` DATETIME NULL DEFAULT NULL,
+			PRIMARY KEY (`{Col(u => u.Id)}`) USING BTREE,
+			UNIQUE INDEX `{Col(u => u.EmailAddress)}` (`{Col(u => u.EmailAddress)}`) USING BTREE
+		)
+		COLLATE='utf8_general_ci'
+		ENGINE=InnoDB
+		;
+	");
 
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down()
-	{
-		Execute("DROP TABLE `Auth.User`;");
-	}
+	protected override void Down() => Execute($@"
+		DROP TABLE `{AuthDb.Schema}.{AuthUserTable.TableName}`
+		;
+	");
 }

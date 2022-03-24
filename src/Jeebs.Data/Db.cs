@@ -19,9 +19,7 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public IDbClient Client { get; private init; }
 
-	/// <summary>
-	/// Configuration for this database connection
-	/// </summary>
+	/// <inheritdoc/>
 	public DbConnectionConfig Config { get; private init; }
 
 	/// <summary>

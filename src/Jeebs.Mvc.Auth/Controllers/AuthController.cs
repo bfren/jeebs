@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Jeebs.Auth;
+using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Auth.Jwt.Functions;
