@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// Command dispatcher
+/// CQRS command dispatcher
 /// </summary>
 public interface ICommandDispatcher
 {
-	/// <inheritdoc cref="DispatchAsync{TCommand, TResult}(TCommand, CancellationToken)"/>
-	ValueTask<Maybe<TResult>> DispatchAsync<TCommand, TResult>(TCommand query) =>
-		DispatchAsync<TCommand, TResult>(query, CancellationToken.None);
+	/// <inheritdoc cref="DispatchAsync{TCommand}(TCommand, CancellationToken)"/>
+	Task<Maybe<bool>> DispatchAsync<TCommand>(TCommand query)
+		where TCommand : ICommand =>
+		DispatchAsync(query, CancellationToken.None);
 
 	/// <summary>
 	/// Create command of type <typeparamref name="TCommand"/> and dispatch
 	/// </summary>
 	/// <typeparam name="TCommand">Command type</typeparam>
-	/// <typeparam name="TResult">Command result</typeparam>
 	/// <param name="query">Command object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	ValueTask<Maybe<TResult>> DispatchAsync<TCommand, TResult>(TCommand query, CancellationToken cancellationToken);
+	Task<Maybe<bool>> DispatchAsync<TCommand>(TCommand query, CancellationToken cancellationToken)
+		where TCommand : ICommand;
 }

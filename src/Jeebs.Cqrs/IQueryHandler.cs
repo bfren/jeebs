@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// Query handler
+/// CQRS query handler
 /// </summary>
 /// <typeparam name="TQuery">Query type</typeparam>
-/// <typeparam name="TResult">Query result</typeparam>
+/// <typeparam name="TResult">Query result value type</typeparam>
 public interface IQueryHandler<TQuery, TResult>
+	where TQuery : IQuery<TResult>
 {
 	/// <inheritdoc cref="HandleAsync(TQuery, CancellationToken)"/>
 	Task<Maybe<TResult>> HandleAsync(TQuery query) =>

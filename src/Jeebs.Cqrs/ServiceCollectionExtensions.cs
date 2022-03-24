@@ -28,7 +28,7 @@ public static class ServiceCollectionExtensions
 		// Add commands
 		_ = services.Scan(selector => selector
 			.FromAssemblies(assemblies)
-			.AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<,>)))
+			.AddClasses(filter => filter.AssignableTo(typeof(ICommandHandler<>)))
 			.AsImplementedInterfaces()
 			.WithSingletonLifetime()
 		);
