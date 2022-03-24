@@ -199,20 +199,22 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Maybe<bool>> DeleteAsync(TId id)
+	public virtual async Task<Maybe<bool>> DeleteAsync<TModel>(TModel model)
+		where TModel : IWithId
 	{
 		using var w = Db.UnitOfWork;
-		return await DeleteAsync(id, w.Transaction).ConfigureAwait(false);
+		return await DeleteAsync(model, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Maybe<bool>> DeleteAsync(TId id, IDbTransaction transaction) =>
-		Db.Client.GetDeleteQuery<TEntity>(id.Value)
+	public virtual Task<Maybe<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
+		where TModel : IWithId =>
+		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(DeleteAsync), x, id)
+			some: x => LogFunc(nameof(DeleteAsync), x, model)
 		)
 		.BindAsync(
-			x => Db.ExecuteAsync(x, null, CommandType.Text, transaction)
+			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
 		);
 
 	#endregion CRUD Queries

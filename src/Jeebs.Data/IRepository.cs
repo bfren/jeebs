@@ -113,15 +113,18 @@ public interface IRepository<TEntity, TId>
 	Task<Maybe<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId;
 
-	/// <inheritdoc cref="DeleteAsync(TId, IDbTransaction)"/>
-	Task<Maybe<bool>> DeleteAsync(TId id);
+	/// <inheritdoc cref="DeleteAsync(TModel, IDbTransaction)"/>
+	Task<Maybe<bool>> DeleteAsync<TModel>(TModel model)
+		where TModel : IWithId;
 
 	/// <summary>
 	/// Delete an entity
 	/// </summary>
-	/// <param name="id">Entity ID</param>
+	/// <typeparam name="TModel">Model type</typeparam>
+	/// <param name="model">Model containing ID of entity to delete (and Version if required)</param>
 	/// <param name="transaction">Database transaction</param>
-	Task<Maybe<bool>> DeleteAsync(TId id, IDbTransaction transaction);
+	Task<Maybe<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
+		where TModel : IWithId;
 
 	#endregion CRUD Queries
 }
