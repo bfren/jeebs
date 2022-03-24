@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using SimpleMigrations;
@@ -28,8 +28,8 @@ public sealed class AddUserTable : Migration
 				""UserFriendlyName"" character(32) COLLATE pg_catalog.default,
 				""UserGivenName"" character(128) COLLATE pg_catalog.default,
 				""UserFamilyName"" character(128) COLLATE pg_catalog.default,
-				""UserIsEnabled"" bit(1) NOT NULL DEFAULT (0)::bit(1),
-				""UserIsSuper"" bit(1) NOT NULL DEFAULT (0)::bit(1),
+				""UserIsEnabled"" boolean NOT NULL DEFAULT false,
+				""UserIsSuper"" boolean NOT NULL DEFAULT false,
 				""UserLastSignedIn"" timestamp without time zone,
 				CONSTRAINT ""UserId_Key"" PRIMARY KEY(""UserId""),
 				CONSTRAINT ""UserEmailAddress_Unique"" UNIQUE(""UserEmailAddress"")
