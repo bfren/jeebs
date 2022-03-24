@@ -3,7 +3,6 @@
 
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Entities;
 using Jeebs.Config.Web.Auth;
 using Jeebs.Config.Web.Auth.Jwt;
 using Jeebs.Data;
@@ -29,7 +28,7 @@ public sealed class AuthBuilder
 
 	private readonly AuthConfig config;
 
-	private bool providerAdded;
+	private bool dataAdded;
 
 	/// <summary>
 	/// Inject dependencies
@@ -66,54 +65,22 @@ public sealed class AuthBuilder
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
 	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>
+	/// <exception cref="AuthDataAlreadyAddedException"></exception>
 	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)
 		where TDbClient : class, IAuthDbClient
 	{
-		CheckProvider();
-
-		// Register Auth database classes
-		_ = services.AddSingleton<AuthDb>();
-		_ = services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
-		_ = services.AddSingleton<TDbClient>();
-		_ = services.AddSingleton<IAuthDbClient>(s => s.GetRequiredService<TDbClient>());
-
-		_ = services.AddScoped<AuthDbQuery>();
-		_ = services.AddScoped<IAuthDbQuery, AuthDbQuery>();
-
-		// Share auth database with main database
-		if (useAuthDbClientAsMain)
+		// Only allow WithData to be called once
+		if (dataAdded)
 		{
-			_ = services.AddSingleton<IDbClient>(s => s.GetRequiredService<TDbClient>());
+			throw new AuthDataAlreadyAddedException();
 		}
+		dataAdded = true;
 
-		// Register Auth repositories
-		_ = services.AddScoped<AuthUserRepository>();
-		_ = services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
-		_ = services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
+		// Add services
+		_ = services.AddAuthData<TDbClient>(useAuthDbClientAsMain);
 
-		_ = services.AddScoped<AuthRoleRepository>();
-		_ = services.AddScoped<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
-		_ = services.AddScoped<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
-
-		_ = services.AddScoped<AuthUserRoleRepository>();
-		_ = services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
-		_ = services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
-
-		// Register Auth provider
-		_ = services.AddScoped<AuthDataProvider>();
-		_ = services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
-
+		// Return builder
 		return this;
-	}
-
-	private void CheckProvider()
-	{
-		if (providerAdded)
-		{
-			throw new AuthProviderAlreadyAddedException();
-		}
-
-		providerAdded = true;
 	}
 
 	/// <summary>
