@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
@@ -10,7 +10,8 @@ public sealed class HashPassword_Tests
 	[Theory]
 	[InlineData(null)]
 	[InlineData("")]
-	public void HashPassword_NullOrEmpty_ThrowsArgumentNullException(string input)
+	[InlineData(" ")]
+	public void HashPassword_NullOrWhiteSpace_Returns_Empty_String(string input)
 	{
 		// Arrange
 
