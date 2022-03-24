@@ -19,9 +19,9 @@ public class GetColumnFromExpression_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		_ = Assert.IsType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>(n0);
+		Assert.IsType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>(n0);
 		var n1 = r1.AssertNone();
-		_ = Assert.IsType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>(n1);
+		Assert.IsType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>(n1);
 	}
 
 	[Fact]

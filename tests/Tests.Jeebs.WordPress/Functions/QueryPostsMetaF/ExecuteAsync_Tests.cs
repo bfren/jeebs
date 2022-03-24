@@ -20,7 +20,7 @@ public class ExecuteAsync_Tests : Query_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<ErrorGettingQueryPostsMetaOptionsMsg>(none);
+		Assert.IsType<ErrorGettingQueryPostsMetaOptionsMsg>(none);
 	}
 
 	[Fact]
@@ -30,10 +30,10 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, v) = Setup();
 
 		// Act
-		_ = await QueryPostsMetaF.ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
+		await QueryPostsMetaF.ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
 
 		// Assert
-		_ = await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);
+		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);
 	}
 
 	public record class Test : WpPostMetaEntity;

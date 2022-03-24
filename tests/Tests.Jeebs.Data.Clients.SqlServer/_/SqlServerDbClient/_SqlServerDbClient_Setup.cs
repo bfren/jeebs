@@ -13,7 +13,7 @@ public static class SqlServerDbClient_Setup
 		var name = Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
-		_ = table.GetName().Returns(tableName);
+		table.GetName().Returns(tableName);
 		var client = new SqlServerDbClient();
 
 		return (client, new(table, schema, name));

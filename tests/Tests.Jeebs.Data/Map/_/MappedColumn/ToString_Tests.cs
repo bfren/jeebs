@@ -13,7 +13,7 @@ public class ToString_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
-		_ = prop.Name.Returns(Rnd.Str);
+		prop.Name.Returns(Rnd.Str);
 		var column = new MappedColumn(new TableName(Rnd.Str), name, prop);
 
 		// Act

@@ -24,7 +24,7 @@ public class VerifyCode_Tests
 	{
 		// Arrange
 		var key = Rnd.ByteF.Get(8);
-		_ = TotpF.GenerateCode(key, TotpSettings.Default);
+		TotpF.GenerateCode(key, TotpSettings.Default);
 
 		// Act
 		var result = TotpF.VerifyCode(key, Rnd.Str, TotpSettings.Default);

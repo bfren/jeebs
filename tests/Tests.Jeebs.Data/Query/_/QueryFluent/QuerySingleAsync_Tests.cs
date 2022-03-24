@@ -21,7 +21,7 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<NoPredicatesMsg>(none);
+		Assert.IsType<NoPredicatesMsg>(none);
 	}
 
 	[Fact]
@@ -30,13 +30,13 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 		// Arrange
 		var (query, v) = Setup();
 		var predicates = Substitute.For<IImmutableList<(Expression<Func<TestEntity, object>>, Compare, object)>>();
-		_ = predicates.Count.Returns(1);
+		predicates.Count.Returns(1);
 
 		// Act
-		_ = await (query with { Predicates = predicates }).QuerySingleAsync<int>().ConfigureAwait(false);
+		await (query with { Predicates = predicates }).QuerySingleAsync<int>().ConfigureAwait(false);
 
 		// Assert
 		var array = predicates.Received().ToArray();
-		_ = await v.Repo.Received().QuerySingleAsync<int>(array).ConfigureAwait(false);
+		await v.Repo.Received().QuerySingleAsync<int>(array).ConfigureAwait(false);
 	}
 }

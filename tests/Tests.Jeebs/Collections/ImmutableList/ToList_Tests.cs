@@ -17,7 +17,7 @@ public class ToList_Tests
 		var result = list.ToList();
 
 		// Assert
-		_ = Assert.IsType<List<int>>(result);
+		Assert.IsType<List<int>>(result);
 		Assert.Collection(result,
 			x => Assert.Equal(i0, x),
 			x => Assert.Equal(i1, x)

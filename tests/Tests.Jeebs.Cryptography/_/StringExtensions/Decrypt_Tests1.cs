@@ -23,7 +23,7 @@ public partial class Decrypt_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
+		Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
 	}
 
 	[Fact]
@@ -38,7 +38,7 @@ public partial class Decrypt_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<DeserialiseExceptionMsg>(none);
+		Assert.IsType<DeserialiseExceptionMsg>(none);
 	}
 
 	[Fact]
@@ -51,7 +51,7 @@ public partial class Decrypt_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public partial class Decrypt_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
 	}
 
 	[Fact]
@@ -80,7 +80,7 @@ public partial class Decrypt_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
+		Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
 	}
 
 	[Fact]

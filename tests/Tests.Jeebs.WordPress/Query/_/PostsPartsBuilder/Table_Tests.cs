@@ -24,6 +24,6 @@ public class Table_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, WpPostId>
 		var result = builder.Table;
 
 		// Assert
-		_ = Assert.IsType<PostsTable>(result);
+		Assert.IsType<PostsTable>(result);
 	}
 }

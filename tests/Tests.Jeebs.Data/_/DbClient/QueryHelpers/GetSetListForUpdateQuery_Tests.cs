@@ -26,8 +26,8 @@ public class GetSetListForUpdateQuery_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		_ = client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
-		_ = client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
+		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
+		client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
@@ -40,8 +40,8 @@ public class GetSetListForUpdateQuery_Tests
 		var result = client.GetSetListForUpdateQueryTest(columns);
 
 		// Assert
-		_ = client.Received().Escape(column);
-		_ = client.Received().GetParamRef(alias);
+		client.Received().Escape(column);
+		client.Received().GetParamRef(alias);
 		Assert.Collection(result,
 			x => Assert.Equal(expected, x)
 		);

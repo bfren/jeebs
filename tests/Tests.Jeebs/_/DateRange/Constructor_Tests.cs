@@ -30,7 +30,7 @@ public class StartMustBeBeforeEnd_Tests
 		var result = new DateRange(date1, date2);
 
 		// Assert
-		_ = Assert.IsType<DateRange>(result);
+		Assert.IsType<DateRange>(result);
 	}
 
 	[Fact]
@@ -44,6 +44,6 @@ public class StartMustBeBeforeEnd_Tests
 		var incorrect = object () => new DateRange(date2, date1);
 
 		// Assert
-		_ = Assert.Throws<ArgumentException>(incorrect);
+		Assert.Throws<ArgumentException>(incorrect);
 	}
 }

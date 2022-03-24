@@ -21,7 +21,7 @@ public class GetWriteableColumnNamesAndAliases_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<NoWriteableColumnsFoundMsg>(none);
+		Assert.IsType<NoWriteableColumnsFoundMsg>(none);
 	}
 
 	[Fact]

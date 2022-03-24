@@ -11,7 +11,7 @@ public class IsRegistered_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var type = new Taxonomy(name);
-		_ = Taxonomy.AddCustomTaxonomy(type);
+		Taxonomy.AddCustomTaxonomy(type);
 
 		// Act
 		var result = Taxonomy.IsRegistered(type);

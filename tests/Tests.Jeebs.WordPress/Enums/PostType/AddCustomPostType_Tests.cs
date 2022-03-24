@@ -28,7 +28,7 @@ public class AddCustomPostType_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var type = new PostType(name);
-		_ = PostType.AddCustomPostType(type);
+		PostType.AddCustomPostType(type);
 
 		// Act
 		var result = PostType.AddCustomPostType(type);

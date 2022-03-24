@@ -20,7 +20,7 @@ public class Where_Tests
 		var action = void () => builder.Where<TestTable>(t => t.Foo, Compare.Equal, Rnd.Str);
 
 		// Assert
-		_ = Assert.Throws<WhereTableNotAddedException<TestTable>>(action);
+		Assert.Throws<WhereTableNotAddedException<TestTable>>(action);
 	}
 
 	[Fact]

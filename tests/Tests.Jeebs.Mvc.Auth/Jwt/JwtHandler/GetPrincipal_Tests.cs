@@ -15,9 +15,9 @@ public class GetPrincipal_Tests
 		var value = Rnd.Str;
 
 		// Act
-		_ = JwtHandler.GetPrincipal(auth, value);
+		JwtHandler.GetPrincipal(auth, value);
 
 		// Assert
-		_ = auth.Received().ValidateToken(value);
+		auth.Received().ValidateToken(value);
 	}
 }

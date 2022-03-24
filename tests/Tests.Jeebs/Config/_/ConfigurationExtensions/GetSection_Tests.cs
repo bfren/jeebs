@@ -15,10 +15,10 @@ public class GetSection_Tests
 		var key = Rnd.Str;
 
 		// Act
-		_ = config.GetSection<object>(key, false);
+		config.GetSection<object>(key, false);
 
 		// Assert
-		_ = config.Received().GetSection(key);
+		config.Received().GetSection(key);
 	}
 
 	[Fact]
@@ -29,10 +29,10 @@ public class GetSection_Tests
 		var key = $":{Rnd.Str}";
 
 		// Act
-		_ = config.GetSection<object>(key, false);
+		config.GetSection<object>(key, false);
 
 		// Assert
-		_ = config.Received().GetSection($"jeebs{key}");
+		config.Received().GetSection($"jeebs{key}");
 	}
 
 	[Fact]
@@ -43,12 +43,12 @@ public class GetSection_Tests
 		var key = $":{Rnd.Str}";
 
 		// Act
-		_ = config.GetSection<object>(key);
-		_ = config.GetSection<object>(key);
-		_ = config.GetSection<object>(key);
+		config.GetSection<object>(key);
+		config.GetSection<object>(key);
+		config.GetSection<object>(key);
 
 		// Assert
-		_ = config.Received(1).GetSection($"jeebs{key}");
+		config.Received(1).GetSection($"jeebs{key}");
 	}
 
 	[Fact]
@@ -60,7 +60,7 @@ public class GetSection_Tests
 		var b1 = Rnd.Int;
 
 		var builder = new ConfigurationBuilder();
-		_ = builder.AddInMemoryCollection(new Dictionary<string, string?>
+		builder.AddInMemoryCollection(new Dictionary<string, string?>
 		{
 			{ $"{key}:{nameof(Foo.Bar0)}", b0 },
 			{ $"{key}:{nameof(Foo.Bar1)}", b1.ToString() }

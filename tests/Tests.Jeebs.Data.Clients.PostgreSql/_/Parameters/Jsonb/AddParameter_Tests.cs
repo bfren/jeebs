@@ -18,13 +18,13 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 
 			var collection = Substitute.For<IDataParameterCollection>();
 			var command = Substitute.For<IDbCommand>();
-			_ = command.Parameters.Returns(collection);
+			command.Parameters.Returns(collection);
 
 			// Act
 			param.AddParameter(command, name);
 
 			// Assert
-			_ = collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.NpgsqlDbType == NpgsqlTypes.NpgsqlDbType.Jsonb));
+			collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.NpgsqlDbType == NpgsqlTypes.NpgsqlDbType.Jsonb));
 		}
 
 		[Fact]
@@ -37,13 +37,13 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
 
 			var collection = Substitute.For<IDataParameterCollection>();
 			var command = Substitute.For<IDbCommand>();
-			_ = command.Parameters.Returns(collection);
+			command.Parameters.Returns(collection);
 
 			// Act
 			param.AddParameter(command, name);
 
 			// Assert
-			_ = collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.Value == (object)value));
+			collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.Value == (object)value));
 		}
 	}
 }

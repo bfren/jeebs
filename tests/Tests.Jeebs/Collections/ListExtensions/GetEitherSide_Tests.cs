@@ -18,9 +18,9 @@ public class GetEitherSide_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		_ = Assert.IsType<ListIsEmptyMsg>(n0);
+		Assert.IsType<ListIsEmptyMsg>(n0);
 		var n1 = r1.AssertNone();
-		_ = Assert.IsType<ListIsEmptyMsg>(n1);
+		Assert.IsType<ListIsEmptyMsg>(n1);
 	}
 
 	[Fact]
@@ -34,9 +34,9 @@ public class GetEitherSide_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		_ = Assert.IsType<ListContainsSingleItemMsg>(n0);
+		Assert.IsType<ListContainsSingleItemMsg>(n0);
 		var n1 = r1.AssertNone();
-		_ = Assert.IsType<ListContainsSingleItemMsg>(n1);
+		Assert.IsType<ListContainsSingleItemMsg>(n1);
 	}
 
 	[Fact]
@@ -71,7 +71,7 @@ public class GetEitherSide_Tests
 
 		// Assert
 		var none = r0.AssertNone();
-		_ = Assert.IsType<ItemIsFirstItemMsg>(none);
+		Assert.IsType<ItemIsFirstItemMsg>(none);
 		var some = r1.AssertSome();
 		Assert.Equal(next, some);
 	}
@@ -91,7 +91,7 @@ public class GetEitherSide_Tests
 		var some = r0.AssertSome();
 		Assert.Equal(prev, some);
 		var none = r1.AssertNone();
-		_ = Assert.IsType<ItemIsLastItemMsg>(none);
+		Assert.IsType<ItemIsLastItemMsg>(none);
 	}
 
 	[Fact]

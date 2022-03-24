@@ -16,7 +16,7 @@ public class Parse_Tests
 		var result = EnumF.Parse<TestA>(input);
 
 		// Assert
-		_ = result.AssertNone();
+		result.AssertNone();
 	}
 
 	[Fact]
@@ -42,7 +42,7 @@ public class Parse_Tests
 		var result = EnumF.Parse<TestA>(input);
 
 		// Assert
-		_ = result.AssertNone();
+		result.AssertNone();
 	}
 
 	[Fact]
@@ -55,7 +55,7 @@ public class Parse_Tests
 		var result = EnumF.Parse(typeof(string), input);
 
 		// Assert
-		_ = result.AssertNone();
+		result.AssertNone();
 	}
 
 	public enum TestA

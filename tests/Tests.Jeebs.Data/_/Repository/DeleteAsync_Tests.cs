@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Repository_Tests;
@@ -13,10 +13,10 @@ public class DeleteAsync_Tests
 		var value = Rnd.Lng;
 
 		// Act
-		_ = await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
+		await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
-		_ = client.Received().GetDeleteQuery<Repository_Setup.Foo>(value);
+		client.Received().GetDeleteQuery<Repository_Setup.Foo>(value);
 	}
 
 	[Fact]
@@ -27,7 +27,7 @@ public class DeleteAsync_Tests
 		var value = Rnd.Lng;
 
 		// Act
-		_ = await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
+		await repo.DeleteAsync(new Repository_Setup.FooId(value)).ConfigureAwait(false);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());

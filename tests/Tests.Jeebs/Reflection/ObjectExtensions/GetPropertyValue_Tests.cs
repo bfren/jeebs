@@ -19,9 +19,9 @@ public class GetPropertyValue_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		_ = Assert.IsType<PropertyNotFoundMsg>(n0);
+		Assert.IsType<PropertyNotFoundMsg>(n0);
 		var n1 = r1.AssertNone();
-		_ = Assert.IsType<PropertyNotFoundMsg>(n1);
+		Assert.IsType<PropertyNotFoundMsg>(n1);
 	}
 
 	[Fact]
@@ -35,7 +35,7 @@ public class GetPropertyValue_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<UnexpectedPropertyTypeMsg<int>>(none);
+		Assert.IsType<UnexpectedPropertyTypeMsg<int>>(none);
 	}
 
 	[Theory]
@@ -51,9 +51,9 @@ public class GetPropertyValue_Tests
 
 		// Assert
 		var n0 = r0.AssertNone();
-		_ = Assert.IsType<NullValueMsg<object>>(n0);
+		Assert.IsType<NullValueMsg<object>>(n0);
 		var n1 = r1.AssertNone();
-		_ = Assert.IsType<NullValueMsg<string>>(n1);
+		Assert.IsType<NullValueMsg<string>>(n1);
 	}
 
 	[Fact]

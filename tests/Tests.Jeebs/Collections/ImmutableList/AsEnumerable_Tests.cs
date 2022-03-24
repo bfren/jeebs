@@ -17,7 +17,7 @@ public class AsEnumerable_Tests
 		var result = list.AsEnumerable();
 
 		// Assert
-		_ = Assert.IsAssignableFrom<IEnumerable<int>>(result);
+		Assert.IsAssignableFrom<IEnumerable<int>>(result);
 		Assert.Collection(result,
 			x => Assert.Equal(i0, x),
 			x => Assert.Equal(i1, x)

@@ -13,13 +13,13 @@ public class Build_Tests
 	{
 		// Arrange
 		var builder = Substitute.For<Func<IQueryBuilder, IQueryBuilderWithFrom>>();
-		_ = builder.Invoke(Arg.Any<IQueryBuilder>()).Throws<Exception>();
+		builder.Invoke(Arg.Any<IQueryBuilder>()).Throws<Exception>();
 
 		// Act
 		var result = QueryBuilderF.Build<int>(builder);
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<QueryBuilderExceptionMsg>(none);
+		Assert.IsType<QueryBuilderExceptionMsg>(none);
 	}
 }

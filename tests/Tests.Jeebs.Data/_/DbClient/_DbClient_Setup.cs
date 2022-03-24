@@ -19,7 +19,7 @@ public static class DbClient_Setup
 		var connection = Substitute.For<IDbConnection>();
 
 		var client = Substitute.For<IDbClient>();
-		_ = client.Connect(Arg.Any<string>()).Returns(connection);
+		client.Connect(Arg.Any<string>()).Returns(connection);
 
 		var db = Substitute.ForPartsOf<Db>(client, config, log);
 

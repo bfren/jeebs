@@ -16,7 +16,7 @@ public class Set_Tests
 		var result = void () => info.Set(obj, Rnd.Str);
 
 		// Assert
-		_ = Assert.Throws<ArgumentNullException>(result);
+		Assert.Throws<ArgumentNullException>(result);
 	}
 
 	[Theory]
@@ -31,7 +31,7 @@ public class Set_Tests
 		var result = void () => info.Set(foo, value);
 
 		// Assert
-		_ = Assert.Throws<ArgumentNullException>(result);
+		Assert.Throws<ArgumentNullException>(result);
 	}
 
 	[Fact]

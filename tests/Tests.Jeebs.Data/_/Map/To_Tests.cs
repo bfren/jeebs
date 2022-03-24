@@ -14,10 +14,10 @@ public class To_Tests
 		var svc = Substitute.For<IMapper>();
 
 		// Act
-		_ = Map<Foo>.To<FooTable>(svc);
+		Map<Foo>.To<FooTable>(svc);
 
 		// Assert
-		_ = svc.Received().Map<Foo>(Arg.Any<FooTable>());
+		svc.Received().Map<Foo>(Arg.Any<FooTable>());
 	}
 
 	[Fact]
@@ -28,9 +28,9 @@ public class To_Tests
 		var table = new FooTable();
 
 		// Act
-		_ = Map<Foo>.To(table, svc);
+		Map<Foo>.To(table, svc);
 
 		// Assert
-		_ = svc.Received().Map<Foo>(Arg.Any<FooTable>());
+		svc.Received().Map<Foo>(Arg.Any<FooTable>());
 	}
 }

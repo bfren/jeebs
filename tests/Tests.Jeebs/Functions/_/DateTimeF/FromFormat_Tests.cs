@@ -32,7 +32,7 @@ public class FromFormat_Tests
 		var result = DateTimeF.FromFormat(input, format);
 
 		// Assert
-		_ = result.AssertNone();
+		result.AssertNone();
 	}
 
 	[Fact]
@@ -46,7 +46,7 @@ public class FromFormat_Tests
 		var result = DateTimeF.FromFormat(input, format);
 
 		// Assert
-		_ = result.AssertNone();
+		result.AssertNone();
 	}
 
 	[Fact]
@@ -60,6 +60,6 @@ public class FromFormat_Tests
 		var result = DateTimeF.FromFormat(input, format);
 
 		// Assert
-		_ = result.AssertNone();
+		result.AssertNone();
 	}
 }

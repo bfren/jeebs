@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Functions.JsonF.M;
@@ -67,7 +67,7 @@ public class ReadJson_Tests
 
 		// Assert
 		var none = result.AssertNone();
-		_ = Assert.IsType<DeserialiseExceptionMsg>(none);
+		Assert.IsType<DeserialiseExceptionMsg>(none);
 	}
 
 	public record class EnumeratedTest0 : Enumerated

@@ -13,7 +13,7 @@ public static class PostgreSqlDbClient_Setup
 		var name = Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
-		_ = table.GetName().Returns(tableName);
+		table.GetName().Returns(tableName);
 		var client = new PostgreSqlDbClient();
 
 		return (client, new(table, schema, name));

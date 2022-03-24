@@ -11,7 +11,7 @@ public class GetColumnAliases_Tests
 	{
 		var alias = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
-		_ = prop.Name.Returns(alias);
+		prop.Name.Returns(alias);
 		return (alias, new MappedColumn(new TableName(Rnd.Str), Rnd.Str, prop));
 	}
 
