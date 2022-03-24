@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// Command handler
+/// CQRS command handler
 /// </summary>
 /// <typeparam name="TCommand">Command type</typeparam>
-/// <typeparam name="TResult">Command result</typeparam>
-public interface ICommandHandler<TCommand, TResult>
+public interface ICommandHandler<TCommand>
+	where TCommand : ICommand
 {
 	/// <inheritdoc cref="HandleAsync(TCommand, CancellationToken)"/>
-	ValueTask<Maybe<TResult>> HandleAsync(TCommand query) =>
+	Task<Maybe<bool>> HandleAsync(TCommand query) =>
 		HandleAsync(query, CancellationToken.None);
 
 	/// <summary>
@@ -22,5 +22,5 @@ public interface ICommandHandler<TCommand, TResult>
 	/// </summary>
 	/// <param name="query">Command object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	ValueTask<Maybe<TResult>> HandleAsync(TCommand query, CancellationToken cancellationToken);
+	Task<Maybe<bool>> HandleAsync(TCommand query, CancellationToken cancellationToken);
 }
