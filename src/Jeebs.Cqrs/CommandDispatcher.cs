@@ -5,8 +5,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
+using Jeebs.Cqrs.Messages;
 using Jeebs.Logging;
-using Jeebs.Messages;
 
 namespace Jeebs.Cqrs;
 
@@ -34,7 +34,7 @@ public sealed class CommandDispatcher : ICommandDispatcher
 	{
 		// Make generic handler type
 		var handlerType = typeof(CommandHandler<>).MakeGenericType(command.GetType());
-		Log.Dbg("Command handler type: {Type}", handlerType);
+		Log.Vrb("Command handler type: {Type}", handlerType);
 
 		// Get service and handle query
 		var service = Provider.GetService(handlerType);
@@ -44,19 +44,7 @@ public sealed class CommandDispatcher : ICommandDispatcher
 				handler.HandleAsync(command, cancellationToken),
 
 			_ =>
-				F.None<bool>(new M.UnableToGetCommandHandlerMsg(command.GetType())).AsTask
+				F.None<bool>(new UnableToGetCommandHandlerMsg(command.GetType())).AsTask
 		};
-	}
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Unable to get command handler</summary>
-		/// <param name="Value">Command Type</param>
-		public sealed record class UnableToGetCommandHandlerMsg(Type Value) : WithValueMsg<Type>
-		{
-			/// <summary>Change value name to 'Command Type'</summary>
-			public override string Name { get; init; } = "Command Type";
-		}
 	}
 }

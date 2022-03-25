@@ -5,8 +5,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
+using Jeebs.Cqrs.Messages;
 using Jeebs.Logging;
-using Jeebs.Messages;
 
 namespace Jeebs.Cqrs;
 
@@ -44,19 +44,7 @@ public sealed class QueryDispatcher : IQueryDispatcher
 				handler.HandleAsync(query, cancellationToken),
 
 			_ =>
-				F.None<TResult>(new M.UnableToGetQueryHandlerMsg(query.GetType())).AsTask
+				F.None<TResult>(new UnableToGetQueryHandlerMsg(query.GetType())).AsTask
 		};
-	}
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Unable to get query handler</summary>
-		/// <param name="Value">Query Type</param>
-		public sealed record class UnableToGetQueryHandlerMsg(Type Value) : WithValueMsg<Type>
-		{
-			/// <summary>Change value name to 'Query Type'</summary>
-			public override string Name { get; init; } = "Query Type";
-		}
 	}
 }

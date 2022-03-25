@@ -1,8 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Cqrs.Messages;
 using Jeebs.Logging;
-using static Jeebs.Cqrs.CommandDispatcher.M;
 
 namespace Jeebs.Cqrs.CommandDispatcher_Tests;
 
@@ -22,7 +22,7 @@ public class DispatchAsync_Tests
 		await dispatcher.DispatchAsync(command, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
-		log.Received(2).Dbg("Command handler type: {Type}", typeof(CommandHandler<Command>));
+		log.Received(2).Vrb("Command handler type: {Type}", typeof(CommandHandler<Command>));
 	}
 
 	[Fact]

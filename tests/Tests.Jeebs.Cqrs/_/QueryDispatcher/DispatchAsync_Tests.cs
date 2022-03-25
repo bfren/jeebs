@@ -1,8 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Cqrs.Messages;
 using Jeebs.Logging;
-using static Jeebs.Cqrs.QueryDispatcher.M;
 
 namespace Jeebs.Cqrs.QueryDispatcher_Tests;
 
@@ -22,7 +22,7 @@ public class DispatchAsync_Tests
 		await dispatcher.DispatchAsync(query, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
-		log.Received(2).Dbg("Query handler type: {Type}", typeof(QueryHandler<Query, bool>));
+		log.Received(2).Vrb("Query handler type: {Type}", typeof(QueryHandler<Query, bool>));
 	}
 
 	[Fact]
