@@ -20,9 +20,8 @@ public static class ServiceCollectionExtensions
 	/// <param name="services">IServiceCollection</param>
 	public static IServiceCollection AddCqrs(this IServiceCollection services)
 	{
-		// Add dispatchers
-		_ = services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
-		_ = services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
+		// Add dispatcher
+		_ = services.AddSingleton<IDispatcher, Dispatcher>();
 
 		// Add handlers
 		AddHandlers(services, typeof(CommandHandler<>), 1);
