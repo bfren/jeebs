@@ -9,7 +9,7 @@ namespace Jeebs.Cqrs.CommandDispatcher_Tests;
 public class DispatchAsync_Tests
 {
 	[Fact]
-	public async Task Calls_Log_Dbg()
+	public async Task Calls_Log_Vrb()
 	{
 		// Arrange
 		var provider = Substitute.For<IServiceProvider>();

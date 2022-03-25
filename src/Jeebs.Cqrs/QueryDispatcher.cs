@@ -34,7 +34,7 @@ public sealed class QueryDispatcher : IQueryDispatcher
 	{
 		// Make generic handler type
 		var handlerType = typeof(QueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
-		Log.Dbg("Query handler type: {Type}", handlerType);
+		Log.Vrb("Query handler type: {Type}", handlerType);
 
 		// Get service and handle query
 		var service = Provider.GetService(handlerType);
