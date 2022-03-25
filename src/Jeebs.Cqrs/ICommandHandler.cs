@@ -7,20 +7,11 @@ using System.Threading.Tasks;
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// CQRS command handler
+/// Command handler interface which allows generic dispatching - see
+/// <see cref="CommandHandler{TCommand}.HandleAsync(TCommand, CancellationToken)"/>
 /// </summary>
-/// <typeparam name="TCommand">Command type</typeparam>
-public interface ICommandHandler<TCommand>
-	where TCommand : ICommand
+internal interface ICommandHandler
 {
-	/// <inheritdoc cref="HandleAsync(TCommand, CancellationToken)"/>
-	Task<Maybe<bool>> HandleAsync(TCommand query) =>
-		HandleAsync(query, CancellationToken.None);
-
-	/// <summary>
-	/// Handle command
-	/// </summary>
-	/// <param name="query">Command object</param>
-	/// <param name="cancellationToken">Cancellation token</param>
-	Task<Maybe<bool>> HandleAsync(TCommand query, CancellationToken cancellationToken);
+	/// <inheritdoc cref="CommandHandler{TCommand}.HandleAsync(TCommand, CancellationToken)"/>
+	Task<Maybe<bool>> HandleAsync(ICommand command, CancellationToken cancellationToken);
 }
