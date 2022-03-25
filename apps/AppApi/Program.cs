@@ -6,7 +6,7 @@ using Jeebs.Cqrs;
 using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 
-var app = Jeebs.Apps.Web.ApiApp.Create(args,
+var app = Jeebs.Apps.Web.ApiApp.CreateMinimal(args,
 	(_, services) => services.AddCqrs()
 );
 
