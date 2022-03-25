@@ -1,10 +1,10 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Jeebs.Messages;
+using Jeebs.Cqrs.Internals;
+using Jeebs.Cqrs.Messages;
 
 namespace Jeebs.Cqrs;
 
@@ -35,15 +35,6 @@ public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 				HandleAsync(x, cancellationToken),
 
 			_ =>
-				F.None<TResult>(new M.IncorrectQueryTypeMsg(typeof(TQuery), query.GetType())).AsTask
+				F.None<TResult>(new IncorrectQueryTypeMsg(typeof(TQuery), query.GetType())).AsTask
 		};
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>The query is an incorrect type for the handler</summary>
-		/// <param name="ExpectedType">Expected query type</param>
-		/// <param name="ActualType">Actual query type</param>
-		public sealed record class IncorrectQueryTypeMsg(Type ExpectedType, Type ActualType) : Msg;
-	}
 }

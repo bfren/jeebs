@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Jeebs.Cqrs;
+namespace Jeebs.Cqrs.Internals;
 
 /// <summary>
 /// Query handler interface which allows generic dispatching - see
