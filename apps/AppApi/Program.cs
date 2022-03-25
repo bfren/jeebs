@@ -16,7 +16,7 @@ app.MapGet("/hello/{name}", HandleSayHello);
 app.Run();
 
 static async Task<IResult> HandleSayHello(
-	[FromServices] IQueryDispatcher query,
+	[FromServices] IDispatcher query,
 	[FromRoute] string name
 )
 {
