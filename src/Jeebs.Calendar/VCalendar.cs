@@ -15,6 +15,7 @@ namespace Jeebs.Calendar;
 /// </summary>
 public class VCalendar : CalendarBase
 {
+
 	/// <summary>
 	/// Create object
 	/// </summary>
@@ -108,7 +109,7 @@ public class VCalendar : CalendarBase
 		var builder = new StringBuilder();
 		builder.AppendMax75("BEGIN:VEVENT");
 		builder.AppendMax75($"UID:{uid}");
-		builder.AppendMax75($"CREATED:{Format(DateTime.Now)}");
+		builder.AppendMax75($"CREATED:{Format(lastModified)}");
 		builder.AppendMax75($"LAST-MODIFIED:{Format(lastModified)}");
 		builder.AppendMax75($"DTSTAMP:{Format(lastModified)}");
 		builder.AppendMax75($"SUMMARY:{e.Summary}");

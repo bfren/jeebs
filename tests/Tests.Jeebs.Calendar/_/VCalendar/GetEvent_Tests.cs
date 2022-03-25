@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text;
@@ -19,7 +19,7 @@ public class GetEvent_Tests
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{uid}")
-			.AppendLine($"CREATED:{VCalendar.Format(DateTime.Now)}")
+			.AppendLine($"CREATED:{VCalendar.Format(lastModified)}")
 			.AppendLine($"LAST-MODIFIED:{VCalendar.Format(lastModified)}")
 			.AppendLine($"DTSTAMP:{VCalendar.Format(lastModified)}")
 			.AppendLine($"SUMMARY:{e.Summary}")
@@ -48,7 +48,7 @@ public class GetEvent_Tests
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{uid}")
-			.AppendLine($"CREATED:{VCalendar.Format(DateTime.Now)}")
+			.AppendLine($"CREATED:{VCalendar.Format(lastModified)}")
 			.AppendLine($"LAST-MODIFIED:{VCalendar.Format(lastModified)}")
 			.AppendLine($"DTSTAMP:{VCalendar.Format(lastModified)}")
 			.AppendLine($"SUMMARY:{e.Summary}")
