@@ -14,7 +14,7 @@ namespace Jeebs.Cqrs;
 public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Register all <see cref="IQueryHandler{TQuery, TResult}"/> and <see cref="ICommandHandler{TCommand}"/>
+	/// Register all <see cref="QueryHandler{TQuery, TResult}"/> and <see cref="CommandHandler{TCommand}"/>
 	/// types to <paramref name="services"/>
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>

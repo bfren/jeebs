@@ -15,7 +15,7 @@ public interface ICommandDispatcher
 	Task<Maybe<bool>> DispatchAsync(ICommand command);
 
 	/// <summary>
-	/// Create command of type <typeparamref name="TCommand"/> and dispatch
+	/// Call <see cref="CommandHandler{TCommand}.HandleAsync(TCommand, CancellationToken)"/> for <paramref name="command"/>
 	/// </summary>
 	/// <param name="command">Command object</param>
 	/// <param name="cancellationToken">Cancellation token</param>

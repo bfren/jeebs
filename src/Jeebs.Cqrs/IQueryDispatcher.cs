@@ -15,7 +15,7 @@ public interface IQueryDispatcher
 	Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query);
 
 	/// <summary>
-	/// Call <see cref="IQueryHandler{TQuery, TResult}"/> for <paramref name="query"/>
+	/// Call <see cref="QueryHandler{TQuery, TResult}.HandleAsync(TQuery, CancellationToken)"/> for <paramref name="query"/>
 	/// </summary>
 	/// <typeparam name="TResult">Query result value type</typeparam>
 	/// <param name="query">Query object</param>
