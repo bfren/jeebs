@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text;
@@ -18,7 +18,6 @@ public class ToString_Tests
 		var events = ImmutableList.Create(e0, e1);
 		var lastModified = Rnd.DateTime;
 		var lastModifiedStr = VCalendar.Format(lastModified);
-		var createdStr = VCalendar.Format(DateTime.Now);
 		var calendar = new CalendarModel(events, lastModified);
 		var tzid = Rnd.Str;
 		var domain = Rnd.Str;
@@ -48,7 +47,7 @@ public class ToString_Tests
 			.AppendLine("END:VTIMEZONE")
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{lastModifiedStr}-000000@{domain}")
-			.AppendLine($"CREATED:{createdStr}")
+			.AppendLine($"CREATED:{lastModifiedStr}")
 			.AppendLine($"LAST-MODIFIED:{lastModifiedStr}")
 			.AppendLine($"DTSTAMP:{lastModifiedStr}")
 			.AppendLine($"SUMMARY:{e0.Summary}")
@@ -59,7 +58,7 @@ public class ToString_Tests
 			.AppendLine("END:VEVENT")
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{lastModifiedStr}-000001@{domain}")
-			.AppendLine($"CREATED:{createdStr}")
+			.AppendLine($"CREATED:{lastModifiedStr}")
 			.AppendLine($"LAST-MODIFIED:{lastModifiedStr}")
 			.AppendLine($"DTSTAMP:{lastModifiedStr}")
 			.AppendLine($"SUMMARY:{e1.Summary}")
