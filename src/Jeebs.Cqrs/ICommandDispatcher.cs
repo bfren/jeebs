@@ -12,7 +12,7 @@ namespace Jeebs.Cqrs;
 public interface ICommandDispatcher
 {
 	/// <inheritdoc cref="DispatchAsync(ICommand, CancellationToken)"/>
-	Task<Maybe<bool>> DispatchAsync<TCommand>(ICommand command);
+	Task<Maybe<bool>> DispatchAsync(ICommand command);
 
 	/// <summary>
 	/// Create command of type <typeparamref name="TCommand"/> and dispatch

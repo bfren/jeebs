@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Jeebs.Cqrs.Internals;
 using Jeebs.Logging;
 using Jeebs.Messages;
 
@@ -25,7 +26,7 @@ public sealed class CommandDispatcher : ICommandDispatcher
 		(Provider, Log) = (provider, log);
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> DispatchAsync<TCommand>(ICommand command) =>
+	public Task<Maybe<bool>> DispatchAsync(ICommand command) =>
 		DispatchAsync(command, CancellationToken.None);
 
 	/// <inheritdoc/>
