@@ -52,7 +52,7 @@ public static class TypeF
 	/// Return list of all public class types in all loaded assemblies -
 	/// excludes Microsoft.* and System.* types
 	/// </summary>
-	internal static Lazy<IEnumerable<Type>> AllTypes { get; } = new(
+	public static Lazy<IEnumerable<Type>> AllTypes { get; } = new(
 		() =>
 		{
 			var types = new List<Type>();

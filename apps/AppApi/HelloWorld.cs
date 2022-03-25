@@ -6,9 +6,9 @@ using MaybeF;
 
 namespace AppApi;
 
-public class SayHelloHandler : IQueryHandler<SayHelloQuery, string>
+public class SayHelloHandler : QueryHandler<SayHelloQuery, string>
 {
-	public Task<Maybe<string>> HandleAsync(SayHelloQuery query, CancellationToken cancellationToken) =>
+	public override Task<Maybe<string>> HandleAsync(SayHelloQuery query, CancellationToken cancellationToken) =>
 		F.Some($"Hello, {query.Name}!").AsTask;
 }
 

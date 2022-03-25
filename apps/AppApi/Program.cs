@@ -21,8 +21,8 @@ static async Task<IResult> HandleSayHello(
 )
 {
 	var text = await query
-		.DispatchAsync<SayHelloQuery, string>(
-			new(name)
+		.DispatchAsync(
+			new SayHelloQuery(name)
 		)
 		.UnwrapAsync(
 			x => x.Value(ifNone: "Nothing to say.")

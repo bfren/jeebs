@@ -6,9 +6,6 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-preview.2.*" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Scrutor" Version="4.1.0" />
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

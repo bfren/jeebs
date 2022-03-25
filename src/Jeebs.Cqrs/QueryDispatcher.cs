@@ -4,27 +4,47 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using Jeebs.Cqrs.Internals;
+using Jeebs.Cqrs.Messages;
+using Jeebs.Logging;
 
 namespace Jeebs.Cqrs;
 
 /// <inheritdoc cref="IQueryDispatcher"/>
 public sealed class QueryDispatcher : IQueryDispatcher
 {
-	private readonly IServiceProvider provider;
+	private ILog<QueryDispatcher> Log { get; init; }
+
+	private IServiceProvider Provider { get; init; }
 
 	/// <summary>
 	/// Create object
 	/// </summary>
-	/// <param name="provider">IServiceProvider</param>
-	public QueryDispatcher(IServiceProvider provider) =>
-		this.provider = provider;
+	/// <param name="provider"></param>
+	/// <param name="log"></param>
+	public QueryDispatcher(IServiceProvider provider, ILog<QueryDispatcher> log) =>
+		(Provider, Log) = (provider, log);
 
 	/// <inheritdoc/>
-	public Task<Maybe<TResult>> DispatchAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken)
-		where TQuery : IQuery<TResult>
+	public Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query) =>
+		DispatchAsync(query, CancellationToken.None);
+
+	/// <inheritdoc/>
+	public Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken)
 	{
-		var handler = provider.GetRequiredService<IQueryHandler<TQuery, TResult>>();
-		return handler.HandleAsync(query, cancellationToken);
+		// Make generic handler type
+		var handlerType = typeof(QueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
+		Log.Vrb("Query handler type: {Type}", handlerType);
+
+		// Get service and handle query
+		var service = Provider.GetService(handlerType);
+		return service switch
+		{
+			IQueryHandler<TResult> handler =>
+				handler.HandleAsync(query, cancellationToken),
+
+			_ =>
+				F.None<TResult>(new UnableToGetQueryHandlerMsg(query.GetType())).AsTask
+		};
 	}
 }
