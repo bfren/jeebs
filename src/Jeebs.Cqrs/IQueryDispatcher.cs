@@ -11,18 +11,14 @@ namespace Jeebs.Cqrs;
 /// </summary>
 public interface IQueryDispatcher
 {
-	/// <inheritdoc cref="DispatchAsync{TQuery, TResult}(TQuery, CancellationToken)"/>
-	Task<Maybe<TResult>> DispatchAsync<TQuery, TResult>(TQuery query)
-		where TQuery : IQuery<TResult> =>
-		DispatchAsync<TQuery, TResult>(query, CancellationToken.None);
+	/// <inheritdoc cref="DispatchAsync{TResult}(IQuery{TResult}, CancellationToken)"/>
+	Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query);
 
 	/// <summary>
-	/// Create query of type <typeparamref name="TQuery"/> and dispatch
+	/// Call <see cref="IQueryHandler{TQuery, TResult}"/> for <paramref name="query"/>
 	/// </summary>
-	/// <typeparam name="TQuery">Query type</typeparam>
 	/// <typeparam name="TResult">Query result value type</typeparam>
 	/// <param name="query">Query object</param>
 	/// <param name="cancellationToken">Cancellation token</param>
-	Task<Maybe<TResult>> DispatchAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken)
-		where TQuery : IQuery<TResult>;
+	Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken);
 }
