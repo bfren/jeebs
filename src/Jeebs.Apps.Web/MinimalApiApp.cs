@@ -9,7 +9,7 @@ namespace Jeebs.Apps.Web;
 /// <summary>
 /// Application supporting minimal API syntax
 /// </summary>
-public class MinimalApiApp : ApiApp
+internal sealed class MinimalApiApp : ApiApp
 {
 	/// <summary>
 	/// Create Minimal API application with HSTS enabled

@@ -28,6 +28,14 @@ public class ApiApp : MvcApp
 		where T : ApiApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
 
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static WebApplication CreateMinimal(string[] args) =>
+		WebAppBuilder.Create<MinimalApiApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static WebApplication CreateMinimal(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Create<MinimalApiApp>(args, configureServices);
+
 	/// <summary>
 	/// Create API application with HSTS enabled
 	/// </summary>

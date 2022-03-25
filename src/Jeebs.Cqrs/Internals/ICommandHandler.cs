@@ -8,7 +8,7 @@ namespace Jeebs.Cqrs.Internals;
 
 /// <summary>
 /// Command handler interface which allows generic dispatching - see
-/// <see cref="CommandHandler{TCommand}.HandleAsync(TCommand, CancellationToken)"/>
+/// <see cref="Dispatcher.DispatchAsync(ICommand, CancellationToken)"/>
 /// </summary>
 internal interface ICommandHandler
 {

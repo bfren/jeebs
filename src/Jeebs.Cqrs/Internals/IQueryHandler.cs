@@ -8,7 +8,7 @@ namespace Jeebs.Cqrs.Internals;
 
 /// <summary>
 /// Query handler interface which allows generic dispatching - see
-/// <see cref="QueryDispatcher.DispatchAsync{TResult}(IQuery{TResult}, CancellationToken)"/>
+/// <see cref="Dispatcher.DispatchAsync{TResult}(IQuery{TResult}, CancellationToken)"/>
 /// </summary>
 /// <typeparam name="TResult">Query result value type</typeparam>
 internal interface IQueryHandler<TResult>
