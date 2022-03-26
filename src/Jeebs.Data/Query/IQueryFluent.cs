@@ -23,6 +23,14 @@ public interface IQueryFluent<TEntity, TId>
 	/// <summary>
 	/// Add a WHERE predicate (multiple predicates will be added using AND)
 	/// </summary>
+	/// <param name="column">Column name</param>
+	/// <param name="cmp">Comparison operator</param>
+	/// <param name="value">Column value</param>
+	IQueryFluent<TEntity, TId> Where(string column, Compare cmp, dynamic? value);
+
+	/// <summary>
+	/// Add a WHERE predicate (multiple predicates will be added using AND)
+	/// </summary>
 	/// <typeparam name="TValue">Column value type</typeparam>
 	/// <param name="column">Column selector</param>
 	/// <param name="cmp">Comparison operator</param>
@@ -33,9 +41,20 @@ public interface IQueryFluent<TEntity, TId>
 	/// Add a WHERE IN predicate (multiple predicates will be added using AND)
 	/// </summary>
 	/// <typeparam name="TValue">Column value type</typeparam>
+	/// <param name="column">Column name</param>
+	/// <param name="values">Column value</param>
+	IQueryFluent<TEntity, TId> WhereIn<TValue>(string column, IEnumerable<TValue> values);
+
+	/// <summary>
+	/// Add a WHERE IN predicate (multiple predicates will be added using AND)
+	/// </summary>
+	/// <typeparam name="TValue">Column value type</typeparam>
 	/// <param name="column">Column selector</param>
 	/// <param name="values">Column value</param>
 	IQueryFluent<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values);
+
+	/// <inheritdoc cref="WhereIn{TValue}(string, IEnumerable{TValue})"/>
+	IQueryFluent<TEntity, TId> WhereNotIn<TValue>(string column, IEnumerable<TValue> values);
 
 	/// <inheritdoc cref="WhereIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>
 	IQueryFluent<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values);
