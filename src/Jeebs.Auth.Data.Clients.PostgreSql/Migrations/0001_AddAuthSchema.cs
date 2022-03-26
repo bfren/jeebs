@@ -22,8 +22,5 @@ public sealed class AddAuthSchema : Migration
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down() => Execute($@"
-		DROP SCHEMA IF EXISTS ""{AuthDb.Schema}""
-		;
-	");
+	protected override void Down() { }
 }
