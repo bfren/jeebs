@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Linq.Expressions;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
@@ -28,7 +26,7 @@ public abstract partial class DbClient : IDbClient
 
 	/// <inheritdoc/>
 	public Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
-		(Expression<Func<TEntity, object>>, Compare, object)[] predicates
+		(string, Compare, dynamic?)[] predicates
 	)
 		where TEntity : IWithId =>
 		(

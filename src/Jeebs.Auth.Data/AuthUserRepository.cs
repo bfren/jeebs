@@ -60,17 +60,20 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 			);
 
 	/// <inheritdoc/>
-	public Task<Maybe<TModel>> RetrieveAsync<TModel>(string email) =>
-		QuerySingleAsync<TModel>(
-			(u => u.EmailAddress, Compare.Equal, email)
-		);
+	public async Task<Maybe<TModel>> RetrieveAsync<TModel>(string email)
+	{
+		using var w = Db.UnitOfWork;
+		return await RetrieveAsync<TModel>(email, w.Transaction);
+	}
+
 
 	/// <inheritdoc/>
 	public Task<Maybe<TModel>> RetrieveAsync<TModel>(string email, IDbTransaction transaction) =>
-		QuerySingleAsync<TModel>(
-			transaction,
-			(u => u.EmailAddress, Compare.Equal, email)
-		);
+		StartFluentQuery()
+			.Where(
+				u => u.EmailAddress, Compare.Equal, email
+			)
+			.QuerySingleAsync<TModel>(transaction);
 
 	/// <inheritdoc/>
 	public async Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId)
