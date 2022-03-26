@@ -26,6 +26,12 @@ dotnet_diagnostic.CA1711.severity = none
 # CA2201: Do not raise reserved exception types
 dotnet_diagnostic.CA2201.severity = none
 
+# IDE0022: Use expression body for methods
+dotnet_diagnostic.IDE0022.severity = none
+
+# IDE0053: Use expression body for lambda expressions
+dotnet_diagnostic.IDE0053.severity = none
+
 # IDE0058: Expression value is never used
 dotnet_diagnostic.IDE0058.severity = none
 
@@ -40,6 +46,9 @@ dotnet_diagnostic.RCS1102.severity = none
 
 # RCS1118: Mark local variable as const.
 dotnet_diagnostic.RCS1118.severity = none
+
+# RCS1158: Static member in generic type should use a type parameter.
+dotnet_diagnostic.RCS1158.severity = none
 
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none

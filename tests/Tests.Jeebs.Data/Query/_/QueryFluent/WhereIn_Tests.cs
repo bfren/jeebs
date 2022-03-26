@@ -36,9 +36,9 @@ public class WhereIn_Tests : QueryFluent_Tests
 		var fluent = Assert.IsType<QueryFluent<TestEntity, TestId>>(result);
 		Assert.Collection(fluent.Predicates, x =>
 		{
+			Assert.Equal(nameof(TestEntity.Foo), x.col);
 			Assert.Equal(Compare.In, x.cmp);
-			var coll = Assert.IsAssignableFrom<IEnumerable<object>>(x.val);
-			Assert.Collection(coll,
+			Assert.Collection((IEnumerable<string>)x.val!,
 				y =>
 				{
 					Assert.Equal(v0, y);
