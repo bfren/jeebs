@@ -6,7 +6,7 @@
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0-preview.2.*" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Rnd" Version="8.1.0-beta.220325.1" PrivateAssets="All" />
+		<PackageReference Include="Rnd" Version="8.1.0-beta.220326.1" PrivateAssets="All" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
