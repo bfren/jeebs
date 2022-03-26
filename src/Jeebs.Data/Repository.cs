@@ -1,12 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Id;
 using Jeebs.Logging;
@@ -88,60 +84,9 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 
 	/// <inheritdoc/>
 	public virtual IQueryFluent<TEntity, TId> StartFluentQuery() =>
-		new QueryFluent<TEntity, TId>(this);
+		new QueryFluent<TEntity, TId>(Db, Log.ForContext<IQueryFluent<TEntity, TId>>());
 
 	#endregion Fluent Queries
-
-	#region Custom Queries
-
-	/// <inheritdoc/>
-	public virtual async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	)
-	{
-		using var w = Db.UnitOfWork;
-		return await QueryAsync<TModel>(w.Transaction, predicates);
-	}
-
-	/// <inheritdoc/>
-	public virtual Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
-		IDbTransaction transaction,
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	) =>
-		Db.Client
-			.GetQuery<TEntity, TModel>(
-				predicates
-			)
-			.Audit(
-				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
-			)
-			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
-			);
-
-	/// <inheritdoc/>
-	public virtual async Task<Maybe<TModel>> QuerySingleAsync<TModel>(
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	)
-	{
-		using var w = Db.UnitOfWork;
-		return await QuerySingleAsync<TModel>(w.Transaction, predicates);
-	}
-
-	/// <inheritdoc/>
-	public virtual Task<Maybe<TModel>> QuerySingleAsync<TModel>(
-		IDbTransaction transaction,
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	) =>
-		QueryAsync<TModel>(
-			transaction,
-			predicates
-		)
-		.UnwrapAsync(
-			x => x.SingleValue<TModel>()
-		);
-
-	#endregion Custom Queries
 
 	#region CRUD Queries
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
@@ -39,15 +40,23 @@ public interface IQueryFluent<TEntity, TId>
 	/// <inheritdoc cref="WhereIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>
 	IQueryFluent<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values);
 
+	/// <inheritdoc cref="QueryAsync{TModel}(IDbTransaction)"/>/>
+	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>();
+
 	/// <summary>
 	/// Execute the query and return multiple items
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
-	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>();
+	/// <param name="transaction"></param>
+	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(IDbTransaction transaction);
+
+	/// <inheritdoc cref="QuerySingleAsync{TModel}(IDbTransaction)"/>
+	Task<Maybe<TModel>> QuerySingleAsync<TModel>();
 
 	/// <summary>
 	/// Perform the query and return a single item
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
-	Task<Maybe<TModel>> QuerySingleAsync<TModel>();
+	/// <param name="transaction"></param>
+	Task<Maybe<TModel>> QuerySingleAsync<TModel>(IDbTransaction transaction);
 }

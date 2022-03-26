@@ -19,7 +19,7 @@ public static partial class QueryF
 	/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
 	public static (IImmutableList<string> where, IQueryParametersDictionary param) GetWhereAndParameters(
 		IDbClient client,
-		IImmutableList<(IColumn column, Compare cmp, object value)> predicates,
+		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates,
 		bool includeTableName
 	)
 	{

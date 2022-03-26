@@ -1,10 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
@@ -106,7 +104,7 @@ public interface IDbClient
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND)</param>
 	Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
-		(Expression<Func<TEntity, object>>, Compare, object)[] predicates
+		(string, Compare, dynamic?)[] predicates
 	)
 		where TEntity : IWithId;
 

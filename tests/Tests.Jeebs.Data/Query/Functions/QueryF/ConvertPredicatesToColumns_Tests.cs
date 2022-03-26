@@ -1,8 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections;
-using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Id;
@@ -22,10 +21,10 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Id, Compare.Equal, Rnd.Lng),
-			(e => e.Bar, Compare.Equal, Rnd.Int)
+			(nameof(TestEntity.Id), Compare.Equal, Rnd.Lng),
+			(nameof(TestEntity.Bar), Compare.Equal, Rnd.Int)
 		};
 
 		// Act
@@ -44,9 +43,9 @@ public class ConvertPredicatesToColumns_Tests
 		{
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Foo, Compare.Equal, Rnd.Int)
+			(nameof(TestEntity.Foo), Compare.Equal, Rnd.Int)
 		};
 
 		// Act
@@ -76,9 +75,9 @@ public class ConvertPredicatesToColumns_Tests
 		{
 			new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
 		});
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Id, input, Substitute.For<IList>()) // use list type so IN operator doesn't throw exception
+			(nameof(TestEntity.Id), input, Substitute.For<IList>()) // use list type so IN operator doesn't throw exception
 		};
 
 		// Act
@@ -105,9 +104,9 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Str;
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Foo, input, value)
+			(nameof(TestEntity.Foo), input, value)
 		};
 
 		// Act
@@ -136,9 +135,9 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Lng;
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Foo, input, new TestId(value))
+			(nameof(TestEntity.Foo), input, new TestId(value))
 		};
 
 		// Act
@@ -150,7 +149,7 @@ public class ConvertPredicatesToColumns_Tests
 		);
 	}
 
-	private static void Test_In_With_Enumerable(Func<int, int, int, object> getValue)
+	private static void Test_In_With_Enumerable(Func<int, int, int, dynamic> getValue)
 	{
 		// Arrange
 		var table = new TableName(Rnd.Str);
@@ -163,9 +162,9 @@ public class ConvertPredicatesToColumns_Tests
 		var v1 = Rnd.Int;
 		var v2 = Rnd.Int;
 		var value = getValue(v0, v1, v2);
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Foo, Compare.In, value)
+			(nameof(TestEntity.Foo), Compare.In, value)
 		};
 
 		// Act
@@ -205,9 +204,9 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Str;
-		var predicates = new (Expression<Func<TestEntity, object>> column, Compare cmp, object value)[]
+		var predicates = new (string column, Compare cmp, dynamic? value)[]
 		{
-			(e => e.Foo, Compare.In, value)
+			(nameof(TestEntity.Foo), Compare.In, value)
 		};
 
 		// Act

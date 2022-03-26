@@ -3,13 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Id;
+using Jeebs.Logging;
 using Jeebs.Messages;
+using Jeebs.Reflection;
 
 namespace Jeebs.Data.Query;
 
@@ -32,22 +35,25 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	/// <summary>
 	/// IRepository
 	/// </summary>
-	private readonly IRepository<TEntity, TId> repo;
+	private IDb Db { get; init; }
+
+	private ILog<IQueryFluent<TEntity, TId>> Log { get; init; }
 
 	/// <summary>
 	/// List of added predicates
 	/// </summary>
-	internal IImmutableList<(Expression<Func<TEntity, object>> col, Compare cmp, object val)> Predicates { get; init; } =
-		new ImmutableList<(Expression<Func<TEntity, object>>, Compare, object)>();
+	internal IImmutableList<(string col, Compare cmp, dynamic? val)> Predicates { get; init; } =
+		new ImmutableList<(string, Compare, dynamic?)>();
 
 	/// <summary>
 	/// Create object
 	/// </summary>
-	/// <param name="repo">IRepository</param>
-	internal QueryFluent(IRepository<TEntity, TId> repo) =>
-		this.repo = repo;
+	/// <param name="db"></param>
+	/// <param name="log"></param>
+	internal QueryFluent(IDb db, ILog<IQueryFluent<TEntity, TId>> log) =>
+		(Db, Log) = (db, log);
 
-	private IQueryFluent<TEntity, TId> With<TValue>(Expression<Func<TEntity, TValue>> column, Compare cmp, object? value)
+	private IQueryFluent<TEntity, TId> With<TValue>(Expression<Func<TEntity, TValue>> column, Compare cmp, dynamic? value)
 	{
 		// Don't add predicates with a null value
 		if (value is null)
@@ -55,11 +61,15 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 			return this;
 		}
 
-		// Return with additional predicate
-		return this with
-		{
-			Predicates = Predicates.WithItem((x => column.Compile().Invoke(x) ?? new object(), cmp, value))
-		};
+		return column
+			.GetPropertyInfo()
+			.Switch(
+				some: x => this with
+				{
+					Predicates = Predicates.WithItem((x.Name, cmp, value))
+				},
+				none: this
+			);
 	}
 
 	/// <inheritdoc/>
@@ -89,24 +99,45 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 		};
 
 	/// <inheritdoc/>
-	public Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>() =>
+	public async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>()
+	{
+		using var w = Db.UnitOfWork;
+		return await QueryAsync<TModel>(w.Transaction);
+	}
+
+	/// <inheritdoc/>
+	public Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(IDbTransaction transaction) =>
 		Predicates.Count switch
 		{
 			> 0 =>
-				repo.QueryAsync<TModel>(Predicates.ToArray()),
+				Db.Client
+					.GetQuery<TEntity, TModel>(
+						Predicates.ToArray()
+					)
+					.Audit(
+						some: x => Log.Dbg("Fluent Query {Entity}: {Query} {@Parameters}", typeof(TEntity), x.query, x.param)
+					)
+					.BindAsync(
+						x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
+					),
 
 			_ =>
 				F.None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask
 		};
 
 	/// <inheritdoc/>
-	public Task<Maybe<TModel>> QuerySingleAsync<TModel>() =>
-		Predicates.Count switch
-		{
-			> 0 =>
-				repo.QuerySingleAsync<TModel>(Predicates.ToArray()),
+	public async Task<Maybe<TModel>> QuerySingleAsync<TModel>()
+	{
+		using var w = Db.UnitOfWork;
+		return await QuerySingleAsync<TModel>(w.Transaction);
+	}
 
-			_ =>
-				F.None<TModel, M.NoPredicatesMsg>().AsTask
-		};
+	/// <inheritdoc/>
+	public Task<Maybe<TModel>> QuerySingleAsync<TModel>(IDbTransaction transaction) =>
+		QueryAsync<TModel>(
+			transaction
+		)
+		.UnwrapAsync(
+			x => x.SingleValue<TModel>()
+		);
 }
