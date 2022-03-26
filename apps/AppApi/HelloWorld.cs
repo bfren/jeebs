@@ -8,7 +8,7 @@ namespace AppApi;
 
 public class SayHelloHandler : QueryHandler<SayHelloQuery, string>
 {
-	public override Task<Maybe<string>> HandleAsync(SayHelloQuery query, CancellationToken cancellationToken) =>
+	public override Task<Maybe<string>> HandleAsync(SayHelloQuery query) =>
 		F.Some($"Hello, {query.Name}!").AsTask;
 }
 

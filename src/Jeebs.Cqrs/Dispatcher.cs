@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
 using Jeebs.Cqrs.Messages;
@@ -26,17 +25,13 @@ public sealed class Dispatcher : IDispatcher
 		(Provider, Log) = (provider, log);
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> DispatchAsync(ICommand command) =>
-		DispatchAsync(command, CancellationToken.None);
-
-	/// <inheritdoc/>
-	public Task<Maybe<bool>> DispatchAsync(ICommand command, CancellationToken cancellationToken)
+	public Task<Maybe<bool>> DispatchAsync(ICommand command)
 	{
 		var service = GetHandlerService(typeof(CommandHandler<>), command.GetType());
 		return service switch
 		{
 			ICommandHandler handler =>
-				handler.HandleAsync(command, cancellationToken),
+				handler.HandleAsync(command),
 
 			_ =>
 				F.None<bool>(new UnableToGetCommandHandlerMsg(command.GetType())).AsTask
@@ -44,17 +39,13 @@ public sealed class Dispatcher : IDispatcher
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query) =>
-		DispatchAsync(query, CancellationToken.None);
-
-	/// <inheritdoc/>
-	public Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken)
+	public Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query)
 	{
 		var service = GetHandlerService(typeof(QueryHandler<,>), query.GetType(), typeof(TResult));
 		return service switch
 		{
 			IQueryHandler<TResult> handler =>
-				handler.HandleAsync(query, cancellationToken),
+				handler.HandleAsync(query),
 
 			_ =>
 				F.None<TResult>(new UnableToGetQueryHandlerMsg(query.GetType())).AsTask

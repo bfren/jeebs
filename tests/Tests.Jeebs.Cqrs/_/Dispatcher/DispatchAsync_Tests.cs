@@ -21,7 +21,7 @@ public class DispatchAsync_Tests
 
 			// Act
 			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(command, CancellationToken.None).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
 
 			// Assert
 			log.Received(2).Vrb("Handler type: {Type}", typeof(CommandHandler<Command>));
@@ -38,7 +38,7 @@ public class DispatchAsync_Tests
 
 			// Act
 			var r0 = await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-			var r1 = await dispatcher.DispatchAsync(command, CancellationToken.None).ConfigureAwait(false);
+			var r1 = await dispatcher.DispatchAsync(command).ConfigureAwait(false);
 
 			// Assert
 			var n0 = r0.AssertNone();
@@ -63,10 +63,10 @@ public class DispatchAsync_Tests
 
 			// Act
 			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(command, CancellationToken.None).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
 
 			// Assert
-			await handler.Received(2).HandleAsync(command, CancellationToken.None);
+			await handler.Received(2).HandleAsync(command);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class DispatchAsync_Tests
 
 			// Act
 			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(query, CancellationToken.None).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
 
 			// Assert
 			log.Received(2).Vrb("Handler type: {Type}", typeof(QueryHandler<Query, bool>));
@@ -100,7 +100,7 @@ public class DispatchAsync_Tests
 
 			// Act
 			var r0 = await dispatcher.DispatchAsync(query).ConfigureAwait(false);
-			var r1 = await dispatcher.DispatchAsync(query, CancellationToken.None).ConfigureAwait(false);
+			var r1 = await dispatcher.DispatchAsync(query).ConfigureAwait(false);
 
 			// Assert
 			var n0 = r0.AssertNone();
@@ -125,10 +125,10 @@ public class DispatchAsync_Tests
 
 			// Act
 			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(query, CancellationToken.None).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
 
 			// Assert
-			await handler.Received(2).HandleAsync(query, CancellationToken.None);
+			await handler.Received(2).HandleAsync(query);
 		}
 	}
 

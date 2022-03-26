@@ -75,6 +75,7 @@ public interface IRepository<TEntity, TId>
 		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
 	);
 
+
 	#endregion Custom Queries
 
 	#region CRUD Queries

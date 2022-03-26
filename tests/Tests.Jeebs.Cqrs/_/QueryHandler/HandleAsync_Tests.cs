@@ -19,7 +19,7 @@ public class HandleAsync_Tests
 		await handler.HandleAsync(query);
 
 		// Assert
-		await handler.Received().HandleAsync(query, CancellationToken.None);
+		await handler.Received().HandleAsync(query);
 	}
 
 	[Fact]
@@ -30,7 +30,7 @@ public class HandleAsync_Tests
 		var query = new IncorrectQuery();
 
 		// Act
-		var result = await ((IQueryHandler<string>)handler).HandleAsync(query, CancellationToken.None);
+		var result = await ((IQueryHandler<string>)handler).HandleAsync(query);
 
 		// Assert
 		var none = result.AssertNone();
@@ -47,10 +47,10 @@ public class HandleAsync_Tests
 		var command = new Query();
 
 		// Act
-		await ((IQueryHandler<string>)handler).HandleAsync(command, CancellationToken.None);
+		await ((IQueryHandler<string>)handler).HandleAsync(command);
 
 		// Assert
-		await handler.Received().HandleAsync(command, CancellationToken.None);
+		await handler.Received().HandleAsync(command);
 	}
 
 	public sealed record class Query : IQuery<string>;

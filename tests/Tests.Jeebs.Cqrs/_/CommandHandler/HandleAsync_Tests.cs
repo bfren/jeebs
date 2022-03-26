@@ -19,7 +19,7 @@ public class HandleAsync_Tests
 		await handler.HandleAsync(command);
 
 		// Assert
-		await handler.Received().HandleAsync(command, CancellationToken.None);
+		await handler.Received().HandleAsync(command);
 	}
 
 	[Fact]
@@ -30,7 +30,7 @@ public class HandleAsync_Tests
 		var command = new IncorrectCommand();
 
 		// Act
-		var result = await ((ICommandHandler)handler).HandleAsync(command, CancellationToken.None);
+		var result = await ((ICommandHandler)handler).HandleAsync(command);
 
 		// Assert
 		var none = result.AssertNone();
@@ -47,10 +47,10 @@ public class HandleAsync_Tests
 		var command = new Command();
 
 		// Act
-		await ((ICommandHandler)handler).HandleAsync(command, CancellationToken.None);
+		await ((ICommandHandler)handler).HandleAsync(command);
 
 		// Assert
-		await handler.Received().HandleAsync(command, CancellationToken.None);
+		await handler.Received().HandleAsync(command);
 	}
 
 	public sealed record class Command : ICommand;
