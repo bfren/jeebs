@@ -29,7 +29,7 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic?)>>();
+		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
 		predicates.Count.Returns(1);
 
 		// Act
@@ -46,7 +46,7 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic?)>>();
+		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
 		predicates.Count.Returns(1);
 
 		// Act
@@ -63,7 +63,7 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic?)>>();
+		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
 		predicates.Count.Returns(1);
 		var value = Rnd.Int;
 		v.Db.QueryAsync<int>(default!, default, default, default!)

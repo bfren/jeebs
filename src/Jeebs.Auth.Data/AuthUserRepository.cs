@@ -66,7 +66,6 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 		return await RetrieveAsync<TModel>(email, w.Transaction);
 	}
 
-
 	/// <inheritdoc/>
 	public Task<Maybe<TModel>> RetrieveAsync<TModel>(string email, IDbTransaction transaction) =>
 		StartFluentQuery()

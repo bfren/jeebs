@@ -21,7 +21,7 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Id), Compare.Equal, Rnd.Lng),
 			(nameof(TestEntity.Bar), Compare.Equal, Rnd.Int)
@@ -43,7 +43,7 @@ public class ConvertPredicatesToColumns_Tests
 		{
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), Compare.Equal, Rnd.Int)
 		};
@@ -75,7 +75,7 @@ public class ConvertPredicatesToColumns_Tests
 		{
 			new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
 		});
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Id), input, Substitute.For<IList>()) // use list type so IN operator doesn't throw exception
 		};
@@ -104,7 +104,7 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Str;
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), input, value)
 		};
@@ -135,7 +135,7 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Lng;
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), input, new TestId(value))
 		};
@@ -162,7 +162,7 @@ public class ConvertPredicatesToColumns_Tests
 		var v1 = Rnd.Int;
 		var v2 = Rnd.Int;
 		var value = getValue(v0, v1, v2);
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), Compare.In, value)
 		};
@@ -204,7 +204,7 @@ public class ConvertPredicatesToColumns_Tests
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Str;
-		var predicates = new (string column, Compare cmp, dynamic? value)[]
+		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), Compare.In, value)
 		};

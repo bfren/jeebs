@@ -104,7 +104,7 @@ public interface IDbClient
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND)</param>
 	Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
-		(string, Compare, dynamic?)[] predicates
+		(string, Compare, dynamic)[] predicates
 	)
 		where TEntity : IWithId;
 

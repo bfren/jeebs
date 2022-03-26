@@ -42,8 +42,8 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	/// <summary>
 	/// List of added predicates
 	/// </summary>
-	internal IImmutableList<(string col, Compare cmp, dynamic? val)> Predicates { get; init; } =
-		new ImmutableList<(string, Compare, dynamic?)>();
+	internal IImmutableList<(string col, Compare cmp, dynamic val)> Predicates { get; init; } =
+		new ImmutableList<(string, Compare, dynamic)>();
 
 	/// <summary>
 	/// Create object
@@ -53,7 +53,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	internal QueryFluent(IDb db, ILog<IQueryFluent<TEntity, TId>> log) =>
 		(Db, Log) = (db, log);
 
-	private IQueryFluent<TEntity, TId> With<TValue>(Expression<Func<TEntity, TValue>> column, Compare cmp, dynamic? value)
+	private IQueryFluent<TEntity, TId> With(string column, Compare cmp, dynamic? value)
 	{
 		// Don't add predicates with a null value
 		if (value is null)
@@ -61,23 +61,30 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 			return this;
 		}
 
-		return column
-			.GetPropertyInfo()
+		// Add new predicate
+		return this with
+		{
+			Predicates = Predicates.WithItem((column, cmp, value))
+		};
+	}
+
+	private IQueryFluent<TEntity, TId> With<TValue>(Expression<Func<TEntity, TValue>> column, Compare cmp, dynamic? value) =>
+		column.GetPropertyInfo()
 			.Switch(
-				some: x => this with
-				{
-					Predicates = Predicates.WithItem((x.Name, cmp, value))
-				},
+				some: x => With(x.Name, cmp, value),
 				none: this
 			);
-	}
+
+	/// <inheritdoc/>
+	public IQueryFluent<TEntity, TId> Where(string column, Compare cmp, dynamic? value) =>
+		With(column, cmp, value);
 
 	/// <inheritdoc/>
 	public IQueryFluent<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> column, Compare cmp, TValue value) =>
 		With(column, cmp, value);
 
 	/// <inheritdoc/>
-	public IQueryFluent<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values) =>
+	public IQueryFluent<TEntity, TId> WhereIn<TValue>(string column, IEnumerable<TValue> values) =>
 		values.Any() switch
 		{
 			true =>
@@ -88,7 +95,15 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 		};
 
 	/// <inheritdoc/>
-	public IQueryFluent<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values) =>
+	public IQueryFluent<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values) =>
+		column.GetPropertyInfo()
+			.Switch(
+				some: x => WhereIn(x.Name, values),
+				none: this
+			);
+
+	/// <inheritdoc/>
+	public IQueryFluent<TEntity, TId> WhereNotIn<TValue>(string column, IEnumerable<TValue> values) =>
 		values.Any() switch
 		{
 			true =>
@@ -97,6 +112,14 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 			false =>
 				this
 		};
+
+	/// <inheritdoc/>
+	public IQueryFluent<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> column, IEnumerable<TValue> values) =>
+		column.GetPropertyInfo()
+			.Switch(
+				some: x => WhereNotIn(x.Name, values),
+				none: this
+			);
 
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>()
