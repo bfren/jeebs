@@ -1,12 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Id;
 
@@ -32,51 +28,6 @@ public interface IRepository<TEntity, TId>
 	IQueryFluent<TEntity, TId> StartFluentQuery();
 
 	#endregion Fluent Queries
-
-	#region Custom Queries
-
-	/// <summary>
-	/// Retrieve items matching all <paramref name="predicates"/>
-	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="predicates">Predicates (matched using AND)</param>
-	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	);
-
-	/// <summary>
-	/// Retrieve items matching all <paramref name="predicates"/>
-	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="transaction">IDbTransaction</param>
-	/// <param name="predicates">Predicates (matched using AND)</param>
-	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(
-		IDbTransaction transaction,
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	);
-
-	/// <summary>
-	/// Retrieve a single item matching all <paramref name="predicates"/>
-	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="predicates">Predicates (matched using AND)</param>
-	Task<Maybe<TModel>> QuerySingleAsync<TModel>(
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	);
-
-	/// <summary>
-	/// Retrieve a single item matching all <paramref name="predicates"/>
-	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="transaction">IDbTransaction</param>
-	/// <param name="predicates">Predicates (matched using AND)</param>
-	Task<Maybe<TModel>> QuerySingleAsync<TModel>(
-		IDbTransaction transaction,
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	);
-
-
-	#endregion Custom Queries
 
 	#region CRUD Queries
 
