@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading;
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
 using Jeebs.Cqrs.Messages;
@@ -19,19 +18,14 @@ public abstract class CommandHandler<TCommand> : ICommandHandler
 	/// Handle a command
 	/// </summary>
 	/// <param name="command">Command object</param>
-	/// <param name="cancellationToken">Cancellation token</param>
-	public abstract Task<Maybe<bool>> HandleAsync(TCommand command, CancellationToken cancellationToken);
-
-	/// <inheritdoc cref="HandleAsync(TCommand, CancellationToken)"/>
-	public Task<Maybe<bool>> HandleAsync(TCommand command) =>
-		HandleAsync(command, CancellationToken.None);
+	public abstract Task<Maybe<bool>> HandleAsync(TCommand command);
 
 	/// <inheritdoc/>
-	Task<Maybe<bool>> ICommandHandler.HandleAsync(ICommand command, CancellationToken cancellationToken) =>
+	Task<Maybe<bool>> ICommandHandler.HandleAsync(ICommand command) =>
 		command switch
 		{
 			TCommand x =>
-				HandleAsync(x, cancellationToken),
+				HandleAsync(x),
 
 			_ =>
 				F.None<bool>(new IncorrectCommandTypeMsg(typeof(TCommand), command.GetType())).AsTask

@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading;
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
 using Jeebs.Cqrs.Messages;
@@ -20,19 +19,14 @@ public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 	/// Handle a query object
 	/// </summary>
 	/// <param name="query">Query object</param>
-	/// <param name="cancellationToken">Cancellation token</param>
-	public abstract Task<Maybe<TResult>> HandleAsync(TQuery query, CancellationToken cancellationToken);
-
-	/// <inheritdoc cref="HandleAsync(TQuery, CancellationToken)"/>
-	public Task<Maybe<TResult>> HandleAsync(TQuery query) =>
-		HandleAsync(query, CancellationToken.None);
+	public abstract Task<Maybe<TResult>> HandleAsync(TQuery query);
 
 	/// <inheritdoc/>
-	Task<Maybe<TResult>> IQueryHandler<TResult>.HandleAsync(IQuery<TResult> query, CancellationToken cancellationToken) =>
+	Task<Maybe<TResult>> IQueryHandler<TResult>.HandleAsync(IQuery<TResult> query) =>
 		query switch
 		{
 			TQuery x =>
-				HandleAsync(x, cancellationToken),
+				HandleAsync(x),
 
 			_ =>
 				F.None<TResult>(new IncorrectQueryTypeMsg(typeof(TQuery), query.GetType())).AsTask
