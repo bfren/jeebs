@@ -5,10 +5,7 @@ using Jeebs.Functions;
 
 namespace Jeebs.Cryptography;
 
-/// <summary>
-/// <see cref="object"/> Extensions
-/// </summary>
-public static class ObjectExtensions
+public static partial class ObjectExtensions
 {
 	/// <summary>
 	/// Encrypt an object using the specified key and return it serialised as JSON
