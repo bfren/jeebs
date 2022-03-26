@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -14,11 +14,14 @@ public class WhereNotIn_Tests : QueryFluent_Tests
 		var (query, v) = Setup();
 
 		// Act
-		var result = query.WhereNotIn(x => x.Foo, Array.Empty<string?>());
+		var r0 = query.WhereNotIn(nameof(TestEntity.Foo), Array.Empty<string?>());
+		var r1 = query.WhereNotIn(x => x.Foo, Array.Empty<string?>());
 
 		// Assert
-		var fluent = Assert.IsType<QueryFluent<TestEntity, TestId>>(result);
-		Assert.Empty(fluent.Predicates);
+		var f0 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r0);
+		Assert.Empty(f0.Predicates);
+		var f1 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r1);
+		Assert.Empty(f1.Predicates);
 	}
 
 	[Fact]
@@ -30,23 +33,28 @@ public class WhereNotIn_Tests : QueryFluent_Tests
 		var v1 = Rnd.Str;
 
 		// Act
-		var result = query.WhereNotIn(x => x.Foo, new[] { v0, v1 });
+		var r0 = query.WhereNotIn(nameof(TestEntity.Foo), new[] { v0, v1 });
+		var r1 = query.WhereNotIn(x => x.Foo, new[] { v0, v1 });
 
 		// Assert
-		var fluent = Assert.IsType<QueryFluent<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Predicates, x =>
+		var f0 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r0);
+		Assert.Collection(f0.Predicates, x =>
 		{
 			Assert.Equal(nameof(TestEntity.Foo), x.col);
 			Assert.Equal(Compare.NotIn, x.cmp);
 			Assert.Collection((IEnumerable<string>)x.val!,
-				y =>
-				{
-					Assert.Equal(v0, y);
-				},
-				y =>
-				{
-					Assert.Equal(v1, y);
-				}
+				y => Assert.Equal(v0, y),
+				y => Assert.Equal(v1, y)
+			);
+		});
+		var f1 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r1);
+		Assert.Collection(f1.Predicates, x =>
+		{
+			Assert.Equal(nameof(TestEntity.Foo), x.col);
+			Assert.Equal(Compare.NotIn, x.cmp);
+			Assert.Collection((IEnumerable<string>)x.val!,
+				y => Assert.Equal(v0, y),
+				y => Assert.Equal(v1, y)
 			);
 		});
 	}

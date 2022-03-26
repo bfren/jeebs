@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -14,11 +14,14 @@ public class Where_Tests : QueryFluent_Tests
 		var (query, v) = Setup();
 
 		// Act
-		var result = query.Where(x => x.Foo, Compare.Like, null);
+		var r0 = query.Where(nameof(TestEntity.Foo), Compare.Like, null);
+		var r1 = query.Where(x => x.Foo, Compare.Like, null);
 
 		// Assert
-		var fluent = Assert.IsType<QueryFluent<TestEntity, TestId>>(result);
-		Assert.Empty(fluent.Predicates);
+		var f0 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r0);
+		Assert.Empty(f0.Predicates);
+		var f1 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r1);
+		Assert.Empty(f1.Predicates);
 	}
 
 	[Theory]
@@ -36,11 +39,18 @@ public class Where_Tests : QueryFluent_Tests
 		var value = Rnd.Str;
 
 		// Act
-		var result = query.Where(x => x.Foo, cmp, value);
+		var r0 = query.Where(nameof(TestEntity.Foo), cmp, value);
+		var r1 = query.Where(x => x.Foo, cmp, value);
 
 		// Assert
-		var fluent = Assert.IsType<QueryFluent<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Predicates, x =>
+		var f0 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r0);
+		Assert.Collection(f0.Predicates, x =>
+		{
+			Assert.Equal(cmp, x.cmp);
+			Assert.Equal(value, x.val);
+		});
+		var f1 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r1);
+		Assert.Collection(f1.Predicates, x =>
 		{
 			Assert.Equal(cmp, x.cmp);
 			Assert.Equal(value, x.val);
