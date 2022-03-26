@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -29,7 +29,7 @@ public class QueryAsync_Tests : QueryFluent_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic?)>>();
+		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
 		predicates.Count.Returns(1);
 
 		// Act
@@ -46,7 +46,7 @@ public class QueryAsync_Tests : QueryFluent_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic?)>>();
+		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
 		predicates.Count.Returns(1);
 
 		// Act
