@@ -24,6 +24,9 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+	  <PackageReference Include="Rnd" Version="8.1.0-beta.220325.1" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.PostgreSql\Jeebs.Auth.Data.Clients.PostgreSql.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSql\Jeebs.Data.Clients.PostgreSql.csproj" />
