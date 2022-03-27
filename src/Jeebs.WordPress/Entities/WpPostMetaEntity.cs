@@ -11,7 +11,7 @@ public abstract record class WpPostMetaEntity : WpPostMetaEntityWithId
 	/// <summary>
 	/// PostId
 	/// </summary>
-	public StrongIds.WpPostId PostId { get; init; } = new();
+	public StrongIds.WpPostId PostId { get; init; }
 
 	/// <summary>
 	/// Key

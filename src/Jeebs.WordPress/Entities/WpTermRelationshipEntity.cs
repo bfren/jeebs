@@ -28,7 +28,7 @@ public abstract record class WpTermRelationshipEntity : IWithId
 	/// <summary>
 	/// TermTaxonomyId
 	/// </summary>
-	public StrongIds.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
+	public StrongIds.WpTermTaxonomyId TermTaxonomyId { get; init; }
 
 	/// <summary>
 	/// SortOrder

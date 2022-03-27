@@ -11,7 +11,7 @@ public abstract record class WpUserMetaEntity : WpUserMetaEntityWithId
 	/// <summary>
 	/// UserId
 	/// </summary>
-	public StrongIds.WpUserId UserId { get; init; } = new();
+	public StrongIds.WpUserId UserId { get; init; }
 
 	/// <summary>
 	/// Key

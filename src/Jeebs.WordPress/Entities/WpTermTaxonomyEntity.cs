@@ -13,7 +13,7 @@ public abstract record class WpTermTaxonomyEntity : WpTermTaxonomyEntityWithId
 	/// <summary>
 	/// TermId
 	/// </summary>
-	public StrongIds.WpTermId TermId { get; init; } = new();
+	public StrongIds.WpTermId TermId { get; init; }
 
 	/// <summary>
 	/// Taxonomy
@@ -28,7 +28,7 @@ public abstract record class WpTermTaxonomyEntity : WpTermTaxonomyEntityWithId
 	/// <summary>
 	/// ParentId
 	/// </summary>
-	public StrongIds.WpTermId ParentId { get; init; } = new();
+	public StrongIds.WpTermId ParentId { get; init; }
 
 	/// <summary>
 	/// Count

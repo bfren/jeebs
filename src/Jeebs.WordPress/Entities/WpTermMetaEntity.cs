@@ -11,7 +11,7 @@ public abstract record class WpTermMetaEntity : WpTermMetaEntityWithId
 	/// <summary>
 	/// TermId
 	/// </summary>
-	public StrongIds.WpTermId TermId { get; init; } = new();
+	public StrongIds.WpTermId TermId { get; init; }
 
 	/// <summary>
 	/// Key

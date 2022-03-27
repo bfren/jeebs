@@ -14,7 +14,7 @@ public abstract record class WpCommentEntity : WpCommentEntityWithId
 	/// <summary>
 	/// PostId
 	/// </summary>
-	public StrongIds.WpPostId PostId { get; init; } = new();
+	public StrongIds.WpPostId PostId { get; init; }
 
 	/// <summary>
 	/// AuthorName
@@ -74,12 +74,12 @@ public abstract record class WpCommentEntity : WpCommentEntityWithId
 	/// <summary>
 	/// ParentId
 	/// </summary>
-	public StrongIds.WpCommentId ParentId { get; init; } = new();
+	public StrongIds.WpCommentId ParentId { get; init; }
 
 	/// <summary>
 	/// AuthorId
 	/// </summary>
-	public StrongIds.WpUserId AuthorId { get; init; } = new();
+	public StrongIds.WpUserId AuthorId { get; init; }
 
 	/// <summary>
 	/// AuthorIsSubscribed
