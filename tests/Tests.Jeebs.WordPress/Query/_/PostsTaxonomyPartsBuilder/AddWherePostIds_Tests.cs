@@ -6,6 +6,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
+using static Jeebs.Id.StrongId;
 using static Jeebs.WordPress.Query.PostsTaxonomyPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsTaxonomyPartsBuilder_Tests;
@@ -34,8 +35,8 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsB
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = new WpPostId() { Value = Rnd.Lng };
-		var id1 = new WpPostId() { Value = Rnd.Lng };
+		var id0 = RndId<WpPostId>();
+		var id1 = RndId<WpPostId>();
 		var postIds = ImmutableList.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 

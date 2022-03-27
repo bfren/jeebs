@@ -7,6 +7,7 @@ using Jeebs.Data.Query.QueryOptions_Tests;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
+using static Jeebs.Id.StrongId;
 
 namespace Jeebs.WordPress.Query.PostsOptions_Tests;
 
@@ -178,7 +179,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var parentId = new WpPostId() { Value = Rnd.Lng };
+		var parentId = RndId<WpPostId>();
 		var opt = options with
 		{
 			ParentId = parentId
@@ -210,7 +211,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		// Arrange
 		var (options, builder) = Setup();
 		var taxonomies = ImmutableList.Create(
-			(Taxonomy.LinkCategory, new WpTermId() { Value = Rnd.Lng })
+			(Taxonomy.LinkCategory, RndId<WpTermId>())
 		);
 		var opt = options with
 		{
