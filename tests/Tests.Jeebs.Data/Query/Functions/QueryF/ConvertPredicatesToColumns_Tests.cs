@@ -137,7 +137,7 @@ public class ConvertPredicatesToColumns_Tests
 		var value = Rnd.Lng;
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
-			(nameof(TestEntity.Foo), input, new TestId(value))
+			(nameof(TestEntity.Foo), input, new TestId(){ Value=value })
 		};
 
 		// Act
@@ -216,7 +216,7 @@ public class ConvertPredicatesToColumns_Tests
 		result.AssertNone().AssertType<InOperatorRequiresValueToBeAListMsg>();
 	}
 
-	public readonly record struct TestId(long Value) : IStrongId;
+	public sealed record class TestId : StrongId;
 
 	public sealed record class TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
 }

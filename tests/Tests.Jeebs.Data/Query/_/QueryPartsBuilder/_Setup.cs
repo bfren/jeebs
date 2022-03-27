@@ -12,7 +12,7 @@ public abstract class Setup
 		new(extract);
 }
 
-public readonly record struct TestId(long Value) : IStrongId;
+public sealed record class TestId : StrongId;
 
 public record class TestModel;
 

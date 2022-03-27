@@ -146,9 +146,9 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	public Maybe<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId)
 	{
 		// Add Parent ID
-		if (parentId?.Value > 0)
+		if (parentId is WpPostId id and { Value: > 0 })
 		{
-			return AddWhere(parts, T.Posts, p => p.ParentId, Compare.Equal, parentId.Value);
+			return AddWhere(parts, T.Posts, p => p.ParentId, Compare.Equal, id.Value);
 		}
 
 		// Return

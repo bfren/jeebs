@@ -30,7 +30,7 @@ public class ApplyContentFilters_Tests
 	public void No_Filters_Does_Nothing()
 	{
 		// Arrange
-		var posts = new[] { new Model(new(Rnd.Lng), Rnd.Str) };
+		var posts = new[] { new Model(new() { Value = Rnd.Lng }, Rnd.Str) };
 		var filters = Array.Empty<IContentFilter>();
 
 		// Act
@@ -45,7 +45,7 @@ public class ApplyContentFilters_Tests
 	public void Catches_Exception_In_ContentFilter_Returns_None_With_ApplyContentFiltersExceptionMsg()
 	{
 		// Arrange
-		var posts = new[] { new Model(new(Rnd.Lng), Rnd.Str) };
+		var posts = new[] { new Model(new() { Value = Rnd.Lng }, Rnd.Str) };
 		var filter = Substitute.For<IContentFilter>();
 		filter.Execute(Arg.Any<string>()).Throws(new Exception());
 		var filters = new[] { filter };
@@ -62,9 +62,9 @@ public class ApplyContentFilters_Tests
 	{
 		// Arrange
 		var c0 = Rnd.Str;
-		var p0 = new Model(new(Rnd.Lng), c0);
+		var p0 = new Model(new() { Value = Rnd.Lng }, c0);
 		var c1 = Rnd.Str;
-		var p1 = new Model(new(Rnd.Lng), c1);
+		var p1 = new Model(new() { Value = Rnd.Lng }, c1);
 		var posts = new[] { p0, p1 };
 
 		var f0 = Substitute.For<IContentFilter>();

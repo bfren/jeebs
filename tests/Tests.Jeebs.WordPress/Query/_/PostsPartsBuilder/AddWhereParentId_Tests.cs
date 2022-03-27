@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
@@ -21,7 +21,7 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		WpPostId? id = input is null ? null : new(input.Value);
+		WpPostId? id = input is null ? null : new() { Value = input.Value };
 
 		// Act
 		var result = builder.AddWhereParentId(v.Parts, id);
@@ -36,7 +36,7 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var parentId = new WpPostId(Rnd.Lng);
+		var parentId = new WpPostId() { Value = Rnd.Lng };
 
 		// Act
 		var result = builder.AddWhereParentId(v.Parts, parentId);

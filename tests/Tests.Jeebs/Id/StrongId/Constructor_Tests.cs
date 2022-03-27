@@ -17,5 +17,5 @@ public class Constructor_Tests
 		Assert.Equal(0L, id.Value);
 	}
 
-	public readonly record struct TestId(long Value) : IStrongId;
+	public sealed record class TestId : StrongId;
 }

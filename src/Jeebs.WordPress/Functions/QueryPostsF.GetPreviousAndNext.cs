@@ -19,8 +19,8 @@ public static partial class QueryPostsF
 		var (prev, next) = ids.GetEitherSide(currentId);
 
 		return (
-			prev.IsSome(out var x) ? new WpPostId(x) : null,
-			next.IsSome(out var y) ? new WpPostId(y) : null
+			prev.IsSome(out var x) ? new WpPostId { Value = x } : null,
+			next.IsSome(out var y) ? new WpPostId { Value = y } : null
 		);
 	}
 }

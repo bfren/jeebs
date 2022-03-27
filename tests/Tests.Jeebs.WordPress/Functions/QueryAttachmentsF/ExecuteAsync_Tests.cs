@@ -29,7 +29,7 @@ public class ExecuteAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, v) = Setup();
-		var fileIds = ImmutableList.Create<WpPostId>(new(Rnd.Lng), new(Rnd.Lng));
+		var fileIds = ImmutableList.Create<WpPostId>(new() { Value = Rnd.Lng }, new() { Value = Rnd.Lng });
 
 		// Act
 		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);

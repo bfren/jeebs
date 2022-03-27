@@ -24,5 +24,5 @@ public class SetValue_Tests
 		Assert.Equal(parameter.Value, value);
 	}
 
-	public readonly record struct TestId(long Value) : IStrongId;
+	public sealed record class TestId : StrongId;
 }

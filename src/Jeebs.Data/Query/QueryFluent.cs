@@ -30,7 +30,7 @@ public abstract record class QueryFluent
 /// <inheritdoc cref="IQueryFluent{TEntity, TId}"/>
 public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent<TEntity, TId>
 	where TEntity : IWithId<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	/// <summary>
 	/// IRepository

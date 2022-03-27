@@ -17,5 +17,5 @@ public interface IWithVersion : IWithId
 /// <inheritdoc cref="IWithVersion"/>
 /// <typeparam name="T">IStrongId Type</typeparam>
 public interface IWithVersion<T> : IWithId<T>, IWithVersion
-	where T : IStrongId
+	where T : class, IStrongId, new()
 { }

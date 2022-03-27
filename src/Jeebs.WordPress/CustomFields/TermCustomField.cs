@@ -85,7 +85,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <param name="value">Term ID value</param>
 	internal static Maybe<WpTermId> ParseTermId(Type type, string value) =>
 		F.ParseInt64(value).Switch(
-			some: x => F.Some(new WpTermId(x)),
+			some: x => F.Some(new WpTermId { Value = x }),
 			none: _ => F.None<WpTermId>(new M.ValueIsInvalidTermIdMsg(type, value))
 		);
 

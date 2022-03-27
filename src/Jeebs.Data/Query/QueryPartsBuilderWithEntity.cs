@@ -15,7 +15,7 @@ namespace Jeebs.Data.Query;
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuilder<TId>
 	where TEntity : IWithId<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	private readonly IMapper mapper;
 

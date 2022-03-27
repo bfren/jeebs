@@ -13,7 +13,7 @@ namespace Jeebs.Data.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public interface IQueryOptions<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	/// <summary>
 	/// Query Id

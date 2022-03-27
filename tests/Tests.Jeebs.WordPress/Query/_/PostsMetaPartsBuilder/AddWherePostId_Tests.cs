@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -34,7 +34,7 @@ public class AddWherePostId_Tests : QueryPartsBuilder_Tests<PostsMetaPartsBuilde
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var postId = new WpPostId(Rnd.Lng);
+		var postId = new WpPostId() { Value = Rnd.Lng };
 
 		// Act
 		var result = builder.AddWherePostId(v.Parts, postId, Substitute.For<IImmutableList<WpPostId>>());
@@ -48,8 +48,8 @@ public class AddWherePostId_Tests : QueryPartsBuilder_Tests<PostsMetaPartsBuilde
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = new WpPostId(Rnd.Lng);
-		var id1 = new WpPostId(Rnd.Lng);
+		var id0 = new WpPostId() { Value = Rnd.Lng };
+		var id1 = new WpPostId() { Value = Rnd.Lng };
 		var postIds = ImmutableList.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 

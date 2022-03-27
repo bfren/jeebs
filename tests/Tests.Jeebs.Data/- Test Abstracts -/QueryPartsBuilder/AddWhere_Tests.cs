@@ -10,7 +10,7 @@ namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	public abstract void Test00_Column_Exists_Adds_Where();
 

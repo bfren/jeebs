@@ -33,13 +33,13 @@ public static class Repository_Setup
 
 	public sealed record class Foo : IWithId<FooId>
 	{
-		public FooId Id { get; init; }
+		public FooId Id { get; init; } = new();
 	}
 
 	public sealed record class FooModel : IWithId<FooId>
 	{
-		public FooId Id { get; init; }
+		public FooId Id { get; init; } = new();
 	}
 
-	public readonly record struct FooId(long Value) : IStrongId;
+	public sealed record class FooId : StrongId;
 }

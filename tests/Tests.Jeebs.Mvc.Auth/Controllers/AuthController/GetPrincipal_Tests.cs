@@ -20,7 +20,7 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestController(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new(Rnd.Lng),
+			Id = new() { Value = Rnd.Lng },
 			EmailAddress = Rnd.Str,
 			FriendlyName = Rnd.Str,
 			IsSuper = true
@@ -61,11 +61,11 @@ public class GetPrincipal_Tests
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var controller = new AuthTestController(auth, log);
-		var role0 = new AuthRoleModel(new(Rnd.Lng), Rnd.Str);
-		var role1 = new AuthRoleModel(new(Rnd.Lng), Rnd.Str);
+		var role0 = new AuthRoleModel(new() { Value = Rnd.Lng }, Rnd.Str);
+		var role1 = new AuthRoleModel(new() { Value = Rnd.Lng }, Rnd.Str);
 		var user = new AuthUserModel
 		{
-			Id = new(Rnd.Lng),
+			Id = new() { Value = Rnd.Lng },
 			EmailAddress = Rnd.Str,
 			FriendlyName = Rnd.Str,
 			IsSuper = true,
@@ -119,7 +119,7 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestControllerWithClaims(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new(Rnd.Lng),
+			Id = new() { Value = Rnd.Lng },
 			EmailAddress = Rnd.Str,
 			FriendlyName = Rnd.Str,
 			IsSuper = true

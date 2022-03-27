@@ -34,5 +34,5 @@ public class WriteJson_Tests
 		Assert.Equal(JsonF.Empty, result);
 	}
 
-	public readonly record struct TestId(long Value) : IStrongId;
+	public sealed record class TestId : StrongId;
 }

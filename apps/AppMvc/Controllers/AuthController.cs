@@ -76,14 +76,14 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 	public async Task<IActionResult> UpdateUser() =>
 		await Auth
 			.User.RetrieveAsync<UpdateUserModel>(
-				new AuthUserId(1)
+				new AuthUserId() { Value = 1 }
 			)
 			.SwitchAsync(
 				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = Rnd.Str }).ConfigureAwait(false),
 				none: r => F.None<bool>(r).AsTask
 			)
 			.BindAsync(
-				_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId(1))
+				_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId() { Value = 1 })
 			)
 			.MapAsync(
 				x => Content(x.ToString()),
@@ -110,7 +110,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 
 	public sealed record class UpdateUserModel : IWithId<AuthUserId>, IWithVersion
 	{
-		public AuthUserId Id { get; init; }
+		public AuthUserId Id { get; init; } = new();
 
 		public long Version { get; init; }
 

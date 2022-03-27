@@ -17,7 +17,7 @@ public interface IWithId
 /// <inheritdoc cref="IWithId"/>
 /// <typeparam name="T">IStrongId Type</typeparam>
 public interface IWithId<T> : IWithId
-	where T : IStrongId
+	where T : class, IStrongId, new()
 {
 	/// <summary>
 	/// Strongly-typed IStrongId (wrapping a long value)

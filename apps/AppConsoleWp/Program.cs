@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppConsoleWp;
@@ -123,8 +123,8 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 //
 
 var taxonomy = WpBcg.Taxonomies.BibleBook;
-var book0 = new WpTermId(423U);
-var book1 = new WpTermId(628U);
+var book0 = new WpTermId() { Value = 423U };
+var book1 = new WpTermId() { Value = 628U };
 Console.WriteLine();
 log.Dbg("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
 await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
@@ -220,7 +220,7 @@ log.Dbg("== Get Sermons with Custom Fields ==");
 await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
-	Ids = ImmutableList.Create<WpPostId>(new(924L), new(1867L), new(2020L))
+	Ids = ImmutableList.Create<WpPostId>(new() { Value = 924L }, new() { Value = 1867L }, new() { Value = 2020L })
 })
 .AuditAsync(
 	some: x =>
@@ -317,7 +317,7 @@ Console.WriteLine();
 log.Dbg("== Get Attachments ==");
 await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 {
-	Ids = ImmutableList.Create<WpPostId>(new(802L), new(862L), new(2377L))
+	Ids = ImmutableList.Create<WpPostId>(new() { Value = 802L }, new() { Value = 862L }, new() { Value = 2377L })
 })
 .AuditAsync(
 	some: x =>
@@ -346,7 +346,7 @@ await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 
 Console.WriteLine();
 log.Dbg("== Get Attachment file path ==");
-await bcg.Db.Query.AttachmentFilePathAsync(new(802L))
+await bcg.Db.Query.AttachmentFilePathAsync(new() { Value = 802L })
 .AuditAsync(
 	some: x => log.Dbg("Path: {FilePath}", x),
 	none: r => log.Msg(r)

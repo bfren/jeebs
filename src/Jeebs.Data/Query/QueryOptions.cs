@@ -10,7 +10,7 @@ namespace Jeebs.Data.Query;
 
 /// <inheritdoc cref="IQueryOptions{TId}"/>
 public abstract record class QueryOptions<TId> : IQueryOptions<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	/// <summary>
 	/// Abstraction for building query parts

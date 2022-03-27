@@ -11,7 +11,7 @@ public class DeleteAsync_Tests
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
 		var value = Rnd.Lng;
-		var model = new Repository_Setup.FooModel { Id = new(value) };
+		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
 		await repo.DeleteAsync(model).ConfigureAwait(false);
@@ -26,7 +26,7 @@ public class DeleteAsync_Tests
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
 		var value = Rnd.Lng;
-		var model = new Repository_Setup.FooModel { Id = new(value) };
+		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
 		await repo.DeleteAsync(model).ConfigureAwait(false);
