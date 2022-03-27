@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.Extensions.Primitives;
@@ -18,8 +18,7 @@ public class GetAuthorisationHeader_Tests
 		var result = JwtHandler.GetAuthorisationHeader(headers);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<MissingAuthorisationHeaderMsg>(none);
+		result.AssertNone().AssertType<MissingAuthorisationHeaderMsg>();
 	}
 
 	[Fact]

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Cryptography.Functions;
@@ -19,8 +19,7 @@ public class Unlock_Tests
 		var result = box.Unlock(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
+		result.AssertNone().AssertType<UnlockWhenEncryptedContentsIsNoneMsg>();
 	}
 
 	[Fact]
@@ -35,8 +34,7 @@ public class Unlock_Tests
 		var result = box.Unlock(Rnd.ByteF.Get(16));
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<InvalidKeyExceptionMsg>(none);
+		result.AssertNone().AssertType<InvalidKeyExceptionMsg>();
 	}
 
 	[Fact]
@@ -54,8 +52,7 @@ public class Unlock_Tests
 		var result = box.Unlock(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<InvalidNonceExceptionMsg>(none);
+		result.AssertNone().AssertType<InvalidNonceExceptionMsg>();
 	}
 
 	[Fact]
@@ -71,8 +68,7 @@ public class Unlock_Tests
 		var result = box.Unlock(incorrectKey);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
 	}
 
 	[Fact]
@@ -90,8 +86,7 @@ public class Unlock_Tests
 		var result = box.Unlock(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
 	}
 
 	[Fact]

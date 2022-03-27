@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Reflection.ObjectExtensions.M;
@@ -18,10 +18,8 @@ public class GetPropertyValue_Tests
 		var r1 = test.GetPropertyValue<string>(Rnd.Str);
 
 		// Assert
-		var n0 = r0.AssertNone();
-		Assert.IsType<PropertyNotFoundMsg>(n0);
-		var n1 = r1.AssertNone();
-		Assert.IsType<PropertyNotFoundMsg>(n1);
+		r0.AssertNone().AssertType<PropertyNotFoundMsg>();
+		r1.AssertNone().AssertType<PropertyNotFoundMsg>();
 	}
 
 	[Fact]
@@ -34,8 +32,7 @@ public class GetPropertyValue_Tests
 		var result = test.GetPropertyValue<int>(nameof(Test.Foo));
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<UnexpectedPropertyTypeMsg<int>>(none);
+		result.AssertNone().AssertType<UnexpectedPropertyTypeMsg<int>>();
 	}
 
 	[Theory]
@@ -50,10 +47,8 @@ public class GetPropertyValue_Tests
 		var r1 = test.GetPropertyValue<string>(nameof(Test.Foo));
 
 		// Assert
-		var n0 = r0.AssertNone();
-		Assert.IsType<NullValueMsg<object>>(n0);
-		var n1 = r1.AssertNone();
-		Assert.IsType<NullValueMsg<string>>(n1);
+		r0.AssertNone().AssertType<NullValueMsg<object>>();
+		r1.AssertNone().AssertType<NullValueMsg<string>>();
 	}
 
 	[Fact]

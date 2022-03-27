@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static MaybeF.F.EnumerableF.R;
@@ -36,8 +36,7 @@ public class Indexer_Tests
 		var result = list[2];
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ElementAtIsNullReason>(none);
+		result.AssertNone().AssertType<ElementAtIsNullReason>();
 	}
 
 	[Fact]
@@ -50,8 +49,7 @@ public class Indexer_Tests
 		var result = list[Rnd.Int];
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ListIsEmptyReason>(none);
+		result.AssertNone().AssertType<ListIsEmptyReason>();
 	}
 
 	[Fact]

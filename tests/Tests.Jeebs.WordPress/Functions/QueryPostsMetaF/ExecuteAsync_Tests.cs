@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Query;
@@ -19,8 +19,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryPostsMetaF.ExecuteAsync<Test>(db, w, _ => throw new Exception()).ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ErrorGettingQueryPostsMetaOptionsMsg>(none);
+		result.AssertNone().AssertType<ErrorGettingQueryPostsMetaOptionsMsg>();
 	}
 
 	[Fact]

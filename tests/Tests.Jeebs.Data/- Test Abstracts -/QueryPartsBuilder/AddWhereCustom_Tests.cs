@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Id;
@@ -28,8 +28,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 		var result = builder.AddWhereCustom(v.Parts, input, new());
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TryingToAddEmptyClauseToWhereCustomMsg>(none);
+		result.AssertNone().AssertType<TryingToAddEmptyClauseToWhereCustomMsg>();
 	}
 
 	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input);
@@ -52,8 +51,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 		var result = builder.AddWhereCustom(v.Parts, clause, input);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<UnableToAddParametersToWhereCustomMsg>(none);
+		result.AssertNone().AssertType<UnableToAddParametersToWhereCustomMsg>();
 	}
 
 	public abstract void Test02_Returns_New_Parts_With_Clause_And_Parameters();

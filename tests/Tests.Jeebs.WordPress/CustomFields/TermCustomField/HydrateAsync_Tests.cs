@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
@@ -24,10 +24,9 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<MetaKeyNotFoundMsg>(none);
-		Assert.Equal(typeof(Test), msg.Type);
-		Assert.Equal(key, msg.Value);
+		var none = result.AssertNone().AssertType<MetaKeyNotFoundMsg>();
+		Assert.Equal(typeof(Test), none.Type);
+		Assert.Equal(key, none.Value);
 	}
 
 	[Fact]
@@ -70,9 +69,8 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<MultipleTermsFoundMsg>(none);
-		Assert.Equal(value.ToString(), msg.Value);
+		var none = result.AssertNone().AssertType<MultipleTermsFoundMsg>();
+		Assert.Equal(value.ToString(), none.Value);
 	}
 
 	[Fact]

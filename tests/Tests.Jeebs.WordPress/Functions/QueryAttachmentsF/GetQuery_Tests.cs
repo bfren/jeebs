@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -20,8 +20,7 @@ public class GetQuery_Tests
 		var result = QueryAttachmentsF.GetQuery(schema, fileIds, Rnd.Str);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NoFileIdsMsg>(none);
+		result.AssertNone().AssertType<NoFileIdsMsg>();
 	}
 
 	[Fact]

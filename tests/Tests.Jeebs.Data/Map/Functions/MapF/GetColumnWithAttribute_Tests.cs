@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
@@ -19,8 +19,7 @@ public class GetColumnWithAttribute_Tests
 		var result = MapF.GetColumnWithAttribute<FooWithoutIdAttribute, IdAttribute>(columns);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NoPropertyWithAttributeMsg<FooWithoutIdAttribute, IdAttribute>>(none);
+		result.AssertNone().AssertType<NoPropertyWithAttributeMsg<FooWithoutIdAttribute, IdAttribute>>();
 	}
 
 	[Fact]
@@ -33,7 +32,6 @@ public class GetColumnWithAttribute_Tests
 		var result = MapF.GetColumnWithAttribute<FooWithMultipleIdAttributes, IdAttribute>(columns);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TooManyPropertiesWithAttributeMsg<FooWithMultipleIdAttributes, IdAttribute>>(none);
+		result.AssertNone().AssertType<TooManyPropertiesWithAttributeMsg<FooWithMultipleIdAttributes, IdAttribute>>();
 	}
 }

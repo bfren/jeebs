@@ -213,8 +213,7 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<InOperatorRequiresValueToBeAListMsg>(none);
+		result.AssertNone().AssertType<InOperatorRequiresValueToBeAListMsg>();
 	}
 
 	public readonly record struct TestId(long Value) : IStrongId;

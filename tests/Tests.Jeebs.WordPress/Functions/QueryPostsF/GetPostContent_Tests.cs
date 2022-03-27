@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Entities;
@@ -17,8 +17,7 @@ public class GetPostContent_Tests
 		var result = QueryPostsF.GetPostContent<NoContentProperty>();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ContentPropertyNotFoundMsg<NoContentProperty>>(none);
+		result.AssertNone().AssertType<ContentPropertyNotFoundMsg<NoContentProperty>>();
 	}
 
 	[Fact]
@@ -30,8 +29,7 @@ public class GetPostContent_Tests
 		var result = QueryPostsF.GetPostContent<WithContentPropertyWrongType>();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>(none);
+		result.AssertNone().AssertType<ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>();
 	}
 
 	[Fact]

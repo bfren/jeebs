@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.WordPress.CustomFields.AttachmentCustomField.M;
@@ -18,8 +18,7 @@ public class ParseAttachmentPostId_Tests
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ValueIsInvalidPostIdMsg>(none);
+		result.AssertNone().AssertType<ValueIsInvalidPostIdMsg>();
 	}
 
 	[Fact]

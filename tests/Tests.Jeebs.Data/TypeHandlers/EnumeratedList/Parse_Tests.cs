@@ -39,7 +39,7 @@ public class Parse_Tests
 	{
 		// Arrange
 		var handler = new JsonEnumeratedListTypeHandler<Foo>();
-		const string? json = "{\"foo\":\"bar\"}";
+		const string? json = /*lang=json,strict*/ "{\"foo\":\"bar\"}";
 
 		// Act
 		var result = handler.Parse(json);

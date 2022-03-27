@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Functions.Base32F.M;
@@ -29,8 +29,7 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(input);
 
 		// Assert
-		var msg = result.AssertNone();
-		Assert.IsType<InputStringNotLongEnoughMsg>(msg);
+		result.AssertNone().AssertType<InputStringNotLongEnoughMsg>();
 	}
 
 	[Theory]
@@ -47,9 +46,8 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(str);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<CharacterNotInBase32AlphabetMsg>(none);
-		Assert.Equal(input, msg.Value);
+		var none = result.AssertNone().AssertType<CharacterNotInBase32AlphabetMsg>();
+		Assert.Equal(input, none.Value);
 	}
 
 	[Fact]

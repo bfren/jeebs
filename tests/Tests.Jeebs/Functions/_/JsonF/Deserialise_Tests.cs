@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Functions.JsonF.M;
@@ -20,8 +20,7 @@ public class Deserialise_Tests
 		var result = JsonF.Deserialise<Test>(input);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
+		result.AssertNone().AssertType<DeserialisingNullOrEmptyStringMsg>();
 	}
 
 	[Fact]
@@ -34,8 +33,7 @@ public class Deserialise_Tests
 		var result = JsonF.Deserialise<Test>(input);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialiseExceptionMsg>(none);
+		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
 	}
 
 	[Fact]

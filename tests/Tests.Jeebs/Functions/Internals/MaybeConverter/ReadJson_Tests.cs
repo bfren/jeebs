@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using MaybeF;
@@ -47,7 +47,7 @@ public class ReadJson_Tests
 	[InlineData("true")]
 	[InlineData("false")]
 	[InlineData("[0,1,2]")]
-	[InlineData("{\"bar\":\"foo\"}")]
+	[InlineData(/*lang=json,strict*/ "{\"bar\":\"foo\"}")]
 	public void Deserialise_Null_Or_Invalid_Value_Returns_None_With_DeserialisingValueExceptionMsg(string input)
 	{
 		// Arrange
@@ -56,8 +56,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Maybe<Test>>(input);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialiseExceptionMsg>(none);
+		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
 	}
 
 	[Theory]
@@ -65,7 +64,7 @@ public class ReadJson_Tests
 	[InlineData("true")]
 	[InlineData("false")]
 	[InlineData("[0,1,2]")]
-	[InlineData("{\"bar\":\"foo\"}")]
+	[InlineData(/*lang=json,strict*/ "{\"bar\":\"foo\"}")]
 	public void Deserialise_Object_With_Maybe_Property_Null_Or_Invalid_Value_Returns_None_With_DeserialisingValueExceptionMsg(string input)
 	{
 		// Arrange
@@ -75,8 +74,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Wrapper>(json);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialiseExceptionMsg>(none);
+		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
 	}
 
 	public record class Test(string Foo, int Bar);

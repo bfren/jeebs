@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -21,8 +21,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, _ => throw new Exception()).ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ErrorGettingQueryAttachmentsOptionsMsg>(none);
+		result.AssertNone().AssertType<ErrorGettingQueryAttachmentsOptionsMsg>();
 	}
 
 	[Fact]

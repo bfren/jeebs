@@ -63,7 +63,7 @@ public partial class Decrypt_Tests
 	{
 		// Arrange
 		var key = Rnd.Str;
-		const string json = "{\"foo\":\"bar\"}";
+		const string json = /*lang=json,strict*/ "{\"foo\":\"bar\"}";
 
 		// Act
 		var result = json.Decrypt(key);

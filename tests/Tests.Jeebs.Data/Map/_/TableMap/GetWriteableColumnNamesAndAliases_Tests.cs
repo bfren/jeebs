@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map.Functions;
@@ -20,8 +20,7 @@ public class GetWriteableColumnNamesAndAliases_Tests
 		var result = map.GetWriteableColumnNamesAndAliases();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NoWriteableColumnsFoundMsg>(none);
+		result.AssertNone().AssertType<NoWriteableColumnsFoundMsg>();
 	}
 
 	[Fact]
