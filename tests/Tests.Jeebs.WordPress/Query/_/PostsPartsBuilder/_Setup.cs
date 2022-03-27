@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
@@ -11,14 +11,14 @@ namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
 
 public static class Setup
 {
-	private static readonly WpDbSchema schema =
+	private static readonly WpDbSchema Schema =
 		new(Rnd.Str);
 
 	public static PostsTable Post { get; } =
-		schema.Posts;
+		Schema.Posts;
 
 	public static PostsPartsBuilder GetBuilder(IExtract extract) =>
-		new(extract, schema);
+		new(extract, Schema);
 
 	public static void AssertWhere(QueryParts parts, Maybe<QueryParts> result, string column, Compare cmp, object value)
 	{

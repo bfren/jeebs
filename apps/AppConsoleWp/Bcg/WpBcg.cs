@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Db;
@@ -38,10 +38,8 @@ public sealed class WpBcg : Wp<
 	/// <summary>
 	/// Register custom post types
 	/// </summary>
-	public override void RegisterCustomPostTypes()
-	{
+	public override void RegisterCustomPostTypes() =>
 		PostType.AddCustomPostType(PostTypes.Sermon);
-	}
 
 	/// <summary>
 	/// Register custom taxonomies

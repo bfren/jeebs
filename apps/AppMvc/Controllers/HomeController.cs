@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Apps.Web.Constants;
@@ -22,8 +22,6 @@ public class HomeController : Jeebs.Mvc.Controllers.Controller
 		return View();
 	}
 
-	public IActionResult Privacy()
-	{
-		return View();
-	}
+	public IActionResult Privacy() =>
+		View();
 }

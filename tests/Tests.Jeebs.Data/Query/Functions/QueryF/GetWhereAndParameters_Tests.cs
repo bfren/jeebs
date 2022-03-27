@@ -306,5 +306,5 @@ public class GetWhereAndParameters_Tests
 			$"({string.Join('|', objects)})";
 	}
 
-	readonly record struct TestId(long Value) : IStrongId;
+	private readonly record struct TestId(long Value) : IStrongId;
 }

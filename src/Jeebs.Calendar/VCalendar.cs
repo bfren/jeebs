@@ -15,7 +15,6 @@ namespace Jeebs.Calendar;
 /// </summary>
 public class VCalendar : CalendarBase
 {
-
 	/// <summary>
 	/// Create object
 	/// </summary>

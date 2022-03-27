@@ -1,11 +1,11 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions.PhpF_Tests;
 
 public class Deserialise_Tests
 {
-	public static readonly string serialisedArray = @"a:2:{i:1;a:2:{i:1;s:6:""Orange"";i:0;s:5:""Apple"";}i:0;s:12:""Sample Array"";}";
+	public static readonly string SerialisedArray = @"a:2:{i:1;a:2:{i:1;s:6:""Orange"";i:0;s:5:""Apple"";}i:0;s:12:""Sample Array"";}";
 
 	[Theory]
 	[InlineData("b:1;", true)]
@@ -35,7 +35,7 @@ public class Deserialise_Tests
 		// Arrange
 
 		// Act
-		var result = PhpF.Deserialise(serialisedArray);
+		var result = PhpF.Deserialise(SerialisedArray);
 
 		// Assert
 		var outer = Assert.IsType<PhpF.AssocArray>(result);

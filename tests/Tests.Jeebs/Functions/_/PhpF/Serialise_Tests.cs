@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections;
@@ -7,7 +7,7 @@ namespace Jeebs.Functions.PhpF_Tests;
 
 public class Serialise_Tests
 {
-	public static readonly string serialisedArray = @"a:2:{i:1;a:2:{i:1;s:6:""Orange"";i:0;s:5:""Apple"";}i:0;s:12:""Sample Array"";}";
+	public static readonly string SerialisedArray = @"a:2:{i:1;a:2:{i:1;s:6:""Orange"";i:0;s:5:""Apple"";}i:0;s:12:""Sample Array"";}";
 
 	[Theory]
 	[InlineData(true, "b:1;")]
@@ -53,7 +53,7 @@ public class Serialise_Tests
 		var result = PhpF.Serialise(arrayOuter);
 
 		// Assert
-		Assert.Equal(serialisedArray, result);
+		Assert.Equal(SerialisedArray, result);
 	}
 
 	[Theory]

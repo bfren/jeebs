@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
@@ -14,10 +14,8 @@ public class AppService : IHostedService
 {
 	private readonly ILog log;
 
-	public AppService(ILog log)
-	{
+	public AppService(ILog log) =>
 		this.log = log;
-	}
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
@@ -33,8 +31,6 @@ public class AppService : IHostedService
 		return Task.Delay(2000, cancellationToken);
 	}
 
-	public Task StopAsync(CancellationToken cancellationToken)
-	{
-		return Task.CompletedTask;
-	}
+	public Task StopAsync(CancellationToken cancellationToken) =>
+		Task.CompletedTask;
 }
