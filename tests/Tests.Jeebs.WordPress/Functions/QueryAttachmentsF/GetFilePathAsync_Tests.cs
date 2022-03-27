@@ -21,7 +21,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var fileId = new WpPostId { Value = Rnd.Lng };
 
 		// Act
-		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
 
 		// Assert
 		var none = result.AssertNone().AssertType<AttachmentNotFoundMsg>();
@@ -38,7 +38,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var fileId = new WpPostId { Value = Rnd.Lng };
 
 		// Act
-		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
 
 		// Assert
 		var none = result.AssertNone().AssertType<MultipleAttachmentsFoundMsg>();
@@ -55,7 +55,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 		// Act
-		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, new() { Value = Rnd.Lng }).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, new() { Value = Rnd.Lng });
 
 		// Assert
 		var some = result.AssertSome();

@@ -17,7 +17,7 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 		var (query, _) = Setup();
 
 		// Act
-		var result = await query.QuerySingleAsync<int>().ConfigureAwait(false);
+		var result = await query.QuerySingleAsync<int>();
 
 		// Assert
 		result.AssertNone().AssertType<NoPredicatesMsg>();
@@ -32,8 +32,8 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 		predicates.Count.Returns(1);
 
 		// Act
-		await (query with { Predicates = predicates }).QuerySingleAsync<int>().ConfigureAwait(false);
-		await (query with { Predicates = predicates }).QuerySingleAsync<int>(v.Transaction).ConfigureAwait(false);
+		await (query with { Predicates = predicates }).QuerySingleAsync<int>();
+		await (query with { Predicates = predicates }).QuerySingleAsync<int>(v.Transaction);
 
 		// Assert
 		var array = predicates.Received().ToArray();
@@ -49,8 +49,8 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 		predicates.Count.Returns(1);
 
 		// Act
-		await (query with { Predicates = predicates }).QuerySingleAsync<int>().ConfigureAwait(false);
-		await (query with { Predicates = predicates }).QuerySingleAsync<int>(v.Transaction).ConfigureAwait(false);
+		await (query with { Predicates = predicates }).QuerySingleAsync<int>();
+		await (query with { Predicates = predicates }).QuerySingleAsync<int>(v.Transaction);
 
 		// Assert
 		await v.Db.Received().QueryAsync<int>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>());
@@ -69,8 +69,8 @@ public class QuerySingleAsync_Tests : QueryFluent_Tests
 			.ReturnsForAnyArgs(new[] { value });
 
 		// Act
-		var r0 = await (query with { Predicates = predicates }).QuerySingleAsync<int>().ConfigureAwait(false);
-		var r1 = await (query with { Predicates = predicates }).QuerySingleAsync<int>(v.Transaction).ConfigureAwait(false);
+		var r0 = await (query with { Predicates = predicates }).QuerySingleAsync<int>();
+		var r1 = await (query with { Predicates = predicates }).QuerySingleAsync<int>(v.Transaction);
 
 		// Assert
 		var s0 = r0.AssertSome();

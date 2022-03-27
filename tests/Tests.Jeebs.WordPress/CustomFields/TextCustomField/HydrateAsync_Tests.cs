@@ -22,7 +22,7 @@ public class HydrateAsync_Tests
 		var field = new Test(key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, isRequired).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, isRequired);
 
 		// Assert
 		result.AssertTrue();
@@ -40,7 +40,7 @@ public class HydrateAsync_Tests
 		var field = new Test(key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
 		var none = result.AssertNone().AssertType<MetaKeyNotFoundMsg>();
@@ -58,7 +58,7 @@ public class HydrateAsync_Tests
 		var field = new Test(Rnd.Str);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, false).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, false);
 
 		// Assert
 		result.AssertFalse();

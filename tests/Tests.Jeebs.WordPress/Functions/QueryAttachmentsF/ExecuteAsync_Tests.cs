@@ -18,7 +18,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 
 		// Act
-		var result = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, _ => throw new Exception()).ConfigureAwait(false);
+		var result = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, _ => throw new Exception());
 
 		// Assert
 		result.AssertNone().AssertType<ErrorGettingQueryAttachmentsOptionsMsg>();
@@ -32,9 +32,9 @@ public class ExecuteAsync_Tests : Query_Tests
 		var fileIds = ImmutableList.Create<WpPostId>(new() { Value = Rnd.Lng }, new() { Value = Rnd.Lng });
 
 		// Act
-		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds })).ConfigureAwait(false);
+		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));
 
 		// Assert
-		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction).ConfigureAwait(false);
+		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
 	}
 }

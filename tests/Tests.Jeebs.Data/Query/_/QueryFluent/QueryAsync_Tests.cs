@@ -17,7 +17,7 @@ public class QueryAsync_Tests : QueryFluent_Tests
 		var (query, _) = Setup();
 
 		// Act
-		var result = await query.QueryAsync<int>().ConfigureAwait(false);
+		var result = await query.QueryAsync<int>();
 
 		// Assert
 		result.AssertNone().AssertType<NoPredicatesMsg>();
@@ -32,8 +32,8 @@ public class QueryAsync_Tests : QueryFluent_Tests
 		predicates.Count.Returns(1);
 
 		// Act
-		await (query with { Predicates = predicates }).QueryAsync<int>().ConfigureAwait(false);
-		await (query with { Predicates = predicates }).QueryAsync<int>(v.Transaction).ConfigureAwait(false);
+		await (query with { Predicates = predicates }).QueryAsync<int>();
+		await (query with { Predicates = predicates }).QueryAsync<int>(v.Transaction);
 
 		// Assert
 		var array = predicates.Received().ToArray();
@@ -49,8 +49,8 @@ public class QueryAsync_Tests : QueryFluent_Tests
 		predicates.Count.Returns(1);
 
 		// Act
-		await (query with { Predicates = predicates }).QueryAsync<int>().ConfigureAwait(false);
-		await (query with { Predicates = predicates }).QueryAsync<int>(v.Transaction).ConfigureAwait(false);
+		await (query with { Predicates = predicates }).QueryAsync<int>();
+		await (query with { Predicates = predicates }).QueryAsync<int>(v.Transaction);
 
 		// Assert
 		await v.Db.Received().QueryAsync<int>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>());

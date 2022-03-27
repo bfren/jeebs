@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.LazyAsync_Tests;
@@ -36,11 +36,11 @@ public class Value_Tests
 		// Act
 		for (int i = 0; i < times; i++)
 		{
-			await a.Value.ConfigureAwait(false); // should run task once
+			await a.Value; // should run task once
 		}
 		for (int i = 0; i < times; i++)
 		{
-			await t().ConfigureAwait(false); // should run task each time
+			await t(); // should run task each time
 		}
 
 		// Assert
