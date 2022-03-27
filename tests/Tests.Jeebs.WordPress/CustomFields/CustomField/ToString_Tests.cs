@@ -26,7 +26,7 @@ public class ToString_Tests
 		// Arrange
 		var key = Rnd.Str;
 		Guid? value = null;
-		string str = Rnd.Str;
+		var str = Rnd.Str;
 		var field = Substitute.ForPartsOf<Test>(key, value, str);
 
 		// Act

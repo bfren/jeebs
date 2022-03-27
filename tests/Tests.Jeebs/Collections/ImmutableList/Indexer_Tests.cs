@@ -61,7 +61,7 @@ public class Indexer_Tests
 		var list = ImmutableList.Create(new[] { i0, i1 });
 
 		// Act
-		for (int i = 0; i < list.Count; i++)
+		for (var i = 0; i < list.Count; i++)
 		{
 			var item = list[i];
 			item = Rnd.Str;
