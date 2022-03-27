@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -178,7 +178,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var parentId = new WpPostId(Rnd.Lng);
+		var parentId = new WpPostId() { Value = Rnd.Lng };
 		var opt = options with
 		{
 			ParentId = parentId
@@ -210,7 +210,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		// Arrange
 		var (options, builder) = Setup();
 		var taxonomies = ImmutableList.Create(
-			(Taxonomy.LinkCategory, new WpTermId(Rnd.Lng))
+			(Taxonomy.LinkCategory, new WpTermId() { Value = Rnd.Lng })
 		);
 		var opt = options with
 		{

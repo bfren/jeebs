@@ -8,5 +8,4 @@ namespace Jeebs.Auth.Data;
 /// <summary>
 /// User ID
 /// </summary>
-/// <param name="Value">ID Value</param>
-public readonly record struct AuthUserId(long Value) : IStrongId;
+public sealed record class AuthUserId : StrongId;

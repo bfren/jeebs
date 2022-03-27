@@ -6,5 +6,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Term Taxonomy ID
 /// </summary>
-/// <param name="Value">ID Value</param>
-public readonly record struct WpTermTaxonomyId(long Value) : Id.IStrongId;
+public sealed record class WpTermTaxonomyId : Id.StrongId;

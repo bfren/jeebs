@@ -13,5 +13,5 @@ public abstract record class WpCommentEntityWithId : Id.IWithId<WpCommentId>
 	/// <summary>
 	/// Id
 	/// </summary>
-	public WpCommentId Id { get; init; }
+	public WpCommentId Id { get; init; } = new();
 }

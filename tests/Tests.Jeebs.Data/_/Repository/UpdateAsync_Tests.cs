@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Repository_Tests;
@@ -11,7 +11,7 @@ public class UpdateAsync_Tests
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
 		var value = Rnd.Lng;
-		var model = new Repository_Setup.FooModel { Id = new(value) };
+		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
 		await repo.UpdateAsync(model).ConfigureAwait(false);
@@ -26,7 +26,7 @@ public class UpdateAsync_Tests
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
 		var value = Rnd.Lng;
-		var model = new Repository_Setup.FooModel { Id = new(value) };
+		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
 		await repo.UpdateAsync(model).ConfigureAwait(false);

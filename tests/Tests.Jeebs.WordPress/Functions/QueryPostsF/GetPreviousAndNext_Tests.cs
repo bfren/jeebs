@@ -62,7 +62,7 @@ public class GetPreviousAndNext_Tests
 		// Assert
 		Assert.Null(r0);
 		Assert.NotNull(r1);
-		Assert.Equal(next, r1!.Value.Value);
+		Assert.Equal(next, r1!.Value);
 	}
 
 	[Fact]
@@ -78,7 +78,7 @@ public class GetPreviousAndNext_Tests
 
 		// Assert
 		Assert.NotNull(r0);
-		Assert.Equal(prev, r0!.Value.Value);
+		Assert.Equal(prev, r0!.Value);
 		Assert.Null(r1);
 	}
 
@@ -96,8 +96,8 @@ public class GetPreviousAndNext_Tests
 
 		// Assert
 		Assert.NotNull(r0);
-		Assert.Equal(prev, r0!.Value.Value);
+		Assert.Equal(prev, r0!.Value);
 		Assert.NotNull(r1);
-		Assert.Equal(next, r1!.Value.Value);
+		Assert.Equal(next, r1!.Value);
 	}
 }

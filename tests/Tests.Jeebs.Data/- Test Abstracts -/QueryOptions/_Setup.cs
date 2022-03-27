@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -11,7 +11,7 @@ namespace Jeebs.Data.Query.QueryOptions_Tests;
 public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : IStrongId, new()
+	where TId : class, IStrongId, new()
 {
 	protected abstract (TOptions options, TBuilder builder) Setup();
 

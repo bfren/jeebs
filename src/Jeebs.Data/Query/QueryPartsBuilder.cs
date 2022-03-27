@@ -32,7 +32,7 @@ public abstract class QueryPartsBuilder
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	/// <summary>
 	/// IExtract

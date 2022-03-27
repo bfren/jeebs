@@ -31,7 +31,7 @@ public abstract class PartsBuilder_Tests
 	);
 }
 
-public readonly record struct TestId(long Value) : IStrongId;
+public sealed record class TestId : StrongId;
 
 public class TestPartsBuilder : PartsBuilder<TestId>
 {

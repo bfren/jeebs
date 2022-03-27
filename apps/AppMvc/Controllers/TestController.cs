@@ -34,7 +34,7 @@ public class TestController : Controller
 		var timer = new Stopwatch();
 		var results = new StringBuilder();
 		const int reps = 1;
-		var userId = new AuthUserId(1);
+		var userId = new AuthUserId() { Value = 1 };
 
 		results.AppendLine($"Running {reps} times.");
 
@@ -232,7 +232,7 @@ public class TestController : Controller
 		var timer = new Stopwatch();
 		var results = new StringBuilder();
 		const int reps = 1;
-		var userId = new AuthUserId(1);
+		var userId = new AuthUserId() { Value = 1 };
 
 		results.AppendLine($"Running {reps} times.");
 

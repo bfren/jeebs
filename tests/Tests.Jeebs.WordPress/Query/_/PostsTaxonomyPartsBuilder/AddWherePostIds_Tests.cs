@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -34,8 +34,8 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsB
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = new WpPostId(Rnd.Lng);
-		var id1 = new WpPostId(Rnd.Lng);
+		var id0 = new WpPostId() { Value = Rnd.Lng };
+		var id1 = new WpPostId() { Value = Rnd.Lng };
 		var postIds = ImmutableList.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 

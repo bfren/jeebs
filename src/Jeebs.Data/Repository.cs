@@ -12,7 +12,7 @@ namespace Jeebs.Data;
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
 public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	where TEntity : IWithId<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	/// <inheritdoc/>
 	public IUnitOfWork UnitOfWork =>

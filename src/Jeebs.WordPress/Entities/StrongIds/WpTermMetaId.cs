@@ -6,5 +6,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Term Meta ID
 /// </summary>
-/// <param name="Value">ID Value</param>
-public readonly record struct WpTermMetaId(long Value) : Id.IStrongId;
+public sealed record class WpTermMetaId : Id.StrongId;

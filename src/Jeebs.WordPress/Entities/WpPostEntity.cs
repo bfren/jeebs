@@ -14,7 +14,7 @@ public abstract record class WpPostEntity : WpPostEntityWithId
 	/// <summary>
 	/// AuthorId
 	/// </summary>
-	public StrongIds.WpUserId AuthorId { get; init; }
+	public StrongIds.WpUserId AuthorId { get; init; } = new();
 
 	/// <summary>
 	/// PublishedOn
@@ -64,7 +64,7 @@ public abstract record class WpPostEntity : WpPostEntityWithId
 	/// <summary>
 	/// ParentId
 	/// </summary>
-	public StrongIds.WpPostId ParentId { get; init; }
+	public StrongIds.WpPostId ParentId { get; init; } = new();
 
 	/// <summary>
 	/// Url

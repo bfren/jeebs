@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -25,7 +25,7 @@ public static class Setup
 	}
 }
 
-public readonly record struct TestId(long Value) : IStrongId;
+public sealed record class TestId : StrongId;
 
 public record class TestOptions : QueryOptions<TestId>
 {

@@ -6,5 +6,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Comment Meta ID
 /// </summary>
-/// <param name="Value">ID Value</param>
-public readonly record struct WpCommentMetaId(long Value) : Id.IStrongId;
+public sealed record class WpCommentMetaId : Id.StrongId;

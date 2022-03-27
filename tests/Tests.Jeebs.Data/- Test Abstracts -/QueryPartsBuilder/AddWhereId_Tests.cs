@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : IStrongId, new()
+	where TId : class, IStrongId, new()
 {
 	public abstract void Test00_Id_And_Ids_Null_Returns_Original_Parts();
 

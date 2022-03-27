@@ -12,7 +12,7 @@ public abstract record class AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole
 {
 	/// <inheritdoc/>
 	[Id]
-	public AuthUserId Id { get; init; }
+	public AuthUserId Id { get; init; } = new();
 
 	/// <inheritdoc/>
 	public string EmailAddress { get; init; } = string.Empty;

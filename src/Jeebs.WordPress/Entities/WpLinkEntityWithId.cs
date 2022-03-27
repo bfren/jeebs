@@ -13,5 +13,5 @@ public abstract record class WpLinkEntityWithId : Id.IWithId<WpLinkId>
 	/// <summary>
 	/// Id
 	/// </summary>
-	public WpLinkId Id { get; init; }
+	public WpLinkId Id { get; init; } = new();
 }

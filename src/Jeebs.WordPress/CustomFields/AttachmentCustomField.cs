@@ -103,7 +103,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <param name="value">Post ID value</param>
 	internal static Maybe<WpPostId> ParseAttachmentPostId(Type type, string value) =>
 		F.ParseInt64(value).Switch(
-			some: x => F.Some(new WpPostId(x)),
+			some: x => F.Some(new WpPostId { Value = x }),
 			none: _ => F.None<WpPostId>(new M.ValueIsInvalidPostIdMsg(type, value))
 		);
 

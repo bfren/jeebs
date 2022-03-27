@@ -33,7 +33,7 @@ public sealed record class PostsTaxonomyOptions : Options.PostsTaxonomyOptions
 			x => Builder.AddInnerJoin(x, T.TermTaxonomies, tx => tx.Id, T.TermRelationships, tr => tr.TermTaxonomyId)
 		)
 		.SwitchIf(
-			_ => Id.Value > 0 || Ids.Count > 0,
+			_ => Id?.Value > 0 || Ids.Count > 0,
 			x => Builder.AddWhereId(x, Id, Ids)
 		)
 		.SwitchIf(

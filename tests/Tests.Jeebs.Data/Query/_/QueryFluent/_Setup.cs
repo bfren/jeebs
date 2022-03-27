@@ -45,7 +45,7 @@ public abstract class QueryFluent_Tests
 		IDbTransaction Transaction
 	);
 
-	public readonly record struct TestId(long Value) : IStrongId;
+	public sealed record class TestId : StrongId;
 
 	public readonly record struct TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
 }

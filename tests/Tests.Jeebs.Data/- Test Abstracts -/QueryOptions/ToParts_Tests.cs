@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -11,7 +11,7 @@ namespace Jeebs.Data.Query.QueryOptions_Tests;
 public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : IStrongId, new()
+	where TId : class, IStrongId, new()
 {
 	public abstract void Test00_Calls_Builder_Create_With_Maximum_And_Skip();
 

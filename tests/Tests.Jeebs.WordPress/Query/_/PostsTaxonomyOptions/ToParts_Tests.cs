@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Linq.Expressions;
@@ -101,8 +101,8 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = new WpPostId(Rnd.Lng);
-		var i1 = new WpPostId(Rnd.Lng);
+		var i0 = new WpPostId() { Value = Rnd.Lng };
+		var i1 = new WpPostId() { Value = Rnd.Lng };
 		var postIds = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

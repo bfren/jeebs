@@ -6,5 +6,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress User ID
 /// </summary>
-/// <param name="Value">ID Value</param>
-public readonly record struct WpUserId(long Value) : Id.IStrongId;
+public sealed record class WpUserId : Id.StrongId;

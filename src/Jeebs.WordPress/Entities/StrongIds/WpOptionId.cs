@@ -6,5 +6,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Option ID
 /// </summary>
-/// <param name="Value">ID Value</param>
-public readonly record struct WpOptionId(long Value) : Id.IStrongId;
+public sealed record class WpOptionId : Id.StrongId;

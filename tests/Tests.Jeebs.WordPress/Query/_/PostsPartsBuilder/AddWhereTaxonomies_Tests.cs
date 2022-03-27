@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -35,7 +35,7 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = new WpTermId(Rnd.Lng);
+		var id = new WpTermId() { Value = Rnd.Lng };
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
 		var tt = builder.TTest.TermTaxonomies.ToString();
@@ -69,7 +69,7 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = new WpTermId(Rnd.Lng);
+		var id = new WpTermId() { Value = Rnd.Lng };
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
 		// Act
@@ -102,10 +102,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = new WpTermId(Rnd.Lng);
+		var id0 = new WpTermId() { Value = Rnd.Lng };
 		var t1 = Taxonomy.NavMenu;
-		var id1 = new WpTermId(Rnd.Lng);
-		var id2 = new WpTermId(Rnd.Lng);
+		var id1 = new WpTermId() { Value = Rnd.Lng };
+		var id2 = new WpTermId() { Value = Rnd.Lng };
 		var taxonomies = ImmutableList.Create((t0, id0), (t1, id1), (t1, id2));
 
 		var tt = builder.TTest.TermTaxonomies.ToString();
@@ -145,10 +145,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = new WpTermId(Rnd.Lng);
-		var id1 = new WpTermId(Rnd.Lng);
+		var id0 = new WpTermId() { Value = Rnd.Lng };
+		var id1 = new WpTermId() { Value = Rnd.Lng };
 		var t1 = Taxonomy.LinkCategory;
-		var id2 = new WpTermId(Rnd.Lng);
+		var id2 = new WpTermId() { Value = Rnd.Lng };
 		var taxonomies = ImmutableList.Create((t0, id0), (t0, id1), (t1, id2));
 
 		// Act
