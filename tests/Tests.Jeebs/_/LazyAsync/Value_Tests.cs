@@ -34,11 +34,11 @@ public class Value_Tests
 		var a = new LazyAsync<int>(l);
 
 		// Act
-		for (int i = 0; i < times; i++)
+		for (var i = 0; i < times; i++)
 		{
 			await a.Value; // should run task once
 		}
-		for (int i = 0; i < times; i++)
+		for (var i = 0; i < times; i++)
 		{
 			await t(); // should run task each time
 		}

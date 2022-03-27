@@ -23,7 +23,7 @@ public class ToPagedList_Tests
 	{
 		// Arrange
 		var items = new List<string>();
-		for (int i = 1; i <= 25; i++)
+		for (var i = 1; i <= 25; i++)
 		{
 			items.Add($"Item {i}");
 		}
