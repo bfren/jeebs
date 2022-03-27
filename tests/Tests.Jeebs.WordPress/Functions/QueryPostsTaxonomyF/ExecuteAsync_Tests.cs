@@ -16,7 +16,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 
 		// Act
-		var result = await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, _ => throw new Exception()).ConfigureAwait(false);
+		var result = await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, _ => throw new Exception());
 
 		// Assert
 		result.AssertNone().AssertType<ErrorGettingQueryPostsTaxonomyOptionsMsg>();
@@ -29,10 +29,10 @@ public class ExecuteAsync_Tests : Query_Tests
 		var (db, w, v) = Setup();
 
 		// Act
-		await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, opt => opt).ConfigureAwait(false);
+		await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, opt => opt);
 
 		// Assert
-		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction).ConfigureAwait(false);
+		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
 	}
 
 	public record class Test : WpTermEntity;

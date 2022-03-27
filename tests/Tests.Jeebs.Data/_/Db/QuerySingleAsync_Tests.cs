@@ -17,7 +17,7 @@ public class QuerySingleAsync_Tests
 		const CommandType type = CommandType.Text;
 
 		// Act
-		await db.QuerySingleAsync<int>(query, parameters, type).ConfigureAwait(false);
+		await db.QuerySingleAsync<int>(query, parameters, type);
 
 		// Assert
 		client.Received().Connect(Arg.Any<string>());
@@ -35,8 +35,8 @@ public class QuerySingleAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		await db.QuerySingleAsync<int>(query, parameters, type).ConfigureAwait(false);
-		await db.QuerySingleAsync<int>(query, parameters, type, transaction).ConfigureAwait(false);
+		await db.QuerySingleAsync<int>(query, parameters, type);
+		await db.QuerySingleAsync<int>(query, parameters, type, transaction);
 
 		// Assert
 		log.Received(2).Vrb("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);

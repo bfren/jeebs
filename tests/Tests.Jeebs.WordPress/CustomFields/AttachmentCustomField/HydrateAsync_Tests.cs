@@ -21,7 +21,7 @@ public class HydrateAsync_Tests
 		var field = new TestCustomField(Substitute.For<IQueryPosts>(), key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
 		var none = result.AssertNone().AssertType<MetaKeyNotFoundMsg>();
@@ -39,7 +39,7 @@ public class HydrateAsync_Tests
 		var field = new TestCustomField(Substitute.For<IQueryPosts>(), Rnd.Str);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, false).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, false);
 
 		// Assert
 		result.AssertFalse();
@@ -66,7 +66,7 @@ public class HydrateAsync_Tests
 		var field = new TestCustomField(queryPosts, key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
 		var none = result.AssertNone().AssertType<MultipleAttachmentsFoundMsg>();
@@ -92,7 +92,7 @@ public class HydrateAsync_Tests
 		var field = new TestCustomField(queryPosts, key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
 		result.AssertTrue();
@@ -122,7 +122,7 @@ public class HydrateAsync_Tests
 		var field = new TestCustomField(queryPosts, key);
 
 		// Act
-		var result = await field.HydrateAsync(db, unitOfWork, meta, true).ConfigureAwait(false);
+		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
 		result.AssertTrue();

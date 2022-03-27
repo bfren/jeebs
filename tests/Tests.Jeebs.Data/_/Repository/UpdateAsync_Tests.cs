@@ -14,7 +14,7 @@ public class UpdateAsync_Tests
 		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
-		await repo.UpdateAsync(model).ConfigureAwait(false);
+		await repo.UpdateAsync(model);
 
 		// Assert
 		client.Received().GetUpdateQuery<Repository_Setup.Foo, Repository_Setup.FooModel>(value);
@@ -29,7 +29,7 @@ public class UpdateAsync_Tests
 		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
-		await repo.UpdateAsync(model).ConfigureAwait(false);
+		await repo.UpdateAsync(model);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());

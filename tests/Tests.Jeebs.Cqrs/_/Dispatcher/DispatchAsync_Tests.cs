@@ -20,8 +20,8 @@ public class DispatchAsync_Tests
 			var command = new Command();
 
 			// Act
-			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(command);
+			await dispatcher.DispatchAsync(command);
 
 			// Assert
 			log.Received(2).Vrb("Handler type: {Type}", typeof(CommandHandler<Command>));
@@ -37,8 +37,8 @@ public class DispatchAsync_Tests
 			var command = new Command();
 
 			// Act
-			var r0 = await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-			var r1 = await dispatcher.DispatchAsync(command).ConfigureAwait(false);
+			var r0 = await dispatcher.DispatchAsync(command);
+			var r1 = await dispatcher.DispatchAsync(command);
 
 			// Assert
 			var n0 = r0.AssertNone();
@@ -62,8 +62,8 @@ public class DispatchAsync_Tests
 			var command = new Command();
 
 			// Act
-			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(command).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(command);
+			await dispatcher.DispatchAsync(command);
 
 			// Assert
 			await handler.Received(2).HandleAsync(command);
@@ -82,8 +82,8 @@ public class DispatchAsync_Tests
 			var query = new Query();
 
 			// Act
-			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(query);
+			await dispatcher.DispatchAsync(query);
 
 			// Assert
 			log.Received(2).Vrb("Handler type: {Type}", typeof(QueryHandler<Query, bool>));
@@ -99,8 +99,8 @@ public class DispatchAsync_Tests
 			var query = new Query();
 
 			// Act
-			var r0 = await dispatcher.DispatchAsync(query).ConfigureAwait(false);
-			var r1 = await dispatcher.DispatchAsync(query).ConfigureAwait(false);
+			var r0 = await dispatcher.DispatchAsync(query);
+			var r1 = await dispatcher.DispatchAsync(query);
 
 			// Assert
 			var n0 = r0.AssertNone();
@@ -124,8 +124,8 @@ public class DispatchAsync_Tests
 			var query = new Query();
 
 			// Act
-			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
-			await dispatcher.DispatchAsync(query).ConfigureAwait(false);
+			await dispatcher.DispatchAsync(query);
+			await dispatcher.DispatchAsync(query);
 
 			// Assert
 			await handler.Received(2).HandleAsync(query);

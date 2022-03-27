@@ -14,7 +14,7 @@ public class DeleteAsync_Tests
 		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
-		await repo.DeleteAsync(model).ConfigureAwait(false);
+		await repo.DeleteAsync(model);
 
 		// Assert
 		client.Received().GetDeleteQuery<Repository_Setup.Foo>(value);
@@ -29,7 +29,7 @@ public class DeleteAsync_Tests
 		var model = new Repository_Setup.FooModel { Id = new() { Value = value } };
 
 		// Act
-		await repo.DeleteAsync(model).ConfigureAwait(false);
+		await repo.DeleteAsync(model);
 
 		// Assert
 		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
