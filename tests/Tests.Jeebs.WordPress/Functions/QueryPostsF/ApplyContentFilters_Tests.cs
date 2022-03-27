@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Id;
@@ -54,8 +54,7 @@ public class ApplyContentFilters_Tests
 		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ApplyContentFiltersExceptionMsg<Model>>(none);
+		result.AssertNone().AssertType<ApplyContentFiltersExceptionMsg<Model>>();
 	}
 
 	[Fact]

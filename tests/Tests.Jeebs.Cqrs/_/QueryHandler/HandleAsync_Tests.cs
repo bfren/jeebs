@@ -33,10 +33,9 @@ public class HandleAsync_Tests
 		var result = await ((IQueryHandler<string>)handler).HandleAsync(query);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<IncorrectQueryTypeMsg>(none);
-		Assert.Equal(typeof(Query), msg.ExpectedType);
-		Assert.Equal(typeof(IncorrectQuery), msg.ActualType);
+		var none = result.AssertNone().AssertType<IncorrectQueryTypeMsg>();
+		Assert.Equal(typeof(Query), none.ExpectedType);
+		Assert.Equal(typeof(IncorrectQuery), none.ActualType);
 	}
 
 	[Fact]

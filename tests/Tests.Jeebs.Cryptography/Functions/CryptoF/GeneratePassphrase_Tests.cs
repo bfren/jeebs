@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Cryptography.Functions.CryptoF.M;
@@ -22,9 +22,8 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<CryptographicallySecurePassphrasesMustContainAtLeastFiveWordsMsg>(none);
-		Assert.Equal(input, msg.Value);
+		var none = result.AssertNone().AssertType<CryptographicallySecurePassphrasesMustContainAtLeastFiveWordsMsg>();
+		Assert.Equal(input, none.Value);
 	}
 
 	[Fact]

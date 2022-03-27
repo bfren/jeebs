@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Security.Claims;
@@ -61,8 +61,7 @@ public class ValidateToken_Tests
 		var result = JwtF.ValidateToken(config, token);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TokenIsNotValidYetMsg>(none);
+		result.AssertNone().AssertType<TokenIsNotValidYetMsg>();
 	}
 
 	[Fact]
@@ -75,8 +74,7 @@ public class ValidateToken_Tests
 		var result = JwtF.ValidateToken(config, token);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TokenHasExpiredMsg>(none);
+		result.AssertNone().AssertType<TokenHasExpiredMsg>();
 	}
 
 	[Fact]

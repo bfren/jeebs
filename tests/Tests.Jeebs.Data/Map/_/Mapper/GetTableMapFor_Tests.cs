@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Data.Map.Mapper.M;
@@ -17,8 +17,7 @@ public class GetTableMapFor_Tests
 		var result = mapper.GetTableMapFor<Foo>();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TryingToGetUnmappedEntityMsg<Foo>>(none);
+		result.AssertNone().AssertType<TryingToGetUnmappedEntityMsg<Foo>>();
 	}
 
 	[Fact]

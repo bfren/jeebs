@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Cryptography.Locked.M;
@@ -8,7 +8,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests;
 
 public partial class Decrypt_Tests
 {
-	private readonly string defaultInputStringEncryptedWithStringKey = "{\"value\":{},\"encryptedContents\":\"RKDdTvdBrxf28cMuuBF+mKkVkYEhJSgwnCnTprGtHeeIMr56\",\"salt\":\"kJ3HSzbuEssDYpGmK9ix1A==\",\"nonce\":\"ehg2foprhsqf7UTrBRpU0cjWvkK0sn/f\"}";
+	private readonly string defaultInputStringEncryptedWithStringKey = /*lang=json,strict*/ "{\"value\":{},\"encryptedContents\":\"RKDdTvdBrxf28cMuuBF+mKkVkYEhJSgwnCnTprGtHeeIMr56\",\"salt\":\"kJ3HSzbuEssDYpGmK9ix1A==\",\"nonce\":\"ehg2foprhsqf7UTrBRpU0cjWvkK0sn/f\"}";
 	private readonly string defaultStringKey = "nXhxz39cHyPx3a";
 
 	[Theory]
@@ -22,8 +22,7 @@ public partial class Decrypt_Tests
 		var result = input.Decrypt<int>(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialisingNullOrEmptyStringMsg>(none);
+		result.AssertNone().AssertType<DeserialisingNullOrEmptyStringMsg>();
 	}
 
 	[Fact]
@@ -37,8 +36,7 @@ public partial class Decrypt_Tests
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialiseExceptionMsg>(none);
+		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
 	}
 
 	[Fact]
@@ -50,8 +48,7 @@ public partial class Decrypt_Tests
 		var result = defaultInputStringEncryptedWithStringKey.Decrypt<int>(string.Empty);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
 	}
 
 	[Fact]
@@ -64,8 +61,7 @@ public partial class Decrypt_Tests
 		var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<IncorrectKeyOrNonceExceptionMsg>(none);
+		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
 	}
 
 	[Fact]
@@ -73,14 +69,13 @@ public partial class Decrypt_Tests
 	{
 		// Arrange
 		var key = Rnd.Str;
-		const string json = "{\"foo\":\"bar\"}";
+		const string json = /*lang=json,strict*/ "{\"foo\":\"bar\"}";
 
 		// Act
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<UnlockWhenEncryptedContentsIsNoneMsg>(none);
+		result.AssertNone().AssertType<UnlockWhenEncryptedContentsIsNoneMsg>();
 	}
 
 	[Fact]

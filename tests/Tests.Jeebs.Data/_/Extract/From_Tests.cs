@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
@@ -32,8 +32,7 @@ public class From_Tests
 		var result = Extract<FooNone>.From(table);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NoColumnsExtractedFromTableMsg>(none);
+		result.AssertNone().AssertType<NoColumnsExtractedFromTableMsg>();
 	}
 
 	[Fact]

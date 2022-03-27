@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -50,8 +50,7 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 		var result = builder.AddWhere<TestTable>(v.Parts, new(Rnd.Str, Rnd.Str), _ => Rnd.Str, cmp, val);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<PropertyDoesNotExistOnTypeMsg<TestTable>>(none);
+		result.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<TestTable>>();
 	}
 
 	public sealed record class TestTable(string Foo, string Bar) : Table(Rnd.Str);

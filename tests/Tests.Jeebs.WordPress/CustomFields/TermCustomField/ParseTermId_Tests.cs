@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.WordPress.CustomFields.TermCustomField.M;
@@ -18,8 +18,7 @@ public class ParseTermId_Tests
 		var result = TermCustomField.ParseTermId(type, value);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ValueIsInvalidTermIdMsg>(none);
+		result.AssertNone().AssertType<ValueIsInvalidTermIdMsg>();
 	}
 
 	[Fact]

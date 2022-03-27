@@ -18,7 +18,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(null, Rnd.Ulng);
+		var result = builder.Create<TModel>(null, Rnd.ULng);
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -33,7 +33,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(null, Rnd.Ulng);
+		var result = builder.Create<TModel>(null, Rnd.ULng);
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -45,11 +45,11 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 	protected void Test02()
 	{
 		// Arrange
-		var maximum = Rnd.Ulng;
+		var maximum = Rnd.ULng;
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(maximum, Rnd.Ulng);
+		var result = builder.Create<TModel>(maximum, Rnd.ULng);
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -61,7 +61,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 	protected void Test03()
 	{
 		// Arrange
-		var skip = Rnd.Ulng;
+		var skip = Rnd.ULng;
 		var (builder, v) = Setup();
 
 		// Act

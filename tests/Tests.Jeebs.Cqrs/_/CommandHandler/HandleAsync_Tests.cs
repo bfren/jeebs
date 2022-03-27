@@ -33,10 +33,9 @@ public class HandleAsync_Tests
 		var result = await ((ICommandHandler)handler).HandleAsync(command);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<IncorrectCommandTypeMsg>(none);
-		Assert.Equal(typeof(Command), msg.ExpectedType);
-		Assert.Equal(typeof(IncorrectCommand), msg.ActualType);
+		var none = result.AssertNone().AssertType<IncorrectCommandTypeMsg>();
+		Assert.Equal(typeof(Command), none.ExpectedType);
+		Assert.Equal(typeof(IncorrectCommand), none.ActualType);
 	}
 
 	[Fact]

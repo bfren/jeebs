@@ -66,8 +66,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<DeserialiseExceptionMsg>(none);
+		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
 	}
 
 	public record class EnumeratedTest0 : Enumerated

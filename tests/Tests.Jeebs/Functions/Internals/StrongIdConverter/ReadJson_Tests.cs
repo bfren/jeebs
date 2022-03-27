@@ -64,7 +64,7 @@ public class ReadJson_Tests
 	[InlineData("true")]
 	[InlineData("false")]
 	[InlineData("[ 0, 1, 2 ]")]
-	[InlineData("{ \"foo\": \"bar\" }")]
+	[InlineData(/*lang=json,strict*/ "{ \"foo\": \"bar\" }")]
 	public void Deserialise_Object_With_LongId_Property_Null_Or_Invalid_Value_Returns_Object(string input)
 	{
 		// Arrange

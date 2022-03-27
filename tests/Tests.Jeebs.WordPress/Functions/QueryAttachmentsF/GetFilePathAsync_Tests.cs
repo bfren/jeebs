@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -24,9 +24,8 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<AttachmentNotFoundMsg>(none);
-		Assert.Equal(fileId.Value, msg.FileId);
+		var none = result.AssertNone().AssertType<AttachmentNotFoundMsg>();
+		Assert.Equal(fileId.Value, none.FileId);
 	}
 
 	[Fact]
@@ -42,9 +41,8 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId).ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<MultipleAttachmentsFoundMsg>(none);
-		Assert.Equal(fileId.Value, msg.FileId);
+		var none = result.AssertNone().AssertType<MultipleAttachmentsFoundMsg>();
+		Assert.Equal(fileId.Value, none.FileId);
 	}
 
 	[Fact]

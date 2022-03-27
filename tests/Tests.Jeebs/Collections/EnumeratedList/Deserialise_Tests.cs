@@ -37,7 +37,7 @@ public class Deserialise_Tests
 	public void Incorrect_Json_Returns_Empty_List()
 	{
 		// Arrange
-		const string? json = "{\"foo\":\"bar\"}";
+		const string? json = /*lang=json,strict*/ "{\"foo\":\"bar\"}";
 
 		// Act
 		var result = EnumeratedList.Deserialise<Foo>(json);

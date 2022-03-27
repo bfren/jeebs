@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -38,8 +38,8 @@ public class Constructor_Tests
 			WhereCustom = Substitute.For<IImmutableList<(string, IQueryParametersDictionary)>>(),
 			Sort = Substitute.For<IImmutableList<(IColumn, SortOrder)>>(),
 			SortRandom = Rnd.Flip,
-			Maximum = Rnd.Ulng,
-			Skip = Rnd.Ulng
+			Maximum = Rnd.ULng,
+			Skip = Rnd.ULng
 		};
 
 		// Act

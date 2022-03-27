@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.WordPress.Functions.QueryPostsF.M;
@@ -16,8 +16,7 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<NoMetaDictionaryProperties>();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>(none);
+		result.AssertNone().AssertType<MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>();
 	}
 
 	[Fact]
@@ -29,8 +28,7 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<MoreThanOneMetaDictionaryProperty>();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>(none);
+		result.AssertNone().AssertType<MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>();
 	}
 
 	[Fact]

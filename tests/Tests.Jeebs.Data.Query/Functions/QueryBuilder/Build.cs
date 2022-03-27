@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using NSubstitute.ExceptionExtensions;
@@ -19,7 +19,6 @@ public class Build_Tests
 		var result = QueryBuilderF.Build<int>(builder);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<QueryBuilderExceptionMsg>(none);
+		result.AssertNone().AssertType<QueryBuilderExceptionMsg>();
 	}
 }

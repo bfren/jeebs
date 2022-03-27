@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -63,10 +63,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(parts, transaction).ConfigureAwait(false);
 
 		// Assert
-		var n0 = r0.AssertNone();
-		Assert.IsType<ErrorGettingQueryFromPartsExceptionMsg>(n0);
-		var n1 = r1.AssertNone();
-		Assert.IsType<ErrorGettingQueryFromPartsExceptionMsg>(n1);
+		r0.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
+		r1.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
 	}
 
 	[Fact]
@@ -79,14 +77,12 @@ public class QueryAsync_Tests
 		client.GetCountQuery(parts).Throws<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
-		var r1 = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		var r0 = await query.QueryAsync<int>(Rnd.ULng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
-		var n0 = r0.AssertNone();
-		Assert.IsType<ErrorGettingCountQueryFromPartsExceptionMsg>(n0);
-		var n1 = r1.AssertNone();
-		Assert.IsType<ErrorGettingCountQueryFromPartsExceptionMsg>(n1);
+		r0.AssertNone().AssertType<ErrorGettingCountQueryFromPartsExceptionMsg>();
+		r1.AssertNone().AssertType<ErrorGettingCountQueryFromPartsExceptionMsg>();
 	}
 
 	[Fact]
@@ -99,14 +95,12 @@ public class QueryAsync_Tests
 		client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
-		var r1 = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		var r0 = await query.QueryAsync<int>(Rnd.ULng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
-		var n0 = r0.AssertNone();
-		Assert.IsType<ErrorGettingQueryFromPartsExceptionMsg>(n0);
-		var n1 = r1.AssertNone();
-		Assert.IsType<ErrorGettingQueryFromPartsExceptionMsg>(n1);
+		r0.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
+		r1.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
 	}
 
 	[Fact]
@@ -138,8 +132,8 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
-		await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		await query.QueryAsync<int>(Rnd.ULng, parts).ConfigureAwait(false);
+		await query.QueryAsync<int>(Rnd.ULng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		client.Received(2).GetCountQuery(parts);

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using static Jeebs.Mvc.Auth.Jwt.JwtHandler.M;
@@ -17,8 +17,7 @@ public class GetToken_Tests
 		var result = JwtHandler.GetToken(header);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<InvalidAuthorisationHeaderMsg>(none);
+		result.AssertNone().AssertType<InvalidAuthorisationHeaderMsg>();
 	}
 
 	[Fact]

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Linq.Expressions;
@@ -32,8 +32,7 @@ public class GetPropertyInfo_Tests
 		var result = expr.GetPropertyInfo();
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<PropertyDoesNotExistOnTypeMsg<Test>>(none);
+		result.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<Test>>();
 	}
 
 	public class Test

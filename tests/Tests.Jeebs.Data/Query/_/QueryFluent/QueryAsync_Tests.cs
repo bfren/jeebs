@@ -20,8 +20,7 @@ public class QueryAsync_Tests : QueryFluent_Tests
 		var result = await query.QueryAsync<int>().ConfigureAwait(false);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NoPredicatesMsg>(none);
+		result.AssertNone().AssertType<NoPredicatesMsg>();
 	}
 
 	[Fact]
