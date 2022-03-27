@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -30,7 +30,11 @@ public class CheckTable_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		var action = bool () => { builder.CheckTable<TestTable, TestException<TestTable>>(); return true; };
+		bool action()
+		{
+			builder.CheckTable<TestTable, TestException<TestTable>>();
+			return true;
+		}
 
 		// Assert
 		Assert.True(action());

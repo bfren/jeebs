@@ -125,7 +125,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	public async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>()
 	{
 		using var w = Db.UnitOfWork;
-		return await QueryAsync<TModel>(w.Transaction);
+		return await QueryAsync<TModel>(w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
@@ -152,7 +152,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	public async Task<Maybe<TModel>> QuerySingleAsync<TModel>()
 	{
 		using var w = Db.UnitOfWork;
-		return await QuerySingleAsync<TModel>(w.Transaction);
+		return await QuerySingleAsync<TModel>(w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>

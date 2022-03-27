@@ -22,5 +22,8 @@ public sealed class AddAuthSchema : Migration
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down() { }
+	protected override void Down()
+	{
+		// Can't remove schema as VersionInfo table still exists
+	}
 }

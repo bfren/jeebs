@@ -39,7 +39,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	public async Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName)
 	{
 		using var w = Db.UnitOfWork;
-		return await CreateAsync(email, plainTextPassword, friendlyName, w.Transaction);
+		return await CreateAsync(email, plainTextPassword, friendlyName, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
@@ -63,7 +63,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	public async Task<Maybe<TModel>> RetrieveAsync<TModel>(string email)
 	{
 		using var w = Db.UnitOfWork;
-		return await RetrieveAsync<TModel>(email, w.Transaction);
+		return await RetrieveAsync<TModel>(email, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
@@ -78,7 +78,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	public async Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId)
 	{
 		using var w = Db.UnitOfWork;
-		return await UpdateLastSignInAsync(userId, w.Transaction);
+		return await UpdateLastSignInAsync(userId, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>

@@ -45,8 +45,8 @@ public interface ILog
 	/// <summary>
 	/// Log a list of <see cref="IReason"/>
 	/// </summary>
-	/// <param name="msgs">Messages to log</param>
-	void Msgs(params IReason[] msgs);
+	/// <param name="reasons">Messages to log</param>
+	void Msgs(params IReason[] reasons);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>

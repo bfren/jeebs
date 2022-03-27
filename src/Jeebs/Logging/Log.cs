@@ -62,14 +62,14 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Msgs(params IReason[] msgs)
+	public void Msgs(params IReason[] reasons)
 	{
-		if (msgs.Length == 0)
+		if (reasons.Length == 0)
 		{
 			return;
 		}
 
-		foreach (var item in msgs)
+		foreach (var item in reasons)
 		{
 			Msg(item);
 		}
