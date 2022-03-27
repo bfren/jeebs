@@ -6,6 +6,7 @@ using Jeebs.Data;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
+using static Jeebs.Id.StrongId;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
@@ -35,7 +36,7 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = new WpTermId() { Value = Rnd.Lng };
+		var id = RndId<WpTermId>();
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
 		var tt = builder.TTest.TermTaxonomies.ToString();
@@ -69,7 +70,7 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = new WpTermId() { Value = Rnd.Lng };
+		var id = RndId<WpTermId>();
 		var taxonomies = ImmutableList.Create((taxonomy, id));
 
 		// Act
@@ -102,10 +103,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = new WpTermId() { Value = Rnd.Lng };
+		var id0 = RndId<WpTermId>();
 		var t1 = Taxonomy.NavMenu;
-		var id1 = new WpTermId() { Value = Rnd.Lng };
-		var id2 = new WpTermId() { Value = Rnd.Lng };
+		var id1 = RndId<WpTermId>();
+		var id2 = RndId<WpTermId>();
 		var taxonomies = ImmutableList.Create((t0, id0), (t1, id1), (t1, id2));
 
 		var tt = builder.TTest.TermTaxonomies.ToString();
@@ -145,10 +146,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = new WpTermId() { Value = Rnd.Lng };
-		var id1 = new WpTermId() { Value = Rnd.Lng };
+		var id0 = RndId<WpTermId>();
+		var id1 = RndId<WpTermId>();
 		var t1 = Taxonomy.LinkCategory;
-		var id2 = new WpTermId() { Value = Rnd.Lng };
+		var id2 = RndId<WpTermId>();
 		var taxonomies = ImmutableList.Create((t0, id0), (t0, id1), (t1, id2));
 
 		// Act
