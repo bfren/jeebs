@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
@@ -62,7 +62,7 @@ public class GetPreviousAndNext_Tests
 		// Assert
 		Assert.Null(r0);
 		Assert.NotNull(r1);
-		Assert.Equal(next, r1!.Value);
+		Assert.Equal(next, r1!.Value.Value);
 	}
 
 	[Fact]
@@ -78,7 +78,7 @@ public class GetPreviousAndNext_Tests
 
 		// Assert
 		Assert.NotNull(r0);
-		Assert.Equal(prev, r0!.Value);
+		Assert.Equal(prev, r0!.Value.Value);
 		Assert.Null(r1);
 	}
 
@@ -96,8 +96,8 @@ public class GetPreviousAndNext_Tests
 
 		// Assert
 		Assert.NotNull(r0);
-		Assert.Equal(prev, r0!.Value);
+		Assert.Equal(prev, r0!.Value.Value);
 		Assert.NotNull(r1);
-		Assert.Equal(next, r1!.Value);
+		Assert.Equal(next, r1!.Value.Value);
 	}
 }

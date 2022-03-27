@@ -39,9 +39,9 @@ public sealed class PostsMetaPartsBuilder : PartsBuilder<WpPostMetaId>, IQueryPo
 	public Maybe<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds)
 	{
 		// Add Post ID EQUAL
-		if (postId?.Value > 0)
+		if (postId is WpPostId id and { Value: > 0 })
 		{
-			return AddWhere(parts, T.PostsMeta, p => p.PostId, Compare.Equal, postId.Value);
+			return AddWhere(parts, T.PostsMeta, p => p.PostId, Compare.Equal, id.Value);
 		}
 
 		// Add Post ID IN
