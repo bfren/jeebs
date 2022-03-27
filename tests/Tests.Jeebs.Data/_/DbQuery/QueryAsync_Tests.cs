@@ -79,8 +79,8 @@ public class QueryAsync_Tests
 		client.GetCountQuery(parts).Throws<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
-		var r1 = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		var r0 = await query.QueryAsync<int>(Rnd.ULng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -99,8 +99,8 @@ public class QueryAsync_Tests
 		client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
 
 		// Act
-		var r0 = await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
-		var r1 = await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		var r0 = await query.QueryAsync<int>(Rnd.ULng, parts).ConfigureAwait(false);
+		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		var n0 = r0.AssertNone();
@@ -138,8 +138,8 @@ public class QueryAsync_Tests
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		await query.QueryAsync<int>(Rnd.Ulng, parts).ConfigureAwait(false);
-		await query.QueryAsync<int>(Rnd.Ulng, parts, transaction).ConfigureAwait(false);
+		await query.QueryAsync<int>(Rnd.ULng, parts).ConfigureAwait(false);
+		await query.QueryAsync<int>(Rnd.ULng, parts, transaction).ConfigureAwait(false);
 
 		// Assert
 		client.Received(2).GetCountQuery(parts);
