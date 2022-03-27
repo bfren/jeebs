@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -24,17 +24,17 @@ public enum SearchPostField
 	/// <summary>
 	/// Search Slug field
 	/// </summary>
-	Slug = 2,
+	Slug = 1 << 1,
 
 	/// <summary>
 	/// Search Content field
 	/// </summary>
-	Content = 4,
+	Content = 1 << 2,
 
 	/// <summary>
 	/// Search Excerpt field
 	/// </summary>
-	Excerpt = 8,
+	Excerpt = 1 << 3,
 
 	/// <summary>
 	/// Search All fields

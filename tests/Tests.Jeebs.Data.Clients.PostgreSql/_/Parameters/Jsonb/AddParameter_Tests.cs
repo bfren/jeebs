@@ -4,46 +4,45 @@
 using System.Data;
 using Npgsql;
 
-namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests
+namespace Jeebs.Data.Clients.PostgreSql.Parameters.Jsonb_Tests;
+
+public class AddParameter_Tests
 {
-	public class AddParameter_Tests
+	[Fact]
+	public void Adds_Parameter_As_Jsonb()
 	{
-		[Fact]
-		public void Adds_Parameter_As_Jsonb()
-		{
-			// Arrange
-			var value = Rnd.Str;
-			var name = Rnd.Str;
-			var param = new Jsonb(value);
+		// Arrange
+		var value = Rnd.Str;
+		var name = Rnd.Str;
+		var param = new Jsonb(value);
 
-			var collection = Substitute.For<IDataParameterCollection>();
-			var command = Substitute.For<IDbCommand>();
-			command.Parameters.Returns(collection);
+		var collection = Substitute.For<IDataParameterCollection>();
+		var command = Substitute.For<IDbCommand>();
+		command.Parameters.Returns(collection);
 
-			// Act
-			param.AddParameter(command, name);
+		// Act
+		param.AddParameter(command, name);
 
-			// Assert
-			collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.NpgsqlDbType == NpgsqlTypes.NpgsqlDbType.Jsonb));
-		}
+		// Assert
+		collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.NpgsqlDbType == NpgsqlTypes.NpgsqlDbType.Jsonb));
+	}
 
-		[Fact]
-		public void Adds_Value()
-		{
-			// Arrange
-			var value = Rnd.Str;
-			var name = Rnd.Str;
-			var param = new Jsonb(value);
+	[Fact]
+	public void Adds_Value()
+	{
+		// Arrange
+		var value = Rnd.Str;
+		var name = Rnd.Str;
+		var param = new Jsonb(value);
 
-			var collection = Substitute.For<IDataParameterCollection>();
-			var command = Substitute.For<IDbCommand>();
-			command.Parameters.Returns(collection);
+		var collection = Substitute.For<IDataParameterCollection>();
+		var command = Substitute.For<IDbCommand>();
+		command.Parameters.Returns(collection);
 
-			// Act
-			param.AddParameter(command, name);
+		// Act
+		param.AddParameter(command, name);
 
-			// Assert
-			collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.Value == (object)value));
-		}
+		// Assert
+		collection.Received().Add(Arg.Is<NpgsqlParameter>(p => p.Value == (object)value));
 	}
 }

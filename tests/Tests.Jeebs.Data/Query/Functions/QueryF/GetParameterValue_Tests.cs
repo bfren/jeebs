@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Id;
@@ -33,5 +33,5 @@ public class GetParameterValue_Tests
 		Assert.Equal(value, result);
 	}
 
-	readonly record struct TestId(long Value) : IStrongId;
+	private readonly record struct TestId(long Value) : IStrongId;
 }

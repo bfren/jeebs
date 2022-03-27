@@ -14,7 +14,7 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Taxonomies cache
 	/// </summary>
-	private static readonly ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> termListsCache = new();
+	private static ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> TermListsCache { get; } = new();
 
 	/// <summary>
 	/// Get Term Lists for specified model
@@ -23,7 +23,7 @@ public static partial class QueryPostsF
 	internal static List<PropertyInfo> GetTermLists<TModel>()
 	{
 		// Get from or Add to the cache
-		var taxonomies = termListsCache.GetOrAdd(
+		var taxonomies = TermListsCache.GetOrAdd(
 			typeof(TModel),
 			type => from p in type.GetProperties()
 					where p.PropertyType == typeof(TermList)

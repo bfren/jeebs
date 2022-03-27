@@ -1,6 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Collections;
 using static Jeebs.Functions.JsonF.M;
 
 namespace Jeebs.Functions.JsonF_Tests;
@@ -61,10 +62,15 @@ public class Deserialise_Tests
 		public string? Empty { get; set; }
 	}
 
-	public class TestComparer : IEqualityComparer<Test>
+	public class TestComparer : IEqualityComparer<Test>, IEqualityComparer
 	{
 		public bool Equals(Test? x, Test? y) => x?.Foo == y?.Foo && x?.Bar == y?.Bar;
 
+		public new bool Equals(object? x, object? y) =>
+			x == y;
+
 		public int GetHashCode(Test obj) => obj.GetHashCode();
+
+		public int GetHashCode(object obj) => throw new NotImplementedException();
 	}
 }
