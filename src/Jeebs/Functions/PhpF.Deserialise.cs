@@ -8,19 +8,14 @@ namespace Jeebs.Functions;
 
 public static partial class PhpF
 {
-	private static int pointer;
-
 	/// <summary>
 	/// Deserialise object
 	/// </summary>
 	/// <param name="str">Serialised string</param>
-	public static object Deserialise(string str)
-	{
-		pointer = 0;
-		return PrivateDeserialise(str);
-	}
+	public static object Deserialise(string str) =>
+		PrivateDeserialise(str, 0);
 
-	private static object PrivateDeserialise(string str)
+	private static object PrivateDeserialise(string str, int pointer)
 	{
 		if (string.IsNullOrWhiteSpace(str) || str.Length <= pointer)
 		{
@@ -52,7 +47,7 @@ public static partial class PhpF
 		};
 
 		// Get null object
-		static object getNull()
+		object getNull()
 		{
 			pointer += 2;
 			return string.Empty;
@@ -117,7 +112,7 @@ public static partial class PhpF
 			var table = new AssocArray();
 			for (var i = 0; i < len; i++)
 			{
-				var (key, value) = (PrivateDeserialise(str), PrivateDeserialise(str));
+				var (key, value) = (PrivateDeserialise(str, pointer), PrivateDeserialise(str, pointer));
 				F.ParseInt32(key.ToString()).Switch(
 					some: x => table.Add(x, value),
 					none: _ => table.Add(key, value)
