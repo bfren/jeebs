@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace Jeebs.Functions;
@@ -12,7 +11,7 @@ namespace Jeebs.Functions;
 /// <summary>
 /// Type functions
 /// </summary>
-public static class TypeF
+public static partial class TypeF
 {
 	/// <summary>
 	/// Return list of all loaded assembly names -
@@ -73,50 +72,4 @@ public static class TypeF
 		},
 		true
 	);
-
-	/// <summary>
-	/// Get distinct types that implement type <typeparamref name="T"/>
-	/// </summary>
-	/// <typeparam name="T">Base Type</typeparam>
-	public static List<Type> GetTypesImplementing<T>() =>
-		GetTypesImplementing(typeof(T));
-
-	/// <summary>
-	/// Get distinct types that implement <paramref name="type"/>
-	/// </summary>
-	/// <param name="type">Base Type</param>
-	public static List<Type> GetTypesImplementing(Type type)
-	{
-		var types = from t in AllTypes.Value
-					where type.IsAssignableFrom(t)
-					&& !t.IsAbstract
-					&& !t.IsInterface
-					select t;
-
-		return types.Distinct().ToList();
-	}
-
-	/// <summary>
-	/// Get distinct property types that implement type <typeparamref name="T"/>
-	/// </summary>
-	/// <typeparam name="T">Property Type</typeparam>
-	public static List<Type> GetPropertyTypesImplementing<T>() =>
-		GetPropertyTypesImplementing(typeof(T));
-
-	/// <summary>
-	/// Get distinct property types that implement <paramref name="type"/>
-	/// </summary>
-	/// <param name="type">Property Type</param>
-	public static List<Type> GetPropertyTypesImplementing(Type type)
-	{
-		var types = from t in AllTypes.Value
-					from p in t.GetProperties()
-					where type.IsAssignableFrom(p.PropertyType)
-					&& !p.PropertyType.IsAbstract
-					&& !p.PropertyType.IsInterface
-					&& !p.PropertyType.IsGenericParameter
-					select p.PropertyType;
-
-		return types.Distinct().ToList();
-	}
 }
