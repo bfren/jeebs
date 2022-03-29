@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions;
@@ -6,7 +6,7 @@ namespace Jeebs.Functions;
 /// <summary>
 /// Maths Functions
 /// </summary>
-public static class MathsF
+public static partial class MathsF
 {
 	/// <summary>
 	/// Calculate the factorial result of <paramref name="x"/>
