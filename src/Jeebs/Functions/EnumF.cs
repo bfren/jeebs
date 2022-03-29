@@ -6,7 +6,7 @@ namespace Jeebs.Functions;
 /// <summary>
 /// Enum functions
 /// </summary>
-public static class EnumF
+public static partial class EnumF
 {
 	/// <summary>Messages</summary>
 	public static partial class M { }

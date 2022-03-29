@@ -24,8 +24,7 @@ public static partial class DateTimeF
 		return F.None<DateTime>(new M.InvalidDateTimeMsg(s));
 	}
 
-	/// <summary>Messages</summary>
-	public static class M
+	public static partial class M
 	{
 		/// <summary>Unable to parse DateTime string</summary>
 		/// <param name="Value">DateTime string</param>
