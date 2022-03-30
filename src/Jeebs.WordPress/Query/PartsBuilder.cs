@@ -8,8 +8,8 @@ using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
-using Jeebs.Id;
 using Jeebs.Messages;
+using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : LongId, new()
 {
 	/// <summary>
 	/// IDbClient

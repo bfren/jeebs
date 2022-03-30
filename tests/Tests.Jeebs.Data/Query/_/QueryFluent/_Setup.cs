@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Id;
 using Jeebs.Logging;
 using NSubstitute.Extensions;
+using StrongId;
 
 namespace Jeebs.Data.Query.QueryFluent_Tests;
 
@@ -45,7 +45,7 @@ public abstract class QueryFluent_Tests
 		IDbTransaction Transaction
 	);
 
-	public sealed record class TestId : StrongId;
+	public sealed record class TestId : LongId;
 
 	public readonly record struct TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
 }

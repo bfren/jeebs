@@ -3,13 +3,14 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
 /// TermMeta entity
 /// </summary>
-public abstract record class WpTermMetaEntityWithId : Id.IWithId<WpTermMetaId>
+public abstract record class WpTermMetaEntityWithId : IWithId<WpTermMetaId>
 {
 	/// <summary>
 	/// Id

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,7 +22,7 @@ public static partial class QueryPostsF
 	/// <param name="posts">Posts</param>
 	internal static Task<Maybe<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 		where TList : IEnumerable<TModel>
-		where TModel : Id.IWithId<WpPostId>
+		where TModel : IWithId<WpPostId>
 	{
 		// If there are no posts, do nothing
 		if (!posts.Any())

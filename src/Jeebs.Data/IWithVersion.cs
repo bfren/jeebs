@@ -1,7 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Id;
+using StrongId;
+
+namespace Jeebs.Data;
 
 /// <summary>
 /// Object (Entity or Model) with Version property
@@ -15,7 +17,7 @@ public interface IWithVersion : IWithId
 }
 
 /// <inheritdoc cref="IWithVersion"/>
-/// <typeparam name="T">IStrongId Type</typeparam>
+/// <typeparam name="T"><see cref="IStrongId"/> Type</typeparam>
 public interface IWithVersion<T> : IWithId<T>, IWithVersion
 	where T : class, IStrongId, new()
 { }

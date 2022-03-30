@@ -3,13 +3,14 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
 /// Option entity with ID properties
 /// </summary>
-public abstract record class WpOptionEntityWithId : Id.IWithId<WpOptionId>
+public abstract record class WpOptionEntityWithId : IWithId<WpOptionId>
 {
 	/// <summary>
 	/// Id

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -22,7 +23,7 @@ public static partial class QueryPostsF
 	/// <param name="filters">Optional content filters</param>
 	internal static Task<Maybe<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
-		where TModel : Id.IWithId<WpPostId> =>
+		where TModel : IWithId<WpPostId> =>
 		F.Some(
 			posts
 		)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Functions;
+using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -14,6 +15,6 @@ public sealed class Terms : IQueryTerms
 {
 	/// <inheritdoc/>
 	public Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
-		where T : Id.IWithId<WpTermId> =>
+		where T : IWithId<WpTermId> =>
 		QueryTermsF.ExecuteAsync<T>(db, w, opt);
 }

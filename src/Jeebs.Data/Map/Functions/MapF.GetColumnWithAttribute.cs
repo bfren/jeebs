@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Jeebs.Id;
+using StrongId;
 using Jeebs.Messages;
 
 namespace Jeebs.Data.Map.Functions;

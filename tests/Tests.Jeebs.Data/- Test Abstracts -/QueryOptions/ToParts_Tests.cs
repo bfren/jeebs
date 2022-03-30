@@ -4,14 +4,15 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Id;
+using StrongId;
+using static StrongId.LongId;
 
 namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : LongId, new()
 {
 	public abstract void Test00_Calls_Builder_Create_With_Maximum_And_Skip();
 
@@ -54,7 +55,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var id = new TId { Value = Rnd.Lng };
+		var id = RndId<TId>();
 		var opt = options with
 		{
 			Id = id
@@ -73,8 +74,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = new TId { Value = Rnd.Lng };
-		var i1 = new TId { Value = Rnd.Lng };
+		var i0 = RndId<TId>();
+		var i1 = RndId<TId>();
 		var ids = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

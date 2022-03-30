@@ -8,6 +8,7 @@ using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress;
 
@@ -37,7 +38,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <param name="opt">Function to return query options</param>
 	/// <param name="filters">Optional content filters to apply</param>
 	Task<Maybe<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
-		where T : Id.IWithId<WpPostId>;
+		where T : IWithId<WpPostId>;
 
 	/// <summary>
 	/// Get Posts matching the specified options, with paging
@@ -47,7 +48,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <param name="opt">Function to return query options</param>
 	/// <param name="filters">Optional content filters to apply</param>
 	Task<Maybe<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
-		where T : Id.IWithId<WpPostId>;
+		where T : IWithId<WpPostId>;
 
 	/// <summary>
 	/// Get the Previous and Next posts matching the current query
@@ -62,7 +63,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
 	Task<Maybe<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
-		where T : Id.IWithId<WpPostMetaId>;
+		where T : IWithId<WpPostMetaId>;
 
 	/// <summary>
 	/// Get Posts Taxonomy matching the specified options
@@ -70,7 +71,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
 	Task<Maybe<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
-		where T : Id.IWithId<WpTermId>;
+		where T : IWithId<WpTermId>;
 
 	/// <summary>
 	/// Get Terms matching the specified options
@@ -78,5 +79,5 @@ public interface IWpDbQuery : IDbQuery
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
 	Task<Maybe<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
-		where T : Id.IWithId<WpTermId>;
+		where T : IWithId<WpTermId>;
 }

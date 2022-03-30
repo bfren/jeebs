@@ -3,6 +3,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using StrongId.Json;
 
 namespace Jeebs.Functions;
 
@@ -35,10 +36,10 @@ public static partial class JsonF
 		};
 
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+		Options.Converters.Add(new StrongIdJsonConverterFactory());
 		Options.Converters.Add(new Internals.DateTimeConverter());
 		Options.Converters.Add(new Internals.EnumeratedConverterFactory());
 		Options.Converters.Add(new Internals.MaybeConverterFactory());
-		Options.Converters.Add(new Internals.StrongIdConverterFactory());
 	}
 
 	/// <summary>Messages</summary>

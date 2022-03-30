@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using Jeebs.Id;
 using MaybeF.Extensions;
 using NSubstitute.Extensions;
+using StrongId;
 
 namespace Jeebs.Data.Query.QueryOptions_Tests;
 

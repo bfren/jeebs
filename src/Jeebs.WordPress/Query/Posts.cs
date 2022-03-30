@@ -8,6 +8,7 @@ using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Functions;
+using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -21,7 +22,7 @@ public sealed class Posts : IQueryPosts
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : Id.IWithId<WpPostId> =>
+		where T : IWithId<WpPostId> =>
 		QueryPostsF.ExecuteAsync<T>(db, w, opt, filters);
 
 	/// <inheritdoc/>
@@ -32,6 +33,6 @@ public sealed class Posts : IQueryPosts
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : Id.IWithId<WpPostId> =>
+		where T : IWithId<WpPostId> =>
 		QueryPostsF.ExecuteAsync<T>(db, w, page, opt, filters);
 }

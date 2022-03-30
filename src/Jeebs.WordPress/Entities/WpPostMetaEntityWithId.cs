@@ -3,13 +3,14 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
 /// PostMeta entity
 /// </summary>
-public abstract record class WpPostMetaEntityWithId : Id.IWithId<WpPostMetaId>
+public abstract record class WpPostMetaEntityWithId : IWithId<WpPostMetaId>
 {
 	/// <summary>
 	/// Id

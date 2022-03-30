@@ -4,7 +4,7 @@
 using System.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Id;
+using StrongId;
 using static Jeebs.Data.Query.Functions.QueryF.M;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
@@ -216,7 +216,7 @@ public class ConvertPredicatesToColumns_Tests
 		result.AssertNone().AssertType<InOperatorRequiresValueToBeAListMsg>();
 	}
 
-	public sealed record class TestId : StrongId;
+	public sealed record class TestId : LongId;
 
 	public sealed record class TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
 }

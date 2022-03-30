@@ -1,8 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using Jeebs.Data.Attributes;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
@@ -14,10 +15,16 @@ public abstract record class WpTermRelationshipEntity : IWithId
 	/// <summary>
 	/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table
 	/// </summary>
-	/// <exception cref="System.NotSupportedException"></exception>
+	/// <exception cref="NotSupportedException"></exception>
 	[Ignore]
-	public IStrongId Id =>
-		throw new System.NotSupportedException("Term Relationships do not have unique IDs in the WordPress database.");
+	public IStrongId Id
+	{
+		get => throw NotSupported;
+		init => throw NotSupported;
+	}
+
+	private static NotSupportedException NotSupported =>
+		new("Term Relationships do not have unique IDs in the WordPress database.");
 
 	/// <summary>
 	/// PostId

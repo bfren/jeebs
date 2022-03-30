@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -21,5 +22,5 @@ public interface IQueryTerms
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="opt">Function to return query options</param>
 	Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
-		where T : Id.IWithId<WpTermId>;
+		where T : IWithId<WpTermId>;
 }

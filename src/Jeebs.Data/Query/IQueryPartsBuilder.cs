@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data.Query;
 

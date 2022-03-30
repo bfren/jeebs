@@ -3,13 +3,14 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
 /// TermTaxonomy entity
 /// </summary>
-public abstract record class WpTermTaxonomyEntityWithId : Id.IWithId<WpTermTaxonomyId>
+public abstract record class WpTermTaxonomyEntityWithId : IWithId<WpTermTaxonomyId>
 {
 	/// <summary>
 	/// Id

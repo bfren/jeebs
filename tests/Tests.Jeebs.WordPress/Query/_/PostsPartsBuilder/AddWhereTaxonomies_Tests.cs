@@ -6,7 +6,7 @@ using Jeebs.Data;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
-using static Jeebs.Id.StrongId;
+using static StrongId.LongId;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;

@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -60,7 +60,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 	/// <param name="parts">Initial QueryParts</param>
 	protected virtual Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
 		parts.SwitchIf(
-			_ => Id?.Value > 0 || Ids.Count > 0,
+			_ => Id is not null || Ids.Count > 0,
 			x => Builder.AddWhereId(x, Id, Ids)
 		)
 		.SwitchIf(

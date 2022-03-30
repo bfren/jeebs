@@ -7,7 +7,7 @@ using Jeebs.Data.Query.QueryOptions_Tests;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Enums;
-using static Jeebs.Id.StrongId;
+using static StrongId.LongId;
 
 namespace Jeebs.WordPress.Query.PostsOptions_Tests;
 
