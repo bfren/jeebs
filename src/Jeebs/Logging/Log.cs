@@ -13,17 +13,17 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Msg<T>(T? reason)
-		where T : IReason
+	public void Msg<T>(T? msg)
+		where T : IMsg
 	{
 		// Get log info
-		var (level, text, args) = reason switch
+		var (level, text, args) = msg switch
 		{
-			IMsg msg =>
+			Msg m =>
 				(
-					msg.Level,
-					msg.FormatWithType,
-					msg.ArgsWithType
+					m.Level,
+					m.FormatWithType,
+					m.ArgsWithType
 				),
 
 			_ =>
@@ -62,16 +62,16 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Msgs(params IReason[] reasons)
+	public void Msgs(params IMsg[] msgs)
 	{
-		if (reasons.Length == 0)
+		if (msgs.Length == 0)
 		{
 			return;
 		}
 
-		foreach (var item in reasons)
+		foreach (var msg in msgs)
 		{
-			Msg(item);
+			Msg(msg);
 		}
 	}
 

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Messages;
@@ -13,13 +13,13 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var reason = new TestReason();
+		var reason = new TestIMsg();
 
 		// Act
 		log.Msg(reason);
 
 		// Assert
-		log.Received().Inf(typeof(TestReason).ToString(), Array.Empty<object>());
+		log.Received().Inf(typeof(TestIMsg).ToString(), Array.Empty<object>());
 	}
 
 	[Fact]
@@ -27,7 +27,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Verbose);
 
 		// Act
@@ -42,7 +42,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Debug);
 
 		// Act
@@ -57,7 +57,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Information);
 
 		// Act
@@ -72,7 +72,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Warning);
 
 		// Act
@@ -87,7 +87,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Error);
 
 		// Act
@@ -102,7 +102,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Fatal);
 
 		// Act
@@ -154,7 +154,7 @@ public class Msg_Tests
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
-		var msg = Substitute.For<IMsg>();
+		var msg = Substitute.ForPartsOf<Msg>();
 		msg.Level.Returns(LogLevel.Verbose);
 
 		// Act
@@ -164,7 +164,7 @@ public class Msg_Tests
 		log.Received(5).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
-	public sealed record class TestReason : IReason;
+	public sealed record class TestIMsg : IMsg;
 
 	public sealed record class TestMsg : Msg
 	{

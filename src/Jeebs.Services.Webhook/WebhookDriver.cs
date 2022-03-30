@@ -61,7 +61,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		// Convert to notification Message
 		var message = msg switch
 		{
-			IExceptionMsg x =>
+			ExceptionMsg x =>
 				new Message
 				{
 					Content = content,
@@ -72,7 +72,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 					}
 				},
 
-			IMsg x =>
+			Msg x =>
 				new Message
 				{
 					Content = content,

@@ -35,18 +35,18 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log an <see cref="IReason"/>
+	/// Log an <see cref="IMsg"/>
 	/// </summary>
 	/// <typeparam name="T">The Reason message type</typeparam>
-	/// <param name="reason">Reason message to log</param>
-	void Msg<T>(T? reason)
-		where T : IReason;
+	/// <param name="msg">Reason message to log</param>
+	void Msg<T>(T? msg)
+		where T : IMsg;
 
 	/// <summary>
-	/// Log a list of <see cref="IReason"/>
+	/// Log a list of <see cref="IMsg"/>
 	/// </summary>
-	/// <param name="reasons">Messages to log</param>
-	void Msgs(params IReason[] reasons);
+	/// <param name="msgs">Messages to log</param>
+	void Msgs(params IMsg[] msgs);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>

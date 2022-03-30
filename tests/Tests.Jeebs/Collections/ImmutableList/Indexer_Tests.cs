@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static MaybeF.F.EnumerableF.R;
+using static MaybeF.F.EnumerableF.M;
 
 namespace Jeebs.Collections.ImmutableList_Tests;
 
@@ -36,7 +36,7 @@ public class Indexer_Tests
 		var result = list[2];
 
 		// Assert
-		result.AssertNone().AssertType<ElementAtIsNullReason>();
+		result.AssertNone().AssertType<ElementAtIsNullMsg>();
 	}
 
 	[Fact]
@@ -49,7 +49,7 @@ public class Indexer_Tests
 		var result = list[Rnd.Int];
 
 		// Assert
-		result.AssertNone().AssertType<ListIsEmptyReason>();
+		result.AssertNone().AssertType<ListIsEmptyMsg>();
 	}
 
 	[Fact]

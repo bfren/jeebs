@@ -19,22 +19,22 @@ public static class ControllerExtensions
 	/// Execute a Maybe.None result and return the View
 	/// </summary>
 	/// <param name="this">Controller</param>
-	/// <param name="reason">None</param>
-	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IReason reason) =>
-		ExecuteErrorAsync(@this, reason, null);
+	/// <param name="msg">None</param>
+	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg msg) =>
+		ExecuteErrorAsync(@this, msg, null);
 
 	/// <summary>
 	/// Execute a Maybe.None result and return the View
 	/// </summary>
 	/// <param name="this">Controller</param>
-	/// <param name="reason">None</param>
+	/// <param name="msg">None</param>
 	/// <param name="code">HTTP Status Code</param>
-	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, IReason reason, int? code)
+	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg msg, int? code)
 	{
 		// Log error
-		if (reason is IMsg msg)
+		if (msg is IMsg m)
 		{
-			@this.Log.Msg(msg);
+			@this.Log.Msg(m);
 		}
 
 		// Check for 404
@@ -44,7 +44,7 @@ public static class ControllerExtensions
 				x,
 
 			_ =>
-				reason switch
+				msg switch
 				{
 					INotFoundMsg =>
 						StatusCodes.Status404NotFound,
@@ -60,7 +60,7 @@ public static class ControllerExtensions
 		if ((findView(viewName) ?? findView("Default")) is string view)
 		{
 			@this.Log.Vrb("Found view {view}", view);
-			return @this.View(view, reason);
+			return @this.View(view, msg);
 		}
 
 		// If response has stared we can't do anything

@@ -12,10 +12,13 @@ public static partial class PhpF
 	/// Deserialise object
 	/// </summary>
 	/// <param name="str">Serialised string</param>
-	public static object Deserialise(string str) =>
-		PrivateDeserialise(str, 0);
+	public static object Deserialise(string str)
+	{
+		var pointer = 0;
+		return PrivateDeserialise(str, ref pointer);
+	}
 
-	private static object PrivateDeserialise(string str, int pointer)
+	private static object PrivateDeserialise(string str, ref int pointer)
 	{
 		if (string.IsNullOrWhiteSpace(str) || str.Length <= pointer)
 		{
@@ -25,36 +28,36 @@ public static partial class PhpF
 		return str[pointer] switch
 		{
 			char c when c == ArrayChar =>
-				getArray(),
+				getArray(str, ref pointer),
 
 			char c when c == BooleanChar =>
-				getBoolean(),
+				getBoolean(str, ref pointer),
 
 			char c when c == DoubleChar =>
-				getNumber(double.Parse, 0d),
+				getNumber(str, double.Parse, 0d, ref pointer),
 
 			char c when c == IntegerChar =>
-				getNumber(long.Parse, 0L),
+				getNumber(str, long.Parse, 0L, ref pointer),
 
 			char c when c == StringChar =>
-				getString(),
+				getString(str, ref pointer),
 
 			char c when c == NullChar =>
-				getNull(),
+				getNull(ref pointer),
 
 			_ =>
 				string.Empty
 		};
 
 		// Get null object
-		object getNull()
+		static object getNull(ref int pointer)
 		{
 			pointer += 2;
 			return string.Empty;
 		}
 
 		// Get boolean
-		bool getBoolean()
+		static bool getBoolean(string str, ref int pointer)
 		{
 			var b = str[pointer + 2];
 			pointer += 4;
@@ -62,7 +65,7 @@ public static partial class PhpF
 		}
 
 		// Get a number (long or double)
-		T getNumber<T>(Func<string, T> parse, T ifError)
+		static T getNumber<T>(string str, Func<string, T> parse, T ifError, ref int pointer)
 		{
 			// Get string value
 			var colon = str.IndexOf(':', pointer) + 1;
@@ -82,7 +85,7 @@ public static partial class PhpF
 		}
 
 		// Get string
-		string getString()
+		static string getString(string str, ref int pointer)
 		{
 			// Get start and end positions
 			var colon0 = str.IndexOf(':', pointer) + 1;
@@ -99,7 +102,7 @@ public static partial class PhpF
 		}
 
 		// Get AssocArray
-		AssocArray getArray()
+		static AssocArray getArray(string str, ref int pointer)
 		{
 			// Get start and end positions
 			var colon0 = str.IndexOf(':', pointer) + 1;
@@ -112,7 +115,7 @@ public static partial class PhpF
 			var table = new AssocArray();
 			for (var i = 0; i < len; i++)
 			{
-				var (key, value) = (PrivateDeserialise(str, pointer), PrivateDeserialise(str, pointer));
+				var (key, value) = (PrivateDeserialise(str, ref pointer), PrivateDeserialise(str, ref pointer));
 				F.ParseInt32(key.ToString()).Switch(
 					some: x => table.Add(x, value),
 					none: _ => table.Add(key, value)
