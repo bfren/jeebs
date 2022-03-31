@@ -3,7 +3,7 @@
 
 using MaybeF;
 
-namespace Jeebs.Functions.Internals.MaybeConverter_Tests;
+namespace Jeebs.Functions.JsonConverters.MaybeConverter_Tests;
 
 public class WriteJson_Tests
 {

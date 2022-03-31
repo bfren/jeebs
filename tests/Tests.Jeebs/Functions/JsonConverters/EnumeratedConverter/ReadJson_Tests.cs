@@ -3,7 +3,7 @@
 
 using static Jeebs.Functions.JsonF.M;
 
-namespace Jeebs.Functions.Internals.EnumeratedConverter_Tests;
+namespace Jeebs.Functions.JsonConverters.EnumeratedConverter_Tests;
 
 public class ReadJson_Tests
 {

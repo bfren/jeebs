@@ -5,12 +5,12 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals;
+namespace Jeebs.Functions.JsonConverters;
 
 /// <summary>
 /// <see cref="Maybe{T}"/> JSON converter factory
 /// </summary>
-public sealed class MaybeConverterFactory : JsonConverterFactory
+internal sealed class MaybeJsonConverterFactory : JsonConverterFactory
 {
 	/// <summary>
 	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Maybe{T}"/>
@@ -29,7 +29,7 @@ public sealed class MaybeConverterFactory : JsonConverterFactory
 	{
 		// Get converter type
 		var wrappedType = typeToConvert.GetGenericArguments()[0];
-		var converterType = typeof(MaybeConverter<>).MakeGenericType(wrappedType);
+		var converterType = typeof(MaybeJsonConverter<>).MakeGenericType(wrappedType);
 
 		// Create converter
 		return Activator.CreateInstance(converterType) switch

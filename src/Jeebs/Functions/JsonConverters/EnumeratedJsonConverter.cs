@@ -5,13 +5,13 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals;
+namespace Jeebs.Functions.JsonConverters;
 
 /// <summary>
 /// <see cref="Enumerated"/> JSON converter
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
-internal sealed class EnumeratedConverter<T> : JsonConverter<T>
+internal sealed class EnumeratedJsonConverter<T> : JsonConverter<T>
 	where T : Enumerated
 {
 	/// <summary>
