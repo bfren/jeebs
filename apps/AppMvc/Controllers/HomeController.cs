@@ -4,6 +4,7 @@
 using Jeebs.Apps.Web.Constants;
 using Jeebs.Logging;
 using Microsoft.AspNetCore.Mvc;
+using StrongId;
 
 namespace MvcApp.Controllers;
 
@@ -24,4 +25,9 @@ public class HomeController : Jeebs.Mvc.Controllers.Controller
 
 	public IActionResult Privacy() =>
 		View();
+
+	public IActionResult Id(TestId testId) =>
+		View(testId);
 }
+
+public sealed record class TestId : LongId;
