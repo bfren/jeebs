@@ -1,8 +1,8 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Query;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.WordPress.Query.Options_Tests;
 
@@ -22,7 +22,7 @@ public class Constructor_Tests
 		Assert.Same(schema, result.TTest);
 	}
 
-	public sealed record class TestId : StrongId;
+	public sealed record class TestId : LongId;
 
 	public sealed record class TestOptions : Options<TestId>
 	{

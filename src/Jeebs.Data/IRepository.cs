@@ -4,7 +4,7 @@
 using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Data.Query;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data;
 

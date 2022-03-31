@@ -1,9 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using Jeebs.Id;
 using MaybeF.Extensions;
+using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilderWithEntity_Tests;
 
@@ -27,7 +27,7 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 	);
 }
 
-public sealed record class TestId : StrongId;
+public sealed record class TestId : LongId;
 
 public record class TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 

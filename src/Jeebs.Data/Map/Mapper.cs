@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.Map.Functions;
-using Jeebs.Id;
+using StrongId;
 using Jeebs.Messages;
 
 namespace Jeebs.Data.Map;

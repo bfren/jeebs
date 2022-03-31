@@ -3,8 +3,8 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
-using Jeebs.Id;
 using Jeebs.Logging;
+using StrongId;
 
 namespace Jeebs.Data.Repository_Tests;
 
@@ -41,5 +41,5 @@ public static class Repository_Setup
 		public FooId Id { get; init; } = new();
 	}
 
-	public sealed record class FooId : StrongId;
+	public sealed record class FooId : LongId;
 }

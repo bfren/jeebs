@@ -3,13 +3,14 @@
 
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Id;
+using Jeebs.Data;
 using Jeebs.Logging;
 using MaybeF;
 using MaybeF.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RndF;
+using StrongId;
 
 namespace AppMvc.Controllers;
 

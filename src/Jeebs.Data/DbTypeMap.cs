@@ -6,7 +6,7 @@ using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.Functions;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data;
 

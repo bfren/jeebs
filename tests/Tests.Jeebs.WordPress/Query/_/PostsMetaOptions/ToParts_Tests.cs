@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Query.QueryOptions_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
-using static Jeebs.Id.StrongId;
+using static StrongId.LongId;
 
 namespace Jeebs.WordPress.Query.PostsMetaOptions_Tests;
 

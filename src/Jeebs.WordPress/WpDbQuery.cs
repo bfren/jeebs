@@ -10,6 +10,7 @@ using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Functions;
+using StrongId;
 
 namespace Jeebs.WordPress;
 
@@ -40,7 +41,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
-		where T : Id.IWithId<WpPostId>
+		where T : IWithId<WpPostId>
 	{
 		using var w = Db.UnitOfWork;
 		return await QueryPostsF.ExecuteAsync<T>(Db, w, opt, filters).ConfigureAwait(false);
@@ -48,7 +49,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 
 	/// <inheritdoc/>
 	public async Task<Maybe<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
-		where T : Id.IWithId<WpPostId>
+		where T : IWithId<WpPostId>
 	{
 		using var w = Db.UnitOfWork;
 		return await QueryPostsF.ExecuteAsync<T>(Db, w, page, opt, filters).ConfigureAwait(false);
@@ -63,7 +64,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
-		where T : Id.IWithId<WpPostMetaId>
+		where T : IWithId<WpPostMetaId>
 	{
 		using var w = Db.UnitOfWork;
 		return await QueryPostsMetaF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
@@ -71,7 +72,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
-		where T : Id.IWithId<WpTermId>
+		where T : IWithId<WpTermId>
 	{
 		using var w = Db.UnitOfWork;
 		return await QueryPostsTaxonomyF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
@@ -79,7 +80,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
-		where T : Id.IWithId<WpTermId>
+		where T : IWithId<WpTermId>
 	{
 		using var w = Db.UnitOfWork;
 		return await QueryTermsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);

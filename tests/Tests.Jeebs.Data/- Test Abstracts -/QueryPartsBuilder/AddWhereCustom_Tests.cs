@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Id;
+using StrongId;
 using static Jeebs.Data.Query.QueryPartsBuilder.M;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;

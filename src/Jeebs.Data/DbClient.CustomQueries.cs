@@ -6,7 +6,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data;
 

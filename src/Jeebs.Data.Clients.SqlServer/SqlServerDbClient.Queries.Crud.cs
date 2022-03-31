@@ -29,7 +29,7 @@ public partial class SqlServerDbClient : DbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id
+		object id
 	)
 	{
 		// Get columns
@@ -48,7 +48,7 @@ public partial class SqlServerDbClient : DbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id
+		object id
 	) =>
 		GetUpdateQuery(table, columns, idColumn, id, null);
 
@@ -57,7 +57,7 @@ public partial class SqlServerDbClient : DbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id,
+		object id,
 		IColumn? versionColumn
 	)
 	{
@@ -82,7 +82,7 @@ public partial class SqlServerDbClient : DbClient
 	protected override string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		long id
+		object id
 	) =>
 		GetDeleteQuery(table, idColumn, id, null);
 
@@ -90,7 +90,7 @@ public partial class SqlServerDbClient : DbClient
 	protected override string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		long id,
+		object id,
 		IColumn? versionColumn
 	)
 	{

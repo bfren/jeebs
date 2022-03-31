@@ -6,7 +6,7 @@ using Jeebs.Messages.Exceptions;
 namespace Jeebs.Messages;
 
 /// <summary>
-/// Create <see cref="MsgException{T}"/> using an <see cref="IReason"/>
+/// Create <see cref="MsgException{T}"/> using an <see cref="IMsg"/>
 /// </summary>
 public static class MsgError
 {
@@ -18,11 +18,4 @@ public static class MsgError
 	public static MsgException<TMsg> CreateException<TMsg>(TMsg msg)
 		where TMsg : IMsg =>
 		new(msg);
-
-	/// <summary>
-	/// Create <see cref="MsgException{ReasonMsg}"/>
-	/// </summary>
-	/// <param name="reason">Reason</param>
-	public static MsgException<ReasonMsg> CreateException(IReason reason) =>
-		new(new ReasonMsg(reason));
 }

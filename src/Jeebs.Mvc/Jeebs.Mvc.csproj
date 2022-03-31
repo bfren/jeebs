@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="Rnd" Version="8.1.0" PrivateAssets="All" />
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
 	</ItemGroup>
 </Project>

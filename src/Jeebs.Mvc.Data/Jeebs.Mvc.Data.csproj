@@ -3,4 +3,7 @@
 		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
 		<ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="StrongId.Mvc" Version="8.0.0-beta.220331.7" />
+	</ItemGroup>
 </Project>

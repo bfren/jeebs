@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -33,5 +33,5 @@ public class GetParameterValue_Tests
 		Assert.Equal(value, result);
 	}
 
-	private readonly record struct TestId(long Value) : IStrongId;
+	private sealed record class TestId(long Value) : LongId(Value);
 }

@@ -6,7 +6,7 @@ using System.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data;
 
@@ -137,7 +137,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Maybe<string> GetRetrieveQuery<TEntity, TModel>(long id)
+	Maybe<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -146,7 +146,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Maybe<string> GetUpdateQuery<TEntity, TModel>(long id)
+	Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -154,7 +154,7 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="id">Entity ID</param>
-	Maybe<string> GetDeleteQuery<TEntity>(long id)
+	Maybe<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId;
 
 	#endregion CRUD Queries

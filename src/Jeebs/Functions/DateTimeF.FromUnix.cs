@@ -10,7 +10,7 @@ public static partial class DateTimeF
 	/// <summary>
 	/// Convert a Unix timestamp to a DateTime object
 	/// </summary>
-	/// <param name="unixTimeStamp">Unix timestamp</param>
-	public static DateTime FromUnix(double unixTimeStamp) =>
-		new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTimeStamp).ToLocalTime();
+	/// <param name="unixTimeStampInSeconds">Unix timestamp (in seconds)</param>
+	public static DateTime FromUnix(double unixTimeStampInSeconds) =>
+		DateTime.UnixEpoch.AddSeconds(unixTimeStampInSeconds).ToUniversalTime();
 }

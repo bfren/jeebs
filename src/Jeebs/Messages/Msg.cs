@@ -8,7 +8,9 @@ using Jeebs.Logging;
 
 namespace Jeebs.Messages;
 
-/// <inheritdoc cref="IMsg"/>
+/// <summary>
+/// Framework message - compatible with <see cref="IMsg"/>
+/// </summary>
 public abstract record class Msg : IMsg
 {
 	/// <summary>

@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data.Query.QueryOptions_Tests;
 
@@ -25,7 +25,7 @@ public static class Setup
 	}
 }
 
-public sealed record class TestId : StrongId;
+public sealed record class TestId : LongId;
 
 public record class TestOptions : QueryOptions<TestId>
 {

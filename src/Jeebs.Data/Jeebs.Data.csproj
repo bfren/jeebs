@@ -4,6 +4,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="StrongId.Dapper" Version="8.0.0-beta.220331.7" />
 	</ItemGroup>
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">

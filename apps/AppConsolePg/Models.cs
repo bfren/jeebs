@@ -2,13 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
-using Jeebs.Id;
+using StrongId;
 
 namespace AppConsolePg;
 
 internal record struct ParamTest(int Id, string Foo, string Bar);
 
-internal sealed record class EntityTestId : StrongId;
+internal sealed record class EntityTestId : LongId;
 
 internal record class EntityTest : IWithId<EntityTestId>
 {

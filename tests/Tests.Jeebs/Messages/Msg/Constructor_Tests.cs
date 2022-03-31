@@ -16,7 +16,7 @@ public class Constructor_Tests
 		var result = new TestMsg();
 
 		// Assert
-		Assert.IsAssignableFrom<IReason>(result);
+		Assert.IsAssignableFrom<IMsg>(result);
 	}
 
 	public sealed record class TestMsg : Msg;

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
-using Jeebs.Id;
 
 namespace Jeebs.Data.Map;
 

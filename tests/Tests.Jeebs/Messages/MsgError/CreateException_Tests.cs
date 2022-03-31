@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Messages.Exceptions;
@@ -19,19 +19,5 @@ public class CreateException_Tests
 
 		// Assert
 		Assert.IsType<MsgException<IMsg>>(result);
-	}
-
-	[Fact]
-	public void Creates_MsgException_With_ReasonMsg()
-	{
-		// Arrange
-		var reason = Substitute.For<IReason>();
-
-		// Act
-		var result = MsgError.CreateException(reason);
-
-		// Assert
-		var msg = Assert.IsType<MsgException<ReasonMsg>>(result);
-		Assert.Equal(reason.ToString(), msg.Message);
 	}
 }

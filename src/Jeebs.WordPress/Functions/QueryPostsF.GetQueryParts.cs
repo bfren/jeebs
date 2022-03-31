@@ -4,6 +4,7 @@
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -16,9 +17,9 @@ public static partial class QueryPostsF
 	/// <param name="db">IWpDb</param>
 	/// <param name="opt">Function to return query options</param>
 	internal static Maybe<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
-		where TModel : Id.IWithId<WpPostId> =>
+		where TModel : IWithId<WpPostId> =>
 		F.Some(
-			() => opt(new Query.PostsOptions(db.Schema)),
+			() => opt(new PostsOptions(db.Schema)),
 			e => new M.ErrorGettingQueryPostsOptionsMsg(e)
 		)
 		.Bind(

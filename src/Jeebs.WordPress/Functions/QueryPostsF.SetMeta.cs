@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -19,7 +20,7 @@ public static partial class QueryPostsF
 	/// <param name="metaDict">Meta Dictionary property for <typeparamref name="TModel"/></param>
 	internal static Maybe<TList> SetMeta<TList, TModel>(TList posts, List<PostMeta> postsMeta, Meta<TModel> metaDict)
 		where TList : IEnumerable<TModel>
-		where TModel : Id.IWithId<WpPostId>
+		where TModel : IWithId<WpPostId>
 	{
 		if (posts.Any() && postsMeta.Count > 0)
 		{

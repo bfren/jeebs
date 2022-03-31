@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Id;
+using StrongId;
 using Jeebs.Logging;
 using Jeebs.Messages;
 using Jeebs.Reflection;

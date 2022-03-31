@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -30,7 +31,7 @@ public static partial class QueryPostsF
 		List<PropertyInfo> fields
 	)
 		where TList : IEnumerable<TModel>
-		where TModel : Id.IWithId<WpPostId>
+		where TModel : IWithId<WpPostId>
 	{
 		// Hydrate all custom fields for all posts
 		foreach (var post in posts)

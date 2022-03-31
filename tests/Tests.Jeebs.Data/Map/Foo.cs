@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data.Map;
 
@@ -12,7 +12,7 @@ public record class Foo : IWithId
 	public IStrongId Id
 	{
 		get => FooId;
-		init => FooId = new(value.Value);
+		init => FooId = value switch { FooId f => f, _ => new() };
 	}
 
 	[Id]

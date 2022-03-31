@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
-using Jeebs.Id;
+using StrongId;
 using static Jeebs.Data.Map.Functions.MapF.M;
 
 namespace Jeebs.Data.Map.Mapper_Tests;

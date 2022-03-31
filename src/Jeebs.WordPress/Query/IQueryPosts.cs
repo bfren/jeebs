@@ -7,6 +7,7 @@ using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -22,7 +23,7 @@ public interface IQueryPosts
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : Id.IWithId<WpPostId>;
+		where T : IWithId<WpPostId>;
 
 	/// <summary>
 	/// Run a query and return multiple items with paging
@@ -40,5 +41,5 @@ public interface IQueryPosts
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : Id.IWithId<WpPostId>;
+		where T : IWithId<WpPostId>;
 }

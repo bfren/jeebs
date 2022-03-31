@@ -11,6 +11,7 @@ using Jeebs.Messages;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -23,7 +24,7 @@ public static partial class QueryPostsF
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where TModel : Id.IWithId<WpPostId> =>
+		where TModel : IWithId<WpPostId> =>
 		GetQueryParts<TModel>(
 			db, opt
 		)
@@ -57,7 +58,7 @@ public static partial class QueryPostsF
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where TModel : Id.IWithId<WpPostId> =>
+		where TModel : IWithId<WpPostId> =>
 		GetQueryParts<TModel>(
 			db, opt
 		)

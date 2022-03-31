@@ -8,6 +8,7 @@ using Jeebs.Data;
 using Jeebs.Messages;
 using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.Query;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,9 +22,9 @@ public static partial class QueryPostsMetaF
 	/// <param name="w">IUnitOfWork</param>
 	/// <param name="opt">Function to return query options</param>
 	public static Task<Maybe<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetPostsMetaOptions opt)
-		where TModel : Id.IWithId<WpPostMetaId> =>
+		where TModel : IWithId<WpPostMetaId> =>
 		F.Some(
-			() => opt(new Query.PostsMetaOptions(db.Schema)),
+			() => opt(new PostsMetaOptions(db.Schema)),
 			e => new M.ErrorGettingQueryPostsMetaOptionsMsg(e)
 		)
 		.Bind(

@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Query;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract record class Options<TId> : QueryOptions<TId>
-	where TId : class, IStrongId, new()
+	where TId : LongId, new()
 {
 	/// <summary>
 	/// IWpDbSchema shorthand

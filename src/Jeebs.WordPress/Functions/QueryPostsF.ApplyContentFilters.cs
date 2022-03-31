@@ -7,6 +7,7 @@ using System.Linq;
 using Jeebs.Messages;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,7 +22,7 @@ public static partial class QueryPostsF
 	/// <param name="filters">Content Filters</param>
 	internal static Maybe<TList> ApplyContentFilters<TList, TModel>(TList posts, IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
-		where TModel : Id.IWithId<WpPostId>
+		where TModel : IWithId<WpPostId>
 	{
 		// If there are no posts or filters, do nothing
 		if (!posts.Any() || filters.Length == 0)

@@ -13,6 +13,6 @@
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="$(VersionPath)"/>
+		<EmbeddedResource Include="$(VersionPath)" />
 	</ItemGroup>
 </Project>

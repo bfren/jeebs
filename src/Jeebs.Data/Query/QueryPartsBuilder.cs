@@ -8,7 +8,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Functions;
-using Jeebs.Id;
+using StrongId;
 using Jeebs.Messages;
 
 namespace Jeebs.Data.Query;
@@ -141,7 +141,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	public virtual Maybe<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
 	{
 		// Add Id EQUAL
-		if (id?.Value > 0)
+		if (id is not null)
 		{
 			return parts with { Where = parts.Where.WithItem((IdColumn, Compare.Equal, id.Value)) };
 		}

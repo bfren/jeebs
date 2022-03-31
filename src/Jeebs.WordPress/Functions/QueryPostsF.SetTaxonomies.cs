@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Reflection;
 using Jeebs.WordPress.Entities.StrongIds;
+using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,7 +22,7 @@ public static partial class QueryPostsF
 	/// <param name="termLists">Term List properties</param>
 	internal static Maybe<TList> SetTaxonomies<TList, TModel>(TList posts, IEnumerable<Term> terms, List<PropertyInfo> termLists)
 		where TList : IEnumerable<TModel>
-		where TModel : Id.IWithId<WpPostId>
+		where TModel : IWithId<WpPostId>
 	{
 		foreach (var post in posts)
 		{

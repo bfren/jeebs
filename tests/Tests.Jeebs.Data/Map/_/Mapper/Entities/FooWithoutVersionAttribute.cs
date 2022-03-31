@@ -1,8 +1,8 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
-using Jeebs.Id;
+using StrongId;
 
 namespace Jeebs.Data.Map.Mapper_Tests;
 
@@ -12,7 +12,7 @@ public class FooWithoutVersionAttribute : IWithVersion
 	public IStrongId Id
 	{
 		get => FooId;
-		init => FooId = new(value.Value);
+		init => FooId = value switch { FooId f => f, _ => new FooId() };
 	}
 
 	[Id]

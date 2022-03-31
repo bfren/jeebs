@@ -1,15 +1,16 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Id;
+using StrongId;
+using static StrongId.LongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : LongId, new()
 {
 	public abstract void Test00_Id_And_Ids_Null_Returns_Original_Parts();
 
@@ -31,7 +32,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test01()
 	{
 		// Arrange
-		var id = new TId { Value = Rnd.Lng };
+		var id = RndId<TId>();
 		var (builder, v) = Setup();
 
 		// Act
@@ -55,9 +56,9 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test02()
 	{
 		// Arrange
-		var i0 = new TId { Value = Rnd.Lng };
-		var i1 = new TId { Value = Rnd.Lng };
-		var i2 = new TId { Value = Rnd.Lng };
+		var i0 = RndId<TId>();
+		var i1 = RndId<TId>();
+		var i2 = RndId<TId>();
 		var ids = ImmutableList.Create(i1, i2);
 		var (builder, v) = Setup();
 
@@ -82,8 +83,8 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test03()
 	{
 		// Arrange
-		var i0 = new TId { Value = Rnd.Lng };
-		var i1 = new TId { Value = Rnd.Lng };
+		var i0 = RndId<TId>();
+		var i1 = RndId<TId>();
 		var ids = ImmutableList.Create(i0, i1);
 		var (builder, v) = Setup();
 
@@ -99,7 +100,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 				Assert.Equal(builder.IdColumn, x.column);
 				Assert.Equal(Compare.In, x.cmp);
 
-				var value = Assert.IsAssignableFrom<IEnumerable<long>>(x.value);
+				var value = Assert.IsAssignableFrom<IEnumerable<object>>(x.value);
 				Assert.Collection(value,
 					y => Assert.Equal(i0.Value, y),
 					y => Assert.Equal(i1.Value, y)
