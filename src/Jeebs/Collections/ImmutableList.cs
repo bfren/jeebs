@@ -34,8 +34,15 @@ public static class ImmutableList
 	/// </summary>
 	/// <typeparam name="T">List Item type</typeparam>
 	/// <param name="args">Items to add</param>
-	public static ImmutableList<T> Create<T>(params T[] args) =>
-		new(args);
+	public static ImmutableList<T> Create<T>(params T[]? args) =>
+		args switch
+		{
+			T[] =>
+				new(args),
+
+			_ =>
+				new()
+		};
 
 	/// <summary>
 	/// Merge multiple <see cref="ImmutableList{T}"/> objects into one
@@ -62,13 +69,17 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 	/// <summary>
 	/// Create a new, empty <see cref="ImmutableList{T}"/>
 	/// </summary>
-	public ImmutableList() : this(Sys.ImmutableList<T>.Empty) { }
+	public ImmutableList() :
+		this(Sys.ImmutableList<T>.Empty)
+	{ }
 
 	/// <summary>
 	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
 	/// </summary>
 	/// <param name="collection">Collection of items to add</param>
-	public ImmutableList(IEnumerable<T> collection) : this(Sys.ImmutableList<T>.Empty.AddRange(collection)) { }
+	public ImmutableList(IEnumerable<T> collection) :
+		this(Sys.ImmutableList<T>.Empty.AddRange(collection))
+	{ }
 
 	internal ImmutableList(Sys.ImmutableList<T> list) =>
 		List = list;
