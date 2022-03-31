@@ -10,7 +10,8 @@
 
 	<!-- Common Packages -->
 	<ItemGroup>
-		<PackageReference Include="MaybeF" Version="8.2.0-beta.220330.2" />
+		<PackageReference Include="MaybeF" Version="8.2.0" />
+		<PackageReference Include="Rnd" Version="8.1.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<Using Include="MaybeF" />
