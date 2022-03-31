@@ -5,4 +5,4 @@ using StrongId;
 
 namespace Jeebs.Data.Map;
 
-public readonly record struct FooId(long Value) : IStrongId<long>;
+public sealed record class FooId : LongId;

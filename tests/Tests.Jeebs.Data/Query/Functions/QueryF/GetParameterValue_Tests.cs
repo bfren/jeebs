@@ -33,5 +33,5 @@ public class GetParameterValue_Tests
 		Assert.Equal(value, result);
 	}
 
-	private readonly record struct TestId(long Value) : IStrongId<long>;
+	private sealed record class TestId(long Value) : LongId(Value);
 }

@@ -12,7 +12,7 @@ public record class Foo : IWithId
 	public IStrongId Id
 	{
 		get => FooId;
-		init => FooId = value switch { FooId f => f, _ => new FooId() };
+		init => FooId = value switch { FooId f => f, _ => new() };
 	}
 
 	[Id]
