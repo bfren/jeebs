@@ -6,13 +6,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs.Messages;
 
-namespace Jeebs.Functions.Internals;
+namespace Jeebs.Functions.JsonConverters;
 
 /// <summary>
 /// <see cref="Maybe{T}"/> JSON converter
 /// </summary>
 /// <typeparam name="T">Maybe value type</typeparam>
-public sealed class MaybeConverter<T> : JsonConverter<Maybe<T>>
+internal sealed class MaybeJsonConverter<T> : JsonConverter<Maybe<T>>
 {
 	/// <summary>
 	/// Read value and return as <see cref="MaybeF.Internals.Some{T}"/> or <see cref="MaybeF.Internals.None{T}"/>
@@ -50,9 +50,9 @@ public sealed class MaybeConverter<T> : JsonConverter<Maybe<T>>
 }
 
 /// <summary>
-/// Wrapper for <see cref="MaybeConverter{T}"/> messages because it has a generic constraint
+/// Wrapper for <see cref="MaybeJsonConverter{T}"/> messages because it has a generic constraint
 /// </summary>
-public static class M
+internal static class M
 {
 	/// <summary>Deserialisation returned a null value</summary>
 	public sealed record class DeserialisingReturnedNullMsg() : Msg;

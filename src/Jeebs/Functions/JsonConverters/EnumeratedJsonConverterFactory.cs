@@ -5,12 +5,12 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals;
+namespace Jeebs.Functions.JsonConverters;
 
 /// <summary>
-/// <see cref="EnumeratedConverter{T}"/> JSON converter factory
+/// <see cref="EnumeratedJsonConverter{T}"/> JSON converter factory
 /// </summary>
-public sealed class EnumeratedConverterFactory : JsonConverterFactory
+internal sealed class EnumeratedJsonConverterFactory : JsonConverterFactory
 {
 	/// <summary>
 	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>
@@ -27,14 +27,14 @@ public sealed class EnumeratedConverterFactory : JsonConverterFactory
 	/// <exception cref="JsonException"></exception>
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
-		var converterType = typeof(EnumeratedConverter<>).MakeGenericType(typeToConvert);
+		var converterType = typeof(EnumeratedJsonConverter<>).MakeGenericType(typeToConvert);
 		return Activator.CreateInstance(converterType) switch
 		{
 			JsonConverter x =>
 				x,
 
 			_ =>
-				throw new JsonException($"Unable to create {typeof(EnumeratedConverter<>)} for type {typeToConvert}.")
+				throw new JsonException($"Unable to create {typeof(EnumeratedJsonConverter<>)} for type {typeToConvert}.")
 		};
 	}
 }

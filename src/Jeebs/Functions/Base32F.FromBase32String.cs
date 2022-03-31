@@ -9,7 +9,7 @@ namespace Jeebs.Functions;
 public static partial class Base32F
 {
 	/// <summary>
-	/// Convert base32 string to array of bytes
+	/// Convert <paramref name="base32String"/> string to a byte array
 	/// </summary>
 	/// <param name="base32String">Base32 string to convert - must be at least two characters</param>
 	public static Maybe<byte[]> FromBase32String(string base32String)

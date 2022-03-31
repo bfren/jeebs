@@ -37,16 +37,16 @@ public interface ILog
 	/// <summary>
 	/// Log an <see cref="IMsg"/>
 	/// </summary>
-	/// <typeparam name="T">The Reason message type</typeparam>
-	/// <param name="msg">Reason message to log</param>
-	void Msg<T>(T? msg)
+	/// <typeparam name="T">The message type</typeparam>
+	/// <param name="message">Message to log</param>
+	void Msg<T>(T? message)
 		where T : IMsg;
 
 	/// <summary>
 	/// Log a list of <see cref="IMsg"/>
 	/// </summary>
-	/// <param name="msgs">Messages to log</param>
-	void Msgs(params IMsg[] msgs);
+	/// <param name="messages">Messages to log</param>
+	void Msgs(params IMsg[] messages);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message</param>

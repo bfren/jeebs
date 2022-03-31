@@ -5,12 +5,12 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.Internals;
+namespace Jeebs.Functions.JsonConverters;
 
 /// <summary>
 /// <see cref="DateTime"/> JSON converter
 /// </summary>
-public sealed class DateTimeConverter : JsonConverter<DateTime>
+internal sealed class DateTimeJsonConverter : JsonConverter<DateTime>
 {
 	/// <summary>
 	/// Read value as UTC DateTime
@@ -20,7 +20,7 @@ public sealed class DateTimeConverter : JsonConverter<DateTime>
 	/// <param name="options">JsonSerializerOptions</param>
 	public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 		F.ParseDateTime(reader.GetString()).Switch(
-			some: x => x.ToUniversalTime(),
+			some: x => new DateTime(x.Ticks, DateTimeKind.Utc),
 			none: _ => DateTime.MinValue.ToUniversalTime()
 		);
 

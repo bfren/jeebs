@@ -4,7 +4,7 @@
 using MaybeF;
 using static Jeebs.Functions.JsonF.M;
 
-namespace Jeebs.Functions.Internals.MaybeConverter_Tests;
+namespace Jeebs.Functions.JsonConverters.MaybeConverter_Tests;
 
 public class ReadJson_Tests
 {

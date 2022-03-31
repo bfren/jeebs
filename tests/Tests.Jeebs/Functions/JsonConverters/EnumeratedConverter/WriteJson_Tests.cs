@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Functions.Internals.EnumeratedConverter_Tests;
+namespace Jeebs.Functions.JsonConverters.EnumeratedConverter_Tests;
 
 public class WriteJson_Tests
 {
