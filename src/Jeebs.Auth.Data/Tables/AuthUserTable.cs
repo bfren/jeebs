@@ -18,7 +18,7 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 
 	#region From AuthUserModel
 
-	/// <inheritdoc cref="Id.IWithId.Id"/>
+	/// <inheritdoc cref="StrongId.IWithId.Id"/>
 	public string Id =>
 		TableName + nameof(Id);
 
