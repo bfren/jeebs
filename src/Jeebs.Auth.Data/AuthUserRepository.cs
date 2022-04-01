@@ -44,9 +44,9 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 
 	/// <inheritdoc/>
 	public Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName, IDbTransaction transaction) =>
-		RetrieveAsync<AuthUserEntity>(email, transaction)
+		RetrieveAsync<CheckAuthUserExists>(email, transaction)
 			.SwitchAsync(
-				some: _ => F.None<AuthUserId>(new M.UserAlreadyExistsMsg(email)),
+				some: x => F.None<AuthUserId>(new M.UserAlreadyExistsMsg(x.EmailAddress)),
 				none: _ => CreateAsync(
 					new()
 					{
@@ -69,9 +69,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <inheritdoc/>
 	public Task<Maybe<TModel>> RetrieveAsync<TModel>(string email, IDbTransaction transaction) =>
 		StartFluentQuery()
-			.Where(
-				u => u.EmailAddress, Compare.Equal, email
-			)
+			.Where(u => u.EmailAddress, Compare.Equal, email)
 			.QuerySingleAsync<TModel>(transaction);
 
 	/// <inheritdoc/>
@@ -84,6 +82,8 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <inheritdoc/>
 	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction) =>
 		Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure, transaction);
+
+	private sealed record class CheckAuthUserExists(string EmailAddress);
 
 	/// <summary>Messages</summary>
 	public static class M
