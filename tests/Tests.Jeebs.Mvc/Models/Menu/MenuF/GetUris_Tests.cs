@@ -13,7 +13,7 @@ public class GetUris_Tests
 	{
 		// Arrange
 		var urlHelper = Substitute.For<IUrlHelper>();
-		var getUri = Substitute.For<Menu.GetUri>();
+		var getUri = Substitute.For<GetUri>();
 
 		// Act
 		var result = MenuF.GetUris(urlHelper, new(), getUri);
@@ -31,7 +31,7 @@ public class GetUris_Tests
 		var i0 = new MenuItem();
 		var i1 = new MenuItem();
 		var items = new[] { i0, i1 }.ToList();
-		var getUri = Substitute.For<Menu.GetUri>();
+		var getUri = Substitute.For<GetUri>();
 
 		// Act
 		var result = MenuF.GetUris(urlHelper, items, getUri);
@@ -55,7 +55,7 @@ public class GetUris_Tests
 		var p0 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c0, c1, c2 }) };
 		var p1 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c3, c4 }) };
 		var items = new[] { p0, p1 }.ToList();
-		var getUri = Substitute.For<Menu.GetUri>();
+		var getUri = Substitute.For<GetUri>();
 		getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(x => x.ArgAt<MenuItem>(1).Text);
 
 		// Act
