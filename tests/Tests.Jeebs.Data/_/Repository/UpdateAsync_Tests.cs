@@ -21,7 +21,7 @@ public class UpdateAsync_Tests
 	}
 
 	[Fact]
-	public async Task Logs_Query_To_Debug()
+	public async Task Logs_Query_To_Verbose()
 	{
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
@@ -32,6 +32,6 @@ public class UpdateAsync_Tests
 		await repo.UpdateAsync(model);
 
 		// Assert
-		log.ReceivedWithAnyArgs().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
+		log.ReceivedWithAnyArgs().Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

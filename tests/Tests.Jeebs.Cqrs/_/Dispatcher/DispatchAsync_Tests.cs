@@ -11,23 +11,6 @@ public class DispatchAsync_Tests
 	public class With_Command
 	{
 		[Fact]
-		public async Task Calls_Log_Vrb()
-		{
-			// Arrange
-			var provider = Substitute.For<IServiceProvider>();
-			var log = Substitute.For<ILog<Dispatcher>>();
-			var dispatcher = new Dispatcher(provider, log);
-			var command = new Command();
-
-			// Act
-			await dispatcher.DispatchAsync(command);
-			await dispatcher.DispatchAsync(command);
-
-			// Assert
-			log.Received(2).Vrb("Handler type: {Type}", typeof(CommandHandler<Command>));
-		}
-
-		[Fact]
 		public async Task Unregistered_Handler_Returns_None_With_UnableToGetCommandHandlerMsg()
 		{
 			// Arrange
@@ -72,23 +55,6 @@ public class DispatchAsync_Tests
 
 	public class With_Query
 	{
-		[Fact]
-		public async Task Calls_Log_Vrb()
-		{
-			// Arrange
-			var provider = Substitute.For<IServiceProvider>();
-			var log = Substitute.For<ILog<Dispatcher>>();
-			var dispatcher = new Dispatcher(provider, log);
-			var query = new Query();
-
-			// Act
-			await dispatcher.DispatchAsync(query);
-			await dispatcher.DispatchAsync(query);
-
-			// Assert
-			log.Received(2).Vrb("Handler type: {Type}", typeof(QueryHandler<Query, bool>));
-		}
-
 		[Fact]
 		public async Task Unregistered_Handler_Returns_None_With_UnableToGetQueryHandlerMsg()
 		{

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -39,7 +39,7 @@ public class ExecuteAsync_Tests
 		await db.ExecuteAsync(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Vrb("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(bool), query, parameters);
 	}
 
 	[Fact]
@@ -57,6 +57,6 @@ public class ExecuteAsync_Tests
 		await db.ExecuteAsync<int>(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Vrb("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(int), query, parameters);
 	}
 }

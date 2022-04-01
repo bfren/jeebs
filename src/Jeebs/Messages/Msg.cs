@@ -12,7 +12,7 @@ namespace Jeebs.Messages;
 /// <summary>
 /// Framework message - compatible with <see cref="IMsg"/>
 /// </summary>
-public abstract record class Msg : IMsg
+public abstract record class Msg() : IMsg
 {
 	/// <summary>
 	/// Default LogLevel for messages
@@ -20,7 +20,7 @@ public abstract record class Msg : IMsg
 	public static readonly LogLevel DefaultLevel = LogLevel.Debug;
 
 	/// <inheritdoc/>
-	public virtual LogLevel Level { get; protected init; }
+	public virtual LogLevel Level { get; protected init; } = DefaultLevel;
 
 	/// <inheritdoc/>
 	public virtual string Format { get; protected init; } = string.Empty;
@@ -47,15 +47,10 @@ public abstract record class Msg : IMsg
 	}
 
 	/// <summary>
-	/// Create using <see cref="DefaultLevel"/>
-	/// </summary>
-	public Msg() : this(DefaultLevel) { }
-
-	/// <summary>
 	/// Create with specified log level
 	/// </summary>
 	/// <param name="level">Log Level</param>
-	public Msg(LogLevel level) =>
+	public Msg(LogLevel level) : this() =>
 		Level = level;
 
 	/// <inheritdoc/>
