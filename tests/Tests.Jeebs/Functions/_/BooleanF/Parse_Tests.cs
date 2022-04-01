@@ -60,6 +60,6 @@ public class Parse_Tests
 		var result = BooleanF.Parse(input);
 
 		// Assert
-		var msg = result.AssertNone().AssertType<UnrecognisedValueMsg>();
+		result.AssertNone().AssertType<UnrecognisedValueMsg>();
 	}
 }

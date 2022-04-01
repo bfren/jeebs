@@ -83,7 +83,7 @@ public class GetEitherSide_Tests
 		// Assert
 		var some = r0.AssertSome();
 		Assert.Equal(prev, some);
-		var none = r1.AssertNone().AssertType<ItemIsLastItemMsg>();
+		r1.AssertNone().AssertType<ItemIsLastItemMsg>();
 	}
 
 	[Fact]

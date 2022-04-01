@@ -18,7 +18,7 @@ public class Lock_Tests
 		var result = box.Lock(key);
 
 		// Assert
-		var none = result.AssertNone().AssertType<InvalidKeyLengthMsg>();
+		result.AssertNone().AssertType<InvalidKeyLengthMsg>();
 	}
 
 	[Fact]

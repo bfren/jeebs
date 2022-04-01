@@ -123,8 +123,8 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 //
 
 var taxonomy = WpBcg.Taxonomies.BibleBook;
-var book0 = new WpTermId() { Value = 423U };
-var book1 = new WpTermId() { Value = 628U };
+var book0 = new WpTermId { Value = 423U };
+var book1 = new WpTermId { Value = 628U };
 Console.WriteLine();
 log.Dbg("== Search for Sermons with Bible Books {Book0} and {Book1} ==", book0.Value, book1.Value);
 await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with

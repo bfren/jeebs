@@ -50,7 +50,7 @@ public abstract record class Msg() : IMsg
 	/// Create with specified log level
 	/// </summary>
 	/// <param name="level">Log Level</param>
-	public Msg(LogLevel level) : this() =>
+	protected Msg(LogLevel level) : this() =>
 		Level = level;
 
 	/// <inheritdoc/>

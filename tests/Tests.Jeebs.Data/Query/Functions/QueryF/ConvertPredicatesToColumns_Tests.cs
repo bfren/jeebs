@@ -6,6 +6,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using StrongId;
 using static Jeebs.Data.Query.Functions.QueryF.M;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -134,10 +135,10 @@ public class ConvertPredicatesToColumns_Tests
 		{
 			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
-		var value = Rnd.Lng;
+		var id = LongId<TestId>();
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
-			(nameof(TestEntity.Foo), input, new TestId(){ Value=value })
+			(nameof(TestEntity.Foo), input, id)
 		};
 
 		// Act
@@ -145,7 +146,7 @@ public class ConvertPredicatesToColumns_Tests
 
 		// Assert
 		Assert.Collection(result,
-			x => Assert.Equal(value, x.value)
+			x => Assert.Equal(id.Value, x.value)
 		);
 	}
 
