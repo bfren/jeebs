@@ -83,14 +83,15 @@ public abstract class Db : IDb
 	/// <summary>
 	/// Write query to the log
 	/// </summary>
+	/// <typeparam name="TReturn">Query return type</typeparam>
 	/// <param name="input">Input values</param>
-	private void LogQuery((string query, object? parameters, CommandType type) input)
+	private void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
 	{
 		var (query, parameters, type) = input;
 
-		// Always log operation, entity, and query
-		var message = "{Type}: {Query}";
-		var args = new object[] { type, query };
+		// Always log query type, return type, and query
+		var message = "Query Type: {Type} | Return: {Return} | {Query}";
+		var args = new object[] { type, typeof(TReturn), query };
 
 		// Log with or without parameters
 		if (parameters is null)
@@ -99,7 +100,7 @@ public abstract class Db : IDb
 		}
 		else if (parameters.ToString() is string param)
 		{
-			message += " Parameters: {@Parameters}";
+			message += " | Parameters: {@Parameters}";
 			WriteToLog(message, args.ExtendWith(param));
 		}
 	}
@@ -119,7 +120,7 @@ public abstract class Db : IDb
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery
+			some: LogQuery<T>
 		)
 		.MapAsync(
 			x => transaction.Connection.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
@@ -139,7 +140,7 @@ public abstract class Db : IDb
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery
+			some: LogQuery<T>
 		)
 		.MapAsync(
 			x => transaction.Connection.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
@@ -162,7 +163,7 @@ public abstract class Db : IDb
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery
+			some: LogQuery<bool>
 		)
 		.MapAsync(
 			x => transaction.Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
@@ -186,7 +187,7 @@ public abstract class Db : IDb
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery
+			some: LogQuery<T>
 		)
 		.MapAsync(
 			x => transaction.Connection.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
