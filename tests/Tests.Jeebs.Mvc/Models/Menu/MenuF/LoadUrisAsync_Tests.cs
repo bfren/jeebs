@@ -14,7 +14,7 @@ public class LoadUrisAsync_Tests
 		// Arrange
 		var handler = new MockHttpMessageHandler();
 		var client = new HttpClient(handler);
-		var loadUri = Substitute.For<Menu.LoadUri>();
+		var loadUri = Substitute.For<LoadUri>();
 
 		// Act
 		var result = await MenuF.LoadUrisAsync(client, new(), loadUri);
@@ -34,7 +34,7 @@ public class LoadUrisAsync_Tests
 		var u1 = Rnd.Str;
 		var u2 = Rnd.Str;
 		var uris = new[] { u0, u1, u2 }.ToList();
-		var loadUri = Substitute.For<Menu.LoadUri>();
+		var loadUri = Substitute.For<LoadUri>();
 
 		// Act
 		await MenuF.LoadUrisAsync(client, uris, loadUri);

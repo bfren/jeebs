@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
@@ -9,7 +9,7 @@ namespace Jeebs.Log_Tests;
 public class Message_Tests
 {
 	[Fact]
-	public void Msg_Runs_Information()
+	public void Msg_Runs_Debug()
 	{
 		// Arrange
 		var msg = Substitute.ForPartsOf<Msg>();
@@ -19,7 +19,7 @@ public class Message_Tests
 		log.Msg(msg);
 
 		// Assert
-		log.Received().Inf(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]

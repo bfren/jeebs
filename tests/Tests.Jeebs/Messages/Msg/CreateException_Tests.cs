@@ -4,7 +4,7 @@
 using Jeebs.Messages.Exceptions;
 using MaybeF;
 
-namespace Jeebs.Messages.MsgError_Tests;
+namespace Jeebs.Messages.Msg_Tests;
 
 public class CreateException_Tests
 {
@@ -15,7 +15,7 @@ public class CreateException_Tests
 		var msg = Substitute.For<IMsg>();
 
 		// Act
-		var result = MsgError.CreateException(msg);
+		var result = Msg.CreateException(msg);
 
 		// Assert
 		Assert.IsType<MsgException<IMsg>>(result);

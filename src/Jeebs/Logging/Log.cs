@@ -28,10 +28,10 @@ public abstract class Log : ILog
 
 			_ =>
 				(
-					LogLevel.Information,
-					typeof(T).ToString(),
+					Messages.Msg.DefaultLevel,
+					message?.ToString() ?? typeof(T).ToString(),
 					Array.Empty<object>()
-				)
+				),
 		};
 
 		// Switch different levels

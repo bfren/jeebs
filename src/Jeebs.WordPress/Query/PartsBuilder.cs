@@ -85,7 +85,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 			where TTable : ITable =>
 		QueryF.GetColumnFromExpression(table, selector).Switch(
 			some: column => Client.EscapeWithTable(column),
-			none: r => throw MsgError.CreateException(r)
+			none: r => throw Msg.CreateException(r)
 		);
 
 	#region Testing

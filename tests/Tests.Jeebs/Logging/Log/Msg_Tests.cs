@@ -9,7 +9,7 @@ namespace Jeebs.Logging.Log_Tests;
 public class Msg_Tests
 {
 	[Fact]
-	public void Reason_Calls_Inf_With_Type()
+	public void Reason_Calls_Dbg_With_Type()
 	{
 		// Arrange
 		var log = Substitute.ForPartsOf<Log>();
@@ -19,7 +19,7 @@ public class Msg_Tests
 		log.Msg(reason);
 
 		// Assert
-		log.Received().Inf(typeof(TestIMsg).ToString(), Array.Empty<object>());
+		log.Received().Dbg(reason.ToString(), Array.Empty<object>());
 	}
 
 	[Fact]

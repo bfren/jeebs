@@ -25,7 +25,7 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 	public virtual Lazy<ITableMap> Map =>
 		new(() =>
 			mapper.GetTableMapFor<TEntity>().Unwrap(r =>
-				throw MsgError.CreateException(r)
+				throw Msg.CreateException(r)
 			)
 		);
 

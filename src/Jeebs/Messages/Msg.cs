@@ -5,18 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Jeebs.Functions;
 using Jeebs.Logging;
+using Jeebs.Messages.Exceptions;
 
 namespace Jeebs.Messages;
 
 /// <summary>
 /// Framework message - compatible with <see cref="IMsg"/>
 /// </summary>
-public abstract record class Msg : IMsg
+public abstract record class Msg() : IMsg
 {
 	/// <summary>
 	/// Default LogLevel for messages
 	/// </summary>
-	public static readonly LogLevel DefaultLevel = LogLevel.Information;
+	public static readonly LogLevel DefaultLevel = LogLevel.Debug;
 
 	/// <inheritdoc/>
 	public virtual LogLevel Level { get; protected init; } = DefaultLevel;
@@ -45,6 +46,13 @@ public abstract record class Msg : IMsg
 		}
 	}
 
+	/// <summary>
+	/// Create with specified log level
+	/// </summary>
+	/// <param name="level">Log Level</param>
+	public Msg(LogLevel level) : this() =>
+		Level = level;
+
 	/// <inheritdoc/>
 	public string GetTypeName() =>
 		GetType().ToString();
@@ -61,4 +69,13 @@ public abstract record class Msg : IMsg
 			false =>
 				StringF.Format(FormatWithType, ArgsWithType)
 		};
+
+	/// <summary>
+	/// Create <see cref="MsgException{TMsg}"/>
+	/// </summary>
+	/// <typeparam name="TMsg">Message type</typeparam>
+	/// <param name="msg">Message</param>
+	public static MsgException<TMsg> CreateException<TMsg>(TMsg msg)
+		where TMsg : IMsg =>
+		new(msg);
 }

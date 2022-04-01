@@ -61,9 +61,14 @@ public sealed class Dispatcher : IDispatcher
 	{
 		// Make generic handler type
 		var handlerType = genericType.MakeGenericType(typeArguments);
-		Log.Vrb("Handler type: {Type}", handlerType);
 
 		// Get service
-		return Provider.GetService(handlerType);
+		var service = Provider.GetService(handlerType);
+		if (service is not null)
+		{
+			Log.Vrb("Handler: {Type}", service.GetType());
+		}
+
+		return service;
 	}
 }

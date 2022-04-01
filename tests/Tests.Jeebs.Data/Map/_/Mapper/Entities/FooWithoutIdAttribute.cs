@@ -15,7 +15,7 @@ public class FooWithoutIdAttribute : IWithId
 		init => FooId = value switch { FooId f => f, _ => new FooId() };
 	}
 
-	public FooId FooId { get; init; }
+	public FooId FooId { get; init; } = new();
 
 	public string Bar0 { get; init; } = string.Empty;
 
