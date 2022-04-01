@@ -27,7 +27,7 @@ public abstract class QueryFluent_Tests
 		db.UnitOfWork
 			.Returns(unitOfWork);
 
-		var log = Substitute.For<ILog<IQueryFluent<TestEntity, TestId>>>();
+		var log = Substitute.For<ILog>();
 		var repo = Substitute.For<IRepository<TestEntity, TestId>>();
 
 		var query = new QueryFluent<TestEntity, TestId>(db, log);
@@ -40,7 +40,7 @@ public abstract class QueryFluent_Tests
 	public sealed record class Vars(
 		IDbClient Client,
 		IDb Db,
-		ILog<IQueryFluent<TestEntity, TestId>> Log,
+		ILog Log,
 		IRepository<TestEntity, TestId> Repo,
 		IDbTransaction Transaction
 	);

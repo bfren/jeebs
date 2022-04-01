@@ -9,10 +9,10 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using StrongId;
 using Jeebs.Logging;
 using Jeebs.Messages;
 using Jeebs.Reflection;
+using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -37,7 +37,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	/// </summary>
 	private IDb Db { get; init; }
 
-	private ILog<IQueryFluent<TEntity, TId>> Log { get; init; }
+	private ILog Log { get; init; }
 
 	/// <summary>
 	/// List of added predicates
@@ -50,7 +50,7 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 	/// </summary>
 	/// <param name="db"></param>
 	/// <param name="log"></param>
-	internal QueryFluent(IDb db, ILog<IQueryFluent<TEntity, TId>> log) =>
+	internal QueryFluent(IDb db, ILog log) =>
 		(Db, Log) = (db, log);
 
 	private IQueryFluent<TEntity, TId> With(string column, Compare cmp, dynamic? value)
@@ -136,9 +136,6 @@ public sealed record class QueryFluent<TEntity, TId> : QueryFluent, IQueryFluent
 				Db.Client
 					.GetQuery<TEntity, TModel>(
 						Predicates.ToArray()
-					)
-					.Audit(
-						some: x => Log.Dbg("Fluent Query {Entity}: {Query} {@Parameters}", typeof(TEntity), x.query, x.param)
 					)
 					.BindAsync(
 						x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, transaction)
