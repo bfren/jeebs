@@ -5,7 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using StrongId;
-using static StrongId.LongId;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.Data.Query.QueryOptions_Tests;
 
@@ -55,7 +55,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var id = RndId<TId>();
+		var id = LongId<TId>();
 		var opt = options with
 		{
 			Id = id
@@ -74,8 +74,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = RndId<TId>();
-		var i1 = RndId<TId>();
+		var i0 = LongId<TId>();
+		var i1 = LongId<TId>();
 		var ids = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

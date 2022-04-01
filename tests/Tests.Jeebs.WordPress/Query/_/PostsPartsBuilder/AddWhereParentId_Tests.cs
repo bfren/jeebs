@@ -5,7 +5,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
-using static StrongId.LongId;
+using static StrongId.Testing.Generator;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
@@ -37,7 +37,7 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var parentId = RndId<WpPostId>();
+		var parentId = LongId<WpPostId>();
 
 		// Act
 		var result = builder.AddWhereParentId(v.Parts, parentId);
