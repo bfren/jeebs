@@ -48,43 +48,24 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <param name="message">Log message</param>
 	/// <param name="args">Log message arguments</param>
 	internal virtual void WriteToLog(string message, object[] args) =>
-		Log.Dbg(message, args);
+		Log.Vrb(message, args);
 
 	/// <summary>
-	/// Log the query for a function
+	/// Log an operation
 	/// </summary>
-	/// <typeparam name="T">Parameter type (an entity or model)</typeparam>
 	/// <param name="operation">Operation (method) name</param>
-	/// <param name="query">Query text</param>
-	/// <param name="parameters">[Optional] Query parameters</param>
-	protected void LogFunc<T>(string operation, string query, T? parameters)
-	{
-		// Always log operation, entity, and query
-		var message = "{Operation} {Entity}: {Query}";
-		var args = new object[]
+	protected void LogFunc(string operation) =>
+		WriteToLog("{Operation} {Entity}", new object[]
 		{
 			operation.Replace("Async", string.Empty),
-			typeof(TEntity).Name.Replace("Entity", string.Empty),
-			query
-		};
-
-		// Log with or without parameters
-		if (parameters is null)
-		{
-			WriteToLog(message, args);
-		}
-		else
-		{
-			message += " {@Parameters}";
-			WriteToLog(message, args.ExtendWith(parameters));
-		}
-	}
+			typeof(TEntity).Name.Replace("Entity", string.Empty)
+		});
 
 	#region Fluent Queries
 
 	/// <inheritdoc/>
 	public virtual IQueryFluent<TEntity, TId> StartFluentQuery() =>
-		new QueryFluent<TEntity, TId>(Db, Log.ForContext<IQueryFluent<TEntity, TId>>());
+		new QueryFluent<TEntity, TId>(Db, Log);
 
 	#endregion Fluent Queries
 
@@ -101,7 +82,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual Task<Maybe<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
 		Db.Client.GetCreateQuery<TEntity>()
 		.Audit(
-			some: x => LogFunc(nameof(CreateAsync), x, entity)
+			some: x => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text, transaction)
@@ -118,7 +99,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
 		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(RetrieveAsync), x, id)
+			some: x => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
 			x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text, transaction)
@@ -137,7 +118,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId =>
 		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(UpdateAsync), x, model)
+			some: x => LogFunc(nameof(UpdateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
@@ -156,7 +137,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId =>
 		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(DeleteAsync), x, model)
+			some: x => LogFunc(nameof(DeleteAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
