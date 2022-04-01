@@ -16,7 +16,7 @@
 		<PackageReference Include="System.Text.Json" Version="7.0.0-preview.2.*" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="StrongId" Version="8.0.1" />
+		<PackageReference Include="StrongId" Version="8.0.2" />
 	</ItemGroup>
 	<ItemGroup Label="Embed Version">
 		<EmbeddedResource Include="$(VersionPath)" />

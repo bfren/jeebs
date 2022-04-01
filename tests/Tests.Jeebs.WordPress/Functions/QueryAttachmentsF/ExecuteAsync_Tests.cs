@@ -6,6 +6,7 @@ using Jeebs.Collections;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.StrongIds;
 using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
 
@@ -29,7 +30,7 @@ public class ExecuteAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, v) = Setup();
-		var fileIds = ImmutableList.Create<WpPostId>(new() { Value = Rnd.Lng }, new() { Value = Rnd.Lng });
+		var fileIds = ImmutableList.Create(LongId<WpPostId>(), LongId<WpPostId>());
 
 		// Act
 		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));

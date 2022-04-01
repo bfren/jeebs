@@ -7,7 +7,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
 using static Jeebs.WordPress.Query.PostsMetaPartsBuilder_Tests.Setup;
-using static StrongId.LongId;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsMetaPartsBuilder_Tests;
 
@@ -35,7 +35,7 @@ public class AddWherePostId_Tests : QueryPartsBuilder_Tests<PostsMetaPartsBuilde
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var postId = RndId<WpPostId>();
+		var postId = LongId<WpPostId>();
 
 		// Act
 		var result = builder.AddWherePostId(v.Parts, postId, Substitute.For<IImmutableList<WpPostId>>());
@@ -49,8 +49,8 @@ public class AddWherePostId_Tests : QueryPartsBuilder_Tests<PostsMetaPartsBuilde
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = RndId<WpPostId>();
-		var id1 = RndId<WpPostId>();
+		var id0 = LongId<WpPostId>();
+		var id1 = LongId<WpPostId>();
 		var postIds = ImmutableList.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 

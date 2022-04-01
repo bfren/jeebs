@@ -5,6 +5,7 @@ using System.Data;
 using Jeebs.WordPress.Entities.StrongIds;
 using MaybeF.Extensions;
 using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
+using static StrongId.Testing.Generator;
 using Attachment = Jeebs.WordPress.Functions.QueryAttachmentsF.Attachment;
 
 namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
@@ -18,7 +19,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 		var empty = new List<Attachment>().AsEnumerable().Some();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(empty);
-		var fileId = new WpPostId { Value = Rnd.Lng };
+		var fileId = LongId<WpPostId>();
 
 		// Act
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
@@ -35,7 +36,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var (db, w, _) = Setup();
 		var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Some();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(list);
-		var fileId = new WpPostId { Value = Rnd.Lng };
+		var fileId = LongId<WpPostId>();
 
 		// Act
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
@@ -55,7 +56,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 		// Act
-		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, new() { Value = Rnd.Lng });
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, LongId<WpPostId>());
 
 		// Assert
 		var some = result.AssertSome();

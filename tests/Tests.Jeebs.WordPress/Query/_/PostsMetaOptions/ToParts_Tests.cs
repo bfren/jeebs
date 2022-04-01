@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Query.QueryOptions_Tests;
 using Jeebs.WordPress.Entities.StrongIds;
-using static StrongId.LongId;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsMetaOptions_Tests;
 
@@ -37,7 +37,7 @@ public class ToParts_Tests : ToParts_Tests<PostsMetaOptions, IQueryPostsMetaPart
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var postId = RndId<WpPostId>();
+		var postId = LongId<WpPostId>();
 		var opt = options with
 		{
 			PostId = postId
@@ -55,8 +55,8 @@ public class ToParts_Tests : ToParts_Tests<PostsMetaOptions, IQueryPostsMetaPart
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = RndId<WpPostId>();
-		var i1 = RndId<WpPostId>();
+		var i0 = LongId<WpPostId>();
+		var i1 = LongId<WpPostId>();
 		var postIds = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

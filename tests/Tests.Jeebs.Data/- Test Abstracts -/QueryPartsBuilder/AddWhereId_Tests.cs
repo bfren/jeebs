@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using StrongId;
-using static StrongId.LongId;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
@@ -32,7 +32,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test01()
 	{
 		// Arrange
-		var id = RndId<TId>();
+		var id = LongId<TId>();
 		var (builder, v) = Setup();
 
 		// Act
@@ -56,9 +56,9 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test02()
 	{
 		// Arrange
-		var i0 = RndId<TId>();
-		var i1 = RndId<TId>();
-		var i2 = RndId<TId>();
+		var i0 = LongId<TId>();
+		var i1 = LongId<TId>();
+		var i2 = LongId<TId>();
 		var ids = ImmutableList.Create(i1, i2);
 		var (builder, v) = Setup();
 
@@ -83,8 +83,8 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test03()
 	{
 		// Arrange
-		var i0 = RndId<TId>();
-		var i1 = RndId<TId>();
+		var i0 = LongId<TId>();
+		var i1 = LongId<TId>();
 		var ids = ImmutableList.Create(i0, i1);
 		var (builder, v) = Setup();
 

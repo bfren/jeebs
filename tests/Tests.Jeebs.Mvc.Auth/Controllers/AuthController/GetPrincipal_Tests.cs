@@ -6,6 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Logging;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests;
 
@@ -20,7 +21,7 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestController(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new() { Value = Rnd.Lng },
+			Id = LongId<AuthUserId>(),
 			EmailAddress = Rnd.Str,
 			FriendlyName = Rnd.Str,
 			IsSuper = true
@@ -61,11 +62,11 @@ public class GetPrincipal_Tests
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var controller = new AuthTestController(auth, log);
-		var role0 = new AuthRoleModel(new() { Value = Rnd.Lng }, Rnd.Str);
-		var role1 = new AuthRoleModel(new() { Value = Rnd.Lng }, Rnd.Str);
+		var role0 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
+		var role1 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var user = new AuthUserModel
 		{
-			Id = new() { Value = Rnd.Lng },
+			Id = LongId<AuthUserId>(),
 			EmailAddress = Rnd.Str,
 			FriendlyName = Rnd.Str,
 			IsSuper = true,
@@ -119,7 +120,7 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestControllerWithClaims(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new() { Value = Rnd.Lng },
+			Id = LongId<AuthUserId>(),
 			EmailAddress = Rnd.Str,
 			FriendlyName = Rnd.Str,
 			IsSuper = true
