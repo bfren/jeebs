@@ -8,8 +8,8 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Functions;
-using StrongId;
 using Jeebs.Messages;
+using StrongId;
 
 namespace Jeebs.Data.Query;
 

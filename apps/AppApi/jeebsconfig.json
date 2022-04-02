@@ -6,8 +6,8 @@
 		},
 		"logging": {
 			"minimum": "Debug",
-			"hooks": {
-				"console.serilog": {
+			"providers": {
+				"console": {
 					"enabled": true
 				},
 				"seq.server04": {

@@ -5,8 +5,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
-using StrongId;
 using Jeebs.Messages;
+using StrongId;
 
 namespace Jeebs.Data.Map.Functions;
 

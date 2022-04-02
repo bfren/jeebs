@@ -10,14 +10,14 @@ namespace Jeebs.Logging.Serilog;
 /// <summary>
 /// Configure logging to console
 /// </summary>
-public sealed class ConsoleLoggingHook : ILoggingHook
+public sealed class ConsoleLoggingProvider : ILoggingProvider
 {
 	/// <inheritdoc/>
 	public string Type =>
 		"console";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
+	public void Configure(ref LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
 	{
 		var config = jeebs.Services.GetServiceConfig(c => c.Console, name);
 

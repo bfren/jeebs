@@ -30,5 +30,6 @@
 		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.PostgreSql\Jeebs.Auth.Data.Clients.PostgreSql.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Data.Clients.PostgreSql\Jeebs.Data.Clients.PostgreSql.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Logging.Serilog.PostgreSql\Jeebs.Logging.Serilog.PostgreSql.csproj" />
 	</ItemGroup>
 </Project>

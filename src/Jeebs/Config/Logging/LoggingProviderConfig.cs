@@ -6,17 +6,17 @@ using Jeebs.Logging;
 namespace Jeebs.Config.Logging;
 
 /// <summary>
-/// Logging Hook
+/// Logging Provider
 /// </summary>
-public sealed record class LoggingHookConfig
+public sealed record class LoggingProviderConfig
 {
 	/// <summary>
-	/// Whether or not this hook is enabled
+	/// Whether or not this provider is enabled
 	/// </summary>
 	public bool Enabled { get; init; }
 
 	/// <summary>
-	/// This hook's minimum log level (overrides the default minimum level in main Logging section, if it's higher)
+	/// This provider's minimum log level (overrides the default minimum level in main Logging section, if it's higher)
 	/// </summary>
 	public LogLevel? Minimum { get; init; }
 }

@@ -18,7 +18,7 @@ var app = builder.Build();
 var log = app.Services.GetRequiredService<ILog<App>>();
 
 // Begin
-log.Dbg("= PostgreSQL Console Test =");
+log.Inf("= PostgreSQL Console Test =");
 
 // Get services
 var db = app.Services.GetRequiredService<Db>();
@@ -27,9 +27,21 @@ var authDb = app.Services.GetRequiredService<IAuthDb>();
 var auth = app.Services.GetRequiredService<IAuthDataProvider>();
 Console.WriteLine();
 
+// Create schema
+log.Dbg("== Creating schema ==");
+const string schema = "\"console\"";
+await db
+	.ExecuteAsync(
+		$"CREATE SCHEMA IF NOT EXISTS {schema};",
+		null,
+		CommandType.Text
+	)
+	.ConfigureAwait(false);
+Console.WriteLine();
+
 // Create table
 log.Dbg("== Creating table ==");
-const string table = "console.test";
+const string table = $"{schema}.\"test\"";
 await db
 	.ExecuteAsync(
 		$"CREATE TABLE IF NOT EXISTS {table} " +
@@ -241,3 +253,5 @@ await authDb.ExecuteAsync("TRUNCATE TABLE \"auth\".\"User\";", null, CommandType
 
 // Done
 log.Dbg("Done.");
+
+Console.Read();
