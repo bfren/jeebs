@@ -173,7 +173,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog.MySql
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBasic", "apps\AppBasic\AppBasic.csproj", "{41C9ED43-99B1-4706-A31E-8DEB890F62D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Logging.Serilog.PostgreSql", "src\Jeebs.Logging.Serilog.PostgreSql\Jeebs.Logging.Serilog.PostgreSql.csproj", "{84118EEC-4166-4F9E-96A8-FA70758B890A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog.PostgreSql", "src\Jeebs.Logging.Serilog.PostgreSql\Jeebs.Logging.Serilog.PostgreSql.csproj", "{84118EEC-4166-4F9E-96A8-FA70758B890A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
