@@ -18,7 +18,7 @@ public sealed class SlackLoggingProvider : ILoggingProvider
 		"slack";
 
 	/// <inheritdoc/>
-	public void Configure(ref LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
+	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
 	{
 		var config = jeebs.Services.GetServiceConfig(c => c.Slack, name);
 		_ = logger.WriteTo.Async(a => a.Slack(

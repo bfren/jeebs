@@ -17,7 +17,7 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 		"console";
 
 	/// <inheritdoc/>
-	public void Configure(ref LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
+	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
 	{
 		var config = jeebs.Services.GetServiceConfig(c => c.Console, name);
 

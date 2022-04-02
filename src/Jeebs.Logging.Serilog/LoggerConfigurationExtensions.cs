@@ -104,7 +104,7 @@ public static class LoggerConfigurationExtensions
 			// Configure provider
 			if (providers.TryGetValue(serviceType, out var provider))
 			{
-				provider.Configure(ref serilog, jeebs, serviceName, providerMinimum);
+				provider.Configure(serilog, jeebs, serviceName, providerMinimum);
 			}
 		}
 	}

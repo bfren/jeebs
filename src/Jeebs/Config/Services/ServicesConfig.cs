@@ -88,6 +88,11 @@ public sealed record class ServicesConfig
 	/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
 	public static (string type, string name) SplitDefinition(string definition)
 	{
+		if (string.IsNullOrWhiteSpace(definition))
+		{
+			throw new InvalidServiceDefinitionException(definition);
+		}
+
 		try
 		{
 			return definition.Split('.') switch
