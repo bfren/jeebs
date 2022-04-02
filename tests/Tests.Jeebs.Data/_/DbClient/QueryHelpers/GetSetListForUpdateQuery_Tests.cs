@@ -1,6 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Reflection;
 using Jeebs.Data.Map;
 
 namespace Jeebs.Data.DbClient_Tests;
@@ -12,7 +13,7 @@ public class GetSetListForUpdateQuery_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		var columns = new ColumnList();
+		var columns = new MappedColumnList();
 
 		// Act
 		var result = client.GetSetListForUpdateQueryTest(columns);
@@ -31,10 +32,12 @@ public class GetSetListForUpdateQuery_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var column = new Column(new TableName(Rnd.Str), name, alias);
+		var propertyInfo = Substitute.For<PropertyInfo>();
+		propertyInfo.Name.Returns(alias);
+		var column = new MappedColumn(new TableName(Rnd.Str), name, propertyInfo);
 		var expected = $"--{name}-- = ##{alias}##";
 
-		var columns = new ColumnList(new[] { column });
+		var columns = new MappedColumnList(new[] { column });
 
 		// Act
 		var result = client.GetSetListForUpdateQueryTest(columns);
