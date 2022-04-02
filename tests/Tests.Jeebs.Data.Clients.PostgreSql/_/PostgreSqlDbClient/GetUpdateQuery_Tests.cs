@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
@@ -18,11 +18,15 @@ public class GetUpdateQuery_Tests
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
-		var c0 = new Column(table, c0Name, c0Alias);
+		var c0PropertyInfo = Substitute.For<PropertyInfo>();
+		c0PropertyInfo.Name.Returns(c0Alias);
+		var c0 = new MappedColumn(table, c0Name, c0PropertyInfo);
 
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
-		var c1 = new Column(table, c1Name, c1Alias);
+		var c1PropertyInfo = Substitute.For<PropertyInfo>();
+		c1PropertyInfo.Name.Returns(c1Alias);
+		var c1 = new MappedColumn(table, c1Name, c1PropertyInfo);
 
 		var c2Name = Rnd.Str;
 		var c2Alias = Rnd.Str;
@@ -30,7 +34,7 @@ public class GetUpdateQuery_Tests
 		c2Property.Name.Returns(c2Alias);
 		var c2 = new MappedColumn(table, c2Name, c2Property);
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new MappedColumnList(new[] { c0, c1 });
 		var client = new PostgreSqlDbClient();
 
 		var id = Rnd.Lng;
@@ -57,11 +61,15 @@ public class GetUpdateQuery_Tests
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
-		var c0 = new Column(table, c0Name, c0Alias);
+		var c0PropertyInfo = Substitute.For<PropertyInfo>();
+		c0PropertyInfo.Name.Returns(c0Alias);
+		var c0 = new MappedColumn(table, c0Name, c0PropertyInfo);
 
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
-		var c1 = new Column(table, c1Name, c1Alias);
+		var c1PropertyInfo = Substitute.For<PropertyInfo>();
+		c1PropertyInfo.Name.Returns(c1Alias);
+		var c1 = new MappedColumn(table, c1Name, c1PropertyInfo);
 
 		var c2Name = Rnd.Str;
 		var c2Alias = Rnd.Str;
@@ -75,7 +83,7 @@ public class GetUpdateQuery_Tests
 		c3Property.Name.Returns(c3Alias);
 		var c3 = new MappedColumn(table, c3Name, c3Property);
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new MappedColumnList(new[] { c0, c1 });
 		var client = new PostgreSqlDbClient();
 
 		var id = Rnd.Lng;

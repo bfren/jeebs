@@ -46,7 +46,7 @@ public partial class PostgreSqlDbClient : DbClient
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
 		ITableName table,
-		IColumnList columns,
+		IMappedColumnList columns,
 		IColumn idColumn,
 		object id
 	) =>
@@ -55,7 +55,7 @@ public partial class PostgreSqlDbClient : DbClient
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
 		ITableName table,
-		IColumnList columns,
+		IMappedColumnList columns,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn

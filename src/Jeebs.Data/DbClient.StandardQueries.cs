@@ -52,28 +52,23 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
-		(
-			from map in Mapper.GetTableMapFor<TEntity>()
-			from columns in Extract<TModel>.From(map.Table)
-			select (map, columns)
-		)
-		.Map(
+		Mapper.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
 			{
 				false =>
-					GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id),
+					GetUpdateQuery(x.Name, x.Columns, x.IdColumn, id),
 
 				true =>
-					GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id, x.map.VersionColumn),
+					GetUpdateQuery(x.Name, x.Columns, x.IdColumn, id, x.VersionColumn),
 
 			},
 			e => new M.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn)"/>
+	/// <inheritdoc cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn)"/>
 	protected abstract string GetUpdateQuery(
 		ITableName table,
-		IColumnList columns,
+		IMappedColumnList columns,
 		IColumn idColumn,
 		object id
 	);
@@ -86,7 +81,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="versionColumn">Version column for predicate</param>
 	protected abstract string GetUpdateQuery(
 		ITableName table,
-		IColumnList columns,
+		IMappedColumnList columns,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn
@@ -135,10 +130,10 @@ public abstract partial class DbClient : IDbClient
 	internal string GetRetrieveQueryTest(ITableName table, IColumnList columns, IColumn idColumn, long id) =>
 		GetRetrieveQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(ITableName table, IColumnList columns, IColumn idColumn, long id) =>
+	internal string GetUpdateQueryTest(ITableName table, IMappedColumnList columns, IColumn idColumn, long id) =>
 		GetUpdateQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(ITableName table, IColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
+	internal string GetUpdateQueryTest(ITableName table, IMappedColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
 	internal string GetDeleteQueryTest(ITableName table, IColumn idColumn, long id) =>
