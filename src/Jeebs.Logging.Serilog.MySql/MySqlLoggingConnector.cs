@@ -4,20 +4,19 @@
 using Jeebs.Config;
 using MySqlConnector.Logging;
 using Serilog;
-using Serilog.Events;
 
 namespace Jeebs.Logging.Serilog.MySql;
 
 /// <summary>
 /// Connects MySqlConnector log to Serilog
 /// </summary>
-public sealed class MySqlLoggingHook : ILoggingHook
+public sealed class MySqlLoggingConnector : ILoggingConnector
 {
 	/// <inheritdoc/>
 	public string Type =>
 		"mysql";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
-		MySqlConnectorLogManager.Provider = new MySqlLoggerProvider(minimum);
+	public void Enable(LoggerConfiguration serilog, JeebsConfig jeebs) =>
+		MySqlConnectorLogManager.Provider = new MySqlLoggerProvider();
 }
