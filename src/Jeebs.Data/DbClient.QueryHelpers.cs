@@ -47,7 +47,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetSetListForUpdateQuery(IMappedColumnList columns)
@@ -81,7 +81,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to where string for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>
+	/// Add version to where string for <see cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn?)"/>
 	/// and <see cref="GetDeleteQuery(ITableName, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>

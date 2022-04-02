@@ -12,6 +12,10 @@ using Serilog.Parsing;
 
 namespace Jeebs.Logging.Serilog.PostgreSql;
 
+/// <summary>
+/// Logger implementation for Npgsql
+/// See https://github.com/mysql-net/MySqlConnector/blob/master/src/MySqlConnector.Logging.Serilog/SerilogLoggerProvider.cs
+/// </summary>
 public sealed class PostgreSqlLogger : NpgsqlLogger
 {
 	/// <summary>
