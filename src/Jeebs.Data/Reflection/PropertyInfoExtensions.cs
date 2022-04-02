@@ -25,7 +25,7 @@ public static class PropertyInfoExtensions
 		}
 
 		var attr = from a in @this.GetCustomAttributes()
-				   where a is IdAttribute or IgnoreAttribute or ComputedAttribute or ReadonlyAttribute
+				   where a is IdAttribute or VersionAttribute or IgnoreAttribute or ComputedAttribute or ReadonlyAttribute
 				   select a;
 
 		return attr.Any();
