@@ -92,6 +92,9 @@ public sealed record class ServicesConfig
 		{
 			return definition.Split('.') switch
 			{
+				var x when x.Length == 1 =>
+					(x[0], string.Empty),
+
 				var x when x.Length == 2 =>
 					(x[0], x[1]),
 

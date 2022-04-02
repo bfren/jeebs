@@ -90,11 +90,11 @@
 						"minimum": {
 							"$ref": "#/definitions/logging/level"
 						},
-						"hooks": {
+						"providers": {
 							"type": "object",
-							"description": "[Optional] Logging hooks - name should be in format service_type.service_name (e.g. seq.dev-server)",
+							"description": "[Optional] Logging providers - name should be in format service_type.service_name (e.g. seq.dev-server)",
 							"additionalProperties": {
-								"$ref": "#/definitions/logging/hook"
+								"$ref": "#/definitions/logging/provider"
 							}
 						}
 					}
@@ -288,15 +288,15 @@
 				"description": "Microsoft compatible logging levels",
 				"enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
 			},
-			"hook": {
+			"provider": {
 				"type": "object",
-				"default": "Logging hook",
+				"default": "Logging provider",
 				"required": [ "enabled" ],
 				"additionalProperties": false,
 				"properties": {
 					"enabled": {
 						"type": "boolean",
-						"description": "Whether or not this hook is enabled"
+						"description": "Whether or not this provider is enabled"
 					},
 					"minimum": {
 						"$ref": "#/definitions/logging/level"

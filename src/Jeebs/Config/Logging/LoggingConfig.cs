@@ -22,7 +22,7 @@ public sealed record class LoggingConfig
 	public LogLevel Minimum { get; init; }
 
 	/// <summary>
-	/// List of hooks - dictionary key is a service name
+	/// List of providers - dictionary key is a service name
 	/// </summary>
-	public Dictionary<string, LoggingHookConfig> Hooks { get; init; } = new();
+	public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();
 }

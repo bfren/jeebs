@@ -10,14 +10,14 @@ namespace Jeebs.Logging.Serilog;
 /// <summary>
 /// Configure logging to Seq
 /// </summary>
-public sealed class SeqLoggingHook : ILoggingHook
+public sealed class SeqLoggingProvider : ILoggingProvider
 {
 	/// <inheritdoc/>
 	public string Type =>
 		"seq";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
+	public void Configure(ref LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
 	{
 		var config = jeebs.Services.GetServiceConfig(c => c.Seq, name);
 		_ = logger.WriteTo.Async(a => a.Seq(
