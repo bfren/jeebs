@@ -12,21 +12,17 @@
         }
       }
     },
-    "logging": {
-      "minimum": "Debug",
-      "hooks": {
-        "console.serilog": {
-          "enabled": true
-        },
-        "mysql.connector": {
-          "enabled": true,
-          "minimum": "Information"
-        },
-        "seq.server04": {
-          "enabled": true
-        }
-      }
-    },
+		"logging": {
+			"minimum": "Debug",
+			"providers": {
+				"console": {
+					"enabled": true
+				},
+				"seq.server04": {
+					"enabled": true
+				}
+			}
+		},
     "services": {
       "seq": {
         "server04": {

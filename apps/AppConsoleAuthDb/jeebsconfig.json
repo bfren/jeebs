@@ -17,11 +17,8 @@
     },
     "logging": {
       "minimum": "Verbose",
-      "hooks": {
-        "console.serilog": {
-          "enabled": true
-        },
-        "mysql.serilog": {
+      "providers": {
+        "console": {
           "enabled": true
         },
         "seq.server04": {

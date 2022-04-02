@@ -14,12 +14,13 @@
     },
     "logging": {
       "minimum": "Verbose",
-      "hooks": {
-        "console.serilog": {
+      "providers": {
+        "console": {
           "enabled": true
         },
         "seq.server04": {
-          "enabled": true
+					"enabled": true,
+					"minimum": "Information"
         }
       }
     },

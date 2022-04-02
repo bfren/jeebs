@@ -4,17 +4,17 @@
       "name": "WorkerService",
       "suite": "Jeebs"
     },
-    "logging": {
-      "minimum": "Verbose",
-      "hooks": {
-        "console.serilog": {
-          "enabled": true
-        },
-        "seq.server04": {
-          "enabled": true
-        }
-      }
-    },
+		"logging": {
+			"minimum": "Verbose",
+			"providers": {
+				"console": {
+					"enabled": true
+				},
+				"seq.server04": {
+					"enabled": true
+				}
+			}
+		},
     "services": {
       "seq": {
         "server04": {
