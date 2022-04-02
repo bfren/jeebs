@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.TypeHandlers.Enumerated_Tests;
 
@@ -27,8 +25,8 @@ public class SetValue_Tests
 	{
 		public EnumeratedTest(string name) : base(name) { }
 
-		public readonly static EnumeratedTest Foo = new(nameof(Foo));
+		public static readonly EnumeratedTest Foo = new(nameof(Foo));
 
-		public readonly static EnumeratedTest Bar = new(nameof(Bar));
+		public static readonly EnumeratedTest Bar = new(nameof(Bar));
 	}
 }

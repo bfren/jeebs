@@ -1,12 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Config\Jeebs.Config.csproj" />
 		<ProjectReference Include="..\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
-		<ProjectReference Include="..\Jeebs.Data.Abstractions\Jeebs.Data.Abstractions.csproj" />
-		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="StrongId.Dapper" Version="8.0.2" />
 	</ItemGroup>
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
@@ -19,7 +17,7 @@
 			<_Parameter1>Tests.$(AssemblyName).Clients.SqlServer</_Parameter1>
 		</AssemblyAttribute>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>Tests.Jeebs.WordPress.Data</_Parameter1>
+			<_Parameter1>Tests.Jeebs.WordPress</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
 </Project>

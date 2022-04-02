@@ -1,7 +1,7 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
+using Jeebs.Logging;
 using Microsoft.Extensions.Hosting;
 
 namespace ServiceApp;
@@ -14,18 +14,16 @@ public class AppService : IHostedService
 {
 	private readonly ILog log;
 
-	public AppService(ILog log)
-	{
+	public AppService(ILog log) =>
 		this.log = log;
-	}
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		log.Debug("Hello, world!");
+		log.Dbg("Hello, world!");
 
 		if (Console.ReadLine() is string response)
 		{
-			log.Debug("Response: {Response}", response);
+			log.Dbg("Response: {Response}", response);
 		}
 
 		Console.Read();
@@ -33,8 +31,6 @@ public class AppService : IHostedService
 		return Task.Delay(2000, cancellationToken);
 	}
 
-	public Task StopAsync(CancellationToken cancellationToken)
-	{
-		return Task.CompletedTask;
-	}
+	public Task StopAsync(CancellationToken cancellationToken) =>
+		Task.CompletedTask;
 }

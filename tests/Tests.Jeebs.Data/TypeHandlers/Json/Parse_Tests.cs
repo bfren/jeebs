@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text.Json;
-using Xunit;
 
 namespace Jeebs.Data.TypeHandlers.Json_Tests;
 
@@ -29,7 +28,7 @@ public class Parse_Tests
 	{
 		// Arrange
 		var handler = new JsonTypeHandler<Test>();
-		var input = F.Rnd.Str;
+		var input = Rnd.Str;
 
 		// Act
 		var action = void () => handler.Parse(input);
@@ -43,8 +42,8 @@ public class Parse_Tests
 	{
 		// Arrange
 		var handler = new JsonTypeHandler<Test>();
-		var v0 = F.Rnd.Str;
-		var v1 = F.Rnd.Int;
+		var v0 = Rnd.Str;
+		var v1 = Rnd.Int;
 		var input = $"{{\"foo\":\"{v0}\",\"bar\":{v1},\"ignore\":\"this\"}}";
 		var expected = new Test { Foo = v0, Bar = v1 };
 

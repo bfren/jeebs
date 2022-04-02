@@ -42,8 +42,8 @@ public sealed class AlertsTagHelper : TagHelper
 			{
 				var alertTag = new TagBuilder("div");
 				alertTag.MergeAttribute("class", $"jeebs-alert jeebs-alert-{alert.Type}");
-				alertTag.InnerHtml.Append(alert.Text);
-				output.Content.AppendHtml(alertTag);
+				_ = alertTag.InnerHtml.Append(alert.Text);
+				_ = output.Content.AppendHtml(alertTag);
 			}
 		}
 		else

@@ -1,12 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Xunit;
-using static F.CryptoF;
-using static F.Rnd.StringF.M;
+using static Jeebs.Cryptography.Functions.CryptoF.M;
 
-namespace F.CryptoF_Tests;
+namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
 public class GeneratePassphrase_Tests
 {
@@ -14,45 +11,48 @@ public class GeneratePassphrase_Tests
 	[InlineData(-1)]
 	[InlineData(0)]
 	[InlineData(1)]
-	public void NumberOfWords_Less_Than_Two_Returns_None_With_NumberOfWordsMustBeAtLeastTwoMsg(int input)
+	[InlineData(2)]
+	[InlineData(3)]
+	[InlineData(4)]
+	public void NumberOfWords_Less_Than_Five_Returns_None_With_CryptographicallySecurePassphrasesMustContainAtLeastFiveWordsMsg(int input)
 	{
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase(input);
+		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NumberOfWordsMustBeAtLeastTwoMsg>(none);
+		var none = result.AssertNone().AssertType<CryptographicallySecurePassphrasesMustContainAtLeastFiveWordsMsg>();
+		Assert.Equal(input, none.Value);
+	}
+
+	[Fact]
+	public void Uses_Eight_Words()
+	{
+		// Arrange
+
+		// Act
+		var result = CryptoF.GeneratePassphrase();
+
+		// Assert
+		var some = result.AssertSome().Split('-');
+		Assert.Equal(8, some.Length);
 	}
 
 	[Theory]
-	[InlineData(2)]
-	[InlineData(4)]
-	[InlineData(8)]
+	[InlineData(5)]
+	[InlineData(9)]
+	[InlineData(13)]
 	public void Uses_Correct_Number_Of_Words(int input)
 	{
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase(input);
+		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
 		var some = result.AssertSome().Split('-');
 		Assert.Equal(input, some.Length);
-	}
-
-	[Fact]
-	public void Uses_Three_Words()
-	{
-		// Arrange
-
-		// Act
-		var result = GeneratePassphrase();
-
-		// Assert
-		var some = result.AssertSome().Split('-');
-		Assert.Equal(3, some.Length);
 	}
 
 	[Fact]
@@ -61,7 +61,7 @@ public class GeneratePassphrase_Tests
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase();
+		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
 		var some = result.AssertSome();
@@ -74,7 +74,7 @@ public class GeneratePassphrase_Tests
 		// Arrange
 
 		// Act
-		var result = GeneratePassphrase();
+		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
 		var some = result.AssertSome();

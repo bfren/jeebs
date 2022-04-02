@@ -1,23 +1,24 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth;
-using Jeebs.Linq;
+using Jeebs.Logging;
+using Jeebs.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-using static F.OptionF;
 
 namespace Jeebs.Mvc.Auth.Jwt;
 
 /// <summary>
 /// JWT Authorisation Handler - extracts and validates JWT from the authorisation header
 /// </summary>
-public class JwtHandler : AuthorizationHandler<JwtRequirement>
+public sealed class JwtHandler : AuthorizationHandler<JwtRequirement>
 {
 	private ILog Log { get; init; }
 
@@ -31,22 +32,22 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// <summary>
 	/// Handle Requirement
 	/// </summary>
-	/// <param name="handlerContext">AuthorizationHandlerContext</param>
+	/// <param name="context">AuthorizationHandlerContext</param>
 	/// <param name="requirement">JwtRequirement</param>
-	protected override Task HandleRequirementAsync(AuthorizationHandlerContext handlerContext, JwtRequirement requirement)
+	protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, JwtRequirement requirement)
 	{
-		if (handlerContext.Resource is AuthorizationFilterContext filterContext)
+		if (context.Resource is AuthorizationFilterContext filterContext)
 		{
 			GetAuthorisedPrincipal(filterContext).Switch(
 				some: principal =>
 				{
 					filterContext.HttpContext.User = principal;
-					handlerContext.Succeed(requirement);
+					context.Succeed(requirement);
 				},
 				none: reason =>
 				{
-					Log.Message(reason);
-					handlerContext.Fail();
+					Log.Msg(reason);
+					context.Fail();
 				}
 			);
 		}
@@ -58,7 +59,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// Attempt to get the authorised ClaimsPrincipal
 	/// </summary>
 	/// <param name="ctx">AuthorizationFilterContext</param>
-	private static Option<ClaimsPrincipal> GetAuthorisedPrincipal(AuthorizationFilterContext ctx) =>
+	private static Maybe<ClaimsPrincipal> GetAuthorisedPrincipal(AuthorizationFilterContext ctx) =>
 		from authorisationHeader in
 			GetAuthorisationHeader(ctx.HttpContext.Request.Headers)
 		from token in
@@ -71,28 +72,28 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// Retrieve the authorisation header (if it exists)
 	/// </summary>
 	/// <param name="headers">Dictionary of header values</param>
-	internal static Option<string> GetAuthorisationHeader(IDictionary<string, StringValues> headers) =>
+	internal static Maybe<string> GetAuthorisationHeader(IDictionary<string, StringValues> headers) =>
 		headers.TryGetValue("Authorization", out var authorisationHeader) switch
 		{
 			true when !string.IsNullOrEmpty(authorisationHeader) =>
 				authorisationHeader.ToString(),
 
 			_ =>
-				None<string, M.MissingAuthorisationHeaderMsg>()
+				F.None<string, M.MissingAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>
 	/// Extract the token from the authorisation header
 	/// </summary>
 	/// <param name="authorisationHeader">Authorisation header</param>
-	internal static Option<string> GetToken(string authorisationHeader) =>
-		authorisationHeader.StartsWith("Bearer ") switch
+	internal static Maybe<string> GetToken(string authorisationHeader) =>
+		authorisationHeader.StartsWith("Bearer ", StringComparison.InvariantCulture) switch
 		{
 			true =>
 				authorisationHeader["Bearer ".Length..].Trim(),
 
 			_ =>
-				None<string, M.InvalidAuthorisationHeaderMsg>()
+				F.None<string, M.InvalidAuthorisationHeaderMsg>()
 		};
 
 	/// <summary>
@@ -100,7 +101,7 @@ public class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// </summary>
 	/// <param name="auth">IJwtAuthProvider</param>
 	/// <param name="token">Token value</param>
-	internal static Option<ClaimsPrincipal> GetPrincipal(IAuthJwtProvider auth, string token) =>
+	internal static Maybe<ClaimsPrincipal> GetPrincipal(IAuthJwtProvider auth, string token) =>
 		auth.ValidateToken(token);
 
 	/// <summary>Messages</summary>

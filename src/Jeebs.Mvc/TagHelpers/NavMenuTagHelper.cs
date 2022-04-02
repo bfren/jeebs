@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Encodings.Web;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
@@ -85,14 +86,14 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 		}
 
 		// Setup objects
-		var currentController = ViewContext.ControllerName().ToLower();
-		var currentAction = ViewContext.ActionName().ToLower();
+		var currentController = ViewContext.ControllerName().ToLower(CultureInfo.InvariantCulture);
+		var currentAction = ViewContext.ActionName().ToLower(CultureInfo.InvariantCulture);
 		var urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
 
 		// Build the menu
 		BuildMenu(
 			Menu.Items,
-			mi => mi.Controller.ToLower() == currentController,
+			mi => mi.Controller.ToLower(CultureInfo.InvariantCulture) == currentController,
 			mi => mi.Controller,
 			el => output.Content.AppendHtml(el)
 		);
@@ -122,7 +123,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 				link.AddCssClass(LinkClass);
 
 				// Add GUID
-				link.MergeAttribute("id", $"link-{menuItem.Guid}");
+				link.MergeAttribute("id", $"link-{menuItem.Id}");
 
 				// Check whether or not this is an active link / section
 				if (isActive(menuItem))
@@ -141,10 +142,10 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 				link.Attributes.Add("href", urlHelper.Action(urlActionContext));
 
 				// Add link text - if not set use getText() function
-				link.InnerHtml.Append(menuItem.Text ?? getText(menuItem));
+				_ = link.InnerHtml.Append(menuItem.Text ?? getText(menuItem));
 
 				// Add the link to the list item
-				item.InnerHtml.AppendHtml(link);
+				_ = item.InnerHtml.AppendHtml(link);
 
 				// Check for child menu
 				if (IncludeChildren && menuItem.Children.Count > 0)
@@ -156,13 +157,13 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 					// Build child menu
 					BuildMenu(
 						menuItem.Children,
-						mi => mi.Action.ToLower() == currentAction,
+						mi => mi.Action.ToLower(CultureInfo.InvariantCulture) == currentAction,
 						mi => mi.Action,
 						el => childMenu.InnerHtml.AppendHtml(el)
 					);
 
 					// Add child menu to item
-					item.InnerHtml.AppendHtml(childMenu);
+					_ = item.InnerHtml.AppendHtml(childMenu);
 				}
 
 				// Append item

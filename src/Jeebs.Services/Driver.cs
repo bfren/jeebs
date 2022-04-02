@@ -1,7 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config;
+using Jeebs.Logging;
 
 namespace Jeebs.Services;
 
@@ -10,27 +11,27 @@ namespace Jeebs.Services;
 /// </summary>
 /// <typeparam name="TConfig">Service configuration type</typeparam>
 public abstract class Driver<TConfig> : IDriver<TConfig>
-	where TConfig : IServiceConfig
+	where TConfig : IServiceConfig, new()
 {
 	/// <summary>
 	/// Driver name
 	/// </summary>
-	protected readonly string Name;
+	protected string Name { get; private init; }
 
 	/// <summary>
 	/// ILog
 	/// </summary>
-	protected readonly ILog Log;
+	protected ILog Log { get; private init; }
 
 	/// <summary>
 	/// Jeebs configuration
 	/// </summary>
-	protected readonly JeebsConfig JeebsConfig;
+	protected JeebsConfig JeebsConfig { get; private init; }
 
 	/// <summary>
 	/// Service configuration
 	/// </summary>
-	protected readonly TConfig ServiceConfig;
+	protected TConfig ServiceConfig { get; private init; }
 
 	/// <summary>
 	/// Create object

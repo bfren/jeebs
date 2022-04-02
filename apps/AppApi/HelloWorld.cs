@@ -1,16 +1,15 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
 using Jeebs.Cqrs;
-using static F.OptionF;
+using MaybeF;
 
 namespace AppApi;
 
-public class SayHelloHandler : IQueryHandler<SayHelloQuery, string>
+public class SayHelloHandler : QueryHandler<SayHelloQuery, string>
 {
-	public Task<Option<string>> HandleAsync(SayHelloQuery query, CancellationToken cancellationToken) =>
-		Some($"Hello, {query.Name}!").AsTask;
+	public override Task<Maybe<string>> HandleAsync(SayHelloQuery query) =>
+		F.Some($"Hello, {query.Name}!").AsTask;
 }
 
-public record struct SayHelloQuery(string Name);
+public record struct SayHelloQuery(string Name) : IQuery<string>;

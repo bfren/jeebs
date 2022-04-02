@@ -1,10 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using System.Threading.Tasks;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.Db_Tests;
 
@@ -15,12 +12,12 @@ public class ExecuteAsync_Tests
 	{
 		// Arrange
 		var (_, _, client, connection, db) = Db_Setup.Get();
-		var query = F.Rnd.Str;
-		var parameters = F.Rnd.Guid.ToString();
+		var query = Rnd.Str;
+		var parameters = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
 
 		// Act
-		_ = await db.ExecuteAsync(query, parameters, type).ConfigureAwait(false);
+		await db.ExecuteAsync(query, parameters, type);
 
 		// Assert
 		client.Received().Connect(Arg.Any<string>());
@@ -32,17 +29,17 @@ public class ExecuteAsync_Tests
 	{
 		// Arrange
 		var (_, log, _, _, db) = Db_Setup.Get();
-		var query = F.Rnd.Str;
-		var parameters = F.Rnd.Guid.ToString();
+		var query = Rnd.Str;
+		var parameters = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await db.ExecuteAsync(query, parameters, type).ConfigureAwait(false);
-		_ = await db.ExecuteAsync(query, parameters, type, transaction).ConfigureAwait(false);
+		await db.ExecuteAsync(query, parameters, type);
+		await db.ExecuteAsync(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(bool), query, parameters);
 	}
 
 	[Fact]
@@ -50,16 +47,16 @@ public class ExecuteAsync_Tests
 	{
 		// Arrange
 		var (_, log, _, _, db) = Db_Setup.Get();
-		var query = F.Rnd.Str;
-		var parameters = F.Rnd.Guid.ToString();
+		var query = Rnd.Str;
+		var parameters = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await db.ExecuteAsync<int>(query, parameters, type).ConfigureAwait(false);
-		_ = await db.ExecuteAsync<int>(query, parameters, type, transaction).ConfigureAwait(false);
+		await db.ExecuteAsync<int>(query, parameters, type);
+		await db.ExecuteAsync<int>(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Verbose("{Type}: {Query} Parameters: {@Parameters}", type, query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(int), query, parameters);
 	}
 }

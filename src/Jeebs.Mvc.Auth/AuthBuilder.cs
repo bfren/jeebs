@@ -1,10 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Entities;
-using Jeebs.Config;
+using Jeebs.Config.Web.Auth;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Data;
 using Jeebs.Mvc.Auth.Exceptions;
 using Jeebs.Mvc.Auth.Jwt;
 using Microsoft.AspNetCore.Authentication;
@@ -19,7 +20,7 @@ namespace Jeebs.Mvc.Auth;
 /// <summary>
 /// Fluently configure authentication and authorisation
 /// </summary>
-public class AuthBuilder
+public sealed class AuthBuilder
 {
 	private readonly IServiceCollection services;
 
@@ -27,7 +28,7 @@ public class AuthBuilder
 
 	private readonly AuthConfig config;
 
-	private bool providerAdded;
+	private bool dataAdded;
 
 	/// <summary>
 	/// Inject dependencies
@@ -45,17 +46,17 @@ public class AuthBuilder
 				CookieAuthenticationDefaults.AuthenticationScheme,
 
 			_ =>
-				throw new UnsupportedAuthenticationSchemeException(config.Scheme?.ToString() ?? "unknown")
+				throw new UnsupportedAuthSchemeException(config.Scheme?.ToString() ?? "unknown")
 		});
 
 		// Add cookie info
 		if (config.Scheme == AuthScheme.Cookies)
 		{
-			builder.AddCookie(opt =>
-			{
-				opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
-				opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
-			});
+			_ = builder.AddCookie(opt =>
+			  {
+				  opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
+				  opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
+			  });
 		}
 	}
 
@@ -63,52 +64,29 @@ public class AuthBuilder
 	/// Enable custom data authentication and authorisation
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
-	public AuthBuilder WithData<TDbClient>()
+	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>
+	/// <exception cref="AuthDataAlreadyAddedException"></exception>
+	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)
 		where TDbClient : class, IAuthDbClient
 	{
-		CheckProvider();
-
-		// Add AuthDb
-		services.AddSingleton<AuthDb>();
-		services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
-		services.AddSingleton<IAuthDbClient, TDbClient>();
-
-		services.AddScoped<AuthDbQuery>();
-		services.AddScoped<IAuthDbQuery>(s => s.GetRequiredService<AuthDbQuery>());
-
-		// Add AuthFunc
-		services.AddScoped<AuthUserRepository>();
-		services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
-		services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
-
-		services.AddScoped<AuthRoleRepository>();
-		services.AddScoped<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
-		services.AddScoped<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
-
-		services.AddScoped<AuthUserRoleRepository>();
-		services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
-		services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
-
-		// Add AuthProvider
-		services.AddScoped<AuthDataProvider>();
-		services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
-
-		return this;
-	}
-
-	private void CheckProvider()
-	{
-		if (providerAdded)
+		// Only allow WithData to be called once
+		if (dataAdded)
 		{
-			throw new AuthProviderAlreadyAddedException();
+			throw new AuthDataAlreadyAddedException();
 		}
+		dataAdded = true;
 
-		providerAdded = true;
+		// Add services
+		_ = services.AddAuthData<TDbClient>(useAuthDbClientAsMain);
+
+		// Return builder
+		return this;
 	}
 
 	/// <summary>
 	/// Enable JSON Web Token authentication and authorisation
 	/// </summary>
+	/// <exception cref="InvalidJwtConfigurationException"></exception>
 	public AuthBuilder WithJwt()
 	{
 		// Ensure JWT configuration is valid
@@ -118,24 +96,22 @@ public class AuthBuilder
 		}
 
 		// Add services
-		services.AddScoped<IAuthJwtProvider, AuthJwtProvider>();
-		services.AddSingleton<IAuthorizationHandler, JwtHandler>();
+		_ = services.AddScoped<IAuthJwtProvider, AuthJwtProvider>();
+		_ = services.AddSingleton<IAuthorizationHandler, JwtHandler>();
 
 		// Add authorisation policy
-		services.AddAuthorization(opt =>
-		{
-			opt.AddPolicy("Token", policy =>
-			{
-				policy
+		_ = services.AddAuthorization(opt =>
+		  {
+			  opt.AddPolicy("Token", policy =>
+				_ = policy
 					.AddRequirements(new JwtRequirement())
-					.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-			});
+					.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
 
-			opt.InvokeHandlersAfterFailure = false;
-		});
+			  opt.InvokeHandlersAfterFailure = false;
+		  });
 
 		// Add bearer token
-		builder.AddJwtBearer();
+		_ = builder.AddJwtBearer();
 
 		// Return builder
 		return this;

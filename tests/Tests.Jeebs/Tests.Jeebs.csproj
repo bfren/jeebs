@@ -3,7 +3,16 @@
 		<RootNamespace>Jeebs</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0-preview.2.*" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
+	</ItemGroup>
+	<PropertyGroup>
+		<VersionFile>Version</VersionFile>
+		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="$(VersionPath)" />
 	</ItemGroup>
 </Project>

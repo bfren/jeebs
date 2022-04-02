@@ -1,11 +1,22 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.IO;
 using Azure.Identity;
 using Jeebs.Config;
+using Jeebs.Config.App;
+using Jeebs.Config.AzureKeyVault;
+using Jeebs.Config.Db;
+using Jeebs.Config.Logging;
+using Jeebs.Config.Services;
+using Jeebs.Config.Web;
+using Jeebs.Config.Web.Auth;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Config.Web.Redirections;
+using Jeebs.Config.Web.Verification;
 using Jeebs.Logging;
+using Jeebs.Logging.Serilog;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,30 +27,8 @@ namespace Jeebs.Apps;
 /// <summary>
 /// Configure and run an application using <seealso cref="IHost"/>
 /// </summary>
-public abstract class App
+public class App
 {
-	/// <summary>
-	/// Build <see cref="IHost"/> using specified arguments
-	/// </summary>
-	/// <param name="args">Commandline arguments</param>
-	public virtual IHost BuildHost(string[] args) =>
-		Host.CreateDefaultBuilder(
-			args
-		)
-		.ConfigureHostConfiguration(
-			config => ConfigureHost(config)
-		)
-		.ConfigureAppConfiguration(
-			(host, config) => ConfigureApp(host.HostingEnvironment, config, args)
-		)
-		.UseSerilog(
-			(host, logger) => ConfigureSerilog(host.Configuration, logger)
-		)
-		.ConfigureServices(
-			(host, services) => ConfigureServices(host.HostingEnvironment, host.Configuration, services)
-		)
-		.Build();
-
 	/// <summary>
 	/// Runs when the application is ready to go but before it is run
 	/// </summary>
@@ -47,47 +36,45 @@ public abstract class App
 	/// <param name="log">ILog</param>
 	public virtual void Ready(IServiceProvider services, ILog log)
 	{
-		// Set Option Audit log
-		F.OptionF.LogAuditExceptions = e => log.Error(e, "Error auditing Option");
+		// Set Maybe Audit log
+		F.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
 
 		// Log application is ready
-		log.Information("Application ready.");
+		log.Inf("Application ready.");
 	}
 
 	/// <summary>
 	/// Configure Host
 	/// </summary>
 	/// <param name="config">IConfigurationBuilder</param>
-	protected virtual void ConfigureHost(IConfigurationBuilder config)
-	{
-		// Set base path to be directory of running assembly
-		config.SetBasePath(Directory.GetCurrentDirectory());
-	}
+	public virtual void ConfigureHost(IConfigurationBuilder config) { }
 
 	/// <summary>
 	/// Configure App
 	/// </summary>
-	/// <param name="env">IHostEnvironment</param>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="config">IConfigurationBuilder</param>
-	/// <param name="args">Command Line arguments</param>
-	protected virtual void ConfigureApp(IHostEnvironment env, IConfigurationBuilder config, string[] args)
+	public virtual void ConfigureApp(HostBuilderContext ctx, IConfigurationBuilder config)
 	{
+		// Shortcut for environment
+		var env = ctx.HostingEnvironment;
+
 		// Validate main configuration file
 		var path = $"{env.ContentRootPath}/jeebsconfig.json";
-		ConfigValidator.Validate(path);
+		if (File.Exists(path))
+		{
+			_ = ConfigValidator.Validate(path);
+		}
 
 		// Add Jeebs config - keeps Jeebs config away from app settings
-		config
-			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: false)
+		_ = config
+			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.json", optional: true)
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.json", optional: true);
 
 		// Add environment-specific Jeebs config
-		config
+		_ = config
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true)
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.{env.EnvironmentName}.json", optional: true);
-
-		// Add Environment Variables
-		config.AddEnvironmentVariables();
 
 		// Check for Azure Key Vault section
 		var vault = config.Build().GetSection<AzureKeyVaultConfig>(AzureKeyVaultConfig.Key, false);
@@ -95,38 +82,25 @@ public abstract class App
 		// If the config is valid, add Azure Key Vault to IConfigurationBuilder
 		if (vault.IsValid)
 		{
-			config.AddAzureKeyVault(
+			_ = config.AddAzureKeyVault(
 				new Uri($"https://{vault.Name}.vault.azure.net/"),
 				new ClientSecretCredential(vault.TenantId, vault.ClientId, vault.ClientSecret)
 			);
 		}
-
-		// Add command line arguments
-		config.AddCommandLine(args);
-	}
-
-	/// <summary>
-	/// Configure Serilog
-	/// </summary>
-	/// <param name="config">IConfiguration</param>
-	/// <param name="loggerConfig">LoggerConfiguration</param>
-	protected virtual void ConfigureSerilog(IConfiguration config, LoggerConfiguration loggerConfig)
-	{
-		// Load Serilog config
-		var jeebs = config.GetSection<JeebsConfig>(JeebsConfig.Key, false);
-		loggerConfig.LoadFromJeebsConfig(jeebs);
 	}
 
 	/// <summary>
 	/// Configure Services
 	/// </summary>
-	/// <param name="env">IHostEnvironment</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
+	public virtual void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
+		// Shorthand for configuration
+		var config = ctx.Configuration;
+
 		// Add Jeebs config classes
-		services
+		_ = services
 			.Configure<AppConfig>(config.GetSection(AppConfig.Key))
 			.Configure<AuthConfig>(config.GetSection(AuthConfig.Key))
 			.Configure<AzureKeyVaultConfig>(config.GetSection(AzureKeyVaultConfig.Key))
@@ -140,7 +114,19 @@ public abstract class App
 			.Configure<WebConfig>(config.GetSection(WebConfig.Key));
 
 		// Register Serilog Logger
-		services.AddSingleton<ILog, SerilogLogger>();
-		services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
+		_ = services.AddSingleton<ILog, SerilogLogger>();
+		_ = services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
+	}
+
+	/// <summary>
+	/// Configure Serilog
+	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
+	/// <param name="loggerConfig">LoggerConfiguration</param>
+	public virtual void ConfigureSerilog(HostBuilderContext ctx, LoggerConfiguration loggerConfig)
+	{
+		// Load Serilog config
+		var jeebs = ctx.Configuration.GetSection<JeebsConfig>(JeebsConfig.Key, false);
+		loggerConfig.LoadFromJeebsConfig(jeebs);
 	}
 }

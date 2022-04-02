@@ -1,8 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Data;
+using Jeebs.Logging;
 
 namespace Jeebs.Data;
 
@@ -36,12 +37,12 @@ public sealed class UnitOfWork : IUnitOfWork
 
 		try
 		{
-			log.Verbose("Committing transaction.");
+			log.Vrb("Committing transaction.");
 			Transaction.Commit();
 		}
 		catch (Exception ex)
 		{
-			log.Error(ex, "Error committing transaction.");
+			log.Err(ex, "Error committing transaction.");
 			Rollback();
 		}
 		finally
@@ -60,12 +61,12 @@ public sealed class UnitOfWork : IUnitOfWork
 
 		try
 		{
-			log.Debug("Rolling back transaction.");
+			log.Dbg("Rolling back transaction.");
 			Transaction.Rollback();
 		}
 		catch (Exception ex)
 		{
-			log.Error(ex, "Error rolling back transaction.");
+			log.Err(ex, "Error rolling back transaction.");
 		}
 		finally
 		{

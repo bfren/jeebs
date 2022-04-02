@@ -1,7 +1,7 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Mvc;
+namespace Jeebs.Mvc.Enums;
 
 /// <summary>
 /// Alert Types
@@ -11,20 +11,20 @@ public enum AlertType
 	/// <summary>
 	/// Info
 	/// </summary>
-	Info,
+	Info = 0,
 
 	/// <summary>
 	/// Success
 	/// </summary>
-	Success,
+	Success = 1,
 
 	/// <summary>
 	/// Error
 	/// </summary>
-	Error,
+	Error = 2,
 
 	/// <summary>
 	/// Warning
 	/// </summary>
-	Warning
+	Warning = 3
 }

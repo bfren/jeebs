@@ -6,8 +6,10 @@
 		},
 		"logging": {
 			"minimum": "Debug",
-			"console": true,
 			"providers": {
+				"console": {
+					"enabled": true
+				},
 				"seq.server04": {
 					"enabled": true
 				}

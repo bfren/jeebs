@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Entities;
+namespace Jeebs.Data.Attributes;
 
 /// <summary>
 /// Mark property as to be ignored when mapping entity properties to table columns

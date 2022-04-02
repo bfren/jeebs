@@ -1,54 +1,56 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using AppConsoleAuthDb;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Auth.Data.Clients.PostgreSql;
-using Jeebs.Config;
+using Jeebs.Config.Db;
+using Jeebs.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-Jeebs.Apps.Program.Main<App>(args, (provider, log) =>
-{
-	// Begin
-	log.Debug("= Auth Database Console Test =");
+var builder = Jeebs.Apps.Host.CreateBuilder(args);
+var app = builder.Build();
 
-	// Create clients
-	var postgres = new PostgreSqlDbClient();
-	var mariadb = new MySqlDbClient();
+var log = app.Services.GetRequiredService<ILog>();
 
-	// Get config
-	var config = provider.GetRequiredService<IOptions<DbConfig>>().Value;
+// Begin
+log.Dbg("= Auth Database Console Test =");
 
-	Console.WriteLine();
+// Create clients
+var postgres = new PostgreSqlDbClient();
+var mariadb = new MySqlDbClient();
 
-	// PostgreSql
-	var postgresConn = config.GetConnection("server04-postgres").ConnectionString;
+// Get config
+var config = app.Services.GetRequiredService<IOptions<DbConfig>>().Value;
 
-	log.Debug("== PostgreSQL ==");
+Console.WriteLine();
 
-	log.Debug("Nuke...");
-	postgres.Nuke(postgresConn);
+// PostgreSql
+var postgresConn = config.GetConnection("server04-postgres").ConnectionString;
 
-	log.Debug("Migrate...");
-	postgres.MigrateToLatest(postgresConn);
+log.Dbg("== PostgreSQL ==");
 
-	Console.WriteLine();
+log.Dbg("Nuke...");
+postgres.Nuke(postgresConn);
 
-	// MariaDB
-	var mariadbConn = config.GetConnection("server04-mariadb").ConnectionString;
+log.Dbg("Migrate...");
+postgres.MigrateToLatest(postgresConn);
 
-	log.Debug("== MariaDB ==");
+Console.WriteLine();
 
-	log.Debug("Nuke...");
-	mariadb.Nuke(mariadbConn);
+// MariaDB
+var mariadbConn = config.GetConnection("server04-mariadb").ConnectionString;
 
-	log.Debug("Migrate...");
-	mariadb.MigrateToLatest(mariadbConn);
+log.Dbg("== MariaDB ==");
 
-	Console.WriteLine();
+log.Dbg("Nuke...");
+mariadb.Nuke(mariadbConn);
 
-	// Done
-	Console.WriteLine("Done.");
-	Console.Read();
-});
+log.Dbg("Migrate...");
+mariadb.MigrateToLatest(mariadbConn);
+
+Console.WriteLine();
+
+// Done
+Console.WriteLine("Done.");
+Console.Read();

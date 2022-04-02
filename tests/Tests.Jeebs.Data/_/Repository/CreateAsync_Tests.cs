@@ -1,9 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading.Tasks;
-using NSubstitute;
-using Xunit;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.Data.Repository_Tests;
 
@@ -14,26 +12,26 @@ public class CreateAsync_Tests
 	{
 		// Arrange
 		var (client, _, repo) = Repository_Setup.Get();
-		var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Lng) };
+		var foo = new Repository_Setup.Foo { Id = LongId<Repository_Setup.FooId>() };
 
 		// Act
-		await repo.CreateAsync(foo).ConfigureAwait(false);
+		await repo.CreateAsync(foo);
 
 		// Assert
 		client.Received().GetCreateQuery<Repository_Setup.Foo>();
 	}
 
 	[Fact]
-	public async Task Logs_Query_To_Debug()
+	public async Task Logs_Query_To_Verbose()
 	{
 		// Arrange
 		var (_, log, repo) = Repository_Setup.Get();
-		var foo = new Repository_Setup.Foo { Id = new(F.Rnd.Lng) };
+		var foo = new Repository_Setup.Foo { Id = LongId<Repository_Setup.FooId>() };
 
 		// Act
-		await repo.CreateAsync(foo).ConfigureAwait(false);
+		await repo.CreateAsync(foo);
 
 		// Assert
-		log.ReceivedWithAnyArgs().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+		log.ReceivedWithAnyArgs().Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

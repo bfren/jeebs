@@ -1,8 +1,7 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Text;
-using Jeebs.Data.Mapping;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.PostgreSql;
 
@@ -18,11 +17,10 @@ public partial class PostgreSqlDbClient : DbClient
 		var (col, par) = GetColumnsForCreateQuery(columns);
 
 		// Build and return query
-		return new StringBuilder()
-			.Append($"INSERT INTO {Escape(table)} {JoinList(col, true)} ")
-			.Append($"VALUES {JoinList(par, true)};")
-			.Append(" SELECT LASTVAL();")
-			.ToString()
+		return
+			$"INSERT INTO {Escape(table)} {JoinList(col, true)} " +
+			$"VALUES {JoinList(par, true)}; " +
+			"SELECT LASTVAL();"
 		;
 	}
 
@@ -31,18 +29,17 @@ public partial class PostgreSqlDbClient : DbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id
+		object id
 	)
 	{
 		// Get columns
 		var col = GetColumnsForRetrieveQuery(columns);
 
 		// Build and return query
-		return new StringBuilder()
-			.Append($"SELECT {JoinList(col, false)} ")
-			.Append($"FROM {Escape(table)} ")
-			.Append($"WHERE {Escape(idColumn)} = {id};")
-			.ToString()
+		return
+			$"SELECT {JoinList(col, false)} " +
+			$"FROM {Escape(table)} " +
+			$"WHERE {Escape(idColumn)} = {id};"
 		;
 	}
 
@@ -51,7 +48,7 @@ public partial class PostgreSqlDbClient : DbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id
+		object id
 	) =>
 		GetUpdateQuery(table, columns, idColumn, id, null);
 
@@ -60,7 +57,7 @@ public partial class PostgreSqlDbClient : DbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id,
+		object id,
 		IColumn? versionColumn
 	)
 	{
@@ -71,25 +68,24 @@ public partial class PostgreSqlDbClient : DbClient
 		AddVersionToSetList(set, versionColumn);
 
 		// Begin query
-		var sql = new StringBuilder()
-			.Append($"UPDATE {Escape(table)} ")
-			.Append($"SET {JoinList(set, false)} ")
-			.Append($"WHERE {Escape(idColumn)} = {id}")
+		var sql =
+			$"UPDATE {Escape(table)} " +
+			$"SET {JoinList(set, false)} " +
+			$"WHERE {Escape(idColumn)} = {id}"
 		;
 
 		// Add WHERE Version
-		AddVersionToWhere(sql, versionColumn);
+		sql = AddVersionToWhere(sql, versionColumn);
 
 		// Return query
-		sql.Append(';');
-		return sql.ToString();
+		return $"{sql};";
 	}
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		long id
+		object id
 	) =>
 		GetDeleteQuery(table, idColumn, id, null);
 
@@ -97,21 +93,20 @@ public partial class PostgreSqlDbClient : DbClient
 	protected override string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		long id,
+		object id,
 		IColumn? versionColumn
 	)
 	{
 		// Begin query
-		var sql = new StringBuilder()
-			.Append($"DELETE FROM {Escape(table)} ")
-			.Append($"WHERE {Escape(idColumn)} = {id}")
+		var sql =
+			$"DELETE FROM {Escape(table)} " +
+			$"WHERE {Escape(idColumn)} = {id}"
 		;
 
 		// Add WHERE Version
-		AddVersionToWhere(sql, versionColumn);
+		sql = AddVersionToWhere(sql, versionColumn);
 
 		// Return query
-		sql.Append(';');
-		return sql.ToString();
+		return $"{sql};";
 	}
 }

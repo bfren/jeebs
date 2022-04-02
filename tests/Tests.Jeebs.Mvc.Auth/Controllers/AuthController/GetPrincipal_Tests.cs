@@ -1,14 +1,12 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Jeebs.Auth;
+using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
-using NSubstitute;
-using Xunit;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Logging;
+using static StrongId.Testing.Generator;
 
 namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests;
 
@@ -23,14 +21,14 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestController(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new(F.Rnd.Lng),
-			EmailAddress = F.Rnd.Str,
-			FriendlyName = F.Rnd.Str,
+			Id = LongId<AuthUserId>(),
+			EmailAddress = Rnd.Str,
+			FriendlyName = Rnd.Str,
 			IsSuper = true
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, F.Rnd.Str).ConfigureAwait(false);
+		var result = await controller.GetPrincipal(user, Rnd.Str);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -64,19 +62,19 @@ public class GetPrincipal_Tests
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var controller = new AuthTestController(auth, log);
-		var role0 = new AuthRoleModel(new(F.Rnd.Lng), F.Rnd.Str);
-		var role1 = new AuthRoleModel(new(F.Rnd.Lng), F.Rnd.Str);
+		var role0 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
+		var role1 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var user = new AuthUserModel
 		{
-			Id = new(F.Rnd.Lng),
-			EmailAddress = F.Rnd.Str,
-			FriendlyName = F.Rnd.Str,
+			Id = LongId<AuthUserId>(),
+			EmailAddress = Rnd.Str,
+			FriendlyName = Rnd.Str,
 			IsSuper = true,
 			Roles = new() { { role0 }, { role1 } }
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, F.Rnd.Str).ConfigureAwait(false);
+		var result = await controller.GetPrincipal(user, Rnd.Str);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -122,14 +120,14 @@ public class GetPrincipal_Tests
 		var controller = new AuthTestControllerWithClaims(auth, log);
 		var user = new AuthUserModel
 		{
-			Id = new(F.Rnd.Lng),
-			EmailAddress = F.Rnd.Str,
-			FriendlyName = F.Rnd.Str,
+			Id = LongId<AuthUserId>(),
+			EmailAddress = Rnd.Str,
+			FriendlyName = Rnd.Str,
 			IsSuper = true
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, F.Rnd.Str).ConfigureAwait(false);
+		var result = await controller.GetPrincipal(user, Rnd.Str);
 
 		// Assert
 		Assert.Equal(5, result.Claims.Count());

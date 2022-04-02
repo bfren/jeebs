@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Data;
-using Jeebs.Data.Mapping;
+using Jeebs.Data.Map;
+using Jeebs.Messages;
 
 namespace Jeebs.Data;
 
@@ -21,7 +22,7 @@ public abstract partial class DbClient : IDbClient
 	/// <summary>
 	/// Create using default Mapper instance
 	/// </summary>
-	protected DbClient() : this(Mapping.Mapper.Instance) { }
+	protected DbClient() : this(Map.Mapper.Instance) { }
 
 	/// <summary>
 	/// Inject a Mapper instance

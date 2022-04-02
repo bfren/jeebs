@@ -1,19 +1,21 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
+using Jeebs.Functions;
+using Jeebs.Messages;
+using Jeebs.Services.Notify;
 using Jeebs.Services.Webhook.Models;
 using Microsoft.Extensions.DependencyInjection;
-using static F.ThreadF;
 
 namespace Jeebs.Services.Webhook;
 
 /// <inheritdoc cref="IWebhookDriver{TConfig, TMessage}"/>
 public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebhookDriver<TConfig, TMessage>
-	where TConfig : IWebhookServiceConfig
+	where TConfig : IWebhookServiceConfig, new()
 	where TMessage : notnull
 {
 	/// <summary>
@@ -21,9 +23,10 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
 #pragma warning disable RCS1158 // Static member in generic type should use a type parameter.
+#pragma warning disable CA1000 // Do not declare static members on generic types
 	public static void AddRequiredServices(IServiceCollection services) =>
+#pragma warning restore CA1000 // Do not declare static members on generic types
 #pragma warning restore RCS1158 // Static member in generic type should use a type parameter.
-
 		services.AddHttpClient();
 
 	/// <summary>
@@ -50,7 +53,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(Msg msg)
+	public virtual void Send(IMsg msg)
 	{
 		// Get message content
 		var content = msg.ToString() ?? msg.GetType().ToString();
@@ -63,7 +66,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 				{
 					Content = content,
 					Level = NotificationLevel.Error,
-					Fields = new Dictionary<string, object>()
+					Fields = new Dictionary<string, object>
 					{
 						{ "Exception", x.Value }
 					}
@@ -88,7 +91,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(message);
 	}
 
-	#endregion
+	#endregion Convert to Jeebs.Services.Webhook.Models.Message and Send
 
 	#region Convert to System.Net.Http.HttpRequestMessage and Send
 
@@ -108,7 +111,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(request);
 	}
 
-	#endregion
+	#endregion Convert to System.Net.Http.HttpRequestMessage and Send
 
 	#region Actually Send
 
@@ -117,7 +120,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// </summary>
 	/// <param name="request"></param>
 	protected void Send(HttpRequestMessage request) =>
-		FireAndForget(async () =>
+		ThreadF.FireAndForget(async () =>
 		{
 			try
 			{
@@ -125,14 +128,14 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 				var response = await client.SendAsync(request).ConfigureAwait(false);
 				if (!response.IsSuccessStatusCode)
 				{
-					Log.Warning("Unable to send message: {@Response}", response);
+					Log.Wrn("Unable to send message: {@Response}", response);
 				}
 			}
 			catch (Exception ex)
 			{
-				Log.Error(ex, "Error sending message: {@Request}", request);
+				Log.Err(ex, "Error sending message: {@Request}", request);
 			}
 		});
 
-	#endregion
+	#endregion Actually Send
 }

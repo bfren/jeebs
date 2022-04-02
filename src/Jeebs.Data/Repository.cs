@@ -1,20 +1,18 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
+using Jeebs.Data.Query;
+using Jeebs.Logging;
+using StrongId;
 
 namespace Jeebs.Data;
 
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
 public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
-	where TEntity : IWithId
-	where TId : IStrongId
+	where TEntity : IWithId<TId>
+	where TId : class, IStrongId, new()
 {
 	/// <inheritdoc/>
 	public IUnitOfWork UnitOfWork =>
@@ -50,118 +48,65 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <param name="message">Log message</param>
 	/// <param name="args">Log message arguments</param>
 	internal virtual void WriteToLog(string message, object[] args) =>
-		Log.Debug(message, args);
+		Log.Vrb(message, args);
 
 	/// <summary>
-	/// Log the query for a function
+	/// Log an operation
 	/// </summary>
-	/// <typeparam name="T">Parameter type (an entity or model)</typeparam>
 	/// <param name="operation">Operation (method) name</param>
-	/// <param name="query">Query text</param>
-	/// <param name="parameters">[Optional] Query parameters</param>
-	protected void LogFunc<T>(string operation, string query, T? parameters)
-	{
-		// Always log operation, entity, and query
-		var message = "{Operation} {Entity}: {Query}";
-		var args = new object[]
+	protected void LogFunc(string operation) =>
+		WriteToLog("{Operation} {Entity}", new object[]
 		{
 			operation.Replace("Async", string.Empty),
-			typeof(TEntity).Name.Replace("Entity", string.Empty),
-			query
-		};
-
-		// Log with or without parameters
-		if (parameters is null)
-		{
-			WriteToLog(message, args);
-		}
-		else
-		{
-			message += " {@Parameters}";
-			WriteToLog(message, args.ExtendWith(parameters));
-		}
-	}
+			typeof(TEntity).Name.Replace("Entity", string.Empty)
+		});
 
 	#region Fluent Queries
 
 	/// <inheritdoc/>
 	public virtual IQueryFluent<TEntity, TId> StartFluentQuery() =>
-		new QueryFluent<TEntity, TId>(this);
+		new QueryFluent<TEntity, TId>(Db, Log);
 
-	#endregion
-
-	#region Custom Queries
-
-	/// <inheritdoc/>
-	public virtual async Task<Option<IEnumerable<TModel>>> QueryAsync<TModel>(
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	)
-	{
-		using var w = Db.UnitOfWork;
-		return await
-			Db.Client.GetQuery<TEntity, TModel>(
-				predicates
-			)
-			.Audit(
-				some: x => LogFunc(nameof(RetrieveAsync), x.query, x.param)
-			)
-			.BindAsync(
-				x => Db.QueryAsync<TModel>(x.query, x.param, CommandType.Text, w.Transaction)
-			)
-			.ConfigureAwait(false);
-	}
-
-	/// <inheritdoc/>
-	public virtual Task<Option<TModel>> QuerySingleAsync<TModel>(
-		params (Expression<Func<TEntity, object>>, Compare, object)[] predicates
-	) =>
-		QueryAsync<TModel>(
-			predicates
-		)
-		.UnwrapAsync(
-			x => x.Single<TModel>()
-		);
-
-	#endregion
+	#endregion Fluent Queries
 
 	#region CRUD Queries
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<TId>> CreateAsync(TEntity entity)
+	public virtual async Task<Maybe<TId>> CreateAsync(TEntity entity)
 	{
 		using var w = Db.UnitOfWork;
 		return await CreateAsync(entity, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
+	public virtual Task<Maybe<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
 		Db.Client.GetCreateQuery<TEntity>()
 		.Audit(
-			some: x => LogFunc(nameof(CreateAsync), x, entity)
+			some: x => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text, transaction)
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<TModel>> RetrieveAsync<TModel>(TId id)
+	public virtual async Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id)
 	{
 		using var w = Db.UnitOfWork;
 		return await RetrieveAsync<TModel>(id, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
+	public virtual Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
 		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(RetrieveAsync), x, id)
+			some: x => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
 			x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text, transaction)
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<bool>> UpdateAsync<TModel>(TModel model)
+	public virtual async Task<Maybe<bool>> UpdateAsync<TModel>(TModel model)
 		where TModel : IWithId
 	{
 		using var w = Db.UnitOfWork;
@@ -169,39 +114,41 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
+	public virtual Task<Maybe<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId =>
 		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(UpdateAsync), x, model)
+			some: x => LogFunc(nameof(UpdateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Option<bool>> DeleteAsync(TId id)
+	public virtual async Task<Maybe<bool>> DeleteAsync<TModel>(TModel model)
+		where TModel : IWithId
 	{
 		using var w = Db.UnitOfWork;
-		return await DeleteAsync(id, w.Transaction).ConfigureAwait(false);
+		return await DeleteAsync(model, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public virtual Task<Option<bool>> DeleteAsync(TId id, IDbTransaction transaction) =>
-		Db.Client.GetDeleteQuery<TEntity>(id.Value)
+	public virtual Task<Maybe<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
+		where TModel : IWithId =>
+		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(DeleteAsync), x, id)
+			some: x => LogFunc(nameof(DeleteAsync))
 		)
 		.BindAsync(
-			x => Db.ExecuteAsync(x, null, CommandType.Text, transaction)
+			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
 		);
 
-	#endregion
+	#endregion CRUD Queries
 
 	#region Testing
 
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
 
-	#endregion
+	#endregion Testing
 }

@@ -1,11 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
-using static F.TotpF;
-
-namespace F.TotpF_Tests;
+namespace Jeebs.Auth.Totp.Functions.TotpF_Tests;
 
 public class GetCurrentInterval_Tests
 {
@@ -21,7 +17,7 @@ public class GetCurrentInterval_Tests
 		var expected = seconds / (ulong)period;
 
 		// Act
-		var result = GetCurrentInterval(period);
+		var result = TotpF.GetCurrentInterval(period);
 
 		// Assert
 		Assert.Equal(expected, result);

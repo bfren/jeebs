@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -38,25 +38,25 @@ public abstract class Menu
 	/// </summary>
 	public List<MenuItem> Items { get; private init; } = new();
 
-	/// <inheritdoc cref="F.GetSimpleItems(IUrlHelper, List{MenuItem}, GetUri)"/>
+	/// <inheritdoc cref="MenuF.GetSimpleItems(IUrlHelper, List{MenuItem}, GetUri)"/>
 	public IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper) =>
-		F.GetSimpleItems(urlHelper, Items, GetUriFromActionContext);
+		MenuF.GetSimpleItems(urlHelper, Items, GetUriFromActionContext);
 
 	/// <summary>
 	/// Load this menu's items (to speed up page loading)
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="urlHelper">IUrlHelper</param>
-	public Task<Option<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper)
+	public Task<Maybe<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper)
 	{
 		// Create client
 		var client = http.CreateClient();
 
 		// Get URIs
-		var uris = F.GetUris(urlHelper, Items, GetUriFromActionContext);
+		var uris = MenuF.GetUris(urlHelper, Items, GetUriFromActionContext);
 
 		// Load items
-		return F.LoadUrisAsync(client, uris, F.LoadUriAsync);
+		return MenuF.LoadUrisAsync(client, uris, MenuF.LoadUriAsync);
 	}
 
 	/// <summary>
@@ -83,7 +83,7 @@ public abstract class Menu
 	/// <summary>
 	/// Helper Functions
 	/// </summary>
-	internal static class F
+	internal static class MenuF
 	{
 		/// <summary>
 		/// Use a UrlHelper object to get simple menu items
@@ -141,7 +141,7 @@ public abstract class Menu
 		/// <param name="client">HttpClient</param>
 		/// <param name="uris">List of URIs to load</param>
 		/// <param name="loadUri">LoadUri</param>
-		internal static async Task<Option<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
+		internal static async Task<Maybe<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
 		{
 			// Use a StringBuilder to hold the response text
 			var result = new StringBuilder();
@@ -173,7 +173,7 @@ public abstract class Menu
 			{
 				// Attempt to load the URL and ensure it is successful
 				var response = await client.GetAsync(uri, token).ConfigureAwait(false);
-				response.EnsureSuccessStatusCode();
+				_ = response.EnsureSuccessStatusCode();
 
 				// Successful
 				output += "done";
@@ -184,7 +184,7 @@ public abstract class Menu
 			}
 
 			// Put the next URL on a new line
-			result.Append(output).AppendLine("<br/>");
+			_ = result.Append(output).AppendLine("<br/>");
 		}
 	}
 }

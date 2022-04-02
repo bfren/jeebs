@@ -2,9 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using System.Threading.Tasks;
-using NSubstitute;
-using Xunit;
 
 namespace Jeebs.Data.DbQuery_Tests;
 
@@ -18,17 +15,17 @@ public class QuerySingleAsync_Tests
 	{
 		// Arrange
 		var (db, _, _, query) = DbQuery_Setup.Get();
-		var value = F.Rnd.Str;
-		var param = F.Rnd.Int;
+		var value = Rnd.Str;
+		var param = Rnd.Int;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QuerySingleAsync<int>(value, param, input).ConfigureAwait(false);
-		_ = await query.QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
+		await query.QuerySingleAsync<int>(value, param, input);
+		await query.QuerySingleAsync<int>(value, param, input, transaction);
 
 		// Assert
-		await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().QuerySingleAsync<int>(value, param, input, transaction).ConfigureAwait(false);
+		await db.Received().QuerySingleAsync<int>(value, param, input, Arg.Any<IDbTransaction>());
+		await db.Received().QuerySingleAsync<int>(value, param, input, transaction);
 	}
 
 	[Fact]
@@ -36,35 +33,35 @@ public class QuerySingleAsync_Tests
 	{
 		// Arrange
 		var (db, _, _, query) = DbQuery_Setup.Get();
-		var value = F.Rnd.Str;
-		var param = F.Rnd.Int;
+		var value = Rnd.Str;
+		var param = Rnd.Int;
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QuerySingleAsync<int>(value, param).ConfigureAwait(false);
-		_ = await query.QuerySingleAsync<int>(value, param, transaction).ConfigureAwait(false);
+		await query.QuerySingleAsync<int>(value, param);
+		await query.QuerySingleAsync<int>(value, param, transaction);
 
 		// Assert
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
 	}
 
 	[Fact]
 	public async Task With_Parts_Calls_Client_GetQuery_And_Db_QuerySingleAsync()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var (parts, param) = DbQuery_Setup.GetParts();
 		var (db, client, _, query) = DbQuery_Setup.Get(value, param);
 		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		_ = await query.QuerySingleAsync<int>(parts).ConfigureAwait(false);
-		_ = await query.QuerySingleAsync<int>(parts, transaction).ConfigureAwait(false);
+		await query.QuerySingleAsync<int>(parts);
+		await query.QuerySingleAsync<int>(parts, transaction);
 
 		// Assert
 		client.Received(2).GetQuery(parts);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>()).ConfigureAwait(false);
-		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction).ConfigureAwait(false);
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, Arg.Any<IDbTransaction>());
+		await db.Received().QuerySingleAsync<int>(value, param, CommandType.Text, transaction);
 	}
 }

@@ -1,14 +1,16 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.Auth;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Linq;
+using Jeebs.Data;
+using Jeebs.Logging;
+using MaybeF;
+using MaybeF.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static F.OptionF;
+using RndF;
+using StrongId;
 
 namespace AppMvc.Controllers;
 
@@ -50,7 +52,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.MapAsync(
 				x => View(x),
-				DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(() => View("Unknown"))
@@ -65,28 +67,28 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.MapAsync(
 				_ => RedirectToAction("ShowUser", new { id = model.Id.Value }),
-				DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
-				x => x.Value(() => throw new System.Exception())
+				x => x.Value(() => throw new Exception())
 			)
 			.ConfigureAwait(false);
 
 	public async Task<IActionResult> UpdateUser() =>
 		await Auth
 			.User.RetrieveAsync<UpdateUserModel>(
-				new AuthUserId(1)
+				new AuthUserId { Value = 1 }
 			)
 			.SwitchAsync(
-				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = F.Rnd.Str }).ConfigureAwait(false),
-				none: r => None<bool>(r).AsTask
+				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = Rnd.Str }).ConfigureAwait(false),
+				none: r => F.None<bool>(r).AsTask
 			)
 			.BindAsync(
-				_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId(1))
+				_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId { Value = 1 })
 			)
 			.MapAsync(
 				x => Content(x.ToString()),
-				DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(Content("Ooops"))
@@ -100,7 +102,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.MapAsync(
 				x => View("ShowUser", x),
-				DefaultHandler
+				F.DefaultHandler
 			)
 			.UnwrapAsync(
 				x => x.Value(() => View("Unknown"))

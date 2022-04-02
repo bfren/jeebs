@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace F.CryptoF_Tests;
+namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
 public class GenerateNonce_Tests
 {

@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -12,18 +12,18 @@ public readonly record struct DateRange : IRange<DateTime>
 	public DateTime Start { get; init; }
 
 	/// <inheritdoc/>
-	public DateTime End { get; init; }
+	public DateTime Finish { get; init; }
 
 	/// <inheritdoc/>
 	public int Length =>
-		End.Subtract(Start).Days + 1;
+		Finish.Subtract(Start).Days + 1;
 
 	/// <summary>
 	/// Create range object from a single date
 	/// </summary>
-	/// <param name="single">Range start and end</param>
-	public DateRange(DateTime single) =>
-		(Start, End) = (single.StartOfDay(), single.EndOfDay());
+	/// <param name="startAndEnd">Range start and end</param>
+	public DateRange(DateTime startAndEnd) =>
+		(Start, Finish) = (startAndEnd.StartOfDay(), startAndEnd.EndOfDay());
 
 	/// <summary>
 	/// Create range object, making sure start is before end (!)
@@ -36,7 +36,7 @@ public readonly record struct DateRange : IRange<DateTime>
 		if (start < end)
 		{
 			Start = start.StartOfDay();
-			End = end.EndOfDay();
+			Finish = end.EndOfDay();
 		}
 		else
 		{
@@ -46,15 +46,15 @@ public readonly record struct DateRange : IRange<DateTime>
 
 	/// <inheritdoc/>
 	public bool Includes(DateTime value) =>
-		Start <= value && End >= value;
+		Start <= value && Finish >= value;
 
 	/// <inheritdoc/>
 	public bool Includes(IRange<DateTime> value) =>
-		Start <= value.Start && End >= value.End;
+		Start <= value.Start && Finish >= value.Finish;
 
 	/// <inheritdoc/>
 	public bool Overlaps(IRange<DateTime> value) =>
-		value.Includes(Start) || value.Includes(End) || Includes(value);
+		value.Includes(Start) || value.Includes(Finish) || Includes(value);
 
 	#region Static Members
 
@@ -62,7 +62,6 @@ public readonly record struct DateRange : IRange<DateTime>
 	/// Open-started Date Range object ending at end date
 	/// </summary>
 	/// <param name="end">End date</param>
-	/// <returns>DateRange object</returns>
 	public static DateRange UpTo(DateTime end) =>
 		new(DateTime.MinValue, end);
 
@@ -70,9 +69,8 @@ public readonly record struct DateRange : IRange<DateTime>
 	/// Open-ended Date Range beginning at start date
 	/// </summary>
 	/// <param name="start">Start date</param>
-	/// <returns>DateRange object</returns>
 	public static DateRange From(DateTime start) =>
 		new(start, DateTime.MaxValue);
 
-	#endregion
+	#endregion Static Members
 }

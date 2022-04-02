@@ -1,6 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0-preview.2.*" />
+	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Data.Apps\Jeebs.Data.Apps.csproj" />
-		<ProjectReference Include="..\Jeebs.WordPress.Data\Jeebs.WordPress.Data.csproj" />
+		<ProjectReference Include="..\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
+		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />
 	</ItemGroup>
 </Project>

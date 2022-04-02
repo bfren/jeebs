@@ -1,14 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
-using Jeebs.Linq;
-using static F.OptionF;
+using Jeebs.Messages;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDataProvider{TUserEntity, TRoleEntity, TUserRoleEntity}"/>
 public interface IAuthDataProvider : IAuthDataProvider<AuthUserEntity, AuthRoleEntity, AuthUserRoleEntity>
@@ -45,19 +43,19 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		(User, Role, UserRole, Query) = (user, role, userRole, query);
 
 	/// <inheritdoc/>
-	public async Task<Option<TModel>> ValidateUserAsync<TModel>(string email, string password)
+	public async Task<Maybe<TModel>> ValidateUserAsync<TModel>(string email, string password)
 		where TModel : IAuthUser
 	{
 		// Check email
 		if (string.IsNullOrEmpty(email))
 		{
-			return None<TModel, M.NullOrEmptyEmailMsg>();
+			return F.None<TModel, M.NullOrEmptyEmailMsg>();
 		}
 
 		// Check password
 		if (string.IsNullOrEmpty(password))
 		{
-			return None<TModel, M.InvalidPasswordMsg>();
+			return F.None<TModel, M.InvalidPasswordMsg>();
 		}
 
 		// Get user for authentication
@@ -66,13 +64,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			// Verify the user is enabled
 			if (!user.IsEnabled)
 			{
-				return None<TModel>(new M.UserNotEnabledMsg(email));
+				return F.None<TModel>(new M.UserNotEnabledMsg(email));
 			}
 
 			// Verify the entered password
 			if (!user.PasswordHash.VerifyPassword(password))
 			{
-				return None<TModel, M.InvalidPasswordMsg>();
+				return F.None<TModel, M.InvalidPasswordMsg>();
 			}
 
 			// Get user model
@@ -80,11 +78,11 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// User not found
-		return None<TModel>(new M.UserNotFoundMsg(email));
+		return F.None<TModel>(new M.UserNotFoundMsg(email));
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
+	public Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole =>
 		from u in User.RetrieveAsync<TUser>(id)
@@ -92,7 +90,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		select u with { Roles = r };
 
 	/// <inheritdoc/>
-	public Task<Option<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
+	public Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole =>
 		from u in User.RetrieveAsync<TUser>(email)
@@ -112,9 +110,11 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		public sealed record class NullOrEmptyPasswordMsg : Msg;
 
 		/// <summary>User not enabled</summary>
+		/// <param name="Value">Email address</param>
 		public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>User not found</summary>
+		/// <param name="Value">Email address</param>
 		public sealed record class UserNotFoundMsg(string Value) : NotFoundMsg<string>
 		{
 			/// <inheritdoc/>

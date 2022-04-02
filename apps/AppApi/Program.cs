@@ -2,11 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppApi;
-using Jeebs;
 using Jeebs.Cqrs;
+using MaybeF;
 using Microsoft.AspNetCore.Mvc;
 
-var (app, log) = Jeebs.Apps.Builder.Create(args, useHsts: false, configure: builder => builder.Services.AddCqrs());
+var app = Jeebs.Apps.Web.ApiApp.CreateMinimal(args,
+	(_, services) => services.AddCqrs()
+);
 
 app.MapGet("/", () => "Hello, world!");
 app.MapGet("/hello/{name}", HandleSayHello);
@@ -14,13 +16,13 @@ app.MapGet("/hello/{name}", HandleSayHello);
 app.Run();
 
 static async Task<IResult> HandleSayHello(
-	[FromServices] IQueryDispatcher query,
+	[FromServices] IDispatcher query,
 	[FromRoute] string name
 )
 {
 	var text = await query
-		.DispatchAsync<SayHelloQuery, string>(
-			new(name)
+		.DispatchAsync(
+			new SayHelloQuery(name)
 		)
 		.UnwrapAsync(
 			x => x.Value(ifNone: "Nothing to say.")

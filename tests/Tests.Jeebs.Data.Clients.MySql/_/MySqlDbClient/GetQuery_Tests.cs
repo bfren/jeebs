@@ -1,11 +1,10 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
+using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying;
-using Xunit;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
@@ -15,27 +14,27 @@ public class GetQuery_Tests
 	public void With_Predicates_Returns_Valid_Select_Query()
 	{
 		// Arrange
-		var schema = F.Rnd.Str;
-		var name = F.Rnd.Str;
+		var schema = Rnd.Str;
+		var name = Rnd.Str;
 		var table = new TableName(schema, name);
 
-		var c0Name = F.Rnd.Str;
-		var c0Alias = F.Rnd.Str;
+		var c0Name = Rnd.Str;
+		var c0Alias = Rnd.Str;
 		var c0 = new Column(table, c0Name, c0Alias);
 
-		var c1Name = F.Rnd.Str;
-		var c1Alias = F.Rnd.Str;
+		var c1Name = Rnd.Str;
+		var c1Alias = Rnd.Str;
 		var c1 = new Column(table, c1Name, c1Alias);
 
 		var list = new ColumnList(new[] { c0, c1 });
 
-		var p0Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
+		var p0Column = new Column(table, Rnd.Str, Rnd.Str);
 		var p0Operator = Compare.Like;
-		var p0Value = F.Rnd.Str;
+		var p0Value = Rnd.Str;
 
-		var p1Column = new Column(table, F.Rnd.Str, F.Rnd.Str);
+		var p1Column = new Column(table, Rnd.Str, Rnd.Str);
 		var p1Operator = Compare.MoreThanOrEqual;
-		var p1Value = F.Rnd.Int;
+		var p1Value = Rnd.Int;
 
 		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -49,8 +48,8 @@ public class GetQuery_Tests
 			$" `{c0Name}` AS '{c0Alias}'," +
 			$" `{c1Name}` AS '{c1Alias}'" +
 			$" FROM `{schema}.{name}`" +
-			$" WHERE `{p0Column.Name}` LIKE @P0" +
-			$" AND `{p1Column.Name}` >= @P1;";
+			$" WHERE `{p0Column.ColName}` LIKE @P0" +
+			$" AND `{p1Column.ColName}` >= @P1;";
 
 		// Act
 		var (query, param) = client.GetQueryTest(table, list, predicates);
@@ -121,15 +120,15 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
 
-		var c0Name = F.Rnd.Str;
-		var c0Alias = F.Rnd.Str;
+		var c0Name = Rnd.Str;
+		var c0Alias = Rnd.Str;
 		var c0 = new Column(v.Table, c0Name, c0Alias);
-		var c1Name = F.Rnd.Str;
-		var c1Alias = F.Rnd.Str;
+		var c1Name = Rnd.Str;
+		var c1Alias = Rnd.Str;
 		var c1 = new Column(v.Table, c1Name, c1Alias);
 		var parts = new QueryParts(v.Table)
 		{
-			Select = new ColumnList(new[] { c0, c1 })
+			SelectColumns = new ColumnList(new[] { c0, c1 })
 		};
 		var expected = "SELECT" +
 			$" `{v.Schema}.{v.Name}`.`{c0Name}` AS '{c0Alias}'," +
@@ -148,16 +147,16 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
 
-		var fromName = F.Rnd.Str;
-		var from = new Column(v.Table, fromName, F.Rnd.Str);
+		var fromName = Rnd.Str;
+		var from = new Column(v.Table, fromName, Rnd.Str);
 
-		var to0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
-		var to0Name = F.Rnd.Str;
-		var to0 = new Column(to0Table, to0Name, F.Rnd.Str);
+		var to0Table = new TableName(Rnd.Str, Rnd.Str);
+		var to0Name = Rnd.Str;
+		var to0 = new Column(to0Table, to0Name, Rnd.Str);
 
-		var to1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
-		var to1Name = F.Rnd.Str;
-		var to1 = new Column(to1Table, to1Name, F.Rnd.Str);
+		var to1Table = new TableName(Rnd.Str, Rnd.Str);
+		var to1Name = Rnd.Str;
+		var to1 = new Column(to1Table, to1Name, Rnd.Str);
 
 		var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
 
@@ -201,18 +200,18 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
 
-		var c0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
-		var c0Name = F.Rnd.Str;
-		var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
+		var c0Table = new TableName(Rnd.Str, Rnd.Str);
+		var c0Name = Rnd.Str;
+		var c0 = new Column(c0Table, c0Name, Rnd.Str);
 
-		var c1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
-		var c1Name = F.Rnd.Str;
-		var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
+		var c1Table = new TableName(Rnd.Str, Rnd.Str);
+		var c1Name = Rnd.Str;
+		var c1 = new Column(c1Table, c1Name, Rnd.Str);
 
 		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
-			(c0, Compare.Like, F.Rnd.Str),
-			(c1, Compare.MoreThanOrEqual, F.Rnd.Int)
+			(c0, Compare.Like, Rnd.Str),
+			(c1, Compare.MoreThanOrEqual, Rnd.Int)
 		});
 
 		var parts = new QueryParts(v.Table) { Where = where };
@@ -235,24 +234,24 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
 
-		var w0 = F.Rnd.Str;
-		var w1 = F.Rnd.Str;
-		var p0 = F.Rnd.Str;
-		var p1 = F.Rnd.Str;
-		var p2 = F.Rnd.Str;
-		var parametersToAdd0 = new QueryParameters
+		var w0 = Rnd.Str;
+		var w1 = Rnd.Str;
+		var p0 = Rnd.Str;
+		var p1 = Rnd.Str;
+		var p2 = Rnd.Str;
+		var parametersToAdd0 = new QueryParametersDictionary
 		{
 			{ nameof(p0), p0 },
 			{ nameof(p1), p1 }
 		};
-		var parametersToAdd1 = new QueryParameters
+		var parametersToAdd1 = new QueryParametersDictionary
 		{
 			{ nameof(p2), p2 }
 		};
 
 		var parts = new QueryParts(v.Table)
 		{
-			WhereCustom = ImmutableList.Create(new (string, IQueryParameters)[]
+			WhereCustom = ImmutableList.Create(new (string, IQueryParametersDictionary)[]
 			{
 				(w0, parametersToAdd0),
 				(w1, parametersToAdd1)
@@ -291,15 +290,15 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
 
-		var c0Table = new TableName(F.Rnd.Str);
-		var c0Name = F.Rnd.Str;
-		var c0Value = F.Rnd.Str;
-		var c0 = new Column(c0Table, c0Name, F.Rnd.Str);
+		var c0Table = new TableName(Rnd.Str);
+		var c0Name = Rnd.Str;
+		var c0Value = Rnd.Str;
+		var c0 = new Column(c0Table, c0Name, Rnd.Str);
 
-		var c1Table = new TableName(F.Rnd.Str);
-		var c1Name = F.Rnd.Str;
-		var c1Value = F.Rnd.Int;
-		var c1 = new Column(c1Table, c1Name, F.Rnd.Str);
+		var c1Table = new TableName(Rnd.Str);
+		var c1Name = Rnd.Str;
+		var c1Value = Rnd.Int;
+		var c1 = new Column(c1Table, c1Name, Rnd.Str);
 
 		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -352,13 +351,13 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
 
-		var sort0Table = new TableName(F.Rnd.Str, F.Rnd.Str);
-		var sort0Name = F.Rnd.Str;
-		var sort0 = new Column(sort0Table, sort0Name, F.Rnd.Str);
+		var sort0Table = new TableName(Rnd.Str, Rnd.Str);
+		var sort0Name = Rnd.Str;
+		var sort0 = new Column(sort0Table, sort0Name, Rnd.Str);
 
-		var sort1Table = new TableName(F.Rnd.Str, F.Rnd.Str);
-		var sort1Name = F.Rnd.Str;
-		var sort1 = new Column(sort1Table, sort1Name, F.Rnd.Str);
+		var sort1Table = new TableName(Rnd.Str, Rnd.Str);
+		var sort1Name = Rnd.Str;
+		var sort1 = new Column(sort1Table, sort1Name, Rnd.Str);
 
 		var parts = new QueryParts(v.Table)
 		{
@@ -386,7 +385,7 @@ public class GetQuery_Tests
 	{
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
-		var max = F.Rnd.Ulng;
+		var max = Rnd.ULng;
 		var parts = new QueryParts(v.Table) { Maximum = max };
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {max};";
 
@@ -402,8 +401,8 @@ public class GetQuery_Tests
 	{
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
-		var skip = F.Rnd.Ulng;
-		var max = F.Rnd.Ulng;
+		var skip = Rnd.ULng;
+		var max = Rnd.ULng;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {skip}, {max};";
 

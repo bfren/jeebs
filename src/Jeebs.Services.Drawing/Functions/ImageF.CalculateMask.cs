@@ -1,10 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Jeebs.Services.Drawing.Geometry;
 
-namespace F;
+namespace Jeebs.Services.Drawing.Functions;
 
 /// <summary>
 /// Image functions
@@ -27,16 +27,15 @@ public static partial class ImageF
 	/// <param name="imgHeight">Original image height</param>
 	/// <param name="maskWidth">Mask width</param>
 	/// <param name="maskHeight">Mask height</param>
-	/// <returns>Rectangle to grab the correct portion of the original image, to be resized</returns>
 	public static Rectangle CalculateMask(double imgWidth, double imgHeight, double maskWidth, double maskHeight)
 	{
 		// Calculation variables
 		double x = 0;
 		double y = 0;
-		double w = imgWidth;
-		double h = imgHeight;
-		double ratioX = imgWidth / maskWidth;
-		double ratioY = imgHeight / maskHeight;
+		var w = imgWidth;
+		var h = imgHeight;
+		var ratioX = imgWidth / maskWidth;
+		var ratioY = imgHeight / maskHeight;
 
 		// Calculate the widths / starting co-ordinates
 		if (ratioX > ratioY)

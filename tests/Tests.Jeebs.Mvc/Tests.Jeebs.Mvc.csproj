@@ -4,6 +4,5 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Option.Testing\Jeebs.Option.Testing.csproj" />
 	</ItemGroup>
 </Project>

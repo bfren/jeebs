@@ -1,10 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Data;
-using NSubstitute;
-using Xunit;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.UnitOfWork_Tests;
 
@@ -25,7 +23,7 @@ public class Rollback_Tests
 
 		// Assert
 		transaction.Received().Rollback();
-		log.Received().Debug("Rolling back transaction.");
+		log.Received().Dbg("Rolling back transaction.");
 	}
 
 	[Fact]
@@ -81,6 +79,6 @@ public class Rollback_Tests
 		unitOfWork.Rollback();
 
 		// Assert
-		log.Received().Error(exception, "Error rolling back transaction.");
+		log.Received().Err(exception, "Error rolling back transaction.");
 	}
 }

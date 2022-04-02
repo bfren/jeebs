@@ -1,40 +1,42 @@
 {
-	"jeebs": {
-		"app": {
-			"name": "MVC",
-			"suite": "Jeebs"
-		},
-		"db": {
-			"default": "test",
-			"authentication": "test",
-			"connections": {
-				"test": {
-					"connectionString": ""
-				}
-			}
-		},
+  "jeebs": {
+    "app": {
+      "name": "MVC",
+      "suite": "Jeebs"
+    },
+    "db": {
+      "default": "test",
+      "authentication": "test",
+      "connections": {
+        "test": {
+          "connectionString": ""
+        }
+      }
+    },
 		"logging": {
 			"minimum": "Debug",
-			"console": true,
 			"providers": {
+				"console": {
+					"enabled": true
+				},
 				"seq.server04": {
 					"enabled": true
 				}
 			}
 		},
-		"services": {
-			"seq": {
-				"server04": {
-					"server": "",
-					"apiKey": ""
-				}
-			}
-		},
-		"web": {
-			"auth": {
-				"enabled": true,
-				"scheme": "cookies"
-			}
-		}
-	}
+    "services": {
+      "seq": {
+        "server04": {
+          "server": "",
+          "apiKey": ""
+        }
+      }
+    },
+    "web": {
+      "auth": {
+        "enabled": true,
+        "scheme": "cookies"
+      }
+    }
+  }
 }

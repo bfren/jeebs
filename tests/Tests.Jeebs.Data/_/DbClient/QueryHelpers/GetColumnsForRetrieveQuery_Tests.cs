@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.DbClient_Tests;
 
@@ -28,7 +26,7 @@ public class GetColumnsForRetrieveQuery_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		var column = new Column(new TableName(F.Rnd.Str), F.Rnd.Str, F.Rnd.Str);
+		var column = new Column(new TableName(Rnd.Str), Rnd.Str, Rnd.Str);
 		var list = new ColumnList(new[] { column });
 
 		// Act

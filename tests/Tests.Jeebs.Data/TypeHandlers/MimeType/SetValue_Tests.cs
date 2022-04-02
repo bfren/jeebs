@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using NSubstitute;
-using Xunit;
 using Base = Jeebs.MimeType_Tests.Parse_Tests;
 
 namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests;

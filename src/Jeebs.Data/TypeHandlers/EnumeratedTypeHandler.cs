@@ -9,6 +9,7 @@ namespace Jeebs.Data.TypeHandlers;
 /// <summary>
 /// Enumerated TypeHandler
 /// </summary>
+/// <typeparam name="T">Enumerated type</typeparam>
 public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	where T : Enumerated
 {
@@ -41,5 +42,5 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	internal T ParseTest(object value, Func<string, T> parse, T ifNull) =>
 		Parse(value, parse, ifNull);
 
-	#endregion
+	#endregion Testing
 }

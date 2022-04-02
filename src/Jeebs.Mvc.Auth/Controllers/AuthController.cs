@@ -1,13 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Jeebs.Auth;
+using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
-using Jeebs.Linq;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Auth.Jwt.Functions;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,21 +23,21 @@ public abstract class AuthController : AuthControllerBase
 	/// <summary>
 	/// AuthDataProvider
 	/// </summary>
-	new protected AuthDataProvider Auth { get; private init; }
+	protected new AuthDataProvider Auth { get; private init; }
 
 	/// <summary>
 	/// Inject dependencies
 	/// </summary>
 	/// <param name="auth">AuthDataProvider</param>
 	/// <param name="log">ILog</param>
-	protected AuthController(AuthDataProvider auth, ILog log) : base(auth, log) =>
+	protected AuthController(AuthDataProvider auth, Logging.ILog log) : base(auth, log) =>
 		Auth = auth;
 }
 
 /// <summary>
 /// Implement this controller to add support for user authentication
 /// </summary>
-public abstract class AuthControllerBase : Controller
+public abstract class AuthControllerBase : Mvc.Controllers.Controller
 {
 	/// <summary>
 	/// Returns custom claims for a given user
@@ -59,7 +61,7 @@ public abstract class AuthControllerBase : Controller
 	/// </summary>
 	/// <param name="auth">IAuthDataProvider</param>
 	/// <param name="log">ILog</param>
-	protected AuthControllerBase(IAuthDataProvider auth, ILog log) : base(log) =>
+	protected AuthControllerBase(IAuthDataProvider auth, Logging.ILog log) : base(log) =>
 		Auth = auth;
 
 	/// <summary>
@@ -81,7 +83,6 @@ public abstract class AuthControllerBase : Controller
 	/// Perform sign in
 	/// </summary>
 	/// <param name="model"></param>
-	/// <returns></returns>
 	internal async Task<IActionResult> DoSignIn(SignInModel model)
 	{
 		// Validate user
@@ -92,12 +93,12 @@ public abstract class AuthControllerBase : Controller
 		await foreach (var user in validatedUser)
 		{
 			// Get user principal
-			Log.Debug("User validated.");
+			Log.Dbg("User validated.");
 			var principal = await GetPrincipal(user, model.Password).ConfigureAwait(false);
 
 			// Update last sign in
 			var updated = await Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
-			updated.Audit(none: r => Log.Message(r));
+			_ = updated.Audit(none: r => Log.Msg(r));
 
 			// Add SignIn to HttpContext using Cookie scheme
 			await HttpContext.SignInAsync(
@@ -117,7 +118,7 @@ public abstract class AuthControllerBase : Controller
 		}
 
 		// Log error and add alert for user
-		Log.Debug("Unknown username or password: {Email}.", model.Email);
+		Log.Dbg("Unknown username or password: {Email}.", model.Email);
 		TempData.AddErrorAlert("Unknown username or password.");
 
 		// Return to sign in page
@@ -134,7 +135,7 @@ public abstract class AuthControllerBase : Controller
 		// Create claims object
 		var claims = new List<Claim>
 		{
-			new (JwtClaimTypes.UserId, user.Id.Value.ToString(), ClaimValueTypes.Integer32),
+			new (JwtClaimTypes.UserId, user.Id.Value.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer32),
 			new (ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
 			new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 		};
@@ -165,7 +166,7 @@ public abstract class AuthControllerBase : Controller
 	/// <summary>
 	/// Perform sign out
 	/// </summary>
-	new public async Task<IActionResult> SignOut()
+	public new async Task<IActionResult> SignOut()
 	{
 		// Sign out
 		await HttpContext.SignOutAsync().ConfigureAwait(false);
@@ -180,6 +181,7 @@ public abstract class AuthControllerBase : Controller
 	/// <summary>
 	/// Show access denied page
 	/// </summary>
+	/// <param name="returnUrl">Return URL</param>
 	public IActionResult Denied(string? returnUrl) =>
 		View(new DeniedModel(returnUrl));
 
@@ -189,8 +191,8 @@ public abstract class AuthControllerBase : Controller
 	public IActionResult JwtKeys() =>
 		Json(new
 		{
-			signingKey = F.JwtF.GenerateSigningKey(),
-			encryptingKey = F.JwtF.GenerateEncryptingKey()
+			signingKey = JwtF.GenerateSigningKey(),
+			encryptingKey = JwtF.GenerateEncryptingKey()
 		});
 
 	/// <summary>

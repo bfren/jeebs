@@ -1,9 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
-
 namespace Jeebs.DateRange_Tests;
 
 public class UpTo_Tests
@@ -19,6 +16,6 @@ public class UpTo_Tests
 
 		// Assert
 		Assert.Equal(DateTime.MinValue.StartOfDay(), range.Start);
-		Assert.Equal(date.EndOfDay(), range.End);
+		Assert.Equal(date.EndOfDay(), range.Finish);
 	}
 }

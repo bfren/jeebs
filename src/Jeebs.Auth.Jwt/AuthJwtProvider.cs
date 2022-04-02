@@ -1,14 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Security.Claims;
-using Jeebs.Config;
+using Jeebs.Auth.Jwt.Functions;
+using Jeebs.Config.Web.Auth.Jwt;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Auth;
 
 /// <inheritdoc cref="IAuthJwtProvider"/>
-public class AuthJwtProvider : IAuthJwtProvider
+public sealed class AuthJwtProvider : IAuthJwtProvider
 {
 	private readonly JwtConfig config;
 
@@ -22,10 +23,10 @@ public class AuthJwtProvider : IAuthJwtProvider
 		this.config = config;
 
 	/// <inheritdoc/>
-	public Option<string> CreateToken(ClaimsPrincipal principal) =>
-		F.JwtF.CreateToken(config, principal);
+	public Maybe<string> CreateToken(ClaimsPrincipal principal) =>
+		JwtF.CreateToken(config, principal);
 
 	/// <inheritdoc/>
-	public Option<ClaimsPrincipal> ValidateToken(string token) =>
-		F.JwtF.ValidateToken(config, token);
+	public Maybe<ClaimsPrincipal> ValidateToken(string token) =>
+		JwtF.ValidateToken(config, token);
 }

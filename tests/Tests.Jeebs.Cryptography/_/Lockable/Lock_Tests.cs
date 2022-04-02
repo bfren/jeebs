@@ -1,7 +1,6 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
 using static Jeebs.Cryptography.Lockable.M;
 
 namespace Jeebs.Cryptography.Lockable_Tests;
@@ -12,23 +11,22 @@ public class Lock_Tests
 	public void Incorrect_Key_Length_Returns_None_With_InvalidKeyLengthMsg()
 	{
 		// Arrange
-		var box = new Lockable<string>(F.Rnd.Str);
-		var key = F.Rnd.ByteF.Get(20);
+		var box = new Lockable<string>(Rnd.Str);
+		var key = Rnd.ByteF.Get(20);
 
 		// Act
 		var result = box.Lock(key);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<InvalidKeyLengthMsg>(none);
+		result.AssertNone().AssertType<InvalidKeyLengthMsg>();
 	}
 
 	[Fact]
 	public void Byte_Key_Returns_Locked()
 	{
 		// Arrange
-		var box = new Lockable<string>(F.Rnd.Str);
-		var key = F.Rnd.ByteF.Get(32);
+		var box = new Lockable<string>(Rnd.Str);
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
 		var result = box.Lock(key);
@@ -42,8 +40,8 @@ public class Lock_Tests
 	public void String_Key_Returns_Locked()
 	{
 		// Arrange
-		var box = new Lockable<string>(F.Rnd.Str);
-		var key = F.Rnd.Str;
+		var box = new Lockable<string>(Rnd.Str);
+		var key = Rnd.Str;
 
 		// Act
 		var result = box.Lock(key);

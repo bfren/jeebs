@@ -1,10 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using NSubstitute;
-using Xunit;
-
 namespace Jeebs.Data.TypeHandlers.Enumerated_Tests;
 
 public class Parse_Tests
@@ -18,7 +14,7 @@ public class Parse_Tests
 		var parse = Substitute.For<Func<string, EnumeratedTest>>();
 
 		// Act
-		_ = handler.ParseTest(value, parse, EnumeratedTest.Bar);
+		handler.ParseTest(value, parse, EnumeratedTest.Bar);
 
 		// Assert
 		parse.Received().Invoke(value);
@@ -43,8 +39,8 @@ public class Parse_Tests
 	{
 		public EnumeratedTest(string name) : base(name) { }
 
-		public readonly static EnumeratedTest Foo = new(nameof(Foo));
+		public static readonly EnumeratedTest Foo = new(nameof(Foo));
 
-		public readonly static EnumeratedTest Bar = new(nameof(Bar));
+		public static readonly EnumeratedTest Bar = new(nameof(Bar));
 	}
 }

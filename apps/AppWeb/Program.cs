@@ -3,4 +3,4 @@
 
 using AppWeb;
 
-await Jeebs.Apps.Program.MainAsync<App>(args).ConfigureAwait(false);
+Jeebs.Apps.Web.WebApp.Create<App>(args).Run();

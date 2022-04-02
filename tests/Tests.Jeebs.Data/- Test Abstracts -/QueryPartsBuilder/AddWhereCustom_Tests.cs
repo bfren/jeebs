@@ -1,15 +1,14 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using Xunit;
-using static Jeebs.Data.Querying.QueryPartsBuilder.M;
+using StrongId;
+using static Jeebs.Data.Query.QueryPartsBuilder.M;
 
-namespace Jeebs.Data.Querying.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : IStrongId
+	where TId : class, IStrongId, new()
 {
 	public abstract void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string input);
 
@@ -29,8 +28,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 		var result = builder.AddWhereCustom(v.Parts, input, new());
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TryingToAddEmptyClauseToWhereCustomMsg>(none);
+		result.AssertNone().AssertType<TryingToAddEmptyClauseToWhereCustomMsg>();
 	}
 
 	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input);
@@ -47,14 +45,13 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var clause = F.Rnd.Str;
+		var clause = Rnd.Str;
 
 		// Act
 		var result = builder.AddWhereCustom(v.Parts, clause, input);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<UnableToAddParametersToWhereCustomMsg>(none);
+		result.AssertNone().AssertType<UnableToAddParametersToWhereCustomMsg>();
 	}
 
 	public abstract void Test02_Returns_New_Parts_With_Clause_And_Parameters();
@@ -63,8 +60,8 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var clause = F.Rnd.Str;
-		var value = F.Rnd.Lng;
+		var clause = Rnd.Str;
+		var value = Rnd.Lng;
 		var parameters = new { value };
 
 		// Act

@@ -1,11 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Mapping;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.SqlServer;
 
@@ -29,10 +29,10 @@ public partial class SqlServerDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Name) + " AS " + Escape(column.Alias),
+				Escape(column.ColName) + " AS " + Escape(column.ColAlias),
 
 			false =>
-				Escape(column.Name)
+				Escape(column.ColName)
 		};
 
 	/// <inheritdoc/>
@@ -40,10 +40,10 @@ public partial class SqlServerDbClient : DbClient
 		withAlias switch
 		{
 			true =>
-				Escape(column.Table, column.Name) + " AS " + Escape(column.Alias),
+				Escape(column.TblName, column.ColName) + " AS " + Escape(column.ColAlias),
 
 			false =>
-				Escape(column.Table, column.Name)
+				Escape(column.TblName, column.ColName)
 		};
 
 	/// <inheritdoc/>

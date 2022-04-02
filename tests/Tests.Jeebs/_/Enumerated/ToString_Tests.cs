@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
 namespace Jeebs.Enumerated_Tests;
 
 public class ToString_Tests
@@ -11,7 +9,7 @@ public class ToString_Tests
 	public void ReturnsName()
 	{
 		// Arrange
-		var input = F.Rnd.Str;
+		var input = Rnd.Str;
 		var test = new Foo(input);
 
 		// Act

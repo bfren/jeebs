@@ -1,20 +1,26 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Auth.Data;
+using System.Collections.Generic;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
-using Jeebs.Config;
+using Jeebs.Config.Db;
 using Jeebs.Data;
+using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDb"/>
 public sealed class AuthDb : Db, IAuthDb
 {
+	/// <summary>
+	/// Schema name
+	/// </summary>
+	public static string Schema { get; } = "auth";
+
 	/// <inheritdoc/>
-	new public IAuthDbClient Client { get; private init; }
+	public new IAuthDbClient Client { get; private init; }
 
 	/// <summary>
 	/// Role Table
@@ -49,12 +55,13 @@ public sealed class AuthDb : Db, IAuthDb
 		UserRole = new();
 
 		// Map entities to tables
-		Map<AuthRoleEntity>.To(Role);
-		Map<AuthUserEntity>.To(User);
-		Map<AuthUserRoleEntity>.To(UserRole);
+		_ = Map<AuthRoleEntity>.To(Role);
+		_ = Map<AuthUserEntity>.To(User);
+		_ = Map<AuthUserRoleEntity>.To(UserRole);
 
 		// Map type handlers
 		TypeMap.AddStrongIdTypeHandlers();
+		TypeMap.AddJsonTypeHandler<List<string>>();
 	}
 
 	/// <inheritdoc/>

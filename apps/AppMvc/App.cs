@@ -1,27 +1,28 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppMvc.EfCore;
-using Jeebs;
-using Jeebs.Auth;
+using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Clients.MySql;
+using Jeebs.Logging;
 using Jeebs.Mvc.Auth;
+using Jeebs.Mvc.Data;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppMvc;
 
-public sealed class App : Jeebs.Apps.MvcAppWithData
+public sealed class App : MvcAppWithData
 {
 	public App() : base(false) { }
 
-	protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
+	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
-		base.ConfigureServices(env, config, services);
+		base.ConfigureServices(ctx, services);
 
-		services.AddAuthentication(config)
-			.WithData<MySqlDbClient>()
+		services.AddAuthentication(ctx.Configuration)
+			.WithData<MySqlDbClient>(true)
 			.WithJwt();
 
 		services.AddDbContext<EfCoreContext>(
@@ -31,11 +32,10 @@ public sealed class App : Jeebs.Apps.MvcAppWithData
 		services.AddTransient<IImageDriver, ImageDriver>();
 	}
 
-	protected override void Configure_Authorisation(IApplicationBuilder app, IConfiguration config)
+	protected override void ConfigureAuthorisation(WebApplication app, IConfiguration config)
 	{
 		app.UseAuthentication();
-
-		base.Configure_Authorisation(app, config);
+		base.ConfigureAuthorisation(app, config);
 	}
 
 	public override void Ready(IServiceProvider services, ILog log)

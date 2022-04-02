@@ -1,15 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using Jeebs.Linq;
+using Jeebs.Data.Map;
+using StrongId;
 
 namespace Jeebs.Data;
 
 public abstract partial class DbClient : IDbClient
 {
 	/// <inheritdoc/>
-	public Option<string> GetCreateQuery<TEntity>()
+	public Maybe<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId =>
 		Mapper.GetTableMapFor<TEntity>().Map(
 			x => GetCreateQuery(x.Name, x.Columns),
@@ -25,7 +25,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetRetrieveQuery<TEntity, TModel>(long id)
+	public Maybe<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
@@ -37,7 +37,7 @@ public abstract partial class DbClient : IDbClient
 			e => new M.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(long)"/>
+	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(object)"/>
 	/// <param name="table">Table name</param>
 	/// <param name="columns">List of columns to select</param>
 	/// <param name="idColumn">ID column for predicate</param>
@@ -46,11 +46,11 @@ public abstract partial class DbClient : IDbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id
+		object id
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetUpdateQuery<TEntity, TModel>(long id)
+	public Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
 			from map in Mapper.GetTableMapFor<TEntity>()
@@ -70,12 +70,12 @@ public abstract partial class DbClient : IDbClient
 			e => new M.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetUpdateQuery(ITableName, IColumnList, IColumn, long, IColumn)"/>
+	/// <inheritdoc cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn)"/>
 	protected abstract string GetUpdateQuery(
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id
+		object id
 	);
 
 	/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
@@ -88,12 +88,12 @@ public abstract partial class DbClient : IDbClient
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		long id,
+		object id,
 		IColumn? versionColumn
 	);
 
 	/// <inheritdoc/>
-	public Option<string> GetDeleteQuery<TEntity>(long id)
+	public Maybe<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId =>
 		Mapper.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
@@ -108,11 +108,11 @@ public abstract partial class DbClient : IDbClient
 			e => new M.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetDeleteQuery(ITableName, IColumn, long, IColumn?)"/>
+	/// <inheritdoc cref="GetDeleteQuery(ITableName, IColumn, object, IColumn?)"/>
 	protected abstract string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		long id
+		object id
 	);
 
 	/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
@@ -123,7 +123,7 @@ public abstract partial class DbClient : IDbClient
 	protected abstract string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		long id,
+		object id,
 		IColumn? versionColumn
 	);
 
@@ -147,5 +147,5 @@ public abstract partial class DbClient : IDbClient
 	internal string GetDeleteQueryTest(ITableName table, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetDeleteQuery(table, idColumn, id, versionColumn);
 
-	#endregion
+	#endregion Testing
 }

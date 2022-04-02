@@ -1,15 +1,12 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Security.Claims;
 using System.Security.Principal;
-using Jeebs;
-using Jeebs.Config;
-using NSubstitute;
-using Xunit;
-using static F.JwtF.M;
+using Jeebs.Config.Web.Auth.Jwt;
+using static Jeebs.Auth.Jwt.Functions.JwtF.M;
 
-namespace F.JwtF_Tests;
+namespace Jeebs.Auth.Jwt.Functions.JwtF_Tests;
 
 public class CreateToken_Tests
 {
@@ -25,8 +22,7 @@ public class CreateToken_Tests
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NullIdentityMsg>(none);
+		result.AssertNone().AssertType<NullIdentityMsg>();
 	}
 
 	[Fact]
@@ -40,8 +36,7 @@ public class CreateToken_Tests
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<IdentityNotAuthenticatedMsg>(none);
+		result.AssertNone().AssertType<IdentityNotAuthenticatedMsg>();
 	}
 
 	[Fact]
@@ -58,8 +53,7 @@ public class CreateToken_Tests
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<ConfigInvalidMsg>(none);
+		result.AssertNone().AssertType<ConfigInvalidMsg>();
 	}
 
 	[Fact]
@@ -81,8 +75,7 @@ public class CreateToken_Tests
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<SigningKeyNotLongEnoughMsg>(none);
+		result.AssertNone().AssertType<SigningKeyNotLongEnoughMsg>();
 	}
 
 	[Fact]
@@ -105,8 +98,7 @@ public class CreateToken_Tests
 		var result = JwtF.CreateToken(config, principal);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<EncryptingKeyNotLongEnoughMsg>(none);
+		result.AssertNone().AssertType<EncryptingKeyNotLongEnoughMsg>();
 	}
 
 	[Fact]

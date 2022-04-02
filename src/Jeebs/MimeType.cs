@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace Jeebs;
 /// <summary>
 /// MimeType enumeration
 /// </summary>
-public record class MimeType : Enumerated
+public sealed record class MimeType : Enumerated
 {
 	/// <summary>
 	/// Create new value
@@ -114,30 +114,29 @@ public record class MimeType : Enumerated
 	/// </summary>
 	public static readonly MimeType Zip = new("application/zip");
 
-	#endregion
+	#endregion Default Mime Types
 
 	/// <summary>
 	/// List of all mime types
 	/// Must be static so it is thread safe
 	/// </summary>
-	private static readonly HashSet<MimeType> all;
+	private static HashSet<MimeType> All { get; }
 
 	/// <summary>
 	/// Populate list of mime types
 	/// </summary>
 	static MimeType() =>
-		all = new HashSet<MimeType>(new[] { Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip });
+		All = new HashSet<MimeType>(new[] { Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip });
 
 	internal static HashSet<MimeType> AllTest() =>
-		all;
+		All;
 
 	/// <summary>
 	/// Add a custom mime types
 	/// </summary>
 	/// <param name="mimeType">Mime types to add</param>
-	/// <returns>False if the mime type already exists</returns>
 	public static bool AddCustomMimeType(MimeType mimeType) =>
-		all.Add(mimeType);
+		All.Add(mimeType);
 
 	/// <summary>
 	/// Parse MimeType value
@@ -152,6 +151,6 @@ public record class MimeType : Enumerated
 		}
 
 		// Parse and return value - if None, return Blank
-		return Parse(mimeType, all.ToArray()).Unwrap(() => Blank);
+		return Parse(mimeType, All.ToArray()).Unwrap(() => Blank);
 	}
 }

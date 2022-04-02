@@ -1,8 +1,5 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Jeebs.LazyAsync_Tests;
 
@@ -12,7 +9,7 @@ public class Value_Tests
 	public void Returns_Task()
 	{
 		// Arrange
-		var task = new Task<int>(() => F.Rnd.Int);
+		var task = new Task<int>(() => Rnd.Int);
 		var l0 = new LazyAsync<int>(task);
 		var l1 = new LazyAsync<int>(() => task);
 
@@ -29,17 +26,25 @@ public class Value_Tests
 	public async Task Executes_Once()
 	{
 		// Arrange
-		var counter = 0;
-		var t = () => Task.FromResult(++counter);
-		var l = new LazyAsync<int>(t);
+		var lazyCounter = 0;
+		var taskCounter = 0;
+		var times = 10;
+		var l = () => Task.FromResult(++lazyCounter);
+		var t = () => Task.FromResult(++taskCounter);
+		var a = new LazyAsync<int>(l);
 
 		// Act
-		for (int i = 0; i < 100; i++)
+		for (var i = 0; i < times; i++)
 		{
-			_ = await l.Value.ConfigureAwait(false);
+			await a.Value; // should run task once
+		}
+		for (var i = 0; i < times; i++)
+		{
+			await t(); // should run task each time
 		}
 
 		// Assert
-		Assert.Equal(1, counter);
+		Assert.Equal(1, lazyCounter);
+		Assert.Equal(times, taskCounter);
 	}
 }

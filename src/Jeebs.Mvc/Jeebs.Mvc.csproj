@@ -1,8 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-	</PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Apps.WebApps\Jeebs.Apps.WebApps.csproj" />
+		<ProjectReference Include="..\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
 	</ItemGroup>
 </Project>

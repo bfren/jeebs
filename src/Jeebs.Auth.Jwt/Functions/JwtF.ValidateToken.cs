@@ -1,16 +1,14 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Jeebs;
-using Jeebs.Auth;
-using Jeebs.Config;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Messages;
 using Microsoft.IdentityModel.Tokens;
-using static F.OptionF;
 
-namespace F;
+namespace Jeebs.Auth.Jwt.Functions;
 
 public static partial class JwtF
 {
@@ -19,7 +17,7 @@ public static partial class JwtF
 	/// </summary>
 	/// <param name="config">JwtConfig</param>
 	/// <param name="token">Token value</param>
-	public static Option<ClaimsPrincipal> ValidateToken(JwtConfig config, string token)
+	public static Maybe<ClaimsPrincipal> ValidateToken(JwtConfig config, string token)
 	{
 		try
 		{
@@ -32,7 +30,7 @@ public static partial class JwtF
 				IssuerSigningKey = config.GetSigningKey()
 			};
 
-			config.GetEncryptingKey().IfSome(encryptingKey => parameters.TokenDecryptionKey = encryptingKey);
+			_ = config.GetEncryptingKey().IfSome(encryptingKey => parameters.TokenDecryptionKey = encryptingKey);
 
 			// Create handler to validate token
 			var handler = new JwtSecurityTokenHandler();
@@ -42,19 +40,18 @@ public static partial class JwtF
 		}
 		catch (SecurityTokenNotYetValidException)
 		{
-			return None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
+			return F.None<ClaimsPrincipal, M.TokenIsNotValidYetMsg>();
 		}
 		catch (Exception e) when (e.Message.Contains("IDX10223"))
 		{
-			return None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
+			return F.None<ClaimsPrincipal, M.TokenHasExpiredMsg>();
 		}
 		catch (Exception e)
 		{
-			return None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
+			return F.None<ClaimsPrincipal, M.ValidatingTokenExceptionMsg>(e);
 		}
 	}
 
-	/// <summary>Messages</summary>
 	public static partial class M
 	{
 		/// <summary>The token has expired</summary>
@@ -64,6 +61,7 @@ public static partial class JwtF
 		public sealed record class TokenIsNotValidYetMsg : Msg;
 
 		/// <summary>Exception while validating token</summary>
+		/// <param name="Value">Exception</param>
 		public sealed record class ValidatingTokenExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

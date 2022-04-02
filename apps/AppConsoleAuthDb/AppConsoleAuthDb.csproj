@@ -24,9 +24,11 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Jeebs.Apps.ConsoleApps\Jeebs.Apps.ConsoleApps.csproj" />
+	  <ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
 	  <ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
 	  <ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.PostgreSql\Jeebs.Auth.Data.Clients.PostgreSql.csproj" />
 	  <ProjectReference Include="..\..\src\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj" />
+	  <ProjectReference Include="..\..\src\Jeebs.Logging.Serilog.MySql\Jeebs.Logging.Serilog.MySql.csproj" />
+	  <ProjectReference Include="..\..\src\Jeebs.Logging.Serilog.PostgreSql\Jeebs.Logging.Serilog.PostgreSql.csproj" />
 	</ItemGroup>
 </Project>

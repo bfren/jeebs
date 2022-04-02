@@ -1,9 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
-
-namespace Jeebs.ImmutableList_Tests;
+namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class Replace_Tests
 {
@@ -11,9 +9,9 @@ public class Replace_Tests
 	public void Returns_List_With_Item_Replaced()
 	{
 		// Arrange
-		var i0 = F.Rnd.Str;
-		var i1 = F.Rnd.Str;
-		var i2 = F.Rnd.Str;
+		var i0 = Rnd.Str;
+		var i1 = Rnd.Str;
+		var i2 = Rnd.Str;
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
@@ -30,15 +28,15 @@ public class Replace_Tests
 	public void Returns_New_List_With_Item_Replaced()
 	{
 		// Arrange
-		var i0 = F.Rnd.Str;
-		var i1 = F.Rnd.Str;
-		var i2 = F.Rnd.Str;
+		var i0 = Rnd.Str;
+		var i1 = Rnd.Str;
+		var i2 = Rnd.Str;
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
 		var result = list.Replace(i0, i2);
-		i1 = F.Rnd.Str;
-		i2 = F.Rnd.Str;
+		i1 = Rnd.Str;
+		i2 = Rnd.Str;
 
 		// Assert
 		Assert.Collection(result,

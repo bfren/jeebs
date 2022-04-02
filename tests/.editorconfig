@@ -3,14 +3,55 @@
 # Add file header
 file_header_template = Jeebs Unit Tests\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+insert_final_newline = true
+
+# CA1000: Do not declare static members on generic types
+dotnet_diagnostic.CA1000.severity = none
+
+# CA1304: Specify CultureInfo
+dotnet_diagnostic.CA1304.severity = none
+
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = none
+
+# CA1310: Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = none
+
+# CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = none
+
+# CA1711: Identifiers should not have incorrect suffix
+dotnet_diagnostic.CA1711.severity = none
+
+# CA2201: Do not raise reserved exception types
+dotnet_diagnostic.CA2201.severity = none
+
+# IDE0022: Use expression body for methods
+dotnet_diagnostic.IDE0022.severity = none
+
+# IDE0053: Use expression body for lambda expressions
+dotnet_diagnostic.IDE0053.severity = none
+
+# IDE0058: Expression value is never used
+dotnet_diagnostic.IDE0058.severity = none
+
 # RCS1021: Convert lambda expression body to expression-body.
 dotnet_diagnostic.RCS1021.severity = none
 
 # RCS1032: Remove redundant parentheses.
 dotnet_diagnostic.RCS1032.severity = none
 
+# RCS1090: Add call to 'ConfigureAwait' (or vice versa).
+dotnet_diagnostic.RCS1090.severity = none
+
+# RCS1102: Make class static.
+dotnet_diagnostic.RCS1102.severity = none
+
 # RCS1118: Mark local variable as const.
 dotnet_diagnostic.RCS1118.severity = none
+
+# RCS1158: Static member in generic type should use a type parameter.
+dotnet_diagnostic.RCS1158.severity = none
 
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none

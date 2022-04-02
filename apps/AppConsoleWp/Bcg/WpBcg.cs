@@ -1,10 +1,9 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.Config;
+using Jeebs.Config.Db;
 using Jeebs.WordPress;
-using Jeebs.WordPress.Data.Enums;
+using Jeebs.WordPress.Enums;
 using Microsoft.Extensions.Options;
 
 namespace AppConsoleWp.Bcg;
@@ -17,7 +16,7 @@ public sealed class WpBcg : Wp<
 	Entities.Comment,
 	Entities.CommentMeta,
 	Entities.Link,
-	Entities.Option,
+	Entities.Opt,
 	Entities.Post,
 	Entities.PostMeta,
 	Entities.Term,
@@ -34,15 +33,13 @@ public sealed class WpBcg : Wp<
 	/// <param name="dbConfig">DbConfig</param>
 	/// <param name="wpConfig">WpBcgConfig</param>
 	/// <param name="log">ILog</param>
-	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
+	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, Jeebs.Logging.ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>
 	/// Register custom post types
 	/// </summary>
-	public override void RegisterCustomPostTypes()
-	{
+	public override void RegisterCustomPostTypes() =>
 		PostType.AddCustomPostType(PostTypes.Sermon);
-	}
 
 	/// <summary>
 	/// Register custom taxonomies
@@ -61,11 +58,11 @@ public sealed class WpBcg : Wp<
 	/// </summary>
 	public static class CustomFields
 	{
-		public readonly static AudioRecordingCustomField Audio = new();
-		public readonly static FeedImageCustomField FeedImage = new();
-		public readonly static FirstPreachedCustomField FirstPreached = new();
-		public readonly static PassageCustomField Passage = new();
-		public readonly static PdfCustomField Pdf = new();
+		public static readonly AudioRecordingCustomField Audio = new();
+		public static readonly FeedImageCustomField FeedImage = new();
+		public static readonly FirstPreachedCustomField FirstPreached = new();
+		public static readonly PassageCustomField Passage = new();
+		public static readonly PdfCustomField Pdf = new();
 	}
 
 	/// <summary>
@@ -73,7 +70,7 @@ public sealed class WpBcg : Wp<
 	/// </summary>
 	public static class PostTypes
 	{
-		public readonly static PostType Sermon = new("sermon");
+		public static readonly PostType Sermon = new("sermon");
 	}
 
 	/// <summary>
@@ -81,10 +78,10 @@ public sealed class WpBcg : Wp<
 	/// </summary>
 	public static class Taxonomies
 	{
-		public readonly static Taxonomy BibleBook = new("bible_book");
-		public readonly static Taxonomy PlacePreached = new("place_preached");
-		public readonly static Taxonomy Section = new("section");
-		public readonly static Taxonomy Series = new("series");
-		public readonly static Taxonomy Theme = new("theme");
+		public static readonly Taxonomy BibleBook = new("bible_book");
+		public static readonly Taxonomy PlacePreached = new("place_preached");
+		public static readonly Taxonomy Section = new("section");
+		public static readonly Taxonomy Series = new("series");
+		public static readonly Taxonomy Theme = new("theme");
 	}
 }

@@ -1,16 +1,12 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Security.Claims;
 using System.Security.Principal;
-using Jeebs;
-using Jeebs.Config;
-using NSubstitute;
-using Xunit;
-using static F.JwtF.M;
+using Jeebs.Config.Web.Auth.Jwt;
+using static Jeebs.Auth.Jwt.Functions.JwtF.M;
 
-namespace F.JwtF_Tests;
+namespace Jeebs.Auth.Jwt.Functions.JwtF_Tests;
 
 public class ValidateToken_Tests
 {
@@ -65,8 +61,7 @@ public class ValidateToken_Tests
 		var result = JwtF.ValidateToken(config, token);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TokenIsNotValidYetMsg>(none);
+		result.AssertNone().AssertType<TokenIsNotValidYetMsg>();
 	}
 
 	[Fact]
@@ -79,8 +74,7 @@ public class ValidateToken_Tests
 		var result = JwtF.ValidateToken(config, token);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<TokenHasExpiredMsg>(none);
+		result.AssertNone().AssertType<TokenHasExpiredMsg>();
 	}
 
 	[Fact]

@@ -1,16 +1,17 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Mapping;
-using NSubstitute;
+using Jeebs.Data.Map;
+using MaybeF.Extensions;
 using NSubstitute.Extensions;
+using StrongId;
 
-namespace Jeebs.Data.Querying.QueryOptions_Tests;
+namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : IStrongId, new()
+	where TId : class, IStrongId, new()
 {
 	protected abstract (TOptions options, TBuilder builder) Setup();
 
@@ -23,8 +24,8 @@ public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	{
 		var parts = new QueryParts(table)
 		{
-			Maximum = F.Rnd.Ulng,
-			Skip = F.Rnd.Ulng
+			Maximum = Rnd.ULng,
+			Skip = Rnd.ULng
 		};
 
 		var builder = Substitute.For<TBuilder>();

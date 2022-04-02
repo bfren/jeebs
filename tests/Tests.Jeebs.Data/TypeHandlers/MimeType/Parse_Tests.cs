@@ -1,7 +1,6 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit;
 using Base = Jeebs.MimeType_Tests.Parse_Tests;
 
 namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests;
@@ -40,7 +39,7 @@ public class Parse_Tests
 	public void Invalid_Value_Returns_Blank_MimeType()
 	{
 		// Arrange
-		var value = F.Rnd.Str;
+		var value = Rnd.Str;
 		var handler = new MimeTypeTypeHandler();
 
 		// Act

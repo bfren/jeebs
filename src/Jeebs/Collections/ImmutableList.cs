@@ -1,14 +1,13 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Jeebs.Linq;
 using Sys = System.Collections.Immutable;
 
-namespace Jeebs;
+namespace Jeebs.Collections;
 
 /// <summary>
 /// Alternative methods for creating an <see cref="ImmutableList{T}"/>
@@ -35,8 +34,15 @@ public static class ImmutableList
 	/// </summary>
 	/// <typeparam name="T">List Item type</typeparam>
 	/// <param name="args">Items to add</param>
-	public static ImmutableList<T> Create<T>(params T[] args) =>
-		new(args);
+	public static ImmutableList<T> Create<T>(params T[]? args) =>
+		args switch
+		{
+			T[] =>
+				new(args),
+
+			_ =>
+				new()
+		};
 
 	/// <summary>
 	/// Merge multiple <see cref="ImmutableList{T}"/> objects into one
@@ -53,7 +59,7 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 	internal Sys.ImmutableList<T> List { get; init; }
 
 	/// <inheritdoc/>
-	public Option<T> this[int index] =>
+	public Maybe<T> this[int index] =>
 		List.ElementAtOrNone(index);
 
 	/// <inheritdoc/>
@@ -63,13 +69,17 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 	/// <summary>
 	/// Create a new, empty <see cref="ImmutableList{T}"/>
 	/// </summary>
-	public ImmutableList() : this(Sys.ImmutableList<T>.Empty) { }
+	public ImmutableList() :
+		this(Sys.ImmutableList<T>.Empty)
+	{ }
 
 	/// <summary>
 	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
 	/// </summary>
 	/// <param name="collection">Collection of items to add</param>
-	public ImmutableList(IEnumerable<T> collection) : this(Sys.ImmutableList<T>.Empty.AddRange(collection)) { }
+	public ImmutableList(IEnumerable<T> collection) :
+		this(Sys.ImmutableList<T>.Empty.AddRange(collection))
+	{ }
 
 	internal ImmutableList(Sys.ImmutableList<T> list) =>
 		List = list;
@@ -87,20 +97,20 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 		List.ToList();
 
 	/// <inheritdoc/>
-	public IImmutableList<T> With(T add) =>
-		this with { List = List.Add(add) };
+	public IImmutableList<T> WithItem(T itemToAdd) =>
+		this with { List = List.Add(itemToAdd) };
 
 	/// <inheritdoc/>
-	public IImmutableList<T> Without(T remove) =>
-		this with { List = List.Remove(remove) };
+	public IImmutableList<T> WithoutItem(T itemToRemove) =>
+		this with { List = List.Remove(itemToRemove) };
 
 	/// <inheritdoc/>
-	public IImmutableList<T> WithRange(params T[] add) =>
-		this with { List = List.AddRange(add) };
+	public IImmutableList<T> WithRange(params T[] itemsToAdd) =>
+		this with { List = List.AddRange(itemsToAdd) };
 
 	/// <inheritdoc/>
-	public IImmutableList<T> WithoutRange(params T[] remove) =>
-		this with { List = List.RemoveRange(remove) };
+	public IImmutableList<T> WithoutRange(params T[] itemsToRemove) =>
+		this with { List = List.RemoveRange(itemsToRemove) };
 
 	/// <inheritdoc/>
 	public IImmutableList<T> Replace(T remove, T add) =>

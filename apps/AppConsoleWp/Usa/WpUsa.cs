@@ -1,8 +1,8 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.Config;
+using Jeebs.Config.Db;
+using Jeebs.Logging;
 using Jeebs.WordPress;
 using Microsoft.Extensions.Options;
 
@@ -16,7 +16,7 @@ public sealed class WpUsa : Wp<
 	Entities.Comment,
 	Entities.CommentMeta,
 	Entities.Link,
-	Entities.Option,
+	Entities.Opt,
 	Entities.Post,
 	Entities.PostMeta,
 	Entities.Term,

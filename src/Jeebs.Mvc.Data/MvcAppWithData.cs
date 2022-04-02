@@ -1,26 +1,32 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Mvc.Data.ModelBinding;
+using Jeebs.Apps.Web;
 using Microsoft.AspNetCore.Mvc;
+using StrongId.Mvc;
 
-namespace Jeebs.Apps;
+namespace Jeebs.Mvc.Data;
 
 /// <summary>
 /// MVC Application bootstrapped using IHost - with Data access enabled
 /// </summary>
-public abstract class MvcAppWithData : MvcApp
+public class MvcAppWithData : MvcApp
 {
 	/// <summary>
-	/// Create object
+	/// Create MVC app with data and HSTS enabled
+	/// </summary>
+	public MvcAppWithData() : this(true) { }
+
+	/// <summary>
+	/// Create MVC app with data
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-	protected MvcAppWithData(bool useHsts) : base(useHsts) { }
+	public MvcAppWithData(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	public override void ConfigureServices_MvcOptions(MvcOptions opt)
+	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
-		base.ConfigureServices_MvcOptions(opt);
+		base.ConfigureServicesMvcOptions(opt);
 
 		// Add custom model binders
 		opt.ModelBinderProviders.Insert(0, new StrongIdModelBinderProvider());

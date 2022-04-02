@@ -1,25 +1,27 @@
 {
-	"jeebs": {
-		"app": {
-			"name": "Razor",
-			"suite": "Jeebs"
-		},
+  "jeebs": {
+    "app": {
+      "name": "Razor",
+      "suite": "Jeebs"
+    },
 		"logging": {
 			"minimum": "Verbose",
-			"console": true,
 			"providers": {
+				"console": {
+					"enabled": true
+				},
 				"seq.server04": {
 					"enabled": true
 				}
 			}
 		},
-		"services": {
-			"seq": {
-				"server04": {
-					"server": "",
-					"apiKey": ""
-				}
-			}
-		}
-	}
+    "services": {
+      "seq": {
+        "server04": {
+          "server": "",
+          "apiKey": ""
+        }
+      }
+    }
+  }
 }

@@ -1,10 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
+using Jeebs.Functions;
 using Npgsql;
 using NpgsqlTypes;
-using static F.JsonF;
 
 namespace Jeebs.Data.Clients.PostgreSql.Parameters;
 
@@ -22,10 +22,10 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 		obj switch
 		{
 			{ } =>
-				new(Serialise(obj).Unwrap(Empty)),
+				new(JsonF.Serialise(obj).Unwrap(JsonF.Empty)),
 
 			_ =>
-				new(Empty)
+				new(JsonF.Empty)
 		};
 
 	/// <summary>

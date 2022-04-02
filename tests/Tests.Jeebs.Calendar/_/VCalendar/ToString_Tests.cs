@@ -1,10 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Text;
 using Jeebs.Calendar.Models;
-using Xunit;
+using Jeebs.Collections;
 
 namespace Jeebs.Calendar.VCalendar_Tests;
 
@@ -14,15 +13,14 @@ public class ToString_Tests
 	public void Returns_Correct_VCalendar()
 	{
 		// Arrange
-		var e0 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, false);
-		var e1 = new EventModel(F.Rnd.DateTime, F.Rnd.DateTime, false, F.Rnd.Str, F.Rnd.Str, F.Rnd.Str, true);
+		var e0 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
+		var e1 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, true);
 		var events = ImmutableList.Create(e0, e1);
-		var lastModified = F.Rnd.DateTime;
+		var lastModified = Rnd.DateTime;
 		var lastModifiedStr = VCalendar.Format(lastModified);
-		var createdStr = VCalendar.Format(DateTime.Now);
 		var calendar = new CalendarModel(events, lastModified);
-		var tzid = F.Rnd.Str;
-		var domain = F.Rnd.Str;
+		var tzid = Rnd.Str;
+		var domain = Rnd.Str;
 		var vcal = new VCalendar(calendar, tzid);
 		var expected = new StringBuilder()
 			.AppendLine("BEGIN:VCALENDAR")
@@ -49,7 +47,7 @@ public class ToString_Tests
 			.AppendLine("END:VTIMEZONE")
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{lastModifiedStr}-000000@{domain}")
-			.AppendLine($"CREATED:{createdStr}")
+			.AppendLine($"CREATED:{lastModifiedStr}")
 			.AppendLine($"LAST-MODIFIED:{lastModifiedStr}")
 			.AppendLine($"DTSTAMP:{lastModifiedStr}")
 			.AppendLine($"SUMMARY:{e0.Summary}")
@@ -60,7 +58,7 @@ public class ToString_Tests
 			.AppendLine("END:VEVENT")
 			.AppendLine("BEGIN:VEVENT")
 			.AppendLine($"UID:{lastModifiedStr}-000001@{domain}")
-			.AppendLine($"CREATED:{createdStr}")
+			.AppendLine($"CREATED:{lastModifiedStr}")
 			.AppendLine($"LAST-MODIFIED:{lastModifiedStr}")
 			.AppendLine($"DTSTAMP:{lastModifiedStr}")
 			.AppendLine($"SUMMARY:{e1.Summary}")

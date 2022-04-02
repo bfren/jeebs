@@ -1,8 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Net.Http;
 using Jeebs.Config;
+using Jeebs.Config.Services.Seq;
+using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Services.Drivers.Webhook.Seq;

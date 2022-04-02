@@ -1,34 +1,36 @@
 {
-	"jeebs": {
-		"app": {
-			"name": "Console",
-			"suite": "Jeebs"
-		},
+  "jeebs": {
+    "app": {
+      "name": "Console",
+      "suite": "Jeebs"
+    },
 		"logging": {
 			"minimum": "Debug",
-			"console": true,
 			"providers": {
+				"console": {
+					"enabled": true
+				},
 				"seq.server04": {
 					"enabled": true
 				}
 			}
 		},
-		"services": {
-			"seq": {
-				"server04": {
-					"server": "",
-					"apiKey": ""
-				},
-				"wrong": {
-					"server": "",
-					"apiKey": ""
-				}
-			},
-			"slack": {
-				"bcgdesign": {
-					"webhook": ""
-				}
-			}
-		}
-	}
+    "services": {
+      "seq": {
+        "server04": {
+          "server": "",
+          "apiKey": ""
+        },
+        "wrong": {
+          "server": "",
+          "apiKey": ""
+        }
+      },
+      "slack": {
+        "bcgdesign": {
+          "webhook": ""
+        }
+      }
+    }
+  }
 }

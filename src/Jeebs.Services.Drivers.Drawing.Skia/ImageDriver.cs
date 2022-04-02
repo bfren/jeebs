@@ -1,10 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.IO;
+using Jeebs.Messages;
 using Jeebs.Services.Drawing;
 using SkiaSharp;
-using static F.OptionF;
 
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
@@ -14,11 +14,11 @@ namespace Jeebs.Services.Drivers.Drawing.Skia;
 public sealed class ImageDriver : IImageDriver
 {
 	/// <inheritdoc/>
-	public Option<IImageWrapper> FromFile(string path)
+	public Maybe<IImageWrapper> FromFile(string path)
 	{
 		if (!File.Exists(path))
 		{
-			return None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
+			return F.None<IImageWrapper>(new M.ImageFileNotFoundMsg(path));
 		}
 
 		// Create and return image object
@@ -38,6 +38,7 @@ public sealed class ImageDriver : IImageDriver
 	public static class M
 	{
 		/// <summary>The image file was not found</summary>
+		/// <param name="Value">File Path</param>
 		public sealed record class ImageFileNotFoundMsg(string Value) : NotFoundMsg<string>
 		{
 			/// <inheritdoc/>

@@ -1,12 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Data;
+using Jeebs.Logging;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthRoleRepository{TRoleEntity}"/>
 public interface IAuthRoleRepository : IAuthRoleRepository<AuthRoleEntity>
@@ -23,6 +23,6 @@ public sealed class AuthRoleRepository : Repository<AuthRoleEntity, AuthRoleId>,
 	public AuthRoleRepository(IAuthDb db, ILog<AuthRoleRepository> log) : base(db, log) { }
 
 	/// <inheritdoc/>
-	public Task<Option<AuthRoleId>> CreateAsync(string name) =>
+	public Task<Maybe<AuthRoleId>> CreateAsync(string name) =>
 		CreateAsync(new AuthRoleEntity { Name = name });
 }

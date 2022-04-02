@@ -87,22 +87,8 @@
 					"required": [ "minimum" ],
 					"additionalProperties": false,
 					"properties": {
-						"console": {
-							"type": "boolean",
-							"description": "[Optional] Whether or not to enable console output",
-							"default": true
-						},
-						"consoleOutputTemplate": {
-							"type": "string",
-							"description": "[Optional] Override the default console output template"
-						},
-						"addPrefixToConsoleMessages": {
-							"type": "boolean",
-							"description": "[Optional] Whether or not to add a prefix to console messages (to help them stand out!)",
-							"default": true
-						},
 						"minimum": {
-							"$ref": "#/definitions/logging/minimum"
+							"$ref": "#/definitions/logging/level"
 						},
 						"providers": {
 							"type": "object",
@@ -118,17 +104,21 @@
 					"description": "Third-party services configuration",
 					"additionalProperties": false,
 					"properties": {
-						"rocketChat": {
+						"console": {
 							"type": "object",
-							"default": "Rocket Chat configuration",
+							"description": "Console configuration",
 							"additionalProperties": {
 								"type": "object",
-								"required": [ "webhook" ],
 								"additionalProperties": false,
 								"properties": {
-									"webhook": {
+									"template": {
 										"type": "string",
-										"description": "Webhooks can be created through Rocket.Chat administration 'Integrations' page"
+										"description": "[Optional] Override the default console output template"
+									},
+									"addPrefix": {
+										"type": "boolean",
+										"description": "[Optional] Whether or not to add a prefix to console messages (to help them stand out!)",
+										"default": true
 									}
 								}
 							}
@@ -167,33 +157,6 @@
 									"showAttachments": {
 										"type": "boolean",
 										"description": "[Optional] Whether or not to show attachments"
-									}
-								}
-							}
-						},
-						"twitter": {
-							"type": "object",
-							"default": "Twitter configuration",
-							"additionalProperties": {
-								"type": "object",
-								"required": [ "consumerKey", "consumerSecret", "userAccessSecret", "userAccessToken" ],
-								"additionalProperties": false,
-								"properties": {
-									"consumerKey": {
-										"type": "string",
-										"default": "User Access Token - see Twitter API access documentation"
-									},
-									"consumerSecret": {
-										"type": "string",
-										"default": "User Access Token - see Twitter API access documentation"
-									},
-									"userAccessSecret": {
-										"type": "string",
-										"default": "User Access Token - see Twitter API access documentation"
-									},
-									"userAccessToken": {
-										"type": "string",
-										"default": "User Access Token - see Twitter API access documentation"
 									}
 								}
 							}
@@ -320,7 +283,7 @@
 			}
 		},
 		"logging": {
-			"minimum": {
+			"level": {
 				"type": "string",
 				"description": "Microsoft compatible logging levels",
 				"enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
@@ -336,7 +299,7 @@
 						"description": "Whether or not this provider is enabled"
 					},
 					"minimum": {
-						"$ref": "#/definitions/logging/minimum"
+						"$ref": "#/definitions/logging/level"
 					}
 				}
 			}

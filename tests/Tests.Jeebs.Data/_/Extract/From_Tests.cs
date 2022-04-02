@@ -1,10 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Entities;
-using Jeebs.Data.Mapping;
-using Xunit;
-using static Jeebs.Data.ExtractMsg;
+using Jeebs.Data.Attributes;
+using Jeebs.Data.Map;
+using static Jeebs.Data.Extract.M;
 
 namespace Jeebs.Data.Extract_Tests;
 
@@ -33,8 +32,7 @@ public class From_Tests
 		var result = Extract<FooNone>.From(table);
 
 		// Assert
-		var none = result.AssertNone();
-		Assert.IsType<NoColumnsExtractedFromTableMsg>(none);
+		result.AssertNone().AssertType<NoColumnsExtractedFromTableMsg>();
 	}
 
 	[Fact]
@@ -51,9 +49,9 @@ public class From_Tests
 		// Assert
 		var some = result.AssertSome();
 		Assert.Collection(some,
-			x => Assert.Equal((t0.GetName(), t0.FooId), (x.Table, x.Name)),
-			x => Assert.Equal(t0.Bar0, x.Name),
-			x => Assert.Equal(t1.Bar2, x.Name)
+			x => Assert.Equal((t0.GetName(), t0.FooId), (x.TblName, x.ColName)),
+			x => Assert.Equal(t0.Bar0, x.ColName),
+			x => Assert.Equal(t1.Bar2, x.ColName)
 		);
 	}
 

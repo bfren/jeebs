@@ -1,8 +1,6 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using Xunit;
 using static Jeebs.DateTimeInt.M;
 
 namespace Jeebs.DateTimeInt_Tests;
@@ -35,8 +33,7 @@ public class ToDateTime_Tests
 		var result = input.ToDateTime();
 
 		// Assert
-		var none = result.AssertNone();
-		var msg = Assert.IsType<InvalidDateTimeMsg>(none);
-		Assert.Equal(part, msg.Value.part);
+		var none = result.AssertNone().AssertType<InvalidDateTimeMsg>();
+		Assert.Equal(part, none.Value.part);
 	}
 }

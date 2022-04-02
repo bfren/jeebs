@@ -1,6 +1,8 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using Jeebs.Auth.Data.Tables;
 using SimpleMigrations;
 
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
@@ -11,39 +13,39 @@ namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 [Migration(2, "Add user table")]
 public sealed class AddUserTable : Migration
 {
+	private string Col(Func<AuthUserTable, string> selector) =>
+		selector(new());
+
 	/// <summary>
 	/// Migrate up
 	/// </summary>
-	protected override void Up()
-	{
-		Execute(@"
-			CREATE TABLE IF NOT EXISTS ""Auth"".""User""
-			(
-				""UserId"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-				""UserVersion"" integer NOT NULL DEFAULT 0,
-				""UserEmailAddress"" character(128) COLLATE pg_catalog.default NOT NULL,
-				""UserPasswordHash"" character(128) COLLATE pg_catalog.default NOT NULL,
-				""UserTotpSecret"" character(64) COLLATE pg_catalog.default,
-				""UserTotpBackupCodes"" character(132) COLLATE pg_catalog.default,
-				""UserFriendlyName"" character(32) COLLATE pg_catalog.default,
-				""UserGivenName"" character(128) COLLATE pg_catalog.default,
-				""UserFamilyName"" character(128) COLLATE pg_catalog.default,
-				""UserIsEnabled"" bit(1) NOT NULL DEFAULT (0)::bit(1),
-				""UserIsSuper"" bit(1) NOT NULL DEFAULT (0)::bit(1),
-				""UserLastSignedIn"" timestamp without time zone,
-				CONSTRAINT ""UserId_Key"" PRIMARY KEY(""UserId""),
-				CONSTRAINT ""UserEmailAddress_Unique"" UNIQUE(""UserEmailAddress"")
-			)
-			TABLESPACE pg_default
-			;
-		");
-	}
+	protected override void Up() => Execute($@"
+		CREATE TABLE IF NOT EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
+		(
+			""{Col(u => u.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			""{Col(u => u.Version)}"" integer NOT NULL DEFAULT 0,
+			""{Col(u => u.EmailAddress)}"" character(128) COLLATE pg_catalog.default NOT NULL,
+			""{Col(u => u.PasswordHash)}"" character(128) COLLATE pg_catalog.default NOT NULL,
+			""{Col(u => u.TotpSecret)}"" character(64) COLLATE pg_catalog.default,
+			""{Col(u => u.TotpBackupCodes)}"" character(132) COLLATE pg_catalog.default,
+			""{Col(u => u.FriendlyName)}"" character(32) COLLATE pg_catalog.default,
+			""{Col(u => u.GivenName)}"" character(128) COLLATE pg_catalog.default,
+			""{Col(u => u.FamilyName)}"" character(128) COLLATE pg_catalog.default,
+			""{Col(u => u.IsEnabled)}"" boolean NOT NULL DEFAULT false,
+			""{Col(u => u.IsSuper)}"" boolean NOT NULL DEFAULT false,
+			""{Col(u => u.LastSignedIn)}"" timestamp without time zone,
+			CONSTRAINT ""{Col(u => u.Id)}_Key"" PRIMARY KEY(""{Col(u => u.Id)}""),
+			CONSTRAINT ""{Col(u => u.EmailAddress)}_Unique"" UNIQUE(""{Col(u => u.EmailAddress)}"")
+		)
+		TABLESPACE pg_default
+		;
+	");
 
 	/// <summary>
 	/// Migrate down
 	/// </summary>
-	protected override void Down()
-	{
-		Execute(@"DROP TABLE IF EXISTS ""Auth"".""User"";");
-	}
+	protected override void Down() => Execute($@"
+		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
+		;
+	");
 }

@@ -1,17 +1,15 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Jeebs;
-using Jeebs.Auth;
-using Jeebs.Auth.Constants;
-using Jeebs.Config;
+using Jeebs.Auth.Jwt.Constants;
+using Jeebs.Config.Web.Auth.Jwt;
+using Jeebs.Messages;
 using Microsoft.IdentityModel.Tokens;
-using static F.OptionF;
 
-namespace F;
+namespace Jeebs.Auth.Jwt.Functions;
 
 /// <summary>
 /// JSON Web Tokens functions
@@ -24,7 +22,7 @@ public static partial class JwtF
 	/// </summary>
 	/// <param name="config">JwtConfig</param>
 	/// <param name="principal">ClaimsPrincipal</param>
-	public static Option<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
+	public static Maybe<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
 		CreateToken(config, principal, DateTime.UtcNow, DateTime.UtcNow.AddHours(config.ValidForHours));
 
 	/// <summary>
@@ -35,7 +33,7 @@ public static partial class JwtF
 	/// <param name="principal">ClaimsPrincipal</param>
 	/// <param name="notBefore">The earliest date / time from which this token is valid</param>
 	/// <param name="expires">The latest date / time before which this token is valid</param>
-	internal static Option<string> CreateToken(
+	internal static Maybe<string> CreateToken(
 		JwtConfig config,
 		ClaimsPrincipal principal,
 		DateTime notBefore,
@@ -45,32 +43,32 @@ public static partial class JwtF
 		// Ensure there is a current user
 		if (principal.Identity is null)
 		{
-			return None<string, M.NullIdentityMsg>();
+			return F.None<string, M.NullIdentityMsg>();
 		}
 
 		// Ensure the current user is authenticated
 		var identity = principal.Identity;
 		if (!identity.IsAuthenticated)
 		{
-			return None<string, M.IdentityNotAuthenticatedMsg>();
+			return F.None<string, M.IdentityNotAuthenticatedMsg>();
 		}
 
 		// Ensure the JwtConfig is valid
 		if (!config.IsValid)
 		{
-			return None<string, M.ConfigInvalidMsg>();
+			return F.None<string, M.ConfigInvalidMsg>();
 		}
 
 		// Ensure the signing key is a valid length
 		if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 		{
-			return None<string, M.SigningKeyNotLongEnoughMsg>();
+			return F.None<string, M.SigningKeyNotLongEnoughMsg>();
 		}
 
 		// Ensure the encrypting key is a valid length
 		if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 		{
-			return None<string, M.EncryptingKeyNotLongEnoughMsg>();
+			return F.None<string, M.EncryptingKeyNotLongEnoughMsg>();
 		}
 
 		try
@@ -87,12 +85,12 @@ public static partial class JwtF
 				SigningCredentials = new SigningCredentials(config.GetSigningKey(), JwtSecurity.SigningAlgorithm)
 			};
 
-			config.GetEncryptingKey().IfSome(encryptingKey2 =>
-				descriptor.EncryptingCredentials = new EncryptingCredentials(
-					encryptingKey2,
-					JwtSecurity.KeyWrapAlgorithm,
-					JwtSecurity.EncryptingAlgorithm
-				)
+			_ = config.GetEncryptingKey().IfSome(encryptingKey2 =>
+				  descriptor.EncryptingCredentials = new EncryptingCredentials(
+					  encryptingKey2,
+					  JwtSecurity.KeyWrapAlgorithm,
+					  JwtSecurity.EncryptingAlgorithm
+				  )
 			);
 
 			// Create handler to create and write token
@@ -102,21 +100,21 @@ public static partial class JwtF
 		}
 		catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 		{
-			return None<string, M.KeyNotLongEnoughMsg>();
+			return F.None<string, M.KeyNotLongEnoughMsg>();
 		}
 		catch (Exception e)
 		{
-			return None<string>(new M.CreatingJwtSecurityTokenExceptionMsg(e));
+			return F.None<string>(new M.CreatingJwtSecurityTokenExceptionMsg(e));
 		}
 	}
 
-	/// <summary>Messages</summary>
 	public static partial class M
 	{
 		/// <summary>JwtConfig invalid</summary>
 		public sealed record class ConfigInvalidMsg : Msg;
 
 		/// <summary>Exception when creating JwtSecurityToken</summary>
+		/// <param name="Value">Exception</param>
 		public sealed record class CreatingJwtSecurityTokenExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>The Encrypting Key is not long enough</summary>

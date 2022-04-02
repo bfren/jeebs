@@ -3,4 +3,4 @@
 
 using AppMvc;
 
-await Jeebs.Apps.Program.MainAsync<App>(args).ConfigureAwait(false);
+Jeebs.Apps.Web.MvcApp.Create<App>(args).Run();

@@ -1,10 +1,11 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
+using Jeebs.Calendar.Functions;
 using Jeebs.Calendar.Models;
-using static F.CalendarF;
+using Jeebs.Functions;
 
 namespace Jeebs.Calendar;
 
@@ -19,7 +20,7 @@ public class JsonCalendar : CalendarBase
 	/// <inheritdoc cref="CalendarModel.LastModified"/>
 	public DateTime LastModified { get; internal init; }
 
-	/// <inheritdoc cref="CalendarBase.tzid"/>
+	/// <inheritdoc cref="CalendarBase.TzId"/>
 	public string Timezone { get; internal init; }
 
 	/// <summary>
@@ -43,12 +44,12 @@ public class JsonCalendar : CalendarBase
 		var counter = 0;
 		foreach (var e in calendar.Events)
 		{
-			var uid = GenerateEventUid(counter++, LastModified);
+			var uid = CalendarF.GenerateEventUid(counter++, LastModified);
 			Events.Add(uid, e);
 		}
 	}
 
 	/// <inheritdoc/>
 	public override string ToString() =>
-		F.JsonF.Serialise(new { calendar = this }).Unwrap("{\"calendar\":{}}");
+		JsonF.Serialise(new { calendar = this }).Unwrap(/*lang=json,strict*/ "{\"calendar\":{}}");
 }

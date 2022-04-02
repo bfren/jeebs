@@ -3,8 +3,8 @@
 
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
-using Jeebs.WordPress.Data;
-using Jeebs.WordPress.Data.Entities;
+using Jeebs.WordPress;
+using Jeebs.WordPress.Entities;
 
 namespace AppConsoleWp;
 

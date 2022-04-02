@@ -4,7 +4,6 @@
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
 using Jeebs.WordPress;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -13,21 +12,15 @@ namespace AppConsoleWp;
 /// <summary>
 /// WordPress Console Application
 /// </summary>
-internal sealed class App : Jeebs.Apps.ConsoleApp
+internal sealed class App : Jeebs.Apps.App
 {
-	/// <summary>
-	/// Register WordPress instances
-	/// </summary>
-	/// <param name="env">IHostEnvironment</param>
-	/// <param name="config">IConfiguration</param>
-	/// <param name="services">IServiceCollection</param>
-	protected override void ConfigureServices(IHostEnvironment env, IConfiguration config, IServiceCollection services)
+	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
 		// Base
-		base.ConfigureServices(env, config, services);
+		base.ConfigureServices(ctx, services);
 
 		// Add WordPress
-		services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(config);
-		services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(config);
+		services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(ctx.Configuration);
+		services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(ctx.Configuration);
 	}
 }

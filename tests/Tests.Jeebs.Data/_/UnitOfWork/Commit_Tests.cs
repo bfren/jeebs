@@ -1,10 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Data;
-using NSubstitute;
-using Xunit;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.UnitOfWork_Tests;
 
@@ -25,7 +23,7 @@ public class Commit_Tests
 
 		// Assert
 		transaction.Received().Commit();
-		log.Received().Verbose("Committing transaction.");
+		log.Received().Vrb("Committing transaction.");
 	}
 
 	[Fact]
@@ -81,6 +79,6 @@ public class Commit_Tests
 		unitOfWork.Commit();
 
 		// Assert
-		log.Received().Error(exception, "Error committing transaction.");
+		log.Received().Err(exception, "Error committing transaction.");
 	}
 }

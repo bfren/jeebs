@@ -1,9 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Linq;
-using static F.OptionF;
+using Jeebs.Messages;
 
 namespace Jeebs;
 
@@ -12,7 +13,7 @@ namespace Jeebs;
 /// </summary>
 public readonly record struct DateTimeInt
 {
-	private const string format = "000000000000";
+	private const string Format = "000000000000";
 
 	/// <summary>
 	/// Year
@@ -79,20 +80,20 @@ public readonly record struct DateTimeInt
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(format));
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(Format, CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>
 	/// Get the current DateTime
 	/// </summary>
-	public Option<DateTime> ToDateTime() =>
+	public Maybe<DateTime> ToDateTime() =>
 		IsValidDateTime() switch
 		{
 			{ } x when x.Valid =>
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
+				F.None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
 		};
 
 	/// <summary>
@@ -106,7 +107,7 @@ public readonly record struct DateTimeInt
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				0.ToString(format)
+				0.ToString(Format, CultureInfo.InvariantCulture)
 		};
 
 	/// <summary>
@@ -117,7 +118,7 @@ public readonly record struct DateTimeInt
 		IsValidDateTime().Valid switch
 		{
 			true =>
-				long.Parse(ToString()),
+				long.Parse(ToString(), CultureInfo.InvariantCulture),
 
 			false =>
 				0
@@ -125,12 +126,12 @@ public readonly record struct DateTimeInt
 
 	internal (bool Valid, string Part) IsValidDateTime()
 	{
-		if (Year < 0 || Year > 9999)
+		if (Year is < 0 or > 9999)
 		{
 			return (false, nameof(Year));
 		}
 
-		if (Month < 1 || Month > 12)
+		if (Month is < 1 or > 12)
 		{
 			return (false, nameof(Month));
 		}
@@ -160,12 +161,12 @@ public readonly record struct DateTimeInt
 			}
 		}
 
-		if (Hour < 0 || Hour > 23)
+		if (Hour is < 0 or > 23)
 		{
 			return (false, nameof(Hour));
 		}
 
-		if (Minute < 0 || Minute > 59)
+		if (Minute is < 0 or > 59)
 		{
 			return (false, nameof(Minute));
 		}
@@ -173,7 +174,7 @@ public readonly record struct DateTimeInt
 		return (true, string.Empty);
 	}
 
-	static internal bool IsLeapYear(int year)
+	internal static bool IsLeapYear(int year)
 	{
 		if (year % 400 == 0)
 		{
@@ -220,15 +221,15 @@ public readonly record struct DateTimeInt
 		}
 
 		return (
-			year: int.Parse(value[0..4]),
-			month: int.Parse(value[4..6]),
-			day: int.Parse(value[6..8]),
-			hour: int.Parse(value[8..10]),
-			minute: int.Parse(value[10..])
+			year: int.Parse(value[0..4], CultureInfo.InvariantCulture),
+			month: int.Parse(value[4..6], CultureInfo.InvariantCulture),
+			day: int.Parse(value[6..8], CultureInfo.InvariantCulture),
+			hour: int.Parse(value[8..10], CultureInfo.InvariantCulture),
+			minute: int.Parse(value[10..], CultureInfo.InvariantCulture)
 		);
 	}
 
-	#endregion
+	#endregion Static
 
 	/// <summary>Messages</summary>
 	public static class M

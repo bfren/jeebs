@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.insertSpaces": false,
+		"editor.renderWhitespace": "all",
+		"files.trimTrailingWhitespace": true,
+		"files.exclude": {
+			"**/*.csproj.user": true,
+			"**/.DS_Store": true,
+			"**/.git": true,
+			"**/bin/**": true,
+			"**/obj/**": true,
+			".vs/**": true,
+			".vscode/**": true,
+			"docs/**": true,
+		},
+	}
+}

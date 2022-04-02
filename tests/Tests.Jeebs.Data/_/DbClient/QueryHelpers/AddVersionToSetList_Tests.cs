@@ -1,10 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
-using Jeebs.Data.Mapping;
-using NSubstitute;
-using Xunit;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.DbClient_Tests;
 
@@ -29,12 +26,12 @@ public class AddVersionToSetList_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).Name}--");
+		client.Escape(Arg.Any<IColumn>()).Returns(x => $"--{x.ArgAt<IColumn>(0).ColName}--");
 		client.GetParamRef(Arg.Any<string>()).Returns(x => $"##{x.ArgAt<string>(0)}##");
 
-		var name = F.Rnd.Str;
-		var alias = F.Rnd.Str;
-		var version = new Column(new TableName(F.Rnd.Str), name, alias);
+		var name = Rnd.Str;
+		var alias = Rnd.Str;
+		var version = new Column(new TableName(Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}## + 1";
 
 		var set = new List<string>();

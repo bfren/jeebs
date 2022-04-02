@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text;
 
-namespace Jeebs.Calendar;
+namespace Jeebs.Calendar.Extensions;
 
 /// <summary>
 /// StringBuilder extensions
@@ -23,9 +23,9 @@ internal static class StringBuilderExtensions
 		const int max = 74;
 
 		// If text is short enough, simply append it
-		if (text.Length < max)
+		if (text.Length <= max)
 		{
-			@this.AppendLine(text);
+			_ = @this.AppendLine(text);
 			return;
 		}
 
@@ -42,16 +42,16 @@ internal static class StringBuilderExtensions
 			// a single whitespace character - either space or tab
 			if (first)
 			{
-				@this.AppendLine(next);
+				_ = @this.AppendLine(next);
 				first = false;
 			}
 			else
 			{
-				@this.AppendLine(" " + next);
+				_ = @this.AppendLine(" " + next);
 			}
 		} while (remaining.Length > max);
 
 		// Append remaining text
-		@this.AppendLine(" " + remaining);
+		_ = @this.AppendLine(" " + remaining);
 	}
 }

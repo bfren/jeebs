@@ -1,11 +1,10 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using Jeebs.Internals;
-using static F.OptionF;
+using Jeebs.Messages;
 
 namespace Jeebs;
 
@@ -52,13 +51,13 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Thread-safe parser cache
 	/// </summary>
-	private static readonly ConcurrentDictionary<string, object> cache;
+	private static ConcurrentDictionary<string, object> Cache { get; }
 
 	/// <summary>
 	/// Create cache object
 	/// </summary>
 	static Enumerated() =>
-		cache = new ConcurrentDictionary<string, object>();
+		Cache = new ConcurrentDictionary<string, object>();
 
 	/// <summary>
 	/// Check whether or not the specified name matches the given value
@@ -66,7 +65,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
 	/// <param name="value">Enum value</param>
-	internal static Option<T> Check<T>(string name, T value)
+	internal static Maybe<T> Check<T>(string name, T value)
 		where T : Enumerated =>
 		string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
 		{
@@ -74,7 +73,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				value,
 
 			false =>
-				None<T>(new M.NotAValidEnumeratedValueMsg<T>(value))
+				F.None<T>(new M.NotAValidEnumeratedValueMsg<T>(value))
 		};
 
 	/// <summary>
@@ -83,24 +82,23 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
 	/// <param name="values">Enum values to check name against</param>
-	/// <returns>Matching Enum value, or throws an exception if no match was found</returns>
-	protected static Option<T> Parse<T>(string name, T[] values)
+	protected static Maybe<T> Parse<T>(string name, T[] values)
 		where T : Enumerated =>
-		(Option<T>)cache.GetOrAdd(
+		(Maybe<T>)Cache.GetOrAdd(
 			$"{typeof(T)}-{name}",
 			(_, args) =>
 			{
 				// Check all given values against name
 				foreach (var item in args.Values)
 				{
-					if (Check(args.Name, item) is Some<T> s)
+					if (Check(args.Name, item) is MaybeF.Internals.Some<T> s)
 					{
 						return s;
 					}
 				}
 
 				// If we get here the name was never matched
-				return None<T>(new M.NotAValidEnumeratedValueMsg<T>(name));
+				return F.None<T>(new M.NotAValidEnumeratedValueMsg<T>(name));
 			},
 			new ParseArgs<T>(name, values)
 		);
@@ -113,24 +111,24 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="values">Enum values to check name against</param>
 	protected static bool IsRegistered<T>(string name, T[] values)
 		where T : Enumerated =>
-		Parse(name, values) is Some<T>;
+		Parse(name, values).IsSome(out var _);
 
 	/// <summary>
 	/// Parse Arguments
 	/// </summary>
 	/// <typeparam name="T">Enum Type</typeparam>
-	private class ParseArgs<T>
+	private sealed class ParseArgs<T>
 		where T : Enumerated
 	{
 		/// <summary>
 		/// Enum name to parse
 		/// </summary>
-		public readonly string Name;
+		public string Name { get; private init; }
 
 		/// <summary>
 		/// Enum values to test Name against
 		/// </summary>
-		public readonly T[] Values;
+		public T[] Values { get; private init; }
 
 		/// <summary>
 		/// Create object
@@ -141,7 +139,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 			(Name, Values) = (name, values);
 	}
 
-	#endregion
+	#endregion Static Members
 
 	#region Operators
 
@@ -188,7 +186,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	public static bool operator !=(string l, Enumerated r) =>
 		!r.Equals(l);
 
-	#endregion
+	#endregion Operators
 
 	#region Overrides
 
@@ -217,7 +215,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	public int GetHashCode(IEqualityComparer comparer) =>
 		GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
-	#endregion
+	#endregion Overrides
 
 	/// <summary>Messages</summary>
 	public static class M

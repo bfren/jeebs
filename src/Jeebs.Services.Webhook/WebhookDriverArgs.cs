@@ -1,10 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
+using Jeebs.Config.Services;
+using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Services;

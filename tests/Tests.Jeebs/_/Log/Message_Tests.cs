@@ -1,26 +1,25 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
-using NSubstitute;
-using Xunit;
+using Jeebs.Messages;
 
 namespace Jeebs.Log_Tests;
 
 public class Message_Tests
 {
 	[Fact]
-	public void Msg_Runs_Information()
+	public void Msg_Runs_Debug()
 	{
 		// Arrange
 		var msg = Substitute.ForPartsOf<Msg>();
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Information(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
@@ -32,10 +31,10 @@ public class Message_Tests
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Verbose(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
@@ -47,10 +46,10 @@ public class Message_Tests
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Debug(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
@@ -62,10 +61,10 @@ public class Message_Tests
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Information(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Inf(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
@@ -77,10 +76,10 @@ public class Message_Tests
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Warning(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Wrn(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
@@ -92,10 +91,10 @@ public class Message_Tests
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Error(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Err(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
@@ -107,9 +106,9 @@ public class Message_Tests
 		var log = Substitute.For<Log>();
 
 		// Act
-		log.Message(msg);
+		log.Msg(msg);
 
 		// Assert
-		log.Received().Fatal(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Ftl(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

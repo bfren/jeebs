@@ -1,9 +1,9 @@
 ﻿// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs;
-using Jeebs.Config;
+using Jeebs.Config.Db;
 using Jeebs.Data;
+using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AppConsolePg;

@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -57,7 +57,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	}
 
 	/// <inheritdoc/>
-	public override Option<IImageWrapper> ApplyMask(int width, int height) =>
+	public override Maybe<IImageWrapper> ApplyMask(int width, int height) =>
 		ApplyMask(width, height, (size, mask) =>
 		{
 			// Create source and destination rectangles

@@ -1,8 +1,8 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using NSubstitute;
-using Xunit;
+using Jeebs.Logging;
+using StrongId;
 
 namespace Jeebs.Data.Repository_Tests;
 
@@ -23,7 +23,7 @@ public class Constructor_Tests
 		Assert.Same(log, result.LogTest);
 	}
 
-	public readonly record struct TestId(long Value) : IStrongId;
+	public sealed record class TestId : LongId;
 
 	public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
 

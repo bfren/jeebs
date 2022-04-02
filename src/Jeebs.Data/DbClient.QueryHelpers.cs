@@ -1,9 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Text;
-using Jeebs.Data.Mapping;
+using Jeebs.Data.Map;
+using Jeebs.Data.Reflection;
 
 namespace Jeebs.Data;
 
@@ -19,20 +19,20 @@ public abstract partial class DbClient : IDbClient
 		var par = new List<string>();
 		foreach (var column in columns)
 		{
-			if (column.Property.IsReadonly())
+			if (column.PropertyInfo.IsReadonly())
 			{
 				continue;
 			}
 
-			col.Add(Escape(column.Name));
-			par.Add(GetParamRef(column.Alias));
+			col.Add(Escape(column.ColName));
+			par.Add(GetParamRef(column.ColAlias));
 		}
 
 		return (col, par);
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetRetrieveQuery(ITableName, IColumnList, IColumn, long)"/>
+	/// Get columns for <see cref="GetRetrieveQuery(ITableName, IColumnList, IColumn, object)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
@@ -47,7 +47,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, long, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
@@ -55,43 +55,45 @@ public abstract partial class DbClient : IDbClient
 		var col = new List<string>();
 		foreach (var column in columns)
 		{
-			col.Add($"{Escape(column)} = {GetParamRef(column.Alias)}");
+			col.Add($"{Escape(column)} = {GetParamRef(column.ColAlias)}");
 		}
 
 		return col;
 	}
 
 	/// <summary>
-	/// Add version to column list for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, long, IColumn?)"/>,
+	/// Add version to column list for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
-	/// <param name="set">List of Set commands</param>
+	/// <param name="setList">List of Set commands</param>
 	/// <param name="versionColumn">[Optional] Version column</param>
-	protected virtual void AddVersionToSetList(List<string> set, IColumn? versionColumn)
+	protected virtual void AddVersionToSetList(List<string> setList, IColumn? versionColumn)
 	{
 		if (versionColumn is not null)
 		{
-			set.Add($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)} + 1");
+			setList.Add($"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)} + 1");
 		}
 	}
 
 	/// <summary>
-	/// Add version to where string for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, long, IColumn?)"/>
-	/// and <see cref="GetDeleteQuery(ITableName, IColumn, long, IColumn?)"/>
+	/// Add version to where string for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>
+	/// and <see cref="GetDeleteQuery(ITableName, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>
 	/// <param name="versionColumn">[Optional] Version column</param>
-	protected virtual void AddVersionToWhere(StringBuilder sql, IColumn? versionColumn)
+	protected virtual string AddVersionToWhere(string sql, IColumn? versionColumn)
 	{
 		if (versionColumn is not null)
 		{
 			if (sql.Length > 0)
 			{
-				sql.Append(" AND ");
+				sql += " AND ";
 			}
 
-			sql.Append($"{Escape(versionColumn)} = {GetParamRef(versionColumn.Alias)}");
+			sql += $"{Escape(versionColumn)} = {GetParamRef(versionColumn.ColAlias)}";
 		}
+
+		return sql;
 	}
 
 	#region Testing
@@ -108,8 +110,8 @@ public abstract partial class DbClient : IDbClient
 	internal void AddVersionToSetListTest(List<string> columns, IColumn? versionColumn) =>
 		AddVersionToSetList(columns, versionColumn);
 
-	internal void AddVersionToWhereTest(StringBuilder sql, IColumn? versionColumn) =>
+	internal string AddVersionToWhereTest(string sql, IColumn? versionColumn) =>
 		AddVersionToWhere(sql, versionColumn);
 
-	#endregion
+	#endregion Testing
 }

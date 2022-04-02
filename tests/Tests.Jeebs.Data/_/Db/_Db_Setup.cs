@@ -2,8 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Config;
-using NSubstitute;
+using Jeebs.Config.Db;
+using Jeebs.Logging;
 
 namespace Jeebs.Data.Db_Tests;
 
@@ -11,7 +11,7 @@ public static class Db_Setup
 {
 	public static (DbConnectionConfig config, ILog log, IDbClient client, IDbConnection connection, Db db) Get()
 	{
-		var connectionString = F.Rnd.Str;
+		var connectionString = Rnd.Str;
 		var config = new DbConnectionConfig { ConnectionString = connectionString };
 
 		var log = Substitute.For<ILog>();

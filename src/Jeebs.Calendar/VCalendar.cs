@@ -1,10 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Text;
+using Jeebs.Calendar.Extensions;
+using Jeebs.Calendar.Functions;
 using Jeebs.Calendar.Models;
-using static F.CalendarF;
 
 namespace Jeebs.Calendar;
 
@@ -34,21 +36,21 @@ public class VCalendar : CalendarBase
 	{
 		// Add Header
 		var builder = new StringBuilder();
-		builder.Append(GetHeader());
+		_ = builder.Append(GetHeader());
 
 		// Add Timezone
-		builder.Append(GetTimezone());
+		_ = builder.Append(GetTimezone());
 
 		// Add Events
 		var counter = 0;
-		foreach (var e in calendar.Events)
+		foreach (var e in Calendar.Events)
 		{
-			var uid = GenerateEventUid(counter++, calendar.LastModified, domain);
-			builder.Append(GetEvent(calendar.LastModified, tzid, uid, e));
+			var uid = CalendarF.GenerateEventUid(counter++, Calendar.LastModified, domain);
+			_ = builder.Append(GetEvent(Calendar.LastModified, TzId, uid, e));
 		}
 
 		// Add Footer
-		builder.Append(GetFooter());
+		_ = builder.Append(GetFooter());
 
 		// Return VCalendar string
 		return builder.ToString();
@@ -106,7 +108,7 @@ public class VCalendar : CalendarBase
 		var builder = new StringBuilder();
 		builder.AppendMax75("BEGIN:VEVENT");
 		builder.AppendMax75($"UID:{uid}");
-		builder.AppendMax75($"CREATED:{Format(DateTime.Now)}");
+		builder.AppendMax75($"CREATED:{Format(lastModified)}");
 		builder.AppendMax75($"LAST-MODIFIED:{Format(lastModified)}");
 		builder.AppendMax75($"DTSTAMP:{Format(lastModified)}");
 		builder.AppendMax75($"SUMMARY:{e.Summary}");
@@ -148,7 +150,7 @@ public class VCalendar : CalendarBase
 	/// <param name="dt">Date Time</param>
 	/// <param name="withTime">If true will include the time</param>
 	internal static string Format(DateTime dt, bool withTime = true) =>
-		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd");
+		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd", CultureInfo.InvariantCulture);
 
 	/// <summary>
 	/// Get Timezone information

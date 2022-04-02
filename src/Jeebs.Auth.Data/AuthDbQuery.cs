@@ -1,17 +1,16 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Querying;
-using static F.OptionF;
+using Jeebs.Data.Query;
+using Jeebs.Logging;
 
-namespace Jeebs.Auth;
+namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDbQuery"/>
 public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
@@ -24,9 +23,9 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 	public AuthDbQuery(IAuthDb db, ILog<AuthDbQuery> log) : base(db, log) { }
 
 	/// <inheritdoc/>
-	public Task<Option<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
+	public Task<Maybe<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
 		where TRole : IAuthRole =>
-		Some(userId)
+		F.Some(userId)
 		.BindAsync(
 			x => this.QueryAsync<TRole>(builder => builder
 				.From<AuthRoleTable>()
@@ -36,6 +35,6 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 		)
 		.MapAsync(
 			x => x.ToList(),
-			DefaultHandler
+			F.DefaultHandler
 		);
 }

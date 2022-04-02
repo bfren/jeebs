@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Jeebs.Data.Mapping;
-using Jeebs.Data.Querying;
-using static F.DataF.QueryF;
-using static F.OptionF;
+using Jeebs.Collections;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query;
+using Jeebs.Data.Query.Functions;
+using Jeebs.Logging;
+using Jeebs.Messages;
+using Defaults = Jeebs.Collections.Defaults.PagingValues;
 
 namespace Jeebs.Data;
 
@@ -68,48 +71,50 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// <param name="table">Table object</param>
 	/// <param name="column">Column selector</param>
 #pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 	protected string __<TTable>(TTable table, Expression<Func<TTable, string>> column)
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
 		where TTable : ITable =>
-		GetColumnFromExpression(
+		QueryF.GetColumnFromExpression(
 			table, column
 		)
 		.Map(
 			x => Db.Client.Escape(x, true),
-			DefaultHandler
+			F.DefaultHandler
 		)
 		.Unwrap(
-			r => throw new Exception(r.ToString())
+			r => throw Msg.CreateException(r)
 		);
 
 	#region QueryAsync
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type) =>
+	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type) =>
 		Db.QueryAsync<T>(query, param, type);
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Db.QueryAsync<T>(query, param, type, transaction);
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param) =>
+	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param) =>
 		Db.QueryAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(string query, object? param, IDbTransaction transaction) =>
+	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, IDbTransaction transaction) =>
 		Db.QueryAsync<T>(query, param, CommandType.Text, transaction);
 
 	/// <inheritdoc/>
-	public async Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts)
+	public async Task<Maybe<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts)
 	{
 		using var w = UnitOfWork;
 		return await QueryAsync<T>(page, parts, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
-		Some(
+	public Task<Maybe<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
+		F.Some(
 			() => Db.Client.GetCountQuery(parts),
 			e => new M.ErrorGettingCountQueryFromPartsExceptionMsg(e)
 		)
@@ -117,12 +122,12 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.ExecuteAsync<ulong>(x.query, x.param, CommandType.Text, transaction)
 		)
 		.MapAsync(
-			x => new PagingValues(x, page, parts.Maximum ?? Defaults.PagingValues.ItemsPer, Defaults.PagingValues.PagesPer),
-			DefaultHandler
+			x => new PagingValues(x, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
+			F.DefaultHandler
 		)
 		.BindAsync(
 			pagingValues =>
-				Some(
+				F.Some(
 					() => Db.Client.GetQuery(new QueryParts(parts) with
 					{
 						Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
@@ -135,20 +140,20 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 				)
 				.MapAsync(
 					x => (IPagedList<T>)new PagedList<T>(pagingValues, x),
-					DefaultHandler
+					F.DefaultHandler
 				)
 		);
 
 	/// <inheritdoc/>
-	public async Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
+	public async Task<Maybe<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
 	{
 		using var w = UnitOfWork;
 		return await QueryAsync<T>(parts, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		Some(
+	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
+		F.Some(
 			() => Db.Client.GetQuery(parts),
 			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)
@@ -156,36 +161,36 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
 		);
 
-	#endregion
+	#endregion QueryAsync
 
 	#region QuerySingleAsync
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type) =>
+	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type) =>
 		Db.QuerySingleAsync<T>(query, param, type);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Db.QuerySingleAsync<T>(query, param, type, transaction);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(string query, object? param) =>
+	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param) =>
 		Db.QuerySingleAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(string query, object? param, IDbTransaction transaction) =>
+	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, IDbTransaction transaction) =>
 		Db.QuerySingleAsync<T>(query, param, CommandType.Text, transaction);
 
 	/// <inheritdoc/>
-	public async Task<Option<T>> QuerySingleAsync<T>(IQueryParts parts)
+	public async Task<Maybe<T>> QuerySingleAsync<T>(IQueryParts parts)
 	{
 		using var w = UnitOfWork;
 		return await QuerySingleAsync<T>(parts, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Option<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		Some(
+	public Task<Maybe<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
+		F.Some(
 			() => Db.Client.GetQuery(parts),
 			e => new M.ErrorGettingQueryFromPartsExceptionMsg(e)
 		)
@@ -193,43 +198,43 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 			x => Db.QuerySingleAsync<T>(x.query, x.param, CommandType.Text, transaction)
 		);
 
-	#endregion
+	#endregion QuerySingleAsync
 
 	#region ExecuteAsync
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type) =>
+	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type) =>
 		Db.ExecuteAsync(query, param, type);
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Db.ExecuteAsync(query, param, type, transaction);
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> ExecuteAsync(string query, object? param) =>
+	public Task<Maybe<bool>> ExecuteAsync(string query, object? param) =>
 		Db.ExecuteAsync(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public Task<Option<bool>> ExecuteAsync(string query, object? param, IDbTransaction transaction) =>
+	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, IDbTransaction transaction) =>
 		Db.ExecuteAsync(query, param, CommandType.Text, transaction);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type) =>
+	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type) =>
 		Db.ExecuteAsync<T>(query, param, type);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
 		Db.ExecuteAsync<T>(query, param, type, transaction);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> ExecuteAsync<T>(string query, object? param) =>
+	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param) =>
 		Db.ExecuteAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public Task<Option<T>> ExecuteAsync<T>(string query, object? param, IDbTransaction transaction) =>
+	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, IDbTransaction transaction) =>
 		Db.ExecuteAsync<T>(query, param, CommandType.Text, transaction);
 
-	#endregion
+	#endregion ExecuteAsync
 
 	#region Testing
 
@@ -237,5 +242,5 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		where TTable : ITable =>
 		__(table, column);
 
-	#endregion
+	#endregion Testing
 }
