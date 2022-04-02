@@ -50,11 +50,16 @@ public abstract partial class DbClient : IDbClient
 	/// Get columns for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
-	protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
+	protected virtual List<string> GetSetListForUpdateQuery(IMappedColumnList columns)
 	{
 		var col = new List<string>();
 		foreach (var column in columns)
 		{
+			if (column.PropertyInfo.IsReadonly())
+			{
+				continue;
+			}
+
 			col.Add($"{Escape(column)} = {GetParamRef(column.ColAlias)}");
 		}
 
@@ -62,7 +67,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to column list for <see cref="GetUpdateQuery(ITableName, IColumnList, IColumn, object, IColumn?)"/>,
+	/// Add version to column list for <see cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
 	/// <param name="setList">List of Set commands</param>
@@ -104,7 +109,7 @@ public abstract partial class DbClient : IDbClient
 	internal List<string> GetColumnsForRetrieveQueryTest(IColumnList columns) =>
 		GetColumnsForRetrieveQuery(columns);
 
-	internal List<string> GetSetListForUpdateQueryTest(IColumnList columns) =>
+	internal List<string> GetSetListForUpdateQueryTest(IMappedColumnList columns) =>
 		GetSetListForUpdateQuery(columns);
 
 	internal void AddVersionToSetListTest(List<string> columns, IColumn? versionColumn) =>
