@@ -5,10 +5,10 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
-public class WhereNotIn_Tests : QueryFluent_Tests
+public class WhereNotIn_Tests : FluentQuery_Tests
 {
 	[Fact]
-	public void No_Values_Does_Not_Add_Predicate()
+	public void No_Values__Does_Not_Add_Predicate__Returns_Original_Query()
 	{
 		// Arrange
 		var (query, v) = Setup();
@@ -19,9 +19,11 @@ public class WhereNotIn_Tests : QueryFluent_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Empty(f0.Predicates);
+		Assert.Empty(f0.Parts.Where);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Empty(f1.Predicates);
+		Assert.Empty(f1.Parts.Where);
+		Assert.Same(query, f0);
+		Assert.Same(query, f1);
 	}
 
 	[Fact]
@@ -38,21 +40,25 @@ public class WhereNotIn_Tests : QueryFluent_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Collection(f0.Predicates, x =>
+		Assert.Collection(f0.Parts.Where, x =>
 		{
-			Assert.Equal(nameof(TestEntity.Foo), x.col);
-			Assert.Equal(Compare.NotIn, x.cmp);
-			Assert.Collection((IEnumerable<string>)x.val!,
+			Assert.Equal(v.Table.GetName(), x.column.TblName);
+			Assert.Equal(v.Table.Foo, x.column.ColName);
+			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
+			Assert.Equal(Compare.NotIn, x.compare);
+			Assert.Collection((IEnumerable<string>)x.value!,
 				y => Assert.Equal(v0, y),
 				y => Assert.Equal(v1, y)
 			);
 		});
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Collection(f1.Predicates, x =>
+		Assert.Collection(f1.Parts.Where, x =>
 		{
-			Assert.Equal(nameof(TestEntity.Foo), x.col);
-			Assert.Equal(Compare.NotIn, x.cmp);
-			Assert.Collection((IEnumerable<string>)x.val!,
+			Assert.Equal(v.Table.GetName(), x.column.TblName);
+			Assert.Equal(v.Table.Foo, x.column.ColName);
+			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
+			Assert.Equal(Compare.NotIn, x.compare);
+			Assert.Collection((IEnumerable<string>)x.value!,
 				y => Assert.Equal(v0, y),
 				y => Assert.Equal(v1, y)
 			);

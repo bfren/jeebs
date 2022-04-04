@@ -2,13 +2,15 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
+using MaybeF;
+using static MaybeF.F.EnumerableF.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
-public class Where_Tests : FluentQuery_Tests
+public class Where_Tests1 : FluentQuery_Tests
 {
 	[Fact]
-	public void Null_Value__Does_Not_Add_Predicate()
+	public void Null_Value__Does_Not_Add_Predicate__Returns_Original_Query()
 	{
 		// Arrange
 		var (query, v) = Setup();
@@ -22,6 +24,28 @@ public class Where_Tests : FluentQuery_Tests
 		Assert.Empty(f0.Parts.Where);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
 		Assert.Empty(f1.Parts.Where);
+		Assert.Same(query, f0);
+		Assert.Same(query, f1);
+	}
+
+	[Fact]
+	public void Query_Errors__Does_Not_Add_Predicate__Returns_Original_Query()
+	{
+		// Arrange
+		var (query, v) = Setup();
+		query.Errors.Add(Substitute.For<IMsg>());
+
+		// Act
+		var r0 = query.Where(nameof(TestEntity.Foo), Compare.Like, Rnd.Str);
+		var r1 = query.Where(x => x.Foo, Compare.Like, Rnd.Str);
+
+		// Assert
+		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
+		Assert.Empty(f0.Parts.Where);
+		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
+		Assert.Empty(f1.Parts.Where);
+		Assert.Same(query, f0);
+		Assert.Same(query, f1);
 	}
 
 	[Theory]
@@ -61,5 +85,23 @@ public class Where_Tests : FluentQuery_Tests
 			Assert.Equal(compare, x.compare);
 			Assert.Equal(value, x.value);
 		});
+	}
+
+	[Fact]
+	public void Unable_To_Get_Column__Adds_Error__Returns_Original_Query()
+	{
+		// Arrange
+		var (query, v) = Setup();
+		var column = Rnd.Str;
+
+		// Act
+		var result = query.Where(column, Compare.LessThan, Rnd.Guid);
+
+		// Assert
+		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
+		Assert.Collection(fluent.Errors,
+			x => x.AssertType<NoMatchingItemsMsg>()
+		);
+		Assert.Same(query, fluent);
 	}
 }

@@ -17,7 +17,35 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	where TId : class, IStrongId, new()
 {
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where(string column, Compare cmp, dynamic? value)
+	public IFluentQuery<TEntity, TId> Where(string clause, object parameters)
+	{
+		// If there are errors, return
+		if (Errors.Count > 0)
+		{
+			return this;
+		}
+
+		// Check clause
+		if (string.IsNullOrWhiteSpace(clause))
+		{
+			Errors.Add(new M.TryingToAddEmptyClauseToWhereMsg());
+			return this;
+		}
+
+		// Get parameters
+		var param = new QueryParametersDictionary();
+		if (!param.TryAdd(parameters))
+		{
+			Errors.Add(new M.UnableToAddParametersToWhereMsg());
+			return this;
+		}
+
+		// Add clause and return
+		return Update(parts => parts with { WhereCustom = parts.WhereCustom.WithItem((clause, param)) });
+	}
+
+	/// <inheritdoc/>
+	public IFluentQuery<TEntity, TId> Where(string column, Compare compare, dynamic? value)
 	{
 		// Don't add predicates with a null value
 		if (value is null)
@@ -33,16 +61,16 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 
 		// Get column and add to QueryParts
 		return QueryF.GetColumnFromAlias(Table, column).Switch(
-			some: x => Update(parts => parts with { Where = parts.Where.WithItem((x, cmp, value)) }),
+			some: x => Update(parts => parts with { Where = parts.Where.WithItem((x, compare, value)) }),
 			none: r => { Errors.Add(r); return this; }
 		);
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> selector, Compare cmp, TValue value) =>
+	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> selector, Compare compare, TValue value) =>
 		selector.GetPropertyInfo()
 			.Switch(
-				some: x => Where(x.Name, cmp, value),
+				some: x => Where(x.Name, compare, value),
 				none: this
 			);
 
@@ -51,10 +79,10 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		id.Length switch
 		{
 			> 1 =>
-				WhereIn(nameof(IWithId.Id), id),
+				WhereIn(nameof(IWithId.Id), id.Select(x => x.Value)),
 
 			1 =>
-				Where(nameof(IWithId.Id), Compare.Equal, id[0]),
+				Where(nameof(IWithId.Id), Compare.Equal, id[0].Value),
 
 			_ =>
 				this
@@ -97,32 +125,4 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 				some: x => WhereNotIn(x.Name, values),
 				none: this
 			);
-
-	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> AddWhereCustom(string clause, object parameters)
-	{
-		// If there are errors, return
-		if (Errors.Count > 0)
-		{
-			return this;
-		}
-
-		// Check clause
-		if (string.IsNullOrWhiteSpace(clause))
-		{
-			Errors.Add(new M.TryingToAddEmptyClauseToWhereMsg());
-			return this;
-		}
-
-		// Get parameters
-		var param = new QueryParametersDictionary();
-		if (!param.TryAdd(parameters))
-		{
-			Errors.Add(new M.UnableToAddParametersToWhereMsg());
-			return this;
-		}
-
-		// Add clause and return
-		return Update(parts => parts with { WhereCustom = parts.WhereCustom.WithItem((clause, param)) });
-	}
 }
