@@ -79,6 +79,6 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// Update <see cref="Parts"/> with a new value
 	/// </summary>
 	/// <param name="with">Function to perform the update</param>
-	private IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
+	internal IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
 		this with { Parts = with(new(Parts)) };
 }
