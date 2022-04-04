@@ -45,7 +45,7 @@ public interface IQueryParts
 	/// <summary>
 	/// Where predicates
 	/// </summary>
-	IImmutableList<(IColumn column, Compare cmp, object value)> Where { get; init; }
+	IImmutableList<(IColumn column, Compare cmp, dynamic value)> Where { get; init; }
 
 	/// <summary>
 	/// Additional Where predicates, allowing advanced custom queries (e.g. with OR) -
