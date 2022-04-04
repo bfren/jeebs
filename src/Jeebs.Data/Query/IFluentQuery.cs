@@ -26,18 +26,18 @@ public interface IFluentQuery<TEntity, TId>
 	/// Add a WHERE predicate (multiple predicates will be added using AND)
 	/// </summary>
 	/// <param name="column">Column alias</param>
-	/// <param name="cmp">Comparison operator</param>
+	/// <param name="compare">Comparison operator</param>
 	/// <param name="value">Column value</param>
-	IFluentQuery<TEntity, TId> Where(string column, Compare cmp, dynamic? value);
+	IFluentQuery<TEntity, TId> Where(string column, Compare compare, dynamic? value);
 
 	/// <summary>
 	/// Add a WHERE predicate (multiple predicates will be added using AND)
 	/// </summary>
 	/// <typeparam name="TValue">Column value type</typeparam>
 	/// <param name="selector">Column alias selector</param>
-	/// <param name="cmp">Comparison operator</param>
+	/// <param name="compare">Comparison operator</param>
 	/// <param name="value">Column value</param>
-	IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> selector, Compare cmp, TValue value);
+	IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> selector, Compare compare, TValue value);
 
 	/// <summary>
 	/// Add a WHERE predicate for the ID column (multiple predicates will be added using AND)
@@ -72,7 +72,7 @@ public interface IFluentQuery<TEntity, TId>
 	/// </summary>
 	/// <param name="clause">Custom clause</param>
 	/// <param name="parameters">Parameters for custom clause</param>
-	IFluentQuery<TEntity, TId> AddWhereCustom(string clause, object parameters);
+	IFluentQuery<TEntity, TId> Where(string clause, object parameters);
 
 	#endregion Where
 
@@ -83,10 +83,10 @@ public interface IFluentQuery<TEntity, TId>
 	/// </summary>
 	/// <param name="columnAlias">Column alias</param>
 	/// <param name="order">Sort order</param>
-	IFluentQuery<TEntity, TId> OrderBy(string columnAlias, SortOrder order);
+	IFluentQuery<TEntity, TId> Sort(string columnAlias, SortOrder order);
 
-	/// <inheritdoc cref="OrderBy(string, SortOrder)"/>
-	IFluentQuery<TEntity, TId> OrderBy<TValue>(Expression<Func<TEntity, TValue>> selector, SortOrder order);
+	/// <inheritdoc cref="Sort(string, SortOrder)"/>
+	IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> selector, SortOrder order);
 
 	#endregion Sort
 
