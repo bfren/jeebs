@@ -25,7 +25,7 @@ public interface IRepository<TEntity, TId>
 	/// <summary>
 	/// Start a new fluent query
 	/// </summary>
-	IQueryFluent<TEntity, TId> StartFluentQuery();
+	IFluentQuery<TEntity, TId> StartFluentQuery();
 
 	#endregion Fluent Queries
 
