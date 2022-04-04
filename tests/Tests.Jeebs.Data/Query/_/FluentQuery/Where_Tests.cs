@@ -5,10 +5,10 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
-public class Where_Tests : QueryFluent_Tests
+public class Where_Tests : FluentQuery_Tests
 {
 	[Fact]
-	public void Null_Value_Does_Not_Add_Predicate()
+	public void Null_Value__Does_Not_Add_Predicate()
 	{
 		// Arrange
 		var (query, v) = Setup();
@@ -19,9 +19,9 @@ public class Where_Tests : QueryFluent_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Empty(f0.Predicates);
+		Assert.Empty(f0.Parts.Where);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Empty(f1.Predicates);
+		Assert.Empty(f1.Parts.Where);
 	}
 
 	[Theory]
@@ -32,28 +32,34 @@ public class Where_Tests : QueryFluent_Tests
 	[InlineData(Compare.LessThanOrEqual)]
 	[InlineData(Compare.MoreThan)]
 	[InlineData(Compare.MoreThanOrEqual)]
-	public void Adds_Predicate(Compare cmp)
+	public void Valid_Value__Adds_Predicate(Compare compare)
 	{
 		// Arrange
 		var (query, v) = Setup();
 		var value = Rnd.Str;
 
 		// Act
-		var r0 = query.Where(nameof(TestEntity.Foo), cmp, value);
-		var r1 = query.Where(x => x.Foo, cmp, value);
+		var r0 = query.Where(nameof(TestEntity.Foo), compare, value);
+		var r1 = query.Where(x => x.Foo, compare, value);
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Collection(f0.Predicates, x =>
+		Assert.Collection(f0.Parts.Where, x =>
 		{
-			Assert.Equal(cmp, x.cmp);
-			Assert.Equal(value, x.val);
+			Assert.Equal(v.Table.GetName(), x.column.TblName);
+			Assert.Equal(v.Table.Foo, x.column.ColName);
+			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
+			Assert.Equal(compare, x.compare);
+			Assert.Equal(value, x.value);
 		});
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Collection(f1.Predicates, x =>
+		Assert.Collection(f1.Parts.Where, x =>
 		{
-			Assert.Equal(cmp, x.cmp);
-			Assert.Equal(value, x.val);
+			Assert.Equal(v.Table.GetName(), x.column.TblName);
+			Assert.Equal(v.Table.Foo, x.column.ColName);
+			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
+			Assert.Equal(compare, x.compare);
+			Assert.Equal(value, x.value);
 		});
 	}
 }
