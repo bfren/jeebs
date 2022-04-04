@@ -6,11 +6,11 @@ using Jeebs.Logging;
 using NSubstitute.Extensions;
 using StrongId;
 
-namespace Jeebs.Data.Query.QueryFluent_Tests;
+namespace Jeebs.Data.Query.FluentQuery_Tests;
 
 public abstract class QueryFluent_Tests
 {
-	public static (QueryFluent<TestEntity, TestId> query, Vars v) Setup()
+	public static (FluentQuery<TestEntity, TestId> query, Vars v) Setup()
 	{
 		var db = Substitute.For<IDb>();
 
@@ -30,7 +30,7 @@ public abstract class QueryFluent_Tests
 		var log = Substitute.For<ILog>();
 		var repo = Substitute.For<IRepository<TestEntity, TestId>>();
 
-		var query = new QueryFluent<TestEntity, TestId>(db, log);
+		var query = new FluentQuery<TestEntity, TestId>(db, log);
 		repo.StartFluentQuery()
 			.ReturnsForAll(query);
 

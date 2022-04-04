@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Query.QueryFluent_Tests;
+namespace Jeebs.Data.Query.FluentQuery_Tests;
 
 public class Where_Tests : QueryFluent_Tests
 {
@@ -18,9 +18,9 @@ public class Where_Tests : QueryFluent_Tests
 		var r1 = query.Where(x => x.Foo, Compare.Like, null);
 
 		// Assert
-		var f0 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r0);
+		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
 		Assert.Empty(f0.Predicates);
-		var f1 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r1);
+		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
 		Assert.Empty(f1.Predicates);
 	}
 
@@ -43,13 +43,13 @@ public class Where_Tests : QueryFluent_Tests
 		var r1 = query.Where(x => x.Foo, cmp, value);
 
 		// Assert
-		var f0 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r0);
+		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
 		Assert.Collection(f0.Predicates, x =>
 		{
 			Assert.Equal(cmp, x.cmp);
 			Assert.Equal(value, x.val);
 		});
-		var f1 = Assert.IsType<QueryFluent<TestEntity, TestId>>(r1);
+		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
 		Assert.Collection(f1.Predicates, x =>
 		{
 			Assert.Equal(cmp, x.cmp);
