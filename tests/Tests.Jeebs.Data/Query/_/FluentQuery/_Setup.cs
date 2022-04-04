@@ -2,50 +2,68 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
+using Jeebs.Data.Map;
 using Jeebs.Logging;
-using NSubstitute.Extensions;
+using MaybeF;
 using StrongId;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
-public abstract class QueryFluent_Tests
+public abstract class FluentQuery_Tests
 {
 	public static (FluentQuery<TestEntity, TestId> query, Vars v) Setup()
 	{
-		var db = Substitute.For<IDb>();
-
 		var client = Substitute.For<IDbClient>();
-		client.GetQuery<TestEntity, int>(predicates: default!)
+		client.GetQuery(default!)
 			.ReturnsForAnyArgs((Rnd.Str, new QueryParametersDictionary()));
-		db.Client
-			.Returns(client);
+
+		var transation = Substitute.For<IDbTransaction>();
 
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		var transation = Substitute.For<IDbTransaction>();
 		unitOfWork.Transaction
 			.Returns(transation);
+
+		var db = Substitute.For<IDb>();
+		db.Client
+			.Returns(client);
 		db.UnitOfWork
 			.Returns(unitOfWork);
 
 		var log = Substitute.For<ILog>();
-		var repo = Substitute.For<IRepository<TestEntity, TestId>>();
 
-		var query = new FluentQuery<TestEntity, TestId>(db, log);
-		repo.StartFluentQuery()
-			.ReturnsForAll(query);
+		var table = new TestTable();
 
-		return (query, new(client, db, log, repo, transation));
+		var map = Substitute.For<ITableMap>();
+		map.Table
+			.Returns(table);
+
+		var mapper = Substitute.For<IMapper>();
+		mapper.GetTableMapFor<TestEntity>()
+			.Returns(F.Some(map));
+
+		return (new(db, mapper, log), new(client, db, log, mapper, table, map, transation));
 	}
 
 	public sealed record class Vars(
 		IDbClient Client,
 		IDb Db,
 		ILog Log,
-		IRepository<TestEntity, TestId> Repo,
+		IMapper Mapper,
+		TestTable Table,
+		ITableMap TableMap,
 		IDbTransaction Transaction
 	);
 
 	public sealed record class TestId : LongId;
 
 	public readonly record struct TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
+
+	public sealed record class TestTable() : Table(Rnd.Str)
+	{
+		public string Id =>
+			nameof(TestTable) + nameof(Id);
+
+		public string Foo =>
+			nameof(TestTable) + nameof(Foo);
+	}
 }
