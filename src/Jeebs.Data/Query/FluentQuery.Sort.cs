@@ -15,7 +15,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	where TId : class, IStrongId, new()
 {
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> OrderBy(string columnAlias, SortOrder order)
+	public IFluentQuery<TEntity, TId> Sort(string columnAlias, SortOrder order)
 	{
 		if (Errors.Count > 0)
 		{
@@ -23,26 +23,16 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		}
 
 		return QueryF.GetColumnFromAlias(Table, columnAlias).Switch(
-			some: x => this with
-			{
-				QueryParts = QueryParts with
-				{
-					Sort = QueryParts.Sort.WithItem((x, order))
-				}
-			},
-			none: r =>
-			{
-				Errors.Add(r);
-				return this;
-			}
+			some: x => Update(parts => parts with { Sort = parts.Sort.WithItem((x, order)) }),
+			none: r => { Errors.Add(r); return this; }
 	   );
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> OrderBy<TValue>(Expression<Func<TEntity, TValue>> selector, SortOrder order) =>
+	public IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> selector, SortOrder order) =>
 		selector.GetPropertyInfo()
 			.Switch(
-				some: x => OrderBy(x.Name, order),
+				some: x => Sort(x.Name, order),
 				none: this
 			);
 }
