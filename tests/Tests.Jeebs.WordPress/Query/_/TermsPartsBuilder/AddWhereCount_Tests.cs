@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
@@ -48,7 +48,7 @@ public class AddWhereCount_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder, Wp
 			{
 				Assert.Equal(builder.TTest.TermTaxonomies.GetName(), x.column.TblName);
 				Assert.Equal(builder.TTest.TermTaxonomies.Count, x.column.ColName);
-				Assert.Equal(Compare.MoreThanOrEqual, x.cmp);
+				Assert.Equal(Compare.MoreThanOrEqual, x.compare);
 				Assert.Equal(count, x.value);
 			}
 		);

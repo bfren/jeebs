@@ -13,10 +13,10 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var db = Substitute.For<IDb>();
-		var log = Substitute.For<ILog>();
+		var log = Substitute.For<ILog<TestRepo>>();
 
 		// Act
-		var result = new TestFunc(db, log);
+		var result = new TestRepo(db, log);
 
 		// Assert
 		Assert.Same(db, result.DbTest);
@@ -27,8 +27,8 @@ public class Constructor_Tests
 
 	public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
 
-	public sealed class TestFunc : Repository<TestEntity, TestId>
+	public sealed class TestRepo : Repository<TestEntity, TestId>
 	{
-		public TestFunc(IDb db, ILog log) : base(db, log) { }
+		public TestRepo(IDb db, ILog<TestRepo> log) : base(db, log) { }
 	}
 }

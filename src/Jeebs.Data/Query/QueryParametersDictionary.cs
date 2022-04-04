@@ -32,8 +32,9 @@ public sealed class QueryParametersDictionary : Dictionary<string, object>, IQue
 	/// <inheritdoc/>
 	public bool TryAdd(object? parameters)
 	{
-		// Stop null / int / long / char / etc being added as parameters
-		if (parameters?.GetType().IsPrimitive != false)
+		// Stop null / int / long / char / etc being added as parameters -
+		// 'parameters' should be a class or anonymous object
+		if (parameters?.GetType().IsPrimitive != false || parameters is string)
 		{
 			return false;
 		}

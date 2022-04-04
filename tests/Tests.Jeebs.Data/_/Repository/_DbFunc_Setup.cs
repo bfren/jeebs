@@ -24,7 +24,7 @@ public static class Repository_Setup
 		var db = Substitute.For<IDb>();
 		db.Client.Returns(client);
 
-		var log = Substitute.For<ILog>();
+		var log = Substitute.For<ILog<Repository<Foo, FooId>>>();
 
 		var repo = Substitute.ForPartsOf<Repository<Foo, FooId>>(db, log);
 

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -41,7 +41,7 @@ public class Where_Tests
 				Assert.Equal(nameof(TestTable), x.column.TblName.Name);
 				Assert.Equal(TestTable.Prefix + nameof(TestTable0.Foo), x.column.ColName);
 				Assert.Equal(nameof(TestTable.Foo), x.column.ColAlias);
-				Assert.Equal(Compare.Like, x.cmp);
+				Assert.Equal(Compare.Like, x.compare);
 				Assert.Equal(value, x.value);
 			}
 		);

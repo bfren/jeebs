@@ -29,7 +29,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <summary>
 	/// ILog (should be given a context of the implementing class)
 	/// </summary>
-	protected ILog Log { get; private init; }
+	protected ILog<IRepository<TEntity, TId>> Log { get; private init; }
 
 	internal ILog LogTest =>
 		Log;
@@ -39,7 +39,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// </summary>
 	/// <param name="db">IDb</param>
 	/// <param name="log">ILog (should be given a context of the implementing class)</param>
-	protected Repository(IDb db, ILog log) =>
+	protected Repository(IDb db, ILog<IRepository<TEntity, TId>> log) =>
 		(Db, Log) = (db, log);
 
 	/// <summary>
@@ -64,8 +64,8 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	#region Fluent Queries
 
 	/// <inheritdoc/>
-	public virtual IQueryFluent<TEntity, TId> StartFluentQuery() =>
-		new QueryFluent<TEntity, TId>(Db, Log);
+	public virtual IFluentQuery<TEntity, TId> StartFluentQuery() =>
+		new FluentQuery<TEntity, TId>(Db, Db.Client.Mapper, Log);
 
 	#endregion Fluent Queries
 
