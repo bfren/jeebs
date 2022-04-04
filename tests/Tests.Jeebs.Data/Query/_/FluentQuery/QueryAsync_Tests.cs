@@ -2,16 +2,37 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Collections;
-using Jeebs.Data.Enums;
+using Jeebs.Messages;
+using MaybeF;
 using static Jeebs.Data.Query.FluentQuery.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
-public class QueryAsync_Tests : QueryFluent_Tests
+public class QueryAsync_Tests : FluentQuery_Tests
 {
 	[Fact]
-	public async Task No_Predicates_Returns_None_With_NoPredicatesMsg()
+	public async Task Query_Errors__Returns_None_With_ListMsg()
+	{
+		// Arrange
+		var (query, _) = Setup();
+		var m0 = Substitute.For<IMsg>();
+		var m1 = Substitute.For<IMsg>();
+		query.Errors.Add(m0);
+		query.Errors.Add(m1);
+
+		// Act
+		var result = await query.QueryAsync<int>();
+
+		// Assert
+		var none = result.AssertNone().AssertType<ListMsg>();
+		Assert.Collection(none.Args,
+			x => Assert.Same(m0, x),
+			x => Assert.Same(m1, x)
+		);
+	}
+
+	[Fact]
+	public async Task No_Predicates__Returns_None_With_NoPredicatesMsg()
 	{
 		// Arrange
 		var (query, _) = Setup();
@@ -24,36 +45,42 @@ public class QueryAsync_Tests : QueryFluent_Tests
 	}
 
 	[Fact]
-	public async Task Calls_Db_Client_GetQuery_With_Predicates()
+	public async Task Calls_Db_Client_GetQuery__With_Parts()
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
-		predicates.Count.Returns(1);
+		var withWhere = query.Update(parts => parts with
+		{
+			WhereCustom = parts.WhereCustom.WithItem((Rnd.Str, new QueryParametersDictionary()))
+		});
 
 		// Act
-		await (query with { Predicates = predicates }).QueryAsync<int>();
-		await (query with { Predicates = predicates }).QueryAsync<int>(v.Transaction);
+		await withWhere.QueryAsync<int>();
+		await withWhere.QueryAsync<int>(v.Transaction);
 
 		// Assert
-		var array = predicates.Received().ToArray();
-		v.Client.Received(2).GetQuery<TestEntity, int>(array);
+		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
+		v.Client.Received(2).GetQuery(fluent.Parts);
 	}
 
 	[Fact]
-	public async Task Calls_Db_QueryAsync()
+	public async Task Calls_Db_QueryAsync__With_Correct_Values()
 	{
 		// Arrange
-		var (query, v) = Setup();
-		var predicates = Substitute.For<IImmutableList<(string, Compare, dynamic)>>();
-		predicates.Count.Returns(1);
+		var sql = Rnd.Str;
+		var param = new QueryParametersDictionary();
+		var (query, v) = Setup(sql, param);
+		var withWhere = query.Update(parts => parts with
+		{
+			WhereCustom = parts.WhereCustom.WithItem((Rnd.Str, new QueryParametersDictionary()))
+		});
 
 		// Act
-		await (query with { Predicates = predicates }).QueryAsync<int>();
-		await (query with { Predicates = predicates }).QueryAsync<int>(v.Transaction);
+		await withWhere.QueryAsync<int>();
+		await withWhere.QueryAsync<int>(v.Transaction);
 
 		// Assert
-		await v.Db.Received().QueryAsync<int>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>());
-		await v.Db.Received().QueryAsync<int>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
+		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
+		await v.Db.Received(2).QueryAsync<int>(sql, param, CommandType.Text, v.Transaction);
 	}
 }

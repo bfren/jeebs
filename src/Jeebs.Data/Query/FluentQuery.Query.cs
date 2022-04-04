@@ -30,8 +30,14 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 			return F.None<IEnumerable<TModel>>(new ListMsg(Errors)).AsTask;
 		}
 
+		// Return if there are no where clauses
+		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
+		{
+			return F.None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask;
+		}
+
 		// Add select columns to query
-		var parts = QueryParts with
+		var parts = new QueryParts(Parts) with
 		{
 			SelectColumns = QueryF.GetColumnsFromTable<TModel>(Table)
 		};
