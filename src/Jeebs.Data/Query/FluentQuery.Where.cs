@@ -33,18 +33,8 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 
 		// Get column and add to QueryParts
 		return QueryF.GetColumnFromAlias(Table, column).Switch(
-			some: x => this with
-			{
-				QueryParts = QueryParts with
-				{
-					Where = QueryParts.Where.WithItem((x, cmp, value))
-				}
-			},
-			none: r =>
-			{
-				Errors.Add(r);
-				return this;
-			}
+			some: x => Update(parts => parts with { Where = parts.Where.WithItem((x, cmp, value)) }),
+			none: r => { Errors.Add(r); return this; }
 		);
 	}
 
@@ -133,9 +123,6 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		}
 
 		// Add clause and return
-		return this with
-		{
-			QueryParts = QueryParts with { WhereCustom = QueryParts.WhereCustom.WithItem((clause, param)) }
-		};
+		return Update(parts => parts with { WhereCustom = parts.WhereCustom.WithItem((clause, param)) });
 	}
 }
