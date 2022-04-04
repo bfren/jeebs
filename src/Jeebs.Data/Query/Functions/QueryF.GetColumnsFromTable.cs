@@ -21,21 +21,21 @@ public static partial class QueryF
 
 		// Holds the list of column names being extracted
 		var extracted = new List<IColumn>();
-		foreach (var property in GetModelProperties<TModel>())
+		foreach (var modelProperty in GetModelProperties<TModel>())
 		{
-			// Get the corresponding field
-			var field = tableProperties.SingleOrDefault(p => p.Name == property.Name);
+			// Get the corresponding table property
+			var tableProperty = tableProperties.SingleOrDefault(p => p.Name == modelProperty.Name);
 
-			// If the table field is not present in the model, continue
-			if (field is null)
+			// If the model property is not present in the table, continue
+			if (tableProperty is null)
 			{
 				continue;
 			}
 
 			// Add the column to the extraction list
-			if (field.GetValue(table) is string column)
+			if (tableProperty.GetValue(table) is string column)
 			{
-				var alias = property.Name;
+				var alias = modelProperty.Name;
 				extracted.Add(new Column(table, column, alias));
 			}
 		}
