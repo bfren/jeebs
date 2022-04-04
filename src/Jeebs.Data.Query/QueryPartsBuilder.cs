@@ -182,7 +182,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		TTable table,
 		Expression<Func<TTable, string>> column,
 		Compare cmp,
-		object value
+		dynamic value
 	)
 		where TTable : ITable =>
 		QueryF.GetColumnFromExpression(
