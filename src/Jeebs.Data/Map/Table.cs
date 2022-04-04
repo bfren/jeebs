@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Map;
@@ -6,14 +6,14 @@ namespace Jeebs.Data.Map;
 /// <inheritdoc cref="ITable"/>
 public abstract record class Table : ITable
 {
-	private readonly ITableName name;
+	private ITableName TableName { get; init; }
 
 	/// <summary>
 	/// Create with <see cref="ITableName"/>
 	/// </summary>
 	/// <param name="name">ITableName</param>
 	protected Table(ITableName name) =>
-		this.name = name;
+		TableName = name;
 
 	/// <summary>
 	/// Create with table name
@@ -30,11 +30,13 @@ public abstract record class Table : ITable
 
 	/// <inheritdoc/>
 	public ITableName GetName() =>
-		name;
+		TableName;
 
 	/// <summary>
 	/// See <see cref="ITableName.GetFullName(System.Func{string, string})"/>
 	/// </summary>
 	public sealed override string ToString() =>
-		name.GetFullName(s => s);
+		TableName.GetFullName(s => s);
 }
+
+public sealed record class NullTable() : Table(string.Empty);

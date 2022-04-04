@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -36,10 +36,14 @@ public sealed record class TableName : ITableName
 
 	/// <inheritdoc/>
 	public string GetFullName(Func<string, string> escape) =>
+		GetFullName(escape, SchemaSeparator);
+
+	/// <inheritdoc/>
+	public string GetFullName(Func<string, string> escape, char schemaSeparator) =>
 		Schema switch
 		{
 			{ } =>
-				$"{escape(Schema)}{SchemaSeparator}{escape(Name)}",
+				$"{escape(Schema)}{schemaSeparator}{escape(Name)}",
 
 			_ =>
 				escape(Name)
