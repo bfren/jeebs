@@ -1,9 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
-using Jeebs.Collections;
-using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.Messages;
@@ -51,7 +50,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// <summary>
 	/// Query Parts - used to build the query
 	/// </summary>
-	internal QueryParts QueryParts { get; private init; }
+	internal IQueryParts Parts { get; private init; }
 
 	/// <summary>
 	/// Table that TEntity is mapped to
@@ -59,31 +58,27 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	internal ITable Table { get; private init; }
 
 	/// <summary>
-	/// List of added predicates
-	/// </summary>
-	internal IImmutableList<(string col, Compare cmp, dynamic val)> Predicates { get; init; } =
-		new ImmutableList<(string, Compare, dynamic)>();
-
-	/// <summary>
-	/// List of added sort orders
-	/// </summary>
-	internal IImmutableList<(string col, SortOrder val)> Sorts { get; init; } =
-		new ImmutableList<(string, SortOrder)>();
-
-	/// <summary>
 	/// Create object
 	/// </summary>
 	/// <param name="db">Database instance</param>
+	/// <param name="mapper">IMapper</param>
 	/// <param name="log">ILog (should come with the context of the calling class)</param>
-	internal FluentQuery(IDb db, ILog log)
+	internal FluentQuery(IDb db, IMapper mapper, ILog log)
 	{
 		(Db, Errors, Log) = (db, new List<IMsg>(), log);
 
-		Table = Db.Client.Mapper.GetTableMapFor<TEntity>().Switch(
+		Table = mapper.GetTableMapFor<TEntity>().Switch(
 			some: x => x.Table,
 			none: r => { Errors.Add(r); return new NullTable(); }
 		);
 
-		QueryParts = new QueryParts(Table);
+		Parts = new QueryParts(Table);
 	}
+
+	/// <summary>
+	/// Update <see cref="Parts"/> with a new value
+	/// </summary>
+	/// <param name="with">Function to perform the update</param>
+	private IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
+		this with { Parts = with(new(Parts)) };
 }
