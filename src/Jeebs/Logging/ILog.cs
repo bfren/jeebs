@@ -9,7 +9,7 @@ namespace Jeebs.Logging;
 /// Enables agnostic logging operations
 /// </summary>
 /// <typeparam name="TContext">Log context</typeparam>
-public interface ILog<TContext> : ILog { }
+public interface ILog<out TContext> : ILog { }
 
 /// <summary>
 /// Enables agnostic logging operations
@@ -35,11 +35,21 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log an <see cref="IMsg"/>
+	/// Log an <see cref="IMsg"/> using the <see cref="LogLevel"/> it defines,
+	/// or <see cref="Messages.Msg.DefaultLevel"/>
 	/// </summary>
-	/// <typeparam name="T">The message type</typeparam>
+	/// <typeparam name="T">Message type</typeparam>
 	/// <param name="message">Message to log</param>
 	void Msg<T>(T? message)
+		where T : IMsg;
+
+	/// <summary>
+	/// Log an <see cref="IMsg"/> using the specified <paramref name="level"/>
+	/// </summary>
+	/// <typeparam name="T">Message type</typeparam>
+	/// <param name="message">Message to log</param>
+	/// <param name="level">Log level</param>
+	void Msg<T>(T? message, LogLevel level)
 		where T : IMsg;
 
 	/// <summary>

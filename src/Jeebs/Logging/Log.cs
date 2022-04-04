@@ -14,21 +14,31 @@ public abstract class Log : ILog
 
 	/// <inheritdoc/>
 	public void Msg<T>(T? message)
+		where T : IMsg =>
+		Msg(message, message switch
+		{
+			Msg msg =>
+				msg.Level,
+
+			_ =>
+				Messages.Msg.DefaultLevel
+		});
+
+	/// <inheritdoc/>
+	public void Msg<T>(T? message, LogLevel level)
 		where T : IMsg
 	{
-		// Get log info
-		var (level, text, args) = message switch
+		// Get message text and arguments
+		var (text, args) = message switch
 		{
 			Msg msg =>
 				(
-					msg.Level,
 					msg.FormatWithType,
 					msg.ArgsWithType
 				),
 
 			_ =>
 				(
-					Messages.Msg.DefaultLevel,
 					message?.ToString() ?? typeof(T).ToString(),
 					Array.Empty<object>()
 				),
