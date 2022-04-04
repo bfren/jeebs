@@ -14,10 +14,7 @@ public abstract partial class DbClient : IDbClient
 	/// <summary>
 	/// IMapper
 	/// </summary>
-	protected IMapper Mapper { get; private init; }
-
-	internal IMapper MapperTest =>
-		Mapper;
+	public IMapper Mapper { get; private init; }
 
 	/// <summary>
 	/// Create using default Mapper instance

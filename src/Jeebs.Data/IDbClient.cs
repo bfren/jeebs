@@ -16,6 +16,11 @@ namespace Jeebs.Data;
 public interface IDbClient
 {
 	/// <summary>
+	/// Entity / table mapper
+	/// </summary>
+	IMapper Mapper { get; }
+
+	/// <summary>
 	/// Return a new database connection
 	/// </summary>
 	/// <param name="connectionString">Database connection string</param>
