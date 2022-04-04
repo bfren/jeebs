@@ -30,8 +30,8 @@ public sealed record class QueryParts(ITable From) : IQueryParts
 		new ImmutableList<(IColumn from, IColumn to)>();
 
 	/// <inheritdoc/>
-	public IImmutableList<(IColumn column, Compare cmp, dynamic value)> Where { get; init; } =
-		new ImmutableList<(IColumn column, Compare cmp, dynamic value)>();
+	public IImmutableList<(IColumn column, Compare compare, dynamic value)> Where { get; init; } =
+		new ImmutableList<(IColumn column, Compare compare, dynamic value)>();
 
 	/// <inheritdoc/>
 	public IImmutableList<(string clause, IQueryParametersDictionary parameters)> WhereCustom { get; init; } =
