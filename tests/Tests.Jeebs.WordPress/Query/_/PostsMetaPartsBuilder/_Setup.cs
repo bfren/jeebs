@@ -32,7 +32,7 @@ public static class Setup
 			{
 				Assert.Equal(PostsMeta.GetName(), x.column.TblName);
 				Assert.Equal(column, x.column.ColName);
-				Assert.Equal(cmp, x.cmp);
+				Assert.Equal(cmp, x.compare);
 				Assert.Equal(value, x.value);
 			}
 		);

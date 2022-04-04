@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
@@ -47,7 +47,7 @@ public class AddWhereTaxonomy_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder,
 			{
 				Assert.Equal(builder.TTest.TermTaxonomies.GetName(), x.column.TblName);
 				Assert.Equal(builder.TTest.TermTaxonomies.Taxonomy, x.column.ColName);
-				Assert.Equal(Compare.Equal, x.cmp);
+				Assert.Equal(Compare.Equal, x.compare);
 				Assert.Equal(taxonomy, x.value);
 			}
 		);

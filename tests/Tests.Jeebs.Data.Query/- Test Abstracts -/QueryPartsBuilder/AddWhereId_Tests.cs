@@ -45,7 +45,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 			x =>
 			{
 				Assert.Equal(builder.IdColumn, x.column);
-				Assert.Equal(Compare.Equal, x.cmp);
+				Assert.Equal(Compare.Equal, x.compare);
 				Assert.Equal(id.Value, x.value);
 			}
 		);
@@ -72,7 +72,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 			x =>
 			{
 				Assert.Equal(builder.IdColumn, x.column);
-				Assert.Equal(Compare.Equal, x.cmp);
+				Assert.Equal(Compare.Equal, x.compare);
 				Assert.Equal(i0.Value, x.value);
 			}
 		);
@@ -98,7 +98,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 			x =>
 			{
 				Assert.Equal(builder.IdColumn, x.column);
-				Assert.Equal(Compare.In, x.cmp);
+				Assert.Equal(Compare.In, x.compare);
 
 				Assert.Collection((IEnumerable<object>)x.value,
 					y => Assert.Equal(i0.Value, y),
