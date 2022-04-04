@@ -65,7 +65,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 
 	/// <inheritdoc/>
 	public virtual IFluentQuery<TEntity, TId> StartFluentQuery() =>
-		new FluentQuery<TEntity, TId>(Db, Log);
+		new FluentQuery<TEntity, TId>(Db, Db.Client.Mapper, Log);
 
 	#endregion Fluent Queries
 
