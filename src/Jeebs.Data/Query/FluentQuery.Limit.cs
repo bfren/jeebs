@@ -14,10 +14,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		maximum switch
 		{
 			> 0 =>
-				this with
-				{
-					QueryParts = QueryParts with { Maximum = maximum }
-				},
+				Update(parts => parts with { Maximum = maximum }),
 
 			_ =>
 				this
@@ -28,10 +25,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		skip switch
 		{
 			> 0 =>
-				this with
-				{
-					QueryParts = QueryParts with { Skip = skip }
-				},
+				Update(parts => parts with { Skip = skip }),
 
 			_ =>
 				this
