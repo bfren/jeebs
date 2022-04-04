@@ -1,8 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>Jeebs.Data.Querying</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="StrongId.Testing" Version="8.0.2" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
+		<ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
 	</ItemGroup>
 </Project>

@@ -100,8 +100,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 				Assert.Equal(builder.IdColumn, x.column);
 				Assert.Equal(Compare.In, x.cmp);
 
-				var value = Assert.IsAssignableFrom<IEnumerable<object>>(x.value);
-				Assert.Collection(value,
+				Assert.Collection((IEnumerable<object>)x.value,
 					y => Assert.Equal(i0.Value, y),
 					y => Assert.Equal(i1.Value, y)
 				);
