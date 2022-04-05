@@ -24,7 +24,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		await withWhere.QuerySingleAsync<int>();
 
 		// Assert
-		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
+		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
 		v.Client.Received().GetQuery(Arg.Is<IQueryParts>(x => x.Maximum == 1UL));
 	}
 
