@@ -17,7 +17,7 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0-preview-20220301-01" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0-preview-20220401-07" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MaybeF.Testing" Version="8.2.1" />
