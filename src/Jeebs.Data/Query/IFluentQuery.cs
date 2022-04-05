@@ -95,14 +95,14 @@ public interface IFluentQuery<TEntity, TId>
 	/// <summary>
 	/// The maximum number of records to return
 	/// </summary>
-	/// <param name="maximum"></param>
-	IFluentQuery<TEntity, TId> Maximum(ulong maximum);
+	/// <param name="number"></param>
+	IFluentQuery<TEntity, TId> Maximum(ulong number);
 
 	/// <summary>
 	/// The number of records to skip
 	/// </summary>
-	/// <param name="skip"></param>
-	IFluentQuery<TEntity, TId> Skip(ulong skip);
+	/// <param name="number"></param>
+	IFluentQuery<TEntity, TId> Skip(ulong number);
 
 	#endregion Limit
 
