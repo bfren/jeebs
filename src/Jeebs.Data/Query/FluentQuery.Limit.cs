@@ -10,22 +10,22 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	where TId : class, IStrongId, new()
 {
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Maximum(ulong maximum) =>
-		maximum switch
+	public IFluentQuery<TEntity, TId> Maximum(ulong number) =>
+		number switch
 		{
 			> 0 =>
-				Update(parts => parts with { Maximum = maximum }),
+				Update(parts => parts with { Maximum = number }),
 
 			_ =>
 				this
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Skip(ulong skip) =>
-		skip switch
+	public IFluentQuery<TEntity, TId> Skip(ulong number) =>
+		number switch
 		{
 			> 0 =>
-				Update(parts => parts with { Skip = skip }),
+				Update(parts => parts with { Skip = number }),
 
 			_ =>
 				this

@@ -11,7 +11,10 @@ namespace Jeebs.Data.Query.FluentQuery_Tests;
 
 public abstract class FluentQuery_Tests
 {
-	public static (FluentQuery<TestEntity, TestId> query, Vars v) Setup(string? query = null, IQueryParametersDictionary? param = null)
+	public static (FluentQuery<TestEntity, TestId> query, Vars v) Setup() =>
+		Setup(null, null);
+
+	public static (FluentQuery<TestEntity, TestId> query, Vars v) Setup(string? query, IQueryParametersDictionary? param)
 	{
 		var client = Substitute.For<IDbClient>();
 		client.GetQuery(default!)

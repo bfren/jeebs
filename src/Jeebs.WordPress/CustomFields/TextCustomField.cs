@@ -61,6 +61,6 @@ public abstract class TextCustomField : CustomField<string>
 		/// <summary>Meta key not found in MetaDictionary</summary>
 		/// <param name="Type">Custom Field type</param>
 		/// <param name="Value">Meta Key</param>
-		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value): WithValueMsg<string>;
+		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string>;
 	}
 }

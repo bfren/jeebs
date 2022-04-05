@@ -80,7 +80,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		await withWhere.QueryAsync<int>(v.Transaction);
 
 		// Assert
-		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
+		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
 		await v.Db.Received(2).QueryAsync<int>(sql, param, CommandType.Text, v.Transaction);
 	}
 }

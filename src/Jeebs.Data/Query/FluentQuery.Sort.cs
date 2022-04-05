@@ -29,8 +29,8 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> selector, SortOrder order) =>
-		selector.GetPropertyInfo()
+	public IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order) =>
+		aliasSelector.GetPropertyInfo()
 			.Switch(
 				some: x => Sort(x.Name, order),
 				none: this

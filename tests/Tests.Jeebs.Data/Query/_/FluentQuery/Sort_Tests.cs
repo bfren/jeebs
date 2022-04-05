@@ -36,7 +36,6 @@ public class Sort_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var value = Rnd.Str;
 
 		// Act
 		var r0 = query.Sort(nameof(TestEntity.Foo), order);

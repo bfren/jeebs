@@ -37,9 +37,16 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		}
 
 		// Add select columns to query
-		var parts = new QueryParts(Parts) with
+		var parts = Parts.SelectColumns.Count switch
 		{
-			SelectColumns = QueryF.GetColumnsFromTable<TModel>(Table)
+			0 =>
+				new QueryParts(Parts) with
+				{
+					SelectColumns = QueryF.GetColumnsFromTable<TModel>(Table)
+				},
+
+			_ =>
+				Parts
 		};
 
 		// If there are

@@ -65,7 +65,7 @@ public static partial class EnumF
 	{
 		/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
 		/// <param name="Value">Enum type</param>
-		public sealed record class NotAValidEnumMsg(Type Value): WithValueMsg<Type>;
+		public sealed record class NotAValidEnumMsg(Type Value) : WithValueMsg<Type>;
 
 		/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
 		/// <typeparam name="T">Enum type</typeparam>

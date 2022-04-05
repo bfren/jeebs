@@ -21,7 +21,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		var result = await withWhere.QuerySingleAsync<int>();
+		await withWhere.QuerySingleAsync<int>();
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
@@ -100,7 +100,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		await withWhere.QuerySingleAsync<int>(v.Transaction);
 
 		// Assert
-		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
+		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
 		await v.Db.Received(2).QueryAsync<int>(sql, param, CommandType.Text, v.Transaction);
 	}
 }
