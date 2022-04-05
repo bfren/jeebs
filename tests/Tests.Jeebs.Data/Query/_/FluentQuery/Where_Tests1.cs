@@ -92,10 +92,9 @@ public class Where_Tests1 : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var column = Rnd.Str;
 
 		// Act
-		var result = query.Where(column, Compare.LessThan, Rnd.Guid);
+		var result = query.Where(Rnd.Str, Compare.LessThan, Rnd.Guid);
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);

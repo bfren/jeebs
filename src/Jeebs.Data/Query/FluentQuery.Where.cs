@@ -45,7 +45,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where(string column, Compare compare, dynamic? value)
+	public IFluentQuery<TEntity, TId> Where(string columnAlias, Compare compare, dynamic? value)
 	{
 		// Don't add predicates with a null value
 		if (value is null)
@@ -60,67 +60,67 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		}
 
 		// Get column and add to QueryParts
-		return QueryF.GetColumnFromAlias(Table, column).Switch(
+		return QueryF.GetColumnFromAlias(Table, columnAlias).Switch(
 			some: x => Update(parts => parts with { Where = parts.Where.WithItem((x, compare, value)) }),
 			none: r => { Errors.Add(r); return this; }
 		);
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> selector, Compare compare, TValue value) =>
-		selector.GetPropertyInfo()
+	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value) =>
+		aliasSelector.GetPropertyInfo()
 			.Switch(
 				some: x => Where(x.Name, compare, value),
 				none: this
 			);
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereId(params TId[] id) =>
-		id.Length switch
+	public IFluentQuery<TEntity, TId> WhereId(params TId[] ids) =>
+		ids.Length switch
 		{
 			> 1 =>
-				WhereIn(nameof(IWithId.Id), id.Select(x => x.Value)),
+				WhereIn(nameof(IWithId.Id), ids.Select(x => x.Value)),
 
 			1 =>
-				Where(nameof(IWithId.Id), Compare.Equal, id[0].Value),
+				Where(nameof(IWithId.Id), Compare.Equal, ids[0].Value),
 
 			_ =>
 				this
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereIn<TValue>(string column, IEnumerable<TValue> values) =>
+	public IFluentQuery<TEntity, TId> WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
 		values.Any() switch
 		{
 			true =>
-				Where(column, Compare.In, values),
+				Where(columnAlias, Compare.In, values),
 
 			false =>
 				this
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> selector, IEnumerable<TValue> values) =>
-		selector.GetPropertyInfo()
+	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> columnAlias, IEnumerable<TValue> values) =>
+		columnAlias.GetPropertyInfo()
 			.Switch(
 				some: x => WhereIn(x.Name, values),
 				none: this
 			);
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(string column, IEnumerable<TValue> values) =>
+	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
 		values.Any() switch
 		{
 			true =>
-				Where(column, Compare.NotIn, values),
+				Where(columnAlias, Compare.NotIn, values),
 
 			false =>
 				this
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> selector, IEnumerable<TValue> values) =>
-		selector.GetPropertyInfo()
+	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> columnAlias, IEnumerable<TValue> values) =>
+		columnAlias.GetPropertyInfo()
 			.Switch(
 				some: x => WhereNotIn(x.Name, values),
 				none: this
