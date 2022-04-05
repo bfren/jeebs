@@ -33,8 +33,8 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		var r0 = await withWhere.ExecuteAsync<string>(nameof(TestEntity.Foo));
-		var r1 = await withWhere.ExecuteAsync(x => x.Foo);
+		await withWhere.ExecuteAsync<string>(nameof(TestEntity.Foo));
+		await withWhere.ExecuteAsync(x => x.Foo);
 
 		// Assert
 		v.Db.Client.Received(2).GetQuery(Arg.Is<IQueryParts>(x =>
