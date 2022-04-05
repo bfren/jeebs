@@ -82,7 +82,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual Task<Maybe<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
 		Db.Client.GetCreateQuery<TEntity>()
 		.Audit(
-			some: x => LogFunc(nameof(CreateAsync))
+			some: _ => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text, transaction)
@@ -99,7 +99,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
 		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(RetrieveAsync))
+			some: _ => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
 			x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text, transaction)
@@ -118,7 +118,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId =>
 		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(UpdateAsync))
+			some: _ => LogFunc(nameof(UpdateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
@@ -137,7 +137,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId =>
 		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
 		.Audit(
-			some: x => LogFunc(nameof(DeleteAsync))
+			some: _ => LogFunc(nameof(DeleteAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)

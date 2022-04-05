@@ -100,8 +100,8 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> columnAlias, IEnumerable<TValue> values) =>
-		columnAlias.GetPropertyInfo()
+	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
+		aliasSelector.GetPropertyInfo()
 			.Switch(
 				some: x => WhereIn(x.Name, values),
 				none: this
@@ -119,8 +119,8 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> columnAlias, IEnumerable<TValue> values) =>
-		columnAlias.GetPropertyInfo()
+	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
+		aliasSelector.GetPropertyInfo()
 			.Switch(
 				some: x => WhereNotIn(x.Name, values),
 				none: this

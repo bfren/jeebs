@@ -54,6 +54,6 @@ public static class BooleanF
 
 		/// <summary>Unrecognised boolean value</summary>
 		/// <param name="Value">Unrecognised Value</param>
-		public sealed record class UnrecognisedValueMsg(string Value): WithValueMsg<string>();
+		public sealed record class UnrecognisedValueMsg(string Value) : WithValueMsg<string>();
 	}
 }
