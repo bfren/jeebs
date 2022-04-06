@@ -8,7 +8,7 @@ namespace Jeebs.Config.Web.Auth;
 /// <summary>
 /// Adding auth when auth is not enabled in configuration
 /// </summary>
-public class AuthNotEnabledException : Exception
+public sealed class AuthNotEnabledException : Exception
 {
 	/// <summary>
 	/// Create exception

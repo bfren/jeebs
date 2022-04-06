@@ -9,7 +9,7 @@ namespace Jeebs.Config.Web.Auth;
 /// <summary>
 /// Unknown / unsupported authentication scheme
 /// </summary>
-public class UnsupportedAuthSchemeException : Exception
+public sealed class UnsupportedAuthSchemeException : Exception
 {
 	/// <summary>
 	/// Exception message format
