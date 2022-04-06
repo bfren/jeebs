@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Jeebs.Collections;
@@ -19,7 +20,7 @@ public static partial class QueryF
 	/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
 	public static (IImmutableList<string> where, IQueryParametersDictionary param) GetWhereAndParameters(
 		IDbClient client,
-		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates,
+		IImmutableList<(IColumn column, Compare compare, dynamic value)> predicates,
 		bool includeTableName
 	)
 	{
@@ -29,7 +30,7 @@ public static partial class QueryF
 		var index = 0;
 
 		// Loop through predicates and add each one
-		foreach (var (column, cmp, value) in predicates)
+		foreach (var (column, compare, value) in predicates)
 		{
 			// Escape column with or without table
 			var escapedColumn = includeTableName switch
@@ -41,8 +42,18 @@ public static partial class QueryF
 					client.Escape(column)
 			};
 
+			// IS is a special case for use with null
+			if (compare is Compare.Is or Compare.IsNot && value is DBNull)
+			{
+				// Add null clause
+				where.Add($"{escapedColumn} {client.GetOperator(compare)} NULL");
+
+				// Move to next predicate
+				continue;
+			}
+
 			// IN is a special case, handle ordinary cases first
-			if (cmp is not Compare.In and not Compare.NotIn)
+			if (compare is not Compare.In and not Compare.NotIn)
 			{
 				// Auto-increment name and get parameter value (to support StrongId)
 				var paramName = $"P{index++}";
@@ -50,7 +61,7 @@ public static partial class QueryF
 
 				// Add parameter
 				param.Add(paramName, paramValue);
-				where.Add($"{escapedColumn} {client.GetOperator(cmp)} {client.GetParamRef(paramName)}");
+				where.Add($"{escapedColumn} {client.GetOperator(compare)} {client.GetParamRef(paramName)}");
 
 				// Move to next predicate
 				continue;
@@ -75,7 +86,7 @@ public static partial class QueryF
 				// If there are IN parameters, add to the query
 				if (inParam.Count > 0)
 				{
-					where.Add($"{escapedColumn} {client.GetOperator(cmp)} {client.JoinList(inParam, true)}");
+					where.Add($"{escapedColumn} {client.GetOperator(compare)} {client.JoinList(inParam, true)}");
 				}
 			}
 		}

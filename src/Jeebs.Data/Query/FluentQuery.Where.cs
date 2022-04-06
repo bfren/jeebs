@@ -41,18 +41,15 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 		}
 
 		// Add clause and return
-		return Update(parts => parts with { WhereCustom = parts.WhereCustom.WithItem((clause, param)) });
+		return Update(parts => parts with
+		{
+			WhereCustom = parts.WhereCustom.WithItem((clause, param))
+		});
 	}
 
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> Where(string columnAlias, Compare compare, dynamic? value)
 	{
-		// Don't add predicates with a null value
-		if (value is null)
-		{
-			return this;
-		}
-
 		// If there are errors, return
 		if (Errors.Count > 0)
 		{
@@ -61,8 +58,15 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 
 		// Get column and add to QueryParts
 		return QueryF.GetColumnFromAlias(Table, columnAlias).Switch(
-			some: x => Update(parts => parts with { Where = parts.Where.WithItem((x, compare, value)) }),
-			none: r => { Errors.Add(r); return this; }
+			some: x => Update(parts => parts with
+			{
+				Where = parts.Where.WithItem((x, compare, value ?? DBNull.Value))
+			}),
+			none: r =>
+			{
+				Errors.Add(r);
+				return this;
+			}
 		);
 	}
 
