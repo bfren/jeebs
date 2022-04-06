@@ -9,11 +9,12 @@ using Jeebs.Mvc.Auth;
 using Jeebs.Mvc.Data;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppMvc;
 
-public sealed class App : MvcAppWithData
+public sealed class App : Jeebs.Apps.Web.MvcApp
 {
 	public App() : base(false) { }
 
@@ -36,6 +37,13 @@ public sealed class App : MvcAppWithData
 	{
 		app.UseAuthentication();
 		base.ConfigureAuthorisation(app, config);
+	}
+
+	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
+	{
+		base.ConfigureServicesMvcOptions(opt);
+
+		opt.AddStrongIdModelBinding();
 	}
 
 	public override void Ready(IServiceProvider services, ILog log)
