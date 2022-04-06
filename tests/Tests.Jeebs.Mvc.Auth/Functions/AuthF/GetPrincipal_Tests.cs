@@ -8,7 +8,7 @@ using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Logging;
 using static StrongId.Testing.Generator;
 
-namespace Jeebs.Mvc.Auth.Controllers.AuthController_Tests;
+namespace Jeebs.Mvc.Auth.Functions.AuthF_Tests;
 
 public class GetPrincipal_Tests
 {
@@ -18,7 +18,6 @@ public class GetPrincipal_Tests
 		// Arrange
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
-		var controller = new AuthTestController(auth, log);
 		var user = new AuthUserModel
 		{
 			Id = LongId<AuthUserId>(),
@@ -28,7 +27,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, Rnd.Str);
+		var result = await AuthF.GetPrincipal(user, Rnd.Str, null);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -61,7 +60,6 @@ public class GetPrincipal_Tests
 		// Arrange
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
-		var controller = new AuthTestController(auth, log);
 		var role0 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var role1 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var user = new AuthUserModel
@@ -74,7 +72,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await controller.GetPrincipal(user, Rnd.Str);
+		var result = await AuthF.GetPrincipal(user, Rnd.Str, null);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -117,7 +115,6 @@ public class GetPrincipal_Tests
 		// Arrange
 		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
-		var controller = new AuthTestControllerWithClaims(auth, log);
 		var user = new AuthUserModel
 		{
 			Id = LongId<AuthUserId>(),
@@ -125,36 +122,27 @@ public class GetPrincipal_Tests
 			FriendlyName = Rnd.Str,
 			IsSuper = true
 		};
+		var addClaims = Substitute.For<AuthF.GetClaims>();
+		addClaims.Invoke(user, Arg.Any<string>())
+			.Returns(x =>
+			{
+				var user = (AuthUserModel)x[0];
+				return Task.FromResult(
+					new List<Claim>
+					{
+						new(nameof(GetPrincipal_Tests), $"{user.Id}+{user.FriendlyName}")
+					}
+				);
+			});
 
 		// Act
-		var result = await controller.GetPrincipal(user, Rnd.Str);
+		var result = await AuthF.GetPrincipal(user, Rnd.Str, addClaims);
 
 		// Assert
 		Assert.Equal(5, result.Claims.Count());
 		Assert.Contains(
 			result.Claims,
-			c => c.Type == nameof(AuthTestControllerWithClaims) && c.Value == $"{user.Id}+{user.FriendlyName}"
+			c => c.Type == nameof(GetPrincipal_Tests) && c.Value == $"{user.Id}+{user.FriendlyName}"
 		);
-	}
-
-	public class AuthTestController : AuthControllerBase
-	{
-		public AuthTestController(IAuthDataProvider auth, ILog log) :
-			base(auth, log)
-		{ }
-	}
-
-	public class AuthTestControllerWithClaims : AuthTestController
-	{
-		protected override GetClaims? AddClaims =>
-			(user, _) =>
-				Task.FromResult(new List<Claim>
-				{
-					new(nameof(AuthTestControllerWithClaims), $"{user.Id}+{user.FriendlyName}")
-				});
-
-		public AuthTestControllerWithClaims(IAuthDataProvider auth, ILog log) :
-			base(auth, log)
-		{ }
 	}
 }
