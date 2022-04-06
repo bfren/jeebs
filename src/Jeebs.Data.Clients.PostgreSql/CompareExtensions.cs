@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -46,6 +46,12 @@ public static class CompareExtensions
 
 			Compare.NotIn =>
 				"NOT IN",
+
+			Compare.Is =>
+				"IS",
+
+			Compare.IsNot =>
+				"IS NOT",
 
 			_ =>
 				throw new UnrecognisedSearchOperatorException(@this)
