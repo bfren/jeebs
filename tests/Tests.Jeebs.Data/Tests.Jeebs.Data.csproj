@@ -3,7 +3,7 @@
 		<RootNamespace>Jeebs.Data</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="StrongId.Testing" Version="8.0.2" />
+	  <PackageReference Include="StrongId.Testing" Version="8.1.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />

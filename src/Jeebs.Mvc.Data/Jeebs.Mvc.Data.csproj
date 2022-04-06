@@ -4,6 +4,6 @@
 		<ProjectReference Include="..\Jeebs.Mvc\Jeebs.Mvc.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="StrongId.Mvc" Version="8.0.2" />
+		<PackageReference Include="StrongId.Mvc" Version="8.1.1" />
 	</ItemGroup>
 </Project>
