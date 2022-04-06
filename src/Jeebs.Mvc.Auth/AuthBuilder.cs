@@ -39,6 +39,12 @@ public sealed class AuthBuilder
 	{
 		(this.services, this.config) = (services, config);
 
+		// If auth is not enabled throw an exception
+		if (!config.Enabled)
+		{
+			throw new AuthNotEnabledException("You must configure auth in the Jeebs config file.");
+		}
+
 		// Set default authentication scheme
 		builder = services.AddAuthentication(config.Scheme switch
 		{
@@ -53,10 +59,10 @@ public sealed class AuthBuilder
 		if (config.Scheme == AuthScheme.Cookies)
 		{
 			_ = builder.AddCookie(opt =>
-			  {
-				  opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
-				  opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
-			  });
+			{
+				opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
+				opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
+			});
 		}
 	}
 

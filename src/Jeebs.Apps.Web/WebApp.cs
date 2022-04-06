@@ -102,10 +102,10 @@ public class WebApp : App
 			ConfigureSecurityHeaders(app);
 		}
 
-		// Authentication and authorisation
+		// Configure Authorisation and Authentication
 		if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
 		{
-			ConfigureAuthorisation(app, config);
+			ConfigureAuth(app, config);
 		}
 
 		// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
@@ -149,8 +149,11 @@ public class WebApp : App
 	/// <summary>
 	/// Override to configure authentication and authorisation - it is only called if Auth is enabled
 	/// </summary>
+	/// <remarks>
+	/// Calls to app.UseAuthentication() should come *before* app.UseAuthorization()
+	/// </remarks>
 	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
-	protected virtual void ConfigureAuthorisation(WebApplication app, IConfiguration config) =>
+	protected virtual void ConfigureAuth(WebApplication app, IConfiguration config) =>
 		_ = app.UseAuthorization();
 }

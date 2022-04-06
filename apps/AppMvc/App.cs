@@ -33,10 +33,10 @@ public sealed class App : Jeebs.Apps.Web.MvcApp
 		services.AddTransient<IImageDriver, ImageDriver>();
 	}
 
-	protected override void ConfigureAuthorisation(WebApplication app, IConfiguration config)
+	protected override void ConfigureAuth(WebApplication app, IConfiguration config)
 	{
 		app.UseAuthentication();
-		base.ConfigureAuthorisation(app, config);
+		base.ConfigureAuth(app, config);
 	}
 
 	protected override void ConfigureServicesMvcOptions(MvcOptions opt)

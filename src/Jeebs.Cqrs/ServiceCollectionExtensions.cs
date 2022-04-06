@@ -53,7 +53,7 @@ public static class ServiceCollectionExtensions
 				continue;
 			}
 
-			_ = services.AddSingleton(q);
+			_ = services.AddTransient(q);
 			_ = services.AddTransient(q.BaseType, p => p.GetRequiredService(q));
 		}
 	}
