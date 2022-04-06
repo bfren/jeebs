@@ -42,6 +42,7 @@ public class RazorApp : MvcApp
 	protected override void ConfigureServicesEndpoints(IServiceCollection services) =>
 		_ = services
 			.AddRazorPages(ConfigureServicesRazorPagesOptions)
+			.AddMvcOptions(ConfigureServicesMvcOptions)
 			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
 			.AddJsonOptions(ConfigureServicesEndpointsJson);
 
