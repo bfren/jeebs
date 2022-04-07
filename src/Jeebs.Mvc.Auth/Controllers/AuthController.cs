@@ -39,9 +39,9 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	protected IAuthDataProvider Auth { get; private init; }
 
 	/// <summary>
-	/// Add application-specific claims to an authenticated user
+	/// Get application-specific claims for an authenticated user
 	/// </summary>
-	protected virtual AuthF.GetClaims? AddClaims { get; }
+	protected virtual AuthF.GetClaims? GetClaims { get; }
 
 	/// <summary>
 	/// Inject dependencies
@@ -66,14 +66,15 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	public virtual Task<IActionResult> SignIn(SignInModel model) =>
 		AuthF.DoSignInAsync(new(
 			Model: model,
-			AddClaims: AddClaims,
 			AddErrorAlert: TempData.AddErrorAlert,
 			Auth: Auth,
+			GetClaims: GetClaims,
 			GetRedirect: Redirect,
 			Log: Log,
 			SignInAsync: HttpContext.SignInAsync,
 			GetSignInFormPage: SignIn,
-			Url: Url
+			Url: Url,
+			ValidateUserAsync: AuthF.ValidateUserAsync
 		));
 
 	/// <summary>

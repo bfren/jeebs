@@ -17,8 +17,8 @@ public static partial class AuthF
 	/// </summary>
 	/// <param name="user"></param>
 	/// <param name="password"></param>
-	/// <param name="addClaims"></param>
-	internal static async Task<ClaimsPrincipal> GetPrincipal(AuthUserModel user, string password, GetClaims? addClaims)
+	/// <param name="getClaims"></param>
+	internal static async Task<ClaimsPrincipal> GetPrincipal(AuthUserModel user, string password, GetClaims? getClaims)
 	{
 		// Create claims object
 		var claims = new List<Claim>
@@ -41,9 +41,9 @@ public static partial class AuthF
 		}
 
 		// Add custom Claims
-		if (addClaims != null)
+		if (getClaims != null)
 		{
-			claims.AddRange(await addClaims(user, password).ConfigureAwait(false));
+			claims.AddRange(await getClaims(user, password).ConfigureAwait(false));
 		}
 
 		// Create and return identity and principal objects
