@@ -59,8 +59,10 @@ public static partial class AuthF
 			var principal = await GetPrincipal(user, v.Model.Password, v.AddClaims).ConfigureAwait(false);
 
 			// Update last sign in
-			var updated = await v.Auth.User.UpdateLastSignInAsync(user.Id).ConfigureAwait(false);
-			_ = updated.Audit(none: v.Log.Msg);
+			var updated = await v.Auth.User
+				.UpdateLastSignInAsync(user.Id)
+				.AuditAsync(none: v.Log.Msg)
+				.ConfigureAwait(false);
 
 			// Add SignIn to HttpContext using Cookie scheme
 			await v.Context.SignInAsync(
@@ -75,7 +77,7 @@ public static partial class AuthF
 				}
 			).ConfigureAwait(false);
 
-			// Redirect to return url (or Auth/Index)
+			// Redirect to return url
 			return v.RedirectTo(GetReturnUrl(v.Url, v.Model.ReturnUrl));
 		}
 
