@@ -6,6 +6,7 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Jwt.Functions;
 using Jeebs.Mvc.Auth.Functions;
 using Jeebs.Mvc.Auth.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Auth.Controllers;
@@ -66,12 +67,12 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 		AuthF.DoSignInAsync(new(
 			Model: model,
 			AddClaims: AddClaims,
+			AddErrorAlert: TempData.AddErrorAlert,
 			Auth: Auth,
-			Context: HttpContext,
+			GetRedirect: Redirect,
 			Log: Log,
-			RedirectTo: Redirect,
-			SignInFormPage: SignIn,
-			TempData: TempData,
+			SignInAsync: HttpContext.SignInAsync,
+			GetSignInFormPage: SignIn,
 			Url: Url
 		));
 
@@ -80,9 +81,13 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// </summary>
 	public new Task<IActionResult> SignOut() =>
 		AuthF.DoSignOutAsync(new(
-			Context: HttpContext,
-			SignInFormPage: () => RedirectToAction(nameof(SignIn), new { ReturnUrl = GetReturnUrl(Request.Query["ReturnUrl"]) }),
-			TempData: TempData
+			AddInfoAlert: TempData.AddInfoAlert,
+			GetSignInFormPage: () =>
+				RedirectToAction(
+					nameof(SignIn),
+					new { ReturnUrl = AuthF.GetReturnUrl(Url, Request.Query["ReturnUrl"]) }
+				),
+			SignOutAsync: HttpContext.SignOutAsync
 		));
 
 	/// <summary>
@@ -101,18 +106,4 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 			signingKey = JwtF.GenerateSigningKey(),
 			encryptingKey = JwtF.GenerateEncryptingKey()
 		});
-
-	/// <summary>
-	/// Return either <paramref name="returnUrl"/> or Index action
-	/// </summary>
-	/// <param name="returnUrl">Return URL</param>
-	private string GetReturnUrl(string? returnUrl) =>
-		returnUrl switch
-		{
-			string url when Url.IsLocalUrl(url) =>
-				url,
-
-			_ =>
-				Url.Action("Index") ?? "/"
-		};
 }

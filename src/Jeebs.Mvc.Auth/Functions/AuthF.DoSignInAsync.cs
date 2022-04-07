@@ -2,16 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Data.Models;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Jeebs.Mvc.Auth.Functions;
 
@@ -22,22 +20,22 @@ public static partial class AuthF
 	/// </summary>
 	/// <param name="Model"></param>
 	/// <param name="AddClaims"></param>
+	/// <param name="AddErrorAlert"></param>
 	/// <param name="Auth"></param>
-	/// <param name="Context"></param>
+	/// <param name="GetRedirect"></param>
 	/// <param name="Log"></param>
-	/// <param name="RedirectTo"></param>
-	/// <param name="SignInFormPage"></param>
-	/// <param name="TempData"></param>
+	/// <param name="SignInAsync"></param>
+	/// <param name="GetSignInFormPage"></param>
 	/// <param name="Url"></param>
 	public sealed record class SignInArgs(
 		SignInModel Model,
 		GetClaims? AddClaims,
+		Action<string> AddErrorAlert,
 		IAuthDataProvider Auth,
-		HttpContext Context,
+		Func<string, RedirectResult> GetRedirect,
 		ILog Log,
-		Func<string, RedirectResult> RedirectTo,
-		Func<string?, IActionResult> SignInFormPage,
-		ITempDataDictionary TempData,
+		Func<string?, ClaimsPrincipal, AuthenticationProperties, Task> SignInAsync,
+		Func<string?, IActionResult> GetSignInFormPage,
 		IUrlHelper Url
 	);
 
@@ -48,24 +46,20 @@ public static partial class AuthF
 	public static async Task<IActionResult> DoSignInAsync(SignInArgs v)
 	{
 		// Validate user
-		var validatedUser = from _ in v.Auth.ValidateUserAsync<AuthUserModel>(v.Model.Email, v.Model.Password)
-							from user in v.Auth.RetrieveUserWithRolesAsync<AuthUserModel, AuthRoleModel>(v.Model.Email)
-							select user;
+		var validateResult = await ValidateUserAsync(v.Auth, v.Model).AuditAsync(none: v.Log.Msg).ConfigureAwait(false);
 
-		await foreach (var user in validatedUser)
+		// Perform sign in
+		if (validateResult.IsSome(out var user))
 		{
 			// Get user principal
-			v.Log.Dbg("User validated.");
+			v.Log.Dbg("User {UserId} validated.", user.Id.Value);
 			var principal = await GetPrincipal(user, v.Model.Password, v.AddClaims).ConfigureAwait(false);
 
 			// Update last sign in
-			var updated = await v.Auth.User
-				.UpdateLastSignInAsync(user.Id)
-				.AuditAsync(none: v.Log.Msg)
-				.ConfigureAwait(false);
+			_ = await UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log).ConfigureAwait(false);
 
-			// Add SignIn to HttpContext using Cookie scheme
-			await v.Context.SignInAsync(
+			// Sign in using cookie authentication scheme
+			await v.SignInAsync(
 				CookieAuthenticationDefaults.AuthenticationScheme,
 				principal,
 				new AuthenticationProperties
@@ -78,14 +72,14 @@ public static partial class AuthF
 			).ConfigureAwait(false);
 
 			// Redirect to return url
-			return v.RedirectTo(GetReturnUrl(v.Url, v.Model.ReturnUrl));
+			return v.GetRedirect(GetReturnUrl(v.Url, v.Model.ReturnUrl));
 		}
 
 		// Log error and add alert for user
-		v.Log.Dbg("Unknown username or password: {Email}.", v.Model.Email);
-		v.TempData.AddErrorAlert("Unknown username or password.");
+		v.Log.Err("Unknown username or password: {Email}.", v.Model.Email);
+		v.AddErrorAlert("Unknown username or password.");
 
 		// Return to sign in page
-		return v.SignInFormPage(v.Model.ReturnUrl);
+		return v.GetSignInFormPage(v.Model.ReturnUrl);
 	}
 }

@@ -3,10 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Jeebs.Mvc.Auth.Functions;
 
@@ -15,13 +12,13 @@ public static partial class AuthF
 	/// <summary>
 	/// Provides arguments for <see cref="DoSignOutAsync(SignOutArgs)"/>
 	/// </summary>
-	/// <param name="Context"></param>
-	/// <param name="SignInFormPage"></param>
-	/// <param name="TempData"></param>
+	/// <param name="AddInfoAlert"></param>
+	/// <param name="GetSignInFormPage"></param>
+	/// <param name="SignOutAsync"></param>
 	public sealed record class SignOutArgs(
-		HttpContext Context,
-		Func<IActionResult> SignInFormPage,
-		ITempDataDictionary TempData
+		Action<string> AddInfoAlert,
+		Func<IActionResult> GetSignInFormPage,
+		Func<Task> SignOutAsync
 	);
 
 	/// <summary>
@@ -31,12 +28,12 @@ public static partial class AuthF
 	public static async Task<IActionResult> DoSignOutAsync(SignOutArgs v)
 	{
 		// Sign out
-		await v.Context.SignOutAsync().ConfigureAwait(false);
+		await v.SignOutAsync().ConfigureAwait(false);
 
 		// Show a friendly message to the user
-		v.TempData.AddInfoAlert("Goodbye!");
+		v.AddInfoAlert("Goodbye!");
 
 		// Redirect to sign in page
-		return v.SignInFormPage();
+		return v.GetSignInFormPage();
 	}
 }

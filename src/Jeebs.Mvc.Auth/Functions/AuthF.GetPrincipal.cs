@@ -13,13 +13,6 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Returns custom claims for a given user
-	/// </summary>
-	/// <param name="user">User Model</param>
-	/// <param name="password">The User's password</param>
-	public delegate Task<List<Claim>> GetClaims(AuthUserModel user, string password);
-
-	/// <summary>
 	/// Get a user Principal with claims added
 	/// </summary>
 	/// <param name="user"></param>
