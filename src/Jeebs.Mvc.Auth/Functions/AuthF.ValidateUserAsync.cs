@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
+using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
 
 namespace Jeebs.Mvc.Auth.Functions;
@@ -15,8 +16,12 @@ public static partial class AuthF
 	/// </summary>
 	/// <param name="auth"></param>
 	/// <param name="model"></param>
-	internal static Task<Maybe<AuthUserModel>> ValidateUserAsync(IAuthDataProvider auth, SignInModel model) =>
-		from _ in auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password)
-		from user in auth.RetrieveUserWithRolesAsync<AuthUserModel, AuthRoleModel>(model.Email)
-		select user;
+	/// <param name="log"></param>
+	internal static Task<Maybe<AuthUserModel>> ValidateUserAsync(IAuthDataProvider auth, SignInModel model, ILog log)
+	{
+		log.Vrb("Validating credentials for {User}.", model.Email);
+		return from _ in auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password)
+			   from user in auth.RetrieveUserWithRolesAsync<AuthUserModel, AuthRoleModel>(model.Email)
+			   select user;
+	}
 }
