@@ -17,8 +17,12 @@ public static partial class AuthF
 	/// <param name="log"></param>
 	public static Task<Maybe<bool>> UpdateUserLastSignInAsync(IAuthDataProvider auth, AuthUserId user, ILog log)
 	{
-		log.Vrb("Updating last sign in for user {UserId}", user.Value);
+		log.Vrb("Updating last sign in for user {UserId}.", user.Value);
 		return auth.User.UpdateLastSignInAsync(user)
-			.AuditAsync(none: log.Msg);
+			.AuditAsync(none: log.Msg)
+			.SwitchAsync(
+				some: x => F.Some(x),
+				none: false
+			);
 	}
 }
