@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using Jeebs.Auth.Data;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Messages;
 
@@ -18,7 +19,7 @@ public static class ClaimsPrincipalExtensions
 	/// Returns the ID of the current user
 	/// </summary>
 	/// <param name="this">CLaimsPrincipal</param>
-	public static Maybe<long> GetUserId(this ClaimsPrincipal @this)
+	public static Maybe<AuthUserId> GetUserId(this ClaimsPrincipal @this)
 	{
 		if (@this.Identity?.IsAuthenticated == true)
 		{
@@ -26,16 +27,16 @@ public static class ClaimsPrincipalExtensions
 			{
 				Claim idClaim =>
 					F.ParseInt64(idClaim.Value).Switch(
-						some: x => F.Some(x),
-						none: _ => F.None<long, M.InvalidUserIdMsg>()
+						some: x => F.Some(new AuthUserId { Value = x }),
+						none: _ => F.None<AuthUserId, M.InvalidUserIdMsg>()
 					),
 
 				_ =>
-					F.None<long, M.UnableToFindUserIdClaimMsg>()
+					F.None<AuthUserId, M.UnableToFindUserIdClaimMsg>()
 			};
 		}
 
-		return F.None<long, M.UserIsNotAuthenticatedMsg>();
+		return F.None<AuthUserId, M.UserIsNotAuthenticatedMsg>();
 	}
 
 	/// <summary>
