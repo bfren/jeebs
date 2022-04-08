@@ -17,7 +17,7 @@ public static partial class AuthF
 	/// <param name="auth"></param>
 	/// <param name="model"></param>
 	/// <param name="log"></param>
-	internal static Task<Maybe<AuthUserModel>> ValidateUserAsync(IAuthDataProvider auth, SignInModel model, ILog log)
+	public static Task<Maybe<AuthUserModel>> ValidateUserAsync(IAuthDataProvider auth, SignInModel model, ILog log)
 	{
 		log.Vrb("Validating credentials for {User}.", model.Email);
 		return from _ in auth.ValidateUserAsync<AuthUserModel>(model.Email, model.Password)
