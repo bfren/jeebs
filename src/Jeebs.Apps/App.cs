@@ -116,6 +116,9 @@ public class App
 		// Register Serilog Logger
 		_ = services.AddSingleton<ILog, SerilogLogger>();
 		_ = services.AddTransient(typeof(ILog<>), typeof(SerilogLogger<>));
+
+		// Add HttpClient
+		_ = services.AddHttpClient();
 	}
 
 	/// <summary>
