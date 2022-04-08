@@ -8,6 +8,7 @@ using Jeebs.Auth.Data.Models;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
+using Jeebs.Reflection;
 using MaybeF;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -31,10 +32,8 @@ public class DoSignInAsync_Tests
 		var getClaims = Substitute.For<AuthF.GetClaims>();
 		getClaims.Invoke(default!, default!)
 			.ReturnsForAnyArgs(new List<Claim>());
-		var getRedirect = Substitute.For<Func<string, RedirectResult>>();
 		var log = Substitute.For<ILog>();
 		var signIn = Substitute.For<Func<string?, ClaimsPrincipal, AuthenticationProperties, Task>>();
-		var getSignInPage = Substitute.For<Func<string?, IActionResult>>();
 		var url = Substitute.For<IUrlHelper>();
 		url.IsLocalUrl(default)
 			.ReturnsForAnyArgs(true);
@@ -42,7 +41,7 @@ public class DoSignInAsync_Tests
 		var user = new AuthUserModel { Id = LongId<AuthUserId>(), EmailAddress = Rnd.Str, IsSuper = Rnd.Flip };
 		validateUser(default!, default!, default!)
 			.ReturnsForAnyArgs(validUser ? F.Some(user) : Create.None<AuthUserModel>());
-		return (user, new(model, addErrorAlert, auth, getClaims, getRedirect, log, signIn, getSignInPage, url, validateUser));
+		return (user, new(model, auth, log, url, addErrorAlert, getClaims, signIn, validateUser));
 	}
 
 	[Fact]
@@ -114,32 +113,19 @@ public class DoSignInAsync_Tests
 	}
 
 	[Fact]
-	public async Task Valid_User__Calls_GetRedirect__With_Correct_Values()
-	{
-		// Arrange
-		var (user, v) = Setup(true);
-
-		// Act
-		_ = await AuthF.DoSignInAsync(v);
-
-		// Assert
-		v.GetRedirect.Received().Invoke(v.Model.ReturnUrl!);
-	}
-
-	[Fact]
-	public async Task Valid_User__Calls_GetRedirect__Returns_Result()
+	public async Task Valid_User__Returns_AuthResult_SignedIn__With_Correct_Values()
 	{
 		// Arrange
 		var (_, v) = Setup(true);
-		var redirect = new RedirectResult(Rnd.Str);
-		v.GetRedirect(default!)
-			.ReturnsForAnyArgs(redirect);
 
 		// Act
 		var result = await AuthF.DoSignInAsync(v);
 
 		// Assert
-		Assert.Same(redirect, result);
+		var signedIn = Assert.IsType<AuthResult.SignedIn>(result);
+		var data = signedIn.Value!.GetPropertyValue("data").AssertSome();
+		var redirectTo = data!.GetPropertyValue("redirectTo").AssertSome();
+		Assert.Equal(v.Model.ReturnUrl, redirectTo);
 	}
 
 	[Fact]
@@ -169,32 +155,18 @@ public class DoSignInAsync_Tests
 	}
 
 	[Fact]
-	public async Task Invalid_User__Calls_GetSignInFormPage__With_Correct_Values()
+	public async Task Invalid_User__Returns_AuthResult_TryAgain__With_Correct_Values()
 	{
 		// Arrange
 		var (_, v) = Setup();
-
-		// Act
-		_ = await AuthF.DoSignInAsync(v);
-
-		// Assert
-		v.GetSignInFormPage.ReceivedWithAnyArgs().Invoke(default);
-	}
-
-	[Fact]
-	public async Task Invalid_User__Calls_GetSignInFormPage__Returns_Result()
-	{
-		// Arrange
-		var (_, v) = Setup();
-		var signInPage = Substitute.For<IActionResult>();
-		v.GetSignInFormPage(default)
-			.ReturnsForAnyArgs(signInPage);
 
 		// Act
 		var result = await AuthF.DoSignInAsync(v);
 
 		// Assert
-		v.GetSignInFormPage.ReceivedWithAnyArgs().Invoke(v.Model.ReturnUrl);
-		Assert.Same(signInPage, result);
+		var tryAgain = Assert.IsType<AuthResult.TryAgain>(result);
+		var data = tryAgain.Value!.GetPropertyValue("data").AssertSome();
+		var redirectTo = data!.GetPropertyValue("redirectTo").AssertSome();
+		Assert.Equal(v.Model.ReturnUrl, redirectTo);
 	}
 }

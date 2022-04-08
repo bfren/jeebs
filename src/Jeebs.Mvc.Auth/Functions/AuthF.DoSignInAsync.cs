@@ -20,25 +20,21 @@ public static partial class AuthF
 	/// Provides arguments for <see cref="DoSignInAsync(SignInArgs)"/>
 	/// </summary>
 	/// <param name="Model"></param>
-	/// <param name="AddErrorAlert"></param>
 	/// <param name="Auth"></param>
-	/// <param name="GetClaims"></param>
-	/// <param name="GetRedirect"></param>
 	/// <param name="Log"></param>
-	/// <param name="SignInAsync"></param>
-	/// <param name="GetSignInFormPage"></param>
 	/// <param name="Url"></param>
+	/// <param name="AddErrorAlert"></param>
+	/// <param name="GetClaims"></param>
+	/// <param name="SignInAsync"></param>
 	/// <param name="ValidateUserAsync"></param>
 	public sealed record class SignInArgs(
 		SignInModel Model,
-		Action<string> AddErrorAlert,
 		IAuthDataProvider Auth,
-		GetClaims? GetClaims,
-		Func<string, RedirectResult> GetRedirect,
 		ILog Log,
-		Func<string?, ClaimsPrincipal, AuthenticationProperties, Task> SignInAsync,
-		Func<string?, IActionResult> GetSignInFormPage,
 		IUrlHelper Url,
+		Action<string> AddErrorAlert,
+		GetClaims? GetClaims,
+		Func<string?, ClaimsPrincipal, AuthenticationProperties, Task> SignInAsync,
 		Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>> ValidateUserAsync
 	);
 
@@ -46,7 +42,7 @@ public static partial class AuthF
 	/// Perform sign in checks and do sign in if the user passes
 	/// </summary>
 	/// <param name="v"></param>
-	public static async Task<IActionResult> DoSignInAsync(SignInArgs v)
+	public static async Task<AuthResult> DoSignInAsync(SignInArgs v)
 	{
 		// Validate user
 		var validateResult = await
@@ -84,7 +80,7 @@ public static partial class AuthF
 				.ConfigureAwait(false);
 
 			// Redirect to return url
-			return v.GetRedirect(GetReturnUrl(v.Url, v.Model.ReturnUrl));
+			return new AuthResult.SignedIn(GetReturnUrl(v.Url, v.Model.ReturnUrl));
 		}
 
 		// Log error and add alert for user
@@ -92,6 +88,6 @@ public static partial class AuthF
 		v.AddErrorAlert("Unknown username or password.");
 
 		// Return to sign in page
-		return v.GetSignInFormPage(v.Model.ReturnUrl);
+		return new AuthResult.TryAgain(v.Model.ReturnUrl);
 	}
 }

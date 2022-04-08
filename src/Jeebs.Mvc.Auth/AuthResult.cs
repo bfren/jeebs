@@ -27,6 +27,9 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class Denied : AuthResult
 	{
+		/// <summary>
+		/// Create object
+		/// </summary>
 		public Denied() : base(nameof(Denied), null, StatusCodes.Status401Unauthorized) { }
 	}
 
@@ -35,6 +38,9 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class MfaRequired : AuthResult
 	{
+		/// <summary>
+		/// Create object
+		/// </summary>
 		public MfaRequired() : base(nameof(MfaRequired), null, StatusCodes.Status401Unauthorized) { }
 	}
 
@@ -43,7 +49,11 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class SignedIn : AuthResult
 	{
-		public SignedIn(string redirectTo) : base(nameof(SignedIn), redirectTo, StatusCodes.Status200OK) { }
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="redirectTo"></param>
+		public SignedIn(string? redirectTo) : base(nameof(SignedIn), redirectTo, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -51,7 +61,10 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class SignedOut : AuthResult
 	{
-		public SignedOut(string redirectTo) : base(nameof(SignedOut), redirectTo, StatusCodes.Status200OK) { }
+		/// <summary>
+		/// Create object
+		/// </summary>
+		public SignedOut() : base(nameof(SignedOut), null, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -59,6 +72,10 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class TryAgain : AuthResult
 	{
-		public TryAgain(string redirectTo) : base(nameof(TryAgain), redirectTo, StatusCodes.Status401Unauthorized) { }
+		/// <summary>
+		/// Create object
+		/// </summary>
+		/// <param name="redirectTo"></param>
+		public TryAgain(string? redirectTo) : base(nameof(TryAgain), redirectTo, StatusCodes.Status401Unauthorized) { }
 	}
 }

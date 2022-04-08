@@ -10,9 +10,8 @@ public class DoSignOutAsync_Tests
 	private AuthF.SignOutArgs Setup()
 	{
 		var addInfo = Substitute.For<Action<string>>();
-		var getSignInPage = Substitute.For<Func<IActionResult>>();
 		var signOut = Substitute.For<Func<Task>>();
-		return new(addInfo, getSignInPage, signOut);
+		return new(addInfo, signOut);
 	}
 
 	[Fact]
@@ -42,19 +41,16 @@ public class DoSignOutAsync_Tests
 	}
 
 	[Fact]
-	public async Task Calls_GetSignInFormPage__Returns_GetSignInFormPage()
+	public async Task Calls_GetSignInFormPage__Returns_AuthResult_SignedOut()
 	{
 		// Arrange
 		var v = Setup();
 		var page = Substitute.For<IActionResult>();
-		v.GetSignInFormPage.Invoke()
-			.Returns(page);
 
 		// Act
 		var result = await AuthF.DoSignOutAsync(v);
 
 		// Assert
-		v.GetSignInFormPage.Received().Invoke();
-		Assert.Same(page, result);
+		Assert.IsType<AuthResult.SignedOut>(result);
 	}
 }

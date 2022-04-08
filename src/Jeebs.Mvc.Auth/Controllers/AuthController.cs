@@ -63,33 +63,62 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// </summary>
 	/// <param name="model">SignInModel</param>
 	[HttpPost, AutoValidateAntiforgeryToken]
-	public virtual Task<IActionResult> SignIn(SignInModel model) =>
-		AuthF.DoSignInAsync(new(
+	public virtual async Task<IActionResult> SignIn(SignInModel model)
+	{
+		// Do sign in
+		var result = await AuthF.DoSignInAsync(new(
 			Model: model,
-			AddErrorAlert: TempData.AddErrorAlert,
 			Auth: Auth,
-			GetClaims: GetClaims,
-			GetRedirect: Redirect,
 			Log: Log,
-			SignInAsync: HttpContext.SignInAsync,
-			GetSignInFormPage: SignIn,
 			Url: Url,
+			AddErrorAlert: TempData.AddErrorAlert,
+			GetClaims: GetClaims,
+			SignInAsync: HttpContext.SignInAsync,
 			ValidateUserAsync: AuthF.ValidateUserAsync
 		));
+
+		// Handle result
+		return result switch
+		{
+			AuthResult.SignedIn =>
+				Redirect(AuthF.GetReturnUrl(Url, model.ReturnUrl)),
+
+			AuthResult.TryAgain =>
+				SignIn(model.ReturnUrl),
+
+			_ =>
+				Denied(model.ReturnUrl)
+		};
+	}
 
 	/// <summary>
 	/// Perform sign out
 	/// </summary>
-	public new Task<IActionResult> SignOut() =>
-		AuthF.DoSignOutAsync(new(
+	public new async Task<IActionResult> SignOut()
+	{
+		// Get return URL from query
+		// (don't add as a method argument or we can't override base method)
+		var returnUrl = Request.Query["ReturnUrl"];
+
+		// Do sign out
+		var result = await AuthF.DoSignOutAsync(new(
 			AddInfoAlert: TempData.AddInfoAlert,
-			GetSignInFormPage: () =>
-				RedirectToAction(
-					nameof(SignIn),
-					new { ReturnUrl = AuthF.GetReturnUrl(Url, Request.Query["ReturnUrl"]) }
-				),
 			SignOutAsync: HttpContext.SignOutAsync
 		));
+
+		// Handle result
+		return result switch
+		{
+			AuthResult.SignedOut =>
+				RedirectToAction(
+					nameof(SignIn),
+					new { ReturnUrl = AuthF.GetReturnUrl(Url, returnUrl) }
+				),
+
+			_ =>
+				Denied(returnUrl)
+		};
+	}
 
 	/// <summary>
 	/// Show access denied page

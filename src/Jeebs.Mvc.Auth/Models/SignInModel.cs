@@ -26,7 +26,7 @@ public sealed record class SignInModel
 	/// <summary>
 	/// Return URL (after successful sign in)
 	/// </summary>
-	public string? ReturnUrl { get; set; }
+	public string? ReturnUrl { get; init; }
 
 	/// <summary>
 	/// Create empty model
