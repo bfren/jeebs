@@ -27,8 +27,8 @@ public static class ServiceCollectionExtensions
 		_ = services.AddSingleton<TDbClient>();
 		_ = services.AddSingleton<IAuthDbClient>(s => s.GetRequiredService<TDbClient>());
 
-		_ = services.AddScoped<AuthDbQuery>();
-		_ = services.AddScoped<IAuthDbQuery, AuthDbQuery>();
+		_ = services.AddTransient<AuthDbQuery>();
+		_ = services.AddTransient<IAuthDbQuery, AuthDbQuery>();
 
 		// Share auth database with main database
 		if (useAuthDbClientAsMain)
@@ -37,21 +37,21 @@ public static class ServiceCollectionExtensions
 		}
 
 		// Register Auth repositories
-		_ = services.AddScoped<AuthUserRepository>();
-		_ = services.AddScoped<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
-		_ = services.AddScoped<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
+		_ = services.AddTransient<AuthUserRepository>();
+		_ = services.AddTransient<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
+		_ = services.AddTransient<IAuthUserRepository<AuthUserEntity>>(s => s.GetRequiredService<AuthUserRepository>());
 
-		_ = services.AddScoped<AuthRoleRepository>();
-		_ = services.AddScoped<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
-		_ = services.AddScoped<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
+		_ = services.AddTransient<AuthRoleRepository>();
+		_ = services.AddTransient<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
+		_ = services.AddTransient<IAuthRoleRepository<AuthRoleEntity>>(s => s.GetRequiredService<AuthRoleRepository>());
 
-		_ = services.AddScoped<AuthUserRoleRepository>();
-		_ = services.AddScoped<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
-		_ = services.AddScoped<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
+		_ = services.AddTransient<AuthUserRoleRepository>();
+		_ = services.AddTransient<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
+		_ = services.AddTransient<IAuthUserRoleRepository<AuthUserRoleEntity>>(s => s.GetRequiredService<AuthUserRoleRepository>());
 
 		// Register Auth provider
-		_ = services.AddScoped<AuthDataProvider>();
-		_ = services.AddScoped<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
+		_ = services.AddTransient<AuthDataProvider>();
+		_ = services.AddTransient<IAuthDataProvider>(x => x.GetRequiredService<AuthDataProvider>());
 
 		// Return
 		return services;

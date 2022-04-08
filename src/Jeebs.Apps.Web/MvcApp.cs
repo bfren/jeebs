@@ -51,11 +51,6 @@ public class MvcApp : WebApp
 	protected bool LowercaseUrls { get; init; } = true;
 
 	/// <summary>
-	/// If true, authorisation support will be enabled (default: disabled)
-	/// </summary>
-	protected bool EnableAuthorisation { get; init; }
-
-	/// <summary>
 	/// If true, session support will be enabled (default: disabled)
 	/// </summary>
 	protected bool EnableSession { get; init; }
@@ -139,13 +134,8 @@ public class MvcApp : WebApp
 	/// Override to configure authorisation
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesAuthorisation(IServiceCollection services)
-	{
-		if (EnableAuthorisation)
-		{
-			_ = services.AddAuthorization();
-		}
-	}
+	protected virtual void ConfigureServicesAuthorisation(IServiceCollection services) =>
+		_ = services.AddAuthorization();
 
 	/// <summary>
 	/// Override to configure routing
@@ -258,7 +248,7 @@ public class MvcApp : WebApp
 		ConfigureRouting(app);
 
 		// Authorisation
-		ConfigureAuthorisation(app, app.Configuration);
+		ConfigureAuth(app, app.Configuration);
 
 		// Session
 		ConfigureSession(app);
@@ -354,19 +344,6 @@ public class MvcApp : WebApp
 	/// <param name="app">WebApplication</param>
 	protected virtual void ConfigureRouting(WebApplication app) =>
 		_ = app.UseRouting();
-
-	/// <summary>
-	/// Override to configure authorisation
-	/// </summary>
-	/// <param name="app">WebApplication</param>
-	/// <param name="config">IConfiguration</param>
-	protected override void ConfigureAuthorisation(WebApplication app, IConfiguration config)
-	{
-		if (EnableAuthorisation)
-		{
-			_ = app.UseAuthorization();
-		}
-	}
 
 	/// <summary>
 	/// Override to configure session
