@@ -123,8 +123,7 @@ public class DoSignInAsync_Tests
 
 		// Assert
 		var signedIn = Assert.IsType<AuthResult.SignedIn>(result);
-		var data = signedIn.Value!.GetPropertyValue("data").AssertSome();
-		var redirectTo = data!.GetPropertyValue("redirectTo").AssertSome();
+		var redirectTo = signedIn.Value!.GetPropertyValue("RedirectTo").AssertSome();
 		Assert.Equal(v.Model.ReturnUrl, redirectTo);
 	}
 
@@ -165,8 +164,7 @@ public class DoSignInAsync_Tests
 
 		// Assert
 		var tryAgain = Assert.IsType<AuthResult.TryAgain>(result);
-		var data = tryAgain.Value!.GetPropertyValue("data").AssertSome();
-		var redirectTo = data!.GetPropertyValue("redirectTo").AssertSome();
+		var redirectTo = tryAgain.Value!.GetPropertyValue("RedirectTo").AssertSome();
 		Assert.Equal(v.Model.ReturnUrl, redirectTo);
 	}
 }

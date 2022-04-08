@@ -16,10 +16,13 @@ public abstract class AuthResult : JsonResult
 	/// Create JsonResult using the specified options
 	/// </summary>
 	/// <param name="result">Result value</param>
-	/// <param name="redirectTo">[Optional] Redirect URL</param>
-	/// <param name="statusCode">HTTP status code</param>
-	private AuthResult(string result, string? redirectTo, int statusCode) :
-		base(new { data = new { result, redirectTo } }, JsonF.CopyOptions()) =>
+	/// <param name="message"></param>
+	/// <param name="redirectTo"></param>
+	/// <param name="statusCode"></param>
+	private AuthResult(bool result, string message, string? redirectTo, int statusCode) : base(
+		Result.Create<bool>(result, message) with { RedirectTo = redirectTo },
+		JsonF.CopyOptions()
+	) =>
 		StatusCode = statusCode;
 
 	/// <summary>
@@ -30,7 +33,7 @@ public abstract class AuthResult : JsonResult
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public Denied() : base(nameof(Denied), null, StatusCodes.Status401Unauthorized) { }
+		public Denied() : base(false, nameof(Denied), null, StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -41,7 +44,7 @@ public abstract class AuthResult : JsonResult
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public MfaRequired() : base(nameof(MfaRequired), null, StatusCodes.Status401Unauthorized) { }
+		public MfaRequired() : base(false, nameof(MfaRequired), null, StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -53,7 +56,7 @@ public abstract class AuthResult : JsonResult
 		/// Create object
 		/// </summary>
 		/// <param name="redirectTo"></param>
-		public SignedIn(string? redirectTo) : base(nameof(SignedIn), redirectTo, StatusCodes.Status200OK) { }
+		public SignedIn(string? redirectTo) : base(true, nameof(SignedIn), redirectTo, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -64,7 +67,7 @@ public abstract class AuthResult : JsonResult
 		/// <summary>
 		/// Create object
 		/// </summary>
-		public SignedOut() : base(nameof(SignedOut), null, StatusCodes.Status200OK) { }
+		public SignedOut() : base(true, nameof(SignedOut), null, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -76,6 +79,6 @@ public abstract class AuthResult : JsonResult
 		/// Create object
 		/// </summary>
 		/// <param name="redirectTo"></param>
-		public TryAgain(string? redirectTo) : base(nameof(TryAgain), redirectTo, StatusCodes.Status401Unauthorized) { }
+		public TryAgain(string? redirectTo) : base(false, nameof(TryAgain), redirectTo, StatusCodes.Status401Unauthorized) { }
 	}
 }
