@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth.Data;
@@ -16,45 +15,51 @@ namespace Jeebs.Mvc.Auth;
 public static class ClaimsPrincipalExtensions
 {
 	/// <summary>
+	/// Returns a specified claim for the current user
+	/// </summary>
+	/// <param name="this">ClaimsPrincipal</param>
+	/// <param name="type">Claim type</param>
+	public static Maybe<string> GetClaim(this ClaimsPrincipal @this, string type)
+	{
+		if (@this.Identity?.IsAuthenticated != true)
+		{
+			return F.None<string, M.UserIsNotAuthenticatedMsg>();
+		}
+
+		return @this.Claims
+			.SingleOrNone(c => c.Type == type)
+			.Select(x => x.Value);
+	}
+	/// <summary>
 	/// Returns the ID of the current user
 	/// </summary>
 	/// <param name="this">CLaimsPrincipal</param>
-	public static Maybe<AuthUserId> GetUserId(this ClaimsPrincipal @this)
-	{
-		if (@this.Identity?.IsAuthenticated == true)
-		{
-			return @this.Claims.SingleOrDefault(c => c.Type == JwtClaimTypes.UserId) switch
-			{
-				Claim idClaim =>
-					F.ParseInt64(idClaim.Value).Switch(
-						some: x => F.Some(new AuthUserId { Value = x }),
-						none: _ => F.None<AuthUserId, M.InvalidUserIdMsg>()
-					),
+	public static Maybe<AuthUserId> GetUserId(this ClaimsPrincipal @this) =>
+		@this
+			.GetClaim(
+				JwtClaimTypes.UserId
+			)
+			.Bind(
+				x => F.ParseInt64(x).Switch(
+					some: y => F.Some(new AuthUserId { Value = y }),
+					none: _ => F.None<AuthUserId, M.InvalidUserIdMsg>()
+				)
+			);
 
-				_ =>
-					F.None<AuthUserId, M.UnableToFindUserIdClaimMsg>()
-			};
-		}
-
-		return F.None<AuthUserId, M.UserIsNotAuthenticatedMsg>();
-	}
+	/// <summary>
+	/// Returns whether or not the current user has the specified claim
+	/// </summary>
+	/// <param name="this">ClaimsPrincipal</param>
+	/// <param name="type">Claim type</param>
+	public static bool HasClaim(this ClaimsPrincipal @this, string type) =>
+		@this.GetClaim(type).IsSome(out var _);
 
 	/// <summary>
 	/// Returns whether or not the current user is a Super user
 	/// </summary>
 	/// <param name="this">CLaimsPrincipal</param>
 	public static bool IsSuper(this ClaimsPrincipal @this) =>
-		@this.Identity?.IsAuthenticated == true
-		&& @this.Claims.Any(c => c.Type == JwtClaimTypes.IsSuper);
-
-	/// <summary>
-	/// Returns whether or not the current user has the specified claim
-	/// </summary>
-	/// <param name="this">ClaimsPrincipal</param>
-	/// <param name="value">Claim</param>
-	public static bool HasClaim(this ClaimsPrincipal @this, string value) =>
-		@this.Identity?.IsAuthenticated == true
-		&& @this.Claims.Any(c => string.Equals(c.Value, value, StringComparison.OrdinalIgnoreCase));
+		@this.HasClaim(JwtClaimTypes.IsSuper);
 
 	/// <summary>Messages</summary>
 	public static class M
