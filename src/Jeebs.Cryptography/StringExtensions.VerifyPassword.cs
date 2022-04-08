@@ -14,7 +14,7 @@ public static partial class StringExtensions
 	/// <param name="password">Password to verify</param>
 	public static bool VerifyPassword(this string @this, string password)
 	{
-		if (string.IsNullOrEmpty(@this))
+		if (string.IsNullOrWhiteSpace(@this))
 		{
 			return false;
 		}
@@ -24,6 +24,6 @@ public static partial class StringExtensions
 			return false;
 		}
 
-		return PasswordHash.ArgonHashStringVerify(@this, password);
+		return PasswordHash.ArgonHashStringVerify(@this.Trim(), password);
 	}
 }
