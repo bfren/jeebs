@@ -39,4 +39,7 @@ public abstract record class Table : ITable
 		TableName.GetFullName(s => s);
 }
 
+/// <summary>
+/// Represents a null / unknown table
+/// </summary>
 public sealed record class NullTable() : Table(string.Empty);
