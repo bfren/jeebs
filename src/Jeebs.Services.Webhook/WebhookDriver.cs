@@ -9,7 +9,6 @@ using Jeebs.Functions;
 using Jeebs.Messages;
 using Jeebs.Services.Notify;
 using Jeebs.Services.Webhook.Models;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Services.Webhook;
 
@@ -19,20 +18,9 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	where TMessage : notnull
 {
 	/// <summary>
-	/// Add required services - called by <see cref="ServiceCollectionExtensions"/>
-	/// </summary>
-	/// <param name="services">IServiceCollection</param>
-#pragma warning disable RCS1158 // Static member in generic type should use a type parameter.
-#pragma warning disable CA1000 // Do not declare static members on generic types
-	public static void AddRequiredServices(IServiceCollection services) =>
-#pragma warning restore CA1000 // Do not declare static members on generic types
-#pragma warning restore RCS1158 // Static member in generic type should use a type parameter.
-		services.AddHttpClient();
-
-	/// <summary>
 	/// IHttpClientFactory
 	/// </summary>
-	private readonly IHttpClientFactory factory;
+	internal IHttpClientFactory Factory { get; }
 
 	/// <summary>
 	/// Create object
@@ -40,7 +28,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// <param name="name">Service name</param>
 	/// <param name="args">WebhookServiceArgs</param>
 	protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args) =>
-		factory = args.Factory;
+		Factory = args.Factory;
 
 	#region Convert to Jeebs.Services.Webhook.Models.Message and Send
 
@@ -116,7 +104,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	#region Actually Send
 
 	/// <summary>
-	/// Use <see cref="factory"/> to send the message
+	/// Use <see cref="Factory"/> to send the message
 	/// </summary>
 	/// <param name="request"></param>
 	protected void Send(HttpRequestMessage request) =>
@@ -124,7 +112,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		{
 			try
 			{
-				var client = factory.CreateClient();
+				var client = Factory.CreateClient();
 				var response = await client.SendAsync(request).ConfigureAwait(false);
 				if (!response.IsSuccessStatusCode)
 				{
