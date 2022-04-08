@@ -79,7 +79,15 @@ public static class TempDataDictionaryExtensions
 	{
 		var alerts = GetAlerts(tempData);
 		alerts.Insert(0, new Alert(messageType, message));
+		var json = JsonF.Serialise(alerts).Unwrap(JsonF.Empty);
 
-		tempData.Add(AlertsKey, JsonF.Serialise(alerts).Unwrap(JsonF.Empty));
+		if (HasAlerts(tempData))
+		{
+			tempData[AlertsKey] = json;
+		}
+		else
+		{
+			tempData.Add(AlertsKey, json);
+		}
 	}
 }
