@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Functions;
+using Jeebs.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +17,10 @@ public abstract class AuthResult : JsonResult
 	/// Create JsonResult using the specified options
 	/// </summary>
 	/// <param name="result">Result value</param>
-	/// <param name="message"></param>
 	/// <param name="redirectTo"></param>
 	/// <param name="statusCode"></param>
-	private AuthResult(bool result, string message, string? redirectTo, int statusCode) : base(
-		Result.Create<bool>(result, message) with { RedirectTo = redirectTo },
+	private AuthResult(Maybe<bool> result, string? redirectTo, int statusCode) : base(
+		Result.Create(result) with { RedirectTo = redirectTo },
 		JsonF.CopyOptions()
 	) =>
 		StatusCode = statusCode;
@@ -30,10 +30,8 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class Denied : AuthResult
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public Denied() : base(false, nameof(Denied), null, StatusCodes.Status401Unauthorized) { }
+		/// <inheritdoc cref="Denied"/>
+		public Denied() : base(F.None<bool, M.DeniedMsg>(), null, StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -41,10 +39,8 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class MfaRequired : AuthResult
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public MfaRequired() : base(false, nameof(MfaRequired), null, StatusCodes.Status401Unauthorized) { }
+		/// <inheritdoc cref="MfaRequired"/>
+		public MfaRequired() : base(F.None<bool, M.MfaRequiredMsg>(), null, StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -52,11 +48,9 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class SignedIn : AuthResult
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="redirectTo"></param>
-		public SignedIn(string? redirectTo) : base(true, nameof(SignedIn), redirectTo, StatusCodes.Status200OK) { }
+		/// <inheritdoc cref="SignedIn"/>
+		/// <param name="redirectTo">[Optional] Redirect to this page</param>
+		public SignedIn(string? redirectTo) : base(F.True, redirectTo, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -64,10 +58,8 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class SignedOut : AuthResult
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		public SignedOut() : base(true, nameof(SignedOut), null, StatusCodes.Status200OK) { }
+		/// <inheritdoc cref="SignedOut"/>
+		public SignedOut() : base(F.True, null, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -75,10 +67,21 @@ public abstract class AuthResult : JsonResult
 	/// </summary>
 	public sealed class TryAgain : AuthResult
 	{
-		/// <summary>
-		/// Create object
-		/// </summary>
-		/// <param name="redirectTo"></param>
-		public TryAgain(string? redirectTo) : base(false, nameof(TryAgain), redirectTo, StatusCodes.Status401Unauthorized) { }
+		/// <inheritdoc cref="TryAgain"/>
+		/// <param name="redirectTo">[Optional] Redirect to this page</param>
+		public TryAgain(string? redirectTo) : base(F.None<bool, M.TryAgainMsg>(), redirectTo, StatusCodes.Status401Unauthorized) { }
+	}
+
+	/// <summary>Messages</summary>
+	public static class M
+	{
+		/// <inheritdoc cref="Denied"/>
+		public sealed record class DeniedMsg : Msg;
+
+		/// <inheritdoc cref="MfaRequired"/>
+		public sealed record class MfaRequiredMsg : Msg;
+
+		/// <inheritdoc cref="TryAgainMsg"/>
+		public sealed record class TryAgainMsg : Msg;
 	}
 }

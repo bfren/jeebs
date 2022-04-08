@@ -26,11 +26,6 @@ public abstract record class Result
 	public abstract string Reason { get; }
 
 	/// <summary>
-	/// If set, provides a message to give user feedback
-	/// </summary>
-	public string? Message { get; protected init; }
-
-	/// <summary>
 	/// If set, tells the client to redirect to this URL
 	/// </summary>
 	public string? RedirectTo { get; init; }
@@ -42,15 +37,6 @@ public abstract record class Result
 	/// <param name="value"></param>
 	public static Result<T> Create<T>(Maybe<T> value) =>
 		new(value);
-
-	/// <summary>
-	/// Create with value and message
-	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
-	/// <param name="value"></param>
-	/// <param name="message"></param>
-	public static Result<T> Create<T>(Maybe<T> value, string? message) =>
-		new(value, message);
 }
 
 /// <inheritdoc cref="Result"/>
@@ -105,13 +91,6 @@ public sealed record class Result<T> : Result
 	/// Create with value
 	/// </summary>
 	/// <param name="value"></param>
-	internal Result(Maybe<T> value) : this(value, null) { }
-
-	/// <summary>
-	/// Create with value and message
-	/// </summary>
-	/// <param name="value"></param>
-	/// <param name="message"></param>
-	internal Result(Maybe<T> value, string? message) =>
-		(Maybe, Message) = (value, message);
+	internal Result(Maybe<T> value) =>
+		Maybe = value;
 }
