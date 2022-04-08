@@ -13,17 +13,14 @@ public static partial class TotpF
 	/// </summary>
 	/// <param name="key">Secret key</param>
 	/// <param name="settings">TotpSettings</param>
-	public static string GenerateCode(
-		byte[] key,
-		TotpSettings settings
-	)
+	public static string GenerateCode(byte[] key, TotpSettings settings)
 	{
 		var counter = GetCurrentInterval(settings.PeriodSeconds);
 		return GenerateCode(key, counter, settings.CodeLength);
 	}
 
 	/// <summary>
-	/// Generate a counter-based code from the specified key and counter
+	/// Generate a counter-based code from the specified key and counter<br/>
 	/// See https://stackoverflow.com/a/12398317/8199362
 	/// </summary>
 	/// <param name="key">Secret key</param>
