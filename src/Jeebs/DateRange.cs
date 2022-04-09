@@ -6,7 +6,7 @@ using System;
 namespace Jeebs;
 
 /// <inheritdoc cref="IRange{T}"/>
-public readonly record struct DateRange : IRange<DateTime>
+public sealed record class DateRange : IRange<DateTime>
 {
 	/// <inheritdoc/>
 	public DateTime Start { get; init; }
