@@ -11,7 +11,7 @@ namespace Jeebs;
 /// <summary>
 /// DateTime Integer
 /// </summary>
-public readonly record struct DateTimeInt
+public sealed record class DateTimeInt
 {
 	private const string Format = "000000000000";
 

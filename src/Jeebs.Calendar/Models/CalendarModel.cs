@@ -11,7 +11,7 @@ namespace Jeebs.Calendar.Models;
 /// </summary>
 /// <param name="Events">List of events</param>
 /// <param name="LastModified">Last modified date - for cache purposes</param>
-public readonly record struct CalendarModel(
+public sealed record class CalendarModel(
 	IImmutableList<EventModel> Events,
 	DateTime LastModified
 );
