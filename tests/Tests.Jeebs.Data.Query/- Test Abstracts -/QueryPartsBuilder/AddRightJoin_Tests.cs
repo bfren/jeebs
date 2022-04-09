@@ -17,11 +17,11 @@ public abstract class AddRightJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Test
 		// Arrange
 		var (builder, v) = Setup();
 
-		var t0Name = new TableName(Rnd.Str);
+		var t0Name = new DbName(Rnd.Str);
 		var t0Column = Rnd.Str;
 		var t0 = new TestTable0(t0Name, t0Column);
 
-		var t1Name = new TableName(Rnd.Str);
+		var t1Name = new DbName(Rnd.Str);
 		var t1Column = Rnd.Str;
 		var t1 = new TestTable1(t1Name, t1Column);
 

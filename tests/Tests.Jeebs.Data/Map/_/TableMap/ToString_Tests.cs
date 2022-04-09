@@ -9,7 +9,7 @@ public class ToString_Tests
 	public void Returns_Name()
 	{
 		// Arrange
-		var name = new TableName(Rnd.Str);
+		var name = new DbName(Rnd.Str);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(name);
 		var map = new TableMap(table, Substitute.For<IMappedColumnList>(), GetColumnNames_Tests.Get().column);

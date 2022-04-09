@@ -20,7 +20,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="table">Table name</param>
 	/// <param name="columns">List of mapped columns</param>
 	protected abstract string GetCreateQuery(
-		ITableName table,
+		IDbName table,
 		IMappedColumnList columns
 	);
 
@@ -43,7 +43,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="idColumn">ID column for predicate</param>
 	/// <param name="id">Entity ID</param>
 	protected abstract string GetRetrieveQuery(
-		ITableName table,
+		IDbName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id
@@ -65,9 +65,9 @@ public abstract partial class DbClient : IDbClient
 			e => new M.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn)"/>
+	/// <inheritdoc cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn)"/>
 	protected abstract string GetUpdateQuery(
-		ITableName table,
+		IDbName table,
 		IMappedColumnList columns,
 		IColumn idColumn,
 		object id
@@ -80,7 +80,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="id">Entity ID</param>
 	/// <param name="versionColumn">Version column for predicate</param>
 	protected abstract string GetUpdateQuery(
-		ITableName table,
+		IDbName table,
 		IMappedColumnList columns,
 		IColumn idColumn,
 		object id,
@@ -103,9 +103,9 @@ public abstract partial class DbClient : IDbClient
 			e => new M.ErrorGettingCrudDeleteQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetDeleteQuery(ITableName, IColumn, object, IColumn?)"/>
+	/// <inheritdoc cref="GetDeleteQuery(IDbName, IColumn, object, IColumn?)"/>
 	protected abstract string GetDeleteQuery(
-		ITableName table,
+		IDbName table,
 		IColumn idColumn,
 		object id
 	);
@@ -116,7 +116,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="id">Entity ID</param>
 	/// <param name="versionColumn">Version column for predicate</param>
 	protected abstract string GetDeleteQuery(
-		ITableName table,
+		IDbName table,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn
@@ -124,22 +124,22 @@ public abstract partial class DbClient : IDbClient
 
 	#region Testing
 
-	internal string GetCreateQueryTest(ITableName table, IMappedColumnList columns) =>
+	internal string GetCreateQueryTest(IDbName table, IMappedColumnList columns) =>
 		GetCreateQuery(table, columns);
 
-	internal string GetRetrieveQueryTest(ITableName table, IColumnList columns, IColumn idColumn, long id) =>
+	internal string GetRetrieveQueryTest(IDbName table, IColumnList columns, IColumn idColumn, long id) =>
 		GetRetrieveQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(ITableName table, IMappedColumnList columns, IColumn idColumn, long id) =>
+	internal string GetUpdateQueryTest(IDbName table, IMappedColumnList columns, IColumn idColumn, long id) =>
 		GetUpdateQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(ITableName table, IMappedColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
+	internal string GetUpdateQueryTest(IDbName table, IMappedColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
-	internal string GetDeleteQueryTest(ITableName table, IColumn idColumn, long id) =>
+	internal string GetDeleteQueryTest(IDbName table, IColumn idColumn, long id) =>
 		GetDeleteQuery(table, idColumn, id);
 
-	internal string GetDeleteQueryTest(ITableName table, IColumn idColumn, long id, IColumn? versionColumn) =>
+	internal string GetDeleteQueryTest(IDbName table, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetDeleteQuery(table, idColumn, id, versionColumn);
 
 	#endregion Testing

@@ -11,7 +11,7 @@ public static class PostgreSqlDbClient_Setup
 	{
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var tableName = new TableName(schema, name);
+		var tableName = new DbName(schema, name);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(tableName);
 		var client = new PostgreSqlDbClient();

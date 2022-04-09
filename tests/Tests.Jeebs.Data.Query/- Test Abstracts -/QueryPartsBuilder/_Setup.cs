@@ -31,26 +31,26 @@ public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 
 public record class TestTable0 : ITable
 {
-	private readonly ITableName name;
+	private readonly IDbName name;
 
 	public string Foo { get; init; }
 
-	public TestTable0(ITableName name, string foo) =>
+	public TestTable0(IDbName name, string foo) =>
 		(this.name, Foo) = (name, foo);
 
-	public ITableName GetName() =>
+	public IDbName GetName() =>
 		name;
 }
 
 public record class TestTable1 : ITable
 {
-	private readonly ITableName name;
+	private readonly IDbName name;
 
 	public string Bar { get; init; }
 
-	public TestTable1(ITableName name, string bar) =>
+	public TestTable1(IDbName name, string bar) =>
 		(this.name, Bar) = (name, bar);
 
-	public ITableName GetName() =>
+	public IDbName GetName() =>
 		name;
 }

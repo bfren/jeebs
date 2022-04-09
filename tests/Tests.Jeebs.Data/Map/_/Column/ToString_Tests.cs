@@ -10,7 +10,7 @@ public class ToString_Tests
 	{
 		// Arrange
 		var name = Rnd.Str;
-		var column = new Column(new TableName(Rnd.Str), name, Rnd.Str);
+		var column = new Column(new DbName(Rnd.Str), name, Rnd.Str);
 
 		// Act
 		var result = column.ToString();

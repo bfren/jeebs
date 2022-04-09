@@ -14,7 +14,7 @@ public partial class SqlServerDbClient : DbClient
 {
 	/// <inheritdoc/>
 	protected override (string query, IQueryParametersDictionary param) GetQuery(
-		ITableName table,
+		IDbName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates
 	)

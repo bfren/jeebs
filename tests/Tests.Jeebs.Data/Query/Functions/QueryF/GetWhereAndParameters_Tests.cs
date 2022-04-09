@@ -39,7 +39,7 @@ public class GetWhereAndParameters_Tests
 	{
 		// Arrange
 		var columnName = Rnd.Str;
-		var tableName = new TableName(Rnd.Str);
+		var tableName = new DbName(Rnd.Str);
 		var column = Substitute.For<IColumn>();
 		column.ColName.Returns(columnName);
 		column.TblName.Returns(tableName);
@@ -296,7 +296,7 @@ public class GetWhereAndParameters_Tests
 		public override string Escape(IColumn column, bool withAlias) =>
 			$"--{column.ColName}--";
 
-		public override string Escape(ITableName table, string column) =>
+		public override string Escape(IDbName table, string column) =>
 			$"--{table}|{column}--";
 
 		public override string GetParamRef(string paramName) =>

@@ -9,7 +9,7 @@ public partial class SqlServerDbClient : DbClient
 {
 	/// <inheritdoc/>
 	protected override string GetCreateQuery(
-		ITableName table,
+		IDbName table,
 		IMappedColumnList columns
 	)
 	{
@@ -26,7 +26,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetRetrieveQuery(
-		ITableName table,
+		IDbName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id
@@ -45,7 +45,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		ITableName table,
+		IDbName table,
 		IMappedColumnList columns,
 		IColumn idColumn,
 		object id
@@ -54,7 +54,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		ITableName table,
+		IDbName table,
 		IMappedColumnList columns,
 		IColumn idColumn,
 		object id,
@@ -80,7 +80,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		ITableName table,
+		IDbName table,
 		IColumn idColumn,
 		object id
 	) =>
@@ -88,7 +88,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		ITableName table,
+		IDbName table,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn

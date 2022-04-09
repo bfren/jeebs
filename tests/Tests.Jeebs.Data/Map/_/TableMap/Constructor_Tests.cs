@@ -11,7 +11,7 @@ public class Constructor_Tests
 	public void Properties_Set()
 	{
 		// Arrange
-		var name = new TableName(Rnd.Str);
+		var name = new DbName(Rnd.Str);
 		var columns = Substitute.For<IMappedColumnList>();
 
 		var table = Substitute.For<ITable>();

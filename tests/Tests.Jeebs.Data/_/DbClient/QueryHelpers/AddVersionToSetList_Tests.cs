@@ -31,7 +31,7 @@ public class AddVersionToSetList_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var version = new Column(new TableName(Rnd.Str), name, alias);
+		var version = new Column(new DbName(Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}## + 1";
 
 		var set = new List<string>();

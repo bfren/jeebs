@@ -12,7 +12,7 @@ public class GetColumnNames_Tests
 		var name = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(Rnd.Str);
-		return (name, new MappedColumn(new TableName(Rnd.Str), name, prop));
+		return (name, new MappedColumn(new DbName(Rnd.Str), name, prop));
 	}
 
 	[Fact]

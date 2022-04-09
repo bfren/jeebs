@@ -59,7 +59,7 @@ public abstract class FluentQuery_Tests
 
 	public sealed record class TestId : LongId;
 
-	public readonly record struct TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
+	public sealed record class TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
 
 	public sealed record class TestTable() : Table(Rnd.Str)
 	{

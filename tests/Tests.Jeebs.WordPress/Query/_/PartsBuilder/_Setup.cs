@@ -19,7 +19,7 @@ public abstract class PartsBuilder_Tests
 
 		var builder = new TestPartsBuilder(extract, client, schema);
 
-		var table = new TestTable(new TableName(Rnd.Str), Rnd.Str, Rnd.Str);
+		var table = new TestTable(new DbName(Rnd.Str), Rnd.Str, Rnd.Str);
 
 		return (builder, new(client, schema, table));
 	}
@@ -48,15 +48,15 @@ public class TestPartsBuilder : PartsBuilder<TestId>
 
 public sealed record class TestTable : ITable
 {
-	private readonly ITableName name;
+	private readonly IDbName name;
 
 	public string Id { get; init; }
 
 	public string Foo { get; init; }
 
-	public TestTable(ITableName name, string id, string foo) =>
+	public TestTable(IDbName name, string id, string foo) =>
 		(this.name, Id, Foo) = (name, id, foo);
 
-	public ITableName GetName() =>
+	public IDbName GetName() =>
 		name;
 }

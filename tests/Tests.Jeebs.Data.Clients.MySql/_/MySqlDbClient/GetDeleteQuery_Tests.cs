@@ -14,7 +14,7 @@ public class GetDeleteQuery_Tests
 		// Arrange
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new TableName(schema, name);
+		var table = new DbName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
@@ -41,7 +41,7 @@ public class GetDeleteQuery_Tests
 		// Arrange
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new TableName(schema, name);
+		var table = new DbName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
