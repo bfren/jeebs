@@ -7,6 +7,7 @@ using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.Messages;
 
@@ -81,7 +82,12 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 
 	/// <inheritdoc/>
 	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction) =>
-		Db.ExecuteAsync("UpdateUserLastSignIn", new { Id = userId.Value }, CommandType.StoredProcedure, transaction);
+		Db.ExecuteAsync(
+			Db.Client.Escape(new DbName(AuthDb.Schema, "UpdateUserLastSignIn")),
+			new { Id = userId.Value },
+			CommandType.StoredProcedure,
+			transaction
+		);
 
 	private sealed record class CheckAuthUserExists(string EmailAddress);
 
