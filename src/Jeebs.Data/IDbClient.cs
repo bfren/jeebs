@@ -38,14 +38,14 @@ public interface IDbClient
 	/// Escape a table name
 	/// </summary>
 	/// <param name="table">ITableName</param>
-	string Escape(ITableName table);
+	string Escape(IDbName table);
 
 	/// <summary>
 	/// Escape a column with its table
 	/// </summary>
 	/// <param name="table">ITableName</param>
 	/// <param name="column">Column name</param>
-	string Escape(ITableName table, string column);
+	string Escape(IDbName table, string column);
 
 	/// <summary>
 	/// Escape a column without using an alias

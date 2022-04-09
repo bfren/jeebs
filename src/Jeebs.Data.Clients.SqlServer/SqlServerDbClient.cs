@@ -17,11 +17,11 @@ public partial class SqlServerDbClient : DbClient
 		new SqlConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(ITableName table) =>
+	public override string Escape(IDbName table) =>
 		table.GetFullName(Escape);
 
 	/// <inheritdoc/>
-	public override string Escape(ITableName table, string column) =>
+	public override string Escape(IDbName table, string column) =>
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>

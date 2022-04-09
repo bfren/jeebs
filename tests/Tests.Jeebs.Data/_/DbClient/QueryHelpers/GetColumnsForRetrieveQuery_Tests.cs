@@ -26,7 +26,7 @@ public class GetColumnsForRetrieveQuery_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		var column = new Column(new TableName(Rnd.Str), Rnd.Str, Rnd.Str);
+		var column = new Column(new DbName(Rnd.Str), Rnd.Str, Rnd.Str);
 		var list = new ColumnList(new[] { column });
 
 		// Act

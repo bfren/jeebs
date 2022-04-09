@@ -9,7 +9,7 @@ public class Constructor_Tests
 	public void Properties_Set()
 	{
 		// Arrange
-		var table = new TableName(Rnd.Str);
+		var table = new DbName(Rnd.Str);
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
 		var column = new Column(table, name, alias);

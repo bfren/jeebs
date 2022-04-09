@@ -10,7 +10,7 @@ namespace Jeebs.Data.Map;
 /// <param name="TblName">Table Name</param>
 /// <param name="ColName">Column Name</param>
 /// <param name="ColAlias">Column Alias</param>
-public record class Column(ITableName TblName, string ColName, string ColAlias) : IColumn
+public record class Column(IDbName TblName, string ColName, string ColAlias) : IColumn
 {
 	/// <summary>
 	/// Create column using table object

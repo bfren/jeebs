@@ -14,7 +14,7 @@ public class ToString_Tests
 		var name = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(Rnd.Str);
-		var column = new MappedColumn(new TableName(Rnd.Str), name, prop);
+		var column = new MappedColumn(new DbName(Rnd.Str), name, prop);
 
 		// Act
 		var result = column.ToString();

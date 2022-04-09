@@ -11,7 +11,7 @@ public class ToString_Tests
 		// Arrange
 		var name = Rnd.Str;
 		var schema = Rnd.Str;
-		var t0 = Substitute.ForPartsOf<Table>(new TableName(schema, name));
+		var t0 = Substitute.ForPartsOf<Table>(new DbName(schema, name));
 		var t1 = Substitute.ForPartsOf<Table>(name);
 		var t2 = Substitute.ForPartsOf<Table>(schema, name);
 
@@ -21,8 +21,8 @@ public class ToString_Tests
 		var r2 = t2.ToString();
 
 		// Assert
-		Assert.Equal($"{schema}{TableName.SchemaSeparator}{name}", r0);
+		Assert.Equal($"{schema}{DbName.SchemaSeparator}{name}", r0);
 		Assert.Equal($"{name}", r1);
-		Assert.Equal($"{schema}{TableName.SchemaSeparator}{name}", r2);
+		Assert.Equal($"{schema}{DbName.SchemaSeparator}{name}", r2);
 	}
 }

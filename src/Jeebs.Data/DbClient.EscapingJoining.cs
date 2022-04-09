@@ -14,10 +14,10 @@ public abstract partial class DbClient : IDbClient
 		Escape(table.GetName());
 
 	/// <inheritdoc/>
-	public abstract string Escape(ITableName table);
+	public abstract string Escape(IDbName table);
 
 	/// <inheritdoc/>
-	public abstract string Escape(ITableName table, string column);
+	public abstract string Escape(IDbName table, string column);
 
 	/// <inheritdoc/>
 	public virtual string Escape(IColumn column) =>

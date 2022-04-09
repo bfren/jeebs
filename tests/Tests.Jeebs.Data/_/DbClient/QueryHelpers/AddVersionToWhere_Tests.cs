@@ -31,7 +31,7 @@ public class AddVersionToWhere_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var version = new Column(new TableName(Rnd.Str), name, alias);
+		var version = new Column(new DbName(Rnd.Str), name, alias);
 		var expected = $"--{name}-- = ##{alias}##";
 
 		var sql = string.Empty;
@@ -53,7 +53,7 @@ public class AddVersionToWhere_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var version = new Column(new TableName(Rnd.Str), name, alias);
+		var version = new Column(new DbName(Rnd.Str), name, alias);
 
 		var query = Rnd.Str;
 		var sql = query;

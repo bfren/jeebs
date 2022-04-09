@@ -10,7 +10,7 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <summary>
-	/// Get columns and parameter names for <see cref="GetCreateQuery(ITableName, IMappedColumnList)"/>
+	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IMappedColumnList)"/>
 	/// </summary>
 	/// <param name="columns">IMappedColumnList</param>
 	protected virtual (List<string> col, List<string> par) GetColumnsForCreateQuery(IMappedColumnList columns)
@@ -32,7 +32,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetRetrieveQuery(ITableName, IColumnList, IColumn, object)"/>
+	/// Get columns for <see cref="GetRetrieveQuery(IDbName, IColumnList, IColumn, object)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
@@ -47,7 +47,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetSetListForUpdateQuery(IMappedColumnList columns)
@@ -67,7 +67,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to column list for <see cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn?)"/>,
+	/// Add version to column list for <see cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
 	/// <param name="setList">List of Set commands</param>
@@ -81,8 +81,8 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to where string for <see cref="GetUpdateQuery(ITableName, IMappedColumnList, IColumn, object, IColumn?)"/>
-	/// and <see cref="GetDeleteQuery(ITableName, IColumn, object, IColumn?)"/>
+	/// Add version to where string for <see cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn?)"/>
+	/// and <see cref="GetDeleteQuery(IDbName, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>
 	/// <param name="versionColumn">[Optional] Version column</param>
