@@ -154,7 +154,7 @@ public class DoSignInAsync_Tests
 	}
 
 	[Fact]
-	public async Task Invalid_User__Returns_AuthResult_TryAgain__With_Correct_Values()
+	public async Task Invalid_User__Returns_AuthResult_TryAgain()
 	{
 		// Arrange
 		var (_, v) = Setup();
@@ -163,8 +163,6 @@ public class DoSignInAsync_Tests
 		var result = await AuthF.DoSignInAsync(v);
 
 		// Assert
-		var tryAgain = Assert.IsType<AuthResult.TryAgain>(result);
-		var redirectTo = tryAgain.Value!.GetPropertyValue("RedirectTo").AssertSome();
-		Assert.Equal(v.Model.ReturnUrl, redirectTo);
+		Assert.IsType<AuthResult.TryAgain>(result);
 	}
 }
