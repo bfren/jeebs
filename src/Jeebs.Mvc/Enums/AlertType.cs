@@ -19,12 +19,12 @@ public enum AlertType
 	Success = 1 << 1,
 
 	/// <summary>
-	/// Error
-	/// </summary>
-	Error = 1 << 2,
-
-	/// <summary>
 	/// Warning
 	/// </summary>
-	Warning = 1 << 3
+	Warning = 1 << 2,
+
+	/// <summary>
+	/// Error
+	/// </summary>
+	Error = 1 << 3
 }
