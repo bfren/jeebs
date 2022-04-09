@@ -12,7 +12,7 @@ public class Constructor_Tests
 		var name = Rnd.Str;
 
 		// Act
-		var result = new TableName(name);
+		var result = new DbName(name);
 
 		// Assert
 		Assert.Null(result.Schema);
@@ -27,7 +27,7 @@ public class Constructor_Tests
 		var name = Rnd.Str;
 
 		// Act
-		var result = new TableName(schema, name);
+		var result = new DbName(schema, name);
 
 		// Assert
 		Assert.Equal(schema, result.Schema);

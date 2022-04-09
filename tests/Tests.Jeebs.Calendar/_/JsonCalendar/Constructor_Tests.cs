@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Calendar.Models;
@@ -13,11 +13,10 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var lastModified = Rnd.DateTime;
-		var calendar = new CalendarModel
-		{
-			Events = Substitute.For<IImmutableList<EventModel>>(),
-			LastModified = lastModified
-		};
+		var calendar = new CalendarModel(
+			Substitute.For<IImmutableList<EventModel>>(),
+			lastModified
+		);
 
 		// Act
 		var result = new JsonCalendar(calendar);
@@ -30,11 +29,10 @@ public class Constructor_Tests
 	public void Without_Tzid_Uses_DefaultTimeZone()
 	{
 		// Arrange
-		var calendar = new CalendarModel
-		{
-			Events = Substitute.For<IImmutableList<EventModel>>(),
-			LastModified = Rnd.DateTime
-		};
+		var calendar = new CalendarModel(
+			Substitute.For<IImmutableList<EventModel>>(),
+			Rnd.DateTime
+		);
 
 		// Act
 		var result = new JsonCalendar(calendar);
@@ -48,11 +46,10 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var tzid = Rnd.Str;
-		var calendar = new CalendarModel
-		{
-			Events = Substitute.For<IImmutableList<EventModel>>(),
-			LastModified = Rnd.DateTime
-		};
+		var calendar = new CalendarModel(
+			Substitute.For<IImmutableList<EventModel>>(),
+			Rnd.DateTime
+		);
 
 		// Act
 		var result = new JsonCalendar(calendar, tzid);

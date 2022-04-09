@@ -12,7 +12,7 @@ public class GetColumnAliases_Tests
 		var alias = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(alias);
-		return (alias, new MappedColumn(new TableName(Rnd.Str), Rnd.Str, prop));
+		return (alias, new MappedColumn(new DbName(Rnd.Str), Rnd.Str, prop));
 	}
 
 	[Fact]

@@ -34,7 +34,7 @@ public class GetSetListForUpdateQuery_Tests
 		var alias = Rnd.Str;
 		var propertyInfo = Substitute.For<PropertyInfo>();
 		propertyInfo.Name.Returns(alias);
-		var column = new MappedColumn(new TableName(Rnd.Str), name, propertyInfo);
+		var column = new MappedColumn(new DbName(Rnd.Str), name, propertyInfo);
 		var expected = $"--{name}-- = ##{alias}##";
 
 		var columns = new MappedColumnList(new[] { column });

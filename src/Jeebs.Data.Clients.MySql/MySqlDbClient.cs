@@ -17,11 +17,11 @@ public partial class MySqlDbClient : DbClient
 		new MySqlConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(ITableName table) =>
+	public override string Escape(IDbName table) =>
 		Escape(table.GetFullName(s => s));
 
 	/// <inheritdoc/>
-	public override string Escape(ITableName table, string column) =>
+	public override string Escape(IDbName table, string column) =>
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>

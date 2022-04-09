@@ -10,7 +10,7 @@ public class GetFullName_Tests
 	{
 		// Arrange
 		var name = Rnd.Str;
-		var table = new TableName(name);
+		var table = new DbName(name);
 		var escape = string (string obj) => $"<{obj}>";
 
 		// Act
@@ -26,13 +26,13 @@ public class GetFullName_Tests
 		// Arrange
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new TableName(schema, name);
+		var table = new DbName(schema, name);
 		var escape = string (string obj) => $"<{obj}>";
 
 		// Act
 		var result = table.GetFullName(escape);
 
 		// Assert
-		Assert.Equal($"{escape(schema)}{TableName.SchemaSeparator}{escape(name)}", result);
+		Assert.Equal($"{escape(schema)}{DbName.SchemaSeparator}{escape(name)}", result);
 	}
 }

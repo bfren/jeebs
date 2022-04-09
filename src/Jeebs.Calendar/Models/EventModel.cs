@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -15,7 +15,7 @@ namespace Jeebs.Calendar.Models;
 /// <param name="Description">Event description / details</param>
 /// <param name="Location">Event location</param>
 /// <param name="Free">True if the event shouldn't block time on the calendar</param>
-public readonly record struct EventModel(
+public sealed record class EventModel(
 	DateTime Start,
 	DateTime End,
 	bool IsAllDay,

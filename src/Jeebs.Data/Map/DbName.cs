@@ -5,8 +5,8 @@ using System;
 
 namespace Jeebs.Data.Map;
 
-/// <inheritdoc cref="ITableName"/>
-public sealed record class TableName : ITableName
+/// <inheritdoc cref="IDbName"/>
+public sealed record class DbName : IDbName
 {
 	/// <summary>
 	/// Schema Separator
@@ -22,16 +22,16 @@ public sealed record class TableName : ITableName
 	/// <summary>
 	/// Create with only a name
 	/// </summary>
-	/// <param name="name">Table Name</param>
-	public TableName(string name) =>
+	/// <param name="name">Database object name</param>
+	public DbName(string name) =>
 		Name = name;
 
 	/// <summary>
 	/// Create with schema and name
 	/// </summary>
-	/// <param name="schema">Table Schema</param>
-	/// <param name="name">Table Name</param>
-	public TableName(string schema, string name) : this(name) =>
+	/// <param name="schema">Database schema</param>
+	/// <param name="name">Database object name</param>
+	public DbName(string schema, string name) : this(name) =>
 		Schema = schema;
 
 	/// <inheritdoc/>

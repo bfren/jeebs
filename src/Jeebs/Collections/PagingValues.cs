@@ -7,7 +7,7 @@ using D = Jeebs.Collections.Defaults.PagingValues;
 namespace Jeebs.Collections;
 
 /// <inheritdoc cref="IPagingValues"/>
-public readonly record struct PagingValues : IPagingValues
+public sealed record class PagingValues : IPagingValues
 {
 	/// <inheritdoc/>
 	public ulong Items { get; init; }
@@ -41,6 +41,11 @@ public readonly record struct PagingValues : IPagingValues
 
 	/// <inheritdoc/>
 	public int Take { get; init; }
+
+	/// <summary>
+	/// Create an empty object
+	/// </summary>
+	public PagingValues() { }
 
 	/// <summary>
 	/// Set and calculate values using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>

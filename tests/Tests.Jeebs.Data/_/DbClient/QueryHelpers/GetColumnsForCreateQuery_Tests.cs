@@ -35,7 +35,7 @@ public class GetColumnsForCreateQuery_Tests
 		var propertyInfo = Substitute.For<PropertyInfo>();
 		propertyInfo.Name.Returns(alias);
 
-		var column = new MappedColumn(new TableName(Rnd.Str), name, propertyInfo);
+		var column = new MappedColumn(new DbName(Rnd.Str), name, propertyInfo);
 
 		var list = new MappedColumnList(new[] { column });
 

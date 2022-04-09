@@ -11,5 +11,5 @@ public interface ITable
 	/// <summary>
 	/// Get Table Name
 	/// </summary>
-	ITableName GetName();
+	IDbName GetName();
 }

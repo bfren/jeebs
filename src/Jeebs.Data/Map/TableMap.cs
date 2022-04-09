@@ -16,7 +16,7 @@ public sealed record class TableMap : ITableMap
 	public ITable Table { get; init; }
 
 	/// <inheritdoc/>
-	public ITableName Name =>
+	public IDbName Name =>
 		Table.GetName();
 
 	/// <inheritdoc/>
