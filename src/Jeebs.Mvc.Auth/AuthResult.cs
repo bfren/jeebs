@@ -68,8 +68,7 @@ public abstract class AuthResult : JsonResult
 	public sealed class TryAgain : AuthResult
 	{
 		/// <inheritdoc cref="TryAgain"/>
-		/// <param name="redirectTo">[Optional] Redirect to this page</param>
-		public TryAgain(string? redirectTo) : base(F.None<bool, M.TryAgainMsg>(), redirectTo, StatusCodes.Status401Unauthorized) { }
+		public TryAgain() : base(F.None<bool, M.TryAgainMsg>(), null, StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>Messages</summary>

@@ -87,7 +87,7 @@ public static partial class AuthF
 		v.Log.Err("Unknown username or password: {Email}.", v.Model.Email);
 		v.AddErrorAlert("Unknown username or password.");
 
-		// Return to sign in page
-		return new AuthResult.TryAgain(v.Model.ReturnUrl);
+		// Try again
+		return new AuthResult.TryAgain();
 	}
 }

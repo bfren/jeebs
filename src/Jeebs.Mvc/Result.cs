@@ -1,6 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Functions;
+using Jeebs.Mvc.Enums;
+using Jeebs.Mvc.Models;
 using MaybeF.Internals;
 
 namespace Jeebs.Mvc;
@@ -16,19 +19,36 @@ public abstract record class Result
 	public abstract bool Success { get; }
 
 	/// <summary>
-	/// Returns the value if the operation succeeded, or null
+	/// User feedback alert message - by default returns 'Success' or the Reason message,
+	/// but can be set to display something else
 	/// </summary>
-	public object? Value { get; }
+	public abstract Alert Message { get; init; }
 
 	/// <summary>
-	/// Returns the reason for failure, or 'Success' if the operation succeeded
+	/// Returns the value if the operation succeeded, or null if not
 	/// </summary>
-	public abstract string Reason { get; }
+	public object? Value { get; }
 
 	/// <summary>
 	/// If set, tells the client to redirect to this URL
 	/// </summary>
 	public string? RedirectTo { get; init; }
+
+	/// <summary>
+	/// Return value serialised as JSON
+	/// </summary>
+	public sealed override string ToString() =>
+		JsonF.Serialise(this).Unwrap(() => JsonF.Empty);
+
+	#region Static Create
+
+	/// <summary>
+	/// Create with value
+	/// </summary>
+	/// <typeparam name="T">Value type</typeparam>
+	/// <param name="value"></param>
+	public static Result<T> Create<T>(T value) =>
+		new(value);
 
 	/// <summary>
 	/// Create with value
@@ -37,12 +57,51 @@ public abstract record class Result
 	/// <param name="value"></param>
 	public static Result<T> Create<T>(Maybe<T> value) =>
 		new(value);
+
+	/// <summary>
+	/// Create with value and message
+	/// </summary>
+	/// <typeparam name="T">Value type</typeparam>
+	/// <param name="value"></param>
+	/// <param name="message"></param>
+	public static Result<T> Create<T>(T value, Alert message) =>
+		new(value) { Message = message };
+
+	/// <summary>
+	/// Create with value and message
+	/// </summary>
+	/// <typeparam name="T">Value type</typeparam>
+	/// <param name="value"></param>
+	/// <param name="message"></param>
+	public static Result<T> Create<T>(Maybe<T> value, Alert message) =>
+		new(value) { Message = message };
+
+	#endregion Static Create
 }
 
 /// <inheritdoc cref="Result"/>
 /// <typeparam name="T">Value type</typeparam>
 public sealed record class Result<T> : Result
 {
+	/// <inheritdoc/>
+	public override Alert Message
+	{
+		get => message switch
+		{
+			Alert message =>
+				message,
+
+			_ =>
+				Maybe.Switch(
+					some: _ => Alert.Success(nameof(AlertType.Success)),
+					none: r => Alert.Error(r.ToString() ?? r.GetType().Name)
+				)
+		};
+		init => message = value;
+	}
+
+	private Alert? message;
+
 	/// <summary>
 	/// Maybe result object
 	/// </summary>
@@ -74,17 +133,6 @@ public sealed record class Result<T> : Result
 
 			_ =>
 				default
-		};
-
-	/// <inheritdoc/>
-	public override string Reason =>
-		Maybe.IsNone(out var reason) switch
-		{
-			true =>
-				reason.ToString() ?? reason.GetType().Name,
-
-			false =>
-				nameof(Success)
 		};
 
 	/// <summary>
