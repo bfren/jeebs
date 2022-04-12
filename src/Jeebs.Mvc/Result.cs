@@ -1,47 +1,130 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Net;
+using System.Threading.Tasks;
 using Jeebs.Functions;
 using Jeebs.Mvc.Enums;
 using Jeebs.Mvc.Models;
 using MaybeF.Internals;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Mvc;
 
-/// <summary>
-/// Represents the result of an operation
-/// </summary>
-public abstract record class Result
+/// <inheritdoc cref="IResult{T}"/>
+public record class Result<T> : IActionResult, IResult<T>
 {
 	/// <summary>
-	/// Returns true if the operation was a success
+	/// Maybe result object
 	/// </summary>
-	public abstract bool Success { get; }
+	internal Maybe<T> Maybe { get; private init; }
 
 	/// <summary>
-	/// User feedback alert message - by default returns 'Success' or the Reason message,
-	/// but can be set to display something else
+	/// Returns true if the operation was a success - or in the special case that <typeparamref name="T"/>
+	/// is <see cref="bool"/> and <see cref="Maybe"/> is <see cref="Some{T}"/>, returns that value
 	/// </summary>
-	public abstract Alert Message { get; init; }
+	public bool Success =>
+		Maybe switch
+		{
+			Some<bool> some =>
+				some.Value,
 
-	/// <summary>
-	/// Returns the value if the operation succeeded, or null if not
-	/// </summary>
-	public object? Value { get; }
+			Some<T> =>
+				true,
 
-	/// <summary>
-	/// If set, tells the client to redirect to this URL
-	/// </summary>
+			_ =>
+				false
+		};
+
+	/// <inheritdoc/>
+	public Alert Message
+	{
+		get => message switch
+		{
+			Alert message =>
+				message,
+
+			_ =>
+				Maybe.Switch(
+					some: _ => Alert.Success(nameof(AlertType.Success)),
+					none: r => Alert.Error(r.ToString() ?? r.GetType().Name)
+				)
+		};
+		init => message = value;
+	}
+
+	private Alert? message;
+
+	/// <inheritdoc/>
+	public T? Value =>
+		Maybe.IsSome(out var value) switch
+		{
+			true =>
+				value,
+
+			_ =>
+				default
+		};
+
+	/// <inheritdoc/>
+	public int StatusCode
+	{
+		get => statusCode switch
+		{
+			int statusCode =>
+				statusCode,
+
+			_ =>
+				Success switch
+				{
+					true =>
+						(int)HttpStatusCode.OK,
+
+					false =>
+						(int)HttpStatusCode.InternalServerError
+				}
+		};
+		init => statusCode = value;
+	}
+
+	private int? statusCode;
+
+	/// <inheritdoc/>
 	public string? RedirectTo { get; init; }
 
 	/// <summary>
-	/// Return value serialised as JSON
+	/// Create with value
 	/// </summary>
-	public sealed override string ToString() =>
-		JsonF.Serialise(this).Unwrap(() => JsonF.Empty);
+	/// <param name="value"></param>
+	internal Result(Maybe<T> value) =>
+		Maybe = value;
 
-	#region Static Create
+	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
+	public Task ExecuteResultAsync(ActionContext context)
+	{
+		// Create MVC JsonResult from this result's properties
+		var jsonResult = new JsonResult(this, JsonF.CopyOptions())
+		{
+			ContentType = "application/json",
+			StatusCode = StatusCode
+		};
 
+		// Get result executor
+		var services = context.HttpContext.RequestServices;
+		var executor = services.GetRequiredService<IActionResultExecutor<JsonResult>>();
+
+		// Execute JsonResult
+		return executor.ExecuteAsync(context, jsonResult);
+	}
+}
+
+/// <summary>
+/// Easily create <see cref="Result{T}"/> objects
+/// </summary>
+public static class Result
+{
 	/// <summary>
 	/// Create with value
 	/// </summary>
@@ -75,70 +158,4 @@ public abstract record class Result
 	/// <param name="message"></param>
 	public static Result<T> Create<T>(Maybe<T> value, Alert message) =>
 		new(value) { Message = message };
-
-	#endregion Static Create
-}
-
-/// <inheritdoc cref="Result"/>
-/// <typeparam name="T">Value type</typeparam>
-public sealed record class Result<T> : Result
-{
-	/// <inheritdoc/>
-	public override Alert Message
-	{
-		get => message switch
-		{
-			Alert message =>
-				message,
-
-			_ =>
-				Maybe.Switch(
-					some: _ => Alert.Success(nameof(AlertType.Success)),
-					none: r => Alert.Error(r.ToString() ?? r.GetType().Name)
-				)
-		};
-		init => message = value;
-	}
-
-	private Alert? message;
-
-	/// <summary>
-	/// Maybe result object
-	/// </summary>
-	internal Maybe<T> Maybe { get; private init; }
-
-	/// <summary>
-	/// Returns true if the operation was a success - or in the special case that <typeparamref name="T"/>
-	/// is <see cref="bool"/> and <see cref="Maybe"/> is <see cref="Some{T}"/>, returns that value
-	/// </summary>
-	public override bool Success =>
-		Maybe switch
-		{
-			Some<bool> some =>
-				some.Value,
-
-			Some<T> =>
-				true,
-
-			_ =>
-				false
-		};
-
-	/// <inheritdoc cref="Result.Value"/>
-	public new T? Value =>
-		Maybe.IsSome(out var value) switch
-		{
-			true =>
-				value,
-
-			_ =>
-				default
-		};
-
-	/// <summary>
-	/// Create with value
-	/// </summary>
-	/// <param name="value"></param>
-	internal Result(Maybe<T> value) =>
-		Maybe = value;
 }
