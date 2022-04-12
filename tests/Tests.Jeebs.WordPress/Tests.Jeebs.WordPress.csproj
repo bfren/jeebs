@@ -3,7 +3,7 @@
 		<RootNamespace>Jeebs.WordPress</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="StrongId.Testing" Version="8.1.2" />
+	  <PackageReference Include="StrongId.Testing" Version="8.1.3" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Jeebs.WordPress\Jeebs.WordPress.csproj" />
