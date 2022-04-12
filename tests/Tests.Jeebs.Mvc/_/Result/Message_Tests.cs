@@ -34,7 +34,7 @@ public class Message_Tests
 
 		// Assert
 		Assert.Equal(AlertType.Success, result.Type);
-		Assert.Equal(nameof(Result.Success), result.Text);
+		Assert.Equal(nameof(AlertType.Success), result.Text);
 	}
 
 	[Fact]

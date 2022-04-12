@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Net;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Jeebs.Functions;
 using Jeebs.Mvc.Enums;
@@ -16,6 +17,13 @@ namespace Jeebs.Mvc;
 /// <inheritdoc cref="IResult{T}"/>
 public record class Result<T> : IActionResult, IResult<T>
 {
+	/// <summary>
+	/// Create with value
+	/// </summary>
+	/// <param name="value"></param>
+	internal Result(Maybe<T> value) =>
+		Maybe = value;
+
 	/// <summary>
 	/// Maybe result object
 	/// </summary>
@@ -69,6 +77,7 @@ public record class Result<T> : IActionResult, IResult<T>
 		};
 
 	/// <inheritdoc/>
+	[JsonIgnore]
 	public int StatusCode
 	{
 		get => statusCode switch
@@ -93,13 +102,6 @@ public record class Result<T> : IActionResult, IResult<T>
 
 	/// <inheritdoc/>
 	public string? RedirectTo { get; init; }
-
-	/// <summary>
-	/// Create with value
-	/// </summary>
-	/// <param name="value"></param>
-	internal Result(Maybe<T> value) =>
-		Maybe = value;
 
 	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
 	public Task ExecuteResultAsync(ActionContext context)
