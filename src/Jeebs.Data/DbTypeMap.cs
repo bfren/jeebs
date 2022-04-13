@@ -40,6 +40,9 @@ public sealed class DbTypeMap
 	public void AddGuidTypeHandler() =>
 		SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
+	public void AddImmutableListTypeHandler<T>() =>
+		SqlMapper.AddTypeHandler(new ImmutableListTypeHandler<T>());
+
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON
 	/// </summary>
@@ -51,9 +54,9 @@ public sealed class DbTypeMap
 	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	public void AddJsonEnumeratedListTypeHandler<T>()
+	public void AddEnumeratedListTypeHandler<T>()
 		where T : Enumerated =>
-		SqlMapper.AddTypeHandler(new JsonEnumeratedListTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
 
 	/// <summary>
 	/// Persist <see cref="IStrongId"/> properties to the database
