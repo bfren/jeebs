@@ -18,24 +18,23 @@ public static partial class MapF
 	/// <summary>
 	/// Get all columns as <see cref="Column"/> objects
 	/// </summary>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="table">Table object</param>
-	public static Maybe<ColumnList> GetColumns<TEntity>(ITable table)
+	public static Maybe<ColumnList> GetColumns<TTable, TEntity>(TTable table)
+		where TTable : ITable
 		where TEntity : IWithId =>
 		F.Some(
-			table
-		)
-		.Map(
-			x => from tableProperty in x.GetType().GetProperties()
-				 join entityProperty in typeof(TEntity).GetProperties() on tableProperty.Name equals entityProperty.Name
-				 let column = tableProperty.GetValue(x)?.ToString()
-				 where tableProperty.GetCustomAttribute<IgnoreAttribute>() is null
-				 select new Column
-				 (
-					 tblName: x.GetName(),
-					 colName: column,
-					 propertyInfo: tableProperty
-				 ),
+			() => from tableProperty in typeof(TTable).GetProperties()
+				  join entityProperty in typeof(TEntity).GetProperties() on tableProperty.Name equals entityProperty.Name
+				  let column = tableProperty.GetValue(table)?.ToString()
+				  where tableProperty.GetCustomAttribute<IgnoreAttribute>() is null
+				  select new Column
+				  (
+					  tblName: table.GetName(),
+					  colName: column,
+					  propertyInfo: tableProperty
+				  ),
 			e => new M.ErrorGettingColumnsMsg<TEntity>(e)
 		)
 		.Map(

@@ -18,19 +18,19 @@ public static partial class MapF
 	/// <summary>
 	/// Get the ID column
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="columns">List of mapped columns</param>
-	public static Maybe<Column> GetIdColumn<TEntity>(ColumnList columns)
-		where TEntity : IWithId =>
+	public static Maybe<Column> GetIdColumn<TTable>(ColumnList columns)
+		where TTable : ITable =>
 		F.Some(
 			columns
 		)
 		.Map(
 			x => x.Where(p => p.PropertyInfo.Name == nameof(IWithId.Id) && p.PropertyInfo.GetCustomAttribute(typeof(IgnoreAttribute)) is null).ToList(),
-			e => new M.ErrorGettingIdPropertyMsg<TEntity>(e)
+			e => new M.ErrorGettingIdPropertyMsg<TTable>(e)
 		)
 		.UnwrapSingle<IColumn>(
-			noItems: () => new M.NoIdPropertyMsg<TEntity>()
+			noItems: () => new M.NoIdPropertyMsg<TTable>()
 		)
 		.Map(
 			x => new Column(x),
@@ -39,35 +39,35 @@ public static partial class MapF
 
 	public static partial class M
 	{
-		/// <summary>No Id property found on entity</summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <summary>No Id property found on table</summary>
+		/// <typeparam name="TTable">Table type</typeparam>
 		/// <param name="Value">Exception</param>
-		public sealed record class ErrorGettingIdPropertyMsg<TEntity>(Exception Value) : ExceptionMsg;
+		public sealed record class ErrorGettingIdPropertyMsg<TTable>(Exception Value) : ExceptionMsg;
 
-		/// <summary>No property with specified attribute found on entity</summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		public sealed record class NoIdPropertyMsg<TEntity>() : Msg
+		/// <summary>No property with specified attribute found on table</summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		public sealed record class NoIdPropertyMsg<TTable>() : Msg
 		{
 			/// <inheritdoc/>
 			public override string Format =>
-				"Required {Property} or {Attribute} missing on entity {Type}.";
+				"Required {Property} or {Attribute} missing on table {Type}.";
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { nameof(IWithId.Id), typeof(IdAttribute), typeof(TEntity) };
+				new object[] { nameof(IWithId.Id), typeof(IdAttribute), typeof(TTable) };
 		}
 
-		/// <summary>Too many properties with specified attribute found on entity</summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		public sealed record class TooManyPropertiesWithIdAttributeMsg<TEntity>() : Msg
+		/// <summary>Too many properties with specified attribute found on table</summary>
+		/// <typeparam name="TTable">Table type</typeparam>
+		public sealed record class TooManyPropertiesWithIdAttributeMsg<TTable>() : Msg
 		{
 			/// <inheritdoc/>
 			public override string Format =>
-				"More than one {Attribute} found on entity {Type}.";
+				"More than one {Attribute} found on table {Type}.";
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { typeof(IdAttribute), typeof(TEntity) };
+				new object[] { typeof(IdAttribute), typeof(TTable) };
 		}
 	}
 }

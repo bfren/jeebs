@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
+using Jeebs.Data.Map._.Mapper.Tables;
 using Jeebs.Data.Map.Mapper_Tests;
 using static Jeebs.Data.Map.Functions.MapF.M;
 
@@ -13,25 +14,25 @@ public class GetColumnWithAttribute_Tests
 	public void Missing_Id_Property_Attribute_Returns_None_With_NoPropertyWithAttributeMsg()
 	{
 		// Arrange
-		var columns = MapF.GetColumns<FooWithoutIdAttribute>(new FooTable()).UnsafeUnwrap();
+		var columns = MapF.GetColumns<FooTableWithoutIdAttribute, Foo>(new()).UnsafeUnwrap();
 
 		// Act
-		var result = MapF.GetColumnWithAttribute<FooWithoutIdAttribute, IdAttribute>(columns);
+		var result = MapF.GetColumnWithAttribute<FooTableWithoutIdAttribute, IdAttribute>(columns);
 
 		// Assert
-		result.AssertNone().AssertType<NoPropertyWithAttributeMsg<FooWithoutIdAttribute, IdAttribute>>();
+		result.AssertNone().AssertType<NoPropertyWithAttributeMsg<FooTableWithoutIdAttribute, IdAttribute>>();
 	}
 
 	[Fact]
 	public void Multiple_Id_Properties_Returns_None_With_TooManyPropertiesWithAttributeMsg()
 	{
 		// Arrange
-		var columns = MapF.GetColumns<FooWithMultipleIdAttributes>(new FooTable()).UnsafeUnwrap();
+		var columns = MapF.GetColumns<FooTableWithMultipleIdAttributes, Foo>(new()).UnsafeUnwrap();
 
 		// Act
-		var result = MapF.GetColumnWithAttribute<FooWithMultipleIdAttributes, IdAttribute>(columns);
+		var result = MapF.GetColumnWithAttribute<FooTableWithMultipleIdAttributes, IdAttribute>(columns);
 
 		// Assert
-		result.AssertNone().AssertType<TooManyPropertiesWithAttributeMsg<FooWithMultipleIdAttributes, IdAttribute>>();
+		result.AssertNone().AssertType<TooManyPropertiesWithAttributeMsg<FooTableWithMultipleIdAttributes, IdAttribute>>();
 	}
 }

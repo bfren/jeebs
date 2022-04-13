@@ -46,20 +46,20 @@ internal sealed class Mapper : IMapper, IDisposable
 		mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 		{
 			// Validate table
-			var (valid, errors) = MapF.ValidateTable<TEntity>(table);
+			var (valid, errors) = MapF.ValidateTable<TTable, TEntity>();
 			if (!valid)
 			{
 				throw new InvalidTableMapException(errors);
 			}
 
 			// Get mapped columns
-			var columns = MapF.GetColumns<TEntity>(table).Unwrap(
+			var columns = MapF.GetColumns<TTable, TEntity>(table).Unwrap(
 				reason => throw new UnableToGetColumnsException(reason)
 			);
 
 			// Get ID column by attribute (to allow ID to be overridden)
-			var idColumn = MapF.GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
-				_ => MapF.GetIdColumn<TEntity>(columns).Unwrap(
+			var idColumn = MapF.GetColumnWithAttribute<TTable, IdAttribute>(columns).Unwrap(
+				_ => MapF.GetIdColumn<TTable>(columns).Unwrap(
 					reason => throw new UnableToFindIdColumnException(reason)
 				)
 			);
@@ -70,7 +70,7 @@ internal sealed class Mapper : IMapper, IDisposable
 			// Get Version property
 			if (typeof(TEntity).Implements<IWithVersion>())
 			{
-				map.VersionColumn = MapF.GetColumnWithAttribute<TEntity, VersionAttribute>(columns).Unwrap(
+				map.VersionColumn = MapF.GetColumnWithAttribute<TTable, VersionAttribute>(columns).Unwrap(
 					reason => throw new UnableToFindVersionColumnException(reason)
 				);
 			}
