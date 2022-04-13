@@ -15,12 +15,9 @@ public class FooUnwriteable : IWithId
 		init => FooId = value switch { FooId f => f, _ => new FooId() };
 	}
 
-	[Id]
 	public FooId FooId { get; init; } = new();
 
-	[Computed]
 	public string Bar2 { get; init; } = string.Empty;
 
-	[Readonly]
 	public string Bar3 { get; init; } = string.Empty;
 }

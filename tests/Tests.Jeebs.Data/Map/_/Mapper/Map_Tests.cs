@@ -3,6 +3,7 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
+using Jeebs.Data.Map._.Mapper.Tables;
 using StrongId;
 using static Jeebs.Data.Map.Functions.MapF.M;
 
@@ -59,11 +60,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new Mapper();
-		var error = $"{typeof(NoIdPropertyMsg<FooWithoutIdAttribute>)} " +
-			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithoutIdAttribute)}.";
+		var error = $"{typeof(NoIdPropertyMsg<FooTableWithoutIdAttribute>)} " +
+			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithoutIdAttribute)}.";
 
 		// Act
-		var action = void () => mapper.Map<FooWithoutIdAttribute, FooTable>(new());
+		var action = void () => mapper.Map<Foo, FooTableWithoutIdAttribute>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
@@ -75,11 +76,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new Mapper();
-		var error = $"{typeof(NoIdPropertyMsg<FooWithMultipleIdAttributes>)} " +
-			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithMultipleIdAttributes)}.";
+		var error = $"{typeof(NoIdPropertyMsg<FooTableWithMultipleIdAttributes>)} " +
+			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithMultipleIdAttributes)}.";
 
 		// Act
-		var action = void () => svc.Map<FooWithMultipleIdAttributes, FooTable>(new());
+		var action = void () => svc.Map<Foo, FooTableWithMultipleIdAttributes>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
@@ -91,11 +92,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new Mapper();
-		var error = $"{typeof(NoPropertyWithAttributeMsg<FooWithoutVersionAttribute, VersionAttribute>)} " +
-			$"Required {typeof(VersionAttribute)} missing on entity {typeof(FooWithoutVersionAttribute)}.";
+		var error = $"{typeof(NoPropertyWithAttributeMsg<FooTableWithoutVersionAttribute, VersionAttribute>)} " +
+			$"Required {typeof(VersionAttribute)} missing on table {typeof(FooTableWithoutVersionAttribute)}.";
 
 		// Act
-		var action = void () => mapper.Map<FooWithoutVersionAttribute, FooWithVersionTable>(new());
+		var action = void () => mapper.Map<FooWithVersion, FooTableWithoutVersionAttribute>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
@@ -107,11 +108,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new Mapper();
-		var error = $"{typeof(TooManyPropertiesWithAttributeMsg<FooWithMultipleVersionAttributes, VersionAttribute>)} " +
-			$"More than one {typeof(VersionAttribute)} found on entity {typeof(FooWithMultipleVersionAttributes)}.";
+		var error = $"{typeof(TooManyPropertiesWithAttributeMsg<FooTableWithMultipleVersionAttributes, VersionAttribute>)} " +
+			$"More than one {typeof(VersionAttribute)} found on table {typeof(FooTableWithMultipleVersionAttributes)}.";
 
 		// Act
-		var action = void () => svc.Map<FooWithMultipleVersionAttributes, FooWithVersionTable>(new());
+		var action = void () => svc.Map<FooWithVersion, FooTableWithMultipleVersionAttributes>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
