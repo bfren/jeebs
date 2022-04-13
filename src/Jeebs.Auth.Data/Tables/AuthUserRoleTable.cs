@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
+using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
 
 namespace Jeebs.Auth.Data.Tables;
@@ -17,6 +18,7 @@ public sealed record class AuthUserRoleTable() : Table(AuthDb.Schema, TableName)
 	public static readonly string TableName = "UserRole";
 
 	/// <inheritdoc cref="AuthUserRoleEntity.Id"/>
+	[Id]
 	public string Id =>
 		TableName + nameof(Id);
 

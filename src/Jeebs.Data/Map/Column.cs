@@ -3,22 +3,62 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Jeebs.Data.Map;
 
 /// <inheritdoc cref="IColumn"/>
-/// <param name="TblName">Table Name</param>
-/// <param name="ColName">Column Name</param>
-/// <param name="ColAlias">Column Alias</param>
-public record class Column(IDbName TblName, string ColName, string ColAlias) : IColumn
+public sealed record class Column : IColumn
 {
 	/// <summary>
-	/// Create column using table object
+	/// Table name
+	/// </summary>
+	public IDbName TblName { get; init; }
+
+	/// <summary>
+	/// Column name
+	/// </summary>
+	public string ColName { get; init; }
+
+	/// <summary>
+	/// Column alias
+	/// </summary>
+	public string ColAlias =>
+		PropertyInfo.Name;
+
+	/// <summary>
+	/// Table property PropertyInfo
+	/// </summary>
+	public PropertyInfo PropertyInfo { get; init; }
+
+	/// <summary>
+	/// Create object
+	/// </summary>
+	/// <param name="tblName">Table name</param>
+	/// <param name="colName">Column Name</param>
+	/// <param name="propertyInfo">Entity property PropertyInfo</param>
+	public Column(IDbName tblName, string colName, PropertyInfo propertyInfo) =>
+		(TblName, ColName, PropertyInfo) = (tblName, colName, propertyInfo);
+
+	/// <summary>
+	/// Create from another column
+	/// </summary>
+	/// <param name="column"></param>
+	public Column(IColumn column) : this(column.TblName, column.ColName, column.PropertyInfo) { }
+
+	/// <summary>
+	/// Create object using table
 	/// </summary>
 	/// <param name="table">Table</param>
 	/// <param name="colName">Column Name</param>
-	/// <param name="colAlias">Column Alias</param>
-	public Column(ITable table, string colName, string colAlias) : this(table.GetName(), colName, colAlias) { }
+	/// <param name="propertyInfo">Entity property PropertyInfo</param>
+	public Column(ITable table, string colName, PropertyInfo propertyInfo) : this(table.GetName(), colName, propertyInfo) { }
+
+	/// <summary>
+	/// Return column name
+	/// </summary>
+	public override string ToString() =>
+		ColName;
 
 	/// <summary>
 	/// Column Alias Comparer
@@ -77,10 +117,4 @@ public record class Column(IDbName TblName, string ColName, string ColAlias) : I
 			return obj.GetHashCode();
 		}
 	}
-
-	/// <summary>
-	/// Return column name
-	/// </summary>
-	public sealed override string ToString() =>
-		ColName;
 }

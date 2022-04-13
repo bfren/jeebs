@@ -6,31 +6,31 @@ using System;
 namespace Jeebs.Data.Exceptions;
 
 /// <summary>
-/// See <see cref="Map.Mapper.Map{TEntity}(Map.ITable)"/>
+/// See <see cref="Map.Mapper.Map{TEntity, TTable}(TTable)"/>
 /// </summary>
-public sealed class UnableToGetMappedColumnsException : Exception
+public sealed class UnableToGetColumnsException : Exception
 {
 	/// <summary>
 	/// Create exception
 	/// </summary>
-	public UnableToGetMappedColumnsException() { }
+	public UnableToGetColumnsException() { }
 
 	/// <summary>
 	/// Create exception
 	/// </summary>
 	/// <param name="msg"></param>
-	public UnableToGetMappedColumnsException(IMsg msg) : base(msg.ToString() ?? string.Empty) { }
+	public UnableToGetColumnsException(IMsg msg) : base(msg.ToString() ?? string.Empty) { }
 
 	/// <summary>
 	/// Create exception
 	/// </summary>
 	/// <param name="message"></param>
-	public UnableToGetMappedColumnsException(string message) : base(message) { }
+	public UnableToGetColumnsException(string message) : base(message) { }
 
 	/// <summary>
 	/// Create exception
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>
-	public UnableToGetMappedColumnsException(string message, Exception inner) : base(message, inner) { }
+	public UnableToGetColumnsException(string message, Exception inner) : base(message, inner) { }
 }

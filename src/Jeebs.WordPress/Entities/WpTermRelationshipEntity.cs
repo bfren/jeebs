@@ -29,7 +29,6 @@ public abstract record class WpTermRelationshipEntity : IWithId
 	/// <summary>
 	/// PostId
 	/// </summary>
-	[Id]
 	public StrongIds.WpPostId PostId { get; init; } = new();
 
 	/// <summary>

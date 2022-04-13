@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Map.Column_Tests;
@@ -10,7 +10,7 @@ public class ToString_Tests
 	{
 		// Arrange
 		var name = Rnd.Str;
-		var column = new Column(new DbName(Rnd.Str), name, Rnd.Str);
+		var column = new Column(new DbName(Rnd.Str), name, Helpers.CreateInfoFromAlias());
 
 		// Act
 		var result = column.ToString();

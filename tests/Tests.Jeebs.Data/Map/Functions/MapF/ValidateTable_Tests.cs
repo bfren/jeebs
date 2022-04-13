@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map.Mapper_Tests;
@@ -14,7 +14,7 @@ public class ValidateTable_Tests
 		var e0 = $"The definition of table '{typeof(FooTableWithoutBar0).FullName}' is missing field '{nameof(Foo.Bar0)}'.";
 
 		// Act
-		var (valid, errors) = MapF.ValidateTable<Foo>(new FooTableWithoutBar0());
+		var (valid, errors) = MapF.ValidateTable<FooTableWithoutBar0, Foo>();
 
 		// Assert
 		Assert.False(valid);
@@ -30,7 +30,7 @@ public class ValidateTable_Tests
 		var e2 = $"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.Bar1)}'.";
 
 		// Act
-		var (valid, errors) = MapF.ValidateTable<Foo>(new FooTableWithoutAny());
+		var (valid, errors) = MapF.ValidateTable<FooTableWithoutAny, Foo>();
 
 		// Assert
 		Assert.False(valid);
@@ -48,7 +48,7 @@ public class ValidateTable_Tests
 		var e0 = $"The definition of entity '{typeof(Foo).FullName}' is missing property '{nameof(FooTableWithBar2.Bar2)}'.";
 
 		// Act
-		var (valid, errors) = MapF.ValidateTable<Foo>(new FooTableWithBar2());
+		var (valid, errors) = MapF.ValidateTable<FooTableWithBar2, Foo>();
 
 		// Assert
 		Assert.False(valid);
@@ -64,7 +64,7 @@ public class ValidateTable_Tests
 		var e2 = $"The definition of entity '{typeof(Foo).FullName}' is missing property '{nameof(FooTableWithBar234.Bar4)}'.";
 
 		// Act
-		var (valid, errors) = MapF.ValidateTable<Foo>(new FooTableWithBar234());
+		var (valid, errors) = MapF.ValidateTable<FooTableWithBar234, Foo>();
 
 		// Assert
 		Assert.False(valid);

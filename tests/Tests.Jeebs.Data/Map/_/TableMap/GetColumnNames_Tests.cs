@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
@@ -7,12 +7,12 @@ namespace Jeebs.Data.Map.TableMap_Tests;
 
 public class GetColumnNames_Tests
 {
-	internal static (string name, MappedColumn column) Get()
+	internal static (string name, Column column) Get()
 	{
 		var name = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(Rnd.Str);
-		return (name, new MappedColumn(new DbName(Rnd.Str), name, prop));
+		return (name, new Column(new DbName(Rnd.Str), name, prop));
 	}
 
 	[Fact]
@@ -20,7 +20,7 @@ public class GetColumnNames_Tests
 	{
 		// Arrange
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new MappedColumnList(), Get().column);
+		var map = new TableMap(table, new ColumnList(), Get().column);
 
 		// Act
 		var result = map.GetColumnNames();
@@ -38,7 +38,7 @@ public class GetColumnNames_Tests
 		var (n2, c2) = Get();
 		var (n3, c3) = Get();
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new MappedColumnList(new[] { c0, c1, c2, c3 }), c0);
+		var map = new TableMap(table, new ColumnList(new[] { c0, c1, c2, c3 }), c0);
 
 		// Act
 		var result = map.GetColumnNames();

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
@@ -7,12 +7,12 @@ namespace Jeebs.Data.Map.TableMap_Tests;
 
 public class GetColumnAliases_Tests
 {
-	internal static (string alias, MappedColumn column) Get()
+	internal static (string alias, Column column) Get()
 	{
 		var alias = Rnd.Str;
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(alias);
-		return (alias, new MappedColumn(new DbName(Rnd.Str), Rnd.Str, prop));
+		return (alias, new Column(new DbName(Rnd.Str), Rnd.Str, prop));
 	}
 
 	[Fact]
@@ -20,7 +20,7 @@ public class GetColumnAliases_Tests
 	{
 		// Arrange
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new MappedColumnList(), Get().column);
+		var map = new TableMap(table, new ColumnList(), Get().column);
 
 		// Act
 		var result = map.GetColumnAliases(false);
@@ -38,7 +38,7 @@ public class GetColumnAliases_Tests
 		var (a2, c2) = Get();
 		var (a3, c3) = Get();
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new MappedColumnList(new[] { c0, c1, c2, c3 }), c0);
+		var map = new TableMap(table, new ColumnList(new[] { c0, c1, c2, c3 }), c0);
 
 		// Act
 		var result = map.GetColumnAliases(true);
@@ -61,7 +61,7 @@ public class GetColumnAliases_Tests
 		var (a2, c2) = Get();
 		var (a3, c3) = Get();
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new MappedColumnList(new[] { c0, c1, c2, c3 }), c0);
+		var map = new TableMap(table, new ColumnList(new[] { c0, c1, c2, c3 }), c0);
 
 		// Act
 		var result = map.GetColumnAliases(false);

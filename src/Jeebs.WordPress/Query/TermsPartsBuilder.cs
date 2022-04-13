@@ -21,7 +21,7 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 
 	/// <inheritdoc/>
 	public override IColumn IdColumn =>
-		new Column(T.Terms, T.Terms.Id, nameof(T.Terms.Id));
+		new Column(T.Terms, T.Terms.Id, GetIdColumn(T.Terms));
 
 	/// <summary>
 	/// Internal creation only

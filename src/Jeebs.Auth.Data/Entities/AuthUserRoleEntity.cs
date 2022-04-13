@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Attributes;
 using StrongId;
 
 namespace Jeebs.Auth.Data.Entities;
@@ -14,7 +13,6 @@ public sealed record class AuthUserRoleEntity : IWithId<AuthUserRoleId>, IAuthUs
 	/// <summary>
 	/// User Role ID
 	/// </summary>
-	[Id]
 	public AuthUserRoleId Id { get; init; } = new();
 
 	/// <summary>

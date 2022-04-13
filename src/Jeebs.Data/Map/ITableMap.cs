@@ -23,17 +23,17 @@ public interface ITableMap
 	/// <summary>
 	/// Mapped Columns
 	/// </summary>
-	IMappedColumnList Columns { get; init; }
+	IColumnList Columns { get; init; }
 
 	/// <summary>
 	/// Id Column
 	/// </summary>
-	IMappedColumn IdColumn { get; init; }
+	IColumn IdColumn { get; init; }
 
 	/// <summary>
 	/// [Optional] Version Column
 	/// </summary>
-	IMappedColumn? VersionColumn { get; }
+	IColumn? VersionColumn { get; }
 
 	/// <summary>
 	/// Get all column names

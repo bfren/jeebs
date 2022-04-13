@@ -25,7 +25,7 @@ public class GetTableMapFor_Tests
 	{
 		// Arrange
 		using var mapper = new Mapper();
-		var map = mapper.Map<Foo>(new FooTable());
+		var map = mapper.Map<Foo, FooTable>(new());
 
 		// Act
 		var result = mapper.GetTableMapFor<Foo>();

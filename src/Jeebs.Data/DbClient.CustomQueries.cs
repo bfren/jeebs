@@ -51,7 +51,7 @@ public abstract partial class DbClient : IDbClient
 
 	internal (string query, IQueryParametersDictionary param) GetQueryTest(
 		IDbName table,
-		ColumnList columns,
+		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	) =>
 		GetQuery(table, columns, predicates);

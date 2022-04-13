@@ -20,13 +20,13 @@ public sealed record class TableMap : ITableMap
 		Table.GetName();
 
 	/// <inheritdoc/>
-	public IMappedColumnList Columns { get; init; }
+	public IColumnList Columns { get; init; }
 
 	/// <inheritdoc/>
-	public IMappedColumn IdColumn { get; init; }
+	public IColumn IdColumn { get; init; }
 
 	/// <inheritdoc/>
-	public IMappedColumn? VersionColumn { get; internal set; }
+	public IColumn? VersionColumn { get; internal set; }
 
 	/// <summary>
 	/// Create object
@@ -34,7 +34,7 @@ public sealed record class TableMap : ITableMap
 	/// <param name="table">Table</param>
 	/// <param name="columns">Mapped Columns</param>
 	/// <param name="idColumn">Id Column</param>
-	public TableMap(ITable table, IMappedColumnList columns, IMappedColumn idColumn) =>
+	public TableMap(ITable table, IColumnList columns, IColumn idColumn) =>
 		(Table, Columns, IdColumn) = (table, columns, idColumn);
 
 	/// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class TableMap : ITableMap
 					F.Some(x),
 
 				false =>
-					F.None<IEnumerable<IMappedColumn>, M.NoWriteableColumnsFoundMsg>()
+					F.None<IEnumerable<IColumn>, M.NoWriteableColumnsFoundMsg>()
 			}
 		)
 		.Map(

@@ -20,7 +20,7 @@ public static partial class QueryF
 		where TTable : ITable =>
 		column.GetPropertyInfo()
 			.Map<IColumn>(
-				x => new Column(table, x.Get(table), x.Name),
+				x => new Column(table, x.Get(table), x.Info),
 				F.DefaultHandler
 			);
 

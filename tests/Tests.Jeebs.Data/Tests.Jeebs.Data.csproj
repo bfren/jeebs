@@ -9,4 +9,7 @@
 		<ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />
 		<ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Map\_\Mapper\Entities\" />
+	</ItemGroup>
 </Project>

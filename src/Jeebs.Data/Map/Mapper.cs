@@ -40,31 +40,29 @@ internal sealed class Mapper : IMapper, IDisposable
 	internal Mapper() { }
 
 	/// <inheritdoc/>
-	public ITableMap Map<TEntity>(ITable table)
-		where TEntity : IWithId =>
+	public ITableMap Map<TEntity, TTable>(TTable table)
+		where TEntity : IWithId
+		where TTable : ITable =>
 		mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 		{
 			// Validate table
-			var (valid, errors) = MapF.ValidateTable<TEntity>(table);
+			var (valid, errors) = MapF.ValidateTable<TTable, TEntity>();
 			if (!valid)
 			{
 				throw new InvalidTableMapException(errors);
 			}
 
 			// Get mapped columns
-			var columns = MapF.GetMappedColumns<TEntity>(table).Unwrap(
-				reason => throw new UnableToGetMappedColumnsException(reason)
+			var columns = MapF.GetColumns<TTable, TEntity>(table).Unwrap(
+				reason => throw new UnableToGetColumnsException(reason)
 			);
 
 			// Get ID column by attribute (to allow ID to be overridden)
-			var idColumn = MapF.GetColumnWithAttribute<TEntity, IdAttribute>(columns).Unwrap(
-				_ => MapF.GetIdColumn<TEntity>(columns).Unwrap(
+			var idColumn = MapF.GetColumnWithAttribute<TTable, IdAttribute>(columns).Unwrap(
+				_ => MapF.GetIdColumn<TTable>(columns).Unwrap(
 					reason => throw new UnableToFindIdColumnException(reason)
 				)
-			) with
-			{
-				ColAlias = nameof(IWithId.Id)
-			};
+			);
 
 			// Create Table Map
 			var map = new TableMap(table, columns, idColumn);
@@ -72,7 +70,7 @@ internal sealed class Mapper : IMapper, IDisposable
 			// Get Version property
 			if (typeof(TEntity).Implements<IWithVersion>())
 			{
-				map.VersionColumn = MapF.GetColumnWithAttribute<TEntity, VersionAttribute>(columns).Unwrap(
+				map.VersionColumn = MapF.GetColumnWithAttribute<TTable, VersionAttribute>(columns).Unwrap(
 					reason => throw new UnableToFindVersionColumnException(reason)
 				);
 			}

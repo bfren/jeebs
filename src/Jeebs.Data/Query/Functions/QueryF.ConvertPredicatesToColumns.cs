@@ -19,7 +19,7 @@ public static partial class QueryF
 	/// <param name="columns">Mapped entity columns</param>
 	/// <param name="predicates">Predicates (matched using AND)</param>
 	public static Maybe<IImmutableList<(IColumn column, Compare cmp, dynamic value)>> ConvertPredicatesToColumns(
-		IMappedColumnList columns,
+		IColumnList columns,
 		(string alias, Compare cmp, dynamic value)[] predicates
 	)
 	{

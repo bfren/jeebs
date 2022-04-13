@@ -27,7 +27,7 @@ public static class Map<TEntity>
 	/// <param name="mapper">IMapper</param>
 	internal static ITableMap To<TTable>(IMapper mapper)
 		where TTable : Table, new() =>
-		mapper.Map<TEntity>(new TTable());
+		mapper.Map<TEntity, TTable>(new TTable());
 
 	/// <summary>
 	/// Map entity to the specified table
@@ -48,5 +48,5 @@ public static class Map<TEntity>
 	/// <param name="mapper">IMapper</param>
 	internal static ITableMap To<TTable>(TTable table, IMapper mapper)
 		where TTable : Table =>
-		mapper.Map<TEntity>(table);
+		mapper.Map<TEntity, TTable>(table);
 }

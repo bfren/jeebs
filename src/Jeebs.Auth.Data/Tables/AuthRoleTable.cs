@@ -3,6 +3,7 @@
 
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Models;
+using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
 
 namespace Jeebs.Auth.Data.Tables;
@@ -20,6 +21,7 @@ public sealed record class AuthRoleTable() : Table(AuthDb.Schema, TableName)
 	#region From AuthRoleModel
 
 	/// <inheritdoc cref="AuthRoleModel.Id"/>
+	[Id]
 	public string Id =>
 		TableName + nameof(Id);
 

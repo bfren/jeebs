@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Data;
-using Jeebs.Data.Attributes;
 
 namespace Jeebs.Auth.Data.Entities;
 
@@ -15,7 +14,6 @@ namespace Jeebs.Auth.Data.Entities;
 public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 {
 	/// <inheritdoc/>
-	[Version]
 	public long Version { get; init; }
 
 	/// <summary>

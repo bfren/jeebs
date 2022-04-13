@@ -1,8 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
+using Jeebs.Data.Map._.Mapper.Tables;
 using StrongId;
 using static Jeebs.Data.Map.Functions.MapF.M;
 
@@ -17,8 +18,8 @@ public class Map_Tests
 		using var mapper = new Mapper();
 
 		// Act
-		var m0 = mapper.Map<Foo>(new FooTable());
-		var m1 = mapper.Map<Foo>(new FooTable());
+		var m0 = mapper.Map<Foo, FooTable>(new());
+		var m1 = mapper.Map<Foo, FooTable>(new());
 
 		// Assert
 		Assert.Same(m0, m1);
@@ -32,7 +33,7 @@ public class Map_Tests
 		var error = $"The definition of table '{typeof(FooTableWithoutBar0)}' is missing field '{nameof(Foo.Bar0)}'.";
 
 		// Act
-		var action = void () => mapper.Map<Foo>(new FooTableWithoutBar0());
+		var action = void () => mapper.Map<Foo, FooTableWithoutBar0>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
@@ -47,7 +48,7 @@ public class Map_Tests
 		var error = $"The definition of entity '{typeof(Foo)}' is missing property '{nameof(FooTableWithBar2.Bar2)}'.";
 
 		// Act
-		var action = void () => mapper.Map<Foo>(new FooTableWithBar2());
+		var action = void () => mapper.Map<Foo, FooTableWithBar2>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
@@ -59,11 +60,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new Mapper();
-		var error = $"{typeof(NoIdPropertyMsg<FooWithoutIdAttribute>)} " +
-			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithoutIdAttribute)}.";
+		var error = $"{typeof(NoIdPropertyMsg<FooTableWithoutIdAttribute>)} " +
+			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithoutIdAttribute)}.";
 
 		// Act
-		var action = void () => mapper.Map<FooWithoutIdAttribute>(new FooTable());
+		var action = void () => mapper.Map<Foo, FooTableWithoutIdAttribute>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
@@ -75,11 +76,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new Mapper();
-		var error = $"{typeof(NoIdPropertyMsg<FooWithMultipleIdAttributes>)} " +
-			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on entity {typeof(FooWithMultipleIdAttributes)}.";
+		var error = $"{typeof(NoIdPropertyMsg<FooTableWithMultipleIdAttributes>)} " +
+			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithMultipleIdAttributes)}.";
 
 		// Act
-		var action = void () => svc.Map<FooWithMultipleIdAttributes>(new FooTable());
+		var action = void () => svc.Map<Foo, FooTableWithMultipleIdAttributes>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
@@ -91,11 +92,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new Mapper();
-		var error = $"{typeof(NoPropertyWithAttributeMsg<FooWithoutVersionAttribute, VersionAttribute>)} " +
-			$"Required {typeof(VersionAttribute)} missing on entity {typeof(FooWithoutVersionAttribute)}.";
+		var error = $"{typeof(NoPropertyWithAttributeMsg<FooTableWithoutVersionAttribute, VersionAttribute>)} " +
+			$"Required {typeof(VersionAttribute)} missing on table {typeof(FooTableWithoutVersionAttribute)}.";
 
 		// Act
-		var action = void () => mapper.Map<FooWithoutVersionAttribute>(new FooWithVersionTable());
+		var action = void () => mapper.Map<FooWithVersion, FooTableWithoutVersionAttribute>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
@@ -107,11 +108,11 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new Mapper();
-		var error = $"{typeof(TooManyPropertiesWithAttributeMsg<FooWithMultipleVersionAttributes, VersionAttribute>)} " +
-			$"More than one {typeof(VersionAttribute)} found on entity {typeof(FooWithMultipleVersionAttributes)}.";
+		var error = $"{typeof(TooManyPropertiesWithAttributeMsg<FooTableWithMultipleVersionAttributes, VersionAttribute>)} " +
+			$"More than one {typeof(VersionAttribute)} found on table {typeof(FooTableWithMultipleVersionAttributes)}.";
 
 		// Act
-		var action = void () => svc.Map<FooWithMultipleVersionAttributes>(new FooWithVersionTable());
+		var action = void () => svc.Map<FooWithVersion, FooTableWithMultipleVersionAttributes>(new());
 
 		// Assert
 		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);

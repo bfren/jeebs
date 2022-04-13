@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -31,7 +31,7 @@ public class AddVersionToSetList_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var version = new Column(new DbName(Rnd.Str), name, alias);
+		var version = new Column(new DbName(Rnd.Str), name, Helpers.CreateInfoFromAlias(alias));
 		var expected = $"--{name}-- = ##{alias}## + 1";
 
 		var set = new List<string>();

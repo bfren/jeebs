@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,24 +18,25 @@ public static partial class MapF
 	/// <summary>
 	/// Validate that the properties on the entity and the columns on the table match
 	/// </summary>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <param name="table">Table object</param>
-	public static (bool valid, List<string> errors) ValidateTable<TEntity>(ITable table)
+	public static (bool valid, List<string> errors) ValidateTable<TTable, TEntity>()
+		where TTable : ITable
 		where TEntity : IWithId
 	{
 		// Get types
-		var tableType = table.GetType();
+		var tableType = typeof(TTable);
 		var entityType = typeof(TEntity);
 
 		// Get the table field names
-		var tablePropertyNames = from p in tableType.GetProperties()
-								 where p.PropertyType.IsPublic
-								 select p.Name;
+		static IEnumerable<string> getPropertyNames(Type type) =>
+			from p in type.GetProperties()
+			where p.PropertyType.IsPublic
+			&& p.GetCustomAttribute<IgnoreAttribute>() is null
+			select p.Name;
 
-		// Get the entity property names
-		var entityPropertyNames = from p in entityType.GetProperties()
-								  where p.GetCustomAttribute<IgnoreAttribute>() is null
-								  select p.Name;
+		var tablePropertyNames = getPropertyNames(tableType);
+		var entityPropertyNames = getPropertyNames(entityType);
 
 		// Compare the table columns with the entity properties
 		var errors = new List<string>();

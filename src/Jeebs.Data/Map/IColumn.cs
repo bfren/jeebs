@@ -1,10 +1,12 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using System.Reflection;
 
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Holds information about a column
+/// Holds information about a mapped column
 /// </summary>
 public interface IColumn
 {
@@ -22,4 +24,9 @@ public interface IColumn
 	/// Column Alias
 	/// </summary>
 	string ColAlias { get; }
+
+	/// <summary>
+	/// Entity Property
+	/// </summary>
+	PropertyInfo PropertyInfo { get; }
 }

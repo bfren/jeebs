@@ -20,7 +20,7 @@ public sealed class PostsMetaPartsBuilder : PartsBuilder<WpPostMetaId>, IQueryPo
 
 	/// <inheritdoc/>
 	public override IColumn IdColumn =>
-		new Column(T.PostsMeta, T.PostsMeta.Id, nameof(T.PostsMeta.Id));
+		new Column(T.PostsMeta, T.PostsMeta.Id, GetIdColumn(T.PostsMeta));
 
 	/// <summary>
 	/// Internal creation only

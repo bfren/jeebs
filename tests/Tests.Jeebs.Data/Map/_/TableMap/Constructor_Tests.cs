@@ -12,13 +12,13 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var name = new DbName(Rnd.Str);
-		var columns = Substitute.For<IMappedColumnList>();
+		var columns = Substitute.For<IColumnList>();
 
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(name);
 		var prop = Substitute.For<PropertyInfo>();
 		prop.Name.Returns(Rnd.Str);
-		var idColumn = Substitute.For<IMappedColumn>();
+		var idColumn = Substitute.For<IColumn>();
 		idColumn.PropertyInfo.Returns(prop);
 
 		// Act

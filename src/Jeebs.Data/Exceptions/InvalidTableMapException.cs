@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Exceptions;
 
 /// <summary>
-/// See <see cref="Map.Mapper.Map{TEntity}(Map.ITable)"/>
+/// See <see cref="Map.Mapper.Map{TEntity, TTable}(TTable)"/>
 /// </summary>
 public sealed class InvalidTableMapException : Exception
 {

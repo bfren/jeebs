@@ -10,10 +10,10 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <summary>
-	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IMappedColumnList)"/>
+	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IColumnList)"/>
 	/// </summary>
-	/// <param name="columns">IMappedColumnList</param>
-	protected virtual (List<string> col, List<string> par) GetColumnsForCreateQuery(IMappedColumnList columns)
+	/// <param name="columns">IColumnList</param>
+	protected virtual (List<string> col, List<string> par) GetColumnsForCreateQuery(IColumnList columns)
 	{
 		var col = new List<string>();
 		var par = new List<string>();
@@ -47,10 +47,10 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
-	protected virtual List<string> GetSetListForUpdateQuery(IMappedColumnList columns)
+	protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
 	{
 		var col = new List<string>();
 		foreach (var column in columns)
@@ -67,7 +67,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to column list for <see cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn?)"/>,
+	/// Add version to column list for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
 	/// <param name="setList">List of Set commands</param>
@@ -81,7 +81,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Add version to where string for <see cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn?)"/>
+	/// Add version to where string for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>
 	/// and <see cref="GetDeleteQuery(IDbName, IColumn, object, IColumn?)"/>
 	/// </summary>
 	/// <param name="sql">SQL query StringBuilder</param>
@@ -103,13 +103,13 @@ public abstract partial class DbClient : IDbClient
 
 	#region Testing
 
-	internal (List<string> col, List<string> par) GetColumnsForCreateQueryTest(IMappedColumnList columns) =>
+	internal (List<string> col, List<string> par) GetColumnsForCreateQueryTest(IColumnList columns) =>
 		GetColumnsForCreateQuery(columns);
 
 	internal List<string> GetColumnsForRetrieveQueryTest(IColumnList columns) =>
 		GetColumnsForRetrieveQuery(columns);
 
-	internal List<string> GetSetListForUpdateQueryTest(IMappedColumnList columns) =>
+	internal List<string> GetSetListForUpdateQueryTest(IColumnList columns) =>
 		GetSetListForUpdateQuery(columns);
 
 	internal void AddVersionToSetListTest(List<string> columns, IColumn? versionColumn) =>
