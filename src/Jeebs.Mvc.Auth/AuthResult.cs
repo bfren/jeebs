@@ -1,34 +1,29 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Functions;
 using Jeebs.Messages;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Auth;
 
 /// <summary>
 /// Various authentication results
 /// </summary>
-public abstract class AuthResult : JsonResult
+public abstract record class AuthResult : Result<bool>
 {
 	/// <summary>
-	/// Create JsonResult using the specified options
+	/// Create object
 	/// </summary>
 	/// <param name="result">Result value</param>
 	/// <param name="redirectTo"></param>
 	/// <param name="statusCode"></param>
-	private AuthResult(Maybe<bool> result, string? redirectTo, int statusCode) : base(
-		Result.Create(result) with { RedirectTo = redirectTo },
-		JsonF.CopyOptions()
-	) =>
-		StatusCode = statusCode;
+	private AuthResult(Maybe<bool> result, string? redirectTo, int statusCode) : base(result) =>
+		(StatusCode, RedirectTo) = (statusCode, redirectTo);
 
 	/// <summary>
 	/// Access is denied
 	/// </summary>
-	public sealed class Denied : AuthResult
+	public sealed record class Denied : AuthResult
 	{
 		/// <inheritdoc cref="Denied"/>
 		public Denied() : base(F.None<bool, M.DeniedMsg>(), null, StatusCodes.Status401Unauthorized) { }
@@ -37,7 +32,7 @@ public abstract class AuthResult : JsonResult
 	/// <summary>
 	/// Additional MFA information is required
 	/// </summary>
-	public sealed class MfaRequired : AuthResult
+	public sealed record class MfaRequired : AuthResult
 	{
 		/// <inheritdoc cref="MfaRequired"/>
 		public MfaRequired() : base(F.None<bool, M.MfaRequiredMsg>(), null, StatusCodes.Status401Unauthorized) { }
@@ -46,7 +41,7 @@ public abstract class AuthResult : JsonResult
 	/// <summary>
 	/// Credentials were valid and the user has been signed in
 	/// </summary>
-	public sealed class SignedIn : AuthResult
+	public sealed record class SignedIn : AuthResult
 	{
 		/// <inheritdoc cref="SignedIn"/>
 		/// <param name="redirectTo">[Optional] Redirect to this page</param>
@@ -56,7 +51,7 @@ public abstract class AuthResult : JsonResult
 	/// <summary>
 	/// The user has been signed out
 	/// </summary>
-	public sealed class SignedOut : AuthResult
+	public sealed record class SignedOut : AuthResult
 	{
 		/// <inheritdoc cref="SignedOut"/>
 		public SignedOut() : base(F.True, null, StatusCodes.Status200OK) { }
@@ -65,7 +60,7 @@ public abstract class AuthResult : JsonResult
 	/// <summary>
 	/// Credentials are invalid / not recognised, and the user can try again
 	/// </summary>
-	public sealed class TryAgain : AuthResult
+	public sealed record class TryAgain : AuthResult
 	{
 		/// <inheritdoc cref="TryAgain"/>
 		public TryAgain() : base(F.None<bool, M.TryAgainMsg>(), null, StatusCodes.Status401Unauthorized) { }

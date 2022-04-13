@@ -21,7 +21,7 @@ public record class Result<T> : IActionResult, IResult<T>
 	/// Create with value
 	/// </summary>
 	/// <param name="value"></param>
-	internal Result(Maybe<T> value) =>
+	public Result(Maybe<T> value) =>
 		Maybe = value;
 
 	/// <summary>
