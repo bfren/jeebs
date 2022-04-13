@@ -32,7 +32,7 @@ public sealed record class Column : IColumn
 	public PropertyInfo PropertyInfo { get; init; }
 
 	/// <summary>
-	/// Create column
+	/// Create object
 	/// </summary>
 	/// <param name="tblName">Table name</param>
 	/// <param name="colName">Column Name</param>
@@ -41,7 +41,13 @@ public sealed record class Column : IColumn
 		(TblName, ColName, PropertyInfo) = (tblName, colName, propertyInfo);
 
 	/// <summary>
-	/// Create column using table object
+	/// Create from another column
+	/// </summary>
+	/// <param name="column"></param>
+	public Column(IColumn column) : this(column.TblName, column.ColName, column.PropertyInfo) { }
+
+	/// <summary>
+	/// Create object using table
 	/// </summary>
 	/// <param name="table">Table</param>
 	/// <param name="colName">Column Name</param>
