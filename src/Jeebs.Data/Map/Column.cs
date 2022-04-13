@@ -1,9 +1,12 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
+using Jeebs.Reflection;
 
 namespace Jeebs.Data.Map;
 
@@ -59,6 +62,20 @@ public sealed record class Column : IColumn
 	/// </summary>
 	public override string ToString() =>
 		ColName;
+
+	/// <summary>
+	/// Create a column from a table object and expression
+	/// </summary>
+	/// <typeparam name="T">Table type</typeparam>
+	/// <param name="table">Table</param>
+	/// <param name="column">Column selector</param>
+	public static Maybe<Column> From<T>(T table, Expression<Func<T, string>> column)
+		where T : ITable =>
+		column.GetPropertyInfo()
+			.Map(
+				x => new Column(table, x.Get(table), x.Info),
+				F.DefaultHandler
+			);
 
 	/// <summary>
 	/// Column Alias Comparer
