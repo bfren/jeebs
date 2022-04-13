@@ -8,7 +8,6 @@ using Jeebs.Auth.Data.Models;
 using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
-using Jeebs.Reflection;
 using MaybeF;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -123,8 +122,7 @@ public class DoSignInAsync_Tests
 
 		// Assert
 		var signedIn = Assert.IsType<AuthResult.SignedIn>(result);
-		var redirectTo = signedIn.Value!.GetPropertyValue("RedirectTo").AssertSome();
-		Assert.Equal(v.Model.ReturnUrl, redirectTo);
+		Assert.Equal(v.Model.ReturnUrl, signedIn.RedirectTo);
 	}
 
 	[Fact]
