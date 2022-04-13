@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Map.Mapper_Tests;
@@ -10,7 +10,7 @@ public class Dispose_Tests
 	{
 		// Arrange
 		var svc = new Mapper();
-		svc.Map<Foo>(new FooTable());
+		svc.Map<Foo, FooTable>(new());
 
 		// Act
 		svc.Dispose();

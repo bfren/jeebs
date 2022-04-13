@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Messages;
-using StrongId;
 
 namespace Jeebs.Data.Map.Functions;
 
@@ -17,22 +16,21 @@ public static partial class MapF
 	/// <summary>
 	/// Get the column with the specified attribute
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TAttribute">Attribute type</typeparam>
 	/// <param name="columns">List of mapped columns</param>
-	public static Maybe<Column> GetColumnWithAttribute<TEntity, TAttribute>(ColumnList columns)
-		where TEntity : IWithId
+	public static Maybe<Column> GetColumnWithAttribute<TTable, TAttribute>(ColumnList columns)
 		where TAttribute : Attribute =>
 		F.Some(
 			columns
 		)
 		.Map(
 			x => x.Where(p => p.PropertyInfo.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
-			e => new M.ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(e)
+			e => new M.ErrorGettingColumnsWithAttributeMsg<TTable, TAttribute>(e)
 		)
 		.UnwrapSingle<IColumn>(
-			noItems: () => new M.NoPropertyWithAttributeMsg<TEntity, TAttribute>(),
-			tooMany: () => new M.TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>()
+			noItems: () => new M.NoPropertyWithAttributeMsg<TTable, TAttribute>(),
+			tooMany: () => new M.TooManyPropertiesWithAttributeMsg<TTable, TAttribute>()
 		)
 		.Map(
 			x => new Column(x),
@@ -61,18 +59,18 @@ public static partial class MapF
 				new object[] { typeof(TAttribute), typeof(TEntity) };
 		}
 
-		/// <summary>Too many properties with specified attribute found on entity</summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
+		/// <summary>Too many properties with specified attribute found on table</summary>
+		/// <typeparam name="TTable">Table type</typeparam>
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
-		public sealed record class TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>() : Msg
+		public sealed record class TooManyPropertiesWithAttributeMsg<TTable, TAttribute>() : Msg
 		{
 			/// <inheritdoc/>
 			public override string Format =>
-				"More than one {Attribute} found on entity {Type}.";
+				"More than one {Attribute} found on table {Type}.";
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { typeof(TAttribute), typeof(TEntity) };
+				new object[] { typeof(TAttribute), typeof(TTable) };
 		}
 	}
 }

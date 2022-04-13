@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
 
 namespace Jeebs.WordPress.Tables;
@@ -13,6 +14,7 @@ public sealed record class PostsTable : Table
 	/// <summary>
 	/// PostId
 	/// </summary>
+	[Id]
 	public string Id =>
 		"ID";
 

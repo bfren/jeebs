@@ -27,14 +27,14 @@ public static partial class MapF
 		)
 		.Map(
 			x => from tableProperty in x.GetType().GetProperties()
-				 let column = tableProperty.GetValue(x)?.ToString()
 				 join entityProperty in typeof(TEntity).GetProperties() on tableProperty.Name equals entityProperty.Name
-				 where entityProperty.GetCustomAttribute<IgnoreAttribute>() is null
+				 let column = tableProperty.GetValue(x)?.ToString()
+				 where tableProperty.GetCustomAttribute<IgnoreAttribute>() is null
 				 select new Column
 				 (
 					 tblName: x.GetName(),
 					 colName: column,
-					 propertyInfo: entityProperty
+					 propertyInfo: tableProperty
 				 ),
 			e => new M.ErrorGettingColumnsMsg<TEntity>(e)
 		)

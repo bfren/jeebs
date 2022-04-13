@@ -40,8 +40,9 @@ internal sealed class Mapper : IMapper, IDisposable
 	internal Mapper() { }
 
 	/// <inheritdoc/>
-	public ITableMap Map<TEntity>(ITable table)
-		where TEntity : IWithId =>
+	public ITableMap Map<TEntity, TTable>(TTable table)
+		where TEntity : IWithId
+		where TTable : ITable =>
 		mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 		{
 			// Validate table

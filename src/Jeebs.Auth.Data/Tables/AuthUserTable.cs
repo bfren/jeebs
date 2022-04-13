@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
+using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
 
 namespace Jeebs.Auth.Data.Tables;
@@ -19,6 +20,7 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 	#region From AuthUserModel
 
 	/// <inheritdoc cref="StrongId.IWithId.Id"/>
+	[Id]
 	public string Id =>
 		TableName + nameof(Id);
 
@@ -47,6 +49,7 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 	#region From AuthUserEntity
 
 	/// <inheritdoc cref="AuthUserEntity.Version"/>
+	[Version]
 	public string Version =>
 		TableName + nameof(Version);
 

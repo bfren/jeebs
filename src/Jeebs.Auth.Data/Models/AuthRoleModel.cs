@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Attributes;
-
 namespace Jeebs.Auth.Data.Models;
 
 /// <summary>
@@ -13,7 +11,6 @@ public record class AuthRoleModel : IAuthRole
 	/// <summary>
 	/// Role ID
 	/// </summary>
-	[Id]
 	public AuthRoleId Id { get; init; } = new();
 
 	/// <summary>
