@@ -3,7 +3,7 @@
 
 namespace Jeebs.Data.Map.Functions.MapF_Tests;
 
-public class GetMappedColumns_Tests
+public class GetColumns_Tests
 {
 	[Fact]
 	public void Ignores_Properties_With_Ignore_Attribute()
@@ -11,7 +11,7 @@ public class GetMappedColumns_Tests
 		// Arrange
 
 		// Act
-		var result = MapF.GetMappedColumns<FooWithIgnored>(new FooTable());
+		var result = MapF.GetColumns<FooWithIgnored>(new FooTable());
 
 		// Assert
 		var some = result.AssertSome();
@@ -20,12 +20,12 @@ public class GetMappedColumns_Tests
 	}
 
 	[Fact]
-	public void Returns_Some_With_MappedColumn_List()
+	public void Returns_Some_With_Column_List()
 	{
 		// Arrange
 
 		// Act
-		var result = MapF.GetMappedColumns<FooWithIgnored>(new FooTable());
+		var result = MapF.GetColumns<FooWithIgnored>(new FooTable());
 
 		// Assert
 		var some = result.AssertSome();

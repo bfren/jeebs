@@ -20,7 +20,7 @@ public static partial class MapF
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="columns">List of mapped columns</param>
-	public static Maybe<MappedColumn> GetIdColumn<TEntity>(MappedColumnList columns)
+	public static Maybe<Column> GetIdColumn<TEntity>(ColumnList columns)
 		where TEntity : IWithId =>
 		F.Some(
 			columns
@@ -29,11 +29,11 @@ public static partial class MapF
 			x => x.Where(p => p.PropertyInfo.Name == nameof(IWithId.Id) && p.PropertyInfo.GetCustomAttribute(typeof(IgnoreAttribute)) is null).ToList(),
 			e => new M.ErrorGettingIdPropertyMsg<TEntity>(e)
 		)
-		.UnwrapSingle<IMappedColumn>(
+		.UnwrapSingle<IColumn>(
 			noItems: () => new M.NoIdPropertyMsg<TEntity>()
 		)
 		.Map(
-			x => new MappedColumn(x),
+			x => new Column(x),
 			F.DefaultHandler
 		);
 

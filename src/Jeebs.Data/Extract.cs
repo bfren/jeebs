@@ -14,7 +14,7 @@ public sealed class Extract : IExtract
 {
 	/// <inheritdoc/>
 	public IColumnList From<TModel>(params ITable[] tables) =>
-		Extract<TModel>.From(tables).Unwrap(() => new ColumnList());
+		Extract<TModel>.From(tables).Unwrap((Func<IColumnList>)(() => new ColumnList()));
 
 	/// <summary>Messages</summary>
 	public static class M

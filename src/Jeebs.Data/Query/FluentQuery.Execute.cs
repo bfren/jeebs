@@ -29,7 +29,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 			.BindAsync(x =>
 				Update(parts => parts with
 				{
-					SelectColumns = new ColumnList(new[] { new Column(Table, x.ColName, x.ColAlias) })
+					SelectColumns = new ColumnList(new[] { x })
 				})
 				.QuerySingleAsync<TValue>(transaction)
 			);

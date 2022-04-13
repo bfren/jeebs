@@ -16,20 +16,20 @@ public class PropertyInfo<TObject, TProperty>
 	/// <summary>
 	/// PropertyInfo object
 	/// </summary>
-	private readonly PropertyInfo info;
+	public PropertyInfo Info { get; private init; }
 
 	/// <summary>
 	/// Return the property name
 	/// </summary>
 	public string Name =>
-		info.Name;
+		Info.Name;
 
 	/// <summary>
 	/// Create object
 	/// </summary>
 	/// <param name="info">PropertyInfo object</param>
 	public PropertyInfo(PropertyInfo info) =>
-		this.info = info;
+		Info = info;
 
 	/// <summary>
 	/// Create object
@@ -41,7 +41,7 @@ public class PropertyInfo<TObject, TProperty>
 		{
 			if (typeof(TProperty).Equals(info.PropertyType))
 			{
-				this.info = info;
+				Info = info;
 			}
 			else
 			{
@@ -67,12 +67,12 @@ public class PropertyInfo<TObject, TProperty>
 			throw new ArgumentNullException(nameof(obj));
 		}
 
-		if (info.GetValue(obj, null) is TProperty value)
+		if (Info.GetValue(obj, null) is TProperty value)
 		{
 			return value;
 		}
 
-		throw new InvalidOperationException($"Unable to get value of property '{info.Name}' from type {typeof(TObject)} - the value has not been set.");
+		throw new InvalidOperationException($"Unable to get value of property '{Info.Name}' from type {typeof(TObject)} - the value has not been set.");
 	}
 
 	/// <summary>
@@ -93,6 +93,6 @@ public class PropertyInfo<TObject, TProperty>
 			throw new ArgumentNullException(nameof(value));
 		}
 
-		info.SetValue(obj, value);
+		Info.SetValue(obj, value);
 	}
 }

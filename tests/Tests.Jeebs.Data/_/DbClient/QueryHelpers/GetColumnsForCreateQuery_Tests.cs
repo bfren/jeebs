@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
@@ -13,7 +13,7 @@ public class GetColumnsForCreateQuery_Tests
 	{
 		// Arrange
 		var client = Substitute.ForPartsOf<DbClient>();
-		var list = new MappedColumnList();
+		var list = new ColumnList();
 
 		// Act
 		var (col, par) = client.GetColumnsForCreateQueryTest(list);
@@ -35,9 +35,9 @@ public class GetColumnsForCreateQuery_Tests
 		var propertyInfo = Substitute.For<PropertyInfo>();
 		propertyInfo.Name.Returns(alias);
 
-		var column = new MappedColumn(new DbName(Rnd.Str), name, propertyInfo);
+		var column = new Column(new DbName(Rnd.Str), name, propertyInfo);
 
-		var list = new MappedColumnList(new[] { column });
+		var list = new ColumnList(new[] { column });
 
 		// Act
 		client.GetColumnsForCreateQueryTest(list);

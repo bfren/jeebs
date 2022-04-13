@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -20,19 +20,19 @@ public class GetQuery_Tests
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
-		var c0 = new Column(table, c0Name, c0Alias);
+		var c0 = new Column(table, c0Name, Helpers.CreateInfoFromAlias(c0Alias));
 
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
-		var c1 = new Column(table, c1Name, c1Alias);
+		var c1 = new Column(table, c1Name, Helpers.CreateInfoFromAlias(c1Alias));
 
 		var list = new ColumnList(new[] { c0, c1 });
 
-		var p0Column = new Column(table, Rnd.Str, Rnd.Str);
+		var p0Column = new Column(table, Rnd.Str, Helpers.CreateInfoFromAlias());
 		var p0Operator = Compare.Like;
 		var p0Value = Rnd.Str;
 
-		var p1Column = new Column(table, Rnd.Str, Rnd.Str);
+		var p1Column = new Column(table, Rnd.Str, Helpers.CreateInfoFromAlias());
 		var p1Operator = Compare.MoreThanOrEqual;
 		var p1Value = Rnd.Int;
 
@@ -122,10 +122,10 @@ public class GetQuery_Tests
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
-		var c0 = new Column(v.Table, c0Name, c0Alias);
+		var c0 = new Column(v.Table, c0Name, Helpers.CreateInfoFromAlias(c0Alias));
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
-		var c1 = new Column(v.Table, c1Name, c1Alias);
+		var c1 = new Column(v.Table, c1Name, Helpers.CreateInfoFromAlias(c1Alias));
 		var parts = new QueryParts(v.Table)
 		{
 			SelectColumns = new ColumnList(new[] { c0, c1 })
@@ -148,15 +148,15 @@ public class GetQuery_Tests
 		var (client, v) = SqlServerDbClient_Setup.Get();
 
 		var fromName = Rnd.Str;
-		var from = new Column(v.Table, fromName, Rnd.Str);
+		var from = new Column(v.Table, fromName, Helpers.CreateInfoFromAlias());
 
 		var to0Table = new DbName(Rnd.Str, Rnd.Str);
 		var to0Name = Rnd.Str;
-		var to0 = new Column(to0Table, to0Name, Rnd.Str);
+		var to0 = new Column(to0Table, to0Name, Helpers.CreateInfoFromAlias());
 
 		var to1Table = new DbName(Rnd.Str, Rnd.Str);
 		var to1Name = Rnd.Str;
-		var to1 = new Column(to1Table, to1Name, Rnd.Str);
+		var to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
 
 		var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
 
@@ -202,11 +202,11 @@ public class GetQuery_Tests
 
 		var c0Table = new DbName(Rnd.Str, Rnd.Str);
 		var c0Name = Rnd.Str;
-		var c0 = new Column(c0Table, c0Name, Rnd.Str);
+		var c0 = new Column(c0Table, c0Name, Helpers.CreateInfoFromAlias());
 
 		var c1Table = new DbName(Rnd.Str, Rnd.Str);
 		var c1Name = Rnd.Str;
-		var c1 = new Column(c1Table, c1Name, Rnd.Str);
+		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
 		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -293,12 +293,12 @@ public class GetQuery_Tests
 		var c0Table = new DbName(Rnd.Str);
 		var c0Name = Rnd.Str;
 		var c0Value = Rnd.Str;
-		var c0 = new Column(c0Table, c0Name, Rnd.Str);
+		var c0 = new Column(c0Table, c0Name, Helpers.CreateInfoFromAlias());
 
 		var c1Table = new DbName(Rnd.Str);
 		var c1Name = Rnd.Str;
 		var c1Value = Rnd.Int;
-		var c1 = new Column(c1Table, c1Name, Rnd.Str);
+		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
 		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
 		{
@@ -353,11 +353,11 @@ public class GetQuery_Tests
 
 		var sort0Table = new DbName(Rnd.Str, Rnd.Str);
 		var sort0Name = Rnd.Str;
-		var sort0 = new Column(sort0Table, sort0Name, Rnd.Str);
+		var sort0 = new Column(sort0Table, sort0Name, Helpers.CreateInfoFromAlias());
 
 		var sort1Table = new DbName(Rnd.Str, Rnd.Str);
 		var sort1Name = Rnd.Str;
-		var sort1 = new Column(sort1Table, sort1Name, Rnd.Str);
+		var sort1 = new Column(sort1Table, sort1Name, Helpers.CreateInfoFromAlias());
 
 		var parts = new QueryParts(v.Table)
 		{

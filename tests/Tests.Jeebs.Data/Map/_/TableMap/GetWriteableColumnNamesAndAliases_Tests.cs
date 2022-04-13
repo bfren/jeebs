@@ -13,7 +13,7 @@ public class GetWriteableColumnNamesAndAliases_Tests
 	{
 		// Arrange
 		var table = new FooUnwriteableTable();
-		var columns = MapF.GetMappedColumns<FooUnwriteable>(table).UnsafeUnwrap();
+		var columns = MapF.GetColumns<FooUnwriteable>(table).UnsafeUnwrap();
 		var map = new TableMap(table, columns, GetColumnNames_Tests.Get().column);
 
 		// Act
@@ -28,7 +28,7 @@ public class GetWriteableColumnNamesAndAliases_Tests
 	{
 		// Arrange
 		var table = new FooTable();
-		var columns = MapF.GetMappedColumns<Foo>(table).UnsafeUnwrap();
+		var columns = MapF.GetColumns<Foo>(table).UnsafeUnwrap();
 		var map = new TableMap(table, columns, GetColumnNames_Tests.Get().column);
 
 		// Act

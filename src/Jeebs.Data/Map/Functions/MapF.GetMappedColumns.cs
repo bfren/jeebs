@@ -16,11 +16,11 @@ namespace Jeebs.Data.Map.Functions;
 public static partial class MapF
 {
 	/// <summary>
-	/// Get all columns as <see cref="MappedColumn"/> objects
+	/// Get all columns as <see cref="Column"/> objects
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="table">Table object</param>
-	public static Maybe<MappedColumnList> GetMappedColumns<TEntity>(ITable table)
+	public static Maybe<ColumnList> GetColumns<TEntity>(ITable table)
 		where TEntity : IWithId =>
 		F.Some(
 			table
@@ -30,16 +30,16 @@ public static partial class MapF
 				 let column = tableProperty.GetValue(x)?.ToString()
 				 join entityProperty in typeof(TEntity).GetProperties() on tableProperty.Name equals entityProperty.Name
 				 where entityProperty.GetCustomAttribute<IgnoreAttribute>() is null
-				 select new MappedColumn
+				 select new Column
 				 (
-					 Table: x.GetName(),
-					 Name: column,
-					 PropertyInfo: entityProperty
+					 tblName: x.GetName(),
+					 colName: column,
+					 propertyInfo: entityProperty
 				 ),
-			e => new M.ErrorGettingMappedColumnsMsg<TEntity>(e)
+			e => new M.ErrorGettingColumnsMsg<TEntity>(e)
 		)
 		.Map(
-			x => new MappedColumnList(x),
+			x => new ColumnList(x),
 			F.DefaultHandler
 		);
 
@@ -48,6 +48,6 @@ public static partial class MapF
 		/// <summary>Messages</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <param name="Value">Exception object</param>
-		public sealed record class ErrorGettingMappedColumnsMsg<TEntity>(Exception Value) : ExceptionMsg;
+		public sealed record class ErrorGettingColumnsMsg<TEntity>(Exception Value) : ExceptionMsg;
 	}
 }

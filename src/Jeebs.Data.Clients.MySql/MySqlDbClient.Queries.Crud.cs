@@ -10,7 +10,7 @@ public partial class MySqlDbClient : DbClient
 	/// <inheritdoc/>
 	protected override string GetCreateQuery(
 		IDbName table,
-		IMappedColumnList columns
+		IColumnList columns
 	)
 	{
 		// Get columns
@@ -46,7 +46,7 @@ public partial class MySqlDbClient : DbClient
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
 		IDbName table,
-		IMappedColumnList columns,
+		IColumnList columns,
 		IColumn idColumn,
 		object id
 	) =>
@@ -55,7 +55,7 @@ public partial class MySqlDbClient : DbClient
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
 		IDbName table,
-		IMappedColumnList columns,
+		IColumnList columns,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn

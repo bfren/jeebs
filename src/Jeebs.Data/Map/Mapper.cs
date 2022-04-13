@@ -52,8 +52,8 @@ internal sealed class Mapper : IMapper, IDisposable
 			}
 
 			// Get mapped columns
-			var columns = MapF.GetMappedColumns<TEntity>(table).Unwrap(
-				reason => throw new UnableToGetMappedColumnsException(reason)
+			var columns = MapF.GetColumns<TEntity>(table).Unwrap(
+				reason => throw new UnableToGetColumnsException(reason)
 			);
 
 			// Get ID column by attribute (to allow ID to be overridden)
@@ -61,10 +61,7 @@ internal sealed class Mapper : IMapper, IDisposable
 				_ => MapF.GetIdColumn<TEntity>(columns).Unwrap(
 					reason => throw new UnableToFindIdColumnException(reason)
 				)
-			) with
-			{
-				ColAlias = nameof(IWithId.Id)
-			};
+			);
 
 			// Create Table Map
 			var map = new TableMap(table, columns, idColumn);

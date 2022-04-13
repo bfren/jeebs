@@ -26,7 +26,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 
 	/// <inheritdoc/>
 	public override IColumn IdColumn =>
-		new Column(T.Posts, T.Posts.Id, nameof(T.Posts.Id));
+		new Column(T.Posts, T.Posts.Id, GetIdColumn(T.Posts));
 
 	/// <summary>
 	/// Internal creation only

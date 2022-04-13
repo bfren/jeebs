@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Reflection;
 using Jeebs.Data.Map;
 using Jeebs.Messages;
 using Jeebs.Reflection;
@@ -22,14 +23,15 @@ public static partial class QueryF
 				x => x.Name == columnAlias
 			)
 			.Map(
-				x => x.GetValue(table)?.ToString()!,
+				x => (name: x.GetValue(table)?.ToString()!, prop: x),
 				F.DefaultHandler
 			)
-			.IfNull(
-				() => F.None<string>(new M.UnableToGetColumnFromAliasMsg(table, columnAlias))
+			.SwitchIf(
+				x => string.IsNullOrEmpty(x.name),
+				ifTrue: _ => F.None<(string, PropertyInfo)>(new M.UnableToGetColumnFromAliasMsg(table, columnAlias))
 			)
 			.Map<IColumn>(
-				x => new Column(table.GetName(), x, columnAlias),
+				x => new Column(table.GetName(), x.name, x.prop),
 				F.DefaultHandler
 			);
 

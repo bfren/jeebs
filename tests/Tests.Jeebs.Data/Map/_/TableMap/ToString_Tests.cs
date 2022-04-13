@@ -12,7 +12,7 @@ public class ToString_Tests
 		var name = new DbName(Rnd.Str);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(name);
-		var map = new TableMap(table, Substitute.For<IMappedColumnList>(), GetColumnNames_Tests.Get().column);
+		var map = new TableMap(table, Substitute.For<IColumnList>(), GetColumnNames_Tests.Get().column);
 
 		// Act
 		var result = map.ToString();

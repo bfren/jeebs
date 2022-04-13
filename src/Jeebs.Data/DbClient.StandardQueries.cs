@@ -21,7 +21,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="columns">List of mapped columns</param>
 	protected abstract string GetCreateQuery(
 		IDbName table,
-		IMappedColumnList columns
+		IColumnList columns
 	);
 
 	/// <inheritdoc/>
@@ -52,23 +52,27 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
-		Mapper.GetTableMapFor<TEntity>().Map(
+		(
+			from map in Mapper.GetTableMapFor<TEntity>()
+			from columns in Extract<TModel>.From(map.Table)
+			select (map, columns)
+		)
+		.Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
 			{
 				false =>
-					GetUpdateQuery(x.Name, x.Columns, x.IdColumn, id),
+					GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id),
 
 				true =>
-					GetUpdateQuery(x.Name, x.Columns, x.IdColumn, id, x.VersionColumn),
-
+					GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id, x.map.VersionColumn),
 			},
 			e => new M.ErrorGettingCrudUpdateQueryExceptionMsg(e)
 		);
 
-	/// <inheritdoc cref="GetUpdateQuery(IDbName, IMappedColumnList, IColumn, object, IColumn)"/>
+	/// <inheritdoc cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn)"/>
 	protected abstract string GetUpdateQuery(
 		IDbName table,
-		IMappedColumnList columns,
+		IColumnList columns,
 		IColumn idColumn,
 		object id
 	);
@@ -81,7 +85,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="versionColumn">Version column for predicate</param>
 	protected abstract string GetUpdateQuery(
 		IDbName table,
-		IMappedColumnList columns,
+		IColumnList columns,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn
@@ -124,16 +128,16 @@ public abstract partial class DbClient : IDbClient
 
 	#region Testing
 
-	internal string GetCreateQueryTest(IDbName table, IMappedColumnList columns) =>
+	internal string GetCreateQueryTest(IDbName table, IColumnList columns) =>
 		GetCreateQuery(table, columns);
 
 	internal string GetRetrieveQueryTest(IDbName table, IColumnList columns, IColumn idColumn, long id) =>
 		GetRetrieveQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(IDbName table, IMappedColumnList columns, IColumn idColumn, long id) =>
+	internal string GetUpdateQueryTest(IDbName table, IColumnList columns, IColumn idColumn, long id) =>
 		GetUpdateQuery(table, columns, idColumn, id);
 
-	internal string GetUpdateQueryTest(IDbName table, IMappedColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
+	internal string GetUpdateQueryTest(IDbName table, IColumnList columns, IColumn idColumn, long id, IColumn? versionColumn) =>
 		GetUpdateQuery(table, columns, idColumn, id, versionColumn);
 
 	internal string GetDeleteQueryTest(IDbName table, IColumn idColumn, long id) =>

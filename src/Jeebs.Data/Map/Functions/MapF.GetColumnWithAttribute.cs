@@ -20,7 +20,7 @@ public static partial class MapF
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TAttribute">Attribute type</typeparam>
 	/// <param name="columns">List of mapped columns</param>
-	public static Maybe<MappedColumn> GetColumnWithAttribute<TEntity, TAttribute>(MappedColumnList columns)
+	public static Maybe<Column> GetColumnWithAttribute<TEntity, TAttribute>(ColumnList columns)
 		where TEntity : IWithId
 		where TAttribute : Attribute =>
 		F.Some(
@@ -30,12 +30,12 @@ public static partial class MapF
 			x => x.Where(p => p.PropertyInfo.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
 			e => new M.ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(e)
 		)
-		.UnwrapSingle<IMappedColumn>(
+		.UnwrapSingle<IColumn>(
 			noItems: () => new M.NoPropertyWithAttributeMsg<TEntity, TAttribute>(),
 			tooMany: () => new M.TooManyPropertiesWithAttributeMsg<TEntity, TAttribute>()
 		)
 		.Map(
-			x => new MappedColumn(x),
+			x => new Column(x),
 			F.DefaultHandler
 		);
 

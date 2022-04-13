@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
@@ -18,17 +18,17 @@ public class GetRetrieveQuery_Tests
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
-		var c0 = new Column(table, c0Name, c0Alias);
+		var c0 = new Column(table, c0Name, Helpers.CreateInfoFromAlias(c0Alias));
 
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
-		var c1 = new Column(table, c1Name, c1Alias);
+		var c1 = new Column(table, c1Name, Helpers.CreateInfoFromAlias(c1Alias));
 
 		var c2Name = Rnd.Str;
 		var c2Alias = Rnd.Str;
 		var c2Property = Substitute.ForPartsOf<PropertyInfo>();
 		c2Property.Name.Returns(c2Alias);
-		var c2 = new MappedColumn(table, c2Name, c2Property);
+		var c2 = new Column(table, c2Name, c2Property);
 
 		var list = new ColumnList(new[] { c0, c1 });
 		var client = new SqlServerDbClient();

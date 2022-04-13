@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Map.Column_Tests;
@@ -12,13 +12,15 @@ public class Constructor_Tests
 		var table = new DbName(Rnd.Str);
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var column = new Column(table, name, alias);
+		var prop = Helpers.CreateInfoFromAlias(alias);
 
 		// Act
+		var result = new Column(table, name, prop);
 
 		// Assert
-		Assert.Equal(table, column.TblName);
-		Assert.Equal(name, column.ColName);
-		Assert.Equal(alias, column.ColAlias);
+		Assert.Equal(table, result.TblName);
+		Assert.Equal(name, result.ColName);
+		Assert.Equal(alias, result.ColAlias);
+		Assert.Equal(prop, result.PropertyInfo);
 	}
 }

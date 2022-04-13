@@ -17,10 +17,10 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
-			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			new Column(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
+			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
@@ -40,9 +40,9 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
@@ -72,9 +72,9 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
+			new Column(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
 		});
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
@@ -100,9 +100,9 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Str;
 		var predicates = new (string column, Compare cmp, dynamic value)[]
@@ -131,9 +131,9 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var id = LongId<TestId>();
 		var predicates = new (string column, Compare cmp, dynamic value)[]
@@ -154,9 +154,9 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 
 		var v0 = Rnd.Int;
@@ -200,9 +200,9 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new MappedColumnList(new[]
+		var columns = new ColumnList(new[]
 		{
-			new MappedColumn(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
+			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
 		});
 		var value = Rnd.Str;
 		var predicates = new (string column, Compare cmp, dynamic value)[]
