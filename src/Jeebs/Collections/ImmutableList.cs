@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Jeebs.Functions;
 using Sys = System.Collections.Immutable;
 
 namespace Jeebs.Collections;
@@ -43,6 +44,18 @@ public static class ImmutableList
 			_ =>
 				new()
 		};
+
+	/// <summary>
+	/// Deserialise a JSON list into an ImmutableList
+	/// </summary>
+	/// <typeparam name="T">List Item type</typeparam>
+	/// <param name="json">JSON list</param>
+	public static ImmutableList<T> Deserialise<T>(string json) =>
+		JsonF.Deserialise<List<T>>(json)
+			.Switch(
+				some: x => Create(items: x),
+				none: _ => new()
+			);
 
 	/// <summary>
 	/// Merge multiple <see cref="ImmutableList{T}"/> objects into one
