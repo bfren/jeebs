@@ -8,9 +8,6 @@ using System.Reflection;
 namespace Jeebs.Data.Map;
 
 /// <inheritdoc cref="IColumn"/>
-/// <param name="Table">Table name</param>
-/// <param name="Name">Column Name</param>
-/// <param name="PropertyInfo">Entity property PropertyInfo</param>
 public sealed record class Column : IColumn
 {
 	/// <summary>
@@ -50,18 +47,6 @@ public sealed record class Column : IColumn
 	/// <param name="colName">Column Name</param>
 	/// <param name="propertyInfo">Entity property PropertyInfo</param>
 	public Column(ITable table, string colName, PropertyInfo propertyInfo) : this(table.GetName(), colName, propertyInfo) { }
-
-	/// <summary>
-	/// Create from a mapped column interface
-	/// </summary>
-	/// <param name="Column">IColumn</param>
-	public Column(IColumn Column) :
-		this(
-			Column.TblName,
-			Column.ColName,
-			Column.PropertyInfo
-		)
-	{ }
 
 	/// <summary>
 	/// Return column name
