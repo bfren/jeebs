@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -36,6 +36,6 @@ public sealed class TypekitTagHelper : TagHelper
 
 		// Add Typekit code
 		output.Attributes.Add("rel", "stylesheet");
-		output.Attributes.Add("href", $"//use.typekit.net/{Library}.css");
+		output.Attributes.Add("href", $"https://use.typekit.net/{Library}.css");
 	}
 }
