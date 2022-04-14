@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
@@ -31,7 +31,7 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
 	</ItemGroup>
 	<ProjectExtensions>
 		<VisualStudio>

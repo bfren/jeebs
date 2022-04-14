@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
@@ -8,7 +8,7 @@
 		<None Remove="jeebsconfig.json" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Rnd" Version="8.1.3" />
+		<PackageReference Include="Rnd" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="appsettings.json">

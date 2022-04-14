@@ -8,23 +8,23 @@
 		</VisualStudio>
 	</ProjectExtensions>
 	<ItemGroup>
-	  <None Remove="appsettings.json" />
-	  <None Remove="jeebsconfig-secrets.json" />
-	  <None Remove="jeebsconfig.json" />
+		<None Remove="appsettings.json" />
+		<None Remove="jeebsconfig-secrets.json" />
+		<None Remove="jeebsconfig.json" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Include="appsettings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="jeebsconfig-secrets.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="jeebsconfig.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="jeebsconfig-secrets.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="jeebsconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Rnd" Version="8.1.3" />
+		<PackageReference Include="Rnd" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />

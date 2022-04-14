@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0-preview.2.*" />
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Http" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Services\Jeebs.Services.csproj" />

@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Npgsql" Version="6.0.3" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Npgsql" Version="7.0.0-preview.2" />
+	<ItemGroup>
+		<PackageReference Include="Npgsql" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
