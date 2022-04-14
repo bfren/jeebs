@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+	
+	<!-- Properties -->
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<EnablePackageVersionOverride>false</EnablePackageVersionOverride>
 	</PropertyGroup>
+	
+	<!-- Packages -->
+	<PropertyGroup>
+		<PackageVersionsFile>Packages.props</PackageVersionsFile>
+		<PackageVersionsPath>$([MSBuild]::GetPathOfFileAbove('$(PackageVersionsFile)'))</PackageVersionsPath>
+	</PropertyGroup>
+	<Import Project="$(PackageVersionsPath)" Condition="Exists('$(PackageVersionsPath)')"/>
+	
 </Project>

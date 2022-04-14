@@ -6,17 +6,9 @@
 		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<EnablePackageVersionOverride>false</EnablePackageVersionOverride>
 	</PropertyGroup>
-
-	<!-- Common Packages -->
-	<ItemGroup>
-		<PackageReference Include="MaybeF" Version="8.3.0" />
-		<PackageReference Include="Rnd" Version="8.1.3" />
-	</ItemGroup>
-	<ItemGroup>
-		<Using Include="MaybeF" />
-		<Using Include="MaybeF.Linq" />
-	</ItemGroup>
 
 	<!-- Enable Internal Testing -->
 	<ItemGroup Label="Test Internals">
@@ -35,6 +27,10 @@
 		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)'))</LocalPackPath>
 	</PropertyGroup>
 	<PropertyGroup>
+		<PackageVersionsFile>Packages.props</PackageVersionsFile>
+		<PackageVersionsPath>$([MSBuild]::GetPathOfFileAbove('$(PackageVersionsFile)'))</PackageVersionsPath>
+	</PropertyGroup>
+	<PropertyGroup>
 		<ReadmeFile>README.md</ReadmeFile>
 		<ReadmePath>$([MSBuild]::GetPathOfFileAbove('$(ReadmeFile)', '$(MSBuildProjectDirectory)'))</ReadmePath>
 	</PropertyGroup>
@@ -42,6 +38,17 @@
 		<VersionFile>Version</VersionFile>
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
+
+	<!-- Common Packages -->
+	<Import Project="$(PackageVersionsPath)" Condition="Exists('$(PackageVersionsPath)')"/>
+	<ItemGroup>
+		<PackageReference Include="MaybeF" />
+		<PackageReference Include="Rnd" />
+	</ItemGroup>
+	<ItemGroup>
+		<Using Include="MaybeF" />
+		<Using Include="MaybeF.Linq" />
+	</ItemGroup>
 
 	<!-- Import Files -->
 	<ItemGroup Label="Files" Condition="'$(Configuration)'=='Release'">

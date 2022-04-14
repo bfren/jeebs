@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+	
+	<!-- Properties -->
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<EnablePackageVersionOverride>false</EnablePackageVersionOverride>
 	</PropertyGroup>
+
+	<!-- Packages -->
+	<PropertyGroup>
+		<PackageVersionsFile>Packages.props</PackageVersionsFile>
+		<PackageVersionsPath>$([MSBuild]::GetPathOfFileAbove('$(PackageVersionsFile)'))</PackageVersionsPath>
+	</PropertyGroup>
+	<Import Project="$(PackageVersionsPath)" Condition="Exists('$(PackageVersionsPath)')"/>
 	<ItemGroup>
 		<Using Include="MaybeF.Testing" />
 		<Using Include="NSubstitute" />
 		<Using Include="RndF" />
 		<Using Include="Xunit" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0-preview-20220401-08" />
-	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="MaybeF.Testing" Version="8.3.0" />
-		<PackageReference Include="NSubstitute" Version="4.3.0" />
-		<PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.15" />
-		<PackageReference Include="xunit" Version="2.4.1" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+		<PackageReference Include="MaybeF.Testing" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="NSubstitute" />
+		<PackageReference Include="NSubstitute.Analyzers.CSharp" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="coverlet.collector" Version="3.1.2">
+		<PackageReference Include="coverlet.collector">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
+	
 </Project>
