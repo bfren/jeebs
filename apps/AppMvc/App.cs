@@ -6,11 +6,11 @@ using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth;
-using Jeebs.Mvc.Data;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StrongId.Mvc;
 
 namespace AppMvc;
 
@@ -42,8 +42,7 @@ public sealed class App : Jeebs.Apps.Web.MvcApp
 	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
 	{
 		base.ConfigureServicesMvcOptions(opt);
-
-		opt.AddStrongIdModelBinding();
+		opt.AddStrongIdModelBinder();
 	}
 
 	public override void Ready(IServiceProvider services, ILog log)
