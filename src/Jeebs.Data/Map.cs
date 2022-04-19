@@ -18,14 +18,14 @@ public static class Map<TEntity>
 	public static ITableMap To<TTable>()
 #pragma warning restore CA1000 // Do not declare static members on generic types
 		where TTable : Table, new() =>
-		To<TTable>(Mapper.Instance);
+		To<TTable>(EntityMapper.Instance);
 
 	/// <summary>
 	/// Map entity to the specified table type
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="mapper">IMapper</param>
-	internal static ITableMap To<TTable>(IMapper mapper)
+	internal static ITableMap To<TTable>(IEntityMapper mapper)
 		where TTable : Table, new() =>
 		mapper.Map<TEntity, TTable>(new TTable());
 
@@ -38,7 +38,7 @@ public static class Map<TEntity>
 	public static ITableMap To<TTable>(TTable table)
 #pragma warning restore CA1000 // Do not declare static members on generic types
 		where TTable : Table =>
-		To(table, Mapper.Instance);
+		To(table, EntityMapper.Instance);
 
 	/// <summary>
 	/// Map entity to the specified table
@@ -46,7 +46,7 @@ public static class Map<TEntity>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
 	/// <param name="mapper">IMapper</param>
-	internal static ITableMap To<TTable>(TTable table, IMapper mapper)
+	internal static ITableMap To<TTable>(TTable table, IEntityMapper mapper)
 		where TTable : Table =>
 		mapper.Map<TEntity, TTable>(table);
 }

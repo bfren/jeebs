@@ -40,7 +40,7 @@ public abstract class FluentQuery_Tests
 		map.Table
 			.Returns(table);
 
-		var mapper = Substitute.For<IMapper>();
+		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
 			.Returns(F.Some(map));
 
@@ -51,7 +51,7 @@ public abstract class FluentQuery_Tests
 		IDbClient Client,
 		IDb Db,
 		ILog Log,
-		IMapper Mapper,
+		IEntityMapper Mapper,
 		TestTable Table,
 		ITableMap TableMap,
 		IDbTransaction Transaction

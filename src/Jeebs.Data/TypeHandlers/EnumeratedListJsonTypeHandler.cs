@@ -6,15 +6,16 @@ using Jeebs.Collections;
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// ImmutableList TypeHandler
+/// EnumeratedList TypeHandler
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
-public sealed class ImmutableListTypeHandler<T> : JsonTypeHandler<ImmutableList<T>>
+public sealed class EnumeratedListJsonTypeHandler<T> : JsonTypeHandler<EnumeratedList<T>>
+	where T : Enumerated
 {
 	/// <summary>
 	/// Parse from list of string values and convert
 	/// </summary>
 	/// <param name="xml">JSON string</param>
-	protected override ImmutableList<T> Parse(string xml) =>
-		ImmutableList.Deserialise<T>(xml);
+	protected override EnumeratedList<T> Parse(string xml) =>
+		EnumeratedList.Deserialise<T>(xml);
 }

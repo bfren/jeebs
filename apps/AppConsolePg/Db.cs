@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Db;
@@ -18,6 +18,6 @@ internal class Db : Jeebs.Data.Db
 
 		Map<EntityTest>.To(Json);
 
-		TypeMap.AddStrongIdTypeHandlers();
+		client.Types.AddStrongIdTypeHandlers();
 	}
 }

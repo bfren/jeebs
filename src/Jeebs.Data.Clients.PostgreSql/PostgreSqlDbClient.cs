@@ -12,6 +12,11 @@ namespace Jeebs.Data.Clients.PostgreSql;
 /// <inheritdoc cref="IDbClient"/>
 public partial class PostgreSqlDbClient : DbClient
 {
+	/// <summary>
+	/// Use PostgreSQL type mapper
+	/// </summary>
+	public PostgreSqlDbClient() : base(new PostgreSqlDbTypeMapper()) { }
+
 	/// <inheritdoc/>
 	public override IDbConnection Connect(string connectionString) =>
 		new NpgsqlConnection(connectionString);

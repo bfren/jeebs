@@ -1,4 +1,7 @@
-﻿@model Jeebs.Mvc.Auth.Models.SignInModel
+@model Jeebs.Mvc.Auth.Models.SignInModel
+@{
+	ArgumentNullException.ThrowIfNull(Model);
+}
 
 <form method="post" action="@Url.Action("SignIn", "Auth", new { returnUrl = Model.ReturnUrl })">
 

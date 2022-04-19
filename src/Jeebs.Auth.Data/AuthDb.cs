@@ -60,8 +60,8 @@ public sealed class AuthDb : Db, IAuthDb
 		_ = Map<AuthUserRoleEntity>.To(UserRole);
 
 		// Map type handlers
-		TypeMap.AddStrongIdTypeHandlers();
-		TypeMap.AddJsonTypeHandler<List<string>>();
+		client.Types.AddStrongIdTypeHandlers();
+		client.Types.AddJsonTypeHandler<List<string>>();
 	}
 
 	/// <inheritdoc/>

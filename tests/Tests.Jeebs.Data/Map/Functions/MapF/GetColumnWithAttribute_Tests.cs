@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Map._.Mapper.Tables;
-using Jeebs.Data.Map.Mapper_Tests;
+using Jeebs.Data.Map.EntityMapper_Tests;
 using static Jeebs.Data.Map.Functions.MapF.M;
 
 namespace Jeebs.Data.Map.Functions.MapF_Tests;

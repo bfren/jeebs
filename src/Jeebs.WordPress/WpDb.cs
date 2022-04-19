@@ -92,12 +92,12 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 		_ = Map<TUm>.To(Schema.UsersMeta);
 
 		// Add type handlers
-		TypeMap.ResetTypeHandlers();
-		TypeMap.AddTypeHandler(new CommentTypeTypeHandler());
-		TypeMap.AddTypeHandler(new MimeTypeTypeHandler());
-		TypeMap.AddTypeHandler(new PostStatusTypeHandler());
-		TypeMap.AddTypeHandler(new PostTypeTypeHandler());
-		TypeMap.AddTypeHandler(new TaxonomyTypeHandler());
-		TypeMap.AddStrongIdTypeHandlers();
+		client.Types.ResetTypeHandlers();
+		client.Types.AddTypeHandler(new CommentTypeTypeHandler());
+		client.Types.AddTypeHandler(new MimeTypeTypeHandler());
+		client.Types.AddTypeHandler(new PostStatusTypeHandler());
+		client.Types.AddTypeHandler(new PostTypeTypeHandler());
+		client.Types.AddTypeHandler(new TaxonomyTypeHandler());
+		client.Types.AddStrongIdTypeHandlers();
 	}
 }

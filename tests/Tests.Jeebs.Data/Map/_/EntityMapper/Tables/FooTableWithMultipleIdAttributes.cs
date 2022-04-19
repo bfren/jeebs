@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Attributes;
 
-namespace Jeebs.Data.Map.Mapper_Tests;
+namespace Jeebs.Data.Map.EntityMapper_Tests;
 
 public record class FooTableWithMultipleIdAttributes : Table
 {

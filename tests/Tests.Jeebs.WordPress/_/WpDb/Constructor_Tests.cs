@@ -51,40 +51,40 @@ public class Constructor_Tests
 			TermRelationship, TermTaxonomy, User, UserMeta>(client, dbConfig, wpConfig, log);
 
 		// Assert
-		var s0 = Mapper.Instance.GetTableMapFor<Comment>().AssertSome();
+		var s0 = EntityMapper.Instance.GetTableMapFor<Comment>().AssertSome();
 		Assert.IsAssignableFrom<CommentsTable>(s0.Table);
 
-		var s1 = Mapper.Instance.GetTableMapFor<CommentMeta>().AssertSome();
+		var s1 = EntityMapper.Instance.GetTableMapFor<CommentMeta>().AssertSome();
 		Assert.IsAssignableFrom<CommentsMetaTable>(s1.Table);
 
-		var s2 = Mapper.Instance.GetTableMapFor<Link>().AssertSome();
+		var s2 = EntityMapper.Instance.GetTableMapFor<Link>().AssertSome();
 		Assert.IsAssignableFrom<LinksTable>(s2.Table);
 
-		var s3 = Mapper.Instance.GetTableMapFor<Opt>().AssertSome();
+		var s3 = EntityMapper.Instance.GetTableMapFor<Opt>().AssertSome();
 		Assert.IsAssignableFrom<OptionsTable>(s3.Table);
 
-		var s4 = Mapper.Instance.GetTableMapFor<Post>().AssertSome();
+		var s4 = EntityMapper.Instance.GetTableMapFor<Post>().AssertSome();
 		Assert.IsAssignableFrom<PostsTable>(s4.Table);
 
-		var s5 = Mapper.Instance.GetTableMapFor<PostMeta>().AssertSome();
+		var s5 = EntityMapper.Instance.GetTableMapFor<PostMeta>().AssertSome();
 		Assert.IsAssignableFrom<PostsMetaTable>(s5.Table);
 
-		var s6 = Mapper.Instance.GetTableMapFor<Term>().AssertSome();
+		var s6 = EntityMapper.Instance.GetTableMapFor<Term>().AssertSome();
 		Assert.IsAssignableFrom<TermsTable>(s6.Table);
 
-		var s7 = Mapper.Instance.GetTableMapFor<TermMeta>().AssertSome();
+		var s7 = EntityMapper.Instance.GetTableMapFor<TermMeta>().AssertSome();
 		Assert.IsAssignableFrom<TermsMetaTable>(s7.Table);
 
-		var s8 = Mapper.Instance.GetTableMapFor<TermRelationship>().AssertSome();
+		var s8 = EntityMapper.Instance.GetTableMapFor<TermRelationship>().AssertSome();
 		Assert.IsAssignableFrom<TermRelationshipsTable>(s8.Table);
 
-		var s9 = Mapper.Instance.GetTableMapFor<TermTaxonomy>().AssertSome();
+		var s9 = EntityMapper.Instance.GetTableMapFor<TermTaxonomy>().AssertSome();
 		Assert.IsAssignableFrom<TermTaxonomiesTable>(s9.Table);
 
-		var s10 = Mapper.Instance.GetTableMapFor<User>().AssertSome();
+		var s10 = EntityMapper.Instance.GetTableMapFor<User>().AssertSome();
 		Assert.IsAssignableFrom<UsersTable>(s10.Table);
 
-		var s11 = Mapper.Instance.GetTableMapFor<UserMeta>().AssertSome();
+		var s11 = EntityMapper.Instance.GetTableMapFor<UserMeta>().AssertSome();
 		Assert.IsAssignableFrom<UsersMetaTable>(s11.Table);
 	}
 
