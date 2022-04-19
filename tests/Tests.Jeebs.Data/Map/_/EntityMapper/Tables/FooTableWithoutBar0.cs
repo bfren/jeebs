@@ -1,7 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Map.Mapper_Tests;
+namespace Jeebs.Data.Map.EntityMapper_Tests;
 
 public record class FooTableWithoutBar0 : Table
 {

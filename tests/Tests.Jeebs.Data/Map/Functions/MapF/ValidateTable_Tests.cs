@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Map.Mapper_Tests;
+using Jeebs.Data.Map.EntityMapper_Tests;
 
 namespace Jeebs.Data.Map.Functions.MapF_Tests;
 

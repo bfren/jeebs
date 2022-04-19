@@ -11,12 +11,12 @@ public class Constructor_Tests
 	public void Sets_Properties()
 	{
 		// Arrange
-		var mapper = Substitute.For<IMapper>();
+		var mapper = Substitute.For<IEntityMapper>();
 
 		// Act
 		var result = Substitute.ForPartsOf<DbClient>(mapper);
 
 		// Assert
-		Assert.Same(mapper, result.Mapper);
+		Assert.Same(mapper, result.Entities);
 	}
 }
