@@ -38,9 +38,9 @@ public sealed class DbTypeMap
 	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	public void AddEnumeratedListTypeHandler<T>()
+	public void AddEnumeratedListJsonTypeHandler<T>()
 		where T : Enumerated =>
-		SqlMapper.AddTypeHandler(new EnumeratedListTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new EnumeratedListJsonTypeHandler<T>());
 
 	/// <summary>
 	/// Persist a nullable Guid type to the database
@@ -52,8 +52,8 @@ public sealed class DbTypeMap
 	/// Persist an <see cref="Collections.ImmutableList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public void AddImmutableListTypeHandler<T>() =>
-		SqlMapper.AddTypeHandler(new ImmutableListTypeHandler<T>());
+	public void AddImmutableListJsonTypeHandler<T>() =>
+		SqlMapper.AddTypeHandler(new ImmutableListJsonTypeHandler<T>());
 
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON
@@ -71,7 +71,7 @@ public sealed class DbTypeMap
 	/// <summary>
 	/// Persist <see cref="Locked{T}"/> properties to the database
 	/// </summary>
-	public void AddLockedTypeHandlers() =>
+	public void AddLockedJsonTypeHandlers() =>
 		AddGenericTypeHandlers<Locked>(typeof(JsonTypeHandler<>), SqlMapper.AddTypeHandler);
 
 	/// <summary>
@@ -80,7 +80,7 @@ public sealed class DbTypeMap
 	/// <typeparam name="T">Base (abstract or interface) type to map</typeparam>
 	/// <param name="handlerType">Handler type (with generic argument)</param>
 	/// <param name="addTypeHandler">Function to add a type handler</param>
-	internal void AddGenericTypeHandlers<T>(Type handlerType, AddGenericTypeHandler addTypeHandler)
+	public void AddGenericTypeHandlers<T>(Type handlerType, AddGenericTypeHandler addTypeHandler)
 	{
 		if (!handlerType.ContainsGenericParameters)
 		{
