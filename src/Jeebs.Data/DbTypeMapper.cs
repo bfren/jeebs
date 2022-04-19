@@ -54,7 +54,7 @@ public class DbTypeMapper : IDbTypeMapper
 	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	public virtual void AddEnumeratedListJsonTypeHandler<T>()
+	public virtual void AddEnumeratedListTypeHandler<T>()
 		where T : Enumerated =>
 		SqlMapper.AddTypeHandler(new EnumeratedListJsonTypeHandler<T>());
 
@@ -68,7 +68,7 @@ public class DbTypeMapper : IDbTypeMapper
 	/// Persist an <see cref="Collections.ImmutableList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public virtual void AddImmutableListJsonTypeHandler<T>() =>
+	public virtual void AddImmutableListTypeHandler<T>() =>
 		SqlMapper.AddTypeHandler(new ImmutableListJsonTypeHandler<T>());
 
 	/// <summary>
@@ -87,7 +87,7 @@ public class DbTypeMapper : IDbTypeMapper
 	/// <summary>
 	/// Persist <see cref="Locked{T}"/> properties to the database
 	/// </summary>
-	public virtual void AddLockedJsonTypeHandlers() =>
+	public virtual void AddLockedTypeHandlers() =>
 		AddGenericTypeHandlers<Locked>(typeof(JsonTypeHandler<>), SqlMapper.AddTypeHandler);
 
 	/// <summary>

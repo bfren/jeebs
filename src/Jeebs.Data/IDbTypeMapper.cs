@@ -27,7 +27,7 @@ public interface IDbTypeMapper
 	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	void AddEnumeratedListJsonTypeHandler<T>()
+	void AddEnumeratedListTypeHandler<T>()
 	   where T : Enumerated;
 
 	/// <summary>
@@ -39,7 +39,7 @@ public interface IDbTypeMapper
 	/// Persist an <see cref="Collections.ImmutableList{T}"/> to the database by encoding it as JSON
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	void AddImmutableListJsonTypeHandler<T>();
+	void AddImmutableListTypeHandler<T>();
 
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON
@@ -55,7 +55,7 @@ public interface IDbTypeMapper
 	/// <summary>
 	/// Persist <see cref="Cryptography.Locked{T}"/> properties to the database
 	/// </summary>
-	void AddLockedJsonTypeHandlers();
+	void AddLockedTypeHandlers();
 
 	/// <summary>
 	/// Add generic type handlers

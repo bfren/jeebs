@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.PostgreSql;
 public sealed class PostgreSqlDbTypeMapper : DbTypeMapper
 {
 	/// <inheritdoc/>
-	public override void AddEnumeratedListJsonTypeHandler<T>() =>
+	public override void AddEnumeratedListTypeHandler<T>() =>
 		AddTypeHandler(new EnumeratedListJsonbTypeHandler<T>());
 
 	/// <inheritdoc/>
@@ -21,10 +21,10 @@ public sealed class PostgreSqlDbTypeMapper : DbTypeMapper
 		AddTypeHandler(new JsonbTypeHandler<T>());
 
 	/// <inheritdoc/>
-	public override void AddImmutableListJsonTypeHandler<T>() =>
+	public override void AddImmutableListTypeHandler<T>() =>
 		AddTypeHandler(new ImmutableListJsonbTypeHandler<T>());
 
 	/// <inheritdoc/>
-	public override void AddLockedJsonTypeHandlers() =>
+	public override void AddLockedTypeHandlers() =>
 		AddGenericTypeHandlers<Locked>(typeof(JsonbTypeHandler<>), SqlMapper.AddTypeHandler);
 }
