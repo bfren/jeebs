@@ -13,8 +13,8 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(InvalidHandlerWithoutGenericParameter);
-		var addTypeHandler = Substitute.For<DbTypeMap.AddGenericTypeHandler>();
-		var mapper = new DbTypeMap();
+		var addTypeHandler = Substitute.For<DbTypeMapper.AddGenericTypeHandler>();
+		var mapper = new DbTypeMapper();
 
 		// Act
 		mapper.AddGenericTypeHandlers<string>(handlerType, addTypeHandler);
@@ -28,8 +28,8 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(InvalidHandlerWithGenericParameter<>);
-		var addTypeHandler = Substitute.For<DbTypeMap.AddGenericTypeHandler>();
-		var mapper = new DbTypeMap();
+		var addTypeHandler = Substitute.For<DbTypeMapper.AddGenericTypeHandler>();
+		var mapper = new DbTypeMapper();
 
 		// Act
 		mapper.AddGenericTypeHandlers<string>(handlerType, addTypeHandler);
@@ -43,8 +43,8 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(Handler<>);
-		var addTypeHandler = Substitute.For<DbTypeMap.AddGenericTypeHandler>();
-		var mapper = new DbTypeMap();
+		var addTypeHandler = Substitute.For<DbTypeMapper.AddGenericTypeHandler>();
+		var mapper = new DbTypeMapper();
 
 		// Act
 		mapper.AddGenericTypeHandlers<CustomBaseType>(handlerType, addTypeHandler);

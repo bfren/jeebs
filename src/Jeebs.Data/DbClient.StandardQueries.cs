@@ -11,7 +11,7 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public Maybe<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId =>
-		Mapper.GetTableMapFor<TEntity>().Map(
+		Entities.GetTableMapFor<TEntity>().Map(
 			x => GetCreateQuery(x.Name, x.Columns),
 			e => new M.ErrorGettingCrudCreateQueryExceptionMsg(e)
 		);
@@ -28,7 +28,7 @@ public abstract partial class DbClient : IDbClient
 	public Maybe<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
-			from map in Mapper.GetTableMapFor<TEntity>()
+			from map in Entities.GetTableMapFor<TEntity>()
 			from columns in Extract<TModel>.From(map.Table)
 			select (map, columns)
 		)
@@ -53,7 +53,7 @@ public abstract partial class DbClient : IDbClient
 	public Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
-			from map in Mapper.GetTableMapFor<TEntity>()
+			from map in Entities.GetTableMapFor<TEntity>()
 			from columns in Extract<TModel>.From(map.Table)
 			select (map, columns)
 		)
@@ -94,7 +94,7 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public Maybe<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId =>
-		Mapper.GetTableMapFor<TEntity>().Map(
+		Entities.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
 			{
 				false =>

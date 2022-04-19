@@ -17,7 +17,7 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 	where TEntity : IWithId<TId>
 	where TId : class, IStrongId, new()
 {
-	private readonly IMapper mapper;
+	private readonly IEntityMapper mapper;
 
 	/// <summary>
 	/// Get table map for <typeparamref name="TEntity"/>
@@ -40,12 +40,12 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 	/// <summary>
 	/// Create with default mapper
 	/// </summary>
-	protected QueryPartsBuilderWithEntity() : this(Mapper.Instance) { }
+	protected QueryPartsBuilderWithEntity() : this(EntityMapper.Instance) { }
 
 	/// <summary>
 	/// Inject mapper
 	/// </summary>
 	/// <param name="mapper">IMapper</param>
-	protected QueryPartsBuilderWithEntity(IMapper mapper) =>
+	protected QueryPartsBuilderWithEntity(IEntityMapper mapper) =>
 		this.mapper = mapper;
 }
