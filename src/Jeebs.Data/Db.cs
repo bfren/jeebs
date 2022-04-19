@@ -30,11 +30,6 @@ public abstract class Db : IDb
 	internal ILog LogTest =>
 		Log;
 
-	/// <summary>
-	/// DbTypeMap
-	/// </summary>
-	protected DbTypeMap TypeMap { get; private init; }
-
 	/// <inheritdoc/>
 	public IUnitOfWork UnitOfWork
 	{
@@ -72,7 +67,7 @@ public abstract class Db : IDb
 	/// <param name="config">Database configuration</param>
 	/// <param name="log">ILog (should be given a context of the implementing class)</param>
 	protected Db(IDbClient client, DbConnectionConfig config, ILog log) =>
-		(Client, Config, Log, TypeMap) = (client, config, log, new());
+		(Client, Config, Log) = (client, config, log);
 
 	/// <summary>
 	/// Use Verbose log by default - override to send elsewhere (or to disable entirely)

@@ -18,7 +18,12 @@ public interface IDbClient
 	/// <summary>
 	/// Entity / table mapper
 	/// </summary>
-	IMapper Mapper { get; }
+	IEntityMapper Entities { get; }
+
+	/// <summary>
+	/// Type mapper
+	/// </summary>
+	IDbTypeMapper Types { get; }
 
 	/// <summary>
 	/// Return a new database connection
