@@ -1,10 +1,10 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
 using Dapper;
 
-namespace Jeebs.Data.DbTypeMap_Tests;
+namespace Jeebs.Data.DbTypeMapper_Tests;
 
 public class AddGenericTypeHandlers_Tests
 {
@@ -13,7 +13,7 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(InvalidHandlerWithoutGenericParameter);
-		var addTypeHandler = Substitute.For<DbTypeMapper.AddGenericTypeHandler>();
+		var addTypeHandler = Substitute.For<IDbTypeMapper.AddGenericTypeHandler>();
 		var mapper = new DbTypeMapper();
 
 		// Act
@@ -28,7 +28,7 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(InvalidHandlerWithGenericParameter<>);
-		var addTypeHandler = Substitute.For<DbTypeMapper.AddGenericTypeHandler>();
+		var addTypeHandler = Substitute.For<IDbTypeMapper.AddGenericTypeHandler>();
 		var mapper = new DbTypeMapper();
 
 		// Act
@@ -43,7 +43,7 @@ public class AddGenericTypeHandlers_Tests
 	{
 		// Arrange
 		var handlerType = typeof(Handler<>);
-		var addTypeHandler = Substitute.For<DbTypeMapper.AddGenericTypeHandler>();
+		var addTypeHandler = Substitute.For<IDbTypeMapper.AddGenericTypeHandler>();
 		var mapper = new DbTypeMapper();
 
 		// Act
