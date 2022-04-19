@@ -9,7 +9,7 @@ namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 /// EnumeratedList TypeHandler
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
-public sealed class JsonbEnumeratedListTypeHandler<T> : JsonbTypeHandler<EnumeratedList<T>>
+public sealed class EnumeratedListJsonbTypeHandler<T> : JsonbTypeHandler<EnumeratedList<T>>
 	where T : Enumerated
 {
 	/// <summary>
