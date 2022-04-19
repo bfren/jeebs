@@ -11,21 +11,21 @@ using StrongId;
 
 namespace Jeebs.Data.Map;
 
-/// <inheritdoc cref="IMapper"/>
-internal sealed class Mapper : IMapper, IDisposable
+/// <inheritdoc cref="IEntityMapper"/>
+internal sealed class EntityMapper : IEntityMapper, IDisposable
 {
 	#region Static
 
 	/// <summary>
 	/// Default (global) instance
 	/// </summary>
-	internal static IMapper Instance =>
+	internal static IEntityMapper Instance =>
 		LazyInstance.Value;
 
 	/// <summary>
-	/// Lazily create a <see cref="Mapper"/>
+	/// Lazily create a <see cref="EntityMapper"/>
 	/// </summary>
-	private static Lazy<IMapper> LazyInstance { get; } = new(() => new Mapper(), true);
+	private static Lazy<IEntityMapper> LazyInstance { get; } = new(() => new EntityMapper(), true);
 
 	#endregion Static
 
@@ -37,7 +37,7 @@ internal sealed class Mapper : IMapper, IDisposable
 	/// <summary>
 	/// Only allow internal creation
 	/// </summary>
-	internal Mapper() { }
+	internal EntityMapper() { }
 
 	/// <inheritdoc/>
 	public ITableMap Map<TEntity, TTable>(TTable table)

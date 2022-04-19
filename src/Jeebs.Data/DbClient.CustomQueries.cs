@@ -30,7 +30,7 @@ public abstract partial class DbClient : IDbClient
 	)
 		where TEntity : IWithId =>
 		(
-			from map in Mapper.GetTableMapFor<TEntity>()
+			from map in Entities.GetTableMapFor<TEntity>()
 			from sel in Extract<TModel>.From(map.Table)
 			from whr in QueryF.ConvertPredicatesToColumns(map.Columns, predicates)
 			select (map, sel, whr)

@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Map.Mapper_Tests;
+namespace Jeebs.Data.Map.EntityMapper_Tests;
 
 public class Dispose_Tests
 {
@@ -9,7 +9,7 @@ public class Dispose_Tests
 	public void Clears_Mapped_Entities()
 	{
 		// Arrange
-		var svc = new Mapper();
+		var svc = new EntityMapper();
 		svc.Map<Foo, FooTable>(new());
 
 		// Act

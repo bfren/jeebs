@@ -63,7 +63,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// <param name="db">Database instance</param>
 	/// <param name="mapper">IMapper</param>
 	/// <param name="log">ILog (should come with the context of the calling class)</param>
-	internal FluentQuery(IDb db, IMapper mapper, ILog log)
+	internal FluentQuery(IDb db, IEntityMapper mapper, ILog log)
 	{
 		(Db, Errors, Log) = (db, new List<IMsg>(), log);
 

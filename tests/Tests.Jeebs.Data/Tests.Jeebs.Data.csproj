@@ -3,13 +3,15 @@
 		<RootNamespace>Jeebs.Data</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Map\_\EntityMapper\Entities\**" />
+	  <EmbeddedResource Remove="Map\_\EntityMapper\Entities\**" />
+	  <None Remove="Map\_\EntityMapper\Entities\**" />
+	</ItemGroup>
+	<ItemGroup>
 	  <PackageReference Include="StrongId.Testing" Version="8.1.4" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />
 		<ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Map\_\Mapper\Entities\" />
 	</ItemGroup>
 </Project>

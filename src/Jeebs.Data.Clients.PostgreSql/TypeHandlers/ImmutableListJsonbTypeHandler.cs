@@ -6,21 +6,20 @@ using Jeebs.Collections;
 namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
 /// <summary>
-/// EnumeratedList TypeHandler
+/// ImmutableList JsonTypeHandler
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
-public sealed class JsonbEnumeratedListTypeHandler<T> : JsonbTypeHandler<EnumeratedList<T>>
-	where T : Enumerated
+public sealed class ImmutableListJsonbTypeHandler<T> : JsonbTypeHandler<ImmutableList<T>>
 {
 	/// <summary>
 	/// Parse from list of string values and convert
 	/// </summary>
-	/// <param name="value">Database value</param>
-	public override EnumeratedList<T> Parse(object value) =>
+	/// <param name="value">JSON string</param>
+	public override ImmutableList<T> Parse(object value) =>
 		value switch
 		{
 			string json =>
-				EnumeratedList.Deserialise<T>(json),
+				ImmutableList.Deserialise<T>(json),
 
 			_ =>
 				new()

@@ -7,7 +7,7 @@ using Jeebs.Data.Map._.Mapper.Tables;
 using StrongId;
 using static Jeebs.Data.Map.Functions.MapF.M;
 
-namespace Jeebs.Data.Map.Mapper_Tests;
+namespace Jeebs.Data.Map.EntityMapper_Tests;
 
 public class Map_Tests
 {
@@ -15,7 +15,7 @@ public class Map_Tests
 	public void Returns_Map_If_Already_Mapped()
 	{
 		// Arrange
-		using var mapper = new Mapper();
+		using var mapper = new EntityMapper();
 
 		// Act
 		var m0 = mapper.Map<Foo, FooTable>(new());
@@ -29,7 +29,7 @@ public class Map_Tests
 	public void Table_Missing_Column_Throws_InvalidTableMapException()
 	{
 		// Arrange
-		using var mapper = new Mapper();
+		using var mapper = new EntityMapper();
 		var error = $"The definition of table '{typeof(FooTableWithoutBar0)}' is missing field '{nameof(Foo.Bar0)}'.";
 
 		// Act
@@ -44,7 +44,7 @@ public class Map_Tests
 	public void Entity_Missing_Property_Throws_InvalidTableMapException()
 	{
 		// Arrange
-		using var mapper = new Mapper();
+		using var mapper = new EntityMapper();
 		var error = $"The definition of entity '{typeof(Foo)}' is missing property '{nameof(FooTableWithBar2.Bar2)}'.";
 
 		// Act
@@ -59,7 +59,7 @@ public class Map_Tests
 	public void Missing_Id_Property_Attribute_Throws_UnableToFindIdColumnException()
 	{
 		// Arrange
-		using var mapper = new Mapper();
+		using var mapper = new EntityMapper();
 		var error = $"{typeof(NoIdPropertyMsg<FooTableWithoutIdAttribute>)} " +
 			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithoutIdAttribute)}.";
 
@@ -75,7 +75,7 @@ public class Map_Tests
 	public void Multiple_Id_Properties_Throws_UnableToFindIdColumnException()
 	{
 		// Arrange
-		using var svc = new Mapper();
+		using var svc = new EntityMapper();
 		var error = $"{typeof(NoIdPropertyMsg<FooTableWithMultipleIdAttributes>)} " +
 			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithMultipleIdAttributes)}.";
 
@@ -91,7 +91,7 @@ public class Map_Tests
 	public void Missing_Version_Property_Attribute_Throws_UnableToFindVersionColumnException()
 	{
 		// Arrange
-		using var mapper = new Mapper();
+		using var mapper = new EntityMapper();
 		var error = $"{typeof(NoPropertyWithAttributeMsg<FooTableWithoutVersionAttribute, VersionAttribute>)} " +
 			$"Required {typeof(VersionAttribute)} missing on table {typeof(FooTableWithoutVersionAttribute)}.";
 
@@ -107,7 +107,7 @@ public class Map_Tests
 	public void Multiple_Version_Properties_Throws_UnableToFindVersionColumnException()
 	{
 		// Arrange
-		using var svc = new Mapper();
+		using var svc = new EntityMapper();
 		var error = $"{typeof(TooManyPropertiesWithAttributeMsg<FooTableWithMultipleVersionAttributes, VersionAttribute>)} " +
 			$"More than one {typeof(VersionAttribute)} found on table {typeof(FooTableWithMultipleVersionAttributes)}.";
 

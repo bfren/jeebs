@@ -11,7 +11,7 @@ public class To_Tests
 	public void Without_Table_Calls_MapService_Map()
 	{
 		// Arrange
-		var svc = Substitute.For<IMapper>();
+		var svc = Substitute.For<IEntityMapper>();
 
 		// Act
 		Map<Foo>.To<FooTable>(svc);
@@ -24,7 +24,7 @@ public class To_Tests
 	public void With_Table_Calls_MapService_Map()
 	{
 		// Arrange
-		var svc = Substitute.For<IMapper>();
+		var svc = Substitute.For<IEntityMapper>();
 		var table = new FooTable();
 
 		// Act

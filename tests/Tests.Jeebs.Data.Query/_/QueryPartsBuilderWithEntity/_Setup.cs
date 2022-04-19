@@ -11,7 +11,7 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 {
 	public static (TestBuilder builder, Vars v) Setup()
 	{
-		var mapper = Substitute.For<IMapper>();
+		var mapper = Substitute.For<IEntityMapper>();
 
 		var map = Substitute.For<ITableMap>();
 		mapper.GetTableMapFor<TestEntity>().Returns(map.Some());
@@ -22,7 +22,7 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 	}
 
 	public sealed record class Vars(
-		IMapper Mapper,
+		IEntityMapper Mapper,
 		ITableMap Map
 	);
 }
@@ -33,5 +33,5 @@ public record class TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
 
 public abstract class TestBuilder : QueryPartsBuilderWithEntity<TestEntity, TestId>
 {
-	protected TestBuilder(IMapper mapper) : base(mapper) { }
+	protected TestBuilder(IEntityMapper mapper) : base(mapper) { }
 }

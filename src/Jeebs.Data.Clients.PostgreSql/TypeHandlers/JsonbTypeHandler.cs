@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Data;
 using System.Text.Json;
 using Jeebs.Functions;
@@ -42,6 +43,13 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 			npgsqlParameter.NpgsqlDbType = NpgsqlDbType.Jsonb;
 		}
 
-		parameter.Value = JsonF.Serialise(value).Unwrap(JsonF.Empty);
+		parameter.Value = value switch
+		{
+			T x =>
+				JsonF.Serialise(x).Unwrap(JsonF.Empty),
+
+			_ =>
+				DBNull.Value
+		};
 	}
 }

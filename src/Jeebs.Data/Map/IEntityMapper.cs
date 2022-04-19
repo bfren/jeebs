@@ -8,7 +8,7 @@ namespace Jeebs.Data.Map;
 /// <summary>
 /// Maps entities to tables
 /// </summary>
-public interface IMapper
+public interface IEntityMapper
 {
 	/// <summary>
 	/// Map the specified <typeparamref name="TEntity"/> to the specified <paramref name="table"/>
