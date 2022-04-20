@@ -20,12 +20,12 @@ public sealed class AddUserRoleTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE ""{AuthDb.Schema}"".""{AuthUserRoleTable.TableName}""
+		CREATE TABLE {AuthDb.Schema}.{AuthUserRoleTable.TableName}
 		(
-			""{Col(ur => ur.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-			""{Col(ur => ur.UserId)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-			""{Col(ur => ur.RoleId)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-			CONSTRAINT ""{Col(ur => ur.Id)}_Key"" PRIMARY KEY(""{Col(ur => ur.Id)}"")
+			{Col(ur => ur.Id)} integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			{Col(ur => ur.UserId)} integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			{Col(ur => ur.RoleId)} integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			CONSTRAINT {Col(ur => ur.Id)}_key PRIMARY KEY({Col(ur => ur.Id)})
 		)
 		TABLESPACE pg_default
 		;
@@ -35,7 +35,7 @@ public sealed class AddUserRoleTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserRoleTable.TableName}""
+		DROP TABLE IF EXISTS {AuthDb.Schema}.{AuthUserRoleTable.TableName}
 		;
 	");
 }

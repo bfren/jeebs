@@ -20,13 +20,13 @@ public sealed class AddRoleTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE IF NOT EXISTS ""{AuthDb.Schema}"".""{AuthRoleTable.TableName}""
+		CREATE TABLE IF NOT EXISTS {AuthDb.Schema}.{AuthRoleTable.TableName}
 		(
-			""{Col(r => r.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-			""{Col(r => r.Name)}"" character(64) COLLATE pg_catalog.default NOT NULL,
-			""{Col(r => r.Description)}"" character(128) COLLATE pg_catalog.default NOT NULL,
-			CONSTRAINT ""{Col(r => r.Id)}_Key"" PRIMARY KEY(""{Col(r => r.Id)}""),
-			CONSTRAINT ""{Col(r => r.Name)}_Unique"" UNIQUE(""{Col(r => r.Name)}"")
+			{Col(r => r.Id)} integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			{Col(r => r.Name)} text COLLATE pg_catalog.default NOT NULL,
+			{Col(r => r.Description)} text COLLATE pg_catalog.default NOT NULL,
+			CONSTRAINT {Col(r => r.Id)}_key PRIMARY KEY({Col(r => r.Id)}),
+			CONSTRAINT {Col(r => r.Name)}_unique UNIQUE({Col(r => r.Name)})
 		)
 		TABLESPACE pg_default
 		;
@@ -36,7 +36,7 @@ public sealed class AddRoleTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthRoleTable.TableName}""
+		DROP TABLE IF EXISTS {AuthDb.Schema}.{AuthRoleTable.TableName}
 		;
 	");
 }

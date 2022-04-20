@@ -20,22 +20,22 @@ public sealed class AddUserTable : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE TABLE IF NOT EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
+		CREATE TABLE IF NOT EXISTS {AuthDb.Schema}.{AuthUserTable.TableName}
 		(
-			""{Col(u => u.Id)}"" integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-			""{Col(u => u.Version)}"" integer NOT NULL DEFAULT 0,
-			""{Col(u => u.EmailAddress)}"" character(128) COLLATE pg_catalog.default NOT NULL,
-			""{Col(u => u.PasswordHash)}"" character(128) COLLATE pg_catalog.default NOT NULL,
-			""{Col(u => u.TotpSecret)}"" character(64) COLLATE pg_catalog.default,
-			""{Col(u => u.TotpBackupCodes)}"" character(132) COLLATE pg_catalog.default,
-			""{Col(u => u.FriendlyName)}"" character(32) COLLATE pg_catalog.default,
-			""{Col(u => u.GivenName)}"" character(128) COLLATE pg_catalog.default,
-			""{Col(u => u.FamilyName)}"" character(128) COLLATE pg_catalog.default,
-			""{Col(u => u.IsEnabled)}"" boolean NOT NULL DEFAULT false,
-			""{Col(u => u.IsSuper)}"" boolean NOT NULL DEFAULT false,
-			""{Col(u => u.LastSignedIn)}"" timestamp without time zone,
-			CONSTRAINT ""{Col(u => u.Id)}_Key"" PRIMARY KEY(""{Col(u => u.Id)}""),
-			CONSTRAINT ""{Col(u => u.EmailAddress)}_Unique"" UNIQUE(""{Col(u => u.EmailAddress)}"")
+			{Col(u => u.Id)} integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+			{Col(u => u.Version)} integer NOT NULL DEFAULT 0,
+			{Col(u => u.EmailAddress)} text COLLATE pg_catalog.default NOT NULL,
+			{Col(u => u.PasswordHash)} text COLLATE pg_catalog.default NOT NULL,
+			{Col(u => u.TotpSecret)} text COLLATE pg_catalog.default,
+			{Col(u => u.TotpBackupCodes)} text COLLATE pg_catalog.default,
+			{Col(u => u.FriendlyName)} text COLLATE pg_catalog.default,
+			{Col(u => u.GivenName)} text COLLATE pg_catalog.default,
+			{Col(u => u.FamilyName)} text COLLATE pg_catalog.default,
+			{Col(u => u.IsEnabled)} boolean NOT NULL DEFAULT false,
+			{Col(u => u.IsSuper)} boolean NOT NULL DEFAULT false,
+			{Col(u => u.LastSignedIn)} timestamp with time zone,
+			CONSTRAINT {Col(u => u.Id)}_key PRIMARY KEY({Col(u => u.Id)}),
+			CONSTRAINT {Col(u => u.EmailAddress)}_unique UNIQUE({Col(u => u.EmailAddress)})
 		)
 		TABLESPACE pg_default
 		;
@@ -45,7 +45,7 @@ public sealed class AddUserTable : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP TABLE IF EXISTS ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
+		DROP TABLE IF EXISTS {AuthDb.Schema}.{AuthUserTable.TableName}
 		;
 	");
 }

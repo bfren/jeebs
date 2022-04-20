@@ -15,7 +15,7 @@ public sealed class AddAuthSchema : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE SCHEMA IF NOT EXISTS ""{AuthDb.Schema}""
+		CREATE SCHEMA IF NOT EXISTS {AuthDb.Schema}
 		;
 	");
 
