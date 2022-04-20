@@ -41,6 +41,12 @@ public sealed record class DateTimeInt
 	public int Minute { get; init; }
 
 	/// <summary>
+	/// Construct using zero values
+	/// </summary>
+	public DateTimeInt() =>
+		(Year, Month, Day, Hour, Minute) = (0, 0, 0, 0, 0);
+
+	/// <summary>
 	/// Construct object using specified date/time integers
 	/// </summary>
 	/// <param name="year">Year</param>
