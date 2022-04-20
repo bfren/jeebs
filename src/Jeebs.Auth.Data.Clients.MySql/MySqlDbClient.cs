@@ -18,7 +18,7 @@ public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAut
 		using var db = new MySqlConnection(connectionString);
 
 		// Get migration objects
-		var provider = new MysqlDatabaseProvider(db) { TableName = $"`{AuthDb.Schema}.versioninfo`" };
+		var provider = new MysqlDatabaseProvider(db) { TableName = $"`{AuthDb.Schema}.version_info`" };
 		var migrator = new SimpleMigrator(typeof(MySqlDbClient).Assembly, provider, new ConsoleLogger());
 
 		// Get all the migrations

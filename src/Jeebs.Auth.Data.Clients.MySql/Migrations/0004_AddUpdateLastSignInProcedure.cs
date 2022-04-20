@@ -20,7 +20,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE DEFINER=`%`@`%` PROCEDURE `{AuthDb.Schema}.UpdateUserLastSignIn`(
+		CREATE DEFINER=`%`@`%` PROCEDURE `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`(
 			IN `Id` BIGINT
 		)
 		LANGUAGE SQL
@@ -41,7 +41,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP PROCEDURE `{AuthDb.Schema}.UpdateUserLastSignIn`
+		DROP PROCEDURE `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`
 		;
 	");
 }
