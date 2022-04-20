@@ -16,18 +16,18 @@ public sealed record class AuthRoleTable() : Table(AuthDb.Schema, TableName)
 	/// <summary>
 	/// Table name will be added as a prefix to all column names
 	/// </summary>
-	public static readonly string TableName = "Role";
+	public static readonly string TableName = "role";
 
 	#region From AuthRoleModel
 
 	/// <inheritdoc cref="AuthRoleModel.Id"/>
 	[Id]
 	public string Id =>
-		TableName + nameof(Id);
+		"role_id";
 
 	/// <inheritdoc cref="AuthRoleModel.Name"/>
 	public string Name =>
-		TableName + nameof(Name);
+		"role_name";
 
 	#endregion From AuthRoleModel
 
@@ -35,7 +35,7 @@ public sealed record class AuthRoleTable() : Table(AuthDb.Schema, TableName)
 
 	/// <inheritdoc cref="AuthRoleEntity.Description"/>
 	public string Description =>
-		TableName + nameof(Description);
+		"role_description";
 
 	#endregion From AuthRoleEntity
 }

@@ -83,7 +83,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <inheritdoc/>
 	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction) =>
 		Db.ExecuteAsync(
-			Db.Client.Escape(new DbName(AuthDb.Schema, "UpdateUserLastSignIn")),
+			Db.Client.Escape(new DbName(AuthDb.Schema, Procedures.UpdateUserLastSignIn)),
 			new { Id = userId.Value },
 			CommandType.StoredProcedure,
 			transaction

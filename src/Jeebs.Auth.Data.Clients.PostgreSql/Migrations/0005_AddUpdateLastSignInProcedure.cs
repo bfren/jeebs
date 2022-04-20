@@ -20,14 +20,14 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE OR REPLACE PROCEDURE ""{AuthDb.Schema}"".""UpdateUserLastSignIn""(
-			""Id"" integer DEFAULT 0
+		CREATE OR REPLACE PROCEDURE {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(
+			id integer DEFAULT 0
 		)
 		LANGUAGE 'sql'
 		AS $BODY$
-		UPDATE ""{AuthDb.Schema}"".""{AuthUserTable.TableName}""
-		SET ""{Col(u => u.LastSignedIn)}"" = NOW()
-		WHERE ""{Col(u => u.Id)}"" = ""Id"";
+		UPDATE {AuthDb.Schema}.{AuthUserTable.TableName}
+		SET {Col(u => u.LastSignedIn)} = NOW()
+		WHERE {Col(u => u.Id)} = id;
 		$BODY$
 		;
 	");
@@ -36,7 +36,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP PROCEDURE IF EXISTS ""{AuthDb.Schema}"".""UpdateUserLastSignIn""(integer)
+		DROP PROCEDURE IF EXISTS {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(integer)
 		;
 	");
 }
