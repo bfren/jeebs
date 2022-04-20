@@ -15,34 +15,34 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 	/// <summary>
 	/// Table name will be added as a prefix to all column names
 	/// </summary>
-	public static readonly string TableName = "User";
+	public static readonly string TableName = "user";
 
 	#region From AuthUserModel
 
 	/// <inheritdoc cref="StrongId.IWithId.Id"/>
 	[Id]
 	public string Id =>
-		TableName + nameof(Id);
+		"user_id";
 
 	/// <inheritdoc cref="IAuthUser.EmailAddress"/>
 	public string EmailAddress =>
-		TableName + nameof(EmailAddress);
+		"user_email";
 
 	/// <inheritdoc cref="IAuthUser.FriendlyName"/>
 	public string FriendlyName =>
-		TableName + nameof(FriendlyName);
+		"user_friendly_name";
 
 	/// <inheritdoc cref="IAuthUser.GivenName"/>
 	public string GivenName =>
-		TableName + nameof(GivenName);
+		"user_given_name";
 
 	/// <inheritdoc cref="IAuthUser.FriendlyName"/>
 	public string FamilyName =>
-		TableName + nameof(FamilyName);
+		"user_family_name";
 
 	/// <inheritdoc cref="IAuthUser.IsSuper"/>
 	public string IsSuper =>
-		TableName + nameof(IsSuper);
+		"user_is_super";
 
 	#endregion From AuthUserModel
 
@@ -51,27 +51,27 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 	/// <inheritdoc cref="AuthUserEntity.Version"/>
 	[Version]
 	public string Version =>
-		TableName + nameof(Version);
+		"user_version";
 
 	/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
 	public string PasswordHash =>
-		TableName + nameof(PasswordHash);
+		"user_password_hash";
 
 	/// <inheritdoc cref="AuthUserEntity.TotpSecret"/>
 	public string TotpSecret =>
-		TableName + nameof(TotpSecret);
+		"user_totp_secret";
 
 	/// <inheritdoc cref="AuthUserEntity.TotpBackupCodes"/>
 	public string TotpBackupCodes =>
-		TableName + nameof(TotpBackupCodes);
+		"user_totp_backup_codes";
 
 	/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
 	public string IsEnabled =>
-		TableName + nameof(IsEnabled);
+		"user_is_enabled";
 
 	/// <inheritdoc cref="AuthUserEntity.LastSignedIn"/>
 	public string LastSignedIn =>
-		TableName + nameof(LastSignedIn);
+		"user_last_signed_in";
 
 	#endregion From AuthUserEntity
 }
