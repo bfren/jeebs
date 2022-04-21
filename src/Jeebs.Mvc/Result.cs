@@ -128,6 +128,22 @@ public record class Result<T> : IActionResult, IResult<T>
 public static class Result
 {
 	/// <summary>
+	/// Create an error result with a message (and a <see langword="false"/> value)
+	/// </summary>
+	/// <param name="message"></param>
+	public static Result<bool> Error(string message) =>
+		new(false) { Message = Alert.Error(message) };
+
+	/// <summary>
+	/// Create an error result with a Reason message
+	/// </summary>
+	/// <typeparam name="T">Reason message type</typeparam>
+	/// <param name="reason"></param>
+	public static Result<bool> Error<T>(T reason)
+		where T : IMsg =>
+		new(F.None<bool>(reason));
+
+	/// <summary>
 	/// Create with value
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
