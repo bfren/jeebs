@@ -4,14 +4,10 @@
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Auth.Data.Clients.PostgreSql;
 using Jeebs.Config.Db;
-using Jeebs.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-var builder = Jeebs.Apps.Host.CreateBuilder(args);
-var app = builder.Build();
-
-var log = app.Services.GetRequiredService<ILog>();
+var (app, log) = Jeebs.Apps.Host.Create(args);
 
 // Begin
 log.Dbg("= Auth Database Console Test =");
