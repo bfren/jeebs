@@ -43,7 +43,7 @@ public class GetColumnsForCreateQuery_Tests
 		client.GetColumnsForCreateQueryTest(list);
 
 		// Assert
-		client.Received().Escape(name);
+		client.Received().Escape(column);
 		client.Received().GetParamRef(alias);
 	}
 }
