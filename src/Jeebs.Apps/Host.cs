@@ -76,8 +76,17 @@ public static class Host
 	internal static (IHost, ILog<T>) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
 		where T : App, new()
 	{
-		var app = CreateBuilder<T>(args, configureServices).Build();
-		var log = app.Services.GetRequiredService<ILog<T>>();
-		return (app, log);
+		// Build host
+		var host = CreateBuilder<T>(args, configureServices).Build();
+
+		// Get log service
+		var log = host.Services.GetRequiredService<ILog<T>>();
+
+		// App is ready
+		var app = new T();
+		app.Ready(host.Services, log);
+
+		// Return host and log
+		return (host, log);
 	}
 }

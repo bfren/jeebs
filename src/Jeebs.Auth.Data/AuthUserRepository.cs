@@ -81,13 +81,16 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction) =>
-		Db.ExecuteAsync(
+	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction)
+	{
+		var id = userId.Value;
+		return Db.ExecuteAsync<bool>(
 			Db.Client.Escape(new DbName(AuthDb.Schema, Procedures.UpdateUserLastSignIn)),
-			new { Id = userId.Value },
+			new { id },
 			CommandType.StoredProcedure,
 			transaction
 		);
+	}
 
 	private sealed record class CheckAuthUserExists(string EmailAddress);
 

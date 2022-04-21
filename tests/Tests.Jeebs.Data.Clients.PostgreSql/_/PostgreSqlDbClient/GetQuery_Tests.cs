@@ -45,11 +45,11 @@ public class GetQuery_Tests
 		var client = new PostgreSqlDbClient();
 
 		var expected = "SELECT" +
-			$" \"{c0Name}\" AS \"{c0Alias}\"," +
-			$" \"{c1Name}\" AS \"{c1Alias}\"" +
-			$" FROM \"{schema}\".\"{name}\"" +
-			$" WHERE \"{p0Column.ColName}\" LIKE @P0" +
-			$" AND \"{p1Column.ColName}\" >= @P1;";
+			$" {c0Name} AS \"{c0Alias}\"," +
+			$" {c1Name} AS \"{c1Alias}\"" +
+			$" FROM {schema}.{name}" +
+			$" WHERE {p0Column.ColName} LIKE @P0" +
+			$" AND {p1Column.ColName} >= @P1;";
 
 		// Act
 		var (query, param) = client.GetQueryTest(table, list, predicates);
@@ -81,7 +81,7 @@ public class GetQuery_Tests
 		var (query, _) = client.GetQuery(parts);
 
 		// Assert
-		Assert.Contains($"\"{v.Schema}\".\"{v.Name}\"", query);
+		Assert.Contains($"{v.Schema}.{v.Name}", query);
 	}
 
 	[Fact]
@@ -90,7 +90,7 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = PostgreSqlDbClient_Setup.Get();
 		var parts = new QueryParts(v.Table) with { SelectCount = true };
-		var expected = $"SELECT COUNT(*) FROM \"{v.Schema}\".\"{v.Name}\";";
+		var expected = $"SELECT COUNT(*) FROM {v.Schema}.{v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -105,7 +105,7 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = PostgreSqlDbClient_Setup.Get();
 		var parts = new QueryParts(v.Table);
-		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\";";
+		var expected = $"SELECT * FROM {v.Schema}.{v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -131,9 +131,9 @@ public class GetQuery_Tests
 			SelectColumns = new ColumnList(new[] { c0, c1 })
 		};
 		var expected = "SELECT" +
-			$" \"{v.Schema}\".\"{v.Name}\".\"{c0Name}\" AS \"{c0Alias}\"," +
-			$" \"{v.Schema}\".\"{v.Name}\".\"{c1Name}\" AS \"{c1Alias}\"" +
-			$" FROM \"{v.Schema}\".\"{v.Name}\";";
+			$" {v.Schema}.{v.Name}.{c0Name} AS \"{c0Alias}\"," +
+			$" {v.Schema}.{v.Name}.{c1Name} AS \"{c1Alias}\"" +
+			$" FROM {v.Schema}.{v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -163,11 +163,11 @@ public class GetQuery_Tests
 		var parts = setJoin(new(v.Table), join);
 
 		var expected = "SELECT" +
-			$" * FROM \"{v.Schema}\".\"{v.Name}\"" +
-			$" {joinType} JOIN \"{to0Table.Schema}\".\"{to0Table.Name}\"" +
-			$" ON \"{v.Schema}\".\"{v.Name}\".\"{fromName}\" = \"{to0Table.Schema}\".\"{to0Table.Name}\".\"{to0Name}\"" +
-			$" {joinType} JOIN \"{to1Table.Schema}\".\"{to1Table.Name}\"" +
-			$" ON \"{to0Table.Schema}\".\"{to0Table.Name}\".\"{to0Name}\" = \"{to1Table.Schema}\".\"{to1Table.Name}\".\"{to1Name}\";";
+			$" * FROM {v.Schema}.{v.Name}" +
+			$" {joinType} JOIN {to0Table.Schema}.{to0Table.Name}" +
+			$" ON {v.Schema}.{v.Name}.{fromName} = {to0Table.Schema}.{to0Table.Name}.{to0Name}" +
+			$" {joinType} JOIN {to1Table.Schema}.{to1Table.Name}" +
+			$" ON {to0Table.Schema}.{to0Table.Name}.{to0Name} = {to1Table.Schema}.{to1Table.Name}.{to1Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -217,9 +217,9 @@ public class GetQuery_Tests
 		var parts = new QueryParts(v.Table) { Where = where };
 
 		var expected = "SELECT *" +
-			$" FROM \"{v.Schema}\".\"{v.Name}\"" +
-			$" WHERE \"{c0Table.Schema}\".\"{c0Table.Name}\".\"{c0Name}\" LIKE @P0" +
-			$" AND \"{c1Table.Schema}\".\"{c1Table.Name}\".\"{c1Name}\" >= @P1;";
+			$" FROM {v.Schema}.{v.Name}" +
+			$" WHERE {c0Table.Schema}.{c0Table.Name}.{c0Name} LIKE @P0" +
+			$" AND {c1Table.Schema}.{c1Table.Name}.{c1Name} >= @P1;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -258,7 +258,7 @@ public class GetQuery_Tests
 			})
 		};
 
-		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" WHERE ({w0}) AND ({w1});";
+		var expected = $"SELECT * FROM {v.Schema}.{v.Name} WHERE ({w0}) AND ({w1});";
 
 		// Act
 		var (query, param) = client.GetQuery(parts);
@@ -336,7 +336,7 @@ public class GetQuery_Tests
 			SortRandom = true
 		};
 
-		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" ORDER BY RAND();";
+		var expected = $"SELECT * FROM {v.Schema}.{v.Name} ORDER BY RAND();";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -369,9 +369,9 @@ public class GetQuery_Tests
 		};
 
 		var expected = "SELECT" +
-			$" * FROM \"{v.Schema}\".\"{v.Name}\" ORDER BY" +
-			$" \"{sort0Table.Schema}\".\"{sort0Table.Name}\".\"{sort0Name}\" ASC," +
-			$" \"{sort1Table.Schema}\".\"{sort1Table.Name}\".\"{sort1Name}\" DESC;";
+			$" * FROM {v.Schema}.{v.Name} ORDER BY" +
+			$" {sort0Table.Schema}.{sort0Table.Name}.{sort0Name} ASC," +
+			$" {sort1Table.Schema}.{sort1Table.Name}.{sort1Name} DESC;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -387,7 +387,7 @@ public class GetQuery_Tests
 		var (client, v) = PostgreSqlDbClient_Setup.Get();
 		var max = Rnd.ULng;
 		var parts = new QueryParts(v.Table) { Maximum = max };
-		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" LIMIT {max};";
+		var expected = $"SELECT * FROM {v.Schema}.{v.Name} LIMIT {max};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);
@@ -404,7 +404,7 @@ public class GetQuery_Tests
 		var skip = Rnd.ULng;
 		var max = Rnd.ULng;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
-		var expected = $"SELECT * FROM \"{v.Schema}\".\"{v.Name}\" LIMIT {max} OFFSET {skip};";
+		var expected = $"SELECT * FROM {v.Schema}.{v.Name} LIMIT {max} OFFSET {skip};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts);

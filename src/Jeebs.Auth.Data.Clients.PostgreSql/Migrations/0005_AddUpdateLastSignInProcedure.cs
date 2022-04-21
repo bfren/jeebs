@@ -20,14 +20,19 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE OR REPLACE PROCEDURE {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(
-			id integer DEFAULT 0
-		)
-		LANGUAGE 'sql'
+		CREATE OR REPLACE FUNCTION {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(
+			id bigint DEFAULT 0)
+			RETURNS boolean
+			LANGUAGE 'plpgsql'
+			COST 100
+			VOLATILE PARALLEL UNSAFE
 		AS $BODY$
-		UPDATE {AuthDb.Schema}.{AuthUserTable.TableName}
-		SET {Col(u => u.LastSignedIn)} = NOW()
-		WHERE {Col(u => u.Id)} = id;
+		BEGIN
+			UPDATE {AuthDb.Schema}.{AuthUserTable.TableName}
+			SET {Col(u => u.LastSignedIn)} = NOW()
+			WHERE {Col(u => u.Id)} = id;
+			RETURN FOUND;
+		END;
 		$BODY$
 		;
 	");
@@ -36,7 +41,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP PROCEDURE IF EXISTS {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(integer)
+		DROP FUNCTION IF EXISTS {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(bigint)
 		;
 	");
 }

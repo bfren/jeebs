@@ -21,8 +21,9 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// </summary>
 	protected override void Up() => Execute($@"
 		CREATE DEFINER=`%`@`%` PROCEDURE `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`(
-			IN `Id` BIGINT
+			IN `id` BIGINT
 		)
+		RETURNS tinyint(1)
 		LANGUAGE SQL
 		NOT DETERMINISTIC
 		CONTAINS SQL
@@ -32,7 +33,8 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 
 		UPDATE `{AuthDb.Schema}`.`{AuthUserTable.TableName}`
 		SET `{Col(u => u.LastSignedIn)}` = NOW()
-		WHERE `{Col(u => u.Id)}` = Id;
+		WHERE `{Col(u => u.Id)}` = id;
+		RETURN ROW_COUNT() > 0;
 
 		END
 	");

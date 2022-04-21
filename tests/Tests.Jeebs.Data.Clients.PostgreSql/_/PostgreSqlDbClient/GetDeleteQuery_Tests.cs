@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
@@ -26,7 +26,7 @@ public class GetDeleteQuery_Tests
 
 		var id = Rnd.Lng;
 
-		var expected = $"DELETE FROM \"{schema}\".\"{name}\" WHERE \"{c0Name}\" = {id};";
+		var expected = $"DELETE FROM {schema}.{name} WHERE {c0Name} = {id};";
 
 		// Act
 		var result = client.GetDeleteQueryTest(table, c0, id);
@@ -59,7 +59,7 @@ public class GetDeleteQuery_Tests
 
 		var id = Rnd.Lng;
 
-		var expected = $"DELETE FROM \"{schema}\".\"{name}\" WHERE \"{c0Name}\" = {id} AND \"{c1Name}\" = @{c1Alias};";
+		var expected = $"DELETE FROM {schema}.{name} WHERE {c0Name} = {id} AND {c1Name} = @{c1Alias};";
 
 		// Act
 		var result = client.GetDeleteQueryTest(table, c0, id, c1);

@@ -6,14 +6,14 @@ using Jeebs.Data.Map;
 
 namespace AppConsolePg;
 
-public record JsonTable : Table
+public sealed record class JsonTable : Table
 {
 	public JsonTable(string schema) : base(schema, "test_json") { }
 
 	[Id]
 	public string Id =>
-		nameof(Id);
+		"json_id";
 
 	public string Value =>
-		nameof(Value);
+		"json_value";
 }

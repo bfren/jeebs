@@ -24,7 +24,7 @@ public abstract partial class DbClient : IDbClient
 				continue;
 			}
 
-			col.Add(Escape(column.ColName));
+			col.Add(Escape(column));
 			par.Add(GetParamRef(column.ColAlias));
 		}
 
