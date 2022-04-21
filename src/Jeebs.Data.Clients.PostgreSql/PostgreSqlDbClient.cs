@@ -23,21 +23,21 @@ public partial class PostgreSqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	public override string Escape(IDbName table) =>
-		table.GetFullName(Escape);
+		table.GetFullName(s => s);
 
 	/// <inheritdoc/>
 	public override string Escape(IDbName table, string column) =>
-		Escape(table) + "." + Escape(column);
+		Escape(table) + "." + column;
 
 	/// <inheritdoc/>
 	public override string Escape(IColumn column, bool withAlias) =>
 		withAlias switch
 		{
 			true =>
-				Escape(column.ColName) + " AS " + Escape(column.ColAlias),
+				column.ColName + " AS " + Escape(column.ColAlias),
 
 			false =>
-				Escape(column.ColName)
+				column.ColName
 		};
 
 	/// <inheritdoc/>
