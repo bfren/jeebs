@@ -7,15 +7,11 @@ using Jeebs.Auth.Data;
 using Jeebs.Data.Clients.PostgreSql.Parameters;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 using Jeebs.Extensions;
-using Jeebs.Logging;
 using MaybeF;
 using Microsoft.Extensions.DependencyInjection;
 using RndF;
 
-var builder = Jeebs.Apps.Host.CreateBuilder<App>(args);
-var app = builder.Build();
-
-var log = app.Services.GetRequiredService<ILog<App>>();
+var (app, log) = Jeebs.Apps.Host.Create<App>(args);
 
 // Begin
 log.Inf("= PostgreSQL Console Test =");
@@ -29,7 +25,7 @@ Console.WriteLine();
 
 // Create schema
 log.Dbg("== Creating schema ==");
-const string schema = "\"console\"";
+const string schema = "console";
 await db
 	.ExecuteAsync(
 		$"CREATE SCHEMA IF NOT EXISTS {schema};",
@@ -41,7 +37,7 @@ Console.WriteLine();
 
 // Create table
 log.Dbg("== Creating table ==");
-const string table = $"{schema}.\"test\"";
+const string table = $"{schema}.test";
 await db
 	.ExecuteAsync(
 		$"CREATE TABLE IF NOT EXISTS {table} " +
@@ -136,8 +132,8 @@ await db
 	.ExecuteAsync(
 		$"CREATE TABLE IF NOT EXISTS {jsonTable} " +
 		"(" +
-		"\"Id\" integer NOT NULL GENERATED ALWAYS AS IDENTITY, " +
-		"\"Value\" jsonb NOT NULL" +
+		"\"json_id\" integer NOT NULL GENERATED ALWAYS AS IDENTITY, " +
+		"\"json_value\" jsonb NOT NULL" +
 		");",
 		null,
 		CommandType.Text
@@ -156,7 +152,7 @@ using (var w = db.UnitOfWork)
 	{
 		await db
 			.ExecuteAsync(
-				$"INSERT INTO {jsonTable} (\"Value\") VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
+				$"INSERT INTO {jsonTable} (json_value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
 			)
 			.AuditAsync(
 				none: r => log.Msg(r)
@@ -169,7 +165,7 @@ Console.WriteLine();
 log.Dbg("== Checking Jsonb insert has worked ==");
 await db
 	.QuerySingleAsync<int>(
-		$"SELECT \"Value\" -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE \"Value\" ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+		$"SELECT json_value -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE json_value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 	)
 	.AuditAsync(
 		some: x => { if (x == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
@@ -184,7 +180,7 @@ Dapper.SqlMapper.AddTypeHandler(new JsonbTypeHandler<ParamTest>()); // add here 
 
 await db
 	.QuerySingleAsync<EntityTest>(
-		$"SELECT * FROM {jsonTable} WHERE \"Value\" ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+		$"SELECT * FROM {jsonTable} WHERE json_value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 	)
 	.AuditAsync(
 		some: x => { if (x.Value.Id == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
@@ -231,10 +227,20 @@ authDb.MigrateToLatest();
 // Insert user
 log.Dbg("== Insert User ==");
 var email = Rnd.Str;
-await auth.User
+var userId = await auth.User
 	.CreateAsync(email, Rnd.Str)
 	.AuditAsync(
 		some: x => log.Dbg("New User ID: {UserId}", x.Value),
+		none: r => log.Msg(r)
+	)
+	.UnwrapAsync(x => x.Value(() => throw new Exception("Unable to get User ID.")));
+
+// Update user last sign in
+log.Dbg("== Update sign in ==");
+await auth.User
+	.UpdateLastSignInAsync(userId)
+	.AuditAsync(
+		some: x => { if (x) { log.Dbg("Last sign in updated"); } else { log.Err("Unable to update last sign in"); } },
 		none: r => log.Msg(r)
 	);
 
@@ -249,7 +255,7 @@ await auth.User
 
 // Clean up users
 log.Dbg("== Cleaning up user entities ==");
-await authDb.ExecuteAsync("TRUNCATE TABLE \"auth\".\"User\";", null, CommandType.Text);
+await authDb.ExecuteAsync("TRUNCATE TABLE auth.user;", null, CommandType.Text);
 
 // Done
 log.Dbg("Done.");
