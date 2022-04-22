@@ -11,6 +11,7 @@ using Jeebs.Apps.Web.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Redirections;
 using Jeebs.Functions;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
@@ -28,15 +29,15 @@ namespace Jeebs.Apps.Web;
 public class MvcApp : WebApp
 {
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args) =>
+	public static new (WebApplication, ILog<MvcApp>) Create(string[] args) =>
 		WebAppBuilder.Create<MvcApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static new (WebApplication, ILog<MvcApp>) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<MvcApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create<T>(string[] args)
+	public static new (WebApplication, ILog<T>) Create<T>(string[] args)
 		where T : MvcApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
 

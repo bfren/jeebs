@@ -6,6 +6,7 @@ using Jeebs.Apps.Web.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Auth;
 using Jeebs.Config.Web.Verification;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,15 +21,15 @@ namespace Jeebs.Apps.Web;
 public class WebApp : App
 {
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication Create(string[] args) =>
+	public static (WebApplication, ILog<WebApp>) Create(string[] args) =>
 		WebAppBuilder.Create<WebApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static (WebApplication, ILog<WebApp>) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<WebApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication Create<T>(string[] args)
+	public static (WebApplication, ILog<T>) Create<T>(string[] args)
 		where T : WebApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
 

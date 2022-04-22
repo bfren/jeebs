@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,24 +17,24 @@ namespace Jeebs.Apps.Web;
 public class ApiApp : MvcApp
 {
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args) =>
+	public static new (WebApplication, ILog<ApiApp>) Create(string[] args) =>
 		WebAppBuilder.Create<ApiApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static new (WebApplication, ILog<ApiApp>) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<ApiApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create<T>(string[] args)
+	public static new (WebApplication, ILog<T>) Create<T>(string[] args)
 		where T : ApiApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication CreateMinimal(string[] args) =>
+	public static (WebApplication, ILog<ApiApp>) CreateMinimal(string[] args) =>
 		WebAppBuilder.Create<MinimalApiApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication CreateMinimal(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static (WebApplication, ILog<ApiApp>) CreateMinimal(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<MinimalApiApp>(args, configureServices);
 
 	/// <summary>
