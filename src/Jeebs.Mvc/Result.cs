@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Mvc;
 
 /// <inheritdoc cref="IResult{T}"/>
-public record class Result<T> : IActionResult, IResult<T>
+public record class Result<T> : Result, IResult<T>
 {
 	/// <summary>
 	/// Create with value
@@ -33,7 +33,7 @@ public record class Result<T> : IActionResult, IResult<T>
 	/// Returns true if the operation was a success - or in the special case that <typeparamref name="T"/>
 	/// is <see cref="bool"/> and <see cref="Maybe"/> is <see cref="Some{T}"/>, returns that value
 	/// </summary>
-	public bool Success =>
+	public override bool Success =>
 		Maybe switch
 		{
 			Some<bool> some =>
@@ -78,7 +78,7 @@ public record class Result<T> : IActionResult, IResult<T>
 
 	/// <inheritdoc/>
 	[JsonIgnore]
-	public int StatusCode
+	public override int StatusCode
 	{
 		get => statusCode switch
 		{
@@ -101,10 +101,10 @@ public record class Result<T> : IActionResult, IResult<T>
 	private int? statusCode;
 
 	/// <inheritdoc/>
-	public string? RedirectTo { get; init; }
+	public override string? RedirectTo { get; init; }
 
 	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
-	public Task ExecuteResultAsync(ActionContext context)
+	public override Task ExecuteResultAsync(ActionContext context)
 	{
 		// Create MVC JsonResult from this result's properties
 		var jsonResult = new JsonResult(this, JsonF.CopyOptions())
@@ -125,39 +125,53 @@ public record class Result<T> : IActionResult, IResult<T>
 /// <summary>
 /// Easily create <see cref="Result{T}"/> objects
 /// </summary>
-public static class Result
+public abstract record class Result : IResult
 {
+	/// <inheritdoc/>
+	public abstract bool Success { get; }
+
+	/// <inheritdoc/>
+	public abstract string? RedirectTo { get; init; }
+
+	/// <inheritdoc/>
+	public abstract int StatusCode { get; init; }
+
+	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
+	public abstract Task ExecuteResultAsync(ActionContext context);
+
+	#region Static Methods
+
 	/// <summary>
 	/// Create an error result with a message (and a <see langword="false"/> value)
 	/// </summary>
 	/// <param name="message"></param>
-	public static Result<bool> Error(string message) =>
-		new(false) { Message = Alert.Error(message) };
+	public static Result Error(string message) =>
+		new Result<bool>(false) { Message = Alert.Error(message) };
 
 	/// <summary>
 	/// Create an error result with a Reason message
 	/// </summary>
 	/// <typeparam name="T">Reason message type</typeparam>
 	/// <param name="reason"></param>
-	public static Result<bool> Error<T>(T reason)
+	public static Result Error<T>(T reason)
 		where T : IMsg =>
-		new(F.None<bool>(reason));
+		new Result<bool>(F.None<bool>(reason));
 
 	/// <summary>
 	/// Create with value
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
-	public static Result<T> Create<T>(T value) =>
-		new(value);
+	public static Result Create<T>(T value) =>
+		new Result<T>(value);
 
 	/// <summary>
 	/// Create with value
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
-	public static Result<T> Create<T>(Maybe<T> value) =>
-		new(value);
+	public static Result Create<T>(Maybe<T> value) =>
+		new Result<T>(value);
 
 	/// <summary>
 	/// Create with value and message
@@ -165,8 +179,8 @@ public static class Result
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
 	/// <param name="message"></param>
-	public static Result<T> Create<T>(T value, Alert message) =>
-		new(value) { Message = message };
+	public static Result Create<T>(T value, Alert message) =>
+		new Result<T>(value) { Message = message };
 
 	/// <summary>
 	/// Create with value and message
@@ -174,6 +188,8 @@ public static class Result
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
 	/// <param name="message"></param>
-	public static Result<T> Create<T>(Maybe<T> value, Alert message) =>
-		new(value) { Message = message };
+	public static Result Create<T>(Maybe<T> value, Alert message) =>
+		new Result<T>(value) { Message = message };
+
+	#endregion Static Methods
 }

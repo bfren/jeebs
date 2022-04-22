@@ -17,9 +17,10 @@ public class Error_Tests
 		var result = Result.Error(value);
 
 		// Assert
-		Assert.False(result.Value);
-		Assert.Equal(AlertType.Error, result.Message.Type);
-		Assert.Equal(value, result.Message.Text);
+		var some = Assert.IsType<Result<bool>>(result);
+		Assert.False(some.Value);
+		Assert.Equal(AlertType.Error, some.Message.Type);
+		Assert.Equal(value, some.Message.Text);
 	}
 
 	[Fact]
@@ -32,8 +33,9 @@ public class Error_Tests
 		var result = Result.Error(msg);
 
 		// Assert
-		Assert.False(result.Value);
-		Assert.Equal(AlertType.Error, result.Message.Type);
-		Assert.Equal(msg.ToString(), result.Message.Text);
+		var some = Assert.IsType<Result<bool>>(result);
+		Assert.False(some.Value);
+		Assert.Equal(AlertType.Error, some.Message.Type);
+		Assert.Equal(msg.ToString(), some.Message.Text);
 	}
 }

@@ -14,7 +14,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var message = Alert.Info(Rnd.Str);
-		var jsonResult = Result.Create(Rnd.Int, message);
+		var jsonResult = (Result<int>)Result.Create(Rnd.Int, message);
 
 		// Act
 		var result = jsonResult.Message;

@@ -18,8 +18,10 @@ public class Create_Tests
 		var r1 = Result.Create(F.Some(value));
 
 		// Assert
-		Assert.Equal(value, r0.Value);
-		Assert.Equal(value, r1.Value);
+		var s0 = Assert.IsType<Result<Guid>>(r0);
+		Assert.Equal(value, s0.Value);
+		var s1 = Assert.IsType<Result<Guid>>(r1);
+		Assert.Equal(value, s1.Value);
 	}
 
 	[Fact]
@@ -34,10 +36,12 @@ public class Create_Tests
 		var r1 = Result.Create(F.Some(value), message);
 
 		// Assert
-		Assert.Equal(value, r0.Value);
-		Assert.Equal(message, r0.Message);
-		Assert.Equal(value, r1.Value);
-		Assert.Equal(value, r1.Value);
-		Assert.Equal(message, r1.Message);
+		var s0 = Assert.IsType<Result<Guid>>(r0);
+		Assert.Equal(value, s0.Value);
+		Assert.Equal(message, s0.Message);
+		var s1 = Assert.IsType<Result<Guid>>(r1);
+		Assert.Equal(value, s1.Value);
+		Assert.Equal(value, s1.Value);
+		Assert.Equal(message, s1.Message);
 	}
 }
