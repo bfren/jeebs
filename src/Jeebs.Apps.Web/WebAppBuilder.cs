@@ -15,6 +15,14 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 internal static class WebAppBuilder
 {
+	/// <summary>
+	/// Build a <see cref="WebApplication"/> with default configuration and then run it
+	/// </summary>
+	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	internal static void Run<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
+		where T : WebApp, new() =>
+		Create<T>(args, configureServices).app.Run();
+
 	/// <inheritdoc cref="WebAppBuilder"/>
 	/// <remarks>
 	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>
@@ -25,11 +33,12 @@ internal static class WebAppBuilder
 	///   - Logging is enabled using Serilog<br/>
 	///   - <see cref="WebApplication"/> is built<br/>
 	///   - <see cref="WebApplication"/> is configured
+	///   - <see cref="App.Ready(IServiceProvider, ILog)"/> is run
 	/// </remarks>
 	/// <typeparam name="T">App type</typeparam>
 	/// <param name="args">Command-line arguments</param>
 	/// <param name="configureServices">Add additional services</param>
-	internal static (WebApplication, ILog<T>) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
+	internal static (WebApplication app, ILog<T> log) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
 		where T : WebApp, new()
 	{
 		// Create app and builder
