@@ -3,4 +3,4 @@
 
 using AppMvc;
 
-Jeebs.Apps.Web.MvcApp.Create<App>(args).Run();
+Jeebs.Apps.Web.MvcApp.Run<App>(args);

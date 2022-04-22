@@ -5,7 +5,6 @@ using AppConsole;
 using AppConsole.Messages;
 using Jeebs.Config;
 using Jeebs.Functions;
-using Jeebs.Logging;
 using Jeebs.Services;
 using Jeebs.Services.Notify;
 using MaybeF;
@@ -14,11 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RndF;
 
-var builder = Jeebs.Apps.Host.CreateBuilder(args);
-builder.ConfigureServices((_, services) => services.AddDrivers());
-var app = builder.Build();
-
-var log = app.Services.GetRequiredService<ILog>();
+var (app, log) = Jeebs.Apps.Host.Create(args, (_, services) => services.AddDrivers());
 
 Serilog.Debugging.SelfLog.Enable(Console.Error);
 var jeebs = app.Services.GetRequiredService<IOptions<JeebsConfig>>().Value;

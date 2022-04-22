@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,18 +15,39 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class RazorApp : MvcApp
 {
+	#region Run
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run(string[] args) =>
+		WebAppBuilder.Run<RazorApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Run<RazorApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run<T>(string[] args)
+		where T : RazorApp, new() =>
+		WebAppBuilder.Run<T>(args, (_, _) => { });
+
+	#endregion Run
+
+	#region Create
+
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args) =>
+	public static new (WebApplication app, ILog<RazorApp> log) Create(string[] args) =>
 		WebAppBuilder.Create<RazorApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static new (WebApplication app, ILog<RazorApp> log) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<RazorApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create<T>(string[] args)
+	public static new (WebApplication app, ILog<T> log) Create<T>(string[] args)
 		where T : RazorApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
+
+	#endregion Create
 
 	/// <summary>
 	/// Create Razor application with HSTS enabled

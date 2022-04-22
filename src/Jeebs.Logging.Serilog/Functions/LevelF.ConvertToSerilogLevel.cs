@@ -33,6 +33,9 @@ public static partial class LevelF
 			LogLevel.Fatal =>
 				LogEventLevel.Fatal,
 
+			LogLevel.Unknown =>
+				LogEventLevel.Information,
+
 			_ =>
 				F.None<LogEventLevel>(new M.UnknownLogLevelMsg(level))
 		};

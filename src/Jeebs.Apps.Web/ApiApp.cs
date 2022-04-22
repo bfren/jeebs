@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,26 +16,55 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class ApiApp : MvcApp
 {
+	#region Run
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run(string[] args) =>
+		WebAppBuilder.Run<ApiApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Run<ApiApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run<T>(string[] args)
+		where T : ApiApp, new() =>
+		WebAppBuilder.Run<T>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static void RunMinimal(string[] args) =>
+		CreateMinimal(args).app.Run();
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static void RunMinimal(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		CreateMinimal(args, configureServices).app.Run();
+
+	#endregion Run
+
+	#region Create
+
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args) =>
+	public static new (WebApplication app, ILog<ApiApp> log) Create(string[] args) =>
 		WebAppBuilder.Create<ApiApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static new (WebApplication app, ILog<ApiApp> log) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<ApiApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create<T>(string[] args)
+	public static new (WebApplication app, ILog<T> log) Create<T>(string[] args)
 		where T : ApiApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication CreateMinimal(string[] args) =>
+	public static (WebApplication app, ILog<ApiApp> log) CreateMinimal(string[] args) =>
 		WebAppBuilder.Create<MinimalApiApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication CreateMinimal(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static (WebApplication app, ILog<ApiApp> log) CreateMinimal(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<MinimalApiApp>(args, configureServices);
+
+	#endregion Create
 
 	/// <summary>
 	/// Create API application with HSTS enabled

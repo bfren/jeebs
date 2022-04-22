@@ -6,7 +6,6 @@ using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Logging;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.StrongIds;
@@ -14,10 +13,7 @@ using Jeebs.WordPress.Enums;
 using MaybeF;
 using Microsoft.Extensions.DependencyInjection;
 
-var builder = Jeebs.Apps.Host.CreateBuilder<App>(args);
-var app = builder.Build();
-
-var log = app.Services.GetRequiredService<ILog<App>>();
+var (app, log) = Jeebs.Apps.Host.Create<App>(args);
 
 // Begin
 log.Dbg("= WordPress Console Test =");

@@ -11,6 +11,7 @@ using Jeebs.Apps.Web.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Redirections;
 using Jeebs.Functions;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
@@ -27,18 +28,39 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class MvcApp : WebApp
 {
+	#region Run
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run(string[] args) =>
+		WebAppBuilder.Run<MvcApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Run<MvcApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static new void Run<T>(string[] args)
+		where T : MvcApp, new() =>
+		WebAppBuilder.Run<T>(args, (_, _) => { });
+
+	#endregion Run
+
+	#region Create
+
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args) =>
+	public static new (WebApplication app, ILog<MvcApp> log) Create(string[] args) =>
 		WebAppBuilder.Create<MvcApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static new (WebApplication app, ILog<MvcApp> log) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<MvcApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static new WebApplication Create<T>(string[] args)
+	public static new (WebApplication app, ILog<T> log) Create<T>(string[] args)
 		where T : MvcApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
+
+	#endregion Create
 
 	/// <summary>
 	/// If true, routing will be set to append a trailing slash

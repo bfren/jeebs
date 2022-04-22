@@ -6,6 +6,7 @@ using Jeebs.Apps.Web.Middleware;
 using Jeebs.Config;
 using Jeebs.Config.Web.Auth;
 using Jeebs.Config.Web.Verification;
+using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,18 +20,39 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class WebApp : App
 {
+	#region Run
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static void Run(string[] args) =>
+		WebAppBuilder.Run<WebApp>(args, (_, _) => { });
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static void Run(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+		WebAppBuilder.Run<WebApp>(args, configureServices);
+
+	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
+	public static void Run<T>(string[] args)
+		where T : WebApp, new() =>
+		WebAppBuilder.Run<T>(args, (_, _) => { });
+
+	#endregion Run
+
+	#region Create
+
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication Create(string[] args) =>
+	public static (WebApplication app, ILog<WebApp> log) Create(string[] args) =>
 		WebAppBuilder.Create<WebApp>(args, (_, _) => { });
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
+	public static (WebApplication app, ILog<WebApp> log) Create(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices) =>
 		WebAppBuilder.Create<WebApp>(args, configureServices);
 
 	/// <inheritdoc cref="WebAppBuilder.Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
-	public static WebApplication Create<T>(string[] args)
+	public static (WebApplication app, ILog<T> log) Create<T>(string[] args)
 		where T : WebApp, new() =>
 		WebAppBuilder.Create<T>(args, (_, _) => { });
+
+	#endregion Create
 
 	/// <summary>
 	/// Whether or not to use HSTS
