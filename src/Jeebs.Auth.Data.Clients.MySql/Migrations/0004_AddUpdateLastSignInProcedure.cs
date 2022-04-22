@@ -20,8 +20,8 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate up
 	/// </summary>
 	protected override void Up() => Execute($@"
-		CREATE DEFINER=`%`@`%` PROCEDURE `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`(
-			IN `id` BIGINT
+		CREATE DEFINER=`root`@`localhost` FUNCTION `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`(
+			`id` BIGINT
 		)
 		RETURNS tinyint(1)
 		LANGUAGE SQL
@@ -31,7 +31,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 		COMMENT ''
 		BEGIN
 
-		UPDATE `{AuthDb.Schema}`.`{AuthUserTable.TableName}`
+		UPDATE `{AuthDb.Schema}.{AuthUserTable.TableName}`
 		SET `{Col(u => u.LastSignedIn)}` = NOW()
 		WHERE `{Col(u => u.Id)}` = id;
 		RETURN ROW_COUNT() > 0;
@@ -43,7 +43,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	/// Migrate down
 	/// </summary>
 	protected override void Down() => Execute($@"
-		DROP PROCEDURE `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`
+		DROP FUNCTION `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`
 		;
 	");
 }
