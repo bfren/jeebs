@@ -33,7 +33,7 @@ public record class Result<T> : Result, IResult<T>
 	/// Returns true if the operation was a success - or in the special case that <typeparamref name="T"/>
 	/// is <see cref="bool"/> and <see cref="Maybe"/> is <see cref="Some{T}"/>, returns that value
 	/// </summary>
-	public bool Success =>
+	public override bool Success =>
 		Maybe switch
 		{
 			Some<bool> some =>
@@ -60,7 +60,7 @@ public record class Result<T> : Result, IResult<T>
 					none: r => Alert.Error(r.ToString() ?? r.GetType().Name)
 				)
 		};
-		init => message = value;
+		private init => message = value;
 	}
 
 	private Alert? message;
@@ -127,6 +127,9 @@ public record class Result<T> : Result, IResult<T>
 /// </summary>
 public abstract record class Result : IResult
 {
+	/// <inheritdoc/>
+	public abstract bool Success { get; }
+
 	/// <inheritdoc/>
 	public abstract string? RedirectTo { get; init; }
 
