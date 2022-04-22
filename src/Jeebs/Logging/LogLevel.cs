@@ -9,6 +9,11 @@ namespace Jeebs.Logging;
 public enum LogLevel
 {
 	/// <summary>
+	/// Unknown log level - will use default
+	/// </summary>
+	Unknown = 0,
+
+	/// <summary>
 	/// Logs that contain the most detailed messages.
 	/// These messages may contain sensitive application data.
 	/// These messages are disabled by default and should never be enabled in a production environment.
