@@ -36,10 +36,12 @@ public interface IDbTypeMapper
 	void AddGuidTypeHandler();
 
 	/// <summary>
-	/// Persist an <see cref="Collections.ImmutableList{T}"/> to the database by encoding it as JSON
+	/// Persist list types to the database by encoding as JSON:<br/>
+	///  - <see cref="Collections.ImmutableList{T}"/><br/>
+	///  - <see cref="System.Collections.Generic.List{T}"/>
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	void AddImmutableListTypeHandler<T>();
+	void AddListTypeHandlers<T>();
 
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON
