@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Collections.Generic;
 using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
@@ -36,66 +37,44 @@ public class DbTypeMapper : IDbTypeMapper
 	/// </summary>
 	protected internal DbTypeMapper() { }
 
-	/// <summary>
-	/// Reset type handlers
-	/// </summary>
+	/// <inheritdoc/>
 	public virtual void ResetTypeHandlers() =>
 		SqlMapper.ResetTypeHandlers();
 
-	/// <summary>
-	/// Add a type handler
-	/// </summary>
-	/// <typeparam name="T">Type to handle</typeparam>
-	/// <param name="typeHandler">Type handler</param>
+	/// <inheritdoc/>
 	public virtual void AddTypeHandler<T>(SqlMapper.TypeHandler<T> typeHandler) =>
 		SqlMapper.AddTypeHandler(typeHandler);
 
-	/// <summary>
-	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON
-	/// </summary>
-	/// <typeparam name="T">Type to handle</typeparam>
+	/// <inheritdoc/>
 	public virtual void AddEnumeratedListTypeHandler<T>()
 		where T : Enumerated =>
-		SqlMapper.AddTypeHandler(new EnumeratedListJsonTypeHandler<T>());
+		AddTypeHandler(new EnumeratedListJsonTypeHandler<T>());
 
-	/// <summary>
-	/// Persist a nullable Guid type to the database
-	/// </summary>
+	/// <inheritdoc/>
 	public virtual void AddGuidTypeHandler() =>
-		SqlMapper.AddTypeHandler(new GuidTypeHandler());
+		AddTypeHandler(new GuidTypeHandler());
 
-	/// <summary>
-	/// Persist an <see cref="Collections.ImmutableList{T}"/> to the database by encoding it as JSON
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public virtual void AddImmutableListTypeHandler<T>() =>
-		SqlMapper.AddTypeHandler(new ImmutableListJsonTypeHandler<T>());
+	/// <inheritdoc/>
+	public virtual void AddListTypeHandlers<T>()
+	{
+		AddTypeHandler(new JsonTypeHandler<T[]>());
+		AddTypeHandler(new JsonTypeHandler<List<T>>());
+		AddTypeHandler(new ImmutableListJsonTypeHandler<T>());
+	}
 
-	/// <summary>
-	/// Persist a type to the database by encoding it as JSON
-	/// </summary>
-	/// <typeparam name="T">Type to handle</typeparam>
+	/// <inheritdoc/>
 	public virtual void AddJsonTypeHandler<T>() =>
-		SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
+		AddTypeHandler(new JsonTypeHandler<T>());
 
-	/// <summary>
-	/// Persist <see cref="IStrongId"/> properties to the database
-	/// </summary>
+	/// <inheritdoc/>
 	public virtual void AddStrongIdTypeHandlers() =>
 		AddGenericTypeHandlers<IStrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
 
-	/// <summary>
-	/// Persist <see cref="Locked{T}"/> properties to the database
-	/// </summary>
+	/// <inheritdoc/>
 	public virtual void AddLockedTypeHandlers() =>
 		AddGenericTypeHandlers<Locked>(typeof(JsonTypeHandler<>), SqlMapper.AddTypeHandler);
 
-	/// <summary>
-	/// Add generic type handlers
-	/// </summary>
-	/// <typeparam name="T">Base (abstract or interface) type to map</typeparam>
-	/// <param name="handlerType">Handler type (with generic argument)</param>
-	/// <param name="addTypeHandler">Function to add a type handler</param>
+	/// <inheritdoc/>
 	public virtual void AddGenericTypeHandlers<T>(Type handlerType, AddGenericTypeHandler addTypeHandler)
 	{
 		if (!handlerType.ContainsGenericParameters)

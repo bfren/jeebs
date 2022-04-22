@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Collections.Generic;
 using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
@@ -21,8 +22,12 @@ public sealed class PostgreSqlDbTypeMapper : DbTypeMapper
 		AddTypeHandler(new JsonbTypeHandler<T>());
 
 	/// <inheritdoc/>
-	public override void AddImmutableListTypeHandler<T>() =>
+	public override void AddListTypeHandlers<T>()
+	{
+		AddJsonTypeHandler<T[]>();
+		AddJsonTypeHandler<List<T>>();
 		AddTypeHandler(new ImmutableListJsonbTypeHandler<T>());
+	}
 
 	/// <inheritdoc/>
 	public override void AddLockedTypeHandlers() =>
