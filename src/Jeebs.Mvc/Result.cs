@@ -60,7 +60,7 @@ public record class Result<T> : Result, IResult<T>
 					none: r => Alert.Error(r.ToString() ?? r.GetType().Name)
 				)
 		};
-		private init => message = value;
+		init => message = value;
 	}
 
 	private Alert? message;
