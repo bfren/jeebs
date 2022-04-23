@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Auth.Data.Entities;
+using Jeebs.Auth.Data.Models;
 using Jeebs.Cryptography;
 using Jeebs.Messages;
 
@@ -78,7 +79,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// User not found
-		return F.None<TModel>(new M.UserNotFoundMsg(email));
+		return F.None<TModel>(new M.UserEmailNotFoundMsg(email));
 	}
 
 	/// <inheritdoc/>
@@ -97,6 +98,42 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		from r in Query.GetRolesForUserAsync<TRole>(u.Id)
 		select u with { Roles = r };
 
+	/// <inheritdoc/>
+	public async Task<Maybe<bool>> ChangeUserPasswordAsync(AuthChangePasswordModel model)
+	{
+		// If the passwords don't match, do nothing
+		if (model.NewPassword != model.CheckPassword)
+		{
+			return F.None<bool, M.PasswordsDoNotMatchMsg>();
+		}
+
+		// If the passwords are the same, do nothing
+		if (model.NewPassword == model.CurrentPassword)
+		{
+			return F.None<bool, M.NewPasswordIsNotDifferentMsg>();
+		}
+
+		// Get user for authentication
+		foreach (var user in await User.RetrieveAsync<AuthUserEntity>(model.Id).ConfigureAwait(false))
+		{
+			// Verify the entered password
+			if (!user.PasswordHash.VerifyPassword(model.CurrentPassword))
+			{
+				return F.None<bool, M.InvalidPasswordMsg>();
+			}
+
+			// Update the password
+			return await User.UpdateAsync(user with
+			{
+				Version = model.Version,
+				PasswordHash = model.NewPassword.HashPassword()
+			});
+		}
+
+		// User not found
+		return F.None<bool>(new M.UserIdNotFoundMsg(model.Id));
+	}
+
 	/// <summary>Messages</summary>
 	public static class M
 	{
@@ -114,12 +151,27 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>User not found</summary>
-		/// <param name="Value">Email address</param>
-		public sealed record class UserNotFoundMsg(string Value) : NotFoundMsg<string>
+		/// <param name="Value">User Id</param>
+		public sealed record class UserIdNotFoundMsg(AuthUserId Value) : NotFoundMsg<AuthUserId>
 		{
 			/// <inheritdoc/>
 			public override string Name =>
 				"EmailAddress";
 		}
+
+		/// <summary>User not found</summary>
+		/// <param name="Value">Email address</param>
+		public sealed record class UserEmailNotFoundMsg(string Value) : NotFoundMsg<string>
+		{
+			/// <inheritdoc/>
+			public override string Name =>
+				"EmailAddress";
+		}
+
+		/// <summary>Passwords don't match</summary>
+		public sealed record class PasswordsDoNotMatchMsg : Msg;
+
+		/// <summary>New password is the same as the current password</summary>
+		public sealed record class NewPasswordIsNotDifferentMsg : Msg;
 	}
 }
