@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
+using Jeebs.Auth.Data.Models;
 using StrongId;
 
 namespace Jeebs.Auth.Data;
@@ -65,4 +66,10 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
 		where TUser : AuthUserWithRoles<TRole>
 		where TRole : IAuthRole;
+
+	/// <summary>
+	/// Change a user's password
+	/// </summary>
+	/// <param name="model"></param>
+	Task<Maybe<bool>> ChangeUserPasswordAsync(AuthChangePasswordModel model);
 }
