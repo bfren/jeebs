@@ -1,18 +1,20 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Config.AzureKeyVault;
+using System;
+
+namespace Jeebs.Config.Azure.KeyVault;
 
 /// <summary>
 /// Azure Key Vault Configuration
 /// These values should only ever be set in jeebsconfig-secrets.json to avoid them being checked into version control
 /// </summary>
-public sealed record class AzureKeyVaultConfig
+public sealed record class KeyVaultConfig
 {
 	/// <summary>
 	/// Path to this configuration section
 	/// </summary>
-	public static readonly string Key = JeebsConfig.Key + ":azureKeyVault";
+	public static readonly string Key = AzureConfig.Key + ":keyVault";
 
 	/// <summary>
 	/// Azure Key Vault Name
@@ -42,4 +44,10 @@ public sealed record class AzureKeyVaultConfig
 		&& !string.IsNullOrWhiteSpace(TenantId)
 		&& !string.IsNullOrWhiteSpace(ClientId)
 		&& !string.IsNullOrWhiteSpace(ClientSecret);
+
+	/// <summary>
+	/// Get Azure Vault URI
+	/// </summary>
+	public Uri GetUri() =>
+		new($"https://{Name}.vault.azure.net/");
 }

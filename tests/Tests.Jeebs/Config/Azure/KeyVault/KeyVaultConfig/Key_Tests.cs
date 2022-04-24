@@ -1,7 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Config.AzureKeyVault.AzureKeyVault_Tests;
+namespace Jeebs.Config.Azure.KeyVault.KeyVaultConfig_Tests;
 
 public class Key_Tests
 {
@@ -11,9 +11,9 @@ public class Key_Tests
 		// Arrange
 
 		// Act
-		var result = AzureKeyVaultConfig.Key;
+		var result = KeyVaultConfig.Key;
 
 		// Assert
-		Assert.Equal(JeebsConfig.Key + ":azureKeyVault", result);
+		Assert.Equal(AzureConfig.Key + ":keyVault", result);
 	}
 }

@@ -22,9 +22,9 @@ public sealed record class JeebsConfig
 	public App.AppConfig App { get; init; } = new();
 
 	/// <summary>
-	/// Azure KeyVault congiguration
+	/// Azure configuration
 	/// </summary>
-	public AzureKeyVault.AzureKeyVaultConfig AzureKeyVault { get; init; } = new();
+	public Azure.AzureConfig Azure { get; init; } = new();
 
 	/// <summary>
 	/// Data configuration
