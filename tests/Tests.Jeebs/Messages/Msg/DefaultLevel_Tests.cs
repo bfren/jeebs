@@ -16,6 +16,6 @@ public class DefaultLevel_Tests
 		var result = Msg.DefaultLevel;
 
 		// Assert
-		Assert.Equal(LogLevel.Debug, result);
+		Assert.Equal(LogLevel.Warning, result);
 	}
 }
