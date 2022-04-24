@@ -9,8 +9,8 @@ namespace Jeebs;
 public static partial class MaybeExtensions
 {
 	/// <inheritdoc cref="LogBool(Maybe{bool}, ILog, string, string)"/>
-	public static Task<Maybe<bool>> LogBoolAsync(this Task<Maybe<bool>> @this, ILog log) =>
-		LogBoolAsync(@this, log, "Done.", "Failed.");
+	public static async Task<Maybe<bool>> LogBoolAsync(this Task<Maybe<bool>> @this, ILog log) =>
+		(await @this.ConfigureAwait(false)).LogBool(log);
 
 	/// <inheritdoc cref="LogBool(Maybe{bool}, ILog, string, string)"/>
 	public static async Task<Maybe<bool>> LogBoolAsync(this Task<Maybe<bool>> @this, ILog log, string done, string failed) =>
