@@ -6,10 +6,10 @@ using Jeebs.Messages;
 
 namespace Jeebs.Log_Tests;
 
-public class Message_Tests
+public class Msg_Tests
 {
 	[Fact]
-	public void Msg_Runs_Debug()
+	public void Msg_Default_Runs_Wrn()
 	{
 		// Arrange
 		var msg = Substitute.ForPartsOf<Msg>();
@@ -19,11 +19,11 @@ public class Message_Tests
 		log.Msg(msg);
 
 		// Assert
-		log.Received().Dbg(Arg.Any<string>(), Arg.Any<object[]>());
+		log.Received().Wrn(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 
 	[Fact]
-	public void Msg_Trace_Runs_Trace()
+	public void Msg_Trace_Runs_Vrb()
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
@@ -38,7 +38,7 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Msg_Debug_Runs_Debug()
+	public void Msg_Debug_Runs_Dbg()
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
@@ -53,7 +53,7 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Msg_Information_Runs_Information()
+	public void Msg_Information_Runs_Inf()
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
@@ -68,7 +68,7 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Msg_Warning_Runs_Warning()
+	public void Msg_Warning_Runs_Wrn()
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
@@ -83,7 +83,7 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Msg_Error_Runs_Error()
+	public void Msg_Error_Runs_Err()
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
@@ -98,7 +98,7 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Msg_Critical_Runs_Critical()
+	public void Msg_Fatal_Runs_Ftl()
 	{
 		// Arrange
 		var msg = Substitute.For<Msg>();
