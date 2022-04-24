@@ -14,5 +14,5 @@ public static partial class MaybeExtensions
 
 	/// <inheritdoc cref="LogBool(Maybe{bool}, ILog, string, string)"/>
 	public static async Task<Maybe<bool>> LogBoolAsync(this Task<Maybe<bool>> @this, ILog log, string done, string failed) =>
-		(await @this).LogBool(log, done, failed);
+		(await @this.ConfigureAwait(false)).LogBool(log, done, failed);
 }
