@@ -3,10 +3,10 @@
 
 using System;
 using System.IO;
-using Azure.Identity;
 using Jeebs.Config;
 using Jeebs.Config.App;
-using Jeebs.Config.AzureKeyVault;
+using Jeebs.Config.Azure.DataProtection;
+using Jeebs.Config.Azure.KeyVault;
 using Jeebs.Config.Db;
 using Jeebs.Config.Logging;
 using Jeebs.Config.Services;
@@ -17,6 +17,7 @@ using Jeebs.Config.Web.Redirections;
 using Jeebs.Config.Web.Verification;
 using Jeebs.Logging;
 using Jeebs.Logging.Serilog;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -76,16 +77,11 @@ public class App
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig.{env.EnvironmentName}.json", optional: true)
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.{env.EnvironmentName}.json", optional: true);
 
-		// Check for Azure Key Vault section
-		var vault = config.Build().GetSection<AzureKeyVaultConfig>(AzureKeyVaultConfig.Key, false);
-
-		// If the config is valid, add Azure Key Vault to IConfigurationBuilder
+		// Add config from Azure Key Vault
+		var vault = config.Build().GetSection<KeyVaultConfig>(KeyVaultConfig.Key, false);
 		if (vault.IsValid)
 		{
-			_ = config.AddAzureKeyVault(
-				new Uri($"https://{vault.Name}.vault.azure.net/"),
-				new ClientSecretCredential(vault.TenantId, vault.ClientId, vault.ClientSecret)
-			);
+			_ = config.AddAzureKeyVault(vault.GetUri(), vault.GetCredential());
 		}
 	}
 
@@ -103,7 +99,8 @@ public class App
 		_ = services
 			.Configure<AppConfig>(config.GetSection(AppConfig.Key))
 			.Configure<AuthConfig>(config.GetSection(AuthConfig.Key))
-			.Configure<AzureKeyVaultConfig>(config.GetSection(AzureKeyVaultConfig.Key))
+			.Configure<DataProtectionConfig>(config.GetSection(DataProtectionConfig.Key))
+			.Configure<KeyVaultConfig>(config.GetSection(KeyVaultConfig.Key))
 			.Configure<DbConfig>(config.GetSection(DbConfig.Key))
 			.Configure<JeebsConfig>(config.GetSection(JeebsConfig.Key))
 			.Configure<JwtConfig>(config.GetSection(JwtConfig.Key))
@@ -119,6 +116,16 @@ public class App
 
 		// Add HttpClient
 		_ = services.AddHttpClient();
+
+		// Add Azure Data Protection
+		var dpc = ctx.Configuration.GetSection<DataProtectionConfig>(DataProtectionConfig.Key);
+		var vault = ctx.Configuration.GetSection<KeyVaultConfig>(KeyVaultConfig.Key);
+		if (dpc.IsValid && vault.IsValid)
+		{
+			_ = services.AddDataProtection()
+				.PersistKeysToAzureBlobStorage(dpc.StorageAccessKeyConnectionString, dpc.ContainerName, dpc.BlobName)
+				.ProtectKeysWithAzureKeyVault(dpc.GetUri(), vault.GetCredential());
+		}
 	}
 
 	/// <summary>
