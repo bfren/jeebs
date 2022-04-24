@@ -142,6 +142,13 @@ public abstract record class Result : IResult
 	#region Static Methods
 
 	/// <summary>
+	/// Create a success result with a redirect URL
+	/// </summary>
+	/// <param name="url">Redirect URL</param>
+	public static Result Redirect(string url) =>
+		new Result<bool>(true) { RedirectTo = url };
+
+	/// <summary>
 	/// Create an error result with a message (and a <see langword="false"/> value)
 	/// </summary>
 	/// <param name="message"></param>
