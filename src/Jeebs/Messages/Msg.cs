@@ -17,7 +17,7 @@ public abstract record class Msg() : IMsg
 	/// <summary>
 	/// Default LogLevel for messages
 	/// </summary>
-	public static readonly LogLevel DefaultLevel = LogLevel.Debug;
+	public static readonly LogLevel DefaultLevel = LogLevel.Warning;
 
 	/// <inheritdoc/>
 	public virtual LogLevel Level { get; protected init; } = DefaultLevel;
