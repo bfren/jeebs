@@ -38,7 +38,7 @@ public class App
 	public virtual void Ready(IServiceProvider services, ILog log)
 	{
 		// Set Maybe Audit log
-		F.LogAuditExceptions = e => log.Err(e, "Error auditing Maybe");
+		F.DefaultLogger = e => log.Err(e, "Maybe Exception: {Exception}.");
 
 		// Log application is ready
 		log.Inf("Application ready.");

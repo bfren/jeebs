@@ -91,7 +91,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				// Check all given values against name
 				foreach (var item in args.Values)
 				{
-					if (Check(args.Name, item) is MaybeF.Internals.Some<T> s)
+					if (Check(args.Name, item) is Some<T> s)
 					{
 						return s;
 					}
