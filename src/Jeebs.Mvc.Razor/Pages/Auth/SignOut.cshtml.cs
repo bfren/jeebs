@@ -1,33 +1,41 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Threading.Tasks;
-using Jeebs.Auth.Data;
 using Jeebs.Logging;
+using Jeebs.Mvc.Auth;
 using Jeebs.Mvc.Auth.Functions;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Jeebs.Mvc.Auth.Pages.Auth;
+namespace Jeebs.Mvc.Razor.Pages.Auth;
 
 /// <summary>
 /// Auth Sign Out page model
 /// </summary>
+[Authorize]
 public abstract class SignOutModel : PageModel
 {
-	private IAuthDataProvider Auth { get; init; }
+	/// <summary>
+	/// Log
+	/// </summary>
+	protected ILog Log { get; init; }
 
-	private ILog Log { get; init; }
+	/// <summary>
+	/// Redirect here after a successful sign out
+	/// </summary>
+	protected virtual Func<string?> SignOutRedirect { get; init; }
 
 	/// <summary>
 	/// Inject dependencies
 	/// </summary>
-	/// <param name="auth"></param>
 	/// <param name="log"></param>
-	protected SignOutModel(IAuthDataProvider auth, ILog log) =>
-		(Auth, Log) = (auth, log);
+	protected SignOutModel(ILog log) =>
+		(Log, SignOutRedirect) = (log, () => Url.Page("/Auth/SignIn"));
 
 	/// <summary>
 	/// Attempt sign out and return result
@@ -38,6 +46,7 @@ public abstract class SignOutModel : PageModel
 		// Do sign out
 		var result = await AuthF.DoSignOutAsync(new(
 			AddInfoAlert: TempData.AddInfoAlert,
+			RedirectUrl: SignOutRedirect,
 			SignOutAsync: HttpContext.SignOutAsync
 		));
 
@@ -45,10 +54,7 @@ public abstract class SignOutModel : PageModel
 		return result switch
 		{
 			AuthResult.SignedOut =>
-				Result.Create(true, Alert.Success("You were signed out.")) with
-				{
-					RedirectTo = AuthF.GetReturnUrl(Url, returnUrl)
-				},
+				result with { Message = Alert.Success("You were signed out.") },
 
 			_ =>
 				Forbid()

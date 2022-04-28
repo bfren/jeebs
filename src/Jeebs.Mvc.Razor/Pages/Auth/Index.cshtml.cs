@@ -1,33 +1,34 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Auth.Data;
 using Jeebs.Logging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Jeebs.Mvc.Auth.Pages.Auth;
+namespace Jeebs.Mvc.Razor.Pages.Auth;
 
 /// <summary>
-/// Auth Sign In page model
+/// Auth Index page
 /// </summary>
-public abstract class SignInModel : PageModel
+[Authorize]
+public abstract partial class IndexModel : PageModel
 {
-	private IAuthDataProvider Auth { get; init; }
-
-	private ILog Log { get; init; }
+	/// <summary>
+	/// Log
+	/// </summary>
+	protected ILog Log { get; init; }
 
 	/// <summary>
 	/// Inject dependencies
 	/// </summary>
-	/// <param name="auth"></param>
 	/// <param name="log"></param>
-	protected SignInModel(IAuthDataProvider auth, ILog log) =>
-		(Auth, Log) = (auth, log);
+	protected IndexModel(ILog log) =>
+		Log = log;
 
 	/// <summary>
-	/// Get page
+	/// Redirect to Sign In page
 	/// </summary>
 	public virtual IActionResult OnGet() =>
-		Page();
+		RedirectToPage("/Auth/SignIn");
 }

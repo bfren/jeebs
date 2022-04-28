@@ -2,33 +2,27 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
+using Jeebs.Mvc.Auth;
 using Jeebs.Mvc.Auth.Functions;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Jeebs.Mvc.Auth.Pages.Auth;
+namespace Jeebs.Mvc.Razor.Pages.Auth;
 
-public abstract partial class IndexModel : PageModel
+public abstract partial class SignInModel
 {
-	/// <summary>
-	/// Get application-specific claims for an authenticated user
-	/// </summary>
-	protected virtual AuthF.GetClaims? GetClaims { get; }
-
 	/// <summary>
 	/// Get standard sign in form
 	/// </summary>
-	/// <param name="returnUrl">[Optional] Return URL</param>
-	public Task<PartialViewResult> OnGetFormAsync(string? returnUrl) =>
-		Task.FromResult(Partial("_SignInForm", new Models.SignInModel { ReturnUrl = returnUrl }));
+	public Task<PartialViewResult> OnGetFormAsync() =>
+		Task.FromResult(Partial("_SignInForm", new Mvc.Auth.Models.SignInModel()));
 
 	/// <summary>
 	/// Attempt sign in and return result
 	/// </summary>
 	/// <param name="form">Sign In form data</param>
-	public virtual async Task<AuthResult> OnPostFormAsync(Models.SignInModel form)
+	public virtual async Task<AuthResult> OnPostFormAsync(Mvc.Auth.Models.SignInModel form)
 	{
 		Log.Dbg("Performing sign in using {@Form}.", form with { Password = "** REDACTED **" });
 		var result = await AuthF.DoSignInAsync(new(
@@ -38,19 +32,18 @@ public abstract partial class IndexModel : PageModel
 			Url: Url,
 			AddErrorAlert: TempData.AddErrorAlert,
 			GetClaims: GetClaims,
+			RedirectUrl: SignInRedirect,
 			SignInAsync: HttpContext.SignInAsync,
 			ValidateUserAsync: AuthF.ValidateUserAsync
 		));
 
-		if (result is AuthResult.SignedIn success)
+		return result switch
 		{
-			return success with
-			{
-				Message = Alert.Success("You were signed in."),
-				RedirectTo = AuthF.GetReturnUrl(Url, form.ReturnUrl)
-			};
-		}
+			AuthResult.SignedIn =>
+				result with { Message = Alert.Success("You were signed in.") },
 
-		return result;
+			_ =>
+				result
+		};
 	}
 }
