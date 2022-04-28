@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Razor\Jeebs.Mvc.Razor.csproj" />
 	</ItemGroup>
 	<ItemGroup>

@@ -4,6 +4,15 @@
 			"name": "Razor",
 			"suite": "Jeebs"
 		},
+		"db": {
+			"default": "test",
+			"authentication": "test",
+			"connections": {
+				"test": {
+					"connectionString": ""
+				}
+			}
+		},
 		"logging": {
 			"minimum": "Verbose",
 			"providers": {

@@ -2,29 +2,19 @@
 	<PropertyGroup>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-preview.2.*" />
+	<ItemGroup>
+		<Content Remove="Pages\_Denied.cshtml" />
+		<Content Remove="Pages\_SignInForm.cshtml" />
+		<Content Remove="Views\Auth\SignInForm.cshtml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Remove="Pages\_Denied.cshtml" />
-	  <Content Remove="Pages\_SignInForm.cshtml" />
-	  <Content Remove="Views\Auth\SignInForm.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj">
-			<PrivateAssets>Jeebs.Auth.Data.Entities</PrivateAssets>
-		</ProjectReference>
-		<ProjectReference Include="..\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
 		<ProjectReference Include="..\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Include="Pages\Auth\_SignInForm.cshtml" />
-	  <None Include="Views\Auth\SignInForm.cshtml" />
+		<None Include="Pages\Auth\_SignInForm.cshtml" />
+		<None Include="Views\Auth\SignInForm.cshtml" />
 	</ItemGroup>
 </Project>
