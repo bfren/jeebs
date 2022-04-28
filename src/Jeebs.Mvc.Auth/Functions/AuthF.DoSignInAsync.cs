@@ -25,6 +25,7 @@ public static partial class AuthF
 	/// <param name="Url"></param>
 	/// <param name="AddErrorAlert"></param>
 	/// <param name="GetClaims"></param>
+	/// <param name="RedirectUrl"></param>
 	/// <param name="SignInAsync"></param>
 	/// <param name="ValidateUserAsync"></param>
 	public sealed record class SignInArgs(
@@ -34,6 +35,7 @@ public static partial class AuthF
 		IUrlHelper Url,
 		Action<string> AddErrorAlert,
 		GetClaims? GetClaims,
+		Func<string?> RedirectUrl,
 		Func<string?, ClaimsPrincipal, AuthenticationProperties, Task> SignInAsync,
 		Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>> ValidateUserAsync
 	);
@@ -71,16 +73,16 @@ public static partial class AuthF
 					principal,
 					new AuthenticationProperties
 					{
+						IssuedUtc = DateTime.UtcNow,
 						ExpiresUtc = DateTime.UtcNow.AddDays(28),
 						IsPersistent = v.Model.RememberMe,
-						AllowRefresh = false,
-						RedirectUri = v.Model.ReturnUrl
+						AllowRefresh = v.Model.RememberMe
 					}
 				)
 				.ConfigureAwait(false);
 
 			// Redirect to return url
-			return new AuthResult.SignedIn(GetReturnUrl(v.Url, v.Model.ReturnUrl));
+			return new AuthResult.SignedIn(v.RedirectUrl());
 		}
 
 		// Log error and add alert for user

@@ -1,36 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0-preview.2.*" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Pages\Auth\_Denied.cshtml" />
-	  <None Remove="Pages\Auth\_SignInForm.cshtml" />
-	  <None Remove="Views\Auth\SignInForm.cshtml" />
-	  <None Remove="Views\_ViewImports.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Content Include="Pages\Auth\_Denied.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Pages\Auth\_SignInForm.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Views\Auth\SignInForm.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="Views\_ViewImports.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj">
