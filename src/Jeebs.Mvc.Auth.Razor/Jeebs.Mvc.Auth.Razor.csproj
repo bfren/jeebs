@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
-	<PropertyGroup>
-		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
-	</ItemGroup>
-</Project>
