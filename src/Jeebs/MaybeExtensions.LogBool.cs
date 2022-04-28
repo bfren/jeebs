@@ -12,7 +12,7 @@ public static partial class MaybeExtensions
 		LogBool(@this, log, "Done.", "Failed.");
 
 	/// <summary>
-	/// Log a boolean result - or the reason if <see cref="MaybeF.Internals.None{T}"/>
+	/// Log a boolean result - or the reason if <see cref="None{T}"/>
 	/// </summary>
 	/// <param name="this"></param>
 	/// <param name="log"></param>

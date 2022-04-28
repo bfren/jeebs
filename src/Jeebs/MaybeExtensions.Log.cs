@@ -12,7 +12,7 @@ public static partial class MaybeExtensions
 		Log(@this, log, "Done: {Value}.");
 
 	/// <summary>
-	/// Log a result - or the reason if <see cref="MaybeF.Internals.None{T}"/>
+	/// Log a result - or the reason if <see cref="None{T}"/>
 	/// </summary>
 	/// <typeparam name="T">Maybe type</typeparam>
 	/// <param name="this"></param>
