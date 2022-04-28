@@ -80,11 +80,11 @@ public class ApiApp : MvcApp
 	#region ConfigureServices
 
 	/// <inheritdoc/>
-	protected override void ConfigureServicesEndpoints(IServiceCollection services) =>
-		_ = services.AddControllers(ConfigureServicesMvcOptions);
+	protected override void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
+		_ = services.AddControllers(opt => ConfigureServicesMvcOptions(ctx, opt));
 
 	/// <inheritdoc/>
-	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
+	protected override void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
 		// do nothing
 	}

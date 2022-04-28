@@ -61,18 +61,19 @@ public class RazorApp : MvcApp
 	public RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	protected override void ConfigureServicesEndpoints(IServiceCollection services) =>
+	protected override void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
-			.AddRazorPages(ConfigureServicesRazorPagesOptions)
-			.AddMvcOptions(ConfigureServicesMvcOptions)
-			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
-			.AddJsonOptions(ConfigureServicesEndpointsJson);
+			.AddRazorPages(opt => ConfigureServicesRazorPagesOptions(ctx, opt))
+			.AddMvcOptions(opt => ConfigureServicesMvcOptions(ctx, opt))
+			.AddRazorRuntimeCompilation(opt => ConfigureServicesRuntimeCompilation(ctx, opt))
+			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>
 	/// Override to configure Razor Pages options
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="opt">RazorPagesOptions</param>
-	public virtual void ConfigureServicesRazorPagesOptions(RazorPagesOptions opt) { }
+	public virtual void ConfigureServicesRazorPagesOptions(HostBuilderContext ctx, RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>
 	protected override void ConfigureEndpoints(WebApplication app) =>

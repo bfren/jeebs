@@ -112,36 +112,38 @@ public class MvcApp : WebApp
 		base.ConfigureServices(ctx, services);
 
 		// Response Caching
-		ConfigureServicesResponseCaching(services);
+		ConfigureServicesResponseCaching(ctx, services);
 
 		// Response Compression
-		ConfigureServicesResponseCompression(services);
+		ConfigureServicesResponseCompression(ctx, services);
 
 		// Routing
-		ConfigureServicesRouting(services);
+		ConfigureServicesRouting(ctx, services);
 
 		// Authorisation
-		ConfigureServicesAuthorisation(services);
+		ConfigureServicesAuthorisation(ctx, services);
 
 		// Session
-		ConfigureServicesSession(services);
+		ConfigureServicesSession(ctx, services);
 
 		// Endpoints
-		ConfigureServicesEndpoints(services);
+		ConfigureServicesEndpoints(ctx, services);
 	}
 
 	/// <summary>
 	/// Override to configure response caching
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesResponseCaching(IServiceCollection services) =>
+	protected virtual void ConfigureServicesResponseCaching(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services.AddResponseCaching();
 
 	/// <summary>
 	/// Override to configure response compression
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesResponseCompression(IServiceCollection services) =>
+	protected virtual void ConfigureServicesResponseCompression(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
 			.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
 			.Configure<BrotliCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
@@ -155,15 +157,17 @@ public class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure authorisation
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesAuthorisation(IServiceCollection services) =>
+	protected virtual void ConfigureServicesAuthorisation(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services.AddAuthorization();
 
 	/// <summary>
 	/// Override to configure routing
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesRouting(IServiceCollection services) =>
+	protected virtual void ConfigureServicesRouting(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services.AddRouting(opt =>
 		{
 			opt.AppendTrailingSlash = AppendTrailingSlash;
@@ -173,8 +177,9 @@ public class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure session options
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesSession(IServiceCollection services)
+	protected virtual void ConfigureServicesSession(HostBuilderContext ctx, IServiceCollection services)
 	{
 		if (EnableSession)
 		{
@@ -185,18 +190,20 @@ public class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure endpoints - default is MVC
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
-	protected virtual void ConfigureServicesEndpoints(IServiceCollection services) =>
+	protected virtual void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
-			.AddControllersWithViews(ConfigureServicesMvcOptions)
-			.AddRazorRuntimeCompilation(ConfigureServicesRuntimeCompilation)
-			.AddJsonOptions(ConfigureServicesEndpointsJson);
+			.AddControllersWithViews(opt => ConfigureServicesMvcOptions(ctx, opt))
+			.AddRazorRuntimeCompilation(opt => ConfigureServicesRuntimeCompilation(ctx, opt))
+			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>
 	/// Override to configure MVC options
 	/// </summary>
+	/// <param name="ctx"></param>
 	/// <param name="opt">MvcOptions</param>
-	protected virtual void ConfigureServicesMvcOptions(MvcOptions opt)
+	protected virtual void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
 		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
@@ -205,14 +212,16 @@ public class MvcApp : WebApp
 	/// <summary>
 	/// Override to configure Razor Runtime Compilation
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
-	protected virtual void ConfigureServicesRuntimeCompilation(MvcRazorRuntimeCompilationOptions opt) { }
+	protected virtual void ConfigureServicesRuntimeCompilation(HostBuilderContext ctx, MvcRazorRuntimeCompilationOptions opt) { }
 
 	/// <summary>
 	/// Override to configure endpoints JSON
 	/// </summary>
+	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="opt">JsonOptions</param>
-	protected virtual void ConfigureServicesEndpointsJson(JsonOptions opt)
+	protected virtual void ConfigureServicesEndpointsJson(HostBuilderContext ctx, JsonOptions opt)
 	{
 		// Get default options
 		var defaultOptions = JsonF.CopyOptions();

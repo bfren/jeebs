@@ -3,6 +3,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Jeebs.Apps.Web;
 
@@ -23,7 +24,7 @@ internal sealed class MinimalApiApp : ApiApp
 	public MinimalApiApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
-	protected override void ConfigureServicesEndpoints(IServiceCollection services)
+	protected override void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services)
 	{
 		// do nothing
 	}
