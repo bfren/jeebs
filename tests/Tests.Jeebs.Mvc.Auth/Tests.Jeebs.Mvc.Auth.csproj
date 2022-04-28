@@ -8,4 +8,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Jwt\" />
+	</ItemGroup>
 </Project>

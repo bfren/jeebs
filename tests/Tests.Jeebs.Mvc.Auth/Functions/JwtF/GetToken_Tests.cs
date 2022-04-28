@@ -1,9 +1,9 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Mvc.Auth.Jwt.JwtHandler.M;
+using static Jeebs.Mvc.Auth.Functions.JwtF.M;
 
-namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
+namespace Jeebs.Mvc.Auth.Functions.JwtF_Tests;
 
 public class GetToken_Tests
 {
@@ -14,7 +14,7 @@ public class GetToken_Tests
 		var header = Rnd.Str;
 
 		// Act
-		var result = JwtHandler.GetToken(header);
+		var result = JwtF.GetToken(header);
 
 		// Assert
 		result.AssertNone().AssertType<InvalidAuthorisationHeaderMsg>();
@@ -28,7 +28,7 @@ public class GetToken_Tests
 		var header = $"Bearer {value}";
 
 		// Act
-		var result = JwtHandler.GetToken(header);
+		var result = JwtF.GetToken(header);
 
 		// Assert
 		var some = result.AssertSome();

@@ -3,11 +3,10 @@
 
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Jwt.Functions;
-using Jeebs.Mvc.Auth.Functions;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using static Jeebs.Mvc.Auth.Functions.AuthF;
 
 namespace Jeebs.Mvc.Auth.Controllers;
 
@@ -41,7 +40,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// <summary>
 	/// Get application-specific claims for an authenticated user
 	/// </summary>
-	protected virtual AuthF.GetClaims? GetClaims { get; }
+	protected virtual GetClaims? GetClaims { get; }
 
 	/// <summary>
 	/// Inject dependencies
@@ -62,11 +61,11 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// Check TOTP requirement or perform sign in
 	/// </summary>
 	/// <param name="model">SignInModel</param>
-	[HttpPost, AutoValidateAntiforgeryToken]
+	[HttpPost, ValidateAntiForgeryToken]
 	public virtual async Task<IActionResult> SignIn(SignInModel model)
 	{
 		// Do sign in
-		var result = await AuthF.DoSignInAsync(new(
+		var result = await DoSignInAsync(new(
 			Model: model,
 			Auth: Auth,
 			Log: Log,
@@ -74,14 +73,14 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 			AddErrorAlert: TempData.AddErrorAlert,
 			GetClaims: GetClaims,
 			SignInAsync: HttpContext.SignInAsync,
-			ValidateUserAsync: AuthF.ValidateUserAsync
+			ValidateUserAsync: ValidateUserAsync
 		));
 
 		// Handle result
 		return result switch
 		{
 			AuthResult.SignedIn =>
-				Redirect(AuthF.GetReturnUrl(Url, model.ReturnUrl)),
+				Redirect(GetReturnUrl(Url, model.ReturnUrl)),
 
 			AuthResult.TryAgain =>
 				SignIn(model.ReturnUrl),
@@ -101,7 +100,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 		var returnUrl = Request.Query["ReturnUrl"];
 
 		// Do sign out
-		var result = await AuthF.DoSignOutAsync(new(
+		var result = await DoSignOutAsync(new(
 			AddInfoAlert: TempData.AddInfoAlert,
 			SignOutAsync: HttpContext.SignOutAsync
 		));
@@ -112,7 +111,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 			AuthResult.SignedOut =>
 				RedirectToAction(
 					nameof(SignIn),
-					new { ReturnUrl = AuthF.GetReturnUrl(Url, returnUrl) }
+					new { ReturnUrl = GetReturnUrl(Url, returnUrl) }
 				),
 
 			_ =>
@@ -126,14 +125,4 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// <param name="returnUrl">Return URL</param>
 	public IActionResult Denied(string? returnUrl) =>
 		View(new DeniedModel(returnUrl));
-
-	/// <summary>
-	/// Generate new JWT keys
-	/// </summary>
-	public IActionResult JwtKeys() =>
-		Json(new
-		{
-			signingKey = JwtF.GenerateSigningKey(),
-			encryptingKey = JwtF.GenerateEncryptingKey()
-		});
 }
