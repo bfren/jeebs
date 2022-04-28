@@ -54,7 +54,8 @@ public abstract record class AuthResult : Result<bool>
 	public sealed record class SignedOut : AuthResult
 	{
 		/// <inheritdoc cref="SignedOut"/>
-		public SignedOut() : base(F.True, null, StatusCodes.Status200OK) { }
+		/// <param name="redirectTo">[Optional] Redirect to this page</param>
+		public SignedOut(string? redirectTo) : base(F.True, redirectTo, StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
