@@ -20,7 +20,7 @@ public class DoSignInAsync_Tests
 {
 	private (AuthUserModel user, AuthF.SignInArgs v) Setup(bool validUser = false)
 	{
-		var model = new SignInModel { Email = Rnd.Str, Password = Rnd.Str, RememberMe = Rnd.Flip, ReturnUrl = Rnd.Str };
+		var model = new SignInModel { Email = Rnd.Str, Password = Rnd.Str, RememberMe = Rnd.Flip };
 		var addErrorAlert = Substitute.For<Action<string>>();
 		var repo = Substitute.For<IAuthUserRepository<AuthUserEntity>>();
 		repo.UpdateLastSignInAsync(default!)
@@ -31,6 +31,7 @@ public class DoSignInAsync_Tests
 		var getClaims = Substitute.For<AuthF.GetClaims>();
 		getClaims.Invoke(default!, default!)
 			.ReturnsForAnyArgs(new List<Claim>());
+		var redirectUrl = Substitute.For<Func<string?>>();
 		var log = Substitute.For<ILog>();
 		var signIn = Substitute.For<Func<string?, ClaimsPrincipal, AuthenticationProperties, Task>>();
 		var url = Substitute.For<IUrlHelper>();
@@ -40,7 +41,7 @@ public class DoSignInAsync_Tests
 		var user = new AuthUserModel { Id = LongId<AuthUserId>(), EmailAddress = Rnd.Str, IsSuper = Rnd.Flip };
 		validateUser(default!, default!, default!)
 			.ReturnsForAnyArgs(validUser ? F.Some(user) : Create.None<AuthUserModel>());
-		return (user, new(model, auth, log, url, addErrorAlert, getClaims, signIn, validateUser));
+		return (user, new(model, auth, log, url, addErrorAlert, getClaims, redirectUrl, signIn, validateUser));
 	}
 
 	[Fact]
@@ -103,10 +104,10 @@ public class DoSignInAsync_Tests
 				&& x.Claims.Any(c => (c.Type == JwtClaimTypes.IsSuper && c.Value == user.IsSuper.ToString()) || !user.IsSuper)
 			),
 			Arg.Is<AuthenticationProperties>(x =>
-				x.ExpiresUtc!.Value.Date == DateTime.Now.AddDays(28).Date
+				x.IssuedUtc!.Value.Date == DateTime.Now.Date
+				&& x.ExpiresUtc!.Value.Date == DateTime.Now.AddDays(28).Date
 				&& x.IsPersistent == v.Model.RememberMe
-				&& x.AllowRefresh == false
-				&& x.RedirectUri == v.Model.ReturnUrl
+				&& x.AllowRefresh == v.Model.RememberMe
 			)
 		);
 	}
@@ -116,13 +117,16 @@ public class DoSignInAsync_Tests
 	{
 		// Arrange
 		var (_, v) = Setup(true);
+		var url = Rnd.Str;
+		v.RedirectUrl.Invoke()
+			.Returns(url);
 
 		// Act
 		var result = await AuthF.DoSignInAsync(v);
 
 		// Assert
 		var signedIn = Assert.IsType<AuthResult.SignedIn>(result);
-		Assert.Equal(v.Model.ReturnUrl, signedIn.RedirectTo);
+		Assert.Equal(url, signedIn.RedirectTo);
 	}
 
 	[Fact]

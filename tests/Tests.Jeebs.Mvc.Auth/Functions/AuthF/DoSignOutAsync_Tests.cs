@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Microsoft.AspNetCore.Mvc;
-
 namespace Jeebs.Mvc.Auth.Functions.AuthF_Tests;
 
 public class DoSignOutAsync_Tests
@@ -10,8 +8,9 @@ public class DoSignOutAsync_Tests
 	private AuthF.SignOutArgs Setup()
 	{
 		var addInfo = Substitute.For<Action<string>>();
+		var redirectUrl = Substitute.For<Func<string?>>();
 		var signOut = Substitute.For<Func<Task>>();
-		return new(addInfo, signOut);
+		return new(addInfo, redirectUrl, signOut);
 	}
 
 	[Fact]
@@ -45,12 +44,12 @@ public class DoSignOutAsync_Tests
 	{
 		// Arrange
 		var v = Setup();
-		var page = Substitute.For<IActionResult>();
 
 		// Act
 		var result = await AuthF.DoSignOutAsync(v);
 
 		// Assert
 		Assert.IsType<AuthResult.SignedOut>(result);
+		v.RedirectUrl.Received().Invoke();
 	}
 }
