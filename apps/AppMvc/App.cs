@@ -39,9 +39,9 @@ public sealed class App : Jeebs.Apps.Web.MvcApp
 		base.ConfigureAuth(app, config);
 	}
 
-	protected override void ConfigureServicesMvcOptions(MvcOptions opt)
+	protected override void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
-		base.ConfigureServicesMvcOptions(opt);
+		base.ConfigureServicesMvcOptions(ctx, opt);
 		opt.AddStrongIdModelBinder();
 	}
 
