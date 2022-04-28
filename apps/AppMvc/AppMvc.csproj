@@ -9,7 +9,6 @@
 		<ProjectReference Include="..\..\src\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth.Razor\Jeebs.Mvc.Auth.Razor.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
 		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj" />

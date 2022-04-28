@@ -1,9 +1,9 @@
 {
-  "jeebs": {
-    "app": {
-      "name": "Razor",
-      "suite": "Jeebs"
-    },
+	"jeebs": {
+		"app": {
+			"name": "Razor",
+			"suite": "Jeebs"
+		},
 		"logging": {
 			"minimum": "Verbose",
 			"providers": {
@@ -15,13 +15,19 @@
 				}
 			}
 		},
-    "services": {
-      "seq": {
-        "server04": {
-          "server": "",
-          "apiKey": ""
-        }
-      }
-    }
-  }
+		"services": {
+			"seq": {
+				"server04": {
+					"server": "",
+					"apiKey": ""
+				}
+			}
+		},
+		"web": {
+			"auth": {
+				"enabled": true,
+				"scheme": "cookies"
+			}
+		}
+	}
 }

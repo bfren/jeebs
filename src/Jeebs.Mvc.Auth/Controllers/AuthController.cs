@@ -1,13 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
-using Jeebs.Auth.Jwt.Functions;
-using Jeebs.Mvc.Auth.Functions;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using static Jeebs.Mvc.Auth.Functions.AuthF;
 
 namespace Jeebs.Mvc.Auth.Controllers;
 
@@ -41,53 +42,67 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// <summary>
 	/// Get application-specific claims for an authenticated user
 	/// </summary>
-	protected virtual AuthF.GetClaims? GetClaims { get; }
+	protected virtual GetClaims? GetClaims { get; }
+
+	/// <summary>
+	/// Redirect here after a successful sign in
+	/// </summary>
+	protected virtual Func<string?> SignInRedirect { get; init; }
+
+	/// <summary>
+	/// Redirect here after a successful sign out
+	/// </summary>
+	protected virtual Func<string?> SignOutRedirect { get; init; }
 
 	/// <summary>
 	/// Inject dependencies
 	/// </summary>
 	/// <param name="auth">IAuthDataProvider</param>
 	/// <param name="log">ILog</param>
-	protected AuthControllerBase(IAuthDataProvider auth, Logging.ILog log) : base(log) =>
+	protected AuthControllerBase(IAuthDataProvider auth, Logging.ILog log) : base(log)
+	{
 		Auth = auth;
+		SignInRedirect = () => Url.Action("Index", "Home");
+		SignOutRedirect = () => Url.Action("Auth", "SignOut");
+	}
 
 	/// <summary>
 	/// Display sign in page
 	/// </summary>
-	/// <param name="returnUrl">[Optional] Return URL</param>
-	public IActionResult SignIn(string? returnUrl) =>
-		View(SignInModel.Empty(returnUrl ?? Url.Action("Index")));
+	public IActionResult SignIn() =>
+		View(new SignInModel());
 
 	/// <summary>
 	/// Check TOTP requirement or perform sign in
 	/// </summary>
 	/// <param name="model">SignInModel</param>
-	[HttpPost, AutoValidateAntiforgeryToken]
+	[HttpPost, ValidateAntiForgeryToken]
 	public virtual async Task<IActionResult> SignIn(SignInModel model)
 	{
 		// Do sign in
-		var result = await AuthF.DoSignInAsync(new(
+		var result = await DoSignInAsync(new(
 			Model: model,
 			Auth: Auth,
 			Log: Log,
 			Url: Url,
 			AddErrorAlert: TempData.AddErrorAlert,
 			GetClaims: GetClaims,
+			RedirectUrl: SignInRedirect,
 			SignInAsync: HttpContext.SignInAsync,
-			ValidateUserAsync: AuthF.ValidateUserAsync
+			ValidateUserAsync: ValidateUserAsync
 		));
 
 		// Handle result
 		return result switch
 		{
 			AuthResult.SignedIn =>
-				Redirect(AuthF.GetReturnUrl(Url, model.ReturnUrl)),
+				result,
 
 			AuthResult.TryAgain =>
-				SignIn(model.ReturnUrl),
+				SignIn(),
 
 			_ =>
-				Denied(model.ReturnUrl)
+				Denied(Request.GetDisplayUrl())
 		};
 	}
 
@@ -96,13 +111,10 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// </summary>
 	public new async Task<IActionResult> SignOut()
 	{
-		// Get return URL from query
-		// (don't add as a method argument or we can't override base method)
-		var returnUrl = Request.Query["ReturnUrl"];
-
 		// Do sign out
-		var result = await AuthF.DoSignOutAsync(new(
+		var result = await DoSignOutAsync(new(
 			AddInfoAlert: TempData.AddInfoAlert,
+			RedirectUrl: SignOutRedirect,
 			SignOutAsync: HttpContext.SignOutAsync
 		));
 
@@ -110,30 +122,17 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 		return result switch
 		{
 			AuthResult.SignedOut =>
-				RedirectToAction(
-					nameof(SignIn),
-					new { ReturnUrl = AuthF.GetReturnUrl(Url, returnUrl) }
-				),
+				result,
 
 			_ =>
-				Denied(returnUrl)
+				Denied(Request.GetDisplayUrl())
 		};
 	}
 
 	/// <summary>
 	/// Show access denied page
 	/// </summary>
-	/// <param name="returnUrl">Return URL</param>
-	public IActionResult Denied(string? returnUrl) =>
-		View(new DeniedModel(returnUrl));
-
-	/// <summary>
-	/// Generate new JWT keys
-	/// </summary>
-	public IActionResult JwtKeys() =>
-		Json(new
-		{
-			signingKey = JwtF.GenerateSigningKey(),
-			encryptingKey = JwtF.GenerateEncryptingKey()
-		});
+	/// <param name="accessUrl">URL that was accessed</param>
+	public IActionResult Denied(string? accessUrl) =>
+		View(new DeniedModel(accessUrl));
 }

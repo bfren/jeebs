@@ -12,9 +12,11 @@ public static partial class AuthF
 	/// Provides arguments for <see cref="DoSignOutAsync(SignOutArgs)"/>
 	/// </summary>
 	/// <param name="AddInfoAlert"></param>
+	/// <param name="RedirectUrl"></param>
 	/// <param name="SignOutAsync"></param>
 	public sealed record class SignOutArgs(
 		Action<string> AddInfoAlert,
+		Func<string?> RedirectUrl,
 		Func<Task> SignOutAsync
 	);
 
@@ -31,6 +33,6 @@ public static partial class AuthF
 		v.AddInfoAlert("Goodbye!");
 
 		// Redirect to sign in page
-		return new AuthResult.SignedOut();
+		return new AuthResult.SignedOut(v.RedirectUrl());
 	}
 }

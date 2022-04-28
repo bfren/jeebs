@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Microsoft.Extensions.Primitives;
-using static Jeebs.Mvc.Auth.Jwt.JwtHandler.M;
+using static Jeebs.Mvc.Auth.Functions.JwtF.M;
 
-namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
+namespace Jeebs.Mvc.Auth.Functions.JwtF_Tests;
 
 public class GetAuthorisationHeader_Tests
 {
@@ -15,7 +15,7 @@ public class GetAuthorisationHeader_Tests
 		var headers = new Dictionary<string, StringValues>();
 
 		// Act
-		var result = JwtHandler.GetAuthorisationHeader(headers);
+		var result = JwtF.GetAuthorisationHeader(headers);
 
 		// Assert
 		result.AssertNone().AssertType<MissingAuthorisationHeaderMsg>();
@@ -32,7 +32,7 @@ public class GetAuthorisationHeader_Tests
 		};
 
 		// Act
-		var result = JwtHandler.GetAuthorisationHeader(headers);
+		var result = JwtF.GetAuthorisationHeader(headers);
 
 		// Assert
 		var some = result.AssertSome();

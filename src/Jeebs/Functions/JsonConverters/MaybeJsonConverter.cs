@@ -15,7 +15,7 @@ namespace Jeebs.Functions.JsonConverters;
 internal sealed class MaybeJsonConverter<T> : JsonConverter<Maybe<T>>
 {
 	/// <summary>
-	/// Read value and return as <see cref="MaybeF.Internals.Some{T}"/> or <see cref="MaybeF.Internals.None{T}"/>
+	/// Read value and return as <see cref="Some{T}"/> or <see cref="None{T}"/>
 	/// </summary>
 	/// <param name="reader">Utf8JsonReader</param>
 	/// <param name="typeToConvert">Maybe of type <typeparamref name="T"/></param>
@@ -31,7 +31,7 @@ internal sealed class MaybeJsonConverter<T> : JsonConverter<Maybe<T>>
 		};
 
 	/// <summary>
-	/// If the Maybe is <see cref="MaybeF.Internals.Some{T}"/> write the value, otherwise write a null value
+	/// If the Maybe is <see cref="Some{T}"/> write the value, otherwise write a null value
 	/// </summary>
 	/// <param name="writer">Utf8JsonWriter</param>
 	/// <param name="value">Maybe value</param>

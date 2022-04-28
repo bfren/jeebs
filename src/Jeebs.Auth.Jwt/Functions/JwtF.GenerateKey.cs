@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Jwt.Functions;
 public static partial class JwtF
 {
 	private static string GenerateKey(int bytes) =>
-		Rnd.StringF.Get(bytes, opt => opt with { Numbers = true, Special = true });
+		Rnd.StringF.Get(bytes, opt => opt with { Lower = true, Upper = true, Numbers = true });
 
 	/// <summary>
 	/// Generate a signing key of length <see cref="JwtSecurity.SigningKeyBytes"/>

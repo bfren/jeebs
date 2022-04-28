@@ -22,16 +22,4 @@ public sealed record class SignInModel
 	/// Remember Me
 	/// </summary>
 	public bool RememberMe { get; init; }
-
-	/// <summary>
-	/// Return URL (after successful sign in)
-	/// </summary>
-	public string? ReturnUrl { get; init; }
-
-	/// <summary>
-	/// Create empty model
-	/// </summary>
-	/// <param name="returnUrl">[Optional] Return URL (after successful sign in)</param>
-	public static SignInModel Empty(string? returnUrl) =>
-		new() { ReturnUrl = returnUrl };
 }

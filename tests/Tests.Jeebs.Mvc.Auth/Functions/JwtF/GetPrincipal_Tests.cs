@@ -1,9 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth;
 
-namespace Jeebs.Mvc.Auth.Jwt.JwtHandler_Tests;
+namespace Jeebs.Mvc.Auth.Functions.JwtF_Tests;
 
 public class GetPrincipal_Tests
 {
@@ -15,7 +15,7 @@ public class GetPrincipal_Tests
 		var value = Rnd.Str;
 
 		// Act
-		JwtHandler.GetPrincipal(auth, value);
+		_ = JwtF.GetPrincipal(auth, value);
 
 		// Assert
 		auth.Received().ValidateToken(value);
