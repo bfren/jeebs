@@ -14,10 +14,7 @@ namespace Jeebs.Cqrs;
 public abstract class CommandHandler<TCommand> : ICommandHandler
 	where TCommand : ICommand
 {
-	/// <summary>
-	/// Handle a command
-	/// </summary>
-	/// <param name="command">Command object</param>
+	/// <inheritdoc cref="ICommandHandler.HandleAsync(ICommand)"/>
 	public abstract Task<Maybe<bool>> HandleAsync(TCommand command);
 
 	/// <inheritdoc/>
