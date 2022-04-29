@@ -8,7 +8,7 @@
 	  <None Remove="Map\_\EntityMapper\Entities\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="StrongId.Testing" Version="8.1.6" />
+	  <PackageReference Include="StrongId.Testing" Version="8.1.7" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />
