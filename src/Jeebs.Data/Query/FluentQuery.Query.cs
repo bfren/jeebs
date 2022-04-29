@@ -6,13 +6,10 @@ using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Data.Query.Functions;
 using Jeebs.Messages;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
-public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFluentQuery<TEntity, TId>
-	where TEntity : IWithId<TId>
-	where TId : class, IStrongId, new()
+public sealed partial record class FluentQuery<TEntity, TId>
 {
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>()

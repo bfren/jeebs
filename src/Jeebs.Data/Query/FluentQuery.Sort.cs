@@ -6,13 +6,10 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.Functions;
 using Jeebs.Reflection;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
-public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFluentQuery<TEntity, TId>
-	where TEntity : IWithId<TId>
-	where TId : class, IStrongId, new()
+public sealed partial record class FluentQuery<TEntity, TId>
 {
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> Sort(string columnAlias, SortOrder order)
