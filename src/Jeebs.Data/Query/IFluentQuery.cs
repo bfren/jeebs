@@ -129,6 +129,19 @@ public interface IFluentQuery<TEntity, TId>
 
 	#endregion Execute
 
+	#region Count
+
+	/// <inheritdoc cref="CountAsync(IDbTransaction)"/>
+	Task<Maybe<long>> CountAsync();
+
+	/// <summary>
+	/// Return the number of rows matching the query
+	/// </summary>
+	/// <param name="transaction"></param>
+	Task<Maybe<long>> CountAsync(IDbTransaction transaction);
+
+	#endregion Count
+
 	#region Query
 
 	/// <inheritdoc cref="QueryAsync{TModel}(IDbTransaction)"/>/>
