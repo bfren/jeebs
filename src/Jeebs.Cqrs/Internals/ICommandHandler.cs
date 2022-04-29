@@ -11,6 +11,9 @@ namespace Jeebs.Cqrs.Internals;
 /// </summary>
 internal interface ICommandHandler
 {
-	/// <inheritdoc cref="CommandHandler{TCommand}.HandleAsync(TCommand)"/>
+	/// <summary>
+	/// Handle a command
+	/// </summary>
+	/// <param name="command">Command object</param>
 	Task<Maybe<bool>> HandleAsync(ICommand command);
 }

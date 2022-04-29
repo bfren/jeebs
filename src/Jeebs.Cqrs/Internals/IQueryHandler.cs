@@ -12,6 +12,9 @@ namespace Jeebs.Cqrs.Internals;
 /// <typeparam name="TResult">Query result value type</typeparam>
 internal interface IQueryHandler<TResult>
 {
-	/// <inheritdoc cref="QueryHandler{TQuery, TResult}.HandleAsync(TQuery)"/>
+	/// <summary>
+	/// Handle a query
+	/// </summary>
+	/// <param name="query">Query object</param>
 	Task<Maybe<TResult>> HandleAsync(IQuery<TResult> query);
 }

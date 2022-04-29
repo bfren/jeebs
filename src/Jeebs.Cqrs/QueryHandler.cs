@@ -15,10 +15,7 @@ namespace Jeebs.Cqrs;
 public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 	where TQuery : IQuery<TResult>
 {
-	/// <summary>
-	/// Handle a query object
-	/// </summary>
-	/// <param name="query">Query object</param>
+	/// <inheritdoc cref="IQueryHandler{TResult}.HandleAsync(IQuery{TResult})"/>
 	public abstract Task<Maybe<TResult>> HandleAsync(TQuery query);
 
 	/// <inheritdoc/>
