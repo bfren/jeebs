@@ -40,7 +40,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// <summary>
 	/// List of errors encountered while building
 	/// </summary>
-	internal IList<IMsg> Errors { get; private init; }
+	internal IList<IMsg> Errors { get; private init; } = new List<IMsg>();
 
 	/// <summary>
 	/// Log (should come with the context of the calling class)
@@ -65,7 +65,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// <param name="log">ILog (should come with the context of the calling class)</param>
 	internal FluentQuery(IDb db, IEntityMapper mapper, ILog log)
 	{
-		(Db, Errors, Log) = (db, new List<IMsg>(), log);
+		(Db, Log) = (db, log);
 
 		Table = mapper.GetTableMapFor<TEntity>().Switch(
 			some: x => x.Table,
