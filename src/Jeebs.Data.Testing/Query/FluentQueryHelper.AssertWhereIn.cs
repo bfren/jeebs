@@ -39,7 +39,7 @@ public static partial class FluentQueryHelper
 		AssertGenericArgument<TValue>(call);
 
 		// Check each parameters
-		Assert.Collection(call.GetArguments(),
+		AssertCollection(call.GetArguments(),
 
 			// Check that the correct property is being used
 			actualProperty => AssertPropertyExpression<TEntity, TValue>(expectedProperty, actualProperty),
