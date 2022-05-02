@@ -16,7 +16,6 @@ public class GetPrincipal_Tests
 	public async Task Returns_ClaimsPrincipal_With_User_Info_Claims()
 	{
 		// Arrange
-		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var user = new AuthUserModel
 		{
@@ -58,7 +57,6 @@ public class GetPrincipal_Tests
 	public async Task Returns_ClaimsPrincipal_With_Role_Claims()
 	{
 		// Arrange
-		var auth = Substitute.For<IAuthDataProvider>();
 		var log = Substitute.For<ILog>();
 		var role0 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var role1 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
@@ -113,8 +111,6 @@ public class GetPrincipal_Tests
 	public async Task Adds_Custom_Claims()
 	{
 		// Arrange
-		var auth = Substitute.For<IAuthDataProvider>();
-		var log = Substitute.For<ILog>();
 		var user = new AuthUserModel
 		{
 			Id = LongId<AuthUserId>(),
