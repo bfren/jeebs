@@ -3,9 +3,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
-		<Using Include="MaybeF.Testing"/>
-		<Using Include="NSubstitute"/>
-		<Using Include="Xunit"/>
+		<Using Include="MaybeF.Testing" />
+		<Using Include="NSubstitute" />
+		<Using Include="Xunit" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />

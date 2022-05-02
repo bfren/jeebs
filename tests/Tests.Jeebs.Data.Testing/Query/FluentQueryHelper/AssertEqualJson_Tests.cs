@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Xunit.Sdk;
+using Jeebs.Data.Testing.Exceptions;
 
 namespace Jeebs.Data.Testing.Query.FluentQueryHelper_Tests;
 
@@ -23,7 +23,7 @@ public class AssertEqualJson_Tests
 	}
 
 	[Fact]
-	public void Different_Property_Names__Equal_Values__Throws_EqualException()
+	public void Different_Property_Names__Equal_Values__Throws_EqualJsonException()
 	{
 		// Arrange
 		var value = Rnd.Str;
@@ -34,11 +34,12 @@ public class AssertEqualJson_Tests
 		var action = () => FluentQueryHelper.AssertEqualJson(v0, v1);
 
 		// Assert
-		Assert.Throws<EqualException>(action);
+		var ex = Assert.Throws<EqualJsonException>(action);
+		Assert.Equal($"Expected '{v0}' but value was '{v1}'.", ex.Message);
 	}
 
 	[Fact]
-	public void Same_Property_Names__Different_Values__Throws_EqualException()
+	public void Same_Property_Names__Different_Values__Throws_EqualJsonException()
 	{
 		// Arrange
 		var v0 = new { v0 = Rnd.Str };
@@ -48,6 +49,7 @@ public class AssertEqualJson_Tests
 		var action = () => FluentQueryHelper.AssertEqualJson(v0, v1);
 
 		// Assert
-		Assert.Throws<EqualException>(action);
+		var ex = Assert.Throws<EqualJsonException>(action);
+		Assert.Equal($"Expected '{v0}' but value was '{v1}'.", ex.Message);
 	}
 }

@@ -2,13 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
+using Jeebs.Data.Testing.Exceptions;
 using NSubstitute.Core;
 using NSubstitute.Extensions;
-using Xunit.Sdk;
 
 namespace Jeebs.Data.Testing.Query.FluentQueryHelper_Tests;
 
-public class AssertAssertGenericArgument_Tests
+public class AssertGenericArgument_Tests
 {
 	[Fact]
 	public void Calls_GetMethodInfo__Asserts_Collection()
@@ -30,7 +30,7 @@ public class AssertAssertGenericArgument_Tests
 	}
 
 	[Fact]
-	public void Incorrect_Type__Throws_CollectionException_With_EqualException()
+	public void Incorrect_Type__Throws_GenericArgumentException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
@@ -44,12 +44,12 @@ public class AssertAssertGenericArgument_Tests
 		var action = () => FluentQueryHelper.AssertGenericArgument<Guid>(call);
 
 		// Assert
-		var ex = Assert.Throws<CollectionException>(action);
-		Assert.Contains("Assert.Equal() Failure", ex.Message);
+		var ex = Assert.Throws<GenericArgumentException>(action);
+		Assert.Contains($"Expected type '{typeof(Guid)}' but found '{typeof(string)}'.", ex.Message);
 	}
 
 	[Fact]
-	public void No_Generic_Arguments__Throws_CollectionException()
+	public void No_Generic_Arguments__Throws_GenericArgumentException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
@@ -63,16 +63,18 @@ public class AssertAssertGenericArgument_Tests
 		var action = () => FluentQueryHelper.AssertGenericArgument<string>(call);
 
 		// Assert
-		Assert.Throws<CollectionException>(action);
+		var ex = Assert.Throws<GenericArgumentException>(action);
+		Assert.Equal("Expected one generic argument but found none.", ex.Message);
 	}
 
 	[Fact]
-	public void Too_Many_Generic_Arguments__Throws_CollectionException()
+	public void Too_Many_Generic_Arguments__Throws_GenericArgumentException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
+		var args = Rnd.NumberF.GetInt32(2, 10);
 		method.Configure().GetGenericArguments()
-			.Returns(Enumerable.Repeat(typeof(string), Rnd.NumberF.GetInt32(2, 10)).ToArray());
+			.Returns(Enumerable.Repeat(typeof(string), args).ToArray());
 		var call = Substitute.For<ICall>();
 		call.GetMethodInfo()
 			.Returns(method);
@@ -81,6 +83,7 @@ public class AssertAssertGenericArgument_Tests
 		var action = () => FluentQueryHelper.AssertGenericArgument<string>(call);
 
 		// Assert
-		Assert.Throws<CollectionException>(action);
+		var ex = Assert.Throws<GenericArgumentException>(action);
+		Assert.Equal($"Expected one generic argument but found {args}.", ex.Message);
 	}
 }

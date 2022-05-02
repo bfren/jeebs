@@ -2,8 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
+using Jeebs.Data.Testing.Exceptions;
 using NSubstitute.Core;
-using Xunit.Sdk;
 
 namespace Jeebs.Data.Testing.Query.FluentQueryHelper_Tests;
 
@@ -30,7 +30,7 @@ public class AssertMethodName_Tests
 	}
 
 	[Fact]
-	public void Not_Equal__Throws_EqualException()
+	public void Not_Equal__Throws_MethodNameException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
@@ -44,6 +44,6 @@ public class AssertMethodName_Tests
 		var action = () => FluentQueryHelper.AssertMethodName(call, Rnd.Str);
 
 		// Assert
-		Assert.Throws<EqualException>(action);
+		Assert.Throws<MethodNameException>(action);
 	}
 }
