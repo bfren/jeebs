@@ -30,7 +30,7 @@ public class AssertMethodName_Tests
 	}
 
 	[Fact]
-	public void Calls_GetMethodInfo__Throws_When_Not_Equal()
+	public void Not_Equal__Throws_EqualException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();

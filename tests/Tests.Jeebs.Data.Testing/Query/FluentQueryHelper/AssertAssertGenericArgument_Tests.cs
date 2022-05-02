@@ -30,7 +30,7 @@ public class AssertAssertGenericArgument_Tests
 	}
 
 	[Fact]
-	public void Calls_GetMethodInfo__Throws_When_Incorrect_Type()
+	public void Incorrect_Type__Throws_CollectionException_With_EqualException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
@@ -49,7 +49,7 @@ public class AssertAssertGenericArgument_Tests
 	}
 
 	[Fact]
-	public void Calls_GetMethodInfo__Throws_When_No_Generic_Arguments()
+	public void No_Generic_Arguments__Throws_CollectionException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
@@ -67,7 +67,7 @@ public class AssertAssertGenericArgument_Tests
 	}
 
 	[Fact]
-	public void Calls_GetMethodInfo__Throws_When_Too_Many_Generic_Arguments()
+	public void Too_Many_Generic_Arguments__Throws_CollectionException()
 	{
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
