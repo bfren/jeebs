@@ -2,8 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
+using Jeebs.Data.Testing.Exceptions;
 using NSubstitute.Core;
-using Xunit.Sdk;
 
 namespace Jeebs.Data.Testing.Query.FluentQueryHelper_Tests;
 
@@ -39,7 +39,7 @@ public class AssertExecute_Tests : Setup
 	}
 
 	[Fact]
-	public async Task Incorrect_Method__Throws_CollectionException()
+	public async Task Incorrect_Method__Throws_MethodNameException()
 	{
 		// Arrange
 		var fluent = Create();
@@ -49,12 +49,11 @@ public class AssertExecute_Tests : Setup
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, true);
 
 		// Assert
-		var ex = Assert.Throws<CollectionException>(() => fluent.AssertCalls(action));
-		Assert.Contains("Assert.Equal() Failure", ex.Message);
+		Assert.Throws<MethodNameException>(() => fluent.AssertCalls(action));
 	}
 
 	[Fact]
-	public async Task Incorrect_Generic_Argument__Throws_CollectionException()
+	public async Task Incorrect_Generic_Argument__Throws_GenericArgumentException()
 	{
 		// Arrange
 		var fluent = Create();
@@ -64,11 +63,11 @@ public class AssertExecute_Tests : Setup
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, string>(c, nameof(TestEntity.Id), false);
 
 		// Assert
-		Assert.Throws<CollectionException>(() => fluent.AssertCalls(action));
+		Assert.Throws<GenericArgumentException>(() => fluent.AssertCalls(action));
 	}
 
 	[Fact]
-	public async Task Not_Property_Expression__Throws_CollectionException()
+	public async Task Not_Property_Expression__Throws_PropertyExpressionException()
 	{
 		// Arrange
 		var fluent = Create();
@@ -78,6 +77,6 @@ public class AssertExecute_Tests : Setup
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, false);
 
 		// Assert
-		Assert.Throws<CollectionException>(() => fluent.AssertCalls(action));
+		Assert.Throws<PropertyExpressionException>(() => fluent.AssertCalls(action));
 	}
 }
