@@ -20,7 +20,7 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <param name="call">Call</param>
 	/// <param name="expected">Expected method name</param>
-	private static void AssertMethodName(ICall call, string expected) =>
+	internal static void AssertMethodName(ICall call, string expected) =>
 		Assert.Equal(
 			expected: expected,
 			actual: call.GetMethodInfo().Name
@@ -31,7 +31,7 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <typeparam name="TExpected">Generic argument</typeparam>
 	/// <param name="call">Call</param>
-	private static void AssertGenericArgument<TExpected>(ICall call) =>
+	internal static void AssertGenericArgument<TExpected>(ICall call) =>
 		Assert.Collection(call.GetMethodInfo().GetGenericArguments(),
 			actual => Assert.Equal(
 				expected: typeof(TExpected),
@@ -46,7 +46,7 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="T">Value Type</typeparam>
 	/// <param name="expected">Expected value</param>
 	/// <param name="actual">Actual value</param>
-	private static void AssertEqual<T>(T expected, object? actual) =>
+	internal static void AssertEqual<T>(T expected, object? actual) =>
 		Assert.Equal(
 			expected: expected,
 			actual: Assert.IsType<T>(actual)
@@ -58,7 +58,7 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <param name="expected">Expected value</param>
 	/// <param name="actual">Actual value</param>
-	private static void AssertEqualJson(object expected, object? actual) =>
+	internal static void AssertEqualJson(object expected, object? actual) =>
 		Assert.Equal(
 			expected: JsonF.Serialise(expected),
 			actual: JsonF.Serialise(actual)
@@ -72,7 +72,7 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="TValue">Value Type</typeparam>
 	/// <param name="expected">Expected property name</param>
 	/// <param name="actual">Actual property (will be cast to <see cref="Expression{TDelegate}"/>)</param>
-	private static void AssertPropertyExpression<TEntity, TValue>(string expected, object? actual) =>
+	internal static void AssertPropertyExpression<TEntity, TValue>(string expected, object? actual) =>
 		Assert.Equal(
 			expected: expected,
 			actual: Assert.IsAssignableFrom<Expression<Func<TEntity, TValue>>>(actual)
