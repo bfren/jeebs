@@ -11,5 +11,6 @@ namespace Jeebs.Cqrs.Messages;
 public sealed record class UnableToGetQueryHandlerMsg(Type Value) : WithValueMsg<Type>
 {
 	/// <summary>Change value name to 'Query Type'</summary>
-	public override string Name { get; init; } = "Query Type";
+	public override string Name =>
+		"Query Type";
 }
