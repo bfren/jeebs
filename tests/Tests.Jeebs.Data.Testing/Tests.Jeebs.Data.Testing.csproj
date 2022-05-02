@@ -2,7 +2,4 @@
 	<PropertyGroup>
 		<RootNamespace>Jeebs.Data.Testing</RootNamespace>
 	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Data.Testing\Jeebs.Data.Testing.csproj" />
-	</ItemGroup>
 </Project>
