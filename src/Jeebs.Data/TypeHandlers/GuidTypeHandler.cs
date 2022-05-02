@@ -19,7 +19,7 @@ public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 		value?.ToString() switch
 		{
 			string guid when !string.IsNullOrWhiteSpace(guid) =>
-				Guid.Parse(guid.AsSpan()),
+				Guid.Parse(guid.ToLowerInvariant()),
 
 			_ =>
 				Guid.Empty
