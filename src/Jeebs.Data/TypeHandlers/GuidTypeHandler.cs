@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -19,7 +19,7 @@ public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 		value?.ToString() switch
 		{
 			string guid when !string.IsNullOrWhiteSpace(guid) =>
-				Guid.Parse(guid),
+				Guid.Parse(guid.ToLowerInvariant()),
 
 			_ =>
 				Guid.Empty

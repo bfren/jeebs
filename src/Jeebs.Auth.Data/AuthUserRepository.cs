@@ -102,7 +102,8 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 		public sealed record class UserAlreadyExistsMsg(string Value) : WithValueMsg<string>
 		{
 			/// <summary>Change value name to 'Email Address'</summary>
-			public override string Name { get; init; } = nameof(AuthUserEntity.EmailAddress);
+			public override string Name =>
+				nameof(AuthUserEntity.EmailAddress);
 		}
 	}
 }

@@ -4,6 +4,8 @@
 
 [![Test](https://github.com/bfren/jeebs/actions/workflows/test.yml/badge.svg)](https://github.com/bfren/jeebs/actions/workflows/test.yml) ![Publish](https://github.com/bfren/jeebs/workflows/Publish/badge.svg)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a21b1f1909dd44fbbdea712cddc76266)](https://www.codacy.com/gh/bfren/jeebs/dashboard)
+
 Libraries for use in .NET Core projects for rapid application development.
 
 Please [view the book](https://docs.bfren.dev/jeebs) for information on how to use these libraries.

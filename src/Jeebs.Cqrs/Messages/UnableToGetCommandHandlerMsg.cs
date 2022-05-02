@@ -11,5 +11,6 @@ namespace Jeebs.Cqrs.Messages;
 public sealed record class UnableToGetCommandHandlerMsg(Type Value) : WithValueMsg<Type>
 {
 	/// <summary>Change value name to 'Command Type'</summary>
-	public override string Name { get; init; } = "Command Type";
+	public override string Name =>
+		"Command Type";
 }

@@ -31,11 +31,7 @@ public static partial class FluentQueryHelper
 			{
 				inspectors[i].Invoke(collection[i]);
 			}
-			catch (FluentQueryHelperException)
-			{
-				throw;
-			}
-			catch (Exception ex)
+			catch (Exception ex) when (ex is not FluentQueryHelperException)
 			{
 				throw new CollectionException(collection, expected, actual, i, ex);
 			}

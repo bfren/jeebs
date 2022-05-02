@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Messages.Msg_Tests;
@@ -39,7 +39,6 @@ public class ToString_Tests
 	{
 		public TestMsg() { }
 
-		public TestMsg(string format, params object[] args) =>
-			(Format, Args) = (format, args);
+		public TestMsg(string format, params object[] args) : base(null, format, args) { }
 	}
 }

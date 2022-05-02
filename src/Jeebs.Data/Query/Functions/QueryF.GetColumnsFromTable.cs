@@ -35,7 +35,6 @@ public static partial class QueryF
 			// Add the column to the extraction list
 			if (tableProperty.GetValue(table) is string column)
 			{
-				var alias = modelProperty.Name;
 				extracted.Add(new Column(table, column, tableProperty));
 			}
 		}

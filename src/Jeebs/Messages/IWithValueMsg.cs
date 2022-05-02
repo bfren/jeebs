@@ -12,7 +12,7 @@ public interface IWithValueMsg<T> : IMsg
 	/// <summary>
 	/// Message Value property name
 	/// </summary>
-	string Name { get; init; }
+	string Name { get; }
 
 	/// <summary>
 	/// Message Value

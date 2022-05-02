@@ -17,20 +17,30 @@ public abstract record class Msg() : IMsg
 	/// <summary>
 	/// Default LogLevel for messages
 	/// </summary>
-	public static readonly LogLevel DefaultLevel = LogLevel.Warning;
+	public static readonly LogLevel DefaultLevel =
+		LogLevel.Warning;
 
 	/// <inheritdoc/>
-	public virtual LogLevel Level { get; protected init; } = DefaultLevel;
+	public virtual LogLevel Level =>
+		level ?? DefaultLevel;
+
+	private readonly LogLevel? level;
 
 	/// <inheritdoc/>
-	public virtual string Format { get; protected init; } = string.Empty;
+	public virtual string Format =>
+		format ?? string.Empty;
+
+	private readonly string? format;
 
 	/// <inheritdoc/>
 	public string FormatWithType =>
 		$"{{MsgType}} {Format}".Trim();
 
 	/// <inheritdoc/>
-	public virtual object[]? Args { get; protected init; }
+	public virtual object[]? Args =>
+		args;
+
+	private readonly object[]? args;
 
 	/// <inheritdoc/>
 	public object[] ArgsWithType
@@ -47,11 +57,13 @@ public abstract record class Msg() : IMsg
 	}
 
 	/// <summary>
-	/// Create with specified log level
+	/// For testing, allow <see cref="level"/>, <see cref="format"/>, and <see cref="args"/> to be set via constructor
 	/// </summary>
 	/// <param name="level">Log Level</param>
-	protected Msg(LogLevel level) : this() =>
-		Level = level;
+	/// <param name="format">Format</param>
+	/// <param name="args"></param>
+	private protected Msg(LogLevel? level, string? format, object[]? args) : this() =>
+		(this.level, this.format, this.args) = (level, format, args);
 
 	/// <inheritdoc/>
 	public string GetTypeName() =>

@@ -26,7 +26,7 @@ public static partial class FluentQueryHelper
 		);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Where"/>
+	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Where{TValue}(Expression{Func{TEntity, TValue}}, Compare, TValue)"/>
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TValue">Column select value type</typeparam>

@@ -4,10 +4,13 @@
 namespace Jeebs.Messages;
 
 /// <inheritdoc cref="IWithValueMsg{T}"/>
-public abstract record class WithValueMsg<T> : Msg, IWithValueMsg<T>
+public abstract record class WithValueMsg<T>() : Msg, IWithValueMsg<T>
 {
 	/// <inheritdoc/>
-	public virtual string Name { get; init; } = nameof(Value);
+	public virtual string Name =>
+		name ?? nameof(Value);
+
+	private readonly string? name;
 
 	/// <inheritdoc/>
 	public abstract T Value { get; init; }
@@ -19,4 +22,11 @@ public abstract record class WithValueMsg<T> : Msg, IWithValueMsg<T>
 	/// <inheritdoc/>
 	public sealed override object[]? Args =>
 		new[] { Value ?? new object() };
+
+	/// <summary>
+	/// For testing, allow <see cref="name"/> to be set via constructor
+	/// </summary>
+	/// <param name="name">Value name</param>
+	private protected WithValueMsg(string name) : this() =>
+		this.name = name;
 }
