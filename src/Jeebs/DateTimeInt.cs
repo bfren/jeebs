@@ -244,12 +244,13 @@ public sealed record class DateTimeInt
 		/// <param name="Value">Invalid part and DateTimeInt</param>
 		public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) : Msg
 		{
+
 			/// <inheritdoc/>
-			public override string Format =>
+			public override string Format { get; protected init; } =
 				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.";
 
 			/// <inheritdoc/>
-			public override object[]? Args =>
+			public override object[]? Args { get; protected init; } =
 				new object[] { Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute };
 		}
 	}
