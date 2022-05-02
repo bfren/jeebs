@@ -15,7 +15,7 @@ public static partial class FluentQueryHelper
 		AssertExecute<TEntity, TValue>(call, expected.GetPropertyInfo().UnsafeUnwrap().Name, withTransaction);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.ExecuteAsync"/>
+	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.ExecuteAsync{TValue}(Expression{Func{TEntity, TValue}})"/>
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TValue">Column select value type</typeparam>
