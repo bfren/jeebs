@@ -5,7 +5,6 @@ using System.Security.Claims;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
 using Jeebs.Auth.Jwt.Constants;
-using Jeebs.Logging;
 using static StrongId.Testing.Generator;
 
 namespace Jeebs.Mvc.Auth.Functions.AuthF_Tests;
@@ -16,7 +15,6 @@ public class GetPrincipal_Tests
 	public async Task Returns_ClaimsPrincipal_With_User_Info_Claims()
 	{
 		// Arrange
-		var log = Substitute.For<ILog>();
 		var user = new AuthUserModel
 		{
 			Id = LongId<AuthUserId>(),
@@ -57,7 +55,6 @@ public class GetPrincipal_Tests
 	public async Task Returns_ClaimsPrincipal_With_Role_Claims()
 	{
 		// Arrange
-		var log = Substitute.For<ILog>();
 		var role0 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var role1 = new AuthRoleModel(LongId<AuthRoleId>(), Rnd.Str);
 		var user = new AuthUserModel
