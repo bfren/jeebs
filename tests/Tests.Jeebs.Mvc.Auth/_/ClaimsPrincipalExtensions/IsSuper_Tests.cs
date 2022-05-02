@@ -64,7 +64,7 @@ public class IsSuper_Tests : ClaimsPrincipalExtensions_Tests
 	public void Claims_Contains_Multiple__Returns_False()
 	{
 		// Arrange
-		var principal = Setup(true, new[] { new Claim(JwtClaimTypes.IsSuper, Rnd.Str), new Claims(JwtClaimTypes.IsSuper, Rnd.Str) });
+		var principal = Setup(true, new[] { new Claim(JwtClaimTypes.IsSuper, Rnd.Str), new Claim(JwtClaimTypes.IsSuper, Rnd.Str) });
 
 		// Act
 		var result = principal.IsSuper();
