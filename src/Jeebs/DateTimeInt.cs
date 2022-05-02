@@ -13,7 +13,7 @@ namespace Jeebs;
 /// </summary>
 public sealed record class DateTimeInt
 {
-	private const string Format = "000000000000";
+	private const string FormatString = "000000000000";
 
 	/// <summary>
 	/// Year
@@ -86,7 +86,7 @@ public sealed record class DateTimeInt
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(Format, CultureInfo.InvariantCulture));
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>
@@ -113,7 +113,7 @@ public sealed record class DateTimeInt
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				0.ToString(Format, CultureInfo.InvariantCulture)
+				0.ToString(FormatString, CultureInfo.InvariantCulture)
 		};
 
 	/// <summary>
