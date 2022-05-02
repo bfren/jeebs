@@ -6,23 +6,14 @@ namespace Jeebs.Data.Testing.Exceptions;
 /// <summary>
 /// See <see cref="Query.FluentQueryHelper.AssertEqualType{T}(T, object?)"/>
 /// </summary>
-public sealed class EqualTypeException : Exception
+public sealed class EqualTypeException : FluentQueryHelperException
 {
-	/// <summary>
-	/// Create
-	/// </summary>
+	/// <inheritdoc/>
 	public EqualTypeException() { }
 
-	/// <summary>
-	/// Create with message
-	/// </summary>
-	/// <param name="message"></param>
+	/// <inheritdoc/>
 	public EqualTypeException(string message) : base(message) { }
 
-	/// <summary>
-	/// Create with message and inner exception
-	/// </summary>
-	/// <param name="message"></param>
-	/// <param name="inner"></param>
+	/// <inheritdoc/>
 	public EqualTypeException(string message, Exception inner) : base(message, inner) { }
 }

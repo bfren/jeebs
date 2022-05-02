@@ -6,23 +6,14 @@ namespace Jeebs.Data.Testing.Exceptions;
 /// <summary>
 /// See <see cref="Query.FluentQueryHelper.AssertGenericArgument{TExpected}(NSubstitute.Core.ICall)"/>
 /// </summary>
-public sealed class GenericArgumentException : Exception
+public sealed class GenericArgumentException : FluentQueryHelperException
 {
-	/// <summary>
-	/// Create
-	/// </summary>
+	/// <inheritdoc/>
 	public GenericArgumentException() { }
 
-	/// <summary>
-	/// Create with message
-	/// </summary>
-	/// <param name="message"></param>
+	/// <inheritdoc/>
 	public GenericArgumentException(string message) : base(message) { }
 
-	/// <summary>
-	/// Create with message and inner exception
-	/// </summary>
-	/// <param name="message"></param>
-	/// <param name="inner"></param>
+	/// <inheritdoc/>
 	public GenericArgumentException(string message, Exception inner) : base(message, inner) { }
 }

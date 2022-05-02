@@ -6,23 +6,14 @@ namespace Jeebs.Data.Testing.Exceptions;
 /// <summary>
 /// See <see cref="Query.FluentQueryHelper.AssertPropertyExpression{TEntity, TValue}(string, object?)"/>
 /// </summary>
-public sealed class PropertyExpressionException : Exception
+public sealed class PropertyExpressionException : FluentQueryHelperException
 {
-	/// <summary>
-	/// Create
-	/// </summary>
+	/// <inheritdoc/>
 	public PropertyExpressionException() { }
 
-	/// <summary>
-	/// Create with message
-	/// </summary>
-	/// <param name="message"></param>
+	/// <inheritdoc/>
 	public PropertyExpressionException(string message) : base(message) { }
 
-	/// <summary>
-	/// Create with message and inner exception
-	/// </summary>
-	/// <param name="message"></param>
-	/// <param name="inner"></param>
+	/// <inheritdoc/>
 	public PropertyExpressionException(string message, Exception inner) : base(message, inner) { }
 }
