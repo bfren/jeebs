@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -37,7 +37,7 @@ public class ToOperator_Tests
 	public void Other_Returns_ASC()
 	{
 		// Arrange
-		var value = (SortOrder)Rnd.NumberF.GetInt32(min: 2, max: 1000);
+		var value = (SortOrder)Rnd.NumberF.GetInt32(min: 3, max: 1000);
 
 		// Act
 		var result = value.ToOperator();
