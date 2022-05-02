@@ -42,7 +42,7 @@ public static partial class FluentQueryHelper
 			actualProperty => AssertPropertyExpression<TEntity, TValue>(expectedProperty, actualProperty),
 
 			// Check that the correct order is being used
-			actualCompare => AssertEqual(expectedOrder, actualCompare)
+			actualCompare => AssertEqualType(expectedOrder, actualCompare)
 		);
 	}
 }

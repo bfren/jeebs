@@ -3,10 +3,12 @@
 
 using System.Linq.Expressions;
 using Jeebs.Data.Query;
+using Jeebs.Data.Testing.Exceptions;
 using Jeebs.Functions;
 using Jeebs.Reflection;
 using NSubstitute.Core;
 using StrongId;
+using Xunit.Sdk;
 
 namespace Jeebs.Data.Testing.Query;
 
@@ -20,24 +22,52 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <param name="call">Call</param>
 	/// <param name="expected">Expected method name</param>
-	internal static void AssertMethodName(ICall call, string expected) =>
-		Assert.Equal(
-			expected: expected,
-			actual: call.GetMethodInfo().Name
-		);
+	/// <exception cref="MethodNameException"></exception>
+	internal static void AssertMethodName(ICall call, string expected)
+	{
+		var actual = call.GetMethodInfo().Name;
+
+		try
+		{
+			Assert.Equal(expected, actual);
+		}
+		catch (EqualException ex)
+		{
+			throw new MethodNameException($"Expected call to '{expected}' but received call to '{actual}'.", ex);
+		}
+	}
 
 	/// <summary>
 	/// Assert that <paramref name="call"/> has one generic argument, of type <typeparamref name="TExpected"/>
 	/// </summary>
 	/// <typeparam name="TExpected">Generic argument</typeparam>
 	/// <param name="call">Call</param>
-	internal static void AssertGenericArgument<TExpected>(ICall call) =>
-		Assert.Collection(call.GetMethodInfo().GetGenericArguments(),
-			actual => Assert.Equal(
-				expected: typeof(TExpected),
-				actual: actual
-			)
-		);
+	/// <exception cref="GenericArgumentException"></exception>
+	internal static void AssertGenericArgument<TExpected>(ICall call)
+	{
+		// Check correct number of generic arguments
+		var args = call.GetMethodInfo().GetGenericArguments();
+		if (args.Length == 0)
+		{
+			throw new GenericArgumentException("Expected one generic argument but found none.");
+		}
+		if (args.Length > 1)
+		{
+			throw new GenericArgumentException($"Expected one generic argument but found {args.Length}.");
+		}
+
+		// Check generic argument
+		var expected = typeof(TExpected);
+		var actual = args[0];
+		try
+		{
+			Assert.Equal(expected, actual);
+		}
+		catch (EqualException ex)
+		{
+			throw new GenericArgumentException($"Expected type '{expected}' but found '{actual}'.", ex);
+		}
+	}
 
 	/// <summary>
 	/// Assert that <paramref name="actual"/> is of type <typeparamref name="T"/> and equal to
@@ -46,11 +76,25 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="T">Value Type</typeparam>
 	/// <param name="expected">Expected value</param>
 	/// <param name="actual">Actual value</param>
-	internal static void AssertEqual<T>(T expected, object? actual) =>
-		Assert.Equal(
-			expected: expected,
-			actual: Assert.IsType<T>(actual)
-		);
+	/// <exception cref="EqualTypeException"></exception>
+	internal static void AssertEqualType<T>(T expected, object? actual)
+	{
+		try
+		{
+			Assert.Equal(
+				expected: expected,
+				actual: Assert.IsType<T>(actual)
+			);
+		}
+		catch (IsTypeException ex)
+		{
+			throw new EqualTypeException($"Expected type '{typeof(T)}' but value was type '{actual?.GetType()}'.", ex);
+		}
+		catch (EqualException ex)
+		{
+			throw new EqualTypeException($"Expected '{expected}' but value was '{actual}'.", ex);
+		}
+	}
 
 	/// <summary>
 	/// Assert that <paramref name="actual"/> and <paramref name="expected"/> are equal by
@@ -58,11 +102,21 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <param name="expected">Expected value</param>
 	/// <param name="actual">Actual value</param>
-	internal static void AssertEqualJson(object expected, object? actual) =>
-		Assert.Equal(
-			expected: JsonF.Serialise(expected),
-			actual: JsonF.Serialise(actual)
-		);
+	/// <exception cref="EqualJsonException"></exception>
+	internal static void AssertEqualJson(object expected, object? actual)
+	{
+		try
+		{
+			Assert.Equal(
+				expected: JsonF.Serialise(expected).UnsafeUnwrap(),
+				actual: JsonF.Serialise(actual).UnsafeUnwrap()
+			);
+		}
+		catch (EqualException ex)
+		{
+			throw new EqualJsonException($"Expected '{expected}' but value was '{actual}'.", ex);
+		}
+	}
 
 	/// <summary>
 	/// Assert that <paramref name="actual"/> is an <see cref="Expression{TDelegate}"/> that resolves
@@ -72,12 +126,31 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="TValue">Value Type</typeparam>
 	/// <param name="expected">Expected property name</param>
 	/// <param name="actual">Actual property (will be cast to <see cref="Expression{TDelegate}"/>)</param>
-	internal static void AssertPropertyExpression<TEntity, TValue>(string expected, object? actual) =>
-		Assert.Equal(
-			expected: expected,
-			actual: Assert.IsAssignableFrom<Expression<Func<TEntity, TValue>>>(actual)
-				.GetPropertyInfo().UnsafeUnwrap().Name
-		);
+	/// <exception cref="PropertyExpressionException"></exception>
+	internal static void AssertPropertyExpression<TEntity, TValue>(string expected, object? actual)
+	{
+		try
+		{
+			var actualName = Assert.IsAssignableFrom<Expression<Func<TEntity, TValue>>>(actual)
+				.GetPropertyInfo().UnsafeUnwrap().Name;
+
+			try
+			{
+				Assert.Equal(
+					expected: expected,
+					actual: actualName
+				);
+			}
+			catch (EqualException ex)
+			{
+				throw new PropertyExpressionException($"Expected property with name '{expected}' but received '{actualName}'.", ex);
+			}
+		}
+		catch (IsAssignableFromException ex)
+		{
+			throw new PropertyExpressionException($"Expected a property expression but received '{actual?.GetType()}'.", ex);
+		}
+	}
 
 	/// <summary>Used in <see cref="IFake"/></summary>
 	private sealed record class FakeId : LongId;

@@ -45,7 +45,7 @@ public static partial class FluentQueryHelper
 			actualProperty => AssertPropertyExpression<TEntity, TValue>(expectedProperty, actualProperty),
 
 			// Check that the correct values are being used
-			actualValue => AssertEqual(expectedValues, actualValue)
+			actualValue => AssertEqualType(expectedValues, actualValue)
 		);
 	}
 }

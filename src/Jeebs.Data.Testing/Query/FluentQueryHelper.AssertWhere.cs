@@ -54,7 +54,7 @@ public static partial class FluentQueryHelper
 			actualProperty => AssertPropertyExpression<TEntity, TValue>(expectedProperty, actualProperty),
 
 			// Check that the correct compare is being used
-			actualCompare => AssertEqual(expectedCompare, actualCompare),
+			actualCompare => AssertEqualType(expectedCompare, actualCompare),
 
 			// Check that the correct value is being used
 			actualValue =>
@@ -86,7 +86,7 @@ public static partial class FluentQueryHelper
 		Assert.Collection(call.GetArguments(),
 
 			// Check that the correct clause is being used
-			actualClause => AssertEqual(expectedClause, actualClause),
+			actualClause => AssertEqualType(expectedClause, actualClause),
 
 			// Check that the correct parameters are being used -
 			// using Json serialisation to support anonymous types
