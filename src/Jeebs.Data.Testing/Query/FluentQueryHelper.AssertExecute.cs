@@ -10,9 +10,9 @@ namespace Jeebs.Data.Testing.Query;
 
 public static partial class FluentQueryHelper
 {
-	/// <inheritdoc cref="AssertExecute{TEntity, TValue}(ICall, string)"/>
-	public static void AssertExecute<TEntity, TValue>(ICall call, Expression<Func<TEntity, TValue>> expected) =>
-		AssertExecute<TEntity, TValue>(call, expected.GetPropertyInfo().UnsafeUnwrap().Name);
+	/// <inheritdoc cref="AssertExecute{TEntity, TValue}(ICall, string, bool)"/>
+	public static void AssertExecute<TEntity, TValue>(ICall call, Expression<Func<TEntity, TValue>> expected, bool withTransaction) =>
+		AssertExecute<TEntity, TValue>(call, expected.GetPropertyInfo().UnsafeUnwrap().Name, withTransaction);
 
 	/// <summary>
 	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.ExecuteAsync"/>
@@ -21,7 +21,8 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="TValue">Column select value type</typeparam>
 	/// <param name="call">Call</param>
 	/// <param name="expected">Expected property</param>
-	public static void AssertExecute<TEntity, TValue>(ICall call, string expected)
+	/// <param name="withTransaction">Whether or not to check for a transaction</param>
+	public static void AssertExecute<TEntity, TValue>(ICall call, string expected, bool withTransaction)
 	{
 		// Check the method name
 		AssertMethodName(call, nameof(IFake.ExecuteAsync));
@@ -30,10 +31,18 @@ public static partial class FluentQueryHelper
 		AssertGenericArgument<TValue>(call);
 
 		// Check the parameters
-		Assert.Collection(call.GetArguments(),
-
+		var inspectors = new List<Action<object?>>
+		{
 			// Check that the correct property is being used
-			actualProperty => AssertPropertyExpression<TEntity, TValue>(expected, actualProperty)
-		);
+			{ actualProperty => AssertPropertyExpression<TEntity, TValue>(expected, actualProperty) }
+		};
+
+		if (withTransaction)
+		{
+			// Use discard as a placeholder so the right number of items is checked in the collection
+			inspectors.Add(_ => { });
+		}
+
+		Assert.Collection(call.GetArguments(), inspectors.ToArray());
 	}
 }
