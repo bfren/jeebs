@@ -50,7 +50,7 @@ public class HasClaim_Tests : ClaimsPrincipalExtensions_Tests
 	public void Claims_Does_Not_Contain__Returns_False()
 	{
 		// Arrange
-		var principal = Setup(true, new Claim[] { new(Rnd.Str, Rnd.Str), new(Rnd.Str, Rnd.Str) });
+		var principal = Setup(true, new[] { new Claim(Rnd.Str, Rnd.Str), new Claim(Rnd.Str, Rnd.Str) });
 
 		// Act
 		var result = principal.HasClaim(Rnd.Str);
@@ -64,7 +64,7 @@ public class HasClaim_Tests : ClaimsPrincipalExtensions_Tests
 	{
 		// Arrange
 		var type = Rnd.Str;
-		var principal = Setup(true, new Claim[] { new(type, Rnd.Str), new(type, Rnd.Str) });
+		var principal = Setup(true, new[] { new Claim(type, Rnd.Str), new Claim(type, Rnd.Str) });
 
 		// Act
 		var result = principal.HasClaim(type);
