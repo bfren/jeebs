@@ -13,5 +13,5 @@ public abstract class Setup
 
 	public sealed record class TestId : LongId;
 
-	public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
+	public sealed record class TestEntity(TestId Id, string Foo, long Bar) : IWithId<TestId>;
 }

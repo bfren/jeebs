@@ -48,7 +48,7 @@ public static partial class FluentQueryHelper
 		AssertGenericArgument<TValue>(call);
 
 		// Check the parameters
-		Assert.Collection(call.GetArguments(),
+		AssertCollection(call.GetArguments(),
 
 			// Check that the correct property is being used
 			actualProperty => AssertPropertyExpression<TEntity, TValue>(expectedProperty, actualProperty),
@@ -65,7 +65,7 @@ public static partial class FluentQueryHelper
 				}
 				else
 				{
-					Assert.Equal(expectedValue!, actualValue);
+					AssertEqualType(expectedValue!, actualValue);
 				}
 			}
 		);
@@ -83,7 +83,7 @@ public static partial class FluentQueryHelper
 		AssertMethodName(call, nameof(IFake.Where));
 
 		// Check the parameters
-		Assert.Collection(call.GetArguments(),
+		AssertCollection(call.GetArguments(),
 
 			// Check that the correct clause is being used
 			actualClause => AssertEqualType(expectedClause, actualClause),
