@@ -10,5 +10,6 @@ namespace Jeebs.Messages;
 public abstract record class WithInnerMsg(IMsg Value) : WithValueMsg<IMsg>
 {
 	/// <inheritdoc/>
-	public override string Name { get; init; } = "Inner Message";
+	public override string Name =>
+		"Inner Message";
 }

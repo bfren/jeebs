@@ -12,10 +12,12 @@ public abstract record class ExceptionMsg : WithValueMsg<Exception>, IExceptionM
 	/// <summary>
 	/// Override Level with <see cref="LogLevel.Error"/>
 	/// </summary>
-	public override LogLevel Level { get; protected init; } = LogLevel.Error;
+	public override LogLevel Level =>
+		LogLevel.Error;
 
 	/// <summary>
 	/// Override Name with 'Exception'
 	/// </summary>
-	public override string Name { get; init; } = nameof(Exception);
+	public override string Name =>
+		nameof(Exception);
 }
