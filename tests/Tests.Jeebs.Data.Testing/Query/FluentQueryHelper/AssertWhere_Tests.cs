@@ -42,6 +42,22 @@ public class AssertWhere_Tests : Setup
 	}
 
 	[Fact]
+	public void With_Nullable_Value__Asserts_Where()
+	{
+		// Arrange
+		var fluent = Create();
+		var compare = Compare.NotEqual;
+		long? value = Rnd.Lng;
+		fluent.Where(x => x.Nll, compare, value);
+
+		// Act
+		var action = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, long?>(c, x => x.Nll, compare, value);
+
+		// Assert
+		fluent.AssertCalls(action);
+	}
+
+	[Fact]
 	public void Incorrect_Method__Throws_MethodNameException()
 	{
 		// Arrange

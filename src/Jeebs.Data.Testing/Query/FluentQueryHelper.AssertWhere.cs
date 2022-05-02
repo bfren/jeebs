@@ -65,7 +65,7 @@ public static partial class FluentQueryHelper
 				}
 				else
 				{
-					AssertEqualType(expectedValue!, actualValue);
+					AssertEqual(expectedValue, actualValue);
 				}
 			}
 		);
