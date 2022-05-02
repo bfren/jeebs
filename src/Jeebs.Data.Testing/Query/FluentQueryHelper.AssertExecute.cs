@@ -43,6 +43,6 @@ public static partial class FluentQueryHelper
 			inspectors.Add(_ => { });
 		}
 
-		Assert.Collection(call.GetArguments(), inspectors.ToArray());
+		AssertCollection(call.GetArguments(), inspectors.ToArray());
 	}
 }
