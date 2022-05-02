@@ -171,7 +171,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppBasic", "apps\AppBasic\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Logging.Serilog.PostgreSql", "src\Jeebs.Logging.Serilog.PostgreSql\Jeebs.Logging.Serilog.PostgreSql.csproj", "{84118EEC-4166-4F9E-96A8-FA70758B890A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Mvc.Razor", "src\Jeebs.Mvc.Razor\Jeebs.Mvc.Razor.csproj", "{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Mvc.Razor", "src\Jeebs.Mvc.Razor\Jeebs.Mvc.Razor.csproj", "{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Testing", "src\Jeebs.Data.Testing\Jeebs.Data.Testing.csproj", "{9AE5CF87-5B23-4A33-832E-F19EC46247B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Testing", "tests\Tests.Jeebs.Data.Testing\Tests.Jeebs.Data.Testing.csproj", "{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -460,6 +464,18 @@ Global
 		{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -533,6 +549,8 @@ Global
 		{41C9ED43-99B1-4706-A31E-8DEB890F62D1} = {A256449B-4234-43DD-B18F-741D69906712}
 		{84118EEC-4166-4F9E-96A8-FA70758B890A} = {BD8813AD-C9E3-4B05-A9E0-F044D53AE06F}
 		{2CC366AF-8D27-4AAD-AD01-5D36CAB55753} = {8687DA2A-88DE-4130-941B-62B80FA6D4A2}
+		{9AE5CF87-5B23-4A33-832E-F19EC46247B9} = {2C74A640-5088-487E-8B3D-0B8C818EDFCB}
+		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97} = {1ADCEE54-1EBE-4A6F-B558-7ECE4F7AB61A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
