@@ -168,10 +168,8 @@ public class Msg_Tests
 
 	public sealed record class TestMsg : Msg
 	{
-		public TestMsg(string format) =>
-			(Level, Format) = (LogLevel.Verbose, format);
+		public TestMsg(string format) : base(LogLevel.Verbose, format, null) { }
 
-		public TestMsg(object[] args) =>
-			(Level, Args) = (LogLevel.Fatal, args);
+		public TestMsg(object[] args) : base(LogLevel.Fatal, null, args) { }
 	}
 }

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Messages.Msg_Tests;
@@ -44,7 +44,6 @@ public class ArgsWithType_Tests
 	{
 		public TestMsg() { }
 
-		public TestMsg(object[] args) =>
-			Args = args;
+		public TestMsg(object[] args) : base(null, null, args) { }
 	}
 }

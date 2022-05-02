@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Messages.Msg_Tests;
@@ -50,7 +50,6 @@ public class FormatWithType_Tests
 	{
 		public TestMsg() { }
 
-		public TestMsg(string format) =>
-			Format = format;
+		public TestMsg(string format) : base(null, format, null) { }
 	}
 }
