@@ -18,7 +18,7 @@ jobs:
     steps:
     -
       name: Prepare - Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     -
       name: Prepare - Read Version
       uses: bfren/read-file@v1
@@ -36,17 +36,17 @@ jobs:
     -
       name: A - Restore
       run: |
-        dotnet restore ./Test.csproj
+        dotnet restore Test.csproj
     -
       name: B - Build
       run: |
-        dotnet build ./Test.csproj \
+        dotnet build Test.csproj \
           --no-restore \
           --configuration Release
     -
       name: C - Test
       run: |
-        dotnet test ./Test.csproj \
+        dotnet test Test.csproj \
           --no-restore \
           --no-build \
           --configuration Release
@@ -59,7 +59,7 @@ jobs:
         SLACK_USERNAME: Jeebs (GitHub)
         SLACK_MESSAGE: Tests Passed
         SLACK_COLOR: good
-        SLACK_ICON: https://bfren.uk/img/logo-square-500x500.jpg
+        SLACK_ICON: https://bfren.dev/img/logo-square-500x500.jpg
     -
       if: failure()
       name: Finish - Failure
@@ -69,4 +69,4 @@ jobs:
         SLACK_USERNAME: Jeebs (GitHub)
         SLACK_MESSAGE: Test Failed
         SLACK_COLOR: danger
-        SLACK_ICON: https://bfren.uk/img/logo-square-500x500.jpg
+        SLACK_ICON: https://bfren.dev/img/logo-square-500x500.jpg
