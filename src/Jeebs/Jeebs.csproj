@@ -18,7 +18,7 @@
 	<ItemGroup>
 		<PackageReference Include="MaybeF" Version="9.0.2" />
 		<PackageReference Include="Rnd" Version="8.2.0" />
-		<PackageReference Include="StrongId" Version="8.1.8" />
+		<PackageReference Include="StrongId" Version="8.1.9" />
 	</ItemGroup>
 	<ItemGroup Label="Embed Version">
 		<EmbeddedResource Include="$(VersionPath)" />
