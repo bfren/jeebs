@@ -1,5 +1,5 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema",
+	"$schema": "https://json-schema.org/draft-07/schema",
 	"id": "https://raw.githubusercontent.com/bfren/jeebs/main/Libraries/Jeebs.Config/schema.json",
 	"title": "Jeebs Libraries Configuration Settings",
 	"type": "object",
@@ -89,7 +89,7 @@
 							}
 						}
 					}
-				},				
+				},
 				"db": {
 					"type": "object",
 					"description": "Database connection configuration",
