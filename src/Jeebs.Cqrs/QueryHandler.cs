@@ -13,13 +13,13 @@ namespace Jeebs.Cqrs;
 /// <typeparam name="TQuery">Query type</typeparam>
 /// <typeparam name="TResult">Query result value type</typeparam>
 public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
-	where TQuery : IQuery<TResult>
+	where TQuery : Query<TResult>
 {
-	/// <inheritdoc cref="IQueryHandler{TResult}.HandleAsync(IQuery{TResult})"/>
+	/// <inheritdoc cref="IQueryHandler{TResult}.HandleAsync(Query{TResult})"/>
 	public abstract Task<Maybe<TResult>> HandleAsync(TQuery query);
 
 	/// <inheritdoc/>
-	Task<Maybe<TResult>> IQueryHandler<TResult>.HandleAsync(IQuery<TResult> query) =>
+	Task<Maybe<TResult>> IQueryHandler<TResult>.HandleAsync(Query<TResult> query) =>
 		query switch
 		{
 			TQuery x =>

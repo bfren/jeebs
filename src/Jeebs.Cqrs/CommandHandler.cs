@@ -12,13 +12,13 @@ namespace Jeebs.Cqrs;
 /// </summary>
 /// <typeparam name="TCommand">Command type</typeparam>
 public abstract class CommandHandler<TCommand> : ICommandHandler
-	where TCommand : ICommand
+	where TCommand : Command
 {
-	/// <inheritdoc cref="ICommandHandler.HandleAsync(ICommand)"/>
+	/// <inheritdoc cref="ICommandHandler.HandleAsync(Command)"/>
 	public abstract Task<Maybe<bool>> HandleAsync(TCommand command);
 
 	/// <inheritdoc/>
-	Task<Maybe<bool>> ICommandHandler.HandleAsync(ICommand command) =>
+	Task<Maybe<bool>> ICommandHandler.HandleAsync(Command command) =>
 		command switch
 		{
 			TCommand x =>

@@ -7,4 +7,4 @@ namespace Jeebs.Cqrs;
 /// CQRS query
 /// </summary>
 /// <typeparam name="TResult">Result value type</typeparam>
-public interface IQuery<TResult> { }
+public abstract record class Query<TResult>;

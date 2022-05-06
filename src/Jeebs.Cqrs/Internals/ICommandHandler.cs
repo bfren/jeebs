@@ -7,7 +7,7 @@ namespace Jeebs.Cqrs.Internals;
 
 /// <summary>
 /// Command handler interface which allows generic dispatching - see
-/// <see cref="Dispatcher.DispatchAsync(ICommand)"/>
+/// <see cref="Dispatcher.DispatchAsync(Command)"/>
 /// </summary>
 internal interface ICommandHandler
 {
@@ -15,5 +15,5 @@ internal interface ICommandHandler
 	/// Handle a command
 	/// </summary>
 	/// <param name="command">Command object</param>
-	Task<Maybe<bool>> HandleAsync(ICommand command);
+	Task<Maybe<bool>> HandleAsync(Command command);
 }

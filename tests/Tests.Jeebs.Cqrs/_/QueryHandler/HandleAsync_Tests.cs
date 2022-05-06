@@ -52,7 +52,7 @@ public class HandleAsync_Tests
 		await handler.Received().HandleAsync(command);
 	}
 
-	public sealed record class Query : IQuery<string>;
+	public sealed record class Query : Query<string>;
 
-	public sealed record class IncorrectQuery : IQuery<string>;
+	public sealed record class IncorrectQuery : Query<string>;
 }

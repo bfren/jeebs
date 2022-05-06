@@ -7,7 +7,7 @@ namespace Jeebs.Cqrs.Internals;
 
 /// <summary>
 /// Query handler interface which allows generic dispatching - see
-/// <see cref="Dispatcher.DispatchAsync{TResult}(IQuery{TResult})"/>
+/// <see cref="Dispatcher.DispatchAsync{TResult}(Query{TResult})"/>
 /// </summary>
 /// <typeparam name="TResult">Query result value type</typeparam>
 internal interface IQueryHandler<TResult>
@@ -16,5 +16,5 @@ internal interface IQueryHandler<TResult>
 	/// Handle a query
 	/// </summary>
 	/// <param name="query">Query object</param>
-	Task<Maybe<TResult>> HandleAsync(IQuery<TResult> query);
+	Task<Maybe<TResult>> HandleAsync(Query<TResult> query);
 }

@@ -12,4 +12,4 @@ public class SayHelloHandler : QueryHandler<SayHelloQuery, string>
 		F.Some($"Hello, {query.Name}!").AsTask;
 }
 
-public record struct SayHelloQuery(string Name) : IQuery<string>;
+public sealed record class SayHelloQuery(string Name) : Query<string>;

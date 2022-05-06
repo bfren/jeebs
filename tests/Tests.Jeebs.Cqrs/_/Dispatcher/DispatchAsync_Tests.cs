@@ -98,7 +98,7 @@ public class DispatchAsync_Tests
 		}
 	}
 
-	public sealed record class Command : ICommand;
+	public sealed record class Command : Cqrs.Command;
 
-	public sealed record class Query : IQuery<bool>;
+	public sealed record class Query : Query<bool>;
 }
