@@ -25,7 +25,7 @@ public sealed class Dispatcher : IDispatcher
 		(Provider, Log) = (provider, log);
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> DispatchAsync(ICommand command)
+	public Task<Maybe<bool>> DispatchAsync(Command command)
 	{
 		var service = GetHandlerService(typeof(CommandHandler<>), command.GetType());
 		return service switch
@@ -39,7 +39,7 @@ public sealed class Dispatcher : IDispatcher
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query)
+	public Task<Maybe<TResult>> DispatchAsync<TResult>(Query<TResult> query)
 	{
 		var service = GetHandlerService(typeof(QueryHandler<,>), query.GetType(), typeof(TResult));
 		return service switch

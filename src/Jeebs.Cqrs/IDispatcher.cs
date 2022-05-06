@@ -14,12 +14,12 @@ public interface IDispatcher
 	/// Call <see cref="CommandHandler{TCommand}.HandleAsync(TCommand)"/> for <paramref name="command"/>
 	/// </summary>
 	/// <param name="command">Command object</param>
-	Task<Maybe<bool>> DispatchAsync(ICommand command);
+	Task<Maybe<bool>> DispatchAsync(Command command);
 
 	/// <summary>
 	/// Call <see cref="QueryHandler{TQuery, TResult}.HandleAsync(TQuery)"/> for <paramref name="query"/>
 	/// </summary>
 	/// <typeparam name="TResult">Query result value type</typeparam>
 	/// <param name="query">Query object</param>
-	Task<Maybe<TResult>> DispatchAsync<TResult>(IQuery<TResult> query);
+	Task<Maybe<TResult>> DispatchAsync<TResult>(Query<TResult> query);
 }

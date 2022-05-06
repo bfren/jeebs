@@ -52,7 +52,7 @@ public class HandleAsync_Tests
 		await handler.Received().HandleAsync(command);
 	}
 
-	public sealed record class Command : ICommand;
+	public sealed record class Command : Cqrs.Command;
 
-	public sealed record class IncorrectCommand : ICommand;
+	public sealed record class IncorrectCommand : Cqrs.Command;
 }
