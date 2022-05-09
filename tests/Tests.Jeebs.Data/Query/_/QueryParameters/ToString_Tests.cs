@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Query.QueryParameters_Tests;
@@ -6,7 +6,20 @@ namespace Jeebs.Data.Query.QueryParameters_Tests;
 public class ToString_Tests
 {
 	[Fact]
-	public void Returns_Json()
+	public void No_Items__Returns_Empty()
+	{
+		// Arrange
+		var param = new QueryParametersDictionary();
+
+		// Act
+		var result = param.ToString();
+
+		// Assert
+		Assert.Equal("(Empty)", result);
+	}
+
+	[Fact]
+	public void With_Items__Returns_String()
 	{
 		// Arrange
 		var param = new QueryParametersDictionary();
@@ -18,6 +31,6 @@ public class ToString_Tests
 		var result = param.ToString();
 
 		// Assert
-		Assert.Equal($"{{\"{nameof(p0)}\":\"{p0}\",\"{nameof(p1)}\":{p1}}}", result);
+		Assert.Equal($"2, {nameof(p0)} = {p0}, {nameof(p1)} = {p1}", result);
 	}
 }
