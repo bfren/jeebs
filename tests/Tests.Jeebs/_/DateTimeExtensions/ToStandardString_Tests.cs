@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.DateTimeExtensions_Tests;
@@ -9,13 +9,13 @@ public class ToStandardString_Tests
 	public void Date_ReturnsStandardFormattedString()
 	{
 		// Arrange
-		const string expected = "15:59 04/01/2000";
-		var date = new DateTime(2000, 1, 4, 15, 59, 30);
+		var date = Rnd.DateTime;
+		var expected = date.ToString("HH:mm dd/MM/yyyy");
 
 		// Act
-		var actual = date.ToStandardString();
+		var result = date.ToStandardString();
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
 	}
 }

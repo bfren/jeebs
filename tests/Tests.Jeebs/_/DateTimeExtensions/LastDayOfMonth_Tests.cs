@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.DateTimeExtensions_Tests;
@@ -9,13 +9,29 @@ public class LastDayOfMonth_Tests
 	public void Date_ReturnsOneMinuteToMidnightOnLastDayOfMonth()
 	{
 		// Arrange
-		var date = new DateTime(2000, 1, 4, 15, 59, 30);
-		var expected = new DateTime(2000, 1, 31, 23, 59, 59);
+		var date = Rnd.DateTime;
+		var expected = new DateTime(date.Year, date.Month, 1).AddMonths(1).AddDays(-1).EndOfDay();
 
 		// Act
-		var actual = date.LastDayOfMonth();
+		var result = date.LastDayOfMonth();
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
+	}
+
+	[Theory]
+	[InlineData(DateTimeKind.Unspecified)]
+	[InlineData(DateTimeKind.Utc)]
+	[InlineData(DateTimeKind.Local)]
+	public void Date_Retains_Kind(DateTimeKind input)
+	{
+		// Arrange
+		var date = DateTime.SpecifyKind(Rnd.DateTime, input);
+
+		// Act
+		var result = date.LastDayOfMonth();
+
+		// Assert
+		Assert.Equal(input, result.Kind);
 	}
 }
