@@ -77,8 +77,21 @@ public sealed class QueryParametersDictionary : Dictionary<string, object>, IQue
 	/// <summary>
 	/// Return parameters as JSON
 	/// </summary>
-	public override string ToString() =>
-		JsonF.Serialise(this, JsonSerializerOptions).Unwrap(GetType().ToString());
+	public override string ToString()
+	{
+		if (Count == 0)
+		{
+			return "(Empty)";
+		}
+
+		var str = $"{Count}";
+		foreach (var (key, value) in this)
+		{
+			str += $", {key} = {value}";
+		}
+
+		return str;
+	}
 
 	/// <summary>
 	/// Don't change parameter names when serialising to JSON
