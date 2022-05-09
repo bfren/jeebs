@@ -57,6 +57,13 @@ public static class DateTimeExtensions
 	/// Return a standard format date/time value (HH:mm dd/MM/yyyy)
 	/// </summary>
 	/// <param name="this">DateTime object</param>
+	public static string ToSortableString(this DateTime @this) =>
+		@this.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.ffff", CultureInfo.InvariantCulture);
+
+	/// <summary>
+	/// Return a standard format date/time value (HH:mm dd/MM/yyyy)
+	/// </summary>
+	/// <param name="this">DateTime object</param>
 	public static string ToStandardString(this DateTime @this) =>
 		@this.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture);
 }
