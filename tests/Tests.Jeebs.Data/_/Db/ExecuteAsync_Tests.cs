@@ -39,7 +39,7 @@ public class ExecuteAsync_Tests
 		await db.ExecuteAsync(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(bool), query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Parameters}", type, typeof(bool), query, parameters);
 	}
 
 	[Fact]
@@ -57,6 +57,6 @@ public class ExecuteAsync_Tests
 		await db.ExecuteAsync<int>(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(int), query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Parameters}", type, typeof(int), query, parameters);
 	}
 }
