@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.DateTimeExtensions_Tests;
@@ -9,13 +9,29 @@ public class StartOfDay_Tests
 	public void Date_ReturnsMidnight()
 	{
 		// Arrange
-		var date = new DateTime(2000, 1, 1, 15, 59, 30);
-		var expected = new DateTime(2000, 1, 1, 0, 0, 0);
+		var date = Rnd.DateTime;
+		var expected = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
 
 		// Act
-		var actual = date.StartOfDay();
+		var result = date.StartOfDay();
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
+	}
+
+	[Theory]
+	[InlineData(DateTimeKind.Unspecified)]
+	[InlineData(DateTimeKind.Utc)]
+	[InlineData(DateTimeKind.Local)]
+	public void Date_Retains_Kind(DateTimeKind input)
+	{
+		// Arrange
+		var date = DateTime.SpecifyKind(Rnd.DateTime, input);
+
+		// Act
+		var result = date.StartOfDay();
+
+		// Assert
+		Assert.Equal(input, result.Kind);
 	}
 }

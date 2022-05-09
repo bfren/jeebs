@@ -95,7 +95,7 @@ public abstract class Db : IDb
 		}
 		else if (parameters.ToString() is string param)
 		{
-			message += " | Parameters: {@Parameters}";
+			message += " | Parameters: {Parameters}";
 			WriteToLog(message, args.ExtendWith(param));
 		}
 	}

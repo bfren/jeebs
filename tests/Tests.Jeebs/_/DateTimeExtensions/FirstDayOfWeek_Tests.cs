@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.DateTimeExtensions_Tests;
@@ -13,9 +13,9 @@ public class FirstDayOfWeek_Tests
 		var expected = new DateTime(2000, 1, 2, 0, 0, 0);
 
 		// Act
-		var actual = date.FirstDayOfWeek();
+		var result = date.FirstDayOfWeek();
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
 	}
 }

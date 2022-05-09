@@ -39,6 +39,6 @@ public class QuerySingleAsync_Tests
 		await db.QuerySingleAsync<int>(query, parameters, type, transaction);
 
 		// Assert
-		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {@Parameters}", type, typeof(int), query, parameters);
+		log.Received(2).Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Parameters}", type, typeof(int), query, parameters);
 	}
 }

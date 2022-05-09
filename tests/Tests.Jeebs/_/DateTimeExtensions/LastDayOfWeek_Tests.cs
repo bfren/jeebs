@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.DateTimeExtensions_Tests;
@@ -13,9 +13,9 @@ public class LastDayOfWeek_Tests
 		var expected = new DateTime(2000, 1, 8, 23, 59, 59);
 
 		// Act
-		var actual = date.LastDayOfWeek();
+		var result = date.LastDayOfWeek();
 
 		// Assert
-		Assert.Equal(expected, actual);
+		Assert.Equal(expected, result);
 	}
 }

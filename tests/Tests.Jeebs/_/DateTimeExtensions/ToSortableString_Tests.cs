@@ -3,17 +3,17 @@
 
 namespace Jeebs.DateTimeExtensions_Tests;
 
-public class ToStandardString_Tests
+public class ToSortableString_Tests
 {
 	[Fact]
-	public void Date_ReturnsStandardFormattedString()
+	public void Date_Returns_Sortable_Formatted_String()
 	{
 		// Arrange
 		var date = Rnd.DateTime;
-		var expected = date.ToString("HH:mm dd/MM/yyyy");
+		var expected = date.ToString("yyyy-MM-dd HH:mm:ss.ffff");
 
 		// Act
-		var result = date.ToStandardString();
+		var result = date.ToSortableString();
 
 		// Assert
 		Assert.Equal(expected, result);
