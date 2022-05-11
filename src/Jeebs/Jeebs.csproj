@@ -9,7 +9,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MaybeF" Version="9.1.0" />
-		<PackageReference Include="Rnd" Version="8.2.0" />
+		<PackageReference Include="Rnd" Version="8.3.0" />
 		<PackageReference Include="StrongId" Version="8.1.9" />
 	</ItemGroup>
 	<ItemGroup Label="Embed Version">
