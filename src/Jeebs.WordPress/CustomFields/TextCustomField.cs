@@ -35,17 +35,17 @@ public abstract class TextCustomField : CustomField<string>
 		if (meta.TryGetValue(Key, out var value))
 		{
 			ValueStr = value;
-			return F.True.AsTask;
+			return F.True.AsTask();
 		}
 
 		// Return error if the field is required
 		if (isRequired)
 		{
-			return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+			return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask();
 		}
 
 		// Return OK but not set
-		return F.False.AsTask;
+		return F.False.AsTask();
 	}
 
 	/// <inheritdoc/>

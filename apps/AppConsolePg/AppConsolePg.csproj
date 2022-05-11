@@ -24,7 +24,7 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Rnd" Version="8.2.0" />
+	  <PackageReference Include="Rnd" Version="8.3.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />

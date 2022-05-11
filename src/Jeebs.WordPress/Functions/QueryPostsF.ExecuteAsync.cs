@@ -38,7 +38,7 @@ public static partial class QueryPostsF
 					Process<IEnumerable<TModel>, TModel>(db, w, x, filters),
 
 				_ =>
-					F.Some(x).AsTask
+					F.Some(x).AsTask()
 			}
 		);
 
@@ -72,10 +72,10 @@ public static partial class QueryPostsF
 					Process<IPagedList<TModel>, TModel>(db, w, x, filters),
 
 				PagedList<TModel> =>
-					F.Some(x).AsTask,
+					F.Some(x).AsTask(),
 
 				_ =>
-					F.None<IPagedList<TModel>, M.UnrecognisedPagedListTypeMsg>().AsTask
+					F.None<IPagedList<TModel>, M.UnrecognisedPagedListTypeMsg>().AsTask()
 			}
 		);
 

@@ -34,7 +34,7 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(command),
 
 			_ =>
-				F.None<bool>(new UnableToGetCommandHandlerMsg(command.GetType())).AsTask
+				F.None<bool>(new UnableToGetCommandHandlerMsg(command.GetType())).AsTask()
 		};
 	}
 
@@ -48,7 +48,7 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(query),
 
 			_ =>
-				F.None<TResult>(new UnableToGetQueryHandlerMsg(query.GetType())).AsTask
+				F.None<TResult>(new UnableToGetQueryHandlerMsg(query.GetType())).AsTask()
 		};
 	}
 

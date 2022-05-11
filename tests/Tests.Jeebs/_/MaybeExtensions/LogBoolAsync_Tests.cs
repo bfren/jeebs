@@ -12,7 +12,7 @@ public class LogBoolAsyncAsync_Tests
 	public async Task Is_Some__Value_True__Calls_Log_Inf__With_Correct_Values()
 	{
 		// Arrange
-		var maybe = F.True.AsTask;
+		var maybe = F.True.AsTask();
 		var done = Rnd.Str;
 		var log = Substitute.For<ILog>();
 
@@ -29,7 +29,7 @@ public class LogBoolAsyncAsync_Tests
 	public async Task Is_Some__Value_False__Calls_Log_Err__With_Correct_Values()
 	{
 		// Arrange
-		var maybe = F.False.AsTask;
+		var maybe = F.False.AsTask();
 		var failed = Rnd.Str;
 		var log = Substitute.For<ILog>();
 
@@ -47,7 +47,7 @@ public class LogBoolAsyncAsync_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<IMsg>();
-		var maybe = F.None<bool>(msg).AsTask;
+		var maybe = F.None<bool>(msg).AsTask();
 		var log = Substitute.For<ILog>();
 
 		// Act

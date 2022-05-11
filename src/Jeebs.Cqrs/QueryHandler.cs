@@ -26,6 +26,6 @@ public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 				HandleAsync(x),
 
 			_ =>
-				F.None<TResult>(new IncorrectQueryTypeMsg(typeof(TQuery), query.GetType())).AsTask
+				F.None<TResult>(new IncorrectQueryTypeMsg(typeof(TQuery), query.GetType())).AsTask()
 		};
 }

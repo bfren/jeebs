@@ -13,7 +13,7 @@ public class LogAsync_Tests
 	{
 		// Arrange
 		var value = Rnd.Str;
-		var maybe = F.Some(value).AsTask;
+		var maybe = F.Some(value).AsTask();
 		var message = Rnd.Str;
 		var log = Substitute.For<ILog>();
 
@@ -31,7 +31,7 @@ public class LogAsync_Tests
 	{
 		// Arrange
 		var msg = Substitute.For<IMsg>();
-		var maybe = F.None<bool>(msg).AsTask;
+		var maybe = F.None<bool>(msg).AsTask();
 		var log = Substitute.For<ILog>();
 
 		// Act
