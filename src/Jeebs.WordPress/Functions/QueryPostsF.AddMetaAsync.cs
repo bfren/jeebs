@@ -28,7 +28,7 @@ public static partial class QueryPostsF
 		// If there are no posts, do nothing
 		if (!posts.Any())
 		{
-			return F.Some(posts).AsTask;
+			return F.Some(posts).AsTask();
 		}
 
 		// Get Meta values

@@ -28,14 +28,14 @@ public static partial class QueryPostsF
 		// If there are no posts, do nothing
 		if (!posts.Any())
 		{
-			return F.Some(posts).AsTask;
+			return F.Some(posts).AsTask();
 		}
 
 		// Only proceed if there is at least one term list in this model
 		var termLists = GetTermLists<TModel>();
 		if (termLists.Count == 0)
 		{
-			return F.Some(posts).AsTask;
+			return F.Some(posts).AsTask();
 		}
 
 		// Get terms and add them to the posts

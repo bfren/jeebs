@@ -25,6 +25,6 @@ public abstract class CommandHandler<TCommand> : ICommandHandler
 				HandleAsync(x),
 
 			_ =>
-				F.None<bool>(new IncorrectCommandTypeMsg(typeof(TCommand), command.GetType())).AsTask
+				F.None<bool>(new IncorrectCommandTypeMsg(typeof(TCommand), command.GetType())).AsTask()
 		};
 }

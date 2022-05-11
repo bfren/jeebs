@@ -46,10 +46,10 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		{
 			if (isRequired)
 			{
-				return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask;
+				return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask();
 			}
 
-			return F.False.AsTask;
+			return F.False.AsTask();
 		}
 
 		// If we're here we have a Term ID, so get it and hydrate the custom field

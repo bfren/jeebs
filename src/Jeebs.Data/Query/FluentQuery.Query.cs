@@ -24,13 +24,13 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		// Return if there were any errors (usually when converting a column alias to a column object)
 		if (Errors.Count > 0)
 		{
-			return F.None<IEnumerable<TModel>>(new ListMsg(Errors)).AsTask;
+			return F.None<IEnumerable<TModel>>(new ListMsg(Errors)).AsTask();
 		}
 
 		// Return if there are no where clauses
 		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
 		{
-			return F.None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask;
+			return F.None<IEnumerable<TModel>, M.NoPredicatesMsg>().AsTask();
 		}
 
 		// Add select columns to query
