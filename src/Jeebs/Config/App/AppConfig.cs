@@ -3,13 +3,14 @@
 
 using System;
 using Jeebs.Functions;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.App;
 
 /// <summary>
 /// Jeebs Application Configuraiton
 /// </summary>
-public sealed record class AppConfig
+public sealed record class AppConfig : IOptions<AppConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -37,4 +38,8 @@ public sealed record class AppConfig
 	/// Application Version
 	/// </summary>
 	public Version Version { get; init; } = new Version(0, 1, 0, 0);
+
+	/// <inheritdoc/>
+	AppConfig IOptions<AppConfig>.Value =>
+		this;
 }

@@ -2,13 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Functions;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Web.Verification;
 
 /// <summary>
 /// Site Verification Configuration
 /// </summary>
-public sealed record class VerificationConfig
+public sealed record class VerificationConfig : IOptions<VerificationConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -34,4 +35,8 @@ public sealed record class VerificationConfig
 	/// </summary>
 	public bool Any =>
 		Google is not null;
+
+	/// <inheritdoc/>
+	VerificationConfig IOptions<VerificationConfig>.Value =>
+		this;
 }

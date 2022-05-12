@@ -3,13 +3,14 @@
 
 using System.Collections.Generic;
 using Jeebs.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Logging;
 
 /// <summary>
 /// Logging configuration
 /// </summary>
-public sealed record class LoggingConfig
+public sealed record class LoggingConfig : IOptions<LoggingConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -25,4 +26,8 @@ public sealed record class LoggingConfig
 	/// List of providers - dictionary key is a service name
 	/// </summary>
 	public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();
+
+	/// <inheritdoc/>
+	LoggingConfig IOptions<LoggingConfig>.Value =>
+		this;
 }

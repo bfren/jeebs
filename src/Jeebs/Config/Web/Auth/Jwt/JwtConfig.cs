@@ -1,12 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Microsoft.Extensions.Options;
+
 namespace Jeebs.Config.Web.Auth.Jwt;
 
 /// <summary>
 /// JSON Web Tokens (JWT) configuration
 /// </summary>
-public sealed record class JwtConfig
+public sealed record class JwtConfig : IOptions<JwtConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -45,4 +47,8 @@ public sealed record class JwtConfig
 		!string.IsNullOrEmpty(SigningKey)
 		&& !string.IsNullOrEmpty(Issuer)
 		&& !string.IsNullOrEmpty(Audience);
+
+	/// <inheritdoc/>
+	JwtConfig IOptions<JwtConfig>.Value =>
+		this;
 }
