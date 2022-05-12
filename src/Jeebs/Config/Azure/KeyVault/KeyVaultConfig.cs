@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Azure.KeyVault;
 
@@ -9,7 +10,7 @@ namespace Jeebs.Config.Azure.KeyVault;
 /// Azure Key Vault Configuration
 /// These values should only ever be set in jeebsconfig-secrets.json to avoid them being checked into version control
 /// </summary>
-public sealed record class KeyVaultConfig
+public sealed record class KeyVaultConfig : IOptions<KeyVaultConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -44,6 +45,10 @@ public sealed record class KeyVaultConfig
 		&& !string.IsNullOrWhiteSpace(TenantId)
 		&& !string.IsNullOrWhiteSpace(ClientId)
 		&& !string.IsNullOrWhiteSpace(ClientSecret);
+
+	/// <inheritdoc/>
+	KeyVaultConfig IOptions<KeyVaultConfig>.Value =>
+		this;
 
 	/// <summary>
 	/// Get Azure Vault URI

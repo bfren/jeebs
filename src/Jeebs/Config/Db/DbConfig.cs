@@ -2,13 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Db;
 
 /// <summary>
 /// Database configuration
 /// </summary>
-public sealed record class DbConfig
+public sealed record class DbConfig : IOptions<DbConfig>
 {
 	/// <summary>
 	/// Path to database settings configuration section
@@ -38,6 +39,10 @@ public sealed record class DbConfig
 	/// Dictionary of database connections
 	/// </summary>
 	public Dictionary<string, DbConnectionConfig> Connections { get; init; } = new();
+
+	/// <inheritdoc/>
+	DbConfig IOptions<DbConfig>.Value =>
+		this;
 
 	/// <summary>
 	/// Retrieve default Connection

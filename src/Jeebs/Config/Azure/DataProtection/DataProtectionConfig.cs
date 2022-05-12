@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Azure.DataProtection;
 
@@ -9,7 +10,7 @@ namespace Jeebs.Config.Azure.DataProtection;
 /// Azure Key Vault Configuration
 /// These values should only ever be set in jeebsconfig-secrets.json to avoid them being checked into version control
 /// </summary>
-public sealed record class DataProtectionConfig
+public sealed record class DataProtectionConfig : IOptions<DataProtectionConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -44,6 +45,10 @@ public sealed record class DataProtectionConfig
 		&& !string.IsNullOrWhiteSpace(ContainerName)
 		&& !string.IsNullOrWhiteSpace(BlobName)
 		&& !string.IsNullOrWhiteSpace(KeyUri);
+
+	/// <inheritdoc/>
+	DataProtectionConfig IOptions<DataProtectionConfig>.Value =>
+		this;
 
 	/// <summary>
 	/// Get Azure Key URI

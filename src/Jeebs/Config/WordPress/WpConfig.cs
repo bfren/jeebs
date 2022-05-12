@@ -1,12 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Microsoft.Extensions.Options;
+
 namespace Jeebs.Config.WordPress;
 
 /// <summary>
 /// WordPress configuration
 /// </summary>
-public record class WpConfig
+public record class WpConfig : IOptions<WpConfig>
 {
 	/// <summary>
 	/// Path to WordPress settings configuration section
@@ -38,4 +40,8 @@ public record class WpConfig
 	/// Files URL (alias to hide wp-content/uploads directory)
 	/// </summary>
 	public string VirtualUploadsUrl { get; init; } = string.Empty;
+
+	/// <inheritdoc/>
+	WpConfig IOptions<WpConfig>.Value =>
+		this;
 }

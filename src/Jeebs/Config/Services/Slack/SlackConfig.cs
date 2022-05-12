@@ -2,13 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Functions;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Services.Slack;
 
 /// <summary>
 /// Slack configuration
 /// </summary>
-public sealed record class SlackConfig : IWebhookServiceConfig
+public sealed record class SlackConfig : IOptions<SlackConfig>, IWebhookServiceConfig
 {
 	/// <inheritdoc/>
 	public string Webhook { get; init; } = string.Empty;
@@ -21,4 +22,8 @@ public sealed record class SlackConfig : IWebhookServiceConfig
 	/// <inheritdoc/>
 	public bool IsValid =>
 		UriF.IsHttps(Webhook);
+
+	/// <inheritdoc/>
+	SlackConfig IOptions<SlackConfig>.Value =>
+		this;
 }

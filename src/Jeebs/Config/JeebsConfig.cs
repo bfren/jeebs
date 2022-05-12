@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config;
 
 /// <summary>
 /// Jeebs Configuration
 /// </summary>
-public sealed record class JeebsConfig
+public sealed record class JeebsConfig : IOptions<JeebsConfig>
 {
 	/// <summary>
 	/// Path to Jeebs settings configuration section
@@ -50,6 +51,10 @@ public sealed record class JeebsConfig
 	/// WordPress configurations
 	/// </summary>
 	public Dictionary<string, WordPress.WpConfig> Wp { get; init; } = new();
+
+	/// <inheritdoc/>
+	JeebsConfig IOptions<JeebsConfig>.Value =>
+		this;
 
 	/// <summary>
 	/// If key starts with ':', add Jeebs config prefix

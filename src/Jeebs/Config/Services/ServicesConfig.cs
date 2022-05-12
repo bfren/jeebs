@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Services;
 
 /// <summary>
 /// Third-party services configuration
 /// </summary>
-public sealed record class ServicesConfig
+public sealed record class ServicesConfig : IOptions<ServicesConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -30,6 +31,10 @@ public sealed record class ServicesConfig
 	/// Slack configurations
 	/// </summary>
 	public Dictionary<string, Slack.SlackConfig> Slack { get; init; } = new();
+
+	/// <inheritdoc/>
+	ServicesConfig IOptions<ServicesConfig>.Value =>
+		this;
 
 	/// <summary>
 	/// Get a service configuration from the definition

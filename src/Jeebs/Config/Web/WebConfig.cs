@@ -1,12 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Microsoft.Extensions.Options;
+
 namespace Jeebs.Config.Web;
 
 /// <summary>
 /// Configuration options for Web Apps
 /// </summary>
-public sealed record class WebConfig
+public sealed record class WebConfig : IOptions<WebConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -27,4 +29,8 @@ public sealed record class WebConfig
 	/// SiteVerificationConfig
 	/// </summary>
 	public Verification.VerificationConfig Verification { get; init; } = new();
+
+	/// <inheritdoc/>
+	WebConfig IOptions<WebConfig>.Value =>
+		this;
 }

@@ -1,12 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Microsoft.Extensions.Options;
+
 namespace Jeebs.Config.Web.Auth;
 
 /// <summary>
 /// Jeebs Authentication and Authorisation Configuraiton
 /// </summary>
-public sealed record class AuthConfig
+public sealed record class AuthConfig : IOptions<AuthConfig>
 {
 	/// <summary>
 	/// Path to this configuration section
@@ -37,4 +39,8 @@ public sealed record class AuthConfig
 	/// JwtConfig
 	/// </summary>
 	public Jwt.JwtConfig Jwt { get; init; } = new();
+
+	/// <inheritdoc/>
+	AuthConfig IOptions<AuthConfig>.Value =>
+		this;
 }
