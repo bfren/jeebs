@@ -8,4 +8,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Option ID
 /// </summary>
-public sealed record class WpOptionId : LongId;
+public sealed record class WpOptionId : ULongId;

@@ -8,4 +8,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Link ID
 /// </summary>
-public sealed record class WpLinkId : LongId;
+public sealed record class WpLinkId : ULongId;

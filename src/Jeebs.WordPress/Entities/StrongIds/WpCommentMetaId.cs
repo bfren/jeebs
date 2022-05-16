@@ -8,4 +8,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Comment Meta ID
 /// </summary>
-public sealed record class WpCommentMetaId : LongId;
+public sealed record class WpCommentMetaId : ULongId;
