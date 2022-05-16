@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
-	where TId : LongId, new()
+	where TId : ULongId, new()
 {
 	/// <summary>
 	/// IDbClient

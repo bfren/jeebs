@@ -8,4 +8,4 @@ namespace Jeebs.WordPress.Entities.StrongIds;
 /// <summary>
 /// WordPress Post Meta ID
 /// </summary>
-public sealed record class WpPostMetaId : LongId;
+public sealed record class WpPostMetaId : ULongId;

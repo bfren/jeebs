@@ -37,7 +37,7 @@ public class ToParts_Tests : ToParts_Tests<PostsMetaOptions, IQueryPostsMetaPart
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var postId = LongId<WpPostId>();
+		var postId = ULongId<WpPostId>();
 		var opt = options with
 		{
 			PostId = postId
@@ -55,8 +55,8 @@ public class ToParts_Tests : ToParts_Tests<PostsMetaOptions, IQueryPostsMetaPart
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = LongId<WpPostId>();
-		var i1 = LongId<WpPostId>();
+		var i0 = ULongId<WpPostId>();
+		var i1 = ULongId<WpPostId>();
 		var postIds = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

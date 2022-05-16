@@ -29,8 +29,8 @@ public class GetQuery_Tests
 		// Arrange
 		var prefix = Rnd.Str;
 		var schema = new WpDbSchema(prefix);
-		var i0 = Rnd.Lng;
-		var i1 = Rnd.Lng;
+		var i0 = Rnd.ULng;
+		var i1 = Rnd.ULng;
 		var fileIds = ImmutableList.Create<WpPostId>(new() { Value = i0 }, new() { Value = i1 });
 		var virtualUploadsUrl = Rnd.Str;
 		var expected =

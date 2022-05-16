@@ -12,7 +12,7 @@ public abstract class Setup
 		new(extract);
 }
 
-public sealed record class TestId : LongId;
+public sealed record class TestId : ULongId;
 
 public record class TestModel;
 

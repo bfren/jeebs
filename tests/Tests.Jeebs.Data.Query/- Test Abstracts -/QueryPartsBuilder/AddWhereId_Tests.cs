@@ -10,7 +10,7 @@ namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : LongId, new()
+	where TId : ULongId, new()
 {
 	public abstract void Test00_Id_And_Ids_Null_Returns_Original_Parts();
 
@@ -32,7 +32,7 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test01()
 	{
 		// Arrange
-		var id = LongId<TId>();
+		var id = ULongId<TId>();
 		var (builder, v) = Setup();
 
 		// Act
@@ -56,9 +56,9 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test02()
 	{
 		// Arrange
-		var i0 = LongId<TId>();
-		var i1 = LongId<TId>();
-		var i2 = LongId<TId>();
+		var i0 = ULongId<TId>();
+		var i1 = ULongId<TId>();
+		var i2 = ULongId<TId>();
 		var ids = ImmutableList.Create(i1, i2);
 		var (builder, v) = Setup();
 
@@ -83,8 +83,8 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test03()
 	{
 		// Arrange
-		var i0 = LongId<TId>();
-		var i1 = LongId<TId>();
+		var i0 = ULongId<TId>();
+		var i1 = ULongId<TId>();
 		var ids = ImmutableList.Create(i0, i1);
 		var (builder, v) = Setup();
 

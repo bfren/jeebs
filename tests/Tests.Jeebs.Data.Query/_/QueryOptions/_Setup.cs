@@ -25,7 +25,7 @@ public static class Setup
 	}
 }
 
-public sealed record class TestId : LongId;
+public sealed record class TestId : ULongId;
 
 public record class TestOptions : QueryOptions<TestId>
 {

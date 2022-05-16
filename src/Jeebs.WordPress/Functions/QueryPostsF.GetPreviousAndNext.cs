@@ -14,7 +14,7 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <param name="currentId">Current Post ID</param>
 	/// <param name="ids">List of IDs</param>
-	internal static (WpPostId? prev, WpPostId? next) GetPreviousAndNext(long currentId, List<long> ids)
+	internal static (WpPostId? prev, WpPostId? next) GetPreviousAndNext(ulong currentId, List<ulong> ids)
 	{
 		var (prev, next) = ids.GetEitherSide(currentId);
 

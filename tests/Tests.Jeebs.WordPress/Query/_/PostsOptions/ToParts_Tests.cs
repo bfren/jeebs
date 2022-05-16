@@ -179,7 +179,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var parentId = LongId<WpPostId>();
+		var parentId = ULongId<WpPostId>();
 		var opt = options with
 		{
 			ParentId = parentId
@@ -211,7 +211,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		// Arrange
 		var (options, builder) = Setup();
 		var taxonomies = ImmutableList.Create(
-			(Taxonomy.LinkCategory, LongId<WpTermId>())
+			(Taxonomy.LinkCategory, ULongId<WpTermId>())
 		);
 		var opt = options with
 		{

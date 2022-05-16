@@ -11,10 +11,10 @@ public abstract class Id_Tests<TEntity, TId>
 {
 	public abstract void Test00_Id_Returns_Database_Id();
 
-	protected void Test00(Func<long, TEntity> create)
+	protected void Test00(Func<ulong, TEntity> create)
 	{
 		// Arrange
-		var value = Rnd.Lng;
+		var value = Rnd.ULng;
 		var entity = create(value);
 
 		// Act
