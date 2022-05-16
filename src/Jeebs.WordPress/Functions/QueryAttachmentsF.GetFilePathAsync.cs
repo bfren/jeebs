@@ -40,15 +40,15 @@ public static partial class QueryAttachmentsF
 	{
 		/// <summary>Attachment not found</summary>
 		/// <param name="FileId">File (Post) ID</param>
-		public sealed record class AttachmentNotFoundMsg(long FileId) : Msg;
+		public sealed record class AttachmentNotFoundMsg(ulong FileId) : Msg;
 
 		/// <summary>Multiple Attachments found</summary>
 		/// <param name="FileId">File (Post) ID</param>
-		public sealed record class MultipleAttachmentsFoundMsg(long FileId) : Msg;
+		public sealed record class MultipleAttachmentsFoundMsg(ulong FileId) : Msg;
 
 		/// <summary>Unable to get Attachment file path</summary>
 		/// <param name="Value">Exception object</param>
 		/// <param name="FileId">File (Post) ID</param>
-		public sealed record class ErrorGettingAttachmentFilePathMsg(Exception Value, long FileId) : ExceptionMsg;
+		public sealed record class ErrorGettingAttachmentFilePathMsg(Exception Value, ulong FileId) : ExceptionMsg;
 	}
 }

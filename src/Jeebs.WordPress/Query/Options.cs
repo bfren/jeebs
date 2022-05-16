@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract record class Options<TId> : QueryOptions<TId>
-	where TId : LongId, new()
+	where TId : ULongId, new()
 {
 	/// <summary>
 	/// IWpDbSchema shorthand
