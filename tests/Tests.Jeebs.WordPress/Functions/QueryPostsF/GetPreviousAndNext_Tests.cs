@@ -9,10 +9,10 @@ public class GetPreviousAndNext_Tests
 	public void Empty_List_Returns_None_With_ListIsEmptyMsg()
 	{
 		// Arrange
-		var list = new List<long>();
+		var list = new List<ulong>();
 
 		// Act
-		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.Lng, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.ULng, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -23,10 +23,10 @@ public class GetPreviousAndNext_Tests
 	public void Single_Item_Returns_None_With_ListContainsSingleItemMsg()
 	{
 		// Arrange
-		var list = new List<long> { Rnd.Lng };
+		var list = new List<ulong> { Rnd.ULng };
 
 		// Act
-		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.Lng, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.ULng, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -38,7 +38,7 @@ public class GetPreviousAndNext_Tests
 	{
 		// Arrange
 		var value = 10001U;
-		var list = new List<long> { Rnd.Lng, Rnd.Lng, Rnd.Lng };
+		var list = new List<ulong> { Rnd.ULng, Rnd.ULng, Rnd.ULng };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
@@ -52,9 +52,9 @@ public class GetPreviousAndNext_Tests
 	public void First_Item_Returns_None_And_Next_Item()
 	{
 		// Arrange
-		var value = Rnd.Lng;
-		var next = Rnd.Lng;
-		var list = new List<long> { value, next, Rnd.Lng, Rnd.Lng };
+		var value = Rnd.ULng;
+		var next = Rnd.ULng;
+		var list = new List<ulong> { value, next, Rnd.ULng, Rnd.ULng };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
@@ -69,9 +69,9 @@ public class GetPreviousAndNext_Tests
 	public void Last_Item_Returns_Previous_Item_And_None()
 	{
 		// Arrange
-		var value = Rnd.Lng;
-		var prev = Rnd.Lng;
-		var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value };
+		var value = Rnd.ULng;
+		var prev = Rnd.ULng;
+		var list = new List<ulong> { Rnd.ULng, Rnd.ULng, prev, value };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
@@ -86,10 +86,10 @@ public class GetPreviousAndNext_Tests
 	public void Returns_Previous_And_Next_Items()
 	{
 		// Arrange
-		var value = Rnd.Lng;
-		var prev = Rnd.Lng;
-		var next = Rnd.Lng;
-		var list = new List<long> { Rnd.Lng, Rnd.Lng, prev, value, next, Rnd.Lng, Rnd.Lng };
+		var value = Rnd.ULng;
+		var prev = Rnd.ULng;
+		var next = Rnd.ULng;
+		var list = new List<ulong> { Rnd.ULng, Rnd.ULng, prev, value, next, Rnd.ULng, Rnd.ULng };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);

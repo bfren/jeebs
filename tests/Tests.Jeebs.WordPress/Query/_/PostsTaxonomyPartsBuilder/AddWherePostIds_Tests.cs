@@ -35,8 +35,8 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsB
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = LongId<WpPostId>();
-		var id1 = LongId<WpPostId>();
+		var id0 = ULongId<WpPostId>();
+		var id1 = ULongId<WpPostId>();
 		var postIds = ImmutableList.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 

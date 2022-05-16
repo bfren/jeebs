@@ -17,8 +17,8 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 
 	[Theory]
 	[InlineData(null)]
-	[InlineData(0L)]
-	public void Invalid_ParentId_Does_Nothing(long? input)
+	[InlineData(0UL)]
+	public void Invalid_ParentId_Does_Nothing(ulong? input)
 	{
 		// Arrange
 		var (builder, v) = Setup();
@@ -37,7 +37,7 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var parentId = LongId<WpPostId>();
+		var parentId = ULongId<WpPostId>();
 
 		// Act
 		var result = builder.AddWhereParentId(v.Parts, parentId);

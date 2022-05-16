@@ -12,7 +12,7 @@ namespace Jeebs.Data.Query.QueryOptions_Tests;
 public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : LongId, new()
+	where TId : ULongId, new()
 {
 	public abstract void Test00_Calls_Builder_Create_With_Maximum_And_Skip();
 
@@ -55,7 +55,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var id = LongId<TId>();
+		var id = ULongId<TId>();
 		var opt = options with
 		{
 			Id = id
@@ -74,8 +74,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = LongId<TId>();
-		var i1 = LongId<TId>();
+		var i0 = ULongId<TId>();
+		var i1 = ULongId<TId>();
 		var ids = ImmutableList.Create(i0, i1);
 		var opt = options with
 		{

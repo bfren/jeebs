@@ -26,7 +26,7 @@ public class ParseTermId_Tests
 	{
 		// Arrange
 		var type = typeof(ParseTermId_Tests);
-		var value = Rnd.Lng;
+		var value = Rnd.ULng;
 
 		// Act
 		var result = TermCustomField.ParseTermId(type, value.ToString());

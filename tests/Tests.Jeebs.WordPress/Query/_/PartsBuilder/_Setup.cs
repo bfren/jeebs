@@ -31,7 +31,7 @@ public abstract class PartsBuilder_Tests
 	);
 }
 
-public sealed record class TestId : LongId;
+public sealed record class TestId : ULongId;
 
 public class TestPartsBuilder : PartsBuilder<TestId>
 {

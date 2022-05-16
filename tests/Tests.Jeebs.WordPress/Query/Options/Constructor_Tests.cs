@@ -22,7 +22,7 @@ public class Constructor_Tests
 		Assert.Same(schema, result.TTest);
 	}
 
-	public sealed record class TestId : LongId;
+	public sealed record class TestId : ULongId;
 
 	public sealed record class TestOptions : Options<TestId>
 	{
