@@ -99,9 +99,6 @@ public record class Result<T> : Result, IResult<T>
 
 	private int? statusCode;
 
-	/// <inheritdoc/>
-	public override string? RedirectTo { get; init; }
-
 	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
 	public override Task ExecuteResultAsync(ActionContext context)
 	{
@@ -130,22 +127,12 @@ public abstract record class Result : IResult
 	public abstract bool Success { get; }
 
 	/// <inheritdoc/>
-	public abstract string? RedirectTo { get; init; }
-
-	/// <inheritdoc/>
 	public abstract int StatusCode { get; init; }
 
 	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
 	public abstract Task ExecuteResultAsync(ActionContext context);
 
 	#region Static Methods
-
-	/// <summary>
-	/// Create a success result with a redirect URL
-	/// </summary>
-	/// <param name="url">Redirect URL</param>
-	public static Result Redirect(string url) =>
-		new Result<bool>(true) { RedirectTo = url };
 
 	/// <summary>
 	/// Create an error result with a message (and a <see langword="false"/> value)
