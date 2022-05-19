@@ -9,8 +9,6 @@ using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
 using MaybeF;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using static StrongId.Testing.Generator;
 
@@ -18,7 +16,7 @@ namespace Jeebs.Mvc.Auth.Functions.AuthF_Tests;
 
 public class DoSignInAsync_Tests
 {
-	private (AuthUserModel user, AuthF.SignInArgs v) Setup(bool validUser = false)
+	private (AuthUserModel user, AuthF.SignInArgs v) Setup()
 	{
 		var model = new SignInModel { Email = Rnd.Str, Password = Rnd.Str, RememberMe = Rnd.Flip };
 		var addErrorAlert = Substitute.For<Action<string>>();
@@ -31,17 +29,22 @@ public class DoSignInAsync_Tests
 		var getClaims = Substitute.For<AuthF.GetClaims>();
 		getClaims.Invoke(default!, default!)
 			.ReturnsForAnyArgs(new List<Claim>());
-		var redirectUrl = Substitute.For<Func<string?>>();
 		var log = Substitute.For<ILog>();
-		var signIn = Substitute.For<Func<string?, ClaimsPrincipal, AuthenticationProperties, Task>>();
+		var signIn = Substitute.For<Func<ClaimsPrincipal, Task<AuthResult>>>();
 		var url = Substitute.For<IUrlHelper>();
 		url.IsLocalUrl(default)
 			.ReturnsForAnyArgs(true);
-		var validateUser = Substitute.For<Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>>>();
 		var user = new AuthUserModel { Id = LongId<AuthUserId>(), EmailAddress = Rnd.Str, IsSuper = Rnd.Flip };
+		return (user, new(model, auth, log, url, getClaims, signIn));
+	}
+
+	private Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>> SetupValidate(AuthUserModel? user = null)
+	{
+		var validateUser = Substitute.For<Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>>>();
 		validateUser(default!, default!, default!)
-			.ReturnsForAnyArgs(validUser ? F.Some(user) : Create.None<AuthUserModel>());
-		return (user, new(model, auth, log, url, addErrorAlert, getClaims, redirectUrl, signIn, validateUser));
+			.ReturnsForAnyArgs(user is not null ? F.Some(user) : Create.None<AuthUserModel>());
+
+		return validateUser;
 	}
 
 	[Fact]
@@ -49,22 +52,24 @@ public class DoSignInAsync_Tests
 	{
 		// Arrange
 		var (_, v) = Setup();
+		var validateUser = SetupValidate();
 
 		// Act
-		_ = await AuthF.DoSignInAsync(v);
+		_ = await AuthF.DoSignInAsync(v, validateUser);
 
 		// Assert
-		await v.ValidateUserAsync.Received().Invoke(v.Auth, v.Model, v.Log);
+		await validateUser.Received().Invoke(v.Auth, v.Model, v.Log);
 	}
 
 	[Fact]
 	public async Task Calls_ValidateUserAsync__Receives_Some__Calls_Log_Dbg__With_Correct_Values()
 	{
 		// Arrange
-		var (user, v) = Setup(true);
+		var (user, v) = Setup();
+		var validateUser = SetupValidate(user);
 
 		// Act
-		_ = await AuthF.DoSignInAsync(v);
+		_ = await AuthF.DoSignInAsync(v, validateUser);
 
 		// Assert
 		v.Log.Received().Dbg("User {UserId} validated.", user.Id.Value);
@@ -76,11 +81,12 @@ public class DoSignInAsync_Tests
 		// Arrange
 		var (_, v) = Setup();
 		var msg = Substitute.For<IMsg>();
-		v.ValidateUserAsync(default!, default!, default!)
+		var validateUser = SetupValidate();
+		validateUser(default!, default!, default!)
 			.ReturnsForAnyArgs(F.None<AuthUserModel>(msg));
 
 		// Act
-		_ = await AuthF.DoSignInAsync(v);
+		_ = await AuthF.DoSignInAsync(v, validateUser);
 
 		// Assert
 		v.Log.Received().Msg(msg);
@@ -90,43 +96,20 @@ public class DoSignInAsync_Tests
 	public async Task Valid_User__Calls_SignInAsync__With_Correct_Values()
 	{
 		// Arrange
-		var (user, v) = Setup(true);
+		var (user, v) = Setup();
+		var validateUser = SetupValidate(user);
 
 		// Act
-		_ = await AuthF.DoSignInAsync(v);
+		_ = await AuthF.DoSignInAsync(v, validateUser);
 
 		// Assert
 		await v.SignInAsync.Received().Invoke(
-			CookieAuthenticationDefaults.AuthenticationScheme,
 			Arg.Is<ClaimsPrincipal>(x =>
 				x.Claims.Any(c => c.Type == JwtClaimTypes.UserId && c.Value == user.Id.Value.ToString())
 				&& x.Claims.Any(c => c.Type == ClaimTypes.Email && c.Value == user.EmailAddress)
 				&& x.Claims.Any(c => (c.Type == JwtClaimTypes.IsSuper && c.Value == user.IsSuper.ToString()) || !user.IsSuper)
-			),
-			Arg.Is<AuthenticationProperties>(x =>
-				x.IssuedUtc!.Value.Date == DateTime.Now.Date
-				&& x.ExpiresUtc!.Value.Date == DateTime.Now.AddDays(28).Date
-				&& x.IsPersistent == v.Model.RememberMe
-				&& x.AllowRefresh == v.Model.RememberMe
 			)
 		);
-	}
-
-	[Fact]
-	public async Task Valid_User__Returns_AuthResult_SignedIn__With_Correct_Values()
-	{
-		// Arrange
-		var (_, v) = Setup(true);
-		var url = Rnd.Str;
-		v.RedirectUrl.Invoke()
-			.Returns(url);
-
-		// Act
-		var result = await AuthF.DoSignInAsync(v);
-
-		// Assert
-		var signedIn = Assert.IsType<AuthResult.SignedIn>(result);
-		Assert.Equal(url, signedIn.RedirectTo);
 	}
 
 	[Fact]
@@ -140,19 +123,6 @@ public class DoSignInAsync_Tests
 
 		// Assert
 		v.Log.Received().Err("Unknown username or password: {Email}.", v.Model.Email);
-	}
-
-	[Fact]
-	public async Task Invalid_User__Calls_AddErrorAlert__With_Correct_Values()
-	{
-		// Arrange
-		var (_, v) = Setup();
-
-		// Act
-		_ = await AuthF.DoSignInAsync(v);
-
-		// Assert
-		v.AddErrorAlert.Received().Invoke("Unknown username or password.");
 	}
 
 	[Fact]
