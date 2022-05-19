@@ -43,8 +43,8 @@ public abstract record class AuthResult : Result<string>
 	public sealed record class SignedIn : AuthResult
 	{
 		/// <inheritdoc cref="SignedIn"/>
-		/// <param name="redirectTo">[Optional] Redirect to this page</param>
-		public SignedIn(string? redirectTo) : base(F.Some(redirectTo ?? string.Empty), StatusCodes.Status200OK) { }
+		/// <param name="result">[Optional] Result - usually redirect URL or JWT</param>
+		public SignedIn(string? result) : base(F.Some(result ?? string.Empty), StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
