@@ -20,8 +20,7 @@ public class TryAgain_Tests
 		Assert.False(result.Success);
 		Assert.Equal(AlertType.Error, result.Message.Type);
 		Assert.Equal(typeof(TryAgainMsg).ToString(), result.Message.Text);
-		Assert.Null(result.RedirectTo);
 		Assert.Equal(401, result.StatusCode);
-		Assert.False(result.Value);
+		Assert.Null(result.Value);
 	}
 }
