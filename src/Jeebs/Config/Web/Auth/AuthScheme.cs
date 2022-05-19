@@ -11,5 +11,10 @@ public enum AuthScheme
 	/// <summary>
 	/// Cookies authentication
 	/// </summary>
-	Cookies = 0
+	Cookies = 1 << 0,
+
+	/// <summary>
+	/// JWT authentication
+	/// </summary>
+	Jwt = 1 << 1
 }
