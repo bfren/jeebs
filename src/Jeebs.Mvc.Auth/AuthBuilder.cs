@@ -51,41 +51,37 @@ public sealed class AuthBuilder
 			AuthScheme.Cookies =>
 				CookieAuthenticationDefaults.AuthenticationScheme,
 
+			AuthScheme.Jwt =>
+				JwtBearerDefaults.AuthenticationScheme,
+
 			_ =>
 				throw new UnsupportedAuthSchemeException(config.Scheme?.ToString() ?? "unknown")
 		});
 
-		// Add cookie info
+		// Add cookie
 		if (config.Scheme == AuthScheme.Cookies)
 		{
-			_ = builder.AddCookie(opt =>
-			{
-				opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
-				opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
-			});
+			_ = WithCookie();
+		}
+
+		// Add JWT
+		else if (config.Scheme == AuthScheme.Jwt)
+		{
+			_ = WithJwt();
 		}
 	}
 
 	/// <summary>
-	/// Enable custom data authentication and authorisation
+	/// Enable cookie authentication and authorisation
 	/// </summary>
-	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
-	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>
-	/// <exception cref="AuthDataAlreadyAddedException"></exception>
-	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)
-		where TDbClient : class, IAuthDbClient
+	public AuthBuilder WithCookie()
 	{
-		// Only allow WithData to be called once
-		if (dataAdded)
+		_ = builder.AddCookie(opt =>
 		{
-			throw new AuthDataAlreadyAddedException();
-		}
-		dataAdded = true;
+			opt.LoginPath = new PathString(config.LoginPath ?? "/auth/signin");
+			opt.AccessDeniedPath = new PathString(config.AccessDeniedPath ?? "/auth/denied");
+		});
 
-		// Add services
-		_ = services.AddAuthData<TDbClient>(useAuthDbClientAsMain);
-
-		// Return builder
 		return this;
 	}
 
@@ -107,17 +103,42 @@ public sealed class AuthBuilder
 
 		// Add authorisation policy
 		_ = services.AddAuthorization(opt =>
-		  {
-			  opt.AddPolicy("Token", policy =>
-				_ = policy
-					.AddRequirements(new JwtRequirement())
-					.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
+		{
+			var policy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+				.AddRequirements(new JwtRequirement())
+				.Build();
 
-			  opt.InvokeHandlersAfterFailure = false;
-		  });
+			opt.AddPolicy("Token", policy);
+			opt.DefaultPolicy = policy;
+
+			opt.InvokeHandlersAfterFailure = false;
+		});
 
 		// Add bearer token
 		_ = builder.AddJwtBearer();
+
+		// Return builder
+		return this;
+	}
+
+	/// <summary>
+	/// Enable custom data authentication and authorisation
+	/// </summary>
+	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
+	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>
+	/// <exception cref="AuthDataAlreadyAddedException"></exception>
+	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)
+		where TDbClient : class, IAuthDbClient
+	{
+		// Only allow WithData to be called once
+		if (dataAdded)
+		{
+			throw new AuthDataAlreadyAddedException();
+		}
+		dataAdded = true;
+
+		// Add services
+		_ = services.AddAuthData<TDbClient>(useAuthDbClientAsMain);
 
 		// Return builder
 		return this;
