@@ -4,7 +4,7 @@
 using System.Linq;
 using System.Security.Claims;
 using Jeebs.Auth;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Mvc.Auth.Functions;
@@ -12,13 +12,13 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class JwtF
 {
 	/// <summary>
-	/// Attempt to get the authorised ClaimsPrincipal
+	/// Attempt to get an authorised ClaimsPrincipal from the authorisation token
 	/// </summary>
-	/// <param name="ctx">AuthorizationFilterContext</param>
-	public static Maybe<ClaimsPrincipal> GetAuthorisedPrincipal(AuthorizationFilterContext ctx)
+	/// <param name="http">HttpContext</param>
+	public static Maybe<ClaimsPrincipal> GetAuthorisedPrincipal(HttpContext http)
 	{
-		var auth = ctx.HttpContext.RequestServices.GetRequiredService<IAuthJwtProvider>();
-		return from h in GetAuthorisationHeader(ctx.HttpContext.Request.Headers)
+		var auth = http.RequestServices.GetRequiredService<IAuthJwtProvider>();
+		return from h in GetAuthorisationHeader(http.Request.Headers)
 			   from t in GetToken(h)
 			   from p in GetPrincipal(auth, t)
 			   select p;
