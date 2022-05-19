@@ -5,6 +5,8 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
+using Jeebs.Auth.Data.Models;
+using Jeebs.Functions;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +37,19 @@ public static partial class AuthF
 	/// Perform sign in checks and do sign in if the user passes
 	/// </summary>
 	/// <param name="v"></param>
-	public static async Task<AuthResult> DoSignInAsync(SignInArgs v)
+	public static Task<AuthResult> DoSignInAsync(SignInArgs v) =>
+		DoSignInAsync(v, ValidateUserAsync);
+
+	/// <summary>
+	/// Perform sign in checks and do sign in if the user passes
+	/// </summary>
+	/// <param name="v"></param>
+	/// <param name="validate"></param>
+	internal static async Task<AuthResult> DoSignInAsync(SignInArgs v, Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>> validate)
 	{
 		// Validate user
 		var validateResult = await
-			ValidateUserAsync(
+			validate(
 				v.Auth, v.Model, v.Log
 			)
 			.AuditAsync(
@@ -52,10 +62,10 @@ public static partial class AuthF
 		if (validateResult.IsSome(out var user))
 		{
 			// Get user principal			
-			var principal = await GetPrincipal(user, v.Model.Password, v.GetClaims).ConfigureAwait(false);
+			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims).ConfigureAwait(false);
 
 			// Update last sign in
-			_ = await UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log).ConfigureAwait(false);
+			ThreadF.FireAndForget(() => UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log));
 
 			// Sign in and return result
 			return await v.SignInAsync(principal);
