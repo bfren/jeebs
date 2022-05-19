@@ -6,10 +6,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Jeebs.Auth.Data;
 using Jeebs.Auth.Data.Models;
+using Jeebs.Functions;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Auth.Functions;
@@ -23,32 +22,34 @@ public static partial class AuthF
 	/// <param name="Auth"></param>
 	/// <param name="Log"></param>
 	/// <param name="Url"></param>
-	/// <param name="AddErrorAlert"></param>
 	/// <param name="GetClaims"></param>
-	/// <param name="RedirectUrl"></param>
 	/// <param name="SignInAsync"></param>
-	/// <param name="ValidateUserAsync"></param>
 	public sealed record class SignInArgs(
 		SignInModel Model,
 		IAuthDataProvider Auth,
 		ILog Log,
 		IUrlHelper Url,
-		Action<string> AddErrorAlert,
 		GetClaims? GetClaims,
-		Func<string?> RedirectUrl,
-		Func<string?, ClaimsPrincipal, AuthenticationProperties, Task> SignInAsync,
-		Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>> ValidateUserAsync
+		Func<ClaimsPrincipal, Task<AuthResult>> SignInAsync
 	);
 
 	/// <summary>
 	/// Perform sign in checks and do sign in if the user passes
 	/// </summary>
 	/// <param name="v"></param>
-	public static async Task<AuthResult> DoSignInAsync(SignInArgs v)
+	public static Task<AuthResult> DoSignInAsync(SignInArgs v) =>
+		DoSignInAsync(v, ValidateUserAsync);
+
+	/// <summary>
+	/// Perform sign in checks and do sign in if the user passes
+	/// </summary>
+	/// <param name="v"></param>
+	/// <param name="validate"></param>
+	internal static async Task<AuthResult> DoSignInAsync(SignInArgs v, Func<IAuthDataProvider, SignInModel, ILog, Task<Maybe<AuthUserModel>>> validate)
 	{
 		// Validate user
 		var validateResult = await
-			v.ValidateUserAsync(
+			validate(
 				v.Auth, v.Model, v.Log
 			)
 			.AuditAsync(
@@ -61,33 +62,17 @@ public static partial class AuthF
 		if (validateResult.IsSome(out var user))
 		{
 			// Get user principal			
-			var principal = await GetPrincipal(user, v.Model.Password, v.GetClaims).ConfigureAwait(false);
+			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims).ConfigureAwait(false);
 
 			// Update last sign in
-			_ = await UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log).ConfigureAwait(false);
+			ThreadF.FireAndForget(() => UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log));
 
-			// Sign in using cookie authentication scheme
-			await
-				v.SignInAsync(
-					CookieAuthenticationDefaults.AuthenticationScheme,
-					principal,
-					new AuthenticationProperties
-					{
-						IssuedUtc = DateTime.UtcNow,
-						ExpiresUtc = DateTime.UtcNow.AddDays(28),
-						IsPersistent = v.Model.RememberMe,
-						AllowRefresh = v.Model.RememberMe
-					}
-				)
-				.ConfigureAwait(false);
-
-			// Redirect to return url
-			return new AuthResult.SignedIn(v.RedirectUrl());
+			// Sign in and return result
+			return await v.SignInAsync(principal);
 		}
 
 		// Log error and add alert for user
 		v.Log.Err("Unknown username or password: {Email}.", v.Model.Email);
-		v.AddErrorAlert("Unknown username or password.");
 
 		// Try again
 		return new AuthResult.TryAgain();

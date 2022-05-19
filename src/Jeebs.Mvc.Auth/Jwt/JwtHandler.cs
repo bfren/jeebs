@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Functions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
 
 namespace Jeebs.Mvc.Auth.Jwt;
 
@@ -30,12 +30,12 @@ public sealed class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// <param name="requirement">JwtRequirement</param>
 	protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, JwtRequirement requirement)
 	{
-		if (context.Resource is AuthorizationFilterContext filterContext)
+		if (context.Resource is DefaultHttpContext http)
 		{
-			JwtF.GetAuthorisedPrincipal(filterContext).Switch(
+			JwtF.GetAuthorisedPrincipal(http).Switch(
 				some: principal =>
 				{
-					filterContext.HttpContext.User = principal;
+					http.User = principal;
 					context.Succeed(requirement);
 				},
 				none: reason =>

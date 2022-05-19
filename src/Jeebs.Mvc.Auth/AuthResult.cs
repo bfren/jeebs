@@ -9,16 +9,15 @@ namespace Jeebs.Mvc.Auth;
 /// <summary>
 /// Various authentication results
 /// </summary>
-public abstract record class AuthResult : Result<bool>
+public abstract record class AuthResult : Result<string>
 {
 	/// <summary>
 	/// Create object
 	/// </summary>
 	/// <param name="result">Result value</param>
-	/// <param name="redirectTo"></param>
 	/// <param name="statusCode"></param>
-	private AuthResult(Maybe<bool> result, string? redirectTo, int statusCode) : base(result) =>
-		(StatusCode, RedirectTo) = (statusCode, redirectTo);
+	private AuthResult(Maybe<string> result, int statusCode) : base(result) =>
+		StatusCode = statusCode;
 
 	/// <summary>
 	/// Access is denied
@@ -26,7 +25,7 @@ public abstract record class AuthResult : Result<bool>
 	public sealed record class Denied : AuthResult
 	{
 		/// <inheritdoc cref="Denied"/>
-		public Denied() : base(F.None<bool, M.DeniedMsg>(), null, StatusCodes.Status401Unauthorized) { }
+		public Denied() : base(F.None<string, M.DeniedMsg>(), StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -35,7 +34,7 @@ public abstract record class AuthResult : Result<bool>
 	public sealed record class MfaRequired : AuthResult
 	{
 		/// <inheritdoc cref="MfaRequired"/>
-		public MfaRequired() : base(F.None<bool, M.MfaRequiredMsg>(), null, StatusCodes.Status401Unauthorized) { }
+		public MfaRequired() : base(F.None<string, M.MfaRequiredMsg>(), StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -44,8 +43,8 @@ public abstract record class AuthResult : Result<bool>
 	public sealed record class SignedIn : AuthResult
 	{
 		/// <inheritdoc cref="SignedIn"/>
-		/// <param name="redirectTo">[Optional] Redirect to this page</param>
-		public SignedIn(string? redirectTo) : base(F.True, redirectTo, StatusCodes.Status200OK) { }
+		/// <param name="result">[Optional] Result - usually redirect URL or JWT</param>
+		public SignedIn(string? result) : base(F.Some(result ?? string.Empty), StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -55,7 +54,7 @@ public abstract record class AuthResult : Result<bool>
 	{
 		/// <inheritdoc cref="SignedOut"/>
 		/// <param name="redirectTo">[Optional] Redirect to this page</param>
-		public SignedOut(string? redirectTo) : base(F.True, redirectTo, StatusCodes.Status200OK) { }
+		public SignedOut(string? redirectTo) : base(F.Some(redirectTo ?? string.Empty), StatusCodes.Status200OK) { }
 	}
 
 	/// <summary>
@@ -64,7 +63,7 @@ public abstract record class AuthResult : Result<bool>
 	public sealed record class TryAgain : AuthResult
 	{
 		/// <inheritdoc cref="TryAgain"/>
-		public TryAgain() : base(F.None<bool, M.TryAgainMsg>(), null, StatusCodes.Status401Unauthorized) { }
+		public TryAgain() : base(F.None<string, M.TryAgainMsg>(), StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>Messages</summary>

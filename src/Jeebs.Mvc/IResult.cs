@@ -19,11 +19,6 @@ public interface IResult : IActionResult
 	/// HTTP status code - by default returns 200 on success or 500 on failure
 	/// </summary>
 	int StatusCode { get; }
-
-	/// <summary>
-	/// Optional URL to redirect to on success
-	/// </summary>
-	string? RedirectTo { get; }
 }
 
 /// <inheritdoc cref="IResult"/>

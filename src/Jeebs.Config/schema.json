@@ -213,7 +213,7 @@
 								"scheme": {
 									"type": "string",
 									"description": "The authentication scheme to use",
-									"enum": [ "cookies" ]
+									"enum": [ "cookies", "jwt" ]
 								},
 								"loginPath": {
 									"type": "string",

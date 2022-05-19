@@ -9,7 +9,7 @@ using static StrongId.Testing.Generator;
 
 namespace Jeebs.Mvc.Auth.Functions.AuthF_Tests;
 
-public class GetPrincipal_Tests
+public class GetPrincipalAsync_Tests
 {
 	[Fact]
 	public async Task Returns_ClaimsPrincipal_With_User_Info_Claims()
@@ -24,7 +24,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await AuthF.GetPrincipal(user, Rnd.Str, null);
+		var result = await AuthF.GetPrincipalAsync(user, Rnd.Str, null);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -67,7 +67,7 @@ public class GetPrincipal_Tests
 		};
 
 		// Act
-		var result = await AuthF.GetPrincipal(user, Rnd.Str, null);
+		var result = await AuthF.GetPrincipalAsync(user, Rnd.Str, null);
 
 		// Assert
 		Assert.Collection(result.Claims,
@@ -123,19 +123,19 @@ public class GetPrincipal_Tests
 				return Task.FromResult(
 					new List<Claim>
 					{
-						new(nameof(GetPrincipal_Tests), $"{user.Id}+{user.FriendlyName}")
+						new(nameof(GetPrincipalAsync_Tests), $"{user.Id}+{user.FriendlyName}")
 					}
 				);
 			});
 
 		// Act
-		var result = await AuthF.GetPrincipal(user, Rnd.Str, addClaims);
+		var result = await AuthF.GetPrincipalAsync(user, Rnd.Str, addClaims);
 
 		// Assert
 		Assert.Equal(5, result.Claims.Count());
 		Assert.Contains(
 			result.Claims,
-			c => c.Type == nameof(GetPrincipal_Tests) && c.Value == $"{user.Id}+{user.FriendlyName}"
+			c => c.Type == nameof(GetPrincipalAsync_Tests) && c.Value == $"{user.Id}+{user.FriendlyName}"
 		);
 	}
 }

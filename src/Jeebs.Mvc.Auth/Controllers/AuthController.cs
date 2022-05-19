@@ -80,16 +80,8 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	public virtual async Task<IActionResult> SignIn(SignInModel model)
 	{
 		// Do sign in
-		var result = await DoSignInAsync(new(
-			Model: model,
-			Auth: Auth,
-			Log: Log,
-			Url: Url,
-			AddErrorAlert: TempData.AddErrorAlert,
-			GetClaims: GetClaims,
-			RedirectUrl: SignInRedirect,
-			SignInAsync: HttpContext.SignInAsync,
-			ValidateUserAsync: ValidateUserAsync
+		var result = await DoSignInAsync(new(model, Auth, Log, Url, GetClaims,
+			SignInAsync: user => CreateCookieAsync(HttpContext, user, model.RememberMe, SignInRedirect())
 		));
 
 		// Handle result
