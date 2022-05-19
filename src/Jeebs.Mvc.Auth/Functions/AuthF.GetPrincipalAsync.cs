@@ -18,7 +18,7 @@ public static partial class AuthF
 	/// <param name="user"></param>
 	/// <param name="password"></param>
 	/// <param name="getClaims"></param>
-	internal static async Task<ClaimsPrincipal> GetPrincipal(AuthUserModel user, string password, GetClaims? getClaims)
+	internal static async Task<ClaimsPrincipal> GetPrincipalAsync(AuthUserModel user, string password, GetClaims? getClaims)
 	{
 		// Create claims object
 		var claims = new List<Claim>
