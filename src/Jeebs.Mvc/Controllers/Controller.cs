@@ -41,7 +41,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <typeparam name="T">Result type</typeparam>
 	/// <param name="maybe">Maybe value</param>
 	/// <param name="success">Function to run when the result is successful</param>
-	protected Task<IActionResult> ProcessOptionAsync<T>(Maybe<T> maybe, Func<T, Task<IActionResult>> success) =>
+	protected Task<IActionResult> ProcessAsync<T>(Maybe<T> maybe, Func<T, Task<IActionResult>> success) =>
 		maybe.SwitchAsync(
 			some: value =>
 				success(value),
@@ -55,7 +55,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <typeparam name="T">Result type</typeparam>
 	/// <param name="maybe">Maybe value</param>
 	/// <param name="success">Function to run when the result is successful</param>
-	protected Task<IActionResult> ProcessOptionAsync<T>(Task<Maybe<T>> maybe, Func<T, IActionResult> success) =>
+	protected Task<IActionResult> ProcessAsync<T>(Task<Maybe<T>> maybe, Func<T, IActionResult> success) =>
 		maybe.SwitchAsync(
 			some: value =>
 				success(value),
@@ -69,7 +69,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <typeparam name="T">Result type</typeparam>
 	/// <param name="maybe">Maybe value</param>
 	/// <param name="success">Function to run when the result is successful</param>
-	protected Task<IActionResult> ProcessOptionAsync<T>(Task<Maybe<T>> maybe, Func<T, Task<IActionResult>> success) =>
+	protected Task<IActionResult> ProcessAsync<T>(Task<Maybe<T>> maybe, Func<T, Task<IActionResult>> success) =>
 		maybe.SwitchAsync(
 			some: value =>
 				success(value),
@@ -77,8 +77,8 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 				this.ExecuteErrorAsync(reason)
 		);
 
-	/// <inheritdoc cref="ProcessOptionAsync{T}(Maybe{T}, Func{T, Task{IActionResult}})"/>
-	protected IActionResult ProcessOption<T>(Maybe<T> maybe, Func<T, IActionResult> success) =>
+	/// <inheritdoc cref="ProcessAsync{T}(Maybe{T}, Func{T, Task{IActionResult}})"/>
+	protected IActionResult Process<T>(Maybe<T> maybe, Func<T, IActionResult> success) =>
 		maybe.Switch(
 			some: value =>
 				success(value),
