@@ -31,12 +31,21 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="allowEmpty">If <see langword="false"/>, and <paramref name="name"/> is null or empty, will throw an exception</param>
 	protected Enumerated(string name, bool allowEmpty)
 	{
-		if (string.IsNullOrWhiteSpace(name) && !allowEmpty)
+		if (string.IsNullOrWhiteSpace(name))
 		{
-			throw new ArgumentNullException(nameof(name));
+			if (allowEmpty)
+			{
+				this.name = string.Empty;
+			}
+			else
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
 		}
-
-		this.name = name.Trim();
+		else
+		{
+			this.name = name.Trim();
+		}
 	}
 
 	/// <summary>
@@ -196,7 +205,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// </summary>
 	/// <param name="other">Object to compare to this <see cref="Enumerated"/></param>
 	public virtual bool Equals(Enumerated? other) =>
-		(name == other?.name) && (GetType().FullName == other.GetType().FullName);
+		(name == other?.name) && (GetType().FullName == other?.GetType().FullName);
 
 	/// <summary>
 	/// Compare this <see cref="Enumerated"/> with a string
