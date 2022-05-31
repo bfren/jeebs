@@ -23,6 +23,11 @@ public sealed record class LoggingConfig : IOptions<LoggingConfig>
 	public LogLevel Minimum { get; init; }
 
 	/// <summary>
+	/// Minimum level for Microsoft ASP.NET log messages - reduces noise that hides app log messages
+	/// </summary>
+	public LogLevel MinimumAspNetCore { get; init; } = LogLevel.Warning;
+
+	/// <summary>
 	/// List of providers - dictionary key is a service name
 	/// </summary>
 	public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();

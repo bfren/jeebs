@@ -122,6 +122,11 @@
 						"minimum": {
 							"$ref": "#/definitions/logging/level"
 						},
+						"minimumAspNetCore": {
+							"#ref": "#/definitions/logging/level",
+							"description": "Minimum level for Microsoft ASP.NET log messages - reduces noise that hides app log messages",
+							"default": "Warning"
+						},
 						"providers": {
 							"type": "object",
 							"description": "[Optional] Logging providers - name should be in format service_type.service_name (e.g. seq.dev-server)",
