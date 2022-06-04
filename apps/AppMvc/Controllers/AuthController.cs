@@ -81,7 +81,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.SwitchAsync(
 				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = Rnd.Str }).ConfigureAwait(false),
-				none: r => F.None<bool>(r).AsTask
+				none: r => F.None<bool>(r).AsTask()
 			)
 			.BindAsync(
 				_ => Auth.User.RetrieveAsync<AuthUserModel>(new AuthUserId { Value = 1 })
