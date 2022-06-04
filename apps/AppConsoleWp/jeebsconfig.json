@@ -14,6 +14,10 @@
     },
 		"logging": {
 			"minimum": "Debug",
+			"overrides": {
+				"Microsoft": "Warning",
+				"Microsoft.Hosting.Lifetime": "Information"
+			},
 			"providers": {
 				"console": {
 					"enabled": true
