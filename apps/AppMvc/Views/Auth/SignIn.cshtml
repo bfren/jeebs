@@ -1,7 +1,7 @@
 @model Jeebs.Mvc.Auth.Models.SignInModel
 <h1>Sign In</h1>
 
-<form method="post" action="@Url.Action("SignIn", "Auth", new { returnUrl = Model.ReturnUrl })">
+<form method="post" action="@Url.Action("SignIn", "Auth")">
 
 	<!-- Alerts -->
 	<alerts />
@@ -34,10 +34,6 @@
 	</div>
 
 	<!-- Hidden values -->
-	<input type="hidden"
-		   id="@nameof(Model.ReturnUrl)"
-		   name="@nameof(Model.ReturnUrl)"
-		   value="@Model.ReturnUrl" />
 	@Html.AntiForgeryToken()
 
 	<!-- Submit -->

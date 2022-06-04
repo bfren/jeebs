@@ -6,6 +6,10 @@
     },
 		"logging": {
 			"minimum": "Verbose",
+			"overrides": {
+				"Microsoft": "Warning",
+				"Microsoft.Hosting.Lifetime": "Information"
+			},
 			"providers": {
 				"console": {
 					"enabled": true

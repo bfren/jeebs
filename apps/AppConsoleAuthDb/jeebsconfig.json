@@ -15,17 +15,21 @@
         }
       }
     },
-    "logging": {
-      "minimum": "Verbose",
-      "providers": {
-        "console": {
-          "enabled": true
-        },
-        "seq.server04": {
-          "enabled": true
-        }
-      }
-    },
+		"logging": {
+			"minimum": "Verbose",
+			"overrides": {
+				"Microsoft": "Warning",
+				"Microsoft.Hosting.Lifetime": "Information"
+			},
+			"providers": {
+				"console": {
+					"enabled": true
+				},
+				"seq.server04": {
+					"enabled": true
+				}
+			}
+		},
     "services": {
       "seq": {
         "server04": {

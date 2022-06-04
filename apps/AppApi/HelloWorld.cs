@@ -9,7 +9,7 @@ namespace AppApi;
 public class SayHelloHandler : QueryHandler<SayHelloQuery, string>
 {
 	public override Task<Maybe<string>> HandleAsync(SayHelloQuery query) =>
-		F.Some($"Hello, {query.Name}!").AsTask;
+		F.Some($"Hello, {query.Name}!").AsTask();
 }
 
 public sealed record class SayHelloQuery(string Name) : Query<string>;
