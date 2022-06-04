@@ -1,5 +1,5 @@
 {
-	"$schema": "https://json-schema.org/draft-07/schema",
+	"$schema": "http://json-schema.org/draft-07/schema",
 	"id": "https://raw.githubusercontent.com/bfren/jeebs/main/Libraries/Jeebs.Config/schema.json",
 	"title": "Jeebs Libraries Configuration Settings",
 	"type": "object",
@@ -122,10 +122,12 @@
 						"minimum": {
 							"$ref": "#/definitions/logging/level"
 						},
-						"minimumAspNetCore": {
-							"#ref": "#/definitions/logging/level",
-							"description": "Minimum level for Microsoft ASP.NET log messages - reduces noise that hides app log messages",
-							"default": "Warning"
+						"overrides": {
+							"type": "object",
+							"description": "Log level overrides - property names should be the starting pattern of a log source, e.g. Microsoft.AspNetCore",
+							"additionalProperties": {
+								"$ref": "#/definitions/logging/level"
+							}
 						},
 						"providers": {
 							"type": "object",

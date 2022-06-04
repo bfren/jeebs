@@ -34,8 +34,11 @@ public static class LoggerConfigurationExtensions
 		// Set the minimum log level
 		_ = @this.MinimumLevel.Is(GetMinimum(null, jeebs.Logging.Minimum));
 
-		// Override minimum level for Microsoft ASP.NET messages
-		_ = @this.MinimumLevel.Override("Microsoft.AspNetCore", GetMinimum(jeebs.Logging.MinimumAspNetCore, jeebs.Logging.Minimum));
+		// Set custom minimum levels
+		foreach (var (key, level) in jeebs.Logging.Overrides)
+		{
+			_ = @this.MinimumLevel.Override(key, GetMinimum(level, jeebs.Logging.Minimum));
+		}
 
 		// Configure providers
 		ConfigureProviders(ref @this, jeebs);
