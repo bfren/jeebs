@@ -5,12 +5,12 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
-		<PackageReference Include="System.Text.Json" Version="6.0.4" />
+		<PackageReference Include="System.Text.Json" Version="6.0.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MaybeF" Version="9.1.1" />
 		<PackageReference Include="Rnd" Version="8.3.1" />
-		<PackageReference Include="StrongId" Version="8.2.2" />
+		<PackageReference Include="StrongId" Version="8.2.3" />
 	</ItemGroup>
 	<ItemGroup Label="Embed Version">
 		<EmbeddedResource Include="$(VersionPath)" />

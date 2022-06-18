@@ -8,7 +8,7 @@
 	  <None Remove="Jwt\**" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="StrongId.Testing" Version="8.2.2" />
+		<PackageReference Include="StrongId.Testing" Version="8.2.3" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
