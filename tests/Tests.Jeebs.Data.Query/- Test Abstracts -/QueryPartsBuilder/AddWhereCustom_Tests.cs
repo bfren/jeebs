@@ -12,7 +12,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 {
 	public abstract void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string input);
 
-	public static IEnumerable<string?[]> Test00_Data()
+	public static IEnumerable<object?[]> Test00_Data()
 	{
 		yield return new string?[] { null };
 		yield return new[] { "" };
