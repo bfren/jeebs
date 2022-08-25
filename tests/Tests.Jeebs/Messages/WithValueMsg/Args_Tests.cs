@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Messages.WithValueMsg;
@@ -15,7 +15,7 @@ public class Args_Tests
 		var result = msg.Args;
 
 		// Assert
-		Assert.Collection(result,
+		Assert.Collection(result!,
 			x => Assert.NotNull(x)
 		);
 	}
@@ -31,7 +31,7 @@ public class Args_Tests
 		var result = msg.Args;
 
 		// Assert
-		Assert.Collection(result,
+		Assert.Collection(result!,
 			x => Assert.Equal(value, x)
 		);
 	}

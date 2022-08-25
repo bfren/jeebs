@@ -43,7 +43,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 
 		// Assert
 		var none = result.AssertNone().AssertType<ListMsg>();
-		Assert.Collection(none.Args,
+		Assert.Collection(none.Args!,
 			x => Assert.Same(m0, x),
 			x => Assert.Same(m1, x)
 		);
