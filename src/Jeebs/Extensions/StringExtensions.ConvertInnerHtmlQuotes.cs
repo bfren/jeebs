@@ -20,7 +20,7 @@ public static partial class StringExtensions
 				input.ConvertCurlyQuotes(ls: "&lsquo;", rs: "&rsquo;", ld: "&ldquo;", rd: "&rdquo;");
 
 			// Match HTML tags and their attributes
-			var htmlTags = new Regex("<[^>]*>");
+			var htmlTags = HtmlTagsRegex();
 
 			// Get the first match
 			var match = htmlTags.Match(@this);
@@ -49,4 +49,7 @@ public static partial class StringExtensions
 			// Return result string
 			return builder.ToString();
 		});
+
+	[GeneratedRegex("<[^>]*>")]
+	private static partial Regex HtmlTagsRegex();
 }

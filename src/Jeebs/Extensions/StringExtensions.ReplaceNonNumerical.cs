@@ -22,11 +22,14 @@ public static partial class StringExtensions
 			}
 
 			// Now replace all non-numerical characters
-			var nonNumerical = new Regex("[^0-9]+");
+			var nonNumerical = NonNumericalCharactersRegex();
 			return nonNumerical.Replace(@this, replaceWith);
 		});
 
 	/// <inheritdoc cref="ReplaceNonNumerical(string, string?)"/>
 	public static string ReplaceNonNumerical(this string @this) =>
 		ReplaceNonNumerical(@this, null);
+
+	[GeneratedRegex("[^0-9]+")]
+	private static partial Regex NonNumericalCharactersRegex();
 }

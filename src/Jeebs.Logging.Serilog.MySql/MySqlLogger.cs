@@ -14,7 +14,7 @@ namespace Jeebs.Logging.Serilog.MySql;
 /// Logger implementation for MySqlConnector
 /// See https://github.com/mysql-net/MySqlConnector/blob/master/src/MySqlConnector.Logging.Serilog/SerilogLoggerProvider.cs
 /// </summary>
-public sealed class MySqlLogger : IMySqlConnectorLogger
+public sealed partial class MySqlLogger : IMySqlConnectorLogger
 {
 	/// <summary>
 	/// Logger instance
@@ -24,7 +24,7 @@ public sealed class MySqlLogger : IMySqlConnectorLogger
 	/// <summary>
 	/// Token replacement regular expression
 	/// </summary>
-	internal static Regex TokenReplacer { get; } = new(@"((\w+)?\s?(?:=|:)?\s?'?)\{(?:\d+)(\:\w+)?\}('?)", RegexOptions.Compiled);
+	internal static Regex TokenReplacer { get; } = LogMessageTokenRegex();
 
 	/// <summary>
 	/// Create log instance by name
@@ -108,4 +108,7 @@ public sealed class MySqlLogger : IMySqlConnectorLogger
 			}
 		}
 	}
+
+	[GeneratedRegex("((\\w+)?\\s?(?:=|:)?\\s?'?)\\{(?:\\d+)(\\:\\w+)?\\}('?)", RegexOptions.Compiled)]
+	private static partial Regex LogMessageTokenRegex();
 }

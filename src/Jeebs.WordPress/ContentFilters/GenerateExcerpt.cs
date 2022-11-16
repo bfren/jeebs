@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.ContentFilters;
 /// <summary>
 /// Generate Excerpt
 /// </summary>
-public sealed class GenerateExcerpt : ContentFilter
+public sealed partial class GenerateExcerpt : ContentFilter
 {
 	/// <inheritdoc/>
 	private GenerateExcerpt(Func<string, string> filter) : base(filter) { }
@@ -35,14 +35,14 @@ public sealed class GenerateExcerpt : ContentFilter
 			}
 
 			// Strip out square brackets
-			var squareBrackets1 = new Regex(@"\[(\w+) *(.*)\](.*)(\[\/(\1)\])", RegexOptions.Singleline);
+			var squareBrackets1 = SquareBrackets1Regex();
 			content = squareBrackets1.Replace(content, " ");
 
-			var squareBrackets2 = new Regex(@"\[(\w+) *(.*)\]", RegexOptions.Singleline);
+			var squareBrackets2 = SquareBrackets2Regex();
 			content = squareBrackets2.Replace(content, " ");
 
 			// Strip out new lines
-			var newLines = new Regex(@"[\n\r]");
+			var newLines = NewLinesRegex();
 			content = newLines.Replace(content, " ");
 
 			// Cut out everything after <!--more--> tag
@@ -57,7 +57,7 @@ public sealed class GenerateExcerpt : ContentFilter
 			content = content.ReplaceHtmlTags(" ");
 
 			// Strip out multiple spaces and trim
-			var multipleSpaces = new Regex(@"\s+");
+			var multipleSpaces = MultipleSpacesRegex();
 			content = multipleSpaces.Replace(content, " ").Trim();
 
 			// Ensure maximum length
@@ -69,4 +69,16 @@ public sealed class GenerateExcerpt : ContentFilter
 			// Return filtered content
 			return content;
 		});
+
+	[GeneratedRegex("\\[(\\w+) *(.*)\\](.*)(\\[\\/(\\1)\\])", RegexOptions.Singleline)]
+	private static partial Regex SquareBrackets1Regex();
+
+	[GeneratedRegex("\\[(\\w+) *(.*)\\]", RegexOptions.Singleline)]
+	private static partial Regex SquareBrackets2Regex();
+
+	[GeneratedRegex("[\\n\\r]")]
+	private static partial Regex NewLinesRegex();
+
+	[GeneratedRegex("\\s+")]
+	private static partial Regex MultipleSpacesRegex();
 }

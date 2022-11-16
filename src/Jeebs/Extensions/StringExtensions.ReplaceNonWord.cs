@@ -22,11 +22,14 @@ public static partial class StringExtensions
 			}
 
 			// Now replace all non-word characters
-			var nonWord = new Regex(@"\W+");
+			var nonWord = NonWordCharactersRegex();
 			return nonWord.Replace(@this, replaceWith);
 		});
 
 	/// <inheritdoc cref="ReplaceNonWord(string, string?)"/>
 	public static string ReplaceNonWord(this string @this) =>
 		ReplaceNonWord(@this, null);
+
+	[GeneratedRegex("\\W+")]
+	private static partial Regex NonWordCharactersRegex();
 }

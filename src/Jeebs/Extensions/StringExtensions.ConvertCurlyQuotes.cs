@@ -24,11 +24,11 @@ public static partial class StringExtensions
 				.Replace("&#39;", "'");
 
 			// Use regular expression to replace single quotes at the end of words
-			var singleQuote = new Regex("(\\s|^)'");
+			var singleQuote = SingleQuoteRegex();
 			s = singleQuote.Replace(s, $"$1{ls}").Replace("'", rs);
 
 			// Use regular expression to replace double quote at the end of words
-			var doubleQuote = new Regex("(\\s|^)\"");
+			var doubleQuote = DoubleQuoteRegex();
 			return doubleQuote.Replace(s, $"$1{ld}").Replace("\"", rd);
 		});
 
@@ -47,4 +47,10 @@ public static partial class StringExtensions
 	/// <inheritdoc cref="ConvertCurlyQuotes(string, string, string, string, string)"/>
 	public static string ConvertCurlyQuotes(this string @this) =>
 		ConvertCurlyQuotes(@this, "‘", "’", "“", "”");
+
+	[GeneratedRegex("(\\s|^)'")]
+	private static partial Regex SingleQuoteRegex();
+
+	[GeneratedRegex("(\\s|^)\"")]
+	private static partial Regex DoubleQuoteRegex();
 }
