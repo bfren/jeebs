@@ -67,6 +67,9 @@ public static partial class EnumF
 		/// <param name="Value">Enum type</param>
 		public sealed record class NotAValidEnumMsg(Type Value) : WithValueMsg<Type>;
 
+		/// <summary>Attempting to parse a null value</summary>
+		public sealed record class NullValueMsg : Msg;
+
 		/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
 		/// <typeparam name="T">Enum type</typeparam>
 		/// <param name="Value">Enum value</param>

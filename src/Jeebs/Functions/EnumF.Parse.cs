@@ -12,9 +12,14 @@ public static partial class EnumF
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
 	/// <param name="value">The value to parse</param>
-	public static Maybe<T> Parse<T>(string value)
+	public static Maybe<T> Parse<T>(string? value)
 		where T : struct, Enum
 	{
+		if (value is null)
+		{
+			return F.None<T, M.NullValueMsg>();
+		}
+
 		try
 		{
 			return Enum.Parse(typeof(T), value) switch
@@ -37,11 +42,16 @@ public static partial class EnumF
 	/// </summary>
 	/// <param name="t">Enum type</param>
 	/// <param name="value">The value to parse</param>
-	public static Maybe<object> Parse(Type t, string value)
+	public static Maybe<object> Parse(Type t, string? value)
 	{
 		if (!t.IsEnum)
 		{
 			return F.None<object>(new M.NotAValidEnumMsg(t));
+		}
+
+		if (value is null)
+		{
+			return F.None<object, M.NullValueMsg>();
 		}
 
 		try
