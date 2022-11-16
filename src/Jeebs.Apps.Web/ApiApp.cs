@@ -118,8 +118,10 @@ public class ApiApp : MvcApp
 	}
 
 	/// <inheritdoc/>
+#pragma warning disable ASP0014 // Suggest using top level route registrations
 	protected override void ConfigureEndpoints(WebApplication app) =>
 		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
+#pragma warning restore ASP0014 // Suggest using top level route registrations
 
 	#endregion Configure
 }
