@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using AppConsoleWp.Bcg;
@@ -15,12 +15,12 @@ internal record class PostModel : WpPostEntityWithId
 	public MetaDictionary Meta { get; init; } = new();
 }
 
-internal record class PostModelWithContent : PostModel
+internal sealed record class PostModelWithContent : PostModel
 {
 	public string Content { get; init; } = string.Empty;
 }
 
-internal record class PostModelWithCustomFields : PostModel
+internal sealed record class PostModelWithCustomFields : PostModel
 {
 	public FeaturedImageId FeaturedImage { get; set; } = new();
 }
@@ -32,14 +32,14 @@ internal record class SermonModel : WpPostEntityWithId
 	public DateTime PublishedOn { get; init; }
 }
 
-internal record class SermonModelWithTaxonomies : SermonModel
+internal sealed record class SermonModelWithTaxonomies : SermonModel
 {
 	public TermList BibleBooks { get; init; } = new(WpBcg.Taxonomies.BibleBook);
 
 	public TermList Series { get; init; } = new(WpBcg.Taxonomies.Series);
 }
 
-internal record class SermonModelWithCustomFields : SermonModel
+internal sealed record class SermonModelWithCustomFields : SermonModel
 {
 	public MetaDictionary Meta { get; init; } = new();
 
@@ -54,11 +54,11 @@ internal record class SermonModelWithCustomFields : SermonModel
 	public FeedImageCustomField? Image { get; init; }
 }
 
-internal record class TaxonomyModel : WpTermEntityWithId
+internal sealed record class TaxonomyModel : WpTermEntityWithId
 {
 	public string Title { get; init; } = string.Empty;
 
 	public long Count { get; init; }
 }
 
-internal record class Attachment : PostAttachment;
+internal sealed record class Attachment : PostAttachment;
