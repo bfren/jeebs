@@ -392,13 +392,11 @@ public class MvcApp : WebApp
 	/// Override to configure endpoints
 	/// </summary>
 	/// <param name="app">WebApplication</param>
-#pragma warning disable ASP0014 // Suggest using top level route registrations
 	protected virtual void ConfigureEndpoints(WebApplication app) =>
-		app.UseEndpoints(endpoints => endpoints.MapControllerRoute(
+		_ = app.MapControllerRoute(
 			name: "default",
 			pattern: "{controller=Home}/{action=Index}/{id?}"
-		));
-#pragma warning restore ASP0014 // Suggest using top level route registrations
+		);
 
 	#endregion Configure
 }

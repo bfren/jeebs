@@ -76,8 +76,6 @@ public class RazorApp : MvcApp
 	public virtual void ConfigureServicesRazorPagesOptions(HostBuilderContext ctx, RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>
-#pragma warning disable ASP0014 // Suggest using top level route registrations
 	protected override void ConfigureEndpoints(WebApplication app) =>
-		_ = app.UseEndpoints(endpoints => endpoints.MapRazorPages());
-#pragma warning restore ASP0014 // Suggest using top level route registrations
+		_ = app.MapRazorPages();
 }
