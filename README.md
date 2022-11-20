@@ -6,7 +6,11 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a21b1f1909dd44fbbdea712cddc76266)](https://www.codacy.com/gh/bfren/jeebs/dashboard)
 
-Libraries for use in .NET Core projects for rapid application development.
+Libraries for use in .NET Core projects for rapid application development.  The most basic ASP.NET app - with full Jeebs library support - begins like this:
+
+```csharp
+Jeebs.Apps.Web.WebApp.Run(args);
+```
 
 Please [view the book](https://docs.bfren.dev/jeebs) for information on how to use these libraries.
 
