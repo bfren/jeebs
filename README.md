@@ -22,7 +22,7 @@ Jeebs v6 brought a full rewrite of the WordPress library to take advantage of th
 
 Jeebs v7 took advantage of new features and optimisations in .NET 6, including support for the new minimal API, file-scoped namespaces, record structs, sealed `ToString()` methods, a new SkiaSharp driver (as System.Drawing was deprecated).
 
-Jeebs v8 targets .NET 6 and .NET 7, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
+Jeebs v8 targets .NET 7, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
 
 ## License
 
