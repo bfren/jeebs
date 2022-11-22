@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Jeebs.Config;
 using Serilog;
 using Serilog.Events;
@@ -28,7 +29,8 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 
 		_ = logger.WriteTo.Console(
 			restrictedToMinimumLevel: minimum,
-			outputTemplate: config.Template ?? "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}"
+			outputTemplate: config.Template ?? "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}",
+			formatProvider: CultureInfo.InvariantCulture
 		);
 	}
 }

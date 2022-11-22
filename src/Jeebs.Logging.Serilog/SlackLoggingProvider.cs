@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Jeebs.Config;
 using Serilog;
 using Serilog.Events;
@@ -23,7 +24,8 @@ public sealed class SlackLoggingProvider : ILoggingProvider
 		var config = jeebs.Services.GetServiceConfig(c => c.Slack, name);
 		_ = logger.WriteTo.Async(a => a.Slack(
 			webhookUrl: config.Webhook,
-			restrictedToMinimumLevel: minimum
+			restrictedToMinimumLevel: minimum,
+			formatProvider: CultureInfo.InvariantCulture
 		));
 	}
 }

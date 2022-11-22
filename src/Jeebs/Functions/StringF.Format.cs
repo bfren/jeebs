@@ -11,7 +11,7 @@ namespace Jeebs.Functions;
 /// <summary>
 /// String functions
 /// </summary>
-public static class StringF
+public static partial class StringF
 {
 	/// <summary>
 	/// If <paramref name="obj"/> is not null, use string.Format() -
@@ -54,14 +54,11 @@ public static class StringF
 		}
 
 		// Thanks James Newton-King!
-		var r = new Regex(
-			@"(?<start>\{)+(?<template>[\w\.\[\]@]+)(?<format>:[^}]+)?(?<end>\})+",
-			RegexOptions.CultureInvariant | RegexOptions.IgnoreCase
-		);
+		var r = TemplateMatcherRegex();
 
 		var values = new List<object>();
 		var replaceIndex = 0; // keeps track of replace loop so we can match named template values with an array source
-		var rewrittenFormat = r.Replace(formatString, (Match m) =>
+		var rewrittenFormat = r.Replace(formatString, (m) =>
 		{
 			var startGroup = m.Groups["start"];
 			var templateGroup = m.Groups["template"];
@@ -100,4 +97,7 @@ public static class StringF
 
 		return string.Format(CultureInfo.InvariantCulture, rewrittenFormat, values.ToArray());
 	}
+
+	[GeneratedRegex("(?<start>\\{)+(?<template>[\\w\\.\\[\\]@]+)(?<format>:[^}]+)?(?<end>\\})+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+	private static partial Regex TemplateMatcherRegex();
 }

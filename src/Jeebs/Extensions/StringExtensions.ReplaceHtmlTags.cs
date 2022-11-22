@@ -16,17 +16,17 @@ public static partial class StringExtensions
 		Modify(@this, () =>
 		{
 			// Make sure replaceWith isn't null
-			if (replaceWith is null)
-			{
-				replaceWith = string.Empty;
-			}
+			replaceWith ??= string.Empty;
 
 			// Now replace all HTML characters
-			var re = new Regex("<.*?>");
+			var re = HtmlCharactersRegex();
 			return re.Replace(@this, replaceWith);
 		});
 
 	/// <inheritdoc cref="ReplaceHtmlTags(string, string?)"/>
 	public static string ReplaceHtmlTags(this string @this) =>
 		ReplaceHtmlTags(@this, null);
+
+	[GeneratedRegex("<.*?>")]
+	private static partial Regex HtmlCharactersRegex();
 }

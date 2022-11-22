@@ -77,5 +77,5 @@ public class RazorApp : MvcApp
 
 	/// <inheritdoc/>
 	protected override void ConfigureEndpoints(WebApplication app) =>
-		_ = app.UseEndpoints(endpoints => endpoints.MapRazorPages());
+		_ = app.MapRazorPages();
 }

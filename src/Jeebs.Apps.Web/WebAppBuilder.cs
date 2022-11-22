@@ -46,12 +46,14 @@ internal static class WebAppBuilder
 		var builder = WebApplication.CreateBuilder(args);
 
 		// Configure and build host
+#pragma warning disable ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
 		_ = builder.Host
 			.ConfigureHostConfiguration(app.ConfigureHost)
 			.ConfigureAppConfiguration(app.ConfigureApp)
 			.ConfigureServices(app.ConfigureServices)
 			.ConfigureServices(configureServices)
 			.UseSerilog(app.ConfigureSerilog);
+#pragma warning restore ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
 
 		var webApplication = builder.Build();
 

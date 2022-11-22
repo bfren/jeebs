@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0" />
 		<PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.7" />
-		<PackageReference Include="StrongId.Mvc" Version="8.2.5" />
+		<PackageReference Include="StrongId.Mvc" Version="8.3.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
@@ -22,8 +22,6 @@
 		</Content>
 	</ItemGroup>
 	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties jeebsconfig_1json__JsonSchema="..\..\src\Jeebs.Config\schema.json" />
-		</VisualStudio>
+		<VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" /></VisualStudio>
 	</ProjectExtensions>
 </Project>

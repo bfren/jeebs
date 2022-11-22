@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace AppConsolePg;
 
-internal class Db : Jeebs.Data.Db
+internal sealed class Db : Jeebs.Data.Db
 {
 	public JsonTable Json { get; init; }
 

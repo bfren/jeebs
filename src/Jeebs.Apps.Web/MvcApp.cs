@@ -393,10 +393,10 @@ public class MvcApp : WebApp
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	protected virtual void ConfigureEndpoints(WebApplication app) =>
-		app.UseEndpoints(endpoints => endpoints.MapControllerRoute(
+		_ = app.MapControllerRoute(
 			name: "default",
 			pattern: "{controller=Home}/{action=Index}/{id?}"
-		));
+		);
 
 	#endregion Configure
 }

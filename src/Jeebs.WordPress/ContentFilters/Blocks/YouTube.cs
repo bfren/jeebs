@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Jeebs.Functions;
 using RndF;
@@ -12,7 +13,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks;
 /// <summary>
 /// Parse YouTube blocks
 /// </summary>
-internal static class YouTube
+internal static partial class YouTube
 {
 	/// <summary>
 	/// Parse embedded YouTube videos
@@ -21,8 +22,7 @@ internal static class YouTube
 	internal static string Parse(string content)
 	{
 		// Get YouTube info
-		const string pattern = "<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->";
-		var matches = Regex.Matches(content, pattern, RegexOptions.Singleline);
+		var matches = YouTubeRegex().Matches(content);
 		if (matches.Count == 0)
 		{
 			return content;
@@ -32,7 +32,7 @@ internal static class YouTube
 		const string format = "<div id=\"{0}\" class=\"hide video-youtube\" data-v=\"{1}\">{2}</div>";
 
 		// Parse each match
-		foreach (Match match in matches)
+		foreach (var match in matches.Cast<Match>())
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[2].Value;
@@ -63,7 +63,7 @@ internal static class YouTube
 	/// <param name="uri">URI</param>
 	internal static string? GetVideoId(Uri uri)
 	{
-		var regex = new Regex(@"^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*");
+		var regex = VideoRegex();
 		var m = regex.Match(uri.AbsoluteUri);
 
 		if (m.Success && m.Groups[1] is Group g && g.Value is string v)
@@ -79,4 +79,10 @@ internal static class YouTube
 	/// </summary>
 	/// <param name="Url">YouTube URL</param>
 	private sealed record class YouTubeParsed(string Url);
+
+	[GeneratedRegex("<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->", RegexOptions.Singleline)]
+	private static partial Regex YouTubeRegex();
+
+	[GeneratedRegex("^.*(?:(?:youtu\\.be\\/|v\\/|vi\\/|u\\/\\w\\/|embed\\/)|(?:(?:watch)?\\?v(?:i)?=|\\&v(?:i)?=))([^#\\&\\?]*).*")]
+	private static partial Regex VideoRegex();
 }

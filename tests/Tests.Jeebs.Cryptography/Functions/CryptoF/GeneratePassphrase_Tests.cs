@@ -65,7 +65,7 @@ public class GeneratePassphrase_Tests
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.NotEqual(some, some.ToLower());
+		Assert.NotEqual(some, some.ToLowerInvariant());
 	}
 
 	[Fact]

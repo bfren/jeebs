@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Mvc.Enums;
@@ -13,7 +13,7 @@ public abstract class Setup
 		// Arrange
 		var text = Rnd.Str;
 		var td = Substitute.For<ITempDataDictionary>();
-		var expected = $"[{{\"type\":\"{type.ToString().ToLower()}\",\"text\":\"{text}\"}}]";
+		var expected = $"[{{\"type\":\"{type.ToString().ToLowerInvariant()}\",\"text\":\"{text}\"}}]";
 
 		// Act
 		add(td, text);

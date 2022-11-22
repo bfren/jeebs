@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Mvc.Enums;
@@ -42,10 +42,10 @@ public class GetAlerts_Tests
 		// Arrange
 		var a0Type = AlertType.Success;
 		var a0Text = Rnd.Str;
-		var a0 = $"{{\"type\":\"{a0Type.ToString().ToLower()}\",\"text\":\"{a0Text}\"}}";
+		var a0 = $"{{\"type\":\"{a0Type.ToString().ToLowerInvariant()}\",\"text\":\"{a0Text}\"}}";
 		var a1Type = AlertType.Warning;
 		var a1Text = Rnd.Str;
-		var a1 = $"{{\"type\":\"{a1Type.ToString().ToLower()}\",\"text\":\"{a1Text}\"}}";
+		var a1 = $"{{\"type\":\"{a1Type.ToString().ToLowerInvariant()}\",\"text\":\"{a1Text}\"}}";
 		var json = $"[{a0},{a1}]";
 
 		var td = Substitute.For<ITempDataDictionary>();

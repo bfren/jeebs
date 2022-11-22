@@ -119,7 +119,7 @@ public class ApiApp : MvcApp
 
 	/// <inheritdoc/>
 	protected override void ConfigureEndpoints(WebApplication app) =>
-		_ = app.UseEndpoints(endpoints => endpoints.MapControllers());
+		_ = app.MapControllers();
 
 	#endregion Configure
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Jeebs.Config;
 using Jeebs.Config.Services;
@@ -83,7 +84,7 @@ public static class LoggerConfigurationExtensions
 		// If no providers are enabled, add basic console logging and return
 		if (enabledProviders.Count == 0)
 		{
-			_ = serilog.WriteTo.Console();
+			_ = serilog.WriteTo.Console(formatProvider: CultureInfo.InvariantCulture);
 			return;
 		}
 

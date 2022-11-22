@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Jeebs.Functions;
 using RndF;
@@ -11,7 +12,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks;
 /// <summary>
 /// Parse embed blocks
 /// </summary>
-internal static class Embed
+internal static partial class Embed
 {
 	/// <summary>
 	/// Parse a generic embedded object
@@ -23,15 +24,14 @@ internal static class Embed
 	internal static string Parse(string content, EmbedType type, Provider provider, Func<string, EmbedParsed, string> format)
 	{
 		// Get Embedded info
-		const string pattern = "<!-- wp:embed ({.*?}) -->(.*?)<!-- /wp:embed -->";
-		var matches = Regex.Matches(content, pattern, RegexOptions.Singleline);
+		var matches = EmbedRegex().Matches(content);
 		if (matches.Count == 0)
 		{
 			return content;
 		}
 
 		// Parse each match
-		foreach (Match match in matches)
+		foreach (var match in matches.Cast<Match>())
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[1].Value;
@@ -76,4 +76,7 @@ internal static class Embed
 	{
 		Vimeo = 0
 	}
+
+	[GeneratedRegex("<!-- wp:embed ({.*?}) -->(.*?)<!-- /wp:embed -->", RegexOptions.Singleline)]
+	private static partial Regex EmbedRegex();
 }

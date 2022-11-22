@@ -14,7 +14,10 @@ public static partial class StringExtensions
 	public static string SplitByCapitals(this string @this) =>
 		Modify(@this, () =>
 		{
-			var capitals = new Regex("( *)([A-Z])");
+			var capitals = CapitalLettersRegex();
 			return capitals.Replace(@this, " $2").Trim();
 		});
+
+	[GeneratedRegex("( *)([A-Z])")]
+	private static partial Regex CapitalLettersRegex();
 }

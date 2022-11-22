@@ -14,16 +14,16 @@ jobs:
       uses: actions/checkout@v3
     -
       name: Prepare - Read Version
-      uses: bfren/read-file@v1
+      uses: bfren/read-file@v2
       with:
         file: ./Version
       id: version
     -
       name: Prepare - Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-          6.0.x
+          7.0.x
     -
       name: A - Restore
       run: |
