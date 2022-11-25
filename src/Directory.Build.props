@@ -14,6 +14,11 @@
 		<Using Include="MaybeF.Linq" />
 	</ItemGroup>
 
+	<!-- Documentation -->
+	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
 	<!-- Enable Internal Testing -->
 	<ItemGroup Label="Test Internals">
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
@@ -23,18 +28,18 @@
 
 	<!-- Get Paths to Files -->
 	<PropertyGroup>
+		<SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v8).sln'))</SolutionFilePath>
+		<SolutionRootPath>$([System.IO.Path]::GetDirectoryName('$(SolutionFilePath)'))</SolutionRootPath>
+	</PropertyGroup>
+	<PropertyGroup>
 		<LicenceFile>LICENSE</LicenceFile>
 		<LicencePath>$([MSBuild]::GetPathOfFileAbove('$(LicenceFile)'))</LicencePath>
-	</PropertyGroup>
-	<PropertyGroup>
 		<LocalPackFile>Local.pack.props</LocalPackFile>
 		<LocalPackPath>$([MSBuild]::GetPathOfFileAbove('$(LocalPackFile)'))</LocalPackPath>
-	</PropertyGroup>
-	<PropertyGroup>
+		<LogoFile>logo.png</LogoFile>
+		<LogoPath>$([System.IO.Path]::Combine('$(SolutionRootPath)', 'artwork', '$(LogoFile)'))</LogoPath>
 		<ReadmeFile>README.md</ReadmeFile>
 		<ReadmePath>$([MSBuild]::GetPathOfFileAbove('$(ReadmeFile)', '$(MSBuildProjectDirectory)'))</ReadmePath>
-	</PropertyGroup>
-	<PropertyGroup>
 		<VersionFile>Version</VersionFile>
 		<VersionPath>$([MSBuild]::GetPathOfFileAbove('$(VersionFile)'))</VersionPath>
 	</PropertyGroup>
@@ -42,10 +47,11 @@
 	<!-- Import Files -->
 	<ItemGroup Label="Files" Condition="'$(Configuration)'=='Release'">
 		<None Include="$(LicencePath)" Pack="true" PackagePath="/" />
+		<None Include="$(LogoPath)" Pack="true" PackagePath="/"/>
 		<None Include="$(ReadmePath)" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
-	<!-- Get Version -->
+	<!-- Read Version File -->
 	<PropertyGroup Label="Version">
 		<JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)'))</JeebsVersion>
 	</PropertyGroup>
@@ -55,31 +61,33 @@
 		<Authors>bfren</Authors>
 		<Company>bfren.dev</Company>
 		<Copyright>Copyright © bfren.dev 2013-$([System.DateTime]::Now.ToString(yyyy))</Copyright>
-		<Version>$(JeebsVersion)</Version>
+		<DebugType>embedded</DebugType>
 		<Description>$(MSBuildProjectName) library</Description>
+		<PackageIcon>$(LogoFile)</PackageIcon>
 		<PackageLicenseFile>$(LicenceFile)</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/bfren/jeebs</PackageProjectUrl>
 		<PackageReadmeFile>$(ReadmeFile)</PackageReadmeFile>
+		<PackageTags>C#;Rapid Application Development;Toolkit</PackageTags>
 		<RepositoryUrl>https://github.com/bfren/jeebs</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-	</PropertyGroup>
-
-	<!-- Documentation -->
-	<PropertyGroup Label="Documentation" Condition="'$(Configuration)'=='Release'">
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Version>$(JeebsVersion)</Version>
 	</PropertyGroup>
 
 	<!--
 		[Optional]
 		Create Local Packages
-		Use AfterTargets="DispatchToInnerBuilds" to run after builds are completed for all frameworks
 			1. Import local repo
-			2. Create package
-			3. Publish package to local repository
-			4. Cleanup
+			2. Enable package validation
+			3. Create package
+			4. Publish package to local repository
+			5. Cleanup
 	-->
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
-	<Target Name="PackAndPushToLocalNuget" AfterTargets="DispatchToInnerBuilds" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
+	<PropertyGroup Label="Local Package Validation" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
+		<EnablePackageValidation>true</EnablePackageValidation>
+		<PackageValidationBaselineVersion>8.1.0</PackageValidationBaselineVersion>
+	</PropertyGroup>
+	<Target Name="PackAndPushToLocalNuget" AfterTargets="Build" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
 		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build --configuration Release" />
 		<Exec Command="nuget init &quot;$(MSBuildProjectDirectory)\bin\Release&quot; &quot;$(LocalNugetRepository)&quot;" />
 		<Exec Command="del &quot;$(MSBuildProjectDirectory)\bin\Release\*.nupkg&quot;" />
