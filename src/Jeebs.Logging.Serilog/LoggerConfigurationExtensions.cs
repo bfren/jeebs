@@ -92,10 +92,9 @@ public static class LoggerConfigurationExtensions
 		var providers = new Dictionary<string, ILoggingProvider>();
 		TypeF.GetTypesImplementing<ILoggingProvider>().ForEach(t =>
 		{
-			var i = Activator.CreateInstance(t);
-			if (i is ILoggingProvider h)
+			if (Activator.CreateInstance(t) is ILoggingProvider p)
 			{
-				providers.Add(h.Type, h);
+				providers.Add(p.Type, p);
 			}
 		});
 
@@ -127,10 +126,9 @@ public static class LoggerConfigurationExtensions
 		var connectors = new List<ILoggingConnector>();
 		TypeF.GetTypesImplementing<ILoggingConnector>().ForEach(t =>
 		{
-			var i = Activator.CreateInstance(t);
-			if (i is ILoggingConnector h)
+			if (Activator.CreateInstance(t) is ILoggingConnector c)
 			{
-				connectors.Add(h);
+				connectors.Add(c);
 			}
 		});
 

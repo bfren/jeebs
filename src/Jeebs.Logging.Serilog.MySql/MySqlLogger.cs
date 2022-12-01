@@ -39,7 +39,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	/// <param name="level">Requested level</param>
 	public bool IsEnabled(MySqlConnectorLogLevel level) =>
 		LevelF.ConvertToSerilogLevel(level).Switch(
-			some: x => Logger.IsEnabled(x),
+			some: Logger.IsEnabled,
 			none: false
 		);
 
