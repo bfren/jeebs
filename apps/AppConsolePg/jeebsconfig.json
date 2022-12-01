@@ -1,17 +1,17 @@
 {
-  "jeebs": {
-    "app": {
-      "name": "PostgreSQL",
-      "suite": "Jeebs"
-    },
-    "db": {
-      "default": "server04",
-      "connections": {
-        "server04": {
-          "connectionString": ""
-        }
-      }
-    },
+	"jeebs": {
+		"app": {
+			"name": "PostgreSQL",
+			"suite": "Jeebs"
+		},
+		"db": {
+			"default": "server04",
+			"connections": {
+				"server04": {
+					"connectionString": ""
+				}
+			}
+		},
 		"logging": {
 			"minimum": "Verbose",
 			"overrides": {
@@ -28,13 +28,13 @@
 				}
 			}
 		},
-    "services": {
-      "seq": {
-        "server04": {
-          "server": "",
-          "apiKey": ""
-        }
-      }
-    }
-  }
+		"services": {
+			"seq": {
+				"server04": {
+					"server": "",
+					"apiKey": ""
+				}
+			}
+		}
+	}
 }
