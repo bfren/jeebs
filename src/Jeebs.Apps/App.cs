@@ -78,10 +78,10 @@ public class App
 			.AddJsonFile($"{env.ContentRootPath}/jeebsconfig-secrets.{env.EnvironmentName}.json", optional: true);
 
 		// Add config from Azure Key Vault
-		var vault = config.Build().GetSection<KeyVaultConfig>(KeyVaultConfig.Key, false);
-		if (vault.IsValid)
+		var kvc = config.Build().GetSection<KeyVaultConfig>(KeyVaultConfig.Key, false);
+		if (kvc.IsValid)
 		{
-			_ = config.AddAzureKeyVault(vault.GetUri(), vault.GetCredential());
+			_ = config.AddAzureKeyVault(kvc.GetUri(), kvc.GetCredential());
 		}
 	}
 
@@ -119,12 +119,12 @@ public class App
 
 		// Add Azure Data Protection
 		var dpc = ctx.Configuration.GetSection<DataProtectionConfig>(DataProtectionConfig.Key);
-		var vault = ctx.Configuration.GetSection<KeyVaultConfig>(KeyVaultConfig.Key);
-		if (dpc.IsValid && vault.IsValid)
+		var kvc = ctx.Configuration.GetSection<KeyVaultConfig>(KeyVaultConfig.Key);
+		if (dpc.IsValid && kvc.IsValid)
 		{
 			_ = services.AddDataProtection()
 				.PersistKeysToAzureBlobStorage(dpc.StorageAccessKeyConnectionString, dpc.ContainerName, dpc.BlobName)
-				.ProtectKeysWithAzureKeyVault(dpc.GetUri(), vault.GetCredential());
+				.ProtectKeysWithAzureKeyVault(dpc.GetUri(), kvc.GetCredential());
 		}
 	}
 
