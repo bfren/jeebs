@@ -2,6 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text.Json.Serialization;
 using Jeebs.Config;
 using Jeebs.Services.Notify;
 
@@ -13,14 +15,16 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public sealed record class SlackMessage
 {
 	/// <summary>
-	/// Username (filled with application name)
+	/// Plain text value of the message
 	/// </summary>
-	public string Username { get; private init; }
+	[JsonPropertyName("text")]
+	public string Text { get; private init; }
 
 	/// <summary>
-	/// Attachments (the actual text of the message)
+	/// Blocks (the formatted content of the message)
 	/// </summary>
-	public List<SlackAttachment> Attachments { get; private init; }
+	[JsonPropertyName("blocks")]
+	public List<SlackBlock> Blocks { get; private init; }
 
 	/// <summary>
 	/// Create a message
@@ -30,10 +34,26 @@ public sealed record class SlackMessage
 	/// <param name="level">MessageLevel</param>
 	public SlackMessage(JeebsConfig config, string text, NotificationLevel level)
 	{
-		Username = config.App.FullName;
-		Attachments = new List<SlackAttachment>
+		// Set plain text (fallback) message content
+		Text = text;
+
+		// Add notification image URL
+		var url = string.Format(
+			CultureInfo.InvariantCulture,
+			"https://bfren.dev/img/notifications/{0}",
+			level.ToString().ToLowerInvariant()
+		);
+
+		// Add blocks
+		Blocks = new()
 		{
-			{ new (text, level) }
+			new SlackHeader(
+				text: new SlackPlainText(config.App.FullName)
+			),
+			new SlackSection(
+				text: new SlackPlainText(text),
+				accessory: new SlackImage($"{url}.png", $"{level}: {url}.txt")
+			)
 		};
 	}
 }
