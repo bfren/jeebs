@@ -32,7 +32,9 @@ var seq = app.Services.GetRequiredService<Seq>();
 seq.Send("test");
 
 var slack = app.Services.GetRequiredService<Slack>();
-slack.Send("test");
+slack.Send("test ok");
+slack.Send("test warning", NotificationLevel.Warning);
+slack.Send("test error", NotificationLevel.Error);
 
 var notifier = app.Services.GetRequiredService<INotifier>();
 notifier.Send("test notification");
