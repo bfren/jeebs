@@ -37,23 +37,38 @@ public sealed record class SlackMessage
 		// Set plain text (fallback) message content
 		Text = text;
 
-		// Add notification image URL
-		var url = string.Format(
-			CultureInfo.InvariantCulture,
-			"https://bfren.dev/img/notifications/{0}",
-			level.ToString().ToLowerInvariant()
+		// Create header block
+		var headerBlock = new SlackHeader(
+			text: new SlackPlainText(config.App.FullName)
 		);
 
-		// Add blocks
-		Blocks = new()
+		// Create text block
+		var textBlock = new SlackPlainText(text);
+
+		// Add image if not an information notification
+		if (level == NotificationLevel.Information)
 		{
-			new SlackHeader(
-				text: new SlackPlainText(config.App.FullName)
-			),
-			new SlackSection(
-				text: new SlackPlainText(text),
-				accessory: new SlackImage($"{url}.png", $"{level}: {url}.txt")
-			)
-		};
+			// Add header and text section
+			Blocks = new() { headerBlock, new SlackSection(text: textBlock) };
+		}
+		else
+		{
+			// Build notification image URL
+			var url = string.Format(
+				CultureInfo.InvariantCulture,
+				"https://bfren.dev/img/notifications/{0}",
+				level.ToString().ToLowerInvariant()
+			);
+
+			// Add header and text with image section
+			Blocks = new()
+			{
+				headerBlock,
+				new SlackSection(
+					text: textBlock,
+					accessory:new SlackImage($"{url}.png", $"{level}: {url}.txt")
+				)
+			};
+		}
 	}
 }
