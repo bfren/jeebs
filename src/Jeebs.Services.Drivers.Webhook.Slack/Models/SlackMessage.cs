@@ -37,19 +37,19 @@ public sealed record class SlackMessage
 		// Set plain text (fallback) message content
 		Text = text;
 
-		// Create header block
-		var headerBlock = new SlackHeader(
-			text: new SlackPlainText(config.App.FullName)
-		);
-
-		// Create text block
-		var textBlock = new SlackPlainText(text);
+		// Create header
+		Blocks = new()
+		{
+			new SlackHeader(
+				new SlackPlainText(config.App.FullName)
+			)
+		};
 
 		// Add image if not an information notification
 		if (level == NotificationLevel.Information)
 		{
-			// Add header and text section
-			Blocks = new() { headerBlock, new SlackSection(text: textBlock) };
+			// Add text section
+			Blocks.Add(new SlackSection(text: new SlackPlainText(text)));
 		}
 		else
 		{
@@ -60,15 +60,17 @@ public sealed record class SlackMessage
 				level.ToString().ToLowerInvariant()
 			);
 
-			// Add header and text with image section
-			Blocks = new()
-			{
-				headerBlock,
-				new SlackSection(
-					text: textBlock,
-					accessory:new SlackImage($"{url}.png", $"{level}: {url}.txt")
-				)
-			};
+			// Create content section
+			var content = new SlackSection(
+				text: new SlackMarkdown($"*{level}*\n{text}"),
+				accessory: new SlackImage($"{url}.png", $"{level}: {url}.txt")
+			);
+
+			// Add text with image section
+			Blocks.Add(content);
 		}
+
+		// Create end divider
+		Blocks.Add(new SlackDivider());
 	}
 }
