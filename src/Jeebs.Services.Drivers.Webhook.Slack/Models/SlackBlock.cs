@@ -8,6 +8,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 /// <summary>
 /// Slack message block
 /// </summary>
+[JsonDerivedType(typeof(SlackDivider))]
 [JsonDerivedType(typeof(SlackHeader))]
 [JsonDerivedType(typeof(SlackSection))]
 public abstract record class SlackBlock
