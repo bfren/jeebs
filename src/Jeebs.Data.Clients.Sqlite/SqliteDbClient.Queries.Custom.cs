@@ -1,0 +1,137 @@
+// Jeebs Rapid Application Development
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using System.Collections.Generic;
+using Jeebs.Collections;
+using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query;
+using Jeebs.Data.Query.Functions;
+
+namespace Jeebs.Data.Clients.Sqlite;
+
+public partial class SqliteDbClient : DbClient
+{
+	/// <inheritdoc/>
+	protected override (string query, IQueryParametersDictionary param) GetQuery(
+		IDbName table,
+		IColumnList columns,
+		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates
+	)
+	{
+		// Get columns
+		var col = QueryF.GetColumnsFromList(this, columns);
+
+		// Add each predicate to the where and parameter lists
+		var (where, param) = QueryF.GetWhereAndParameters(this, predicates, false);
+
+		// Return query and parameters
+		return (
+			$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)};",
+			param
+		);
+	}
+
+	/// <inheritdoc/>
+	public override (string query, IQueryParametersDictionary param) GetQuery(IQueryParts parts)
+	{
+		// Start query
+		var select = parts.SelectCount switch
+		{
+			true =>
+				"COUNT(*)",
+
+			false =>
+				(parts.SelectColumns.Count > 0) switch
+				{
+					true =>
+						QueryF.GetSelectFromList(this, parts.SelectColumns),
+
+					false =>
+						"*"
+				}
+		};
+
+		var sql = $"SELECT {select} FROM {Escape(parts.From)}";
+
+		// Add INNER JOIN
+		foreach (var (from, to) in parts.InnerJoin)
+		{
+			sql += $" JOIN {Escape(to.TblName)} USING ({Escape(from.TblName, from.ColName)}, {Escape(to.TblName, to.ColName)})";
+		}
+
+		// Add LEFT JOIN
+		foreach (var (from, to) in parts.LeftJoin)
+		{
+			sql += $" LEFT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
+		}
+
+		// Add RIGHT JOIN
+		foreach (var (from, to) in parts.RightJoin)
+		{
+			sql += $" RIGHT JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
+		}
+
+		// Add WHERE
+		IQueryParametersDictionary parameters = new QueryParametersDictionary();
+		if (parts.Where.Count > 0 || parts.WhereCustom.Count > 0)
+		{
+			// This will be appended to the SQL query
+			var where = new List<string>();
+
+			// Add simple WHERE
+			if (parts.Where.Count > 0)
+			{
+				var (whereSimple, param) = QueryF.GetWhereAndParameters(this, parts.Where, true);
+				where.AddRange(whereSimple);
+				_ = parameters.Merge(param);
+			}
+
+			// Add custom WHERE
+			foreach (var (whereCustom, param) in parts.WhereCustom)
+			{
+				where.Add($"({whereCustom})");
+				_ = parameters.Merge(param);
+			}
+
+			// If there's anything to add, 
+			if (where.Count > 0)
+			{
+				sql += $" WHERE {string.Join(" AND ", where)}";
+			}
+		}
+
+		// Add ORDER BY
+		if (parts.SortRandom)
+		{
+			sql += " ORDER BY RAND()";
+		}
+		else if (parts.Sort.Count > 0)
+		{
+			var orderBy = new List<string>();
+			foreach (var (column, order) in parts.Sort)
+			{
+				orderBy.Add($"{Escape(column.TblName, column.ColName)} {order.ToOperator()}");
+			}
+
+			sql += $" ORDER BY {JoinList(orderBy, false)}";
+		}
+
+		// Add LIMIT
+		if (parts.Maximum > 0)
+		{
+			// Add OFFSET
+			if (parts.Skip > 0)
+			{
+				sql += $" LIMIT {parts.Skip}, {parts.Maximum}";
+			}
+			else
+			{
+				sql += $" LIMIT {parts.Maximum}";
+			}
+		}
+
+		// Return query string
+		return ($"{sql};", parameters);
+	}
+}
