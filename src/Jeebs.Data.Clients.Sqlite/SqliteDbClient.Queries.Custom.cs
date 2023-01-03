@@ -39,7 +39,7 @@ public partial class SqliteDbClient : DbClient
 		var select = parts.SelectCount switch
 		{
 			true =>
-				"COUNT(*)",
+				"COUNT()",
 
 			false =>
 				(parts.SelectColumns.Count > 0) switch
@@ -57,7 +57,7 @@ public partial class SqliteDbClient : DbClient
 		// Add INNER JOIN
 		foreach (var (from, to) in parts.InnerJoin)
 		{
-			sql += $" JOIN {Escape(to.TblName)} USING ({Escape(from.TblName, from.ColName)}, {Escape(to.TblName, to.ColName)})";
+			sql += $" INNER JOIN {Escape(to.TblName)} ON {Escape(from.TblName, from.ColName)} = {Escape(to.TblName, to.ColName)}";
 		}
 
 		// Add LEFT JOIN
@@ -104,7 +104,7 @@ public partial class SqliteDbClient : DbClient
 		// Add ORDER BY
 		if (parts.SortRandom)
 		{
-			sql += " ORDER BY RAND()";
+			sql += " ORDER BY random()";
 		}
 		else if (parts.Sort.Count > 0)
 		{
