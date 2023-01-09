@@ -8,9 +8,9 @@
 		<PackageReference Include="System.Text.Json" Version="7.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="MaybeF" Version="9.2.1" />
-		<PackageReference Include="Rnd" Version="8.4.1" />
-		<PackageReference Include="StrongId" Version="8.3.2" />
+		<PackageReference Include="MaybeF" Version="9.3.0" />
+		<PackageReference Include="Rnd" Version="8.4.2" />
+		<PackageReference Include="StrongId" Version="8.3.3" />
 	</ItemGroup>
 	<ItemGroup Label="Embed Version">
 		<EmbeddedResource Include="$(VersionPath)" />
