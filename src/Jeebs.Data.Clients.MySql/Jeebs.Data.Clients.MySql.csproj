@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="MySqlConnector" Version="2.2.4" />
+		<PackageReference Include="MySqlConnector" Version="2.2.5" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
