@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>Jeebs.Auth.Totp</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj" />
+		<ProjectReference Include="..\..\src\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj" />
 	</ItemGroup>
 </Project>
