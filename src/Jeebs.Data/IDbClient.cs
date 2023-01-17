@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Data;
+using System.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
@@ -26,10 +26,10 @@ public interface IDbClient
 	IDbTypeMapper Types { get; }
 
 	/// <summary>
-	/// Return a new database connection
+	/// Return an open database connection
 	/// </summary>
 	/// <param name="connectionString">Database connection string</param>
-	IDbConnection Connect(string connectionString);
+	DbConnection GetConnection(string connectionString);
 
 	#region Escaping and Joining
 

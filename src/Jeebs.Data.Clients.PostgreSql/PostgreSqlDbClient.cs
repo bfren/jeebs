@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Data;
+using System.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Npgsql;
@@ -18,7 +18,7 @@ public partial class PostgreSqlDbClient : DbClient
 	public PostgreSqlDbClient() : base(new PostgreSqlDbTypeMapper()) { }
 
 	/// <inheritdoc/>
-	public override IDbConnection Connect(string connectionString) =>
+	public override DbConnection GetConnection(string connectionString) =>
 		new NpgsqlConnection(connectionString);
 
 	/// <inheritdoc/>
