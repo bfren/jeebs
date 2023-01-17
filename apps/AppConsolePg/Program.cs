@@ -146,7 +146,7 @@ log.Dbg("== Inserting values as Jsonb ==");
 var v0 = new ParamTest(7, Rnd.Str, Rnd.Str);
 var v1 = new ParamTest(18, Rnd.Str, Rnd.Str);
 var v2 = new ParamTest(93, Rnd.Str, Rnd.Str);
-using (var w = db.UnitOfWork)
+using (var w = await db.StartWorkAsync())
 {
 	foreach (var v in new[] { v0, v1, v2 })
 	{
@@ -194,7 +194,7 @@ log.Dbg("== Inserting values using repository ==");
 var v3 = new ParamTest(8, Rnd.Str, Rnd.Str);
 var v4 = new ParamTest(19, Rnd.Str, Rnd.Str);
 var v5 = new ParamTest(94, Rnd.Str, Rnd.Str);
-using (var w = db.UnitOfWork)
+using (var w = await db.StartWorkAsync())
 {
 	foreach (var v in new[] { v3, v4, v5 })
 	{
