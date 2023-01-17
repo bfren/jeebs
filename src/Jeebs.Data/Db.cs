@@ -31,22 +31,49 @@ public abstract class Db : IDb
 		Log;
 
 	/// <inheritdoc/>
-	public IUnitOfWork UnitOfWork
+	public virtual IUnitOfWork StartWork()
 	{
-		get
-		{
-			// Get a database connection
-			Log.Vrb("Getting database connection.");
-			var connection = Client.Connect(Config.ConnectionString);
-			if (connection.State != ConnectionState.Open)
-			{
-				connection.Open();
-			}
+		// Get a database connection
+		Log.Vrb("Getting database connection.");
+		var connection = Client.GetConnection(Config.ConnectionString);
 
-			// Create Unit of Work
-			Log.Vrb("Starting new Unit of Work.");
-			return new UnitOfWork(connection, Log.ForContext<UnitOfWork>());
+		// Open database connection
+		if (connection.State != ConnectionState.Open)
+		{
+			Log.Vrb("Connecting to the database.");
+			connection.Open();
 		}
+
+		// Begin a new transaction
+		Log.Vrb("Beginning a new transaction.");
+		var transaction = connection.BeginTransaction();
+
+		// Create Unit of Work
+		Log.Vrb("Starting new Unit of Work.");
+		return new UnitOfWork(connection, transaction, Log);
+	}
+
+	/// <inheritdoc/>
+	public virtual async Task<IUnitOfWork> StartWorkAsync()
+	{
+		// Connect to the database
+		Log.Vrb("Getting database connection.");
+		var connection = Client.GetConnection(Config.ConnectionString);
+
+		// Open database connection
+		if (connection.State != ConnectionState.Open)
+		{
+			Log.Vrb("Connecting to the database.");
+			await connection.OpenAsync();
+		}
+
+		// Begin a new transaction
+		Log.Vrb("Beginning a new transaction.");
+		var transaction = await connection.BeginTransactionAsync();
+
+		// Create Unit of Work
+		Log.Vrb("Starting new Unit of Work.");
+		return new UnitOfWork(connection, transaction, Log);
 	}
 
 	/// <summary>
@@ -105,7 +132,7 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
 	{
-		using var w = UnitOfWork;
+		using var w = await StartWorkAsync();
 		return await QueryAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -125,7 +152,7 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public async Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
 	{
-		using var w = UnitOfWork;
+		using var w = await StartWorkAsync();
 		return await QuerySingleAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -148,7 +175,7 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public async Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
-		using var w = UnitOfWork;
+		using var w = await StartWorkAsync();
 		return await ExecuteAsync(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -172,7 +199,7 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public async Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
 	{
-		using var w = UnitOfWork;
+		using var w = await StartWorkAsync();
 		return await ExecuteAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
 	}
 
