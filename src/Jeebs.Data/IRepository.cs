@@ -17,9 +17,6 @@ public interface IRepository<TEntity, TId>
 	where TEntity : IWithId<TId>
 	where TId : class, IStrongId, new()
 {
-	/// <inheritdoc cref="IDb.UnitOfWork"/>
-	IUnitOfWork UnitOfWork { get; }
-
 	#region Fluent Queries
 
 	/// <summary>
