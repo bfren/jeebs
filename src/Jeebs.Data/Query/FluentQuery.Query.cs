@@ -14,7 +14,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>()
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryAsync<TModel>(w.Transaction).ConfigureAwait(false);
 	}
 
@@ -54,7 +54,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public async Task<Maybe<TModel>> QuerySingleAsync<TModel>()
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QuerySingleAsync<TModel>(w.Transaction).ConfigureAwait(false);
 	}
 

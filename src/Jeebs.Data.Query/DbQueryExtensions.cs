@@ -22,7 +22,7 @@ public static class DbQueryExtensions
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder
 	)
 	{
-		using var w = @this.UnitOfWork;
+		using var w = await @this.StartWorkAsync();
 		return await QueryAsync<T>(@this, page, builder, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -53,7 +53,7 @@ public static class DbQueryExtensions
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder
 	)
 	{
-		using var w = @this.UnitOfWork;
+		using var w = await @this.StartWorkAsync();
 		return await QueryAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -76,7 +76,7 @@ public static class DbQueryExtensions
 		Func<IQueryBuilder, IQueryBuilderWithFrom> builder
 	)
 	{
-		using var w = @this.UnitOfWork;
+		using var w = await @this.StartWorkAsync();
 		return await QuerySingleAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
 	}
 
