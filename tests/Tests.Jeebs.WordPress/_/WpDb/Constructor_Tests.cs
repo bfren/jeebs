@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
+using System.Data.Common;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
 using Jeebs.Data;
@@ -21,8 +21,8 @@ public class Constructor_Tests
 		// Arrange
 		var client = Substitute.For<IDbClient>();
 
-		var connection = Substitute.For<IDbConnection>();
-		client.Connect(Arg.Any<string>()).Returns(connection);
+		var connection = Substitute.ForPartsOf<DbConnection>();
+		client.GetConnection(Arg.Any<string>()).Returns(connection);
 
 		var dbConfig = Substitute.For<IOptions<DbConfig>>();
 

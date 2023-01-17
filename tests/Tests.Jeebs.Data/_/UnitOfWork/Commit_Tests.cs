@@ -1,7 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
+using System.Data.Common;
 using Jeebs.Logging;
 
 namespace Jeebs.Data.UnitOfWork_Tests;
@@ -12,11 +12,10 @@ public class Commit_Tests
 	public void Logs_Action_And_Calls_Transaction_Commit()
 	{
 		// Arrange
-		var transaction = Substitute.For<IDbTransaction>();
-		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		var transaction = Substitute.ForPartsOf<DbTransaction>();
+		var connection = Substitute.ForPartsOf<DbConnection>();
 		var log = Substitute.For<ILog>();
-		var unitOfWork = new UnitOfWork(connection, log);
+		var unitOfWork = new UnitOfWork(connection, transaction, log);
 
 		// Act
 		unitOfWork.Commit();
@@ -30,11 +29,10 @@ public class Commit_Tests
 	public void Commits_Only_Once()
 	{
 		// Arrange
-		var transaction = Substitute.For<IDbTransaction>();
-		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		var transaction = Substitute.ForPartsOf<DbTransaction>();
+		var connection = Substitute.ForPartsOf<DbConnection>();
 		var log = Substitute.For<ILog>();
-		var unitOfWork = new UnitOfWork(connection, log);
+		var unitOfWork = new UnitOfWork(connection, transaction, log);
 
 		// Act
 		unitOfWork.Commit();
@@ -49,11 +47,10 @@ public class Commit_Tests
 	public void Does_Not_Commit_If_Rolled_Back()
 	{
 		// Arrange
-		var transaction = Substitute.For<IDbTransaction>();
-		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		var transaction = Substitute.ForPartsOf<DbTransaction>();
+		var connection = Substitute.ForPartsOf<DbConnection>();
 		var log = Substitute.For<ILog>();
-		var unitOfWork = new UnitOfWork(connection, log);
+		var unitOfWork = new UnitOfWork(connection, transaction, log);
 
 		// Act
 		unitOfWork.Rollback();
@@ -67,13 +64,12 @@ public class Commit_Tests
 	public void Catches_Exception_And_Logs_Error()
 	{
 		// Arrange
-		var transaction = Substitute.For<IDbTransaction>();
-		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		var transaction = Substitute.ForPartsOf<DbTransaction>();
+		var connection = Substitute.ForPartsOf<DbConnection>();
 		var exception = new Exception();
 		transaction.When(t => t.Commit()).Throw(exception);
 		var log = Substitute.For<ILog>();
-		var unitOfWork = new UnitOfWork(connection, log);
+		var unitOfWork = new UnitOfWork(connection, transaction, log);
 
 		// Act
 		unitOfWork.Commit();
