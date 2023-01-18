@@ -16,13 +16,17 @@ public sealed class UnitOfWork : IUnitOfWork
 
 	private bool pending = true;
 
-	/// <inheritdoc/>
+	/// <summary>
+	/// DbConnection object to allow access to async methods
+	/// </summary>
 	private readonly DbConnection connection;
 
 	IDbConnection IUnitOfWork.Connection =>
 		connection;
 
-	/// <inheritdoc/>
+	/// <summary>
+	/// DbTransaction object to allow access to async methods
+	/// </summary>
 	private readonly DbTransaction transaction;
 
 	IDbTransaction IUnitOfWork.Transaction =>
