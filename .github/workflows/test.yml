@@ -36,9 +36,7 @@ jobs:
       run: |
         echo ".NET"
         dotnet --version
-        echo "MSBuild Version"
         dotnet msbuild --version
-        echo "NuGet"
         dotnet nuget --version
     -
       name: A - Restore

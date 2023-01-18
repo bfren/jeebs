@@ -25,6 +25,13 @@ jobs:
         dotnet-version: |
           7.0.x
     -
+      name: Prepare - Output versions
+      run: |
+        echo ".NET"
+        dotnet --version
+        dotnet msbuild --version
+        dotnet nuget --version
+    -
       name: A - Restore
       run: |
         dotnet restore Pack.csproj
