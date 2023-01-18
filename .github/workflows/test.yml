@@ -32,6 +32,12 @@ jobs:
         dotnet-version: |
           7.0.x
     -
+      name: Output versions
+      run: |
+        dotnet --version ; \
+        dotnet msbuild --version ; \
+        dotnet nuget --version
+    -
       name: A - Restore
       run: |
         dotnet restore Test.csproj
