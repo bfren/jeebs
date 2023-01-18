@@ -29,8 +29,8 @@ jobs:
       run: |
         echo ".NET"
         dotnet --version
-        dotnet msbuild --version
         dotnet nuget --version
+        dotnet msbuild --version
     -
       name: A - Restore
       run: |
