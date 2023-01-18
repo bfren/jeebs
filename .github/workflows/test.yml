@@ -40,14 +40,14 @@ jobs:
       run: |
         dotnet build Test.csproj \
           --no-restore \
-          --configuration Release
+          --configuration Test
     -
       name: C - Test
       run: |
         dotnet test Test.csproj \
           --no-restore \
           --no-build \
-          --configuration Release
+          --configuration Test
     -
       if: success()
       name: Finish - Success

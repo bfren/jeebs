@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  restore-build-test-pack-push:
+  restore-build-pack-push:
     runs-on: ubuntu-latest
     steps:
     -
@@ -27,23 +27,16 @@ jobs:
     -
       name: A - Restore
       run: |
-        dotnet restore Test.csproj
+        dotnet restore Pack.csproj
     -
       name: B - Build
       run: |
-        dotnet build Test.csproj \
+        dotnet build Pack.csproj \
           --no-restore \
-          --configuration Release
-    -
-      name: C - Test
-      run: |
-        dotnet test Test.csproj \
-          --no-restore \
-          --no-build \
           --configuration Release
     -
       if: success()
-      name: D - Pack
+      name: C - Pack
       run: |
         dotnet pack Pack.csproj \
           --no-build \
@@ -52,7 +45,7 @@ jobs:
           -p:PackageVersion=${{ steps.version.outputs.contents }}
     -
       if: success()
-      name: E - Push
+      name: D - Push
       run: |
         dotnet nuget push "$HOME/.nupkgs/*.nupkg" \
           --skip-duplicate \
