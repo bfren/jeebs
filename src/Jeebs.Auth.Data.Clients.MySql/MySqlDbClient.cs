@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Auth.Data.Tables;
 using MySqlConnector;
 using SimpleMigrations;
 using SimpleMigrations.Console;
@@ -12,6 +13,15 @@ namespace Jeebs.Auth.Data.Clients.MySql;
 /// <inheritdoc cref="IAuthDbClient"/>
 public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAuthDbClient
 {
+	/// <inheritdoc/>
+	public string GetUpdateUserLastSignInQuery() =>
+		$@"
+			UPDATE `{AuthDb.Schema}.{AuthUserTable.TableName}`
+			SET `{new AuthUserTable().LastSignedIn}` = NOW()
+			WHERE `{new AuthUserTable().Id}` = @id;
+			RETURN ROW_COUNT();
+		";
+
 	private static void DoMigration(string connectionString, Action<SimpleMigrator> act)
 	{
 		// Connection to database

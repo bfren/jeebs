@@ -3,6 +3,7 @@
 
 using Jeebs.Auth.Data.Clients.MySql;
 using Jeebs.Auth.Data.Clients.PostgreSql;
+using Jeebs.Auth.Data.Clients.Sqlite;
 using Jeebs.Config.Db;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -15,6 +16,7 @@ log.Dbg("= Auth Database Console Test =");
 // Create clients
 var postgres = new PostgreSqlDbClient();
 var mariadb = new MySqlDbClient();
+var sqlitedb = new SqliteDbClient();
 
 // Get config
 var config = app.Services.GetRequiredService<IOptions<DbConfig>>().Value;
@@ -22,7 +24,7 @@ var config = app.Services.GetRequiredService<IOptions<DbConfig>>().Value;
 Console.WriteLine();
 
 // PostgreSql
-var postgresConn = config.GetConnection("server04-postgres").ConnectionString;
+var postgresConn = config.GetConnection("rpi-postgres").ConnectionString;
 
 log.Dbg("== PostgreSQL ==");
 
@@ -35,7 +37,7 @@ postgres.MigrateToLatest(postgresConn);
 Console.WriteLine();
 
 // MariaDB
-var mariadbConn = config.GetConnection("server04-mariadb").ConnectionString;
+var mariadbConn = config.GetConnection("rpi-mariadb").ConnectionString;
 
 log.Dbg("== MariaDB ==");
 
@@ -44,6 +46,19 @@ mariadb.Nuke(mariadbConn);
 
 log.Dbg("Migrate...");
 mariadb.MigrateToLatest(mariadbConn);
+
+Console.WriteLine();
+
+// Sqlite
+var sqliteConn = config.GetConnection("local-sqlite").ConnectionString;
+
+log.Dbg("== Sqlite ==");
+
+log.Dbg("Nuke...");
+sqlitedb.Nuke(sqliteConn);
+
+log.Dbg("Migrate...");
+sqlitedb.MigrateToLatest(sqliteConn);
 
 Console.WriteLine();
 

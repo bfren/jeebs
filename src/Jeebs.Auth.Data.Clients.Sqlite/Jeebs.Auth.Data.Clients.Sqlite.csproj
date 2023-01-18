@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<PackageReference Include="Simple.Migrations" Version="0.9.21" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj" />
+		<ProjectReference Include="..\Jeebs.Data.Clients.Sqlite\Jeebs.Data.Clients.Sqlite.csproj" />
+	</ItemGroup>
+</Project>
