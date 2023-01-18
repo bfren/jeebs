@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="Sodium.Core" Version="1.3.3" />
+		<PackageReference Include="Sodium.Core" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs\Jeebs.csproj" />

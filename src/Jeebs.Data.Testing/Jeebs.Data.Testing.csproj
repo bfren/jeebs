@@ -8,9 +8,9 @@
 		<Using Include="Xunit" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="MaybeF.Testing" Version="9.3.0" />
-		<PackageReference Include="NSubstitute" Version="4.4.0" />
-		<PackageReference Include="xunit.assert" Version="2.4.2" />
+		<PackageReference Include="MaybeF.Testing" />
+		<PackageReference Include="NSubstitute" />
+		<PackageReference Include="xunit.assert" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />

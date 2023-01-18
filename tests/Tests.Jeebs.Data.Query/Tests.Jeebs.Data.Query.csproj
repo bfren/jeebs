@@ -3,7 +3,7 @@
 		<RootNamespace>Jeebs.Data.Querying</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="StrongId.Testing" Version="8.3.3" />
+		<PackageReference Include="StrongId.Testing" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
