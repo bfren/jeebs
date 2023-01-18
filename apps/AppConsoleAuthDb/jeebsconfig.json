@@ -1,20 +1,23 @@
 {
-  "jeebs": {
-    "app": {
-      "name": "Auth Database",
-      "suite": "Jeebs"
-    },
-    "db": {
-      "default": "server04",
-      "connections": {
-        "server04-mariadb": {
-          "connectionString": ""
-        },
-        "server04-postgres": {
-          "connectionString": ""
-        }
-      }
-    },
+	"jeebs": {
+		"app": {
+			"name": "Auth Database",
+			"suite": "Jeebs"
+		},
+		"db": {
+			"default": "server04",
+			"connections": {
+				"rpi-mariadb": {
+					"connectionString": ""
+				},
+				"rpi-postgres": {
+					"connectionString": ""
+				},
+				"local-sqlite": {
+					"connectionString": ""
+				}
+			}
+		},
 		"logging": {
 			"minimum": "Verbose",
 			"overrides": {
@@ -25,18 +28,18 @@
 				"console": {
 					"enabled": true
 				},
-				"seq.server04": {
+				"seq.local": {
 					"enabled": true
 				}
 			}
 		},
-    "services": {
-      "seq": {
-        "server04": {
-          "server": "",
-          "apiKey": ""
-        }
-      }
-    }
-  }
+		"services": {
+			"seq": {
+				"local": {
+					"server": "",
+					"apiKey": ""
+				}
+			}
+		}
+	}
 }
