@@ -32,10 +32,13 @@ jobs:
         dotnet-version: |
           7.0.x
     -
-      name: Output versions
+      name: Prepare - Output versions
       run: |
-        dotnet --version ; \
-        dotnet msbuild --version ; \
+        echo ".NET"
+        dotnet --version
+        echo "MSBuild Version"
+        dotnet msbuild --version
+        echo "NuGet"
         dotnet nuget --version
     -
       name: A - Restore
