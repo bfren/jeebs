@@ -10,6 +10,7 @@
 
 	<!-- Common Packages -->
 	<ItemGroup>
+		<PackageReference Include="MaybeF" />
 		<Using Include="MaybeF" />
 		<Using Include="MaybeF.Linq" />
 	</ItemGroup>
@@ -85,7 +86,7 @@
 	<Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
 	<PropertyGroup Label="Local Package Validation" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
 		<EnablePackageValidation>true</EnablePackageValidation>
-		<PackageValidationBaselineVersion>8.1.0</PackageValidationBaselineVersion>
+		<PackageValidationBaselineVersion>8.2.0</PackageValidationBaselineVersion>
 	</PropertyGroup>
 	<Target Name="PackAndPushToLocalNuget" AfterTargets="Build" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
 		<Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build --configuration Release" />

@@ -8,6 +8,7 @@ on:
       - '**'
     paths:
       - '.github/workflows/test.yml'
+      - 'Directory.Packages.props'
       - 'src/**'
       - 'tests/**'
   workflow_dispatch:
@@ -31,6 +32,13 @@ jobs:
       with:
         dotnet-version: |
           7.0.x
+    -
+      name: Prepare - Output versions
+      run: |
+        echo ".NET"
+        dotnet --version
+        dotnet nuget --version
+        dotnet msbuild --version
     -
       name: A - Restore
       run: |

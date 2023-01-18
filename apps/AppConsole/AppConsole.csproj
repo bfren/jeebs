@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
@@ -8,7 +8,7 @@
 		<None Remove="jeebsconfig.json" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Rnd" Version="8.4.2" />
+		<PackageReference Include="Rnd" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="appsettings.json">
@@ -27,6 +27,8 @@
 		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
 	</ItemGroup>
 	<ProjectExtensions>
-		<VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" /></VisualStudio>
+		<VisualStudio>
+			<UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" />
+		</VisualStudio>
 	</ProjectExtensions>
 </Project>

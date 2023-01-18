@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Services.Drawing;
@@ -22,8 +22,8 @@ public class ImageController : Controller
 				from m in i.ApplyMask(width, height)
 				select m.ToPngByteArray();
 
-		return r.Switch<IActionResult>(
-			some: x => File(x, "image/jpg"),
+		return r.Switch(
+			some: x => File(x, "image/jpg") as IActionResult,
 			none: () => NotFound()
 		);
 	}

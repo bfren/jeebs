@@ -3,12 +3,12 @@
 		<RootNamespace>Jeebs.Mvc.Auth</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="Jwt\**" />
-	  <EmbeddedResource Remove="Jwt\**" />
-	  <None Remove="Jwt\**" />
+		<Compile Remove="Jwt\**" />
+		<EmbeddedResource Remove="Jwt\**" />
+		<None Remove="Jwt\**" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="StrongId.Testing" Version="8.3.3" />
+		<PackageReference Include="StrongId.Testing" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
