@@ -7,6 +7,7 @@
 	"settings": {
 		"editor.insertSpaces": false,
 		"editor.renderWhitespace": "all",
+		"files.eol": "\r\n",
 		"files.trimTrailingWhitespace": true,
 		"files.exclude": {
 			"**/*.csproj.user": true,
