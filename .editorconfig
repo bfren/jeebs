@@ -453,7 +453,6 @@ dotnet_naming_rule.parameters_rule.severity             = warning
 
 [*]
 
-indent_style = tab
 indent_size = tab
 tab_size = 4
 end_of_line = crlf
