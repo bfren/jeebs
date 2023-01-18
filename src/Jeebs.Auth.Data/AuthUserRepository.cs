@@ -7,7 +7,6 @@ using Jeebs.Auth.Data.Entities;
 using Jeebs.Cryptography;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.Messages;
 
@@ -22,11 +21,17 @@ public interface IAuthUserRepository : IAuthUserRepository<AuthUserEntity>
 public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
 {
 	/// <summary>
+	/// IAuthDb
+	/// </summary>
+	private new IAuthDb Db { get; init; }
+
+	/// <summary>
 	/// Inject dependencies
 	/// </summary>
 	/// <param name="db">IAuthDb</param>
 	/// <param name="log">ILog</param>
-	public AuthUserRepository(IAuthDb db, ILog<AuthUserRepository> log) : base(db, log) { }
+	public AuthUserRepository(IAuthDb db, ILog<AuthUserRepository> log) : base(db, log) =>
+		Db = db;
 
 	/// <inheritdoc/>
 	public Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword) =>
@@ -81,15 +86,19 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction)
+	public async Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction)
 	{
 		var id = userId.Value;
-		return Db.ExecuteAsync<bool>(
-			Db.Client.Escape(new DbName(AuthDb.Schema, Procedures.UpdateUserLastSignIn)),
-			new { id },
-			CommandType.StoredProcedure,
-			transaction
-		);
+		return await Db
+			.ExecuteAsync<int>(
+				Db.Client.GetUpdateUserLastSignInQuery(),
+				new { id },
+				CommandType.Text,
+				transaction
+			)
+			.BindAsync(
+				x => x > 0 ? F.True : F.False
+			);
 	}
 
 	private sealed record class CheckAuthUserExists(string EmailAddress);

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+	</ItemGroup>
+</Project>

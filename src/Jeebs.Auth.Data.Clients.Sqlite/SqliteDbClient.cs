@@ -2,34 +2,34 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Data.SQLite;
 using Jeebs.Auth.Data.Tables;
-using Npgsql;
 using SimpleMigrations;
 using SimpleMigrations.Console;
 using SimpleMigrations.DatabaseProvider;
 
-namespace Jeebs.Auth.Data.Clients.PostgreSql;
+namespace Jeebs.Auth.Data.Clients.Sqlite;
 
 /// <inheritdoc cref="IAuthDbClient"/>
-public sealed class PostgreSqlDbClient : Jeebs.Data.Clients.PostgreSql.PostgreSqlDbClient, IAuthDbClient
+public sealed class SqliteDbClient : Jeebs.Data.Clients.Sqlite.SqliteDbClient, IAuthDbClient
 {
 	/// <inheritdoc/>
 	public string GetUpdateUserLastSignInQuery() =>
 		$@"
-			UPDATE {AuthDb.Schema}.{AuthUserTable.TableName}
-			SET {new AuthUserTable().LastSignedIn} = NOW()
-			WHERE {new AuthUserTable().Id} = @id
+			UPDATE ""{AuthDb.Schema}.{AuthUserTable.TableName}""
+			SET ""{new AuthUserTable().LastSignedIn}"" = datetime(""now"")
+			WHERE ""{new AuthUserTable().Id}"" = @id
 			RETURNING *;
 		";
 
 	private static void DoMigration(string connectionString, Action<SimpleMigrator> act)
 	{
 		// Connection to database
-		using var db = new NpgsqlConnection(connectionString);
+		using var db = new SQLiteConnection(connectionString);
 
 		// Get migration objects
-		var provider = new PostgresqlDatabaseProvider(db) { SchemaName = AuthDb.Schema, TableName = "version_info" };
-		var migrator = new SimpleMigrator(typeof(PostgreSqlDbClient).Assembly, provider, new ConsoleLogger());
+		var provider = new SqliteDatabaseProvider(db) { TableName = $"\"{AuthDb.Schema}.version_info\"" };
+		var migrator = new SimpleMigrator(typeof(SqliteDbClient).Assembly, provider, new ConsoleLogger());
 
 		// Get all the migrations
 		migrator.Load();
