@@ -37,8 +37,8 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	where TDb : IDb
 {
 	/// <inheritdoc/>
-	public IUnitOfWork UnitOfWork =>
-		Db.UnitOfWork;
+	public Task<IUnitOfWork> StartWorkAsync() =>
+		Db.StartWorkAsync();
 
 	/// <summary>
 	/// TDb
@@ -108,7 +108,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// <inheritdoc/>
 	public async Task<Maybe<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts)
 	{
-		using var w = UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryAsync<T>(page, parts, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -147,7 +147,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// <inheritdoc/>
 	public async Task<Maybe<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
 	{
-		using var w = UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryAsync<T>(parts, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -184,7 +184,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// <inheritdoc/>
 	public async Task<Maybe<T>> QuerySingleAsync<T>(IQueryParts parts)
 	{
-		using var w = UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QuerySingleAsync<T>(parts, w.Transaction).ConfigureAwait(false);
 	}
 

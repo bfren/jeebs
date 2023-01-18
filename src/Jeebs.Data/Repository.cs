@@ -14,10 +14,6 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	where TEntity : IWithId<TId>
 	where TId : class, IStrongId, new()
 {
-	/// <inheritdoc/>
-	public IUnitOfWork UnitOfWork =>
-		Db.UnitOfWork;
-
 	/// <summary>
 	/// IDb
 	/// </summary>
@@ -74,7 +70,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <inheritdoc/>
 	public virtual async Task<Maybe<TId>> CreateAsync(TEntity entity)
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await CreateAsync(entity, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -91,7 +87,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <inheritdoc/>
 	public virtual async Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id)
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await RetrieveAsync<TModel>(id, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -109,7 +105,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual async Task<Maybe<bool>> UpdateAsync<TModel>(TModel model)
 		where TModel : IWithId
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await UpdateAsync(model, w.Transaction).ConfigureAwait(false);
 	}
 
@@ -128,7 +124,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual async Task<Maybe<bool>> DeleteAsync<TModel>(TModel model)
 		where TModel : IWithId
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await DeleteAsync(model, w.Transaction).ConfigureAwait(false);
 	}
 

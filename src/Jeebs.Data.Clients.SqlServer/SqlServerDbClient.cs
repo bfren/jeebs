@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.SqlServer;
 public partial class SqlServerDbClient : DbClient
 {
 	/// <inheritdoc/>
-	public override IDbConnection Connect(string connectionString) =>
+	public override DbConnection GetConnection(string connectionString) =>
 		new SqlConnection(connectionString);
 
 	/// <inheritdoc/>

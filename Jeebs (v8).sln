@@ -179,9 +179,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Config", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Data.Clients.Sqlite", "src\Jeebs.Data.Clients.Sqlite\Jeebs.Data.Clients.Sqlite.csproj", "{A19EEE68-1088-48DD-B5BA-2394B45CAF4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Data.Clients.Sqlite", "tests\Tests.Jeebs.Data.Clients.Sqlite\Tests.Jeebs.Data.Clients.Sqlite.csproj", "{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Clients.Sqlite", "tests\Tests.Jeebs.Data.Clients.Sqlite\Tests.Jeebs.Data.Clients.Sqlite.csproj", "{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jeebs.Auth.Data.Clients.Sqlite", "src\Jeebs.Auth.Data.Clients.Sqlite\Jeebs.Auth.Data.Clients.Sqlite.csproj", "{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Data.Clients.Sqlite", "src\Jeebs.Auth.Data.Clients.Sqlite\Jeebs.Auth.Data.Clients.Sqlite.csproj", "{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -459,7 +459,6 @@ Global
 		{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CC366AF-8D27-4AAD-AD01-5D36CAB55753}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{9AA4AD0C-DBA6-4B74-B422-6AF774932A97}.Test|Any CPU.Build.0 = Debug|Any CPU
@@ -470,17 +469,14 @@ Global
 		{0F8CD177-16A0-4C59-8C31-4E394F0C8448}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F8CD177-16A0-4C59-8C31-4E394F0C8448}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{A48B5BCD-35A3-4C70-9AD8-186E903CFF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A48B5BCD-35A3-4C70-9AD8-186E903CFF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A48B5BCD-35A3-4C70-9AD8-186E903CFF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A48B5BCD-35A3-4C70-9AD8-186E903CFF34}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{A48B5BCD-35A3-4C70-9AD8-186E903CFF34}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{82217A79-F6A8-4DE8-B41D-880845C819A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82217A79-F6A8-4DE8-B41D-880845C819A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82217A79-F6A8-4DE8-B41D-880845C819A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82217A79-F6A8-4DE8-B41D-880845C819A8}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{82217A79-F6A8-4DE8-B41D-880845C819A8}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{F50926CB-F1DF-49F3-8D9D-7204FCF09782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F50926CB-F1DF-49F3-8D9D-7204FCF09782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F50926CB-F1DF-49F3-8D9D-7204FCF09782}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F50926CB-F1DF-49F3-8D9D-7204FCF09782}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{F50926CB-F1DF-49F3-8D9D-7204FCF09782}.Test|Any CPU.Build.0 = Debug|Any CPU
@@ -491,9 +487,7 @@ Global
 		{A19EEE68-1088-48DD-B5BA-2394B45CAF4C}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{A19EEE68-1088-48DD-B5BA-2394B45CAF4C}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}.Test|Any CPU.Build.0 = Debug|Any CPU
 		{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

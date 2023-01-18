@@ -5,6 +5,7 @@ using System.Data;
 using Jeebs.Data.Map;
 using Jeebs.Logging;
 using MaybeF;
+using NSubstitute.Extensions;
 using StrongId;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
@@ -29,7 +30,9 @@ public abstract class FluentQuery_Tests
 		var db = Substitute.For<IDb>();
 		db.Client
 			.Returns(client);
-		db.UnitOfWork
+		db.Configure().StartWork()
+			.Returns(unitOfWork);
+		db.Configure().StartWorkAsync()
 			.Returns(unitOfWork);
 
 		var log = Substitute.For<ILog>();

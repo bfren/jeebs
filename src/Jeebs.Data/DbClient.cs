@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Data;
+using System.Data.Common;
 using Jeebs.Data.Map;
 using Jeebs.Messages;
 
@@ -41,7 +41,7 @@ public abstract partial class DbClient : IDbClient
 		(Entities, Types) = (entities, types);
 
 	/// <inheritdoc/>
-	public abstract IDbConnection Connect(string connectionString);
+	public abstract DbConnection GetConnection(string connectionString);
 
 	/// <summary>Messages</summary>
 	public static class M

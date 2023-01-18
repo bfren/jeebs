@@ -94,7 +94,7 @@ public partial class SqlServerDbClient : DbClient
 				_ = parameters.Merge(param);
 			}
 
-			// If there's anything to add, 
+			// If there are any WHERE clauses, add them to the SQL string
 			if (where.Count > 0)
 			{
 				sql += $" WHERE {string.Join(" AND ", where)}";

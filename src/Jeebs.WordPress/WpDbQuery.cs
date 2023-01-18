@@ -28,14 +28,14 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	public async Task<Maybe<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
 		where T : IPostAttachment
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryAttachmentsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
 	public async Task<Maybe<string>> AttachmentFilePathAsync(WpPostId fileId)
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryAttachmentsF.GetFilePathAsync(Db, w, fileId).ConfigureAwait(false);
 	}
 
@@ -43,7 +43,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	public async Task<Maybe<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
 		where T : IWithId<WpPostId>
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryPostsF.ExecuteAsync<T>(Db, w, opt, filters).ConfigureAwait(false);
 	}
 
@@ -51,14 +51,14 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	public async Task<Maybe<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
 		where T : IWithId<WpPostId>
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryPostsF.ExecuteAsync<T>(Db, w, page, opt, filters).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
 	public async Task<Maybe<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt)
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryPostsF.GetPreviousAndNextAsync(Db, w, id, opt).ConfigureAwait(false);
 	}
 
@@ -66,7 +66,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	public async Task<Maybe<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
 		where T : IWithId<WpPostMetaId>
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryPostsMetaF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
 	}
 
@@ -74,7 +74,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	public async Task<Maybe<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
 		where T : IWithId<WpTermId>
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryPostsTaxonomyF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
 	}
 
@@ -82,7 +82,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	public async Task<Maybe<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
 		where T : IWithId<WpTermId>
 	{
-		using var w = Db.UnitOfWork;
+		using var w = await Db.StartWorkAsync();
 		return await QueryTermsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
 	}
 }

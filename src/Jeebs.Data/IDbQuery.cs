@@ -14,8 +14,10 @@ namespace Jeebs.Data;
 /// </summary>
 public interface IDbQuery
 {
-	/// <inheritdoc cref="IDb.UnitOfWork"/>
-	IUnitOfWork UnitOfWork { get; }
+	/// <summary>
+	/// Begin a new Unit of Work
+	/// </summary>
+	Task<IUnitOfWork> StartWorkAsync();
 
 	#region QueryAsync
 

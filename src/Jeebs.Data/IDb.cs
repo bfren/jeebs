@@ -24,9 +24,14 @@ public interface IDb
 	DbConnectionConfig Config { get; }
 
 	/// <summary>
-	/// Start a new unit of work
+	/// Start a new Unit of Work
 	/// </summary>
-	IUnitOfWork UnitOfWork { get; }
+	IUnitOfWork StartWork();
+
+	/// <summary>
+	/// Start a new Unit of Work asynchronously
+	/// </summary>
+	Task<IUnitOfWork> StartWorkAsync();
 
 	/// <inheritdoc cref="QueryAsync{T}(string, object?, CommandType, IDbTransaction)"/>
 	Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type);

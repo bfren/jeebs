@@ -1,7 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
+using System.Data.Common;
 using Jeebs.Logging;
 
 namespace Jeebs.Data.UnitOfWork_Tests;
@@ -12,11 +12,10 @@ public class Dispose_Tests
 	public void Calls_Transaction_Commit()
 	{
 		// Arrange
-		var transaction = Substitute.For<IDbTransaction>();
-		var connection = Substitute.For<IDbConnection>();
-		connection.BeginTransaction().Returns(transaction);
+		var transaction = Substitute.For<DbTransaction>();
+		var connection = Substitute.For<DbConnection>();
 		var log = Substitute.For<ILog>();
-		var unitOfWork = new UnitOfWork(connection, log);
+		var unitOfWork = new UnitOfWork(connection, transaction, log);
 
 		// Act
 		unitOfWork.Dispose();
