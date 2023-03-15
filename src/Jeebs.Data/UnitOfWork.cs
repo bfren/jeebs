@@ -140,6 +140,7 @@ public sealed class UnitOfWork : IUnitOfWork
 	{
 		Commit();
 		transaction.Dispose();
+		connection.Close();
 		connection.Dispose();
 	}
 
@@ -150,6 +151,7 @@ public sealed class UnitOfWork : IUnitOfWork
 	{
 		await CommitAsync();
 		await transaction.DisposeAsync();
+		await connection.CloseAsync();
 		await connection.DisposeAsync();
 	}
 }
